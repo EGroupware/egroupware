@@ -2,17 +2,17 @@
 <p>&nbsp;</p>
 
 <table border="0" align="center" width="{tbl_width}">
-<tr bgcolor="486591">
+<tr bgcolor="#486591">
 	<td colspan="{td_colspan}">
-		&nbsp;<font color="fefefe">{stage_title}</font>
+		&nbsp;<font color="#fefefe">{stage_title}</font>
 	</td>
 </tr>
-<tr bgcolor="e6e6e6">
+<tr bgcolor="#e6e6e6">
 	<td colspan="{td_colspan}">
 		{stage_desc}
 	</td>
 </tr>
-<tr bgcolor="e6e6e6">
+<tr bgcolor="#e6e6e6">
 	<td {td_align}>
 		{select_box_desc}
 		<form method="POST" action="lang.php">

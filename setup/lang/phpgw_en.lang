@@ -153,6 +153,7 @@ requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
+select to download file	setup	en	Select to download file
 select which group(s) will be exported (group membership will be maintained)	setup	en	Select which group(s) will be exported (group membership will be maintained)
 select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
 select which languages you would like to use	setup	en	Select which languages you would like to use

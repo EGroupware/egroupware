@@ -64,7 +64,7 @@
 		exit;
 	}
 
-	$bgcolor = array('DDDDDD','EEEEEE');
+	$bgcolor = array('#DDDDDD','#EEEEEE');
 
 	function parsedep($depends,$main=True)
 	{

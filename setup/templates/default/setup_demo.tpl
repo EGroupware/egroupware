@@ -4,7 +4,7 @@
     <td>{description}</td>
   </tr>
   <tr>
-    <td align="left" bgcolor="486591"><font color="fefefe">{detailadmin}</td><td align="right" bgcolor="486591">&nbsp;
+    <td align="left" bgcolor="#486591"><font color="#fefefe">{detailadmin}</td><td align="right" bgcolor="#486591">&nbsp;
     </td>
   </tr>
   <tr>

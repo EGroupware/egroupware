@@ -1,10 +1,10 @@
 <!-- begin config_post_script.tpl -->
-  <tr bgcolor="FFFFFF">
+  <tr bgcolor="#FFFFFF">
     <td colspan="2" align="center">
 &nbsp;
     </td>
   </tr>
-  <tr bgcolor="FFFFFF">
+  <tr bgcolor="#FFFFFF">
     <td colspan="2" align="center">
 {more_configs}
     </td>

@@ -1,6 +1,6 @@
 <!-- BEGIN sqlheader -->
 <table colspan="6">
-  <tr bgcolor="e6e6e6">
+  <tr bgcolor="#e6e6e6">
     <td>
       <pre>
 	$phpgw_baseline = array(

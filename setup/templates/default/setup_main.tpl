@@ -2,10 +2,10 @@
 <!-- begin the db section -->
 <table border="0" width="100%" cellspacing="0" cellpadding="2">
 <tr>
-	<td align="left" bgcolor="486591">
-		<font color="fefefe">{db_step_text}</font>
+	<td align="left" bgcolor="#486591">
+		<font color="#fefefe">{db_step_text}</font>
 	</td>
-	<td align="right" bgcolor="486591">
+	<td align="right" bgcolor="#486591">
 		&nbsp;
 	</td>
 </tr>
@@ -15,10 +15,10 @@
 
 <!-- begin the config section -->
 <tr>
-	<td align="left" bgcolor="486591">
-		<font color="fefefe">{config_step_text}</font>
+	<td align="left" bgcolor="#486591">
+		<font color="#fefefe">{config_step_text}</font>
 	</td>
-	<td align="right" bgcolor="486591">
+	<td align="right" bgcolor="#486591">
 		&nbsp;
 	</td>
 </tr>
@@ -39,10 +39,10 @@
 <!-- end the config section -->
 <!-- begin the lang section -->
 <tr>
-	<td align="left" bgcolor="486591">
-		<font color="fefefe">{lang_step_text}</font>
+	<td align="left" bgcolor="#486591">
+		<font color="#fefefe">{lang_step_text}</font>
 	</td>
-	<td align="right" bgcolor="486591">
+	<td align="right" bgcolor="#486591">
 		&nbsp;
 	</td>
 </tr>
@@ -57,10 +57,10 @@
 <!-- end the lang section -->
 <!-- begin the apps section -->
 <tr>
-	<td align="left" bgcolor="486591">
-		<font color="fefefe">{apps_step_text}</font>
+	<td align="left" bgcolor="#486591">
+		<font color="#fefefe">{apps_step_text}</font>
 	</td>
-	<td align="right" bgcolor="486591">
+	<td align="right" bgcolor="#486591">
 		&nbsp;
 	</td>
 </tr>

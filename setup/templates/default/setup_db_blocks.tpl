@@ -101,19 +101,19 @@
 	</td>
 	<td>
 		<table width="100%">
-		<tr bgcolor="486591">
+		<tr bgcolor="#486591">
 			<td>
-				<font color="fefefe">&nbsp;<b>{subtitle}</b></font>
+				<font color="#fefefe">&nbsp;<b>{subtitle}</b></font>
 			</td>
 		</tr>
-		<tr bgcolor="e6e6e6">
+		<tr bgcolor="#e6e6e6">
 			<td>
 				{submsg}
 			</td>
 		</tr>
-		<tr bgcolor="486591">
+		<tr bgcolor="#486591">
 			<td>
-				<font color="fefefe">&nbsp;<b>{tblchange}</b></font>
+				<font color="#fefefe">&nbsp;<b>{tblchange}</b></font>
 			</td>
 		</tr>
 <!-- END B_db_stage_5_pre -->
@@ -121,12 +121,12 @@
 &nbsp; <!-- ================================== --> &nbsp; 
 
 <!-- BEGIN B_db_stage_5_post -->
-		<tr bgcolor="486591">
+		<tr bgcolor="#486591">
 			<td>
-				<font color="fefefe">&nbsp;<b>{status}</b></font>
+				<font color="#fefefe">&nbsp;<b>{status}</b></font>
 			</td>
 		</tr>
-		<tr bgcolor="e6e6e6">
+		<tr bgcolor="#e6e6e6">
 			<td>{tableshave} {subaction}</td>
 		</tr>
 		</table>

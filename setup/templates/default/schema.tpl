@@ -12,10 +12,10 @@
 <!-- BEGIN app_header -->
 <form method="POST" action="{action_url}">
   <tr>
-    <td colspan="4" bgcolor="486591"><center><font color="fefefe">{appdata}</font></center></td>
-    <td colspan="1" bgcolor="486591"><center><font color="fefefe">{actions}</font></center></td>
+    <td colspan="4" bgcolor="#486591"><center><font color="#fefefe">{appdata}</font></center></td>
+    <td colspan="1" bgcolor="#486591"><center><font color="#fefefe">{actions}</font></center></td>
   </tr>
-  <tr bgcolor="99cccc">
+  <tr bgcolor="#99cccc">
     <td colspan="2">{app_info}</td>
     <td align="center">{app_title}</td>
     <td align="center">{app_version}</td>
@@ -29,7 +29,7 @@
     <td>{appinfo}&nbsp;</td>
     <td>{apptitle}&nbsp;</td>
     <td align="center"><select name="version[{appname}]">{select_version}</select></td>
-    <td bgcolor="CCFFCC" align="center">{install}</td>
+    <td bgcolor="#CCFFCC" align="center">{install}</td>
   </tr>
 <!-- END apps -->
 

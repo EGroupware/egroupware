@@ -12,10 +12,10 @@
 <!-- BEGIN app_header -->
 <form method="POST" action="{action_url}">
   <tr>
-    <td colspan="5" bgcolor="486591"><center><font color="fefefe">{appdata}</font></center></td>
-    <td colspan="4" bgcolor="486591"><center><font color="fefefe">{actions}</font></center></td>
+    <td colspan="5" bgcolor="#486591"><center><font color="#fefefe">{appdata}</font></center></td>
+    <td colspan="4" bgcolor="#486591"><center><font color="#fefefe">{actions}</font></center></td>
   </tr>
-  <tr bgcolor="99cccc">
+  <tr bgcolor="#99cccc">
     <td colspan="2">{app_info}</td>
     <td align="center">{app_title}</td>
     <td align="center">{app_currentver}</td>
@@ -34,10 +34,10 @@
     <td>{apptitle}&nbsp;</td>
     <td>{currentver}&nbsp;</td>
     <td>{version}&nbsp;</td>
-    <td bgcolor="CCFFCC" align="center">{install}</td>
-    <td bgcolor="CCCCFF" align="center">{upgrade}</td>
+    <td bgcolor="#CCFFCC" align="center">{install}</td>
+    <td bgcolor="#CCCCFF" align="center">{upgrade}</td>
     <td align="center">{resolution}&nbsp;</td>
-    <td bgcolor="CCAAAA" align="center">{remove}</td>
+    <td bgcolor="#CCAAAA" align="center">{remove}</td>
   </tr>
 <!-- END apps -->
 

@@ -251,6 +251,7 @@
 		$setup_tpl->set_var('lang_showall','Show all');
 		$setup_tpl->set_var('title','SQL to schema_proc array util');
 		$setup_tpl->set_var('lang_applist','Applications');
+		$setup_tpl->set_var('select_to_download_file',lang('Select to download file'));
 		$setup_tpl->pfp('out','appheader');
 
 		$d = dir(PHPGW_SERVER_ROOT);
