@@ -75,7 +75,9 @@
 
 			$access_ok = $owner == $this->user ||                // user has all rights
 							 // ACL only on public entrys || $owner granted _PRIVATE
-							 !!($this->grants[$owner] & $required_rights) &&
+							 (!!($this->grants[$owner] & $required_rights) ||
+							 // implicite read-rights for responsible user !!!
+							  $info['info_responsible'] == $this->user && $required_rights == PHPGW_ACL_READ) &&
 							 ($info['info_access'] == 'public' ||
 							 !!($this->grants[$owner] & PHPGW_ACL_PRIVATE));   
 							
@@ -93,7 +95,7 @@
 		*/
 		function aclFilter($filter = 'none')
 		{
-			ereg('.*(own|privat|all|none|user)([0-9]*).*',$filter,$vars);
+			ereg('.*(own|privat|all|none|user)([0-9]*).*',$filter_was=$filter,$vars);
 			$filter = $vars[1];
 			$f_user   = intval($vars[2]);
 
@@ -122,6 +124,9 @@
 			}
 			$filtermethod = " (info_owner=$this->user"; // user has all rights
 
+			// implicit read-rights for responsible user
+			$filtermethod .= " OR (info_responsible=$this->user AND info_access='public')";
+
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'own')
 			{
@@ -145,6 +150,7 @@
 			{
 				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR info_responsible=$f_user) AND $filtermethod)";
 			}
+			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod'</p>\n";
 			return $this->acl_filter[$filter.$user] = $filtermethod;  // cache the filter
 		}
 	
@@ -521,7 +527,7 @@
 					$start = 0;
 				}
 				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $query $ordermethod",$start,__LINE__,__FILE__);
-
+				//echo "<p>sql='$sql'</p>\n";
 				while ($this->db->next_record())
 				{
 					$this->db2data(&$info);
