@@ -224,10 +224,11 @@
 
 			if ($key == 'tables')
 			{
+				$tblcnt = count($setup_info[$detail][$key]);
 				if(is_array($val))
 				{
-					$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True">' . $key . '</a>' . "\n";
-					$val = implode(',',$val);
+					$key = '<a href="sqltoarray.php?appname=' . $detail . '&submit=True">' . $key . '(' . $tblcnt . ')</a>' . "\n";
+					$val = implode(',' . "\n",$val);
 				}
 			}
 			if ($key == 'hooks')   { $val = implode(',',$val); }
