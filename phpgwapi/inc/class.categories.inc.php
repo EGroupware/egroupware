@@ -112,13 +112,14 @@
 		@param $query string defaults to ''
 		@param $sort string sort order, either defaults to 'ASC'
 		@param $order order by
+		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$public = False, $parent_id = '')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
-			if ($public)
+			if ($globals)
 			{
-				$public_cats = " OR cat_appname='phpgw' OR (cat_access='public' AND cat_appname='".$this->app_name."')";
+				$global_cats = " OR cat_appname='phpgw'";
 			}
 
 			$filter = $this->filter($type);
@@ -169,7 +170,7 @@
 				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $public_cats . ")"
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 				. $parent_filter . $querymethod . $filter;
 
 			if ($limit)
@@ -202,11 +203,11 @@
 		}
 
 
-		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$public = False)
+		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False)
 		{
-			if ($public)
+			if ($globals)
 			{
-				$public_cats = " OR cat_appname='phpgw' OR (cat_access='public' AND cat_appname='".$this->app_name."')";
+				$global_cats = " OR cat_appname='phpgw'";
 			}
 
 			if (!$sort)
@@ -250,7 +251,7 @@
 				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $public_cats . ")"
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $global_cats . ")"
 					. $querymethod;
 
 			$mainselect = ' AND cat_level=0';
@@ -368,21 +369,22 @@
 		@param $format currently only supports select (select box)
 		@param $type string - subs or mains
 		@param $selected - cat_id or array with cat_id values 
+		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $s array - populated with categories
 		*/
-		function formatted_list($format,$type = 'all',$selected = '',$public = False,$site_link = 'site')
+		function formatted_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
 		{
-			return $this->formated_list($format,$type,$selected,$public,$site_link);
+			return $this->formated_list($format,$type,$selected,$globals,$site_link);
 		}
 
-		function formated_list($format,$type = 'all',$selected = '',$public = False,$site_link = 'site')
+		function formated_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
 		{
 			if(is_array($format))
 			{
 				$temp_format = $format['format'];
 				$type = (isset($format['type'])?$format['type']:'all');
 				$selected = (isset($format['selected'])?$format['selected']:'');
-				$public = (isset($format['public'])?$format['public']:False);
+				$globals = (isset($format['globals'])?$format['globals']:False);
 				$site_link = (isset($format['site_link'])?$format['site_link']:'site');
 				settype($format,'string');
 				$format = $temp_format;
@@ -396,11 +398,11 @@
 
 			if ($type != 'all')
 			{
-				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
+				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$globals);
 			}
 			else
 			{
-				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$public);
+				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$globals);
 			}
 
 			if ($format == 'select')
