@@ -64,6 +64,7 @@ are you sure you want to kill this session ?	admin	en	Are you sure you want to k
 arial	notes	en	Arial
 august	common	en	August
 author	nntp	en	Author
+autosave default category	common	en	Autosave Default Category
 available groups	nntp	en	Available Groups
 bad login or password	login	en	Bad login or password
 base url	admin	en	Base URL
@@ -76,13 +77,14 @@ bookmarks	common	en	Bookmarks
 brief description	calendar	en	Brief Description
 business city	common	en	Business City
 business	common	en	Business
+business address type	addressbook	en	Business Address Type
 business country	common	en	Business Country
 business email	common	en	Business EMail
 business email type	common	en	Business EMail Type
 business fax	common	en	Business Fax
 business phone	common	en	Business Phone
 business state	common	en	Business State
-business street common	en	Business Street
+business street	common	en	Business Street
 business zip code	common	en	Business Postal Code
 calendar - add	calendar	en	Calendar - Add
 calendar	common	en	calendar
@@ -267,6 +269,7 @@ hide php information	admin	en	hide php information
 high	common	en	High
 home city	addressbook	en	Home City
 home	common	en	Home
+home address type	addressbook	en	Home Address Type
 home country	addressbook	en	Home Country
 home directory	admin	en	Home directory
 home email	addressbook	en	Home EMail
@@ -336,7 +339,7 @@ max matchs per page	preferences	en	Max matches per page
 may	common	en	May
 medium	common	en	Medium
 message	common	en	Message
-message phone	addressbook	eno	Message Phone
+message phone	addressbook	en	Message Phone
 messages	email	en	Messages
 message x	nntp	en	Message %1
 metar	admin	en	Metar
