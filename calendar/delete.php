@@ -13,7 +13,8 @@
   \**************************************************************************/
 
   /* $Id$ */
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "calendar");
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True,
+                                "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if ($id > 0) {

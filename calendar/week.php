@@ -18,8 +18,7 @@
   } else {
      $friendly = 0;
   }
-
-  $phpgw_info["flags"]["currentapp"] = "calendar";
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
