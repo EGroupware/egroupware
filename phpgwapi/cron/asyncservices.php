@@ -30,16 +30,26 @@
 		'currentapp' => 'login',
 		'noapi'      => True		// this stops header.inc.php to include phpgwapi/inc/function.inc.php
 	);
+	if (!is_readable($path_to_phpgroupware.'/header.inc.php'))
+	{
+		echo "asyncservice.php: Could not find '$path_to_phpgroupware/header.inc.php', exiting !!!\n";
+		exit(1);
+	}
 	include($path_to_phpgroupware.'/header.inc.php');
 	unset($GLOBALS['phpgw_info']['flags']['noapi']);
 
 	$db_type = $GLOBALS['phpgw_domain'][$_GET['domain']]['db_type'];
+	if (!isset($GLOBALS['phpgw_domain'][$_GET['domain']]) || empty($db_type))
+	{
+		echo "asyncservice.php: Domain '$_GET[domain]' is not configured or renamed, exiting !!!\n";
+		exit(1);
+	}
 	if (!extension_loaded($db_type) && !dl($db_type.'.so'))
 	{
-		echo "Extension '$db_type' is not loaded and can't be loaded via dl('$db_type.so') !!!\n";
+		echo "asyncservice.php: Extension '$db_type' is not loaded and can't be loaded via dl('$db_type.so') !!!\n";
 	}
 	
-	$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';
+	$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';	// no php4-sessions availible for cgi
 
 	include(PHPGW_API_INC.'/functions.inc.php');
 	
