@@ -45,6 +45,7 @@
       }
       if(!$this->apps_loaded) {
         $this->apps_loaded = True;
+        $db2->lock(array("applications"));
         $db2->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
         $apps_enabled = False;
         while ($db2->next_record()) {
@@ -58,6 +59,7 @@
           $this->enabled[$name] = 1;
           $this->status[$name] = $db2->f("app_status");
         }
+        $db2->unlock();
       }
       if($apps_enabled && $lid) {
         $owner_found = False;
