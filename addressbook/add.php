@@ -105,6 +105,9 @@
 		$fields["tel_pager"]			= $pager;
 		$fields["tel_cell"]				= $mphone;
 		$fields["tel_msg"]				= $msgphone;
+		$fields["tel_car"]              = $carphone;
+		$fields["tel_video"]            = $vidphone;
+		$fields["tel_isdn"]             = $isdnphone;
 		$fields["adr_one_street"]		= $bstreet;
 		$fields["adr_one_locality"]		= $bcity;
 		$fields["adr_one_region"]		= $bstate;
