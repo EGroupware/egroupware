@@ -106,6 +106,7 @@
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('email', 'Email', 1, 10,NULL, '".$phpgw_info["server"]["version"]."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('nntp', 'NNTP', 1, 11, 'newsgroups,users_newsgroups', '".$phpgw_info["server"]["version"]."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('cron_apps', 'cron_apps', 0, 0, NULL, '".$phpgw_info["server"]["version"]."')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
   
   $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A')");
   
