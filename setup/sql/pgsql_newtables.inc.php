@@ -102,7 +102,7 @@
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_addressbook (
-     id    int(8) NOT NULL auto_increment,
+     id    serial,
      lid   varchar(32),
      tid   char(1),
      owner int(8),

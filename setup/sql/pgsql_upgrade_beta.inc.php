@@ -1453,7 +1453,7 @@
 		$db1 = $phpgw_setup->db;
 
 		$sql="CREATE TABLE phpgw_addressbook_temp (
-		   id    int(8) NOT NULL auto_increment,
+		   id    serial,
 		   lid   varchar(32),
 		   tid   char(1),
 		   owner int(8),
