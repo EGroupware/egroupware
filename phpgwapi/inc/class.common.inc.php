@@ -1058,11 +1058,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		{
 			$this->navbar();
 			
+			$app_title = isset($GLOBALS['phpgw_info']['flags']['currentapp']) ? ' ['.$GLOBALS['phpgw_info']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']]['title'].']' : '';
 			$css = $this->get_css_url();
 			$var = array
 			(
 				'charset'			=> lang('charset'),
-				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'],
+				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'].$app_title,
 				'webserver_url'		=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 				'phpgw_css_file'	=> $css[0],
 				'theme_css_file'	=> $css[1],
@@ -1243,7 +1244,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 									. $this->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 
-			while (list($app,$data) = each($GLOBALS['phpgw_info']['navbar']))
+			foreach($GLOBALS['phpgw_info']['navbar'] as $app => $data)
 			{
 				if ($app == $cur_app)
 				{
@@ -1259,10 +1260,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['applications'][] = array
 					(
 						'icon'			=> $data['icon'],
-						'title'			=> $GLOBALS['phpgw_info']['apps'][$app]['title'],
+						'title'			=> $data['title'],
 						'img_src_over'	=> $data['icon_hover'],
 						'url'			=> $data['url'],
-						'name'			=> str_replace('-','_',$app),
+						'name'			=> $data['title'],
 						'statustext'	=> $data['title'],
 						'css'			=> $app_css
 					);
@@ -1382,7 +1383,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 				if ($app == 'preferences' || $GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
-					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $data['title'];
+					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= $GLOBALS['phpgw_info']['apps'][$app]['title'];
 					$GLOBALS['phpgw_info']['navbar'][$app]['url']	= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
 					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
 
@@ -1423,7 +1424,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 
 			/* We handle this here becuase its special */
-			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about x',lang($app));
+			$GLOBALS['phpgw_info']['navbar']['about']['title']		= lang('about %1',$GLOBALS['phpgw_info']['apps'][$app]['title']);
 			$GLOBALS['phpgw_info']['navbar']['about']['url']		= $GLOBALS['phpgw']->link('/about.php','app='.$app);
 			$GLOBALS['phpgw_info']['navbar']['about']['icon']		= $this->image('phpgwapi',Array('about','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['about']['icon_hover']	= $this->image_on('phpgwapi',Array('about','nonav'),'-over');
