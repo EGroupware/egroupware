@@ -99,7 +99,7 @@
 									</td>
 								</tr>
 								<tr align="right" class="top_bottom" height="15">
-									<td colspan="2">
+									<td colspan="2" height="15">
 									<!-- row 2 right nav buttons -->
 										<table cellpadding="0" cellspacing="0">
 											<tr class="top_bottom">
@@ -118,13 +118,25 @@
 						<!-- END top_part -->
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr valign="top" height="*">
 						<td rowspan="2">
 						<!-- BEGIN left_part -->
-							<table cellspacing="0" cellpadding="0" valign="top" class="left" height="100%">
-								<xsl:apply-templates select="applications"/>
+							<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 								<tr>
-									<td class="left" valign="top" height="100%"><img src="{$nav_bar_left_top_bg_img}"/></td>
+									<td width="154" align="left" valign="top" background="/phpgroupware/phpgwapi/templates/idsociety/images/nav_bar_left_spacer.png">
+										<table cellspacing="0" cellpadding="0" valign="top" class="left">
+											<xsl:apply-templates select="applications"/>
+											<tr>
+												<td class="left" valign="top"><img src="{$nav_bar_left_top_bg_img}"/></td>
+											</tr>
+											<tr>
+												<td width="154" align="left" valign="top">
+													<br/>
+													<div align="center"></div>
+												</td>
+											</tr>
+										</table>
+									</td>
 								</tr>
 							</table>
 						<!-- END left_part -->
@@ -172,8 +184,8 @@
 							</xsl:choose>
 						</td>
 					</tr>
-					<tr valign="top">
-						<td colspan="2" align="center" valign="top" class="bottom">
+					<tr valign="bottom" height="10">
+						<td colspan="2" align="center" valign="top" class="bottom" background="/phpgroupware/phpgwapi/templates/idsociety/images/em.png">
 						<!-- BEGIN bottom_part -->
 							<xsl:value-of select="lang_powered_by"/>
 							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">
