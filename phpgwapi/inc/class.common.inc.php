@@ -407,7 +407,7 @@
 		{
 			global $phpgw_info;
 			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-			$ir = $phpgw_info['server']['images_dir'];
+			$ir = PHPGW_IMAGES_DIR;
 
 			if ($fontsize)
 			{
