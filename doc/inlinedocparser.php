@@ -29,7 +29,7 @@
 		
     if ($fn)
     {
-				if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$fn) || preg_match("/^functions\.inc\.php+$/",$fn))
+				if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$fn) || preg_match("/^functions\.inc\.php+$/",$fn) || preg_match("/^xml_functions\.inc\.php+$/",$fn))
 				{
 						$files[] = $fn;
 				}
