@@ -29,7 +29,7 @@
   $phpgw->common->phpgw_header();
   echo parse_navbar();
 
-  $phpgw->template->set_var("message",lang("Are you sure you want to delete this application ?"));
+  $phpgw->template->set_var("messages",lang("Are you sure you want to delete this application ?"));
   $phpgw->template->set_var("no",'<a href="' . $phpgw->link("/admin/applications.php")
                                . '">' . lang("No") . '</a>');
   $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($app_name) . "&confirm=True") . '">' . lang("Yes") . '</a>');
