@@ -215,13 +215,13 @@
       $db->query("update lang set lang='da' where lang='dk'");
       $db->query("update lang set lang='ko' where lang='kr'");
 
-      $db->query("update preferences set lang='da' where lang='dk'");
-      $db->query("update preferences set lang='ko' where lang='kr'");
+      $db->query("update preferences set preference_name='da' where preference_name='dk'");
+      $db->query("update preferences set preference_name='ko' where preference_name='kr'");
 
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.1 to 0.9.2pre1 is completed.</td>\n";
+      echo "    <td>Upgrade from 0.9.1 to 0.9.2 is completed.</td>\n";
       echo "  </tr>\n";
-      $currentver = "0.9.2pre1";
+      $currentver = "0.9.2";
     }
   }
 
