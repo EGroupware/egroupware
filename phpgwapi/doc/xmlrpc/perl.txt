@@ -33,7 +33,6 @@ $result = HASH(0x826d4b0)
 
 	rpc-client.pl \
 	http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
-	./rpc-client.pl http://www.phpgroupware.org/cvsdemo/xmlrpc.php \
 	--username 36f9ec1e4ad78bxd8bc902b1c38d3e14 \
 	--password e0219714614769x25bc92286016c60c2 \
 	service.contacts.read \
