@@ -12,127 +12,150 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True, "parent_page" => "index.php");
+	$phpgw_flags = Array(
+		'currentapp'					=>	'calendar',
+		'enable_nextmatchs_class'	=>	True,
+	);
 
-  include("../header.inc.php");
+	$phpgw_info['flags'] = $phpgw_flags;
 
-  if(isset($friendly) && $friendly) {
-    if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
-      $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
+	include('../header.inc.php');
 
-    if (isset($date) && strlen($date) > 0) {
-       $thisyear  = substr($date, 0, 4);
-       $thismonth = substr($date, 4, 2);
-       $thisday   = substr($date, 6, 2);
-    } else {
-       if (!isset($day) || !$day)
-          $thisday = $phpgw->calendar->today["day"];
-       else
-          $thisday = $day;
-       if (!isset($month) || !$month)
-          $thismonth = $phpgw->calendar->today["month"];
-       else
-          $thismonth = $month;
-       if (!isset($year) || !$year)
-          $thisyear = $phpgw->calendar->today["year"];
-       else
-          $thisyear = $year;
-    }
-  }
+	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 
-  $phpgw->template->set_file(array("matrix_query_begin" => "matrix_query.tpl",
-				   "list"     	      => "list.tpl",
-				   "matrix_query_end"   => "matrix_query.tpl",
-				   "form_button"      => "form_button_script.tpl"));
+	$templates = Array(
+		'matrix_query_begin'	=>	'matrix_query.tpl',
+		'list'					=>	'list.tpl',
+		'matrix_query_end'	=>	'matrix_query.tpl',
+		'form_button'			=>	'form_button_script.tpl'
+	);
 
-  $phpgw->template->set_block("matrix_query_begin","list","matrix_query_end","form_button");
+	$p->set_file($templates);
 
-  $phpgw->template->set_var("matrix_action",lang("Daily Matrix View"));
-  $phpgw->template->set_var("action_url",$phpgw->link("viewmatrix.php"));
+	$var = Array(
+		'matrix_action'			=>	lang('Daily Matrix View'),
+		'action_url'				=> $phpgw->link('viewmatrix.php')
+	);
 
-  $phpgw->template->parse("out","matrix_query_begin");
+	$p->set_var($var);
+	$p->parse('out','matrix_query_begin');
 
-  $phpgw->template->set_var("field",lang("Date"));
+// Date
+	$day_html = '<select name="day">';
+	for($i=1;$i<=31;$i++)
+	{
+		$day_html .= '<option value="'.$i.'"'.($i==$thisday?' selected':'').'>'.$i.'</option>'."\n";
+	}
+	$day_html .= '</select>';
 
-  $day_html = "<select name=\"day\">";
-  for($i=1;$i<=31;$i++)
-    $day_html .= "<option value=\"$i\"".($i==$thisday?" selected":"").">$i</option>\n";
-  $day_html .= "</select>";
+	$month_html = '<select name="month">';
+	for($i=1;$i<=12;$i++)
+	{
+		$m = lang(date('F', mktime(0,0,0,$i,1,$thisyear)));
+		$month_html .= '<option value="'.$i.'"'.($i==$thismonth?' selected':'').'>'.$m.'</option>'."\n";
+	}
+	$month_html .= '</select>';
 
-  $month_html = "<select name=\"month\">";
-  for($i=1;$i<=12;$i++) {
-    $m = lang(date("F", mktime(0,0,0,$i,1,$thisyear)));
-    $month_html .= "<option value=\"$i\"".($i==$thismonth?" selected":"").">$m</option>\n";
-  }
-  $month_html .= "</select>";
+	$year_html = '<select name="year">';
+	for($i=($thisyear - 1);$i<($thisyear + 5);$i++)
+	{
+		$year_html .= '<option value="'.$i.'"'.($i==$thisyear?' selected':'').'>'.$i.'</option>'."\n";
+	}
+	$year_html .= '</select>';
 
-  $year_html = "<select name=\"year\">";
-  for($i=($thisyear - 1);$i<($thisyear + 5);$i++) {
-    $year_html .= "<option value=\"$i\"".($i==$thisyear?" selected":"").">$i</option>\n";
-  }
-  $year_html .= "</select>";
-
-  $phpgw->template->set_var("data",$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
-  $phpgw->template->parse("output","list",True);
-
+	$var = Array(
+		'field'	=>	lang('Date'),
+		'data'	=>	$phpgw->common->dateformatorder($year_html,$month_html,$day_html)
+	);
+		
+	$p->set_var($var);
+	$p->parse('output','list',True);
+	
 // View type
-  $phpgw->template->set_var("field",lang("View"));
-  $str = "<select name=\"matrixtype\">";
-  $str .= "<option value=\"free/busy\" selected>".lang("free/busy")."</option>\n";
-  $str .= "<option value=\"weekly\">".lang("Weekly")."</option>\n";
-  $str .= "</select>\n";
-  $phpgw->template->set_var("data",$str);
-  $phpgw->template->parse("output","list",True);
+	$str  = '<select name="matrixtype">';
+	$str .= '<option value="free/busy" selected>'.lang('free/busy').'</option>'."\n";
+	$str .= '<option value="weekly">'.lang('Weekly').'</option>'."\n";
+	$str .= '</select>'."\n";
+
+	$var = Array(
+		'field'	=>	lang('View'),
+		'data'	=>	$str
+	);
+
+	$p->set_var($var);
+	$p->parse('output','list',True);
 
 // Participants
-  $phpgw->template->set_var("field",lang("Participants"));
-  $db2 = $phpgw->db;
-  $db2->query("select account_id,account_lastname,account_firstname "
-	    . "from accounts where account_status !='L' and "
-	    . "account_id != ".$phpgw_info["user"]["account_id"]." "
-	    . "and account_permissions like '%:calendar:%' "
-  	    . "order by account_lastname,account_firstname");
+	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
+	$users = Array();
+	for($i=0;$i<count($accounts);$i++)
+	{
+	   $user = $accounts[$i];
+		if(!isset($users[$user]))
+		{
+			$users[$user] = $phpgw->common->grab_owner_name($user);
+			if($phpgw->accounts->get_type($user) == 'g')
+			{
+				$group_members = $phpgw->acl->get_ids_for_location($user,1,'phpgw_group');
+				if($group_members != False)
+				{
+					for($j=0;$j<count($group_members);$j++)
+					{
+						if(!isset($users[$group_members[$j]]))
+						{
+							$users[$group_members[$j]] = $phpgw->common->grab_owner_name($group_members[$j]);
+						}
+					}
+				}
+			}
+		}
+	}
 
-  $num_rows = $db2->num_rows();
-  if ($num_rows > 50)
-    $size = 15;
-  elseif ($num_rows > 5)
-    $size = 5;
-  else
-    $size = $num_rows;
-  $str = "<select name=\"participants[]\" multiple size=\"$size\">";
+	if ($num_users > 50)
+	{
+		$size = 15;
+	}
+	elseif ($num_users > 5)
+	{
+		$size = 5;
+	}
+	else
+	{
+		$size = $num_users;
+	}
+	$str = "\n".'   <select name="participants[]" multiple size="'.$size.'">'."\n";
+	@asort($users);
+	@reset($users);
+	while ($user = each($users))
+	{
+		if((($phpgw->accounts->exists($user[0]) == True) && ($grants[$user[0]] && PHPGW_ACL_READ)) || ($user[0] == $owner) || $phpgw->accounts->get_type($user[0]) == 'g')
+		{
+			$str .= '    <option value="' . $user[0] . '">('.$phpgw->accounts->get_type($user[0]).') '.$user[1].'</option>'."\n";
+		}
+	}
+	$str .= '   </select>';
 
-  while($db2->next_record()) {
-    $id = $db2->f("account_id");
-    $str .= "<option value=\"".$id."\">".$phpgw->common->grab_owner_name($id)."</option>\n";
-  }
-  $str .= "</select>";
-  $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
-  $phpgw->template->set_var("data",$str);
-  $phpgw->template->parse("output","list",True);
+	$var = Array(
+		'field'	=>	lang('Participants'),
+		'data'	=>	$str
+	);
 
-// Groups
-  $phpgw->template->set_var("field",lang("Groups"));
-  $str = "<select name=\"groups[]\" multiple size=\"5\">";
-  $user_groups = $phpgw->accounts->read_group_names();
-  for ($i=0;$i<count($user_groups);$i++) {
-    $str .= "<option value=\"" . $user_groups[$i][0] . "\">" . $user_groups[$i][1] . "</option>\n";
-  }
-  $str .= "</select>";
-  $phpgw->template->set_var("data",$str);
-  $phpgw->template->parse("output","list",True);
+	$p->set_var($var);
+	$p->parse('output','list',True);
 
-  $phpgw->template->set_var("submit_button",lang("Submit"));
+	$var = Array(
+		'submit_button'			=>	lang('Submit'),
+		'action_url_button'		=> '',
+		'action_text_button'		=>	lang('Cancel'),
+		'action_confirm_button'	=>	'onClick="history.back(-1)"'
+	);
 
-  $phpgw->template->set_var("action_url_button","");
-  $phpgw->template->set_var("action_text_button",lang("Cancel"));
-  $phpgw->template->set_var("action_confirm_button","onClick=\"history.back(-1)\"");
+	$p->set_var($var);
+	$p->parse('cancel_button','form_button');
 
-  $phpgw->template->parse("cancel_button","form_button");
+	$p->pparse('out','matrix_query_end');
 
-  $phpgw->template->pparse("out","matrix_query_end");
-
-  $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>
