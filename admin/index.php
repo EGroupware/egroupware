@@ -17,59 +17,54 @@
 	$phpgw_info['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
-	$admin_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$admin_tpl->set_file(array(
-		'admin' => 'index.tpl'
-	));
+	$GLOBALS['admin_tpl'] = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$GLOBALS['admin_tpl']->set_file(
+		Array(
+			'admin' => 'index.tpl'
+		)
+	);
 
-	$admin_tpl->set_block('admin','list');
-	$admin_tpl->set_block('admin','app_row');
-	$admin_tpl->set_block('admin','app_row_noicon');
-	$admin_tpl->set_block('admin','link_row');
-	$admin_tpl->set_block('admin','spacer_row');
+	$GLOBALS['admin_tpl']->set_block('admin','list');
+	$GLOBALS['admin_tpl']->set_block('admin','app_row');
+	$GLOBALS['admin_tpl']->set_block('admin','app_row_noicon');
+	$GLOBALS['admin_tpl']->set_block('admin','link_row');
+	$GLOBALS['admin_tpl']->set_block('admin','spacer_row');
 
-	$admin_tpl->set_var('title',lang('Administration'));
+	$GLOBALS['admin_tpl']->set_var('title',lang('Administration'));
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='',$appname='')
 	{
-		global $phpgw, $phpgw_info, $admin_tpl;
-
-		$admin_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
-		$admin_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
-		$admin_tpl->set_var('app_name',lang($name));
-		$admin_tpl->set_var('a_name',$appname);
-		$admin_tpl->set_var('app_icon',$icon);
+		$GLOBALS['admin_tpl']->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
+		$GLOBALS['admin_tpl']->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
+		$GLOBALS['admin_tpl']->set_var('app_name',lang($name));
+		$GLOBALS['admin_tpl']->set_var('a_name',$appname);
+		$GLOBALS['admin_tpl']->set_var('app_icon',$icon);
 		if ($icon)
 		{
-			$admin_tpl->parse('rows','app_row',True);
+			$GLOBALS['admin_tpl']->parse('rows','app_row',True);
 		}
 		else
 		{
-			$admin_tpl->parse('rows','app_row_noicon',True);
+			$GLOBALS['admin_tpl']->parse('rows','app_row_noicon',True);
 		} 
 	}
 
 	function section_item($pref_link='',$pref_text='')
 	{
-		global $phpgw, $phpgw_info, $admin_tpl;
-
-		$admin_tpl->set_var('pref_link',$pref_link);
-		$admin_tpl->set_var('pref_text',$pref_text);		
-		$admin_tpl->parse('rows','link_row',True);
+		$GLOBALS['admin_tpl']->set_var('pref_link',$pref_link);
+		$GLOBALS['admin_tpl']->set_var('pref_text',$pref_text);		
+		$GLOBALS['admin_tpl']->parse('rows','link_row',True);
 	} 
 
 	function section_end()
 	{
-		global $phpgw, $phpgw_info, $admin_tpl;
-
-		$admin_tpl->parse('rows','spacer_row',True);
+		$GLOBALS['admin_tpl']->parse('rows','spacer_row',True);
 	}
 
 	function display_section($appname,$title,$file)
 	{
-		global $phpgw;
-		section_start($title,$phpgw->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
+		section_start($title,$GLOBALS['phpgw']->common->image($appname,Array('navbar.gif',$appname.'.gif')),$appname);
 
 		while(list($text,$url) = each($file))
 		{
@@ -78,8 +73,8 @@
 		section_end(); 
 	}
 
-	$phpgw->common->hook('admin');
-	$admin_tpl->pparse('out','list');
+	$GLOBALS['phpgw']->common->hook('admin');
+	$GLOBALS['admin_tpl']->pparse('out','list');
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
