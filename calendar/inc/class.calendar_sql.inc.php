@@ -716,7 +716,7 @@ class calendar_ extends calendar__
 
 	function fetch_current_stream_event($stream)
 	{
-		return $this->fetch_event($this->event->id);
+		return $this->fetch_event($stream,$this->event->id);
 	}
 	
 	function event_add_attribute($stream,$attribute,$value)
@@ -736,7 +736,7 @@ class calendar_ extends calendar__
 		{
 			$event_id = $this->deleted_events[$i];
 
-			$event = $this->fetch_event($event_id);
+			$event = $this->fetch_event($stream,$event_id);
 			$this->send_update(MSG_DELETED,$event->participants,$event);
 
 			$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);

@@ -197,10 +197,11 @@
 
 		$p->set_var('color',$phpgw_info['theme']['bg_text']);
 
+		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$overlap = '';
 		for($i=0;$i<count($overlapping_events);$i++)
 		{
-			$over = $phpgw->calendar->fetch_event($overlapping_events[$i]);
+			$over = $phpgw->calendar->fetch_event($cal_stream,$overlapping_events[$i]);
 			$overlap .= '<li>';
 			$private = $phpgw->calendar->is_private($over,$over->owner);
 
