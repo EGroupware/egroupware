@@ -23,7 +23,7 @@
    </tr>
 
    <tr bgcolor="{row_on}">
-    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br>Examples:_/files,_E:\FILES}:</td>
+    <td>{lang_Enter_the_full_path_for_users_and_group_files.<br>Examples:_/files,_E:\FILES,<br>http://webdav.domain.com (WebDAV)}:</td>
     <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40"></td>
    </tr>
    
@@ -306,6 +306,7 @@
     <td>
      <select name="newsettings[file_repository]">
       <option value="sql"{selected_file_repository_sql}>SQL</option>
+      <option value="dav"{selected_file_repository_dav}>WebDAV</option>
      </select>
     </td>
    </tr>
