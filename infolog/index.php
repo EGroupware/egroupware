@@ -17,9 +17,11 @@
 		'currentapp'	=> 'infolog', 
 		'noheader'		=> True,
 		'nonavbar'		=> True
-	 );
-	 include('../header.inc.php');
+	);
+	include('../header.inc.php');
 
-	 $obj = CreateObject('infolog.uiinfolog');
-	 $obj->get_list();
+	$obj = CreateObject('infolog.uiinfolog');
+	$obj->get_list();
+
+	$phpgw->common->phpgw_footer();
 ?>

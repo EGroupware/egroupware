@@ -459,9 +459,6 @@
 			}
 
 			$t->pfp('out','info_list_t',true);
-
-			if (!$for_include)
-				$phpgw->common->phpgw_footer();
 		}
 
 		function edit( ) {
@@ -745,7 +742,6 @@
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
 
-				$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 				$t->set_file(array( 'info_delete' => 'delete.tpl' ));
 				$t->set_var( $this->setStyleSheet( ));
 				$t->set_var( $this->infoHeaders(  ));
@@ -760,9 +756,6 @@
 					array('info_id' => $info_id,'confirm' => 'True')+
 					$this->menuaction('delete')));
 				$t->pfp('out','info_delete');
-
-				$phpgw->common->phpgw_footer();
-				echo parse_navbar_end();
 			}
 		}
 	}
