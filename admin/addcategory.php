@@ -36,21 +36,25 @@
 	    $cat_description = addslashes($cat_description);
 	    $cat_access = 'public';
 
-	    $c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
+	    $c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
 	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been added !", $cat_name)); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been added !', $cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $t->set_var('title_categories',lang('Add global category'));
     $t->set_var('actionurl',$phpgw->link('/admin/addcategory.php'));
     $t->set_var('doneurl',$phpgw->link('/admin/categories.php'));
     $t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
-    $t->set_var('lang_select_parent',lang('Select parent category'));
 
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
+    $t->set_var('lang_main',lang('Main category'));
+    $t->set_var('lang_new_main',lang('New main category'));
+    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+    $t->set_var('lang_parent',lang('Parent category'));
+    $t->set_var('lang_select_parent',lang('Select parent category'));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('cat_name',$cat_name);

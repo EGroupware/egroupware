@@ -93,9 +93,7 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->db2 = $this->db;
-			
-			if ($public) 
+			if ($public)
 			{
 				$public_cats = " OR cat_appname='phpgw' ";
 			}
@@ -113,7 +111,7 @@
 			}
 			else
 			{
-				$ordermethod = " order by cat_parent asc";
+				$ordermethod = " order by cat_main asc";
 			}
 
 			if (is_array($this->grants))
@@ -138,14 +136,11 @@
 
 			if ($query)
 			{
-				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
-				    . " $grant_cats AND (cat_name like '%$query%' OR cat_description like '%$query%') $filter $ordermethod";
+				$querymethod = " AND (cat_name like '%$query%' OR cat_description like '%$query%') ";
 			}
-			else
-			{
-				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND " 
-					. " $grant_cats $filter $ordermethod";
-			}
+	
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND " 
+					. " $grant_cats $querymethod $filter $ordermethod";
 
 			$this->db2->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db2->num_rows();
@@ -155,14 +150,16 @@
 			$i = 0;
 			while ($this->db->next_record())
 			{
-				$cats[$i]['id']          = $this->db->f('cat_id');
-				$cats[$i]['owner']       = $this->db->f('cat_owner');
-				$cats[$i]['access']      = $this->db->f('cat_access');
-				$cats[$i]['app_name']    = $this->db->f('cat_appname');
-				$cats[$i]['parent']      = $this->db->f('cat_parent');
-				$cats[$i]['name']        = $this->db->f('cat_name');
-				$cats[$i]['description'] = $this->db->f('cat_description');
-				$cats[$i]['data']        = $this->db->f('cat_data');
+				$cats[$i]['id']			= $this->db->f('cat_id');
+				$cats[$i]['owner']		= $this->db->f('cat_owner');
+				$cats[$i]['access']		= $this->db->f('cat_access');
+				$cats[$i]['app_name']		= $this->db->f('cat_appname');
+				$cats[$i]['main']		= $this->db->f('cat_main');
+				$cats[$i]['level']		= $this->db->f('cat_level');
+				$cats[$i]['parent']		= $this->db->f('cat_parent');
+				$cats[$i]['name']		= $this->db->f('cat_name');
+				$cats[$i]['description']	= $this->db->f('cat_description');
+				$cats[$i]['data']       	= $this->db->f('cat_data');
 				$i++;
 	 	   }
 			return $cats;
@@ -182,14 +179,16 @@
 	    
 			$this->db->next_record();
 		
-			    $cats[0]['id']          = $this->db->f('cat_id');
-        		    $cats[0]['owner']       = $this->db->f('cat_owner');
-        		    $cats[0]['access']      = $this->db->f('cat_access');
-        		    $cats[0]['parent']      = $this->db->f('cat_parent');
-        		    $cats[0]['name']        = $this->db->f('cat_name');
-        		    $cats[0]['description'] = $this->db->f('cat_description');
-        		    $cats[0]['data']        = $this->db->f('cat_data');
-		
+			    $cats[0]['id']		= $this->db->f('cat_id');
+        		    $cats[0]['owner']		= $this->db->f('cat_owner');
+        		    $cats[0]['access']		= $this->db->f('cat_access');
+        		    $cats[0]['main']		= $this->db->f('cat_main');
+        		    $cats[0]['level']		= $this->db->f('cat_level');
+        		    $cats[0]['parent']		= $this->db->f('cat_parent');
+        		    $cats[0]['name']		= $this->db->f('cat_name');
+        		    $cats[0]['description'] 	= $this->db->f('cat_description');
+        		    $cats[0]['data']        	= $this->db->f('cat_data');
+
 		    return $cats;
 		}
 		/*!
@@ -212,6 +211,7 @@
 			$this->account_id	= $account_id;
 			$this->app_name		= $app_name;
 			$this->db		= $phpgw->db;
+			$this->db2		= $this->db;
 			$this->total_records	= $this->db->num_rows();
 			$this->grants		= $phpgw->acl->get_grants($app_name);
 			$this->cats		= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
@@ -265,12 +265,33 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '',$cat_access = '')
+		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '',$cat_access = '',$cat_main)
 		{
-			$this->db->query('insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,'
+
+		    if ($cat_main)
+		    {
+			$this->db2->query("Select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
+			$this->db2->next_record();
+			$cat_level = $this->db2->f('cat_level')+1;
+
+			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
                        . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
                        . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
-                       . "','$cat_data')",__LINE__,__FILE__);
+                       . "','$cat_data','$cat_main','$cat_level')",__LINE__,__FILE__);
+		    }
+		    else 
+		    {
+			$this->db->query("insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,"
+                       . "cat_description,cat_data,cat_main,cat_level) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
+                       . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
+                       . "','$cat_data','$cat_main','$cat_level')",__LINE__,__FILE__);
+
+			$this->db2->query("select max(cat_id) as max from phpgw_categories",__LINE__,__FILE__);
+			$this->db2->next_record();
+			$this->db->query("update phpgw_categories set cat_main='" . $this->db2->f('max') . "' where cat_id='"
+					. $this->db2->f('max') . "'",__LINE__,__FILE__);     
+		    }
+
 		}
 		/*!
 		@function delete
@@ -296,12 +317,32 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '')
+		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '',$cat_main)
 		{
+
+                    if ($cat_main)
+                    {
+                        $this->db2->query("Select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
+                        $this->db2->next_record();
+                        $cat_level = $this->db2->f('cat_level')+1;
+
 			$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
-                        . "cat_description='" . addslashes($cat_description) . "', cat_data='"
-                        . "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access' where cat_appname='"
-                        . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+                    		. "cat_description='" . addslashes($cat_description) . "', cat_data='"
+                    		. "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access', cat_main='$cat_main', cat_level='$cat_level' "
+				. "where cat_appname='" . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+		    }
+                    else
+                    {
+                	$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
+                    	    . "cat_description='" . addslashes($cat_description) . "', cat_data='"
+                    	    . "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access', cat_main='$cat_main', cat_level='$cat_level' "
+                    	    . "where cat_appname='" . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
+
+                        $this->db2->query("select max(cat_id) as max from phpgw_categories",__LINE__,__FILE__);
+                        $this->db2->next_record();
+                        $this->db->query("update phpgw_categories set cat_main='" . $this->db2->f('max') . "' where cat_id='"
+                                        . $this->db2->f('max') . "'",__LINE__,__FILE__);
+                    }
 		}
 
 		function name2id($cat_name)

@@ -51,12 +51,13 @@
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been updated !",$cat_name)); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been updated !',$cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $cats = $c->return_single($cat_id);
 
     $t->set_var('title_categories',lang('Edit global category'));
+    $t->set_var('lang_parent',lang('Parent category'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
@@ -69,12 +70,15 @@
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
 
+    $cat_main = $cats[0]['main'];
+    $t->set_var('lang_main',lang('Main category'));
+    $t->set_var('lang_new_main',lang('New main category'));
+    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
     $cat_id = $cats[0]['id'];
     $cat_parent = $cats[0]['parent'];
-
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');

@@ -10,6 +10,10 @@
 <table border="0" width="80%" cellspacing="2" cellpadding="2"> 
   <form name="form" action="{actionurl}" method="POST">
     <tr>
+     <td><font face="{font}">{lang_main}</font></td>
+     <td><font face="{font}"><select name="cat_main"><option value="">{lang_new_main}</option>{main_category_list}</select></font></td>
+    </tr>
+    <tr>
      <td><font face="{font}">{lang_parent}</font></td>
      <td><font face="{font}"><select name="cat_parent"><option value="">{lang_select_parent}</option>{category_list}</select></font></td>
     </tr>

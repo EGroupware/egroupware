@@ -11,5 +11,5 @@
 
 	/* $Id$ */
 
-	$phpgw_info['server']['versions']['phpgwapi']       = '0.9.11.002';
+	$phpgw_info['server']['versions']['phpgwapi']       = '0.9.11.003';
 	$phpgw_info['server']['versions']['current_header'] = '1.11';

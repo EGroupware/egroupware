@@ -52,20 +52,24 @@
 	if ($access) { $cat_access = 'private'; }
 	else { $cat_access = 'public'; }
 
-	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access); }
+	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access,$cat_main); }
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category x has been updated !",$cat_name)); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been updated !',$cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $cats = $c->return_single($cat_id);
 
+    $cat_main = $cats[0]['main'];
+    $t->set_var('lang_main',lang('Main category'));
+    $t->set_var('lang_new_main',lang('New main category'));
+    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
     $cat_parent = $cats[0]['parent'];
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
-    $t->set_var('font',$phpgw_info["theme"]["font"]);
-    $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
-    $t->set_var('title_categories',lang("Edit x category for",$cats_app));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
+    $t->set_var('font',$phpgw_info['theme']['font']);
+    $t->set_var('user_name',$phpgw_info['user']['fullname']);
+    $t->set_var('title_categories',lang('Edit x category for',$cats_app));
     $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
     $t->set_var('actionurl',$phpgw->link('/preferences/editcategory.php'));
     $t->set_var('deleteurl',$phpgw->link('/preferences/deletecategory.php'));

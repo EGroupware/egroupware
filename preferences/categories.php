@@ -52,7 +52,7 @@
 
     $c = CreateObject('phpgwapi.categories');
     $c->app_name = $cats_app;
-    $categories = $c->return_array('all',$start,$limit,$query,$sort,$order,'False');
+    $categories = $c->return_array('all',$start,$limit,$query,$sort,$order);
 
 //--------------------------------- nextmatch --------------------------------------------
 
@@ -92,28 +92,28 @@
 
     $cat_id = $categories[$i]['id'];
     $owner = $categories[$i]['owner'];
+    $level = $categories[$i]['level'];
     $space = '&nbsp;&nbsp;';
-		if ($categories[$i]['parent'] > 0)
-		{
-			$parent_data = $c->return_single($categories[$i]['parent']);
-			$name = $space . $phpgw->strip_html($parent_data[0]['name'] . ' :: ' . $categories[$i]['name']);
-		}
+
+    if ($level > 0) {
+	$spaceset = str_repeat($space,$level);
+	$name = $spaceset .$phpgw->strip_html($categories[$i]['name']);
+    }
 
     $descr = $phpgw->strip_html($categories[$i]['description']);
     if (! $descr) { $descr  = '&nbsp;'; }
 
-
     if ($extra) {
-    $data = $categories[$i]['data'];
-    if (! $data) { $data  = '&nbsp;'; }
-    $t->set_var('td_data','<td><font face=' . $phpgw_info["theme"]["font"] . '>' . $data . '</font></td>');
+	$data = $categories[$i]['data'];
+	if (! $data) { $data  = '&nbsp;'; }
+	$t->set_var('td_data','<td><font face=' . $phpgw_info["theme"]["font"] . '>' . $data . '</font></td>');
     }
     else { $t->set_var('td_data',''); }
 
-    if ($categories[$i]['parent'] == 0) {
-    $name = '<font color=FF0000><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
-    $descr = '<font color=FF0000><b>' . $descr . '</b></font>';
-    $data = '<font color=FF0000><b>' . $data . '</b></font>';
+    if ($level == 0) {
+	$name = '<font color="FF0000"><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
+	$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
+	$data = '<font color="FF0000"><b>' . $data . '</b></font>';
     }
 
 //-------------------------- template declaration for list records ---------------------------

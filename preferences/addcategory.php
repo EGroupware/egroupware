@@ -54,7 +54,7 @@
 			if ($access) { $cat_access = 'private'; }
 			else { $cat_access = 'public'; }
 
-			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
+			$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access,$cat_main);
 		}
 	}
 
@@ -63,10 +63,14 @@
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
 
-    $t->set_var('font',$phpgw_info["theme"]["font"]);
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
+
+    $t->set_var('lang_main',lang('Main category'));
+    $t->set_var('lang_new_main',lang('New main category'));
+    $t->set_var('font',$phpgw_info['theme']['font']);
+    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
     $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
+    $t->set_var('user_name',$phpgw_info['user']['fullname']);
     $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
     $t->set_var('title_categories',lang("Add x category for",$cats_app));
     $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
