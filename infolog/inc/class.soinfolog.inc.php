@@ -26,7 +26,6 @@
 		var $db,$db2;
 		var $grants;
 		var $data = array( );
-		var $filters = array( );
 		var $user;
 
 		/*!
@@ -460,9 +459,10 @@
 		@param $query pattern to search, search is done in info_from, info_subject and info_des
 		@param $action / $action_id if only entries linked to a specified app/entry show be used
 		@param &$start, &$total nextmatch-parameters will be used and set if query returns less entries
+		@param $col_filter array with column-name - data pairs, data == '' means no filter (!)
 		@returns array with id's as key of the matching log-entries
 		*/
-		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total)
+		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total,$col_filter=False)
 		{
 			//echo "<p>soinfolog.search(order='$order',,filter='$filter',,query='$query',action='$action/$action_id')</p>\n";
 			$action2app = array(
@@ -494,6 +494,18 @@
 			$filtermethod = $this->aclFilter($filter);
 			$filtermethod .= $this->statusFilter($filter);
 			$filtermethod .= $this->dateFilter($filter);
+
+			if (is_array($col_filter))
+			{
+				foreach($col_filter as $col => $data)
+				{
+					$data = $this->db->db_addslashes($data);
+					if (!empty($data))
+					{
+						$filtermethod .= " AND $col = '$data'";
+					}
+				}
+			}
 			//echo "<p>filtermethod='$filtermethod'</p>";
 
 			if (intval($cat_id))

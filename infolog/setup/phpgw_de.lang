@@ -63,9 +63,10 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	de	benutzerdefinierte Kontaktinformationen, leer lassen um die Daten der Verknüpfung zu verwenden
 custom fields	infolog	de	Benutzerdefinierte Felder
 custom fields, typ and status	common	de	Benutzerdefinierte Felder, Typen und Status
-custom regarding	infolog	de	benutzerdefinierter Bezug
+custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
-datecreated	infolog	de	erstellt am
+customfields	infolog	de	Benutzerdefinierte Felder
+datecreated	infolog	de	Erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
 default filter for infolog	infolog	de	Standard-Filter für InfoLog
@@ -159,8 +160,6 @@ own	infolog	de	eigene
 own open	infolog	de	eigene offen
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
-owner	infolog	de	Erstellt von
-owner responsible	infolog	de	Ersteller Verantwortlich
 path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
@@ -176,7 +175,7 @@ reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokal
 reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
-responsible	infolog	de	Auftrag an
+responsible	infolog	de	Verantwortlich
 responsible user, priority, ...	infolog	de	Verantwortlicher, Prioritäten, ...
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet

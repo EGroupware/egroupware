@@ -248,9 +248,9 @@
 			return $this->so->anzSubs( $info_id );
 		}
 
-		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total)
+		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total,$col_filter=False)
 		{
-			return $this->so->search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,$start,$total);
+			return $this->so->search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,$start,$total,$col_filter);
 		}
 
 		/*!

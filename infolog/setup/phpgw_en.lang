@@ -66,6 +66,7 @@ custom fields	infolog	en	Custom Fields
 custom fields, typ and status	common	en	Custom fields, type and status
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
+customfields	infolog	en	Customfields
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
@@ -161,8 +162,6 @@ own	infolog	en	own
 own open	infolog	en	own open
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
-owner	infolog	en	Owner
-owner responsible	infolog	en	Owner Responsible
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	en	pattern for search in Addressbook

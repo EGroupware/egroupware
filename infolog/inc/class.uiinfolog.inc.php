@@ -123,18 +123,27 @@
 			return $info;
 		}
 
+		function save_sessiondata($values)
+		{
+			$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
+				'search' => $values['search'],
+				'start'  => $values['start'],
+				'filter' => $values['filter'],
+				'cat_id' => $values['cat_id'],
+				'order'  => $values['order'],
+				'sort'   => $values['sort'],
+				'col_filter' => $values['col_filter']
+			));
+		}
+
 		function get_rows($query,&$rows,&$readonlys)
 		{
-			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]')</p>\n";
-			$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
-				'search' => $query['search'],
-				'start'  => $query['start'],
-				'filter' => $query['filter'],
-				'cat_id' => $query['cat_id']
-			));
+			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
+			$this->save_sessiondata($query);
+
 			$ids = $this->bo->search($query['order'],$query['sort'],$query['filter'],$query['cat_id'],
 				$query['search'],$query['action'],$query['action_id'],$query['ordermethod'],
-				$query['start'],$total);
+				$query['start'],$total,$query['col_filter']);
 
 			if (!is_array($ids))
 			{
@@ -148,14 +157,14 @@
 			}
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			reset($rows);
-			
+
 			return $total;
 		}
 
 		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False)
 		{
 			$referer = is_array($values) ? $values['referer'] : $referer;
-			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]')</p>\n";
+			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]') values=\n"; _debug_array($values);
 			if (!is_array($values))
 			{
 				$values = array('nm' => $GLOBALS['phpgw']->session->appsession('session_data','infolog'));
@@ -163,15 +172,15 @@
 				{
 					$values['nm']['filter'] = $_GET['filter'];	// infolog/index.php sets defaultFilter that way
 				}
+				if (!isset($values['nm']['order']) || !$values['nm']['order'])
+				{
+					$values['nm']['order'] = 'info_datemodified';
+					$values['nm']['sort'] = 'DESC';
+				}
 			}
 			else
 			{
-				$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
-					'search' => $values['nm']['search'],
-					'start'  => $values['nm']['start'],
-					'filter' => $values['nm']['filter'],
-					'cat_id' => $values['nm']['cat_id']
-				));
+				$this->save_sessiondata($values['nm']);
 			}
 			if ($action == '')
 			{
@@ -228,7 +237,7 @@
 					$values['main'][1] = $this->get_info($action_id,&$readonlys['main']);
 					break;
 			}
-			$readonlys['cancel'] = $action != 'sp'; 
+			$readonlys['cancel'] = $action != 'sp';
 
 			$this->tmpl->read('infolog.index');
 
@@ -245,7 +254,15 @@
 			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['referer'] = $referer;
 
-			return $this->tmpl->exec('infolog.uiinfolog.index',$values,'',$readonlys,$persist,'',$return_html);
+			$all_stati = array();
+			foreach($this->bo->status as $typ => $stati)
+			{
+				if ($typ != 'defaults') $all_stati += $stati;
+			}
+			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
+				'info_type'     => $this->bo->enums['type'],
+				'info_status'   => $all_stati
+			),$readonlys,$persist,'',$return_html);
 		}
 
 		function delete($values=0,$referer='')
@@ -269,7 +286,7 @@
 			$values['main']['no_actions'] = True;
 			$persist['info_id'] = $info_id;
 			$persist['referer'] = $referer;
-			
+
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 
 			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
