@@ -131,6 +131,26 @@ class calendar extends calendar_
 		return (!!($this->rights & $needed) == True);
 	}
 
+	function get_long_status($status_short)
+	{
+		switch ($status_short)
+		{
+			case 'A':
+				$status = 'Accepted';
+				break;
+			case 'R':
+				$status = 'Rejected';
+				break;
+			case 'T':
+				$status = 'Tentative';
+				break;
+			case 'U':
+				$status = 'No Response';
+				break;
+		}
+		return $status;
+	}
+
 	function get_weekday_start($year,$month,$day) {
 		global $phpgw_info;
 
@@ -225,6 +245,9 @@ class calendar extends calendar_
 		{
 			$str = $cal_info->$field;
 		}
+
+		$str .= ' ('.$this->get_long_status($this->users_status).')';
+		
 		return $str;
 	}
 
@@ -1465,22 +1488,9 @@ class calendar extends calendar_
 			{
 				$str .= '<br>';
 			}
-			switch ($event->status[$i])
-			{
-				case 'A':
-					$status = 'Accepted';
-					break;
-				case 'R':
-					$status = 'Rejected';
-					break;
-				case 'T':
-					$status = 'Tentative';
-					break;
-				case 'U':
-					$status = 'No Response';
-					break;
-			}
 
+			$status = $this->get_long_status($event->status[$i]);
+			
 			$str .= $phpgw->common->grab_owner_name($event->participants[$i]).' (';
 			
 			if($event->participants[$i] == $this->owner && $this->check_perms(PHPGW_ACL_EDIT) == True)

@@ -345,6 +345,10 @@ class calendar_ extends calendar__
 			{
 				while($this->stream->next_record())
 				{
+					if($this->stream->f('cal_login') == $this->user)
+					{
+						$this->users_status = $this->stream->f('cal_status');
+					}
 					$this->event->participants[] = $this->stream->f('cal_login');
 					$this->event->status[] = $this->stream->f('cal_status');
 				}
