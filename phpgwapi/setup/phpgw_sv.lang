@@ -13,6 +13,12 @@
 3 number of chars for day-shortcut	jscalendar	sv	3 tecken för dag genväg
 3 number of chars for month-shortcut	jscalendar	sv	3 tecken för månad genväg
 80 (http)	admin	sv	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	sv	\n Städar upp i HTML-koden, vänta...
+_delete row	htmlarea-ContextMenu	sv	Ra_dera rad
+_image properties...	htmlarea-ContextMenu	sv	B_ildegenskaper
+_modify link...	htmlarea-ContextMenu	sv	_Modifiera länk
+_remove link...	htmlarea-ContextMenu	sv	_Radera länk
+_table properties...	htmlarea-ContextMenu	sv	_Tabellegenskaper
 about	common	sv	Om
 about %1	common	sv	Om %1
 about the calendar	jscalendar	sv	Om Kalendern
@@ -97,6 +103,7 @@ bulgaria	common	sv	BULGARIEN
 bulleted list	htmlarea	sv	Punktad lista
 burkina faso	common	sv	BURKINA FASO
 burundi	common	sv	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	sv	C_ellegenskaper
 calendar	common	sv	Kalender
 cambodia	common	sv	CAMBODJA
 cameroon	common	sv	CAMERUN
@@ -116,7 +123,9 @@ center	htmlarea-TableOperations	sv	Center
 central african republic	common	sv	CENTRAL AFRIKANSKA REPUBLIKEN
 chad	common	sv	TCHAD
 change	common	sv	Ändra
+char	htmlarea-TableOperations	sv	Char
 charset	common	sv	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	sv	_Kontrollera länk
 check installation	common	sv	Kontrollera installationen
 check now	common	sv	Kontrollera nu
 chile	common	sv	CHILE
@@ -164,6 +173,7 @@ date	common	sv	Datum
 date due	common	sv	Förfallodatum
 date selection:	jscalendar	sv	Datum val:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	sv	Radera Ko_lumn
 december	common	sv	December
 decimal numbers	htmlarea-ListType	sv	Decimal nummer
 decrease indent	htmlarea	sv	Minska indrag
@@ -208,13 +218,14 @@ egroupware api version %1	common	sv	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spärrad för '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
+element...	htmlarea-ContextMenu	sv	Element...
 email	common	sv	E-post
 email-address of the user, eg. "%1"	common	sv	Användarens e-post adress, ex. "%1"
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
 end time	common	sv	Slut tid
 enlarge editor	htmlarea	sv	Stora editorn
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; eller &nbsp; /egroupware<br><b>Utan efterföljande snedstreck</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
 entry has been deleted sucessfully	common	sv	Post raderad
 entry updated sucessfully	common	sv	Post uppdaterad
 equatorial guinea	common	sv	EQUATORIAL GUINEA
@@ -242,6 +253,7 @@ first name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
 first page	common	sv	Första sidan
 firstname	common	sv	Förnamn
 fixme!	common	sv	FIXAMIG!!!!
+float	htmlarea-TableOperations	sv	Flytande
 font color	htmlarea	sv	Teckenfärg
 force selectbox	common	sv	Tvinga SelectBox
 frames	htmlarea-TableOperations	sv	Ramar
@@ -300,20 +312,27 @@ how many columns would you like to merge?	htmlarea-TableOperations	sv	Hur många 
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i navigerings listen (överst på sidan). Ikoner utöver dessa visas i rull listen som hämtas via ikonen längst till höger.
 how many rows would you like to merge?	htmlarea-TableOperations	sv	Hur många rader ska slås samman?
 html tidy	htmlarea-HtmlTidy	sv	Städa HTML kod
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	sv	HTMLArea (editorn) klarar inte att ta bort den sista cellen i en rad
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	sv	HTMLArea (editorn) klarar inte att ta bort den sista kolumnen i en tabell
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	sv	HTMLArea (editorn) klarar inte att ta bort den sista rader i en tabell
 hungary	common	sv	UNGERN
 i will open it in a new page.	htmlarea-SpellChecker	sv	Öppnar i nytt fönster
+i_nsert row before	htmlarea-ContextMenu	sv	Lägg i_n rad före
 iceland	common	sv	ISLAND
 ignore	htmlarea-SpellChecker	sv	Ignorera
 ignore all	htmlarea-SpellChecker	sv	Ignorera alla
 image url	htmlarea-TableOperations	sv	Bild URL
+in_sert row after	htmlarea-ContextMenu	sv	_stoppa in rad efter
 increase indent	htmlarea	sv	Öka indrag
 india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
+insert _column before	htmlarea-ContextMenu	sv	Ski_cka in kolumn före
 insert a new column after the current one	htmlarea-ContextMenu	sv	Infoga ny kolumn efter aktuella
 insert a new column before the current one	htmlarea-ContextMenu	sv	Infoga ny kolumn före aktuella
 insert a new row after the current one	htmlarea-ContextMenu	sv	Infoga ny rad efter aktuella
 insert a new row before the current one	htmlarea-ContextMenu	sv	Infoga ny rad före aktuella
 insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser för %2 kontakterna i %3
+insert c_olumn after	htmlarea-ContextMenu	sv	Lägg in k_olumn efter
 insert cell after	htmlarea-TableOperations	sv	Infoga cell efter
 insert cell before	htmlarea-TableOperations	sv	Infoga cell före
 insert column after	htmlarea-TableOperations	sv	Infoga kolumn efter
@@ -362,6 +381,7 @@ last page	common	sv	Sista sidan
 lastname	common	sv	Efternamn
 latvia	common	sv	LETTLAND
 layout	htmlarea-TableOperations	sv	Layout
+ldap-mgr	common	sv	LDAP-Hanterare
 lebanon	common	sv	LIBANON
 left	htmlarea-TableOperations	sv	Vänster
 lesotho	common	sv	LESOTHO
@@ -378,6 +398,9 @@ login	common	sv	Inloggning
 loginid	common	sv	Inloggnings ID
 logout	common	sv	Logga ut
 low	common	sv	Låg
+lower greek letters	htmlarea-ListType	sv	Gemena grekiska tecken
+lower latin letters	htmlarea-ListType	sv	Gemena latinska tecken
+lower roman numbers	htmlarea-ListType	sv	Gemena romerska siffror
 lowest	common	sv	Lägsta
 luxembourg	common	sv	LUXEMBOURG
 macau	common	sv	MACAU
@@ -387,6 +410,7 @@ mail domain, eg. "%1"	common	sv	E-post domän, ex. "%1"
 main category	common	sv	Huvudkategori
 main screen	common	sv	Startsidan
 maintainer	common	sv	Underhåll
+make lin_k...	htmlarea-ContextMenu	sv	Skapa län_k
 malawi	common	sv	MALAWI
 malaysia	common	sv	MALAYSIA
 maldives	common	sv	MALDIVERNA
@@ -473,6 +497,7 @@ original word	htmlarea-SpellChecker	sv	Ursprungligt ord
 other	common	sv	Övriga
 overview	common	sv	Översikt
 owner	common	sv	Ägare
+padding	htmlarea-TableOperations	sv	Stoppning
 page	common	sv	Sida
 page was generated in %1 seconds	common	sv	Sidan genererades på %1 sekunder
 pakistan	common	sv	PAKISTAN
@@ -518,12 +543,14 @@ pliz weit ;-)	htmlarea-SpellChecker	sv	Var god och vänta
 poland	common	sv	POLEN
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
+powered by egroupware version %1	common	sv	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 powered by phpgroupware version %1	common	sv	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	sv	Alternativ
 preferences for the idots template set	common	sv	Idots template alternativ
 prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
 prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
 previous page	common	sv	Föregående sida
+primary style-sheet:	common	sv	Primär Style sheet
 print	common	sv	Skriv ut
 priority	common	sv	Prioritet
 private	common	sv	Privat
@@ -538,6 +565,7 @@ redoes your last action	htmlarea	sv	Upprepa åtgärd
 reject	common	sv	Avvisa
 remove selected accounts	common	sv	Radera valda konton
 remove the	htmlarea-ContextMenu	sv	Radera
+remove this node from the document	htmlarea-ContextMenu	sv	Ta bort denna nod från dokumentet
 rename	common	sv	Byt namn
 replace	htmlarea-SpellChecker	sv	Byt
 replace all	htmlarea-SpellChecker	sv	Byt alla
@@ -548,6 +576,7 @@ returns struct of users application access	common	sv	Returnerar struktur på anvä
 reunion	common	sv	REUNION
 revert	htmlarea-SpellChecker	sv	Återgå
 right	htmlarea-TableOperations	sv	Höger
+ro_w properties...	htmlarea-ContextMenu	sv	radegenskaper
 romania	common	sv	RUMÄNIEN
 row properties	htmlarea-TableOperations	sv	Rad alternativ
 rules	htmlarea-TableOperations	sv	Regler
@@ -570,6 +599,7 @@ save	common	sv	Spara
 search	common	sv	Sök
 search %1 '%2'	common	sv	Sök %1 '%2'
 search or select accounts	common	sv	Sök eller välj konton
+search or select multiple accounts	common	sv	sök eller välj multipla konton
 section	common	sv	Avsnitt
 select	common	sv	Välj
 select all %1 %2 for %3	common	sv	Välj alla %1 %2 för %3
@@ -577,6 +607,7 @@ select category	common	sv	Välj kategori
 select date	common	sv	Välj datum
 select group	common	sv	Välj grupp
 select home email address	common	sv	Välj hem e-post adress
+select multiple accounts	common	sv	välj multipla konton
 select one	common	sv	Välj en
 select user	common	sv	Välj användare
 select work email address	common	sv	Välj arbete e-post adress
@@ -595,6 +626,10 @@ show all categorys	common	sv	Visa alla kategorier
 show menu	common	sv	Visa meny
 show page generation time	common	sv	Visa sidans genererings tid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
+show the image properties dialog	htmlarea-ContextMenu	sv	Visa bildegenskaper
+show the table cell properties dialog	htmlarea-ContextMenu	sv	Visa cellegenskaper
+show the table properties dialog	htmlarea-ContextMenu	sv	Visa tabellegenskaper
+show the table row properties dialog	htmlarea-ContextMenu	sv	Visa radegenskaper
 show_more_apps	common	sv	Visa fler applikationer
 showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
@@ -607,8 +642,10 @@ somalia	common	sv	SOMALIEN
 sorry, your login has expired	login	sv	Beklagar, din inloggning har upphört
 south africa	common	sv	SYD AFRIKA
 south georgia and the south sandwich islands	common	sv	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	sv	Mellanrum
+spacing and padding	htmlarea-TableOperations	sv	Mellanrum och stoppning
 spain	common	sv	SPANIEN
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	sv	Språk kontroll klar utan felstavade ord.
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	sv	Språkkontroll klar utan felstavade ord.
 spell-check	htmlarea-SpellChecker	sv	Språk kontroll
 split cell	htmlarea-TableOperations	sv	Dela cell
 split column	htmlarea-TableOperations	sv	Dela kolumn
@@ -619,6 +656,7 @@ start time	common	sv	Start tid
 start with	common	sv	Börja med
 status	common	sv	Läge
 strikethrough	htmlarea	sv	Genomstruken
+style [css]	htmlarea-TableOperations	sv	Stil [CSS]
 subject	common	sv	Rubrik
 submit	common	sv	Utför
 subscript	htmlarea	sv	Prenumerera
@@ -638,9 +676,12 @@ table properties	htmlarea-TableOperations	sv	Tabell alternativ
 taiwan	common	sv	TAIWAN/TAIPEI
 tajikistan	common	sv	TAJIKISTAN
 tanzania, united republic of	common	sv	TANZANIA
+text align	htmlarea-TableOperations	sv	Textjustering
+text color:	common	sv	Textfärg
 thailand	common	sv	THAILAND
 the api is current	common	sv	API är senast tillgängliga
 the api requires an upgrade	common	sv	API behöver uppgradering
+the bottom side only	htmlarea-TableOperations	sv	Undersidan enbart
 the following applications require upgrades	common	sv	Följande applikationer behöver uppgraderas
 the left-hand side only	htmlarea-TableOperations	sv	Vänster sida endast
 the mail server returned	common	sv	E-post servern returnerade
@@ -651,6 +692,7 @@ the top side only	htmlarea-TableOperations	sv	Överst endast
 this application is current	common	sv	Applikationen är senast tillgängliga
 this application requires an upgrade	common	sv	Applikationen behöver uppgraderas
 this name has been used already	common	sv	Namnet är redan upptaget
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	sv	Detta kastar ändringarna och avslutar stavningskontrollen. Bekräfta.
 thursday	common	sv	Torsdag
 time	common	sv	Tid
 time selection:	jscalendar	sv	Tids intervall:
@@ -687,8 +729,11 @@ united states	common	sv	U.S.A
 united states minor outlying islands	common	sv	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	sv	Okänd
 unlink the current element	htmlarea-ContextMenu	sv	Länka av aktuellt element
+unset color	htmlarea-TableOperations	sv	Ta bort färg
 update	common	sv	Uppdatera
 upload image	htmlarea-UploadImage	sv	Ladda upp bild
+upper latin letters	htmlarea-ListType	sv	Versala latinska bokstäver
+upper roman numbers	htmlarea-ListType	sv	Versala romerska siffror
 url	common	sv	URL
 uruguay	common	sv	URUGUAI
 use button to search for	common	sv	använd knappen för att söka
@@ -705,6 +750,7 @@ uzbekistan	common	sv	UZBEKISTAN
 vanuatu	common	sv	VANUATU
 venezuela	common	sv	VENEZUELA
 version	common	sv	Version
+vertical align	htmlarea-TableOperations	sv	Vertikaljustera
 viet nam	common	sv	VIETNAM
 view	common	sv	Visa
 virgin islands, british	common	sv	VIRGIN ISLANDS, BRITTISKA
@@ -721,7 +767,7 @@ written by:	common	sv	Skriven av:
 year	common	sv	År
 yemen	common	sv	YEMEN
 yes	common	sv	Ja
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	sv	Du är i TEXT läge. Använd [<>] för att komma tillbaks till WYSIWIG.
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	sv	Du är i TEXT läge. Använd [<>] knappen för att komma tillbaks till WYSIWIG.
 you are required to change your password during your first login	common	sv	Du måste byta lösenord vid första inloggningen
 you are running a newer version of phpgroupware than your database is setup for	common	sv	Du använder en nyare version av phpGroupWare än din databas är konfigurerad för.
 you have been successfully logged out	login	sv	Du är utloggad

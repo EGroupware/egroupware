@@ -1,5 +1,5 @@
 %1 records imported	infolog	sv	%1 poster importerade
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	sv	%1 poster lästa (ännu inte importerade, gå %2tillbaks%3 och avmarkera Testimport)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	sv	%1 poster lästa (ännu inte importerade, gå %2tillbaka%3 och avmarkera Testimport)
 - subprojects from	infolog	sv	- Underprojekt till
 0%	infolog	sv	0%
 10%	infolog	sv	10%
@@ -11,7 +11,7 @@
 70%	infolog	sv	70%
 80%	infolog	sv	80%
 90%	infolog	sv	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	sv	<b>Fil bilagor via symlänk</b> istället för uppladdning och hämtning via file:/sökväg för lan klienter
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	sv	<b>Filbilagor via symlänk eller genväg</b> istället för uppladdning och hämtning via file:/sökväg för lokala användare
 a short subject for the entry	infolog	sv	Ett kort rubrik för post
 abort without deleting	infolog	sv	Avbryt utan att radera
 accept	infolog	sv	Acceptera
@@ -21,14 +21,14 @@ add a file	infolog	sv	Lägg till fil
 add a new entry	infolog	sv	Lägg till post
 add a new note	infolog	sv	Lägg till Anteckning
 add a new phonecall	infolog	sv	Lägg till Samtal
-add a new sub-task, -note, -call to this entry	infolog	sv	Lägg till ny under- Uppgift, Anteckning eller Samtal till post
+add a new sub-task, -note, -call to this entry	infolog	sv	Lägg till ny Under- Uppgift, Anteckning eller Samtal till post
 add a new todo	infolog	sv	Lägg till Uppgift
 add file	infolog	sv	Lägg till fil
 add sub	infolog	sv	Lägg till under
 add:	infolog	sv	Lägg till:
 all	infolog	sv	Alla
 all links and attachments	infolog	sv	Alla länkar och bilagor
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sv	Tillåter status ändring på post, ex. Sätt uppgift till färdig när klar.
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sv	Tillåter statusändring på post, ex. Sätt uppgift till färdig när klar.
 applies the changes	infolog	sv	Sparar ändringar
 are you shure you want to delete this entry ?	infolog	sv	Vill du verkligen radera posten?
 are you sure you want to delete this entry	infolog	sv	Vill du verkligen radera posten?
@@ -42,9 +42,9 @@ call	infolog	sv	Samtal
 cancel	infolog	sv	Avbryt
 categories	infolog	sv	Kategorier
 category	infolog	sv	Kategori
-change the status of an entry, eg. close it	infolog	sv	Ändra status på post, ex. stäng den
+change the status of an entry, eg. close it	infolog	sv	Ändra status på post, t ex. stäng den
 charset of file	infolog	sv	Filens teckenuppsättning
-check to set startday	infolog	sv	Markera för att sätta start dag
+check to set startday	infolog	sv	Markera för att sätta startdag
 click here to create the link	infolog	sv	Klicka för att skapa länk
 click here to start the search	infolog	sv	Klicka för att starta sökning
 close	infolog	sv	Stäng
@@ -70,8 +70,8 @@ customfields	infolog	sv	Anpassat fält
 datecreated	infolog	sv	Skapad datum
 dates, status, access	infolog	sv	Datum, status, åtkomst
 days	infolog	sv	Dagar
-default filter for infolog	infolog	sv	Standard filter för Infolog
-default status for a new log entry	infolog	sv	Standard status för nya loggar
+default filter for infolog	infolog	sv	Standardfilter för Infolog
+default status for a new log entry	infolog	sv	Standardstatus för nya loggar
 delegation	infolog	sv	Delegering
 delete	infolog	sv	Radera
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	sv	Radera alla underobjekt?
@@ -181,6 +181,7 @@ project	infolog	sv	Projekt
 re:	infolog	sv	Sv:
 read one record by passing its id.	infolog	sv	Ange ID för att läsa post
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	sv	reg. expr. för lokal IP<br>ex. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sv	Giltigt uttryck för lokala IP-adresser.<br>dvs 192\.168\.1\.
 remark	infolog	sv	Anmärkning
 remove this link (not the entry itself)	infolog	sv	Radera länk (inte posten)
 responsible	infolog	sv	Ansvarig
@@ -202,7 +203,7 @@ should infolog display your open entries - not finised tasks, phonecalls or note
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sv	Ska Infolog visa under- Uppgifter, Samtal eller Anteckningar i normala vyn eller inte? Du kan alltid visa dessa via topobjektet
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	sv	Ska Infolog visa länkar till andra applikationer och/eller bilagor i Infolog listan (vyn du kommer till när du öppnar Infolog)?
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sv	Ska Infolog visa fullständiga namn (förnamn efternamn) eller bara inloggnings namnet?
-should this entry only be visible to you and people you grant privat access via the acl	infolog	sv	Ska denna post visas enbart för dig och de du get tillgång till via ACL?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	sv	Ska denna post visas enbart för dig och de du givit tillgång till via ACL?
 show full usernames	infolog	sv	Visa fullständigt användarnamn
 show in the infolog list	infolog	sv	Visa i Infolog lista
 show list of upcoming entries	infolog	sv	Visa kommande händelser
@@ -218,11 +219,11 @@ sub	infolog	sv	Under
 subject	infolog	sv	Ämne
 task	infolog	sv	Uppgifter
 test import (show importable records <u>only</u> in browser)	infolog	sv	Testimport (visa importerara poster <u>bara</u> i browser)
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 10 tecken), ändring gör existerande data otillgänglig
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 20 tecken), aändring gör existerande data otillgänglig
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 10 tecken), ändring gör existerande data otillgängligt
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 20 tecken), ändring gör existerande data otillgängligt
 the text displayed to the user	infolog	sv	Texten som visas för användare
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sv	Detta filter använder Infolog när du öppnar applikationen. Filtren kan visa bara avslutade, öppna eller framtida objekt som tillhör dig eller alla.
-til when should the todo or phonecall be finished	infolog	sv	Tills när ska Uppgift och Samtal vara gjorda
+til when should the todo or phonecall be finished	infolog	sv	Tills när ska Uppgift och Samtal vara utförda
 to many might exceed your execution-time-limit	infolog	sv	För många kan gå över exekverings tidgränsen
 today	infolog	sv	Idag
 todo	infolog	sv	Uppgifter
@@ -238,9 +239,10 @@ urgency	infolog	sv	Prioritet
 urgent	infolog	sv	Brådskande
 use button to search for address	infolog	sv	Använd knapp för att söka adress
 use button to search for project	infolog	sv	Använd knapp för att söka projekt
+valid path on clientside<br>eg. \\server\share or e:\	infolog	sv	Giltid sökväg för klient<br>t ex \\server\share eller e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	sv	Sökväg på klient<br>ex. \\Server\Share eller e:\
 valid path on clientside<br>eg. servershare or e:	infolog	sv	Sökväg på klient<br>ex. \\Server\Share eller e:\
-values for selectbox	infolog	sv	Värde för Seleckbox
+values for selectbox	infolog	sv	Värde för Selectbox
 view all subs of this entry	infolog	sv	Visa alla under denna post
 view other subs	infolog	sv	Visa andra under
 view parent	infolog	sv	Visa rot

@@ -2,9 +2,11 @@
 %1 hours	preferences	sv	%1 timmar
 12 hour	preferences	sv	12 timmar
 24 hour	preferences	sv	24 timmar
+a template defines the layout of egroupware and it contains icons for each application.	preferences	sv	Ett template (en mall) definerar utformningen av egroupware och dess ikoner
 a template defines the layout of phpgroupware and it contains icons for each application.	preferences	sv	Ett template definierar hur siten ser ut och innehåller ikoner för varje applikation.
 a theme defines the colors and fonts used by the template.	preferences	sv	Ett tema definierar färger och fonter som används av ett template.
-acl grants have been updated	preferences	sv	ACL rättigheter har uppdaterats
+acl grants have been updated	preferences	sv	Behörighetslistan (ACL) har uppdaterats
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor i eGroupWare kommer att visa såhär många rader.<br>För många rader gör att det blir långsamt, för få och du förlorar överblicken.
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sv	Alla listor visar detta antal poster/sida.<br>För många saktar ner och för få ger inte tillräcklig överblick.
 are you sure you want to delete this category ?	preferences	sv	Vill du verkligen radera kategorin?
 change your password	preferences	sv	Ändra lösenord
@@ -13,15 +15,15 @@ change your settings	preferences	sv	Ändra inställningar
 click to select a color	preferences	sv	Välja färg
 color	preferences	sv	Färg
 country	preferences	sv	Land
-date format	preferences	sv	Datum format
+date format	preferences	sv	Datumformat
 default	preferences	sv	Standard
-default application	preferences	sv	Standard applikation
-default preferences	preferences	sv	Standard Inställningar
+default application	preferences	sv	Standardapplikation
+default preferences	preferences	sv	Standardinställningar
 default sorting order	preferences	sv	Standard sorterings ordning
 delete categories	preferences	sv	Radera kategorier
 description can not exceed 255 characters in length !	preferences	sv	Beskrivningen kan inte vara längre änn 255 tecken
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sv	Föredrar du 24 timmars format, eller 12 med fm/em.
-edit custom fields	preferences	sv	Redigera anpassade fält
+edit custom fields	preferences	sv	Redigera egendefinerade fält
 email signature	preferences	sv	E-post signatur
 enter your new password	preferences	sv	Nytt lösenord
 error: there was a problem finding the preference file for %1 in %2	preferences	sv	Fel: Konfigurations fil för %1 i %2 saknas
@@ -33,6 +35,7 @@ how do you like to display accounts	preferences	sv	Hur vill du se konton
 how do you like to select accounts	preferences	sv	Hur vill du välja konton
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sv	Hur många timmar för eller efter är du den tidzon där servern befinner sig?<br>Om du är i samma tidzon välj 0 timmar eller välj lokalt datum och tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sv	Antal ikoner som visas i navigerings listen? Ikoner utöver dessa visas i en rullgardins lista som hämtas via ikonen längst till höger.
+how should egroupware display dates for you.	preferences	sv	Hur skall eGroupWare visa Datum
 how should phpgroupware display dates for you.	preferences	sv	Datum format
 icon	preferences	sv	Ikon
 icons and text	preferences	sv	Ikon och text
@@ -43,7 +46,7 @@ language	preferences	sv	Språk
 max matches per page	preferences	sv	Max träffar per sida
 max matchs per page	preferences	sv	Max träffar per sida
 max number of icons in navbar	preferences	sv	Max antal ikoner i navigerings listen
-no default	preferences	sv	Inget standard
+no default	preferences	sv	Ingen standard
 note: this feature does *not* change your email password. this will	preferences	sv	Not: Denna funktionen ändrar *inte* ditt e-post lösenord utan måste göras manuellt.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Not: Denna funktionen ändrar *inte* ditt e-post lösenord. Detta måste göras manuellt.
 please, select a new theme	preferences	sv	Välj nytt tema
@@ -52,6 +55,7 @@ re-enter your password	preferences	sv	Bekräfta lösenordet
 select columns to display	preferences	sv	Välj vilka kolumner som skall visas
 select different theme	preferences	sv	Välj annat tema
 select one	preferences	sv	Välj en
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sv	Välj språk för menyer och dialoger. Alla är språk är inte kompletta och kan därför visa enstaka engelska menyer och dialoger.
 select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sv	Välj språk för texter och meddelanden.<br>Vissa språk är inte helt översatta varför det kan visas engelska meddelanden.
 selectbox	preferences	sv	Selectbox
 selectbox with primary group and search	preferences	sv	Selectbox med primärgrupp och sök funktion
@@ -60,14 +64,15 @@ should the number of active sessions be displayed for you all the time.	preferen
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	sv	Visa alltid hjälp meddelanden eller bara på begäran?
 show birthday reminders on main screen	preferences	sv	Visa födelsedags påminnelser på startsidan
 show current users on navigation bar	preferences	sv	Visa nuvarande användare i navigerings listen
-show helpmessages by default	preferences	sv	Visa alltid hjälp meddelanden?
+show helpmessages by default	preferences	sv	Visa alltid hjälpmeddelanden?
 show high priority events on main screen	preferences	sv	Visa högprioritets händelse på startsidan
-show navigation bar as	preferences	sv	Visa navigerings listen som
+show navigation bar as	preferences	sv	Visa navigeringslisten som
 show new messages on main screen	preferences	sv	Visa nya meddelande på startsidan
 show number of current users	preferences	sv	Visa antal aktiva användare
-show text on navigation icons	preferences	sv	Visa text på navigerings ikoner
+show text on navigation icons	preferences	sv	Visa text på navigeringsikoner
 show_more_apps	common	sv	Visa fler applikationer
 text only	preferences	sv	Endast text
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Default-applikationen kommer att visas vid inloggning och när du klickar på eGroupWare-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen visas vid inloggning eller när man klickar på hem ikonen.<br>Du kan ha fler änn 1 applikation på din startsida om du inte väljer en specifik här (konfigureras i alternativen för var applikation).
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sv	Selectbox visar tillgängliga användare (kan vara långsam med många samtidiga användare). I popup fönstret kan man söka användare efter namn eller grupp.
 the two passwords are not the same	preferences	sv	Lösenorden är inte lika
@@ -79,6 +84,7 @@ use default	preferences	sv	Använd standard
 users choice	preferences	sv	Användarnas val
 weekday starts on	preferences	sv	Vecka börjar med
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sv	Om du väljer Ja, kommer hem och utloggnings knappar att visas i navigerings listen.
+which currency symbol or name should be used in egroupware.	preferences	sv	Vilken valutasymbol skall användas i eGroupWare.
 which currency symbol or name should be used in phpgroupware.	preferences	sv	Vilken valuta symbol eller namn ska användas.
 work day ends on	preferences	sv	Arbetsdag slutar kl:
 work day starts on	preferences	sv	Arbetsdag börjar kl:

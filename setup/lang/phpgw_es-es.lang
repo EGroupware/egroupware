@@ -7,6 +7,7 @@
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	es-es	<b>juego de caracteres a usar</b> (usar utf-8 si se van a usar idiomas con distintos juegos de caracteres):
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	<b>Esto creará 1 cuenta de administrador y 3 de demostración</b><br>Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
 accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
@@ -24,6 +25,7 @@ after backing up your tables first.	setup	es-es	Después de haber hecho copia de 
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	es-es	Después de recuperar el fichero, póngalo en su lugar como header.inc.php. Después, pulse "continuar".
 all applications	setup	es-es	Todas las aplicaciones
 all core tables and the admin and preferences applications	setup	es-es	Todas las tablas principales y las aplicaciones de preferencias y administración
+all languages (incl. not listed ones)	setup	es-es	todos los idiomas (incluyendo los no listados)
 all users	setup	es-es	Todos los usuarios
 analysis	setup	es-es	Análisis
 and reload your webserver, so the above changes take effect !!!	setup	es-es	Y reiniciar el servidor web, para que los cambios de arriba tengan efecto
@@ -56,6 +58,7 @@ back to the previous screen	setup	es-es	Volver al menú anterior
 back to user login	setup	es-es	Volver al inicio de sesión de usuario
 back's up your db now, this might take a view minutes	setup	es-es	realiza una copia de seguridad de la base de datos. Puede tardar unos minutos
 backup '%1' deleted	setup	es-es	se ha borrado la copia de seguridad '%1'
+backup '%1' renamed to '%2'	setup	es-es	la copia de seguridad '%1' se ha renombrado a '%2'
 backup '%1' restored	setup	es-es	se ha restaurado la copia de seguridad '%1'
 backup and restore	setup	es-es	copiar y restaurar
 backup failed	setup	es-es	Falló la copia de seguridad
@@ -167,7 +170,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	es-es	
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br>Ejemplo: /files, E:FILES
 enter the full path to the backup directory.<br>if empty: files directory	setup	es-es	Introduzca la ruta completa al directorio de la copia de seguridad.<br>Si está vacio: directorio de los ficheros
 enter the hostname of the machine on which this server is running	setup	es-es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o &nbsp; /egroupware<br><b>Sin barra invertida al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	es-es	Introduzca la URL de eGroupWare.<br>Ejemplo: http://www.dominio.com/egroupware o   /egroupware<br><b>Sin barra invertida al final</b>
 enter the site password for peer servers	setup	es-es	Introduzca la contraseña del sitio para los servidores peer
 enter the site username for peer servers	setup	es-es	Introduzca el nombre de usuario del sitio para servidores peer
 enter the title for your site	setup	es-es	Introduzca el título para su sitio
@@ -192,6 +195,7 @@ go back	setup	es-es	Volver
 go to	setup	es-es	Ir a
 grant access	setup	es-es	Conceder acceso
 has a version mismatch	setup	es-es	No coinciden las versiones
+header 0assword	setup	es-es	Contraseña del encabezado
 header admin login	setup	es-es	Usuario administrador del encabezado
 header password	setup	es-es	Contraseña del encabezado
 header username	setup	es-es	Usuario del encabezado
@@ -345,6 +349,7 @@ registered	setup	es-es	registrado
 rejected lines	setup	es-es	Líneas rechazadas
 remove	setup	es-es	Eliminar
 remove all	setup	es-es	Eliminar todo
+rename	setup	es-es	renombrar
 requires reinstall or manual repair	setup	es-es	Requiere reinstalación o reparación manual
 requires upgrade	setup	es-es	Requiere actualización
 resolve	setup	es-es	Resolver

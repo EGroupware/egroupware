@@ -11,6 +11,7 @@
 %s onchange	etemplate	sv	%s PåÄndring
 %s readonly	etemplate	sv	%s Skrivskyddad
 '%1' has an invalid format !!!	etemplate	sv	'%1' har ett ogiltigt format
+'%1' is not a valid date !!!	etemplate	sv	'%1' är ett ogiltigt datum
 '%1' is not a valid floatingpoint number !!!	etemplate	sv	'%1' är inte ett giltigt floatingpoint nummer
 '%1' is not a valid integer !!!	etemplate	sv	'%1' är inte ett giltig integer
 a pattern to be searched for	etemplate	sv	Sökord att söka efter
@@ -22,17 +23,25 @@ add table	etemplate	sv	Skapa tabell
 align	etemplate	sv	Passa
 alignment of label and input-field in table-cell	etemplate	sv	Passning av etikett och input fält i tabell cell
 alignment of the v/hbox containing table-cell	etemplate	sv	Passning av V/HBox innehållande tabell cell
+all days	etemplate	sv	Samtliga dagar
+all operations save the template!	etemplate	sv	Alla operationer sparar template
 am	etemplate	sv	fm
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sv	En kolumn med index går fortare att sök i (på bekostnad av filsystems utrymme)
 application	etemplate	sv	Applikation
 application name needed to write a langfile or dump the etemplates !!!	etemplate	sv	Namnet på applikationen behövs för att skriva en språkfil eller dumpa eTemplate
+applies the changes made	etemplate	sv	Applicerar förändringar
+applies the changes to the given version of the template	etemplate	sv	Applicerar förändringar på en given version av template
 attach	etemplate	sv	Bifoga
 attach file	etemplate	sv	Bifoga fil
 blurtext	etemplate	sv	Oskarptext
 border	etemplate	sv	Kantlinje
 border-line-thickness for the table-tag	etemplate	sv	Kantlinjes tjocklek för tabell-tag
+bottom	etemplate	sv	Botten
 can not have special sql-value null	etemplate	sv	Kan inte ha SQL reserverat värde NULL
 cancel	etemplate	sv	Avbryt
+cant delete a single widget from a grid !!!	etemplate	sv	Kan inte ta bort en enstaka widget från en grid!!
+cant delete the only column of a grid !!!	etemplate	sv	Kan inte ta bort den enda kolumnen från en grid!!
+cant delete the only row in a grid !!!	etemplate	sv	Kan inte ta bort den enda raden i en grid
 category	etemplate	sv	Kategori
 cellpadding for the table-tag	etemplate	sv	Cell fyllnad för tabell-tag
 cells	etemplate	sv	Celler
@@ -48,13 +57,21 @@ click here to create the link	etemplate	sv	Skapa länk
 click here to start the search	etemplate	sv	Sök
 click here to upload the file	etemplate	sv	Ladda upp fil
 click to order after that criteria	etemplate	sv	Sortera enl. kriteria
+clickable path	etemplate	sv	Klickbar sökväg
+closes the window without saving the changes	etemplate	sv	stänger fönstret utan att spara förändringar
+column...	etemplate	sv	Kolumn
 columnname	etemplate	sv	Kolumn namn
 comment	etemplate	sv	Kommentar
+confirm	etemplate	sv	bekräfta
+confirmation message or custom javascript (returning true or false)	etemplate	sv	Bekräftelsemeddelande eller eget javascript (som returnerar sant eller falskt)
 create a new table for the application	etemplate	sv	Skapa ny tabell för applikationen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sv	Skapa engelsk ('en') språkfil från etikett och hjälptexter (för applikation i Namn)
 css class for the table-tag	etemplate	sv	CSS class för tabell-tag
+css properties	etemplate	sv	CSS-egenskaper
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	sv	CSS-class namn för denna rad, förinställd: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	sv	CSS-styles
+custom	etemplate	sv	Egen
+cut	etemplate	sv	Klipp ut
 date+time	etemplate	sv	Date+Time
 datum	etemplate	sv	Datum
 day	etemplate	sv	Dag

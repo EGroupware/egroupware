@@ -92,6 +92,7 @@ color	admin	sv	Färg
 country selection	admin	sv	Landsval
 create group	admin	sv	Skapa Grupp
 crontab only (recomended)	admin	sv	enbart crontab (rekommenderas)
+cyrus imap server	admin	sv	Cyrus IMAP server
 data	admin	sv	Data
 day	admin	sv	Dag
 day of week<br>(0-6, 0=sun)	admin	sv	Veckodag<br>(0-6, 0=Sön)
@@ -166,7 +167,7 @@ enter the background color for the site title	admin	sv	Ange bakgrundsfärg för we
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
 enter the hostname of the machine on which this server is running	admin	sv	Ange HOSTNAME för datorn som kör denna tjänst
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för eGroupWare<br> t ex: http://www.domain.com/egroupware   or   /egroupware<br><b>ingen avslutande slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för eGroupWare<br> t ex: http://www.domain.com/egroupware   or   /egroupware<br><b>ingen avslutande slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sv	Ange söksträng. För att visa alla poster, töm fältet och tryck på SUBMIT
 enter the site password for peer servers	admin	sv	Ange lösenord för peer servers
 enter the site username for peer servers	admin	sv	Ange användarnamn för peer servers
@@ -292,6 +293,7 @@ please select	admin	sv	Vänligen välj
 postfix with ldap	admin	sv	Postfix med LDAP
 preferences	admin	sv	Preferenser
 primary group	admin	sv	primärgrupp
+qmaildotmode	admin	sv	qmaildotmode
 qouta size in mbyte	admin	sv	Kvotstorlek i MegaByte
 quota settings	admin	sv	Kvotinställningar
 re-enter password	admin	sv	Skriv in lösenord igen
