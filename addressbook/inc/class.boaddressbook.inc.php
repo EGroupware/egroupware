@@ -82,15 +82,15 @@
 				$this->use_session = True;
 			}
 			/* _debug_array($_POST); */
-			/* Might change this to '' at the end---> */
 			$_start   = get_var('start',array('POST','GET'));
 			$_query   = get_var('query',array('POST','GET'),'_UNSET_');
 			$_cquery  = get_var('cquery', array('GET','POST'),'_UNSET_');
 			$_sort    = get_var('sort',array('POST','GET'));
 			$_order   = get_var('order',array('POST','GET'));
 			$_filter  = get_var('filter',array('POST','GET'));
-			$_cat_id  = get_var('cat_id',array('POST','GET'));
+//			$_cat_id  = get_var('cat_id',array('POST','GET'));
 			$_fcat_id = get_var('fcat_id',array('POST','GET'));
+			$_typeid  = get_var('typeid',array('POST','GET'),'_UNSET_');
 
 			if(!empty($_start) || ($_start == '0') || ($_start == 0))
 			{
@@ -111,6 +111,15 @@
 				$this->cquery = $_cquery;
 			}
 
+			if($_typeid != '_UNSET_')
+			{
+				$this->typeid = $_typeid;
+			}
+			if(!@in_array($this->typeid,array('n','c')))
+			{
+				$this->typeid = 'n';
+			}
+
 			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
 				$this->cat_id = $_fcat_id;
@@ -119,6 +128,17 @@
 			{
 				$this->cat_id = -1;
 			}
+
+			/*
+			if(isset($_POST['typeid']) || isset($_POST['typeid']))
+			{
+				$this->typeid = $typeid;
+			}
+			else
+			{
+				$this->typeid = 'n';
+			}
+			*/
 
 			if(isset($_sort)   && !empty($_sort))
 			{
@@ -139,11 +159,6 @@
 			}
 
 			if($this->debug) { $this->_debug_sqsof(); }
-
-			$this->xmlrpc_methods[] = array(
-				'name'        => 'read_entries',
-				'description' => 'Get list of addressbook items'
-			);
 		}
 
 		function _debug_sqsof()
@@ -156,67 +171,11 @@
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
-				'cat_id' => $this->cat_id
+				'cat_id' => $this->cat_id,
+				'typeid' => $this->typeid
 			);
 			echo '<br>BO:';
 			_debug_array($data);
-		}
-
-		function list_methods($_type='xmlrpc')
-		{
-			/*
-			  This handles introspection or discovery by the logged in client,
-			  in which case the input might be an array.  The server always calls
-			  this function to fill the server dispatch map using a string.
-			*/
-			if(is_array($_type))
-			{
-				$_type = $_type['type'] ? $_type['type'] : $_type[0];
-			}
-			switch($_type)
-			{
-				case 'xmlrpc':
-					$xml_functions = array(
-						'read' => array(
-							'function'  => 'read_entry',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
-						),
-						'add' => array(
-							'function'  => 'add_entry',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Add a single entry by passing the fields.')
-						),
-						'save' => array(
-							'function'  => 'update_entry',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Update a single entry by passing the fields.')
-						),
-						'delete' => array(
-							'function'  => 'delete_entry',
-							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
-							'docstring' => lang('Delete a single entry by passing the id.')
-						),
-						'read_list' => array(
-							'function'  => 'read_entries',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Read a list of entries.')
-						),
-						'list_methods' => array(
-							'function'  => 'list_methods',
-							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-							'docstring' => lang('Read this list of methods.')
-						)
-					);
-					return $xml_functions;
-					break;
-				case 'soap':
-					return $this->soap_functions;
-					break;
-				default:
-					return array();
-					break;
-			}
 		}
 
 		function save_sessiondata($data)
@@ -241,6 +200,7 @@
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];
 			$this->cat_id = $data['cat_id'];
+			$this->typeid = $data['typeid'];
 			if($this->debug) { echo '<br>read_sessiondata();'; $this->_debug_sqsof(); }
 		}
 
@@ -465,5 +425,63 @@
 
 			$GLOBALS['phpgw']->preferences->save_repository(True);
 		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+			if(is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'read' => array(
+							'function'  => 'read_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
+						),
+						'add' => array(
+							'function'  => 'add_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Add a single entry by passing the fields.')
+						),
+						'save' => array(
+							'function'  => 'update_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Update a single entry by passing the fields.')
+						),
+						'delete' => array(
+							'function'  => 'delete_entry',
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'docstring' => lang('Delete a single entry by passing the id.')
+						),
+						'read_list' => array(
+							'function'  => 'read_entries',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a list of entries.')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
+		}
+
 	}
 ?>

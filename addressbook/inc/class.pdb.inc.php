@@ -3,12 +3,12 @@
   * eGroupWare API - Palm Database Access                                    *
   * This file written by Miles Lott <milos@groupwhere.org>                   *
   * Access to palm OS database structures (?)                                *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * Portions of code from ToPTIP                                             *
   *   Copyright (C) 2000-2001 Pierre Dittgen                                 *
   *   This file is a translation of the txt2pdbdoc tool                      *
   *   written in C Paul J. Lucas (plj@best.com)                              *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library may be part of the eGroupWare API                           *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
@@ -45,7 +45,7 @@
 		*/
 		function int2($value)
 		{
-			return sprintf("%c%c", $value / 256, $value % 256);	
+			return sprintf("%c%c", $value / 256, $value % 256);
 		}
 
 		/**
@@ -53,7 +53,7 @@
 		*/
 		function int4($value)
 		{
-			for ($i=0; $i<4; $i++)
+			for($i=0; $i<4; $i++)
 			{
 				$b[$i] = $value % 256;
 				$value = (int)(($value - $b[$i]) / 256);
@@ -69,14 +69,14 @@
 		{
 			// ============ File header =========================================
 			// Title of the document, it's limited to 31 characters
-			if (strlen($title) > 31)
+			if(strlen($title) > 31)
 			{
 				$title = substr($title, 0, 31);
 			}
 			fwrite($fd, $title);
 
 			// Completion with null '\0' characters
-			for ($i=0; $i<32-strlen($title); $i++)
+			for($i=0; $i<32-strlen($title); $i++)
 			{
 				fwrite($fd, sprintf("%c", 0), 1);
 			}
@@ -107,7 +107,7 @@
 			$full_tr	= (int)($content_length / $this->record_size);
 			$notfull_tr	= $content_length % $this->record_size;
 			$num_records = $full_tr;
-			if ($notfull_tr != 0)
+			if($notfull_tr != 0)
 			{
 				$num_records++;
 			}
@@ -124,7 +124,7 @@
 			fwrite($fd, $this->int4($index++));
 
 			$val	= 110 + ($num_offsets - 2) * 8;
-			while (--$num_offsets != 0)
+			while(--$num_offsets != 0)
 			{
 				fwrite($fd, $this->int4($val));
 				$val += 4096;
@@ -171,7 +171,7 @@
 			$title = fread(31,$fd);
 
 			// Completion with null '\0' characters
-			for ($i=0; $i<32-strlen($title); $i++)
+			for($i=0; $i<32-strlen($title); $i++)
 			{
 				fwrite($fd, sprintf("%c", 0), 1);
 			}
@@ -202,7 +202,7 @@
 			$full_tr	= (int)($content_length / $this->record_size);
 			$notfull_tr	= $content_length % $this->record_size;
 			$num_records = $full_tr;
-			if ($notfull_tr != 0)
+			if($notfull_tr != 0)
 			{
 				$num_records++;
 			}
@@ -219,7 +219,7 @@
 			fwrite($fd, $this->int4($index++));
 
 			$val	= 110 + ($num_offsets - 2) * 8;
-			while (--$num_offsets != 0)
+			while(--$num_offsets != 0)
 			{
 				fwrite($fd, $this->int4($val));
 				$val += 4096;

@@ -22,6 +22,10 @@ function check_all(which)
 {lang_showing}
 <br>{searchreturn}
 {search_filter}
+<!-- <table width="95%" border="1" cellspacing="1" cellpadding="3">
+<form name="addr_type" action="{self_url}" method="POST">
+<tr bgcolor="{th_bg}"><td>{lang_show}&nbsp;&nbsp;{contact_type_list}</td></tr></form>
+</table>-->
 <table width="95%" border="1" cellspacing="1" cellpadding="3">
 <tr>{alphalinks}
 </tr>

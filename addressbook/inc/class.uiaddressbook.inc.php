@@ -48,6 +48,15 @@
 			'address3' => 'address3'
 		);
 
+		var $contact_types = array(
+			'n' => 'People',
+			'c' => 'Companies'
+		);
+		var $contact_type = array(
+			'n' => 'Person',
+			'c' => 'Company'
+		);
+
 		function uiaddressbook()
 		{
 			$GLOBALS['phpgw']->country    = CreateObject('phpgwapi.country');
@@ -65,14 +74,15 @@
 
 		function _set_sessiondata()
 		{
-			$this->start    = $this->bo->start;
-			$this->limit    = $this->bo->limit;
-			$this->query    = $this->bo->query;
-			$this->cquery   = $this->bo->cquery;
-			$this->sort     = $this->bo->sort;
-			$this->order    = $this->bo->order;
-			$this->filter   = $this->bo->filter;
-			$this->cat_id   = $this->bo->cat_id;
+			$this->start  = $this->bo->start;
+			$this->limit  = $this->bo->limit;
+			$this->query  = $this->bo->query;
+			$this->cquery = $this->bo->cquery;
+			$this->sort   = $this->bo->sort;
+			$this->order  = $this->bo->order;
+			$this->filter = $this->bo->filter;
+			$this->cat_id = $this->bo->cat_id;
+			$this->typeid = $this->bo->typeid;
 			if($this->debug) { $this->_debug_sqsof(); }
 		}
 
@@ -86,7 +96,8 @@
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
-				'cat_id' => $this->cat_id
+				'cat_id' => $this->cat_id,
+				'typeid' => $this->typeid
 			);
 			echo '<br>UI:';
 			_debug_array($data);
@@ -103,7 +114,8 @@
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
-				'cat_id' => $this->cat_id
+				'cat_id' => $this->cat_id,
+				'typeid' => $this->typeid
 			);
 			$this->bo->save_sessiondata($data);
 		}
@@ -120,7 +132,7 @@
 			{
 				$select .= '<option value="">' . lang('Please Select') . '</option>'."\n";
 			}
-//			while(list($key,$val) = each($list))
+			settype($list,'array');
 			foreach($list as $key => $val)
 			{
 				$select .= '<option value="' . $key . '"';
@@ -132,7 +144,8 @@
 			}
 
 			$select .= '</select>'."\n";
-			$select .= '<noscript><input type="submit" name="' . $name . '_select" value="True"></noscript>' . "\n";
+			$select .= '<noscript><input type="submit" name="' . $name . '_select" value="'
+				. lang('Submit') . '"></noscript>' . "\n";
 
 			return $select;
 		}
@@ -408,7 +421,7 @@
 			Set qfilter to display entries where tid=n (normal contact entry),
 			else they may be accounts, etc.
 			*/
-			$qfilter = 'tid=n';
+			$qfilter = 'tid=' . (string)$this->typeid;
 			switch($this->filter)
 			{
 				case 'blank':
@@ -483,6 +496,15 @@
 			$GLOBALS['phpgw']->template->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
 			$GLOBALS['phpgw']->template->set_var('lang_showing',$lang_showing);
 			$GLOBALS['phpgw']->template->set_var('search_filter',$search_filter);
+			/*
+			$GLOBALS['phpgw']->template->set_var('lang_show',lang('Show') . ':');
+			$GLOBALS['phpgw']->template->set_var('contact_type_list',$this->formatted_list('typeid',$this->contact_types,$this->typeid,False,True));
+			$GLOBALS['phpgw']->template->set_var('self_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
+			*/
+			$GLOBALS['phpgw']->template->set_var('lang_show','');
+			$GLOBALS['phpgw']->template->set_var('contact_type_list','');
+			$GLOBALS['phpgw']->template->set_var('self_url','');
+
 			$GLOBALS['phpgw']->template->set_var('cats',lang('Category'));
 			$GLOBALS['phpgw']->template->set_var('cats_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			/* $GLOBALS['phpgw']->template->set_var('cats_link',$this->cat_option($this->cat_id)); */
@@ -1604,7 +1626,7 @@
 
 				if(strlen($bday) > 2)
 				{
-					list( $month, $day, $year ) = split( '/', $bday );
+					list($month, $day, $year) = split('/', $bday);
 					$temp_month[$month] = ' selected';
 					$bday_month = '<select name="entry[bday_month]">'
 						. '<option value=""'   . $temp_month[0]  . '>' . '</option>'

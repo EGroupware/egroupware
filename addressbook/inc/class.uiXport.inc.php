@@ -157,7 +157,7 @@
 				$i=0; $myfilearray = '';
 				while($file = readdir($dir_handle))
 				{
-					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'import' . SEP . $file) )
+					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'import' . SEP . $file))
 					{
 						$myfilearray[$i] = $file;
 						$i++;
@@ -191,14 +191,12 @@
 				$this->template->set_var('query',$this->query);
 				$this->template->set_var('cat_id',$this->cat_id);
 				$this->template->set_var('lang_import_instructions',lang('import_instructions'));
+				$this->template->set_var('zip_note','');
 				if(extension_loaded('zip'))
 				{
 					$this->template->set_var('zip_note',lang('zip_note'));
 				}
-				else
-				{
-					$this->template->set_var('zip_note','');
-				}
+
 				$this->template->set_var('lang_exported_file',lang('enter the path to the exported file here'));
 				$this->template->set_var('lang_conv_type',lang('select the type of conversion'));
 				$this->template->set_var('lang_mark_priv',lang('Mark records as private'));
@@ -232,7 +230,7 @@
 
 				$buffer = $this->bo->export($conv_type,$cat_id);
 
-				if(($download == 'on') || ($conv_type == 'Palm_PDB') )
+				if(($download == 'on') || ($conv_type == 'Palm_PDB'))
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
 					$this->browser->content_header($tsvfilename,'application/x-octet-stream',strlen($buffer));
@@ -262,7 +260,7 @@
 				$i=0; $myfilearray = '';
 				while($file = readdir($dir_handle))
 				{
-					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'export' . SEP . $file) )
+					if((substr($file, 0, 1) != '.') && is_file(PHPGW_APP_INC . SEP . 'export' . SEP . $file))
 					{
 						$myfilearray[$i] = $file;
 						$i++;

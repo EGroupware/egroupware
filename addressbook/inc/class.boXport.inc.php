@@ -136,6 +136,10 @@
 
 			if($tsvfile['type'] == 'application/zip')
 			{
+				if(!@function_exists('zip_open'))
+				{
+					return False;
+				}
 				$fp = $this->unzip($tsvfile['tmp_name'],$contacts->type);
 			}
 			else

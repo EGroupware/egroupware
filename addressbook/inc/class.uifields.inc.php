@@ -101,7 +101,7 @@
 				$title = $fields[$i]['title'];
 
 				$GLOBALS['phpgw']->template->set_var('cfield',$title);
-				
+
 				$params = array(
 					'menuaction' => 'addressbook.uifields.edit',
 					'field'      => urlencode($field),
