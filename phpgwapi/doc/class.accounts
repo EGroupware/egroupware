@@ -4,7 +4,8 @@ class accounts_{
   var $db;
   var $account_id;
   var $data;
-  var $security_equals
+  var $memberships;
+  var $members;
   
   function read_repository()
   {
@@ -13,9 +14,9 @@ class accounts_{
     * then return $this->data                                                  *
     *                                                                          *
     * These are the values that should be set:                                 *
-    * $this->data["userid"]                                                    *
     * $this->data["account_id"]                                                *
     * $this->data["account_lid"]                                               *
+    * $this->data["account_type"]                                               *
     * $this->data["firstname"]                                                 *
     * $this->data["lastname"]                                                  *
     * $this->data["fullname"]                                                  *
