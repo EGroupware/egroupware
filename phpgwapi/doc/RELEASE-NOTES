@@ -1,0 +1,2 @@
+This version will NOT work with PHP 4.0.3pl1.  This is due to the PHP devteam breaking serialize() and
+unserialize().  There is no known work around.

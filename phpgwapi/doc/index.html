@@ -1,0 +1,2011 @@
+<HTML
+><HEAD
+><TITLE
+>phpGroupWare Docs V0.05</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"></HEAD
+><BODY
+CLASS="BOOK"
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN1"
+>phpGroupWare Docs V0.05</A
+></H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN5"
+>Dan Kuykendall</A
+></H3
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN12"
+>Joseph Engo</A
+></H3
+><HR></DIV
+><HR><H1
+><A
+NAME="AEN19"
+>Dedication</A
+></H1
+><P
+>		Thanks to Joesph Engo for starting phpGroupWare (at the time called webdistro) and the core of this HOWTO.
+  	Thanks to all the developers and users who contribute to making phpGroupWare such a success.
+  </P
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>I. <A
+HREF="#AEN21"
+>Introduction</A
+></DT
+><DD
+><DL
+><DT
+>1. <A
+HREF="#WHAT"
+>What is phpGroupWare</A
+></DT
+><DT
+>2. <A
+HREF="#WHY"
+>Why should you use it</A
+></DT
+><DT
+>3. <A
+HREF="#APPHIS"
+>A short History</A
+></DT
+><DT
+>4. <A
+HREF="#COPYRIGHT"
+>Copyright</A
+></DT
+></DL
+></DD
+><DT
+>II. <A
+HREF="#AEN43"
+>Installation</A
+></DT
+><DD
+><DL
+><DT
+>5. <A
+HREF="#REQUIREMENTS"
+>Requirements</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN53"
+>Tested Systems</A
+></DT
+></DL
+></DD
+><DT
+>6. <A
+HREF="#OBTAINING"
+>Obtaining phpGroupWare</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#AEN74"
+>Released Versions</A
+></DT
+><DT
+><A
+HREF="#AEN79"
+>Developer's version from CVS</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="#INSTALLING"
+>Installation Steps</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#TARBALLINS"
+>Installing from TarBall</A
+></DT
+><DT
+><A
+HREF="#CVSINS"
+>Installing from CVS</A
+></DT
+><DT
+><A
+HREF="#AEN112"
+>Setup / Configure phpGroupWare</A
+></DT
+><DT
+><A
+HREF="#AEN156"
+>Testing the install</A
+></DT
+><DT
+><A
+HREF="#AEN161"
+>Installing additional applications</A
+></DT
+></DL
+></DD
+><DT
+>8. <A
+HREF="#TROUBLESHOOT"
+>Trouble Shooting</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#TROB1"
+>I get "Unable to open mailbox" when using the email application</A
+></DT
+><DT
+><A
+HREF="#TROB2"
+>It seems to hang when I try to read my mail</A
+></DT
+><DT
+><A
+HREF="#TROB3"
+>When I log in I see the directory listing instead of a web page</A
+></DT
+><DT
+><A
+HREF="#TROB4"
+>I get garbage that looks like code when I go to the phpGroupWare URL</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>III. <A
+HREF="#AEN237"
+>Using phpGroupWare</A
+></DT
+><DD
+><DL
+><DT
+>9. <A
+HREF="#LOGINGIN"
+>Loging into phpgw</A
+></DT
+><DT
+>10. <A
+HREF="#CHECKMAIL"
+>checking Email</A
+></DT
+><DT
+>11. <A
+HREF="#ADDRESSBOOK"
+>Using Addressbook</A
+></DT
+><DT
+>12. <A
+HREF="#CALENDER"
+>Using Calender</A
+></DT
+><DT
+>13. <A
+HREF="#FILEMAN"
+>Managing Files with file manager</A
+></DT
+><DT
+>14. <A
+HREF="#HEADLINES"
+>Getting Headlines</A
+></DT
+><DT
+>15. <A
+HREF="#HR"
+>Human Resources</A
+></DT
+><DT
+>16. <A
+HREF="#PREF"
+>Preferences</A
+></DT
+><DT
+>17. <A
+HREF="#TODO"
+>Using todo</A
+></DT
+><DT
+>18. <A
+HREF="#TOBTICK"
+>Using Trouble ticket</A
+></DT
+></DL
+></DD
+><DT
+>IV. <A
+HREF="#AEN274"
+>Administering phpGroupWare</A
+></DT
+><DD
+><DL
+><DT
+>19. <A
+HREF="#USERACC"
+>User Accounts</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#CREATEU"
+>Creating Accounts</A
+></DT
+><DT
+><A
+HREF="#MAINTAINU"
+>Maintaining Accounts</A
+></DT
+></DL
+></DD
+><DT
+>20. <A
+HREF="#GROUPACC"
+>Group Accounts</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#CREATEG"
+>Creating Accounts</A
+></DT
+><DT
+><A
+HREF="#MAINTAING"
+>Maintaining Accounts</A
+></DT
+></DL
+></DD
+><DT
+>21. <A
+HREF="#APP"
+>Applications</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#INSTALLA"
+>Installing</A
+></DT
+><DT
+><A
+HREF="#UPDATA"
+>Updating</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>V. <A
+HREF="#AEN312"
+>Developers Documentation</A
+></DT
+><DD
+><DL
+><DT
+>22. <A
+HREF="#DEVADDAPP"
+>Developing Add-On Apps</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#REQUIRDEV"
+>Requirements</A
+></DT
+><DT
+><A
+HREF="#ETC"
+>add your topic seek</A
+></DT
+></DL
+></DD
+><DT
+>23. <A
+HREF="#APIDOCS"
+>API documentation</A
+></DT
+><DD
+><DL
+><DT
+><A
+HREF="#FUNCTION1"
+>function1(or what ever)</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>VII. <A
+HREF="#AEN331"
+>About this document</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN21"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>I. Introduction</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN23"
+></A
+><P
+>		Do yo have questions on using phpGroupWare , like What? Why? What for? What's in for me?
+	</P
+><P
+>		Then you should seriously read this doc :-).
+	</P
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="#WHAT"
+>What is phpGroupWare</A
+></DT
+><DT
+>2. <A
+HREF="#WHY"
+>Why should you use it</A
+></DT
+><DT
+>3. <A
+HREF="#APPHIS"
+>A short History</A
+></DT
+><DT
+>4. <A
+HREF="#COPYRIGHT"
+>Copyright</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="WHAT"
+>Chapter 1. What is phpGroupWare</A
+></H1
+><P
+>		phpGroupWare is a web based groupware application that includes integrated features such as
+    email, calendar, todo list, address book, file manager, headline news, and a trouble ticket system.
+    It should run on all systems where PHP is installed and has access to a SQL server (MySQL ,PostgreSQL or Oracle).
+  </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="WHY"
+>Chapter 2. Why should you use it</A
+></H1
+><P
+>    You should use it if you would like a powerful groupware system that can be access from anywhere on the Internet.
+  </P
+><P
+>		For companies with a distributed user base, it's an ideal solution. Oh, and did I mention that its FREE?
+	</P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="APPHIS"
+>Chapter 3. A short History</A
+></H1
+><P
+>		phpGroupWare started by Jengo (Joseph Engo) as an application to satisfy his girlfriends need for a webbased calendar/todo_list/email. 
+		At the time it was called webdistro when Seek3r (Dan Kuykendall) discovered this promising project.
+		The two joined up together and between Seek3r's API design and Jengo's programming skills they renamed the project phpGroupWare and started building the application around the phpgwAPI.
+	</P
+><P
+>		During this period Seek3r took over project management to free Jengo up to do more development. 
+		This duo worked hard to build a sucessful community around the project. Their efforts paid off, and the project is what it is today due to the efforts of the developers who have joined this community.
+	</P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="COPYRIGHT"
+>Chapter 4. Copyright</A
+></H1
+><P
+>	  Copyright (c) Dan Kuykendall.
+	</P
+><P
+>		  Permission is granted to copy, distribute and/or modify this document
+  		under the terms of the GNU Free Documentation License, Version 1.1
+  		or any later version published by the Free Software Foundation
+  		A copy of the license is available at
+  	<A
+HREF="http://www.gnu.org/copyleft/fdl.txt"
+TARGET="_top"
+>  		<I
+CLASS="CITETITLE"
+>GNU Free Documentation License Making TeXWork</I
+>
+  	</A
+>
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN43"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>II. Installation</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN45"
+></A
+><P
+>&#13;<P
+CLASS="LITERALLAYOUT"
+>Installation/Upgrade&nbsp;and&nbsp;Configuration&nbsp;of&nbsp;phpGroupWare&nbsp;has&nbsp;been&nbsp;made&nbsp;as&nbsp;easy&nbsp;as&nbsp;possible.&nbsp;<br>
+Most&nbsp;of&nbsp;the&nbsp;work&nbsp;is&nbsp;point&nbsp;and&nbsp;click.&nbsp;<br>
+By&nbsp;carefully&nbsp;reading&nbsp;this&nbsp;document&nbsp;you&nbsp;can&nbsp;easly&nbsp;install&nbsp;phpGroupWare.</P
+>
+	</P
+><P
+>		Since this is still a beta version we do expect some bugs.
+	</P
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>5. <A
+HREF="#REQUIREMENTS"
+>Requirements</A
+></DT
+><DT
+>6. <A
+HREF="#OBTAINING"
+>Obtaining phpGroupWare</A
+></DT
+><DT
+>7. <A
+HREF="#INSTALLING"
+>Installation Steps</A
+></DT
+><DT
+>8. <A
+HREF="#TROUBLESHOOT"
+>Trouble Shooting</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="REQUIREMENTS"
+>Chapter 5. Requirements</A
+></H1
+><P
+>		You will need PHP compiled and installed on your system.  You will also need MySQL, PostgreSQL or Oracle setup.
+		</P
+><P
+>		If you are planning on using the email system, you will need to have an IMAP server installed and IMAP support compiled into PHP, or a POP3 server installed.
+		You can have it installed as an Apache module or CGI mode for other web servers, the Apache module is preferred.
+		We will assume that you are running on a Linux or other Unix system for these steps.
+		Windows is supported, but there is no documentation for it currently.
+		</P
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN53"
+>Tested Systems</A
+></H4
+><P
+>		Seek3r has tested:
+		<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>phpGroupWare.org runs: Red Hat 6.2, Apache/1.3.12,PHP/4.0.2,mod_perl/1.21,MySQL 3.23.10-alpha,Courier-IMAP 0.33+ with qmail 1.03</P
+></LI
+></UL
+>
+
+		Blinky has tested:
+		<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>phpGroupWare.net runs: Red Hat 6.2,Apache/1.3.14 PHP/4.0.3pl1 mod_ssl/2.7.1 OpenSSL/0.9.6 PHP4.03.pl1, MySQL 3.23.10-alpha,qmail 1.03</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>dev boxes are variants on: Red Hat 7.0,mysql-3.23.22-6 (from RH7 RPM), and Sendmail, Courier, or qmail+courier IMAP depending on mood.</P
+></LI
+></UL
+>
+
+
+		Jengo has tested:
+		<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>main test box: Red Hat 6.2,Apache 1.3.12,PHP 3.0.16,PostgreSQL 7.2,Sendmail (from RH6.2)</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>laptop is rh 6.1, apache 1.3.?, MySQL and PostgreSQL 7.0 w/ PHP 3.0.16, its a P-90 w/ 40 mb ram and a 800 mb hd</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Test box: Win2k with IIS5.0, PHP4.0.2 and MySQL</P
+></LI
+></UL
+>
+ 		There are installations on Windows NT and OS/2, and using MySQL or Oracle as the database.
+ 		</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="OBTAINING"
+>Chapter 6. Obtaining phpGroupWare</A
+></H1
+><P
+>			While we are still in the Beta phase of phpGroupWare, you may
+			want to track the CVS copy as closely as possible. The released
+			versions are more stable, but often contain bugs that have been fixed
+			in the CVS version.
+		</P
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN74"
+>Released Versions</A
+></H4
+><P
+>				The downloads section on the <A
+HREF="http://www.phpgroupware.org/"
+TARGET="_top"
+><I
+CLASS="CITETITLE"
+>site</I
+></A
+>
+				contains links to the most recent releases, and several mirror sites
+				for the releases.
+			</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN79"
+>Developer's version from CVS</A
+></H4
+><P
+>				If you have never used CVS, you may want to read through the doucmentation
+				found at <A
+HREF="http://www.cvshome.org/"
+TARGET="_top"
+><I
+CLASS="CITETITLE"
+>www.cvshome.org</I
+>
+				</A
+>.
+				The CVS pages for the core and apps projects can be found at
+				<A
+HREF="http://sourceforge.net/cvs/?group_id=7305"
+TARGET="_top"
+>				<I
+CLASS="CITETITLE"
+>phpGroupWare Core CVS</I
+></A
+>
+				, and <A
+HREF="http://sourceforge.net/cvs/?group_id=9787"
+TARGET="_top"
+>				<I
+CLASS="CITETITLE"
+>phpGroupWare Apps CVS</I
+></A
+>.
+				Follow the directions for <I
+CLASS="EMPHASIS"
+>Anonymous CVS access</I
+> and you should
+				have the most recent development copy of phpGroupWare in no time.
+			</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="INSTALLING"
+>Chapter 7. Installation Steps</A
+></H1
+><P
+>    After you have met the system requirements, You can install
+    it from the TarBall or you can get it directly from CVS.
+  </P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="TARBALLINS"
+>Installing from TarBall</A
+></H1
+><P
+>      The files should be	installed in the webserver directory. So all you need to
+    	do is unpack the tar ball and copy the whole directory to	the webserver directory 
+    </P
+><P
+>    	(eg. /home/httpd/html for default	apache configuration in many linux distros).
+    </P
+><P
+>    	You may	have to get required permissions to do this. Contact your system 
+    	administrator if you dont have the permission	to write to your webserver directory.
+    </P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="CVSINS"
+>Installing from CVS</A
+></H1
+><P
+>   		  Grabbing a copy from CVS is not as hard as it may seem. You will need to have a cvs client installed.
+   		  Then try the following commands:
+        <P
+><B
+CLASS="COMMAND"
+>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</B
+> <BR><BR><B
+CLASS="COMMAND"
+>cvs login (just hit enter when prompted for a password)</B
+> <BR><BR><B
+CLASS="COMMAND"
+>cvs checkout phpgroupware</B
+> </P
+>
+        If you need to install into a different dirname, you can add ' -d dirname' after 'checkout' and before 'phpgroupware'.
+        The commands would look like this:
+        <P
+><B
+CLASS="COMMAND"
+>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</B
+> <BR><BR><B
+CLASS="COMMAND"
+>cvs login (just hit enter when prompted for a password)</B
+> <BR><BR><B
+CLASS="COMMAND"
+>cvs checkout -d dirname phpgroupware</B
+> </P
+>
+   		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="AEN112"
+>Setup / Configure phpGroupWare</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN114"
+>The config file</A
+></H2
+><P
+>      	Copy the <TT
+CLASS="FILENAME"
+>header.inc.php.sample</TT
+> file to
+      	<TT
+CLASS="FILENAME"
+>header.inc.php</TT
+> and edit the file, following the
+      	directions in the comments.
+    	</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H2
+CLASS="SECT2"
+><A
+NAME="AEN119"
+>Create database in MySQL</A
+></H2
+><P
+>        An empty database will be needed for phpGroupWare. Here are the instructions for doing so with MySQL.
+        First create the database:
+        <P
+><B
+CLASS="COMMAND"
+>mysqladmin create phpgroupware -p</B
+> </P
+>
+        Then login to the mysql:
+        <P
+><B
+CLASS="COMMAND"
+>mysql -p</B
+> </P
+>
+        Finally grant the needed security rights:
+        <P
+><B
+CLASS="COMMAND"
+>grant all on phpgroupware.* to phpgroupware@localhost identified by "some_password";</B
+> </P
+>
+    	</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H2
+CLASS="SECT2"
+><A
+NAME="AEN128"
+>Create database in PostreSQL</A
+></H2
+><P
+>        An empty database will be needed for phpGroupWare. Here are the instructions for doing so with PostgreSQL.
+        Create the database:
+        <P
+><B
+CLASS="COMMAND"
+>postmaster -i -D /home/[username]/[dataDir]</B
+> </P
+>
+        You will probably need to review PostgreSQL documentation for futher details.
+    	</P
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H2
+CLASS="SECT2"
+><A
+NAME="AEN133"
+>The Setup Program</A
+></H2
+><P
+>    		Then point your browser to phpgroupware/setup/ which will
+    		create (or upgrade) the database tables.
+    		You wil be asked to login, using the password set in
+    		<TT
+CLASS="FILENAME"
+>header.inc.php</TT
+>. Setup will attempt to determine what version
+    		of the phpGroupWare database you have installed, and upgrade to the most recent
+    		version.
+      </P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TH
+ALIGN="LEFT"
+VALIGN="CENTER"
+><B
+>Note</B
+></TH
+></TR
+><TR
+><TD
+>&nbsp;</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>            The developers are concentrating on getting the beta
+            working, and have not spent a great deal of time building upgrade scripts from the
+            alpha versions of phpGroupWare. You are advised to backup your existing alpha
+            database before running the setup script to avoid problems!
+         </P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>    	  If you get no error messages, continue on to phpgroupware/setup/config.php
+    		to configure phpGroupWare to your system.
+      </P
+><P
+>    	  If you are using the email system you will need to create a temporary directory
+      	where file uploads will be stored.  For security reasons, you should <TT
+CLASS="CONSTANT"
+>chown
+      	nobody.nobody</TT
+> and <TT
+CLASS="CONSTANT"
+>chmod 700</TT
+> to that directory.  Depending on your system configuration.
+      	Default installs of Apache normally run as the user nobody.  You may need your system
+      	administrator to do this for you if you do not have root access.
+      </P
+><P
+>    	  If you do not have access to root, create this file and run it.
+      </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>?php
+if (mkdir("/path/to/temp/directory",0700)) {
+echo "Directory created successfully";
+} else {
+echo "Error creating directory";
+}
+?
+      </PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H2
+CLASS="SECT2"
+><A
+NAME="AEN146"
+>The phpGroupWare Daemon</A
+></H2
+><P
+>        If you have access to cron, you may want to setup the files in the cron
+    		directory.
+    	</P
+><P
+>    		stalesessions.pl - There are 2 reasons for this file.
+    		<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Users always forget to logout. This way the session doesn't sit around forever, creating a possible security risk.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>The email system requires plain text passwords which are stored in the sessions table.</P
+></LI
+></UL
+>
+        This file is not required, you can simply disable cron_apps in the admin -&#62; applications section
+      	to clean out the sessions table during login and logout
+      </P
+><P
+>        stale_uploads.pl - This will delete file attachments for messages that where not
+    		completed.  If a users browser crashes, Internet connection dies, etc, their
+    		files will sit there forever unless deleted.  You could add a few lines to
+    		logout.php that will look in the temp directory for any stale uploads and delete
+    		them. But, once again, it becomes a performance issue.
+    	</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="AEN156"
+>Testing the install</A
+></H1
+><P
+>      If your config is setup properly you can now login.  Point your browser to the
+  		installed location and login with the username <TT
+CLASS="CLASSNAME"
+>demo</TT
+> and the password is <TT
+CLASS="CLASSNAME"
+>1234</TT
+>
+  		At this point it would be a good idea to create a new user with administrative privileges and
+  		delete the old one.
+  	</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="AEN161"
+>Installing additional applications</A
+></H1
+><P
+>  		Once you have the core phpGroupWare install up and running,
+  		you may want to download and install additional applications.
+  	</P
+><P
+>  		You should consult any <TT
+CLASS="FILENAME"
+>README</TT
+> or <TT
+CLASS="FILENAME"
+>INSTALL</TT
+>
+  		files that come with the new application first, as most require you
+  		to create additional tables in the database, and add additional
+  		translation data to the lang table (typically a file called <TT
+CLASS="FILENAME"
+>lang.sql</TT
+>)
+  	</P
+><P
+>  		You install the new application within the phpGroupWare install tree by
+  		copying the application directory into the phpGroupWare install location,
+  		and enabling the application through the Administration page.
+  	</P
+><P
+>      For example, this is the process to install the
+  		Headlines application (see <A
+HREF="http://sourceforge.net/phpgwapps/"
+TARGET="_top"
+>  		<I
+CLASS="CITETITLE"
+>http://sourceforge.net/phpgwapps/</I
+></A
+> for
+  		more on this and other applications).
+  		<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Download the .tar.gz file for the application, or check out the source with cvs with
+          <P
+><B
+CLASS="COMMAND"
+>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</B
+> <BR><B
+CLASS="COMMAND"
+>cvs login   (just hit enter if prompted for a password)</B
+> <BR><B
+CLASS="COMMAND"
+>cvs co headlines</B
+> <BR></P
+>
+    		</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Move the <TT
+CLASS="CLASSNAME"
+>headlines</TT
+> directory into your phpGroupWare
+    			install directory.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Log into phpGroupWare as an administrative user, and go to the Administration page.
+    			</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>In the first section, choose the <TT
+CLASS="CLASSNAME"
+>Applications</TT
+> link.
+    				</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Click on add, and fill in the form.</P
+><P
+>    			<SPAN
+CLASS="APPLICATION"
+>Application name</SPAN
+>
+    			should be identical to the name
+    			of the directory you moved into the phpGroupWare install, in this case use <TT
+CLASS="CLASSNAME"
+>headlines</TT
+>
+    		</P
+><P
+>    			<SPAN
+CLASS="APPLICATION"
+>Application Title</SPAN
+>
+    			is shown in the navigation bar and other places to refer to the
+    			new application. Enter <TT
+CLASS="CLASSNAME"
+>Headlines</TT
+> for this example.
+    		</P
+><P
+>    			<SPAN
+CLASS="APPLICATION"
+>Enabled</SPAN
+>
+    			can be used to disable an application for all users temporially. You
+    			should normal check the box to enable the application.
+    		</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Back in the Administration page, you need to enable the application for specific users
+    			or user groups by editing them, and checking the new <TT
+CLASS="CLASSNAME"
+>Headlines</TT
+> box that appears
+    			in the middle of the account editing page.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Once you have added the Headlines app to your account, you should see a Headlines
+    			entry in the Administration and Preferences pages, and there should be an icon for
+    			the Headlines application in the navigation bar.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Once you enable a few of the Headlines sites through the Administration page link, you
+    			should see headlines grabbed from the sites you selected when you click on the Headlines
+  			  icon in the navigation bar.
+  			</P
+></LI
+></UL
+>
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="TROUBLESHOOT"
+>Chapter 8. Trouble Shooting</A
+></H1
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/warning.gif"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>           				phpGroupWare is still Beta software, expect some bugs
+					along the way. If you run into a problem not discussed here, contact us
+					through one of the methods listed on the website.
+				</P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>					The phpGroupWare developers can most often be seen hanging out in <I
+CLASS="EMPHASIS"
+>#phpGroupWare</I
+>
+					on <I
+CLASS="EMPHASIS"
+>irc.openprojects.net</I
+> if you require real-time help.
+				</P
+><P
+>				
+					Also check the FAQ in this directory for additional common questions,
+					it is available as FAQ.sgml, FAQ.txt and FAQ.html
+				</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="TROB1"
+>I get "Unable to open mailbox" when using the email application</A
+></H1
+><P
+>			At the time of this writing (2000-09-27) you must use the same
+			username and password in phpGroupWare that you use to log into
+			your mail server. If you change your password and it still isn't working,
+			try logging out of phpGroupWare (the rightmost icon in the navigation bar)
+			and then log back in.
+		</P
+><P
+>			An preference page to edit the email settings is being developed, and should
+			appear shortly after the first beta release.
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="TROB2"
+>It seems to hang when I try to read my mail</A
+></H1
+><P
+>			This is often a problem if you are using POP3 instead of IMAP, and you have
+			more than a few hundred messages in your mailbox.
+		</P
+><P
+>			By default, php is set up to time-out a request that takes over 30 seconds
+			to complete. phpGroupWare must do a lot of work the first time your POP3 mailbox
+			is opened, and every time you get new mail, which may take more than the 30
+			second timeout.
+		</P
+><P
+>			You can either clean up your mailbox with another mail program, or
+			add the line
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>set_time_limit(0);
+			</PRE
+></TD
+></TR
+></TABLE
+>
+			to the top of the inc/phpgwapi/phpgw_msg_pop3.inc.php file, just before
+			the line <TT
+CLASS="CLASSNAME"
+>class msg extends msg_common</TT
+>
+                </P
+><P
+>			If you choose to edit the file, be patient when loading a large POP3
+			mailbox - the author tested against a mailbox with 2500 messages in it,
+			but it took 15 minutes to load the page. We highly suggest you use IMAP
+			if you expect to have more than a few hundred messages in your mailbox.
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="TROB3"
+>When I log in I see the directory listing instead of a web page</A
+></H1
+><P
+>You are using Apache, this often means you need to add
+	              <TT
+CLASS="CLASSNAME"
+>.php</TT
+> to the <TT
+CLASS="CLASSNAME"
+>DirectoryIndex</TT
+> line in your httpd.conf file.
+	              For example:
+		      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>DirectoryIndex index.php index.php3 index.html index.htm index.cgi
+		      </PRE
+></TD
+></TR
+></TABLE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="TROB4"
+>I get garbage that looks like code when I go to the phpGroupWare URL</A
+></H1
+><P
+>			This is often because you have php3 installed,
+			which does not map <TT
+CLASS="CLASSNAME"
+>.php</TT
+> to the PHP engine.
+                        For PHP3:
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>AddType             application/x-httpd-php3 .php3 .php
+			</PRE
+></TD
+></TR
+></TABLE
+>
+For PHP4:
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>AddType             application/x-httpd-php .php3 .php
+			</PRE
+></TD
+></TR
+></TABLE
+>
+		</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN237"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>III. Using phpGroupWare</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN239"
+></A
+><P
+>		Using phpGroupWare is a cake walk , thats what people say :-). Reading this doc would
+		definitely give a head start. If you ever come cross any problem please report to
+	</P
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>9. <A
+HREF="#LOGINGIN"
+>Loging into phpgw</A
+></DT
+><DT
+>10. <A
+HREF="#CHECKMAIL"
+>checking Email</A
+></DT
+><DT
+>11. <A
+HREF="#ADDRESSBOOK"
+>Using Addressbook</A
+></DT
+><DT
+>12. <A
+HREF="#CALENDER"
+>Using Calender</A
+></DT
+><DT
+>13. <A
+HREF="#FILEMAN"
+>Managing Files with file manager</A
+></DT
+><DT
+>14. <A
+HREF="#HEADLINES"
+>Getting Headlines</A
+></DT
+><DT
+>15. <A
+HREF="#HR"
+>Human Resources</A
+></DT
+><DT
+>16. <A
+HREF="#PREF"
+>Preferences</A
+></DT
+><DT
+>17. <A
+HREF="#TODO"
+>Using todo</A
+></DT
+><DT
+>18. <A
+HREF="#TOBTICK"
+>Using Trouble ticket</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="LOGINGIN"
+>Chapter 9. Loging into phpgw</A
+></H1
+><P
+>		After your setup you can point your browser to <TT
+CLASS="FILENAME"
+>index.php</TT
+> in the
+		installation directory. If the set up was right you can login with user name <TT
+CLASS="CLASSNAME"
+>demo
+		</TT
+> and the password is <TT
+CLASS="CLASSNAME"
+>1234</TT
+>&#62; Now it is recommended to
+		create a new user with administrative privileges and delete the old one.
+	 </P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="CHECKMAIL"
+>Chapter 10. checking Email</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="ADDRESSBOOK"
+>Chapter 11. Using Addressbook</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="CALENDER"
+>Chapter 12. Using Calender</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="FILEMAN"
+>Chapter 13. Managing Files with file manager</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="HEADLINES"
+>Chapter 14. Getting Headlines</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="HR"
+>Chapter 15. Human Resources</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="PREF"
+>Chapter 16. Preferences</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="TODO"
+>Chapter 17. Using todo</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="TOBTICK"
+>Chapter 18. Using Trouble ticket</A
+></H1
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN274"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>IV. Administering phpGroupWare</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN276"
+></A
+><P
+>		To administer phpGroupWare you need not be a PHP hacker. All you need to do is again just
+		point and click. And hey just a bit of typing too. :). You need to login to phpGroupWare
+		and click the Administration image.
+	</P
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>19. <A
+HREF="#USERACC"
+>User Accounts</A
+></DT
+><DT
+>20. <A
+HREF="#GROUPACC"
+>Group Accounts</A
+></DT
+><DT
+>21. <A
+HREF="#APP"
+>Applications</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="USERACC"
+>Chapter 19. User Accounts</A
+></H1
+><P
+>		In phpGroupWare it is very easy to maintain User Accounts. You can easily add , remove or
+		set previleges to the user accordingly.
+	</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="CREATEU"
+>Creating Accounts</A
+></H1
+><P
+>		
+			To create a user account goto <TT
+CLASS="CLASSNAME"
+>User Accounts</TT
+> section
+			of <TT
+CLASS="CLASSNAME"
+>Administration</TT
+> and the click the
+			<TT
+CLASS="CLASSNAME"
+>Add</TT
+> button. Now a form would be displayed.
+			FIXME : should i explain the process :-). After submiting the form you would be sent
+			back to the accounts page and you can now see the new user you have just created.
+			Isn't it easy !!!
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="MAINTAINU"
+>Maintaining Accounts</A
+></H1
+><P
+>			Maintaining user accounts is also very easy. Just go to the
+			<TT
+CLASS="CLASSNAME"
+>User Accounts</TT
+> section . Now you can see
+			the list of the current users and there logins. You
+			can now either view their ops or can even edit them.
+			FIXMEAGIN: need i say anything more :-&#62;.
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="GROUPACC"
+>Chapter 20. Group Accounts</A
+></H1
+><P
+>		Enter the <TT
+CLASS="CLASSNAME"
+>User Group</TT
+> section. You would see
+		the current user groups.
+	</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="CREATEG"
+>Creating Accounts</A
+></H1
+><P
+>			Click the <TT
+CLASS="CLASSNAME"
+>Add</TT
+> button. Now fill the form by
+			selecting the existing users and the persmissions you want to include
+			in the new group.And you r done.
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="MAINTAING"
+>Maintaining Accounts</A
+></H1
+><P
+>			One has always a option to view and edit the groups when ever
+			needed
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="APP"
+>Chapter 21. Applications</A
+></H1
+><P
+>		There r many applications been developed for phpGroupWare and there would be more
+		in the future. So insatallation of these application and as well as the future
+		applications has been made easy the developers. So what you have to do is to
+		just go to the <TT
+CLASS="CLASSNAME"
+>Application</TT
+> section.
+	</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="INSTALLA"
+>Installing</A
+></H1
+><P
+></P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="UPDATA"
+>Updating</A
+></H1
+><P
+></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN312"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>V. Developers Documentation</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN314"
+></A
+><P
+>		This documentation is for developers who want to hack into the core of the
+		phpGroupWare.  Please follow this documentation carefully before u take a jump into
+		the code :)
+	</P
+></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>22. <A
+HREF="#DEVADDAPP"
+>Developing Add-On Apps</A
+></DT
+><DT
+>23. <A
+HREF="#APIDOCS"
+>API documentation</A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="DEVADDAPP"
+>Chapter 22. Developing Add-On Apps</A
+></H1
+><P
+>text for developin add on apps (seek its your area)</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="REQUIRDEV"
+>Requirements</A
+></H1
+><P
+>			text for requirements
+		</P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="ETC"
+>add your topic seek</A
+></H1
+><P
+>			text for the appropriate topic
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="CHAPTER"
+><HR><H1
+><A
+NAME="APIDOCS"
+>Chapter 23.  API documentation</A
+></H1
+><P
+>	
+		text for the API documentation chapter
+	</P
+><DIV
+CLASS="SECT1"
+><HR><H1
+CLASS="SECT1"
+><A
+NAME="FUNCTION1"
+>function1(or what ever)</A
+></H1
+><P
+>			the function you want to include seek.
+		</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="PART"
+><A
+NAME="AEN331"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+>VII. About this document</H1
+><DIV
+CLASS="PARTINTRO"
+><A
+NAME="AEN333"
+></A
+><P
+>			The newest version of this document can be found on our website <A
+HREF="http://www.phpgroupware.org"
+TARGET="_top"
+>			<I
+CLASS="CITETITLE"
+>www.phpgroupware.org</I
+></A
+>
+			 as SGML source, HTML, or TEXT.
+		</P
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN337"
+>Comments</A
+></H4
+><P
+>			  Comments on this HOWTO should be directed to the phpGroupWare developers mailing list
+			  <A
+HREF="mailto:phpgroupware-developers@lists.sourceforge.net"
+TARGET="_top"
+>			  <I
+CLASS="CITETITLE"
+>phpgroupware-developers@lists.sourceforge.net</I
+></A
+>
+          	</P
+><P
+>        		  To subscribe, go to <A
+HREF="http://sourceforge.net/mail/?group_id=7305"
+TARGET="_top"
+>			  <I
+CLASS="CITETITLE"
+>http://sourceforge.net/mail/?group_id=7305</I
+></A
+>
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN345"
+>History</A
+></H4
+><P
+>			  This document was started by Joseph Engo and reworked by Dan Kuykendall.
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><HR><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN348"
+>Version History</A
+></H4
+><P
+>			  Old Version
+			<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Created by Jengo, wasn't in SGML HOWTO format.</P
+></LI
+></UL
+>
+		</P
+><P
+>			  v1.0 (July 6, 2000)
+		</P
+><P
+>			<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Built proper SGML version.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Included the FAQ.</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Other minor additions.</P
+></LI
+></UL
+>
+		</P
+><P
+>			 v1.1 (September 27-29, 2000) - blinky
+		</P
+><P
+>			<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Added Testing Install section</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Added Trouble-shooting section</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Added description of application installation</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>Changes for the new setup program</P
+></LI
+></UL
+>
+		</P
+><P
+>			v0.01 (October 15 , 2000) - gnrfan , Converted the HOWTO to DocBook format
+			
+		</P
+><P
+>			v.0.05 (November 5, 2000) - gnrfan , Completely revamped according to Seek's
+			idea and intregrated the Developers HOWTO.
+		</P
+><P
+>			v 0.xx (Somewhere in the near future) -  gnrfan, Trail map comming up on
+			how to hack and learn about coding phpGroupWare(core) and its
+			apps too :-).
+		</P
+></DIV
+></DIV
+></DIV
+></DIV
+></DIV
+></BODY
+></HTML
+>

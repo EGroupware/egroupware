@@ -1,0 +1,87 @@
+### Core Developers ###
+
+* Joseph Engo (aka Jengo) <jengo@phpgroupware.org>
+- Man who started it all.
+- Provides project direction, documentation.
+- Works on core services session management, permissions, groups class, etc...
+- Wrote the following applications
+--- Addressbook (orignal work)
+--- ToDolist (orignal work)
+--- Inventory (orignal work)
+--- Email (Adapted from Aeromail, which was written by Mark Cushman <mark@cushman.net> http://the.cushman.net/)
+--- Calendar (Adapted from WebCalendar, which was written by Craig Knudsen <cknudsen@radix.net> http://www.radix.net/~cknudsen)
+- Continues development and project direction. 
+
+* Dan Kuykendall (aka Seek3r) <dan@kuykendall.org>
+- Project Administrator/Supervisor.
+- Provides project direction, documentation.
+- Works on core services such as the $phpgw[] array for application developers.
+- Hosts website, and offers commercial support thru Clear River Technologies (http://www.clearrivertech.com)
+- Wrote the following applications
+--- File Manager (Based on filemanager, which was written by Lacey Pevey <lpevey@mailhost.tcs.tulane.edu> http://px.sklar.com/code.html?code_id=258)
+--- Chat (orignal work)
+- Continues development and project direction. 
+
+### Application Developers ###
+* Michael Weber <weber@rising-systems.de>
+- Develops/Maintains Trouble Ticket System
+
+* Vincent Larchet	(aka vinz) <vinz@users.sourceforge.net>
+- He hops from application to application helping out everywhere
+- Keeps phpGW working on NT servers
+
+* Mark A Peters (aka Skeeter) <mpeters@satx.rr.com>
+- Developed/Maintains Headlines application
+- Developed/Maintains NNTP application
+- Helps with almost all other applications as well
+
+* Scott Moser (aka smoser) <smoser@brickies.net>
+-Developed/Maintains the FTP application
+
+* Itzchak Rehberg (aka izzy) <izzysoft@qumran.org>
+- has been working on replacement for mail() function
+- Developed/Maintains POP-3 class
+- Built/Maintains the german language files
+- He hops from application to application helping out everywhere
+
+* Stephan Beal (aka wander) <stephan@wanderinghorse.net>
+- Initial quick-n-dirty rbs port from the MRBS system
+- Minor bug fixes.
+- Conned Hakon into doing the Norwegian translations ;)
+
+* Marc Logemann (aka Loge) |loge@mail.com|
+- Develop/Maintains todo (project management)
+- Develops utility classes for phpgwapi
+- mental support for Palm Sync issue :)
+
+### Patch Contributors ### (in alphabetical order)	Let us know if we forgot anyone :)
+* Wolfgang Lunz          <wlunz@infomatec.de>
+* bachroxx               <bachroxx@users.sourceforge.net>
+* brandonne              <brandonne@users.sourceforge.net>
+* Park ChungKyu          <pchk@users.sourceforge.net>
+* Kjell Claesson         <keyson@users.sourceforge.net>
+- Swedish translations.
+* Simone Cortesi         <simone@cortesi.com>
+- Italian  translations.
+* flimm                  <flimm@users.sourceforge.net>
+* gmartine               <gmartine@users.sourceforge.net>
+* Omer Uner Guclu        <oquclu@superonline.com>
+* Marvin Horst           <marvinhorst@hotmail.com>
+* Brian King             <bking@affcu.com>
+* Marl                   <marl@users.sourceforge.net>
+* Mike Preishuber        <martin.preishuber@eclipt.uni-klu.ac.at>
+* Roy Svendsen           <roysv@users.sourceforge.net>
+* smoser                 <smoser@users.sourceforge.net>
+* Petr Moses             <pmoses@users.sourceforge.net>
+- Czechoslovakian translations.
+* preisel                <preisl@users.aourceforge.net>
+* Raúl Alexis Betancort Santana	<rabs@dimension-virtual.com>
+- Great working on our first template set.
+* Hakon Tjaum
+- Norwegian translations.
+* zaphod                 <zaphod@users.sourceforge.net>
+- Dutch (?) translations.
+
+Thanks to Crista Schofield and Eric Degner for *TONS* of Beta testing.
+All others on the phpgroupware-developers@lists.sourceforge.net mailing list
+And finally every one of our users for the encouragement that keeps us happy, which means more development.
