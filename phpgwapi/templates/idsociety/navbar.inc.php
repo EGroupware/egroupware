@@ -228,6 +228,7 @@
 				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
 //				'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
+			$var['em_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','em');
 			$tpl->set_var($var);
  			$tpl->parse('V_powered_bottom','B_powered_bottom');
 		}

@@ -1,5 +1,8 @@
 <!-- BEGIN footer -->
 			<br>
+		</td>
+	</tr>
+</table>
 			<!-- BEGIN B_powered_bottom -->
 			<table border="0" cellspacing="0" cellpadding="0" width="100%">
 				<tr>
@@ -10,9 +13,6 @@
 			</table>
 				<!-- END B_powered_bottom -->
 			<p>&nbsp;</p>
-		</td>
-	</tr>
-</table>
 </BODY>
 <!-- END footer -->
 </HTML>
