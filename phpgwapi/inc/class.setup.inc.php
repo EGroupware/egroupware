@@ -719,10 +719,7 @@
 			{
 				$testa[1] = 0;
 			}
-			if(@$testa[3] == '')
-			{
-				$testa[3] = 0;
-			}
+
 			$testb = explode('.',$newb);
 			if(@$testb[1] == '')
 			{
@@ -763,8 +760,9 @@
 				}
 				else
 				{
-					if($DEBUG) { echo ' no, they are equal.'; }
-					$less = 0;
+					if($DEBUG) { echo ' no, they are equal or of different length.'; }
+					// makes sure eg. '1.0.0' is counted less the '1.0.0.xxx' !
+					$less = count($testa) < count($testb) ? 1 : 0;
 				}
 			}
 			if($DEBUG) { echo '<br>Check value is: "'.$less.'"'; }
