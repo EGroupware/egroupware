@@ -334,9 +334,9 @@
 					break;
 			}
 			/* If they want NOGIF policy, then I do a global replace */
-			if (PHPGW_IMGTYPE_PREF == 2)
+			if ($GLOBALS['phpgw_info']['server']['image_type'] == 2)
 			{
-				$str = str_replace (".gif", ".png",$str);
+				$str = str_replace ('.gif', '.png',$str);
 			}
 			return $str;
 		}
