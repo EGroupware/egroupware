@@ -1,7 +1,7 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 0.9.99.013
-%define packaging 2
+%define version 0.9.99.014
+%define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -28,7 +28,11 @@ Packager: eGroupWare <r.jung@creativix.net>
 %description
 eGroupWare is a web-based groupware suite written in PHP. This package provides:
 
-egroupware core app, addressbook, backup, bookmark, calendar, comic, developer_tools, doc, email, felamimail, forum, ftp, headlines, infolog (CRM), manual, news_admin, phpsysinfo, polls, projects (advanced project management), sitemgr (web content manager), stocks, todo
+egroupware core app, addressbook, backup, bookmarks, calendar, comic, developer tools, 
+docs, email, emailadmin, etemplate, felamimail, filemanager, forum, ftp, fudforum, 
+headlines, infolog, jinn, messenger news admin, phpldapadmin, phpbrain (knowledgebase), 
+phpsysinfo, polls, projects (advanced project management), registration, sitemgr, 
+skel, stocks, tts (trouble ticket system), wiki
 
 It also provides an API for developing additional applications. See the egroupware
 apps project for add-on apps.
@@ -128,8 +132,11 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
-* Sat Feb XX 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-x
+* Wed Mar 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
 - add support to spec file for SuSE directory structure
+- extensions to Danish language
+- extensions at sitemgr
+- bugfixes for upcomming 1.0 release
 
 * Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
 - RC3-4 bugfix for broken calender ACL
@@ -214,5 +221,3 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 * Sat Aug 30 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.000
 - initial eGroupWare package anouncement.
 
-
-# end of file

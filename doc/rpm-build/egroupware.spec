@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.013
-%define packaging 2
+%define version 0.9.99.014
+%define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -504,17 +504,24 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
-* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-x
+* Wed Mar 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
 - add support to spec file for SuSE directory structure
+- extensions to Danish language
+- extensions at sitemgr
+- bugfixes for upcomming 1.0 release
 
-* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
+* Sat Fe 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
 - bugfix for broken calender ACL
 
 * Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-1
 - Release RC3-3 is only a small bugfixing for some installations
 - PostgreSQL bug fixed
 - Email Bug fixed
-- Login problem on some clients fixed
+-r 03 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.014-1
+- add support to spec file for SuSE directory structure
+- extensions to Danish language
+- extensions at sitemgr
+- bugfixes for upcomming 1.0 release Login problem on some clients fixed
 
 * Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012-2
 - We use the download problem at out server buf fix some other problems
