@@ -195,10 +195,12 @@ class calendar__
 
 	function prepare_recipients(&$new_event,$old_event)
 	{
-		for($i=0;$i<count($old_event->participants);$i++)
+		$old_part_count = count($old_event->participants);
+		for($i=0;$i<$old_part_count;$i++)
 		{
 			$delete = True;
-			for($k=0;$k<count($new_event->participants);$k++)
+			$new_part_count = count($new_event->participants);
+			for($i=0;$i<$new_part_count;$i++)
 			{
 				if($new_event->participants[$k] == $old_event->participants[$i])
 				{
@@ -212,7 +214,8 @@ class calendar__
 				$this->deleted[] = $old_event->participants[$i];
 			}
 		}
-		for($i=0;$i<count($new_event->participants);$i++)
+		$new_part_count = count($new_event->participants);
+		for($i=0;$i<$new_part_count;$i++)
 		{
 			$add = True;
 			for($k=0;$k<count($old_event->participants);$k++)
