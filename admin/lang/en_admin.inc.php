@@ -40,9 +40,13 @@
        case "title":			$s = "Title";				break;
        case "enabled":			$s = "Enabled";				break;
        case "applications":		$s = "Applications";		break;
+       case "edit group":		$s = "Edit Group";			break;
 
        case "installed applications":
 	$s = "Installed applications";						break;
+
+       case "permissions this group has":
+	$s = "Permissions this group has";					break;
 
        case "select permissions this group will have":
 	$s = "Select permissions this group will have";		break;
@@ -129,7 +133,7 @@
         $s = "They must be removed before you can continue";	break;
 
 
-       default: $s = "<b>*</b> ". $message;
+       default: $s = "* ". $message;
     }
     return $s;
   }
