@@ -431,7 +431,7 @@
 				{
 					$arr[$key] = $this->compress_array($val);
 				}
-				elseif ($val == '' || $val == '0')
+				elseif ($val == '')
 				{
 					unset($arr[$key]);
 				}
@@ -628,10 +628,14 @@
 			{
 				while (list($col,$cell) = each($cols))
 				{
-					$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:''));
+					list($extra_row) = explode(',',$cell['size']);
+					if (substr($cell['type'],0,6) != 'select' || !empty($extra_row) && $extra_row > 0)
+						$extra_row = '';
+					$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:'').
+						(!empty($extra_row) ? '|'.$extra_row : ''));
 					while (list(,$str) = each($all))
 					{
-						if (strlen($str) > 1)
+						if (strlen($str) > 1 && $str[0] != '@')
 						{
 							$to_trans[strtolower($str)] = $str;
 						}
@@ -679,6 +683,10 @@
 			}
 			list($app) = explode('.',$app);
 
+			if (!file_exists(PHPGW_SERVER_ROOT.'/developer_tools/inc/class.solangfile.inc.php'))
+			{
+				return 'Error: app developer-tools not installed !!!';
+			}
 			$solangfile = CreateObject('developer_tools.solangfile');
 
 			$langarr = $solangfile->load_app($app,$lang);

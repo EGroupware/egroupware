@@ -29,7 +29,8 @@
 			'no_filename'=> 'no filename given or selected via Browse...',
 			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
 			'exported'   => "eTemplate '%s' written to '%s'",
-			'newer_version' => "newer version '%s' exists !!!"
+			'newer_version' => "newer version '%s' exists !!!",
+			'need_name'  => 'Application name needed to write a langfile !!!'
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -406,13 +407,21 @@
 			}
 			elseif ($content['langfile'])
 			{
-				$additional = array();
-				if (substr($content['name'],0,9) == 'etemplate')
+				list($name) = explode('.',$content['name']);
+				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
 				{
-					$m = new editor(False);
-					$additional = $m->messages + $this->etemplate->types + $this->extensions + $this->aligns;
+					$msg = $this->messages['need_name'];
 				}
-				$msg = $this->etemplate->writeLangFile($content['name'],'en',$additional);
+				else
+				{
+					$additional = array();
+					if ($name == 'etemplate')
+					{
+						$m = new editor(False);
+						$additional = $m->messages + $this->etemplate->types + $this->extensions + $this->aligns;
+					}
+					$msg = $this->etemplate->writeLangFile($name,'en',$additional);
+				}
 			}
 			elseif ($content['export_xml'])
 			{
