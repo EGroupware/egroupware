@@ -405,8 +405,9 @@
 							$lines = file($appfile);
 							foreach($lines as $line)
 							{
-								// we realy need to split with tab+cr, as only this works with mbstring.overload=7 !!!
-								list($message_id,$app_name,,$content) = split("[\t\n]",$line);
+								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
+								list($message_id,$app_name,,$content) = explode("\t",$line);
+								$content=str_replace("\n",'',$content);
 								$message_id = substr(strtolower(chop($message_id)),0,MAX_MESSAGE_ID_LENGTH);
 								$app_name = chop($app_name);
 								$raw[$app_name][$message_id] = $content;
