@@ -26,7 +26,7 @@
 		<![endif]-->
 
 </head>
-<body bgcolor="#ffffff">
+<body>
 <div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}"/></a></div>
 
 <div id="divMain"style= "background-repeat:no-repeat;background-position: center center;background-image:url(./phpgwapi/templates/idots/images/login-background.jpg)">
@@ -39,9 +39,6 @@
 						<tr>
 							<td width="100%"><img src="./phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
 						</tr>
-<!--						<tr>
-							<td width="100%">&nbsp;</td>
-						</tr>-->
 					</table>
 
 				</td>
@@ -57,9 +54,6 @@
 <div align="center">{cd}</div>
 <p>&nbsp;</p>
 <form name="login_form" method="post" action="{login_url}">
-<!-- <table class=sidebox cellspacing=1 cellpadding=0  border=1  align=center> -->
-
-
 	<table class="divLoginbox" cellspacing="0" cellpadding="0" border="0" align="center">
 	<tr> 
 		<td class="divLoginboxHeader" style="border-bottom: #9c9c9c 1px solid;" align="center">{website_title}</td>
@@ -67,20 +61,14 @@
 	<tr > 
 		<td class="divSideboxEntry">
 
-		<table  cellspacing="3" cellpadding="0" width="100%" border="0">
+		<table cellspacing="3" cellpadding="0" width="100%" border="0">
 		<tr>
 <td colspan="4" align="center">
 &nbsp;
 </td>
 </tr>
-<!--		<tr>
-			<td colspan="3" align="center">
-			{register_link}<br/>
-				<img width="200" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="spacer" />
-			</td>
-		</tr>-->
 		<tr>
-			<td  colspan="3">
+			<td colspan="3">
 				<input type="hidden" name="passwd_type" value="text">
 				<input type="hidden" name="account_type" value="u">
 			</td>
@@ -104,7 +92,7 @@
 			<tr>
 			<td align="right" tablindex="1">{lang_username}:&nbsp;</td>
 			<td align="left"><input name="login" value="{cookie}" style="width: 150px; border: 1px solid silver;"></td>
-			<td align="left"><!--{select_domain}--></td>
+			<td align="left"></td>
 		</tr>
 		<tr>
 			<td align="right">{lang_password}:&nbsp;</td>
@@ -113,7 +101,7 @@
 		<tr>
 			<td align="right">&nbsp;</td>
 			<td align="left" style="margin-top:5px;">
-				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;width:100px;">
+				<input type="submit" value="{lang_login}" name="submitit" style="width:100px">
 			</td>
 		</tr>
 <!-- BEGIN registration -->
