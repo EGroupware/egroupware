@@ -423,7 +423,10 @@
 			$this->template->set_var('color',$GLOBALS['phpgw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
 			//$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
+
 			$options = '';
+			$options = '<option value="">'.lang('none')."</options>\n";
+
 			foreach ($this->icons as $icon)
 			{
 				$options .= '<option value="'.$icon.'"'.($icon == $cat['data']['icon'] ? ' selected="1"':'').'>'.
