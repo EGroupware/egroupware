@@ -60,8 +60,8 @@
 
 		function bofilemanager()
 		{
+			
 			$this->vfs = CreateObject('phpgwapi.vfs');
-
 			$to_decode = Array(
 				/*
 					Decode
@@ -666,6 +666,8 @@
 		function f_newfile()
 		{
 			$result = Array();
+			echo "newfile: ".$this->newfile ." createfile: ".$this->createfile;
+			//die();
 			if ($this->newfile && $this->createfile)
 			{
 				if($badchar = $this->bad_chars($this->createfile,True,True))
@@ -674,16 +676,16 @@
 					return $result;
 				}
 				if($this->vfs->file_exists(array(
-					'string' => $this->path.SEP.$this->createfile,
-					'relatives' => Array(RELATIVE_NONE)
+					'string' => $this->createfile,
+					'relatives' => Array(RELATIVE_ALL)
 					)))
 				{
 					$result[] = lang('file %1 already exists.  Please edit it or delete it first', $this->path.SEP.$this->createfile);
 					return $result;
 				}
 				if(!$this->vfs->touch(array(
-					'string' => $this->path.SEP.$this->createfile,
-					'relatives' => Array(RELATIVE_NONE)
+					'string' => $this->createfile,
+					'relatives' => Array(RELATIVE_ALL)
 					)))
 				{
 					$result[] = lang('file %1 could not be created', $this->path.SEP.$this->createfile);
@@ -691,6 +693,7 @@
 			}
 			else
 			{
+
 				$result[] = lang('filename not provided!');
 			}
 			return $result;
@@ -713,8 +716,8 @@
 				###
 		
 				$ls_array = $this->vfs->ls (array (
-						'string'	=> $this->path . '/' . $this->upload_file['name'][$i],
-						'relatives'	=> array (RELATIVE_NONE),
+						'string'	=> $this->upload_file['name'][$i],
+						'relatives'	=> array (RELATIVE_ALL,
 						'checksubdirs'	=> False,
 						'nofiles'	=> True
 					)

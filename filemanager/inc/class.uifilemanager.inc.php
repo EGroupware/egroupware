@@ -69,18 +69,17 @@
 
 		function uifilemanager()
 		{
-			$GLOBALS['phpgw_info']['flags']['xslt_app'] = True;
+			$this->no_header();
 			$this->actions = CreateObject('filemanager.uiactions');
 			$this->bo = CreateObject('filemanager.bofilemanager');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->browser = CreateObject('phpgwapi.browser');
-			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir($GLOBALS['phpgw_info']['flags']['currentapp']);
+			//$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir($GLOBALS['phpgw_info']['flags']['currentapp']);
 			$this->check_access();
 			$this->create_home_dir();
 			$this->verify_path();
 			$this->update();
-			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
-		
+			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets'));
 		}
 
 		function load_header()
@@ -89,9 +88,19 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			unset($GLOBALS['phpgw_info']['flags']['noappheader']);
 			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
 		}
+		function no_header()
+		{
+			$GLOBALS['phpgw_info']['flags']['noheader'] = True;
+			$GLOBALS['phpgw_info']['flags']['nonavbar'] = True;
+			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
+			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
+			 $GLOBALS['phpgw_info']['flags']['headonly'] = True;
+ 
 
+
+		}
 		function check_access()
 		{
 			if($this->bo->path != $this->bo->homedir && $this->bo->path != $this->bo->fakebase && $this->bo->path != '/' && !$this->bo->vfs->acl_check(array(
@@ -103,12 +112,6 @@
 			}
 			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
 			$this->bo->userinfo['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->bo->userinfo['working_id']);
-		}
-
-		function set_col_headers(&$p,$var,$append=True)
-		{
-		//	$p->set_var($var);
-		//	$p->parse('col_headers','column_headers',$append);
 		}
 
 		/**TODO: xslt-ise this (and get rid of the hard-coded html)*/
@@ -332,7 +335,8 @@
 						if($function == 'newfile')
 						{
 							$var = Array(
-								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.edit',
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.action',
+								'uiaction' => 'edit',
 								'path'	=> urlencode($this->bo->path),
 								'file'	=> urlencode($this->bo->createfile)
 							);
@@ -400,53 +404,7 @@
 				return '';
 			}
 		}
-/*
-		function image($image,$alt)
-		{
-			return '<img src="'.$GLOBALS['phpgw']->common->image($this->bo->appname,$image).'" alt="'.$alt.'" align="center" border="0">';
-		}
-
-		function link($array_params,$text)
-		{
-			return '<a href="'.$GLOBALS['phpgw']->link('/index.php',$array_params).'">'.$text.'</a>';
-		}
-
-		function build_upload_choices($number)
-		{
-			return $this->link(
-				Array(
-					'menuaction'	=> get_var('menuaction',Array('GET')),
-					'path'	=> $this->bo->path,
-					'show_upload_boxes'	=> $number
-				),
-				$number).'&nbsp;&nbsp;';
-		}
-
-		function column_header(&$p,$internal,$displayed,$link=True)
-		{
-			if($link)
-			{
-				$header_str = '<a href="'
-					. $GLOBALS['phpgw']->link('/index.php',
-						Array(
-							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-							'sortby'		=> $internal
-						)
-					).'"><b>'.lang($displayed).'</b></a>';
-			}
-			else
-			{
-				$header_str = $displayed;
-			}
-			$this->set_col_headers(
-				$p,
-				Array(
-					'td_extras'	=> '',
-					'column_header'	=> $header_str.$this->build_help($internal)
-				)
-			);
-		}
-*/
+		
 		function display_buttons()
 		{
 			$var = array();
@@ -645,7 +603,7 @@
 			}
 			return $var;
 		}
-
+/*
 		function display_summary_info($numoffiles,$usedspace)
 		{
 
@@ -698,7 +656,7 @@
 			}
 			return $p->fp('output','table');
 		}
-
+*/
 		function display_uploads()
 		{
 
@@ -772,7 +730,16 @@
 		
 		function index( $edit=array())
 		{
-			$this->load_header();
+			//This lets you use an alternate xslt by appending &template=<name> to the url
+			if (!($template = get_var('template', array('GET', 'POST'))) )
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file(array('index',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
+			}
+			else
+			{
+				$GLOBALS['phpgw']->xslttpl->add_file($template);
+			}
+			
 			$files_array = $this->bo->load_files();
 			$usage = 0;
 			$files_array = $this->dirs_first($files_array);
@@ -893,10 +860,11 @@
 						)
 					)
 				);
-				$GLOBALS['phpgw']->xslttpl->add_file(array('index',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
+
 				
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
 				$var = Array(
+
 					'form_action'	=> $GLOBALS['phpgw']->link('/index.php',
 							Array(
 								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.action',
@@ -970,7 +938,17 @@
 				}
 				
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('index' => $var));
-
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('sidebar' => array(
+					'url' => $GLOBALS['phpgw']->link('/index.php',
+							Array(
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+								'path'		=> urlencode($this->bo->path)
+							), 1
+							),
+					'label' => lang('phpgroupware files'),
+					'link_label' => lang('add mozilla/netscape sidebar tab')
+						)
+						));
 				@reset($this->bo->file_attributes);
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('settings' => $this->bo->settings));
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('display_settings' => $GLOBALS['phpgw_info']['theme']));
@@ -1012,46 +990,15 @@
 		}
 		function view()
 		{	
-			//Some VFSs (ie WebDAV) are able to provide their own more efficent view method
-			//than just reading the file into memory then dumping it back out again
-			if ($this->bo->vfs->options('VIEW'))
-			{
-				$this->bo->vfs->view(array (
-					'string'	=> $this->bo->path.'/'.$this->bo->file,
-					'relatives'	=> array (RELATIVE_NONE)
-				));
-			} 
-			else 
-			{
-				
-				$GLOBALS['phpgw_info']['flags']['noheader'] = true;
-				$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
-				$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
-				$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
-				$ls_array = $this->bo->vfs->ls (array (
-						'string'	=>  $this->bo->path.'/'.$this->bo->file,
-						'relatives'	=> array (RELATIVE_ALL),
-						'checksubdirs'	=> False,
-						'nofiles'	=> True
-					)
-				);
-			
-				if ($ls_array[0]['mime_type'])
-				{
-					$mime_type = $ls_array[0]['mime_type'];
-				}
-				elseif ($GLOBALS['settings']['viewtextplain'])
-				{
-					$mime_type = 'text/plain';
-				}
-			
-				header('Content-type: ' . $mime_type);
-				echo $this->bo->vfs->read (array (
-						'string'	=> $this->bo->path.'/'.$this->bo->file,
-						'relatives'	=> array (RELATIVE_NONE)
-					)
-				);
-			}
+			$GLOBALS['phpgw_info']['flags']['noheader'] = true;
+			$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
+			$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
+			$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
+
+			$this->bo->vfs->view(array (
+				'string'	=> $this->bo->path.'/'.$this->bo->file,
+				'relatives'	=> array (RELATIVE_NONE)
+			));
 			exit();;
 		}
 		
