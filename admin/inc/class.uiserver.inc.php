@@ -156,7 +156,7 @@
 				$GLOBALS['phpgw']->template->set_var(array(
 					'server_name' => $GLOBALS['phpgw']->strip_html($server['server_name']),
 					'server_url'  => $GLOBALS['phpgw']->strip_html($server['server_url']),
-					'server_security' => strtoupper($server['server_security']),
+					'server_security' => $server['server_security'] ? strtoupper($server['server_security']) : lang('none'),
 					'server_mode' => strtoupper($server['server_mode'])
 				));
 
