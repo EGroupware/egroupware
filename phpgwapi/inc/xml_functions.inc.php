@@ -709,6 +709,14 @@
 		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
 	}
 
+	$GLOBALS['_xmlrpcs_package_app_byid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_package_app_byid_doc'] = 'Package an application for transport back to the calling client';
+	function _xmlrpcs_package_app_byid($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.package_app_byid',$app->scalarval());
+	}
+
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
@@ -820,6 +828,11 @@
 			'function'  => '_xmlrpcs_find_new_app',
 			'signature' => $GLOBALS['_xmlrpcs_find_new_app_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_find_new_app_doc']
+		),
+		'system.package_app_byid' => array(
+			'function'  => '_xmlrpcs_package_app_byid',
+			'signature' => $GLOBALS['_xmlrpcs_package_app_byid_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_package_app_byid_doc']
 		),
 		'system.login'  => array(
 			'function'  => '_xmlrpcs_login',

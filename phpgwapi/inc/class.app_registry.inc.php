@@ -33,6 +33,7 @@
 			'request_appbyid'       => True,
 			'request_appbyname'     => True,
 			'request_newer_applist' => True,
+			'request_packaged_app'  => True,
 			'get_appbyid'           => True,
 			'get_appbyname'         => True,
 			'find_new_app'          => True
@@ -44,6 +45,8 @@
 		var $is;
 		var $client;
 		var $server;
+
+		var $dir_file = Array();
 
 //		var $target_page = '/cvsdemo/xmlrpc.php';
 //		var $target_site = 'www.phpgroupware.org';
@@ -125,6 +128,16 @@
 								)
 							),
 							'docstring' => lang('compare an array of apps/versions against the repository and return new/updated list of apps.')
+						),
+						'package_app_byid' => Array(
+							'function'  => 'package_app_byid',
+							'signature' => Array(
+								Array(
+									xmlrpcStruct,
+									xmlrpcString
+								)
+							),
+							'docstring' => lang('Package an application for transport back to the calling client.')
 						)
 					);
 					return $xml_functions;
@@ -201,135 +214,157 @@
 			}
 		}
 
+		function request_packaged_app($app_id)
+		{
+			if(is_object($this->is))
+			{
+				return $this->is->send('system.package_app_byid',$app_id,$this->is->server['server_url']);
+			}
+			else
+			{
+				return $this->request('phpgwapi.app_registry.get_appbyname',$app_name);
+			}
+		}
+
 		function get_result()
 		{
 			switch($this->db->num_rows())
 			{
 				case 0:
-					$app[] = CreateObject('phpgwapi.xmlrpcval',CreateObject('phpgwapi.xmlrpcval',False,'boolean'),'boolean');
-					break;
-				case 1:
-					$this->db->next_record();
-					$app[] = CreateObject('phpgwapi.xmlrpcval',
-						Array(
-							'id'      => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_id'),'int'),
-							'name'    => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_name'),'string'),
-							'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
-							'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
-							'tables'  => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_tables'),'string')
-						),
-						'struct'
-					);
+					$app = False;
 					break;
 				default:
 					while($this->db->next_record())
 					{
-						$app[] = CreateObject('phpgwapi.xmlrpcval',
-								Array(
-									'id'      => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_id'),'int'),
-									'name'    => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_name'),'string'),
-									'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
-									'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
-									'tables'  => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_tables'),'string')
-								),
-								'struct'
+						$app[$this->db->f('app_id')] = Array(
+							'id'      => $this->db->f('app_id'),
+							'name'    => $this->db->f('app_name'),
+							'title'   => $this->db->f('app_title'),
+							'version' => $this->db->f('app_version'),
+							'tables'  => $this->db->f('app_tables')
 						);
 					}
 					break;
 			}
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$app, 'struct'));
+			return $app;
 		}
 
-//		function get_result()
-//		{
-//			switch($this->db->num_rows())
-//			{
-//				case 0:
-//					$app = False;
-//					break;
-//				case 1:
-//					$this->db->next_record();
-//					$app = Array(
-//						'id'      => $this->db->f('app_id'),
-//						'name'    => $this->db->f('app_name'),
-//						'title'   => $this->db->f('app_title'),
-//						'version' => $this->db->f('app_version'),
-//						'tables'  => $this->db->f('app_tables')
-//					);
-//					break;
-//				default:
-//					while($this->db->next_record())
-//					{
-//						$app[] = Array(
-//							'id'      => $this->db->f('app_id'),
-//							'name'    => $this->db->f('app_name'),
-//							'title'   => $this->db->f('app_title'),
-//							'version' => $this->db->f('app_version'),
-//							'tables'  => $this->db->f('app_tables')
-//						);
-//					}
-//					break;
-//			}
-//			return $app;
-//		}
+		function xml_response($app)
+		{
+			switch(gettype($app))
+			{
+				case 'boolean':
+					return CreateObject('phpgwapi.xmlrpcval',CreateObject('phpgwapi.xmlrpcval',False,'boolean'),'boolean');
+					break;
+				case 'array':
+					@reset($app);
+					while($app && list($id,$application) = each($app))
+					{
+						$updated_app[$id] = CreateObject('phpgwapi.xmlrpcval',
+							Array(
+								'id'      => CreateObject('phpgwapi.xmlrpcval',$id,'int'),
+								'name'    => CreateObject('phpgwapi.xmlrpcval',$application['name'],'string'),
+								'title'   => CreateObject('phpgwapi.xmlrpcval',$application['title'],'string'),
+								'version' => CreateObject('phpgwapi.xmlrpcval',$application['version'],'string'),
+								'tables'  => CreateObject('phpgwapi.xmlrpcval',$application['tables'],'string')
+							),
+							'struct'
+						);
+					}
+					return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$updated_app, 'struct'));
+					break;
+			}
+		}
 
 		function get_appbyid($app_id)
 		{
 			$this->db->query('SELECT * FROM phpgw_applications WHERE app_id='.$app_id,__LINE__,__FILE__);
-			return $this->get_result();
+			return $this->xml_response($this->get_result());
 		}
 
 		function get_appbyname($app_name)
 		{
 			$this->db->query("SELECT * FROM phpgw_applications WHERE app_name='".$app_name."'",__LINE__,__FILE__);
-			return $this->get_result();
+			return $this->xml_response($this->get_result());
 		}
 
 		function get_allapps()
 		{
 			$this->db->query('SELECT * FROM phpgw_applications',__LINE__,__FILE__);
-			return $this->get_result();
+			return $this->xml_response($this->get_result());
 		}
 
 		function find_new_app($apps)
 		{
 			$this->db->query('SELECT * FROM phpgw_applications',__LINE__,__FILE__);
-			while($this->db->next_record())
-			{
-				$app[$this->db->f('app_id')] = Array(
-					'id'      => $this->db->f('app_id'),
-					'name'    => $this->db->f('app_name'),
-					'title'   => $this->db->f('app_title'),
-					'version' => $this->db->f('app_version'),
-					'tables'  => $this->db->f('app_tables')
-				);
-			}
+			$app = $this->get_result();
 			@reset($apps);
 			while($apps && list($id,$application) = each($apps))
 			{
 				if($app[$id])
 				{
-					if($app[$id]->version == $application->version)
+					if($app[$id]['version'] == $application['version'])
 					{
 						unset($app[$id]);
 					}
 				}
 			}
-			@reset($app);
-			while($app && list($id,$application) = each($app))
-			{
-				$updated_app[$id] = CreateObject('phpgwapi.xmlrpcval',
-					Array(
-						'id'      => CreateObject('phpgwapi.xmlrpcval',$id,'int'),
-						'name'    => CreateObject('phpgwapi.xmlrpcval',$application->name,'string'),
-						'title'   => CreateObject('phpgwapi.xmlrpcval',$application->title,'string'),
-						'version' => CreateObject('phpgwapi.xmlrpcval',$application->version,'string'),
-						'tables'  => CreateObject('phpgwapi.xmlrpcval',$application->tables,'string')
-					),
-					'struct'
-				);
-			}
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$updated_app, 'struct'));
+			return $this->xml_response($app);
 		}
+
+		function package_file($filename)
+		{
+			$fp=fopen($filename,'rt');
+			$packed_file = CreateObject('phpgwapi.xmlrpcval',fread($fp,filesize($filename)),'base64');
+			fclose($fp);
+			return $packed_file;
+		}
+
+		function pack_dir($directory,$app,$dir_prefix='')
+		{
+			$sep = filesystem_separator();
+			if($dir_prefix)
+			{
+				$dir_prefix .= $sep;
+			}
+			$d = dir($directory);
+			while($entry = $d->read())
+			{
+				$new_filename = $directory.$sep.$entry;
+				if(is_file($new_filename))
+				{
+					$this->dir_file[$dir_prefix.$entry] = $this->package_file($new_filename);
+				}
+				elseif(is_dir($new_filename))
+				{
+					if($entry != '.' && $entry != '..' && $entry != 'CVS')
+					{
+//						$this->dir_file[$dir_prefix.$entry] = CreateObject('phpgwapi.xmlrpcval',$new_filename,'string');
+						$dir_path[$dir_prefix.$entry] = $new_filename;
+					}
+				}
+			}
+			$d->close();
+			@reset($dir_path);
+			while($dir_path && list($dir_prefix,$filename) = each($dir_path))
+			{
+				$this->pack_dir($filename,$app,$dir_prefix);
+			}
+		}
+
+		function package_app_byid($appid)
+		{
+			$this->db->query('SELECT app_name FROM phpgw_applications WHERE app_id='.$appid,__LINE__,__FILE__);
+			if(!$this->db->num_rows())
+			{
+				return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',False,'boolean'),'boolean');
+			}
+			$this->db->next_record();
+			$path_prefix = PHPGW_SERVER_ROOT.filesystem_separator().$this->db->f('app_name');
+			$this->dir_file = Array();
+			$this->pack_dir($path_prefix,$this->db->f('app_name'));
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->dir_file,'struct'));
+		}
+
 	}
 ?>
