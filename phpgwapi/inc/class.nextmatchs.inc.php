@@ -307,15 +307,15 @@
                                   array('private',lang('Only yours')));
 					for ($index=0; $index<$indexlimit; $index++)
 					{
-						$filter_obj[2+$index][0] = $user_groups[$index][0];
-						$filter_obj[2+$index][1] = 'Group - ' . $user_groups[$index][1];
+						$filter_obj[2+$index][0] = $user_groups[$index]['account_id'];
+						$filter_obj[2+$index][1] = 'Group - ' . $user_groups[$index]['account_name'];
 					}
 				}
 			}
       
 			if (is_array($filter_obj))
 			{
-				$str .= '<select name="filter">';
+				$str .= '<select name="filter">'."\n";
           
 				$indexlimit = count($filter_obj);
 
@@ -333,10 +333,11 @@
 						$str .= ' selected';
 					}
 
-					$str .= '>' . $filter_obj[$index][1] . '</option>';
+					$str .= '>' . $filter_obj[$index][1] . '</option>'."\n";
 				}
           
-				$str .= '</select>';
+				$str .= '</select>'."\n";
+				$tpl->set_var('select',$str);
 				$tpl->set_var('lang_filter',lang('Filter'));
 			}
      
