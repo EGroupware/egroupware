@@ -47,10 +47,10 @@ Fax:<br/>
 Pager:<br/>
 Other number:<br/>
 Birthday:</td></table>
+...and many others.  
 Simply fill in the fields, and click OK.</li><p/></ul>
-Access can be restricted to, private, group readable (that is the members of the
-same groups as you are in, will be able to see the too, and globally readable, all
-users to the system will be able to see the entry.<p/>
-Users can only edit their own entries, regardless of readability settings.
+Access can be restricted to private, overriding acl preferences settings.
+From preferences, you can grant access to users to the be able to view, 
+edit, and even delete your entries.<p/>
 <?php $phpgw->common->phpgw_footer(); ?>
 
