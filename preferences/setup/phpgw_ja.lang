@@ -2,6 +2,7 @@ change password	preferences	ja	パスワード変更
 change your password	preferences	ja	パスワード変更
 change your profile	preferences	ja	プロフィール変更
 change your settings	preferences	ja	設定変更
+country selection	preferences	ja	国の選択
 currency	preferences	ja	通貨
 date format	preferences	ja	日付書式
 default application	preferences	ja	アプリケーション（既定）
@@ -23,4 +24,6 @@ text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the x timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
+use selectbox	preferences	ja	セレクトボックス
+use text entry	preferences	ja	テキスト入力
 your current theme is: x	preferences	ja	</b>
