@@ -1,12 +1,12 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
-(shift-)click or drag to change value	jscalendar	da	
-- click on any of the time parts to increase it	jscalendar	da	
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	da	
-- or click and drag for faster selection.	jscalendar	da	
-- or shift-click to decrease it	jscalendar	da	
-- use the %1, %2 buttons to select month	jscalendar	da	
-- use the %1, %2 buttons to select year	jscalendar	da	
+(shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
+- click on any of the time parts to increase it	jscalendar	da	- Klik på hvilken som helst tidsandelerne for at forøge den
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	da	- Hold musse knappen på hvilken som helst af de overstående knapper for hurtigere udvælgelse.
+- or click and drag for faster selection.	jscalendar	da	- eller klik og træk for hurtigere udvælgelse
+- or shift-click to decrease it	jscalendar	da	- eller Shift-klik for at forminske den
+- use the %1, %2 buttons to select month	jscalendar	da	- Brug %1, %2 knapperne for at vælge måned
+- use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
 80 (http)	admin	da	80 (http)
@@ -55,7 +55,6 @@ australia	common	da	Australien
 austria	common	da	Østrig
 author	common	da	Forfatter
 autohide sidebox menus	common	da	Gem automatisk sidemenuen
-automatically hide the sidebox menu's?	common	da	
 automatically hide the sidebox menus?	common	da	Skal sidemenuen automatisk gemmes?
 autosave default category	common	da	Autogem Standard Kategori
 azerbaijan	common	da	Azerbaijan
@@ -84,7 +83,6 @@ brazil	common	da	Brazilien
 british indian ocean territory	common	da	Britisk Indiske ocean
 brunei darussalam	common	da	Brunei Darussalam
 bulgaria	common	da	Bulgarien
-bulleted list	htmlarea	da	
 burkina faso	common	da	Burkina Faso
 burundi	common	da	Burundi
 calendar	common	da	Kalender
@@ -134,7 +132,7 @@ croatia	common	da	Kroatien
 cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
-current style	htmlarea	da	
+current style	htmlarea	da	Nuværende stil
 current users	common	da	Nuværende antal brugere
 cut selection	htmlarea	da	Klip udvalgte
 cyprus	common	da	Cupern
@@ -142,17 +140,16 @@ czech republic	common	da	Tjekkiet
 date	common	da	Dato
 date due	common	da	Skal være færdig
 date hired	common	da	Dato hyret
-date selection:	jscalendar	da	
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	
+date selection:	jscalendar	da	Dato valg:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	da	December
-decrease indent	htmlarea	da	
 default category	common	da	Standard Kategori
 delete	common	da	Slet
 denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
@@ -185,7 +182,7 @@ email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks.
 enabled	common	da	Slået til
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enlarge editor	htmlarea	da	
+enlarge editor	htmlarea	da	Forstør editoren
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
@@ -209,7 +206,7 @@ filter	common	da	Filter
 finland	common	da	Finland
 first name	common	da	Fornavn
 first name of the user, eg. "%1"	common	da	fornavn på brugeren, f.eks. "%1"
-first page	common	da	
+first page	common	da	Første side
 firstname	common	da	Fornavn
 fixme!	common	da	RETMIG!
 font color	htmlarea	da	Skrift farve
@@ -230,7 +227,7 @@ ghana	common	da	Ghana
 gibraltar	common	da	Gibraltar
 global	common	da	Global
 global public	common	da	Global adgang
-go today	jscalendar	da	
+go today	jscalendar	da	Gå i dag
 grant access	common	da	Giv adgang
 greece	common	da	Grækenland
 greenland	common	da	Grønland
@@ -254,7 +251,7 @@ guyana	common	da	Guyana
 haiti	common	da	Haiti
 heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
 help	common	da	Hjælp
-help using editor	htmlarea	da	
+help using editor	htmlarea	da	Hjælp til editoren
 high	common	da	Høj
 highest	common	da	Højeste
 holy see (vatican city state)	common	da	Vatikanet
@@ -262,16 +259,15 @@ home	common	da	Startside
 home email	common	da	privat e-mail
 honduras	common	da	Honduras
 hong kong	common	da	Hong Kong
-horizontal rule	htmlarea	da	
+horizontal rule	htmlarea	da	Horisontal Regl
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
 hungary	common	da	Ungarn
 iceland	common	da	Island
-increase indent	htmlarea	da	
 india	common	da	Indien
 indonesia	common	da	Indonesien
-insert all %1 addresses of the %2 contacts in %3	common	da	
-insert image	htmlarea	da	Insæt billede
-insert table	htmlarea	da	
+insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
+insert image	htmlarea	da	Indsæt billede
+insert table	htmlarea	da	Indsæt tabel
 insert web link	htmlarea	da	Insæt hyperlink
 international	common	da	International
 invalid ip address	common	da	Ugyldig IP
@@ -383,7 +379,7 @@ niger	common	da	Niger
 nigeria	common	da	Nigeria
 niue	common	da	Niue
 no	common	da	Nej
-no entries found, try again ...	common	da	
+no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
 no history for this record	common	da	Ingen historie fundet for denne post
 no subject	common	da	Intet Emne
 none	common	da	Ingen
@@ -406,7 +402,7 @@ only private	common	da	kun private
 only yours	common	da	Kun Din
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
-ordered list	htmlarea	da	
+ordered list	htmlarea	da	Sorteret visning
 original	common	da	Original
 other	common	da	Anden
 overview	common	da	Oversigt
@@ -419,7 +415,7 @@ palestinian territory, occupied	common	da	Palestina, Besatte Territorie
 panama	common	da	Panama
 papua new guinea	common	da	Papua Ny Guinea
 paraguay	common	da	Paraguay
-parcel	common	da	
+parcel	common	da	Pakke
 parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
@@ -462,13 +458,13 @@ public	common	da	offentlig
 puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
-read this list of methods.	common	da	
+read this list of methods.	common	da	Læs denne liste over metoder
 redoes your last action	htmlarea	da	Fortryder din sidste handling
 reject	common	da	Afvis
 rename	common	da	Omdøb
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	
-returns an array of todo items	common	da	
-returns struct of users application access	common	da	
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
+returns an array of todo items	common	da	Returnere et array af opgaver
+returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang
 reunion	common	da	Reunion
 romania	common	da	Romanien
 russian federation	common	da	Rusland
@@ -487,7 +483,7 @@ save	common	da	Gem
 search	common	da	Søg
 section	common	da	Sektion
 select	common	da	Vælg
-select all %1 %2 for %3	common	da	
+select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
 select category	common	da	Vælg Kategori
 select date	common	da	Vælg dato
 select group	common	da	Vælg gruppe
@@ -509,7 +505,7 @@ show all categorys	common	da	Vis alle kategorier
 show menu	common	da	vis menu
 show page generation time	common	da	Vis side generations tid
 show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden?
-show_more_apps	common	da	
+show_more_apps	common	da	vis_flere_applikationer
 showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
 sierra leone	common	da	Sierra Leone
@@ -527,14 +523,12 @@ sri lanka	common	da	Sri Lanka
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
-strikethrough	htmlarea	da	
 subject	common	da	Emne
 submit	common	da	Send
-subscript	htmlarea	da	
-substitutions and their meanings:	common	da	
+subscript	htmlarea	da	Underscript
 sudan	common	da	Sudan
 sunday	common	da	Søndag
-superscript	htmlarea	da	
+superscript	htmlarea	da	Superscript
 suriname	common	da	Suriname
 svalbard and jan mayen	common	da	Svalbard og Jan Mayen
 swaziland	common	da	Swaziland
@@ -554,7 +548,7 @@ this application requires an upgrade	common	da	Denne applikation skal opdateres
 this name has been used already	common	da	Dette navn er allerede i brug!
 thursday	common	da	Torsdag
 time	common	da	Tid
-time selection:	jscalendar	da	
+time selection:	jscalendar	da	Tid valgt:
 time tracking	common	da	Tidsregistrering
 time zone	common	da	Tidszone
 time zone offset	common	da	Tidszone forskel
@@ -564,8 +558,8 @@ to correct this error for the future you will need to properly set the	common	da
 to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilbage til beskedlisten, klik <a href="%1">her</a>
 today	common	da	I dag
 todays date, eg. "%1"	common	da	i dags dato, f.eks. "%1"
-toggle first day of week	jscalendar	da	
-toggle html source	htmlarea	da	
+toggle first day of week	jscalendar	da	Toogle første dag på ugen
+toggle html source	htmlarea	da	Toggle HTML Source
 togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
@@ -618,7 +612,7 @@ wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
 which groups	common	da	Hvilke grupper
-wk	jscalendar	da	
+wk	jscalendar	da	uge
 work email	common	da	arbejds e-mail
 written by:	common	da	Skrevet af:
 year	common	da	År
