@@ -13,28 +13,33 @@
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
+
+  $t = new Template($phpgw_info["server"]["template_dir"]);
+  $t->set_file(array( "header"	=> "accesslog.tpl",
+			  "row"		=> "accesslog.tpl",
+			  "footer"	=> "accesslog.tpl" ));
+
+  $t->set_block("header","row","footer");
+
   $show_maxlog = 30;
-?>
-  <br>
-  <table border="0" align="center" width="75%">
-   <tr>
-    <td bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>" align="center" colspan="5">
-      <?php echo lang_admin("Last x logins",$show_maxlog); ?>
-    </td>
-   </tr>
-   <tr bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>">
-    <td><?php echo lang_admin("LoginID"); ?></td>
-    <td><?php echo lang_admin("IP"); ?></td>
-    <td><?php echo lang_common("Login"); ?></td>
-    <td><?php echo lang_common("Logout"); ?></td>
-    <td><?php echo lang_common("Total"); ?></td>
-   </tr>
-   <?php
+
+  $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $t->set_var("lang_last_x_logins",lang_admin("Last x logins",$show_maxlog));
+
+  $t->set_var("lang_loginid",lang_admin("LoginID"));
+  $t->set_var("lang_ip",lang_admin("IP"));
+  $t->set_var("lang_login",lang_common("Login"));
+  $t->set_var("lang_logout",lang_common("Logout"));
+  $t->set_var("lang_total",lang_common("Total"));
+
+  $t->parse("out","header");
 
   $phpgw->db->query("select loginid,ip,li,lo from access_log order by li desc "
 	         . "limit $show_maxlog");
   while ($phpgw->db->next_record()) {
+
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+    $t->set_var("tr_color",$tr_color);
 
     // In case there was a problem creating there session. eg, bad login time
     // I still want it to be printed here.  This will alert the admin there
@@ -60,8 +65,15 @@
     else
        $lo = "&nbsp;";
 
-    echo "<tr bgcolor=$tr_color><td>" . $phpgw->db->f("loginid") . "</td><td>"
-       . $phpgw->db->f("ip") . "</td><td>$li</td><td>$lo</td><td>$total</td></tr>";
+    $t->set_var("row_loginid",$phpgw->db->f("loginid"));
+    $t->set_var("row_ip",$phpgw->db->f("ip"));
+    $t->set_var("row_li",$li);
+    $t->set_var("row_lo",$li);
+    $t->set_var("row_total",$total);
+
+    if ($phpgw->db->num_rows() != ++$i) {
+       $t->parse("output","row",True);
+    }
   }
 
   $phpgw->db->query("select count(*) from access_log");
@@ -74,11 +86,11 @@
 
   $percent = round((10000 * ($loggedout / $total)) / 100);
 
-  echo "<tr bgcolor=" . $theme["bg_color"] . "><td colspan=5 align=left>"
-     . lang_admin("Total records") . ": $total</td></tr>";
+  $t->set_var("bg_color",$phpgw_info["themes"]["bg_color"]);
+  $t->set_var("footer_total",lang_admin("Total records") . ": $total");
+  $t->set_var("lang_percent",lang_admin("Percent of users that logged out") . ": $percent%");
 
-  echo "<tr bgcolor=" . $theme["bg_color"] . "><td colspan=5 align=left>"
-     . lang_admin("Percent of users that logged out") . ": $percent%</td></tr></table>";
+  $t->pparse("out","footer");
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 
