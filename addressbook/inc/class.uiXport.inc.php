@@ -182,11 +182,12 @@
 
 				$buffer = $this->bo->export($conv_type,$cat_id);
 
-				if(($download == 'on') || ($o->type == 'pdb'))
+				if(($download == 'on') || ($conv_type == 'Palm_PDB'))
 				{
 					// filename, default application/octet-stream, length of file, default nocache True
-					$this->browser->content_header($tsvfilename,'application/octet-stream',strlen($buffer));
+					$this->browser->content_header($tsvfilename,'application/x-octet-stream',strlen($buffer));
 					echo $buffer;
+					exit;
 				}
 				else
 				{
