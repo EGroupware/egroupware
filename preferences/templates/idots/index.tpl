@@ -6,8 +6,8 @@
 
 <!-- BEGIN app_row -->
  <tr height="60" bgcolor="{icon_backcolor}">
-  <td width="5%" align="center" valign="middle" background="../phpgwapi/templates/idots/images/panel.png"><img src="{app_icon}" alt="[ {app_name} ]"> <a name="{a_name}"></a></td>
-  <td width="95%" valign="middle" background="../phpgwapi/templates/idots/images/panel.png"><strong>&nbsp;&nbsp;{app_name}</strong></td>
+  <td width="5%" align="center" valign="middle"><img src="{app_icon}" alt="[ {app_name} ]"> <a name="{a_name}"></a></td>
+  <td width="95%" valign="middle"><strong>&nbsp;&nbsp;{app_name}</strong></td>
  </tr>
 <!-- END app_row -->
 
