@@ -254,7 +254,7 @@
 				for($i=0;$i<7;$i++)
 				{
 					$var = Array(
-						'dayname'	=> '<b>' . substr(lang($GLOBALS['phpgw']->datetime->days[$i]),0,2) . '</b>',
+						'dayname'	=> '<b>' . lang($GLOBALS['phpgw']->datetime->days_short[$i]) . '</b>',
 						'day_image'	=> ''
 					);
 					$this->output_template_array($mini_cal_tpl,'daynames','mini_day',$var);
