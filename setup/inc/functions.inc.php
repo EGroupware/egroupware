@@ -36,6 +36,6 @@
   if(!file_exists("../header.inc.php")) { include("../header.inc.php"); }
 
   include("./inc/phpgw_setup.inc.php");
-  include("./inc/phpgw_schema_proc.inc.php");
+//  include("./inc/phpgw_schema_proc.inc.php");
   $phpgw_setup = new phpgw_setup;
 ?>
