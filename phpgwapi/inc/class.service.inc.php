@@ -35,7 +35,10 @@
 			{
 				$data     = $service[2];
 				$function = $service[1];
-				$service  = $service[0];
+				$temp_service = $service[0];
+				settype($service,'string');
+				$service = $temp_service;
+				unset($temp_service);
 			}
 			switch ($service)
 			{
@@ -45,6 +48,9 @@
 				case 'todo':
 					$this = CreateObject('phpgwapi.service_' . $service);
 					break;
+				case 'app_registry':
+					$this = CreateObject('phpgwapi.'.$service);
+					break;					
 				default:
 					$this = CreateObject($service);
 					break;

@@ -25,7 +25,8 @@
 		var $payload;
 		var $methodname;
 		var $params = array();
-		var $debug  = 0;
+//		var $debug  = True;
+		var $debug  = False;
 
 		function xmlrpcmsg($meth, $pars=0)
 		{
@@ -198,6 +199,7 @@
 						xml_error_string(xml_get_error_code($parser)),
 						xml_get_current_line_number($parser));
 				}
+//				echo $errstr;
 				error_log($errstr);
 				$r = CreateObject('phpgwapi.xmlrpcresp', '', $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 				xml_parser_free($parser);

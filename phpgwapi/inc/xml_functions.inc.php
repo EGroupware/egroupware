@@ -685,6 +685,30 @@
 	}
 	*/
 
+	$GLOBALS['_xmlrpcs_get_appbyname_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_get_appbyname_doc'] = 'Returns an array of information for the requested application name';
+	function _xmlrpcs_get_appbyname($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.get_appbyname',$app->scalarval());
+	}
+
+	$GLOBALS['_xmlrpcs_get_appbyid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_get_appbyid_doc'] = 'Returns an array of information for the requested application ID';
+	function _xmlrpcs_get_appbyid($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.get_appbyid',$app->scalarval());
+	}
+
+	$GLOBALS['_xmlrpcs_find_new_app_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
+	$GLOBALS['_xmlrpcs_find_new_app_doc'] = 'Returns an array of information for the requested application ID';
+	function _xmlrpcs_find_new_app($server,$m)
+	{
+		$app = $m->getParam(0);
+		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
+	}
+
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
@@ -782,6 +806,21 @@
 			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
 		),
 		*/
+		'system.get_appbyname' => array(
+			'function'  => '_xmlrpcs_get_appbyname',
+			'signature' => $GLOBALS['_xmlrpcs_get_appbyname_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_get_appbyname_doc']
+		),
+		'system.get_appbyid' => array(
+			'function'  => '_xmlrpcs_get_appbyid',
+			'signature' => $GLOBALS['_xmlrpcs_get_appbyid_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_get_appbyid_doc']
+		),
+		'system.find_new_app' => array(
+			'function'  => '_xmlrpcs_find_new_app',
+			'signature' => $GLOBALS['_xmlrpcs_find_new_app_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_find_new_app_doc']
+		),
 		'system.login'  => array(
 			'function'  => '_xmlrpcs_login',
 			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
