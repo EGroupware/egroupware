@@ -122,11 +122,11 @@
 					$public_user_list[] = $user;
 				}
 				reset($public_user_list);
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' OR cat_owner in(" . implode(',',$public_user_list) . ")) ";
+				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' AND cat_owner in(" . implode(',',$public_user_list) . ")) ";
 			}
 			else
 			{
-				$grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public') ";
+				$grant_cats = " (cat_owner='" . $this->account_id . "') ";
 			}
 
 			if ($parent_id)
@@ -144,8 +144,8 @@
 				$limitmethod = " " . $this->db->limit($start);
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
-				. " $grant_cats $querymethod $filter";
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $parent_filter AND "
+				. " $grant_cats) $public_cats $querymethod $filter";
 
 			$this->db2->query($sql,__LINE__,__FILE__);
 
