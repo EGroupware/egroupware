@@ -85,23 +85,8 @@ class Base extends Observable {
 	function convert_sortmode($sort_mode) {
 		global $ADODB_LASTDB;
 
-		switch ($ADODB_LASTDB) {
-		case "pgsql72":
-		case "postgres7":
-		case "oci8":
-		case "sybase":
-			// Postgres needs " " around column names
-			//preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-			$sort_mode = str_replace("_", "\" ", $sort_mode);
-			$sort_mode = "\"" . $sort_mode;
-			break;
-		case "mysql3":
-		case "mysql":
-		default:
-			$sort_mode = str_replace("_", "` ", $sort_mode);
-			$sort_mode = "`" . $sort_mode;
-			break;
-		}
+		$sort_mode = str_replace("__", "` ", $sort_mode);
+		$sort_mode = "`" . $sort_mode;
 		return $sort_mode;
 	}
 

@@ -29,7 +29,7 @@ class ProcessManager extends BaseManager {
   */
   function activate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='y' where pId=$pId";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set wf_is_active='y' where wf_p_id=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been activated'),$pId);
     $this->notify_all(3,$msg);
@@ -40,7 +40,7 @@ class ProcessManager extends BaseManager {
   */
   function deactivate_process($pId)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='n' where pId=$pId";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set wf_is_active='n' where wf_p_id=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
@@ -54,15 +54,15 @@ class ProcessManager extends BaseManager {
     // <process>
     $out = '<process>'."\n";
     $proc_info = $this->get_process($pId);
-    $procname = $proc_info['normalized_name'];
-    $out.= '  <name>'.htmlspecialchars($proc_info['name']).'</name>'."\n";
-    $out.= '  <isValid>'.htmlspecialchars($proc_info['isValid']).'</isValid>'."\n";
-    $out.= '  <version>'.htmlspecialchars($proc_info['version']).'</version>'."\n";
-    $out.= '  <isActive>'.htmlspecialchars($proc_info['isActive']).'</isActive>'."\n";
-    $out.='   <description>'.htmlspecialchars($proc_info['description']).'</description>'."\n";
-    $out.= '  <lastModif>'.date("d/m/Y [h:i:s]",$proc_info['lastModif']).'</lastModif>'."\n";
+    $wf_procname = $proc_info['wf_normalized_name'];
+    $out.= '  <name>'.htmlspecialchars($proc_info['wf_name']).'</name>'."\n";
+    $out.= '  <isValid>'.htmlspecialchars($proc_info['wf_is_valid']).'</isValid>'."\n";
+    $out.= '  <version>'.htmlspecialchars($proc_info['wf_version']).'</version>'."\n";
+    $out.= '  <isActive>'.htmlspecialchars($proc_info['wf_is_active']).'</isActive>'."\n";
+    $out.='   <description>'.htmlspecialchars($proc_info['wf_description']).'</description>'."\n";
+    $out.= '  <lastModif>'.date("d/m/Y [h:i:s]",$proc_info['wf_last_modif']).'</lastModif>'."\n";
     $out.= '  <sharedCode><![CDATA[';
-    $fp=fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","r");
+    $fp=fopen(GALAXIA_PROCESSES."/$wf_procname/code/shared.php","r");
     while(!feof($fp)) {
       $line=fread($fp,8192);
       $out.=$line;
@@ -70,37 +70,37 @@ class ProcessManager extends BaseManager {
     fclose($fp);
     $out.= '  ]]></sharedCode>'."\n";
     // Now loop over activities
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$pId";
     $result = $this->query($query);
     $out.='  <activities>'."\n";
     $am = new ActivityManager($this->db);
     while($res = $result->fetchRow()) {      
-      $name = $res['normalized_name'];
+      $name = $res['wf_normalized_name'];
       $out.='    <activity>'."\n";
-      $out.='      <name>'.htmlspecialchars($res['name']).'</name>'."\n";
-      $out.='      <type>'.htmlspecialchars($res['type']).'</type>'."\n";
-      $out.='      <description>'.htmlspecialchars($res['description']).'</description>'."\n";
-      $out.='      <lastModif>'.date("d/m/Y [h:i:s]",$res['lastModif']).'</lastModif>'."\n";
-      $out.='      <isInteractive>'.$res['isInteractive'].'</isInteractive>'."\n";
-      $out.='      <isAutoRouted>'.$res['isAutoRouted'].'</isAutoRouted>'."\n";
+      $out.='      <name>'.htmlspecialchars($res['wf_name']).'</name>'."\n";
+      $out.='      <type>'.htmlspecialchars($res['wf_type']).'</type>'."\n";
+      $out.='      <description>'.htmlspecialchars($res['wf_description']).'</description>'."\n";
+      $out.='      <lastModif>'.date("d/m/Y [h:i:s]",$res['wf_last_modif']).'</lastModif>'."\n";
+      $out.='      <isInteractive>'.$res['wf_is_interactive'].'</isInteractive>'."\n";
+      $out.='      <isAutoRouted>'.$res['wf_is_autorouted'].'</isAutoRouted>'."\n";
       $out.='      <roles>'."\n";
 
-      $roles = $am->get_activity_roles($res['activityId']);
+      $roles = $am->get_activity_roles($res['wf_activity_id']);
       foreach($roles as $role) {
-        $out.='        <role>'.htmlspecialchars($role['name']).'</role>'."\n";
+        $out.='        <role>'.htmlspecialchars($role['wf_name']).'</role>'."\n";
       }  
       $out.='      </roles>'."\n";
       $out.='      <code><![CDATA[';
-      $fp=fopen(GALAXIA_PROCESSES."/$procname/code/activities/$name.php","r");
+      $fp=fopen(GALAXIA_PROCESSES."/$wf_procname/code/activities/$name.php","r");
       while(!feof($fp)) {
         $line=fread($fp,8192);
         $out.=$line;
       }
       fclose($fp);
       $out.='      ]]></code>';
-      if($res['isInteractive']=='y') {
+      if($res['wf_is_interactive']=='y') {
         $out.='      <template><![CDATA[';
-        $fp=fopen(GALAXIA_PROCESSES."/$procname/code/templates/$name.tpl","r");
+        $fp=fopen(GALAXIA_PROCESSES."/$wf_procname/code/templates/$name.tpl","r");
         while(!feof($fp)) {
           $line=fread($fp,8192);
           $out.=$line;
@@ -115,13 +115,13 @@ class ProcessManager extends BaseManager {
     $transitions = $am->get_process_transitions($pId);
     foreach($transitions as $tran) {
       $out.='     <transition>'."\n";
-      $out.='       <from>'.htmlspecialchars($tran['actFromName']).'</from>'."\n";
-      $out.='       <to>'.htmlspecialchars($tran['actToName']).'</to>'."\n";
+      $out.='       <from>'.htmlspecialchars($tran['wf_act_from_name']).'</from>'."\n";
+      $out.='       <to>'.htmlspecialchars($tran['wf_act_to_name']).'</to>'."\n";
       $out.='     </transition>'."\n";
     }     
     $out.='  </transitions>'."\n";
     $out.= '</process>'."\n";
-    //$fp = fopen(GALAXIA_PROCESSES."/$procname/$procname.xml","w");
+    //$fp = fopen(GALAXIA_PROCESSES."/$wf_procname/$wf_procname.xml","w");
     //fwrite($fp,$out);
     //fclose($fp);
     return $out;
@@ -240,37 +240,37 @@ class ProcessManager extends BaseManager {
     $pid = $this->replace_process(0,$vars,false);
     //Put the shared code 
     $proc_info = $this->get_process($pid);
-    $procname = $proc_info['normalized_name'];
-    $fp = fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","w");
+    $wf_procname = $proc_info['wf_normalized_name'];
+    $fp = fopen(GALAXIA_PROCESSES."/$wf_procname/code/shared.php","w");
     fwrite($fp,$data['sharedCode']);
     fclose($fp);
     $actids = Array();
     // Foreach activity create activities
     foreach($data['activities'] as $activity) {
       $vars = Array(
-        'name' => $activity['name'],
-        'description' => $activity['description'],
-        'type' => $activity['type'],
-        'lastModif' => $activity['lastModif'],
-        'isInteractive' => $activity['isInteractive'],
-        'isAutoRouted' => $activity['isAutoRouted']
+        'name' => $activity['wf_name'],
+        'description' => $activity['wf_description'],
+        'type' => $activity['wf_type'],
+        'lastModif' => $activity['wf_lastModif'],
+        'isInteractive' => $activity['wf_is_interactive'],
+        'isAutoRouted' => $activity['wf_is_autorouted']
       );    
-      $actname=$am->_normalize_name($activity['name']);
+      $actname=$am->_normalize_name($activity['wf_name']);
       
       $actid = $am->replace_activity($pid,0,$vars);
-      $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php',"w");
+      $fp = fopen(GALAXIA_PROCESSES."/$wf_procname/code/activities/$actname".'.php',"w");
       fwrite($fp,$activity['code']);
       fclose($fp);
       if($activity['isInteractive']=='y') {
-        $fp = fopen(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl',"w");
+        $fp = fopen(GALAXIA_PROCESSES."/$wf_procname/code/templates/$actname".'.tpl',"w");
         fwrite($fp,$activity['template']);
         fclose($fp);
       }
-      $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['name']);
-      $actname = $am->_normalize_name($activity['name']);
+      $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['wf_name']);
+      $actname = $am->_normalize_name($activity['wf_name']);
       $now = date("U");
 
-      foreach($activity['roles'] as $role) {
+      foreach($activity['wf_roles'] as $role) {
         $vars = Array(
           'name' => $role,
           'description' => $role,
@@ -297,7 +297,7 @@ class ProcessManager extends BaseManager {
     $am->build_process_graph($pid);
     unset($am);
     unset($rm);
-    $msg = sprintf(tra('Process %s %s imported'),$proc_info['name'],$proc_info['version']);
+    $msg = sprintf(tra('Process %s %s imported'),$proc_info['wf_name'],$proc_info['wf_version']);
     $this->notify_all(2,$msg);
   }
 
@@ -312,75 +312,75 @@ class ProcessManager extends BaseManager {
   {
     $oldpid = $pId;
     $proc_info = $this->get_process($pId);
-    $name = $proc_info['name'];
+    $name = $proc_info['wf_name'];
     if(!$proc_info) return false;
     // Now update the version
-    $version = $this->_new_version($proc_info['version'],$minor);
-    while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where name='$name' and version='$version'")) {
+    $version = $this->_new_version($proc_info['wf_version'],$minor);
+    while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where wf_name='$name' and wf_version='$version'")) {
       $version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
-    $proc_info['version'] = $version;
-    $proc_info['isActive'] = 'n';
+    $proc_info['wf_version'] = $version;
+    $proc_info['wf_is_active'] = 'n';
     // create a new process, but don't create start/end activities
     $pid = $this->replace_process(0, $proc_info, false);
     // And here copy all the activities & so
     $am = new ActivityManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$oldpid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$oldpid";
     $result = $this->query($query);
     $newaid = array();
     while($res = $result->fetchRow()) {    
-      $oldaid = $res['activityId'];
+      $oldaid = $res['wf_activity_id'];
       $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
     // create transitions
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where pId=$oldpid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where wf_p_id=$oldpid";
     $result = $this->query($query);
     while($res = $result->fetchRow()) {    
-      if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
+      if (empty($newaid[$res['wf_act_from_id']]) || empty($newaid[$res['wf_act_io_id']])) {
         continue;
       }
-      $am->add_transition($pid,$newaid[$res['actFromId']],$newaid[$res['actToId']]);
+      $am->add_transition($pid,$newaid[$res['wf_act_from_id']],$newaid[$res['wf_act_to_id']]);
     }
     // create roles
     $rm = new RoleManager($this->db);
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId=$oldpid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where wf_p_id=$oldpid";
     $result = $this->query($query);
     $newrid = array();
     while($res = $result->fetchRow()) {
-      if(!$rm->role_name_exists($pid,$res['name'])) {
+      if(!$rm->role_name_exists($pid,$res['wf_name'])) {
         $rid=$rm->replace_role($pid,0,$res);
       } else {
-        $rid = $rm->get_role_id($pid,$res['name']);
+        $rid = $rm->get_role_id($pid,$res['wf_name']);
       }
-      $newrid[$res['roleId']] = $rid;
+      $newrid[$res['wf_role_id']] = $rid;
     }
     // map users to roles
     if (count($newrid) > 0) {
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$oldpid";
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."user_roles where wf_p_id=$oldpid";
       $result = $this->query($query);
       while($res = $result->fetchRow()) {
-        if (empty($newrid[$res['roleId']])) {
+        if (empty($newrid[$res['wf_role_id']])) {
           continue;
         }
-        $rm->map_user_to_role($pid,$res['user'],$newrid[$res['roleId']]);
+        $rm->map_user_to_role($pid,$res['wf_user'],$newrid[$res['wf_role_id']]);
       }
     }
     // add roles to activities
     if (count($newaid) > 0 && count($newrid ) > 0) {
-      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in (" . join(', ',array_keys($newaid)) . ")";
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where wf_activity_id in (" . join(', ',array_keys($newaid)) . ")";
       $result = $this->query($query);
       while($res = $result->fetchRow()) {
-        if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
+        if (empty($newaid[$res['wf_activity_id']]) || empty($newrid[$res['wf_role_id']])) {
           continue;
         }
-        $am->add_activity_role($newaid[$res['activityId']],$newrid[$res['roleId']]);
+        $am->add_activity_role($newaid[$res['wf_activity_id']],$newrid[$res['wf_role_id']]);
       }
     }
 
     //Now since we are copying a process we should copy
     //the old directory structure to the new directory
-    $oldname = $proc_info['normalized_name'];
+    $oldname = $proc_info['wf_normalized_name'];
     $newname = $this->_get_normalized_name($pid);
     $this->_rec_copy(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
 
@@ -398,7 +398,7 @@ class ProcessManager extends BaseManager {
   function process_name_exists($name,$version)
   {
     $name = addslashes($this->_normalize_name($name,$version));
-    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where normalized_name='$name'");
+    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where wf_normalized_name='$name'");
   }
   
   
@@ -407,7 +407,7 @@ class ProcessManager extends BaseManager {
   */
   function get_process($pId)
   {
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes where wf_p_id=$pId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
@@ -422,7 +422,7 @@ class ProcessManager extends BaseManager {
     $sort_mode = $this->convert_sortmode($sort_mode);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid=" where ((name like ?) or (description like ?))";
+      $mid=" where ((wf_name like ?) or (wf_description like ?))";
       $bindvars = array($findesc,$findesc);
     } else {
       $mid="";
@@ -454,7 +454,7 @@ class ProcessManager extends BaseManager {
   */
   function invalidate_process($pid)
   {
-    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isValid='n' where pId=$pid";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set wf_is_valid='n' where wf_p_id=$pid";
     $this->query($query);
   }
   
@@ -467,16 +467,16 @@ class ProcessManager extends BaseManager {
     $name = $this->_get_normalized_name($pId);
     $aM = new ActivityManager($this->db);
     // Remove process activities
-    $query = "select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
+    $query = "select wf_activity_id from ".GALAXIA_TABLE_PREFIX."activities where wf_p_id=$pId";
     $result = $this->query($query);
     while($res = $result->fetchRow()) {
-      $aM->remove_activity($pId,$res['activityId']);
+      $aM->remove_activity($pId,$res['wf_activity_id']);
     }
 
     // Remove process roles
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where wf_p_id=$pId";
     $this->query($query);
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$pId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where wf_p_id=$pId";
     $this->query($query);
     
     // Remove the directory structure
@@ -487,7 +487,7 @@ class ProcessManager extends BaseManager {
       $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
     }
     // And finally remove the proc
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."processes where wf_p_id=$pId";
     $this->query($query);
     $msg = sprintf(tra('Process %s removed'),$name);
     $this->notify_all(5,$msg);
@@ -504,8 +504,8 @@ class ProcessManager extends BaseManager {
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."processes";
     $now = date("U");
-    $vars['lastModif']=$now;
-    $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        
+    $vars['wf_last_modif']=$now;
+    $vars['wf_normalized_name'] = $this->_normalize_name($vars['wf_name'],$vars['wf_version']);        
     foreach($vars as $key=>$value)
     {
       $vars[$key]=addslashes($value);
@@ -522,21 +522,21 @@ class ProcessManager extends BaseManager {
         $query.= " $key=$value ";
         $first = false;
       }
-      $query .= " where pId=$pId ";
+      $query .= " where wf_p_id=$pId ";
       $this->query($query);
       // Note that if the name is being changed then
       // the directory has to be renamed!
-      $oldname = $old_proc['normalized_name'];
-      $newname = $vars['normalized_name'];
+      $oldname = $old_proc['wf_normalized_name'];
+      $newname = $vars['wf_normalized_name'];
       if ($newname != $oldname) {
           rename(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
       }
-      $msg = sprintf(tra('Process %s has been updated'),$vars['name']);     
+      $msg = sprintf(tra('Process %s has been updated'),$vars['wf_name']);     
       $this->notify_all(3,$msg);
     } else {
-      unset($vars['pId']);
+      unset($vars['wf_p_id']);
       // insert mode
-      $name = $this->_normalize_name($vars['name'],$vars['version']);
+      $name = $this->_normalize_name($vars['wf_name'],$vars['wf_version']);
       $this->_create_directory_structure($name);
       $first = true;
       $query = "insert into $TABLE_NAME(";
@@ -555,30 +555,30 @@ class ProcessManager extends BaseManager {
       } 
       $query .=")";
       $this->query($query);
-      $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=$now"); 
+      $pId = $this->getOne("select max(wf_p_id) from $TABLE_NAME where wf_last_modif=$now"); 
       // Now automatically add a start and end activity 
       // unless importing ($create = false)
       if($create) {
         $aM= new ActivityManager($this->db);
         $vars1 = Array(
-          'name' => 'start',
-          'description' => 'default start activity',
-          'type' => 'start',
-          'isInteractive' => 'y',
-          'isAutoRouted' => 'y'
+          'wf_name' => 'start',
+          'wf_description' => 'default start activity',
+          'wf_type' => 'start',
+          'wf_is_interactive' => 'y',
+          'wf_is_autorouted' => 'y'
         );
         $vars2 = Array(
-          'name' => 'end',
-          'description' => 'default end activity',
-          'type' => 'end',
-          'isInteractive' => 'n',
-          'isAutoRouted' => 'y'
+          'wf_name' => 'end',
+          'wf_description' => 'default end activity',
+          'wf_type' => 'end',
+          'wf_is_interactive' => 'n',
+          'wf_is_autorouted' => 'y'
         );
   
         $aM->replace_activity($pId,0,$vars1);
         $aM->replace_activity($pId,0,$vars2);
       }
-    $msg = sprintf(tra('Process %s has been created'),$vars['name']);     
+    $msg = sprintf(tra('Process %s has been created'),$vars['wf_name']);     
     $this->notify_all(4,$msg);
     }
     // Get the id
@@ -592,7 +592,7 @@ class ProcessManager extends BaseManager {
   function _get_normalized_name($pId)
   {
     $info = $this->get_process($pId);
-    return $info['normalized_name'];
+    return $info['wf_normalized_name'];
   }
    
   /*!

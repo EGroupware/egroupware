@@ -23,13 +23,13 @@ class GUI extends Base {
   {
     // FIXME: this doesn't support multiple sort criteria
     //$sort_mode = $this->convert_sortmode($sort_mode);
-    $sort_mode = str_replace("_"," ",$sort_mode);
+    $sort_mode = str_replace("__"," ",$sort_mode);
 
-    $mid = "where gp.isActive=? and gur.user=?";
+    $mid = "where gp.wf_is_active=? and gur.wf_user=?";
     $bindvars = array('y',$user);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid .= " and ((gp.name like ?) or (gp.description like ?))";
+      $mid .= " and ((gp.wf_name like ?) or (gp.wf_description like ?))";
       $bindvars[] = $findesc;
       $bindvars[] = $findesc;
     }
@@ -37,44 +37,44 @@ class GUI extends Base {
       $mid.= " and ($where) ";
     }
     
-    $query = "select distinct(gp.pId), 
-                     gp.isActive,                    
-                     gp.name as procname, 
-                     gp.normalized_name as normalized_name, 
-                     gp.version as version
+    $query = "select distinct(gp.wf_p_id), 
+                     gp.wf_is_active,                    
+                     gp.wf_name as wf_procname, 
+                     gp.wf_normalized_name as normalized_name, 
+                     gp.wf_version as version
               from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.wf_p_id=ga.wf_p_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gr.wf_role_id
               $mid order by $sort_mode";
-    $query_cant = "select count(distinct(gp.pId))
+    $query_cant = "select count(distinct(gp.wf_p_id))
               from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.wf_p_id=ga.wf_p_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gr.wf_role_id
               $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
     while($res = $result->fetchRow()) {
       // Get instances per activity
-      $pId=$res['pId'];
-      $res['activities']=$this->getOne("select count(distinct(ga.activityId))
+      $pId=$res['wf_p_id'];
+      $res['wf_activities']=$this->getOne("select count(distinct(ga.wf_activity_id))
               from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
-              where gp.pId=? and gur.user=?",
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.wf_p_id=ga.wf_p_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gr.wf_role_id
+              where gp.wf_p_id=? and gur.wf_user=?",
               array($pId,$user));
-      $res['instances']=$this->getOne("select count(distinct(gi.instanceId))
+      $res['wf_instances']=$this->getOne("select count(distinct(gi.wf_instance_id))
               from ".GALAXIA_TABLE_PREFIX."instances gi
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-              where gi.pId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.wf_instance_id=gia.wf_instance_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.wf_activity_id=gar.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.wf_role_id=gur.wf_role_id
+              where gi.wf_p_id=? and ((gia.wf_user=?) or (gia.wf_user=? and gur.wf_user=?))",
               array($pId,$user,'*',$user));
       $ret[] = $res;
     }
@@ -89,13 +89,13 @@ class GUI extends Base {
   {
     // FIXME: this doesn't support multiple sort criteria
     //$sort_mode = $this->convert_sortmode($sort_mode);
-    $sort_mode = str_replace("_"," ",$sort_mode);
+    $sort_mode = str_replace("__"," ",$sort_mode);
 
-    $mid = "where gp.isActive=? and gur.user=?";
+    $mid = "where gp.wf_is_active=? and gur.wf_user=?";
     $bindvars = array('y',$user);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid .= " and ((ga.name like ?) or (ga.description like ?))";
+      $mid .= " and ((ga.wf_name like ?) or (ga.wf_description like ?))";
       $bindvars[] = $findesc;
       $bindvars[] = $findesc;
     }
@@ -103,41 +103,41 @@ class GUI extends Base {
       $mid.= " and ($where) ";
     }
     
-    $query = "select distinct(ga.activityId),                     
-                     ga.name,
-                     ga.type,
-                     gp.name as procname, 
-                     ga.isInteractive,
-                     ga.isAutoRouted,
-                     ga.activityId,
-                     gp.version as version,
-                     gp.pId,
-                     gp.isActive
+    $query = "select distinct(ga.wf_activity_id),                     
+                     ga.wf_name,
+                     ga.wf_type,
+                     gp.wf_name as wf_procname, 
+                     ga.wf_is_interactive,
+                     ga.wf_is_autorouted,
+                     ga.wf_activity_id,
+                     gp.wf_version as wf_version,
+                     gp.wf_p_id,
+                     gp.wf_is_active
               from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.wf_p_id=ga.wf_p_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gr.wf_role_id
               $mid order by $sort_mode";
-    $query_cant = "select count(distinct(ga.activityId))
+    $query_cant = "select count(distinct(ga.wf_activity_id))
               from ".GALAXIA_TABLE_PREFIX."processes gp
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.wf_p_id=ga.wf_p_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gr.wf_role_id
               $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
     while($res = $result->fetchRow()) {
       // Get instances per activity
-      $res['instances']=$this->getOne("select count(distinct(gi.instanceId))
+      $res['wf_instances']=$this->getOne("select count(distinct(gi.wf_instance_id))
               from ".GALAXIA_TABLE_PREFIX."instances gi
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-              where gia.activityId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-              array($res['activityId'],$user,'*',$user));
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.wf_instance_id=gia.wf_instance_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.wf_activity_id=gar.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.wf_role_id=gur.wf_role_id
+              where gia.wf_activity_id=? and ((gia.wf_user=?) or (gia.wf_user=? and gur.wf_user=?))",
+              array($res['wf_activity_id'],$user,'*',$user));
       $ret[] = $res;
     }
     $retval = Array();
@@ -151,13 +151,13 @@ class GUI extends Base {
   {
     // FIXME: this doesn't support multiple sort criteria
     //$sort_mode = $this->convert_sortmode($sort_mode);
-    $sort_mode = str_replace("_"," ",$sort_mode);
+    $sort_mode = str_replace("__"," ",$sort_mode);
 
-    $mid = "where (gia.user=? or (gia.user=? and gur.user=?))";
+    $mid = "where (gia.wf_user=? or (gia.wf_user=? and gur.wf_user=?))";
     $bindvars = array($user,'*',$user);
     if($find) {
       $findesc = '%'.$find.'%';
-      $mid .= " and ((ga.name like ?) or (ga.description like ?))";
+      $mid .= " and ((ga.wf_name like ?) or (ga.wf_description like ?))";
       $bindvars[] = $findesc;
       $bindvars[] = $findesc;
     }
@@ -165,34 +165,34 @@ class GUI extends Base {
       $mid.= " and ($where) ";
     }
     
-    $query = "select distinct(gi.instanceId),                     
-                     gi.started,
-                     gi.owner,
-                     gia.user,
-                     gi.status,
-                     gia.status as actstatus,
-                     ga.name,
-                     ga.type,
-                     gp.name as procname, 
-                     ga.isInteractive,
-                     ga.isAutoRouted,
-                     ga.activityId,
-                     gp.version as version,
-                     gp.pId
+    $query = "select distinct(gi.wf_instance_id),                     
+                     gi.wf_started,
+                     gi.wf_owner,
+                     gia.wf_user,
+                     gi.wf_status,
+                     gia.wf_status as wf_act_status,
+                     ga.wf_name,
+                     ga.wf_type,
+                     gp.wf_name as wf_procname, 
+                     ga.wf_is_interactive,
+                     ga.wf_is_autorouted,
+                     ga.wf_activity_id,
+                     gp.wf_version as wf_version,
+                     gp.wf_p_id
               from ".GALAXIA_TABLE_PREFIX."instances gi 
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.activityId = ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.pId=ga.pId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.wf_instance_id=gia.wf_instance_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.wf_activity_id = ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.wf_activity_id=gar.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.wf_p_id=ga.wf_p_id
               $mid order by $sort_mode";
-    $query_cant = "select count(distinct(gi.instanceId))
+    $query_cant = "select count(distinct(gi.wf_instance_id))
               from ".GALAXIA_TABLE_PREFIX."instances gi 
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.activityId = ga.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gar.roleId
-                INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.pId=ga.pId
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.wf_instance_id=gia.wf_instance_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.wf_activity_id = ga.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.wf_activity_id=gar.wf_activity_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.wf_role_id=gar.wf_role_id
+                INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.wf_p_id=ga.wf_p_id
               $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
@@ -215,7 +215,7 @@ class GUI extends Base {
     // Users can only abort instances they're currently running, or instances that they're the owner of
     if(!$this->getOne("select count(*)
                        from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
-                       where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
+                       where gia.wf_instance_id=gi.wf_instance_id and wf_activity_id=? and gia.wf_instance_id=? and (wf_user=? or wf_owner=?)",
                        array($activityId,$instanceId,$user,$user)))
       return false;
     include_once(GALAXIA_LIBRARY.'/src/API/Instance.php');
@@ -236,12 +236,12 @@ class GUI extends Base {
     // Users can only do exception handling for instances they're currently running, or instances that they're the owner of
     if(!$this->getOne("select count(*)
                        from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
-                       where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
+                       where gia.wf_instance_id=gi.wf_instance_id and wf_activity_id=? and gia.wf_instance_id=? and (wf_user=? or wf_owner=?)",
                        array($activityId,$instanceId,$user,$user)))
       return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instances
-              set status=?
-              where instanceId=?";
+              set wf_status=?
+              where wf_instance_id=?";
     $this->query($query, array('exception',$instanceId));
   }
 
@@ -253,12 +253,12 @@ class GUI extends Base {
     // Users can only resume instances they're currently running, or instances that they're the owner of
     if(!$this->getOne("select count(*)
                        from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
-                       where gia.instanceId=gi.instanceId and activityId=? and gia.instanceId=? and (user=? or owner=?)",
+                       where gia.wf_instance_id=gi.wf_instance_id and wf_activity_id=? and gia.wf_instance_id=? and (wf_user=? or wf_owner=?)",
                        array($activityId,$instanceId,$user,$user)))
       return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instances
-              set status=?
-              where instanceId=?";
+              set wf_status=?
+              where wf_instance_id=?";
     $this->query($query, array('active',$instanceId));
   }
 
@@ -268,14 +268,14 @@ class GUI extends Base {
     if(!
       ($this->getOne("select count(*)
                       from ".GALAXIA_TABLE_PREFIX."instance_activities
-                      where activityId=? and instanceId=? and user=?",
+                      where wf_activity_id=? and wf_instance_id=? and wf_user=?",
                       array($activityId,$instanceId,$user)))
       ||
       ($this->getOne("select count(*) 
                       from ".GALAXIA_TABLE_PREFIX."instance_activities gia
-                      INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=gia.activityId
-                      INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-                      where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
+                      INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=gia.wf_activity_id
+                      INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.wf_role_id=gur.wf_role_id
+                      where gia.wf_instance_id=? and gia.wf_activity_id=? and gia.wf_user=? and gur.wf_user=?",
                       array($instanceId,$activityId,'*',$user)))
       ) return false;
     include_once(GALAXIA_LIBRARY.'/src/API/Instance.php');
@@ -289,11 +289,11 @@ class GUI extends Base {
   {
     if(!$this->getOne("select count(*)
                        from ".GALAXIA_TABLE_PREFIX."instance_activities
-                       where activityId=? and instanceId=? and user=?",
+                       where wf_activity_id=? and wf_instance_id=? and wf_user=?",
                        array($activityId,$instanceId,$user))) return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instance_activities
-              set user=?
-              where instanceId=? and activityId=?";
+              set wf_user=?
+              where wf_instance_id=? and wf_activity_id=?";
     $this->query($query, array('*',$instanceId,$activityId));
   }
   
@@ -302,13 +302,13 @@ class GUI extends Base {
     // Grab only if roles are ok  
     if(!$this->getOne("select count(*) 
                       from ".GALAXIA_TABLE_PREFIX."instance_activities gia
-                      INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=gia.activityId
-                      INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-                      where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
+                      INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.wf_activity_id=gia.wf_activity_id
+                      INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.wf_role_id=gur.wf_role_id
+                      where gia.wf_instance_id=? and gia.wf_activity_id=? and gia.wf_user=? and gur.wf_user=?",
                       array($instanceId,$activityId,'*',$user)))  return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instance_activities
-              set user=?
-              where instanceId=? and activityId=?";
+              set wf_user=?
+              where wf_instance_id=? and wf_activity_id=?";
     $this->query($query, array($user,$instanceId,$activityId));
   }
 }

@@ -39,11 +39,11 @@ class BaseActivity extends Base {
   */
   function getActivity($activityId) 
   {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?";
     $result = $this->query($query,array($activityId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
-    switch($res['type']) {
+    switch($res['wf_type']) {
       case 'start':
         $act = new Start($this->db);  
         break;
@@ -66,27 +66,27 @@ class BaseActivity extends Base {
         $act = new Activity($this->db);
         break;
       default:
-        trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
+        trigger_error('Unknown activity type:'.$res['wf_type'],E_USER_WARNING);
     }
     
-    $act->setName($res['name']);
-    $act->setProcessId($res['pId']);
-    $act->setNormalizedName($res['normalized_name']);
+    $act->setName($res['wf_name']);
+    $act->setProcessId($res['wf_p_id']);
+    $act->setNormalizedName($res['wf_normalized_name']);
     $act->setDescription($res['description']);
-    $act->setIsInteractive($res['isInteractive']);
-    $act->setIsAutoRouted($res['isAutoRouted']);
-    $act->setActivityId($res['activityId']);
-    $act->setType($res['type']);
+    $act->setIsInteractive($res['wf_is_interactive']);
+    $act->setIsAutoRouted($res['is_autorouted']);
+    $act->setActivityId($res['activity_id']);
+    $act->setType($res['wf_type']);
     
     //Now get forward transitions 
     
     //Now get backward transitions
     
     //Now get roles
-    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
-    $result=$this->query($query,array($res['activityId']));
+    $query = "select `wf_role_id` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `wf_activity_id`=?";
+    $result=$this->query($query,array($res['wf_activity_id']));
     while($res = $result->fetchRow()) {
-      $this->roles[] = $res['roleId'];
+      $this->roles[] = $res['wf_role_id'];
     }
     $act->setRoles($this->roles);
     return $act;
@@ -94,11 +94,11 @@ class BaseActivity extends Base {
   
   /*! Returns an Array of roleIds for the given user */
   function getUserRoles($user) {
-    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=?";
+    $query = "select `wf_role_id` from `".GALAXIA_TABLE_PREFIX."user_roles` where `wf_user`=?";
     $result=$this->query($query,array($user));
     $ret = Array();
     while($res = $result->fetchRow()) {
-      $ret[] = $res['roleId'];
+      $ret[] = $res['wf_role_id'];
     }
     return $ret;
   }
@@ -107,7 +107,7 @@ class BaseActivity extends Base {
   for the given user */  
   function getActivityRoleNames() {
     $aid = $this->activityId;
-    $query = "select gr.`roleId`, `name` from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
+    $query = "select gr.`wf_role_id`, `wf_name` from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`wf_role_id`=gr.`wf_role_id` and gar.`wf_activity_id`=?";
     $result=$this->query($query,array($aid));
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -211,7 +211,7 @@ class BaseActivity extends Base {
       e.g. $isadmin = $activity->checkUserRole($user,'admin'); */
   function checkUserRole($user,$rolename) {
     $aid = $this->activityId;
-    return $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."user_roles` gur, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
+    return $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."user_roles` gur, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`wf_role_id`=gr.`roleId` and gur.`wf_role_id`=gr.`roleId` and gar.`wf_activity_id`=? and gur.`wf_user`=? and gr.`wf_name`=?",array($aid, $user, $rolename));
   }
 
 }

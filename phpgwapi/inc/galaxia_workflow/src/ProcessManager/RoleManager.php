@@ -31,7 +31,7 @@ class RoleManager extends BaseManager {
   function get_role_id($pid,$name)
   {
     $name = addslashes($name);
-    return ($this->getOne("select roleId from ".GALAXIA_TABLE_PREFIX."roles where name='$name' and pId=$pid"));
+    return ($this->getOne("select wf_role_id from ".GALAXIA_TABLE_PREFIX."roles where wf_name='$name' and wf_p_id=$pid"));
   }
   
   /*!
@@ -39,7 +39,7 @@ class RoleManager extends BaseManager {
   */
   function get_role($pId, $roleId)
   {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `wf_p_id`=? and `wf_role_id`=?";
   $result = $this->query($query,array($pId, $roleId));
   $res = $result->fetchRow();
   return $res;
@@ -51,7 +51,7 @@ class RoleManager extends BaseManager {
   function role_name_exists($pid,$name)
   {
     $name = addslashes($name);
-    return ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=$pid and name='$name'"));
+    return ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where wf_p_id=$pid and wf_name='$name'"));
   }
   
   /*!
@@ -59,9 +59,9 @@ class RoleManager extends BaseManager {
   */
   function map_user_to_role($pId,$user,$roleId)
   {
-  $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=? and `user`=?";
+  $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `wf_role_id`=? and `wf_user`=?";
   $this->query($query,array($roleId, $user));
-  $query = "insert into `".GALAXIA_TABLE_PREFIX."user_roles`(`pId`, `user`, `roleId`) values(?,?,?)";
+  $query = "insert into `".GALAXIA_TABLE_PREFIX."user_roles`(`wf_p_id`, `wf_user`, `wf_role_id`) values(?,?,?)";
   $this->query($query,array($pId,$user,$roleId));
   }
   
@@ -70,7 +70,7 @@ class RoleManager extends BaseManager {
   */
   function remove_mapping($user,$roleId)
   { 
-  $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=? and `roleId`=?";
+  $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `wf_user`=? and `wf_role_id`=?";
   $this->query($query,array($user, $roleId));
   }
   
@@ -82,14 +82,14 @@ class RoleManager extends BaseManager {
     if($find) {
       // no more quoting here - this is done in bind vars already
       $findesc = '%'.$find.'%';
-      $query = "select `name`,`gr`.`roleId`,`user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?)) order by $sort_mode";
+      $query = "select `wf_name`,`gr`.`wf_role_id`,`wf_user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`wf_role_id`=`gur`.`wf_role_id` and `gur`.`wf_p_id`=? and ((`wf_name` like ?) or (`wf_user` like ?) or (`wf_description` like ?)) order by $sort_mode";
       $result = $this->query($query,array($pId,$findesc,$findesc,$findesc), $maxRecords, $offset);
-      $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?))";
+      $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`wf_role_id`=`gur`.`wf_role_id` and `gur`.`wf_p_id`=? and ((`wf_name` like ?) or (`wf_user` like ?) or (`wf_description` like ?))";
       $cant = $this->getOne($query_cant,array($pId,$findesc,$findesc,$findesc));
     } else {
-      $query = "select `name`,`gr`.`roleId`,`user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? order by $sort_mode";
+      $query = "select `wf_name`,`gr`.`wf_role_id`,`wf_user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`wf_role_id`=`gur`.`wf_role_id` and `gur`.`wf_p_id`=? order by $sort_mode";
       $result = $this->query($query,array($pId), $maxRecords, $offset);
-      $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=?";
+      $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`wf_role_id`=`gur`.`wf_role_id` and `gur`.`wf_p_id`=?";
       $cant = $this->getOne($query_cant,array($pId));
     }
     $ret = Array();
@@ -111,10 +111,10 @@ class RoleManager extends BaseManager {
     if($find) {
       // no more quoting here - this is done in bind vars already
       $findesc = '%'.$find.'%';
-      $mid=" where pId=? and ((name like ?) or (description like ?))";
+      $mid=" where wf_p_id=? and ((wf_name like ?) or (wf_description like ?))";
       $bindvars = array($pId,$findesc,$findesc);
     } else {
-      $mid=" where pId=? ";
+      $mid=" where wf_p_id=? ";
       $bindvars = array($pId);
     }
     if($where) {
@@ -141,11 +141,11 @@ class RoleManager extends BaseManager {
   */
   function remove_role($pId, $roleId)
   {
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."roles` where `wf_p_id`=? and `wf_role_id`=?";
     $this->query($query,array($pId, $roleId));
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `roleId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `wf_role_id`=?";
     $this->query($query,array($roleId));
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `wf_role_id`=?";
     $this->query($query,array($roleId));
   }
   
@@ -159,8 +159,8 @@ class RoleManager extends BaseManager {
   {
     $TABLE_NAME = GALAXIA_TABLE_PREFIX."roles";
     $now = date("U");
-    $vars['lastModif']=$now;
-    $vars['pId']=$pId;
+    $vars['wf_last_modif']=$now;
+    $vars['wf_p_id']=$pId;
     
     foreach($vars as $key=>$value)
     {
@@ -177,14 +177,14 @@ class RoleManager extends BaseManager {
         $query.= " $key=$value ";
         $first = false;
       }
-      $query .= " where pId=$pId and roleId=$roleId ";
+      $query .= " where wf_p_id=$pId and wf_role_id=$roleId ";
       $this->query($query);
     } else {
-      $name = $vars['name'];
-      if ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId and name='$name'")) {
+      $name = $vars['wf_name'];
+      if ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."roles where wf_p_id=$pId and wf_name='$name'")) {
         return false;
       }
-      unset($vars['roleId']);
+      unset($vars['wf_role_id']);
       // insert mode
       $first = true;
       $query = "insert into $TABLE_NAME(";
@@ -203,7 +203,7 @@ class RoleManager extends BaseManager {
       } 
       $query .=")";
       $this->query($query);
-      $roleId = $this->getOne("select max(roleId) from $TABLE_NAME where pId=$pId and lastModif=$now"); 
+      $roleId = $this->getOne("select max(wf_role_id) from $TABLE_NAME where wf_p_id=$pId and wf_last_modif=$now"); 
     }
     // Get the id
     return $roleId;

@@ -22,15 +22,15 @@ class Process extends Base {
   Loads a process form the database
   */
   function getProcess($pId) {
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."processes` where `pId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."processes` where `wf_p_id`=?";
     $result = $this->query($query,array($pId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
-    $this->name = $res['name'];
-    $this->description = $res['description'];
-    $this->normalizedName = $res['normalized_name'];
-    $this->version = $res['version'];
-    $this->pId = $res['pId'];
+    $this->name = $res['wf_name'];
+    $this->description = $res['wf_description'];
+    $this->normalizedName = $res['wf_normalized_name'];
+    $this->version = $res['wf_version'];
+    $this->pId = $res['wf_p_id'];
   }
   
   /*!
@@ -63,7 +63,7 @@ class Process extends Base {
   */
   function getActivityByName($actname) {
     // Get the activity data
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=? and `name`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `wf_p_id`=? and `wf_name`=?";
     $pId = $this->pId;
     $result = $this->query($query,array($pId,$actname));
     if(!$result->numRows()) return false;

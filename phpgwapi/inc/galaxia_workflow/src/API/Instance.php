@@ -32,23 +32,23 @@ class Instance extends Base {
   */
   function getInstance($instanceId) {
     // Get the instance data
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."instances` where `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instances` where `wf_instance_id`=?";
     $result = $this->query($query,array((int)$instanceId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow();
 
     //Populate 
-    $this->properties = unserialize($res['properties']);
-    $this->status = $res['status'];
-    $this->pId = $res['pId'];
-    $this->instanceId = $res['instanceId'];
-    $this->owner = $res['owner'];
-    $this->started = $res['started'];
-    $this->ended = $res['ended'];
-    $this->nextActivity = $res['nextActivity'];
-    $this->nextUser = $res['nextUser'];
+    $this->properties = unserialize($res['wf_properties']);
+    $this->status = $res['wf_status'];
+    $this->pId = $res['wf_p_id'];
+    $this->instanceId = $res['wf_instance_id'];
+    $this->owner = $res['wf_owner'];
+    $this->started = $res['wf_started'];
+    $this->ended = $res['wf_ended'];
+    $this->nextActivity = $res['wf_next_activity'];
+    $this->nextUser = $res['wf_next_user'];
     // Get the activities where the instance is (ids only is ok)
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where  `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where  `wf_instance_id`=?";
     $result = $this->query($query,array((int)$instanceId));    
     while($res = $result->fetchRow()) {
       $this->activities[]=$res;
@@ -64,12 +64,12 @@ class Instance extends Base {
   function setNextActivity($actname) {
     $pId = $this->pId;
     $actname=trim($actname);
-    $aid = $this->getOne("select `activityId` from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=? and `name`=?",array($pId,$actname));
-    if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=? and `pId`=?",array($aid,$pId))) {
+    $aid = $this->getOne("select `wf_activity_id` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_p_id`=? and `wf_name`=?",array($pId,$actname));
+    if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=? and `wf_p_id`=?",array($aid,$pId))) {
       trigger_error(tra('Fatal error: setting next activity to an unexisting activity'),E_USER_WARNING);
     }
     $this->nextActivity=$aid;
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `nextActivity`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_next_activity`=? where `wf_instance_id`=?";
     $this->query($query,array((int)$aid,(int)$this->instanceId));
   }
 
@@ -81,7 +81,7 @@ class Instance extends Base {
   function setNextUser($user) {
     $pId = $this->pId;
     $this->nextUser = $user;
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `nextUser`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_next_user`=? where `wf_instance_id`=?";
     $this->query($query,array($user,(int)$this->instanceId));
   }
  
@@ -94,7 +94,7 @@ class Instance extends Base {
   function _createNewInstance($activityId,$user) {
     // Creates a new instance setting up started,ended,user
     // and status
-    $pid = $this->getOne("select `pId` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));
+    $pid = $this->getOne("select `wf_p_id` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array((int)$activityId));
     $this->status = 'active';
     $this->nextActivity = 0;
     $this->setNextUser('');
@@ -103,19 +103,19 @@ class Instance extends Base {
     $this->started=$now;
     $this->owner = $user;
     $props=serialize($this->properties);
-    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`wf_started`,`wf_ended`,`wf_status`,`wf_p_id`,`wf_owner`,`wf_properties`) values(?,?,?,?,?,?)";
     $this->query($query,array($now,0,'active',$pid,$user,$props));
-    $this->instanceId = $this->getOne("select max(`instanceId`) from `".GALAXIA_TABLE_PREFIX."instances` where `started`=? and `owner`=?",array((int)$now,$user));
+    $this->instanceId = $this->getOne("select max(`wf_instance_id`) from `".GALAXIA_TABLE_PREFIX."instances` where `wf_started`=? and `wf_owner`=?",array((int)$now,$user));
     $iid=$this->instanceId;
     
     // Now update the properties!
     $props = serialize($this->properties);
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `properties`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_properties`=? where `wf_instance_id`=?";
     $this->query($query,array($props,(int)$iid));
 
     // Then add in ".GALAXIA_TABLE_PREFIX."instance_activities an entry for the
     // activity the user and status running and started now
-    $query = "insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`instanceId`,`activityId`,`user`,`started`,`status`) values(?,?,?,?,?)";
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`wf_instance_id`,`wf_activity_id`,`wf_user`,`wf_started`,`wf_status`) values(?,?,?,?,?)";
     $this->query($query,array((int)$iid,(int)$activityId,$user,(int)$now,'running'));
   }
   
@@ -126,7 +126,7 @@ class Instance extends Base {
   function set($name,$value) {
     $this->properties[$name] = $value;
     $props = serialize($this->properties);
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `properties`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_properties`=? where `wf_instance_id`=?";
     $this->query($query,array($props,$this->instanceId));
   }
   
@@ -164,7 +164,7 @@ class Instance extends Base {
   function setStatus($status) {
     $this->status = $status; 
     // and update the database
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `status`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_status`=? where `wf_instance_id`=?";
     $this->query($query,array($status,(int)$this->instanceId));  
   }
   
@@ -195,7 +195,7 @@ class Instance extends Base {
   function setOwner($user) {
     $this->owner = $user;
     // save database
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `owner`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_owner`=? where `wf_instance_id`=?";
     $this->query($query,array($owner,(int)$this->instanceId));  
   }
   
@@ -207,9 +207,9 @@ class Instance extends Base {
   function setActivityUser($activityId,$theuser) {
     if(empty($theuser)) $theuser='*';
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        $this->activities[$i]['user']=$theuser;
-        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `user`=? where `activityId`=? and `instanceId`=?";
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        $this->activities[$i]['wf_user']=$theuser;
+        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_user`=? where `wf_activity_id`=? and `wf_instance_id`=?";
 
         $this->query($query,array($theuser,(int)$activityId,(int)$this->instanceId));
       }
@@ -222,8 +222,8 @@ class Instance extends Base {
   */  
   function getActivityUser($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        return $this->activities[$i]['user'];
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        return $this->activities[$i]['wf_user'];
       }
     }  
     return false;
@@ -235,9 +235,9 @@ class Instance extends Base {
   */  
   function setActivityStatus($activityId,$status) {
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        $this->activities[$i]['status']=$status;
-        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `status`=? where `activityId`=? and `instanceId`=?";
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        $this->activities[$i]['wf_status']=$status;
+        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_status`=? where `wf_activity_id`=? and `wf_instance_id`=?";
         $this->query($query,array($status,(int)$activityId,(int)$this->instanceId));
       }
     }  
@@ -250,8 +250,8 @@ class Instance extends Base {
   */
   function getActivityStatus($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        return $this->activities[$i]['status'];
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        return $this->activities[$i]['wf_status'];
       }
     }  
     return false;
@@ -263,9 +263,9 @@ class Instance extends Base {
   function setActivityStarted($activityId) {
     $now = date("U");
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        $this->activities[$i]['started']=$now;
-        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `started`=? where `activityId`=? and `instanceId`=?";
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        $this->activities[$i]['wf_started']=$now;
+        $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_started`=? where `wf_activity_id`=? and `wf_instance_id`=?";
         $this->query($query,array($now,(int)$activityId,(int)$this->instanceId));
       }
     }  
@@ -276,8 +276,8 @@ class Instance extends Base {
   */
   function getActivityStarted($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
-        return $this->activities[$i]['started'];
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
+        return $this->activities[$i]['wf_started'];
       }
     }  
     return false;
@@ -289,7 +289,7 @@ class Instance extends Base {
   */
   function _get_instance_activity($activityId) {
     for($i=0;$i<count($this->activities);$i++) {
-      if($this->activities[$i]['activityId']==$activityId) {
+      if($this->activities[$i]['wf_activity_id']==$activityId) {
         return $this->activities[$i];
       }
     }  
@@ -301,7 +301,7 @@ class Instance extends Base {
   */
   function setStarted($time) {
     $this->started=$time;
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `started`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_started`=? where `wf_instance_id`=?";
     $this->query($query,array((int)$time,(int)$this->instanceId));    
   }
   
@@ -317,7 +317,7 @@ class Instance extends Base {
   */
   function setEnded($time) {
     $this->ended=$time;
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `ended`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_ended`=? where `wf_instance_id`=?";
     $this->query($query,array((int)$time,(int)$this->instanceId));    
   }
   
@@ -353,25 +353,25 @@ class Instance extends Base {
     if(empty($user)) {$theuser='*';} else {$theuser=$user;}
     
     if($activityId==0) {
-      $activityId=$_REQUEST['activityId'];
+      $activityId=$_REQUEST['activity_id'];
     }  
     
     // If we are completing a start activity then the instance must 
     // be created first!
-    $type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));    
+    $type = $this->getOne("select `wf_type` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array((int)$activityId));    
     if($type=='start') {
       $this->_createNewInstance((int)$activityId,$theuser);
     }
       
     // Now set ended
     $now = date("U");
-    $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_ended`=? where `wf_activity_id`=? and `wf_instance_id`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
     
     //Add a workitem to the instance 
     $iid = $this->instanceId;
     if($addworkitem) {
-      $max = $this->getOne("select max(`orderId`) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array((int)$iid));
+      $max = $this->getOne("select max(`wf_order_id`) from `".GALAXIA_TABLE_PREFIX."workitems` where `wf_instance_id`=?",array((int)$iid));
       if(!$max) {
         $max=1;
       } else {
@@ -383,12 +383,12 @@ class Instance extends Base {
         $started = $this->getStarted();
         $putuser = $this->getOwner();
       } else {
-        $started=$act['started'];
-        $putuser = $act['user'];
+        $started=$act['wf_started'];
+        $putuser = $act['wf_user'];
       }
       $ended = date("U");
       $properties = serialize($this->properties);
-      $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
+      $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`wf_instance_id`,`wf_order_id`,`wf_activity_id`,`wf_started`,`wf_ended`,`wf_properties`,`wf_user`) values(?,?,?,?,?,?,?)";    
       $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
     }
     
@@ -404,13 +404,13 @@ class Instance extends Base {
     //If the activity ending is autorouted then send to the
     //activity
     if ($type != 'end') {
-      if (($force) || ($this->getOne("select `isAutoRouted` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId)) == 'y'))   {
+      if (($force) || ($this->getOne("select `wf_is_autorouted` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array($activityId)) == 'y'))   {
         // Now determine where to send the instance
-        $query = "select `actToId` from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=?";
+        $query = "select `wf_act_to_id` from `".GALAXIA_TABLE_PREFIX."transitions` where `wf_act_from_id`=?";
         $result = $this->query($query,array((int)$activityId));
         $candidates = Array();
         while ($res = $result->fetchRow()) {
-          $candidates[] = $res['actToId'];
+          $candidates[] = $res['wf_act_to_id'];
         }  
         if($type == 'split') {
           $first = true;
@@ -446,25 +446,25 @@ class Instance extends Base {
     }
     
     if($activityId==0) {
-      $activityId=$_REQUEST['activityId'];
+      $activityId=$_REQUEST['wf_activity_id'];
     }  
     
     // If we are completing a start activity then the instance must 
     // be created first!
-    $type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));    
+    $type = $this->getOne("select `wf_type` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array((int)$activityId));    
     if($type=='start') {
       $this->_createNewInstance((int)$activityId,$theuser);
     }
       
     // Now set ended
     $now = date("U");
-    $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_ended`=? where `wf_activity_id`=? and `wf_instance_id`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
     
     //Add a workitem to the instance 
     $iid = $this->instanceId;
     if($addworkitem) {
-      $max = $this->getOne("select max(`orderId`) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array((int)$iid));
+      $max = $this->getOne("select max(`wf_order_id`) from `".GALAXIA_TABLE_PREFIX."workitems` where `wf_instance_id`=?",array((int)$iid));
       if(!$max) {
         $max=1;
       } else {
@@ -476,12 +476,12 @@ class Instance extends Base {
         $started = $this->getStarted();
         $putuser = $this->getOwner();
       } else {
-        $started=$act['started'];
-        $putuser = $act['user'];
+        $started=$act['wf_started'];
+        $putuser = $act['wf_user'];
       }
       $ended = date("U");
       $properties = serialize($this->properties);
-      $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";    
+      $query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`wf_instance_id`,`wf_order_id`,`wf_activity_id`,`wf_started`,`wf_ended`,`wf_properties`,`wf_user`) values(?,?,?,?,?,?,?)";    
       $this->query($query,array((int)$iid,(int)$max,(int)$activityId,(int)$started,(int)$ended,$properties,$putuser));
     }
     
@@ -502,9 +502,9 @@ class Instance extends Base {
   function terminate($status = 'completed') {
     //Set the status of the instance to completed
     $now = date("U");
-    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `status`=?, `ended`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `wf_status`=?, `wf_ended`=? where `wf_instance_id`=?";
     $this->query($query,array($status,(int)$now,(int)$this->instanceId));
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=?";
     $this->query($query,array((int)$this->instanceId));
     $this->status = $status;
     $this->activities = Array();
@@ -521,10 +521,10 @@ class Instance extends Base {
     //if this instance is also in
     //other activity if so do
     //nothing
-    $type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));
+    $type = $this->getOne("select `wf_type` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array((int)$activityId));
     
     // Verify the existance of a transition
-    if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=? and `actToId`=?",array($from,(int)$activityId))) {
+    if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."transitions` where `wf_act_from_id`=? and `wf_act_to_id`=?",array($from,(int)$activityId))) {
       trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'),E_USER_WARNING);
     }
     
@@ -534,14 +534,14 @@ class Instance extends Base {
       $putuser = $this->nextUser;
     } else {
       $candidates = Array();
-      $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
+      $query = "select `wf_role_id` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `wf_activity_id`=?";
       $result = $this->query($query,array((int)$activityId)); 
       while ($res = $result->fetchRow()) {
-        $roleId = $res['roleId'];
-        $query2 = "select `user` from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=?";
+        $roleId = $res['wf_role_id'];
+        $query2 = "select `wf_user` from `".GALAXIA_TABLE_PREFIX."user_roles` where `wf_role_id`=?";
         $result2 = $this->query($query2,array((int)$roleId)); 
         while ($res2 = $result2->fetchRow()) {
-          $candidates[] = $res2['user'];
+          $candidates[] = $res2['wf_user'];
         }
       }
       if(count($candidates) == 1) {
@@ -554,19 +554,19 @@ class Instance extends Base {
     //if not splitting delete first
     //please update started,status,user
     if(!$split) {
-      $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
+      $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=? and `wf_activity_id`=?";
       $this->query($query,array((int)$this->instanceId,$from));
     }
     $now = date("U");
     $iid = $this->instanceId;
-    $query="delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
+    $query="delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=? and `wf_activity_id`=?";
     $this->query($query,array((int)$iid,(int)$activityId));
-    $query="insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
+    $query="insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`wf_instance_id`,`wf_activity_id`,`wf_user`,`wf_status`,`wf_started`) values(?,?,?,?,?)";
     $this->query($query,array((int)$iid,(int)$activityId,$putuser,'running',(int)$now));
     
     //we are now in a new activity
     $this->activities=Array();
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=?";
     $result = $this->query($query,array((int)$iid));
     while ($res = $result->fetchRow()) {
       $this->activities[]=$res;
@@ -583,7 +583,7 @@ class Instance extends Base {
     //if the activity is not interactive then
     //execute the code for the activity and
     //complete the activity
-    $isInteractive = $this->getOne("select `isInteractive` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array((int)$activityId));
+    $isInteractive = $this->getOne("select `wf_is_interactive` from `".GALAXIA_TABLE_PREFIX."activities` where `wf_activity_id`=?",array((int)$activityId));
     if ($isInteractive=='n') {
 
       // Now execute the code for the activity (function defined in lib/Galaxia/config.php)
@@ -600,7 +600,7 @@ class Instance extends Base {
   */
   function get_instance_comment($cId) {
     $iid = $this->instanceId;
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? and `cId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `wf_instance_id`=? and `wf_c_id`=?";
     $result = $this->query($query,array((int)$iid,(int)$cId));
     $res = $result->fetchRow();
     return $res;
@@ -615,15 +615,15 @@ class Instance extends Base {
     }
     $iid = $this->instanceId;
     if ($cId) {
-      $query = "update `".GALAXIA_TABLE_PREFIX."instance_comments` set `title`=?,`comment`=? where `instanceId`=? and `cId`=?";
+      $query = "update `".GALAXIA_TABLE_PREFIX."instance_comments` set `wf_title`=?,`wf_comment`=? where `wf_instance_id`=? and `wf_c_id`=?";
       $this->query($query,array($title,$comment,(int)$iid,(int)$cId));
     } else {
       $hash = md5($title.$comment);
-      if ($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? and `hash`=?",array($iid,$hash))) {
+      if ($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instance_comments` where `wf_instance_id`=? and `wf_hash`=?",array($iid,$hash))) {
         return false;
       }
       $now = date("U");
-      $query ="insert into `".GALAXIA_TABLE_PREFIX."instance_comments`(`instanceId`,`user`,`activityId`,`activity`,`title`,`comment`,`timestamp`,`hash`) values(?,?,?,?,?,?,?,?)";
+      $query ="insert into `".GALAXIA_TABLE_PREFIX."instance_comments`(`wf_instance_id`,`wf_user`,`wf_activity_id`,`wf_activity`,`wf_title`,`wf_comment`,`wf_timestamp`,`wf_hash`) values(?,?,?,?,?,?,?,?)";
       $this->query($query,array((int)$iid,$user,(int)$activityId,$activity,$title,$comment,(int)$now,$hash));
     }  
   }
@@ -633,7 +633,7 @@ class Instance extends Base {
   */
   function remove_instance_comment($cId) {
     $iid = $this->instanceId;
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_comments` where `cId`=? and `instanceId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_comments` where `wf_c_id`=? and `wf_instance_id`=?";
     $this->query($query,array((int)$cId,(int)$iid));
   }
  
@@ -642,7 +642,7 @@ class Instance extends Base {
   */
   function get_instance_comments() {
     $iid = $this->instanceId;
-    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? order by ".$this->convert_sortmode("timestamp_desc");
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `wf_instance_id`=? order by ".$this->convert_sortmode("timestamp_desc");
     $result = $this->query($query,array((int)$iid));    
     $ret = Array();
     while($res = $result->fetchRow()) {    
