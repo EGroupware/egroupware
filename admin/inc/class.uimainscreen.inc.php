@@ -143,7 +143,7 @@
 				
 				if($_POST['htmlarea'])
 				{
-				   $text_or_htmlarea=$html->htmlarea('message',stripslashes($current_message),'','','TableOperations,ContextMenu,SpellChecker');
+				   $text_or_htmlarea=$html->htmlarea('message',stripslashes($current_message));
 				   $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
