@@ -85,6 +85,7 @@ compose	email	en	Compose
 copy	common	en	Copy
 copy	filemanager	en	Copy
 copy_as	filemanager	en	Copy as
+country	addressbook	en	Country
 courier new       notes      en       Courier New
 create	common	en	Create
 create	filemanager	en	Create
@@ -311,6 +312,7 @@ please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	en	Preferences
+prefix	addressbook	en	Prefix
 previous	email	en	Previous
 previous page	common	en	Previous page
 print	common	en	Print
@@ -389,6 +391,7 @@ subject	email	en	Subject
 subject	nntp	en	Subject
 submit	common	en	Submit
 submit changes	admin	en	Submit Changes
+suffix	addressbook	en	Suffix
 sun	calendar	en	Sun
 sunday	common	en	Sunday
 switch current folder to	email	en	Switch Current Folder To
