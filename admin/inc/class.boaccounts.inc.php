@@ -13,7 +13,6 @@
 
 	class boaccounts
 	{
-		var $ui;
 		var $so;
 		var $public_functions = array(
 			'add_group'	=> True,
@@ -24,15 +23,54 @@
 			'edit_user'	=> True
 		);
 
-		function boaccounts($dont_load_ui = False)
+		var $xml_functions = array();
+
+		var $soap_functions = array(
+			'add_user' => array(
+				'in'  => array('int', 'struct'),
+				'out' => array()
+			)
+		);
+
+		function boaccounts()
 		{
 			$this->so = createobject('admin.soaccounts');
+		}
 
-			// This is to prevent an infinite loop which ends up segfaulting PHP and will drive
-			// you crazy for hours tring to track it down. (jengo)
-			if (! $dont_load_ui)
+		function list_methods($_type='xmlrpc')
+		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+			if (is_array($_type))
 			{
-				$this->ui = createobject('admin.uiaccounts');
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'rpc_add_user' => array(
+							'function'  => 'rpc_add_user',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Add a new account.')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
 			}
 		}
 
@@ -45,7 +83,8 @@
 		{
 			if (!@isset($GLOBALS['HTTP_POST_VARS']['account_id']) || !@$GLOBALS['HTTP_POST_VARS']['account_id'] || $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
 			{
-				$this->ui->list_groups();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_groups();
 				return False;
 			}
 			
@@ -81,7 +120,8 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$this->ui->list_accounts();
+			$ui = createobject('admin.uiaccounts');
+		  $ui->list_accounts();
 			return False;
 
 		}
@@ -90,7 +130,8 @@
 		{
 			if (isset($GLOBALS['HTTP_POST_VARS']['cancel']) || $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
 			{
-				$this->ui->list_users();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_users();
 				return False;
 			}
 			elseif($GLOBALS['HTTP_POST_VARS']['delete_account'])
@@ -128,7 +169,8 @@
 					$cd = 29;
 				}
 
-				$this->ui->list_users();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_users();
 				return False;
 			}
 		}
@@ -137,7 +179,8 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
 			{
-				$this->ui->list_groups();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_groups();
 				return False;
 			}
 
@@ -251,7 +294,8 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$this->ui->list_groups();
+			$ui = createobject('admin.uiaccounts');
+		  $ui->list_groups();
 			return False;
 		}
 
@@ -259,7 +303,8 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
-				$this->ui->list_users();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_users();
 				return False;
 			}
 
@@ -289,107 +334,9 @@
 
 				if (!$errors = $this->validate_user($userData))
 				{
-					$userData['account_expires'] = $userData['expires'];
-					$GLOBALS['phpgw']->db->lock(
-						Array(
-							'phpgw_accounts',
-							'phpgw_nextid',
-							'phpgw_preferences',
-							'phpgw_sessions',
-							'phpgw_acl',
-							'phpgw_applications',
-							'phpgw_app_sessions',
-							'phpgw_hooks'
-						)
-					);
-
-					$GLOBALS['phpgw']->accounts->create($userData);
-
-					$userData['account_id'] = $GLOBALS['phpgw']->accounts->name2id($userData['account_lid']);
-
-					$apps = CreateObject('phpgwapi.applications',array($userData['account_id'],'u'));
-					$apps->read_installed_apps();
-
-					// Read Group Apps
-					if ($GLOBALS['HTTP_POST_VARS']['account_groups'])
-					{
-						$apps->account_type = 'g';
-						reset($GLOBALS['HTTP_POST_VARS']['account_groups']);
-						while($groups = each($GLOBALS['HTTP_POST_VARS']['account_groups']))
-						{
-							$apps->account_id = $groups[0];
-							$old_app_groups = $apps->read_account_specific();
-							@reset($old_app_groups);
-							while($old_group_app = each($old_app_groups))
-							{
-								if (!$apps_after[$old_group_app[0]])
-								{
-									$apps_after[$old_group_app[0]] = $old_app_groups[$old_group_app[0]];
-								}
-							}
-						}
-					}
-
-					$apps->account_type = 'u';
-					$apps->account_id = $userData['account_id'];
-					$apps->account_apps = Array(Array());
-
-					if ($userData['account_permissions'])
-					{
-						@reset($userData['account_permissions']);
-						while (list($app,$turned_on) = each($userData['account_permissions']))
-						{
-							if ($turned_on)
-							{
-								$apps->add($app);
-								if (!$apps_after[$app])
-								{
-									$apps_after[] = $app;
-								}
-							}
-						}
-					}
-					$apps->save_repository();
-
-					$GLOBALS['phpgw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
-
-					// Assign user to groups
-					if ($userData['account_groups'])
-					{
-						$c_acct_groups = count($userData['account_groups']);
-						for ($i=0;$i<$c_acct_groups;$i++)
-						{
-							$GLOBALS['phpgw']->acl->add_repository('phpgw_group',$userData['account_groups'][$i],$userData['account_id'],1);
-						}
-					}
-
-/*					if ($apps_after)
-					{
-						$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$userData['account_id']);
-						$GLOBALS['phpgw']->common->hook_single('add_def_pref','admin');
-						while ($apps = each($apps_after))
-						{
-							if (strcasecmp ($apps[0], 'admin') != 0)
-							{
-								$GLOBALS['phpgw']->common->hook_single('add_def_pref', $apps[1]);
-							}
-						}
-						$GLOBALS['pref']->save_repository(False);
-					} */
-
-					$apps->account_apps = array(array());
-					$apps_after = array(array());
-
-					$GLOBALS['phpgw']->db->unlock();
-
-/*
-					// start inlcuding other admin tools
-					while($app = each($apps_after))
-					{
-						$GLOBALS['phpgw']->common->hook_single('add_user_data', $value);
-					}
-*/
-					$this->ui->list_users();
+					$this->so->add_user($userData);
+					$ui = createobject('admin.uiaccounts');
+				  $ui->list_users();
 					return False;
 				}
 				else
@@ -400,7 +347,8 @@
 			}
 			else
 			{
-				$this->ui->list_users();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_users();
 				return False;
 			}
 		}
@@ -409,7 +357,8 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
 			{
-				$this->ui->list_groups();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_groups();
 				return False;
 			}
 
@@ -569,7 +518,8 @@
 
 			$GLOBALS['phpgw']->db->unlock();
 
-			$this->ui->list_groups();
+			$ui = createobject('admin.uiaccounts');
+		  $ui->list_groups();
 			return False;
 		}
 
@@ -577,7 +527,8 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
 			{
-				$this->ui->list_users();
+				$ui = createobject('admin.uiaccounts');
+			  $ui->list_users();
 				return False;
 			}
 
@@ -613,19 +564,21 @@
 					$menuClass = CreateObject('admin.uimenuclass');
 					if (!$menuClass->createHTMLCode('edit_user'))
 					{
-						$this->ui->list_users();
+						$ui = createobject('admin.uiaccounts');
+					  $ui->list_users();
 						return False;
 					}
 					else
 					{
-						$this->ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
+						$ui = createobject('admin.uiaccounts');
+					  $ui->edit_user($GLOBALS['HTTP_GET_VARS']['account_id']);
 						return False;
 					}
 				}
 				else
 				{
-//					$ui = createobject('admin.uiaccounts');
-					$this->ui->create_edit_user($userData['account_id'],$userData,$errors);
+						$ui = createobject('admin.uiaccounts');
+					  $ui->create_edit_user($userData['account_id'],$userData,$errors);
 				}
 			}
 		}
@@ -848,5 +801,22 @@
 			@reset($account_apps);
 			return $account_apps;
 		}
+
+		// xmlrpc functions
+
+		function rpc_add_user($data)
+		{
+			if (!$errors = $this->validate_user($data))
+			{
+				$result = $this->so->add_user($data);
+			}
+			else
+			{
+				$result = $errors;
+			}
+
+			return $result;
+		}
+
 	}
 ?>

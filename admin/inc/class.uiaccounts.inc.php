@@ -31,7 +31,7 @@
 
 		function uiaccounts()
 		{
-			$this->bo = createobject('admin.boaccounts',True);
+			$this->bo = createobject('admin.boaccounts');
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
 		}
 
