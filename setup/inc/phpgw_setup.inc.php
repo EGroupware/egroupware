@@ -312,5 +312,45 @@
       }
       */
     }
+
+    function setup_header($title = "",$nologoutbutton = False) {
+      global $phpgw_info, $PHP_SELF;
+  
+      // Ok, so it isn't the greatest idea, but it works for now.  Setup needs to be rewritten.
+      if ($phpgw_info["setup"]["dontshowtheheaderagain"]) {
+         return False;
+      }
+  
+      $phpgw_info["setup"]["dontshowtheheaderagain"] = True;
+?>
+      <head>
+       <title>phpGroupWare setup <?php echo $title; ?></title>
+        <style type="text/css">
+         <!--
+           .link
+           { 
+              color: #FFFFFF;
+           }
+         -->
+        </style>
+      </head>
+      <BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" marginright="0" marginbottom="0">
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+       <tr>
+        <td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version <?php 
+         echo $phpgw_info["server"]["versions"]["phpgwapi"]; ?> setup</font>
+        </td>
+        <td align="right" bgcolor="486591">
+<?php
+      if ($nologoutbutton) {
+        echo "&nbsp;";
+      } else {
+        echo '<a href="' . $PHP_SELF . '?FormLogout=True" class="link">Logout</a>&nbsp;';
+      }
+      echo "</td></tr></table>";
+    }
+
+
+
   }
 ?>
