@@ -86,9 +86,41 @@ class bo_resources
 		return /* all exept pictures(blobs) */$this->so->read($id);
 	}
 	
-	function save($content)
+	/*!
+		@function save
+		@abstract saves a resource including picture upload ...
+		@param array $resource array with key => value of all needed datas
+		@return string msg if somthing went wrong
+	*/
+	function save($resource)
 	{
-		return $this->so->save_data($content);
+		if($resource['own_file']['size']>0 && ($resource['picture_src']=='db_src' || sizeof($resource['picture_src'])<1))
+		{
+			$resource['picture_src'] = 'db_src';
+			switch($resource['own_file']['type'])
+			{
+				case 'image/gif':
+					$resource['db_src'] = imagecreatefromgif($resource['own_file']['tmp_name']);
+					break;
+				case 'image/jpeg':
+				case 'image/pjpeg':
+					$resource['db_src'] = imagecreatefromjpeg($resource['own_file']['tmp_name']);
+					break;
+				case 'image/png':
+				case 'image/x-png':
+					$resource['db_src'] = imagecreatefrompng($resource['own_file']['tmp_name']);
+					break;
+				default:
+					return 'Picture type is not supported, sorry!';
+			}
+		}
+		
+		if($resource['picture_src'] == 'gen_src')
+		{
+		}
+
+			
+		return $this->so->save_data($resource);
 	}
 
 	function delete($id)
@@ -97,7 +129,7 @@ class bo_resources
 	}
 	
 	function get_images($params)
-	{
+	{ 
 		$id = implode($params);
 		$picture = $this->so->get_value('picture',$id);
 		if($picture)
@@ -107,7 +139,7 @@ class bo_resources
 			echo $picture;
 		}
 		header('Content-type: image/png');
-		echo file_get_contents(PHPGW_INCLUDE_ROOT.'/contactcenter/templates/default/images/photo.png');
+		echo file_get_contents(PHPGW_INCLUDE_ROOT.'/resources/templates/default/images/generic.png');
 		return;
 	}
 }

@@ -93,6 +93,9 @@ class ui_resources
 	*/
 	function edit($content='',$msg='')
 	{
+		$sel_options = array('cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD));
+		$no_button = array();
+		
 		if (is_array($content))
 		{
 			if(isset($content['delete']))
@@ -101,25 +104,27 @@ class ui_resources
 			}
 			if(isset($content['save']))
 			{
-				if(!$content['cat_id'])
+				if(!$content['cat_id'] || !$content['name'])
 				{
-					return $this->edit($content['id'],'please choose a category');
+					$content['msg'] = 'You need to choose at least a name and a category!';
+					$this->tmpl->read('resources.edit');
+					$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button);
+					return;
 				}
-				$this->bo->save($content);
+				
+				$content['msg'] = $this->bo->save($content);
+				if($content['msg'])
+				{
+					$this->tmpl->read('resources.edit');
+					$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button);
+				}
 			}
 			return $this->index();
 		}
 		
-		$sel_options = array(
-					'cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD)
-				);
-		$no_button = array(		// button not to show
-		);
 		if ($content > 0)
 		{
-			$preserv = array(
-					'id' => $content
-				);
+			$preserv = array('id' => $content);
 			$content = $this->bo->read($content);
 		}
 		else
