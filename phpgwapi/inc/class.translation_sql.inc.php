@@ -34,8 +34,8 @@
 
 		/*!
 		 @function translation
-		 @abstract class constructor - loads up translations into $this->lang based on currentapp and userlang preference, if present.
-		 @discussion This also loads translations with appname='common' or appname='all'.  User lang defaults to 'en'.
+		 @abstract class constructor - sets class vars for currentapp and user lang preference
+		 @discussion User lang defaults to 'en'.
 		*/
 		function translation()
 		{
@@ -48,6 +48,11 @@
 			$this->currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
 		}
 
+		/*!
+		 @function load_langs
+		 @abstract loads up translations into $this->lang based on currentapp and userlang preference.
+		 @discussion This also loads translations with appname='common' or appname='all'.
+		*/
 		function load_langs()
 		{
 			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $this->userlang
@@ -82,7 +87,8 @@
 		 @function translate
 		 @abstract Return the translated string from $this->lang, if it exists.  If no translation exists, return the same string with an asterisk.
 		 @discussion This should be called from the global function lang(), not directly.
-		 @syntax translate('translate this x', $somevar);
+		 @syntax translate('translate x',array('replacement'));  OR  translate('translate this');
+		 @example translate('translate this x', array('lang entry'));  returns 'Translate this Lang Entry' or 'translate this lang x*'
 		*/
 		function translate($key,$vars=False) 
 		{
