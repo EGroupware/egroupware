@@ -94,11 +94,29 @@ input,button,select
 
 input[type=submit],input[type=button],input[type=reset],button
 {
-	border:  outset 1px #bbbbbb;
+/*	color:white;*/
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
 	margin:  1px;
 	padding: 1px;
 	cursor:  pointer; 
+	color:  #004e7d;
 	cursor:  hand;
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover
+{
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #006699;
+	color:  #004e7d;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active
+{
+	border:  inset 1px #bbbbbb;
 }
 
 input[type=image]
