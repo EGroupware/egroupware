@@ -213,10 +213,12 @@
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
+			$default_db_ports = array();
 			if(extension_loaded('mysql') || function_exists('mysql_connect'))
 			{
 				$detected .= lang('You appear to have MySQL support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mysql';
+				$default_db_ports['mysql'] = '3306';
 			}
 			else
 			{
@@ -226,6 +228,7 @@
 			{
 				$detected .= lang('You appear to have PostgreSQL support enabled') . '<br>' . "\n";
 				$supported_db[]  = 'pgsql';
+				$default_db_ports['pgsql'] = '5432';
 			}
 			else
 			{
@@ -235,6 +238,7 @@
 			{
 				$detected .= lang('You appear to have Microsoft SQL Server support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mssql';
+				$default_db_ports['mssql'] = '1433';
 			}
 			else
 			{
@@ -244,6 +248,7 @@
 			{
 				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br>' . "\n";
 				$supported_db[] = 'oracle';
+				$default_db_ports['oracle'] = '1521';
 			}
 			else
 			{
@@ -251,6 +256,7 @@
 				{
 					$detected .= lang('You appear to have Oracle support enabled') . '<br>' . "\n";
 					$supported_db[] = 'oracle';
+					$default_db_ports['oracle'] = '1521';
 				}
 				else
 				{
@@ -283,6 +289,14 @@
 				$supported_sessions_type[] = 'php4';
 			}
 
+			@reset($default_db_ports);
+			$js_default_db_ports = 'var default_db_ports = new Array();'."\n";
+			while(list($k,$v) = @each($default_db_ports))
+			{
+				$js_default_db_ports .= '  default_db_ports["'.$k.'"]="'.$v.'";'."\n";
+			}
+			$setup_tpl->set_var('js_default_db_ports',$js_default_db_ports);
+
 			/*
 			if(extension_loaded('xml') || function_exists('xml_parser_create'))
 			{
@@ -310,6 +324,7 @@
 					$setup_tpl->set_var('lang_delete',lang('Delete'));
 					$setup_tpl->set_var('db_domain','default');
 					$setup_tpl->set_var('db_host','localhost');
+					$setup_tpl->set_var('db_port','3306');
 					$setup_tpl->set_var('db_name','egroupware');
 					$setup_tpl->set_var('db_user','egroupware');
 					$setup_tpl->set_var('db_pass','your_password');
@@ -356,6 +371,7 @@
 						$setup_tpl->set_var('lang_delete',lang('Delete'));
 						$setup_tpl->set_var('db_domain',$key);
 						$setup_tpl->set_var('db_host',$GLOBALS['phpgw_domain'][$key]['db_host']);
+						$setup_tpl->set_var('db_port',$GLOBALS['phpgw_domain'][$key]['db_port']);
 						$setup_tpl->set_var('db_name',$GLOBALS['phpgw_domain'][$key]['db_name']);
 						$setup_tpl->set_var('db_user',$GLOBALS['phpgw_domain'][$key]['db_user']);
 						$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_domain'][$key]['db_pass']);
@@ -414,6 +430,7 @@
 				$setup_tpl->set_var('lang_delete',lang('Delete'));
 				$setup_tpl->set_var('db_domain','default');
 				$setup_tpl->set_var('db_host','localhost');
+				$setup_tpl->set_var('db_port','3306');
 				$setup_tpl->set_var('db_name','egroupware');
 				$setup_tpl->set_var('db_user','egroupware');
 				$setup_tpl->set_var('db_pass','your_password');
@@ -557,6 +574,8 @@
 			$setup_tpl->set_var('lang_adminpass',lang('Admin password to header manager'));
 			$setup_tpl->set_var('lang_dbhost',lang('DB Host'));
 			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server'));
+			$setup_tpl->set_var('lang_dbport',lang('DB Port'));
+			$setup_tpl->set_var('lang_dbportdescr',lang('TCP port number of database server'));
 			$setup_tpl->set_var('lang_dbname',lang('DB Name'));
 			$setup_tpl->set_var('lang_dbnamedescr',lang('Name of database'));
 			$setup_tpl->set_var('lang_dbuser',lang('DB User'));

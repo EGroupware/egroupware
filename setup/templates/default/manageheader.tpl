@@ -1,5 +1,21 @@
 <!-- BEGIN manageheader -->
 
+<script language="JavaScript" type="text/javascript">
+<!--
+  {js_default_db_ports}
+  function setDefaultDBPort(selectBox,portField)
+  {
+	//alert("select: " + selectBox + "; portField: " + portField);
+    if(selectBox.selectedIndex != -1 && selectBox.options[selectBox.selectedIndex].value)
+	{
+		//alert("value = " + selectBox.options[selectBox.selectedIndex].value);
+		portField.value = default_db_ports[selectBox.options[selectBox.selectedIndex].value];
+	}
+    return false;
+  }
+//-->
+</script>
+
 <table border="0" width="90%" cellspacing="0" cellpadding="0" align="center">
 <tbody><tr><td>
 
@@ -8,7 +24,7 @@
 	<tr class="th">
     <th colspan="2">{lang_settings}</th>
   </tr>
-   <form action="manageheader.php" method="post">
+   <form name="domain_settings" action="manageheader.php" method="post">
     <input type="hidden" name="setting[write_config]" value="true">
   <tr>
     <td colspan="2"><b>{lang_serverroot}</b>
@@ -98,7 +114,19 @@
     <td>{lang_domain}:</td>&nbsp;<td><input name="domains[{db_domain}]" value="{db_domain}">&nbsp;&nbsp;<input type="checkbox" name="deletedomain[{db_domain}]">&nbsp;<font color="fefefe">{lang_delete}</font></td>
   </tr>
   <tr>
+    <td><b>{lang_dbtype}</b><br>
+      <select name="setting_{db_domain}[db_type]" onchange="setDefaultDBPort(this,this.form['setting_{db_domain}[db_port]']);">
+{dbtype_options}
+      </select>
+    </td>
+    <td>{lang_whichdb}</td>
+  </tr>
+  <tr>
     <td><b>{lang_dbhost}</b><br><input type="text" name="setting_{db_domain}[db_host]" value="{db_host}"></td><td>{lang_dbhostdescr}</td>
+  </tr>
+  <tr>
+  <tr>
+    <td><b>{lang_dbport}</b><br><input type="text" name="setting_{db_domain}[db_port]" value="{db_port}"></td><td>{lang_dbportdescr}</td>
   </tr>
   <tr>
     <td><b>{lang_dbname}</b><br><input type="text" name="setting_{db_domain}[db_name]" value="{db_name}"></td><td>{lang_dbnamedescr}</td>
@@ -108,14 +136,6 @@
   </tr>
   <tr>
     <td><b>{lang_dbpass}</b><br><input type="text" name="setting_{db_domain}[db_pass]" value="{db_pass}"></td><td>{lang_dbpassdescr}</td>
-  </tr>
-  <tr>
-    <td><b>{lang_dbtype}</b><br>
-      <select name="setting_{db_domain}[db_type]">
-{dbtype_options}
-      </select>
-    </td>
-    <td>{lang_whichdb}</td>
   </tr>
   <tr>
     <td><b>{lang_configpass}</b><br><input type="text" name="setting_{db_domain}[config_pass]" value="{config_pass}"></td>

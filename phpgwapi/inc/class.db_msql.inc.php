@@ -17,7 +17,7 @@
 
 	class db
 	{
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -28,6 +28,10 @@
 			{
 				$Host     = $this->Host;
 			}
+			if ($Port == '')
+			{
+				$Port     = $this->Port;
+			}
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -36,6 +40,7 @@
 			{
 				$Password = $this->Password;
 			}
+			$Host = $Host.':'.$Port;
 
 			// Not connected? Then connect?
 			if (! $this->Link_ID)

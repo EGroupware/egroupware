@@ -24,7 +24,7 @@
 		/* copied from db_mysql for completeness */
 		/* public: identification constant. never change this. */
 		var $type     = 'oracle';
-		var $revision = '1.2';
+		var $revision = '1.3';
 
 		/* public: constructor */
 		function db($query = '')
@@ -32,7 +32,7 @@
 			$this->db_($query);
 		}
 
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -42,6 +42,10 @@
 			if ($Host == '')
 			{
 				$Host     = $this->Host;
+			}
+			if ($Port == '')
+			{
+				$Port     = $this->Port;
 			}
 			if ($User == '')
 			{

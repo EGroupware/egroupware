@@ -20,7 +20,7 @@
 	class db
 	{
 
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -30,6 +30,10 @@
 			if ($Host == '')
 			{
 				$Host     = $this->Host;
+			}
+			if ($Port == '')
+			{
+				$Port     = $this->Port;
 			}
 			if ($User == '')
 			{

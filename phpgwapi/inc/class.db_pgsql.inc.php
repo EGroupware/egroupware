@@ -36,7 +36,7 @@
 			$this->db_($query);
 		}
 
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -47,6 +47,10 @@
 			{
 				$Host     = $this->Host;
 			}
+			if ($Port == '')
+			{
+				$Port     = $this->Port;
+			}
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -55,7 +59,6 @@
 			{
 				$Password = $this->Password;
 			}
-
 			if (! $this->Link_ID)
 			{
 				$cstr = 'dbname=' . $Database

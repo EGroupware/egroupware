@@ -43,6 +43,11 @@
 		var $Host     = '';
 
 		/**
+		* @var string $Port port number of database to connect to
+		*/
+		var $Port     = '';
+
+		/**
 		* @var string $Database name of database to use
 		*/
 		var $Database = '';
@@ -143,7 +148,7 @@
 		* @param string $User name of database user (optional)
 		* @var string $Password password for database user (optional)
 		*/
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -154,6 +159,14 @@
 			{
 				$Host     = $this->Host;
 			}
+			if ($Port == '')
+			{
+				$Port     = $this->Port;
+			}
+			if (isset($Port))
+			{
+				$Host = $Host.':'.$Port;
+			}
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -162,6 +175,7 @@
 			{
 				$Password = $this->Password;
 			}
+
 			if (!$this->Link_ID)
 			{
 				$this->type = $GLOBALS['phpgw_info']['server']['db_type'];

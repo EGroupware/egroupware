@@ -88,6 +88,7 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 db host	setup	en	DB Host
 db name	setup	en	DB Name
 db password	setup	en	DB Password
+db port	setup	en	DB Port
 db root password	setup	en	DB root password
 db root username	setup	en	DB root username
 db type	setup	en	DB Type
@@ -315,6 +316,7 @@ tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
 tables upgraded	setup	en	tables upgraded
 target version	setup	en	Target Version
+TCP port number of database server	setup	en	TCP port number of database server
 text entry	setup	en	Text Entry
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	en	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	en	the file

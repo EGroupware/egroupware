@@ -18,7 +18,7 @@
 	{
 		/* public: this is an api revision, not a CVS revision. */
 		var $type     = 'mysql';
-		var $revision = '1.2';
+		var $revision = '1.3';
 
 		function db($query = '')
 		{
@@ -26,7 +26,7 @@
 		}
 
 		/* public: connection management */
-		function connect($Database = '', $Host = '', $User = '', $Password = '')
+		function connect($Database = '', $Host = '', $Port = '', $User = '', $Password = '')
 		{
 			/* Handle defaults */
 			if ($Database == '')
@@ -37,6 +37,10 @@
 			{
 				$Host     = $this->Host;
 			}
+            if ($Port == '') 
+            {   
+				$Port     = isset($this->Port) ? $this->Port : '3306';
+            } 
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -45,6 +49,8 @@
 			{
 				$Password = $this->Password;
 			}
+			$Host = $Host.':'.$Port;
+
 			/* establish connection, select database */
 			if (! $this->Link_ID)
 			{
@@ -56,7 +62,6 @@
 				{
 					$this->Link_ID=mysql_connect($Host, $User, $Password);
 				}
-
 				if (!$this->Link_ID)
 				{
 					$this->halt(($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')."connect($Host, $User, \$Password) failed.");
