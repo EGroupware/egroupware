@@ -19,7 +19,7 @@ create function get_seq(seq_table in varchar2(40))
   return number is
   seq number(11);
 begin
-  select seq_table.nextval into seq from seq_table;
+  select seq_table.nextval into seq from dual;
   return(seq);
 end
 
