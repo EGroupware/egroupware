@@ -522,7 +522,7 @@
 			$db2 = $this->db;
 
 			$account_id = get_account_id($accountid,$this->account_id);
-			$memberships = $phpgw->accounts->memberships($account_id);
+			$memberships = $phpgw->accounts->membership($account_id);
 			$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
 				. 'acl_account in ';
 			$security = '('.$account_id;
@@ -572,7 +572,7 @@
 //			$security = "('". $phpgw_info['user']['account_id'] ."'";
 			$security = "('". $this->account_id ."'";
 			$myaccounts = CreateObject('phpgwapi.accounts');
-			$my_memberships = $myaccounts->memberships($this->account_id);
+			$my_memberships = $myaccounts->membership($this->account_id);
 			unset($myaccounts);
 			@reset($my_memberships);
 			while($my_memberships && list($key,$group) = each($my_memberships))

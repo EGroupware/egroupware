@@ -59,7 +59,7 @@
 		{
 			$account = CreateObject('phpgwapi.accounts',$_account_id);
 			$userData = $account->read_repository();
-			$userGroups = $account->memberships($_account_id);
+			$userGroups = $account->membership($_account_id);
 			$allGroups = $account->get_list('groups');
 
 			if ($userData['expires'] == -1)

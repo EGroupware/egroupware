@@ -78,7 +78,7 @@
 			return $this->data;
 		}
 
-		function memberships($accountid = '')
+		function membership($accountid = '')
 		{
 			global $phpgw_info, $phpgw;
 			$account_id = get_account_id($accountid);

@@ -140,7 +140,7 @@
 	}
 
 	// Find out which groups they are members of
-	$usergroups = $account->memberships(intval($account_id));
+	$usergroups = $account->membership(intval($account_id));
 	if (gettype($usergroups) != 'array')
 	{
 		$t->set_var('groups_select',lang('None'));
