@@ -623,7 +623,7 @@
 	}
 
 	/* Just a wrapper to my new print_r() function I added to the php3 support file.  Seek3r */
-	function _debug_array($array)
+	function _debug_array($array,$print=True)
 	{
 		$four = False;
 		if(@floor(phpversion()) == 4)
@@ -632,12 +632,23 @@
 		}
 		if($four)
 		{
+			if(!$print)
+			{
+				ob_start();
+			}
 			echo '<pre>';
-		}
-		print_r($array);
-		if($four)
-		{
+			print_r($array);
 			echo '</pre>';
+			if(!$print)
+			{
+				$v = ob_get_contents();
+				ob_end_clean();
+				return $v;
+			}
+		}
+		else
+		{
+			return print_r($array,False,$print);
 		}
 	}
 

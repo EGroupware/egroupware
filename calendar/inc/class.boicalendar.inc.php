@@ -1263,7 +1263,7 @@ class boicalendar
 		}
 		else
 		{
-			$this->debug("Setting ".$type." = "._debug_array($value));
+			$this->debug("Setting ".$type." = "._debug_array($value,False));
 		}
 	}
 
@@ -1411,7 +1411,7 @@ class boicalendar
 		}
 		elseif(ereg('(.*(\:\\\\)?.*):(.*)',$value,$temp))
 		{
-			$this->debug('Value : '._debug_array($temp));
+			$this->debug('Value : '._debug_array($temp,False));
 			$this->debug('Param '.$majortype.' Value : '.$temp[3]);
 			if($temp[3])
 			{
@@ -1423,7 +1423,7 @@ class boicalendar
 			}
 			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\<\>\-]*))([\;]?)(.*)',$value,$temp))
 			{
-				$this->debug('Value : '._debug_array($temp));
+				$this->debug('Value : '._debug_array($temp,False));
 				$this->debug('Param '.$temp[2].' Value : '.$temp[3]);
 				$return_value[] = Array(
 					'param'	=> $temp[2],
@@ -1438,7 +1438,7 @@ class boicalendar
 		{
 			while(ereg('(([A-Z\-]*)[=]([[:alnum:] \_\)\(\/\$\.\,\:\\\|\*\&\^\%\#\!\~\"\?\&\@\<\>\-]*))([\;]?)(.*)',$value,$temp))
 			{
-				$this->debug('Value : '._debug_array($temp));
+				$this->debug('Value : '._debug_array($temp,False));
 				$this->debug('Param '.$temp[2].' Value : '.$temp[3]);
 				$return_value[] = Array(
 					'param'	=> $temp[2],
@@ -1512,7 +1512,7 @@ class boicalendar
 						{
 							$this->set_var($event[$majortype],$param,$value);
 						}
-						$this->debug('Event : '._debug_array($event));
+						$this->debug('Event : '._debug_array($event,False));
 						break;
 				}
 			}
@@ -1526,7 +1526,7 @@ class boicalendar
 		$this->parse_parameters($var,$majortype,$value);
 		if($this->property[$majortype][$mode]['multiples'])
 		{
-			$this->debug(_debug_array($var));
+			$this->debug(_debug_array($var,False));
 			$event[$majortype][] = $var;
 		}
 		else
@@ -1543,7 +1543,7 @@ class boicalendar
 				{
 					$var[$key] = $val;
 				}
-				$this->debug($majortype.' : '._debug_array($var));
+				$this->debug($majortype.' : '._debug_array($var,False));
 			}
 			$this->set_var($event,$majortype,$var);
 		}
@@ -2065,7 +2065,7 @@ class boicalendar
 					}
 				}
 			}
-			$this->debug('DATETIME : '._debug_array($dtime));
+			$this->debug('DATETIME : '._debug_array($dtime,False));
 			return $dtime;
 		}
 		elseif(is_array($var))

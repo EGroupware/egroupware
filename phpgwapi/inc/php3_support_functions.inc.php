@@ -275,31 +275,40 @@
 		}
 	}
 
-	function print_r($array,$recursed=False)
+	function print_r($array,$recursed=False,$print=True)
 	{
+		$str = '';
 		if(is_array($array) || is_object($array))
 		{
 			if(!$recursed)
 			{
-				echo '<p>';
+				$str .= '<p>';
 			}
-			echo ucfirst(gettype($array)) . '(<ul>';
+			$str .= ucfirst(gettype($array)) . '(<ul>';
 
 			while(list($index, $subarray) = each($array) )
 			{
-				echo '<li>'.$index.' <code>=&gt;&nbsp;</code>';
-				print_r($subarray,True);
-				echo '</li>';
+				$str .= '<li>'.$index.' <code>=&gt;&nbsp;</code>';
+				$str .= print_r($subarray,True,$print);
+				$str .= '</li>';
 			}
-			echo '</ul>)';
+			$str .= '</ul>)';
 		}
 		elseif(is_string($array))
 		{
-			echo ucfirst(gettype($array)) . '("' . $array . '")';
+			$str .= ucfirst(gettype($array)) . '("' . $array . '")';
 		}
 		else
 		{
-			echo gettype($array) . '(' . $array . ')';
+			$str .= gettype($array) . '(' . $array . ')';
+		}
+		if($print)
+		{
+			echo $str;
+		}
+		else
+		{
+			return $str;
 		}
 	}
 
