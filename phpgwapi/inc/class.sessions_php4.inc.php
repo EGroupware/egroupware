@@ -291,12 +291,24 @@
 			$parts = explode('.',$dom);
 			if (count($parts) > 2)
 			{
-				$this->cookie_domain = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+        if (!ereg('[0-9]+',$parts[1]))
+        {
+          for($i=1;$i<count($parts);$i++)
+          {
+            $this->cookie_domain .= '.'.$parts[$i];
+          }
+        }
+        else
+        {
+          $this->cookie_domain = '';
+        }
 			}
 			else
 			{
 				$this->cookie_domain = '';
 			}
+      print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
+			session_set_cookie_params(0,'/',$this->cookie_domain);
 		}
 
 		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
