@@ -101,7 +101,7 @@
       /* commented out because I cannot accuratly figure out if the DB exists */
       //echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td><form action="index.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
       echo '<tr><td align="center"><img src="'.$phpgw_info["server"]["app_images"].'/incomplete.gif" alt="O" border="0"></td><td>Make sure that your database is created and the account permissions are set.<br>';
-      switch ($phpgw_domain[$SetupDomain]["db_type"]){
+      switch ($phpgw_domain[$ConfigDomain]["db_type"]){
         case "mysql":
           echo "
             <br>Instructions for creating the database in MySQL:<br>

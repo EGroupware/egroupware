@@ -70,7 +70,7 @@
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
-        $phpgw_setup->show_header("Generated header.inc.php", False, "header");
+        $phpgw_setup->show_header("Saved header.inc.php", False, "header");
         echo "<form action=\"index.php\" method=post>";
         echo "<br>Created header.inc.php! ";
         echo "<input type=hidden name=\"FormLogout\" value=\"header\">";
