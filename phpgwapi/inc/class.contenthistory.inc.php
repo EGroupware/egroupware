@@ -23,9 +23,17 @@
 	*/
 	class contenthistory
 	{
-		#function contenthistory()
-		#{
-		#}
+		/**
+		 * @var db-object $this->db
+		 */
+		var $db;
+
+		function contenthistory()
+		{
+			$this->db = clone($GLOBALS['egw']->db);
+			$this->db->set_app('phpgwapi');
+			$this->table = 'egw_api_content_history';
+		}
 		
 		/**
 		* get the timestamp for action
@@ -39,42 +47,36 @@
 		*/
 		function getHistory($_appName, $_action, $_ts)
 		{
-			copyobj($GLOBALS['phpgw']->db,$db);
-			
-			$query = "select sync_guid from egw_api_content_history where sync_appname = '".$db->db_addslashes($_appName)."' and ";
-			
 			switch($_action)
 			{
 				case 'modify':
-					$query .= "sync_modified > '".$db->to_timestamp($_ts)."' and sync_modified > sync_deleted";
+					$query = "sync_modified > '".$this->db->to_timestamp($_ts)."' AND sync_modified > sync_deleted";
 					break;
+					
 				case 'delete':
-					$query .= "sync_deleted > '".$db->to_timestamp($_ts)."'";
+					$query = "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
 					break;
+					
 				case 'add':
-					$query .= "sync_added > '".$db->to_timestamp($_ts)."' and sync_added > sync_deleted";
+					$query = "sync_added > '".$this->db->to_timestamp($_ts)."' AND sync_added > sync_deleted";
 					break;
+					
 				default:
 					// no valid $_action set
 					return array();
-					break;
 			}
 			
-			$db->query($query, __LINE__, __FILE__);
+			$this->db->select($this->table,array(
+				'sync_appname' => $_appName,
+				$query,				
+			), __LINE__, __FILE__);
 
-			if($db->num_rows() > 0)
+			$guidList = array();
+			while($this->db->next_record())
 			{
-				while($db->next_record())
-				{
-					$guidList[] = $db->f('sync_guid');
-				}
-				
-				return $guidList;
+				$guidList[] = $this->db->f('sync_guid');
 			}
-			else
-			{
-				return array();
-			}
+			return $guidList;
 		}
 		
 		/**
@@ -86,29 +88,23 @@
 		*/
 		function getTSforAction($_guid, $_action)
 		{
-			copyobj($GLOBALS['phpgw']->db,$db);
-			
 			$where = array (
 				'sync_guid'		=> $_guid,
 			);
 
-			$db->select('egw_api_content_history',array('sync_added','sync_modified','sync_deleted'),$where,__LINE__,__FILE__);
-			if($db->num_rows() > 0)
+			$this->db->select($this->table,array('sync_added','sync_modified','sync_deleted'),$where,__LINE__,__FILE__);
+			if($this->db->next_record())
 			{
-				$db->next_record();
 				switch($_action)
 				{
 					case 'add':
-						return $db->from_timestamp($db->f('sync_added'));
-						break;
+						return $this->db->from_timestamp($this->db->f('sync_added'));
+
 					case 'delete':
-						return $db->from_timestamp($db->f('sync_deleted'));
-						break;
+						return $this->db->from_timestamp($this->db->f('sync_deleted'));
+
 					case 'modify':
-						return $db->from_timestamp($db->f('sync_modified'));
-						break;
-					default:
-						return false;
+						return $this->db->from_timestamp($this->db->f('sync_modified'));
 				}
 			}
 			
@@ -126,83 +122,43 @@
 		*/
 		function updateTimeStamp($_appName, $_id, $_action, $_ts)
 		{
-			copyobj($GLOBALS['phpgw']->db,$db);
+			$_ts = $this->db->to_timestamp($_ts);
 
-			$_ts = $db->to_timestamp($_ts);
-
+			$newData = array (
+				'sync_appname'		=> $_appName,
+				'sync_contentid'	=> $_id,
+				'sync_added'		=> $_ts,
+				'sync_guid'			=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
+				'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
+			);
 			switch($_action)
 			{
 				case 'add':
-					$newData = array (
-						'sync_appname'		=> $_appName,
-						'sync_contentid'	=> $_id,
-						'sync_added'		=> $_ts,
-						'sync_guid'		=> $GLOBALS['phpgw']->common->generate_uid($_appName, $_id),
-						'sync_changedby'	=> $GLOBALS['phpgw_info']['user']['account_id'],
-					);
-					$db->insert('egw_api_content_history',$newData,array(),__LINE__,__FILE__);
+					$this->db->insert($this->table,$newData,array(),__LINE__,__FILE__);
 					break;
+					
 				case 'modify':
-					$where = array (
-						'sync_appname'		=> $_appName,
-						'sync_contentid'	=> $_id,
-						
-					);
-
-					// first check that this entry got ever added to database already
-					$db->select('egw_api_content_history','sync_contentid',$where,__LINE__,__FILE__);
-					if($db->num_rows() == 0)
-					{
-						$newData = array (
-							'sync_appname'		=> $_appName,
-							'sync_contentid'	=> $_id,
-							'sync_added'		=> $_ts,
-							'sync_guid'		=> $GLOBALS['phpgw']->common->generate_uid($_appName, $_id),
-						);
-						$db->insert('egw_api_content_history',$newData,array(),__LINE__,__FILE__);
-					}
-					
-					// now update the time stamp
-					$newData = array (
-						'sync_appname'		=> $_appName,
-						'sync_contentid'	=> $_id,
-						'sync_modified'		=> $_ts,
-						'sync_changedby'	=> $GLOBALS['phpgw_info']['user']['account_id'],
-					);
-					$db->update('egw_api_content_history', $newData, $where,__LINE__,__FILE__);
-					break;
 				case 'delete':
+					// first check that this entry got ever added to database already
 					$where = array (
 						'sync_appname'		=> $_appName,
 						'sync_contentid'	=> $_id,
-						
 					);
-
-					// first check that this entry got ever added to database already
-					$db->select('egw_api_content_history','sync_contentid',$where,__LINE__,__FILE__);
-					if($db->num_rows() == 0)
+					$this->db->select($this->table,'sync_contentid',$where,__LINE__,__FILE__);
+					if(!$this->db->next_record())
 					{
-						$newData = array (
-							'sync_appname'		=> $_appName,
-							'sync_contentid'	=> $_id,
-							'sync_added'		=> $_ts,
-							'sync_guid'		=> $GLOBALS['phpgw']->common->generate_uid($_appName, $_id),
-						);
-						$db->insert('egw_api_content_history',$newData,array(),__LINE__,__FILE__);
+						$this->db->insert($this->table,$newData,array(),__LINE__,__FILE__);
 					}
 					
 					// now update the time stamp
 					$newData = array (
-						'sync_appname'		=> $_appName,
-						'sync_contentid'	=> $_id,
-						'sync_deleted'		=> $_ts,
-						'sync_changedby'	=> $GLOBALS['phpgw_info']['user']['account_id'],
+						'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
+						$_action == 'modify' ? 'sync_modified' : 'sync_deleted' => $_ts,
 					);
-					$db->update('egw_api_content_history', $newData, $where,__LINE__,__FILE__);
+					$this->db->update($this->table, $newData, $where,__LINE__,__FILE__);
 					break;
 			}
 			
 			return true;
 		}
 	}
-?>
