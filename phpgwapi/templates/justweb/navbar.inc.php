@@ -116,7 +116,7 @@
 		if (! function_exists('display_section'))
 		{
 //echo 'function was not found<br>';
-
+/*
 			function display_section($appname,$title,$file)
 			{
 				$GLOBALS['prefs'][$appname]['title'] = $title;
@@ -125,6 +125,7 @@
 			$temp_hooks = CreateObject('phpgwapi.hooks');
 
 			$temp_hooks->process('preferences',array('preferences'));
+*/
 //echo 'prefs<pre>';
 //print_r($GLOBALS['prefs']);
 //echo '</pre>';
