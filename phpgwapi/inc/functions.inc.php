@@ -99,12 +99,11 @@
 	*/
 	function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
+	/* Need to make sure this is working against a single dimensional object */
+	$partscount = substr_count($object, '.');
+	if ($partscount == 2)
+	{
 		list($appname,$classname,$functionname) = explode(".", $object);
-		if ($appname == 'phpgw')
-		{
-			$appname == 'phpgwapi';
-		}
-
 		if (!is_object($GLOBALS[$classname]))
 		{
 			if ($classparams != '_UNDEF_')
@@ -126,6 +125,64 @@
 			return $GLOBALS[$classname]->$functionname();
 		}
 	}
+	/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
+	elseif ($partscount => 3)
+	{
+		$classpart = explode(".", $object);
+		$classpartnum = $partscount - 1;
+
+		$classpart = explode (".", $classname);
+		$appname = $classpart[0];		
+		$classname = $classpart[$classpartnum];
+		$functionname = $classpart[$partscount];
+		/* Now I clear these out of the array so that I can do a proper */
+		/* loop and build the $parentobject */
+		unset $classpart[0];
+		unset $classpart[$classpartnum];
+		unset $classpart[$partscount];
+		reset ($classpart);
+		$firstparent = 'True';
+		while(list($key, $val) = each($classpart))
+		{ 
+			if ($firstparent == 'True')
+			{
+				$parentobject = '$GLOBALS["'.$val.'"]';
+				$firstparent = False;
+			}
+			else
+			{
+				$parentobject .= '->'.$val;
+			}
+		}
+		eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
+		if (!$isobject)
+		{
+			if ($classparams != '_UNDEF_')
+			{
+				eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
+			}
+			else
+			{
+				eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
+			}
+		}
+
+		if ($functionparams != '_UNDEF_')
+		{
+			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
+			return $returnval;
+		}
+		else
+		{
+			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
+			return $returnval;
+		}		
+	}
+	else
+	{
+		return 'error in parts';
+	}
+}
 
 	/*!
 	@function lang
