@@ -1,1 +1,1 @@
-<?php  $phpgw_info["server"]["version"] = "0.9.3pre3"; ?>
+<?php  $phpgw_info["server"]["version"] = "0.9.3pre4"; ?>
