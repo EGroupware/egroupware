@@ -53,8 +53,8 @@
 		\*************************************************************************/
 		function sessions()
 		{
-			$this->sessionid = (isset($GLOBALS['HTTP_GET_VARS']['sessionid'])?$GLOBALS['HTTP_GET_VARS']['sessionid']:(isset($GLOBALS['HTTP_COOKIE_VARS']['sessionid'])?$GLOBALS['HTTP_COOKIE_VARS']['sessionid']:''));
-			$this->kp3       = (isset($GLOBALS['HTTP_GET_VARS']['kp3'])?$GLOBALS['HTTP_GET_VARS']['kp3']:(isset($GLOBALS['HTTP_COOKIE_VARS']['kp3'])?$GLOBALS['HTTP_COOKIE_VARS']['kp3']:''));
+			$this->sessionid = get_var('sessionid',Array('COOKIE','GET'));
+			$this->kp3       = get_var('kp3',Array('COOKIE','GET'));
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
 		}
@@ -113,8 +113,8 @@
 		{
 			if(empty($sessionid) || !$sessionid)
 			{
-				$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
-				$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+				$sessionid = get_var('sessionid',Array('COOKIE','GET'));
+				$kp3       = get_var('kp3',Array('COOKIE','GET'));
 			}
 
 			$this->sessionid = $sessionid;
@@ -619,9 +619,9 @@
 		function update_dla()
 		{
 			global $PHP_SELF;
-			if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			if(MENUACTION)
 			{
-				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
+				$action = MENUACTION;
 			}
 			else
 			{
@@ -841,7 +841,7 @@
 		\*************************************************************************/
 		function link($url, $extravars = '')
 		{
-			$kp3 = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+			$kp3 = get_var('kp3',Array('COOKIE','GET'));
 
 			if (! $kp3)
 			{

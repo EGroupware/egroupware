@@ -625,9 +625,9 @@
 		function update_dla()
 		{
 			global $PHP_SELF;
-			if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			if(MENUACTION)
 			{
-				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
+				$action = MENUACTION;
 			}
 			else
 			{

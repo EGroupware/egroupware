@@ -35,7 +35,7 @@
 		*/
 		function setup_translation()
 		{
-			$ConfigLang = @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] ? @$GLOBALS['HTTP_COOKIE_VARS']['ConfigLang'] : @$GLOBALS['HTTP_POST_VARS']['ConfigLang'];
+			$ConfigLang = get_var('ConfigLang',Array('POST','COOKIE'));
 
 			/* TODO */
 			/*

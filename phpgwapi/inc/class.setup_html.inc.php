@@ -26,14 +26,16 @@
 			$GLOBALS['header_template']->set_block('header','domain','domain');
 			$var = Array();
 
-			@reset($GLOBALS['HTTP_POST_VARS']['domains']);
-			while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['domains']))
+			$deletedomain = get_var('deletedomain',Array('POST'));
+			$domains = get_var('domains',Array('POST'));
+			@reset($domains);
+			while($domains && list($k,$v) = @each($domains))
 			{
-				if(isset($GLOBALS['HTTP_POST_VARS']['deletedomain'][$v]))
+				if(isset($deletedomain[$v]))
 				{
 					continue;
 				}
-				$dom = $GLOBALS['HTTP_POST_VARS']["setting_$v"];
+				$dom = get_var('setting_'.$v,Array('POST'));
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 				while(list($x,$y) = @each($dom))
 				{
@@ -44,7 +46,8 @@
 
 			$GLOBALS['header_template']->set_var('domain','');
 
-			while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['setting']))
+			$setting = get_var('setting',Array('POST'));
+			while($setting && list($k,$v) = @each($setting))
 			{
 				$var[strtoupper($k)] = $v;
 			}

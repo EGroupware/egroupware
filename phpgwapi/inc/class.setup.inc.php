@@ -49,7 +49,7 @@
 			if(empty($GLOBALS['ConfigDomain']))
 			{
 				/* This is to fix the reading of this value immediately after the cookie was set on login */
-				$GLOBALS['ConfigDomain'] = @$GLOBALS['HTTP_POST_VARS']['FormDomain'] ? @$GLOBALS['HTTP_POST_VARS']['FormDomain'] : 'default';
+				$GLOBALS['ConfigDomain'] = get_var('ConfigDomain',Array('DEFAULT','POST'),'default');
 			}
 
 			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];

@@ -104,8 +104,8 @@
 	$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
-	$GLOBALS['login'] = @$GLOBALS['HTTP_POST_VARS']['login'];
-	$GLOBALS['logindomain'] = @$GLOBALS['HTTP_POST_VARS']['logindomain'];
+	$GLOBALS['login'] = get_var('login',Array('POST'));
+	$GLOBALS['logindomain'] = get_var('logindomain',Array('POST'));
 
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
 	if (isset($domain) && $domain)
@@ -251,7 +251,6 @@
 	$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions');
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
-	//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded', 'messageonly','api');
 	if (! isset($GLOBALS['phpgw_info']['flags']['included_classes']['error']) ||
 		! $GLOBALS['phpgw_info']['flags']['included_classes']['error'])
@@ -306,6 +305,8 @@
 			exit;
 		}
 
+		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
+
 		/* A few hacker resistant constants that will be used throught the program */
 		define('PHPGW_TEMPLATE_DIR', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir', 'phpgwapi'));
 		define('PHPGW_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi'));
@@ -325,6 +326,9 @@
 		define('PHPGW_ACL_DELETE',8);
 		define('PHPGW_ACL_PRIVATE',16);
 		*/
+
+		/******* Define the GLOBALS['MENUACTION'] *******/
+		define('MENUACTION',get_var('menuaction',Array('GET')));
 
 		/********* This sets the user variables *********/
 		$GLOBALS['phpgw_info']['user']['private_dir'] = $GLOBALS['phpgw_info']['server']['files_dir']
@@ -450,13 +454,13 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
 		if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && 
 			!@$GLOBALS['phpgw_info']['flags']['noappheader'] &&
-			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			file_exists(PHPGW_APP_INC . '/header.inc.php') && !MENUACTION)
 		{
 			include(PHPGW_APP_INC . '/header.inc.php');
 		}

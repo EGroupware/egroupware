@@ -62,7 +62,7 @@
 						$setup_info[$GLOBALS['phpgw_setup']->db->f('app_name')]['enabled'] = $GLOBALS['phpgw_setup']->db->f('app_enabled');
 					}
 					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
-					$tmp = $setup_info['phpgwapi']['version']; /* save the file version */
+					$tmp = @$setup_info['phpgwapi']['version']; /* save the file version */
 					if(!@$setup_info['phpgwapi']['currentver'])
 					{
 						$setup_info['phpgwapi']['currentver'] = $setup_info['admin']['currentver'];

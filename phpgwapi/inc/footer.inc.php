@@ -34,16 +34,16 @@
 	/**************************************************************************\
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
-	if ((file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS']['menuaction'])) &&
+	if((file_exists (PHPGW_APP_INC . '/footer.inc.php') || MENUACTION)) &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
 		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 	{
-		if ($GLOBALS['HTTP_GET_VARS']['menuaction'])
+		if(MENUACTION)
 		{
-			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+			list($app,$class,$method) = explode('.',MENUACTION);
+			if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
 			{
 //				eval("\$GLOBALS[$class]->footer();");
 				$GLOBALS[$class]->footer();

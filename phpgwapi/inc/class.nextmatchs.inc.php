@@ -61,9 +61,9 @@
 				$this->maxmatches = 15;
 			}
 
-			if(isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			if(MENUACTION)
 			{
-				$this->action = $GLOBALS['HTTP_GET_VARS']['menuaction'];
+				$this->action = MENUACTION;
 			}
 		}
 
@@ -508,7 +508,7 @@
 		*/
 		function searchby($search_obj)
 		{
-			$qfield = $GLOBALS['HTTP_POST_VARS']['qfield'] ? $GLOBALS['HTTP_POST_VARS']['qfield'] : $GLOBALS['HTTP_GET_VARS']['qfield'];
+			$qfield = get_var('qfield',Array('GET','POST'));
 
 			$str = '';
 			if(is_array($search_obj))
@@ -542,7 +542,7 @@
 			}
 			else
 			{
-				$filter = $GLOBALS['HTTP_POST_VARS']['filter'] ? $GLOBALS['HTTP_POST_VARS']['filter'] : $GLOBALS['HTTP_GET_VARS']['filter'];
+				$filter = get_var('filter',Array('GET','POST'));
 			}
 
 			if(is_long($filter_obj))

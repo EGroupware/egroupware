@@ -687,18 +687,18 @@
 			}
 
 			// Setting this for display of template choices in user preferences
-			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
+			if (@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
 			{
 				$GLOBALS['phpgw_info']['server']['usrtplchoice'] = 'user_choice';
 			}
 
-			if (($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+			if ((@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
 				!isset($GLOBALS['phpgw_info']['server']['template_set'])) &&
 				isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'];
 			}
-			elseif ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+			elseif (@$GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
 				!isset($GLOBALS['phpgw_info']['server']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
@@ -1250,13 +1250,18 @@
 		*/
 		function show_date($t = '', $format = '')
 		{
-			if (! $t)
+			if (!$t)
 			{
-				$t = time();
+				if(!is_object($GLOBALS['phpgw']->datetime))
+				{
+					$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
+				}
+				$t = $GLOBALS['phpgw']->datetime->gmtnow;
 			}
 
-			$t = $t + ((60*60) * $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
-
+			//  + (date('I') == 1?3600:0)
+			$t += (3600 * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+			
 			if (! $format)
 			{
 				$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] . ' - ';
