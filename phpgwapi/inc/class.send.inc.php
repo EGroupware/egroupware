@@ -74,7 +74,7 @@
 				{
 					$header .= 'X-phpGW-Type: '.$msgtype."\n";
 				}
-				$header .= 'X-Mailer: phpGroupWare (http://www.phpgroupware.org)'."\n";
+				$header .= 'X-Mailer: eGroupWare (http://www.egroupware.org)'."\n";
 
 				/* // moved to email/send_message.php
 				if ($GLOBALS['phpgw_info']['user']['preferences']['email']['email_sig'] && $attach_sig)
