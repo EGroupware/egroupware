@@ -148,7 +148,7 @@
 ?>
 <TR><TD></TD></TR>
 </TABLE>
-<a href="<?php echo $phpgw->link("debug.php") ?>">debug page</a><br>
+<a href="<?php echo $phpgw->link("debug.php") ?>">debug page (only temporary)</a><br>
 <?php
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 ?>
