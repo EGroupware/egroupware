@@ -219,14 +219,12 @@
   
   function account_delete($account_id)
   {
-     global $ldap;
+    global $phpgw_info, $phpgw, $ldap;
 
-     $searchline = getSearchLine($searchstring);
-     $result     = ldap_search($ldap, $BASEDN, $searchline);
-     $entry      = ldap_get_entries($ldap, $result);
-     $numentries = $entry["count"];
- 
-    @ldap_delete($ldap, $button); 
+    $phpgw->db->query("select account_lid from accounts where account_id='$account_id'");
+    $phpgw->db->next_record();
+    
+    ldap_delete($ldap,"uid=" . $phpgw->db->f("account_lid") . ", ". $phpgw_info["server"]["ldap_context"]);
   }
 
   function account_exsists($loginid)

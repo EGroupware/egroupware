@@ -50,6 +50,22 @@
      return $account_info;
   }
   
+  function account_view($loginid)
+  {
+    global $phpgw_info, $phpgw;
+
+    $phpgw->db->query("select account_id,account_firstname,account_lastname from accounts where "
+    				. "account_lid='$loginid'");
+    $phpgw->db->next_record();
+        
+    $account_info["account_id"]        = $phpgw->db->f("account_id");
+    $account_info["account_lid"]       = $loginid;
+    $account_info["account_lastname"]  = $phpgw->db->f("account_lastname");
+    $account_info["account_firstname"] = $phpgw->db->f("account_firstname");
+
+    return $account_info;
+  }
+  
   function account_add($account_info)
   {
      global $phpgw, $phpgw_info;
