@@ -8,8 +8,12 @@
 		<td align="center" colspan=2>{messages}</td>
 	</tr>
 	<tr>
-		<td align="center">{lang_subs}</td>
-		<td align="center">{subs}</td>
+		<td align="center">{lang_modify_subs}</td>
+		<td align="center">{modify_subs}</td>
+	</tr>
+	<tr>
+		<td align="center">{lang_drop_subs}</td>
+		<td align="center">{drop_subs}</td>
 	</tr>
 	<tr>
 		<td align="center">

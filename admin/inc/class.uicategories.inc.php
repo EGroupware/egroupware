@@ -427,7 +427,11 @@
 
 			if ($GLOBALS['HTTP_POST_VARS']['confirm'])
 			{
-				if ($GLOBALS['HTTP_POST_VARS']['subs'])
+				if ($GLOBALS['HTTP_POST_VARS']['modify_subs'])
+				{
+					$this->bo->delete($this->cat_id,False,True);
+				}
+				elseif ($GLOBALS['HTTP_POST_VARS']['drop_subs'])
 				{
 					$this->bo->delete($this->cat_id,True);
 				}
@@ -455,7 +459,7 @@
 				$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
 				$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
 
-				if ($apps_cats)
+				/*if ($apps_cats)
 				{
 					$GLOBALS['phpgw']->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
 						. lang('You will need to remove the subcategories before you can delete this category'));
@@ -469,7 +473,7 @@
 					$GLOBALS['phpgw']->template->pfp('donehandle','done');
 				}
 				else
-				{
+				{*/
 					$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this category ?'));
 
 					$exists = $this->bo->exists(array
@@ -481,13 +485,11 @@
 
 					if ($exists)
 					{
-						$GLOBALS['phpgw']->template->set_var('lang_subs',lang('Do you also want to delete all global subcategories ?'));
-						$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="subs" value="True">');
-					}
-					else
-					{
-						$GLOBALS['phpgw']->template->set_var('lang_subs','');
-						$GLOBALS['phpgw']->template->set_var('subs', '');
+						$GLOBALS['phpgw']->template->set_var('lang_drop_subs',lang('Do you also want to delete all global subcategories ?'));
+						$GLOBALS['phpgw']->template->set_var('drop_subs','<input type="checkbox" name="drop_subs" value="True">');
+
+						$GLOBALS['phpgw']->template->set_var('lang_modify_subs',lang('Do you want to move all global subcategories one level down ?'));
+						$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="modify_subs" value="True">');
 					}
 
 					$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
@@ -499,7 +501,7 @@
 					$GLOBALS['phpgw']->template->set_var('lang_yes',lang('Yes'));
 
 					$GLOBALS['phpgw']->template->fp('phpgw_body','category_delete');
-				}
+				//}
 			}
 		}
 	}

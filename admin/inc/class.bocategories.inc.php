@@ -142,9 +142,9 @@
 			}
 		}
 
-		function delete($cat_id,$subs=False)
+		function delete($cat_id,$drop_subs=False,$modify_subs=True)
 		{
-			return $this->cats->delete($cat_id,$subs);
+			$this->cats->delete($cat_id,$drop_subs,$modify_subs);
 		}
 
 		function check_values($values)
