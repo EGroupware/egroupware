@@ -603,7 +603,7 @@
 					if (empty($ldap_fields[0]['phpgwaccess'])) {
 						$stock_fields['phpgwaccess']         = $access;
 						$err = ldap_modify($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
-					} elseif (!$ldap_fields[0]['owner']) {
+					} elseif (!$ldap_fields[0]['phpgwaccess']) {
 						$stock_fields['phpgwaccess']         = $access;
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwaccess' => $stock_fields['phpgwaccess']));
 					}
