@@ -26,15 +26,12 @@ class calendar_holiday
 		global $phpgw, $phpgw_info;
 		
 		$this->db = $phpgw->db;
-//		$this->cal = CreateObject('calendar.calendar');
-//		$phpgw_info['user']['preferences']['calendar']['locale'] = 'US';
 		$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
 		$owner_id = get_account_id($owner);
 		if($owner_id != $phpgw_info['user']['account_id'])
 		{
 			$owner_pref = CreateObject('phpgwapi.preferences',$owner_id);
 			$owner_prefs = $owner_pref->read_repository();
-//			$owner_prefs['calendar']['locale'] = 'UK';
 			$this->users['owner'] = $owner_prefs['calendar']['locale'];			
 		}
 		if($phpgw_info['server']['auto_load_holidays'] == True)
@@ -113,7 +110,7 @@ class calendar_holiday
 		}
 	}
 
-	function calculate_date($holiday)
+	function calculate_date($holiday,&$i)
 	{
 		global $phpgw;
 		
@@ -134,6 +131,32 @@ class calendar_holiday
 		else
 		{
 			$day = $holiday['day'];
+			$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],$day);
+			// This now calulates Observed holidays and creates a new entry for them.
+			if($dow == 0)
+			{
+				$i++;
+				$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
+				$this->holidays[$i]['name'] = $holiday['name'];
+				$this->holidays[$i]['day'] = $holiday['day'] + 1;
+				$this->holidays[$i]['month'] = $holiday['month'];
+				$this->holidays[$i]['occurence'] = $holiday['occurence'];
+				$this->holidays[$i]['dow'] = $holiday['dow'];
+				$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$this->year) - $this->tz_offset;
+//		echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
+			}
+			elseif($dow == 6)
+			{
+				$i++;
+				$this->holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
+				$this->holidays[$i]['name'] = $holiday['name'];
+				$this->holidays[$i]['day'] = $holiday['day'] - 1;
+				$this->holidays[$i]['month'] = $holiday['month'];
+				$this->holidays[$i]['occurence'] = $holiday['occurence'];
+				$this->holidays[$i]['dow'] = $holiday['dow'];
+				$this->holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$this->year) - $this->tz_offset;
+//		echo 'Calculating for year('.$this->year.') month('.$this->holidays[$i]['month'].') dow('.$this->holidays[$i]['dow'].') occurence('.$this->holidays[$i]['occurence'].') datetime('.$this->holidays[$i]['date'].') DATE('.date('Y.m.d H:i:s',$this->holidays[$i]['date']).')<br>'."\n";
+			}
 		}
 		$datetime = mktime(0,0,0,$holiday['month'],$day,$this->year) - $this->tz_offset;
 //		echo 'Calculating for year('.$this->year.') month('.$holiday['month'].') dow('.$holiday['dow'].') occurence('.$holiday['occurence'].') datetime('.$datetime.') DATE('.date('Y.m.d H:i:s',$datetime).')<br>'."\n";
@@ -144,24 +167,22 @@ class calendar_holiday
 	{
 		global $phpgw;
 
-		$this->year = intval($phpgw->calendar->today['year']);
+		$this->year = intval($phpgw->calendar->tempyear);
 		$this->tz_offset = intval($phpgw->calendar->tz_offset);
 		
 		$sql = $this->build_holiday_query();
 		$this->holidays = Null;
 		$this->db->query($sql,__LINE__,__FILE__);
 
-		$i = -1;
+		$i = 0;
 		while($this->db->next_record())
 		{
-			$i++;
 			$this->holidays[$i]['locale'] = $this->db->f('locale');
 			$this->holidays[$i]['name'] = $phpgw->strip_html($this->db->f('name'));
 			$this->holidays[$i]['day'] = intval($this->db->f('mday'));
 			$this->holidays[$i]['month'] = intval($this->db->f('month_num'));
 			$this->holidays[$i]['occurence'] = intval($this->db->f('occurence'));
 			$this->holidays[$i]['dow'] = intval($this->db->f('dow'));
-			$this->holidays[$i]['date'] = $this->calculate_date($this->holidays[$i]);
 			if(count($find_locale) == 2 && $find_locale[0] != $find_locale[1])
 			{
 				if($this->holidays[$i]['locale'] == $find_locale[1])
@@ -177,6 +198,13 @@ class calendar_holiday
 			{
 				$this->holidays[$i]['owner'] = 'user';		
 			}
+			$c = $i;
+			$this->holidays[$i]['date'] = $this->calculate_date($this->holidays[$i],$c);
+			if($c != $i)
+			{
+				$i = $c;
+			}
+			$i++;
 		}
 		$this->holidays = $this->sort_by_date($this->holidays);
 		return $this->holidays;

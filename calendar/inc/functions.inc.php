@@ -75,7 +75,6 @@
 	}
 	
 	$phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
-	$phpgw->calendar->holidays->read_holiday();
 
 	if (isset($date) && strlen($date) > 0)
 	{
@@ -114,7 +113,9 @@
 
 	}
   
-  $phpgw->calendar->tempyear = $thisyear;
-  $phpgw->calendar->tempmonth = $thismonth;
-  $phpgw->calendar->tempday = $thisday;
+	$phpgw->calendar->tempyear = $thisyear;
+	$phpgw->calendar->tempmonth = $thismonth;
+	$phpgw->calendar->tempday = $thisday;
+
+	$phpgw->calendar->holidays->read_holiday();
 ?>
