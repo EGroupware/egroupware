@@ -45,7 +45,7 @@
      }
 
      if (! $error) {
-        $phpgw->db->lock(array('phpgw_accounts','preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
+        $phpgw->db->lock(Array('phpgw_accounts','phpgw_preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
         $apps = CreateObject('phpgwapi.applications',intval($group_id));
         $apps_before = $apps->read_account_specific();
         $apps->update_data(Array());

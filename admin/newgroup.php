@@ -43,7 +43,7 @@
      }
 
      if (! $error) {
-        $phpgw->db->lock(array('phpgw_accounts','preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
+        $phpgw->db->lock(array('phpgw_accounts','phpgw_preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
         while(1) {
           $group_id = mt_rand (1000, 60000);
           $phpgw->db->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$group_id",__LINE__,__FILE__);
