@@ -270,7 +270,12 @@
 
 		    if ($cat_main)
 		    {
-			$this->db2->query("Select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
+			if (!$cat_parent)
+			{
+			$cat_parent = $cat_main;
+			}
+
+			$this->db2->query("select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
 			$this->db2->next_record();
 			$cat_level = $this->db2->f('cat_level')+1;
 
@@ -322,7 +327,12 @@
 
                     if ($cat_main)
                     {
-                        $this->db2->query("Select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
+			if (!$cat_parent)
+			{
+			    $cat_parent = $cat_main;
+			}
+
+                        $this->db2->query("select cat_level from phpgw_categories where cat_id='$cat_parent'",__LINE__,__FILE__);
                         $this->db2->next_record();
                         $cat_level = $this->db2->f('cat_level')+1;
 
