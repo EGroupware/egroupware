@@ -191,7 +191,7 @@
 				return $id_list[$account_id];
 			}				
 	
-			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=".$account_id,__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -214,7 +214,7 @@
 			{
 				return $account_type[$account_id];
 			}
-			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id=".$account_id,__LINE__,__FILE__);
 			if ($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -232,9 +232,9 @@
 			static $by_id, $by_lid;
 
 			$sql = "SELECT count(account_id) FROM phpgw_accounts WHERE ";
-			if(gettype($account_lid) == 'integer')
+			if(is_integer($account_lid))
 			{
-				if(@isset($by_id[$account_lid]))
+				if(@isset($by_id[$account_lid]) && $by_id[$account_lid] != '')
 				{
 					return $by_id[$account_lid];
 				}
@@ -242,7 +242,7 @@
 			}
 			else
 			{
-				if(@isset($by_lid[$account_lid]))
+				if(@isset($by_lid[$account_lid]) && $by_lid[$account_lid] != '')
 				{
 					return $by_lid[$account_lid];
 				}
