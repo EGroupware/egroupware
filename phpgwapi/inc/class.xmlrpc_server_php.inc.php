@@ -42,7 +42,7 @@
 		var $resp_struct = array();
 		var $debug = False;
 		var $method_requested;
-		var $log = False; //'/tmp/xmlrpc.log';
+		var $log = False;	//'/tmp/xmlrpc.log';
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
@@ -75,12 +75,15 @@
 			}
 		}
 
-		function service()
+		function service($r=False)
 		{
 			global $HTTP_RAW_POST_DATA;
 
-			$r = $this->parseRequest();
-			if ($r == False)
+			if (!$r)	// do we have a response, or we need to parse the request
+			{
+				$r = $this->parseRequest();
+			}
+			if (!$r)
 			{
 				header('WWW-Authenticate: Basic realm="eGroupWare xmlrpc"');
 				header('HTTP/1.0 401 Unauthorized');
@@ -468,6 +471,17 @@
 			fputs($fp,$r->serialize);
 			fputs($fp,$HTTP_RAW_POST_DATA);
 			fclose($fp);
+		}
+
+		function xmlrpc_error($error_number, $error_string)
+		{
+			$r = CreateObject('phpgwapi.xmlrpcresp',
+				'',
+				$error_number,
+				$error_string . ': ' . $this->last_method
+			);
+			$this->service($r);
+			exit;
 		}
 	}
 ?>
