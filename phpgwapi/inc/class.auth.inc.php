@@ -1,1 +1,1 @@
-<?php include($phpgw_info["server"]["include_root"]."/phpgwapi/inc/class.auth_".$phpgw_info["server"]["auth_type"].".inc.php"); ?>
+<?php include($phpgw_info["server"]["api_inc"]."/class.auth_".$phpgw_info["server"]["auth_type"].".inc.php"); ?>
