@@ -134,7 +134,7 @@ To see a list of applications currently available via CVS, go to [http://cvs.sou
 Follow these steps (please adjust to your servers config):
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html</userinput>
-<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co phpgroupware</userinput>
+<userinput># cvs -z3 -d:pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware co phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
 <userinput># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
 </literallayout></blockquote>
@@ -142,7 +142,7 @@ Follow these steps (please adjust to your servers config):
 or if you prefer using CVSROOT:
 </para>
 <blockquote><literallayout>
-<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</userinput>
+<userinput># export CVSROOT=':pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware'</userinput>
 <userinput># cvs co phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
 <userinput># cvs co admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
@@ -155,7 +155,7 @@ Follow these steps (please adjust to your servers config):
 </para>
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html</userinput>
-<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co -r Version-0_9_12-branch phpgroupware</userinput>
+<userinput># cvs -z3 -d:pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware co -r Version-0_9_12-branch phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
 <userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
 </literallayout></blockquote>
@@ -163,7 +163,7 @@ Follow these steps (please adjust to your servers config):
 or if you prefer using CVSROOT:
 </para>
 <blockquote><literallayout>
-<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</userinput>
+<userinput># export CVSROOT=':pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware'</userinput>
 <userinput># cvs co -r Version-0_9_12-branch phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
 <userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
@@ -254,7 +254,7 @@ Ensure that you have a working PostgreSQL installation and that PostgreSQL is ru
 Mandrake or Redhat : 
 <userinput>/etc/rc.d/init.d/postgresql start</userinput>
 Others: 
-<userinput> /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl -D /var/lib/pgsq/data start</userinput> (adjust for your install dirs)
+<userinput> /usr/bin/postmaster -D /var/lib/pgsql/data -i or /usr/bin/pg_ctl -D /var/lib/pgsq/data start</userinput> (adjust for your install dirs)
 </literallayout></blockquote>
 <para>
 Create the phpgroupware database and user
