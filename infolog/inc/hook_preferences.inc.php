@@ -14,14 +14,17 @@
 
 {
 // Only Modify the $file and $title variables.....
-	$title = $appname;
 	$file = array(
 		'Preferences'     => $GLOBALS['phpgw']->link('/index.php','menuaction=infolog.uiinfolog.preferences'),
 		'Grant Access'    => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 		'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 	);
 //Do not modify below this line
-	display_section($appname,$title,$file);
+	list($ver,$mayor,$minor,$ref) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+	if ($minor > 14)
+		display_section($appname,$file);
+	else
+		display_section($appname,$appname,$file);
 }
 
 ?>

@@ -19,6 +19,10 @@
 		);
 
 //Do not modify below this line
-		display_section($appname,$file);
+		list($ver,$mayor,$minor,$ref) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+		if ($minor > 14)
+			display_section($appname,$file);
+		else
+			display_section($appname,$appname,$file);
 	}
 ?>
