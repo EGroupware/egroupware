@@ -11,14 +11,16 @@
   \**************************************************************************/
 /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = 'admin';
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
-	$phpgw->template->set_file(array('form' => 'server_form.tpl'));
-	$phpgw->template->set_block('form','add','addhandle');
-	$phpgw->template->set_block('form','edit','edithandle');
+	$GLOBALS['phpgw']->template->set_file(array('form' => 'server_form.tpl'));
+	$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
+	$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
 
 	$is = CreateObject('phpgwapi.interserver');
+	$server_id = $GLOBALS['HTTP_POST_VARS']['server_id'];
+	$server = $is->read_repository($server_id);
 
 	function formatted_list($name,$list,$id='',$default=False,$java=False)
 	{
@@ -42,16 +44,17 @@
 		return $select;
 	}
 
+	$submit = $GLOBALS['HTTP_POST_VARS']['submit'];
 	if ($submit)
 	{
 		$errorcount = 0;
 
-		if($is->name2id($server_name))
+		if($is->name2id($GLOBALS['HTTP_POST_VARS']['server_name']))
 		{
 			$error[$errorcount++] = lang('That server name has been used already !');
 		}
 
-		if (!$server_name)
+		if (!$GLOBALS['HTTP_POST_VARS']['server_name'])
 		{
 			$error[$errorcount++] = lang('Please enter a name for that server !');
 		}
@@ -59,16 +62,16 @@
 		if (!$error)
 		{
 			$server_info = array(
-				'server_name' => addslashes($server_name),
-				'server_url'  => addslashes($server_url),
-				'trust_level' => intval($trust_level),
-				'trust_rel'   => intval($trust_rel),
-				'username'    => addslashes($server_username),
-				'password'    => $server_password ? $server_password : $server['password'],
-				'server_mode' => addslashes($server_mode),
-				'server_security' => addslashes($server_security),
-				'admin_name'  => addslashes($admin_name),
-				'admin_email' => addslashes($admin_email)
+				'server_name' => addslashes($GLOBALS['HTTP_POST_VARS']['server_name']),
+				'server_url'  => addslashes($GLOBALS['HTTP_POST_VARS']['server_url']),
+				'trust_level' => intval($GLOBALS['HTTP_POST_VARS']['trust_level']),
+				'trust_rel'   => intval($GLOBALS['HTTP_POST_VARS']['trust_rel']),
+				'username'    => addslashes($GLOBALS['HTTP_POST_VARS']['server_username']),
+				'password'    => $GLOBALS['HTTP_POST_VARS']['server_password'] ? $GLOBALS['HTTP_POST_VARS']['server_password'] : $server['password'],
+				'server_mode' => addslashes($GLOBALS['HTTP_POST_VARS']['server_mode']),
+				'server_security' => addslashes($GLOBALS['HTTP_POST_VARS']['server_security']),
+				'admin_name'  => addslashes($GLOBALS['HTTP_POST_VARS']['admin_name']),
+				'admin_email' => addslashes($GLOBALS['HTTP_POST_VARS']['admin_email'])
 			);
 
 			$is->create($server_info);
@@ -77,53 +80,53 @@
 
 	if ($errorcount)
 	{
-		$phpgw->template->set_var('message',$phpgw->common->error_list($error));
+		$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 	}
 	if (($submit) && (! $error) && (! $errorcount))
 	{
-		$phpgw->template->set_var('message',lang('Server x has been added !', $server_name));
+		$GLOBALS['phpgw']->template->set_var('message',lang('Server x has been added !', $server_name));
 	}
 	if ((!$submit) && (!$error) && (!$errorcount))
 	{
-		$phpgw->template->set_var('message','');
+		$GLOBALS['phpgw']->template->set_var('message','');
 	}
 
-	$phpgw->template->set_var('title_servers',lang('Add Peer Server'));
-	$phpgw->template->set_var('actionurl',$phpgw->link('/admin/addserver.php'));
-	$phpgw->template->set_var('doneurl',$phpgw->link('/admin/servers.php'));
-	$phpgw->template->set_var('hidden_vars','<input type="hidden" name="server_id" value="' . $server_id . '">');
+	$GLOBALS['phpgw']->template->set_var('title_servers',lang('Add Peer Server'));
+	$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/admin/addserver.php'));
+	$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/admin/servers.php'));
+	$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="server_id" value="' . $server_id . '">');
 
-	$phpgw->template->set_var('lang_name',lang('Server name'));
-	$phpgw->template->set_var('lang_url',lang('Server URL'));
-	$phpgw->template->set_var('lang_mode',lang('Server Type(mode)'));
-	$phpgw->template->set_var('lang_security',lang('Security'));
-	$phpgw->template->set_var('lang_trust',lang('Trust Level'));
-	$phpgw->template->set_var('lang_relationship',lang('Trust Relationship'));
-	$phpgw->template->set_var('lang_username',lang('Server Username'));
-	$phpgw->template->set_var('lang_password',lang('Server Password'));
-	$phpgw->template->set_var('lang_admin_name',lang('Admin Name'));
-	$phpgw->template->set_var('lang_admin_email',lang('Admin Email'));
-	$phpgw->template->set_var('lang_add',lang('Add'));
-	$phpgw->template->set_var('lang_default',lang('Default'));
-	$phpgw->template->set_var('lang_reset',lang('Clear Form'));
-	$phpgw->template->set_var('lang_done',lang('Done'));
+	$GLOBALS['phpgw']->template->set_var('lang_name',lang('Server name'));
+	$GLOBALS['phpgw']->template->set_var('lang_url',lang('Server URL'));
+	$GLOBALS['phpgw']->template->set_var('lang_mode',lang('Server Type(mode)'));
+	$GLOBALS['phpgw']->template->set_var('lang_security',lang('Security'));
+	$GLOBALS['phpgw']->template->set_var('lang_trust',lang('Trust Level'));
+	$GLOBALS['phpgw']->template->set_var('lang_relationship',lang('Trust Relationship'));
+	$GLOBALS['phpgw']->template->set_var('lang_username',lang('Server Username'));
+	$GLOBALS['phpgw']->template->set_var('lang_password',lang('Server Password'));
+	$GLOBALS['phpgw']->template->set_var('lang_admin_name',lang('Admin Name'));
+	$GLOBALS['phpgw']->template->set_var('lang_admin_email',lang('Admin Email'));
+	$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
+	$GLOBALS['phpgw']->template->set_var('lang_default',lang('Default'));
+	$GLOBALS['phpgw']->template->set_var('lang_reset',lang('Clear Form'));
+	$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
 
-	$phpgw->template->set_var('server_name',$server['server_name']);
-	$phpgw->template->set_var('server_url',$server['server_url']);
-	$phpgw->template->set_var('server_username',$server['username']);
-	$phpgw->template->set_var('server_mode',formatted_list('server_mode',$is->server_modes,$server['server_mode']));
-	$phpgw->template->set_var('server_security',formatted_list('server_security',$is->security_types,$server['server_security']));
-	$phpgw->template->set_var('ssl_note',lang('Note: SSL available only if PHP is compiled with curl support'));
-	$phpgw->template->set_var('pass_note',lang('(Stored password will not be shown here)'));
-	$phpgw->template->set_var('trust_level',formatted_list('trust_level',$is->trust_levels,$server['trust_level']));
-	$phpgw->template->set_var('trust_relationship',formatted_list('trust_rel',$is->trust_relationships,$server['trust_rel'],True));
-	$phpgw->template->set_var('admin_name',$phpgw->strip_html($server['admin_name']));
-	$phpgw->template->set_var('admin_email',$phpgw->strip_html($server['admin_email']));
+	$GLOBALS['phpgw']->template->set_var('server_name',$server['server_name']);
+	$GLOBALS['phpgw']->template->set_var('server_url',$server['server_url']);
+	$GLOBALS['phpgw']->template->set_var('server_username',$server['username']);
+	$GLOBALS['phpgw']->template->set_var('server_mode',formatted_list('server_mode',$is->server_modes,$server['server_mode']));
+	$GLOBALS['phpgw']->template->set_var('server_security',formatted_list('server_security',$is->security_types,$server['server_security']));
+	$GLOBALS['phpgw']->template->set_var('ssl_note',lang('Note: SSL available only if PHP is compiled with curl support'));
+	$GLOBALS['phpgw']->template->set_var('pass_note',lang('(Stored password will not be shown here)'));
+	$GLOBALS['phpgw']->template->set_var('trust_level',formatted_list('trust_level',$is->trust_levels,$server['trust_level']));
+	$GLOBALS['phpgw']->template->set_var('trust_relationship',formatted_list('trust_rel',$is->trust_relationships,$server['trust_rel'],True));
+	$GLOBALS['phpgw']->template->set_var('admin_name',$GLOBALS['phpgw']->strip_html($server['admin_name']));
+	$GLOBALS['phpgw']->template->set_var('admin_email',$GLOBALS['phpgw']->strip_html($server['admin_email']));
 
-	$phpgw->template->set_var('edithandle','');
-	$phpgw->template->set_var('addhandle','');
-	$phpgw->template->pparse('out','form');
-	$phpgw->template->pparse('addhandle','add');
+	$GLOBALS['phpgw']->template->set_var('edithandle','');
+	$GLOBALS['phpgw']->template->set_var('addhandle','');
+	$GLOBALS['phpgw']->template->pparse('out','form');
+	$GLOBALS['phpgw']->template->pparse('addhandle','add');
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

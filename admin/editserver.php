@@ -11,19 +11,19 @@
   \**************************************************************************/
   /* $Id$ */
 
-	$phpgw_info["flags"]["currentapp"] = 'admin';
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
-	if (!$server_id)
+	if (!($GLOBALS['HTTP_GET_VARS']['server_id'] ||
+		$GLOBALS['HTTP_POST_VARS']['server_id']) )
 	{
-		Header('Location: ' . $phpgw->link('/admin/servers.php',"sort=$sort&order=$order&query=$query&start=$start"
+		Header('Location: ' . $GLOBALS['phpgw']->link('/admin/servers.php',"sort=$sort&order=$order&query=$query&start=$start"
 			. "&filter=$filter"));
 	}
 
-	$phpgw->t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$phpgw->template->set_file(array('form' => 'server_form.tpl'));
-	$phpgw->template->set_block('form','add','addhandle');
-	$phpgw->template->set_block('form','edit','edithandle');
+	$GLOBALS['phpgw']->template->set_file(array('form' => 'server_form.tpl'));
+	$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
+	$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
 
 	function formatted_list($name,$list,$id='',$default=False,$java=False)
 	{
@@ -48,7 +48,7 @@
 	}
 
 	$is = CreateObject('phpgwapi.interserver',$server_id);
-	$server = $is->read_repository($server_id);
+	$server = $is->read_repository($GLOBALS['HTTP_GET_VARS']['server_id']);
 
 	$hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
 		. "<input type=\"hidden\" name=\"order\" value=\"$order\">\n"
