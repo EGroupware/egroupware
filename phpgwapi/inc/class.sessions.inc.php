@@ -42,6 +42,10 @@
 		var $data;
 		var $db;
 		var $db2;
+		var $public_functions = array(
+			'list_methods' => True,
+			'update_dla'   => True
+		);
 
 		/*************************************************************************\
 		* Constructor just loads up some defaults from cookies                    *
@@ -52,6 +56,41 @@
 			$this->db2       = $GLOBALS['phpgw']->db;
 			$this->sessionid = (isset($GLOBALS['HTTP_GET_VARS']['sessionid'])?$GLOBALS['HTTP_GET_VARS']['sessionid']:(isset($GLOBALS['HTTP_COOKIE_VARS']['sessionid'])?$GLOBALS['HTTP_COOKIE_VARS']['sessionid']:''));
 			$this->kp3       = (isset($GLOBALS['HTTP_GET_VARS']['kp3'])?$GLOBALS['HTTP_GET_VARS']['kp3']:(isset($GLOBALS['HTTP_COOKIE_VARS']['kp3'])?$GLOBALS['HTTP_COOKIE_VARS']['kp3']:''));
+		}
+
+		function list_methods($_type)
+		{
+			if (is_array($_type))
+			{
+				$_type = $_type['type'];
+			}
+
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						),
+						'update_dla' => array(
+							'function'  => 'update_dla',
+							'signature' => array(array(xmlrpcBoolean)),
+							'docstring' => lang('Returns an array of todo items')
+						),
+					);
+					return $xml_functions;
+					break;
+
+				case 'soap':
+					return $this->soap_functions;
+					break;
+
+				default:
+					return array();
+					break;
+			}
 		}
 
 		/*************************************************************************\
@@ -127,7 +166,12 @@
 			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$GLOBALS['phpgw']->log->message('W-VerifySession, account loginid %1 is expired',$this->account_lid);
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-VerifySession, account loginid %1 is expired',
+					'p1'   => $this->account_lid,
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 				return False;
 			}
@@ -140,7 +184,13 @@
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$GLOBALS['phpgw']->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$GLOBALS['phpgw_info']['user']['domain']);
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-VerifySession, the domains %1 and %2 don\t match',
+					'p1'   => $userid_array[1],
+					'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 
 				return False;
@@ -151,7 +201,13 @@
 				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
 					// This needs some better wording
-					$GLOBALS['phpgw']->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$GLOBALS['phpgw_info']['user']['session_ip']);
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
+						'p1'   => $this->getuser_ip(),
+						'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
 					$GLOBALS['phpgw']->log->commit();
 
 					return False;
@@ -166,7 +222,11 @@
 			if (! $this->account_lid)
 			{
 				// This needs some better wording
-				$GLOBALS['phpgw']->log->message('W-VerifySession, account_id is empty');
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-VerifySession, account_id is empty',
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 
 				return False;
@@ -191,11 +251,21 @@
 									 . "'",__LINE__,__FILE__);
 		}
 
-		function create($login,$passwd,$passwd_type)
+		function create($login,$passwd = '',$passwd_type = '')
 		{
-			$this->login       = $login;
-			$this->passwd      = $passwd;
-			$this->passwd_type = $passwd_type;
+			if (is_array($login))
+			{
+				$this->login       = $login['login'];
+				$this->passwd      = $login['passwd'];
+				$this->passwd_type = $login['passwd_type'];
+				$login             = $this->login;
+			}
+			else
+			{
+				$this->login       = $login;
+				$this->passwd      = $passwd;
+				$this->passwd_type = $passwd_type;
+			}
 
 			$this->clean_sessions();
 			$login_array = explode('@', $login);
@@ -262,7 +332,12 @@
 			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$GLOBALS['phpgw']->log->message('W-LoginFailure, account loginid %1 is expired',$this->account_lid);
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-LoginFailure, account loginid %1 is expired',
+					'p1'   => $this->account_lid,
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 
 				return False;
@@ -359,7 +434,13 @@
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$GLOBALS['phpgw']->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$GLOBALS['phpgw_info']['user']['domain']);
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-VerifySession, the domains %1 and %2 don\t match',
+					'p1'   => $userid_array[1],
+					'p2'   => $GLOBALS['phpgw_info']['user']['domain'],
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 
 				return False;
@@ -370,7 +451,13 @@
 				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
 					// This needs some better wording
-					$GLOBALS['phpgw']->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$GLOBALS['phpgw_info']['user']['session_ip']);
+					$GLOBALS['phpgw']->log->message(array(
+						'text' => 'W-VerifySession, IP %1 doesn\'t match IP %2 in session table',
+						'p1'   => $this->getuser_ip(),
+						'p2'   => $GLOBALS['phpgw_info']['user']['session_ip'],
+						'line' => __LINE__,
+						'file' => __FILE__
+					));
 					$GLOBALS['phpgw']->log->commit();
 
 					return False;
@@ -385,7 +472,11 @@
 			if (! $this->account_lid)
 			{
 				// This needs some better wording
-				$GLOBALS['phpgw']->log->message('W-VerifySession, account_id is empty');
+				$GLOBALS['phpgw']->log->message(array(
+					'text' => 'W-VerifySession, account_id is empty',
+					'line' => __LINE__,
+					'file' => __FILE__
+				));
 				$GLOBALS['phpgw']->log->commit();
 
 				return False;
@@ -486,6 +577,7 @@
 
 			$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
 								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
+			return True;
 		}
 
 		function destroy($sessionid, $kp3)
