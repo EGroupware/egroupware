@@ -1,10 +1,10 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Accounts manager for LDAP                             *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
+  * phpGroupWare API - Accounts manager for the contacts class               *
+  * This file written by Miles Lott <milosch@phpgroupware.org>               *
   * and Lars Kneschke <kneschke@phpgroupware.org>                            *
-  * View and manipulate account records using LDAP                           *
-  * Copyright (C) 2000, 2001 Joseph Engo                                     *
+  * View and manipulate account records using the contacts class             *
+  * Copyright (C) 2000, 2001 Miles Lott                                      *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
@@ -61,6 +61,7 @@
 			/* Now dump it into the array */
 			$this->data["account_id"]	= $allValues[0]["id"];
 			$this->data["account_lid"] 	= $allValues[0]["lid"];
+			$this->data["account_type"] = $allValues[0]["tid"];
 			$this->data["firstname"]   	= $allValues[0]["n_given"];
 			$this->data["lastname"]    	= $allValues[0]["n_family"];
 			$this->data["fullname"]    	= $allValues[0]["fn"];
