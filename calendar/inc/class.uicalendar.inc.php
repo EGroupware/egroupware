@@ -1202,7 +1202,7 @@
 				$this->bo->add_attribute('id',0);
 
 				$can_edit = True;
-				$participants = (string)(get_var('participants',array('HTTP_GET_VARS'||'GET'),FALSE));
+				$participants = (string)(get_var('participants',array('GET'),FALSE));
 				$starthour = (int)(get_var('hour',array('GET'),$this->bo->prefs['calendar']['workdaystarts']));
 				$startmin  = (int)(get_var('minute',array('GET'),0));
 				$endmin    = $startmin + (int)$this->bo->prefs['calendar']['defaultlength'];
