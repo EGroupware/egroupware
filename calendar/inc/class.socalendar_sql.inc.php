@@ -176,7 +176,10 @@ class socalendar_ extends socalendar__
 					$this->add_attribute('recur_enddate',0,'sec');
 				}
 				$this->add_attribute('recur_enddate',0,'alarm');
-//	echo 'Event ID#'.$this->event['id'].' : Enddate = '.$enddate."<br>\n";
+				if($this->debug)
+				{
+					echo 'Event ID#'.$this->event['id'].' : Enddate = '.$enddate."<br>\n";
+				}
 				$this->add_attribute('recur_data',$this->stream->f('recur_data'));
 			}
 			
@@ -216,19 +219,29 @@ class socalendar_ extends socalendar__
 
 		$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
 		$user_where = ' AND (phpgw_cal_user.cal_login = '.$this->user.') ';
-		$startDate = 'AND (phpgw_cal.datetime >= '.$datetime.') ';
-	  
+		$startDate = 'AND ( ( (phpgw_cal.datetime >= '.$datetime.') ';
+
+		$enddate = '';
 		if($endYear != 0 && $endMonth != 0 && $endDay != 0)
 		{
 			$edatetime = mktime(23,59,59,intval($endMonth),intval($endDay),intval($endYear)) - $tz_offset;
-			$endDate = 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
+			$endDate .= 'AND (phpgw_cal.edatetime <= '.$edatetime.') ) '
+				. 'OR ( (phpgw_cal.datetime <= '.$datetime.') '
+				. 'AND (phpgw_cal.edatetime >= '.$edatetime.') ) '
+				. 'OR ( (phpgw_cal.datetime >= '.$datetime.') '
+				. 'AND (phpgw_cal.datetime <= '.$edatetime.') '
+				. 'AND (phpgw_cal.edatetime >= '.$edatetime.') ) '
+				. 'OR ( (phpgw_cal.datetime <= '.$datetime.') '
+				. 'AND (phpgw_cal.edatetime >= '.$datetime.') '
+				. 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
 		}
-		else
-		{
-			$endDate = '';
-		}
+		$endDate .= ') ) ';
 
 		$order_by = 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+		if($this->debug)
+		{
+			echo "SQL : ".$user_where.$startDate.$endDate.$extra."<br>\n";
+		}
 		return $this->get_event_ids(False,$user_where.$startDate.$endDate.$extra.$order_by);
 	}
 
@@ -316,17 +329,31 @@ class socalendar_ extends socalendar__
 				. $repeats_from
 				. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
 				. $repeats_where . $extra;
+
+		if($this->debug)
+		{
+			echo "FULL SQL : ".$sql."<br>\n";
+		}
+		
 		$this->stream->query($sql,__LINE__,__FILE__);
 
 		$retval = Array();
 		if($this->stream->num_rows() == 0)
 		{
+			if($this->debug)
+			{
+				echo "No records found!<br>\n";
+			}
 			return $retval;
 		}
 
 		while($this->stream->next_record())
 		{
 			$retval[] = intval($this->stream->f('cal_id'));
+		}
+		if($this->debug)
+		{
+			echo "Records found!<br>\n";
 		}
 		return $retval;
 	}

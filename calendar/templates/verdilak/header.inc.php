@@ -19,11 +19,11 @@
 
 	function add_image_ahref($link,$image,$alt)
 	{
-		global $phpgw;
-		return '<a href="'.$link.'"><img src="'.$phpgw->common->image('calendar',$image).'" alt="'.$alt.'" border="0"></a>';
+		global $GLOBALS;
+		return '<a href="'.$link.'"><img src="'.$GLOBALS['phpgw']->common->image('calendar',$image).'" alt="'.$alt.'" border="0"></a>';
 	}
 
-	$refer = explode('.',$menuaction);
+	$refer = explode('.',$HTTP_GET_VARS['menuaction']);
 	$referrer = $refer[2];
 
 	$templates = Array(
@@ -70,27 +70,27 @@
 	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 	{
 		$remainder -= 28;
-		$hidden_vars = '<input type="hidden" name="from" value="'.$menuaction.'">'."\n";
-		if(isset($date) && $date)
+		$hidden_vars = '<input type="hidden" name="from" value="'.$HTTP_GET_VARS['menuaction'].'">'."\n";
+		if(isset($HTTP_GET_VARS['date']) && $HTTP_GET_VARS['date'])
 		{
-			$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="date" value="'.$HTP_GET_VARS['date'].'">'."\n";
 		}
 		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
 		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
 		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
-		if(isset($keywords) && $keywords)
+		if(isset($HTTP_POST_VARS['keywords']) && $HTTP_POST_VARS['keywords'])
 		{
-			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$HTTP_POST_VARS['keywords'].'">'."\n";
 		}
-		if(isset($matrixtype) && $matrixtype)
+		if(isset($HTTP_POST_VARS['matrixtype']) && $HTTP_POST_VARS['matrixtype'])
 		{
-			$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$matrixtype.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$HTTP_POST_VARS['matrixtype'].'">'."\n";
 		}
-		if(isset($participants) && $participants)
+		if(isset($HTTP_POST_VARS['participants']) && $HTTP_POST_VARS['participants'])
 		{
-			for ($i=0;$i<count($participants);$i++)
+			for ($i=0;$i<count($HTTP_POST_VARS['participants']);$i++)
 			{
-				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$participants[$i].'">'."\n";
+				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$HTTP_POST_VARS['participants'][$i].'">'."\n";
 			}
 		}
 		if($this->debug) { echo 'Filter = ('.$this->bo->filter.")<br>\n"; }
@@ -113,27 +113,27 @@
 
 	if(count($this->bo->grants) > 0)
 	{
-		$hidden_vars = '    <input type="hidden" name="from" value="'.$menuaction.'">'."\n";
-		if(isset($date) && $date)
+		$hidden_vars = '    <input type="hidden" name="from" value="'.$HTTP_GET_VARS['menuaction'].'">'."\n";
+		if(isset($HTTP_GET_VARS['date']) && $HTTP_GET_VARS['date'])
 		{
-			$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="date" value="'.$HTTP_GET_VARS['date'].'">'."\n";
 		}
 		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
 		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
 		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
-		if(isset($keywords) && $keywords)
+		if(isset($HTTP_POST_VARS['keywords']) && $HTTP_POST_VARS['keywords'])
 		{
-			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$HTTP_POST_VARS['keywords'].'">'."\n";
 		}
-		if(isset($cal_id) && $cal_id != 0)
+		if(isset($HTTP_GET_VARS['cal_id']) && $HTTP_GET_VARS['cal_id'] != 0)
 		{
-			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$cal_id.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$HTTP_GET_VARS['cal_id'].'">'."\n";
 		}
 		$form_options = '';
 		reset($this->bo->grants);
 		while(list($grantor,$temp_rights) = each($this->bo->grants))
 		{
-			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$this->bo->owner?' selected':'').'>'.$phpgw->common->grab_owner_name($grantor).'</option>'."\n";
+			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$this->bo->owner?' selected':'').'>'.$GLOBALS['phpgw']->common->grab_owner_name($grantor).'</option>'."\n";
       }
 		reset($this->bo->grants);
 		
@@ -151,29 +151,25 @@
 		$tpl->parse('header_column','head_col',True);
 	}
 
-	$hidden_vars = '    <input type="hidden" name="from" value="'.$menuaction.'">'."\n";
-	if(isset($date) && $date)
+	$hidden_vars = '    <input type="hidden" name="from" value="'.$HTTP_GET_VARS['menuaction'].'">'."\n";
+	if(isset($HTTP_GET_VARS['date']) && $HTTP_GET_VARS['date'])
 	{
-		$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="date" value="'.$HTTP_GET_VARS['date'].'">'."\n";
 	}
 	$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->so->month.'">'."\n";
 	$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->so->day.'">'."\n";
 	$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->so->year.'">'."\n";
-	if(isset($keywords) && $keywords)
-	{
-		$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
-	}
 	if(isset($this->bo->filter) && $this->bo->filter)
 	{
 		$hidden_vars .= '    <input type="hidden" name="filter" value="'.$this->bo->filter.'">'."\n";
 	}
-	$extra_field = $hidden_vars.'    <input name="keywords"'.($keywords?' value="'.$keywords.'"':'').'>';
+	$hidden_vars .= '    <input name="keywords"'.($HTTP_POST_VARS['keywords']?' value="'.$HTTP_POST_VARS['keywords'].'"':'').'>';
 
 	$var = Array(
 		'action_url_button'	=> $this->page('search'),
 		'action_text_button'	=> lang('Search'),
 		'action_confirm_button'	=> '',
-		'action_extra_field'	=> $extra_field
+		'action_extra_field'	=> $hidden_vars
 	);
 	$tpl->set_var($var);
 	$button = $tpl->fp('out','form_button');

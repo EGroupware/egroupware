@@ -24,30 +24,32 @@
 		var $filter;
 		var $cat_id;
 
-		function socalendar($owner=0,$filter='',$cat_id='')
+		function socalendar($param)
 		{
 			global $phpgw, $phpgw_info;
 
 			$this->db = $phpgw->db;
 			$this->datetime = CreateObject('phpgwapi.datetime');
-			if($owner == 0)
+
+			if(!isset($param['owner']) || $param['owner'] == 0)
 			{
 				$this->owner = $phpgw_info['user']['account_id'];
 			}
 			else
 			{
-				$this->owner = $owner;
+				$this->owner = $param['owner'];
 			}
 
-			if($filter != '')
+			if(isset($param['filter']) && $param['filter'] != '')
 			{
-				$this->filter = $filter;
+				$this->filter = $param['filter'];
 			}
 
-			if($cat_id != '')
+			if(isset($param['category']) && $param['category'] != '')
 			{
-				$this->cat_id = $cat_id;
+				$this->cat_id = $param['category'];
 			}
+			
 			if($this->debug)
 			{
 				echo 'SO Filter : '.$this->filter."<br>\n";
