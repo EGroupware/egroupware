@@ -623,13 +623,13 @@
       $this->sorted_re = 0;
       $this->set_filter();
       $owner = !$owner?$phpgw_info["user"]["account_id"]:$owner;
-      $rep_event = $this->check_repeating_entries($datetime,$owner);
+      $rep_event = $this->check_repeating_entries($datetime);
       $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_datetime, "
 	   . "calendar_entry.cal_edatetime, calendar_entry.cal_priority "
 	   . "FROM calendar_entry, calendar_entry_user "
-	   . "WHERE ((calendar_entry.cal_datetime >= " . $datetime . " AND calendar_entry.cal_datetime <= ".($datetime + 86399).") OR "
-	   . "(calendar_entry.cal_datetime <= " . $datetime . " AND calendar_entry.cal_edatetime >= ".($datetime + 86399).")) AND "
-//	   . "WHERE (calendar_entry.cal_datetime >= " . $datetime . " AND calendar_entry.cal_datetime <= ".($datetime + 86399).") AND "
+	   . "WHERE ((calendar_entry.cal_datetime >= ".$datetime." AND calendar_entry.cal_datetime <= ".($datetime + 86399).") OR "
+	   . "(calendar_entry.cal_datetime <= ".$datetime." AND calendar_entry.cal_edatetime >= ".($datetime + 86399).") OR "
+	   . "(calendar_entry.cal_edatetime >= ".$datetime." AND calendar_entry.cal_edatetime <= ".($datetime + 86399).")) AND "
 	   . "calendar_entry_user.cal_id=calendar_entry.cal_id AND calendar_entry.cal_type != 'M' AND ";
       $sqlfilter = "";
 // Private
