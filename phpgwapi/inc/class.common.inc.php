@@ -1661,6 +1661,12 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					}
 					$GLOBALS['phpgw']->xslttpl->pp();
 				}
+				// call the asyncservice check_run function if it is not explicitly set to cron-only
+				//
+				if (!$GLOBALS['phpgw_info']['server']['asyncservice'])	// is default
+				{
+					ExecMethod('phpgwapi.asyncservice.check_run','fallback');
+				}
 				$GLOBALS['phpgw']->db->disconnect();
 
 				/* Clean up mcrypt */
