@@ -34,7 +34,7 @@ class soapclient
 		}
 	}
 
-	function call($method,$params=array(),$namespace=false,$soapAction=false)
+	function call($method,$params='',$namespace=false,$soapAction=false)
 	{
 		if($this->endpointType == 'wsdl')
 		{
@@ -106,7 +106,8 @@ class soapclient
 					{
 						$this->debug("got fault");
 						$faultArray = $return->decode();
-						foreach($faultArray as $k => $v)
+						while(list($k,$v) = each($faultArray))
+						/* foreach($faultArray as $k => $v) */
 						{
 							print "$k = $v<br>";
 						}
