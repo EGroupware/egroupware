@@ -18,21 +18,25 @@
 
   $phpgw_info["flags"]["currentapp"] = "admin";
   $phpgw_info["flags"]["enable_nextmatchs_class"] = True;
+
   include("../header.inc.php");
+
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
 
   function display_row($label, $value)
   {
-     global $phpgw;
-     $phpgw->template->set_var("tr_color",$phpgw->nextmatchs->alternate_row_color());
-     $phpgw->template->set_var("label",$label);
-     $phpgw->template->set_var("value",$value);
+     global $phpgw,$p;
+     $p->set_var("tr_color",$phpgw->nextmatchs->alternate_row_color());
+     $p->set_var("label",$label);
+     $p->set_var("value",$value);
 
-     $phpgw->template->parse("rows","row",True);
+     $p->parse("rows","row",True);
   }
 
-  $phpgw->template->set_file(array("form" => "application_form.tpl",
-                                   "row"  => "application_form_row.tpl"
-                                  ));
+	$p->set_file(array(
+		"form" => "application_form.tpl",
+		"row"  => "application_form_row.tpl"
+	));
 
   if ($submit) {
      if (! $app_order) {
@@ -53,10 +57,10 @@
         $phpgw->db->next_record();
      
         if ($phpgw->db->f(0) != 0) {
-           $error[$totalerrors++] = lang("That application name already exsists.");
+           $error[$totalerrors++] = lang("That application name already exists.");
         }
      }
-        
+ 
      if (! $totalerrors) {
         $phpgw->db->query("update phpgw_applications set app_name='" . addslashes($n_app_name) . "',"
                 	     . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
@@ -79,9 +83,9 @@
      $phpgw->common->phpgw_header();
      echo parse_navbar();
 
-     $phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
+     $p->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
   } else {
-     $phpgw->template->set_var("error","");
+     $p->set_var("error","");
      
      $n_app_name   = $phpgw->db->f("app_name");
      $n_app_title  = $phpgw->db->f("app_title");
@@ -91,16 +95,16 @@
      $n_app_anonymous = $phpgw->acl->check('', PHPGW_ACL_READ, $n_app_name);
   }
  
-  $phpgw->template->set_var("lang_header",lang("Edit application"));
-  $phpgw->template->set_var("hidden_vars",'<input type="hidden" name="old_app_name" value="' . $old_app_name . '">');
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $phpgw->template->set_var("form_action",$phpgw->link("editapplication.php"));
+  $p->set_var("lang_header",lang("Edit application"));
+  $p->set_var("hidden_vars",'<input type="hidden" name="old_app_name" value="' . $old_app_name . '">');
+  $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $p->set_var("form_action",$phpgw->link("editapplication.php"));
 
   display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
   display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');
 
-  $phpgw->template->set_var("lang_status",lang("Status"));
-  $phpgw->template->set_var("lang_submit_button",lang("edit"));
+  $p->set_var("lang_status",lang("Status"));
+  $p->set_var("lang_submit_button",lang("edit"));
 
   $selected[$n_app_status] = " selected";
   $status_html = '<option value="0"' . $selected[0] . '>' . lang("Disabled") . '</option>'
@@ -118,9 +122,9 @@
   
   display_row(lang("Allow Anonymous access to this app"),$str);
   
-  $phpgw->template->set_var("select_status",$status_html);
+  $p->set_var("select_status",$status_html);
 
-  $phpgw->template->pparse("out","form");
+  $p->pparse("out","form");
 
   $phpgw->common->phpgw_footer();
 ?>
