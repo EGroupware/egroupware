@@ -9,6 +9,8 @@
 		- Fixed a few problems with admin -> editaccount not changing the directory name properly.
 		- Fixed the languages table was using the lang name in upper case while everything else
 		  was using lowercase.
+		- Added admin section to be able to add legal notices or other messages on the main screen.
+		  Thanks snerd for this idea.
 
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
