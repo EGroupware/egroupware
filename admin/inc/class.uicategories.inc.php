@@ -317,7 +317,7 @@
 			$this->template->set_block('form','delete','deletehandle');
 
 			$link_data['menuaction'] = 'admin.uicategories.add';
-			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$this->template->set_var('category_list',$this->bo->cats->formatted_list(array('selected' => $cat_parent)));
 			$this->template->set_var('cat_name',$cat_name);
