@@ -10,7 +10,7 @@
     <td align="center">{new_owner_select}</td>
    </tr>
    <tr>
-    <td align="center"><input type="submit" name="submit" value="{cancel}">&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" value="{delete}"></td>
+    <td align="center"><input type="submit" name="cancel" value="{cancel}">&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="delete_account" value="{delete}"></td>
    </tr>
   </table>
  </center>

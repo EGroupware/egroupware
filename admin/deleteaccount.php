@@ -13,7 +13,7 @@
 
 	$phpgw_info = array();
 
-	if ($submit || !$account_id)
+	if ($delete_account || !$account_id)
 	{
 		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
 	}
@@ -22,13 +22,13 @@
 	include("../header.inc.php");
 	// Make sure they are not attempting to delete their own account, or they have cancelled.
 	// If they are, they should not reach this point anyway.
-	if($submit=='Cancel' || $phpgw_info['user']['account_id'] == $account_id)
+	if($cancel || $phpgw_info['user']['account_id'] == $account_id)
 	{
 		Header('Location: '.$phpgw->link('/admin/accounts.php'));
 		$phpgw->common->phpgw_exit();
 	}
 	
-	if (($account_id) && ($submit<>'Delete'))
+	if ($account_id && !$delete_account)
 	{
 		$phpgw->template->set_file(array("form" => "delete_account.tpl"));
 		
@@ -55,7 +55,7 @@
 
 		$phpgw->common->phpgw_footer();
 	}
-	if($submit=='Delete')
+	if($delete_account)
 	{
 		$accountid = $account_id;
 		settype($account_id,'integer');
