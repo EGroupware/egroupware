@@ -23,15 +23,25 @@ class holidaycalc {
 			if($holiday['occurence'] != 99)
 			{
 				$dow = $datetime->day_of_week($year,$holiday['month'],1);
-				$day = (((7 * $holiday['occurence']) - 6) + (($holiday['dow'] - $dow) % 7));
+				$day = (((7 * $holiday['occurence']) - 6) + ((($holiday['dow'] + 7) - $dow) % 7));
 				$day += ($day < 1 ? 7 : 0);
-				$day += ($holiday['dow']==1 ? 7 : 0);
+				// What is the point of this?  
+				// Add 7 when the holiday falls on a Monday???
+				//$day += ($holiday['dow']==1 ? 7 : 0);
+
+				// Sometimes the 5th occurance of a weekday (ie the 5th monday)
+				// can spill over to the next month.  This prevents that.  
+				$ld = $datetime->days_in_month($holiday['month'],$year);
+				if ($day > $ld)
+				{
+					return;
+				}
 			}
 			else
 			{
 				$ld = $datetime->days_in_month($holiday['month'],$year);
 				$dow = $datetime->day_of_week($year,$holiday['month'],$ld);
-				$day = $ld - ($dow - $holiday['dow']) % 7 ;
+				$day = $ld - (($dow + 7) - $holiday['dow']) % 7 ;
 			}
 		}
 		else
