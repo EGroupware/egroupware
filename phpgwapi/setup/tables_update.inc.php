@@ -1028,3 +1028,13 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.014';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '0.9.99.014';
+	function phpgwapi_upgrade0_9_99_014()
+	{
+		// enabeling russian language
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='ru'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.015';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
