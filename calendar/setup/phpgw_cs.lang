@@ -1,0 +1,477 @@
+%1 %2 in %3	calendar	cs	%1 %2 v %3
+%1 matches found	calendar	cs	Nalezeno %1 záznamù
+%1 records imported	calendar	cs	Importováno %1 záznamù
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	cs	pøeèteno %1 záznamù (neiportováno, mù¾ete se vrátit %2zpìt%3 a odznaèit Test importu)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	cs	naèteno %1 záznamù (neimportováno, vra»te se a odznaète Test)
+(e.g. 1969)	addressbook	cs	(napø. 1969)
+(for weekly)	calendar	cs	(pro týdenní)
+(i/v)cal	calendar	cs	(i/v)Cal
+1 match found	calendar	cs	Nalezen 1 záznam
+@-eval() is only availible to admins!!!	addressbook	cs	pou¾ít @-eval() mohou jen správci !!!
+accept	calendar	cs	Potvrï
+accepted	calendar	cs	Potvrzeno
+access not permitted	addressbook	cs	pøístup nepovolen
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	cs	Zmìna která vyvolala upozornìní: Nová, Zru¹ená, Pøijatá, Odmítnutá, ...
+add a single entry by passing the fields.	calendar	cs	Pøidej záznam pøeskoèením polo¾ek.
+add alarm	calendar	cs	Pøidej pøipomenutí
+add contact	calendar	cs	Pøidej kontakt
+add custom field	addressbook	cs	Pøidej u¾ivatelskou polo¾ku
+add or update a single entry by passing the fields.	calendar	cs	Pøidejte èi upravte jeden záznam zadáním polí
+added	calendar	cs	Pøidáno
+address book	calendar	cs	Adresáø
+address book - vcard in	addressbook	cs	Adresáø - VCard v
+address book - view	addressbook	cs	Adresáø - pohled
+address line 2	addressbook	cs	Adresa øádek 2
+address line 3	addressbook	cs	Adresa øádek 3
+address type	addressbook	cs	Typ adresy
+addressbook	common	cs	Telefonní seznam
+addressbook preferences	addressbook	cs	Nastavení adresáøe
+addvcard	addressbook	cs	Pøidej vizitku VCard
+alarm	calendar	cs	Pøipomenutí
+alarm for %1 at %2 in %3	calendar	cs	Pøípomenutí %1 %2 v %2
+alarm management	calendar	cs	Správa pøipomenutí
+alarm-management	calendar	cs	Správa pøipomenutí
+alarms	calendar	cs	Pøipomenutí
+all	addressbook	cs	V¹e
+all day	calendar	cs	Celý den
+alt. csv import	addressbook	cs	Alternativní import z CSV
+april	addressbook	cs	duben
+are you sure you want to delete this country ?	calendar	cs	Opravdu mám smazat tuto zemi?
+are you sure you want to delete this field?	addressbook	cs	Opravdu mám smazat tuto polo¾ku?
+are you sure you want to delete this holiday ?	calendar	cs	Opravdu mám smazat tento záznam?
+are you sure\nyou want to\ndelete these alarms?	calendar	cs	Opravdu\nmám smazat\ntyto pøipomenutí?
+are you sure\nyou want to\ndelete this entry ?	calendar	cs	Opravdu mám\nsmazat tento záznam?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì chcete\nsmazat tuto událost?\n\nBude vymazána\npro v¹echny u¾ivatele.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	cs	Urèitì chcete\nsmazat tento výskyt události?\n\nBude vymazána\npro v¹echny u¾ivatele.
+august	addressbook	cs	srpen
+bbs phone	addressbook	cs	Èíslo na BBS
+before the event	calendar	cs	pøed událostí
+birthday	common	cs	Narozeniny
+birthdays	common	cs	Narozeniny
+blank	addressbook	cs	Prázdná
+brief description	calendar	cs	Krátký popis
+business	calendar	cs	Obchod
+business address type	addressbook	cs	Typ obchodní adresy
+business city	addressbook	cs	Mìsto obchodu
+business country	addressbook	cs	Zemì obchodu
+business email	addressbook	cs	E-mail obchodu
+business email type	addressbook	cs	Typ e-mailu obchodu
+business fax	addressbook	cs	Fax obchodu
+business phone	addressbook	cs	Telefon obchodu
+business state	addressbook	cs	Stát obchodu
+business street	addressbook	cs	Ulice obchodu
+business zip code	addressbook	cs	PSÈ obchodu
+calendar	common	cs	Kalendáø
+calendar - [iv]cal importer	calendar	cs	Kalendáø - Import [iv]Cal
+calendar - add	calendar	cs	Kalendáø - Pøidej
+calendar - edit	calendar	cs	Kalendáø - Uprav
+calendar event	calendar	cs	Událost kalendáøe
+calendar holiday management	admin	cs	Správa svátkù kalendáøe
+calendar preferences	calendar	cs	Nastavení kalendáøe
+calendar settings	admin	cs	Nastavení kalendáøe
+calendar-fieldname	calendar	cs	Pole kalendáøe
+canceled	calendar	cs	Stornováno
+car phone	addressbook	cs	Telefon do auta
+category	addressbook	cs	Kategorie
+cell phone	addressbook	cs	Mobil
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	cs	Zmìnit v¹echny  události pro $params['old_owner'] to $params['new_owner'].
+change status	calendar	cs	Zmìnit stav
+charset of file	calendar	cs	Znaková sada souboru
+city	common	cs	Mìsto
+click %1here%2 to return to the calendar.	calendar	cs	%1Zpìt na kalendáø%2
+company	common	cs	Spoleènost
+company name	common	cs	Firma
+configuration	calendar	cs	Nastavení
+contact	common	cs	Kontakt
+contact application	admin	cs	Kontakty
+contact settings	admin	cs	Nastavení kontaktù
+copied by %1, from record #%2.	addressbook	cs	Zkopíroval %1 od záznamu è.%2
+countries	calendar	cs	Zemì
+country	calendar	cs	Zemì
+created by	calendar	cs	Vytvoøil
+csv-fieldname	calendar	cs	Pole v CVS
+csv-filename	calendar	cs	CVS soubor
+custom	addressbook	cs	Vlastní
+custom fields	calendar	cs	U¾ivatelská pole
+custom fields and sorting	common	cs	U¾ivatelská pole a øazení
+daily	calendar	cs	Dennì
+daily matrix view	calendar	cs	Pohled na denní tabulku
+days	calendar	cs	dny
+days repeated	calendar	cs	dnù se opakuje
+dayview	calendar	cs	Náhled dne
+debug output in browser	addressbook	cs	Ladící výstup v prohlí¾eèi
+december	addressbook	cs	prosinec
+default appointment length (in minutes)	calendar	cs	Výchozí délka události (v minutách)
+default calendar filter	calendar	cs	Standartní filtr kalendáøe
+default calendar view	calendar	cs	Standartní pohled kalendáøe
+default filter	addressbook	cs	Standartní filtr
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	cs	Výchozí délka novì vytvoøených událostí. Délka je v minutách, tedy 60 odpovídá jedné hodinì.
+defines the size in minutes of the lines in the day view.	calendar	cs	Definuje kolika minutám odpovídá jeden øádek v denním pohledu.
+delete	addressbook	cs	Sma¾
+delete a single entry by passing the id.	calendar	cs	Sma¾ záznam pøedáním id.
+delete an entire users calendar.	calendar	cs	Smazat celý u¾ivatelùv kalendáø
+delete selected contacts	calendar	cs	Smazat vybrané kontakty
+delete series	calendar	cs	Smazat sérii
+delete single	calendar	cs	Smazat tento
+deleted	calendar	cs	Smazáno
+department	common	cs	Oddìlení
+description	calendar	cs	Popis
+disable	calendar	cs	Zakázat
+disabled	calendar	cs	zakázáno
+display interval in day view	calendar	cs	Zobrazuj interval v denním pohledu
+display mini calendars when printing	calendar	cs	Pøi tisku zobrazuj mini kalendáø
+display status of events	calendar	cs	Zobrazuj stav události
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	cs	Zobrazit výchozí kalendáø na domácí stránce (stránka která se zobrazí po pøihlá¹ení èi kliknutí na ikonu domeèku)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	cs	Chcete dostávat zprávy o nových èi zmìnìných událostech? Budete informováni o va¹ich vlastních zmìnách.<br>Mù¾ete omezit zprávy jen na urèité události. Ka¾dý prvek výbìru obsahuje zároveò v¹echny prvky uvedené pøed ním. V¹echny zmìny obsahují zmìny názvu, popisu úèastníkù ale ne odezvy úèastníkù. Pokud vlastník události po¾aduje zprávy o v¹ech zmìnách, dostane v¾dy i odezvy úèastníkù.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	cs	Chcete dostávat pravidelný souhrn va¹ich schùzek elektronickou po¹tou?<br>Souhrn bude posílán na Va¹i bì¾nou adresu ka¾dé ráno, pøípadnì v pondìlí pro týdenní souhrn.<br>Bude posílán jen pokud budou na daný den èi týden nìjaké události plánovány.
+do you wish to autoload calendar holidays files dynamically?	admin	cs	Mám automaticky nahrávat sobory svátkù?
+domestic	addressbook	cs	Domácí
+download	calendar	cs	Ulo¾it
+duration	calendar	cs	Trvání
+e-mail	addressbook	cs	E-Mail
+edit	addressbook	cs	Oprav
+edit custom field	addressbook	cs	Oprav vlastní polo¾ku
+edit custom fields	admin	cs	Oprav vlastní polo¾ky
+edit series	calendar	cs	Uprav sérii
+edit single	calendar	cs	Uprav jednu
+email notification	calendar	cs	Upozornìní elektronickou po¹tou
+email notification for %1	calendar	cs	Elektronickou po¹tou bude upozornìn %1
+empty for all	calendar	cs	prázdné znamená v¹e
+enable	calendar	cs	Povolit
+enabled	calendar	cs	povoleno
+end date/time	calendar	cs	Koncové datum a èas
+enddate	calendar	cs	Konec
+ends	calendar	cs	konèí
+enter output filename: ( .vcs appended )	calendar	cs	Vlo¾te jméno výstupního souboru (pøípojí .vcs)
+event details follow	calendar	cs	Podrobnosti o události
+exceptions	calendar	cs	Výjimky
+export	calendar	cs	Export
+export a list of entries in ical format.	calendar	cs	Exportovat seznam událostí ve formátu iCal.
+export contacts	addressbook	cs	Export kontaktù
+export file name	addressbook	cs	Název souboru exportu
+export from addressbook	addressbook	cs	Export z adresáøe
+extended	calendar	cs	Roz¹íøený
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	cs	Roz¹íøený formát v¾dy obsahuje v¹echny údaje o události. Formát iCal lze importovat do nìkterých dal¹ích kalendáøních aplikací
+external participants	calendar	cs	Externí úèastníci
+extra	addressbook	cs	Extra
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	cs	Nelze poslat zprávu pro '%1' #%2 pøedmìt='%3', odesilatel='%4' !!!
+fax	addressbook	cs	Fax
+fax number	common	cs	Faxové èíslo
+february	addressbook	cs	únor
+field %1 has been added !	addressbook	cs	Polo¾ka %1 byla pøidána
+field %1 has been updated !	addressbook	cs	Polo¾ka %1 byla aktualizována
+field name	addressbook	cs	Jméno polo¾ky
+fields	addressbook	cs	Polo¾ky
+fields to show in address list	addressbook	cs	Viditelné polo¾ky v seznamu
+fieldseparator	calendar	cs	Oddìlovaè polí
+first name	addressbook	cs	Jméno
+firstname of person to notify	calendar	cs	Køestní jméno upozoròované osoby
+format of event updates	calendar	cs	Formát zprávy o zmìnách
+fr	calendar	cs	Pá
+free/busy	calendar	cs	Volno/Obsazeno
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	cs	Informace o zaneprázdnìní není povoleno pro nepøihlá¹ené u¾ivatele, u¾ivatel '%1' je neznámý nebo zadal ¹patné heslo
+frequency	calendar	cs	Frekvence opakování
+fri	calendar	cs	Pá
+full description	calendar	cs	Popis
+full name	addressbook	cs	Celé jméno
+fullname of person to notify	calendar	cs	Celé jméno upozoròované osoby
+generate printer-friendly version	calendar	cs	Generuj verzi pro tisk
+geo	addressbook	cs	GEO
+global categories	calendar	cs	Globální kategorie
+global public and group public	calendar	cs	Globálnì pøístupná i pøístupná pro skupinu
+global public only	calendar	cs	Pouze globálnì pøístupná
+go!	calendar	cs	Jdi!
+grant addressbook access	common	cs	Deleguj práva pro pøístup k adresáøi
+grant calendar access	common	cs	Vyhraï pøístup ke kalendáøi
+group planner	calendar	cs	Plánovaè
+group public only	calendar	cs	Pøístupná pouze pro skupinu
+here is your requested alarm.	calendar	cs	Po¾adované pøipomenutí.
+high priority	calendar	cs	vysoká priorita
+holiday	calendar	cs	Svátky
+holiday management	calendar	cs	Správa svátkù
+holiday-management	calendar	cs	Správa svátkù
+holidays	calendar	cs	Svátky
+home address type	addressbook	cs	Typ adresy domù
+home city	addressbook	cs	Mìsto - domù
+home country	addressbook	cs	Zemì - domù
+home email	addressbook	cs	E-mail - domù
+home email type	addressbook	cs	Typ e-mailu domù
+home phone	addressbook	cs	Telefon - domù
+home state	addressbook	cs	Stát - domù
+home street	addressbook	cs	Ulice -domù
+home zip code	addressbook	cs	PSÈ - domù
+hours	calendar	cs	hodin
+i participate	calendar	cs	Podílím se
+ical / rfc2445	calendar	cs	iCal - rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	cs	Pokud za¹krtnete toto pole a svátek pøipadne na výkend, automaticky se pøesune na následující pondìlí.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	cs	Pokud heslo nenastavíte, budou údaje dostupné komukoli kdo zná pøíslu¹ný URL!!!
+ignore conflict	calendar	cs	Ignoruj konflikt
+import	calendar	cs	Import
+import contacts	addressbook	cs	Importuj kontakty
+import csv-file	common	cs	Importovat CSV soubor
+import file	addressbook	cs	Importuj soubor
+import from ldif, csv, or vcard	addressbook	cs	Import z LDIF, CSV nebo VCard
+import from outlook	addressbook	cs	Importuj z Outlooku
+international	addressbook	cs	Mezinárodní
+interval	calendar	cs	Interval
+intervals in day view	calendar	cs	Èasové rozli¹ení v denním pohledu
+intervals per day in planner view	calendar	cs	Rozli¹ení dnù v plánovaèi
+invalid entry id.	calendar	cs	Neplatné id
+isdn phone	addressbook	cs	ISDN èíslo
+january	addressbook	cs	leden
+july	addressbook	cs	èervenec
+june	addressbook	cs	èerven
+label	addressbook	cs	Nálepka
+last	calendar	cs	poslední
+last name	addressbook	cs	Pøíjmení
+lastname of person to notify	calendar	cs	Pøíjmení upozoròované osoby
+ldap context for contacts	admin	cs	LDAP kontext pro kontakty
+ldap host for contacts	admin	cs	LDAP hostitel pro kontakty
+ldap root dn for contacts	admin	cs	LDAP koøenové dn pro kontakty
+ldap root pw for contacts	admin	cs	LDAP koøenové pw pro kontakty
+ldif	addressbook	cs	LDIF
+length shown<br>(emtpy for full length)	calendar	cs	Délka zobrazení<br>(prázdné pro celou)
+length<br>(<= 255)	calendar	cs	Délka<br>(<=255)
+line 2	addressbook	cs	Øádek 2
+link	calendar	cs	Odkaz
+link to view the event	calendar	cs	Odkaz na detail události
+list all categories.	calendar	cs	Zobraz v¹echny kategorie
+load [iv]cal	calendar	cs	Naèíst [iv]Cal
+location	calendar	cs	Umístìní
+location to autoload from	admin	cs	Umístìní zdroje pro automatické naètení
+make freebusy information availible to not loged in persons?	calendar	cs	Zpøístupnit informace o volném èase a zaneprázdnìní i nepøihlá¹ených osobám?
+march	addressbook	cs	bøezen
+mark records as private	addressbook	cs	Oznaèit záznam jako soukromý
+matrixview	calendar	cs	Denní tabulka
+may	addressbook	cs	kvìten
+message phone	addressbook	cs	Telefon pro zprávy
+middle name	addressbook	cs	Prostøední jméno
+minutes	calendar	cs	minut
+mo	calendar	cs	Po
+mobile	addressbook	cs	Mobil
+mobile phone	addressbook	cs	Mobil
+modem phone	addressbook	cs	Èíslo na modem
+modified	calendar	cs	Zmìnìno
+modify list of external participants	calendar	cs	Zmìnit seznam externích úèastníkù
+mon	calendar	cs	Po
+month	calendar	cs	Mìsíc
+monthly	calendar	cs	Mìsíènì
+monthly (by date)	calendar	cs	Mìsíènì (podle data)
+monthly (by day)	calendar	cs	Mìsíènì (podle dne)
+monthview	calendar	cs	Náhled mìsíce
+name	addressbook	cs	Jméno
+new entry	calendar	cs	Nový záznam
+new name must not exist and not be empty!!!	calendar	cs	Nové jméno nesmí být prázdné a nesmí být ji¾ pou¾ito!!!
+no	addressbook	cs	Ne
+no matches found	calendar	cs	®ádné záznamy nenalezeny
+no response	calendar	cs	®ádná odezva
+no vcard	addressbook	cs	®ádná vizitka
+none	addressbook	cs	¾ádné
+notes	addressbook	cs	Poznámky
+notification messages for added events	calendar	cs	Tvar zprávy pro nové události
+notification messages for canceled events	calendar	cs	Tvar zprávy pøi zru¹ení události
+notification messages for modified events	calendar	cs	Tvar zprávy pøi zmìnì události
+notification messages for your alarms	calendar	cs	Tvar zpráv pøipomenutí události
+notification messages for your responses	calendar	cs	Tvar zprávy pro Va¹e odpovìdi
+november	addressbook	cs	listopad
+number of intervals per day in planner view	calendar	cs	Poèet intervalù za den v plánovacím pohledu
+number of months	calendar	cs	Poèet mìsícù
+number of records to read (%1)	calendar	cs	Poèet záznamù k naètení (%1)
+observance rule	calendar	cs	Pravidlo zachování
+occurence	calendar	cs	Výskyt
+october	addressbook	cs	øíjen
+ok	addressbook	cs	OK
+old startdate	calendar	cs	Staré poèáteèní datum
+olddate	calendar	cs	StaréDatum
+on %1 %2 %3 your meeting request for %4	calendar	cs	%1 %2 %3 vá¹ po¾adavek na schùzku pro %4
+on all changes	calendar	cs	pøi v¹ech zmìnách
+on all modification, but responses	calendar	cs	pøi v¹ech zmìnách mimo odpovìdí
+on any time change too	calendar	cs	i pøi jakékoli zmìnì èasu
+on invitation / cancelation only	calendar	cs	jen pøi pozvání/zru¹ení
+on participant responses too	calendar	cs	i pøi odpovìdích
+on time change of more than 4 hours too	calendar	cs	i pøi zmìnì èasu o více ne¾ 4 hodiny
+open todo's:	calendar	cs	Úkoly:
+order	calendar	cs	Poøadí
+other number	addressbook	cs	Telefon - ostatní
+other phone	addressbook	cs	Jiný telefon
+overlap holiday	calendar	cs	pøekrýt svátky
+pager	common	cs	Pager
+parcel	addressbook	cs	Parcela
+participant	calendar	cs	Spoluzodpovìdný
+participants	calendar	cs	Spoluzodpovìdní
+participates	calendar	cs	Spoluzodpovídá
+password for not loged in users to your freebusy information?	calendar	cs	Pøístupové heslo k informacím o zaneprázdnìní pro nepøihlá¹ené osoby
+people holiday	calendar	cs	osobní dovolená
+permission denied	calendar	cs	Pøístup zakázán
+phone number	common	cs	Telefonní èíslo
+phone numbers	common	cs	Telefonní èísla
+planner	calendar	cs	Plánovaè
+planner by category	calendar	cs	Plánovaè - podle kategorie
+planner by user	calendar	cs	Plánovaè - podle u¾ivatele
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	cs	Prosím potvrïte, pøijmìte, odvolejte nebo zkontrolujte zmìny v pøíslu¹ném záznamu kalendáøe
+please enter a filename !!!	calendar	cs	Prosím vlo¾te název souboru !!!
+please enter a name for that field !	addressbook	cs	Prosím zadejte jméno pro tuto polo¾ku !
+please select	addressbook	cs	Vyberte prosím
+please set your preferences for this app	addressbook	cs	Upravte si prosím volby pro tuto aplikaci
+please set your preferences for this application	addressbook	cs	Upravte si prosím volby pro tuto aplikaci
+postal	common	cs	Po¹tovní
+pref	addressbook	cs	Titul
+prefix	addressbook	cs	Titul
+preselected group for entering the planner	calendar	cs	Pøedvybraná skupina pro vstup do plánovaèe
+print calendars in black & white	calendar	cs	Tiskni èernobílé kalendáøe
+print the mini calendars	calendar	cs	Tisknout minikalendáøe
+printer friendly	calendar	cs	Pro tisk
+privat	calendar	cs	Soukromé
+private	addressbook	cs	Soukromé
+private and global public	calendar	cs	Soukromì i veøejnì pøístupné
+private and group public	calendar	cs	Pøístupné soukromì i pro skupinu
+private only	calendar	cs	Pouze soukromé
+public	addressbook	cs	veøejné
+public key	addressbook	cs	Veøejný klíè
+re-edit event	calendar	cs	Oprav znova
+read a list of entries.	calendar	cs	Naèti seznam záznamù.
+read a single entry by passing the id and fieldlist.	calendar	cs	Naèti záznam pøedáním id a seznamu polo¾ek.
+read this list of methods.	calendar	cs	Naèti tento seznam metod.
+receive email updates	calendar	cs	Dostávat informace elektronickou po¹tou?
+receive extra information in event mails	calendar	cs	Dostávat roz¹íøené informace v e-mailech o událostech
+receive summary of appointments	calendar	cs	Dostávat souhrn událostí
+record access	addressbook	cs	Pøístup k záznamu
+record owner	addressbook	cs	Vlastník záznamu
+recurring event	calendar	cs	Opakující se událost
+refresh	calendar	cs	Obnov
+reinstate	calendar	cs	Obnovit výskyty
+rejected	calendar	cs	Odmítnuto
+repeat day	calendar	cs	Den pro opakování
+repeat end date	calendar	cs	Datum konce opakování
+repeat type	calendar	cs	Druh opakování
+repeating event information	calendar	cs	Informace o opakování
+repetition	calendar	cs	Opakování
+repetitiondetails (or empty)	calendar	cs	Opakování (nebo nic)
+reset	calendar	cs	Reset
+retrieve contacts	admin	cs	naèti kontakty
+rule	calendar	cs	Pravidlo
+sa	calendar	cs	So
+sat	calendar	cs	So
+scheduling conflict	calendar	cs	Konflikt naplánování
+search results	calendar	cs	Výsledky hledání
+select all	addressbook	cs	Vybrat v¹e
+select where you want to store	admin	cs	Vyberte místo pro ulo¾ení
+selected contacts (%1)	calendar	cs	Vyber kontakty (%1)
+send updates via email	common	cs	Po¹li zmìny e-mailem
+send/receive updates via email	calendar	cs	Odeslat / pøijmout zmìny e-mailem
+september	addressbook	cs	záøí
+set a year only for one-time / non-regular holidays.	calendar	cs	Rok nastavte jen pro jednorázové a nepravidelné události.
+set new events to private	calendar	cs	Nastav nové události jako soukromé
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	cs	Mají se odmítnuté pozvánky stále zobrazovat v kalendáøi?<br>Mù¾ete je pøijmout pozdìji, ale jen pokud jsou stále zobrazeny!
+should new events created as private by default ?	calendar	cs	Mají být nové události vytváøeny jako soukromé?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	cs	Mohou nepøihlá¹ené osoby vidìt informace o Va¹em zaneprázdnìní èi volném èase? Mù¾ete i nastavit dodateèné heslo, odli¹né od Va¹eho bì¾ného hesla, k ochranì tìchto údajù. Tyto údaje jsou ve formátu iCal a obsahují pouze èasy va¹eho zaneprázdnìní, nikoli podrobnosti o událostech. Odkaz na tyto informace je %1.
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	cs	Mají se minikalendáøe zobrazovat a tisknout i v náhledech tisku?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	cs	Má být náhled tisku èernobílý nebo barevný?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	cs	Má se za jménem u¾ivatele zobrazovat jeho vztah k události (pøijmul, odmítnul, ...)?
+show birthday reminders on main screen	addressbook	cs	Pøipomínat narozeniny na hlavní stranì
+show day view on main screen	calendar	cs	Zobraz denní pohled na hlavní stránce
+show default view on main screen	calendar	cs	Zobraz standartní pohled na hlavní stránce
+show high priority events on main screen	calendar	cs	Zobraz události s vysokou prioritou na hlavní stránce
+show invitations you rejected	calendar	cs	Zobraz odmítnuté pozvánky
+show list of upcoming events	calendar	cs	Zobraz seznam budoucích událostí
+single event	calendar	cs	samostatná událost
+sorry, the owner has just deleted this event	calendar	cs	Omlouvám se, vlastník právì smazal tuto událost
+sorry, this event does not exist	calendar	cs	Omlouvám se, tato událost neexistuje
+sorry, this event does not have exceptions defined	calendar	cs	Omlouvám se, tato událost nemá definovány výjimky
+sort by	calendar	cs	Setøídìno podle
+specifies the the number of intervals shown in the planner view.	calendar	cs	Urèuje poèet zobrazených intervalù v plánovaèi
+start date/time	calendar	cs	Poèáteèní datum a èas
+start- and enddates	calendar	cs	Poèáteèní a koncové datum
+startdate	calendar	cs	Poèátek
+startrecord	calendar	cs	První záznam
+state	common	cs	Stát
+street	common	cs	Ulice
+su	calendar	cs	Ne
+submit	addressbook	cs	Ode¹li
+submit to repository	calendar	cs	Ulo¾it do databáze
+successfully imported %1 records into your addressbook.	addressbook	cs	Ùspì¹nì importováno %1 záznamù do adresáøe.
+suffix	addressbook	cs	Pøípona
+sun	calendar	cs	Ne
+tentative	calendar	cs	Pøedbì¾nì
+test import (show importable records <u>only</u> in browser)	calendar	cs	Otestovat import (importované záznamy se zobrazí <u>jen</u> v prohlí¾eèi)
+text	calendar	cs	Text
+th	calendar	cs	Èt
+that field name has been used already !	addressbook	cs	Takový název polo¾ky u¾ existuje !
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	cs	Následují kolize se zadaným èasem:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	cs	U¾ivatel %1 se neúèastní této události
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	cs	Vyskytl se problém se spojením na news-server. <BR>Prosím kontaktujte administrátora.
+this day is shown as first day in the week or month view.	calendar	cs	Tento den je zobrazen jako první v náhledu týdne èi mìsíce
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	cs	Touto hodinou konèí denní pohled. Události po této hodinì se zobrazí za denním pohledem.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	cs	Touto hodinou zaèíná denní pohled. Události pøed ní se zobrazí nad denním pohledem.<br>Zároveò se tato hodina pou¾ije jako výchozí pro nové události.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	cs	Tato skupina bude automaticky vybrána pøi vstupu do plánovaèe. V plánovaèi ji mù¾ete mìnit podle libosti.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	cs	Pravdìpodobnì je ¹patnì nastaven SMTP server. Upozornìte správce systému.
+this message is sent for canceled or deleted events.	calendar	cs	Tato zpráva se ode¹le pøi zru¹ení èi smazání události
+this message is sent for modified or moved events.	calendar	cs	Tato zpráva je posílána pøi zmìnì èi pøesunutí události
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	cs	Tato zpráva se ode¹le v¹em úèastníkùm Va¹í schùzky, kteøí po¾ádali o zprávy o nových událostech<br>Mù¾ete pou¾ít rùzné promìnné, které budou nahrazeny skuteènými údaji o události.<br>První øádka je pøedmìt zprávy
+this message is sent when you accept, tentative accept or reject an event.	calendar	cs	Tato zpráva se ode¹le pokud pøijmete, pøedbì¾nì pøijmete èi odmítnete událost (schùzku).
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	cs	Tato zpráva se ode¹le pokud je nastaveno pøipomenutí nìjaké události. Uveïte v¹echny údaje které mù¾ete potøebovat.
+this month	calendar	cs	Tento mìsíc
+this person's first name was not in the address book.	addressbook	cs	Toto jméno nebylo nalezeno v adresáøi.
+this person's last name was not in the address book.	addressbook	cs	Toto pøíjmení nebylo nalezeno v adresáøi.
+this week	calendar	cs	Tento týden
+this year	calendar	cs	Letos
+thu	calendar	cs	Èt
+title	calendar	cs	Název
+title of the event	calendar	cs	Název události
+title-row	calendar	cs	Nadpis
+to many might exceed your execution-time-limit	calendar	cs	pøíli¹ mnoho mù¾e pøekroèit èas vymezený pro vykonání
+today	calendar	cs	Dnes
+today is %1's birthday!	common	cs	Dnes má narozeniny %1!
+tomorrow is %1's birthday.	common	cs	Zítra má narozeniny %1.
+translation	calendar	cs	Pøeklad
+tu	calendar	cs	Út
+tue	calendar	cs	Út
+update a single entry by passing the fields.	calendar	cs	Zmìnit záznam pøedáním polo¾ek.
+updated	calendar	cs	Aktualizováno
+use end date	calendar	cs	Datum konce pou¾ití
+vcard	common	cs	Vizitka VCard
+vcards require a first name entry.	addressbook	cs	Vizitky potøebují zadané køestní jméno.
+vcards require a last name entry.	addressbook	cs	Vizitky potøebují zadané pøíjmení.
+video phone	addressbook	cs	Video telefon
+view this entry	calendar	cs	Uka¾ tento záznam
+voice phone	addressbook	cs	Voice telefon
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	cs	VAROVÁNÍ!! LDAP nejde pou¾ít, pokud pou¾íváte kontakty pro uchování u¾ivatelských úètù
+we	calendar	cs	St
+wed	calendar	cs	St
+week	calendar	cs	Týden
+weekday starts on	calendar	cs	Týden zaèíná dnem
+weekly	calendar	cs	Týdnì
+weekview	calendar	cs	Náhled týdne
+when creating new events default set to private	calendar	cs	Novì vytvoøené události standartnì nastavit na soukromé
+which events do you want to see when you enter the calendar.	calendar	cs	Jaké události chcete vidìt pøi spu¹tìní kalendáøe?
+which of calendar view do you want to see, when you start calendar ?	calendar	cs	Jaký náhled chcete vidìt pøi spu¹tìní kalendáøe?
+work day ends on	calendar	cs	Pracovní den zaèíná
+work day starts on	calendar	cs	Pracovní den konèí
+work phone	addressbook	cs	Telefon - práce
+workdayends	calendar	cs	konecpráce
+yearly	calendar	cs	Roènì
+yearview	calendar	cs	Náhled roku
+yes	addressbook	cs	Ano
+you appear to be running	addressbook	cs	Pou¾íváte
+you can either set a year or a occurence, not both !!!	calendar	cs	Mù¾ete zadat buï rok nebo výskyt, ale ne obojí !!!
+you can only set a year or a occurence !!!	calendar	cs	Mù¾ete zadat buï rok nebo výskyt, ale ne obojí !!!
+you do not have permission to add alarms to this event !!!	calendar	cs	Nemáte právo pøidat pøipomenutí k této události !!!
+you do not have permission to delete this alarm !!!	calendar	cs	Nemáte právo smazat toto pøipomenutí !!!
+you do not have permission to enable/disable this alarm !!!	calendar	cs	Nemáte právo zapnout nebo vypnout toto pøipomenutí !!!
+you do not have permission to read this record!	calendar	cs	Nemáte právo èíst tento záznam
+you have %1 high priority events on your calendar today.	common	cs	Máte dnes %1 událostí s vysokou priritou.
+you have 1 high priority event on your calendar today.	common	cs	Máte dnes 1 událost s vysokou prioritou.
+you have a meeting scheduled for %1	calendar	cs	Máte naplánovanou schùzku na %1
+you have not entered a title	calendar	cs	Nebyl zadán název
+you have not entered a valid date	calendar	cs	Nebylo zadáno správné datum
+you have not entered a valid time of day	calendar	cs	Nebyl zadán správný èas
+you have not entered participants	calendar	cs	Nebyli zadání spoluzodpovìdní
+you must enter one or more search keywords	calendar	cs	Musíte zadat alespoò jedno klíèové slovo
+you must select a [iv]cal. (*.[iv]cs)	calendar	cs	Musíte vybrat [iv]Cal. (*.[iv]cs)
+you must select a vcard. (*.vcf)	addressbook	cs	Musíte vybrat VCard (*.vcf)
+you must select at least 1 column to display	addressbook	cs	Musíte vybrat alespoò 1 sloupec k zobrazení.
+you need to set either a day or a occurence !!!	calendar	cs	Musíte nastavit buï den nebo výskyt !!!
+your meeting scheduled for %1 has been canceled	calendar	cs	Schùzka plánovavaná na %1 byla zru¹ena
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	cs	Schùzka plánovaná na %1 byla pøelo¾ena na %2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	cs	Vá¹ navrhovaný èas <B> %1 - %2 </B> se kryje s následujícími záznamy v kalendáøi:
+zip code	common	cs	PSÈ
