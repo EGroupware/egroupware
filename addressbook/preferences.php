@@ -22,7 +22,17 @@
 	include("../header.inc.php");
 
 	$this = CreateObject("phpgwapi.contacts");
- 
+ 	$extrafields = array(
+		"pager" => "pager",
+		"mphone" => "mphone",
+		"ophone" => "ophone",
+		"address2" => "address2",
+		"bday" => "bday",
+		"url" => "url",
+		"notes" => "notes"
+	);
+	$qfields = $this->stock_contact_fields + $extrafields;
+
 	if ($submit) {
 		$totalerrors = 0;
 		if (! count($ab_selected)) {
@@ -68,13 +78,15 @@
 	$i = 0; $j = 0;
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 	echo "<tr bgcolor=\"" . $tr_color . "\">\n";
-	while (list($col, $descr) = each($this->stock_contact_fields)) {
+	while (list($col, $descr) = each($qfields)) {
 		// echo "<br>test: $col - $i $j - " . count($abc);
 		$i++; $j++;
 		$showcol = display_name($descr);
-		if ($showcol) {
+		// yank the *'s prior to testing for a valid column description
+		$coltest = ereg_replace("\*","",$showcol);
+		if ($coltest) {
 			echo "\t<td><input type=\"checkbox\" name=\"ab_selected[" . $col . "]\" value=\"True\""
-			. ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . lang($showcol)
+			. ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . $showcol
 			. "</option></td>\n";
 		} else {
 			$i--;
@@ -84,11 +96,11 @@
 			echo "</tr>\n";
 			$i = 0;
 		}
-		if ($i == 0 && $showcol) {
+		if ($i == 0 && $coltest) {
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 			echo "<tr bgcolor=\"" . $tr_color . "\">\n";
 		}
-		if ($j == count($this->stock_contact_fields)) {
+		if ($j == count($qfields)) {
 			if ($i == 1) {
 				echo "\t<td>&nbsp;</td><td>&nbsp;</td>\n";
 			}
