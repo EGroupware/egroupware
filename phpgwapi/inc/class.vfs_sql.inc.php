@@ -30,28 +30,28 @@
 	*/
 
 	/* Relative defines.  Used mainly by getabsolutepath () */
-	define (RELATIVE_ROOT, 1);
-	define (RELATIVE_USER, 2);
-	define (RELATIVE_CURR_USER, 4);
-	define (RELATIVE_USER_APP, 8);
-	define (RELATIVE_PATH, 16);
-	define (RELATIVE_NONE, 32);
-	define (RELATIVE_CURRENT, 64);
-	define (VFS_REAL, 1024);
-	define (RELATIVE_ALL, RELATIVE_PATH);
+	define ('RELATIVE_ROOT', 1);
+	define ('RELATIVE_USER', 2);
+	define ('RELATIVE_CURR_USER', 4);
+	define ('RELATIVE_USER_APP', 8);
+	define ('RELATIVE_PATH', 16);
+	define ('RELATIVE_NONE', 32);
+	define ('RELATIVE_CURRENT', 64);
+	define ('VFS_REAL', 1024);
+	define ('RELATIVE_ALL', RELATIVE_PATH);
 
 	/* These are used in calls to extra_sql () */
-	define (VFS_SQL_SELECT, 1);
-	define (VFS_SQL_DELETE, 2);
-	define (VFS_SQL_UPDATE, 2);
+	define ('VFS_SQL_SELECT', 1);
+	define ('VFS_SQL_DELETE', 2);
+	define ('VFS_SQL_UPDATE', 2);
 
 	/* These are used in calls to add_journal (), and allow journal messages to be more standard */
-	define (VFS_OPERATION_CREATED, 1);
-	define (VFS_OPERATION_EDITED, 2);
-	define (VFS_OPERATION_EDITED_COMMENT, 4);
-	define (VFS_OPERATION_COPIED, 8);
-	define (VFS_OPERATION_MOVED, 16);
-	define (VFS_OPERATION_DELETED, 32);
+	define ('VFS_OPERATION_CREATED', 1);
+	define ('VFS_OPERATION_EDITED', 2);
+	define ('VFS_OPERATION_EDITED_COMMENT', 4);
+	define ('VFS_OPERATION_COPIED', 8);
+	define ('VFS_OPERATION_MOVED', 16);
+	define ('VFS_OPERATION_DELETED', 32);
 
 	/*!
 	@class path_class
