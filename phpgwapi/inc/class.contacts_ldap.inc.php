@@ -395,9 +395,22 @@
 			$myfilter = '';
 
 			if($query)
-			{
-				reset($this->stock_contact_fields);
-				$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
+			{	
+				// the old code was searching about all fields
+				// this was very slow
+				#reset($this->stock_contact_fields);
+				#$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
+				
+				// don't search about any fields any more
+				$search_filter = array(
+					'fn'		=> 'cn',
+					'n_given'	=> 'givenname',
+					'n_family'	=> 'sn',
+					'email'		=> 'mail',
+					'org_name'	=> 'o',
+					'org_unit'	=> 'ou'
+				);
+				$myfilter = $this->makefilter($filterfields,$search_filter,$query,$DEBUG);
 			}
 			else
 			{
