@@ -16,7 +16,7 @@
 
   class calendar
   {
-    var $today = array("full","month","day","year");
+    var $today = Array("raw","day","month","year","full","dow","dm");
     var $printer_friendly = False;
     var $repeated_events;
     var $checked_events;
@@ -308,7 +308,7 @@
 
       if(!isset($phpgw_info["user"]["preferences"]["calendar"]["interval"]) ||
 	      !$phpgw_info["user"]["preferences"]["calendar"]["interval"]) {
-	$phpgw_info["user"]["preferences"]["calendar"]["interval"] = 15;
+        $phpgw_info["user"]["preferences"]["calendar"]["interval"] = 15;
       }
       $datetime = $this->gmtdate($date["raw"]);
       $increment = $phpgw_info["user"]["preferences"]["calendar"]["interval"];
@@ -319,30 +319,30 @@
       $str .= "<tr><td height=\"1\" colspan=\"".((24 * $interval) + 1)."\" bgcolor=\"black\"><img src=\"".$phpgw_info["server"]["app_images"]."/pix.gif\"></td></tr>";
       $str .= "<tr><td width=\"15%\">Participant</td>";
       for($i=0;$i<24;$i++) {
-	for($j=0;$j<$interval;$j++)
-	  switch($j) {
-	    case 0:
-	      if($interval == 4) {
-		$k = ($i<=9?"0":substr($i,0,1));
-	      }
-	      $str .= "<td align=\"right\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
-	      $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j<=9?"0":"").($increment * $j)."'; return true;\">";
-	      $str .= $k."</a></font></td>";
-	      break;
-	    case 1:
-	      if($interval == 4) {
-		$k = ($i<=9?substr($i,0,1):substr($i,1,2));
-	      }
-	      $str .= "<td align=\"right\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
-	      $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j)."'; return true;\">";
-	      $str .= $k."</a></font></td>";
-	      break;
-	    default:
-	      $str .= "<td align=\"left\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
-	      $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j)."'; return true;\">";
-	      $str .= "&nbsp</a></font></td>";
-	      break;
-	  }
+        for($j=0;$j<$interval;$j++)
+          switch($j) {
+            case 0:
+              if($interval == 4) {
+                $k = ($i<=9?"0":substr($i,0,1));
+              }
+              $str .= "<td align=\"right\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
+              $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j<=9?"0":"").($increment * $j)."'; return true;\">";
+              $str .= $k."</a></font></td>";
+              break;
+            case 1:
+              if($interval == 4) {
+                $k = ($i<=9?substr($i,0,1):substr($i,1,2));
+              }
+              $str .= "<td align=\"right\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
+              $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j)."'; return true;\">";
+              $str .= $k."</a></font></td>";
+              break;
+            default:
+              $str .= "<td align=\"left\" bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\"><font color=\"".$phpgw_info["theme"]["bg_text"]."\">";
+              $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$datetime["year"]."&month=".$datetime["month"]."&day=".$datetime["day"]."&hour=".$i."&minute=".(interval * $j))."\" onMouseOver=\"window.status='".$i.":".($increment * $j)."'; return true;\">";
+              $str .= "&nbsp</a></font></td>";
+              break;
+          }
       }
       $str .= "</tr>";
       $str .= "<tr><td height=\"1\" colspan=\"".((24 * $interval) + 1)."\" bgcolor=\"black\"><img src=\"".$phpgw_info["server"]["app_images"]."/pix.gif\"></td></tr>";
@@ -526,6 +526,7 @@
       $date = $this->localdates($datetime);
       for ($i=0;$i<$this->re;$i++) {
         $rep_events = $this->repeated_events[$i];
+        $frequency = intval($rep_events->rpt_freq);
         $start = $this->localdates($rep_events->datetime);
         if($rep_events->rpt_use_end)
           $enddate = $this->gmtdate($rep_events->rpt_end);
@@ -536,7 +537,7 @@
           continue;
         }
 
-        if ($date["full"] <= $start["full"]) {
+        if ($date["full"] < $start["full"]) {
           continue;
         }
 
@@ -544,11 +545,11 @@
           $link[$this->checked_re] = $i;
           $this->checked_re++;
         } elseif ($rep_events->rpt_type == 'daily') {
-          if (floor(($date["raw"] - $start["raw"])/86400) % intval($rep_events->rpt_freq)) {
+          if ((floor(($date["raw"] - $start["raw"])/86400) % $frequency)) {
             continue;
           }
-          $link[$this->checked_re] = $i;
-          $this->checked_re++;
+          $link[$this->checked_re++] = $i;
+//          $this->checked_re++;
         } elseif ($rep_events->rpt_type == 'weekly') {
           $isDay = strtoupper(substr($rep_events->rpt_days, $date["dow"], 1));
 
@@ -556,7 +557,7 @@
            **   continue;
           */
           
-          if (floor(($date["raw"] - $start["raw"])/604800) % intval($rep_events->rpt_freq)) {
+          if (floor(($date["raw"] - $start["raw"])/604800) % $frequency) {
             continue;
           }
           if (strcmp($isDay,"Y") == 0) {
@@ -564,7 +565,7 @@
             $this->checked_re++;
           }
         } elseif ($rep_events->rpt_type == 'monthlybyday') {
-          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) {
+          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % $frequency) {
             continue;
           }
 	  
@@ -574,7 +575,7 @@
             $this->checked_re++;
           }
         } elseif ($rep_events->rpt_type == 'monthlybydate') {
-          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) {
+          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % $frequency) {
             continue;
           }
           if ($date["day"] == $start["day"]) {
@@ -582,7 +583,7 @@
             $this->checked_re++;
           }
         } elseif ($rep_events->rpt_type == 'yearly') {
-          if (($date["year"] - $start["year"]) % intval($rep_events->rpt_freq)) {
+          if (($date["year"] - $start["year"]) % $frequency) {
             continue;
           }
           if ($date["dm"] == $start["dm"]) {
@@ -610,30 +611,30 @@
       $owner = !$owner?$phpgw_info["user"]["account_id"]:$owner;
       $rep_event = $this->check_repeating_entries($datetime);
       $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_datetime, "
-	   . "calendar_entry.cal_edatetime, calendar_entry.cal_priority "
-	   . "FROM calendar_entry, calendar_entry_user "
-	   . "WHERE ((calendar_entry.cal_datetime >= ".$datetime." AND calendar_entry.cal_datetime <= ".($datetime + 86399).") OR "
-	   . "(calendar_entry.cal_datetime <= ".$datetime." AND calendar_entry.cal_edatetime >= ".($datetime + 86399).") OR "
-	   . "(calendar_entry.cal_edatetime >= ".$datetime." AND calendar_entry.cal_edatetime <= ".($datetime + 86399).")) AND "
-	   . "calendar_entry_user.cal_id=calendar_entry.cal_id AND calendar_entry.cal_type != 'M' AND ";
+           . "calendar_entry.cal_edatetime, calendar_entry.cal_priority "
+           . "FROM calendar_entry, calendar_entry_user "
+           . "WHERE ((calendar_entry.cal_datetime >= ".$datetime." AND calendar_entry.cal_datetime <= ".($datetime + 86399).") OR "
+           . "(calendar_entry.cal_datetime <= ".$datetime." AND calendar_entry.cal_edatetime >= ".($datetime + 86399).") OR "
+           . "(calendar_entry.cal_edatetime >= ".$datetime." AND calendar_entry.cal_edatetime <= ".($datetime + 86399).")) AND "
+           . "calendar_entry_user.cal_id=calendar_entry.cal_id AND calendar_entry.cal_type != 'M' AND ";
       $sqlfilter = "";
 // Private
       if($this->filter==" all " || strpos($this->filter,"private")) {
-	$sqlfilter .= "(calendar_entry_user.cal_login = ".$owner." AND calendar_entry.cal_access='private') ";
+        $sqlfilter .= "(calendar_entry_user.cal_login = ".$owner." AND calendar_entry.cal_access='private') ";
       }
 
 // Group Public
       if($this->filter==" all " || strpos($this->filter,"group")) {
-	if($sqlfilter)
-	  $sqlfilter .= "OR ";
-	$sqlfilter .= $this->group_search($owner)." ";
+        if($sqlfilter)
+          $sqlfilter .= "OR ";
+        $sqlfilter .= $this->group_search($owner)." ";
       }
 
 // Global Public
       if($this->filter==" all " || strpos($this->filter,"public")) {
-	if($sqlfilter)
-	  $sqlfilter .= "OR ";
-	$sqlfilter .= "calendar_entry.cal_access='public' ";
+        if($sqlfilter)
+          $sqlfilter .= "OR ";
+        $sqlfilter .= "calendar_entry.cal_access='public' ";
       }
       $orderby = " ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC";
 
@@ -647,34 +648,50 @@
       $events = Null;
       $rep_events = Array();
       if($db2->num_rows()) {
-	while($db2->next_record()) {
-	  $rep_events[$this->sorted_re++] = (int)$db2->f(0);
-	}
-	$events = $this->getevent($rep_events);
+        while($db2->next_record()) {
+          $rep_events[$this->sorted_re++] = (int)$db2->f(0);
+        }
+        $events = $this->getevent($rep_events);
       } else
-	$events = Array(CreateObject('calendar.calendar_item'));
+        $events = Array(CreateObject('calendar.calendar_item'));
 
       if(!$this->checked_re && !$this->sorted_re) return False;
 
       $e = CreateObject('calendar.calendar_item');
       for ($j=0;$j<$this->checked_re;$j++) {
-	$e = $this->repeated_events[$rep_event[$j]];
-	$events[$this->sorted_re++] = $e;
+        $e = $this->repeated_events[$rep_event[$j]];
+        $events[$this->sorted_re++] = $e;
       }
       if(!$this->sorted_re) return False;
       if($this->sorted_re == 1) return $events;
-      for($outer_loop=0;$outer_loop<$this->sorted_re - 1;$outer_loop++) {
-	$outer = $events[$outer_loop];
-	for($inner_loop=$outer_loop;$inner_loop<$this->sorted_re;$inner_loop++) {
-	  $inner = $events[$inner_loop];
-	  if(($outer->datetime > $inner->datetime) || (($outer->datetime == $inner->datetime) && ($outer->edatetime > $inner->edatetime))) {
-	    $temp = $events[$inner_loop];
-	    $events[$inner_loop] = $events[$outer_loop];
-	    $events[$outer_loop] = $temp;
-	  }
-	}
+      for($outer_loop=0;$outer_loop<($this->sorted_re - 1);$outer_loop++) {
+        $outer = $events[$outer_loop];
+        $outer_time = $phpgw->common->show_date($outer->datetime,"Hi");
+        $outer_etime = $phpgw->common->show_date($outer->edatetime,"Hi");
+        if($outer->datetime < $datetime) {
+          $outer_time = 0;
+        }
+        if($outer->edatetime > ($datetime + 86399)) {
+          $outer_etime = 2359;
+        }
+        for($inner_loop=$outer_loop;$inner_loop<$this->sorted_re;$inner_loop++) {
+          $inner = $events[$inner_loop];
+          $inner_time = $phpgw->common->show_date($inner->datetime,"Hi");
+          $inner_etime = $phpgw->common->show_date($inner->edatetime,"Hi");
+          if($inner->datetime < $datetime) {
+            $inner_time = 0;
+          }
+          if($inner->edatetime > ($datetime + 86399)) {
+            $inner_etime = 2359;
+          }
+          if(($outer_time > $inner_time) ||
+             (($outer_time == $inner_time) && ($outer_etime > $inner_etime))) {
+            $temp = $events[$inner_loop];
+            $events[$inner_loop] = $events[$outer_loop];
+            $events[$outer_loop] = $temp;
+          }
+        }
       }
-      
       if(isset($events)) return $events; else return False;
     }
 

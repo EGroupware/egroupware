@@ -1,8 +1,5 @@
-<!-- $Id$    week_day_event -->
-     <nobr>
+<!-- $Id$ -->
 {link_entry}
-      <font size="-2">{start_time}-{end_time}</font>&nbsp;
-     </nobr>
-     <font size="-1">
-      {name}<br>
-     </font>
+      <nobr><font size="-2">{start_time}-{end_time}</font></nobr></a>&nbsp;
+      <font size="-1">{name}<br></font>
+
