@@ -199,6 +199,7 @@
     function preferences($account_id=0)
     {
       global $phpgw;
+
       $db2 = $phpgw->db;
       $load_pref = True;
       if (is_long($account_id) && $account_id) {
@@ -224,9 +225,10 @@
     // This should be called when you are done makeing changes to the preferences
     function commit($line = "",$file = "")
     {
-       //echo "<br>commit called<br>Line: $line<br>File: $file";
-    
        global $phpgw, $phpgw_info;
+
+       //echo "<br>commit called<br>Line: $line<br>File: $file".$phpgw_info["user"]["account_id"]."<br>";
+    
        if ($this->account_id) {
          $db = $phpgw->db;
 
