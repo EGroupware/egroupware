@@ -24,8 +24,20 @@
 	{
 		$GLOBALS['phpgw']->redirect_link('/home.php');
 	}
+	if (isset($_FILES['csvfile']['tmp_name']))
+	{
+		$csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/infolog_import_'.basename($csvfile);
+		$GLOBALS['phpgw']->session->appsession('csvfile','',$csvfile);
+		$_POST['action'] = move_uploaded_file($_FILES['csvfile']['tmp_name'],$csvfile) ?
+			'download' : '';
+	}
+	else
+	{
+		$csvfile = $GLOBALS['phpgw']->session->appsession('csvfile');
+	}
 	if ($_POST['cancel'])
 	{
+		@unlink($csvfile);
 		$GLOBALS['phpgw']->redirect_link('/admin/index.php');
 	}
 	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog - Import CSV-File');
@@ -41,11 +53,6 @@
 	$GLOBALS['phpgw']->template->set_block('import_t','imported','importedhandle');
 	$GLOBALS['phpgw']->template->set_block('import_t','import','importhandle');
 
-
-	// $GLOBALS['phpgw']->template->set_var("navbar_bg",$GLOBALS['phpgw_info']["theme"]["navbar_bg"]);
-	// $GLOBALS['phpgw']->template->set_var("navbar_text",$GLOBALS['phpgw_info']["theme"]["navbar_text"]);
-
-	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
 
 	if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
@@ -137,7 +144,6 @@ function cat_id($cats)
 			array('utf-8' => 'utf-8 (Unicode)'),True));
 		$GLOBALS['phpgw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
 		$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
-		$GLOBALS['phpgw']->template->set_var('csvfile',$csvfile);
 		$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 		$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
@@ -236,15 +242,10 @@ function cat_id($cats)
 		$GLOBALS['phpgw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
 		$GLOBALS['phpgw']->template->parse('rows','ffooter',True);
 		fclose($fp);
-		if ($_POST['action'] == 'download')
-		{
-			$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/info_log_import_'.basename($csvfile);
-			rename($old,$csvfile);
-		}
+
 		$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
 			'action'  => 'import',
 			'fieldsep'=> $_POST['fieldsep'],
-			'csvfile' => $csvfile,
 			'charset' => $_POST['charset']
 		));
 		$help_on_trans = 	"<a name=\"help\"></a><b>How to use Translation's</b><p>".
@@ -290,7 +291,6 @@ function cat_id($cats)
 		$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
 			'action'  => 'continue',
 			'fieldsep'=> $_POST['fieldsep'],
-			'csvfile' => $csvfile,
 			'charset' => $_POST['charset'],
 			'start'   => $_POST['start']+(!$_POST['debug'] ? $_POST['max'] : 0),
 			'max'     => $_POST['max'],
@@ -299,7 +299,7 @@ function cat_id($cats)
 			'trans'   => $_POST['trans']
 		));
 		@set_time_limit(0);
-		$fp=fopen($_POST['csvfile'],'r');
+		$fp=fopen($csvfile,'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 		$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
