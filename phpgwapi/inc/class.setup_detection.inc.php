@@ -229,20 +229,20 @@
 			}
 			else
 			{
-				if (!isset($GLOBALS['phpgw_info']['server']['header_admin_password']))
+				if(!@isset($GLOBALS['phpgw_info']['server']['header_admin_password']))
 				{
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (No header admin password set)';
 					return '2';
 				}
-				elseif (!isset($GLOBALS['phpgw_domain']))
+				elseif(!@isset($GLOBALS['phpgw_domain']))
 				{
-					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
+					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Add domains to your header.inc.php)';
 					return '3';
 				}
-				elseif (@$GLOBALS['phpgw_info']['server']['versions']['header'] != @$GLOBALS['phpgw_info']['server']['versions']['current_header'])
+				elseif(@$GLOBALS['phpgw_info']['server']['versions']['header'] != @$GLOBALS['phpgw_info']['server']['versions']['current_header'])
 				{
 					$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
-					return '3';
+					return '4';
 				}
 			}
 			/* header.inc.php part settled. Moving to authentication */

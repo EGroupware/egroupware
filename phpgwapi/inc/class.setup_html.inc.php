@@ -75,13 +75,14 @@
 		function show_header($title='',$nologoutbutton=False, $logoutfrom='config', $configdomain='')
 		{
 			$GLOBALS['setup_tpl']->set_var('lang_charset',lang('charset'));
-			$style = array('th_bg'		=> '#486591',
-					'th_text'	=> '#FFFFFF',
-					'row_on'	=> '#DDDDDD',
-					'row_off'	=> '#EEEEEE',
-					'banner_bg'	=> '#4865F1',
-					'msg'		=> '#FF0000',
-					);
+			$style = array(
+				'th_bg'		=> '#486591',
+				'th_text'	=> '#FFFFFF',
+				'row_on'	=> '#DDDDDD',
+				'row_off'	=> '#EEEEEE',
+				'banner_bg'	=> '#4865F1',
+				'msg'		=> '#FF0000',
+			);
 			$GLOBALS['setup_tpl']->set_var($style);
 			if ($nologoutbutton)
 			{

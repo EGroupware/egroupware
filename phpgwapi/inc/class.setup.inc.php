@@ -1,17 +1,17 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup						    *
-  * http://www.phpgroupware.org					     *
-  * --------------------------------------------			    *
-  * This file written by Joseph Engo<jengo@phpgroupware.org>		*
-  *  and Dan Kuykendall<seek3r@phpgroupware.org>			    *
-  *  and Mark Peters<skeeter@phpgroupware.org>			      *
-  *  and Miles Lott<milosch@phpgroupware.org>				*
-  * --------------------------------------------			    *
+  * phpGroupWare - Setup                                                     *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  * This file written by Joseph Engo<jengo@phpgroupware.org>                 *
+  *  and Dan Kuykendall<seek3r@phpgroupware.org>                             *
+  *  and Mark Peters<skeeter@phpgroupware.org>                               *
+  *  and Miles Lott<milosch@phpgroupware.org>                                *
+  * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.					     *
+  *  option) any later version.                                              *
   \**************************************************************************/
 
   /* $Id$ */
@@ -26,8 +26,8 @@
 		var $lang = '';
 		var $html = '';
 		var $appreg = '';
-	
-	/* table name vars */
+
+		/* table name vars */
 		var $tbl_apps;
 		var $tbl_config;
 		var $tbl_hooks;
@@ -39,7 +39,7 @@
 			$this->appreg    = CreateObject('phpgwapi.app_registry');
 
 			/* The setup application needs these */
-			$this->html	= $html ? CreateObject('phpgwapi.setup_html') : '';
+			$this->html = $html ? CreateObject('phpgwapi.setup_html') : '';
 			$this->translation = $translation ? CreateObject('phpgwapi.setup_translation') : '';
 
 //			$this->tbl_apps    = $this->get_apps_table_name();
@@ -57,7 +57,7 @@
 
 			$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
 
-			$this->db	  = CreateObject('phpgwapi.db');
+			$this->db           = CreateObject('phpgwapi.db');
 			$this->db->Host     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_host'];
 			$this->db->Type     = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_type'];
 			$this->db->Database = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']]['db_name'];
@@ -352,9 +352,9 @@
 				if ($setup_info[$appname]['tables_use_prefix'] == True)
 				{
 					echo $setup_info[$appname]['name'] . ' uses tables_use_prefix, storing ' 
-					. $setup_info[$appname]['tables_prefix']
+						. $setup_info[$appname]['tables_prefix']
 						. ' as prefix for ' . $setup_info[$appname]['name'] . " tables\n";
-																			
+
 					$sql = "INSERT INTO phpgw_config (config_app,config_name,config_value) "
 						."VALUES ('".$setup_info[$appname]['name']."','"
 						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."');";

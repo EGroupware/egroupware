@@ -374,6 +374,7 @@ you have not created your header.inc.php yet!<br> you can create it now.	setup	e
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
 you need to select your current charset!	setup	en	You need to select your current charset!
+you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...

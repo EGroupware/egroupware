@@ -96,10 +96,22 @@
 			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header admin password is NOT set. Please set it now!');
 			break;
 		case '3':
+			$GLOBALS['phpgw_info']['setup']['HeaderFormMSG'] = lang('You need to add some domains to your header.inc.php.');
+			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('You need to add some domains to your header.inc.php.');
+			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You need to add some domains to your header.inc.php.');
+			if(!$GLOBALS['phpgw_setup']->auth('Header'))
+			{
+				$GLOBALS['phpgw_setup']->html->show_header('Please login',True);
+				$GLOBALS['phpgw_setup']->html->login_form();
+				$GLOBALS['phpgw_setup']->html->show_footer();
+				exit;
+			}
+			break;
+		case '4':
 			$GLOBALS['phpgw_info']['setup']['HeaderFormMSG'] = lang('Your header.inc.php needs upgrading.');
 			$GLOBALS['phpgw_info']['setup']['PageMSG'] = lang('Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>');
 			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('Your header.inc.php needs upgrading.');
-			if (!$GLOBALS['phpgw_setup']->auth('Header'))
+			if(!$GLOBALS['phpgw_setup']->auth('Header'))
 			{
 				$GLOBALS['phpgw_setup']->html->show_header('Please login',True);
 				$GLOBALS['phpgw_setup']->html->login_form();
@@ -108,7 +120,7 @@
 			}
 			break;
 		case '10':
-			if (!$GLOBALS['phpgw_setup']->auth('Header'))
+			if(!$GLOBALS['phpgw_setup']->auth('Header'))
 			{
 				$GLOBALS['phpgw_setup']->html->show_header('Please login',True);
 				$GLOBALS['phpgw_setup']->html->login_form();
@@ -187,7 +199,7 @@
 			
 			$detected = '';
 
-			if (!get_var('ConfigLang',array('POST','COOKIE')))
+			if(!get_var('ConfigLang',array('POST','COOKIE')))
 			{
 				$detected .= '<br><form action="manageheader.php" method="Post">Please Select your language '.lang_select(True,'en')."</form>\n";
 			}
@@ -201,7 +213,7 @@
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
-			if (extension_loaded('mysql') || function_exists('mysql_connect'))
+			if(extension_loaded('mysql') || function_exists('mysql_connect'))
 			{
 				$detected .= lang('You appear to have MySQL support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mysql';
@@ -210,7 +222,7 @@
 			{
 				$detected .= lang('No MySQL support found. Disabling') . '<br>' . "\n";
 			}
-			if (extension_loaded('pgsql') || function_exists('pg_connect'))
+			if(extension_loaded('pgsql') || function_exists('pg_connect'))
 			{
 				$detected .= lang('You appear to have Postgres-DB support enabled') . '<br>' . "\n";
 				$supported_db[]  = 'pgsql';
@@ -219,7 +231,7 @@
 			{
 				$detected .= lang('No Postgres-DB support found. Disabling') . '<br>' . "\n";
 			}
-			if (extension_loaded('mssql') || function_exists('mssql_connect'))
+			if(extension_loaded('mssql') || function_exists('mssql_connect'))
 			{
 				$detected .= lang('You appear to have Microsoft SQL Server support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mssql';
@@ -228,7 +240,7 @@
 			{
 				$detected .= lang('No Microsoft SQL Server support found. Disabling') . '<br>' . "\n";
 			}
-			if (extension_loaded('oci8'))
+			if(extension_loaded('oci8'))
 			{
 				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br>' . "\n";
 				$supported_db[] = 'oracle';
@@ -256,7 +268,7 @@
 				exit;
 			}
 
-			if (!function_exists('version_compare'))
+			if(!function_exists('version_compare'))
 			{
 				$detected .= '<b><p align="center" class="msg">'
 					. lang('You appear to be using PHP earlier than 4.1.0. phpGroupWare now requires 4.1.0 or later'). "\n"
@@ -272,7 +284,7 @@
 			}
 
 			/*
-			if (extension_loaded('xml') || function_exists('xml_parser_create'))
+			if(extension_loaded('xml') || function_exists('xml_parser_create'))
 			{
 				$detected .= lang('You appear to have XML support enabled') . '<br>' . "\n";
 				$xml_enabled = 'True';
@@ -292,8 +304,32 @@
 				/* This code makes sure the newer multi-domain supporting header.inc.php is being used */
 				if(!isset($GLOBALS['phpgw_domain']))
 				{
-					$detected .= lang("You're using an old configuration file format...") . '<br>' . "\n";
-					$detected .= lang('Importing old settings into the new format....') . '<br>' . "\n";
+					$detected .= lang('You need to add some domains to your header.inc.php.') . '<br>' . "\n";
+					$GLOBALS['phpgw_domain']['default'] = array();
+					$setup_tpl->set_var('lang_domain',lang('Domain'));
+					$setup_tpl->set_var('lang_delete',lang('Delete'));
+					$setup_tpl->set_var('db_domain','default');
+					$setup_tpl->set_var('db_host','localhost');
+					$setup_tpl->set_var('db_name','egroupware');
+					$setup_tpl->set_var('db_user','egroupware');
+					$setup_tpl->set_var('db_pass','your_password');
+					$setup_tpl->set_var('db_type','mysql');
+					$setup_tpl->set_var('config_pass','changeme');
+					while(list($k,$v) = @each($supported_db))
+					{
+						if($v == $GLOBALS['phpgw_domain'][$key]['db_type'])
+						{
+							$selected = ' selected ';
+							$found_dbtype = true;
+						}
+						else
+						{
+							$selected = '';
+						}
+						$dbtype_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "\n";
+					}
+					$setup_tpl->set_var('dbtype_options',$dbtype_options);
+					$setup_tpl->parse('domains','domain',True);
 				}
 				else
 				{
@@ -349,10 +385,12 @@
 					}
 					$setup_tpl->set_var('domain','');
 				}
-				if (defined('PHPGW_SERVER_ROOT'))
+				if(defined('PHPGW_SERVER_ROOT'))
 				{
-					$GLOBALS['phpgw_info']['server']['server_root'] = PHPGW_SERVER_ROOT;
-					$GLOBALS['phpgw_info']['server']['include_root'] = PHPGW_INCLUDE_ROOT; 
+					$GLOBALS['phpgw_info']['server']['server_root'] = PHPGW_SERVER_ROOT == '..'
+						? '/path/to/egroupware'	: PHPGW_SERVER_ROOT;
+					$GLOBALS['phpgw_info']['server']['include_root'] = PHPGW_INCLUDE_ROOT == '..'
+						? '/path/to/egroupware' : PHPGW_INCLUDE_ROOT;
 				}
 				elseif(!@isset($GLOBALS['phpgw_info']['server']['include_root']) && @$GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
 				{
@@ -542,12 +580,10 @@
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 			$setup_tpl->set_var('lang_continue',lang('Continue'));
 
-		
 			$setup_tpl->pfp('out','manageheader');
-	
+
 			$GLOBALS['phpgw_setup']->html->show_footer();
-		
+
 			break; // ending the switch default
 	}
 ?>
-
