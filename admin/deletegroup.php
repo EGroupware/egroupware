@@ -57,8 +57,12 @@
         $p->set_var('yes','');
         $p->set_var('no','');
         $p->pparse('out','body');
+		$phpgw->common->phpgw_footer();
         $phpgw->common->phpgw_exit();
-     }
+     } elseif ($removeusers && !$confirm) {
+	 	Header('Location: ' . $phpgw->link('/admin/deletegroup.php','group_id='.$group_id.'&confirm=True'));
+		$phpgw->common->phpgw_exit();
+	 }
 
      if ($confirm) {
         $phpgw->db->lock(array('phpgw_accounts','phpgw_acl'));
