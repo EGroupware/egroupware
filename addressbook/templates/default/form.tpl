@@ -1,6 +1,6 @@
 
 <!-- BEGIN addressbook entry form -->
-<table width="75%" border="0" align="center">
+<table width="95%" border="0" align="center">
   <tr bgcolor="{th_bg}">
     <td colspan="5"><font color="{th_text}" face="">{lang_personal}:</font></td>
   </tr>
@@ -279,5 +279,5 @@
   <!-- BEGIN creator -->
   {create}
   <!-- END creator -->
-</table>
+<!--</table>-->
 <!-- END addressbook entry form -->
