@@ -19,7 +19,7 @@ enable sieve	emailadmin	sl	omogo&#269;i sita
 enter your default mail domain (from: user@domain)	emailadmin	sl	vnesi privzeto domeno (oblika: uporabnik@domena)
 forward also to	emailadmin	sl	posreduj tudi
 forward email's to	emailadmin	sl	posreduj sporo&#269;ila k
-forward only	sl	samo posreduj
+forward only	emailadmin	sl	samo posreduj
 imap admin password	emailadmin	sl	Geslo upravljalca IMAPa
 imap admin user		emailadmin	sl	IMAP upravljalec
 imap server hostname or ip address	emailadmin	sl	Ime ali IP IMAP stre¾nika
