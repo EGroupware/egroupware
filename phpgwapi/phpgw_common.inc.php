@@ -622,19 +622,32 @@
   }
 
 
-  function hook($location = "") {
+  function hook($location = "", $order = ""){
     global $phpgw, $phpgw_info;
 
+    if ($order == ""){$order[] = $phpgw_info["flags"]["currentapp"];}
+//    if ($order == ""){$order = Array();}
     /* First include the apps own hook file */
-    $appname = $phpgw_info["flags"]["currentapp"];
+    reset ($order);
+    while (list ($key, $appname) = each ($order)){
+      $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+    	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
+  	  if (file_exists($f)) {include($f);}
+      $processed .= '|| $appname != "'.$appname.'" ';
+    }
+    $processed = 'if ($appname != "" '.$processed.'){';
+echo "processed: ".$processed."<br>\n";
     $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+
+
     if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php";}
     if (file_exists($f)) {include($f);}
 
     /* Then add the rest */
     reset ($phpgw_info["user"]["app_perms"]);
     while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
-      if ($appname != "" || $appname != $phpgw_info["flags"]["currentapp"]){
+if ($appname != "" ){
+    //eval($processed);
         $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
       	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
     	  if (file_exists($f)) {include($f);}
