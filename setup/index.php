@@ -56,7 +56,7 @@
 
   $ok = true;
   $baseDir = $phpgw_info["server"]["server_root"];
-  include("inc/core_setup.inc.php");
+  include("./inc/core_setup.inc.php");
   if (!$ok) {
     exit;
   } else {
