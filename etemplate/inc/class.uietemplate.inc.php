@@ -558,8 +558,8 @@
 					{
 						$value = $blur;
 					}
-					$onFocus .= "if(this.value=='".addslashes(htmlspecialchars($blur))."') this.value='';";
-					$onBlur  .= "if(this.value=='') this.value='".addslashes(htmlspecialchars($blur))."';";
+					$onFocus .= "if(this.value=='".addslashes($this->html->htmlspecialchars($blur))."') this.value='';";
+					$onBlur  .= "if(this.value=='') this.value='".addslashes($this->html->htmlspecialchars($blur))."';";
 				}
 				if ($help)
 				{
@@ -567,11 +567,11 @@
 					{
 						$help = lang($help);
 					}
-					$onFocus .= "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
+					$onFocus .= "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;";
 					$onBlur  .= "self.status=''; return true;";
 					if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
 					{
-						$options .= " onMouseOver=\"self.status='".addslashes(htmlspecialchars($help))."'; return true;\"";
+						$options .= " onMouseOver=\"self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;\"";
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
 					}
 				}
@@ -596,7 +596,7 @@
 						break;
 					list($style,$extra_link,$activate_links) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
-					$value = nl2br(htmlspecialchars($value));
+					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
@@ -618,7 +618,7 @@
 				case 'text':		// size: [length][,maxLength[,preg]]
 					if ($readonly)
 					{
-						$html .= $this->html->bold(htmlspecialchars($value));
+						$html .= $this->html->bold($this->html->htmlspecialchars($value));
 					}
 					else
 					{
