@@ -1,6 +1,0 @@
-The documentation is writtend in DocBook SGML and converted to other formats use Jade.
-
-The makefile in this directory is used to generate the various other forms on the docs server, it may or may not work on your particular installation.
-
---Brandon Neill
-
