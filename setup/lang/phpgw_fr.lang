@@ -1,3 +1,6 @@
+00 (disable)	setup	fr	00 (désactiver)
+13 (ntp)	setup	fr	13 (ntp)
+80 (http)	setup	fr	80 (http)
 (account deletion in SQL Only)	setup	fr	(effacement de compte dans SQL seulement)
 actions	setup	fr	Actions
 Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-crées à ce groupe ('Défaut' va être tenté si ceci est vide.)
@@ -51,6 +54,7 @@ create	setup	fr	Créer
 creating tables	setup	fr	Création de tables en cours
 currently installed languages: x <br>	setup	fr	Langues installées actuellement: %1 <br>
 current version	setup	fr	Version actuelle
+datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)	setup	fr	Port Date/heure.<br>Si vous utilisez le port 13, SVP modifiez les règles du firewall avant de modifier cette page.<br>(Port: 13 / Serveur: 129.6.15.28)
 db root password	setup	fr	Mot de passe du compte root de la base de données
 db root username	setup	fr	Login du compte root de la base de données
 Default file system space per user/group ?	setup	fr	Espace disque par utilisateur/groupe par défaut ?
@@ -105,6 +109,8 @@ is broken	setup	fr	est cassé
 is disabled	setup	fr	est désactivé
 ldap account import/export	setup	fr	Import/export de compte LDAP
 LDAP accounts context	setup	fr	Contexte de comptes LDAP
+ldap accounts configuration	setup	fr	Configuration des comptes LDAP
+ldap config	setup	fr	Configuration LDAP
 LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe LDAP de répertoire maison par défaut (p.e. /home pour /home/utilisateur)
 LDAP Default shell (e.g. /bin/bash)	setup	fr	Shell LDAP par défaut (p.e. /bin/bash)
 LDAP encryption type	setup	fr	Type de cryptage LDAP
