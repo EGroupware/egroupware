@@ -44,8 +44,6 @@
           $db->query("select app_version from applications where app_name='admin'");
           $db->next_record();
           $oldversion = $db->f("app_version");
-echo "oldversion: $oldversion<br>\n";
-
           $db->free();
           if (isset($oldversion)){
             if ($oldversion == $phpgw_info["server"]["version"]){

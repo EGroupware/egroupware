@@ -358,9 +358,12 @@
         $currentver = "0.9.4";
         update_version_table();
       }
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
   function v0_9_4to0_9_5(){
@@ -555,9 +558,12 @@
         update_version_table();
       }
 
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
 
@@ -673,9 +679,12 @@
         update_version_table();	
       }
 
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
 
@@ -701,9 +710,12 @@
         update_version_table();
       }
 */
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
   function v0_9_8to0_9_9(){
@@ -728,9 +740,12 @@
         update_version_table();
       }
 */
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
   function v0_9_9to0_9_10(){
@@ -755,9 +770,12 @@
         update_version_table();
       }
 */
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
+      if ($oldversion != $currentver){
+        echo "  </tr><td>\n";
+        echo "  <tr bgcolor=\"e6e6e6\">\n";
+        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+        echo "  </tr>\n";
+      }
     }
   }
 

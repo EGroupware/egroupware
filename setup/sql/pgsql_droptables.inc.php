@@ -28,10 +28,9 @@
   $db->query("DROP TABLE addressbook");
   $db->query("drop sequence webcal_entry_cal_id_seq");
   $db->query("DROP TABLE todo");
-  $db->query("DROP TABLE webcal_entry");
-  $db->query("DROP TABLE webcal_entry_repeats");
-  $db->query("DROP TABLE webcal_entry_user");
-  $db->query("DROP TABLE webcal_entry_groups");
+  $db->query("DROP TABLE calendar_entry");
+  $db->query("DROP TABLE calendar_entry_repeats");
+  $db->query("DROP TABLE calendar_entry_user");
   $db->query("drop sequence newsgroups_con_seq");
   $db->query("DROP TABLE newsgroups");
   $db->query("DROP TABLE users_newsgroups");
