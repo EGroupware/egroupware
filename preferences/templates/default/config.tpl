@@ -49,33 +49,6 @@
    </tr>
 
    <tr bgcolor="{row_on}">
-    <td>{lang_Interface}/{lang_Template_Selection}:</td>
-    <td>
-     <select name="newsettings[template_set]">
-{hook_template_set}
-     </select>
-    </td>
-   </tr>
-
-   <tr bgcolor="{row_off}">
-    <td>{lang_Use_theme}:<br></td>
-    <td>
-     <select name="newsettings[force_theme]">
-{hook_force_theme}
-     </select>
-    </td>
-   </tr>
-
-   <tr bgcolor="{row_off}">
-    <td>{lang_Force_default_application}:<br></td>
-    <td>
-     <select name="newsettings[force_default_app]">
-{hook_force_default_app}
-     </select>
-    </td>
-   </tr>
-
-   <tr bgcolor="{row_on}">
     <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
     <td>
      <select name="newsettings[htmlcompliant]">
