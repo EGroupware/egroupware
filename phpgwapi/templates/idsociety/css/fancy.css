@@ -35,6 +35,11 @@ a:hover
 	background-color: #AABBCC;
 }
 
+.msgbox
+{
+	background-color: #FFFFFF;
+}
+
 .row_on
 {
 	background-color: #EEEEFF;

@@ -211,5 +211,8 @@
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
 
-	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
+	if (!$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'])
+	{
+		$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
+	}
 ?>

@@ -5,9 +5,9 @@
 	</xsl:template>
 
 	<xsl:template match="msgbox_data">
-		<table cellpadding="2" cellspacing="2" align="center" bgcolor="#FFFFFF">
+		<table cellpadding="2" cellspacing="0" align="center" class="msgbox">
 			<tr>
-				<td align="center">
+				<td align="center" valign="middle">
 					<xsl:variable name="msgbox_img"><xsl:value-of select="msgbox_img"/></xsl:variable>
 					<xsl:variable name="msgbox_img_alt"><xsl:value-of select="msgbox_img_alt"/></xsl:variable>
 					<img src="{$msgbox_img}" alt="{$msgbox_img_alt}" onMouseout="window.status='';return true;">
@@ -16,7 +16,7 @@
 								<xsl:value-of select="lang_msgbox_statustext"/>
 							<xsl:text>'; return true;</xsl:text>
 						</xsl:attribute>
-					</img>
+					</img><xsl:text> </xsl:text>
 					<xsl:value-of select="msgbox_text"/>
 				</td>
 			</tr>

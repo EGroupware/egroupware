@@ -71,7 +71,10 @@
 //		eval("\$GLOBALS['obj']->$method();");
 		execmethod($GLOBALS['HTTP_GET_VARS']['menuaction']);
 
-		$GLOBALS['phpgw']->common->stop_xslt_capture();	// send captured output to the xslttpl
+		if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+		{
+			$GLOBALS['phpgw']->common->stop_xslt_capture();	// send captured output to the xslttpl
+		}
 
 		unset($app);
 		unset($obj);

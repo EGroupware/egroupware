@@ -1240,7 +1240,10 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			switch($GLOBALS['phpgw_info']['flags']['currentapp'])
 			{
 				case 'home':
-					$var['home'] = True;
+					if (!$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'])
+					{
+						$var['home'] = True;
+					}
 					break;
 				case 'about':
 					$var['about'] = True;
@@ -1389,7 +1392,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				/* Hope we don't get to this point.  Better then the user seeing a */
 				/* complety back screen and not know whats going on                */
-				$GLOBALS['phpgw_info']['theme']['bg_color'] = 'FFFFFF';
 				$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
 			}
 			$phpgw_css_file = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'templates' . SEP . $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']
@@ -1417,25 +1419,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				return " MM_preloadImages($preload_image_string);";
 			}
 			return '';
-		}
-
-		function load_phpgw_body_tags()
-		{
-			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] = $this->load_preload_images_data(); 
-
-			if(@is_array($GLOBALS['phpgw_info']['flags']['body_tags']))
-			{
-				$body_tags_string = '';
-				reset($GLOBALS['phpgw_info']['flags']['body_tags']);
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['body_tags']))
-				{
-					if($value != '')
-					{
-						$body_tags_string .= " $key=\"$value\"";
-					}
-				}
-				$GLOBALS['phpgw']->template->set_var('phpgw_body_tags',$body_tags_string);
-			}
 		}
 
 		/*!
@@ -1536,10 +1519,17 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
 					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 				{
-					$this->start_xslt_capture();	// if index already turned it off
+					if($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+					{
+						$this->start_xslt_capture();	// if index already turned it off
+					}
 					$this->phpgw_appfooter();
 				}
-				$this->stop_xslt_capture();
+
+				if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+				{
+					$this->stop_xslt_capture();
+				}
 
 				$GLOBALS['phpgw']->xslttpl->pp();
 				$GLOBALS['phpgw']->db->disconnect();

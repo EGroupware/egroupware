@@ -269,10 +269,13 @@
 	define('PHPGW_ACL_PRIVATE',16);
 	define('PHPGW_ACL_GROUP_MANAGERS',32);
 
-	/****************************************************************************\
-	* Forcing all non-cooperating apps to send there output through the xslt-tpl *
-	\****************************************************************************/
-	$GLOBALS['phpgw']->common->start_xslt_capture();
+	if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
+	{
+		/****************************************************************************\
+		* Forcing all non-cooperating apps to send there output through the xslt-tpl *
+		\****************************************************************************/
+		$GLOBALS['phpgw']->common->start_xslt_capture();
+	}
 
 	/****************************************************************************\
 	* Forcing the footer to run when the rest of the script is done.             *

@@ -50,7 +50,7 @@ table.login
 	text-align: center;
 }
 
-.login,.portal,.about
+.login,.portal,.about,.msgbox
 {
 	border-width: 1px;
 	border-style: ridge;
