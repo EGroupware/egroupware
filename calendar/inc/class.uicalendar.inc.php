@@ -3023,6 +3023,10 @@
 				$overlap .= '<ul>';
 				foreach($overlapped_event['participants'] as $id => $status)
 				{
+					// Check if user can view others participants
+					if($GLOBALS["phpgw"]->acl->get_rights($id, "calendar") < PHPGW_ACL_READ)
+						continue;
+
 					$conflict = isset($event['participants'][$id]);
 					$overlap .= '<li>'.($conflict?'<b>':'').
 						$GLOBALS['phpgw']->common->grab_owner_name($id).
