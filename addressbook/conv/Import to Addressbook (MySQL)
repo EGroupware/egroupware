@@ -147,6 +147,7 @@ function outlook_end_record($buffer,$private="private") {
     list($name, $value) = split("%%",$lines[$i]);
     $row++;
     $namelist .= array($name => $value);
+	echo $name.' '.$value;
   }
   
   return $buffer.$namelist;

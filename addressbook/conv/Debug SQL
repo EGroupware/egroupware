@@ -150,7 +150,7 @@ function outlook_end_record($buffer,$private="private") {
         $thisname="";
 	$thisvalu="";
       }
-      $namelist = $namelist."\nINSERT INTO addressbook (owner,".$thisname;
+      $namelist = $namelist."\nINSERT INTO phpgw_addressbook (owner,".$thisname;
       $valulist = $valulist."VALUES ('".$phpgw_info["user"]["account_id"]."',".$thisvalu;
     } elseif ($row==count($lines)-1) {
       if (!empty($name) && !empty($value)) {
