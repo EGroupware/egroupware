@@ -66,12 +66,12 @@
 	   $t = $pref->get_preferences();
 
 	   $docommit = False;
-	   for ($j=1;$j<=count($apps_after);$j++) {
+	   for ($j=1;$j<count($apps_after) - 1;$j++) {
 	     if($apps_after[$j]=="admin")
 	       $check = "common";
 	     else
 	       $check = $apps_after[$j];
-	     if (!count($t["$check"])) {
+	     if (!$t["$check"]) {
 	       $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
 	       $docommit = True;
 	     }

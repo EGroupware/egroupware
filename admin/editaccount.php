@@ -93,15 +93,15 @@
        $t = $pref->get_preferences();
          
        $docommit = False;
-         
-       while(list($key,$value) = each($phpgw_info["user"]["app_perms"])) {
-         if($value=="admin") {
+       $after_apps = explode(':',$apps_after);
+       for($i=1;$i<count($after_apps) - 1;$i++) {
+         if($after_apps[$i]=="admin") {
            $check = "common";
          } else {
-           $check = $value;
+           $check = $after_apps[$i];
 		 }
-         if (!count($t["$check"])) {
-           $phpgw->common->hook_single("add_def_pref", $value);
+         if (!$t["$check"]) {
+           $phpgw->common->hook_single("add_def_pref", $after_apps[$i]);
            $docommit = True;
          }
        }

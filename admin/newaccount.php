@@ -69,8 +69,8 @@
         $pref = new preferences(intval($phpgw->db->f("account_id")));
         $phpgw->common->hook_single("add_def_pref", "admin");
         for ($i=1;$i<sizeof($apps) - 1;$i++) {
-	   if($apps[$i]<>"admin")
-              $phpgw->common->hook_single("add_def_pref", $apps[$i]);
+          if($apps[$i]<>"admin")
+            $phpgw->common->hook_single("add_def_pref", $apps[$i]);
         }
         $pref->commit();
 
