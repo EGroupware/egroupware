@@ -146,7 +146,7 @@
 					}
 				}
 			}
-			$phpgw->redirect($phpgw->link($phpgw_info['server']['webserver_url'] . '/index.php','cd=yes' . $extra_vars));
+			$phpgw->redirect($phpgw->link('/index.php','cd=yes' . $extra_vars));
 		}
 	}
 	else
