@@ -143,7 +143,7 @@
       <option value="mail"{selected_auth_type_mail}>Mail</option>
       <option value="http"{selected_auth_type_http}>HTTP</option>
       <option value="nis"{selected_auth_type_nis}>NIS</option>
-      <!--<option value="pam"{selected_auth_type_pam}>PAM (Not Ready)</option>-->
+      <option value="pam"{selected_auth_type_pam}>PAM</option>
      </select>
     </td>
    </tr>
