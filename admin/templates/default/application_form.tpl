@@ -7,7 +7,7 @@
  {hidden_vars}
  <div align="center">
  <table border="0" width="55%">
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
    <td colspan="2">&nbsp;</td>
   </tr>
 
@@ -25,7 +25,7 @@
 <!-- END form -->
 
 <!-- BEGIN row -->
-  <tr bgcolor="{tr_color}">
+  <tr class="{tr_color}">
    <td>{label}</td>
    <td>{value}</td>
   </tr>

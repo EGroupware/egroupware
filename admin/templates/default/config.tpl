@@ -1,20 +1,20 @@
 <!-- BEGIN header -->
 <form method="POST" action="{action_url}">
 <table border="0" align="center" width="85%">
-   <tr bgcolor="{th_bg}">
+   <tr class="th">
     <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr bgcolor="{th_bg}">
+   <tr class="th">
     <td colspan="2"><font color="{th_text}"><b>{lang_Authentication_/_Accounts}</b></font></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -29,7 +29,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
@@ -40,7 +40,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>
 	{lang_Select_where_you_want_to_store/retrieve_filesystem_information}:
 	<br>
@@ -53,7 +53,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>
 	{lang_Select_where_you_want_to_store/retrieve_file_contents}:
 	<br>
@@ -67,16 +67,16 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Minimum_account_id_(e.g._500_or_100,_etc.)}:</td>
     <td><input name="newsettings[account_min_id]" value="{value_account_min_id}"></td>
    </tr>
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Maximum_account_id_(e.g._65535_or_1000000)}:</td>
     <td><input name="newsettings[account_max_id]" value="{value_account_max_id}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
      <td>{lang_If_using_LDAP,_do_you_want_to_manage_homedirectory_and_loginshell_attributes?}:</td>
      <td>
       <select name="newsettings[ldap_extra_attributes]">
@@ -86,17 +86,17 @@
      </td>
     </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>&nbsp;&nbsp;&nbsp;{lang_LDAP_Default_homedirectory_prefix_(e.g._/home_for_/home/username)}:</td>
     <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>&nbsp;&nbsp;&nbsp;{lang_LDAP_Default_shell_(e.g._/bin/bash)}:</td>
     <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Auto_create_account_records_for_authenticated_users}:</td>
     <td>
       <select name="newsettings[auto_create_acct]">
@@ -106,7 +106,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Auto-created_user_accounts_expire}:</td>
     <td>
      <select name="newsettings[auto_create_expire]">
@@ -118,12 +118,12 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Add_auto-created_users_to_this_group_('Default'_will_be_attempted_if_this_is_empty.)}:</td>
     <td><input name="newsettings[default_group_lid]" value="{value_default_group_lid}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_If_no_ACL_records_for_user_or_any_group_the_user_is_a_member_of}:</td>
     <td>
      <select name="newsettings[acl_default]">
@@ -133,32 +133,32 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_LDAP_host}:</td>
     <td><input name="newsettings[ldap_host]" value="{value_ldap_host}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_LDAP_accounts_context}:</td>
     <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_LDAP_groups_context}:</td>
     <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_LDAP_rootdn}:</td>
     <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_LDAP_root_password}:</td>
     <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
@@ -167,16 +167,16 @@
     </td>
    </tr>
 
-   <tr bgcolor="{th_bg}">
+   <tr class="th">
     <td colspan="2"><font color="{th_text}"><b>{lang_Mcrypt_Settings_(requires_mcrypt_PHP_extension)}</b></font></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Enter_some_random_text_for_app_session_encryption}:</td>
     <td><input name="newsettings[encryptkey]" value="{value_encryptkey}" size="40"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr class="row_on">
     <td>{lang_Mcrypt_algorithm_(default_TRIPLEDES)}:</td>
     <td>
      <select name="newsettings[mcrypt_algo]">
@@ -185,7 +185,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr class="row_off">
     <td>{lang_Mcrypt_mode_(default_CBC)}:</td>
     <td>
      <select name="newsettings[mcrypt_mode]">
@@ -196,7 +196,7 @@
 <!-- END body -->
 
 <!-- BEGIN footer -->
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
     <td colspan="2">
 &nbsp;
     </td>

@@ -24,12 +24,12 @@
 					<form method="post" action="{actionurl}">
 					<input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}"></form></td>
 			</tr>
-			<tr bgcolor="{th_bg}">
-				<td width=20% bgcolor="{th_bg}">{sort_name}</td>
-				<td width=32% bgcolor="{th_bg}">{sort_description}</td>
-				<td width=8% bgcolor="{th_bg}" align="center">{lang_sub}</td>
-				<td width=8% bgcolor="{th_bg}" align="center">{lang_edit}</td>
-				<td width=8% bgcolor="{th_bg}" align="center">{lang_delete}</td>
+			<tr class="th">
+				<td width=20% class="th">{sort_name}</td>
+				<td width=32% class="th">{sort_description}</td>
+				<td width=8% class="th" align="center">{lang_sub}</td>
+				<td width=8% class="th" align="center">{lang_edit}</td>
+				<td width=8% class="th" align="center">{lang_delete}</td>
 			</tr>
 
 			{rows}
@@ -54,7 +54,7 @@
 
 <!-- BEGIN cat_row -->
 
-			<tr bgcolor="{tr_color}">
+			<tr class="{tr_color}">
 				<td>{name}</td>
 				<td>{descr}</td>
 				<td align="center"><a href="{add_sub}">{lang_sub_entry}</a></td>

@@ -34,7 +34,7 @@ function check_all()
   <form name="allow" action="{action_url}" method="POST">
   {common_hidden_vars}
   <table border="0" width="70%">
-    <tr bgcolor="{th_bg}">
+    <tr class="th">
       <td align="center"><font size="2" face="{th_font}">{sort_con}</font></td>
       <td><font size="2" face="{th_font}">{sort_group}</font></td>
       <td align="center"><font size="2" face="{th_font}">{sort_active}</font></td>
@@ -45,7 +45,7 @@ function check_all()
 
 <!-- BEGIN nntp_list -->
 
-    <tr bgcolor="{tr_color}">
+    <tr class="{tr_color}">
       <td align="center"><font face="{th_font}">{con}</font></td>
       <td><font face="{th_font}">{group}</font></td>
       <td align="center"><font face="{th_font}">{active}</font></td>
@@ -55,7 +55,7 @@ function check_all()
 
 <!-- BEGIN nntp_footer -->
 
-    <tr bgcolor="{th_bg}">
+    <tr class="th">
       <td>&nbsp;</td>
       <td align="center"><input type="submit" name="submit" value="{lang_update}"></td>
       <td align=center>

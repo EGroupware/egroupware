@@ -2,14 +2,14 @@
 <center>
 {lang_current_users}:
 <table border="0" width="95%">
- <tr bgcolor="{bg_color}">
+ <tr class="bg_color">
    {left_next_matchs}
    <td>&nbsp;</td>
    <td>&nbsp;</td>
    {right_next_matchs}
  </tr> 
 
- <tr bgcolor="{th_bg}">
+ <tr class="th">
   <td>{sort_loginid}</td>
   <td>{sort_ip}</td>
   <td>{sort_login_time}</td>
@@ -25,7 +25,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
- <tr bgcolor="{tr_color}">
+ <tr class="{tr_color}">
   <td>{row_loginid}</td>
   <td>{row_ip}</td>
   <td>{row_logintime}</td>

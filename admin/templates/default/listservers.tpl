@@ -20,17 +20,17 @@
      <form method="post" action="{actionurl}">
      <input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}"></form></td>
    </tr>
-   <tr bgcolor="{th_bg}">
-    <td bgcolor="{th_bg}">{sort_name}</td>
-    <td bgcolor="{th_bg}">{sort_url}</td>
-    <td bgcolor="{th_bg}">{sort_mode}</td>
-    <td bgcolor="{th_bg}">{sort_security}</td>
-    <td bgcolor="{th_bg}" align="center">{lang_edit}</td>
-    <td bgcolor="{th_bg}" align="center">{lang_delete}</td>
+   <tr class="th">
+    <td class="th">{sort_name}</td>
+    <td class="th">{sort_url}</td>
+    <td class="th">{sort_mode}</td>
+    <td class="th">{sort_security}</td>
+    <td class="th" align="center">{lang_edit}</td>
+    <td class="th" align="center">{lang_delete}</td>
    </tr>
 
 <!-- BEGIN server_list -->
-   <tr bgcolor="{tr_color}">
+   <tr class="{tr_color}">
     <td>{server_name}</td>
     <td>{server_url}</td>
     <td>{server_mode}</td>

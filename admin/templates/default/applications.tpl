@@ -4,7 +4,7 @@
 <p>
 <div align="center">
  <table border="0" width="45%">
-  <tr bgcolor="{bg_color}">
+  <tr class="bg_color">
 {left}
     <td align="center">{lang_showing}</td>
 {right}
@@ -12,7 +12,7 @@
  </table>
  
  <table border="0" width="45%">
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
    <td> {sort_title} </td>
    <td>{lang_edit}</td>
    <td>{lang_delete}</td>
@@ -36,7 +36,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
-  <tr bgcolor="{tr_color}">
+  <tr class="{tr_color}">
    <td>{name}</td>
    <td width="5%">{edit}</td>
    <td width="5%">{delete}</td>

@@ -3,7 +3,7 @@
 <table border="0" cellspacing="2" cellpadding="2" width="70%" align="center">
 <!-- END view_header -->
 <!-- BEGIN view_row -->
-  <tr bgcolor="{th_bg}">
+  <tr class="th">
     <td align="right" width="30%"><b>{display_col}</b>:</td><td width="70%">{ref_data}</td>
   </tr>
 <!-- END view_row -->

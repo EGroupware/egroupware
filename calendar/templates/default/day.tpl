@@ -14,7 +14,7 @@
        </td>
       </tr>
      </table>
-     <table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="{bg_text}">
+     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="bg_text">
       {day_events}
      </table>
     </td>
