@@ -226,6 +226,8 @@ subject	infolog	es-es	Asunto
 task	infolog	es-es	Tareas pendientes
 test import (show importable records <u>only</u> in browser)	infolog	es-es	Probar Importar (mostrar registros importables <u>sólo</u> en el navegador)
 the maximum number of entries to display on the main screen.	infolog	es-es	El número máximo de entradas a mostrar en la pantalla principal
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	es-es	el nombre usado internamente (menos de 10 caracteres), cambiándolo hace que los datos existentes no estén disponibles.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	es-es	el nombre usado internamente (menos de 20 caracteres), cambiándolo hace que los datos existentes no estén disponibles.
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	es-es	El nombre usado internamente (hasta 32 caracteres). Cambiarlo hace que los datos dejen de estar disponibles.
 the text displayed to the user	infolog	es-es	el texto que se muestra al usuario
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	es-es	Este es el filtro que el Registro usa cuando usted entra a la aplicación. Los filtros limitan las entradas que se ven en la vista actual. Hay filtros para mostrar sólo las terminadas, todavía abiertas o entradas futuras suyas o de todos los usuarios.
