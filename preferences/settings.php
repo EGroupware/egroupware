@@ -149,7 +149,7 @@
          display_option("show birthday reminders on main screen","addressbook","mainscreen_showbirthdays");
          
          if ($phpgw_info["user"]["permissions"]["calendar"]) {
-?>
+            ?>
             <tr>
              <td><?php echo lang_pref("show high priority events on main screen"); ?> ?</td>
 	     <td><input type="checkbox" name="mainscreen_showevents" value="Y" <?php if ($phpgw_info["user"]["preferences"]["mainscreen_showevents"] == "Y") echo " checked"; ?>></td>
@@ -201,7 +201,7 @@
 	      <td><select name="default_app">
                    <option value="">&nbsp;</option>
                   <?php
-			$db_perms = $phpgw->permissions->read_other($phpgw->session->loginid);
+ 			     $db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["sessionid"]);
                     while ($permission = each($db_perms)) {
                        if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
 				  echo "<option value=\"" . $permission[0] . "\"";
