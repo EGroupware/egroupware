@@ -174,7 +174,6 @@ if you did not receive any errors, your tables have been	setup	es-ca	Si no heu r
 if you running this the first time, don't forget to manualy %1 !!!	setup	es-ca	Si esteu executant l'aplicació per primera vegada, no oblideu %1 manualment!!
 image type selection order	setup	es-ca	Ordre de selecció del tipus d'imatge
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	es-ca	Importar comptes de LDAP a la taula de comptes d'eGroupWare (per a una nova instal.lació fent servir comptes SQL)
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	es-ca	Importar cuentas de LDAP a la tabla de cuentas de eGroupWare (para una instalación nueva que usa cuentas SQL)
 import has been completed!	setup	es-ca	Importació acabada!
 import ldap users/groups	setup	es-ca	Importar usuaris/grups LDAP
 importing old settings into the new format....	setup	es-ca	Importar configuració antiga al nou format...

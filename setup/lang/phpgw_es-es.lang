@@ -191,7 +191,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	es-es	¡
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	es-es	Si solamente usa idiomas del mismo juego de caracteres (por ejemplo, los occidentales), entonces no necesita un juego de caracteres para el sistema
 image type selection order	setup	es-es	Orden de selección del tipo de imagen
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	es-es	Importar cuentas de LDAP a la tabla da cuentas de eGroupWare (para una nueva instalación usando cuentas SQL)
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	es-es	Importar cuentas de LDAP a la tabla de cuentas de eGroupWare (para una instalación nueva que usa cuentas SQL)
 import has been completed!	setup	es-es	Se ha completado la importación
 import ldap users/groups	setup	es-es	Importar usuarios/grupos LDAP
 importing old settings into the new format....	setup	es-es	Importar configuración antigua al nuevo formato...

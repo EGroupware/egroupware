@@ -158,7 +158,7 @@ if you did not receive any errors, your applications have been	setup	zh	如果�
 if you did not receive any errors, your tables have been	setup	zh	如果您没有看到任何错误信息，您的表格已经
 if you running this the first time, don't forget to manualy %1 !!!	setup	zh	如果您是第一次运行, 别忘了手动 %1 !!!
 image type selection order	setup	zh	按此处的类型顺序显示图片(即图片类型的显示优先级)
-import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	zh	将 LDAP 中的帐户信息导入到 phpGroupWare 帐户表格 (第一次安装使用 SQL 帐户)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	zh	将 LDAP 中的帐户信息导入到 eGroupWare 帐户表格 (第一次安装使用 SQL 帐户)
 import has been completed!	setup	zh	导入完成!
 import ldap users/groups	setup	zh	导入 LDAP 用户/组
 importing old settings into the new format....	setup	zh	将原有配置导入到新格式....
