@@ -1525,7 +1525,8 @@
 			}
 			$datefmt = $this->prefs['common']['dateformat'];
 			
-			$month_before_day = $datefmt[0] == 'm' || $datefmt[2] == 'm' && $datefmt[4] == 'd';
+			$month_before_day = strtolower($datefmt[0]) == 'm' ||
+				strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
 
 			for ($i = 0; $i < 5; $i += 2)
 			{
@@ -1566,10 +1567,11 @@
 						$range .= ' ' . $last['day'] . ($datefmt[1] == '.' ? '.' : '');
 						break;
 					case 'm':
+					case 'M':
 						$range .= ' '.lang(strftime('%B',$month_before_day ? $first['raw'] : $last['raw'])) . ' ';
 						break;
 					case 'Y':
-						$range .= ($datefmt[0] == 'm' ? ', ' : ' ') . ($datefmt[0] == 'Y' ? $first['year'].', ' : $last['year'].' ');
+						$range .= ($datefmt[0] == 'm' ? ', ' : ' ') . ($datefmt[0] == 'Y' ? $first['year'].($datefmt[2] == 'd' ? ', ' : ' ') : $last['year'].' ');
 						break;
 				}
 			}
@@ -3025,7 +3027,8 @@
 						$str_extra .= lang('ends').': '.lang($GLOBALS['phpgw']->common->show_date($recur_end,'l')).', '.$this->long_date($recur_end).' ';
 					}
 				}
-				if($event['recur_type'] == MCAL_RECUR_WEEKLY || $event['recur_type'] == MCAL_RECUR_DAILY)
+				// only weekly uses the recur-data (days) !!!
+				if($event['recur_type'] == MCAL_RECUR_WEEKLY)
 				{
 					$repeat_days = array();
 					foreach ($this->rpt_day as $mcal_mask => $dayname)
