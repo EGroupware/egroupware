@@ -58,6 +58,19 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.14.003';
+	function phpgwapi_upgrade0_9_14_003()
+	{
+		// this is the 0.9.15.001 update
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('lang','phpgw_lang');
+		$GLOBALS['phpgw_setup']->oProc->RenameTable('languages','phpgw_languages');
+
+		// 0.9.15.002 are already included in 0.9.14.002
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.003';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.14.500';
 	function phpgwapi_upgrade0_9_14_500()
 	{
