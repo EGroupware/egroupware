@@ -13,7 +13,10 @@
 /* $Id$ */
 
 	if ($confirm) {
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
 	}
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
@@ -26,7 +29,7 @@
 
 	$this = CreateObject("phpgwapi.contacts");
 	$fields = $this->read_single_entry($ab_id,array("owner" => "owner"));
-	$owner = $fields[0]["owner"];
+	//$record_owner = $fields[0]["owner"];
 
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array("delete" => "delete.tpl"));

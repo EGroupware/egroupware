@@ -38,10 +38,10 @@
 			"org_name"			=> "company name",  //company
 			"org_unit"			=> "department",  //division
 			"title"				=> "title",
-			"n_given"			=> "first name",   //firstname
-			"n_family"			=> "last name",  //lastname
-			"n_middle"			=> "middle name",
 			"n_prefix"			=> "prefix",
+			"n_given"			=> "first name",   //firstname
+			"n_middle"			=> "middle name",
+			"n_family"			=> "last name",  //lastname
 			"n_suffix"			=> "suffix",
 			"label"				=> "label",
 			"adr_street"		=> "street",
@@ -160,31 +160,31 @@
 		$country      = $fields["adr_countryname"];
 		$timezone     = $fields["tz"];
 		$bday         = $fields["bday"];
-		$notes        = $fields["notes"];
+		$notes        = stripslashes($fields["notes"]);
 		$company      = $fields["org_name"];
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
 		//$access       = $fields["access"];
 
 		if ($format != "view") {
-			$email 	 = "<input name=\"email\" value=\"$email\">";
+			$email 	   = "<input name=\"email\" value=\"$email\">";
 			$firstname = "<input name=\"firstname\" value=\"$firstname\">";
 			$lastname  = "<input name=\"lastname\" value=\"$lastname\">";
 			$middle    = "<input name=\"middle\" value=\"$middle\">";
 			$prefix    = "<input name=\"prefix\" value=\"$prefix\" size=\"10\">";
 			$suffix    = "<input name=\"suffix\" value=\"$suffix\" size=\"10\">";
 			$title     = "<input name=\"title\" value=\"$title\">";
-			$hphone	 = "<input name=\"hphone\" value=\"$hphone\">";
-			$wphone	 = "<input name=\"wphone\" value=\"$wphone\">";
-			$fax	 = "<input name=\"fax\" value=\"$fax\">";
-			$pager	 = "<input name=\"pager\" value=\"$pager\">";
-			$mphone	 = "<input name=\"mphone\" value=\"$mphone\">";
-			$ophone	 = "<input name=\"ophone\" value=\"$ophone\">";
-			$street	 = "<input name=\"street\" value=\"$street\">";
+			$hphone    = "<input name=\"hphone\" value=\"$hphone\">";
+			$wphone	   = "<input name=\"wphone\" value=\"$wphone\">";
+			$fax       = "<input name=\"fax\" value=\"$fax\">";
+			$pager     = "<input name=\"pager\" value=\"$pager\">";
+			$mphone    = "<input name=\"mphone\" value=\"$mphone\">";
+			$ophone	   = "<input name=\"ophone\" value=\"$ophone\">";
+			$street	   = "<input name=\"street\" value=\"$street\">";
 			$address2  = "<input name=\"address2\" value=\"$address2\">";
-			$city	 = "<input name=\"city\" value=\"$city\">";
-			$state	 = "<input name=\"state\" value=\"$state\">";
-			$zip	 = "<input name=\"zip\" value=\"$zip\">";
+			$city      = "<input name=\"city\" value=\"$city\">";
+			$state     = "<input name=\"state\" value=\"$state\">";
+			$zip       = "<input name=\"zip\" value=\"$zip\">";
 			$country   = "<input name=\"country\" value=\"$country\">";
 
 /*

@@ -15,7 +15,8 @@
 	$phpgw_info["flags"] = array(
 		"currentapp" => "addressbook",
 		"enable_contacts_class" => True,
-		"enable_nextmatchs_class" => True);
+		"enable_nextmatchs_class" => True
+	);
 
 	include("../header.inc.php");
 

@@ -13,7 +13,10 @@
 /* $Id$ */
 
 	if ($submit || ! $ab_id) {
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
 	}
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";

@@ -13,9 +13,15 @@
 /* $Id$ */
 
 	if ($nolname || $nofname) {
-		$phpgw_info["flags"] = array("noheader" => False, "nonavbar" => False);
+		$phpgw_info["flags"] = array(
+			"noheader" => False,
+			"nonavbar" => False
+		);
 	} else {
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
 	}
 
 	$phpgw_info["flags"]["enable_addressbook_class"] = True;

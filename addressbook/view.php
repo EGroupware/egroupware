@@ -13,7 +13,10 @@
 /* $Id$ */
 
 	if ($submit || ! $ab_id) {
-		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
 	}
 
 	$phpgw_info["flags"] = array(
@@ -52,11 +55,11 @@
 	$qfields = $this->stock_contact_fields + $extrafields;
 	$fields  = addressbook_read_entry($ab_id,$qfields);
 	
-	$owner  = $fields[0]["owner"];
+	$record_owner  = $fields[0]["owner"];
 
 	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
-	
+
 	while ($column = each($columns_to_display)) { // each entry column
 		$columns_html .= "<tr><td><b>" . display_name($colname[$column[0]]) . "</b>:</td>";
 		$ref=$data="";
@@ -90,10 +93,10 @@
 */
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
-		. $phpgw->common->grab_owner_name($owner) . '</td><td><b>' 
+		. $phpgw->common->grab_owner_name($record_owner) . '</td><td><b>' 
 		. $access_link . '</b></td><td></table>';
 
-	$editlink  = $phpgw->common->check_owner($owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
+	$editlink  = $phpgw->common->check_owner($record_owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
 	$vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 	$donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
 		

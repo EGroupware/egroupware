@@ -23,7 +23,6 @@
 	$phpgw_info["flags"]["enable_addressbook_class"] = True;
 	include("../header.inc.php");
 	
-	#$t = new Template($phpgw_info["server"]["app_tpl"]);
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array("add" => "add.tpl"));
 	
@@ -83,7 +82,6 @@
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 		$ab_id = addressbook_get_lastid();
 
-		//Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/","cd=14"));
 		Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
 		$phpgw->common->phpgw_exit();
 	}
