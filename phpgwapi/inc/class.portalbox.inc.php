@@ -163,7 +163,7 @@
 						{
 							$image_width = 30;
 						}
-						$this->p->set_var('link_field_data','<a href="'.$this->$param.'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button.gif').'" border="0" width="'.$image_width.'" height="15" alt="'.lang($param).'"></a>');
+						$this->p->set_var('link_field_data','<a href="'.$this->$param.'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button').'" border="0" width="'.$image_width.'" height="15" alt="'.lang($param).'"></a>');
 						$this->p->parse('control_link','link_field',True);
 					}
 				}
