@@ -3020,6 +3020,7 @@ class boicalendar
 						@reset($ical_cats);
 						while(list($key,$cat) = each($ical_cats))
 						{
+							$cat_id_nums = Array();
 							if(!$cats->exists('appandmains',$cat))
 							{
 								$cats->add(
