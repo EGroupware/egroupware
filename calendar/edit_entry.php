@@ -171,7 +171,7 @@
 
 // Groups
     $db2 = $phpgw->db;
-    $db2->query("SELECT account_lid FROM accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
+    $db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
     $db2->next_record();
     $user_groups = $phpgw->accounts->read_group_names($db2->f("account_lid"));
       
@@ -180,7 +180,7 @@
 // Participants
     $db2 = $phpgw->db;
     $db2->query("select account_id,account_lastname,account_firstname,account_lid "
-		     . "from accounts where account_status !='L' and "
+		     . "from phpgw_accounts where account_status !='L' and "
 		     . "account_id != ".$phpgw_info["user"]["account_id"]." "
 		     . "and account_permissions like '%:calendar:%' "
   		     . "order by account_lastname,account_firstname,account_lid");
