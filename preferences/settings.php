@@ -117,7 +117,7 @@
        <?php
          if ($phpgw_info["user"]["apps"]["admin"]) {
             echo '<tr><td>' . lang("show current users on navigation bar") . '</td><td>'
-               . '<input type="checkbox" name="<?php echo $option; ?>" value="True"';
+               . '<input type="checkbox" name="show_currentusers" value="True"';
             if ($phpgw_info["user"]["preferences"]["common"]["show_currentusers"]) {
                echo " checked";
             }
