@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - EditableTemplates - HTML User Interface                   *
+	* phpGroupWare - EditableTemplates - GTK User Interface                    *
 	* http://www.phpgroupware.org                                              *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
