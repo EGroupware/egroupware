@@ -17,6 +17,11 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
+  if ($id < 1) {
+     echo lang("Invalid entry id.");
+     exit;
+  }
+
   function grab_group($db,$id)
   {
     $db->query("select groups from webcal_entry_groups where cal_id=$id");
@@ -34,10 +39,6 @@
 
   $unapproved = FALSE;
 
-  if ($id < 1) {
-     echo lang("Invalid entry id.");
-     exit;
-  }
 
   // first see who has access to view this entry
   $is_my_event = false;
