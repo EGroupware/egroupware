@@ -322,7 +322,7 @@
 			{
 
 				//counts the number of stored backups
-				$where = "file_id=$file_id AND (backup_file_id != NULL OR backup_file_id != '')";
+				$where = "file_id=$file_id AND (backup_file_id != NULL OR backup_file_id != 0)";
 
 				$this->db->select('phpgw_vfs2_versioning','count(*)',$where,
 					__LINE__,__FILE__);

@@ -3368,7 +3368,12 @@
 		//sort of smart error handling.
 		function compress($data)
 		{
-			
+			$compression_handlers = array(
+//				'gz'  => 'gzip',
+//				'bz2' => 'bzip',
+//				'tar' => 'tar',
+				'zip' => 'zip'
+				);
 
 			if (!is_array($data['files']) || !$data['name'])
 			{
@@ -3385,11 +3390,17 @@
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
 
+			if (!$data['type'] || !array_key_exists($data['type'],$compression_handlers))
+			{
+				//error: inexistent type given
+				return false;
+			}
+
 
 			//put extension in archive name, if not exists
 			if ($this->get_file_extension($data['name']) != $data['type'])
 			{
-				if ($data['type'] == 'zip')
+				if ($data['type'] == 'zip' || $data['type'] == 'tar')
 				{
 					$data['name'] .= '.' . $data['type'];
 				}
@@ -3477,6 +3488,29 @@
 			$tmp_dir =  $GLOBALS['phpgw_info']['server']['temp_dir'];
 			$tmp_filename = $tmp_dir.'/'.$this->random_filename();
 
+			$archive_opts = array(
+				'basedir' =>  $dest->real_leading_dirs,
+				'inmemory' => 0,
+				'overwrite' => 1, //provisory, todo error handling
+				'recurse' => 1,
+				'storepaths' => 1,
+				'level' => 9//compression level, 9 is max, 0 is none, 3 ok
+			);
+
+/*			#Didn't work - class.archive.inc.php
+			$compression_class = $compression_handlers[$data['type']].'_file';
+
+			require_once(PHPGW_API_INC.'/class.archive.inc.php');	
+
+			$arch = new $compression_class($tmp_filename);
+			$arch->set_options($archive_opts);
+			$arch->add_files($filenames);
+			$arch->create_archive();
+
+			$type_array = $this->vfs_mimetypes->get_type(array('extension'=>$data['type']));
+			$arch_mime = $type_array['mime'];*/
+
+
 			switch($data['type'])
 			{
 				case 'zip':
@@ -3489,6 +3523,7 @@
 					break;
 
 				default:
+				/*
 					$tar = CreateObject('phpgwapi.Archive_Tar',$tmp_filename,$data['type']);
 					//FIXME not $dest->real_leading_dirs, but the path to be
 					//removed from files
@@ -3498,6 +3533,7 @@
 					}
 					$arch_mime = 'application/x-gzip';
 					break;
+				*/
 			}
 
 			/* VOILA! now the archive is created!!! but it is yet in /tmp and
@@ -3506,11 +3542,12 @@
 
 			$dest_relativity = $data['relatives'][count($data['relatives'])-1];
 
-			# ---------------------------------------------------------- #
-			# All code under here copied from bo->fileUpload             #
-			# ---------------------------------------------------------- #
+			# ----------------------------------------------------------- #
+			# All code under here copied from filescenter->bo->fileUpload #
+			# ----------------------------------------------------------- #
 
 			$file_comment = "Archive contents:\n\n".implode("\n",$data['files']);
+			$file_comment = substr(0,255,$file_comment);
 
 			# Check to see if the file exists in the database, and get
 			# its info at the same time
@@ -3592,6 +3629,13 @@
 		# them in db
 		function extract($data)
 		{
+			$compression_handlers = array(
+				'gz'  => 'gzip',
+				'bz2' => 'bzip',
+				'tar' => 'tar',
+				'zip' => 'zip'
+				);
+
 
 			if (!$data['name'] || !$data['dest'])
 			{
@@ -3612,6 +3656,13 @@
 			{
 				$data['type'] = strtolower($this->get_file_extension($data['name']));
 			}
+
+			if (!$data['type'] || !array_key_exists($data['type'],$compression_handlers))
+			{
+				//error: inexistent type given
+				return false;
+			}
+
 
 			$arch = $this->path_parts (array(
 				'string' => $data['name'],
@@ -3672,13 +3723,27 @@
 						return false; //TODO handle error
 					}
 					break;
-				case 'gz':
-					$tar = CreateObject('phpgwapi.Archive_Tar',$arch->real_full_path);
+				default:
+					return false;
+				/*
+
+					$archive_opts = array(
+						'basedir' =>  $tmp_dest->real_full_path,
+						'overwrite' => 1 //provisory, todo error handling
+					);
+
+					$compression_class = $compression_handlers[$data['type']].'_file';
+					$archive_obj = new $compression_class($arch->real_full_path);
+					$archive_obj->set_options($archive_opts);
+					$archive_obj->extract_files();
+					*/
+
+	/*				$tar = CreateObject('phpgwapi.Archive_Tar',$arch->real_full_path);
 					if (!$tar->extract($tmp_dest->real_full_path))
 					{
 						return false; //TODO handle error
 					}
-					break;
+					break;*/
 				default:
 					return false; //TODO handle error
 			}
