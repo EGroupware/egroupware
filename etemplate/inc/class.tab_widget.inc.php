@@ -84,8 +84,7 @@
 				$extension_data = $selected_tab = $names[0];
 			}
 			$tabs->data[1] = $tab_row;
-			$tabs->rows = 1;
-			$tabs->cols = sizeof($tab_row);
+			$tabs->set_rows_cols();
 			$tabs->size = ',,,,0';
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
