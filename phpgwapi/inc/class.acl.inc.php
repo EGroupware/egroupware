@@ -95,7 +95,7 @@
       // User piece
       $sql = "select acl_rights from phpgw_acl where acl_appname='$appname'";
       $sql .= " and acl_location = '$location' and ";
-      $sql .= "acl_account_type = ".$id_type." and acl_account = ".$id;
+      $sql .= "acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ return True; }
@@ -120,11 +120,11 @@
     }
 
     function delete($app, $location, $id, $id_type){
-      $sql = "delete from phpgw_acl where acl_appname like '".$app."'";
-      $sql .= " and acl_location like '".$location."' and ";
-      $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id;
+      $sql = "delete from phpgw_acl where acl_appname like '".$app."'"
+           . " and acl_location like '".$location."' and "
+           . " acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);
-      return True;
+      return $this->db->num_rows();
     }
 
     function replace($app, $location, $id, $id_type, $rights){
@@ -146,8 +146,6 @@
         $rights |= $this->db->f("acl_rights");
         if (!!($rights & $required) == True){
           $apps[] = $this->db->f("acl_appname");
-        }else{
-          return False;
         }
       }
       return $apps;
