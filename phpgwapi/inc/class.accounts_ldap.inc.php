@@ -675,6 +675,7 @@
 						$entry['gidnumber'] = $account_id;
 					}
 					$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
+					$entry['phpgwlastpasswdchange'] = 0;
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'person';
 					$entry['objectclass'][2] = 'organizationalPerson';
