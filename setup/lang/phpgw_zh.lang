@@ -358,11 +358,11 @@ we will automatically update your tables/records to %1	setup	zh	将自动将您�
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	zh	使用何种类型的会话管理工具?(PHP4的会话管理性能较好)
 which database type do you want to use with egroupware?	setup	zh 在eGroupWare中使用何种数据库？
 would you like egroupware to cache the phpgw info array ?	setup	zh	是否让eGroupWare缓存系统信息?
-would you like phpgroupware to check for a new version<br>when admins login ?	setup	zh	管理员登陆时，是否检查phpGroupWare的更新版本?
+would you like egroupware to check for a new version<br>when admins login ?	setup	zh	管理员登陆时，是否检查eGroupWare的更新版本?
 would you like to show each application's upgrade status ?	setup	zh	您希望显示每个应用程序的升级状态吗 ?
 write config	setup	zh	保存配置
 yes	setup	zh	Yes
-you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	您目前运行的是测试版本的 phpGroupWare。<br>目前已经不再支持这个版本，建议您先升级到 0.9.10 版（最后一个测试版） <br>再升级到现在的版本.
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	zh	您目前运行的是测试版本的 eGroupWare。<br>目前已经不再支持这个版本，建议您先升级到 0.9.10 版（最后一个测试版） <br>再升级到现在的版本.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧 <br>建议您升级到较新版本. <br>因为老版本的 PHP 可能会造成 phpGroupWare 运行不正常. <br><br>建议您升级到至少 %1
 you appear to be running version %1 of phpgroupware	setup	zh	您目前运行的eGroupWare版本为 %1  
 you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	zh	您的 PHP 版本号低于 4.1.0 . phpGroupWare 要求4.1.0版或更高版本
