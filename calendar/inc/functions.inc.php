@@ -618,8 +618,8 @@
 		      "year=" . date("Y",$date)
 		    . "&month=" . date("m",$date)
 		    . "&day=" . date("d",$date)
-		    . "&hour=" . substr($time,0,2)
-		    . "&minute=" . substr($time,2,2))
+		    . "&hour=" . substr($time,0,strpos($time,":"))
+		    . "&minute=" . substr($time,strpos($time,":")+1,2))
 		    . "\">$time</A></FONT></TH>";
 
     if ($rowspan > 1) {
