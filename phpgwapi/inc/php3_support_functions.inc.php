@@ -2,6 +2,9 @@
 	 /**************************************************************************\
 	 * phpGroupWare API - PHP3 Compatibility layer                              *
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	 * and Mark Peters <skeeter@phpgroupware.org>                               *
+	 * and Miles Lott <milosch@phpgroupware.org>                                *
+	 * and Jason Wies <Zone@phpgroupware.org>                                   *
 	 * Has replications of PHP4 only functions to allow for transparent PHP3    *
 	 * compatibility                                                            *
 	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
@@ -28,12 +31,12 @@
 	 *   array array_keys (array input, mixed [search_value])
 	 * array_keys() returns the keys, numeric and string, from the input array.
 	 */
-	function array_keys ($arr, $term='')
+	function array_keys($arr, $term='')
 	{
 		$t = array();
-		while (list($k,$v) = each($arr))
+		while(list($k,$v) = each($arr))
 		{
-			if ($term && $v != $term)
+			if($term && $v != $term)
 			{
 				continue;
 				$t[] = $k;
@@ -47,19 +50,19 @@
 	 * array_merge() merges the elements of two or more arrays together so that the values
 	 * of one are appended to the end of the previous one. It returns the resulting array.
 	 */
-	function array_merge ($array1, $array2, $array3 = '', $array4 = '', $array5 = '', $array6 = '', $array7 = '', $array8 = '', $array9 = '', $array10 = '')
+	function array_merge($array1, $array2, $array3='', $array4='', $array5='', $array6='', $array7='', $array8='', $array9='', $array10='')
 	{
-		$rarray = array ();
+		$rarray = array();
 
-		for ($i = 1; $i <= 10; $i++)
+		for($i = 1; $i <= 10; $i++)
 		{
 			$this_array = ${'array' . $i};
-			if (is_array ($this_array))
+			if(is_array($this_array))
 			{
-				reset ($this_array);
-				while (list ($key, $value) = each ($this_array))
+				reset($this_array);
+				while(list($key,$value) = each($this_array))
 				{
-					if (is_int ($key))
+					if(is_int($key))
 					{
 						$rarray[] = $value;
 					}
@@ -141,12 +144,12 @@
 	 * Searches haystack for needle and returns the key if it is found in the array, FALSE
 	 * otherwise.
 	 */
-	function array_search ($needle, $haystack, $strict = False)
+	function array_search($needle, $haystack, $strict=False)
 	{
 		@reset($haystack);
 		while(list($key,$value) = each($haystack))
 		{
-			if ($haystack[$key]==$needle && (!$strict || gettype($haystack[$key])==gettype($needle)))
+			if($haystack[$key]==$needle && (!$strict || gettype($haystack[$key])==gettype($needle)))
 			{
 				return $key;
 			}
@@ -197,7 +200,7 @@
 		$reversed_array = Array();
 		while(list($key,$value) = each($array))
 		{
-			if (!isset($reversed_array[$value]))
+			if(!isset($reversed_array[$value]))
 			{
 				$reversed_array[$value] = $key;
 			}
@@ -228,9 +231,9 @@
 	 * Searches haystack for needle and returns TRUE if it is found in the array, FALSE
 	 * otherwise.
 	 */
-	function in_array ($needle, $haystack, $strict = False)
+	function in_array($needle, $haystack, $strict = False)
 	{
-		if(is_array ($haystack) && count($haystack))
+		if(is_array($haystack) && count($haystack))
 		{
 			for(@reset($haystack); $x=each($haystack); )
 			{
@@ -249,11 +252,11 @@
 	 */
 	function is_bool($var)
 	{
-		$retval = gettype($var) ;
-		if ( strcmp( $retval, 'unknown type') == 0 )
+		$retval = gettype($var);
+		if(strcmp($retval,'unknown type') == 0)
 		{
 			/* Chances are that we have a boolean */
-			if ($var == True || $var == False)
+			if($var == True || $var == False)
 			{
 				return True;
 			}
@@ -268,25 +271,12 @@
 		}
 	}
 
-	/* str_repeat (PHP 4 >= 4.0.0)
-	 *   string str_repeat (string input, int multiplier)
-	 * Returns input_str repeated multiplier times. multiplier has to be greater than 0.
-	 */
-	function str_repeat($input,$multiplier)
-	{
-		for($i=0,$output='';$i<$multiplier;$i++)
-		{
-			$output .= $input;
-		}
-		return $output;
-	}
-
 	function print_r($array)
 	{
 		if(gettype($array)=="array")
 		{
 			echo '<ul>';
-			while (list($index, $subarray) = each($array) )
+			while(list($index, $subarray) = each($array) )
 			{
 				echo '<li>'.$index.' <code>=&gt;</code>';
 				print_r($subarray);
@@ -298,5 +288,18 @@
 		{
 			echo $array;
 		}
+	}
+
+	/* str_repeat (PHP 4 >= 4.0.0)
+	 *   string str_repeat (string input, int multiplier)
+	 * Returns input_str repeated multiplier times. multiplier has to be greater than 0.
+	 */
+	function str_repeat($input,$multiplier)
+	{
+		for($i=0,$output='';$i<$multiplier;$i++)
+		{
+			$output .= $input;
+		}
+		return $output;
 	}
 ?>
