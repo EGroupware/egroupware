@@ -523,7 +523,7 @@
 			}
 			else
 			{
-				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
+				$sql = "SELECT id,lid,tid,owner,access,cat_id,last_mod $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
 				$sqlcount = "SELECT COUNT(id) FROM $this->std_table " . $fwhere
 					. $filtermethod;
