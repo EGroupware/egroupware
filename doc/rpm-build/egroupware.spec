@@ -1,11 +1,10 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.001
-%define packaging 0
+%define version 0.9.99.011
+%define packaging 1
 %define httpdroot  /var/www/html
 
 %define addressbook addressbook
-#%define admin admin
 %define backup backup
 %define bookmarks bookmarks
 %define calendar calendar
@@ -19,17 +18,20 @@
 %define filemanager filemanager
 %define forum forum
 %define ftp ftp
+%define fudforum fudforum
 %define headlines headlines
 %define infolog infolog
+%define jinn jinn
+%define messenger messenger
 %define news_admin news_admin
+%define phpldapadmin phpldapadmin
 %define phpbrain phpbrain
-#%define phpgwapi phpgwapi
 %define phpsysinfo phpsysinfo
 %define polls polls
-#%define preferences preferences
 %define projects projects
-#%define setup_module setup
+%define registration registration
 %define sitemgr sitemgr
+%define skel skel
 %define stocks stocks
 %define tts tts
 %define wiki wiki
@@ -134,7 +136,7 @@ Requires: eGroupWare = %{version}-%{packaging}
 EmailAdmin allow to maintain User email accounts 
 
 %package %{etemplate}
-Summary: The eGroupWare %{etempalte} application
+Summary: The eGroupWare %{etemplate} application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-addressbook = %{version}-%{packaging}
@@ -145,7 +147,7 @@ eTemplates are a new widget-based template system for eGroupWare with an interac
 Summary: The eGroupWare %{felamimail} application
 Group: Web/Database
 AutoReqProv: no
-Requires: eGroupWare = %{version}-%{packaging}
+Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-emailadmin = %{version}-%{packaging}
 %description %{felamimail}
 The %{felamimail} Email Reader is a other Email application for phpgw eGroupWare.
 
@@ -173,6 +175,14 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{ftp}
 This is the %{ftp} app for eGroupWare.
 
+%package %{fudforum}
+Summary: The eGroupWare %{fudforum} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{fudforum}
+This is the %{fudforum} app for eGroupWare.
+
 %package %{headlines}
 Summary: The eGroupWare %{headlines} application
 Group: Web/Database
@@ -189,6 +199,22 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{infolog}
 This is the %{infolog} app for eGroupWare.
 
+%package %{jinn}
+Summary: The eGroupWare %{jinn} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{jinn}
+The %{jinn} app is a multi-site, multi-database, multi-user/-group, database driven Content Management System written in and for the eGroupWare Framework.
+
+%package %{messenger}
+Summary: The eGroupWare %{messenger} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging} 
+%description %{messenger}
+This is the %{messenger} app for eGroupWare.
+
 %package %{news_admin}
 Summary: The eGroupWare %{news_admin} application
 Group: Web/Database
@@ -204,6 +230,14 @@ AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-addressbook = %{version}-%{packaging}
 %description %{phpbrain}
 This is the %{phpbrain} app for eGroupWare.
+
+%package %{phpldapadmin}
+Summary: The eGroupWare %{phpldapadmin} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{phpldapadmin}
+This is the cire %{phpldapadmin} of eGroupWare.
 
 %package %{phpsysinfo}
 Summary: The eGroupWare %{phpsysinfo} application
@@ -228,6 +262,22 @@ AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}, eGroupWare-addressbook = %{version}-%{packaging}
 %description %{projects}
 This is the %{projects} app for eGroupWare.
+
+%package %{registration}
+Summary: The eGroupWare %{registration} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{registration}
+%description %{registration}
+This is the %{registration} app for eGroupWare.
+
+%package %{skel}
+Summary: The eGroupWare %{skel} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{skel}
+This is the %{skel} app for eGroupWare.
 
 %package %{sitemgr}
 Summary: The eGroupWare %{sitemgr} application
@@ -271,6 +321,7 @@ This is the %{wiki} app for eGroupWare.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+#cp .htaccess $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -291,7 +342,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
     echo "* Please secure you apache and add 	    	    *"
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
-    echo "* <Directory /var/www/egroupware>         	    *"
+    echo "* <Directory /var/www/html/egroupware>            *"
     echo "*   <Files ~ "\.inc\.php$">                       *"
     echo "*      Order allow,deny         		    *"
     echo "* 	 Deny from all		         	    *"
@@ -317,6 +368,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/redirect.php
 %{prefix}/%{egwdirname}/set_box.php
 %{prefix}/%{egwdirname}/xmlrpc.php
+%{prefix}/%{egwdirname}/xmlrpc.php.old
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/header.inc.php.template
 %{prefix}/%{egwdirname}/version.inc.php
@@ -354,10 +406,6 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{developer_tools}
 
-#%files %{docs}
-#%defattr(-,root,root)
-#%{prefix}/%{egwdirname}/phpgwapi/%{docs}
-
 %files %{email}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{email}
@@ -386,6 +434,10 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{ftp}
 
+%files %{fudforum}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{fudforum}
+
 %files %{headlines}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{headlines}
@@ -394,6 +446,14 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{infolog}
 
+%files %{jinn}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{jinn}
+
+%files %{messenger}
+%defattr(-,root,root)
+%{prefix}/%{egroupware}/%{messenger}
+
 %files %{news_admin}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{news_admin}
@@ -401,6 +461,10 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %files %{phpbrain}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{phpbrain}
+
+%files %{phpldapadmin}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{phpldapadmin}
 
 %files %{phpsysinfo}
 %defattr(-,root,root)
@@ -414,9 +478,17 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{projects}
 
+%files %{registration}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{registration}
+
 %files %{sitemgr}
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{sitemgr}
+
+%files %{skel}
+%defattr(-,root,root)
+%{prefix}/%{egwdirname}/%{skel}
 
 %files %{stocks}
 %defattr(-,root,root)
@@ -431,7 +503,73 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
-* Sat Jul 05 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.000
+* Thu Jan 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.011
+- remove justweb template
+- Skel app added as package
+- Messenger back in eGW
+- Spanish translation finished
+- Ukrain translation 50% finished
+- extensions on Italian translation
+- backup rewrite
+- Poll upp is rewrited
+- Knowledge Base rewrite (start from new killer app support center)
+- sitemgr fist preview of 1.0 candidate
+- extension on idots
+- new template set included jerryr (preview to 1.0 version)
+- felamimail extension (folders)
+- email bugfixes and extensions
+- encrytion from passwords for header.inc.php and database passwords added
+- JiNN CMS updated
+- addressbook import extended
+- wiki some extensions
+- many Bugs fixed
+
+* Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-2
+- Bug fix for PostgreSQL error.
+
+* Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-1
+- Many Bugs fixed.
+- Extension in Idots
+- fuforum updated
+- Registration application working again
+
+* Mon Dec 08 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008
+- Many Bugs fixed.
+- First available version from phpldapadmin
+- Dutch, Slovenia, Brasilien Portuguese and Chinese translation extended
+- mass delete entries in calender
+- setup support DB ports
+
+* Mon Nov 03 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.006
+- Many Bugs fixed.
+- First available version from FUDeGW forum
+- pre checking the php and folders
+- idots template extended 
+
+* Fri Oct 10 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.005
+- Many Bugs fixed.
+- TTS with Petri Net Support
+- CSV import to Calendar, Infolog
+- Projects app extendet and 1st preview from gant charts available
+- Simplified Chinese translation added
+- Experimental, internal usage from UTF-8 available
+- New layout for setup
+
+* Wed Sep 25 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.004
+- Bugfix release.
+
+* Mon Sep 08 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.001
+- update possibility via CVS
+- Headlines bugfixes and new gray theme
+- Import from new anglemail
+- small changes and bugfixes in Infolog
+- calendar show now phone calls, notes and todos
+- asyncservice problem fixed
+- wiki bugfixes
+- felamimail
+- improved displaying of messages. added some javascript code, to make switching beetwen message, attachments and header lines faster. Updated the layout of the main page and the message display page to look better. Added support for emailadmin. felamimail needs now emailadmin to beinstalled.
+
+* Sat Aug 30 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.000
 - initianal eGroupWare package anouncement.
 
 # end of file

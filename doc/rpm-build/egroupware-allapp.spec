@@ -1,7 +1,7 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 0.9.99.001
-%define packaging 0
+%define version 0.9.99.011
+%define packaging 1
 %define httpdroot  /var/www/html
 
 Summary: eGroupWare is a web-based groupware suite written in php. 
@@ -37,6 +37,7 @@ apps project for add-on apps.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 mkdir -p $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+#cp .htaccess $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -58,16 +59,11 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
     echo "* Please secure you apache and add                *"
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
-    echo "* <Directory /var/www/egroupware>                 *"
-    echo "*   <Files ~ "\.inc\.php$">                       *"
+    echo "* <Directory /var/www/html/egroupware>            *"
+    echo "*   <Files ~ "\.inc\.php$|.tpl$">                 *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
     echo "*    </Files>                                     *"
-    echo "*   <Files ~ ".tpl$">                             *"
-    echo "*      Order allow,deny                           *"
-    echo "*      Deny from all                              *"
-    echo "*   </Files>                                      *"
-    echo "* </Directory>                                    *"
     echo "***************************************************"
 
 %postun
@@ -87,6 +83,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/index.php
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/xmlrpc.php
+%{prefix}/%{egwdirname}/xmlrpc.php.old
 %{prefix}/%{egwdirname}/login.php
 %{prefix}/%{egwdirname}/logout.php
 %{prefix}/%{egwdirname}/CVS
@@ -108,19 +105,91 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/filemanager
 %{prefix}/%{egwdirname}/forum
 %{prefix}/%{egwdirname}/ftp
+%{prefix}/%{egwdirname}/fudforum
 %{prefix}/%{egwdirname}/headlines
 %{prefix}/%{egwdirname}/infolog
+%{prefix}/%{egwdirname}/jinn
+%{prefix}/%{egwdirname}/messenger
 %{prefix}/%{egwdirname}/news_admin
 %{prefix}/%{egwdirname}/phpbrain
+%{prefix}/%{egwdirname}/phpldapadmin
 %{prefix}/%{egwdirname}/phpsysinfo
 %{prefix}/%{egwdirname}/polls
 %{prefix}/%{egwdirname}/projects
+%{prefix}/%{egwdirname}/registration
 %{prefix}/%{egwdirname}/sitemgr
+%{prefix}/%{egwdirname}/skel
 %{prefix}/%{egwdirname}/stocks
 %{prefix}/%{egwdirname}/tts
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Thu Mon 26 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.011
+- remove justweb template
+- Skel app added as package
+- Messenger back in eGW
+- Spanish translation finished
+- Ukrain translation 50% finished
+- extensions on Italian translation
+- backup rewrite
+- Poll upp is rewrited
+- Knowledge Base rewrite (start from new killer app support center)
+- sitemgr fist preview of 1.0 candidate
+- extension on idots
+- new template set included jerryr (preview to 1.0 version)
+- felamimail extension (folders)
+- email bugfixes and extensions
+- encrytion from passwords for header.inc.php and database passwords added
+- JiNN CMS updated
+- addressbook import extended
+- wiki some extensions
+- many Bugs fixed
+
+* Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-2
+- Bug fix for PostgreSQL error.
+
+* Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-1
+- Many Bugs fixed.
+- Extension in Idots
+- fudforum updated
+- Registration application working again
+
+* Mon Dec 08 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008
+- Many Bugs fixed.
+- First available version from phpldapadmin
+- Dutch, Slovenia, Brasilien Portuguese and Chinese translation extended
+- mass delete entries in calender
+- setup support DB ports
+
+* Mon Nov 03 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.006
+- Many Bugs fixed.
+- First available version from FUDeGW forum
+- pre checking the php and folders
+- idots template extended
+
+* Fri Oct 10 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.005
+- Many Bugs fixed.
+- TTS with Petri Net Support
+- CSV import to Calendar, Infolog
+- Experimental, internal usage from UTF-8 available
+- Projects app extendet and 1st preview from gant charts available
+- Simplified Chinese translation added
+- New layout for setup
+
+* Wed Sep 25 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.004
+- Bugfix release.
+                                                                                
+* Mon Sep 08 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.001
+- update possibility via CVS
+- Headlines bugfixes and new gray theme
+- Import from new anglemail
+- small changes and bugfixes in Infolog
+- calendar show now phone calls, notes and todos
+- asyncservice problem fixed
+- wiki bugfixes
+- felamimail
+- improved displaying of messages. added some javascript code, to make switching beetwen message, attachments and header lines faster. Updated the layout of the main page and the message display page to look better. Added support for emailadmin. felamimail needs now emailadmin to beinstalled.
+
 * Sat Aug 30 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.000
 - initial eGroupWare package anouncement.
 
