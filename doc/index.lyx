@@ -1,11 +1,11 @@
 #LyX 1.1 created this file. For more info see http://www.lyx.org/
-\lyxformat 2.17
+\lyxformat 218
 \textclass article
 \begin_preamble
 \usepackage{fullpage, graphicx, url}
 \setlength{\parskip}{1ex}
 \setlength{\parindent}{0ex}
-\title{phpGroupWare Docs V0}
+\title{phpGroupWare Docs}
 \end_preamble
 \language english
 \inputencoding auto
@@ -32,7 +32,7 @@
 
 
 \series bold 
-phpGroupWare Docs V0.07
+phpGroupWare Installation
 \layout Author
 
 
@@ -45,6 +45,9 @@ Joseph Engo
 Dan Kuykendall 
 \series default 
  
+\layout Author
+
+Editor: Darryl VanDorp
 \layout Standard
 
 $Id$
@@ -138,7 +141,7 @@ If you need to to compile php and apache the following links are good starting
 \layout Standard
 
 A set of scripts to compile and install various modules with apache: 
-\begin_inset LatexCommand \htmlurl{http://www.apachetoolbox.com}
+\begin_inset LatexCommand \url{http://www.apachetoolbox.com}
 
 \end_inset 
 
@@ -147,7 +150,7 @@ A set of scripts to compile and install various modules with apache:
 
 The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of this writing):
  
-\begin_inset LatexCommand \htmlurl{http://www.linuxhelp.net/guides/}
+\begin_inset LatexCommand \url{http://www.linuxhelp.net/guides/}
 
 \end_inset 
 
@@ -155,7 +158,7 @@ The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of this writing):
 \layout Standard
 
 The Soothing Seemless Setup of Apache, SSL, MySQL, and PHP: 
-\begin_inset LatexCommand \htmlurl{http://www.devshed.com/Server_Side/PHP/SoothinglySeamless}
+\begin_inset LatexCommand \url{http://www.devshed.com/Server_Side/PHP/SoothinglySeamless}
 
 \end_inset 
 
@@ -235,28 +238,28 @@ Installing from CVS
 Installing from a CVS is fairly easy.
  The files should be checked out in the webserver directory.
  Example steps (please adjust to your servers config):
-\layout Standard
+\layout Itemize
 
 cd /home/httpd/html
-\layout Standard
+\layout Itemize
 
 cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
  login (just hit enter if prompted for a password)
-\layout Standard
+\layout Itemize
 
 cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
  co phpgroupware
 \layout Standard
 
 or if you prefer using CVSROOT:
-\layout Standard
+\layout Itemize
 
 export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgro
 upware'
-\layout Standard
+\layout Itemize
 
 cvs login (just hit enter if prompted for a password)
-\layout Standard
+\layout Itemize
 
 cvs co phpgroupware
 \layout Standard
@@ -265,6 +268,26 @@ You may have to get required permissions to do this.
  Contact your system administrator if you dont have the permission to write
  to your webserver directory.
  
+\layout Subsubsection
+
+Patched Branches in CVS
+\layout Standard
+
+Recently the phpGroupWare developers started a branch for patches to released
+ versions.
+ This is to facilitate bugs being fixed in a released version without having
+ to wait for the next offical release.
+ There is a developer who has been assigned the responsibility for maintaining
+ that branch and applying patches and fixes.
+ To check out this version of the code using 0.9.9 as an example you would
+ do the following:
+\layout Itemize
+
+login to cvs anonymously as described above
+\layout Itemize
+
+cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
+ -r Version-0_9_9-patches phpgroupware
 \layout Subsection
 
 Setting File Permissions 
@@ -284,7 +307,8 @@ Files Directory (Required) - This can be should be the files dir under the
  You will need to give the webserver account owndership of this directory.
 \layout Standard
 
-chown nobody:nobody
+chown nobody:nobody (note: this assumes your webserver runs as user nobody,
+ adjust for your installation)
 \layout Standard
 
 chmod 700 /home/httpd/html/phpgroupware/files
@@ -349,7 +373,7 @@ somepassword
 \layout Standard
 
 For more detailed user documentation on Mysql see their website : 
-\begin_inset LatexCommand \htmlurl{http://www.mysql.com}
+\begin_inset LatexCommand \url{http://www.mysql.com}
 
 \end_inset 
 
@@ -370,10 +394,13 @@ others: /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl -D
 \layout Itemize
 
 create the empty database: /usr/bin/createdb phpgroupware
+\layout Itemize
+
+create a database user: /usr/bin/createuser phpgroupware
 \layout Standard
 
 For more detailed user documentation on Postgresql see their website : 
-\begin_inset LatexCommand \htmlurl{http://www.postgresql.org}
+\begin_inset LatexCommand \url{http://www.postgresql.org}
 
 \end_inset 
 
@@ -433,7 +460,7 @@ For example, this is the process to install the Headlines application:
 \layout Standard
 
 (see 
-\begin_inset LatexCommand \htmlurl{http://www.sourceforge.net/projects/phpgwapps}
+\begin_inset LatexCommand \url{http://www.sourceforge.net/projects/phpgwapps}
 
 \end_inset 
 
@@ -589,7 +616,7 @@ About this document
 \layout Standard
 
 The newest version of this document can be found on our website 
-\begin_inset LatexCommand \htmlurl{http://www.phpgroupware.org}
+\begin_inset LatexCommand \url{http://www.phpgroupware.org}
 
 \end_inset 
 
@@ -620,7 +647,7 @@ History
 \layout Standard
 
 This document was started by Joseph Engo reworked by Dan Kuykendall then
- hacked again by Darryl VanDorp 
+ edited by Darryl VanDorp 
 \layout Subsection
 
 Version History 
@@ -672,5 +699,8 @@ v.0.06 (Jan 10, 2001) - Darryl VanDorp, imported to lyx source reformatted
 
 v.0.07 (Jan 16, 2001) - Darryl VanDorp, added TOC, fixed some Postgresql setup
  instructions, added some links to install/compilation instructions for
- apache, php and mysql.
+ apache, php and mysql.`
+\layout Standard
+
+v.0.08 (Feb 22, 2001) - Darryl VanDorp, added a multipart html export
 \the_end
