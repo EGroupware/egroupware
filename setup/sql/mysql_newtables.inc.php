@@ -109,6 +109,7 @@
      tid   char(1),
      owner int(8),
      access   char(7),
+	 cat_id   varchar(32),
      fn       varchar(64),
      n_family varchar(64),
      n_given  varchar(64),
@@ -343,7 +344,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre21';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

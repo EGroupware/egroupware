@@ -1363,6 +1363,16 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre21';
 	}
 
+	$test[] = '0.9.10pre21';
+	function upgrade0_9_10pre21()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add column cat_id varchar(32) after access",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){
