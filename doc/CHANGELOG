@@ -1,162 +1,164 @@
+[0.9.6] - Fix user permissions where not being checked properly.
+
 [0.9.5] - Fixed NNTP preferences.
-		- Fixed NNTP read_message - missed converting call for VFS.
-		- Fixed calendar view of events - change of convert_string_to_names_access().
-		- Fixed deletion of user accounts hanging on deleting of calendar events.
-		- Fix for email in BIG5 charset.
-		- Fix for adding new users.
-		- Fixed a bug that was casuing people to have problems logining in when using cookie support.
-		- Fixed calendar display of 12 hour formats.
-		- Fixed a few problems with admin -> editaccount not changing the directory name properly.
-		- Fixed the languages table was using the lang name in upper case while everything else
-		  was using lowercase.
-		- Added admin section to be able to add legal notices or other messages on the main screen.
-		  Thanks snerd for this idea.
-		- Added matrix view of individuals and calendar events.
-		- Fixed parent_page link on footer line.
+  		- Fixed NNTP read_message - missed converting call for VFS.
+  		- Fixed calendar view of events - change of convert_string_to_names_access().
+  		- Fixed deletion of user accounts hanging on deleting of calendar events.
+  		- Fix for email in BIG5 charset.
+  		- Fix for adding new users.
+  		- Fixed a bug that was casuing people to have problems logining in when using cookie support.
+  		- Fixed calendar display of 12 hour formats.
+  		- Fixed a few problems with admin -> editaccount not changing the directory name properly.
+  		- Fixed the languages table was using the lang name in upper case while everything else
+  		  was using lowercase.
+  		- Added admin section to be able to add legal notices or other messages on the main screen.
+  		  Thanks snerd for this idea.
+  		- Added matrix view of individuals and calendar events.
+  		- Fixed parent_page link on footer line.
 
 [0.9.4] - Fixed calendar week view.
-		- Displays calendar items in day view without start times.
-		- You now have to specify which API classes need to be loaded.
-		- Preformance is much better.
-		- Fixed a calendar SQL error with stock setups using the demo user.
-		- Fixed a problem with the email folders only reporting back the number of messages
-		  in the INBOX regardless of which folder it is in.
-		- Added calendar day view to home page.
-		- Fixed problem with deletion of accounts.
-		- Fixed a few problems with error reporting in the accounts section.
-		  Thanks mdean <mdean@kcnet.com>
-		- Renamed the webcal_entry.cal_create_by field to webcal_entry.cal_owner.
-		- Split out auth class, so that you can auth from anywhere and still store your accounts in sql or ldap.
-		- Added mail auth class, that will authenticate users against their email accounts
-		- Added multiple domain support.
-		- Fixed a few problems with the categories class
-		- Fixed nextmatchs calling link() wrong causing the next pages to not be displayed.
-		- Removed javascript from the login template
-		- Fixed HTML error in the application status select box for admin -> new/edit application
-		- Fixed group public filters in addressbook and todo list
-		- Cleanup up templates in admin section and created a few new templates.
+  		- Displays calendar items in day view without start times.
+  		- You now have to specify which API classes need to be loaded.
+  		- Preformance is much better.
+  		- Fixed a calendar SQL error with stock setups using the demo user.
+  		- Fixed a problem with the email folders only reporting back the number of messages
+  		  in the INBOX regardless of which folder it is in.
+  		- Added calendar day view to home page.
+  		- Fixed problem with deletion of accounts.
+  		- Fixed a few problems with error reporting in the accounts section.
+  		  Thanks mdean <mdean@kcnet.com>
+  		- Renamed the webcal_entry.cal_create_by field to webcal_entry.cal_owner.
+  		- Split out auth class, so that you can auth from anywhere and still store your accounts in sql or ldap.
+  		- Added mail auth class, that will authenticate users against their email accounts
+  		- Added multiple domain support.
+  		- Fixed a few problems with the categories class
+  		- Fixed nextmatchs calling link() wrong causing the next pages to not be displayed.
+  		- Removed javascript from the login template
+  		- Fixed HTML error in the application status select box for admin -> new/edit application
+  		- Fixed group public filters in addressbook and todo list
+  		- Cleanup up templates in admin section and created a few new templates.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
-	      error is reported.
-		- Fixed NNTP to handle new VFS api.
-		- Fixed a number of preferences bugs on the main screen.
-		- Fixed E-Mail sigs not being added.
-		- Moved E-Mail preferences into its own section.
-		- When changing NNTP servers, now deletes newsgroups and users_newsgroups.
-		- Applied Patch #102089 - scrollbars for addressbook when composing email.  Thanks jaggdedge <jaggdedge@users.sourceforge.net>
-		- owner fields are now working off account_id instead of account_lid
-		- Fixed time format on calendar preferences.
-		- NNTP now uses preferences to store monitored newsgroups.
-		- Added better error checking in applications admin section.
-		- Applied Patch #102116 - qmail/vmail spaces in TO:,CC: fields sending email.  Thanks jaggdedge <jaggdedge@users.sourceforge.net>
-		- Email Trash folder is now created if it doesn't exsist
-		- Added user preferences for sending messages to the trash or just deleteing them.
-		- Started working on LDAP support.  Its some what functional right now, but please be carefull
-		  it has not been fully tested or debugged.
-		- Fixed appsession() not decrypting data properly.
-		- mcrypt should be working correctly now.
-		- Fixed problem with email's addressbook not retrieving records.
-		- Applied patch for accounts->listusers().  Thanks Mathieu van Loon <mathieu@playcollevtive.com>
-		- Fixed check for new version not working.
-		- Merged in patch for vcard support in addressbook. Thanks Qbert <qbert@users.sourceforge.net>
-		- Merged in patch for better langague support based on iso-639   Thanks zaphod <zaphod@users.sourceforge.net>
-		- Fixed accesslog not showing the logout field properly.
-		- transy should now be somewhat usable.
-		- Added automatic email of changes to TTS tickets.
-		- Fixed show currentusers on navbar preference
-		- Added new categories class
-		- Fixed date preferences in todo list
-		- Added date preferences to addressbook for birthdays
-		- Fixed group access to calendar items.
+  	      error is reported.
+  		- Fixed NNTP to handle new VFS api.
+  		- Fixed a number of preferences bugs on the main screen.
+  		- Fixed E-Mail sigs not being added.
+  		- Moved E-Mail preferences into its own section.
+  		- When changing NNTP servers, now deletes newsgroups and users_newsgroups.
+  		- Applied Patch #102089 - scrollbars for addressbook when composing email.  Thanks jaggdedge <jaggdedge@users.sourceforge.net>
+  		- owner fields are now working off account_id instead of account_lid
+  		- Fixed time format on calendar preferences.
+  		- NNTP now uses preferences to store monitored newsgroups.
+  		- Added better error checking in applications admin section.
+  		- Applied Patch #102116 - qmail/vmail spaces in TO:,CC: fields sending email.  Thanks jaggdedge <jaggdedge@users.sourceforge.net>
+  		- Email Trash folder is now created if it doesn't exsist
+  		- Added user preferences for sending messages to the trash or just deleteing them.
+  		- Started working on LDAP support.  Its some what functional right now, but please be carefull
+  		  it has not been fully tested or debugged.
+  		- Fixed appsession() not decrypting data properly.
+  		- mcrypt should be working correctly now.
+  		- Fixed problem with email's addressbook not retrieving records.
+  		- Applied patch for accounts->listusers().  Thanks Mathieu van Loon <mathieu@playcollevtive.com>
+  		- Fixed check for new version not working.
+  		- Merged in patch for vcard support in addressbook. Thanks Qbert <qbert@users.sourceforge.net>
+  		- Merged in patch for better langague support based on iso-639   Thanks zaphod <zaphod@users.sourceforge.net>
+  		- Fixed accesslog not showing the logout field properly.
+  		- transy should now be somewhat usable.
+  		- Added automatic email of changes to TTS tickets.
+  		- Fixed show currentusers on navbar preference
+  		- Added new categories class
+  		- Fixed date preferences in todo list
+  		- Added date preferences to addressbook for birthdays
+  		- Fixed group access to calendar items.
 
 [0.9.2] - Fixed sorting bug in currentusers.php
-		- Cleaned up error reporting and form in newaccount.php
-		- Fixed viewaccounts.php not updated to the new accounts table.
-		- Fixed access_log not being updated durring logouts.
-		- Fixed email/folders.php not showing the number of messages in the INBOX.
-		- Fixed messages that where being passed around in the headlines admin section.
-		- Fixed setup script not working properly with certain version of MySQL.
-		- Fixed the participants list in the calendar.
-		- Fixed permission bug that was not checking users access to an app.
-	    - Applied Patch #101453 - CJK character set display. Thanks Park ChungKyu <pchk@users.sourceforge.net>
-		- Applied Patch #101321 - CZECH lang translation. Thanks Petr Moses <pmoses@users.sourceforge.net>
-		- Now ISO 639 compliant with language translation id.
-		- Applied Patch #101828 - Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
-		- Fixed group management with new groups and navbar problems.
-		- Changed around the way the preferences work.  The $phpgw_info array is also handled a little
-		  differently for preferences.  It now looks like:
-		  $phpgw_info["user"]["preferences"][appname][preference name]
-		- Fixed NNTP call to preferences.php if user does not have any groups selected.
-		- Fixed setting of default preferences of new users.
-		- Updated Spanish translations.  Thanks gmartine <gmartine@users.sourceforge.net>
-		- Default preferences used if not set in DB.
-		- NNTP fixed to use the new account table layout.
-		- NNTP Header problem fixed.
-		- Applied Patch #101934 - Updated Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
-		- Fixed a problem with setup/index.php return a number of errors on fresh PostgreSQL databases.
+  		- Cleaned up error reporting and form in newaccount.php
+  		- Fixed viewaccounts.php not updated to the new accounts table.
+  		- Fixed access_log not being updated durring logouts.
+  		- Fixed email/folders.php not showing the number of messages in the INBOX.
+  		- Fixed messages that where being passed around in the headlines admin section.
+  		- Fixed setup script not working properly with certain version of MySQL.
+  		- Fixed the participants list in the calendar.
+  		- Fixed permission bug that was not checking users access to an app.
+ 	    - Applied Patch #101453 - CJK character set display. Thanks Park ChungKyu <pchk@users.sourceforge.net>
+  		- Applied Patch #101321 - CZECH lang translation. Thanks Petr Moses <pmoses@users.sourceforge.net>
+  		- Now ISO 639 compliant with language translation id.
+  		- Applied Patch #101828 - Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
+  		- Fixed group management with new groups and navbar problems.
+  		- Changed around the way the preferences work.  The $phpgw_info array is also handled a little
+  		  differently for preferences.  It now looks like:
+  		  $phpgw_info["user"]["preferences"][appname][preference name]
+  		- Fixed NNTP call to preferences.php if user does not have any groups selected.
+  		- Fixed setting of default preferences of new users.
+  		- Updated Spanish translations.  Thanks gmartine <gmartine@users.sourceforge.net>
+  		- Default preferences used if not set in DB.
+  		- NNTP fixed to use the new account table layout.
+  		- NNTP Header problem fixed.
+  		- Applied Patch #101934 - Updated Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
+  		- Fixed a problem with setup/index.php return a number of errors on fresh PostgreSQL databases.
 
 [0.9.1] - Fixed a few missing variables with templates.
-	    - editing a product in the inventory program now forwards you back to the category
-		   you where in.
-	    - You can now use decimals in the inventory program.
-	    - Added missing tables for tts and fixed problems with postgresql.
-	    - Fixed changing of password not getting set in session table
-	    - email now displays "Could not open mailbox" if mailbox could
-	      not be opened (formerly displayed just "mailbox empty")
-	    - Added ability to add/edit product status (inventory)
-    	- Fixed displaying of repeated calendar events by owner
-	    - Fixed displaying of calendar events to include group events
-	    - Converted more of the inventory program to use templates
-	    - Added a search field/add button when list products (inventory)
-	    - Fixed editing of calendar entry with regards to start time
-	    - Fixed sorting order in navbar when apps where assigned to a group.
-	    - Fixed groups not being assinged an app properly.
-	    - Fixed timeout for email receiving/sending.
-	    - Changed the format for the accounts, sessions, and preferences tables.
-	    - Started adding support for Oracle databases (Not working yet)
-	    - Added new layout for admin and preferences sections.
-	    - Fixed addressbook entries assigned to groups.
-	    - Fixed accounts not using link() properly and kicking admin out of searchs.
-	    - Removed globalconfig.inc.php and moved it into the database.  Theres now a nice new
-	      setup program.
-	    - Updated docs a great deal.
-	    - Group public items should now be working.
-		- Fixed a wrong data type error when calling sort() on 1 folder.
-		- Added week number in month view of calendar. (Patch by grasl)
-	    - Moved charset setting from globalconfig.inc.php / DB to lang files.
-	    - A bunch of other minor bug fixes.
+ 	    - editing a product in the inventory program now forwards you back to the category
+ 		   you where in.
+ 	    - You can now use decimals in the inventory program.
+ 	    - Added missing tables for tts and fixed problems with postgresql.
+ 	    - Fixed changing of password not getting set in session table
+ 	    - email now displays "Could not open mailbox" if mailbox could
+ 	      not be opened (formerly displayed just "mailbox empty")
+ 	    - Added ability to add/edit product status (inventory)
+     	- Fixed displaying of repeated calendar events by owner
+ 	    - Fixed displaying of calendar events to include group events
+ 	    - Converted more of the inventory program to use templates
+ 	    - Added a search field/add button when list products (inventory)
+ 	    - Fixed editing of calendar entry with regards to start time
+ 	    - Fixed sorting order in navbar when apps where assigned to a group.
+ 	    - Fixed groups not being assinged an app properly.
+ 	    - Fixed timeout for email receiving/sending.
+ 	    - Changed the format for the accounts, sessions, and preferences tables.
+ 	    - Started adding support for Oracle databases (Not working yet)
+ 	    - Added new layout for admin and preferences sections.
+ 	    - Fixed addressbook entries assigned to groups.
+ 	    - Fixed accounts not using link() properly and kicking admin out of searchs.
+ 	    - Removed globalconfig.inc.php and moved it into the database.  Theres now a nice new
+ 	      setup program.
+ 	    - Updated docs a great deal.
+ 	    - Group public items should now be working.
+  		- Fixed a wrong data type error when calling sort() on 1 folder.
+  		- Added week number in month view of calendar. (Patch by grasl)
+ 	    - Moved charset setting from globalconfig.inc.php / DB to lang files.
+ 	    - A bunch of other minor bug fixes.
 
 [09072000] - Added print icon that allows you to print out a page without having
-	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
-	      - on group creation the files directory tried to be created in
-	        "filemanager/groups/" instead of in "files/groups/" - fixed.
-	        Same for the user directory.
-	      - Added error checking for creating/editing an account with no permissions.
-	      - Fixed a db->unlock() issue in editaccount.php
-	      - Fixed a few $phpgw_flags out of place.
-	      - Fixed a problem with attachments not handled properly
-	      - Fixed email/folder.php
-	      - Fixed a problem with link targeting and the navbar.
-	      - Fixed kp3 not being passed properly in chat.
-	      - Changed the icon for NNTP.
-	      - Changed the way session->create() makes the random number. This should fix
-	        the problems on NT.
-	      - Added HTTP Proxy support to phpgw_network.
-	      - Pop3: when a header line started with cc:, from:, ..., but
-	        no information followed the colon, a bunch of error messages were
-	        displayed ("xxx not an object"). Fixed.
-	      - Inventory program now supports changeable status fields.
-	      - Added feature to show minium in stock products in different colors.
-	      - Added error checking for changing a group name to a name that already exsists
-	      - Removed session->hidden_var(), use link() from now on.
-	        NOTE: You need to make sure you use the POST method.  GET will cause problems.
-	      - Cookie sessionid support works a little better now.
-	      - Started adding LDAP account authencation support.
-	      - Converted session->loginid, session->firstname, session->lastname, session->con to store
-	        this data in the phpgw_info array.
-	      - Moved check_owner() from session class to common.
-	      - Converted all working apps to use the new lang() function which uses a database instead of
-	        the lang files. (Passing extra variables is not working perfect, yet)
+ 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
+ 	      - on group creation the files directory tried to be created in
+ 	        "filemanager/groups/" instead of in "files/groups/" - fixed.
+ 	        Same for the user directory.
+ 	      - Added error checking for creating/editing an account with no permissions.
+ 	      - Fixed a db->unlock() issue in editaccount.php
+ 	      - Fixed a few $phpgw_flags out of place.
+ 	      - Fixed a problem with attachments not handled properly
+ 	      - Fixed email/folder.php
+ 	      - Fixed a problem with link targeting and the navbar.
+ 	      - Fixed kp3 not being passed properly in chat.
+ 	      - Changed the icon for NNTP.
+ 	      - Changed the way session->create() makes the random number. This should fix
+ 	        the problems on NT.
+ 	      - Added HTTP Proxy support to phpgw_network.
+ 	      - Pop3: when a header line started with cc:, from:, ..., but
+ 	        no information followed the colon, a bunch of error messages were
+ 	        displayed ("xxx not an object"). Fixed.
+ 	      - Inventory program now supports changeable status fields.
+ 	      - Added feature to show minium in stock products in different colors.
+ 	      - Added error checking for changing a group name to a name that already exsists
+ 	      - Removed session->hidden_var(), use link() from now on.
+ 	        NOTE: You need to make sure you use the POST method.  GET will cause problems.
+ 	      - Cookie sessionid support works a little better now.
+ 	      - Started adding LDAP account authencation support.
+ 	      - Converted session->loginid, session->firstname, session->lastname, session->con to store
+ 	        this data in the phpgw_info array.
+ 	      - Moved check_owner() from session class to common.
+ 	      - Converted all working apps to use the new lang() function which uses a database instead of
+ 	        the lang files. (Passing extra variables is not working perfect, yet)
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	        properly

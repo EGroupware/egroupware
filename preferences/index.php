@@ -16,10 +16,6 @@
 
   $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
-  if ($phpgw_info["user"]["apps"]["anonymous"]) {
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
-     exit;
-  }
 
   // This func called by the includes to dump a row header
   function section_start($name="",$icon="") {
