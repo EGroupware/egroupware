@@ -84,7 +84,7 @@ description can not exceed 8000 characters in length	infolog	it	La descrizione n
 determines the order the fields are displayed	infolog	it	determina l'ordine di visualizzazone dei campi
 disables a status without deleting it	infolog	it	disabilita lo stato senza cancellarlo
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	it	vuoi una conferma dal responsabile su: accettazione, completamento dei ToDo o entrambe
-done	infolog	it	Finito
+done	infolog	it	finiti
 download	infolog	it	Scarica
 duration	infolog	it	Durata
 each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
@@ -156,14 +156,14 @@ ongoing	infolog	it	in corso
 only the attachments	infolog	it	solo gli allegato
 only the links	infolog	it	solo i links
 only up to this number of entries are displayed on the main screen.	infolog	it	Fino a questo numero di voci saranno visualizzati nella schermata principale.
-open	infolog	it	aperta
+open	infolog	it	aperti
 optional note to the link	infolog	it	note opzionali per il Link
 order	infolog	it	Ordine
 overdue	infolog	it	scaduto
-own	infolog	it	proprio
-own open	infolog	it	proprio aperta
+own	infolog	it	propri
+own open	infolog	it	propri aperti
 own overdue	infolog	it	propri scaduti
-own upcoming	infolog	it	proprio in arrivo
+own upcoming	infolog	it	propri in arrivo
 path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)server<br>es. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	it	Il path ai file utente e gruppo DEVE ESSERE ESTERNO alla directory principale del webserver!!!
 pattern for search in addressbook	infolog	it	stringa da ricercare nella rubrica
@@ -239,7 +239,7 @@ view parent	infolog	it	Visualizza i padri
 view subs	infolog	it	visualizza sub
 view the parent of this entry and all his subs	infolog	it	Visualizza i padri di queste voci e tutte i suoi subs
 view this linked entry in its application	infolog	it	visualizza le voci linkate nella sua applicazione
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperto o proprio aperto (pagina iniziale)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	it	quando i ToDo e le Chiamate Telefoniche iniziano, vengono visualizzati dalla data impostata sul filtro aperti o propri aperti (pagina iniziale)
 will-call	infolog	it	chiamerà
 yes - delete	infolog	it	Sì - Cancella
 you can't delete one of the stock types !!!	infolog	it	Non puoi cancellare uno dei tipi predefiniti !!!
