@@ -58,7 +58,7 @@ insert into applications (app_name, app_title, app_enabled, app_order, app_table
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('email', 'Email', 1, 10,NULL);
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('nntp', 'NNTP', 1, 11, 'newsgroups,users_newsgroups');
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('cron_apps', 'cron_apps', 0, 0, NULL);
-
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('transy', 'Translation Manager', 0, 12, NULL);
 
 create table accounts (
   account_id             serial,
