@@ -30,67 +30,10 @@
 	
 	class translation
 	{
-		function translate($key, $vars=false ) 
-		{
-			if (!$vars)
-			{
-				$vars = array();
-			}
-			$ret = $key;
-			// check also if $GLOBALS['lang'] is a array
-			// php-nuke and postnuke are using $GLOBALS['lang'] too
-			// as string
-			// this makes many problems
-			if (!isset($GLOBALS['lang']) || !$GLOBALS['lang'] || !is_array($GLOBALS['lang']))
-			{
-				$GLOBALS['lang'] = array();
-				if (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) &&
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
-				{
-					$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-				}
-				else
-				{
-					$userlang = 'en';
-				}
-				$sql = "select message_id,content from phpgw_lang where lang like '".$userlang."' ".
-					"and (app_name like '".$GLOBALS['phpgw_info']['flags']['currentapp']."' or app_name like 'common' or app_name like 'all')";
+		var $userlang = 'en';
+		var $loaded_apps = array();
 
-				if (strcasecmp ($GLOBALS['phpgw_info']['flags']['currentapp'], 'common')>0)
-				{
-					$sql .= ' order by app_name asc';
-				}
-				else
-				{
-					$sql .= ' order by app_name desc';
-				}
-
-				$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
-				$GLOBALS['phpgw']->db->next_record();
-				$count = $GLOBALS['phpgw']->db->num_rows();
-				for ($idx = 0; $idx < $count; ++$idx)
-				{
-					$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
-					$GLOBALS['phpgw']->db->next_record();
-				}
-			}
-			$ret = $key.'*';	// save key if we dont find a translation
-			$key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
-
-			if (isset($GLOBALS['lang'][$key]))
-			{
-				$ret = $GLOBALS['lang'][$key];
-			}
-			$ndx = 1;
-			while( list($key,$val) = each( $vars ) )
-			{
-				$ret = preg_replace( "/%$ndx/", $val, $ret );
-				++$ndx;
-			}
-			return $ret;
-		}
-
-		function add_app($app) 
+		function init()
 		{
 			// post-nuke and php-nuke are using $GLOBALS['lang'] too
 			// but not as array!
@@ -99,37 +42,70 @@
 			{
 				$GLOBALS['lang'] = array();
 			}
-			
+
 			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 			{
-				$userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			}
-			else
+			$this->add_app('common');
+			$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp']);
+		}
+
+		function translate($key, $vars=false )
+		{
+			if (!$vars)
 			{
-				$userlang = 'en';
+				$vars = array();
 			}
-			$sql = "select message_id,content from phpgw_lang where lang like '".$userlang."' and app_name like '".$app."'";
-			$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$count = $GLOBALS['phpgw']->db->num_rows();
-			for ($idx = 0; $idx < $count; ++$idx)
+			if (!is_array($GLOBALS['lang']) || !count($GLOBALS['lang']))
 			{
-				$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
-				$GLOBALS['phpgw']->db->next_record();
+				$this->init();
+			}
+			$ret = $key.'*';	// save key if we dont find a translation
+
+			$key = strtolower(trim(substr($key,0,MAX_MESSAGE_ID_LENGTH)));
+
+			if (isset($GLOBALS['lang'][$key]))
+			{
+				$ret = $GLOBALS['lang'][$key];
+			}
+			$ndx = 1;
+			foreach($vars as $val)
+			{
+				$ret = preg_replace( "/%$ndx/", $val, $ret );
+				++$ndx;
+			}
+			return $ret;
+		}
+
+		function add_app($app)
+		{
+			if (!isset($this->loaded_apps[$app]))
+			{
+				$sql = "select message_id,content from phpgw_lang where lang='".$this->userlang."' and app_name='".$app."'";
+				$GLOBALS['phpgw']->db->query($sql,__LINE__,__FILE__);
+				while ($GLOBALS['phpgw']->db->next_record())
+				{
+					$GLOBALS['lang'][strtolower ($GLOBALS['phpgw']->db->f('message_id'))] = $GLOBALS['phpgw']->db->f('content');
+				}
+				$this->loaded_apps[$app] = $this->userlang;
 			}
 		}
-		
+
 		function get_installed_langs()
 		{
-			$GLOBALS['phpgw']->db->query("SELECT DISTINCT l.lang,ln.lang_name FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id",__LINE__,__FILE__);
-			if (!$GLOBALS['phpgw']->db->num_rows())
+			if (!is_array($this->langs))
 			{
-				return False;
+				$GLOBALS['phpgw']->db->query("SELECT DISTINCT l.lang,ln.lang_name FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id",__LINE__,__FILE__);
+				if (!$GLOBALS['phpgw']->db->num_rows())
+				{
+					return False;
+				}
+				while ($GLOBALS['phpgw']->db->next_record())
+				{
+					$this->langs[$GLOBALS['phpgw']->db->f('lang')] = $GLOBALS['phpgw']->db->f('lang_name');
+				}
 			}
-			while ($GLOBALS['phpgw']->db->next_record())
-			{
-				$langs[$GLOBALS['phpgw']->db->f('lang')] = $GLOBALS['phpgw']->db->f('lang_name');
-			}
-			return $langs;
+			return $this->langs;
 		}
 	}
