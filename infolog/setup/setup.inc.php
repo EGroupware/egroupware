@@ -28,6 +28,6 @@
 	/* Dependacies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13')
+		 'versions' => Array('0.9.13', '0.9.14')
 	);
 ?>

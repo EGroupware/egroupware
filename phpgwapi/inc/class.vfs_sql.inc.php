@@ -1415,7 +1415,7 @@
 				while (list ($num, $entry) = each ($ls))
 				{
 					$newdir = ereg_replace ("^$f->fake_full_path", "$t->fake_full_path", $entry['directory']);
-					$this->mkdir ("$newdir/$entry[name]", array ($t->mask));
+					$this->mkdir ($newdir.'/'.$entry['name'], array ($t->mask));
 				}
 
 				/* Lastly, we copy the files over */
@@ -1972,19 +1972,24 @@
 			if ($p->fake_leading_dirs != $this->fakebase && $p->fake_leading_dirs != '/')
 			{
 				$ls_array = $this->ls ($string, array ($relatives[0]), False, False, True);
-				$this->set_attributes ($string, array ($relatives[0]), array ('owner_id' => $ls_array[0]['owner_id']));
-				return True;
+				$var = Array(
+					'owner_id' => $ls_array[0]['owner_id']
+				);
 			}
 			elseif (preg_match ("+^$this->fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 			{
-				$this->set_attributes ($string, array ($relatives[0]), array ('owner_id' => $GLOBALS['phpgw']->accounts->name2id ($matches[1])));
-				return True;
+				$var = Array(
+					'owner_id' => $GLOBALS['phpgw']->accounts->name2id ($matches[1])
+				);
 			}
 			else
 			{
-				$this->set_attributes ($string, array ($relatives[0]), array ('owner_id' => 0));
-				return True;
+				$var = Array(
+					'owner_id' => 0
+				);
 			}
+			$this->set_attributes ($string, array ($relatives[0]), $var);
+			return True;
 		}
 
 		function get_mime_type($file)
@@ -2552,18 +2557,16 @@
 					$p2 = $this->path_parts ($file_array['directory'] . '/' . $file_array['name'], array (RELATIVE_NONE));
 
 					/* Note the mime_type.  This can be "Directory", which is how we create directories */
-					$set_attributes_array = array ('size' => $file_array['size'], 'mime_type' => $file_array['mime_type']);
+					$set_attributes_array = Array(
+						'size' => $file_array['size'],
+						'mime_type' => $file_array['mime_type']
+					);
 
 					if (!$this->file_exists ($p2->fake_full_path, array (RELATIVE_NONE)))
 					{
 						$this->touch ($p2->fake_full_path, array (RELATIVE_NONE));
-
-						$this->set_attributes ($p2->fake_full_path, array (RELATIVE_NONE), $set_attributes_array);
 					}
-					else
-					{
-						$this->set_attributes ($p2->fake_full_path, array (RELATIVE_NONE), $set_attributes_array);
-					}
+					$this->set_attributes ($p2->fake_full_path, array (RELATIVE_NONE), $set_attributes_array);
 				}
 			}
 		}

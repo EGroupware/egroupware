@@ -34,7 +34,8 @@
 			}
 			$d->close();
 
-//			echo '<pre>';	echo var_dump($setup_info);	echo '</pre>'; exit;
+			// _debug_array($setup_info);
+			@ksort($setup_info);
 			return $setup_info;
 		}
 
@@ -63,10 +64,14 @@
 					// This is to catch old setup installs that did not have phpgwapi listed as an app
 					if (!$setup_info['phpgwapi']['currentver'])
 					{
+						$tmp = $setup_info['phpgwapi']['version']; /* save the file version */
 						$setup_info['phpgwapi']['currentver'] = $setup_info['admin']['currentver'];
+						$setup_info['phpgwapi']['version'] = $setup_info['admin']['currentver'];
 						$setup_info['phpgwapi']['enabled'] = $setup_info['admin']['enabled'];
-						//var_dump($setup_info['phpgwapi']);exit;
+						// _debug_array($setup_info['phpgwapi']);exit;
+						$GLOBALS['setup_info'] = $setup_info;
 						$this->register_app('phpgwapi');
+						$setup_info['phpgwapi']['version'] = $tmp; /* restore the file version */
 					}
 				}
 				elseif ($oldapps)
@@ -82,7 +87,7 @@
 					}
 				}
 			}
-			//echo print_r($setup_info);exit;
+			// _debug_array($setup_info);
 			return $setup_info;
 		}
 
@@ -124,7 +129,7 @@
 					}
 				}
 			}
-			//echo '<pre>';	echo var_dump($setup_info);	echo '</pre>';
+			// _debug_array($setup_info);
 			return $setup_info;
 		}
 
@@ -211,13 +216,13 @@
 			$setup_info = $GLOBALS['setup_info'];
 
 			$this->db->Halt_On_Error = 'no';
-			//echo '<pre>'.var_dump($setup_info).'</pre>';exit;
+			// _debug_array($setup_info);
 
 			if (isset($setup_info['phpgwapi']['currentver']))
 			{
 				$setup_info = $this->get_db_versions($setup_info);
 			}
-			//echo '<pre>'.var_dump($setup_info).'</pre>';exit;
+			// _debug_array($setup_info);
 			if (isset($setup_info['phpgwapi']['currentver']))
 			{
 				if ($setup_info['phpgwapi']['currentver'] == $setup_info['phpgwapi']['version'])

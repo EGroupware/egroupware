@@ -18,11 +18,14 @@
 	$setup_info['phpwebhosting']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['phpwebhosting']['hooks'] = array ('add_def_pref', 'admin', 'deleteaccount', 'preferences');
+	$setup_info['phpwebhosting']['hooks'][] = 'add_def_pref';
+	$setup_info['phpwebhosting']['hooks'][] = 'admin';
+	$setup_info['phpwebhosting']['hooks'][] = 'deleteaccount';
+	$setup_info['phpwebhosting']['hooks'][] = 'preferences';
 
 	/* Dependencies for this app to work */
 	$setup_info['phpwebhosting']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.10', '0.9.11' , '0.9.12', '0.9.13')
+		 'versions' => array('0.9.10', '0.9.11' , '0.9.12', '0.9.13', '0.9.14')
 	);
 ?>

@@ -26,6 +26,7 @@
 		var $db;
 		var $oProc;
 		var $tables;
+		var $updateincluded = array();
 
 		/*!
 		@function init_process
@@ -81,9 +82,9 @@
 				/* Check current versions and dependencies */
 				$setup_info = $this->get_db_versions($setup_info);
 				$setup_info = $this->compare_versions($setup_info);
-				// var_dump($setup_info);exit;
+				//_debug_array($setup_info);exit;
 				$setup_info = $this->check_depends($setup_info);
-				//if($i==2) { var_dump($passed);exit; }
+				//if($i==2) { _debug_array($passed);exit; }
 
 				/* stuff the rest of the apps, but only those with available upgrades */
 				while(list($key,$value) = @each($setup_info))
@@ -116,7 +117,7 @@
 						/* Run upgrade scripts on each app in the list */
 						$passing = $this->process_upgrade($pass,$DEBUG);
 						$passing = $this->process_upgrade_langs($passing,$DEBUG);
-						//echo var_dump($pass);exit;
+						//_debug_array($pass);exit;
 						break;
 					default:
 						/* What the heck are you doing? */
@@ -154,11 +155,10 @@
 				if ($i == 20) // Then oops it broke
 				{
 					echo '<br>Setup failure: excess looping in process_pass():'."\n";
-					echo '<br>Pass:<br><pre>'."\n";
-					echo var_dump($pass);
-					echo '</pre><br>Passed:<br><pre>'."\n";
-					echo var_dump($passed);
-					echo "</pre>";
+					echo '<br>Pass:<br>'."\n";
+					_debug_array($pass);
+					echo '<br>Passed:<br>'."\n";
+					_debug_array($passed);
 					exit;
 				}
 				$pass_string = implode (':', $pass);
@@ -348,7 +348,7 @@
 			{
 				$appname = $setup_info[$key]['name'];
 				/* This is in the setup_lang class */
-				$this->add_langs($appname,$force_en);
+				$this->add_langs($appname,$DEBUG,$force_en);
 				if($DEBUG)
 				{
 					echo '<br>process_add_langs(): Translations added for ' . $appname . "\n";
@@ -370,7 +370,7 @@
 			{
 				$appname = $setup_info[$key]['name'];
 				/* This is in the setup_lang class */
-				$this->drop_langs($appname);
+				$this->drop_langs($appname,$DEBUG);
 				if($DEBUG)
 				{
 					echo '<br>process_drop_langs():  Translations removed for ' . $appname . "\n";
@@ -390,10 +390,15 @@
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
 			{
+				/* Don't upgrade lang files in the middle of an upgrade */
+				if($setup_info[$key]['status'] == 'R')
+				{
+					continue;
+				}
 				$appname = $setup_info[$key]['name'];
 				/* These are in the setup_lang class */
-				$this->drop_langs($appname);
-				$this->add_langs($appname);
+				$this->drop_langs($appname,$DEBUG);
+				$this->add_langs($appname,$DEBUG);
 				if($DEBUG)
 				{
 					echo '<br>process_upgrade_langs(): Translations reinstalled for ' . $appname . "\n";
@@ -497,12 +502,21 @@
 			}
 			$this->oProc->m_odb->HaltOnError = 'no';
 			$this->oProc->m_bDeltaOnly = True;
-			
 
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
 			{
-				// if upgrade required, or if we are running again after an upgrade or dependency failure
+				/* Don't try to upgrade an app that is not installed */
+				if(!$this->app_registered($setup_info[$key]['name']))
+				{
+					if ($DEBUG)
+					{
+						echo '<br>process_upgrade(): Application not installed: ' . $appname . "\n";
+					}
+					continue;
+				}
+
+				/* if upgrade required, or if we are running again after an upgrade or dependency failure */
 				if ($DEBUG) { echo '<br>process_upgrade(): Incoming : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status']; }
 				if ($setup_info[$key]['status'] == 'U' ||
 					$setup_info[$key]['status'] == 'D' ||
@@ -545,13 +559,14 @@
 						{
 							echo '<br>process_baseline(): No baseline tables for ' . $appname . "\n";
 						}
-						// This should be a break with a status setting, or not at all
-						//break;
+						/* This should be a break with a status setting, or not at all
+						break;
+						*/
 					}
-					if (file_exists($appdir . 'tables_update.inc.php') && !@$setup_info[$key]['updateincluded'])
+					if (file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
 					{
 						include ($appdir . 'tables_update.inc.php');
-						$setup_info[$key]['updateincluded'] = True;
+						$this->updateincluded[$appname] = True;
 
 						// $test array comes from update file, it is a list of available upgrade functions
 						@reset($test);
@@ -559,7 +574,7 @@
 						{
 							$currentver = $setup_info[$key]['currentver'];
 
-							// build upgrade function name
+							/* build upgrade function name */
 							$function = $appname . '_upgrade' . ereg_replace("\.", '_', $value);
 
 							if ($DEBUG)

@@ -204,6 +204,7 @@ top	setup	en	top
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
 translations added	setup	en	Translations Added
 translations removed	setup	en	Translations Removed
+translations upgraded	setup	en	Translations Upgraded
 two weeks	setup	en	two weeks
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled

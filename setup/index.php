@@ -91,6 +91,10 @@
 		$setup_info = $phpgw_setup->get_versions();
 		$setup_info = $phpgw_setup->get_db_versions($setup_info);
 		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
+		if($DEBUG)
+		{
+			_debug_array($setup_info);
+		}
 	}
 
 	if ($DEBUG) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }

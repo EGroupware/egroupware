@@ -144,7 +144,7 @@
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 			}
 
-			$terror = $phpgw_setup->process_drop_langs($terror);
+			$terror = $phpgw_setup->process_drop_langs($terror,$DEBUG);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
 		}
 
@@ -178,7 +178,12 @@
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
 				}
 			}
-			$terror = $phpgw_setup->process_add_langs($terror);
+			$force_en = False;
+			if($appname == 'phpgwapi')
+			{
+				$force_en = True;
+			}
+			$terror = $phpgw_setup->process_add_langs($terror,$DEBUG,$force_en);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
 		}
 
@@ -198,7 +203,7 @@
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
 			}
 
-			$terror = $phpgw_setup->process_upgrade_langs($terror);
+			$terror = $phpgw_setup->process_upgrade_langs($terror,$DEBUG);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
 		}
 

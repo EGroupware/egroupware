@@ -113,14 +113,21 @@
 		@function get_langs
 		@abstract return array of installed languages, e.g. array('de','en')
 		*/
-		function get_langs()
+		function get_langs($DEBUG=False)
 		{
+			if($DEBUG)
+			{
+				echo '<br>get_langs(): checking db...' . "\n";
+			}
 			$GLOBALS['phpgw_setup']->db->query("SELECT DISTINCT(lang) FROM lang",__LINE__,__FILE__);
 			$langs = array();
 
 			while($GLOBALS['phpgw_setup']->db->next_record())
 			{
-				/* echo 'HELLO: ' . $GLOBALS['phpgw_setup']->db->f(0); */
+				if($DEBUG)
+				{
+					echo '<br>get_langs(): found ' . $GLOBALS['phpgw_setup']->db->f(0);
+				}
 				$langs[] = $GLOBALS['phpgw_setup']->db->f(0);
 			}
 			return $langs;
@@ -131,8 +138,12 @@
 		@abstract delete all lang entries for an application, return True if langs were found
 		@param $appname app_name whose translations you want to delete
 		*/
-		function drop_langs($appname)
+		function drop_langs($appname,$DEBUG=False)
 		{
+			if($DEBUG)
+			{
+				echo '<br>drop_langs(): Working on: ' . $appname;
+			}
 			$GLOBALS['phpgw_setup']->db->query("SELECT COUNT(message_id) FROM lang WHERE app_name='$appname'",__LINE__,__FILE__);
 			$GLOBALS['phpgw_setup']->db->next_record();
 			if($GLOBALS['phpgw_setup']->db->f(0))
@@ -148,23 +159,35 @@
 		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
 		@param $appname app_name of application to process
 		*/
-		function add_langs($appname,$force_en=False)
+		function add_langs($appname,$DEBUG=False,$force_en=False)
 		{
-			$langs = $this->get_langs();
+			$langs = $this->get_langs($DEBUG);
 			if($force_en && !isinarray('en',$langs))
 			{
 				$langs[] = 'en';
+			}
+
+			if($DEBUG)
+			{
+				echo '<br>add_langs(): chose these langs: ';
+				_debug_array($langs);
 			}
 
 			$GLOBALS['phpgw_setup']->db->transaction_begin();
 
 			while (list($null,$lang) = each($langs))
 			{
-				/* echo '<br>Working on: ' . $lang; */
+				if($DEBUG)
+				{
+					echo '<br>add_langs(): Working on: ' . $lang . ' for ' . $appname;
+				}
 				$appfile = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
 				if(file_exists($appfile))
 				{
-					/* echo '<br>Including: ' . $appfile; */
+					if($DEBUG)
+					{
+						echo '<br>add_langs(): Including: ' . $appfile;
+					}
 					$raw_file = file($appfile);
 
 					while (list($null,$line) = @each($raw_file))
@@ -184,7 +207,10 @@
 						{
 							if($message_id && $content)
 							{
-								/* echo "<br>adding - INSERT INTO lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')"; */
+								if($DEBUG)
+								{
+									echo "<br>add_langs(): adding - INSERT INTO lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+								}
 								$GLOBALS['phpgw_setup']->db->query("INSERT INTO lang VALUES ('$message_id','$app_name','"
 									. $GLOBALS['phpgw_setup']->db_lang . "','$content')",__LINE__,__FILE__);
 							}

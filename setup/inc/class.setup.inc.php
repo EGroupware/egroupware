@@ -212,8 +212,10 @@
 			}
 			$enable = intval($enable);
 
-			// Use old applications table if the currentver is less than 0.9.10pre8,
-			// but not if the currentver = '', which probably means new install.
+			/*
+			 Use old applications table if the currentver is less than 0.9.10pre8,
+			 but not if the currentver = '', which probably means new install.
+			*/
 			if ($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
 				$appstbl = 'applications';

@@ -358,13 +358,11 @@
         <tr><td><b>Sessions Type</b><br><select name="setting[sessions_type]">
       <?php
 		$selected = '';
-		$found_dbtype = false;
 		while(list($k,$v) = each($supported_sessions_type))
 		{
 			if($v == $phpgw_info['server']['sessions_type'])
 			{
 				$selected = ' selected ';
-				$found_dbtype = true;
 			}
 			else
 			{

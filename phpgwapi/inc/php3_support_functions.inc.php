@@ -248,4 +248,23 @@
 		}
 		return $output;
 	}
+
+	function print_r($array)
+	{
+		if(gettype($array)=="array")
+		{
+			echo '<ul>';
+			while (list($index, $subarray) = each($array) )
+			{
+				echo '<li>'.$index.' <code>=&gt;</code>';
+				print_r($subarray);
+				echo '</li>';
+			}
+			echo '</ul>';
+		}
+		else
+		{
+			echo $array;
+		}
+	}
 ?>
