@@ -74,7 +74,7 @@
 
   //$phpgw->hooks->proccess("location","mainscreen");
 
- // $phpgw->preferences->read_preferences("addressbook");
+// $phpgw->preferences->read_preferences("addressbook");
 //  $phpgw->preferences->read_preferences("email");
 //  $phpgw->preferences->read_preferences("calendar");
 //  $phpgw->preferences->read_preferences("stocks");
