@@ -1,5 +1,4 @@
 {doSearchFkt}
-
 {info_css}
       <p class=action>{lang_info_action}<br>
       <hr noshade width="98%" align="center" size="1">
@@ -111,7 +110,7 @@
          <tr valign="bottom">
           <td height="35" width="50%">
            <div align="center">
-           		<input type="submit" name="submit" value="{lang_addsubmitb}">
+           		<input type="submit" name="add" value="{lang_addsubmitb}">
             </div>
           </td>
           <td height="35" width="50%">
