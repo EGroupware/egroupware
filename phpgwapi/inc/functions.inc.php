@@ -334,7 +334,7 @@
 	}
 
 	magic_quotes_runtime(false);
-	print_debug('sane environment');
+	@print_debug('sane environment');
 
 	/****************************************************************************\
 	* Multi-Domain support                                                       *
