@@ -263,7 +263,7 @@
 							$hidden_vars+$action_vars+array('referer'=>$referer),
 							'/index.php',$this->menuaction('edit')));
 
-			$t->set_var('cat_form',$html->link('/index.php',$this->menuaction()));
+			$t->set_var('cat_form',$html->link('/index.php',ereg_replace('&*cat_id=[0-9]*','',$QUERY_STRING))); //RB:$this->menuaction()));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_all',lang('All'));
 			$t->set_var('lang_select',lang('Select'));
@@ -353,16 +353,23 @@
 
 			// catergory selection
 			$t->set_block('info_list_t','cat_selection','cat_selectionhandle');
-			if (!$for_include)
+
+			if (!$for_include || $total > $maxmatchs ||
+				 $query || $filter != 'none' || $cat_id)
+			{
+				//echo "<p>for_include=$for_include, total=$total, maxmatchs=$maxmatchs, query=$query, filter=$filter, cat_id=$cat_id</p>";
+
 				$t->parse('cat_selectionhandle','cat_selection',True);
 
 			// ===========================================
 			// nextmatch variable template-declarations
 			// ===========================================
-			if (!$for_include) {
+				if (!($q_string = strstr($QUERY_STRING,'menuaction')))
+					$q_string = "menuaction=infolog.uiinfolog.get_list";
+				if (!strstr($q_string,'cat_id'))
+					$q_string .= "&cat_id=$cat_id";
 				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,$total,
-					"&menuaction=infolog.uiinfolog.get_list&action=$action$nm_extra&".
-				  "info_id=$info_id&cat_id=$cat_id",'95%',$phpgw_info['theme']['th_bg']);
+											'&'.$q_string,'95%',$phpgw_info['theme']['th_bg']);
 				$t->set_var('next_matchs',$next_matchs);
 				if ($total > $maxmatchs)
 					$t->set_var('next_matchs_end',$next_matchs);
@@ -371,10 +378,7 @@
 			// ---------- end nextmatch template --------------------
 
 			$sql="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod";
-			if ($for_include)
-				$db->query($sql);
-			else
-				$db->limit_query($sql,$start,__LINE__,__FILE__);
+			$db->limit_query($sql,$start,__LINE__,__FILE__);
 
 			while ($db->next_record()) {
 				// ========================================
