@@ -1,2 +1,13 @@
-US	Presidents Day	988628400
-US	Memorial Day	988714800
+US	New Years	1	1	0	0
+US	Martin Luther King's Birthday	0	1	3	1
+US	Inaugeration Day	20	1	0	0
+US	Armed Forces Day	0	5	3	6
+US	Memorial Day	0	5	99	1
+US	Flag Day	14	6	0	0
+US	Independence Day	4	7	0	0
+US	Labor Day	0	9	1	1
+US	Columbus Day	0	10	2	1
+US	Veterans Day	11	11	0	0
+US	Thanksgiving Day	0	11	4	4
+US	Christmas Day	25	12	0	0
+

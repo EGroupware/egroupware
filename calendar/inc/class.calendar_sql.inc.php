@@ -606,10 +606,6 @@ class calendar_ extends calendar__
 	{
 		global $phpgw_info;
 
-		$cat = CreateObject('phpgwapi.categories');
-		$categ = $cat->return_single($event->category);
-		$category = $categ[0]['name'];
-
 		$locks = Array(
 			'phpgw_cal',
 			'phpgw_cal_user',
@@ -619,8 +615,8 @@ class calendar_ extends calendar__
 		if($event->id == 0)
 		{
 			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
-			$this->stream->query('INSERT INTO phpgw_cal(title,owner,category,priority,is_public) '
-				. "values('".$temp_name."',".$event->owner.",'".$category."',".$event->priority.",".$event->public.")");
+			$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public) '
+				. "values('".$temp_name."',".$event->owner.",".$event->priority.",".$event->public.")");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
 			$event->id = $this->stream->f('cal_id');
@@ -640,13 +636,19 @@ class calendar_ extends calendar__
 			$type = 'E';
 		}
 
+		$cat = '';
+		if($event->category != 0)
+		{
+			$cat = 'category='.$event->category.', ';
+		}
+
 		$sql = 'UPDATE phpgw_cal SET '
 				. 'owner='.$event->owner.', '
 				. 'datetime='.$date.', '
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event->priority.', '
-				. 'category='.$event->category.', '
+				. $cat
 				. "cal_type='".$type."', "
 				. 'is_public='.$event->public.', '
 				. "title='".addslashes($event->title)."', "

@@ -221,10 +221,13 @@
   $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_cal_holidays (
-    hol_id	serial,
+    hol_id		serial,
     locale		char(2) NOT NULL,
     name		varchar(50) NOT NULL,
-    date_time	int4 DEFAULT 0 NOT NULL
+    mday		int DEFAULT 0,
+    month_num		int DEFAULT 0,
+    occurence	int DEFAULT 0,
+    dow		int DEFAULT 0
   )";
   $phpgw_setup->db->query($sql);
 

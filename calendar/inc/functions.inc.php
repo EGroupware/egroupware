@@ -68,14 +68,15 @@
 		'rights'				=> intval($rights)
 	);
   
-	$phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
-
 	if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
 	{
 		$phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
 		$phpgw->preferences->save_repository();
 	}
 	
+	$phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
+	$phpgw->calendar->holidays->read_holiday();
+
 	if (isset($date) && strlen($date) > 0)
 	{
 		$thisyear  = intval(substr($date, 0, 4));

@@ -15,14 +15,18 @@
 class calendar_holiday
 {
 	var $db;
+	var $year;
+	var $tz_offset;
 	var $holidays;
 	var $users;
+//	var $cal;
 
 	function calendar_holiday($owner='')
 	{
 		global $phpgw, $phpgw_info;
 		
 		$this->db = $phpgw->db;
+//		$this->cal = CreateObject('calendar.calendar');
 //		$phpgw_info['user']['preferences']['calendar']['locale'] = 'US';
 		$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
 		$owner_id = get_account_id($owner);
@@ -92,23 +96,56 @@ class calendar_holiday
 //		echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale)."<br>\n";
 		$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale));
 		if (!$lines) return false;
-		$c_lines = count($lines);
-		for($i=10;$i<$c_lines;$i++)
+		$c_lines = count($lines) - 4;
+		for($i=10;$i=$c_lines;$i++)
 		{
 //			echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
 			$holiday = explode("\t",$lines[$i]);
 			$loc = $holiday[0];
 			$name = addslashes($holiday[1]);
-			$date = $holiday[2];
+			$day = intval($holiday[2]);
+			$month = intval($holiday[3]);
+			$occurence = intval($holiday[4]);
+			$dow = intval($holiday[5]);
 //			echo "Inserting LOCALE='".$loc."' NAME='".$name."' DATE='".$date."'<br>\n";
-			$sql = "INSERT INTO phpgw_cal_holidays(locale,name,date_time) VALUES('$loc','$name',$date)";
+			$sql = "INSERT INTO phpgw_cal_holidays(locale,name,mday,month_num,occurence,dow) VALUES('$loc','$name',$day,$month,$occurence,$dow)";
 			$this->db->query($sql,__LINE__,__FILE__);
 		}
+	}
+
+	function calculate_date($holiday)
+	{
+		global $phpgw;
+		
+		if($holiday['mday'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+		{
+			if($holiday['occurence'] != 99)
+			{
+				$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],1);
+				$day = (7 * $holiday['occurence'] - 6 + ($holiday['dow'] - $dow) % 7);
+			}
+			else
+			{
+				$ld = $phpgw->calendar->days_in_month($holiday['month'],$this->year);
+				$dow = $phpgw->calendar->day_of_week($this->year,$holiday['month'],$ld);
+				$day = $ld - ($dow - $holiday['dow']) % 7 ;
+			}
+		}
+		else
+		{
+			$day = $holiday['day'];
+		}
+		$datetime = mktime(0,0,0,$holiday['month'],$day,$this->year) - $this->tz_offset;
+//		echo 'Calculating for year('.$this->year.') month('.$holiday['month'].') dow('.$holiday['dow'].') occurence('.$holiday['occurence'].') datetime('.$datetime.') DATE('.date('Y.m.d H:i:s',$datetime).')<br>'."\n";
+		return $datetime;
 	}
 
 	function read_holiday()
 	{
 		global $phpgw;
+
+		$this->year = intval($phpgw->calendar->today['year']);
+		$this->tz_offset = intval($phpgw->calendar->tz_offset);
 		
 		$sql = $this->build_holiday_query();
 		$this->holidays = Null;
@@ -120,7 +157,11 @@ class calendar_holiday
 			$i++;
 			$this->holidays[$i]['locale'] = $this->db->f('locale');
 			$this->holidays[$i]['name'] = $phpgw->strip_html($this->db->f('name'));
-			$this->holidays[$i]['date'] = $this->db->f('date_time');
+			$this->holidays[$i]['day'] = intval($this->db->f('mday'));
+			$this->holidays[$i]['month'] = intval($this->db->f('month_num'));
+			$this->holidays[$i]['occurence'] = intval($this->db->f('occurence'));
+			$this->holidays[$i]['dow'] = intval($this->db->f('dow'));
+			$this->holidays[$i]['date'] = $this->calculate_date($this->holidays[$i]);
 			if(count($find_locale) == 2 && $find_locale[0] != $find_locale[1])
 			{
 				if($this->holidays[$i]['locale'] == $find_locale[1])
@@ -161,7 +202,7 @@ class calendar_holiday
 
 	function sort_by_date($holidays)
 	{
-		$c_holidays = count($this->holidays);
+		$c_holidays = count($holidays);
 		for($outer_loop=0;$outer_loop<($c_holidays - 1);$outer_loop++)
 		{
 			$outer_date = $holidays[$outer_loop]['date'];

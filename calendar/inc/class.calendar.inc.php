@@ -101,7 +101,6 @@ class calendar extends calendar_
 			$this->users_timeformat = 'H:i';
 		}
 		$this->holidays = CreateObject('calendar.calendar_holiday',$this->owner);
-		$this->holidays->read_holiday();
 	}
 
 // Generic functions that are derived from mcal functions.
@@ -403,8 +402,8 @@ class calendar extends calendar_
 			$full_event_date = date('Ymd',$event_beg_day);
 			
 			// only repeat after the beginning, and if there is an rpt_end before the end date
-			if (($rep_events->rpt_end_use && ($search_date_full > $end_recur_date)) ||
-				($search_date_full < $full_event_date))
+			if ((($rep_events->recur_enddate->month && $rep_events->recur_enddate->mday && $rep_events->recur_enddate->year) &&
+				($search_date_full > $end_recur_date)) || ($search_date_full < $full_event_date))
 			{
 				continue;
 			}
@@ -695,7 +694,6 @@ class calendar extends calendar_
 			$p->set_var('dayname','<b>' . substr(lang($this->days[$i]),0,2) . '</b>');
 			$p->parse('daynames','mini_day',True);
 		}
-		
 		for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
 		{
 			for($j=0;$j<7;$j++)
@@ -910,7 +908,6 @@ class calendar extends calendar_
 		$str = '';
 		$gr_events = CreateObject('calendar.calendar_item');
 		$lr_events = CreateObject('calendar.calendar_item');
-
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('keep');
 		
@@ -934,7 +931,6 @@ class calendar extends calendar_
 			$p->parse('column_header','month_column',True);
 			$p->set_var('col_width','12');
 		}
-		
 		for ($j=0;$j<7;$j++)
 		{
 			$date = $this->gmtdate($startdate + ($j * 86400));
@@ -947,8 +943,8 @@ class calendar extends calendar_
 			$day = $phpgw->common->show_date($date['raw'],'d');
 			$month = $phpgw->common->show_date($date['raw'],'m');
 			$year = $phpgw->common->show_date($date['raw'],'Y');
-			$date = $this->gmtdate(mktime(0,0,0,$month,$day,$year));
-			
+			$date = $this->gmtdate(mktime(0,0,0,$date['month'],$date['day'],$date['year']));
+
 			if ($weekly || ($date['full'] >= $monthstart && $date['full'] <= $monthend))
 			{
 				if($weekly)
@@ -956,6 +952,7 @@ class calendar extends calendar_
 					$cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
 				}
 				
+//				echo 'Date = '.$date['raw'].'  '.date('Y.m.d H:i:s',$date['raw'])."<br>\n";
 				if ($date['full'] != $this->today['full'])
 				{
 					$extra = ' bgcolor="'.$cellcolor.'"';
@@ -963,7 +960,6 @@ class calendar extends calendar_
 				else
 				{
 					$extra = ' bgcolor="'.$phpgw_info['theme']['cal_today'].'"';
-//					echo 'Today = '.$date['raw'].'  '.$phpgw->common->show_date($date['raw'])."<br>\n";
 				}
 
 				$holiday_found = $this->holidays->find_date($date['raw']);
@@ -1326,7 +1322,6 @@ class calendar extends calendar_
 
 		$this->end_repeat_day = intval(date('Ymd',$date['raw']));
 		$this->read_repeated_events($this->owner);
-
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
 		$p->set_unknowns('keep');
 
