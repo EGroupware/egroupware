@@ -102,7 +102,7 @@
 			       . " account_lastname='" . addslashes($n_lastname) . "', account_permissions='"
 	  		       . $phpgw->accounts->add_app("",True) . "', account_status='"
 			       . "$n_account_status', account_groups='"
-  			       . $phpgw->accounts->array_to_string("none",$n_groups)
+  			       . $phpgw->accounts->groups_array_to_string($n_groups)
 			       . "' where account_lid='$n_loginid'");
 
         $phpgw->db->unlock();

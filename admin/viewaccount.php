@@ -47,16 +47,16 @@
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
      <td width="40%"><?php echo lang("First Name"); ?></td>
-     <td width="60%"><?php echo $phpgw->db->f("account_firstname"); ?></td>
+     <td width="60%"><?php echo $phpgw->db->f("account_firstname"); ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
      <td width="40%"><?php echo lang("Last Name"); ?></td>
-     <td width="60%"><?php echo $phpgw->db->f("account_lastname"); ?></td>
+     <td width="60%"><?php echo $phpgw->db->f("account_lastname"); ?>&nbsp;</td>
     </tr>
 
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-     <td width="40%"><?php echo lang("account_permissions"); ?></td>
+     <td width="40%"><?php echo lang("account_permissions"); ?>&nbsp;</td>
     <?php
 
       $i = 0;
@@ -106,5 +106,5 @@
    </center>
 
 <?php
-        $phpgw->common->phpgw_footer();
+  $phpgw->common->phpgw_footer();
 ?>
