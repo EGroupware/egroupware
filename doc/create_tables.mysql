@@ -37,7 +37,7 @@ insert into config (config_name, config_value) values ('httpproxy_server', '');
 insert into config (config_name, config_value) values ('httpproxy_port', '');
 insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom');
 insert into config (config_name, config_value) values ('checkfornewversion', 'False');
-z
+
 CREATE TABLE applications (
   app_name     varchar(25) NOT NULL,
   app_title    varchar(50),
