@@ -20,11 +20,11 @@ alarm management	calendar	it	Gestione Allarmi
 alarm-management	calendar	it	Gestione-Allarmi
 alarms	calendar	it	Allarmi
 all day	calendar	it	Tutto il giorno
-are you sure you want to delete this country ?	calendar	it	Confermi la cancellazione di questa Nazione
-are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività ?
+are you sure you want to delete this country ?	calendar	it	Confermi la cancellazione di questa Nazione?
+are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività?
 are you sure\nyou want to\ndelete these alarms?	calendar	it	Sei sicuro\ndi voler\ncancellare questo allarme?
-are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota ?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
+are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	it	Confermi la cancellazione di questa singola voce?\nQuesto comporterà la cancellazione per tutti gli utenti
 before the event	calendar	it	prima dell'evento
 brief description	calendar	it	Descrizione breve
@@ -262,12 +262,12 @@ this message is sent when you accept, tentative accept or reject an event.	calen
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	it	Questo messaggio è inviato quando imposti un Allarme per certi eventi.  Include tutte le informazioni di cui hai bisogno.
 this month	calendar	it	Questo mese
 this week	calendar	it	Questa settimana
-this year	calendar	it	Questo anno
+this year	calendar	it	Quest'anno
 thu	calendar	it	Gio
 title	calendar	it	Titolo
 title of the event	calendar	it	Titolo dell'evento
 title-row	calendar	it	Riga del Titolo
-to many might exceed your execution-time-limit	calendar	it	troppi potrebbero superare il tuo limite di tempo di esecuzione
+to many might exceed your execution-time-limit	calendar	it	troppi potrebbero superare il limite del tempo di esecuzione
 to-firstname	calendar	it	A-Nome
 to-fullname	calendar	it	A-Nome Completo
 to-lastname	calendar	it	A-Cognome
