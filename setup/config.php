@@ -18,7 +18,7 @@
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
  
   // Authorize the user to use setup app
-  include("inc/setup_auth.inc.php");
+  include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
   echo "<html><head><title>phpGroupWare Setup</title></head>\n";
   echo "<body bgcolor='#ffffff'>\n";
