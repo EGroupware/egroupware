@@ -22,7 +22,7 @@
 		);
 
 		$var['img_root'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/justweb/images';
-		$var[table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
+		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		if ($GLOBALS['phpgw_info']['flags']['navbar_target'])
 		{
@@ -86,7 +86,7 @@
 		$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . ' - '
 			. lang($GLOBALS['phpgw']->common->show_date(time(),"l")) . ' '
 			. lang($GLOBALS['phpgw']->common->show_date(time(),"F")) . ' '
-			. $GLOBALS['phpgw']->common->show_date(time(),"d, Y"));
+			. $GLOBALS['phpgw']->common->show_date(time(),"d, Y");
 
 		/*
 		 * Maybe we should create a common function in the phpgw_accounts_shared.inc.php file
