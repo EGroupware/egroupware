@@ -28,7 +28,7 @@
 	// This is where it belongs (jengo)
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
-	$phpgw_info["server"]["global_denied_users"] = array(
+	$phpgw_info['server']['global_denied_users'] = array(
 		'root'     => True, 'bin'      => True, 'daemon'   => True,
 		'adm'      => True, 'lp'       => True, 'sync'     => True,
 		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
@@ -46,7 +46,7 @@
 		'ident'    => True, 'mailnull' => True
 	);
 
-	$phpgw_info["server"]["global_denied_groups"] = array(
+	$phpgw_info['server']['global_denied_groups'] = array(
 		'root'      => True, 'bin'       => True, 'daemon'    => True,
 		'sys'       => True, 'adm'       => True, 'tty'       => True,
 		'disk'      => True, 'lp'        => True, 'mem'       => True,
@@ -68,6 +68,7 @@
 		var $account_id;
 		var $acct_type = '';
 		var $data;
+		var $total;
 
 		function accounts_()
 		{
@@ -114,12 +115,12 @@
 				$this->data["loginshell"] = $allValues[0]["loginshell"][0];
 			}
 
-			$this->data['lastlogin']         = $allValues[0]['phpgwlastlogin'][0];
-			$this->data['lastloginfrom']     = $allValues[0]['phpgwlastloginfrom'][0];
+			$this->data['lastlogin']         = $allValues[0]['phpgwaccountlastlogin'][0];
+			$this->data['lastloginfrom']     = $allValues[0]['phpgwaccountlastloginfrom'][0];
 			$this->data['lastpasswd_change'] = $allValues[0]['phpgwlastpasswdchange'][0];
 			$this->data['status']            = $allValues[0]['phpgwaccountstatus'][0];
 			$this->data['type']              = $allValues[0]['phpgwaccounttype'][0];
-			$this->data['expires']           = $allValues[0]['phpgwexpires'][0];
+			$this->data['expires']           = $allValues[0]['phpgwaccountexpires'][0];
 
 			return $this->data;
 		}
@@ -145,12 +146,12 @@
 			$entry['cn']                    = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
 			$entry['sn']                    = $this->data['lastname'];
 			$entry['givenname']             = $this->data['firstname'];
-			$entry['phpgwlastlogin']        = $this->data['lastlogin'];
-			$entry['phpgwlastloginfrom']    = $this->data['lastloginfrom'];
+			$entry['phpgwaccountlastlogin']     = $this->data['lastlogin'];
+			$entry['phpgwaccountlastloginfrom'] = $this->data['lastloginfrom'];
 			$entry['phpgwlastpasswdchange'] = $this->data['lastpasswd_change'];
 			$entry['phpgwaccountstatus']    = $this->data['status'];
 			$entry['phpgwaccounttype']      = $this->data['type'];
-			$entry['phpgwexpires']          = $this->data['expires'];
+			$entry['phpgwaccountexpires']   = $this->data['expires'];
 
 			if ($phpgw_info["server"]["ldap_extra_attributes"])
 			{
@@ -229,6 +230,7 @@
 					//$entry["objectclass"][4] = 'account'; Causes problems with some LDAP servers
 					$entry["objectclass"][4] = 'posixAccount';
 					$entry["objectclass"][5] = 'shadowAccount';
+					$entry["objectclass"][6] = 'phpgwAccount';
 
 					if ($phpgw_info["server"]["ldap_extra_attributes"])
 					{
@@ -369,37 +371,45 @@
 
 			if ($_type == 'both' || $_type == 'accounts')
 			{
-				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], '|((uidnumber=*)(phpgwaccounttype=u))');
+				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], '(&(uidnumber=*)(phpgwaccounttype=u))');
 				$allValues = ldap_get_entries($ds, $sri);
-				while ($allVals = @each($allValues))
+				while (list($null,$allVals) = @each($allValues))
 				{
-					$accounts[] = Array(
-						'account_id'        => $allVals['uidnumber'][0],
-						'account_lid'       => $allVals['uid'][0],
-						'account_type'      => $allVals['phpgwaccounttype'],
-						'account_firstname' => $allVals['givenname'][0],
-						'account_lastname'  => $allVals['sn'][0],
-						'account_status'    => $allVals['phpgwaccountstatus'][0]
-					);
+					$test = $allVals['uid'][0];
+					if (!$phpgw_info['server']['global_denied_users'][$test])
+					{
+						$accounts[] = Array(
+							'account_id'        => $allVals['uidnumber'][0],
+							'account_lid'       => $allVals['uid'][0],
+							'account_type'      => $allVals['phpgwaccounttype'],
+							'account_firstname' => $allVals['givenname'][0],
+							'account_lastname'  => $allVals['sn'][0],
+							'account_status'    => $allVals['phpgwaccountstatus'][0]
+						);
+					}
 				}
 			}
 			elseif ($_type == 'both' || $_type == 'groups')
 			{
-				$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], '|((gidnumber=*)(phpgwaccounttype=g))');
+				$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], '(|(gidnumber=*)(phpgwaccounttype=g))');
 				$allValues = ldap_get_entries($ds, $sri);
-				while ($allVals = @each($allValues))
+				while (list($null,$allVals) = @each($allValues))
 				{
-					$accounts[] = Array(
-						'account_id'        => $allVals['gidnumber'][0],
-						'account_lid'       => $allVals['uid'][0],
-						'account_type'      => $allVals['phpgwaccounttype'],
-						'account_firstname' => $allVals['givenname'][0],
-						'account_lastname'  => $allVals['sn'][0],
-						'account_status'    => $allVals['phpgwaccountstatus'][0]
-					);
+					$test = $allVals['cn'][0];
+					if (!$phpgw_info['server']['global_denied_groups'][$test])
+					{
+						$accounts[] = Array(
+							'account_id'        => $allVals['gidnumber'][0],
+							'account_lid'       => $allVals['cn'][0],
+							'account_type'      => $allVals['phpgwaccounttype'],
+							'account_firstname' => $allVals['givenname'][0],
+							'account_lastname'  => $allVals['sn'][0],
+							'account_status'    => $allVals['phpgwaccountstatus'][0]
+						);
+					}
 				}
 			}
-
+			$this->total = count($accounts);
 			return $accounts;
 		}
 
@@ -407,33 +417,48 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-			
-			if($this->db->num_rows())
+			$ds = $phpgw->common->ldapConnect();
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "uid=$account_lid");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['uidnumber'][0])
 			{
-				$this->db->next_record();
-				return intval($this->db->f('account_id'));
-			}
-			else
+				return $allValues[0]['uidnumber'][0];
+			}		
+
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], "cn=$account_id");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['gidnumber'][0])
 			{
-				return False;
+				return $allValues[0]['gidnumber'][0];
 			}
+
+			return False;
 		}
 
 		function id2name($account_id)
 		{
 			global $phpgw, $phpgw_info;
-	
-			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if($this->db->num_rows())
+
+			$ds = $phpgw->common->ldapConnect();
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "uidnumber=$account_id");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['uid'][0])
 			{
-				$this->db->next_record();
-				return $this->db->f('account_lid');
+				return $allValues[0]['uid'][0];
 			}
-			else
+
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], "gidnumber=$account_id");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['uid'][0])
 			{
-				return False;
+				return $allValues[0]['uid'][0];
 			}
+
+			return False;
 		}
 
 		function get_type($accountid = '')
@@ -441,16 +466,27 @@
 			global $phpgw, $phpgw_info;
 
 			$account_id = get_account_id($accountid);
-			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if ($this->db->num_rows())
+			$ds = $phpgw->common->ldapConnect();
+
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=$account_id");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['phpgwaccounttype'][0])
 			{
-				$this->db->next_record();
-				return $this->db->f("account_type");
+				return $allValues[0]['phpgwaccounttype'][0];
 			}
-			else
+
+			$allValues = array*();
+
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "cn=$account_id");
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]['phpgwaccounttype'][0])
 			{
-				return False;
+				return $allValues[0]['phpgwaccounttype'][0];
 			}
+
+			return False;
 		}
 
 		function exists($account_lid)
@@ -525,12 +561,12 @@
 				//echo '<br>using'.$account_id;exit;
 			}
 			$entry['userpasswd']            = $account_info['passwd'];
-			$entry['phpgwlastlogin']        = $account_info['lastlogin'];
-			$entry['phpgwlastloginfrom']    = $account_info['lastloginfrom'];
+			$entry['phpgwaccountlastlogin']        = $account_info['lastlogin'];
+			$entry['phpgwaccountlastloginfrom']    = $account_info['lastloginfrom'];
 			$entry['phpgwlastpasswdchange'] = $account_info['lastpasswd_change'];
 			$entry['phpgwaccountstatus']    = $account_info['status'];
 			$entry['phpgwaccounttype']      = $account_info['type'];
-			$entry['phpgwexpires']          = $account_info['expires'];
+			$entry['phpgwaccountexpires']          = $account_info['expires'];
 
 			if ($account_type == "g")
 			{
@@ -603,14 +639,15 @@
 					$tmpentry["objectclass"][3] = 'inetOrgPerson';
 					$tmpentry["userpassword"]   = $phpgw->common->encrypt_password($account_info['passwd']);
 					//$tmpentry["objectclass"][4] = 'account'; Causes problems with some LDAP servers
-					$tmpentry["objectclass"][5] = 'posixAccount';
-					$tmpentry["objectclass"][6] = 'shadowAccount';
-					$tmpentry['phpgwlastlogin']        = $account_info['lastlogin'];
-					$tmpentry['phpgwlastloginfrom']    = $account_info['lastloginfrom'];
+					$tmpentry["objectclass"][4] = 'posixAccount';
+					$tmpentry["objectclass"][5] = 'shadowAccount';
+					$tmpentry["objectclass"][6] = 'phpgwAccount';
+					$tmpentry['phpgwaccountlastlogin']        = $account_info['lastlogin'];
+					$tmpentry['phpgwaccountlastloginfrom']    = $account_info['lastloginfrom'];
 					$tmpentry['phpgwlastpasswdchange'] = $account_info['lastpasswd_change'];
 					$tmpentry['phpgwaccountstatus']    = $account_info['status'];
 					$tmpentry['phpgwaccounttype']      = $account_info['account_type'];
-					$tmpentry['phpgwexpires']          = $account_info['expires'];
+					$tmpentry['phpgwaccountexpires']          = $account_info['expires'];
 				}
 				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 			}
@@ -653,20 +690,9 @@
 					//$entry["objectclass"][4] = 'account'; Causes problems with some LDAP servers
 					$entry["objectclass"][4] = 'posixAccount';
 					$entry["objectclass"][5] = 'shadowAccount';
+					$entry["objectclass"][5] = 'phpgwAccount';
 				}
-/*
-				echo '<br>dn: '.$dn;
-				while (list($key,$val) = each($entry)) {
-					if (is_array($val)) {
-						for ($i=0;$i<count($val);$i++) {
-							if ($val[$i]) { echo "<br>\nline ".$key.': '.$val[$i]; }
-						}
-					} else {
-						if ($val) { echo '<br>line '.$key.': '.$val; }
-					}
-				}
-				//exit;
-*/
+
 				ldap_add($ds, $dn, $entry);
 			}
 			//print ldap_error($ds);
