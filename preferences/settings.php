@@ -37,7 +37,7 @@
          ?>
        </td>
        <td>
-        <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"][$option]) echo " checked"; ?>>
+        <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"]["common"][$option]) echo " checked"; ?>>
        </td>
       </tr>
 <?php
@@ -48,7 +48,7 @@
         <?php echo lang("email signature"); ?>
        </td>
        <td>
-        <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["email_sig"]; ?></textarea>
+        <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["common"]["email_sig"]; ?></textarea>
        </td>
       </tr>
 <?php
@@ -64,14 +64,14 @@
         <td><?php echo lang("max matchs per page"); ?>: </td>
         <td>
          <input name="maxmatchs" value="<?php
-           echo $phpgw_info["user"]["preferences"]["maxmatchs"]; ?>" size="2">
+           echo $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]; ?>" size="2">
         </td>
        </tr>
        <tr>
         <td><?php echo lang("Show text on navigation icons"); ?>: </td>
         <td>
          <input type="checkbox" name="navbar_text"<?php
-           if ($phpgw_info["user"]["preferences"]["navbar_text"])
+           if ($phpgw_info["user"]["preferences"]["common"]["navbar_text"])
               echo " checked";
            ; ?>>
         </td>
@@ -82,7 +82,7 @@
          <select name="tz_offset"><?php
            for ($i = -23; $i<24; $i++) {
                echo "<option value=\"$i\"";
-               if ($i == $phpgw_info["user"]["preferences"]["tz_offset"])
+               if ($i == $phpgw_info["user"]["preferences"]["common"]["tz_offset"])
                   echo " selected";
                if ($i < 1)
                   echo ">$i</option>\n";
@@ -97,7 +97,7 @@
        <tr>
         <td><?php echo lang("date format"); ?>:</td>
         <td>
-         <?php $df[$phpgw_info["user"]["preferences"]["dateformat"]] = " selected"; ?>
+         <?php $df[$phpgw_info["user"]["preferences"]["common"]["dateformat"]] = " selected"; ?>
          <select name="dateformat">
           <option value="m/d/Y"<?php echo $df["m/d/Y"]; ?>>m/d/y</option>
           <option value="m-d-Y"<?php echo $df["m-d-Y"]; ?>>m-d-y</option>
@@ -120,7 +120,7 @@
        <tr>
         <td><?php echo lang("time format"); ?>:</td>
         <td><?php
-            $timeformat_select[$phpgw_info["user"]["preferences"]["timeformat"]] = " selected";
+            $timeformat_select[$phpgw_info["user"]["preferences"]["common"]["timeformat"]] = " selected";
             echo "<select name=\"timeformat\">"
                . "<option value=\"12\"$timeformat_select[12]>12 Hour</option>"
                . "<option value=\"24\"$timeformat_select[24]>24 Hour</option>"
@@ -131,7 +131,7 @@
        <tr>
          <td><?php echo lang("language"); ?></td>
          <td>
-          <?php $lang_select[$phpgw_info["user"]["preferences"]["lang"]] = " selected"; ?>
+          <?php $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; ?>
           <select name="lang">
            <option value="en"<?php echo $lang_select["en"]; ?>>English</option>
            <option value="de"<?php echo $lang_select["de"]; ?>>Deutsch</option>
@@ -163,7 +163,7 @@
              while ($permission = each($db_perms)) {
                if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
 				  echo "<option value=\"" . $permission[0] . "\"";
-				  if ($phpgw_info["user"]["preferences"]["default_app"] == $permission[0]) {
+				  if ($phpgw_info["user"]["preferences"]["common"]["default_app"] == $permission[0]) {
 					 echo " selected";
                   }
 				  echo ">" . lang($phpgw_info["apps"][$permission[0]]["title"])
@@ -177,7 +177,7 @@
          <tr>
           <td><?php echo lang("Default sorting order"); ?></td>
 	      <td><?php
-                $default_order_display[$phpgw_info["user"]["preferences"]["default_sorting"]] = " selected"; ?>
+                $default_order_display[$phpgw_info["user"]["preferences"]["common"]["default_sorting"]] = " selected"; ?>
                   <select name="default_sorting">
              	   <option value="old_new"<?php echo $default_order_display["old_new"]; ?>>oldest -> newest</option>   
              	   <option value="new_old"<?php echo $default_order_display["new_old"]; ?>>newest -> oldest</option>
@@ -198,7 +198,7 @@
 
  <?php
   } else {
-     $phpgw->common->preferences_delete("notheme",$phpgw_info["user"]["userid"]);
+     $phpgw->common->preferences_delete("byappnotheme",$phpgw_info["user"]["userid"],"common");
 
      // If they don't have permissions to the headlines,
      // we don't need to lock the table.
