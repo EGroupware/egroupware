@@ -218,6 +218,10 @@
       $db->query("update preferences set preference_name='da' where preference_name='dk'");
       $db->query("update preferences set preference_name='ko' where preference_name='kr'");
 
+	//install weather support
+      $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
+      $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'Weather','Weather','en','weather')");
+
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.1 to 0.9.2 is completed.</td>\n";
       echo "  </tr>\n";
