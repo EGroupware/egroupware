@@ -3226,6 +3226,7 @@ return;
 			);
 			$p->set_block('month_header','monthly_row','monthly_row');
 			$p->set_block('month_header','month_column','month_column');
+			$p->set_block('month_header','column_title','column_title');
 			$p->set_block('month_day','month_daily','month_daily');
 			$p->set_block('month_day','day_event','day_event');
 			$p->set_block('month_day','event','event');
@@ -3234,8 +3235,8 @@ return;
 			$p->set_var('col_width','14');
 			if($display_name)
 			{
-				$p->set_var('column_data',$GLOBALS['phpgw']->common->grab_owner_name($owner));
-				$p->parse('column_header','month_column',True);
+				$p->set_var('col_title',$GLOBALS['phpgw']->common->grab_owner_name($owner));
+				$p->parse('column_row','column_title',True);
 				$p->set_var('col_width','12');
 			}
 			$today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
