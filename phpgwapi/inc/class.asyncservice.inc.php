@@ -435,14 +435,21 @@
 					$GLOBALS['phpgw']->translation->add_app($app);
 
 					ExecMethod($job['method'],$job['data']);
-
-					if ($job['next'] = $this->next_run($job['times']))
+					
+					// re-read job, in case it had been updated or even deleted in the method
+					$updated = $this->read($id);
+					if ($updated && isset($updated[$id]))
 					{
-						$this->write($job,True);
-					}
-					else	// no further runs
-					{
-						$this->delete($job['id']);
+						$job = $updated[$id];
+						
+						if ($job['next'] = $this->next_run($job['times']))
+						{
+							$this->write($job,True);
+						}
+						else	// no further runs
+						{
+							$this->delete($job['id']);
+						}
 					}
 				}
 			}
