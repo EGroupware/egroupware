@@ -527,12 +527,15 @@
 		*/
 		function execute_script($script, $order = '')
 		{
-			if ($order != '' && gettype($order) != 'array')
+			if ($order != '' && !is_array($order))
 			{
-				$order = array($order);
+				$new_order = $order;
+				unset($order);
+				$order = array($new_order);
 			}
 			if ($order == '')
 			{
+				unset($order);
 				$order = array();
 			}
 			/* First include the ordered setup script file */
