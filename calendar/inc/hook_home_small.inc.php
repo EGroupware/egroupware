@@ -24,12 +24,17 @@
 
 	$today = $GLOBALS['phpgw']->datetime->users_localtime;
 	$dates = array($today);
-	if(date('w',$today)=='5') // if it's Friday, show the weekend, plus Monday
+	$wday = date('w',$today);
+	if($wday=='5') // if it's Friday, show the weekend, plus Monday
 	{
 		$dates[] = $today + 86400;		// Saturday
 		$dates[] = $today + (2*86400);	// Sunday
 	}
-	$dates[] = $dates[count($dates)-1] + 86400;
+	if($wday=='6') // if it's Saturday, show Sunday, plus Monday
+	{
+		$dates[] = $today + 86400;		// Sunday
+	}
+	$dates[] = $dates[count($dates)-1] + 86400; // the next business day
 
 	$extra_data = $GLOBALS['css']."\n"
 			. '<table border="0" width="100%" cellspacing="0" cellpadding="1">'
