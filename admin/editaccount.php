@@ -14,7 +14,7 @@
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+        . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
@@ -23,7 +23,7 @@
   if ($submit) {
      $totalerrors = 0;
 
-     if ($phpgw_info["server"]["auth_type"] == "ldap") {
+     if ($phpgw_info["server"]["account_repository"] == "ldap") {
         if (strlen($n_loginid) > 8) {
            $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
         }
@@ -72,7 +72,7 @@
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
       <input type="hidden" name="account_id" value="<? 
-	if ($phpgw_info["server"]["auth_type"] == "ldap")
+	if ($phpgw_info["server"]["account_repository"] == "ldap")
 	{
 		echo rawurlencode($userData["account_dn"]);
 	}

@@ -14,7 +14,7 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "noheader" => True, "nonavbar" => True);
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+        . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
   function add_default_preferences($account_id)
   {
@@ -42,7 +42,7 @@
   if ($submit) {
      $totalerrors = 0;
 
-     if ($phpgw_info["server"]["auth_type"] == "ldap") {
+     if ($phpgw_info["server"]["account_repository"] == "ldap") {
         if (strlen($n_loginid) > 8) {
            $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
         }

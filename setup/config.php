@@ -162,7 +162,7 @@
    </tr>
 
    <tr bgcolor="486591">
-    <td colspan="2"><font color="fefefe">&nbsp;<b>Authentication</b></font></td>
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Authentication / Accounts</b></font></td>
    </tr>
 
    <?php $selected[$current_config["auth_type"]] = " selected"; ?>
@@ -172,10 +172,29 @@
      <select name="newsettings[auth_type]">
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
       <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
+      <option value="mail"<?php echo $selected["mail"]; ?>>Mail</option>
+      <option value="pam"<?php echo $selected["pam"]; ?>>PAM (Not Ready)</option>
      </select>
     </td>
    </tr>
    <?php $selected = array(); ?>
+
+   <?php $selected[$current_config["account_repository"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Select where you want to store/retrieve user accounts.</td>
+    <td>
+     <select name="newsettings[account_repository]">
+      <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
+      <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
+   <tr bgcolor="e6e6e6">
+    <td>Auto create account records for authenticated users:</td>
+    <td><input type="checkbox" name="newsettings[auto_create_acct]" value="True"<?php echo ($current_config["auto_create_acct"]?" checked":""); ?>></td>
+   </tr>
 
    <tr bgcolor="e6e6e6">
     <td>LDAP host:</td>

@@ -20,7 +20,7 @@
 
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+        . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));

@@ -18,7 +18,7 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+        . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
   // I didn't active this code until all tables are up to date using the owner field
   // The calendar isn't update to date.  (jengo)
