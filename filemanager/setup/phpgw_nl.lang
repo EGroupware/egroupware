@@ -1,6 +1,6 @@
-filemanager		nl	Filemanager
+filemanager	common	nl	Filemanager
 filemanager preferences		nl	Filemanager voorkeuren
-users		nl	gebruikers
-version		nl	Versie
-who		nl	Wie
-you do not have access to %1		nl	U heeft geen toedang tot %1
+users	filemanager	nl	gebruikers
+version	filemanager	nl	Versie
+who	filemanager	nl	Wie
+you do not have access to %1	filemanager	nl	U heeft geen toedang tot %1

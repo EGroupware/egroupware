@@ -11,7 +11,7 @@
 70%	infolog	en	70%
 80%	infolog	en	80%
 90%	infolog	en	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	en	
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	en	<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients
 a short subject for the entry	infolog	en	a short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	accept
@@ -163,7 +163,7 @@ owner	infolog	en	Owner
 owner responsible	infolog	en	Owner Responsible
 path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
-pattern for search in addressbook	infolog	en	
+pattern for search in addressbook	infolog	en	pattern for search in Addressbook 
 pattern for search in projects	infolog	en	pattern for search in Projects
 phone	infolog	en	Phone Call
 phone/email	infolog	en	Phone/Email
