@@ -368,6 +368,21 @@
 		{
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
+			$next = $this->bo->month + 1;
+			$prev = $this->bo->month - 1;
+			$nextyear = $this->bo->year;
+			$prevyear = $this->bo->year;
+			if ($this->bo->month == 12)
+			{
+				$next = 1;
+				$nextyear = $nextyear + 1;
+			}
+			elseif ($this->bo->month == 1)
+			{
+				$prev = 12;
+				$prevyear = $prevyear - 1;
+			}
+
 			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
 				$minical_prev = $this->mini_calendar(
@@ -375,16 +390,18 @@
 						'day'	=> 1,
 						'month'	=> $this->bo->month - 1,
 						'year'	=> $this->bo->year,
-						'link'	=> 'day'
+						'link'	=> 'day',
+						'outside_month'	=> False
 					)
 				);
-				
+
 				$minical_next = $this->mini_calendar(
 					Array(
 						'day'	=> 1,
 						'month'	=> $this->bo->month + 1,
 						'year'	=> $this->bo->year,
-						'link'	=> 'day'
+						'link'	=> 'day',
+						'outside_month'	=> False
 					)
 				);
 			}
@@ -397,12 +414,16 @@
 			if (!$this->bo->printer_friendly)
 			{
 				$printer = '';
+				$prev_month_link = '<a href="'.$this->page('month','&year='.$prevyear.'&month='.$prev).'">&lt;&lt;</a>';
+				$next_month_link = '<a href="'.$this->page('month','&year='.$nextyear.'&month='.$next).'">&gt;&gt;</a>';
 				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1';
 				$print = '<a href="'.$this->page('month'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 			}
 			else
 			{
 				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
+				$prev_month_link = '';
+				$next_month_link = '';
 				$print =	'';
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
@@ -413,8 +434,10 @@
 				'printer_friendly'		=>	$printer,
 				'bg_text'					=> $this->theme['bg_text'],
 				'small_calendar_prev'	=>	$minical_prev,
+				'prev_month_link'		=>	$prev_month_link,
 				'month_identifier'		=>	lang(strftime("%B",$m)).' '.$this->bo->year,
 				'username'					=>	$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
+				'next_month_link'		=>	$next_month_link,
 				'small_calendar_next'	=>	$minical_next,
 				'large_month'				=>	$this->display_month($this->bo->month,$this->bo->year,True,$this->bo->owner),
 				'print'						=>	$print
