@@ -108,6 +108,7 @@ firstname of person to notify	calendar	en	Firstname of person to notify
 format of event updates	calendar	en	Format of event updates
 fr	calendar	en	F
 free/busy	calendar	en	Free/Busy
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
 frequency	calendar	en	Frequency
 fri	calendar	en	Fri
 full description	calendar	en	Full Description
@@ -259,7 +260,6 @@ test import (show importable records <u>only</u> in browser)	calendar	en	Test Im
 text	calendar	en	Text
 th	calendar	en	T
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	en	The following conflicts with the suggested time:<ul>%1</ul>
-the freebusy information for user '%1' is not availible to not loged in users !!!	calendar	en	The freebusy information for user '%1' is not availible to not loged in users !!!
 the user %1 is not participating in this event!	calendar	en	The user %1 is not participating in this event!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
@@ -287,7 +287,6 @@ today	calendar	en	Today
 translation	calendar	en	Translation
 tu	calendar	en	T
 tue	calendar	en	Tue
-unknow user '%1' !!!	calendar	en	Unknow user '%1' !!!
 update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
@@ -304,7 +303,6 @@ which of calendar view do you want to see, when you start calendar ?	calendar	en
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 workdayends	calendar	en	workdayends
-wrong password for user '%1' !!!	calendar	en	Wrong password for user '%1' !!!
 yearly	calendar	en	Yearly
 yearview	calendar	en	Year View
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurence, not both !!!

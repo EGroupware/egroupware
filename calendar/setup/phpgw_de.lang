@@ -114,6 +114,7 @@ firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Pers
 format of event updates	calendar	de	Format der Benachrichtigungen
 fr	calendar	de	Fr
 free/busy	calendar	de	frei/belegt
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
 frequency	calendar	de	Häufigkeit
 fri	calendar	de	Fr
 full description	calendar	de	vollständige Beschreibung
@@ -282,7 +283,6 @@ test import (show importable records <u>only</u> in browser)	calendar	de	Test Im
 text	calendar	de	Text
 th	calendar	de	Do
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
-the freebusy information for user '%1' is not availible to not loged in users !!!	calendar	de	Die Belegtzeiten des Benutzers '%1' sind nicht verfügbar, wenn sie nicht angemeldet sind!!!
 the user %1 is not participating in this event!	calendar	de	Der Benutzer %1 nimmt nicht an diesem Event teil!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
@@ -316,7 +316,6 @@ today	calendar	de	Heute
 translation	calendar	de	Übersetzung
 tu	calendar	de	Di
 tue	calendar	de	Di
-unknow user '%1' !!!	calendar	de	Unbekannter Benutzer '%1' !!!
 update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin über seine Felder updaten.
 updated	calendar	de	Aktualisiert
 updates of your appointments via email	calendar	de	
@@ -335,7 +334,6 @@ which of the calendar-views do you want to see, when you enter the calendar ?	ca
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 workdayends	calendar	de	Arbeitstag endet
-wrong password for user '%1' !!!	calendar	de	Falsches Passwort für Benutzer '%1' !!!
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
 yearview	calendar	de	Jährliche Ansicht

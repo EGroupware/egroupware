@@ -47,7 +47,7 @@
 
 	if (!($username = $GLOBALS['phpgw']->accounts->id2name($user)))
 	{
-		fail_exit(lang("Unknow user '%1' !!!",$_GET['user']));
+		fail_exit(lang("freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!",$_GET['user']));
 	}
 	if (!$loged_in)
 	{
@@ -57,13 +57,9 @@
 		$GLOBALS['phpgw_info']['user']['account_lid'] = $username;
 
 		$cal_prefs = &$GLOBALS['phpgw_info']['user']['preferences']['calendar'];
-		if (!$cal_prefs['freebusy'])
+		if (!$cal_prefs['freebusy'] || !empty($cal_prefs['freebusy_pw']) && $cal_prefs['freebusy_pw'] != $_GET['password'])
 		{
-			fail_exit(lang("The freebusy information for user '%1' is not availible to not loged in users !!!",$username));
-		}
-		if (!empty($cal_prefs['freebusy_pw']) && $cal_prefs['freebusy_pw'] != $_GET['password'])
-		{
-			fail_exit(lang("Wrong password for user '%1' !!!",$username));
+			fail_exit(lang("freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!",$_GET['user']));
 		}
 	}
 	ExecMethod('calendar.boicalendar.freebusy');

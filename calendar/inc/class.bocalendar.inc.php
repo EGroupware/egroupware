@@ -448,7 +448,7 @@
 						),
 						'categories' => array(
 							'function'  => 'categories',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcBoolean,xmlrpcBoolean)),
 							'docstring' => lang('List all categories.')
 						),
 					);
@@ -1024,6 +1024,10 @@
 				{
 					if (!$send_to_ui)
 					{
+						if ($this->xmlrpc)
+						{
+							$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['incorrect_params'],$GLOBALS['xmlrpcstr']['incorrect_params']);
+						}
 						return array($datetime_check => 'invalid input data');
 					}
 					ExecMethod('calendar.uicalendar.edit',
