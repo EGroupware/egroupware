@@ -178,10 +178,27 @@
           Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
           exit;
         }
+        /* Load selected authentication class */
+        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
+     
+        /* Load selected accounts class */
+        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
+
       }else{
         $this->auth          = new auth;
         $this->session       = new sessions;
+        /* Load selected authentication class */
+        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
+     
+        /* Load selected accounts class */
+        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
       }
       $this->translation   = new translation;
       $this->common        = new common;
@@ -189,15 +206,6 @@
       $this->preferences   = new preferences;
       $this->acl           = new acl;
       $this->hooks         = new hooks;
-
-      /* Load selected authentication class */
-      if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-      include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
-   
-      /* Load selected accounts class */
-      if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
 
       $sep = filesystem_separator();
       $template_root = $this->common->get_tpl_dir();
