@@ -283,7 +283,7 @@ nntp	common	en	NNTP
 no	common	en	No
 no matches found.	calendar	en	No matches found.
 no subject	email	en	No Subject
-no tickets found	tts	de	No tickets found.
+no tickets found	tts	en	No tickets found.
 no_file_name	filemanager	en	No filename was specified
 non-standard	email	en	Non-Standard
 none	calendar	en	None
@@ -405,7 +405,7 @@ sunday	common	en	Sunday
 switch current folder to	email	en	Switch Current Folder To
 tahoma     notes       en       Tahoma
 target language	transy	en	Target Language
-text only	preferences	de	Text only
+text only	preferences	en	Text only
 th	calendar	en	T
 that loginid has already been taken	admin	en	That loginid has already been taken
 that phrase already exists	common	en	That phrase already exists
@@ -495,7 +495,7 @@ you have 1 new message!	common	en	You have 1 new message!
 you have been successfully logged out	login	en	You have been successfully logged out
 you have entered an invailed date	todo	en	you have entered an invailed date
 you have messages!	common	en	You have messages!
-you have no new messages	common	de	You have no new messages
+you have no new messages	common	en	You have no new messages
 you have not entered a\nbrief description	calendar	en	You have not entered a\nBrief Description
 you have not entered a\nvalid time of day.	calendar	en	You have not entered a\nvalid time of day.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.

@@ -104,7 +104,7 @@ daily matrix view	calendar	de	Matrix-Ansicht des Tages
 date	common	de	Datum
 date due	todo	de	fällig am
 date format	preferences	de	Datumsformat
-days datedue	todo	en	Tage bis zur Fälligkeit
+days datedue	todo	de	Tage bis zur Fälligkeit
 days repeated	calendar	de	wiederholte Tage
 december	common	de	Dezember
 default application	preferences	de	Standard-Anwendung
@@ -366,7 +366,7 @@ select language to generate for	transy	de	Sprache auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select which application for this phrase	transy	de	Wählen sie die Applikation für diese Phrase
-select which language for this phrase	transy	en	Wählen sie die Sprache für diese Phrase
+select which language for this phrase	transy	de	Wählen sie die Sprache für diese Phrase
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 send	email	de	Senden
 send deleted messages to the trash	email	de	gelöschte Nachrichten in die Mülltonne befördern
