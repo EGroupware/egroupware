@@ -56,10 +56,17 @@
 			$this->owner  = $owner;
 		}
 
-		function read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order)
+		function read_entries($data)
 		{
-			$readrights = $this->rights & PHPGW_ACL_READ;
-			return $this->contacts->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
+			return $this->contacts->read(
+				$data['start'],
+				$data['limit'],
+				$data['fields'],
+				$data['query'],
+				$data['filter'],
+				$data['sort'],
+				$data['order']
+			);
 		}
 
 		function read_entry($id,$fields)

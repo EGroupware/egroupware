@@ -210,15 +210,7 @@
 
 		function read_entries($data)
 		{
-			$entries = $this->so->read_entries(
-				$data['start'],
-				$data['limit'],
-				$data['fields'],
-				$this->query,
-				$data['filter'],
-				$this->sort,
-				$this->order
-			);
+			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
 			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
 			return $this->strip_html($entries);

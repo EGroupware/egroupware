@@ -420,7 +420,10 @@
 					'start'  => $this->start,
 					'limit'  => $this->limit,
 					'fields' => $columns_to_display,
-					'filter' => $qfilter
+					'filter' => $qfilter,
+					'query'  => $this->query,
+					'sort'   => $this->sort,
+					'order'  => $this->order
 				));
 				$total_records = $this->bo->total;
 			}
@@ -430,8 +433,8 @@
 
 			$query = $this->query;
 			$search_filter = $phpgw->nextmatchs->show_tpl('/index.php',
-				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list',"75%",
-				$phpgw_info["theme"]["th_bg"],1,1,1,1,$this->cat_id);
+				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list','75%',
+				$phpgw_info['theme']['th_bg'],1,1,1,1,$this->cat_id);
 			$query = '';
 
 			$lang_showing = $phpgw->nextmatchs->show_hits($total_records,$this->start);
