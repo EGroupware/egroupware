@@ -6,11 +6,11 @@ actions	setup	fr	Actions
 add a domain	setup	fr	Ajouter un domaine
 add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-crées à ce groupe ('Default' sera tenté si ceci est vide.)
 additional settings	setup	fr	Réglages additionnels
-admin first name	setup	fr	Prénom de l'admin
-admin last name	setup	fr	Nom de l'admin
-admin password	setup	fr	Mot de passe du compte admin
-admin password to header manager	setup	fr	Mot de passe admin pour le gestionnaire d'entête
-admin username	setup	fr	Login de l'admin
+admin first name	setup	fr	Prénom de l'administrateur
+admin last name	setup	fr	Nom de l'adminstrateur
+admin password	setup	fr	Mot de passe du compte administrateur
+admin password to header manager	setup	fr	Mot de passe administrateur pour le gestionnaire d'entête
+admin username	setup	fr	Identifiant de l'administrateur (login)
 admins	setup	fr	Admins
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fr	Après avoir récupéré le fichier, mettez-le en place comme le fichier header.inc.php.   Puis, cliquez sur "continue".
 all core tables and the admin and preferences applications	setup	fr	Toutes les tables de base et les applications admin et preferences
@@ -64,7 +64,7 @@ could not open header.inc.php for writing!	setup	fr	N'a pas pu ouvrir le fichier
 country selection	setup	fr	Choix de pays
 create	setup	fr	Créer
 create database	setup	fr	Créer la base de données
-create demo accounts	setup	fr	Créer les comptes de démo
+create demo accounts	setup	fr	Créer les comptes de démonstration
 create one now	setup	fr	Créer un exemplaire maintenant
 create your header.inc.php	setup	fr	Créer votre fichier header.inc.php
 created	setup	fr	Crée
@@ -276,7 +276,6 @@ server root	setup	fr	Racine serveur
 sessions type	setup	fr	Type de sessions
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "ancien" pour les versions &lt; 2.4, sinon la version exacte de mcrypt que vous utilisez.
 settings	setup	fr	Réglages
-setup	setup	fr	Setup
 setup demo accounts in ldap	setup	fr	Configurer des comptes de démo dans LDAP
 setup the database	setup	fr	Configurer la base de données
 show 'powered by' logo on	setup	fr	Montrer le logo 'propulsé par' sur
@@ -372,3 +371,27 @@ in	setup	fr	dans
 module	setup	fr	module
 line	setup	fr	Ligne
 Rejected lines	setup	fr	Lignes rejetées
+Create admin account	setup	fr	Création du compte Administrateur
+Accounts existing	setup	fr	Comptes déjà créés
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	fr	Supprimer tout les comptes, groupes, ACLs et préférences stockés dans la base SQL déjà existants (normalement, ce n'est pas nécessaire) ?
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fr	<b>Ceci va créer un compte administrateur et trois comptes de démonstration</b><br>Les identifiants et mots de passes des comptes de démonstrations sont: demo/guest, demo2/guest et demo3/guest.
+Setup	setup	fr	Installation
+Back to user login	setup	fr	Revenir à la maison
+Check installation	setup	fr	Vérification de l'installation
+setup main menu	setup	fr	Page principal d'installation
+sql encryption type	setup	fr	Type de chiffrement SQL
+User account prefix	setup	fr	Préfixe pour les comptes utilisateurs
+Usernames are casesensitive	setup	fr	Les identifiants sont sensibles à la casse
+You will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README	setup	fr	Vous devez charger votre propre schéma LDAP dans votre serveur LDAP centralisé - Regardez la documentation stockée dans phpgwapi/doc/ldap/README
+Enable LDAP Version 3	setup	fr	Activer le support du protocole version 3 pour LDAP
+Enter your HTTP proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
+Enter your HTTP proxy server password	setup	fr	Entrez le mot de passe pour le proxy HTTP
+step %1 - admin account	setup	fr	Étape %1 - Compte Administrateur
+current system-charset is %1, click %2here%3 to change it.	setup	fr	Le jeu de caractères est %1, cliquez %2ici%3 pour le changer <br>(note: attention, certain navigateur ne le supporte pas, notamment Internet Explorer sous MacOS)
+admin	setup	fr	Administration
+calendar	setup	fr	Calendrier
+etemplate	setup	fr	ETemplate
+infolog	setup	fr	InfoLog
+news_admin	setup	fr	News Admin
+phpldapadmin	setup	fr	PHPLdapAdmin
+projects	setup	fr	Gestionnaire de projets
