@@ -3,7 +3,6 @@
   * eGroupWare API - Template class                                          *
   * (C) Copyright 1999-2000 NetUSE GmbH Kristian Koehntopp                   *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by eGroupWare.             * 
   * http://www.egroupware.org/                                               *  
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
