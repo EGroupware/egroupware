@@ -40,7 +40,7 @@
      var $std_table="phpgw_addressbook";
      var $ext_table="phpgw_addressbook_extra";
      var $account_id;
-     var $stock_contact_fields;         // This is an array of all the fields in the phpgw_addressbook table
+     var $stock_contact_fields;         // This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
      var $email_types;                  // VCard email type array
      var $total_records;                // This will contain numrows for data retrieved
 
@@ -158,7 +158,7 @@
                                                                                    // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
-	//$DEBUG = 1;
+	$DEBUG = 1;
 
         list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
         if (count($stock_fieldnames)) {
@@ -210,7 +210,8 @@
 	if ($DEBUG && ($filterextra || $filterstock)) {
 	  if ($filterextra) {
 	    echo "<br>DEBUG - Filtering on extra fields with: #" . $filterextra . "#";
-	  } else {
+	  }
+          if ($filterstock) {
 	    echo "<br>DEBUG - Filtering on standard fields with: #" . $filterstock . "#";
           }
         }
