@@ -414,6 +414,17 @@
 			return $table;
 		}
 
+		function draw_image($area, $event, $pixbuf)
+		{
+			$pixbuf->render_to_drawable($area->window,
+										$area->style->fg_gc[GTK_STATE_NORMAL],
+										$event->area->x, $event->area->y,
+										$event->area->x, $event->area->y,
+										$event->area->width, $event->area->height,
+										GDK_RGB_DITHER_NORMAL,
+										$event->area->x, $event->area->y);
+		}
+
 		/*!
 		@function show_cell
 		@abstract generates HTML for 1 input-field / cell
@@ -688,12 +699,26 @@
 					}
 					$html .= $this->sbox->getAccount($form_name.'[]',$value,2,$type,0+$cell['size'],$options);
 					break;
-				case 'image':
-					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-						$cell['label'],lang($cell['help']),'BORDER=0');
-					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
+*/				case 'image':
+					if (!($path = $GLOBALS['phpgw']->common->image(substr($this->name,0,strpos($this->name,'.')),$cell['label'])))
+						$path = $cell['label'];		// name may already contain absolut path
+					if (!isset($GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path]))
+					{
+						$GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path] = GdkPixbuf::new_from_file('../..'.$path);
+					}
+					$pixbuf = &$GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path];
+					if ($pixbuf)
+					{
+						$widget = &new GtkDrawingArea();
+						$widget->size($pixbuf->get_width(),$pixbuf->get_height());
+						$widget->connect('expose_event',array('etemplate','draw_image'),$pixbuf);
+					}
+					else
+					{
+						echo "Can't load image '$path'";
+					}
 					break;
-*/				default:
+				default:
 					//$html .= '<i>unknown type</i>';
 					$widget = &new GtkLabel('unknown type: '.$cell['type']);
 					$widget->set_justify(GTK_JUSTIFY_LEFT);
