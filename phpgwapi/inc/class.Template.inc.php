@@ -19,29 +19,29 @@
 		var $classname = 'Template';
 
 		/* if set, echo assignments */
-		var $debug     = False;
+		var $debug = False;
 
-		/* $file[handle] = "filename"; */
-		var $file  = array();
+		/* $file[handle] = 'filename'; */
+		var $file = array();
 
 		/* relative filenames are relative to this pathname */
-		var $root   = "";
+		var $root = '';
 
-		/* $varkeys[key] = "key"; $varvals[key] = "value"; */
+		/* $varkeys[key] = 'key'; $varvals[key] = 'value'; */
 		var $varkeys = array();
 		var $varvals = array();
 
-		/* "remove"  => remove undefined variables
-		 * "comment" => replace undefined variables with comments
-		 * "keep"    => keep undefined variables
+		/* 'remove'  => remove undefined variables
+		 * 'comment' => replace undefined variables with comments
+		 * 'keep'    => keep undefined variables
 		 */
 		var $unknowns = 'remove';
 
-		/* "yes" => halt, "report" => report error, continue, "no" => ignore error quietly */
-		var $halt_on_error  = 'yes';
+		/* 'yes' => halt, 'report' => report error, continue, 'no' => ignore error quietly */
+		var $halt_on_error = 'yes';
 
 		/* last error message is retained here */
-		var $last_error     = '';
+		var $last_error = '';
 
 		/***************************************************************************/
 		/* public: Constructor.
@@ -56,7 +56,7 @@
 
 		/* public: setroot(pathname $root)
 		 * root:   new template directory.
-		 */  
+		 */
 		function set_root($root)
 		{
 			if (!is_dir($root))
@@ -69,7 +69,7 @@
 		}
 
 		/* public: set_unknowns(enum $unknowns)
-		 * unknowns: "remove", "comment", "keep"
+		 * unknowns: 'remove', 'comment', 'keep'
 		 *
 		 */
 		function set_unknowns($unknowns = 'keep')
@@ -105,7 +105,7 @@
 			}
 		}
 
-		/* public: set_block(string $parent, string $handle, string $name = "")
+		/* public: set_block(string $parent, string $handle, string $name = '')
 		 * extract the template $handle from $parent, 
 		 * place variable {$name} instead.
 		 */
@@ -324,13 +324,12 @@
 		{
 			switch ($this->unknowns)
 			{
-				case "keep":
+				case 'keep':
 					break;
-
-				case "remove":
-					$str = preg_replace('/{[^ \t\r\n}]+}/', "", $str);
+				case 'remove':
+					$str = preg_replace('/{[^ \t\r\n}]+}/', '', $str);
 					break;
-				case "comment":
+				case 'comment':
 					$str = preg_replace('/{([^ \t\r\n}]+)}/', "<!-- Template $handle: Variable \\1 undefined -->", $str);
 					break;
 			}
