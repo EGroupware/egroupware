@@ -124,7 +124,7 @@
     {
       global $phpgw_info, $phpgw;
        
-      if (gettype($id) == "string") { $id = $this->username2userid($id); }
+      if (gettype($id) == "string") { $id = $this->name2id($id); }
       $groups = Array();
       $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", intval($id));
       if ($group_memberships) {

@@ -294,7 +294,7 @@ It should use the values in the $this->data
       global $phpgw, $phpgw_info;
       if ($account_id == False){ $account_id = $phpgw_info["user"]["account_id"]; }
       $sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' and ";
-      $sql .= "acl_account = ".$account_id;
+      $sql .= "acl_account = '".$account_id."'";
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
