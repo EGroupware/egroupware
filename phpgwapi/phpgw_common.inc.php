@@ -329,16 +329,13 @@
    	       $output_text = "<A href=\"" . $phpgw->link($urlbasename."/$appname/index.php");
        	}
        	$output_text .= "\"$target>";
-
           if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] != "text") {
              if ($appname != "home" && $appname != "logout" && $appname != "print") {
-                $output_text .= "<img src=\"" . $phpgw_info["server"]["webserver_url"] 
-                              . "/" . $appname . "/templates/".$phpgw_info["server"]["template_set"]."/images" . "/navbar.gif\" border=0 alt=\"" . lang($description) . "\">";
+                $output_text .= "<img src=\"" . $this->get_image_path($appname) . "/navbar.gif\" border=0 alt=\"" . lang($description) . "\">";
           	} else {
        	      $output_text .= "<img src=\"" . $phpgw_info["server"]["images_dir"]."/$appname.gif\" border=0 alt=\"" . lang($description) . "\">";
           	}
           }
-
        	if (ereg("text",$phpgw_info["user"]["preferences"]["common"]["navbar_format"])) {
         	  $output_text .= "<br><font size=\"-2\">" . lang($description) . "</font>";
        	}
