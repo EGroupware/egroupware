@@ -187,7 +187,7 @@
         <tr><td><b>Configuration Password</b><br><input type=text name="setting[config_pass]" value="<? echo $phpgw_info["server"]["config_passwd"] ?>"></td><td>Password needed for configuration</td></tr>
         <tr><td colspan=2><b>Enable MCrypt</b><br>
         <select name="setting[enable_mcrypt]">
-        <? if($phpgw_info["flags"]["mcrypt_enabled"] == True) { ?>
+        <? if($phpgw_info["server"]["mcrypt_enabled"] == True) { ?>
         <option value=True selected>True
         <option value=False>False
         <? } else { ?>
@@ -196,7 +196,7 @@
         <? } ?>
         </select>
         </td></tr>
-        <tr><td><b>MCrypt version</b><br><input type=text name="setting[mcrypt_version]" value="<? echo $phpgw_info["server"]["mcrypt_version"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
+        <tr><td><b>MCrypt version</b><br><input type=text name="setting[mcrypt_version]" value="<? echo $phpgw_info["server"]["versions"]["mcrypt"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
         <tr><td><b>MCrypt initilazation vector</b><br><input type=text name="setting[mcrypt_iv]" value="<? echo $phpgw_info["server"]["mcrypt_iv"] ?>" size="30"></td><td>It should be around 30 bytes in length.<br>Note: The default has been randomly generated.</td></tr>
         <tr><td><b>Domain select box on login</b><br>
          <select name="setting[domain_selectbox]">
