@@ -404,7 +404,7 @@ class so_sql
 
 			foreach($this->db_cols as $db_col => $col)
 			{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
-				if (isset($filter[$col])) continue;	// added later
+				if (isset($filter[$col]) && $filter[$col]) continue;	// added later
 
 				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
 				{
@@ -424,7 +424,7 @@ class so_sql
 				echo "filter=";_debug_array($filter);
 				echo "data2db(filter)=";_debug_array($data2db_filter);
 			}	
-			foreach($this->data2db($filter) as $col => $val)
+			foreach($data2db_filter as $col => $val)
 			{
 				if ($val !== '') $db_filter[array_search($col,$this->db_cols)] = $val;
 			}
