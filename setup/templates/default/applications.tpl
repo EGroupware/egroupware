@@ -45,6 +45,19 @@ function check_all(which)
     <td align="center">{app_resolve}</td>
     <td align="center">{app_remove}</td>
   </tr>
+  <tr>
+    <td bgcolor="{bg_color}" colspan="5">&nbsp;</td>
+    <td bgcolor="{bg_color}" align="center">
+     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}"></a>
+    </td>
+    <td bgcolor="{bg_color}" align="center">
+     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}"></a>
+    </td>
+    <td bgcolor="{bg_color}">&nbsp;</td>
+    <td bgcolor="{bg_color}" align="center">
+      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}"></a>
+    </td>
+  </tr>
 <!-- END app_header -->
 
 <!-- BEGIN apps -->
