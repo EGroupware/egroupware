@@ -37,6 +37,11 @@
    </tr>
 
    <tr bgcolor="e6e6e6">
+    <td>Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'.</td>
+    <td><input type="checkbox" name="newsettings[ftp_use_mime]" value="True"<?php echo ($current_config["ftp_use_mime"]?" checked":""); ?>></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
     <td>Enter your HTTP proxy server.</td>
     <td><input name="newsettings[httpproxy_server]" value="<?php echo $current_config["httpproxy_server"]; ?>"></td>
    </tr>
