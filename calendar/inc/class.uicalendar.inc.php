@@ -1243,7 +1243,7 @@
 					$this->bo->set_class(True);
 				}
 				// Add participants
-				$participants = explode(";", base64_decode($participants));
+				$participants = explode(";", $GLOBALS['phpgw_session']['phpgw_app_sessions']["calendar"]["participants"]['content']);
 				for($_f_part=0; $_f_part<count($participants); $_f_part++)
 				{
 					$this->bo->add_attribute('participants','A',$participants[$_f_part]);
@@ -2273,6 +2273,9 @@
 				unset($acct);
 			}
 			$participants = array_keys($parts);	// get id's as values and a numeric index
+
+			// Defined - into session - who participates
+			$GLOBALS['phpgw']->session->appsession("participants", NULL, implode(";", $participants));
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -3642,7 +3645,7 @@
 					$k = ($j == 0 ? sprintf('%02d',$i).'<br>':'').sprintf('%02d',$j*$increment);
 
 					$str .= '<td align="left" bgcolor="'.$this->theme['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
-						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.($increment * $j) . '&participants=' . base64_encode(implode(";", $participants_id)) )."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
+						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.($increment * $j))."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
 						. $k."</a>&nbsp;</font></td>\n";
 				}
 			}
