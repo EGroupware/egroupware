@@ -41,11 +41,16 @@
 <!-- END cat_list -->  
 <!-- BEGINN add   -->
 <tr valign="bottom">
-  <td colspan="5">                                                                                                                                                                        
-     <form method="POST" action="{add_action}">                                                                                                                                               
-      <font face="{font}"><input type="submit" value="{lang_add}"></font>                                                                                                                                                
-     </form>                                                                                                                                                                                  
-    </td>                                                                                                                                                                                     
+  <td colspan="4">
+     <form method="POST" action="{add_action}">
+      <font face="{font}"><input type="submit" value="{lang_add}"></font>
+     </form>
+    </td>
+    <td>
+     <form method="POST" action="{doneurl}">
+      <font face="{font}"><input type="submit" name="done" value="{lang_done}"></font>
+      </form>
+    </td>
    </tr>
 <!-- END add -->
 </table>

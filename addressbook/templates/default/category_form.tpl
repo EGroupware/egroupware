@@ -3,19 +3,23 @@
 <center>
 <table border="0" width="80%" cellspacing="2" cellpadding="2">
 <tr>
-  <td colspan="1" align="center" bgcolor="#c9c9c9"><font face="{font}"><b>{title_categories}:&nbsp;{user_name}<b/></font></td>
+  <td colspan="1" align="center" bgcolor="#c9c9c9"><b>{title_categories}<b/></td>
 </tr>
 </table>
-<font face="{font}">{message}</font>
+{message}
 <table border="0" width="80%" cellspacing="2" cellpadding="2"> 
   <form name="form" action="{actionurl}" method="POST">
     <tr>
-     <td><font face="{font}">{lang_name}:</font></td>
-     <td><font face="{font}"><input name="cat_name" size="50" value="{cat_name}"></font></td>
+     <td>&nbsp;</td>
+     <td><select name="cat_parent"><option value="">{lang_select_parent}</option>{category_list}</select></td>
     </tr>
     <tr>
-     <td><font face="{font}">{lang_descr}:</td>
-     <td colspan=2><font face="{font}"><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></font></td>
+     <td>{lang_name}:</td>
+     <td><input name="cat_name" size="50" value="{cat_name}"></td>
+    </tr>
+    <tr>
+     <td>{lang_descr}:</td>
+     <td colspan=2><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></td>
     </tr>
     </table>
 
@@ -24,9 +28,13 @@
          <tr valign="bottom">
           <td height="50" align="center">
            {hidden_vars}
-           <font face="{font}"><input type="submit" name="submit" value="{lang_add}"></font></td> 
+           <input type="submit" name="submit" value="{lang_add}"></td>
           <td height="50" align="center">
-           <font face="{font}"><input type="reset" name="reset" value="{lang_reset}"></font></td>
+           <input type="reset" name="reset" value="{lang_reset}"></form></td>
+          <td height="50" align="center">
+            <form method="POST" action="{doneurl}">
+           {hidden_vars}
+         <input type="submit" name="done" value="{lang_done}"></form></td>
          </tr>
          </table>
          </form>
@@ -38,13 +46,15 @@
          <tr valign="bottom">
           <td height="50" align="center">
            {hidden_vars}
-           <font face="{font}"><input type="submit" name="submit" value="{lang_edit}"></font>
-         </form></td>
+           <input type="submit" name="submit" value="{lang_edit}"></form></td>
           <td height="50" align="center">
             <form method="POST" action="{deleteurl}">
            {hidden_vars}
-         <font face="{font}"><input type="submit" name="delete" value="{lang_delete}"></font>
-         </form></td>
+         <input type="submit" name="delete" value="{lang_delete}"></form></td>
+          <td height="50" align="center">
+            <form method="POST" action="{doneurl}">
+           {hidden_vars}
+         <input type="submit" name="done" value="{lang_done}"></form></td>
          </tr>
          </table>
          </center>
