@@ -504,7 +504,7 @@
 		@param $vars HTTP_POST_VARS on first call, later (deeper recursions) subscripts of it
 		@param $readonly array with cell- / var-names which should NOT return content (this is to workaround browsers who not understand READONLY correct)
 		@param $cname basename of our returnt content (same as in call to show)
-		@returns the adjusted content (in the simplest case that would be $vars[$cname])
+		@returns the adjusted content (by using the var-param &$content)
 		*/
 		function process_show(&$content,$readonlys='')
 		{
