@@ -129,7 +129,6 @@ message has been updated	admin	en	message has been updated
 minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500 or 100, etc.)
 mode	admin	en	Mode
 new group name	admin	en	New group name
-new password [ leave blank for no change 	admin	en	
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no login history exists for this user	admin	en	No login history exists for this user
 no matches found	admin	en	No matches found

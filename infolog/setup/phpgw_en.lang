@@ -13,7 +13,7 @@
 70%	infolog	en	70%
 80%	infolog	en	80%
 90%	infolog	en	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	en	
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	en	
 a short subject for the entry	infolog	en	a short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	accept
