@@ -76,13 +76,13 @@
 			}
 			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
 			/* Might change this to '' at the end---> */
-			$start   = $GLOBALS['start'];
-			$query   = $GLOBALS['query'];
-			$sort    = $GLOBALS['sort'];
-			$order   = $GLOBALS['order'];
-			$filter  = $GLOBALS['filter'];
-			$cat_id  = $GLOBALS['cat_id'];
-			$fcat_id = $GLOBALS['fcat_id'];
+			$start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
+			$query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
+			$sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
+			$filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
+			$cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
+			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
 
 			if(!empty($start) || ($start == '0') || ($start == 0))
 			{
