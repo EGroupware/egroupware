@@ -387,8 +387,8 @@ setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
-shedule	setup	en	shedule
-sheduled backups	setup	en	sheduled backups
+schedule	setup	en	schedule
+scheduled backups	setup	en	scheduled backups
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 size	setup	en	size
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
@@ -423,7 +423,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	en	There w
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
 this might take a while, please wait ...	setup	en	This might take a while, please wait ...
-this program lets you backup your database, shedule a backup or restore it.	setup	en	This program lets you backup your database, shedule a backup or restore it.
+this program lets you backup your database, schedule a backup or restore it.	setup	en	This program lets you backup your database, schedule a backup or restore it.
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
 this program will help you upgrade or install different languages for egroupware	setup	en	This program will help you upgrade or install different languages for eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree

@@ -390,8 +390,8 @@ setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
-shedule	setup	de	planen
-sheduled backups	setup	de	Regelmäßige Datensicherungen
+schedule	setup	de	planen
+scheduled backups	setup	de	Regelmäßige Datensicherungen
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
@@ -427,7 +427,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab 
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss au&szlig;erhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
 this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
-this program lets you backup your database, shedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder sie zurücksichern.
+this program lets you backup your database, schedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder sie zurücksichern.
 this program will convert your database to a new system-charset.	setup	de	Dieses Programm wird Ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim Exportieren von Benutzern/Gruppen aus eGroupWare's Account-Tabellen in Ihren LDAP-Baum behilflich sein

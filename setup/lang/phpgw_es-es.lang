@@ -391,8 +391,8 @@ setup demo accounts in ldap	setup	es-es	Instalar cuentas de demostración en LDAP
 setup main menu	setup	es-es	Menú principal de la instalación
 setup the database	setup	es-es	Instalar la base de datos
 setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
-shedule	setup	es-es	planificar
-sheduled backups	setup	es-es	copias de seguridad planificadas
+schedule	setup	es-es	planificar
+scheduled backups	setup	es-es	copias de seguridad planificadas
 show 'powered by' logo on	setup	es-es	Mostrar el logo en
 size	setup	es-es	tamaño
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
@@ -430,7 +430,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	es-es	Hubo
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	es-es	Hubo un problema intentando conecar al servidor LDAP.<br>Por favor, compruebe la configuración del servidor LDAP
 this has to be outside the webservers document-root!!!	setup	es-es	¡Tiene que estar fuera de la raíz de documentos del servidor web!
 this might take a while, please wait ...	setup	es-es	Esto puede tardar un poco. Por favor, espere...
-this program lets you backup your database, shedule a backup or restore it.	setup	es-es	Este programa permite hacer copia de seguridad de la base de datos, planificar una copia o restaurarla.
+this program lets you backup your database, schedule a backup or restore it.	setup	es-es	Este programa permite hacer copia de seguridad de la base de datos, planificar una copia o restaurarla.
 this program will convert your database to a new system-charset.	setup	es-es	Este programa convertirá la base de datos a un nuevo juego de caracteres del sistema.
 this program will help you upgrade or install different languages for egroupware	setup	es-es	Este programa le ayudará a actualizar o instalar los distintos idiomas para eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	es-es	Esta sección intentará exportar los usuarios y grupos de la cuenta de las tablas de eGroupWare en el árbol LDAP

@@ -21,9 +21,9 @@
 			'noapi' => True
 		));
 		include ('./inc/functions.inc.php');
-	
+
 		@set_time_limit(0);
-	
+
 		// Check header and authentication
 		if (!$GLOBALS['phpgw_setup']->auth('Config'))
 		{
@@ -31,7 +31,7 @@
 			exit;
 		}
 		// Does not return unless user is authorized
-	
+
 		$GLOBALS['phpgw_setup']->loaddb();
 
 		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
@@ -45,7 +45,7 @@
 	{
 		list($file) = each($_POST['download']);
 		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to now allow to change the dir
-		
+
 		$browser = CreateObject('phpgwapi.browser');
 		$browser->content_header(basename($file));
 		fpassthru($f = fopen($file,'rb'));
@@ -58,11 +58,11 @@
 		'T_footer' => 'footer.tpl',
 		'T_db_backup' => 'db_backup.tpl',
 	));
-	$setup_tpl->set_block('T_db_backup','shedule_row','shedule_rows');
+	$setup_tpl->set_block('T_db_backup','schedule_row','schedule_rows');
 	$setup_tpl->set_block('T_db_backup','set_row','set_rows');
 
 	$setup_tpl->set_var('stage_title',$stage_title = lang('DB backup and restore'));
-	$setup_tpl->set_var('stage_desc',lang('This program lets you backup your database, shedule a backup or restore it.'));
+	$setup_tpl->set_var('stage_desc',lang('This program lets you backup your database, schedule a backup or restore it.'));
 	$setup_tpl->set_var('error_msg','');
 
 	$bgcolor = array('#DDDDDD','#EEEEEE');
@@ -98,24 +98,24 @@
 	$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 		'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
 
-	if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] && 
+	if ($_POST['upload'] && is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
 		is_uploaded_file($_FILES['uploaded']['tmp_name']))
 	{
 		move_uploaded_file($_FILES['uploaded']['tmp_name'],$db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
-		
+
 		if (function_exists('md5_file'))	// php4.2+
 		{
 			$md5 = ', md5='.md5_file($db_backup->backup_dir.'/'.$_FILES['uploaded']['name']);
 		}
 		$setup_tpl->set_var('error_msg',lang("succesfully uploaded file %1",$_FILES['uploaded']['name'].', '.
-			sprintf('%3.1lf MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));		
+			sprintf('%3.1lf MB (%d)',$_FILES['uploaded']['size']/(1024*1024),$_FILES['uploaded']['size']).$md5));
 	}
 	// delete a backup
 	if ($_POST['delete'])
 	{
 		list($file) = each($_POST['delete']);
 		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
-		
+
 		if (unlink($file)) $setup_tpl->set_var('error_msg',lang("backup '%1' deleted",$file));
 	}
 	// rename a backup
@@ -136,7 +136,7 @@
 	{
 		list($file) = each($_POST['restore']);
 		$file = $db_backup->backup_dir.'/'.basename($file);	// basename to not allow to change the dir
-		
+
 		if (is_resource($f = $db_backup->fopen_backup($file,true)))
 		{
 			echo '<p align="center">'.lang('restore started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
@@ -149,18 +149,18 @@
 			$setup_tpl->set_var('error_msg',$f);
 		}
 	}
-	// create a new shedulted backup
-	if ($_POST['shedule'])
+	// create a new scheduled backup
+	if ($_POST['schedule'])
 	{
 		$asyncservice->set_timer($_POST['times'],'db_backup-'.implode(':',$_POST['times']),'admin.admin_db_backup.do_backup','');
 	}
-	// cancel a shedulted backup
+	// cancel a scheduled backup
 	if (is_array($_POST['cancel']))
 	{
 		list($id) = each($_POST['cancel']);
 		$asyncservice->cancel_timer($id);
 	}
-	// list sheduled backups
+	// list scheduled backups
 	if (($jobs = $asyncservice->read('db_backup-%')))
 	{
 		foreach($jobs as $job)
@@ -168,17 +168,17 @@
 			$setup_tpl->set_var($job['times']);
 			$setup_tpl->set_var('next_run',date('Y-m-d H:i',$job['next']));
 			$setup_tpl->set_var('actions','<input type="submit" name="cancel['.$job['id'].']" value="'.htmlspecialchars(lang('delete')).'" />');
-			$setup_tpl->parse('shedule_rows','shedule_row',true);
+			$setup_tpl->parse('schedule_rows','schedule_row',true);
 		}
 	}
-	// input-fields to create a new sheduled backup
+	// input-fields to create a new scheduled backup
 	foreach($times=array('year'=>'*','month'=>'*','day'=>'*','dow'=>'2-6','hour'=>3,'minute'=>0) as $name => $default)
 	{
 		$setup_tpl->set_var($name,'<input name="times['.$name.']" size="5" value="'.$default.'" />');
 	}
 	$setup_tpl->set_var('next_run','&nbsp;');
-	$setup_tpl->set_var('actions','<input type="submit" name="shedule" value="'.htmlspecialchars(lang('shedule')).'" />');
-	$setup_tpl->parse('shedule_rows','shedule_row',true);
+	$setup_tpl->set_var('actions','<input type="submit" name="schedule" value="'.htmlspecialchars(lang('schedule')).'" />');
+	$setup_tpl->parse('schedule_rows','schedule_row',true);
 
 	// listing the availible backup sets
 	$setup_tpl->set_var('backup_dir',$db_backup->backup_dir);
@@ -193,7 +193,7 @@
 		}
 	}
 	if ($handle) closedir($handle);
-	
+
 	krsort($files);
 	foreach($files as $ctime => $file)
 	{
@@ -213,7 +213,7 @@
 	}
 
 	$setup_tpl->set_var(array(
-		'lang_sheduled_backups'	=> lang('sheduled backups'),
+		'lang_scheduled_backups'=> lang('scheduled backups'),
 		'lang_year'				=> lang('year'),
 		'lang_month'			=> lang('month'),
 		'lang_day'				=> lang('day'),
@@ -230,7 +230,7 @@
 
 	$setup_tpl->set_var('self',$self);
 	$setup_tpl->pparse('out','T_db_backup');
-	
+
 	if (is_object($GLOBALS['phpgw_setup']->html))
 	{
 		$GLOBALS['phpgw_setup']->html->show_footer();

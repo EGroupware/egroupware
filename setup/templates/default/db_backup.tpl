@@ -17,7 +17,7 @@
 <!-- END setup_header -->
 	<tr bgcolor="#e6e6e6">
 		<td>
-			<b>{lang_sheduled_backups}</b>
+			<b>{lang_scheduled_backups}</b>
 		</td>
 		<td align="right">
 			{backup_now_button}
@@ -36,7 +36,7 @@
 					<td>{lang_next_run}</td>
 					<td>{lang_actions}</td>
 				</tr>
-<!-- BEGIN shedule_row -->
+<!-- BEGIN schedule_row -->
 				<tr align="center">
 					<td>{year}</td>
 					<td>{month}</td>
@@ -47,7 +47,7 @@
 					<td>{next_run}</td>
 					<td>{actions}</td>
 				</tr>
-<!-- END shedule_row -->
+<!-- END schedule_row -->
 			</table>
 		</td>
 	</tr>
