@@ -103,7 +103,7 @@
   $phpgw->template->parse("output","list",True);
 
   if($cal_info->groups) {
-    $cal_groups = explode(",",$phpgw->accounts->convert_str_to_names_access($cal_info->groups));
+    $cal_groups = explode(",",$phpgw->accounts->convert_string_to_names_access($cal_info->groups));
     $cal_grps = "";
     for($i=1;$i<=count($cal_groups);$i++) {
       if($i>1) $cal_grps .= "<br>";
