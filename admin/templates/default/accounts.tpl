@@ -1,4 +1,4 @@
-<!-- BEGIN header -->
+<!-- BEGIN list -->
 <p>
  <table border="0" width="70%" align="center">
   <tr bgcolor="{bg_color}">
@@ -18,22 +18,9 @@
     <td>{lang_delete}</td>
     <td>{lang_view}</td>
    </tr>
-<!-- END header -->
 
-{output}
+   {rows}
 
-<!-- BEGIN row -->
-   <tr bgcolor="{tr_color}">
-    <td>{row_loginid}</td>
-    <td>{row_lastname}</td>
-    <td>{row_firstname}</td>
-    <td width="5%">{row_edit}</td>
-    <td width="5%">{row_delete}</td>
-    <td width="5%">{row_view}</td>
-   </tr>
-<!-- END row -->
-
-<!-- BEGIN footer -->
   </table>
  </center>
 
@@ -52,4 +39,4 @@
    </tr>
   </table>
 
-<!-- END footer -->
+<!-- END list -->

@@ -17,11 +17,8 @@
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["account_repository"] . ".inc.php");
 
-  $phpgw->template->set_file(array("header" => "accounts.tpl",
-              			         "row"	=> "accounts.tpl",
-              			         "footer" => "accounts.tpl"));
-
-  $phpgw->template->set_block("header","row","footer");
+  $phpgw->template->set_file(array("list"   => "accounts.tpl",
+              			         "row"    => "accounts_row.tpl"));
 
   $total = account_total();
 
@@ -39,8 +36,6 @@
   $phpgw->template->set_var("lang_edit",lang("Edit"));
   $phpgw->template->set_var("lang_delete",lang("Delete"));
   $phpgw->template->set_var("lang_view",lang("View"));
-
-  $phpgw->template->parse("out","header");
 
   $account_info = account_read($method,$start,$sort,$order);
 
@@ -69,7 +64,7 @@
     $phpgw->template->set_var("row_firstname",$firstname);
     $phpgw->template->set_var("row_lastname",$lastname);
     $phpgw->template->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
-    				     . $account_id) . '"> ' . lang("Edit") . ' </a>');
+       				     . $account_id) . '"> ' . lang("Edit") . ' </a>');
 
     if ($phpgw_info["user"]["userid"] != $account["account_lid"]) {
        $phpgw->template->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
@@ -79,21 +74,16 @@
     }
 
     $phpgw->template->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
-				         . $account_id) . '"> ' . lang("View") . ' </a>');
+   				         . $account_id) . '"> ' . lang("View") . ' </a>');
 
-    if ($total == 1) {
-       $phpgw->template->set_var("output","");
-    }
-    if ($total != ++$i) {
-       $phpgw->template->parse("output","row",True);
-    }
+    $phpgw->template->parse("rows","row",True);
   }
 
   $phpgw->template->set_var("actionurl",$phpgw->link("newaccount.php"));
   $phpgw->template->set_var("lang_add",lang("add"));
   $phpgw->template->set_var("lang_search",lang("search"));
 
-  $phpgw->template->pparse("out","footer");
+  $phpgw->template->pparse("out","list");
 
   $phpgw->common->phpgw_footer();
   
