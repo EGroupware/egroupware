@@ -11,6 +11,7 @@
 
   /* $Id$ */
 
+	/* MOVED TO API
 	$test[] = '0.9.13.001';
 	function phpwebhosting_upgrade0_9_13_001()
 	{
@@ -55,5 +56,5 @@
 
 		return $setup_info['phpwebhosting']['currentver'];
 	}
-
+	*/
 ?>

@@ -15,7 +15,7 @@
 
   /* $Id$ */
 
-  // table array for phpwebhosting
+  /* table array for phpwebhosting - MOVED TO API
 	$phpgw_baseline = array(
 		'phpgw_vfs' => array(
 			'fd' => array(
@@ -42,5 +42,5 @@
 			'uc' => array()
 		)
 	);
-
+	*/
 ?>
