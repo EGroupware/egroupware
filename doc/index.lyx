@@ -287,7 +287,7 @@ login to cvs anonymously as described above
 \layout Itemize
 
 cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware
- -r Version-0_9_9-patches phpgroupware
+ -r Version-0_9_9-patches co phpgroupware
 \layout Subsection
 
 Setting File Permissions 
