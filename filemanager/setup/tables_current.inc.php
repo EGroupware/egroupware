@@ -23,7 +23,7 @@
 				'owner_id' => array('type' => 'int', 'precision' => 4,'nullable' => False),
 				'createdby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
 				'modifiedby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
-				'created' => array('type' => 'date','nullable' => False),
+				'created' => array('type' => 'date','nullable' => False,'default' => '0000-00-00'),
 				'modified' => array('type' => 'date','nullable' => True),
 				'size' => array('type' => 'int', 'precision' => 4,'nullable' => True),
 				'mime_type' => array('type' => 'varchar', 'precision' => 150,'nullable' => True),
@@ -31,7 +31,9 @@
 				'comment' => array('type' => 'text','nullable' => True),
 				'app' => array('type' => 'varchar', 'precision' => 25,'nullable' => True),
 				'directory' => array('type' => 'text','nullable' => True),
-				'name' => array('type' => 'text','nullable' => False)
+				'name' => array('type' => 'text','nullable' => False),
+				'link_directory' => array('type' => 'text','nullable' => True),
+				'link_name' => array('type' => 'text','nullable' => True)
 			),
 			'pk' => array('file_id'),
 			'fk' => array(),
@@ -39,4 +41,5 @@
 			'uc' => array()
 		),
 	);
+
 ?>
