@@ -726,6 +726,7 @@
 							'string'	=> $files['directory'] . '/' . $files['name'],
 							'relatives'	=> array(RELATIVE_NONE)
 						);
+						if($files['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
 
 						$size = $this->bo->vfs->get_size($tmp_arr);
 
