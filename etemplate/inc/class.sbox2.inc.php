@@ -51,6 +51,11 @@
 		 * In the submitted page the vars $query_XXX and $id_XXX are set according to what is selected, see getAddress as Example
 		 */
 
+		function sbox2()
+		{
+			$this->sbox();	// call constructor extended class
+		}
+
 		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='',$multiple=False)
 		{
 			// echo "<p>getId('$name','$lang_name','$prompt',$id_name,'$content') =";
