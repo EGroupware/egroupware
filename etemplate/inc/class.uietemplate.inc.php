@@ -162,7 +162,8 @@
 				'to_process' => $GLOBALS['phpgw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
 				'dom_enabled' => $GLOBALS['phpgw_info']['etemplate']['dom_enabled'],
-				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content']
+				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content'],
+				'app_header' => $GLOBALS['phpgw_info']['flags']['app_header'],
 			),$id);
 
 			if ($return_html)
@@ -240,6 +241,10 @@
 					{
 						$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $session_data['hooked']));
 					}
+				}
+				if (!empty($session_data['app_header']))
+				{
+					$GLOBALS['phpgw_info']['flags']['app_header'] = $session_data['app_header'];
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($_GET['menuaction'],$session_data['content'],$session_data['sel_options'],
@@ -516,6 +521,10 @@
 			list(,$class) = explode(',',$cell['span']);	// might be set by extension
 
 			$cell_options = $cell['size'];
+			if (strchr($cell_options,'$'))
+			{
+				$cell_options = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
+			}
 			if ($cell_options[0] == '@')
 			{
 				$cell_options = $this->get_array($content,substr($cell_options,1));
@@ -738,6 +747,7 @@
 					}
 					if ($readonly)
 					{
+						if (!is_array($readonlys)) $readonlys = array();
 						$readonlys['__ALL__'] = True;
 					}
 					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row,$cell['onchange'],$cell['tr_class']);
