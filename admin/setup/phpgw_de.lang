@@ -16,6 +16,7 @@ application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, daß Sie dieses Konto löschen wollen ?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, daß Sie diese Anwendung löschen wollen ?
+are you sure you want to delete this category ?	common	de	Sind Sie sicher, da&szlig; Sie diese Kategorie l&ouml;schen wollen ?
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, daß Sie diese Gruppe löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie diese Session killen wollen ?
 change main screen message	admin	de	Nachricht der Startseite ändern

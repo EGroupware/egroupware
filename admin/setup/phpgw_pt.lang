@@ -23,7 +23,7 @@ application title	admin	pt	Título da aplicação
 applications	admin	pt	Aplicações
 are you sure you want to delete this account ?	admin	pt	Tem certeza que deseja remover esta conta ?
 are you sure you want to delete this application ?	admin	pt	Tem certeza que deseja remover esta aplicação ?
-are you sure you want to delete this category ?	admin	pt	Tem certeza que deseja remover esta categoria ?
+are you sure you want to delete this category ?	common	pt	Tem certeza que deseja remover esta categoria ?
 are you sure you want to delete this group ?	admin	pt	Você tem certeza que deseja remover este grupo ?
 are you sure you want to delete this server?	admin	pt	Tem certeza que deseja remover este servidor ?
 are you sure you want to kill this session ?	admin	pt	Você tem certeza que deseja terminar esta seção ?

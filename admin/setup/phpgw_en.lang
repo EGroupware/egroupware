@@ -25,7 +25,7 @@ applications	admin	en	Applications
 application title	admin	en	Application title
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
-are you sure you want to delete this category ?	admin	en	Are you sure you want to delete this category ?
+are you sure you want to delete this category ?	common	en	Are you sure you want to delete this category ?
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
 are you sure you want to delete this server?	admin	en	Are you sure you want to delete this server?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
