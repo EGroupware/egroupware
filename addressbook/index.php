@@ -33,7 +33,6 @@
 		"mphone"   => "mphone",
 		"ophone"   => "ophone",
 		"address2" => "address2",
-		"notes"    => "notes"
 	);
 	$qfields = $this->stock_contact_fields + $extrafields;
 

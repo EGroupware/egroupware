@@ -64,7 +64,7 @@
 	$company      = $fields["org_name"];
 	$dept         = $fields["org_unit"];
 	$bday         = $fields["bday"];
-	$notes        = $fields["notes"];
+	$notes        = $fields["note"];
 	$access       = $fields["access"];
 	$url          = $fields["url"];
 

@@ -78,6 +78,7 @@
 				"geo"             => "geo",
 				"url"             => "url",
 				"bday"            => "bday",
+				"note"            => "note",
 				"a_tel"           => "a_tel",
 				"a_tel_work"      => "a_tel_work",   //yn
 				"a_tel_home"      => "a_tel_home",   //yn

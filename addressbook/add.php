@@ -80,7 +80,7 @@
 		$fields["tz"]				= $timezone;
 		$fields["bday"]				= $bday;
 		$fields["url"]				= $url;
-		$fields["notes"]			= $notes;
+		$fields["note"]				= $notes;
 	
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 		$ab_id = addressbook_get_lastid();

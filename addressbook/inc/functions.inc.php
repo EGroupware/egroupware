@@ -87,7 +87,7 @@
 			"address2"			=> "address2",
 			"bday"				=> "birthday",
 			"url"				=> "url",
-			"notes"				=> "notes"
+			"note"				=> "notes"
 		);
 
 		while($name = each($abc) ) {
@@ -165,7 +165,7 @@
 		$country      = $fields["adr_countryname"];
 		$timezone     = $fields["tz"];
 		$bday         = $fields["bday"];
-		$notes        = stripslashes($fields["notes"]);
+		$notes        = stripslashes($fields["note"]);
 		$company      = $fields["org_name"];
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];

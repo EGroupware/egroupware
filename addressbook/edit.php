@@ -41,7 +41,6 @@
 			"mphone" => "mphone",
 			"ophone" => "ophone",
 			"address2" => "address2",
-			"notes" => "notes"
 		);
 		$qfields = $this->stock_contact_fields + $extrafields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
@@ -85,7 +84,7 @@
 		$fields["tz"]				= $timezone;
 		$fields["bday"]				= $bday;
 		$fields["url"]				= $url;
-		$fields["notes"]			= $notes;
+		$fields["note"]				= $notes;
 
 		// this is now in functions.inc.php and will handle acl soon
 		//if (!$userid) { 
