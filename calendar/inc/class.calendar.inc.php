@@ -767,8 +767,21 @@
                 } else {
                   $format = "H:i";
                 }
-                $p->set_var('start_time',$phpgw->common->show_date($lr_events->datetime,$format));
-                $p->set_var('end_time',$phpgw->common->show_date($lr_events->edatetime,$format));
+                if($lr_events->datetime < $date["raw"]) {
+                  $temp_time = $this->makegmttime(0,0,0,$date["month"],$date["day"],$date["year"]);
+                  $start_time = $phpgw->common->show_date($temp_time["raw"],$format);
+                } else {
+                  $start_time = $phpgw->common->show_date($lr_events->datetime,$format);
+                }
+                
+                if($lr_events->edatetime > ($date["raw"] + 86400)) {
+                  $temp_time = $this->makegmttime(23,59,59,$date["month"],$date["day"],$date["year"]);
+                  $end_time = $phpgw->common->show_date($temp_time["raw"],$format);
+                } else {
+                  $end_time = $phpgw->common->show_date($lr_events->edatetime,$format);
+                }
+                $p->set_var('start_time',$start_time);
+                $p->set_var('end_time',$end_time);
               } else {
                 $p->set_var('start_time','');
                 $p->set_var('end_time','');
