@@ -29,8 +29,8 @@ edit user account	admin	de	Benutzerkonto editieren
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 group name	admin	de	Gruppenname
 group has been added	common	de	Gruppe wurde hinzugef&uuml;gt
-group has been deleted  common	de	Gruppe wurde gel&ouml;scht
-group has been updated  common	de	Gruppe wurde aktualisiert
+group has been deleted	common	de	Gruppe wurde gel&ouml;scht
+group has been updated	common	de	Gruppe wurde aktualisiert
 hide php information	admin	de	PHP Informationen ausblenden
 idle	admin	de	idle
 installed applications	admin	de	Installierte Anwendungen

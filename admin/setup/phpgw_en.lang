@@ -2,7 +2,7 @@ account active	admin	en	Account active
 account has been created	common	en	Account has been created
 account has been deleted	common	en	Account has been deleted
 account has been updated	common	en	Account has been updated
-account preferences admin	en	Account Preferences
+account preferences	admin	en	Account Preferences
 account permissions	admin	en	Account permissions
 action	admin	en	Action
 add global category	admin	en	Add global category
