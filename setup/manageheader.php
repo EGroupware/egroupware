@@ -1,7 +1,7 @@
 <?php
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("./inc/functions.inc.php");
-  include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
+  include('../phpgwapi/setup/setup.inc.php');
   $phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
   unset($setup_info);
 
