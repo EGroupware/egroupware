@@ -13,11 +13,13 @@ account preferences	common	en	Account Preferences
 active	admin	en	Active
 add	common	en	Add
 add a single pharse	transy	en	Add a single pharse
+add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add new pharse	transy	en	Add new pharse
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
 address book	addressbook	en	Address Book
+address book - view	addressbook	en	Address book - view
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
 addsub	todo	en	AddSub
@@ -114,8 +116,12 @@ edit application	admin	en	Edit application
 edit group	admin	en	Edit Group
 email	email	en	E-Mail
 email	common	en	EMail
+email account name	email	en	Email Account Name
+email address	email	en	Email address
+email password	email	en	Email Password
 email signature	email	en	E-Mail signature
 enabled	admin	en	Enabled
+enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enter your new password	preferences	en	Enter your new password
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
@@ -167,7 +173,9 @@ home	common	en	Home
 home phone	addressbook	en	Home Phone
 human resources	common	en	Human Resources
 idle	admin	en	idle
+if applicable	email	en	If Applicable
 image	email	en	Image
+imap server type	email	en	IMAP Server Type
 import lang set	transy	en	Import lang set
 installed applications	admin	en	Installed applications
 inventory	common	en	Inventory
@@ -184,6 +192,7 @@ last page	common	en	last page
 last time read	admin	en	Last Time Read
 last updated	todo	en	Last Updated
 last x logins	admin	en	Last %1 logins
+line 2	addressbook	en	Line 2
 list of current users	admin	en	list of current users
 listings displayed	admin	en	Listings Displayed
 login	common	en	Login
@@ -192,6 +201,8 @@ login time	admin	en	Login Time
 loginid	admin	en	LoginID
 logout	common	en	Logout
 low	common	en	Low
+mail server	email	en	Mail Server
+mail server type	email	en	Mail Server type
 manager	admin	en	Manager
 march	common	en	March
 max matchs per page	preferences	en	Max matches per page
@@ -237,6 +248,7 @@ no	common	en	No
 no	filemanager	en	No
 no matches found.	calendar	en	No matches found.
 no subject	email	en	No Subject
+non-standard	email	en	Non-Standard
 none	calendar	en	None
 normal	common	en	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
@@ -260,6 +272,7 @@ permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
 pharse in english	transy	en	Pharse in English
 pharse in new langague	transy	en	Pharse in new langague
+phpgroupware login	login	en	phpGroupWare login
 please select a message first	email	en	Please select a message first
 please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
@@ -275,6 +288,8 @@ private_files	filemanager	en	Private files
 project description	todo	en	Project Description
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
+record access	addressbook	en	Record Access
+record owner	addressbook	en	Record owner
 remove all users from this group	admin	en	Remove all users from this group
 rename	common	en	Rename
 rename	filemanager	en	Rename
@@ -325,6 +340,7 @@ source language	transy	en	Source Language
 specify_file_name	filemanager	en	You must specify a name for the file you wish to create
 state	addressbook	en	State
 status	todo	en	Status
+status	admin	en	Status
 street	addressbook	en	Street
 su	calendar	en	Su
 subject	email	en	Subject
@@ -354,6 +370,7 @@ time	common	en	Time
 time format	preferences	en	Time format
 time zone offset	preferences	en	Time zone offset
 title	admin	en	Title
+title	addressbook	en	Title
 to	email	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 today	calendar	en	Today
@@ -378,7 +395,9 @@ update	nntp	en	Update
 updated	common	en	Updated
 upload	filemanager	en	Upload
 urgency	todo	en	Urgency
+url	addressbook	en	URL
 use cookies	login	en	use cookies
+use custom settings	email	en	Use custom settings
 use end date	calendar	en	Use End date
 user accounts	admin	en	User accounts
 user groups	admin	en	User groups
@@ -435,4 +454,3 @@ your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
 zip code	addressbook	en	ZIP Code
-phpgroupware login	login	en	phpGroupWare login
