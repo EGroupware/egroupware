@@ -15,6 +15,7 @@ account preferences	common	en	Account Preferences
 acl	common	en	ACL
 action	admin	en	Action
 active	admin	en	Active
+add a note for	notes	en	Add a note for
 add a note for x	notes	en	Add a note for %1
 add a single phrase	transy	en	Add a single phrase
 add	bookkeeping	en	Add
