@@ -1541,7 +1541,7 @@
 			} 
 
 			$birthday = $GLOBALS['phpgw']->common->dateformatorder($bday_year,$bday_month,$bday_day)
-				. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
+				. '<font face="'.$theme["font"].'" size="-2">'.lang('(e.g. 1969)').'</font>';
 			if ($format == 'edit')
 			{
 				$create .= '<tr bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '"><td colspan="2"><font size="-1">' . lang("Created by") . ':</font></td>'
