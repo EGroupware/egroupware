@@ -226,6 +226,34 @@
 			}
 		}
 
+		function find_recur_exceptions($event_id)
+		{
+			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
+			{
+				$arr = Array();
+				$this->cal->query('SELECT datetime FROM phpgw_cal WHERE reference='.$event_id,__LINE__,__FILE__);
+				if($this->cal->num_rows())
+				{
+					while($this->cal->next_record())
+					{
+						$arr[] = intval($this->cal->f('datetime'));
+					}
+				}
+				if(count($arr) == 0)
+				{
+					return False;
+				}
+				else
+				{
+					return $arr;
+				}
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		/* Begin mcal equiv functions */
 		function get_cached_event()
 		{

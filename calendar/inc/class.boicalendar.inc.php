@@ -1565,7 +1565,7 @@ class boicalendar
 		$return_value = $this->fold('X-'.$x_type['name'].$seperator.$quote.$x_type['value'].$quote);
 		if($seperator == '=')
 		{
-			return str_replace("\r\n","",$return_value);
+			return str_replace("\r\n",'',$return_value);
 		}
 		else
 		{
@@ -1580,81 +1580,99 @@ class boicalendar
 		$include_datetime = False;
 		$param = $this->find_parameters($property);
 
-		while(list($dumb_key,$key) = each($param))
+		if($property == 'exdate')
 		{
-			if($key == 'value')
+			while(list($key,$value) = each($event))
 			{
-				continue;
+				$exdates[] = $this->switch_date($value);
 			}
-			if($key == 'mailto')
-			{
-				$include_mailto = True;
-				continue;
-			}
-			$param_array = @$this->parameter[$key];
-			$type = @$this->parameter[$key]['type'];
-			if($type == 'date-time')
-			{
-				$include_datetime = True;
-				continue;
-			}
-			$quote = (@$this->parameter[$key]['quoted']?'"':'');
-			if(isset($event[$key]) && @$this->parameter[$key]['properties'][$property])
-			{
-				$change_text = @$this->parameter[$key]['to_text'];
-				$value = $event[$key];
-				if($change_text && $type == 'text')
-				{
-					$value = $this->to_text($value);
-				}
-				switch($type)
-				{
-					case 'dir':
-						$str .= ';'.str_replace('_','-',strtoupper($key)).'='.$quote.$this->to_dir($value).$quote;
-						break;
-					case 'function':
-						$str .= ';'.str_replace('_','-',strtoupper($key)).'=';
-						$function = $this->parameter[$key]['function'];
-						$this->debug($key.' Function Param : '.$value);
-						$str .= $quote.$this->$function($value).$quote;
-						break;
-					case 'text':
-					case 'string':
-						$str .= ';'.strtoupper($key).'='.$quote.$value.$quote;
-						break;
-					case 'date-time':
-						$str .= ($key=='until'?':':';UNTIL=').date('Ymd\THis',mktime($event['hour'],$event['min'],$event['sec'],$event['month'],$event['mday'],$event['year'])).(!@isset($event['tzid'])?'Z':'');
-						break;
-						
-				}
-				unset($value);
-			}
+			return ':'.implode($exdates,',');
 		}
+		else
+		{
+			while(list($dumb_key,$key) = each($param))
+			{
+				if($key == 'value')
+				{
+					continue;
+				}
+				if($key == 'mailto')
+				{
+					$include_mailto = True;
+					continue;
+				}
+				$param_array = @$this->parameter[$key];
+				$type = @$this->parameter[$key]['type'];
+				if($type == 'date-time')
+				{
+					$include_datetime = True;
+					continue;
+				}
+				$quote = (@$this->parameter[$key]['quoted']?'"':'');
+				if(isset($event[$key]) && @$this->parameter[$key]['properties'][$property])
+				{
+					$change_text = @$this->parameter[$key]['to_text'];
+					$value = $event[$key];
+					if($change_text && $type == 'text')
+					{
+						$value = $this->to_text($value);
+					}
+					switch($type)
+					{
+						case 'dir':
+							$str .= ';'.str_replace('_','-',strtoupper($key)).'='.$quote.$this->to_dir($value).$quote;
+							break;
+						case 'function':
+							$str .= ';'.str_replace('_','-',strtoupper($key)).'=';
+							$function = $this->parameter[$key]['function'];
+							$this->debug($key.' Function Param : '.$value);
+							$str .= $quote.$this->$function($value).$quote;
+							break;
+						case 'text':
+						case 'string':
+							$str .= ';'.strtoupper($key).'='.$quote.$value.$quote;
+							break;
+						case 'date-time':
+							$str .= ($key=='until'?':':';UNTIL=').date('Ymd\THis',mktime($event['hour'],$event['min'],$event['sec'],$event['month'],$event['mday'],$event['year'])).(!@isset($event['tzid'])?'Z':'');
+							break;
+					}
+					unset($value);
+				}
+			}
 
-		if(!empty($event['x_type']))
-		{
-			$c_x_type = count($event['x_type']);
-			for($j=0;$j<$c_x_type;$j++)
+			if(!empty($event['x_type']))
 			{
-				$str .= ';'.$this->build_xtype($event['x_type'][$j],'=');
+				$c_x_type = count($event['x_type']);
+				for($j=0;$j<$c_x_type;$j++)
+				{
+					$str .= ';'.$this->build_xtype($event['x_type'][$j],'=');
+				}
 			}
+			if(!empty($event['value']))
+			{
+				if($property == 'trigger')
+				{
+					$seperator = ';';
+				}
+				else
+				{
+					$seperator = ':';
+				}
+				$str .= $seperator.($this->parameter['value']['to_text']?$this->to_text($event['value']):$event['value']);
+			}
+			if($include_mailto == True)
+			{
+				$key = 'mailto';
+				$function = $this->parameter[$key]['function'];
+				$ret_value = $this->$function($event[$key]);
+				$str .= ($ret_value?':'.$ret_value:'');
+			}
+			if($include_datetime == True || @$this->property[$property]['type'] == 'date-time')
+			{
+				$str .= ':'.date('Ymd\THis',mktime($event['hour'],$event['min'],$event['sec'],$event['month'],$event['mday'],$event['year'])).(!@isset($event['tzid'])?'Z':'');
+			}
+			return ($property=='rrule'?':'.substr($str,1):$str);
 		}
-		if(!empty($event['value']))
-		{
-			$str .= ':'.($this->parameter['value']['to_text']?$this->to_text($event['value']):$event['value']);
-		}
-		if($include_mailto == True)
-		{
-			$key = 'mailto';
-			$function = $this->parameter[$key]['function'];
-			$ret_value = $this->$function($event[$key]);
-			$str .= ($ret_value?':'.$ret_value:'');
-		}
-		if($include_datetime == True || @$this->property[$property]['type'] == 'date-time')
-		{
-			$str .= ':'.date('Ymd\THis',mktime($event['hour'],$event['min'],$event['sec'],$event['month'],$event['mday'],$event['year'])).(!@isset($event['tzid'])?'Z':'');
-		}
-		return ($property=='rrule'?':'.substr($str,1):$str);
 	}
 
 	function build_text($event,$property)
@@ -1715,7 +1733,7 @@ class boicalendar
 				case 'date-time':
 					if(!empty($event[$value]))
 					{
-						if($multiples)
+						if($multiples && $value != 'exdate')
 						{
 							for($i=0;$i<count($event[$value]);$i++)
 							{
@@ -3214,13 +3232,20 @@ class boicalendar
 
 			if(!$GLOBALS['phpgw_info']['flags']['included_classes']['uicalendar'])
 			{
-				$so_event = createobject('calendar.socalendar',
-					Array(
-						'owner'	=> 0,
-						'filter'	=> '',
-						'category'	=> ''
-					)
-				);
+				if(!$GLOBALS['phpgw_info']['flags']['included_classes']['bocalendar'])
+				{
+					$so_event = createobject('calendar.socalendar',
+						Array(
+							'owner'	=> 0,
+							'filter'	=> '',
+							'category'	=> ''
+						)
+					);
+				}
+				else
+				{
+					$so_event = $GLOBALS['bocalendar']->so;
+				}
 			}
 			else
 			{
@@ -3231,6 +3256,18 @@ class boicalendar
 			{
 				$ical_event = Array();
 				$event = $so_event->read_entry($value);
+
+				if($event['alarm'])
+				{
+					while(list($dummy,$alarm) = each($event['alarm']))
+					{
+						$ical_temp = Array();
+						$ical_temp['action']['value'] = 'DISPLAY';
+						$ical_temp['description']['value'] = $alarm['text'];
+						$this->set_var($ical_temp['trigger'],'value','VALUE=DATE-TIME:'.date('Ymd\THis\Z',$alarm['time']),'valarm');
+						$ical_event['alarm'][] = $ical_temp;
+					}
+				}
 
 				$ical_event['priority'] = $event['priority'];
 				$ical_event['class'] = intval($event['public']);
@@ -3356,6 +3393,16 @@ class boicalendar
 						$str .= ';UNTIL='.date('Ymd\THis\Z',$recur_mktime);
 					}
 					$this->parse_value($ical_event,'rrule',$str,'vevent');
+
+					$exceptions = $event['recur_exception'];
+					if(is_array($exceptions))
+					{
+						@reset($exceptions);
+						while(list($key,$except_datetime) = each($exceptions))
+						{
+							$ical_event['exdate'][] = $this->switch_date(date('Ymd\THis\Z',$except_datetime));
+						}
+					}
 				}
 				$ical_events[] = $ical_event;
 			}

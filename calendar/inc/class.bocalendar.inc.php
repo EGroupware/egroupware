@@ -2113,23 +2113,40 @@
 			$t_time = $this->maketime($t_appt) - $this->datetime->tz_offset;
 			$y_time = $t_time - 86400;
 			$tt_time = $t_time + 86399;
-//echo 'T_TIME : '.$t_time."<br>\n";
-//echo 'Y_TIME : '.$y_time."<br>\n";
-//echo 'TT_TIME : '.$tt_time."<br>\n";
+			if($this->debug)
+			{
+				echo '<!-- T_TIME : '.$t_time.' : '.$GLOBALS['phpgw']->common->show_date($t_time).' -->'."\n";
+				echo '<!-- Y_TIME : '.$y_time.' : '.$GLOBALS['phpgw']->common->show_date($y_time).'-->'."\n";
+				echo '<!-- TT_TIME : '.$tt_time.' : '.$GLOBALS['phpgw']->common->show_date($tt_time).'-->'."\n";
+			}
 			while(list($key,$alarm) = each($event['alarm']))
 			{
-//echo 'TIME : '.$alarm['time']."<br>\n";
-				if($event['recur_type'] != MCAL_RECUR_NONE)   /* Recurring Event */
+				if($alarm['enabled'])
 				{
-					if($alarm['time'] > $y_time && $GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi && $alarm['time'] < $t_time)
+					if($this->debug)
+					{
+						echo '<!-- TIME : '.$alarm['time'].' : '.$GLOBALS['phpgw']->common->show_date($alarm['time']).' ('.$event['id'].') -->'."\n";
+					}
+					if($event['recur_type'] != MCAL_RECUR_NONE)   /* Recurring Event */
+					{
+						if($this->debug)
+						{
+							echo '<!-- Recurring Event -->'."\n";
+						}
+						if($alarm['time'] > $y_time && $GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi && $alarm['time'] < $t_time)
+						{
+							$found = True;
+						}
+					}
+					elseif($alarm['time'] > $y_time && $alarm['time'] < $t_time)
 					{
 						$found = True;
 					}
 				}
-				elseif($GLOBALS['phpgw']->common->show_date($alarm['time'],'Hi') < $starttime_hi)
-				{
-					$found = True;
-				}
+			}
+			if($this->debug)
+			{
+				echo '<!-- Found: '.$found.' -->'."\n";
 			}
 			return $found;
 		}
