@@ -12,10 +12,10 @@ account has been updated	common	en	Account has been updated
 account preferences	common	en	Account Preferences
 active	admin	en	Active
 add	common	en	Add
-add a single pharse	transy	en	Add a single pharse
+add a single phrase	transy	en	Add a single phrase
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
-add new pharse	transy	en	Add new pharse
+add new phrase	transy	en	Add new phrase
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
 address book	addressbook	en	Address Book
@@ -82,7 +82,7 @@ create	common	en	Create
 create	filemanager	en	Create
 create group	admin	en	Create Group
 create lang.sql file	transy	en	Create lang.sql file
-create new langague set	transy	en	Create new langague set
+create new language set	transy	en	Create new language set
 created by	common	en	Created By
 created by	todo	en	Created By
 current users	common	en	Current users
@@ -105,7 +105,7 @@ delete	filemanager	en	Delete
 description	calendar	en	Description
 disabled	admin	en	Disabled
 display	admin	en	Display
-display missing pharases in lang set	transy	en	Display missing pharases in lang set
+display missing phrases in lang set	transy	en	Display missing phrases in lang set
 done	common	en	Done
 download	filemanager	en	Download
 do_delete	filemanager	en	Delete
@@ -243,8 +243,8 @@ new entry added sucessfully	common	en	New entry added sucessfully
 new group name	admin	en	New group name
 new message	email	en	New message
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
-new pharse has been added	common	en	New pharse has been added
-new pharse has been added	transy	en	New pharse has been added
+new phrase has been added	common	en	New phrase has been added
+new phrase has been added	transy	en	New phrase has been added
 news file	admin	en	News File
 news headlines	common	en	News headlines
 news reader	common	en	News Reader
@@ -281,8 +281,8 @@ percent of users that logged out	admin	en	Percent of users that logged out
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
-pharse in english	transy	en	Pharse in English
-pharse in new langague	transy	en	Pharse in new langague
+phrase in english	transy	en	Phrase in English
+phrase in new language	transy	en	Phrase in new language
 phpgroupware login	login	en	phpGroupWare login
 please select a message first	email	en	Please select a message first
 please x by hand	common	en	Please %1 by hand
@@ -327,11 +327,11 @@ section	email	en	Section
 select application	transy	en	Select application
 select different theme	preferences	en	Select different Theme
 select headline news sites	preferences	en	Select Headline News sites
-select langague to generate for	transy	en	Select langague to generate for
+select language to generate for	transy	en	Select language to generate for
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
-select which application for this pharse	transy	en	select which application for this pharse
-select which langauge for this pharse	transy	en	select which langauge for this pharse
+select which application for this phrase	transy	en	select which application for this phrase
+select which language for this phrase	transy	en	select which language for this phrase
 send	email	en	Send
 send deleted messages to the trash	email	en	Send deleted messages to the trash
 september	common	en	September
@@ -426,7 +426,7 @@ view	common	en	View
 view access log	admin	en	View Access Log
 view sessions	admin	en	View sessions
 view this entry	calendar	en	View this entry
-view/edit/delete all pharses	transy	en	View/edit/delete all pharses
+view/edit/delete all phrases	transy	en	View/edit/delete all phrases
 we	calendar	en	W
 wed	calendar	en	Wed
 wednesday	common	en	Wednesday
@@ -467,7 +467,7 @@ you must select a file type	admin	en	You must select a file type
 your current theme is: x	preferences	en	</b>
 your message has been sent	common	en	Your message has been sent
 your search returned 1 match	common	en	your search returned 1 match
-your search returned x matchs	common	en	your search returned %1 matchs
+your search returned x matchs	common	en	your search returned %1 matches
 your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
