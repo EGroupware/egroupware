@@ -11,6 +11,8 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	
+	/* $Id$ */
+
 class ui_resources
 {
 	var $public_functions = array(
@@ -108,9 +110,9 @@ class ui_resources
 			return $this->index();
 		}
 		
-		$sel_options = array(		// the options for our type selectbox
-			//'type' => $this-> types
-		);
+		$sel_options = array(
+					'cat_id' => $this->bo->acl->get_cats(PHPGW_ACL_ADD)
+				);
 		$no_button = array(		// button not to show
 		);
 		if ($content > 0)
@@ -119,6 +121,10 @@ class ui_resources
 					'id' => $content
 				);
 			$content = $this->bo->read($content);
+		}
+		else
+		{
+			$content = array();
 		}
 		$content['msg'] = $msg; 
 		$this->tmpl->read('resources.edit');
