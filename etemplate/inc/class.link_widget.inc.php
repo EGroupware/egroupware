@@ -30,6 +30,7 @@
 			'link-to'   => 'LinkTo',
 			'link-list' => 'LinkList'
 		);
+		var $debug = False;
 
 		function link_widget($ui)
 		{
@@ -45,7 +46,11 @@
 					'to_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
 				);
 			}
-			//echo "<p>start: $cell[type]::pre_process: value ="; _debug_array($value);
+			if ($this->debug)
+			{
+				echo "<p>start: $cell[type][$name]::pre_process: value ="; _debug_array($value);
+				echo "extension_data[$cell[type]][$name] ="; _debug_array($extension_data);
+			}
 			switch ($type = $cell['type'])
 			{
 			case 'link-to':
@@ -82,9 +87,11 @@
 
 			case 'link-list':
 				$app = $value['to_app'];
-				$id  = $value['to_id'];
-				//echo "<p>link-list-widget.preprocess: value="; _debug_array($value);
-
+				$id  = isset($extension_data['to_id']) ? $extension_data['to_id'] : $value['to_id'];
+				if ($this->debug)
+				{
+					echo "<p>link-list-widget[$name].preprocess: value="; _debug_array($value);
+				}
 				if (!isset($value['title']))
 				{
 					$value['title'] = $this->link->title($app,$id);
@@ -114,16 +121,19 @@
 			$cell['name'] = $tpl->name;
 			$cell['obj'] = &$tpl;
 
-			//echo "<p>end: $type::pre_process: value ="; _debug_array($value);
+			if ($this->debug)
+			{
+				echo "<p>end: $type"."[$name]::pre_process: value ="; _debug_array($value);
+			}
 			return True;	// extra Label is ok
 		}
 
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$buttons = array('search','create','new','upload','attach');
-			while (!$button && list(,$name) = each($buttons))
+			while (!$button && list(,$bname) = each($buttons))
 			{
-				$button = $value[$name] ? $name : '';
+				$button = $value[$bname] ? $bname : '';
 			}
 			if (is_array($value['unlink']))
 			{
@@ -133,10 +143,10 @@
 			unset($value[$button]);
 
 			$value = array_merge($extension_data,$value);
-			
+
 			if ($button && $this->debug)
 			{
-				echo "<p>start: link_widget::post_process: button='$button', unlink='$unlink', value ="; _debug_array($value);
+				echo "<p>start: link_widget[$name]::post_process: button='$button', unlink='$unlink', value ="; _debug_array($value);
 			}
 			switch ($button)
 			{
@@ -145,7 +155,7 @@
 					{
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$value['app'],$value['id'],$value['remark']);
-						
+
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
 							$value['primary'] = $link_id;
@@ -162,16 +172,16 @@
 					if (is_array($value['file']) && $value['to_app'])
 					{
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
-							'vfs',$value['file'],$value['remark']);
+							$this->link->vfs_appname,$value['file'],$value['remark']);
 						unlink($value['file']['tmp_name']);
-						unset($value['file']); 
+						unset($value['file']);
 					}
 					$extension_data = $value;
 					$loop = True;
 					break;
 
 				case 'upload':		// need to rename file, as php deletes it otherwise
-					if (is_array($value['file']) && !empty($value['file']['tmp_name']) && 
+					if (is_array($value['file']) && !empty($value['file']['tmp_name']) &&
 					    $value['file']['tmp_name'] != 'none')
 					{
 						move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
@@ -187,13 +197,24 @@
 					break;
 
 				case 'unlink':
+					if ($this->debug)
+					{
+						echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
+						if (is_array($value['to_id'])) _debug_array($value['to_id']);
+					}
 					$this->link->unlink($unlink,$value['to_app'],&$value['to_id']);
-					//echo "<p>unlink(link-id=$unlink,$value[to_app],$value[to_id])</p>\n";
+					if (is_array($value['to_id']))
+					{
+						$extension_data['to_id'] = $value['to_id'];	// else changes from unlink get lost
+					}
 					$loop = True;
 					break;
 			}
 			$value['button'] = $button;
-			//echo "<p>end: link_widget::post_process: value ="; _debug_array($value);
+			if ($this->debug)
+			{
+				echo "<p>end: link_widget[$name]::post_process: value ="; _debug_array($value);
+			}
 			return True;
 		}
 	}
