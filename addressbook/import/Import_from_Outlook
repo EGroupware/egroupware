@@ -143,6 +143,7 @@
 				$buffer[$this->id][$name] = $value;
 				//echo '<br>'.$name.' => '.$value;
 			}
+			$buffer[$this->id]['access']] = $private;
 			return $buffer;
 		}
 
