@@ -14,41 +14,38 @@
 
 	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.boetemplate.inc.php');
 
-	/*!
-	@class etemplate
-	@author ralfbecker
-	@abstract creates dialogs / HTML-forms from eTemplate descriptions
-	@discussion etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
-	@example $tmpl = CreateObject('etemplate.etemplate','app.template.name');
-	@example $tmpl->exec('app.class.callback',$content_to_show);
-	@example This creates a form from the eTemplate 'app.template.name' and takes care that
-	@example the method / public function 'callback' in (bo)class 'class' of 'app' gets called
-	@example if the user submitts the form. Vor the complete param's see the description of exec.
-	@param $debug enables debug messages: 0=no, 1=calls to show and process_show, 2=content of process_show
-	@param                                3=calls to show_cell OR template- or cell-type name
-	@param $html instances of html class used to generate the html
-	*/
+	/**
+	 * creates dialogs / HTML-forms from eTemplate descriptions
+	 *
+	 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
+	 *
+	 * $tmpl = CreateObject('etemplate.etemplate','app.template.name');
+	 * $tmpl->exec('app.class.callback',$content_to_show);
+	 * This creates a form from the eTemplate 'app.template.name' and takes care that
+	 * the method / public function 'callback' in (bo)class 'class' of 'app' gets called
+	 * if the user submitts the form. Vor the complete param's see the description of exec.
+	 *
+	 * @package etemplate
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @license GPL
+	 */
 	class etemplate extends boetemplate
 	{
-		var $debug; // 1=calls to show and process_show, 2=content after process_show,
-					// 3=calls to show_cell and process_show_cell, or template-name or cell-type
-		var $html;	// instance of html-class
+		var $debug; /** 1=calls to show and process_show, 2=content after process_show,
+						3=calls to show_cell and process_show_cell, or template-name or cell-type */
+		var $html;	/** instance of html-class */
+		var $xslt = false;	/** do we run in the xslt framework (true) or the regular eGW one (false) */
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
+		var $public_functions = array('process_exec' => True);
 
-		/*!
-		@function etemplate
-		@abstract constructor of etemplate class, reads an eTemplate if $name is given
-		@param $name     name of etemplate or array with name and other keys
-		@param $load_via name/array with keys of other etemplate to load in order to get $name
-		*/
+		/**
+		 * constructor of etemplate class, reads an eTemplate if $name is given
+		 *
+		 * @param $name     name of etemplate or array with name and other keys
+		 * @param $load_via name/array with keys of other etemplate to load in order to get $name
+		 */
 		function etemplate($name='',$load_via='')
 		{
-			$this->public_functions += array(
-				'exec'			=> True,
-				'process_exec'	=> True,
-				'show'			=> True,
-				'process_show'	=> True,
-			);
 			if (!is_object($GLOBALS['phpgw']->html))
 			{
 				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
@@ -59,43 +56,47 @@
 
 			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			//echo "Version: $a.$b.$c.$d\n";
-			$this->stable = $a <= 0 && $b <= 9 && ($c <= 14 || $c == 99) || !is_object($GLOBALS['phpgw']->xslttpl);
+			$this->xslt = is_object($GLOBALS['phpgw']->xslttpl);
+			$this->stable = !$this->xslt;	// for backward compatibility
 		}
 
-		/*!
-		@function location
-		@abstract Abstracts a html-location-header call
-		@discussion In other UI's than html this needs to call the methode, defined by menuaction or
-		@discussion open a browser-window for any other links.
-		*/
-		function location($vars='')
+		/**
+		 * Abstracts a html-location-header call
+		 *
+		 * In other UI's than html this needs to call the methode, defined by menuaction or
+		 * open a browser-window for any other links.
+		 * 
+		 * @param $params string/array url or array with get-params incl. menuaction
+		 */
+		function location($params='')
 		{
-			$GLOBALS['phpgw']->redirect_link(is_array($vars) ? '/index.php' : $vars,
-				is_array($vars) ? $vars : '');
+			$GLOBALS['phpgw']->redirect_link(is_array($params) ? '/index.php' : $params,
+				is_array($params) ? $params : '');
 		}
 
-		/*!
-		@function exec
-		@abstract Generats a Dialog from an eTemplate - abstract the UI-layer
-		@discussion This is the only function an application should use, all other are INTERNAL and
-		@discussion do NOT abstract the UI-layer, because they return HTML.
-		@discussion Generates a webpage with a form from the template and puts process_exec in the
-		@discussion form as submit-url to call process_show for the template before it
-		@discussion ExecuteMethod's the given $method of the caller.
-		@param $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
-		@param $content Array with content to fill the input-fields of template, eg. the text-field
-		@param          with name 'name' gets its content from $content['name']
-		@param $sel_options Array or arrays with the options for each select-field, keys are the
-		@param              field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
-		@param              options for field 'name'. ($content['options-name'] is possible too !!!)
-		@param $readonlys Array with field-names as keys for fields with should be readonly
-		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
-		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id)
-			sets $_POST['id'] for the $method-call
-		@param $return_html if true, dont show the page, just return the html
-		@result nothing
-		*/
-		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$changes='',$return_html=False)
+		/**
+		 * Generats a Dialog from an eTemplate - abstract the UI-layer
+		 *
+		 * This is the only function an application should use, all other are INTERNAL and
+		 * do NOT abstract the UI-layer, because they return HTML.
+		 * Generates a webpage with a form from the template and puts process_exec in the
+		 * form as submit-url to call process_show for the template before it
+		 * ExecuteMethod's the given $method of the caller.
+		 *
+		 * @param $method Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
+		 * @param $content array with content to fill the input-fields of template, eg. the text-field
+		 * @param          with name 'name' gets its content from $content['name']
+		 * @param $sel_options array or arrays with the options for each select-field, keys are the
+		 * @param              field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
+		 * @param              options for field 'name'. ($content['options-name'] is possible too !!!)
+		 * @param $readonlys array with field-names as keys for fields with should be readonly
+		 * @param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
+		 * @param $preserv array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
+		 * @param $output_mode int 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
+		 * @param $changes array change made in the last call if looping, only used internaly by process_exec
+		 * @return string html for $output_mode == 1, else nothing
+		 */
+		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$changes='')
 		{
 			//echo "<br>globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', this->java_script() = '".$this->java_script()."'\n";
 			if (!$sel_options)
@@ -126,17 +127,17 @@
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
-			$html = ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
+			$html = (!$this->xslt ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script(1).
 					$this->html->input_hidden('submit_button','',False).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
 					),'/etemplate/process_exec.php?menuaction='.$method,'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']);
-			if ($this->stable)
+			if (!$this->xslt)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !$return_html)
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && (int) $output_mode != 1)	// not just returning the html
 				{
 					$GLOBALS['phpgw_info']['flags']['java_script'] .= $this->include_java_script(2);
 					$GLOBALS['phpgw']->common->phpgw_header();
@@ -165,41 +166,54 @@
 				'dom_enabled' => $GLOBALS['phpgw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['phpgw_info']['etemplate']['hook_content'],
 				'app_header' => $GLOBALS['phpgw_info']['flags']['app_header'],
+				'output_mode' => $output_mode,
 			),$id);
 
-			if ($return_html)
+			if ((int) $output_mode == 1)	// return html
 			{
-				return $html;
+					return $html;
 			}
-			if ($this->stable)
+			if (!$this->xslt)
 			{
 				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
 				{
-					echo parse_navbar();
+					if((int) $output_mode != 2)
+					{
+						echo parse_navbar();
+					}
+					else
+					{
+						echo '<div id="divMain">'."\n";
+					}
 				}
 				echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;
 
 				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] &&
 				    (!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
 				{
+					if((int) $output_mode == 2)
+					{
+						echo "</div>\n";
+					}
 					$GLOBALS['phpgw']->common->phpgw_footer();
 				}
 			}
 			else
 			{
+				// need to add some logic here to support popups (output_mode==2) for xslt, but who cares ...
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $html));
 			}
 		}
 
-		/*!
-		@function process_exec
-		@abstract Makes the necessary adjustments to _POST before it calls the app's method
-		@discussion This function is only to submit forms to, create with exec.
-		@discussion All eTemplates / forms executed with exec are submited to this function
-		@discussion (via the global index.php and menuaction). It then calls process_show
-		@discussion for the eTemplate (to adjust the content of the _POST) and
-		@discussion ExecMethod's the given callback from the app with the content of the form as first argument.
-		*/
+		/**
+		 * Makes the necessary adjustments to _POST before it calls the app's method
+		 *
+		 * This function is only to submit forms to, create with exec.
+		 * All eTemplates / forms executed with exec are submited to this function
+		 * (via the global index.php and menuaction). It then calls process_show
+		 * for the eTemplate (to adjust the content of the _POST) and
+		 * ExecMethod's the given callback from the app with the content of the form as first argument.
+		 */
 		function process_exec()
 		{
 			//echo "process_exec: _POST ="; _debug_array($_POST);
@@ -244,7 +258,7 @@
 			{
 				if ($session_data['hooked'] != '')	// set previous phpgw_body if we are called as hook
 				{
-					if ($this->stable)
+					if (!$this->xslt)
 					{
 						//echo "<p>process_exec: hook_content set</p>\n";
 						$GLOBALS['phpgw_info']['etemplate']['hook_content'] = $session_data['hooked'];
@@ -260,7 +274,7 @@
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($_GET['menuaction'],$session_data['content'],$session_data['sel_options'],
-					$session_data['readonlys'],$session_data['preserv'],$content);
+					$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],$content);
 			}
 			else
 			{
@@ -291,23 +305,26 @@
 			return $result;
 		}
 
-		/*!
-		@function show
-		@abstract creates HTML from an eTemplate
-		@discussion This is done by calling show_cell for each cell in the form. show_cell itself
-		@discussion calls show recursivly for each included eTemplate.
-		@discussion You can use it in the UI-layer of an app, just make shure to call process_show !!!
-		@discussion This is intended as internal function and should NOT be called by new app's direct,
-		@discussion as it deals with HTML and is so UI-dependent, use exec instead.
-		@param $content array with content for the cells, keys are the names given in the cells/form elements
-		@param $sel_options array with options for the selectboxes, keys are the name of the selectbox
-		@param $readonlys array with names of cells/form-elements to be not allowed to change
-		@param            This is to facilitate complex ACL's which denies access on field-level !!!
-		@param $cname basename of names for form-elements, means index in $_POST
-		@param        eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
-		@param $show_xxx row,col name/index for name expansion
-		@result the generated HTML
-		*/
+		/**
+		 * creates HTML from an eTemplate
+		 *
+		 * This is done by calling show_cell for each cell in the form. show_cell itself
+		 * calls show recursivly for each included eTemplate.
+		 * You can use it in the UI-layer of an app, just make shure to call process_show !!!
+		 * This is intended as internal function and should NOT be called by new app's direct,
+		 * as it deals with HTML and is so UI-dependent, use exec instead.
+		 *
+		 * @param internal
+		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
+		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
+		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
+		 * @param            This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param $cname string basename of names for form-elements, means index in $_POST
+		 *               eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param $show_c string name/index for name expansion
+		 * @param $show_row string name/index for name expansion
+		 * @return string the generated HTML
+		 */
 		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0,
 			$no_table_tr=False,$tr_class='')
 		{
@@ -473,13 +490,15 @@
 			return "\n\n<!-- BEGIN $this->name -->\n$style\n".$html."<!-- END $this->name -->\n\n";
 		}
 
-		/*!
-		@function show_cell
-		@abstract generates HTML for 1 input-field / cell
-		@discussion calls show to generate included eTemplates. Again only an INTERMAL function.
-		@param $cell array with data of the cell: name, type, ...
-		@param for rest see show
-		@result the generated HTML
+		/**
+		 * generates HTML for 1 input-field / cell
+		 *
+		 * calls show to generate included eTemplates. Again only an INTERMAL function.
+		 *
+		 * @internal
+		 * @param $cell array with data of the cell: name, type, ...
+		 * @param for rest see show
+		 * @return the generated HTML
 		*/
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class)
 		{
@@ -858,7 +877,10 @@
 					{
 						$html .= $this->html->select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
 							$cell['no_lang'],$options,$multiple);
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+						if (!isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
+						{
+							$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+						}
 					}
 					break;
 				case 'image':
@@ -959,7 +981,8 @@
 					}
 					break;
 			}
-			if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))	// extension-processing need to be after all other and only with diff. name
+			// extension-processing need to be after all other and only with diff. name
+			if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))	
 			{	// unset it first, if it is already set, to be after the other widgets of the ext.
 				unset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
@@ -967,7 +990,12 @@
 			// save blur-value to strip it in process_exec
 			if (!empty($blur) && isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
 			{
-				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = is_array($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]) ? $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] : array('type' => $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
+				if (!is_array($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
+				{
+					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = array(
+						'type' => $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]
+					);
+				}
 				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]['blur'] = $blur;
 			}
 			if ($extra_label && ($label != '' || $html == ''))
@@ -1014,16 +1042,17 @@
 		}
 
 
-		/*!
-		@function process_show
-		@abstract makes necessary adjustments on _POST after a eTemplate / form gots submitted
-		@discussion This is only an internal function, dont call it direct use only exec
-		@discussion Process_show uses a list of input-fields/widgets generated by show.
-		@syntax process_show(&$content,$to_process,$cname='')
-		@param $content _POST[$cname]
-		@param $to_process list of widgets/form-fields to process
-		@param $cname basename of our returnt content (same as in call to show)
-		@result the adjusted content (by using the var-param &$content)
+		/**
+		 * makes necessary adjustments on $_POST after a eTemplate / form gots submitted
+		 *
+		 * This is only an internal function, dont call it direct use only exec
+		 * Process_show uses a list of input-fields/widgets generated by show.
+		 *
+		 * @param internal
+		 * @param $content array $_POST[$cname], on return the adjusted content
+		 * @param $to_process array list of widgets/form-fields to process
+		 * @param $cname string basename of our returnt content (same as in call to show)
+		 * @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
 		*/
 		function process_show(&$content,$to_process,$cname='')
 		{
@@ -1199,13 +1228,12 @@
 			return count($GLOBALS['phpgw_info']['etemplate']['validation_errors']);
 		}
 
-		/*!
-		@function java_script
-		@syntax java_script( $consider_not_tested_as_enabled = True )
-		@author ralfbecker
-		@abstract is javascript enabled?
-		@discussion this should be tested by the api at login
-		@result true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled 
+		/**
+		 * is javascript enabled?
+		 *
+		 * this should be tested by the api at login
+		 *
+		 * @return boolean true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled 
 		*/
 		function java_script($consider_not_tested_as_enabled = True)
 		{
@@ -1220,14 +1248,12 @@
 				$GLOBALS['phpgw_info']['etemplate']['java_script'].'' == '');
 		}
 
-		/*!
-		@function include_java_script
-		@syntax include_java_script(  )
-		@author ralfbecker
-		@abstract returns the javascript to be included by exec
-		@param $what &1 = returns the test, note: has to be included in the body, not the header\
-			&2 = returns the common functions, best to be included in the header
-		*/
+		/**
+		 * returns the javascript to be included by exec
+		 *
+		 * @param $what &1 = returns the test, note: has to be included in the body, not the header, &2 = returns the common functions, best to be included in the header
+		 * @return string javascript
+		 */
 		function include_java_script($what = 3)
 		{
 			// this is to test if javascript is enabled
