@@ -72,7 +72,7 @@
 
   $phpgw->template->set_file(array("day" => "day.tpl"));
 
-  $phpgw->template->set_block("day");
+  //$phpgw->template->set_block("day");
 
   if ($friendly) {
     $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
