@@ -11,7 +11,7 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-
+	
 	class ui_acl
 	{
 		var $start = 0;
@@ -57,7 +57,7 @@
 			{
 				foreach($_POST['catids'] as $cat_id)
 				{
-					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id]);
+					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],$_POST['inputbook'][$cat_id]);
 				}
 			}
 
@@ -71,6 +71,7 @@
 				'lang_read' => lang('Read permissions'),
 				'lang_write' => lang('Write permissions'),
 				'lang_implies' => lang('implies read permission'),
+				'lang_book' => lang('Direct booking permissions'),
 			));
 
 			$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
@@ -98,7 +99,8 @@
 					'catname' => $cat['name'],
 					'catid' => $cat['id'],
 					'read' => $this->selectlist(PHPGW_ACL_READ),
-					'write' => $this->selectlist(PHPGW_ACL_ADD)
+					'write' => $this->selectlist(PHPGW_ACL_ADD),
+					'book' =>$this->selectlist(PHPGW_ACL_DIRECT_BOOKING)
 				));
 				$GLOBALS['phpgw']->template->parse('Cblock','cat_list',True);
 			}

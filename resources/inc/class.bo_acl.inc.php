@@ -10,8 +10,6 @@
 	* --------------------------------------------                             *
 	\**************************************************************************/
 
-/* $Id: */
-
 	class bo_acl
 	{
 		/*! @var $permissions Holds alls permissions for resources of user */
@@ -30,6 +28,10 @@
 
 		function bo_acl($session=False)
 		{
+			define('PHPGW_ACL_CAT_ADMIN',64);
+			define('PHPGW_ACL_DIRECT_BOOKING',128);
+//			define('PHPGW_ACL_CUSTOM_3',256);
+
 			$this->so = CreateObject('resources.so_acl');
 			$this->permissions = $this->so->get_permissions($GLOBALS['phpgw_info']['user']['account_id'],true);
 			
@@ -59,8 +61,8 @@
 		}
 
 		/*!
-			@function get_readcats
-			@abstract get list of readable cats for current user
+			@function get_cats
+			@abstract get list of cats where current user has given rights
 			@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 			@param int $perm_type one of PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE
 			@return array cat_name => cat_id
@@ -124,10 +126,11 @@
 			return $this->is_permitted($cat_id,PHPGW_ACL_ADD);
 		}
 
-		function set_rights($cat_id,$read,$write)
+		function set_rights($cat_id,$read,$write,$book)
 		{
 			$readcat = $read ? $read : array();
 			$writecat = $write ? $write : array();
+			$bookcat = $book ? $book : array();
 
 			$this->so->remove_location('L' . $cat_id);
 			reset($this->accounts);
@@ -138,6 +141,7 @@
 				$rights = in_array($account_id,$writecat) ?
 					(PHPGW_ACL_READ | PHPGW_ACL_ADD | PHPGW_ACL_EDIT | PHPGW_ACL_DELETE) :
 					(in_array($account_id,$readcat) ? PHPGW_ACL_READ : False);
+				$rights = in_array($account_id,$bookcat) ? ($rights | PHPGW_ACL_DIRECT_BOOKING) : $rights;
 				if ($rights)
 				{
 					$GLOBALS['phpgw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
