@@ -144,7 +144,7 @@
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
-					$acct_exist = $acct->name2id($thisacctid);
+					$acct_exist = $acct->name2id($thisacctlid);
 					if ($acct_exist)
 					{
 						$thisacctid = $acct_exist;
