@@ -320,7 +320,7 @@
 					}
 					$this->data[$key] = $val;   // update internal data
 
-					switch($val['type'])	// protection against query-insertion
+					switch($db_cols[$key]['type'])	// protection against query-insertion
 					{
 						case 'int': case 'auto':
 							$val = intval($val);
@@ -329,9 +329,9 @@
 							$val = "'".$this->db->db_addslashes($val)."'";
 							break;
 					}
-					$cols .= ($cols ? ',' : '').$key;
-					$vals .= ($vals ? ',' : '').$val;
-					$query .= ($query ? ',' : '')."$key=$val";
+					$cols .= (strlen($cols) ? ',' : '').$key;
+					$vals .= (strlen($vals) ? ',' : '').$val;
+					$query .= (strlen($query) ? ',' : '')."$key=$val";
 				}
 			}
 			if (($this->data['info_id'] = intval($values['info_id'])) > 0)
