@@ -33,9 +33,11 @@
        $db2 = $phpgw->db;
 
        // PHP 3 complains that these are not defined when the already are defined.
-       @$phpgw->common->key  = $kp3;
-       @$phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-       $phpgw->crypto = new crypto(@$phpgw->common->key,@$phpgw->common->iv);
+       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
+       $phpgw->common->key .= $sessionid;
+       $phpgw->common->key .= $kp3;
+       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
+       $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
 
        $db->query("select * from phpgw_sessions where session_id='$sessionid'",__LINE__,__FILE__);
        $db->next_record();
@@ -79,8 +81,6 @@
           return False;
        } else {
           // PHP 3 complains that these are not defined when the already are defined.
-          @$phpgw->preferences->preferences = $phpgw_info["user"]["preferences"];
-          @$phpgw->preferences->account_id  = $phpgw_info["user"]["account_id"];
           return True;
        }
     }
@@ -119,11 +119,13 @@
        $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
        $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
 
-       $phpgw->common->key  = $phpgw_info["user"]["kp3"];
+       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
+       $phpgw->common->key .= $phpgw_info["user"]["sessionid"];
+       $phpgw->common->key .= $phpgw_info["user"]["kp3"];
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
        $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
 
-       //$phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
+       $phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
  
        if ($phpgw_info["server"]["usecookies"]) {
           Setcookie("sessionid",$phpgw_info["user"]["sessionid"]);

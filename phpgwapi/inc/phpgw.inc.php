@@ -59,12 +59,6 @@
   {
     global $phpgw,$phpgw_info;
  
-    $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
-    $phpgw->common->key .= $phpgw_info["user"]["sessionid"];
-    $phpgw->common->key .= $phpgw_info["user"]["kp3"];
-    $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-    $phpgw->crypto = new crypto($phpgw->common->key,$phpgw->common->iv);
-
     if ($phpgw_info["flags"]["enable_categories_class"]) {
        include($phpgw_info["server"]["api_inc"] . "/phpgw_categories.inc.php");
        $phpgw->categories = new categories;
@@ -152,11 +146,17 @@
          while($this->db->next_record()) {
            $phpgw_info["server"][$this->db->f("config_name")] = $this->db->f("config_value");
          }
+      } else {
+         $this->db->query("select config_value from config where config_name='encryptkey'",__LINE__,__FILE__);
+         $this->db->next_record();
+         $phpgw_info["server"]["encryptkey"] = $this->db->f("config_value");
       }
 
       /**************************************************************************\
       * Continue adding the classes                                              *
       \**************************************************************************/
+      $this->common        = new common;
+
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         /* Load selected authentication class */
         if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
@@ -191,7 +191,6 @@
      }
       $this->accounts      = new accounts;
       $this->translation   = new translation;
-      $this->common        = new common;
       $this->acl           = new acl;
       $this->hooks         = new hooks;
 

@@ -197,7 +197,7 @@
 
   class preferences
   {
-    var $account_id;
+    var $account_id = 0;
     var $preferences;
 
     function preferences($account_id)
