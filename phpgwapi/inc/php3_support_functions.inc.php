@@ -109,12 +109,13 @@
 				$reversed_array[$value] = $key;
 			}
 		}
-		unset($key, $value);
+		@unset($key);
+		@unset($value);
 		while(list($key,$value) = each($reversed_array))
 		{
-				$new_array[$key] = $value;
+			$new_array[$key] = $value;
 		}
-		return $new_array;		
+		return $new_array;
 	}
 
 	function str_repeat($input,$multiplier)
