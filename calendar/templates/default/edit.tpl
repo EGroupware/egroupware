@@ -32,13 +32,8 @@ function validate_and_submit() {
 
 <!-- BEGIN edit_entry_end -->
 </table>
-<script language="JavaScript">
-  document.writeln ('<INPUT TYPE="button" VALUE="{submit_button}" ONCLICK="validate_and_submit()">');
-</script>
-<noscript>
-<input type="submit" value="{submit_button}">
-</noscript>
-<input type="hidden" name="participant_list" value="">
+<!-- <input type="hidden" name="participant_list" value=""> -->
+<input type="submit" value="{submit_button}" onClick="validate_and_submit()">
 </form>
 
 {delete_button}

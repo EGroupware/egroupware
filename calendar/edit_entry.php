@@ -99,11 +99,7 @@
   if($can_edit) {
     $phpgw->template->set_var("action_url",$phpgw->link("edit_entry_handler.php"));
 
-    if($id) {
-      $common_hidden = "<input type=\"hidden\" name=\"id\" value=\"$id\">\n";
-    } else {
-      $common_hidden = "";
-    }
+    $common_hidden = "<input type=\"hidden\" name=\"id\" value=\"".$id."\">\n";
 
     $phpgw->template->set_var("common_hidden",$common_hidden);
 
@@ -295,8 +291,9 @@
     $phpgw->template->set_var("submit_button",lang("Submit"));
 
     if ($id > 0) {
-      $phpgw->template->set_var("action_url",$phpgw->link("delete.php","id=$id"));
-      $phpgw->template->set_var("action_text",lang("Delete"));
+      $phpgw->template->set_var("action_url_button",$phpgw->link("delete.php","id=$id"));
+      $phpgw->template->set_var("action_text_button",lang("Delete"));
+      $phpgw->template->set_var("action_confirm_button","onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
       $phpgw->template->parse("delete_button","form_button");
       $phpgw->template->pparse("out","edit_entry_end");
     } else {

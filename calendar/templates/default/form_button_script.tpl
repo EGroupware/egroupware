@@ -1,6 +1,6 @@
 <!-- $Id$ -->
 <!-- BEGIN form_button -->
-<form action="{action_url}" method="post" name="{action_text}form">
- <input type="submit" value="{action_text}" {action_confirm}>
+<form action="{action_url_button}" method="post" name="{action_text_button}form">
+ <input type="submit" value="{action_text_button}" {action_confirm_button}>
 </form>
 <!-- END form_button -->
