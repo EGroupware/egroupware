@@ -355,10 +355,14 @@
              $phpgw_info["navbar"][$permission[0]]["title"] = lang($phpgw_info["apps"][$permission[0]]["title"]);
              $phpgw_info["navbar"][$permission[0]]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                             . "/" . $permission[0] . "/index.php");
-             $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
-                                                            . $permission[0] . "/templates/"
-                                                            . $phpgw_info["server"]["template_set"]
-                                                            . "/images/navbar.gif";
+            $icon_file = $phpgw_info["server"]["server_root"]."/".$permission[0] . "/templates/". $phpgw_info["server"]["template_set"]. "/images/navbar.gif";
+            if (file_exists($icon_file)){
+              $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
+                . $permission[0] . "/templates/" . $phpgw_info["server"]["template_set"] . "/images/navbar.gif";
+            }else{
+              $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
+                . $permission[0] . "/templates/default/images/navbar.gif";
+            }
           }
        }
        $phpgw_info["navbar"]["preferences"]["title"] = lang("preferences");
