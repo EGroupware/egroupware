@@ -50,7 +50,14 @@
        case "thu":				$s = "Do";				break;
        case "fri":				$s = "Vr";				break;
        case "sat":				$s = "Za";				break;
-       case "search results":	$s = "Zoek resultaten";	break;
+       case "su":				$s = "Zo";				break;
+       case "m":				$s = "Ma";				break;
+       case "t":				$s = "Di";				break;
+       case "w":				$s = "Wo";				break;
+       case "t":				$s = "Do";				break;
+       case "f":				$s = "Vr";				break;
+       case "sa":				$s = "Za";				break;
+        case "search results":	$s = "Zoek resultaten";	break;
        case "no matches found.":$s = "Geen item gevonden.";break;
        case "1 match found":	$s = "1 item gevonden";	break;
        case "x matches found":	$s = "$m1 items gevonden";break;

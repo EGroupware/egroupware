@@ -7,7 +7,7 @@
     switch($message)
     {
        case "address book":     $s = "Adresboek";    break;
-       case "last name":        $s = "Achteraam";       break;
+       case "last name":        $s = "Achternaam";       break;
        case "first name":       $s = "Voornaam";      break;
        case "e-mail":           $s = "E-Mail";          break;
        case "home phone":       $s = "Telefoon privé";      break;
@@ -22,6 +22,7 @@
        case "state":            $s = "Provincie";           break;
        case "zip code":         $s = "Postcode";        break;
        case "notes":            $s = "Opmerkingen";           break;
+	 case "company name":	  $s = "Bedrijfsnaam";	break;
 
        default: $s = "<b>*</b> ". $message;
     }

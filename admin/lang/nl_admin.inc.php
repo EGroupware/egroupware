@@ -11,7 +11,7 @@
        case "ip":				$s = "IP-adres";					break;
        case "total records":	$s = "Totaal aantal records";		break;
        case "user accounts":	$s = "Gebruiker accounts";		break;
-       case "new group name":	$s = "Nieuwe groepsname";		break;
+       case "new group name":	$s = "Nieuwe groepsnaam";		break;
        case "create group":		$s = "Maak Groep";		break;
        case "kill":				$s = "Verwijder";				break;
        case "idle":				$s = "niet actief";				break;
@@ -25,7 +25,7 @@
        case "base url":			$s = "Basis-URL";			break;
        case "news file":		$s = "Nieuws-bestand";			break;
        case "minutes between reloads":	$s = "Minuten tussen herladen";		break;
-       case "listings displayed":	$s = "Weergevegen lijsten";		break;
+       case "listings displayed":	$s = "Weergegeven lijsten";		break;
        case "news type":		$s = "Nieuwssoort";			break;
        case "user groups":		$s = "Gebruikersgroepen";			break;
        case "headline sites":	$s = "Headline Sites";		break;
@@ -37,6 +37,7 @@
        case "disabled":			$s = "Uitgeschakeld";			break;
        case "last time read":	$s = "Voor het laatst gelezen op";		break;
        case "manager":			$s = "Manager";		break;
+       case "permissions":		$s = "Rechten";			break;
 
        case "are you sure you want to delete this group ?":
 	$s = "Weet u zeker dat u deze groep wilt verwijderen ?"; break;
@@ -51,12 +52,9 @@
 	$s = "Weet u zeker dat u deze account wilt verwijderen ?";	break;
 
        case "are you sure you want to delete this news site ?":
-	$s = "Weet u zeker dat u deze niews-site wilt verwijderen ?";		break;
+	$s = "Weet u zeker dat u deze nieuws-site wilt verwijderen ?";		break;
 
-       case "* make sure that you remove users from this group before you delete it.":
-	$s = "* Vergewis u ervan dat u alle gebruikers uit deze groep verwijderd voor u de groep verwijderd.";	break;
-
-       case "percent of users that logged out":
+      case "percent of users that logged out":
 	$s = "Percentage gebruikers dat uitlogt";			break;
 
        case "list of current users":
@@ -74,7 +72,7 @@
        case "you must enter a password":	$s = "U moet een wachtwoord invoeren";		break;
 
        case "that loginid has already been taken":
-	$s = "Die gevraagde loginid is reeds vergeven";			break;
+	$s = "Die gevraagde gebruikersnaam is reeds vergeven";			break;
 
        case "you must enter a display":		$s = "U moet een weergave opgeven";		break;
        case "you must enter a base url":	$s = "U moet een basis-url opgeven";		break;
@@ -94,6 +92,12 @@
 
        case "select users for inclusion":
         $s = "Selecteer gebruikers";	break;
+
+	case "sorry, the follow users are still a member of the group x":
+        $s = "Sorry, de volgende gebruikers zijn nog lid van de groep $m1";	break;
+
+       case "they must be removed before you can continue":
+        $s = "Zij moeten verwijderd worden voor u verder kunt";	break;
 
        default: $s = "<b>*</b> ". $message;
     }

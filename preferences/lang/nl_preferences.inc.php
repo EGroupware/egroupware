@@ -19,6 +19,9 @@
        case "time format":	$s = "Tijd formaat";			break;
        case "language":		$s = "Taal";			break;
 
+       case "default sorting order":	$s = "Standaard sorteer volgorde";	break;
+       case "default application":		$s = "Standaard toepassing";	break;
+
        case "show text on navigation icons":
 	$s = "Geef tekst weer op de navigatie iconen";			break;
        
@@ -29,7 +32,7 @@
 	$s = "Geef het aantal nieuwe berichten weer op het hoofdscherm";	break;
        
        case "email signature":
-	$s = "E-Mail handtekening";	break;
+	$s = "E-Mail ondertekening";	break;
        
        case "show birthday reminders on main screen":
 	$s = "Geef verjaardags herinneringen op het hoofdscherm weer";	break;
@@ -77,7 +80,7 @@
 	$s = "Selecteer een nieuw thema";	break;
 
        case "note: this feature does *not* change your email password. this will need to be done manually.":
-	$s = "Noot: Deze optie veranderd *niet* uw email-wachtwoord. Dit moet handmatig gebeuren.";	break;
+	$s = "opmerking: Deze optie veranderd *niet* uw email-wachtwoord. Dit moet handmatig gebeuren.";	break;
 
 
        default: $s = "<b>*</b> ". $message;
