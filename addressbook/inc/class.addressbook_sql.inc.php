@@ -321,7 +321,7 @@
         if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
           $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
                      . "a.ab_email,a.ab_wphone,c.company_name "
-                     . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
+                     . "from addressbook as a, customers as c where a.ab_company_id = c.company_id OR a.ab_company_id = '' OR a.ab_company_id = '0' "
                      . "AND $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
         } else {
           $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
