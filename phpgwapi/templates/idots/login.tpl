@@ -84,7 +84,7 @@
 <!-- END language_select -->
 <!-- BEGIN domain_selection -->
 			<tr>
-			<td align="right" tablindex="1">{lang_select_domain}&nbsp;</td>
+			<td align="right" tablindex="1">{lang_select_domain}:&nbsp;</td>
 			<td align="left">{select_domain}</td>
 			<td align="left"></td>
 			</tr>
