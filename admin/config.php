@@ -16,6 +16,7 @@
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => "admin",
+		'enable_nextmatchs_class' => True
 	);
 	include('../header.inc.php');
 
@@ -24,6 +25,13 @@
 		'header' => 'config_head.tpl',
 		'footer' => 'config_footer.tpl'
 	));
+
+	function nextcolor()
+	{
+		global $phpgw,$trcolor;
+		$trcolor = $phpgw->nextmatchs->alternate_row_color($tr_color);
+		echo $trcolor;
+	}
 
 	$c = CreateObject('phpgwapi.config',$appname);
 	$c->read_repository();
@@ -63,13 +71,11 @@
 
 	$t->set_var('title',lang('Site Configuration'));
 	$t->set_var('action_url',$phpgw->link('/admin/config.php'));
+	$t->set_var('th_bg',$phpgw_info["theme"]["th_bg"]);
+	$t->set_var('th_text',$phpgw_info["theme"]["th_text"]);
 	$t->pparse('out','header');
 
-	include(PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP . 'config.inc.php');
-	if ($appname == 'admin')
-	{
-		include(PHPGW_SERVER_ROOT . SEP . 'preferences' . SEP . 'setup' . SEP . 'config.inc.php');
-	}
+	include(PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . 'config.inc.php');
 
 	$t->pparse('out','footer');
 	$phpgw->common->phpgw_footer();

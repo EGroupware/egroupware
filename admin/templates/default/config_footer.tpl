@@ -1,5 +1,5 @@
 <!-- BEGIN footer -->
-  <tr bgcolor="FFFFFF">
+  <tr bgcolor="{th_bg}">
     <td colspan="2">
 &nbsp;
     </td>
