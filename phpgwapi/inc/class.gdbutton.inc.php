@@ -53,9 +53,9 @@
 			$this->filename		= '';
 
 			$this->xspace		= 4;
-			$this->yspace		= 2;
+			$this->yspace		= 4;
 
-			$this->docroot		= $GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT'];
+			$this->save_dir		= $GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT'] . PHPGW_IMAGES_DIR . SEP;
 			$this->img_dir		= PHPGW_IMAGES_DIR . SEP;
 		}
 
@@ -76,7 +76,7 @@
 
 		function gd_button()
 		{
-			if (file_exists(PHPGW_IMAGES_DIR . SEP . $this->filename))
+			if (file_exists($this->save_dir . $this->filename))
 			{
 				return $this->filename;
 			}
@@ -86,8 +86,8 @@
 			$text_width		= ImageFontWidth($this->font_size) * strlen($this->font_text);
 			$text_height	= ImageFontHeight($this->font_size);
 
-			$this->width	= intval($this->xspace + $text_width);
-			$this->height	= intval($this->yspace + $text_height);
+			$this->width	= ($this->xspace*2) + $text_width;
+			$this->height	= $this->yspace + $text_height;
 
 			$this->xpos = ($this->width/2) - ($text_width/2);
 
@@ -119,7 +119,7 @@
 
 		function ttf_button()
 		{
-			if (file_exists(PHPGW_IMAGES_DIR . SEP . $this->filename))
+			if (file_exists($this->save_dir . $this->filename))
 			{
 				return $this->filename;
 			}
@@ -132,8 +132,8 @@
 			$xpad = 10;
 			$ypad = 10;
 
-			$this->width	= $dx + $xpad;
-			$this->height	= $dy + $xpad;
+			$this->width	= ($xpad/2) + $xpad + $dx;
+			$this->height	= $dy + $ypad;
 
 			$this->button_init();
 
@@ -151,7 +151,7 @@
 
 		function save_button()
 		{
-			ImagePNG($this->image,$this->docroot . $this->img_dir . SEP . $this->filename);
+			ImagePNG($this->image,$this->save_dir . $this->filename);
 			ImageDestroy($this->image);
 
 			return $this->filename;
@@ -167,16 +167,16 @@
 
 			$this->file_name();
 
-			if (extension_loaded('gd') && extension_loaded('ttf'))
+			if (extension_loaded('gd') && $config['ttf'] == 'yes')
 			{
 				if (dl('gd.so'))
 				{
-					return '<input type="image" src="' . $this->img_dir . $this->ttf_button() . '" border="0" name="' . $button_name . '">';
+					return '<input type="image" src="' . $this->img_dir . $this->ttf_button() . '" border="0" name="' . $button_name . '" value="' . $button_name . '">';
 				}
 			}
-			elseif(extension_loaded('gd') && !extension_loaded('ttf'))
+			elseif(extension_loaded('gd'))
 			{
-					return '<input type="image" src="' . $this->img_dir . $this->gd_button() . '" border="0" name="' . $button_name . '">';
+					return '<input type="image" src="' . $this->img_dir . $this->gd_button() . '" border="0" name="' . $button_name . '" value="' . $button_name . '">';
 			}
 			else
 			{
