@@ -422,6 +422,7 @@
 				foreach(array(
 					'fn'       => 'cn',
 					'n_family' => 'sn',
+					'n_given'  => 'givenname',
 					'org_name' => 'o'
 				) as $f => $x)
 				{
