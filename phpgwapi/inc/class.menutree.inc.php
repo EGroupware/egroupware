@@ -297,10 +297,10 @@ var $last_column_size;
 				$params='';
 			}
 
-			if($params != '')
-			{
-				$params = '&'.$params;
-			}
+//			if($params != '')
+//			{
+//				$params = '&'.$params;
+//			}
 
         /****************************************/
         /* Always display the extreme top level */
@@ -360,20 +360,28 @@ var $last_column_size;
 			if($tree[$cnt+1][0]>$tree[$cnt][0])
 			{
 				$src = $REQUEST_URI;
-				if(strpos($src,'&p=') != 0)
+				if(ereg('[\?\&]p=',$src) != 0)
 				{
-					$src = str_replace(substr($REQUEST_URI,strpos($src,'&p=')),'',$REQUEST_URI);
+					$src = ereg_replace('[\?\&]p=([0-9\|])','',$REQUEST_URI);
 				}
 //				echo 'Src = '.$src."<br>\n";
+				if(strpos(' '.$src,'?'))
+				{
+					$extra_param = '&';
+				}
+				else
+				{
+					$extra_param = '?';
+				}
 				if($expand[$cnt]==0)
 				{
 //					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
-					$str .= '<td><a href="'.$src.$params.'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
+					$str .= '<td><a href="'.$src.$extra_param.$params.'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
 				}
 				else
 				{
 //					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
-					$str .= '<td><a href="'.$src.$params.'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
+					$str .= '<td><a href="'.$src.$extra_param.$params.'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
 				}
 			}
 			elseif(isset($tree[$cnt+1][0]))
@@ -396,7 +404,15 @@ var $last_column_size;
 				}
 				else
 				{
-					$str .= '<a href="'.$tree[$cnt][2].$params.'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a>';
+					if(strpos(' '.$tree[$cnt][2],'?'))
+					{
+						$extra_param = '&';
+					}
+					else
+					{
+						$extra_param = '?';
+					}
+					$str .= '<a href="'.$tree[$cnt][2].$extra_param.$params.'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a>';
 				}
 			}
 			else
