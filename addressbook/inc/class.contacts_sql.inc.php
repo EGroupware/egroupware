@@ -366,6 +366,8 @@
 					$filtermethod = '('.$filterlist.') ';
 					$fwhere = ' WHERE '; $fand = '';
 				}
+			} else {
+				$filtermethod = "WHERE (tid='n' OR tid is null)";
 			}
 
 			if (!$filtermethod) {
