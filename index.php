@@ -157,24 +157,22 @@
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
-    $phpgw->db->query("select a.owner,a.n_given,a.n_family,b.contact_name,b.contact_value from phpgw_addressbook as a, phpgw_addressbook_extra as b where "
-                    . "b.contact_name='bday' and b.contact_value like '" . $phpgw->common->show_date(time(),"n/d")
-                    . "/%' and (a.owner='" . $phpgw_info["user"]["account_id"] . "' or b.contact_name='access' and b.contact_value ='"
-                    . "public')",__LINE__,__FILE__);
+    $phpgw->db->query("select owner,access,n_given,n_family,bday from phpgw_addressbook where bday like '"
+		. $phpgw->common->show_date(time(),"n/d")."/%'"
+		. " and owner='" . $phpgw_info["user"]["account_id"] . "' and access='public'",__LINE__,__FILE__);
       while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("ab_firstname") . " "
-	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
+        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("n_given") . " "
+	  . $phpgw->db->f("n_family")) . "</td></tr>\n";
       }
       $tomorrow = $phpgw->common->show_date(mktime(0,0,0,
       $phpgw->common->show_date(time(),"m"),
       $phpgw->common->show_date(time(),"d")+1,
       $phpgw->common->show_date(time(),"Y")),"n/d" );
-      $phpgw->db->query("select a.owner,a.n_given,a.n_family,b.contact_name,b.contact_value from phpgw_addressbook as a, phpgw_addressbook_extra as b where "
-                      . "b.contact_name='bday' and b.contact_value like '$tomorrow/%' and (a.owner='"
-                      . $phpgw_info["user"]["account_id"] . "' or b.contact_name='access' and b.contact_value='public')",__LINE__,__FILE__);
+	$phpgw->db->query("select owner,access,n_given,n_family,bday from phpgw_addressbook where bday like '$tomorrow/%'"
+		. " and owner='" . $phpgw_info["user"]["account_id"] . "' and access='public'",__LINE__,__FILE__);
       while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang("Tomorrow is x's birthday.", $phpgw->db->f("ab_firstname") . " "
-	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
+        echo "<tr><td>" . lang("Tomorrow is x's birthday.", $phpgw->db->f("n_given") . " "
+	  . $phpgw->db->f("n_family")) . "</td></tr>\n";
       }
       echo "<!-- Birthday info -->\n";
   }
