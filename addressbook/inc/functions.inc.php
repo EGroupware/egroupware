@@ -47,13 +47,13 @@
 			"adr_street"		=> "street",
 			"adr_locality"		=> "city",   //city
 			"adr_region"		=> "state",     //state
-			"adr_postalcode"	=> "zip", //zip
+			"adr_postalcode"	=> "zip code", //zip
 			"adr_countryname"	=> "country",
 			"adr_work"			=> "",   //yn
 			"adr_home"			=> "",   //yn
 			"adr_parcel"		=> "", //yn
 			"adr_postal"		=> "", //yn
-			"tz"				=> "timezone",
+			"tz"				=> "time zone",
 			"geo"				=> "geo",
 			"a_tel"				=> "home phone",
 			"a_tel_work"		=> "",   //yn
