@@ -641,7 +641,7 @@ class calendar_ extends calendar__
 		return True;
 	}
 
-	function event_recur_daily($stream,$year,$monh,$day,$interval)
+	function event_set_recur_daily($stream,$year,$monh,$day,$interval)
 	{
 	// Legacy Support
 		$this->event->rpt_type = 'daily';
