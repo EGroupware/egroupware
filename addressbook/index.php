@@ -156,6 +156,7 @@
 			$coldata = $entries[$i][$column[0]];
 			// Some fields require special formatting.       
 			if ($column[0] == "url") {
+				if ( !empty($coldata) && (substr($coldata,0,7) != 'http://') ) { $coldata = 'http://' . $coldata; }
 				$ref='<a href="'.$coldata.'" target="_new">';
 				$data=$coldata.'</a>';
 			} elseif ($column[0] == "d_email") {
