@@ -565,13 +565,16 @@
 				case 2:
 					$info .= '&lt;'.$acc['account_lid'].'&gt; ';
 					// fall-through
-				default:
 				case 1:
 					$info .= $acc['account_type'] == 'g' ? lang('group').' '.$acc['account_lid'] :
 						$acc['account_firstname'].' '.$acc['account_lastname'];
 					break;
 				case '0':
 					$info .= $acc['account_lid'];
+					break;
+				default:			// use the phpgw default
+					$info = $GLOBALS['phpgw']->common->display_fullname($acc['account_lid'],
+						$acc['account_firstname'],$acc['account_lastname']);
 					break;
 			}
 			return $info;

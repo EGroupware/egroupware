@@ -534,17 +534,21 @@ implement only a subset of XUL. Here are the main differences:</p>
 			(id will be ''), additional attr see sub-types<p>
 		xml: <b>type</b>: can be set to get several predefined select-contents, in that case you dont need to set
 			the content as descripted above (if set it too its in front of the predefined rows): <br>
-			<b>select-cat</b>: Select a phpgw category<br>
-			<b>select-account</b>: Select a user and/or group, determined by the options-field:<br>
-				,{accounts(default)|groups|both},{0(only lid)|1(only names/default)|2(both)}<br>
-			<b>select-percent, select-priority, select-access, select-country, select-state</b>: as you expect
-				by the name<br>
-			<b>select-year, select-month, select-day</b>: options for year: ,start,end (start and end can be a number of
+			<b>select-cat</b>:<br>
+				Select a phpgw category<br>
+			<b>select-account</b>:<br>
+				Select a user and/or group, determined by the options-field:<br>
+				,{accounts(default)|groups|both},{''(phpgw-default)|0(only lid)|1(only names)|2(both)}<br>
+			<b>select-percent, select-priority, select-access, select-country, select-state</b>:<br>
+				as you expect by the name<br>
+			<b>select-year, select-month, select-day</b>:<br>
+				options for year: ,start,end (start and end can be a number of
 				years from now or if > 100 a absolut year)<br>
-			<b>select-number</b>: Select a number out of a range specified by the options-field:<br>
+			<b>select-number</b>:<br>
+				Select a number out of a range specified by the options-field:<br>
 				,{start (default=1)},{end (incl., default=10)},{decrement (default=1)}<br>
-			<b>select-app</b>: Select an application, availible options: 
-				,{''=user enabled(default)|installed|all)}
+			<b>select-app</b>:<br>
+				Select an application, availible options: ,{''=user enabled(default)|installed|all)}
 	</td>
 </tr>
 <tr>
