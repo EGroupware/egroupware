@@ -69,6 +69,8 @@
 		*/
 		function auth($auth_type='Config')
 		{
+			$remoteip     = $GLOBALS['REMOTE_ADDR'];
+
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
 			$HeaderLogin  = get_var('HeaderLogin', array('POST'));
@@ -79,6 +81,13 @@
 			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
 			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
 			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
+
+			/*
+			if(!empty($remoteip) && !$this->checkip($remoteip))
+			{
+				return False;
+			}
+			*/
 
 			/* 6 cases:
 				1. Logging into header admin
@@ -187,6 +196,60 @@
 				$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 				return False;
 			}
+		}
+
+		function checkip($remoteip='')
+		{
+			$allowed_ips = split(',',$GLOBALS['phpgw_info']['server']['setup_acl']);
+			if(is_array($allowed_ips))
+			{
+				$foundip = False;
+				while(list(,$value) = @each($allowed_ips))
+				{
+					$test = split("\.",$value);
+					if(count($test) < 3)
+					{
+						$value .= ".0.0";
+						$tmp = split("\.",$remoteip);
+						$tmp[2] = 0;
+						$tmp[3] = 0;
+						$testremoteip = join('.',$tmp);
+					}
+					elseif(count($test) < 4)
+					{
+						$value .= ".0";
+						$tmp = split("\.",$remoteip);
+						$tmp[3] = 0;
+						$testremoteip = join('.',$tmp);
+					}
+					elseif(count($test) == 4 &&
+						intval($test[3]) == 0)
+					{
+						$tmp = split("\.",$remoteip);
+						$tmp[3] = 0;
+						$testremoteip = join('.',$tmp);
+					}
+					else
+					{
+						$testremoteip = $remoteip;
+					}
+
+					//echo '<br>testing: ' . $testremoteip . ' compared to ' . $value;
+
+					if($testremoteip == $value)
+					{
+						//echo ' - PASSED!';
+						$foundip = True;
+					}
+				}
+				if(!$foundip)
+				{
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
+					return False;
+				}
+			}
+			return True;
 		}
 
 		/*!
