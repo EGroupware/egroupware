@@ -35,8 +35,8 @@
 	class contacts_
 	{
 		var $db;
-		var $std_table="phpgw_addressbook";
-		var $ext_table="phpgw_addressbook_extra";
+		var $std_table='phpgw_addressbook';
+		var $ext_table='phpgw_addressbook_extra';
 
 		var $account_id;
 		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id
@@ -58,65 +58,65 @@
 
 			// The left side are the array elements used throughout phpgw, right side are the db field names.
 			$this->stock_contact_fields = array(
-				"fn"                     => "fn",        // 'prefix given middle family suffix'
-				"n_given"                => "n_given",   // firstname
-				"n_family"               => "n_family",  // lastname
-				"n_middle"               => "n_middle",
-				"n_prefix"               => "n_prefix",
-				"n_suffix"               => "n_suffix",
-				"sound"                  => "sound",
-				"bday"                   => "bday",
-				"note"                   => "note",
-				"tz"                     => "tz",
-				"geo"                    => "geo",
-				"url"                    => "url",
-				"pubkey"                 => "pubkey",
+				'fn'                     => 'fn',        // 'prefix given middle family suffix'
+				'n_given'                => 'n_given',   // firstname
+				'n_family'               => 'n_family',  // lastname
+				'n_middle'               => 'n_middle',
+				'n_prefix'               => 'n_prefix',
+				'n_suffix'               => 'n_suffix',
+				'sound'                  => 'sound',
+				'bday'                   => 'bday',
+				'note'                   => 'note',
+				'tz'                     => 'tz',
+				'geo'                    => 'geo',
+				'url'                    => 'url',
+				'pubkey'                 => 'pubkey',
 
-				"org_name"               => "org_name",  // company
-				"org_unit"               => "org_unit",  // division
-				"title"                  => "title",
+				'org_name'               => 'org_name',  // company
+				'org_unit'               => 'org_unit',  // division
+				'title'                  => 'title',
 
-				"adr_one_street"         => "adr_one_street",
-				"adr_one_locality"       => "adr_one_locality", 
-				"adr_one_region"         => "adr_one_region", 
-				"adr_one_postalcode"     => "adr_one_postalcode",
-				"adr_one_countryname"    => "adr_one_countryname",
-				"adr_one_type"           => "adr_one_type", // address is domestic/intl/postal/parcel/work/home
-				"label"                  => "label", // address label
+				'adr_one_street'         => 'adr_one_street',
+				'adr_one_locality'       => 'adr_one_locality', 
+				'adr_one_region'         => 'adr_one_region', 
+				'adr_one_postalcode'     => 'adr_one_postalcode',
+				'adr_one_countryname'    => 'adr_one_countryname',
+				'adr_one_type'           => 'adr_one_type', // address is domestic/intl/postal/parcel/work/home
+				'label'                  => 'label', // address label
 
-				"adr_two_street"         => "adr_two_street",
-				"adr_two_locality"       => "adr_two_locality", 
-				"adr_two_region"         => "adr_two_region", 
-				"adr_two_postalcode"     => "adr_two_postalcode",
-				"adr_two_countryname"    => "adr_two_countryname",
-				"adr_two_type"           => "adr_two_type", // address is domestic/intl/postal/parcel/work/home
+				'adr_two_street'         => 'adr_two_street',
+				'adr_two_locality'       => 'adr_two_locality', 
+				'adr_two_region'         => 'adr_two_region', 
+				'adr_two_postalcode'     => 'adr_two_postalcode',
+				'adr_two_countryname'    => 'adr_two_countryname',
+				'adr_two_type'           => 'adr_two_type', // address is domestic/intl/postal/parcel/work/home
 
-				"tel_work"               => "tel_work",
-				"tel_home"               => "tel_home",
-				"tel_voice"              => "tel_voice",
-				"tel_fax"                => "tel_fax", 
-				"tel_msg"                => "tel_msg",
-				"tel_cell"               => "tel_cell",
-				"tel_pager"              => "tel_pager",
-				"tel_bbs"                => "tel_bbs",
-				"tel_modem"              => "tel_modem",
-				"tel_car"                => "tel_car",
-				"tel_isdn"               => "tel_isdn",
-				"tel_video"              => "tel_video",
-				"tel_prefer"             => "tel_prefer", // home, work, voice, etc
-				"email"                  => "email",
-				"email_type"             => "email_type", //'INTERNET','CompuServe',etc...
-				"email_home"             => "email_home",
-				"email_home_type"        => "email_home_type" //'INTERNET','CompuServe',etc...
+				'tel_work'               => 'tel_work',
+				'tel_home'               => 'tel_home',
+				'tel_voice'              => 'tel_voice',
+				'tel_fax'                => 'tel_fax', 
+				'tel_msg'                => 'tel_msg',
+				'tel_cell'               => 'tel_cell',
+				'tel_pager'              => 'tel_pager',
+				'tel_bbs'                => 'tel_bbs',
+				'tel_modem'              => 'tel_modem',
+				'tel_car'                => 'tel_car',
+				'tel_isdn'               => 'tel_isdn',
+				'tel_video'              => 'tel_video',
+				'tel_prefer'             => 'tel_prefer', // home, work, voice, etc
+				'email'                  => 'email',
+				'email_type'             => 'email_type', //'INTERNET','CompuServe',etc...
+				'email_home'             => 'email_home',
+				'email_home_type'        => 'email_home_type' //'INTERNET','CompuServe',etc...
 			);
 
 			$this->non_contact_fields = array(
-				"id"     => "id",
-				"lid"    => "lid",
-				"tid"    => "tid",
-				"cat_id" => "cat_id",
-				"access" => "access",
-				"owner"  => "owner"
+				'id'     => 'id',
+				'lid'    => 'lid',
+				'tid'    => 'tid',
+				'cat_id' => 'cat_id',
+				'access' => 'access',
+				'owner'  => 'owner'
 			);
 
 			/* Used to flag an address as being:
@@ -125,43 +125,43 @@
 			   postal(default)
 			*/
 			$this->adr_types = array(
-				"dom"    => lang("Domestic"),
-				"intl"   => lang("International"),
-				"parcel" => lang("Parcel"),
-				"postal" => lang("Postal")
+				'dom'    => lang('Domestic'),
+				'intl'   => lang('International'),
+				'parcel' => lang('Parcel'),
+				'postal' => lang('Postal')
 			);
 
 			// Used to set preferred number field
 			$this->tel_types = array(
-				"work"  => "work",
-				"home"  => "home",
-				"voice" => "voice",
-				"fax"   => "fax",
-				"msg"   => "msg",
-				"cell"  => "cell",
-				"pager" => "pager",
-				"bbs"   => "bbs",
-				"modem" => "modem",
-				"car"   => "car",
-				"isdn"  => "isdn",
-				"video" => "video"
+				'work'  => 'work',
+				'home'  => 'home',
+				'voice' => 'voice',
+				'fax'   => 'fax',
+				'msg'   => 'msg',
+				'cell'  => 'cell',
+				'pager' => 'pager',
+				'bbs'   => 'bbs',
+				'modem' => 'modem',
+				'car'   => 'car',
+				'isdn'  => 'isdn',
+				'video' => 'video'
 			);
 
 			// Used to set email_type fields
 			$this->email_types = array(
-				"INTERNET"   => "INTERNET",
-				"CompuServe" => "CompuServe",
-				"AOL"        => "AOL",
-				"Prodigy"    => "Prodigy",
-				"eWorld"     => "eWorld",
-				"AppleLink"  => "AppleLink",
-				"AppleTalk"  => "AppleTalk",
-				"PowerShare" => "PowerShare",
-				"IBMMail"    => "IBMMail",
-				"ATTMail"    => "ATTMail",
-				"MCIMail"    => "MCIMail",
-				"X.400"      => "X.400",
-				"TLX"        => "TLX"
+				'INTERNET'   => 'INTERNET',
+				'CompuServe' => 'CompuServe',
+				'AOL'        => 'AOL',
+				'Prodigy'    => 'Prodigy',
+				'eWorld'     => 'eWorld',
+				'AppleLink'  => 'AppleLink',
+				'AppleTalk'  => 'AppleTalk',
+				'PowerShare' => 'PowerShare',
+				'IBMMail'    => 'IBMMail',
+				'ATTMail'    => 'ATTMail',
+				'MCIMail'    => 'MCIMail',
+				'X.400'      => 'X.400',
+				'TLX'        => 'TLX'
 			);
 		}
 
@@ -172,9 +172,11 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if (count($stock_fieldnames)) {
+			if (count($stock_fieldnames))
+			{
 				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",") {
+				if ($t_fields == ",")
+				{
 					unset($t_fields);
 				}
 			}
@@ -184,55 +186,65 @@
 			$this->db->query("select id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
 
-			$return_fields[0]["id"]        = $this->db->f("id"); // unique id
-			$return_fields[0]["lid"]       = $this->db->f("lid"); // lid for group/account records
-			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
-			$return_fields[0]["owner"]     = $this->db->f("owner"); // id of owner/parent for the record
-			$return_fields[0]["access"]    = $this->db->f("access"); // public/private
-			$return_fields[0]["cat_id"]    = $this->db->f("cat_id");
+			$return_fields[0]['id']        = $this->db->f('id'); // unique id
+			$return_fields[0]['lid']       = $this->db->f('lid'); // lid for group/account records
+			$return_fields[0]['tid']       = $this->db->f('tid'); // type id (g/u) for groups/accounts
+			$return_fields[0]['owner']     = $this->db->f('owner'); // id of owner/parent for the record
+			$return_fields[0]['access']    = $this->db->f('access'); // public/private
+			$return_fields[0]['cat_id']    = $this->db->f('cat_id');
 
-			if (gettype($stock_fieldnames) == "array") {
-				while (list($f_name) = each($stock_fieldnames)) {
+			if (gettype($stock_fieldnames) == 'array')
+			{
+				while (list($f_name) = each($stock_fieldnames))
+				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
 			}
 
 			// Setup address type fields
-			if ($this->db->f("adr_one_type")) {
-				$one_type = $this->db->f("adr_one_type");
+			if ($this->db->f('adr_one_type'))
+			{
+				$one_type = $this->db->f('adr_one_type');
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types)) {
+				while (list($name,$val) = each($this->adr_types))
+				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($this->db->f("adr_two_type")) {
-				$two_type = $this->db->f("adr_two_type");
+			if ($this->db->f('adr_two_type'))
+			{
+				$two_type = $this->db->f('adr_two_type');
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types)) {
+				while (list($name,$val) = each($this->adr_types))
+				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
-			while ($this->db2->next_record()) {
+			while ($this->db2->next_record())
+			{
 				// If its not in the list to be returned, don't return it.
 				// This is still quicker then 5(+) separate queries
-				if ($extra_fields[$this->db2->f("contact_name")]) {
-					$return_fields[0][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+				if ($extra_fields[$this->db2->f('contact_name')])
+				{
+					$return_fields[0][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
 				}
 			}
 			return $return_fields;
 		}
 
-		function read_last_entry($fields="")
+		function read_last_entry($fields='')
 		{
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if (count($stock_fieldnames)) {
+			if (count($stock_fieldnames))
+			{
 				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",") {
+				if ($t_fields == ",")
+				{
 					unset($t_fields);
 				}
 			}
@@ -247,41 +259,49 @@
 			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$return_fields[0]["id"]		= $this->db->f("id");
-			$return_fields[0]["lid"]    = $this->db->f("lid");
-			$return_fields[0]["tid"]    = $this->db->f("tid");
-			$return_fields[0]["owner"]  = $this->db->f("owner");
-			$return_fields[0]["access"] = $this->db->f("access"); // public/private
-			$return_fields[0]["cat_id"]    = $this->db->f("cat_id");
+			$return_fields[0]['id']		= $this->db->f('id');
+			$return_fields[0]['lid']    = $this->db->f('lid');
+			$return_fields[0]['tid']    = $this->db->f('tid');
+			$return_fields[0]['owner']  = $this->db->f('owner');
+			$return_fields[0]['access'] = $this->db->f('access'); // public/private
+			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
-			if (gettype($stock_fieldnames) == "array") {
-				while (list($f_name) = each($stock_fieldnames)) {
+			if (gettype($stock_fieldnames) == 'array')
+			{
+				while (list($f_name) = each($stock_fieldnames))
+				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
 				}
 			}
 
 			// Setup address type fields
-			if ($this->db->f("adr_one_type")) {
-				$one_type = $this->db->f("adr_one_type");
+			if ($this->db->f('adr_one_type'))
+			{
+				$one_type = $this->db->f('adr_one_type');
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types)) {
+				while (list($name,$val) = each($this->adr_types))
+				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($this->db->f("adr_two_type")) {
-				$two_type = $this->db->f("adr_two_type");
+			if ($this->db->f('adr_two_type'))
+			{
+				$two_type = $this->db->f('adr_two_type');
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types)) {
+				while (list($name,$val) = each($this->adr_types))
+				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='" . $this->db->f("id") . "'",__LINE__,__FILE__);
-			while ($this->db2->next_record()) {
+			while ($this->db2->next_record())
+			{
 				// If its not in the list to be returned, don't return it.
 				// This is still quicker then 5(+) separate queries
-				if ($extra_fields[$this->db2->f("contact_name")]) {
-					$return_fields[0][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+				if ($extra_fields[$this->db2->f('contact_name')])
+				{
+					$return_fields[0][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
 				}
 			}
 			return $return_fields;
@@ -292,15 +312,15 @@
 		{
 			global $phpgw,$phpgw_info;
 
-			$tmp_table="phpgw_addressbook_user".$phpgw_info["user"]["account_id"];
-
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-			if (count($stock_fieldnames)) {
+			if (count($stock_fieldnames))
+			{
 				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",") {
+				if ($t_fields == ",")
+				{
 					unset($t_fields);
 				}
 			}
@@ -319,18 +339,24 @@
 
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
 				$filterarray = split(',',$filter);
-				if ($filterarray[1]) {
+				if ($filterarray[1])
+				{
 					$i=0;
-					for ($i=0;$i<count($filterarray);$i++) {
+					for ($i=0;$i<count($filterarray);$i++)
+					{
 						list($name,$value) = split("=",$filterarray[$i]);
-						if ($name) {
+						if ($name)
+						{
 							if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#"; }
 							$filterfields[$name] = $value;
 						}
 					}
-				} else {
+				}
+				else
+				{
 					list($name,$value) = split('=',$filter);
-					if ($DEBUG) {
+					if ($DEBUG)
+					{
 						echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#";
 					}
 					$filterfields = array($name => $value);
@@ -340,25 +366,36 @@
 				// below
 				$i=0;
 				reset($filterfields);
-				while (list($name,$value) = each($filterfields)) {
+				while (list($name,$value) = each($filterfields))
+				{
 					if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#"; }
 					$isstd=0;
-					if ($name && empty($value)) {
+					if ($name && empty($value))
+					{
 						if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is empty (NULL)"; }
-						while (list($fname,$fvalue)=each($check_stock)) {
-							if ($fvalue==$name) {
+						while (list($fname,$fvalue)=each($check_stock))
+						{
+							if ($fvalue==$name)
+							{
 								$filterlist .= $name.' is NULL,';
 								if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is a stock field"; }
 								break;
 							}
 						}
-					} elseif($name && $value) {
+					}
+					elseif($name && $value)
+					{
 						reset($check_stock);
-						while (list($fname,$fvalue)=each($check_stock)) {
-							if ($fvalue==$name) {
-								if (gettype($value) == "integer") {
+						while (list($fname,$fvalue)=each($check_stock))
+						{
+							if ($fvalue==$name)
+							{
+								if (gettype($value) == "integer")
+								{
 									$filterlist .= $name."=".$value.",";
-								} else {
+								}
+								else
+								{
 									$filterlist .= $name."='".$value."',";
 								}
 								break;
@@ -370,25 +407,32 @@
 				$filterlist  = substr($filterlist,0,-1);
 				$filterlist  = ereg_replace(","," AND ",$filterlist);
 
-				if ($DEBUG) {
+				if ($DEBUG)
+				{
 					echo "<br>DEBUG - Filter output string: #".$filterlist."#";
 				}
 
-				if ($filterlist) {
+				if ($filterlist)
+				{
 					$filtermethod = '('.$filterlist.') ';
 					$fwhere = ' WHERE '; $fand = ' AND ';
 				}
-			} else {
+			}
+			else
+			{
 				$filtermethod = " AND (tid='n' OR tid is null)";
 			}
 
-			if (!$filtermethod) {
+			if (!$filtermethod)
+			{
 				if($phpgw_info['user']['account_id'])
 				{
 					$fwhere .= " (owner=" . $phpgw_info['user']['account_id'];
 					$fand   .= " (owner=" . $phpgw_info['user']['account_id'];
 				}
-			} else {
+			}
+			else
+			{
 				if($phpgw_info['user']['account_id'])
 				{
 					$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
@@ -418,20 +462,24 @@
 				$fwhere .= ') '; $fand .= ') ';
 			}
 
-
-			if ($DEBUG && $filtermethod) {
+			if ($DEBUG && $filtermethod)
+			{
 				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
 			}
 
 			if (!$sort) { $sort = "ASC"; }
 
-			if ($order) {
+			if ($order)
+			{
 				$ordermethod = "order by $order $sort ";
-			} else {
+			}
+			else
+			{
 				$ordermethod = "order by n_family,n_given,email $sort";
 			}
 
-			if ($DEBUG && $ordermethod) {
+			if ($DEBUG && $ordermethod)
+			{
 				echo "<br>DEBUG - $ordermethod";
 			}
 			
@@ -453,7 +501,8 @@
 
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
-			if ($query) {
+			if ($query)
+			{
 				$this->db3->query("SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
 					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
 					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
@@ -471,7 +520,9 @@
 					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
 					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod . " "
 					. $limit,__LINE__,__FILE__);
-			} else {
+			}
+			else
+			{
 				$this->db3->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod,__LINE__,__FILE__);
 				$this->total_records = $this->db3->num_rows();
@@ -481,30 +532,35 @@
 			}
 
 			$i=0;
-			while ($this->db->next_record()) {
+			while ($this->db->next_record())
+			{
 				// unique id, lid for group/account records,
 				// type id (g/u) for groups/accounts, and
 				// id of owner/parent for the record
-				$return_fields[$i]["id"]     = $this->db->f("id");
-				$return_fields[$i]["lid"]    = $this->db->f("lid");
-				$return_fields[$i]["tid"]    = $this->db->f("tid");
-				$return_fields[$i]["owner"]  = $this->db->f("owner");
-				$return_fields[$i]["access"] = $this->db->f("access"); // public/private
-				$return_fields[$i]["cat_id"] = $this->db->f("cat_id");
+				$return_fields[$i]['id']     = $this->db->f('id');
+				$return_fields[$i]['lid']    = $this->db->f('lid');
+				$return_fields[$i]['tid']    = $this->db->f('tid');
+				$return_fields[$i]['owner']  = $this->db->f('owner');
+				$return_fields[$i]['access'] = $this->db->f('access'); // public/private
+				$return_fields[$i]['cat_id'] = $this->db->f('cat_id');
 
-				if (gettype($stock_fieldnames) == "array") {
-					while (list($f_name) = each($stock_fieldnames)) {
+				if (gettype($stock_fieldnames) == 'array')
+				{
+					while (list($f_name) = each($stock_fieldnames))
+					{
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
 					reset($stock_fieldnames);
 				}
 				$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 					. $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
-				while ($this->db2->next_record()) {
+				while ($this->db2->next_record())
+				{
 					// If its not in the list to be returned, don't return it.
 					// This is still quicker then 5(+) separate queries
-					if ($extra_fields[$this->db2->f("contact_name")]) {
-						$return_fields[$i][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
+					if ($extra_fields[$this->db2->f('contact_name')])
+					{
+						$return_fields[$i][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
 					}
 				}
 				$i++;
@@ -517,7 +573,8 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//$this->db->lock(array("contacts"));
-			if ($fields['lid']) {
+			if ($fields['lid'])
+			{
 				$lid[0] = 'lid,';
 				$lid[1] = $fields['lid']."','";
 			}
@@ -530,8 +587,10 @@
 			$this->db->next_record();
 			$id = $this->db->f(0);
 			//$this->db->unlock();
-			if (count($extra_fields)) {
-				while (list($name,$value) = each($extra_fields)) {
+			if (count($extra_fields))
+			{
+				while (list($name,$value) = each($extra_fields))
+				{
 					$this->db->query("insert into $this->ext_table values ('$id','" . $this->account_id . "','"
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 				}
@@ -563,33 +622,44 @@
 			// First make sure that id number exists
 			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
-			if (! $this->db->f(0)) {
+			if (!$this->db->f(0))
+			{
 				return False;
 			}
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-			if (count($stock_fields)) {
-				while (list($stock_fieldname) = each($stock_fieldnames)) {
+			if (count($stock_fields))
+			{
+				while (list($stock_fieldname) = each($stock_fieldnames))
+				{
 					$ta[] = $stock_fieldname . "='" . addslashes($stock_fields[$stock_fieldname]) . "'";
 				}
 				$fields_s = "," . implode(",",$ta);
-				if ($field_s == ",") {
+				if ($field_s == ",")
+				{
 					unset($field_s);
 				}
 				$this->db->query("update $this->std_table set access='$access',cat_id='$cat_id', tid='$tid' $fields_s where "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 
-			while (list($x_name,$x_value) = each($extra_fields)) {
-				if ($this->field_exists($id,$x_name)) {
-					if (! $x_value) {
+			while (list($x_name,$x_value) = each($extra_fields))
+			{
+				if ($this->field_exists($id,$x_name))
+				{
+					if (!$x_value)
+					{
 						$this->delete_single_extra_field($id,$x_name);
-					} else {
+					}
+					else
+					{
 						$this->db->query("update $this->ext_table set contact_value='" . addslashes($x_value)
 						. "',contact_owner='$owner' where contact_name='" . addslashes($x_name)
 						. "' and contact_id='$id'",__LINE__,__FILE__);
 					}
-				} else {
+				}
+				else
+				{
 					$this->add_single_extra_field($id,$owner,$x_name,$x_value);
 				}
 			}
