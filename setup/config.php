@@ -40,6 +40,16 @@
   if ($submit) {
      $db->query("delete from config");
      while ($newsetting = each($newsettings)) {
+	if($newsetting[0] == "nntp_server") {
+	  $db->query("select nntp_server from config");
+	  if($db->num_rows()) {
+	    $db->next_record();
+	    if($db->f("nntp_server") <> $newsetting[1]) {
+	      $db->query("DELETE FROM newsgroups");
+	      $db->query("DELETE FROM users_newsgroups");
+	    }
+	  }
+	}
         $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
         		  . "','" . addslashes($newsetting[1]) . "')");
      }
