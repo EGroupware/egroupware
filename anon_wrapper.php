@@ -30,5 +30,5 @@
 	include('./header.inc.php');
 
 	$sessionid = $phpgw->session->create($login,$passwd);
-	$phpgw->redirect($phpgw->link($phpgw_info['server']['webserver_url'] . '/index.php'));
+	$phpgw->redirect($phpgw->link('/index.php'));
 ?>
