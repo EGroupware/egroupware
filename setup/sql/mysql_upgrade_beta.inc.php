@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -9,7 +9,7 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
- /* $Id$ */
+  /* $Id$ */
 
   function v0_9_1to0_9_2(){
     global $currentver, $phpgw_info, $db;

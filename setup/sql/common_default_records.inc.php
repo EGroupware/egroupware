@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -22,7 +22,7 @@
     $db->query("insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware')");
     $db->query("insert into config (config_name, config_value) values ('auth_type', 'sql')");
     $db->query("insert into config (config_name, config_value) values ('ldap_host', 'localhost')");
-    $db->query("insert into config (config_name, config_value) values ('ldap_context', 'o=phpGroupWare')");
+    $db->query("insert into config (config_name, config_value) values ('ldap_context', 'ou=People,dc=my-domain,dc=com')");
     $db->query("insert into config (config_name, config_value) values ('ldap_encryption_type', 'DES')");
     $db->query("insert into config (config_name, config_value) values ('ldap_root_dn', 'cn=Manager,dc=my-domain,dc=com')");
     $db->query("insert into config (config_name, config_value) values ('ldap_root_pw', 'secret')");

@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -9,7 +9,7 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
- /* $Id$ */
+  /* $Id$ */
 
   function update_version_table($tableschanged = True){
     global $currentver, $phpgw_info, $db, $tablechanges;

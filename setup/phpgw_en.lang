@@ -1,0 +1,436 @@
+(for weekly)	calendar	en	(for Weekly)
+1 match found	calendar	en	1 match found
+1 message has been deleted	email	en	1 message has been deleted
+a	calendar	en	
+access	common	en	Access
+access type	common	en	Access type
+access type	todo	en	Access type
+account active	admin	en	Account active
+account has been created	common	en	Account has been created
+account has been deleted	common	en	Account has been deleted
+account has been updated	common	en	Account has been updated
+account preferences	common	en	Account Preferences
+active	admin	en	Active
+add	common	en	Add
+add a single pharse	transy	en	Add a single pharse
+add new application	admin	en	Add new application
+add new pharse	transy	en	Add new pharse
+add to addressbook	email	en	Add to addressbook
+address book	common	en	Address Book
+address book	addressbook	en	Address Book
+addressbook	common	en	Addressbook
+addressbook preferences	common	en	Addressbook preferences
+addsub	todo	en	AddSub
+admin	common	en	Admin
+administration	common	en	Administration
+all	transy	en	All
+all records and account information will be lost!	admin	en	All records and account information will be lost!
+anonymous user	admin	en	Anonymous user
+any	transy	en	Any
+application	transy	en	Application
+application name	admin	en	Application name
+application title	admin	en	Application title
+applications	admin	en	Applications
+april	common	en	April
+are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
+are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
+are you sure you want to delete this entry	todo	en	Are you sure you want to delete this entry?
+are you sure you want to delete this entry ?	common	en	Are you sure you want to delete this entry ?
+are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
+are you sure you want to delete this news site ?	admin	en	Are you sure you want to delete this news site ?
+are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
+are you sure\nyou want to\ndelete this entry ?	calendar	en	Are you sure\nyou want to\ndelete this entry ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	en	Are you sure\nyou want to\ndelete this entry ?\n\nThis will delete\nthis entry for all users.
+august	common	en	August
+author	nntp	en	Author
+available groups	nntp	en	Available Groups
+bad login or password	login	en	Bad login or password
+base url	admin	en	Base URL
+birthday	addressbook	en	Birthday
+book marks	common	en	Book marks
+bookmarks	common	en	Bookmarks
+brief description	calendar	en	Brief Description
+calendar	common	en	calendar
+calendar - add	calendar	en	Calendar - Add
+calendar - edit	calendar	en	Calendar - Edit
+calendar preferences	common	en	Calendar preferences
+cancel	common	en	Cancel
+cancel	filemanager	en	Cancel
+cc	email	en	CC
+change	common	en	Change
+change your password	preferences	en	Change your Password
+change your profile	preferences	en	Change your profile
+change your settings	preferences	en	Change your Settings
+chat	common	en	Chat
+city	addressbook	en	City
+clear	common	en	Clear
+clear form	common	en	Clear Form
+clear form	todo	en	Clear form
+clipboard_contents	filemanager	en	Clipboard Contents
+company name	addressbook	en	company name
+completed	todo	en	completed
+compose	email	en	Compose
+copy	common	en	Copy
+copy	filemanager	en	Copy
+copy_as	filemanager	en	Copy as
+create	common	en	Create
+create	filemanager	en	Create
+create group	admin	en	Create Group
+create lang.sql file	transy	en	Create lang.sql file
+create new langague set	transy	en	Create new langague set
+created by	common	en	Created By
+created by	todo	en	Created By
+current users	common	en	Current users
+current_file	filemanager	en	Current File
+daily	calendar	en	Daily
+date	common	en	Date
+date	email	en	Date
+date	nntp	en	Date
+date due	todo	en	Date Due
+date format	preferences	en	Date format
+days datedue	todo	en	days datedue
+days repeated	calendar	en	days repeated
+december	common	en	December
+default application	preferences	en	Default application
+default sorting order	email	en	Default sorting order
+delete	common	en	Delete
+delete	email	en	Delete
+delete	filemanager	en	Delete
+description	calendar	en	Description
+disabled	admin	en	Disabled
+display	admin	en	Display
+display missing pharases in lang set	transy	en	Display missing pharases in lang set
+done	common	en	Done
+download	filemanager	en	Download
+do_delete	filemanager	en	Delete
+duration	calendar	en	Duration
+e-mail	common	en	E-Mail
+e-mail	addressbook	en	E-Mail
+e-mail preferences	common	en	E-Mail preferences
+edit	common	en	Edit
+edit	filemanager	en	Edit
+edit application	admin	en	Edit application
+edit group	admin	en	Edit Group
+email	email	en	E-Mail
+email	common	en	EMail
+email signature	email	en	E-Mail signature
+enabled	admin	en	Enabled
+enter your new password	preferences	en	Enter your new password
+entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
+entry updated sucessfully	common	en	Entry updated sucessfully
+error	common	en	Error
+error creating x x directory	common	en	Error creating %1%2 directory
+error deleting x x directory	common	en	Error deleting %1%2 directory
+error renaming x x directory	common	en	Error renaming %1%2 directory
+err_saving_file	filemanager	en	Error saving file to disk
+exit	common	en	Exit
+exit	filemanager	en	Exit
+fax	addressbook	en	Fax
+february	common	en	February
+file manager	common	en	File manager
+files	email	en	Files
+files	filemanager	en	Files
+file_upload	filemanager	en	File Upload
+filter	common	en	Filter
+first name	common	en	First name
+first name	addressbook	en	First Name
+first page	common	en	first page
+folder	email	en	Folder
+forum	common	en	Forum
+forward	email	en	Forward
+fr	calendar	en	F
+frequency	calendar	en	Frequency
+fri	calendar	en	Fri
+friday	common	en	Friday
+from	email	en	From
+ftp	common	en	FTP
+full description	calendar	en	Full Description
+generate new lang.sql file	transy	en	Generate new lang.sql file
+generate printer-friendly version	calendar	en	Generate printer-friendly version
+global public	common	en	Global Public
+go!	calendar	en	Go!
+group access	common	en	Group Access
+group has been added	common	en	Group has been added
+group has been deleted	common	en	Group has been deleted
+group has been updated	common	en	Group has been updated
+group name	admin	en	Group Name
+group public	common	en	Group Public
+groups	common	en	Groups
+groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
+group_files	filemanager	en	group files
+headline sites	admin	en	Headline Sites
+headlines	common	en	Headlines
+help	common	en	Help
+high	common	en	High
+home	common	en	Home
+home phone	addressbook	en	Home Phone
+human resources	common	en	Human Resources
+idle	admin	en	idle
+image	email	en	Image
+import lang set	transy	en	Import lang set
+installed applications	admin	en	Installed applications
+inventory	common	en	Inventory
+ip	admin	en	IP
+it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+january	common	en	January
+july	common	en	July
+june	common	en	June
+kill	admin	en	Kill
+language	preferences	en	Language
+last name	common	en	Last name
+last name	addressbook	en	Last Name
+last page	common	en	last page
+last time read	admin	en	Last Time Read
+last updated	todo	en	Last Updated
+last x logins	admin	en	Last %1 logins
+list of current users	admin	en	list of current users
+listings displayed	admin	en	Listings Displayed
+login	common	en	Login
+login	login	en	Login
+login time	admin	en	Login Time
+loginid	admin	en	LoginID
+logout	common	en	Logout
+low	common	en	Low
+manager	admin	en	Manager
+march	common	en	March
+max matchs per page	preferences	en	Max matches per page
+may	common	en	May
+medium	common	en	Medium
+message	email	en	Message
+message	transy	en	Message
+message x	nntp	en	Message %1
+messages	email	en	Messages
+minutes	calendar	en	minutes
+minutes between reloads	admin	en	Minutes between Reloads
+mo	calendar	en	M
+mobile	addressbook	en	Mobile
+mon	calendar	en	Mon
+monday	common	en	Monday
+monitor	email	en	Monitor
+monitor	nntp	en	Monitor
+monitor newsgroups	preferences	en	Monitor Newsgroups
+month	calendar	en	Month
+monthly (by date)	calendar	en	Monthly (by date)
+monthly (by day)	calendar	en	Monthly (by day)
+move selected messages into	email	en	Move Selected Messages into
+name	common	en	Name
+network news	admin	en	Network News
+new entry	calendar	en	New Entry
+new entry added sucessfully	common	en	New entry added sucessfully
+new group name	admin	en	New group name
+new message	email	en	New message
+new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
+new pharse has been added	common	en	New pharse has been added
+new pharse has been added	transy	en	New pharse has been added
+news file	admin	en	News File
+news headlines	common	en	News headlines
+news reader	common	en	News Reader
+news type	admin	en	News Type
+newsgroups	nntp	en	Newsgroups
+new_file	filemanager	en	New File
+next	email	en	Next
+next	nntp	en	Next
+next page	common	en	next page
+nntp	common	en	NNTP
+no	common	en	No
+no	filemanager	en	No
+no matches found.	calendar	en	No matches found.
+no subject	email	en	No Subject
+none	calendar	en	None
+normal	common	en	Normal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
+notes	addressbook	en	Notes
+november	common	en	November
+no_file_name	filemanager	en	No filename was specified
+october	common	en	October
+ok	common	en	OK
+on *nix systems please type: x	common	en	On *nix systems please type: %1
+only yours	common	en	only yours
+original	transy	en	Original
+other number	addressbook	en	Other Number
+pager	addressbook	en	Pager
+participants	calendar	en	Participants
+password	common	en	Password
+password	login	en	Password
+password has been updated	common	en	Password has been updated
+percent of users that logged out	admin	en	Percent of users that logged out
+permissions	admin	en	Permissions
+permissions this group has	admin	en	Permissions this group has
+permissions to the files/users directory	common	en	permissions to the files/users directory
+pharse in english	transy	en	Pharse in English
+pharse in new langague	transy	en	Pharse in new langague
+please select a message first	email	en	Please select a message first
+please x by hand	common	en	Please %1 by hand
+please, select a new theme	preferences	en	Please, select a new theme
+powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+preferences	common	en	Preferences
+previous	email	en	Previous
+previous page	common	en	Previous page
+print	common	en	Print
+printer friendly	calendar	en	Printer Friendly
+priority	common	en	Priority
+private	common	en	Private
+private_files	filemanager	en	Private files
+project description	todo	en	Project Description
+re-enter password	admin	en	Re-enter password
+re-enter your password	preferences	en	Re-Enter your password
+remove all users from this group	admin	en	Remove all users from this group
+rename	common	en	Rename
+rename	filemanager	en	Rename
+rename_to	filemanager	en	Rename to
+repeat day	calendar	en	Repeat day
+repeat end date	calendar	en	Repeat End date
+repeat type	calendar	en	Repeat type
+repetition	calendar	en	Repetition
+reply	email	en	Reply
+reply all	email	en	Reply All
+sa	calendar	en	Sa
+sat	calendar	en	Sat
+saturday	common	en	Saturday
+save	common	en	Save
+save	filemanager	en	Save
+search	common	en	Search
+search results	calendar	en	Search Results
+section	email	en	Section
+select application	transy	en	Select application
+select different theme	preferences	en	Select different Theme
+select headline news sites	preferences	en	Select Headline News sites
+select langague to generate for	transy	en	Select langague to generate for
+select permissions this group will have	admin	en	Select permissions this group will have
+select users for inclusion	admin	en	Select users for inclusion
+select which application for this pharse	transy	en	select which application for this pharse
+select which langauge for this pharse	transy	en	select which langauge for this pharse
+send	email	en	Send
+send deleted messages to the trash	email	en	Send deleted messages to the trash
+september	common	en	September
+session has been killed	common	en	Session has been killed
+show all	common	en	show all
+show all groups	nntp	en	Show All Groups
+show birthday reminders on main screen	addressbook	en	Show birthday reminiders on main screen
+show current users on navigation bar	preferences	en	Show current users on navigation bar
+show groups containing	nntp	en	Show Groups Containing
+show high priority events on main screen	calendar	en	Show high priority events on main screen
+show new messages on main screen	email	en	Show new messages on main screen
+show text on navigation icons	preferences	en	Show text on navigation icons
+showing x	common	en	showing %1
+showing x - x of x	common	en	showing %1 - %2 of %3
+site	admin	en	Site
+size	email	en	Size
+sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
+sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
+sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
+sorry, your login has expired	login	en	Sorry, your login has expired
+source language	transy	en	Source Language
+specify_file_name	filemanager	en	You must specify a name for the file you wish to create
+state	addressbook	en	State
+status	todo	en	Status
+street	addressbook	en	Street
+su	calendar	en	Su
+subject	email	en	Subject
+subject	nntp	en	Subject
+submit	common	en	Submit
+submit changes	admin	en	Submit Changes
+sun	calendar	en	Sun
+sunday	common	en	Sunday
+switch current folder to	email	en	Switch Current Folder To
+target language	transy	en	Target Language
+th	calendar	en	T
+that loginid has already been taken	admin	en	That loginid has already been taken
+that site has already been entered	admin	en	That site has already been entered
+the following conflicts with the suggested time:<ul>x</ul>	calendar	en	The following conflicts with the suggested time:<ul>%1</ul>
+the login and password can not be the same	admin	en	The login and password can not be the same
+the two passwords are not the same	admin	en	The two passwords are not the same
+the two passwords are not the same	preferences	en	The two passwords are not the same
+they must be removed before you can continue	admin	en	They must be removed before you can continue
+this folder is empty	email	en	This folder is empty
+this month	calendar	en	This month
+this server is located in the x timezone	preferences	en	 timezone
+this week	calendar	en	This week
+threads	nntp	en	Threads
+thu	calendar	en	Thu
+thursday	common	en	Thursday
+time	common	en	Time
+time format	preferences	en	Time format
+time zone offset	preferences	en	Time zone offset
+title	admin	en	Title
+to	email	en	To
+to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
+today	calendar	en	Today
+today is x's birthday!	common	en	Today is %1's birthday!
+todo	todo	en	todo
+todo list	common	en	Todo List
+todo list	todo	en	Todo list
+todo list - add	todo	en	todo list - add
+todo list - edit	todo	en	Todo list - edit
+tommorow is x's birthday.	common	en	Tommorow is %1's birthday.
+total	common	en	Total
+total records	admin	en	Total records
+translation	transy	en	Translation
+translation management	common	en	Translation Management
+trouble ticket system	common	en	Trouble Ticket System
+tu	calendar	en	T
+tue	calendar	en	Tue
+tuesday	common	en	Tuesday
+undisclosed recipients	email	en	Undisclosed Recipients
+undisclosed sender	email	en	Undisclosed Sender
+update	nntp	en	Update
+updated	common	en	Updated
+upload	filemanager	en	Upload
+urgency	todo	en	Urgency
+use cookies	login	en	use cookies
+use end date	calendar	en	Use End date
+user accounts	admin	en	User accounts
+user groups	admin	en	User groups
+username	login	en	Username
+users	common	en	users
+usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+view	common	en	View
+view access log	admin	en	View Access Log
+view sessions	admin	en	View sessions
+view this entry	calendar	en	View this entry
+view/edit/delete all pharses	transy	en	View/edit/delete all pharses
+we	calendar	en	W
+wed	calendar	en	Wed
+wednesday	common	en	Wednesday
+week	calendar	en	Week
+weekday starts on	calendar	en	Weekday starts on
+weekly	calendar	en	weekly
+which groups	common	en	which groups
+which groups	todo	en	Which groups
+work day ends on	calendar	en	Work day ends on
+work day starts on	calendar	en	Work day starts on
+work phone	addressbook	en	Work Phone
+x matches found	calendar	en	%1 matches found
+x messages have been deleted	email	en	%1 messages have been deleted
+year	calendar	en	Year
+yearly	calendar	en	Yearly
+yes	common	en	Yes
+yes	filemanager	en	Yes
+you are required to change your password durring your first login	common	en	You are required to change your password durring your first login
+you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
+you have 1 new message!	common	en	You have 1 new message!
+you have been successfully logged out	login	en	You have been successfully logged out
+you have entered an invailed date	todo	en	you have entered an invailed date
+you have not entered a\nbrief description	calendar	en	You have not entered a\nBrief Description
+you have not entered a\nvalid time of day.	calendar	en	You have not entered a\nvalid time of day.
+you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
+you have x new messages!	common	en	You have %1 new messages!
+you must add at least 1 permission to this account	admin	en	You must add at least 1 permission to this account
+you must enter a base url	admin	en	You must enter a base url
+you must enter a display	admin	en	You must enter a display
+you must enter a news url	admin	en	You must enter a news url
+you must enter a password	admin	en	You must enter a password
+you must enter a password	preferences	en	You must enter a password
+you must enter an application name and title.	admin	en	You must enter an application name and title.
+you must enter one or more search keywords	calendar	en	You must enter one or more search keywords
+you must enter the number of listings display	admin	en	You must enter the number of listings display
+you must enter the number of minutes between reload	admin	en	You must enter the number of minutes between reload
+you must select a file type	admin	en	You must select a file type
+your current theme is: x	preferences	en	</b>
+your message has been sent	common	en	Your message has been sent
+your search returned 1 match	common	en	your search returned 1 match
+your search returned x matchs	common	en	your search returned %1 matchs
+your session could not be verified.	login	en	Your session could not be verified.
+your settings have been updated	common	en	Your settings have been Updated
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
+zip code	addressbook	en	ZIP Code

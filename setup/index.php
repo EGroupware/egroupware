@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -24,12 +24,12 @@
   include($phpgw_info["server"]["api_dir"] . "/phpgw_db_".$phpgw_info["server"]["db_type"].".inc.php");
 
   $db	            = new db;
-  $db->Host	    = $phpgw_info["server"]["db_host"];
-  $db->Type	    = $phpgw_info["server"]["db_type"];
-  $db->Database     = $phpgw_info["server"]["db_name"];
-  $db->User	    = $phpgw_info["server"]["db_user"];
-  $db->Password     = $phpgw_info["server"]["db_pass"];
-//  $db->Halt_On_Error = "report";
+  $db->Host	      = $phpgw_info["server"]["db_host"];
+  $db->Type	      = $phpgw_info["server"]["db_type"];
+  $db->Database      = $phpgw_info["server"]["db_name"];
+  $db->User	      = $phpgw_info["server"]["db_user"];
+  $db->Password      = $phpgw_info["server"]["db_pass"];
+  //$db->Halt_On_Error = "report";
   $db->Halt_On_Error = "no";
 
   if (!isset($oldversion)){
@@ -153,6 +153,7 @@
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>If you did not recieve any serious errors, your tables have been created.<br>\n";
       echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+      echo "    <a href=\"lang.php\">Click here</a> to configure multi-langague support.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
       break;
@@ -177,7 +178,8 @@
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>If you did not recieve any serious errors, your tables *should* have been updated (no warranty on data integrity).<br>\n";
-      echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+      echo "    <a href=\"config.php\">Click here</a> to configure the environment.\n";
+      echo "    <br><a href=\"lang.php\">Click here</a> to configure multi-langague support.</td>\n";
       echo "  </tr>\n";
       echo "</table>\n";
       break;      
@@ -192,7 +194,8 @@
           echo "  </tr>\n";
           echo "  <tr bgcolor=\"e6e6e6\">\n";
           echo "    <td>Your database is up to date with version $oldversion.<br>\n";
-          echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+          echo "    <a href=\"config.php\">Click here</a> to configure the environment.\n";
+          echo "    <br><a href=\"lang.php\">Click here</a> to configure multi-langague support.</td>\n";
           echo "  </tr>\n";
           echo "</table>\n";
         }else{
@@ -221,7 +224,8 @@
             echo "  </tr>\n";
             echo "  <tr bgcolor=\"e6e6e6\">\n";
             echo "    <td>If you did not recieve any errors, your tables have been created.<br>\n";
-            echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
+            echo "    <a href=\"config.php\">Click here</a> to configure the environment.\n";
+            echo "    <br><a href=\"lang.php?newinstall=True\">Click here</a> to configure multi-langague support.</td>\n";
             echo "  </tr>\n";
             echo "</table>\n";
           }else{
