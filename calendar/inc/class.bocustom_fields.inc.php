@@ -22,6 +22,10 @@
 			'description' => 'Description',
 			'category'    => 'Category',
 			'location'    => 'Location',
+			'project'     => array(
+				'label'		=> 'Project',
+				'disabled'	=> true,
+			),
 			'startdate'   => 'Start Date/Time',
 			'enddate'     => 'End Date/Time',
 			'priority'    => 'Priority',

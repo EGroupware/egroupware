@@ -554,6 +554,7 @@
 
 		function read_entry($id,$ignore_acl=False)
 		{
+			$bolink = createObject('infolog.bolink');
 			if (is_array($id) && count($id) == 1)
 			{
 				list(,$id) = each($id);
@@ -561,6 +562,19 @@
 			if($ignore_acl || $this->check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
+				$linkIDs = $bolink->get_links('calendar', $id);
+				if(is_array($linkIDs))
+				{
+					foreach($linkIDs as $linkData)
+					{
+						//$event['projectID'] = 8;
+						if($linkData['app'] == 'projects')
+						{
+							$event['projectID'] = $linkData['id'];
+							continue;
+						}
+					}
+				}
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
 				{
 					$this->so->add_attribute('participants','U',(int)$this->owner);
@@ -1103,6 +1117,15 @@
 				}
 
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
+				if(isset($l_cal['project']))
+				{
+					$bolink = createObject('infolog.bolink');
+					$bolink->unlink(0,'calendar',$event['id']);
+					if($l_cal['project'] != 'no_project')
+					{
+						$bolink->link('calendar',$event['id'],'projects',$l_cal['project']);
+					}
+				}
 				if($send_to_ui)
 				{
 					$this->read_sessiondata();
@@ -2006,6 +2029,7 @@
 					}
 				}
 			}
+
 			if(!$eyear && !$emonth && !$eday)
 			{
 				$edate = mktime(23,59,59,$smonth + 1,$sday + 1,$syear);
@@ -2114,7 +2138,7 @@
 					}
 				}
 			}
-
+			
 			$this->repeating_events = Array();
 			if($c_cached_ids_repeating)
 			{
@@ -2144,6 +2168,7 @@
 					}
 				}
 			}
+
 			$retval = Array();
 			for($j=date('Ymd',mktime(0,0,0,$smonth,$sday,$syear)),$k=0;$j<=date('Ymd',mktime(0,0,0,$emonth,$eday,$eyear));$k++,$j=date('Ymd',mktime(0,0,0,$smonth,$sday + $k,$syear)))
 			{
@@ -2965,6 +2990,8 @@
 		*/
 		function event2array($event)
 		{
+			$ownerApps = $GLOBALS['phpgw']->acl->get_user_applications($event['owner']);
+
 			$var['title'] = Array(
 				'field'		=> lang('Title'),
 				'data'		=> $event['title']
@@ -3037,6 +3064,16 @@
 				'data'	=> $event['public'] ? lang('Public') : lang('Private')
 			);
 
+			if($ownerApps['projects'] && $event['projectID'])
+			{
+				$boprojects = createObject('projects.boprojects');
+				$projectData = $boprojects->read_single_project($event['projectID']);
+				$var['project'] = Array
+				(
+					'field' => lang('Project'),
+					'data'  => $projectData['title'].'&nbsp;['.$projectData['number'].']'
+				);
+			}
 			if(@isset($event['groups'][0]))
 			{
 				$cal_grps = '';
@@ -3120,6 +3157,10 @@
 				$this->fields = &$this->custom_fields->fields;
 				$this->stock_fields = &$this->custom_fields->stock_fields;
 			}
+// projects
+			if($ownerApps['projects'])
+				$this->fields['project']['disabled'] = false;
+				
 			foreach($this->fields as $field => $data)
 			{
 				if (!$data['disabled'])

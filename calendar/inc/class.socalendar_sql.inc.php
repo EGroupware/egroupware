@@ -451,7 +451,7 @@
 
 		function store_event()
 		{
-			return $this->save_event(&$this->event);
+			return $this->save_event($this->event);
 		}
 
 		function delete_event($event_id)

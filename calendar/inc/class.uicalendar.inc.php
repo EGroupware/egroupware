@@ -541,7 +541,7 @@
 
 			$var = Array(
 				'printer_friendly'	=>	$printer,
-				'bg_text'		=> $this->theme['bg_text'],
+				'bg_text'		=> 	$this->theme['bg_text'],
 				'small_calendar_prev'	=>	$minical_prev,
 				'prev_week_link'	=>	$prev_week_link,
 				'small_calendar_this'	=>	$minical_this,
@@ -2088,7 +2088,7 @@
 				)
 			);
 			$this->bo->remove_doubles_in_cache($this->planner_firstday,$this->planner_lastday);
-
+			
 			// process all events within observed interval
 			//
 			for($v=$this->planner_firstday;$v<=$this->planner_lastday;$v++)
@@ -3795,7 +3795,9 @@
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['phpgw_info']['flags']['app_header'] = $event['id'] ? lang('Calendar - Edit') : lang('Calendar - Add');
 			$GLOBALS['phpgw']->common->phpgw_header();
-
+			
+			$ownerApps = $GLOBALS['phpgw']->acl->get_user_applications($event['owner']);
+			
 			$p = &$GLOBALS['phpgw']->template;
 			$p->set_file(
 				Array(
@@ -3864,6 +3866,37 @@
 				'field'	=> lang('Location'),
 				'data'	=> '<input name="cal[location]" size="45" maxlength="255" value="'.$event['location'].'">'
 			);
+
+// Project
+			if($ownerApps['projects'])
+			{
+				$boprojects = createObject('projects.boprojects');
+				$projects = $boprojects->list_projects( array('limit'=>FALSE) );
+				$projectOptions = $boprojects->select_project_list
+				(
+					array
+					(
+						'action'	=> 'all',
+						'status'	=> 'active',
+						'selected'	=> $event['projectID']
+					)
+				);
+				if(is_array($projects))
+				{
+					$projectData = '<select name="cal[project]">';
+					if(!isset($event['projectID']))
+						$projectData .= '<option value="no_project" selected="selected"></option>';
+					else
+						$projectData .= '<option value="no_project"></option>';
+
+					$projectData .= $projectOptions;
+					$projectData .= '</select>';
+				}
+				$var['project'] = Array(
+					'field'	=> lang('Project'),
+					'data'	=> $projectData
+				);
+			}
 
 // Date
 
@@ -4146,6 +4179,12 @@
 				$this->custom_fields = CreateObject('calendar.bocustom_fields');
 				$this->fields = &$this->custom_fields->fields;
 				$this->stock_fields = &$this->custom_fields->stock_fields;
+			}
+			$ownerApps = $GLOBALS['phpgw']->acl->get_user_applications($event['owner']);
+			if($ownerApps['projects'])
+			{
+				// enable project app
+				$this->fields['project']['disabled'] = false;
 			}
 			$preserved = False;
 			foreach($this->fields as $field => $data)
