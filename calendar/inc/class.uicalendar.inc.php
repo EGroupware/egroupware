@@ -746,7 +746,7 @@
 
 			reset($event['participants']);
 
-			if(!$event->participants[$this->bo->owner])
+			if(!$event['participants'][$this->bo->owner])
 			{
 				echo '<center>The user '.$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner).' is not participating in this event!</center>';
 				return;
