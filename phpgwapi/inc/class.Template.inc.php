@@ -362,13 +362,13 @@
 		 */
 		function filename($filename,$root='',$time=1)
 		{
-			if($root=='')
+			if($root == '')
 			{
-				$root=$this->root;
+				$root = $this->root;
 			}
-			if (substr($filename, 0, 1) != '/')
+			if(substr($filename, 0, 1) != '/')
 			{
-				$new_filename = $root.'/'.$filename;
+				$new_filename = $root . '/' . $filename;
 			}
 			else
 			{
@@ -383,7 +383,8 @@
 				}
 				else
 				{
-					$new_root = substr($root, 0, strrpos($root, $GLOBALS['phpgw_info']['server']['template_set'])).'default';
+//					$new_root = substr($root, 0, strrpos($root, $GLOBALS['phpgw_info']['server']['template_set'])).'default';
+					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
 					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 				}
 			}
