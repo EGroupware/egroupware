@@ -366,7 +366,9 @@
 				// I added these into seperate steps for easier debugging
 				$data = $phpgw->db->f('content');
 				$data = $phpgw->crypto->decrypt($data);
-				$data = stripslashes($data);
+				# this is to much!! knecke
+				# please talk with me if you add it again
+				#$data = stripslashes($data);
 
 				return $data;
 			} else {
@@ -401,8 +403,10 @@
 		{
 			global $phpgw;
 			
-			$serializedData = $this->appsession();
+			$serializedData = $this->appsession('session');
+			#print "serializedData<br>$serializedData<br><br>";
 			$sessionData = unserialize($serializedData);
+			#print "sessionData<br>$sessionData<br><br>";
 			
 			if (is_array($sessionData))
 			{
@@ -431,6 +435,7 @@
 					{
 						global $$key;
 						$sessionData[$key] = $$key;
+						#print "save: ".$key." : ".$$key."<br>";
 					}
 				}
 				$this->appsession('session','',$sessionData);
