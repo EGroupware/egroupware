@@ -755,7 +755,7 @@
 		{
 			$ab_id   = $_GET['ab_id'];
 			$submit  = $_POST['submit'];
-			$referer = $_GET['referer'];
+			$referer = urldecode($_GET['referer']);
 
 			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
