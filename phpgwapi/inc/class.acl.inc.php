@@ -36,10 +36,11 @@
 		@author Seek3r
 		@copyright LGPL
 		@package phpgwapi
-	  	@access	public
+		@access public
 	*/
 	class acl
-	{			/*! @var $account_id */
+	{
+		/*! @var $account_id */
 		var $account_id;
 		/*! @var $account_type */
 		var $account_type;
@@ -119,7 +120,10 @@
 		*/
 		function read()
 		{
-			if (count($this->data) == 0){ $this->read_repository(); }
+			if (count($this->data) == 0)
+			{
+				$this->read_repository();
+			}
 			reset ($this->data);
 			return $this->data;
 		}
@@ -219,7 +223,10 @@
 		*/
 		function get_rights($location,$appname = False)
 		{
-			if (count($this->data) == 0){ $this->read_repository(); }
+			if (count($this->data) == 0)
+			{
+				$this->read_repository();
+			}
 			reset ($this->data);
 			if ($appname == False)
 			{
@@ -227,7 +234,10 @@
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 			$count = count($this->data);
-			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny'){ return True; }
+			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
+			{
+				return True;
+			}
 			$rights = 0;
 			//for ($idx = 0; $idx < $count; ++$idx){
 			reset ($this->data);
@@ -237,7 +247,10 @@
 				{
 					if ($this->data[$idx]['location'] == $location || $this->data[$idx]['location'] == 'everywhere')
 					{
-						if ($this->data[$idx]['rights'] == 0){ return False; }
+						if ($this->data[$idx]['rights'] == 0)
+						{
+							return False;
+						}
 						$rights |= $this->data[$idx]['rights'];
 					}
 				}
@@ -272,7 +285,10 @@
 			}
 
 			$count = count($this->data);
-			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny'){ return True; }
+			if ($count == 0 && $GLOBALS['phpgw_info']['server']['acl_default'] != 'deny')
+			{
+				return True;
+			}
 			$rights = 0;
 
 			reset ($this->data);
@@ -283,7 +299,10 @@
 					$this->data[$idx]['location'] == 'everywhere') &&
 					$this->data[$idx]['account'] == $this->account_id)
 				{
-					if ($this->data[$idx]['rights'] == 0){ return False; }
+					if ($this->data[$idx]['rights'] == 0)
+					{
+						return False;
+					}
 					$rights |= $this->data[$idx]['rights'];
 				}
 			}
@@ -325,10 +344,16 @@
 
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
-			if ($this->db->num_rows() == 0 ){ return False; }
+			if ($this->db->num_rows() == 0 )
+			{
+				return False;
+			}
 			while ($this->db->next_record())
 			{
-				if ($this->db->f('acl_rights') == 0){ return False; }
+				if ($this->db->f('acl_rights') == 0)
+				{
+					return False;
+				}
 				$rights |= $this->db->f('acl_rights');
 				if (!!($rights & $required) == True)
 				{
@@ -449,10 +474,16 @@
 			$sql .= 'acl_account = '.$account_id;
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
-			if ($this->db->num_rows() == 0 ){ return False; }
+			if ($this->db->num_rows() == 0 )
+			{
+				return False;
+			}
 			while ($this->db->next_record())
 			{
-				if ($this->db->f('acl_rights') == 0){ return False; }
+				if ($this->db->f('acl_rights') == 0)
+				{
+					return False;
+				}
 				$rights |= $this->db->f('acl_rights');
 				if (!!($rights & $required) == True)
 				{
@@ -487,7 +518,10 @@
 			$sql .= "acl_account = ".$account_id;
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
-			if ($this->db->num_rows() == 0 ){ return False; }
+			if ($this->db->num_rows() == 0 )
+			{
+				return False;
+			}
 			while ($this->db->next_record())
 			{
 				if ($this->db->f('acl_rights'))
@@ -518,7 +552,10 @@
 			$sql .= "acl_location = '".$location."'";
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
-			if ($this->db->num_rows() == 0 ){ return False; }
+			if ($this->db->num_rows() == 0 )
+			{
+				return False;
+			}
 			while ($this->db->next_record())
 			{
 				$rights = 0;
@@ -564,7 +601,10 @@
 			$security .= ')';
 			$db2->query($sql . $security ,__LINE__,__FILE__);
 
-			if ($db2->num_rows() == 0){ return False; }
+			if ($db2->num_rows() == 0)
+			{
+				return False;
+			}
 			while ($db2->next_record())
 			{
 				if(isset($apps[$db2->f('acl_appname')]))
