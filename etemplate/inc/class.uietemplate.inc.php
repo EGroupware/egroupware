@@ -55,7 +55,7 @@
 
 			list($a,$b,$c,$d) = explode('.',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			//echo "Version: $a.$b.$c.$d\n";
-			$this->stable = $a <= 0 && $b <= 9 && $c <= 14;
+			$this->stable = $a <= 0 && $b <= 9 && $c <= 14 && !is_object($GLOBALS['phpgw']->xslttpl);
 		}
 
 		/*!
@@ -152,6 +152,7 @@
 				'extension_data' => $GLOBALS['phpgw_info']['etemplate']['extension_data'],
 				'to_process' => $GLOBALS['phpgw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['phpgw_info']['etemplate']['java_script'],
+				'dom_enabled' => $GLOBALS['phpgw_info']['etemplate']['dom_enabled'],
 				'method' => $method,
 				'hooked' => $hooked
 			),$id);
@@ -193,6 +194,7 @@
 			$this->init($session_data);
 			$GLOBALS['phpgw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
 			$GLOBALS['phpgw_info']['etemplate']['java_script'] = $session_data['java_script'] || $GLOBALS['HTTP_POST_VARS']['java_script'];
+			$GLOBALS['phpgw_info']['etemplate']['dom_enabled'] = $session_data['dom_enabled'] || $GLOBALS['HTTP_POST_VARS']['dom_enabled'];
 			//echo "globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', session_data[java_script] = '".$session_data['java_script']."', HTTP_POST_VARS[java_script] = '".$GLOBALS['HTTP_POST_VARS']['java_script']."'\n";
 			//echo "process_exec($this->name) content ="; _debug_array($content);
 			$this->process_show($content,$session_data['to_process'],'exec');
@@ -345,7 +347,24 @@
 					else
 					{
 						$cell = &$cols[$c_key];
-						list(,$col_disabled) = explode(',',$opts[$col]);
+						list($col_width,$col_disabled) = explode(',',$opts[$col]);
+						
+						if (!$cell['height'])	// if not set, cell-height = height of row
+						{
+							$cell['height'] = $height;
+						}
+						if (!$cell['width'])	// if not set, cell-width = width of column or table
+						{
+							list($col_span) = explode(',',$cell['span']);
+							if ($col_span == 'all' && !$c)
+							{
+								list($cell['width']) = explode(',',$this->size);
+							}
+							else
+							{
+								$cell['width'] = $col_width;
+							}
+						}
 					}
 					if ($cell['type'] == 'template' && $cell['onchange'])
 					{
@@ -361,6 +380,15 @@
 					{
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
 						continue;
+					}
+					if ($cell['onclick'])	// can only be set via source at the moment
+					{
+						$row_data[".$col"] .= ' onClick="'.$cell['onclick'].'"';
+
+						if ($cell['id'])
+						{
+							$row_data[".$col"] .= ' ID="'.$cell['id'].'"';
+						}
 					}
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
 					if ($colspan > 1)
@@ -478,7 +506,7 @@
 						$options .= " onMouseOut=\"self.status=''; return true;\"";
 					}
 				}
-				if ($cell['onchange'] && $cell['type'] != 'button')	// values != '1' can only set by a program (not in the editor so far)
+				if ($cell['onchange'] && $cell['type'] != 'button') // values != '1' can only set by a program (not in the editor so fa
 				{
 					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
 				}
@@ -576,20 +604,28 @@
 					break;
 				case 'button':
 					list($app) = explode('.',$this->name);
-					if ($this->java_script() && $cell['onchange'])
+					if ($this->java_script() && $cell['onchange'] != '') // use a link instead of a button
 					{
-						$html .= $this->html->input_hidden($form_name,'',False) . "\n";
-						$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;" '.$options.'>' .
-							(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
+						if ($cell['onchange'] == 1)
+						{
+							$html .= $this->html->input_hidden($form_name,'',False) . "\n";
+							$html .= '<a href="" onClick="set_element(document.eTemplate,\''.$form_name.'\',\'pressed\'); document.eTemplate.submit(); return false;" '.$options.'>' .
+								(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
+						}
+						else	// use custom javascript
+						{
+							$html .= '<a href="" onClick="'.$cell['onchange'].'; return false;" '.$options.'>' .
+								(strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label)) . '</a>';
+						}
 					}
 					else
 					{
 						list($img,$ro_img) = explode(',',$cell['size']);
-                  if (!empty($img))
+						if (!empty($img))
 						{
 							$options .= ' TITLE="'.(strlen($label)<=1||$cell['no_lang']?$label:lang($label)).'"';
 						}
-						$html .= !$readonly ? $this->html->submit_button($form_name,$label,'',
+						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$cell['onchange'],
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
 							$this->html->image($app,$ro_img);
 					}
@@ -758,6 +794,40 @@
 							"\n\n<!-- END $cell[type] -->\n\n";
 					}
 					break;
+				case 'deck':
+					for ($n = 1; $n <= $cell['size'] && (empty($value) || $value != $cell[$n]['name']); ++$n) ;
+					if ($n > $cell['size'])
+					{
+						$value = $cell[1]['name'];
+					}
+					if ($s_width = $cell['width'])
+					{
+						$s_width = "width: $s_width".(substr($s_width,-1) != '%' ? 'px' : '').';';
+					}
+					if ($s_height = $cell['height'])
+					{
+						$s_height = "height: $s_height".(substr($s_height,-1) != '%' ? 'px' : '').';';
+					}
+					for ($n = 1; $n <= $cell['size']; ++$n)
+					{
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
+						$vis = !empty($value) && $value == $cell['size'][$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
+						list (,$cl) = explode(',',$cell[$n]['span']);
+						$html .= $this->html->div($h,$this->html->formatOptions(array(
+							$cl.($cl ? ' ':'').'tab_body',
+							"$s_width $s_height position: absolute; left: 0px; top: 0px; visibility: $vis; z-index: 50;",
+							$cell[$n]['name']
+						),'CLASS,STYLE,ID'));
+					}
+					$html .= $this->html->input_hidden($form_name,$value);	// to store active plane
+					
+					list (,$cl) = explode(',',$cell['span']);
+					$html = $this->html->input_hidden($form_name,$value)."\n".	// to store active plane
+						$this->html->div($html,$this->html->formatOptions(array(
+							$cl,
+							"$s_width $s_height position: relative; z-index: 100;"
+						),'CLASS,STYLE'));
+					break;
 				default:
 					if ($ext_type && $this->haveExtension($ext_type,'render'))
 					{
@@ -786,9 +856,9 @@
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$label = $this->html->label($label,$form_name,$accesskey[1]);
 				}
-				if (strstr($label,'%s'))
+				if ($type == 'radio' || strstr($label,'%s'))	// default for radio is label after the button
 				{
-					$html = str_replace('%s',$html,$label);
+					$html = strstr($label,'%s') ? str_replace('%s',$html,$label) : $html.' '.$label;
 				}
 				elseif (($html = $label . ' ' . $html) == ' ')
 				{
@@ -924,7 +994,7 @@
 		@author ralfbecker
 		@abstract is javascript enabled?
 		@discussion this should be tested by the api at login
-		@result true if javascript is enabled or not yet tested
+		@result true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled 
 		*/
 		function java_script($consider_not_tested_as_enabled = True)
 		{
@@ -947,6 +1017,9 @@
 			{
 				$js = '<script language="javascript">
 document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','1')).'\');
+if (document.getElementById) {
+	document.write(\''.str_replace("\n",'',$this->html->input_hidden('dom_enabled','1')).'\');
+}
 </script>
 ';
 			}
@@ -954,10 +1027,10 @@ document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','
 			// here are going all the necesarry functions if javascript is enabled
 			if ($this->java_script(True))
 			{
-				$js .= '<script language="JavaScript">
+				$js .= "<script language=\"JavaScript\">
 function set_element(form,name,value)
 {
-'. /* '	alert("set_element: "+name+"="+value);'. */ '
+". /* "	alert('set_element: '+name+'='+value);". */ "
 	for (i = 0; i < form.length; i++)
 	{
 		if (form.elements[i].name == name)
@@ -969,7 +1042,7 @@ function set_element(form,name,value)
 
 function set_element2(form,name,vname)
 {
-'. /* '	alert("set_element2: "+name+"="+vname);'. */ '
+". /* "	alert('set_element2: '+name+'='+vname);". */ "
 	for (i = 0; i < form.length; i++)
 	{
 		if (form.elements[i].name == vname)
@@ -977,7 +1050,7 @@ function set_element2(form,name,vname)
 			value = form.elements[i].value;
 		}
 	}
-'. /* '	alert("set_element2: "+name+"="+value);'. */ '
+". /* "	alert('set_element2: '+name+'='+value);". */ "
 	for (i = 0; i < form.length; i++)
 	{
 		if (form.elements[i].name == name)
@@ -986,8 +1059,29 @@ function set_element2(form,name,vname)
 		}
 	}
 }
+
+function activate_tab(tab,all_tabs,name)
+{
+	var tabs = all_tabs.split('|');
+	var parts = tab.split('.');
+	var last_part = parts.length-1;
+	
+	for (n = 0; n < tabs.length; n++)
+	{
+		var t = tabs[n];
+		
+		if (t.indexOf('.') < 0 && parts.length > 1) 
+		{
+			parts[last_part] = t;
+			t = parts.join('.');
+		}
+		document.getElementById(t).style.visibility = t == tab ? 'visible' : 'hidden';
+		document.getElementById(t+'-tab').className = 'etemplate_tab'+(t == tab ? '_active th' : ' row_on');
+	}
+	document.getElementByName(name).value = tab;
+}
 </script>
-';
+";
 			}
 			return $js;
 		}

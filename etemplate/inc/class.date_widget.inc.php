@@ -15,7 +15,7 @@
 	/*!
 	@class date_widget
 	@author ralfbecker
-	@abstract widget that reads a date 
+	@abstract widget that reads a date and/or time 
 	@param Options/$cell['size'] = $format[,$year_no_select], $format: ''=timestamp or eg. 'Y-m-d' for 2002-12-31
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
@@ -25,52 +25,83 @@
 			'pre_process' => True,
 			'post_process' => True
 		);
-		var $human_name = 'Date';	// this is the name for the editor
+		var $human_name = array(
+			'date'      => 'Date',		// just a date, no time
+			'date-time' => 'Date+Time',	// date + time
+			'date-timeonly' => 'Time'
+		);
 
 		function date_widget($ui)
 		{
+			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			list($data_format,$options) = explode(',',$cell['size']);
 			$extension_data = $data_format;
+			$type = $cell['type'];
 
 			if (!$value)
 			{
 				$value = array(
 					'Y' => '',
 					'm' => '',
-					'd' => ''
+					'd' => '',
+					'H' => '',
+					'i' => ''
 				);
 			}
 			elseif ($data_format != '')
 			{
-				$date = split('[/.-]',$value);
-				$mdy  = split('[/.-]',$data_format);
-				for ($value=array(),$n = 0; $n < 3; ++$n)
+				$date = split('[- /.:,]',$value);
+				//echo "date=<pre>"; print_r($date); echo "</pre>";
+				$mdy  = split('[- /.:,]',$data_format);
+				$value = array();
+				foreach ($date as $n => $dat)
 				{
 					switch($mdy[$n])
 					{
-						case 'Y': $value['Y'] = $date[$n]; break;
-						case 'm': $value['m'] = $date[$n]; break;
-						case 'd': $value['d'] = $date[$n]; break;
+						case 'Y': $value['Y'] = $dat; break;
+						case 'm': $value['m'] = $dat; break;
+						case 'd': $value['d'] = $dat; break;
+						case 'H': $value['H'] = $dat; break;
+						case 'i': $value['i'] = $dat; break;
 					}
 				}
 			}
 			else
 			{
+				$value += $GLOBALS['phpgw']->datetime->tz_offset;
 				$value = array(
 					'Y' => date('Y',$value),
 					'm' => date('m',$value),
-					'd' => date('d',$value)
+					'd' => date('d',$value),
+					'H' => date('H',$value),
+					'i' => date('i',$value)
 				);
 			}
+			$timeformat = array(3 => 'H', 4 => 'i');
+			if ($this->timeformat == '12')
+			{
+				$value['a'] = $value['H'] < 12 ? 'am' : 'pm';
+				
+				if ($value['H'] > 12)
+				{
+					$value['H'] -= 12; 
+				}
+				$timeformat += array(5 => 'a');
+			}
 			$format = split('[/.-]',$sep=$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			
+			if ($type != 'date')
+			{
+				$format += $timeformat;
+			}
 			$sep = $sep[1];
 			if ($cell['readonly'] || $readonlys)	// is readonly
 			{
-				for ($str='',$n = 0; $n < 3; ++$n)
+				for ($str='',$n = $type == 'date-timeonly' ? 3 : 0; $n < count($format); ++$n)
 				{
 					$str .= ($str != '' ? $sep : '');
 					$str .= $value[$format[$n]];
@@ -83,26 +114,69 @@
 			$tpl = new etemplate;
 			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 
-			$fields = array(
-				'Y' => ($options ? 'int' : 'select-year'),	// if options set, show an int-field
+			$types = array(
+				'Y' => ($options&1 ? 'int' : 'select-year'),	// if options&1 set, show an int-field
 				'm' => 'select-month',
-				'd' => 'select-day'
+				'd' => 'select-day',
+				'H' => 'select-number',
+				'i' => 'select-number'
+			);
+			$options = array(
+				'H' => $this->timeformat == '12' ? ',0,12' : ',0,23',
+				'i' => ',0,59,5'
 			);
 			$help = array(
 				'Y' => 'Year',
 				'm' => 'Month',
-				'd' => 'Day'
+				'd' => 'Day',
+				'H' => 'Hour',
+				'i' => 'Minute'
 			);
 			$row = array();
-			for ($n=0; $n < 3; ++$n)
+			for ($i=0,$n=$type == 'date-timeonly'?3:0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
 			{
 				$dcell = $tpl->empty_cell();
-				$dcell['type'] = $fields[$format[$n]];
+				$dcell['type'] = $types[$format[$n]];
+				$dcell['size'] = $options[$format[$n]];
 				$dcell['name'] = $format[$n];
 				$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
 				$dcell['no_lang'] = True;
-				$row[$tpl->num2chrs($n)] = &$dcell;
+				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
+
+				if ($n == 2 && $options & 2)	// Today button
+				{
+					$dcell = $tpl->empty_cell();
+					$dcell['type'] = 'button';
+					$dcell['name'] = 'today';
+					$dcell['label'] = $type == 'Today';
+					$dcell['help'] = 'sets today as date';
+					$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".date('Y')."'; this.form.elements['$name"."[m]'].value='".date('n')."';this.form.elements['$name"."[d]'].value='".(0+date('d'))."'; return false;";
+					$row[$tpl->num2chrs(3)] = &$dcell;
+					unset($dcell);
+				}
+				if ($n == 2 && $type == 'date-time')	// insert some space between date+time
+				{
+					$dcell = $tpl->empty_cell();
+					$dcell['type'] = 'label';
+					$dcell['name'] = 'space';
+					$value['space'] = ' &nbsp; &nbsp; ';
+					$dcell['no_lang'] = True;
+					$row[$tpl->num2chrs(++$i)] = &$dcell;
+					unset($dcell);
+				}
+				if ($n == 4 && $type != 'date' && $this->timeformat == '12')
+				{
+					$dcell = $tpl->empty_cell();
+					$dcell['type'] = 'radio';
+					$dcell['name'] = 'a';
+					$dcell['help'] = $cell['help'];
+					$dcell['size'] = $dcell['label'] = 'am';
+					$row[$tpl->num2chrs(++$i)] = $dcell;
+					$dcell['size'] = $dcell['label'] = 'pm';
+					$row[$tpl->num2chrs(++$i)] = &$dcell;
+					unset($dcell);
+				}
 			}
 			$tpl->data[0] = array();
 			$tpl->data[1] = &$row;
@@ -123,29 +197,45 @@
 			{
 				return False;
 			}
-			if ($value['d'])
+			if ($value['d'] || $value['H'] !== '' || $value['i'] !== '')
 			{
-				if (!$value['m'])
+				if ($value['d'])
 				{
-					$value['m'] = date('m');
+					if (!$value['m'])
+					{
+						$value['m'] = date('m');
+					}
+					if (!$value['Y'])
+					{
+						$value['Y'] = date('Y');
+					}
+					elseif ($value['Y'] < 100)
+					{
+						$value['Y'] += $value['Y'] < 30 ? 2000 : 1900;
+					}
 				}
-				if (!$value['Y'])
+				else	// for the timeonly field
 				{
-					$value['Y'] = date('Y');
+					$value['d'] = $value['m'] = 1;
+					$value['Y'] = 1970;
 				}
-				elseif ($value['Y'] < 100)
+				if (isset($value['a']))
 				{
-					$value['Y'] += $value['Y'] < 30 ? 2000 : 1900;
+					if ($value['a'] == 'pm' && $value['H'] < 12)
+					{
+						$value['H'] += 12;
+					}
 				}
 				if (empty($extension_data))
 				{
-					$value = mktime(0,0,0,$value['m'],$value['d'],$value['Y']);
+					$value = mktime(intval($value['H']),intval($value['i']),0,$value['m'],$value['d'],$value['Y']) 
+						- $GLOBALS['phpgw']->datetime->tz_offset;
 				}
 				else
 				{
 					for ($n = 0,$str = ''; $n < strlen($extension_data); ++$n)
 					{
-						if (strstr('Ymd',$c = $extension_data[$n]))
+						if (strstr('YmdHi',$c = $extension_data[$n]))
 						{
 							$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
 						}

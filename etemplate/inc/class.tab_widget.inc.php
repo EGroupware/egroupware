@@ -33,16 +33,31 @@
 
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			$dom_enabled = 0;//$GLOBALS['phpgw_info']['etemplate']['dom_enabled'];
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
 			$names = explode('|',$cell['name']);
 
-			$tabs = new etemplate();
-			$tab = new etemplate('etemplate.tab_widget.tab');
+			$tab = new etemplate('etemplate.tab_widget.tab'.($dom_enabled ? '_dom' : ''));
 			$tab_active = new etemplate('etemplate.tab_widget.tab_active');
-
+			$tabs = new etemplate();
 			$tabs->init('*** generated tabs','','',0,'',0,0);	// make an empty template
 
+			foreach($names as $k => $name)
+			{
+				if (!strstr($name,'.'))
+				{
+					$name = $names[$k] = $tmpl->name . '.' . $name;
+				}
+				if ($extension_data == $name)
+				{
+					$selected_tab = $name;
+				}
+			}
+			if (empty($selected_tab))
+			{
+				$extension_data = $selected_tab = $names[0];
+			}
 			$tab_row = array();	// generate the tab row
 			while (list($k,$name) = each($names))
 			{
@@ -55,13 +70,18 @@
 				{
 					// save selected tab in persistent extension_data to use it in post_process
 					$selected_tab = $name;
-					$tcell['obj'] = &$tab_active;
+					$tcell['obj'] = $tab_active;
 					$tcell['name'] = $tab_active->name;
 				}
 				else
 				{
-					$tcell['obj'] = &$tab;
+					$tcell['obj'] = $tab;
 					$tcell['name'] = $tab->name;
+				}
+				if ($dom_enabled)
+				{
+					$tcell['obj']->set_cell_attribute('tab','onclick',"activate_tab('$name','$cell[name]');");
+					$tcell['obj']->set_cell_attribute('tab','id',$name.'-tab');
 				}
 				$tcell['type'] = 'template';
 				$tcell['size'] = $cell['name'].'['.$name.']';
@@ -77,24 +97,38 @@
 			$tabs->data[0][$k] = '99%'; // width
 			$tabs->data[0]['c1'] = ',bottom';
 
-			if (!isset($selected_tab))
-			{
-				$tab_row['A']['obj'] = &$tab_active;
-				$tcell['name'] = $tab_active->name;
-				$extension_data = $selected_tab = $names[0];
-			}
 			$tabs->data[1] = $tab_row;
 			$tabs->set_rows_cols();
-			$tabs->size = ',,,,0';
+			$tabs->size = "$cell[width],,,0,0";
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->set_cell_attribute('@tabs','obj',$tabs);
 			
-			$stab = new etemplate($selected_tab,$tmpl->as_array());
-			$options = array_pad(explode(',',$stab->size),3,'');
-			$options[3] = ($options[3]!= '' ? $options[3].' ':'') . 'tab_body';
-         $stab->size = implode(',',$options);
-			$tab_widget->set_cell_attribute('@body','obj',$stab);
+			if ($dom_enabled)
+			{
+				$tab_widget->set_cell_attribute('@body','type','deck');
+				$tab_widget->set_cell_attribute('@body','width',$cell['width']);
+				$tab_widget->set_cell_attribute('@body','height',$cell['height']);
+				$tab_widget->set_cell_attribute('@body','size',count($names));
+				$tab_widget->set_cell_attribute('@body','class',$cell['class']);
+				foreach($names as $n => $name)
+				{
+					$bcell = $tab_widget->empty_cell();
+					$bcell['type'] = 'template';
+					$bcell['obj'] = new etemplate($name,$tmpl->as_array());
+					$bcell['name'] = $name;
+					$tab_widget->set_cell_attribute('@body',$n+1,$bcell);
+				}
+				$tab_widget->set_cell_attribute('@body','name',$cell['name']);
+			}
+			else
+			{
+				$stab = new etemplate($selected_tab,$tmpl->as_array());
+				$options = array_pad(explode(',',$stab->size),3,'');
+				$options[3] = ($options[3]!= '' ? $options[3].' ':'') . 'tab_body';
+				$stab->size = implode(',',$options);
+				$tab_widget->set_cell_attribute('@body','obj',$stab);
+			}
 			$tab_widget->set_cell_attribute('@body','name',$selected_tab);
 
 			$cell['type'] = 'template';

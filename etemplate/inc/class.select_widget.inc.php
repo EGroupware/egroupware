@@ -36,6 +36,7 @@
 			'select-year'     => 'Select Year',
 			'select-month'    => 'Select Month',
 			'select-day'      => 'Select Day',
+			'select-number'   => 'Select Number',
 			'select-app'      => 'Select Application'
 		);
 		var $monthnames = array(
@@ -359,7 +360,7 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			list($rows,$type,$type2) = explode(',',$cell['size']);
+			list($rows,$type,$type2,$type3) = explode(',',$cell['size']);
 
 			switch ($cell['type'])
 			{
@@ -468,10 +469,23 @@
 					break;
 
 				case 'select-day':
+					$type = 1;
+					$type2 = 31;
+					$type3 = 1;
+					// fall-through
+					
+				case 'select-number':	// options: rows,min,max,dec
 					$cell['sel_options'][''] = '';
-					for ($d=1; $d <= 31; ++$d)
+					$type = $type === '' ? 1 : intval($type);
+					$type2 = $type2 === '' ? 10 : intval($type2);
+					$type3 = !$type3 ? 1 : intval($type3);
+					if (($type < $type2) != ($type3 > 0))
 					{
-						$cell['sel_options'][$d] = $d;
+						$type3 = -$type3;	// void infinite loop
+					}
+					for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3)
+					{
+						$cell['sel_options'][$n] = $n;
 					}
 					$cell['no_lang'] = True;
 					break;
