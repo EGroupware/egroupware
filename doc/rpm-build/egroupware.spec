@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.026
+%define version 1.0.00.002
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -23,6 +23,7 @@
 %define headlines headlines
 %define infolog infolog
 %define jinn jinn
+%define manual manual
 %define messenger messenger
 %define news_admin news_admin
 %define phpldapadmin phpldapadmin
@@ -213,8 +214,16 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{jinn}
 The %{jinn} app is a multi-site, multi-database, multi-user/-group, database driven Content Management System written in and for the eGroupWare Framework.
 
+%package %{manual}
+Summary: The eGroupWare %{manual} application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{manual}
+This is the %{manual} app for eGroupWare.
+
 %package %{messenger}
-Summary: The eGroupWare %{version} application
+Summary: The eGroupWare %{messenger} application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging} 
@@ -451,6 +460,10 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{jinn}
 
+%files %{manual}
+%defattr(0744,root,root)
+%{prefix}/%{egwdirname}/%{manual}
+
 %files %{messenger}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{messenger}
@@ -504,6 +517,14 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
+* Sat Jul 31 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.002-1
+- fixing critical bugs in all applications
+- MS SQL server support is back
+- language extensions
+
+* Sun Jul 11 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.001-1
+- bug fixing in all applications
+
 * Thu Jun 29 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.026-1
 - JiNN extended. 
 - projects updated

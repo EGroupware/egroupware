@@ -1,13 +1,13 @@
 Name: eGroupWare
-Version: 0.9.99
-Release: 0.fdr.1.rc6
+Version: 1.0.00
+Release: 0.fdr.1.rc8
 Epoch: 0
 Summary: eGroupWare is a web-based groupware suite written in php. 
 
 Group: Web/Database
 License: GPL/LGPL
 URL: http://www.egroupware.org/
-Source0: http://download.sourceforge.net/egroupware/eGroupWare-0.9.99.0.fdr.1.rc6.tar.gz
+Source0: http://download.sourceforge.net/egroupware/eGroupWare-1.0.00.0.fdr.1.rc8.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires: php php-mysql php-imap php-xmlrpc
 
@@ -67,6 +67,14 @@ cp -aRf * $RPM_BUILD_ROOT/var/www/html/egroupware
 /var/www/html/egroupware/*
 
 %changelog
+* Sat Jul 31 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.0.fdr.1.rc8
+- fixing critical bugs in all applications
+- MS SQL server support is back
+- language extensions
+
+* Sun Jul 11 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.0.fdr.1.rc7
+- bug fixing in all applications
+
 * Thu Jun 29 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.00.fdr.1.rc6
 - JiNN extended.
 - projects updated

@@ -61,7 +61,7 @@ echo "Start Build Process of - $PACKAGENAME $VERSION"                           
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
-cvs -z9 update -dP                                     			     		>> $LOGFILE 2>&1
+cvs -z9 update -r Version-1_0_0-branch -dP                                     		>> $LOGFILE 2>&1
 echo ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware" > Root.anonymous	
 find . -type d -name CVS -exec cp /build_root/egroupware/Root.anonymous {}/Root \;	>> $LOGFILE 2>&1
 rm Root.anonymous
@@ -148,10 +148,10 @@ echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDOR
 echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
 date                                                                                    >> $LOGFILEFEDORA 2>&1
 cd $ANONCVSDIRFEDORA
-cvs -z3 -d:ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware co egroupware		>> $LOGFILEFEDORA 2>&1
-echo "must wait to finish this job"
+cvs -z9 -d:ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware co -r Version-1_0_0-branch egroupware		>> $LOGFILEFEDORA 2>&1
+echo "must wait to finish this job"                                                     >> $LOGFILEFEDORA 2>&1
 cd $ANONCVSDIRFEDORABUILD	                                                        >> $LOGFILEFEDORA 2>&1
-cvs co all                                                                              >> $LOGFILEFEDORA 2>&1
+cvs co -r Version-1_0_0-branch all                                                      >> $LOGFILEFEDORA 2>&1
 echo "first files are updated and now we must delete the old ones"  			>> $LOGFILEFEDORA 2>&1
 cvs -z9 update -dP 									>> $LOGFILEFEDORA 2>&1
 find . -type d -name CVS | xargs rm -rf
@@ -192,7 +192,7 @@ date                                                                            
 
 cd $ANONCVSDIRFEDORA
                                                                                                                             
-/opt/installbuilder-1.0.2/bin/builder build /opt/installbuilder-1.0.2/projects/egroupware.xml
+/opt/installbuilder-1.1.0/bin/builder build /opt/installbuilder-1.1.0/projects/egroupware.xml
 
 rm -rf egroupware
 echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1

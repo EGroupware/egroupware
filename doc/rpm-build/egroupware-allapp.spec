@@ -1,6 +1,6 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 0.9.99.026
+%define version 1.0.00.002
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -117,6 +117,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/headlines
 %{prefix}/%{egwdirname}/infolog
 %{prefix}/%{egwdirname}/jinn
+%{prefix}/%{egwdirname}/manual
 %{prefix}/%{egwdirname}/messenger
 %{prefix}/%{egwdirname}/news_admin
 %{prefix}/%{egwdirname}/phpbrain
@@ -132,6 +133,14 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Sat Jul 31 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.002-1
+- fixing critical bugs in all applications
+- MS SQL server support is back
+- language extensions
+
+* Sun Jul 11 2004 Reiner Jung <r.jung@creativix.net> 1.0.00.001-1
+- bug fixing in all applications
+
 * Thu Jun 29 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.026-1
 - JiNN extended.
 - projects updated
