@@ -141,7 +141,6 @@ only add languages that are not in the database already	setup	pt	Somente adicion
 only add new phrases	setup	pt	Somente adicionar novas frases
 passwords did not match, please re-enter	setup	pt	Senhas não conferem, digite novamente
 Path information	setup	pt	Informação de Path
-pgsqlinstr	setup	pt	Instruções para criar a base de dados no PostgreSQL:<br>Inicie o serviço (postmaster)<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crie a base de dados vazia -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	pt	Procure por scripts sql dentro do diretório da aplicação
 please configure eGroupWare for your environment	setup	pt	Por favor configure o eGroupWare para o seu ambiente
 please install	setup	pt	Por favor instale

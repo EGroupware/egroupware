@@ -282,7 +282,6 @@ passwords did not match, please re-enter	setup	es-es	Las contreñas no coinciden,
 path information	setup	es-es	Información de la ruta
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 persistent connections	setup	es-es	Conexiones persistentes
-pgsqlinstr	setup	es-es	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb phpgroupware</i>
 phpgroupware administration manual	setup	es-es	Manual de administración de eGroupWare
 please check for sql scripts within the application's directory	setup	es-es	Por favor, compruebe los scripts sql en el directorio de la aplicación
 please check read/write permissions on directories, or back up and use another option.	setup	es-es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción

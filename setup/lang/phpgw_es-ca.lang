@@ -256,7 +256,6 @@ passwords did not match, please re-enter	setup	es-ca	Les contrasenyes no coincid
 path information	setup	es-ca	Informació del camí
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-ca	El camí als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
 persistent connections	setup	es-ca	Connexions persistents
-pgsqlinstr	setup	es-ca	Instrucciones para cræar la base de datos en PostgreSQL:<br>Inicie el postmaster<br><i>[usuario@servidor usuario]# postmaster -i -D /home/[usuario]/[dataDir]</i><br>Crear la base de datos vacia -<br><i>[usuario@servidor usuario]# createdb phpgroupware</i>
 phpgroupware administration manual	setup	es-ca	Manual de administración de eGroupWare
 please check for sql scripts within the application's directory	setup	es-ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicació
 please check read/write permissions on directories, or back up and use another option.	setup	es-ca	Si us plau, comproveu els permissos de lectura i escritura als directoris, o torneu i feu sefvir un altre opció

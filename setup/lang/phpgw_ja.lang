@@ -131,7 +131,6 @@ only add new phrases	setup	ja	新しいフレーズの追加
 or we can attempt to create the database for you:	setup	ja	または、この処理でデータベースを作成することが可能です
 passwords did not match, please re-enter	setup	ja	パスワードに誤りがあります。再度入力して下さい
 path information	setup	ja	パス情報
-pgsqlinstr	setup	ja	PostgreSQLでデータベースを作成するには:<br>postmaster の起動<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>空のデータベース作成 -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
 please configure eGroupWare for your environment	setup	ja	Please configure eGroupWare for your environment
 please install	setup	ja	Please install

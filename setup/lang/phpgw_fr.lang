@@ -219,7 +219,6 @@ passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspon
 path information	setup	fr	Information de chemin
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 persistent connections	setup	fr	Connexions persistantes
-pgsqlinstr	setup	fr	Instructions pour créer la base de données dans PostgreSQL:<br>Démarrer le postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Créer la base de données vide-<br><i>[user@server user]# createdb egroupware</i>
 egroupware administration manual	setup	fr	Manuel d'Administration eGroupWare
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.

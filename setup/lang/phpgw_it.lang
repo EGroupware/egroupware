@@ -184,7 +184,6 @@ password of db user	setup	it	Password dell'utente del DB
 passwords did not match, please re-enter	setup	it	Le password non corrispondono, per favore reinseriscile
 path information	setup	it	Informazioni sul Path
 persistent connections	setup	it	Connessioni persistenti
-pgsqlinstr	setup	it	Istruzioni per creare il database in usando PostgreSQL:<br>Fai partire postmaster<br><i>[utente@server utente]# postmaster -i -D /home/[username]/[dataDir]</i><br>Crea il database vuoto -<br><i>[utente@server utente]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script sql nella cartella dell'applicazione
 please configure egroupware for your environment	setup	it	Per favore configura eGroupWare per il tuo Sistema
 please consult the %1.	setup	it	Prego consulta il %1.

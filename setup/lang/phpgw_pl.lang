@@ -141,7 +141,6 @@ only add languages that are not in the database already	setup	pl	Dodaj tylko te 
 only add new phrases	setup	pl	Dodaj tylko nowe zdania
 passwords did not match, please re-enter	setup	pl	Has³a nie s± identyczne, proszê wpisaæ je jeszcze raz
 path information	setup	pl	¦cie¿ki
-pgsqlinstr	setup	pl	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	pl	Please check for sql scripts within the application's directory
 please configure egroupware for your environment	setup	pl	Proszê skonfigurowaæ eGroupWare dla Twojego ¶rodowiska
 please install	setup	pl	Proszê zainstalowaæ

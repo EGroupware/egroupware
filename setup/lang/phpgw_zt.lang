@@ -279,7 +279,6 @@ passwords did not match, please re-enter	setup	zt	密碼不符，請重新輸入
 path information	setup	zt	路徑資訊
 path to user and group files has to be outside of the webservers document-root!!!	setup	zt	使用者與群組的檔案路徑必須在網站伺服器的網頁根目錄以外！
 persistent connections	setup	zt	持續連線
-pgsqlinstr	setup	zt	在 PostgreSQL 中建立資料庫的方法：<br>起用 PostgreSQL 系統<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>建立空的資料庫 -<br><i>[user@server user]# createdb egroupware</i>
 please check for sql scripts within the application's directory	setup	zt	請檢查應用程式目錄下的 SQL 命令檔
 please check read/write permissions on directories, or back up and use another option.	setup	zt	請檢查資料夾讀取/寫入的權限或是備份後使用其他選項。
 please configure egroupware for your environment	setup	zt	請為您現在的環境設定 eGroupWare 的相關組態

@@ -240,10 +240,9 @@ passwords did not match, please re-enter	setup	zh	密码不符，请重新输入
 path information	setup	zh	路径信息
 path to user and group files has to be outside of the webservers document-root!!!	setup	zh	存放用户和组文件的目录不能位于web服务器的根目录内!!!
 persistent connections	setup	zh	保持连接
-phpgroupware administration manual	setup	zh	phpGroupWare 管理手册
 please check for sql scripts within the application's directory	setup	zh	请在应用程序所在目录中检查sql脚本
 please check read/write permissions on directories, or back up and use another option.	setup	zh	请检查对目录的读/写权限，或者备份后采取其它措施.
-please configure phpgroupware for your environment	setup	zh	请根据您的运行环境设置eGroupWare
+please configure egroupware for your environment	setup	zh	请根据您的运行环境设置eGroupWare
 please consult the %1.	setup	zh	详情请查阅%1.
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	zh	请修正以上错误(%1)和警告(%2),并%3继续安装%4
 please install	setup	zh	请安装
