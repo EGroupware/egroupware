@@ -13,7 +13,7 @@
 
 	function calendar_v0_9_2to0_9_3update_owner($table, $field)
 	{
-		global $phpgw_setup, $phpgw_setup;
+		global $phpgw_setup;
 
 		$phpgw_setup->oProc->query("select distinct($field) from $table");
 		if ($phpgw_setup->oProc->num_rows())

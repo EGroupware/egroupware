@@ -26,7 +26,7 @@
 				"cal_type" => array("type" => "varchar", "precision" => 10),
 				"cal_access" => array("type" => "char", "precision" => 10),
 				"cal_name" => array("type" => "varchar", "precision" => 80, "nullable" => false),
-				"cal_description" => array("type" => "text"),
+				"cal_description" => array("type" => "text")
 			),
 			"pk" => array("cal_id"),
 			"fk" => array(),
@@ -66,6 +66,6 @@
 			"fk" => array(),
 			"ix" => array(),
 			"uc" => array()
-		),
+		)
 	);
 ?>
