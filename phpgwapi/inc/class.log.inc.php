@@ -85,8 +85,8 @@
 			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
 						."('". $phpgw->db->to_timestamp(time()
 )
-						."',".$phpgw->session->account_id
-						.",'".$phpgw_info['flags']['currentapp']."'"
+						."','".$phpgw->session->account_id
+						."','".$phpgw_info['flags']['currentapp']."'"
 						.",'".$this->severity()."'"
 						.")"
 						,__LINE__,__FILE__);
