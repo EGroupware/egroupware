@@ -388,7 +388,7 @@
 				// Changed by Skeeter 2001 Mar 04 0400Z
 				// This was not properly decoding structures saved into session data properly
 //				$data = $phpgw->common->decrypt($data);
-//				$data = stripslashes($data);
+//				return stripslashes($data);
 				return $phpgw->crypto->decrypt($data);
 
 			} else {
@@ -396,25 +396,18 @@
 				. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
 				. "and app = '".$appname."' and location = '".$location."'",__LINE__,__FILE__);
 				
+				$encrypteddata = $phpgw->crypto->encrypt($data);
 				if ($phpgw->db->num_rows()==0) {
-
-					// I added these into seperate steps for easier debugging
-					$data = $phpgw->crypto->encrypt($data);
-					$data = addslashes($data);
-
 					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
-					. "','".$location."','".$data."','" . time() . "')",__LINE__,__FILE__);
+					. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
 				} else {
-					$data = $phpgw->crypto->encrypt($data);
-					$data = addslashes($data);
-					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"
+					$phpgw->db->query("update phpgw_app_sessions set content = '".$encrypteddata."'"
 					. "where sessionid = '".$this->sessionid."'"
 					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
 					. "and location = '".$location."'",__LINE__,__FILE__);
 				}
-	
-				return unserialize($data);
+				return $data;
 			}
 		}
 		
