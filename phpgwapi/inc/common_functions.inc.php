@@ -733,13 +733,7 @@
 
 			if (!method_exists($GLOBALS[$classname],$functionname))
 			{
-				$module = $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
-
-				echo "<p><b>$module</b>: no methode '$functionname' in class '$classname'</p>\n";
-				if (function_exists('debug_backtrace'))
-				{
-					echo '<p><b>Debug-backtrace</b><pre style="text-align: left">'.print_r(debug_backtrace(),True).'</pre>';
-				}
+				echo "<p><b>".functin_backtrace()."</b>: no methode '$functionname' in class '$classname'</p>\n";
 				return False;
 			}
 			if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
@@ -1119,8 +1113,7 @@
 
 	/*!
 	 @function function_backtrace
-	 @abstract returns the backtrace of the calling functions
-	 @param	$default default to return if the function debug_backtrace is not availible (php<4.3)
+	 @abstract backtrace of the calling functions for php4.3+ else menuaction/scriptname
 	 @author ralfbecker
 	 @return function-names separated by slashes (beginning with the calling function not this one)
 	*/
@@ -1137,7 +1130,7 @@
 			}
 			return implode('/',$ret);
 		}
-		return $default;
+		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
 
 ?>
