@@ -37,6 +37,13 @@
 
 		function crypto($vars='')
 		{
+			if($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login' ||
+				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'logout' ||
+				$GLOBALS['phpgw_info']['flags']['currentapp'] == 'home'
+			)
+			{
+				$this->debug = False;
+			}
 			if(is_array($vars))
 			{
 				$this->init($vars);
@@ -49,7 +56,7 @@
 			$key = $vars[0];
 			$iv  = $vars[1];
 
-			if ($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
+			if($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
 			{
 				if($GLOBALS['phpgw_info']['server']['mcrypt_algo'])
 				{
@@ -68,10 +75,10 @@
 
 				$this->enabled = True;
 				$this->mcrypt_version = $GLOBALS['phpgw_info']['server']['versions']['mcrypt'];
-				if ($this->mcrypt_version == 'old')
+				if($this->mcrypt_version == 'old')
 				{
 					$this->td = False;
-					if (phpversion() > '4.0.2pl1')
+					if(phpversion() > '4.0.2pl1')
 					{
 						$keysize = mcrypt_get_key_size($this->algo);
 						$ivsize  = mcrypt_get_iv_size($this->algo,$this->mode);
@@ -85,7 +92,7 @@
 				else
 				{
 					/* Start up mcrypt */
-					$this->td = mcrypt_module_open ($this->algo, '', $this->mode, '');
+					$this->td = mcrypt_module_open($this->algo, '', $this->mode, '');
 
 					$ivsize  = mcrypt_enc_get_iv_size($this->td);
 					$keysize = mcrypt_enc_get_key_size($this->td);
@@ -93,7 +100,7 @@
 
 				/* Hack IV to be the correct size */
 				$x = strlen($iv);
-				for ($i = 0; $i < $ivsize; $i++)
+				for($i = 0; $i < $ivsize; $i++)
 				{
 					$this->iv .= $iv[$i % $x];
 				}
@@ -101,19 +108,26 @@
 				/* Hack Key to be the correct size */
 				$x = strlen($key);
 
-				for ($i = 0; $i < $keysize; $i++)
+				for($i = 0; $i < $keysize; $i++)
 				{
 					$this->key .= $key[$i % $x];
 				}
 			}
-			/* If mcrypt isn't loaded, key and iv are not needed. */
+			else
+			{
+				/* If mcrypt isn't loaded, key and iv are not needed. */
+				if($this->debug)
+				{
+					echo '<br>crypto: mycrypt unavailable or disabled';
+				}
+			}
 		}
 
 		function cleanup()
 		{
-			if ($this->enabled)
+			if($this->enabled)
 			{
-				if ($this->mcrypt_version != 'old')
+				if($this->mcrypt_version != 'old')
 				{
 					if(phpversion >= '4.1.1')
 					{
@@ -158,7 +172,7 @@
 			}
 
 			/* Disable all encryption if the admin didn't set it up */
-			if ($this->enabled)
+			if($this->enabled)
 			{
 				if($_obj)
 				{
@@ -174,7 +188,7 @@
 					echo '<br>' . time() . ' crypto->encrypt() data: ---->>>>' . $data;
 				}
 
-				switch ($this->mcrypt_version)
+				switch($this->mcrypt_version)
 				{
 					case 'old':
 						/* The old code, only works with mcrypt <= 2.2.x */
@@ -182,7 +196,7 @@
 						break;
 					default:
 						/* Handle 2.4 and newer API */
-						mcrypt_generic_init ($this->td, $this->key, $this->iv);
+						mcrypt_generic_init($this->td, $this->key, $this->iv);
 						$encrypteddata = mcrypt_generic($this->td, $data);
 						break;
 				}
@@ -211,10 +225,10 @@
 				echo '<br>' . time() . ' crypto->decrypt() crypted data: ---->>>>' . $encrypteddata;
 			}
 			/* Disable all encryption if the admin didn't set it up */
-			if ($this->enabled)
+			if($this->enabled)
 			{
 				$data = $this->hex2bin($encrypteddata);
-				switch ($this->mcrypt_version)
+				switch($this->mcrypt_version)
 				{
 					case 'old':
 						/* The old code, only works with mcrypt <= 2.2.x */
@@ -222,7 +236,7 @@
 						break;
 					default:
 						/* Handle 2.4 and newer API */
-						mcrypt_generic_init ($this->td, $this->key, $this->iv);
+						mcrypt_generic_init($this->td, $this->key, $this->iv);
 						$data = mdecrypt_generic($this->td, $data);
 						break;
 				}
