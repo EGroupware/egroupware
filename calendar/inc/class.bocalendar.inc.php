@@ -371,13 +371,13 @@
 					$l_recur_enddate['mday'] = 0;
 				}
 		
-				switch($l_cal['recur_type'])
+				switch(intval($l_cal['recur_type']))
 				{
 					case MCAL_RECUR_NONE:
 						$this->so->set_recur_none();
 						break;
 					case MCAL_RECUR_DAILY:
-						$this->so->set_recur_daily($l_recur_enddate['year'],$l_recur_enddate['month'],$l_recur_enddate['mday'],intval($l_cal['recur_interval']));
+						$this->so->set_recur_daily(intval($l_recur_enddate['year']),intval($l_recur_enddate['month']),intval($l_recur_enddate['mday']),intval($l_cal['recur_interval']));
 						break;
 					case MCAL_RECUR_WEEKLY:
 						$cal['recur_data'] = intval($l_cal['rpt_sun']) + intval($l_cal['rpt_mon']) + intval($l_cal['rpt_tue']) + intval($l_cal['rpt_wed']) + intval($l_cal['rpt_thu']) + intval($l_cal['rpt_fri']) + intval($l_cal['rpt_sat']);
