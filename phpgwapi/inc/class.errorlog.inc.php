@@ -77,17 +77,26 @@
 			{
 				switch($err->severity)
 				{
-					case 'F': return 'F'; break;
-					case 'E': $max = 'E'; break;
-					case 'W': if ($max != 'E') 
-					          { 
-							  	$max = 'W';
-							  }
-							  break;
-					case 'I': if ($max == 'D')
-							  {
-							  	$max = 'I';
-							  }
+					case 'F':
+						return 'F';
+						break;
+					case 'E':
+						$max = 'E';
+						break;
+					case 'W':
+						if ($max != 'E') 
+						{
+							$max = 'W';
+						}
+						break;
+					case 'I':
+						if ($max == 'D')
+						{
+							$max = 'I';
+						}
+						break;
+					default:
+						break;
 				}
 			}
 			return $max;
@@ -108,7 +117,7 @@
 						,__LINE__,__FILE__);
 
 			$log_id = $db->get_last_insert_id('phpgw_log','log_id');
-//			$db->query('select max(log_id)  as lid from phpgw_log');
+//			$db->query('select max(log_id) as lid from phpgw_log');
 //			$db->next_record();
 //			$log_id = $db->f('lid');
 //			$db->unlock();
@@ -125,11 +134,11 @@
 							.", '" . $phpgw->db->to_timestamp($err->timestamp
 )
 							."', '". $err->severity . "'"
-							.", '". $err->code     . "'"
-							.", '". $err->msg      . "'"
+							.", '". $err->code . "'"
+							.", '". $err->msg . "'"
 							.", '". addslashes(implode('|',$err->parms)). "'"
-							.", '". $err->fname      . "'"
-							.", ". $err->line      
+							.", '". $err->fname . "'"
+							.", " . intval($err->line)
 							.")" 
 							,__LINE__,__FILE__);
 			};

@@ -11,7 +11,8 @@
 
 	/* $Id$ */
 
-	if (! $sessionid)
+	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	if (! $GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
 		exit;
@@ -20,9 +21,9 @@
 	/*
 		This is the preliminary menuaction driver for the new multi-layered design
 	*/
-	if (@isset($menuaction))
+	if (@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 	{
-		list($app,$class,$method) = explode('.',$menuaction);
+		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
 		if (! $app || ! $class || ! $method)
 		{
 			$invalid_data = True;
@@ -37,7 +38,7 @@
 		$invalid_data = True;
 	}
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => $app
@@ -46,7 +47,7 @@
 
 	if ($app == 'home')
 	{
-		Header('Location: ' . $phpgw->link('/home.php'));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
 	}
 
 	$obj = CreateObject(sprintf('%s.%s',$app,$class));
@@ -56,13 +57,13 @@
 	}
 	else
 	{
-		Header('Location: ' . $phpgw->link('/home.php'));
-		$phpgw->log->message(array('text'=>'W-BadmenuactionVariable, menuaction missing or corrupt: %1','p1'=>$menuaction));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
+		$GLOBALS['phpgw']->log->message(array('text'=>'W-BadmenuactionVariable, menuaction missing or corrupt: %1','p1'=>$menuaction));
 		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method])
 		{
-			$phpgw->log->message(array('text'=>'W-BadmenuactionVariable, attempted to access private method: %1','p1'=>$method));
+			$GLOBALS['phpgw']->log->message(array('text'=>'W-BadmenuactionVariable, attempted to access private method: %1','p1'=>$method));
 		}
-		$phpgw->log->commit();
+		$GLOBALS['phpgw']->log->commit();
 
 		/*
 		$_obj = CreateObject('home.home');
@@ -70,4 +71,4 @@
 		*/
 	}
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();

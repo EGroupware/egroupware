@@ -326,7 +326,8 @@
 	 /* Make sure the developer is following the rules. */
 	if (!isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 	{
-		$phpgw->log->write(array('text'=>'W-MissingFlags, currentapp flag not set'));
+		/* This object does not exist yet. */
+	/*	$GLOBALS['phpgw']->log->write(array('text'=>'W-MissingFlags, currentapp flag not set'));*/
 
 		echo '<b>!!! YOU DO NOT HAVE YOUR $phpgw_info["flags"]["currentapp"] SET !!!';
 		echo '<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';

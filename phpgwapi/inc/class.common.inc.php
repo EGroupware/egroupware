@@ -612,10 +612,9 @@
 		*/
 		function get_tpl_dir($appname = '')
 		{
-			global $phpgw_info;
 			if (! $appname)
 			{
-				$appname = $phpgw_info['flags']['currentapp'];
+				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
 			{
@@ -623,24 +622,23 @@
 			}
 
 			// Setting this for display of template choices in user preferences
-			if ($phpgw_info['server']['template_set'] == 'user_choice')
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
 			{
-				$phpgw_info['server']['usrtplchoice'] = 'user_choice';
+				$GLOBALS['phpgw_info']['server']['usrtplchoice'] = 'user_choice';
 			}
 
-			if ($phpgw_info['server']['template_set'] == 'user_choice' &&
-				isset($phpgw_info['user']['preferences']['common']['template_set']))
+			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' &&
+				isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']))
 			{
-				$phpgw_info['server']['template_set'] = $phpgw_info['user']['preferences']['common']['template_set'];
+				$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'];
 			}
-			elseif ($phpgw_info['server']['template_set'] == 'user_choice' ||
-				!isset($phpgw_info['server']['template_set']))
+			elseif ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice' ||
+				!isset($GLOBALS['phpgw_info']['server']['template_set']))
 			{
-				$phpgw_info['server']['template_set'] = 'default';
+				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
 
-			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
-				. $phpgw_info['server']['template_set'];
+			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'];
 			$tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
 
 			if (is_dir($tpldir))

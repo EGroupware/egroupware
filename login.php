@@ -145,20 +145,21 @@
 		unset($sslattributes);
 	}
 
-	if (isset($submit) && $submit || $submit_x || $submit_y)
+	if (isset($HTTP_POST_VARS['submit']) && $HTTP_POST_VARS['submit'] || $submit_x || $submit_y)
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]))
 		{
 			$phpgw->redirect($phpgw->link('/login.php','code=5'));
 		}
-		$sessionid = $phpgw->session->create($login,$passwd);
-		if (! isset($sessionid) || ! $sessionid)
+		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['HTTP_POST_VARS']['login'],$GLOBALS['HTTP_POST_VARS']['passwd']);
+
+		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
 			$phpgw->redirect($phpgw_info['server']['webserver_url'] . '/login.php?cd=5');
 		}
 		else
 		{
-			if ($phpgw_forward)
+			if ($GLOBALS['phpgw_forward'])
 			{
 				while (list($name,$value) = each($HTTP_GET_VARS))
 				{
@@ -168,7 +169,7 @@
 					}
 				}
 			}
-			$phpgw->redirect($phpgw->link('/home.php','cd=yes' . $extra_vars));
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/home.php','cd=yes' . $extra_vars));
 		}
 	}
 	else

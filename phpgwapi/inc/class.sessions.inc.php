@@ -61,33 +61,32 @@
 		\*************************************************************************/
 		function getuser_ip()
 		{
-			global $REMOTE_ADDR, $HTTP_X_FORWARDED_FOR;
-       
-			if ($HTTP_X_FORWARDED_FOR)
+			if ($GLOBALS['HTTP_X_FORWARDED_FOR'])
 			{
-				return $HTTP_X_FORWARDED_FOR;
+				return $GLOBALS['HTTP_X_FORWARDED_FOR'];
 			}
 			else
 			{
-				return $REMOTE_ADDR;
+				return $GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'];
 			}
 		}
 
 		function verify()
 		{
-			global $phpgw, $phpgw_info, $sessionid, $kp3;
+			$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+			$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
 
-			$db              = $phpgw->db;
-			$db2             = $phpgw->db;
+			$db              = $GLOBALS['phpgw']->db;
+			$db2             = $GLOBALS['phpgw']->db;
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
-			$phpgw->common->iv   = $phpgw_info['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->common->key  = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$GLOBALS['phpgw']->common->iv   = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
 
-			$cryptovars[0] = $phpgw->common->key;      
-			$cryptovars[1] = $phpgw->common->iv;      
-			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			$cryptovars[0] = $GLOBALS['phpgw']->common->key;      
+			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;      
+			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
 
 			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
@@ -103,71 +102,70 @@
 			}
 			else
 			{
-				$this->account_domain = $phpgw_info['server']['default_domain'];
+				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
 			}
 
-			$phpgw_info['user']['kp3'] = $this->kp3;
-			$phpgw_info_flags    = $phpgw_info['flags'];
+			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
-			$phpgw_info['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
 // Thinking this might solve auth_http	problems
 			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
-			$this->account_id = $phpgw->accounts->name2id($this->account_lid);
+			$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
 
 			if (! $this->account_id)
 			{
+//			echo 'er';
 				return False;
 			}
 
-			$phpgw_info['user']['account_id'] = $this->account_id;
-			
-			$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
+			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
+
+			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$phpgw->log->message('W-VerifySession, account loginid %1 is expired',$this->account_lid);
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-VerifySession, account loginid %1 is expired',$this->account_lid);
+				$GLOBALS['phpgw']->log->commit();
 				return False;
 			}
 
-			$phpgw_info['user']  = $this->user;
-			$phpgw_info['hooks'] = $this->hooks;
+			$GLOBALS['phpgw_info']['user']  = $this->user;
+			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$phpgw_info['user']['session_ip']  = $db->f('session_ip');
-			$phpgw_info['user']['passwd']		  = base64_decode($this->appsession('password','phpgwapi'));
+			$GLOBALS['phpgw_info']['user']['session_ip']  = $db->f('session_ip');
+			$GLOBALS['phpgw_info']['user']['passwd']		  = base64_decode($this->appsession('password','phpgwapi'));
 
-			if ($userid_array[1] != $phpgw_info['user']['domain'])
+			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$phpgw->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$phpgw_info['user']['domain']);
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$GLOBALS['phpgw_info']['user']['domain']);
+				$GLOBALS['phpgw']->log->commit();
 
 				return False;
 			}
 
-			if (@$phpgw_info['server']['sessions_checkip'])
+			if (@$GLOBALS['phpgw_info']['server']['sessions_checkip'])
 			{
-				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
+				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
 					// This needs some better wording
-					$phpgw->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$phpgw_info['user']['session_ip']);
-					$phpgw->log->commit();
+					$GLOBALS['phpgw']->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$GLOBALS['phpgw_info']['user']['session_ip']);
+					$GLOBALS['phpgw']->log->commit();
 
 					return False;
 				}
 			}
 
-			$phpgw->acl->acl($this->account_id);
-			$phpgw->accounts->accounts($this->account_id);
-			$phpgw->preferences->preferences($this->account_id);
-			$phpgw->applications->applications($this->account_id);
+			$GLOBALS['phpgw']->acl->acl($this->account_id);
+			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
+			$GLOBALS['phpgw']->preferences->preferences($this->account_id);
+			$GLOBALS['phpgw']->applications->applications($this->account_id);
 
 			if (! $this->account_lid)
 			{
 				// This needs some better wording
-				$phpgw->log->message('W-VerifySession, account_id is empty');
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-VerifySession, account_id is empty');
+				$GLOBALS['phpgw']->log->commit();
 
 				return False;
 			}
@@ -180,22 +178,20 @@
 		// This will remove stale sessions out of the database
 		function clean_sessions()
 		{
-			global $phpgw_info, $phpgw;
-
 			// If you plan on using the cron apps, please remove the following lines.
 			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
 
-			$phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
+			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
 								 . "' and session_flags !='A'",__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$phpgw->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
+			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
 									 . "'",__LINE__,__FILE__);
 		}
 
 		function create($login,$passwd)
 		{
-			global $phpgw_info, $phpgw, $PHP_SELF;
+			global $PHP_SELF;
 
 			$this->login  = $login;
 			$this->passwd = $passwd;
@@ -210,47 +206,47 @@
 			}
 			else
 			{
-				$this->account_domain = $phpgw_info['server']['default_domain'];
+				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
 			}
 
-			if ($phpgw_info['server']['global_denied_users'][$this->account_lid])
+			if ($GLOBALS['phpgw_info']['server']['global_denied_users'][$this->account_lid])
 			{
 				return False;
 			}
 
-			if (! $phpgw->auth->authenticate($this->account_lid, $passwd))
+			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $passwd))
 			{
 				return False;
 				exit;
 			}
 
-			if (!$phpgw->accounts->exists($this->account_lid) && $phpgw_info['server']['auto_create_acct'] == True)
+			if (!$GLOBALS['phpgw']->accounts->exists($this->account_lid) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
 			{
-				$this->account_id = $phpgw->accounts->auto_add($this->account_lid, $passwd);
+				$this->account_id = $GLOBALS['phpgw']->accounts->auto_add($this->account_lid, $passwd);
 			}
 			else
 			{
-				$this->account_id = $phpgw->accounts->name2id($this->account_lid);
+				$this->account_id = $GLOBALS['phpgw']->accounts->name2id($this->account_lid);
 			}
-			$phpgw_info['user']['account_id'] = $this->account_id;
-			$phpgw->accounts->accounts($this->account_id);
+			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
+			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
 
-			$this->sessionid    = md5($phpgw->common->randomstring(10));
-			$this->kp3          = md5($phpgw->common->randomstring(15));
+			$this->sessionid    = md5($GLOBALS['phpgw']->common->randomstring(10));
+			$this->kp3          = md5($GLOBALS['phpgw']->common->randomstring(15));
 
-			$phpgw->common->key = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
-			$phpgw->common->iv  = $phpgw_info['server']['mcrypt_iv'];
-			$cryptovars[0] = $phpgw->common->key;
-			$cryptovars[1] = $phpgw->common->iv;
-			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			$GLOBALS['phpgw']->common->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$GLOBALS['phpgw']->common->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
+			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
+			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
 
-			if ($phpgw_info['server']['usecookies'])
+			if ($GLOBALS['phpgw_info']['server']['usecookies'])
 			{
 				Setcookie('sessionid',$this->sessionid);
 				Setcookie('kp3',$this->kp3);
 				Setcookie('domain',$this->account_domain);
 				Setcookie('last_domain',$this->account_domain,$now+1209600);
-				if ($this->account_domain == $phpgw_info['server']['default_domain'])
+				if ($this->account_domain == $GLOBALS['phpgw_info']['server']['default_domain'])
 				{
 					Setcookie('last_loginid', $this->account_lid ,$now+1209600);  // For 2 weeks
 				}
@@ -258,7 +254,7 @@
 				{
 					Setcookie('last_loginid', $login ,$now+1209600);              // For 2 weeks
 				}
-				unset ($phpgw_info['server']['default_domain']);                 // we kill this for security reasons
+				unset ($GLOBALS['phpgw_info']['server']['default_domain']);                 // we kill this for security reasons
 			}
 
 			$this->read_repositories(False);
@@ -270,11 +266,11 @@
 				return False;
 			}
 
-			$phpgw_info['user']  = $this->user;
-			$phpgw_info['hooks'] = $this->hooks;
+			$GLOBALS['phpgw_info']['user']  = $this->user;
+			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
 			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
-			if ($phpgw->acl->check('anonymous',1,'phpgwapi'))
+			if ($GLOBALS['phpgw']->acl->check('anonymous',1,'phpgwapi'))
 			{
 				$session_flags = 'A';
 			}
@@ -285,38 +281,36 @@
 
 			$user_ip  = $this->getuser_ip();
 
-			$phpgw->db->transaction_begin();
-			$phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
+			$GLOBALS['phpgw']->db->transaction_begin();
+			$GLOBALS['phpgw']->db->query("insert into phpgw_sessions values ('" . $this->sessionid
 								. "','".$login."','" . $user_ip . "','"
 								. $now . "','" . $now . "','" . $PHP_SELF . "','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
-			$phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
+			$GLOBALS['phpgw']->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
 								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
 
-			$this->appsession('account_previous_login','phpgwapi',$phpgw->auth->previous_login);
-			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);
-			$phpgw->db->transaction_commit();
+			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
+			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
+			$GLOBALS['phpgw']->db->transaction_commit();
 
 			return $this->sessionid;
 		}
 
 		function verify_server($sessionid, $kp3)
 		{
-			global $phpgw, $phpgw_info;
-
-			$phpgw->interserver = CreateObject('phpgwapi.interserver');
-			$db              = $phpgw->db;
-			$db2             = $phpgw->db;
+			$GLOBALS['phpgw']->interserver = CreateObject('phpgwapi.interserver');
+			$db              = $GLOBALS['phpgw']->db;
+			$db2             = $GLOBALS['phpgw']->db;
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
-			$phpgw->common->iv   = $phpgw_info['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->common->key  = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$GLOBALS['phpgw']->common->iv   = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
 
-			$cryptovars[0] = $phpgw->common->key; 
-			$cryptovars[1] = $phpgw->common->iv;
-			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
+			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
+			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
 
 			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
@@ -332,65 +326,65 @@
 			}
 			else
 			{
-				$this->account_domain = $phpgw_info['server']['default_domain'];
+				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
 			}
 
-			$phpgw_info['user']['kp3'] = $this->kp3;
-			$phpgw_info_flags    = $phpgw_info['flags'];
+			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
+			$phpgw_info_flags    = $GLOBALS['phpgw_info']['flags'];
 
-			$phpgw_info['flags'] = $phpgw_info_flags;
+			$GLOBALS['phpgw_info']['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
 // Thinking this might solve auth_http	problems
 			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
 			$this->account_lid = $userid_array[1];
 			$this->update_dla();
-			$this->account_id = $phpgw->interserver->name2id($this->account_lid);
+			$this->account_id = $GLOBALS['phpgw']->interserver->name2id($this->account_lid);
 
 			if (!$this->account_id)
 			{
 				return False;
 			}
 
-			$phpgw_info['user']['account_id'] = $this->account_id;
+			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 			
-			$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
+			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 
-			$phpgw_info['user']  = $this->user;
-			$phpgw_info['hooks'] = $this->hooks;
+			$GLOBALS['phpgw_info']['user']  = $this->user;
+			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$phpgw_info['user']['session_ip']  = $db->f('session_ip');
-			$phpgw_info['user']['passwd'] = base64_decode($this->appsession('password','phpgwapi'));
+			$GLOBALS['phpgw_info']['user']['session_ip']  = $db->f('session_ip');
+			$GLOBALS['phpgw_info']['user']['passwd'] = base64_decode($this->appsession('password','phpgwapi'));
 
-			if ($userid_array[1] != $phpgw_info['user']['domain'])
+			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
 			{
-				$phpgw->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$phpgw_info['user']['domain']);
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$GLOBALS['phpgw_info']['user']['domain']);
+				$GLOBALS['phpgw']->log->commit();
 
 				return False;
 			}
 
-			if (@$phpgw_info['server']['sessions_checkip'])
+			if (@$GLOBALS['phpgw_info']['server']['sessions_checkip'])
 			{
-				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
+				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
 				{
 					// This needs some better wording
-					$phpgw->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$phpgw_info['user']['session_ip']);
-					$phpgw->log->commit();
+					$GLOBALS['phpgw']->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$GLOBALS['phpgw_info']['user']['session_ip']);
+					$GLOBALS['phpgw']->log->commit();
 
 					return False;
 				}
 			}
 
-			$phpgw->acl->acl($this->account_id);
-			$phpgw->accounts->accounts($this->account_id);
-			$phpgw->preferences->preferences($this->account_id);
-			$phpgw->applications->applications($this->account_id);
+			$GLOBALS['phpgw']->acl->acl($this->account_id);
+			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
+			$GLOBALS['phpgw']->preferences->preferences($this->account_id);
+			$GLOBALS['phpgw']->applications->applications($this->account_id);
 
 			if (! $this->account_lid)
 			{
 				// This needs some better wording
-				$phpgw->log->message('W-VerifySession, account_id is empty');
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-VerifySession, account_id is empty');
+				$GLOBALS['phpgw']->log->commit();
 
 				return False;
 			}
@@ -497,7 +491,16 @@
     
 		function destroy()
 		{
-			global $phpgw, $phpgw_info, $sessionid, $kp3;
+			global $phpgw, $phpgw_info;
+
+			$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+			$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+
+			if(!$sessionid && $kp3)
+			{
+				return False;
+			}
+
 			$phpgw_info['user']['sessionid'] = $sessionid;
 			$phpgw_info['user']['kp3'] = $kp3;
 	 
@@ -528,22 +531,21 @@
 		\*************************************************************************/
 		function read_repositories($cached='')
 		{
-			global $phpgw, $phpgw_info;
-			$phpgw->acl->acl($this->account_id);
-			$phpgw->accounts->accounts($this->account_id);
-			$phpgw->preferences->preferences($this->account_id);
-			$phpgw->applications->applications($this->account_id);
+			$GLOBALS['phpgw']->acl->acl($this->account_id);
+			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
+			$GLOBALS['phpgw']->preferences->preferences($this->account_id);
+			$GLOBALS['phpgw']->applications->applications($this->account_id);
 			
 			if(@$cached)
 			{
 				$this->user = $this->appsession('phpgw_info_cache','phpgwapi');
 				if(!empty($this->user))
 				{
-					$phpgw->preferences->data = $this->user['preferences'];
-					if (!isset($phpgw_info['apps']) ||
-				    gettype($phpgw_info['apps']) != 'array')
+					$GLOBALS['phpgw']->preferences->data = $this->user['preferences'];
+					if (!isset($GLOBALS['phpgw_info']['apps']) ||
+				    gettype($GLOBALS['phpgw_info']['apps']) != 'array')
 					{
-						$phpgw->applications->read_installed_apps();
+						$GLOBALS['phpgw']->applications->read_installed_apps();
 					}
 				}
 				else
@@ -555,7 +557,7 @@
 			{
 				$this->setup_cache();
 			}
-			$this->hooks               = $phpgw->hooks->read();
+			$this->hooks = $GLOBALS['phpgw']->hooks->read();
 		}
 
 		function setup_cache()
@@ -726,11 +728,13 @@
 		\*************************************************************************/
 		function link($url, $extravars = '')
 		{
-			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
+			global $usercookie, $PHP_SELF;
+
+			$kp3 = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
 
 			if (! $kp3)
 			{
-				$kp3 = $phpgw_info['user']['kp3'];
+				$kp3 = $GLOBALS['phpgw_info']['user']['kp3'];
 			}
 
 			// Explicit hack to work around problems with php running as CGI on windows
@@ -751,7 +755,7 @@
 			}
 */
 
-			$url = $phpgw_info['server']['webserver_url'] . $url;
+			$url = $GLOBALS['phpgw_info']['server']['webserver_url'] . $url;
 
 			// This needs to be tested as well. (jengo)
 
@@ -782,7 +786,7 @@
 				$extravars = $new_extravars;
 			}
 
-			if (isset($phpgw_info['server']['usecookies']) && $phpgw_info['server']['usecookies'])
+			if (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies'])
 			{
 				if ($extravars)
 				{
@@ -791,15 +795,15 @@
 			}
 			else
 			{
-				$sessionID  = 'sessionid=' . @$phpgw_info['user']['sessionid'];
+				$sessionID  = 'sessionid=' . @$GLOBALS['phpgw_info']['user']['sessionid'];
 				$sessionID .= '&kp3=' . $kp3;
-				$sessionID .= '&domain=' . @$phpgw_info['user']['domain'];
+				$sessionID .= '&domain=' . @$GLOBALS['phpgw_info']['user']['domain'];
 				// This doesn't belong in the API.
 				// Its up to the app to pass this value. (jengo)
 				// Putting it into the app requires a massive number of updates in email app. 
 				// Until that happens this needs to stay here (seek3r)
-				if (isset($phpgw_info['flags']['newsmode']) && 
-					$phpgw_info['flags']['newsmode'])
+				if (isset($GLOBALS['phpgw_info']['flags']['newsmode']) && 
+					$GLOBALS['phpgw_info']['flags']['newsmode'])
 				{
 					$url .= '&newsmode=on';
 				}

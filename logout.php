@@ -12,8 +12,8 @@
 
 	/* $Id$ */
 
-	$phpgw_info          = array();
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']        = array();
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'disable_template_class' => True,
 		'currentapp'             => 'logout',
 		'noheader'               => True,
@@ -23,30 +23,34 @@
 
 	include('./header.inc.php');
 
-	if ($phpgw->session->verify($sessionid))
+	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	$GLOBALS['kp3']       = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+
+	$verified = $GLOBALS['phpgw']->session->verify();
+	if ($verified)
 	{
-		if (file_exists($phpgw_info['server']['temp_dir'] . SEP . $sessionid))
+		if (file_exists($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
 		{
-			$dh = opendir($phpgw_info['server']['temp_dir'] . SEP . $sessionid);
+			$dh = opendir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
 			while ($file = readdir($dh))
 			{
 				if ($file != '.' && $file != '..')
 				{
-					unlink($phpgw_info['server']['temp_dir'] . SEP . $sessionid . SEP . $file);
+					unlink($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid'] . SEP . $file);
 				}
 			}
-			rmdir($phpgw_info['server']['temp_dir'] . SEP . $sessionid);
+			rmdir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
 		}
-		$phpgw->common->hook('logout');
-		$phpgw->session->destroy();
+		$GLOBALS['phpgw']->common->hook('logout');
+		$GLOBALS['phpgw']->session->destroy();
 	}
 	else
 	{
-		$phpgw->log->write(array('text'=>'W-VerifySession, could not verify session durring logout'));
+		$GLOBALS['phpgw']->log->write(array('text'=>'W-VerifySession, could not verify session during logout'));
 	}
 	Setcookie('sessionid');
 	Setcookie('kp3');
 	Setcookie('domain');
 
-	$phpgw->redirect($phpgw_info['server']['webserver_url'].'/login.php?cd=1');
+	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=1');
 ?>
