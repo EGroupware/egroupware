@@ -2,7 +2,7 @@
 <!-- BEGIN matrix_query -->
 <center>
 <form action="{action_url}" method="post" name="matrixform">
-<table border="0" width="90%">
+<table border="0" width="98%">
  <tr bgcolor="{th_bg}">
   <td colspan="2" align="center"><b>{title}</b></td>
  </tr>
@@ -10,12 +10,12 @@
  <tr>
   <td>
    <table cellspacing="5"><tr>
-    <td><input type="submit" value="{submit_button}"></form></td>
-    <td>{cancel_button}</td>
+    <td><input type="submit" value="{submit_button}"></td>
    </tr></table>
   </td>
  </tr>
 </table>
+</form>
 </center>
 <!-- END matrix_query -->
 <!-- BEGIN list -->
