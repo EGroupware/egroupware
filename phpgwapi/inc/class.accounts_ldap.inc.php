@@ -185,7 +185,7 @@
 					/* $entry["objectclass"] = ''; */
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'posixGroup';
-					$members = $this->members($this->data["account_id"]);
+					$members = $this->member($this->data["account_id"]);
 					$entry['memberuid'] = array();
 					for ($i=0;$i<count($members);$i++)
 					{
@@ -229,7 +229,7 @@
 			{
 				if ($this->data['account_type'] == 'g' && $this->group_context )
 				{
-					$members = $this->members($this->data['account_id']);
+					$members = $this->member($this->data['account_id']);
 					$entry['memberuid'] = array();
 					for ($i=0;$i<count($members);$i++)
 					{

@@ -153,7 +153,7 @@
 			return $this->memberships;
 		}
 
-		function members ($accountid = '')
+		function member($accountid = '')
 		{
 			$account_id = get_account_id($accountid);
 
