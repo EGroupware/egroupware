@@ -1,9 +1,13 @@
 account active	admin	ja	¥¢¥«¥¦¥ó¥È¥¢¥¯¥Æ¥£¥Ö
+account list	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È¹àÌÜÁ´ÂÎ
 account permissions	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
 acl manager	admin	ja	ÍøÍÑµö²ÄÀßÄê
 acl rights	admin	ja	ÍøÍÑµö²ÄÀßÄê
 action	admin	ja	¥¢¥¯¥·¥ç¥ó
+add account	admin	ja	¥¢¥«¥¦¥ó¥È¤ÎÄÉ²Ã
+add application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄÉ²Ã
 add global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄÉ²Ã
+add group	admin	ja	¥°¥ë¡¼¥×ÄÉ²Ã
 add new account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄÉ²Ã
 add new application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄÉ²Ã
 add peer server	admin	ja	ÂĞÅù¥µ¡¼¥ĞÄÉ²Ã
@@ -15,6 +19,7 @@ all records and account information will be lost!	admin	ja	¤¹¤Ù¤Æ¤Î¥ì¥³¡¼¥É¤È¥¢¥
 all users	admin	ja	Á´¤Æ¤Î¥æ¡¼¥¶
 allow anonymous access to this app	admin	ja	Æ¿Ì¾¥æ¡¼¥¶¤Ø¤Îµö²Ä
 anonymous user	admin	ja	Æ¿Ì¾¥æ¡¼¥¶
+applications list	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¹àÌÜÁ´ÂÎ
 application name	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÌ¾
 application title	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¿¥¤¥È¥ë
 applications	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
@@ -26,13 +31,21 @@ are you sure you want to kill this session ?	admin	ja	¤³¤Î¥»¥Ã¥·¥ç¥ó¤òÀÚÃÇ¤·¤Æ¤â
 back	admin	ja	Ìá¤ë
 bi-directional	admin	ja	ÁĞÊı¸ş
 bi-dir passthrough	admin	ja	ÁĞÊı¸ş¥Ñ¥¹¥¹¥ë¡¼
+categories list	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥ê¹àÌÜÁ´ÂÎ
 change main screen message	admin	ja	¥á¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸ÊÑ¹¹
+change config settings	admin	ja	´Ä¶­ÀßÄêÊÑ¹¹
 check ip address of all sessions	admin	ja	Á´¤Æ¤Î¥»¥Ã¥·¥ç¥ó¤Ç IP ¥¢¥É¥ì¥¹¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+check items to <b>%1</b> to %2 for %3	admin	ja	%3(%2)¤ËÂĞ¤¹¤ë <b>%1</b> ¤Î¹àÌÜ¤ò¥¯¥ê¥Ã¥¯¤·¤Æ²¼¤µ¤¤¡¥
 city	admin	ja	»Ô¶èÄ®Â¼
 country selection	admin	ja	¹ñ¤ÎÁªÂò
 create group	admin	ja	¥°¥ë¡¼¥×ºîÀ®
 default category	admin	ja	´ûÄê¤Î¥«¥Æ¥´¥ê
+delete account	admin	ja	¥¢¥«¥¦¥ó¥Èºï½ü
 delete all records	admin	ja	ºï½ü¤¹¤ë
+delete application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óºï½ü
+delete category	admin	ja	¥«¥Æ¥´¥êºï½ü
+delete group	admin	ja	¥°¥ë¡¼¥×ºï½ü
+delete peer server	admin	ja	ÂĞÅù¥µ¡¼¥Ğºï½ü
 deny all users access to grant other users access to their entries ?	admin	ja	Â¾¤Î¥æ¡¼¥¶¾ğÊó¤Ø¤Î¥¢¥¯¥»¥¹¤òÁ´¤Æ¤Î¥æ¡¼¥¶¤Ëµö²Ä¤·¤Ê¤¤
 deny access to user accounts	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥È¤ÎÀ©¸Â
 deny access to groups	admin	ja	¥æ¡¼¥¶¥°¥ë¡¼¥×¤ÎÀ©¸Â
@@ -44,6 +57,7 @@ deny access to current sessions	admin	ja	¥»¥Ã¥·¥ç¥ó¤ÎÀ©¸Â
 deny to site configuration	admin	ja	¥µ¥¤¥È´Ä¶­ÀßÄê¤ÎÀ©¸Â
 disabled	admin	ja	ÉÔ²Ä
 display	admin	ja	É½¼¨
+edit account	admin	ja	¥¢¥«¥¦¥ó¥ÈÄûÀµ
 edit application	admin	ja	¥¢¥×¥ê¥±¡¼¥·¥ç¥óÄûÀµ
 edit global category	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥êÄûÀµ
 edit group	admin	ja	¥°¥ë¡¼¥×ÄûÀµ
@@ -64,6 +78,7 @@ forecast	admin	ja	Å·µ¤Í½Êó
 forecast zone	admin	ja	Å·µ¤Í½Êó
 fzone	admin	ja	fzone
 global categories	admin	ja	¥°¥í¡¼¥Ğ¥ë¥«¥Æ¥´¥ê
+group list	admin	ja	¥æ¡¼¥¶¥°¥ë¡¼¥×¹àÌÜÁ´ÂÎ
 group name	admin	ja	¥°¥ë¡¼¥×Ì¾
 hide php information	admin	ja	PHP¥¤¥ó¥Õ¥©¥á¡¼¥·¥ç¥ó¤òÊÄ¤¸¤ë
 home directory	admin	ja	home directory	
@@ -80,8 +95,11 @@ last login	admin	ja	ºÇ½ª¥í¥°¥¤¥ó
 last login from	admin	ja	ºÇ½ª¥í¥°¥¤¥óIP
 last time read	admin	ja	Last Time Read
 last x logins	admin	ja	²áµî %1 ¤Î¥í¥°¥¤¥ó
+list config settings	admin	ja	´Ä¶­ÀßÄê¹àÌÜ¤ÎÉ½¼¨
+list current sessions	admin	ja	¥»¥Ã¥·¥ç¥ó»²¾È¹àÌÜÁ´ÂÎ
 list of current users	admin	ja	¥í¥°¥¤¥óÃæ¥æ¡¼¥¶°ìÍ÷
 login history	admin	ja	¥í¥°¥¤¥óÍúÎò
+login message	admin	ja	¥í¥°¥¤¥ó²èÌÌ¥á¥Ã¥»¡¼¥¸
 login screen	admin	ja	¥í¥°¥¤¥ó²èÌÌ
 login shell	admin	ja	¥í¥°¥¤¥ó¥·¥§¥ë
 login time	admin	ja	¥í¥°¥¤¥ó»ş´Ö
@@ -99,6 +117,7 @@ note: ssl available only if php is compiled with curl support	admin	ja	È÷¹Í:PHP¤
 outbound	admin	ja	³°¸ş¤­
 passthrough	admin	ja	¥Ñ¥¹¥¹¥ë¡¼
 peer servers	admin	ja	ÂĞÅù¥µ¡¼¥Ğ
+peer server list	admin	ja	ÂĞÅù¥µ¡¼¥Ğ¹àÌÜÁ´ÂÎ
 percent of users that logged out	admin	ja	¥æ¡¼¥¶¤Î¥í¥°¥¢¥¦¥ÈÎ¨
 permissions	admin	ja	¥Ñ¡¼¥ß¥Ã¥·¥ç¥ó
 permissions this group has	admin	ja	ÍøÍÑ²ÄÇ½¥¢¥×¥ê¥±¡¼¥·¥ç¥ó
@@ -110,6 +129,10 @@ re-enter password	admin	ja	¥Ñ¥¹¥ï¡¼¥ÉºÆÆşÎÏ
 region	admin	ja	ÃÏ°è
 regions	admin	ja	ÃÏ°è
 remove all users from this group	admin	ja	¤³¤Î¥°¥ë¡¼¥×¤ÎÁ´¤Æ¤Î¥æ¡¼¥¶¤òºï½ü¤·¤Ş¤¹¡£
+search accounts	admin	ja	¥¢¥«¥¦¥ó¥È¸¡º÷
+search categories	admin	ja	¥«¥Æ¥´¥ê¸¡º÷
+search groups	admin	ja	¥°¥ë¡¼¥×¸¡º÷
+search peer servers	admin	ja	ÂĞÅù¥µ¡¼¥Ğ¸¡º÷
 section	admin	ja	É½¼¨¾ì½ê
 security	admin	ja	¥»¥­¥å¥ê¥Æ¥£
 selectbox	admin	ja	¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹
@@ -121,7 +144,9 @@ server password	admin	ja	¥µ¡¼¥Ğ¥Ñ¥¹¥ï¡¼¥É
 server type(mode)	admin	ja	¥µ¡¼¥Ğ¥¿¥¤¥×(¥â¡¼¥É)
 server url	admin	ja	¥µ¡¼¥ĞURL
 server username	admin	ja	¥µ¡¼¥Ğ¥æ¡¼¥¶Ì¾
+show current action	admin	ja	¥¢¥¯¥·¥ç¥ó¹àÌÜÉ½¼¨
 show 'powered by' logo on	admin	ja	powered by ¥í¥´É½¼¨°ÌÃÖ
+show session ip address	admin	ja	IP¥¢¥É¥ì¥¹É½¼¨
 site	admin	ja	Site
 site configuration	admin	ja	¥µ¥¤¥È´Ä¶­ÀßÄê
 soap	admin	ja	SOAP
@@ -153,7 +178,10 @@ users choice	admin	ja	¥æ¡¼¥¶ÁªÂò
 user data	admin	ja	¥æ¡¼¥¶¥Ç¡¼¥¿
 user groups	admin	ja	¥æ¡¼¥¶¥°¥ë¡¼¥×
 view access log	admin	ja	¥¢¥¯¥»¥¹¥í¥°»²¾È
+view account	admin	ja	¥¢¥«¥¦¥ó¥ÈÉ½¼¨
+view category	admin	ja	¥«¥Æ¥´¥êÉ½¼¨
 view error log	admin	ja	¥¨¥é¡¼¥í¥°»²¾È
+view peer server	admin	ja	ÂĞÅù¥µ¡¼¥ĞÉ½¼¨
 view sessions	admin	ja	¥»¥Ã¥·¥ç¥ó»²¾È
 view user account	admin	ja	¥æ¡¼¥¶¥¢¥«¥¦¥ó¥ÈÉ½¼¨
 who would you like to transfer all records owned by the deleted user to?	admin	ja	ºï½ü¥æ¡¼¥¶¤Îµ­Ï¿¤òÅ¾Á÷¤¹¤ë¥æ¡¼¥¶¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£

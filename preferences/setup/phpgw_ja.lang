@@ -17,6 +17,7 @@ note: this feature does *not* change your email password. this will need to be d
 please, select a new theme	preferences	ja	Please, select a new theme
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 select different theme	preferences	ja	異なるテーマを選択してください。
+select one	preferences	ja	選択して下さい
 show current users on navigation bar	preferences	ja	現在のユーザ数を表示する。
 show navigation bar as	preferences	ja	ナビゲーション
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
@@ -24,6 +25,7 @@ text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the x timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
+user choice	preferences	ja	選択して下さい
 use selectbox	preferences	ja	セレクトボックス
 use text entry	preferences	ja	テキスト入力
 your current theme is: x	preferences	ja	</b>

@@ -2,27 +2,37 @@
 1 match found	calendar	ja	£±·ï¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£
 a	calendar	ja	
 accept	calendar	ja	¾µÂú
+alarms	calendar	ja	¥¢¥é¡¼¥à
+alarm management	calendar	ja	¥¢¥é¡¼¥à´ÉÍı
 all day	calendar	ja	Á´¤Æ¤ÎÆü
 am	calendar	ja	¸áÁ°
 are you sure\nyou want to\ndelete this entry ?	calendar	ja	¤³¤Î¹àÌÜ¤ò\nºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡£¡Ë
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡Ë
+Are you sure\nyou want to\ndelete this single occurence ?\n\nThis will delete\nthis entry for all users.	calendar	ja	ºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡£\n¡ÊÁ´¤Æ¤Î¥æ¡¼¥¶¤Ë±Æ¶Á¤·¤Ş¤¹¡Ë
 brief description	calendar	ja	·ïÌ¾
 calendar	common	ja	¥«¥ì¥ó¥À¡¼
 calendar preferences	common	ja	¥«¥ì¥ó¥À¡¼¥æ¡¼¥¶ÀßÄê
+calendar settings	admin	ja	¥«¥ì¥ó¥À¡¼ÀßÄê
 calendar - add	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÄÉ²Ã
-calendar - edit	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÊÔ½¸
+calendar - edit	calendar	ja	¥«¥ì¥ó¥À¡¼ - ÄûÀµ
 calendar holiday management	admin	ja	µÙÆüÀßÄê
 countries	calendar	ja	¹ñ°ìÍ÷
 daily	calendar	ja	ÆüÃ±°Ì
 daily matrix view	calendar	ja	ÆüÄøÉ½¼¨
 days repeated	calendar	ja	ÍËÆü
+delete series	calendar	ja	Ï¢Â³ºï½ü
+delete single	calendar	ja	Ã±ÆÈºï½ü
 default calendar filter	calendar	ja	¥«¥ì¥ó¥À¡¼¤Î½é´üÁªÂò
 default calendar view	calendar	ja	¥«¥ì¥ó¥À¡¼¤Î½é´üÉ½¼¨
 display mini calendars when printing	calendar	ja	°õºşÍÑ¤Î»ş¡¢¾®¥«¥ì¥ó¥À¤òÉ½¼¨
 display status of events	calendar	ja	¥¤¥Ù¥ó¥È¾õ¶·É½¼¨
+do you wish to autoload calendar holidays files dynamically?	admin	ja	µÙÆü¥Õ¥¡¥¤¥ë¤ò¼«Æ°¥í¡¼¥É¤¹¤ë
 duration	calendar	ja	·ÑÂ³»ş´Ö
+edit series	calendar	ja	Ï¢Â³ÄûÀµ
+edit single	calendar	ja	Ã±ÆÈÄûÀµ
 end date/time	calendar	ja	½ªÎ»Æü»ş
 ends	calendar	ja	½ªÎ»Æü
+export	calendar	ja	¥¨¥¯¥¹¥İ¡¼¥È
 fr	calendar	ja	¶â
 free/busy	calendar	ja	»ş´ÖÉ½
 frequency	calendar	ja	´Ö³Ö
@@ -38,6 +48,10 @@ holiday	calendar	ja	µÙÆü
 holidays	calendar	ja	µÙÆü°ìÍ÷
 i participate	calendar	ja	¼«Ê¬¤â»²²Ã¼Ô
 ignore conflict	calendar	ja	Ìµ»ë
+import	calendar	ja	¥¤¥ó¥İ¡¼¥È
+interval	calendar	ja	´Ö³Ö
+location	calendar	ja	¾ì½ê
+location to autoload from	admin	ja	¼«Æ°¥í¡¼¥É¸µ
 minutes	calendar	ja	Ê¬
 mo	calendar	ja	·î
 mon	calendar	ja	·î
@@ -56,6 +70,7 @@ occurence	calendar	ja	ÍËÆü»ØÄê
 participant	calendar	ja	»²²Ã¼Ô
 participates	calendar	ja	¤â»²²Ã
 participants	calendar	ja	»²²Ã¼Ô
+planner	calendar	ja	¥×¥é¥ó¥Ê¡¼
 pm	calendar	ja	¸á¸å
 printer friendly	calendar	ja	°õºşÍÑ¤Ø
 private and global public	calendar	ja	¥×¥é¥¤¥Ù¡¼¥È¤È¶¦Í­
@@ -112,6 +127,8 @@ you have 1 high priority event on your calendar today.	common	ja	Í¥ÀèÅÙ¤Î¹â¤¤Í½Ä
 you have x high priority events on your calendar today.	common	ja	Í¥ÀèÅÙ¤Î¹â¤¤Í½Äê¤¬ %1 ¤Ä¤¢¤ê¤Ş¤¹¡£
 you have not entered a\nbrief description	calendar	ja	³µÍ×¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£
 you have not entered a brief description	calendar	ja	³µÍ×¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£
+you have not entered a title	calendar	ja	¥¿¥¤¥È¥ë¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤
+you have not entered a valid date	calendar	ja	ÆüÉÕ¤¬Àµ¤·¤¯¤¢¤ê¤Ş¤»¤ó
 you have not entered a\nvalid time of day.	calendar	ja	»ş¹ï¤¬¸í¤Ã¤Æ¤¤¤Ş¤¹¡£
 you must enter one or more search keywords	calendar	ja	¸¡º÷¥­¡¼¥ï¡¼¥É¤òÆşÎÏ¤·¤Æ²¼¤µ¤¤¡£
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	ja	<B> %1 - %2 </B> ¤Ë¤Ï¡¢ÊÌ¤ÎÍ½Äê¤¬¤¢¤ê¤Ş¤¹¡£
