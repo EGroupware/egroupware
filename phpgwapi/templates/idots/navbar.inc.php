@@ -80,6 +80,7 @@
 					{
 						$tdwidth = 100/($max_icons+2);
 					}
+					$tdwidth=round($tdwidth);
 
 					$app_icons .= '<td width="'.$tdwidth.'%" height="66" valign="bottom" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
 
