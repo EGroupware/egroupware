@@ -41,6 +41,25 @@ class html
 	}
 
 	/**
+	 * Created an input-field with an attached tigra color-picker
+	 *
+	 * Please note: it need to be called before the call to phpgw_header() !!!
+	 *
+	 * @param $name string the name of the input-field
+	 * @param $value string the actual value for the input-field, default ''
+	 * @param $title string tooltip/title for the picker-activation-icon
+	 */
+	function inputColor($name,$value='',$title='')
+	{
+		$GLOBALS['phpgw_info']['flags']['java_script_thirst'] =
+			'<script language=JavaScript src="'.$this->phpgwapi_js_url.'/picker/picker.js"></script><script>TCP.url=\''.$this->phpgwapi_js_url."/picker/';</script>\n";
+
+		return '<input type="text" name="'.$name.'" value="'.$this->htmlspecialchars($value).'" /> '.
+			'<a href="javascript:TCP.popup(document.getElementsByName(\'cat_data[color]\')[0])">'.
+			'<img src="'.$this->phpgwapi_js_url.'/picker/img/sel.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
+	}
+
+	/**
 	 * Handles tooltips via the wz_tooltip class from Walter Zorn
 	 *
 	 * Note: The wz_tooltip.js file gets automaticaly loaded at the end of the page
@@ -158,9 +177,12 @@ class html
 		return $out;
 	}
 
-	function div($content,$options='')
+	function div($content,$options='',$class='',$style='')
 	{
-		return "<div $options>\n$content</div>\n";
+		if ($class) $options .= ' class="'.$class.'"';
+		if ($style) $options .= ' style="'.$style.'"';
+
+		return "<div $options>\n".($content ? "$content</div>\n" : '');
 	}
 
 	function input_hidden($vars,$value='',$ignore_empty=True)
@@ -206,17 +228,19 @@ class html
 		}
 	}
 
-	/*!
-	@function htmlarea
-	@syntax htmlarea( $name,$content='',$style='width:100%; min-width:500px; height:300px;' )
-	@author ralfbecker
-	@abstract creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
-	@param $name string name and id of the input-field
-	@param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
-	@param $style string inline styles, eg. dimension of textarea element
-	@param $base_href string set a base href to get relative image-pathes working
-	@param $plugins string plugins to load seperated by comma's, eg 'TableOperations,ContextMenu' (htmlarea breaks when a plugin calls a nonexisiting lang file)
-	*/
+	/**
+	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
+	 *
+	 * Please note: it need to be called before the call to phpgw_header() !!!
+	 * @author ralfbecker
+	 * @param $name string name and id of the input-field
+	 * @param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
+	 * @param $style string inline styles, eg. dimension of textarea element
+	 * @param $base_href string set a base href to get relative image-pathes working
+	 * @param $plugins string plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
+	 * (htmlarea breaks when a plugin calls a nonexisiting lang file)
+	 * @return the necessary html for the textarea
+	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='')
 	{
 		if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
@@ -357,15 +381,15 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			($image == '' || $accesskey ? $lang_u : '').'</button>';
 	}
 
-	/*!
-	@function link
-	@abstract creates an absolut link + the query / get-variables
-	@param $url phpgw-relative link, may include query / get-vars
-	@parm $vars query or array ('name' => 'value', ...) with query
-	@example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
-	@example  = 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
-	@result absolut link already run through $phpgw->link
-	*/
+	/**
+	 * creates an absolut link + the query / get-variables
+	 *
+	 * Example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
+	 *	gives 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
+	 * @param $url phpgw-relative link, may include query / get-vars
+	 * @param $vars query or array ('name' => 'value', ...) with query
+	 * @return string absolut link already run through $phpgw->link
+	 */
 	function link($url,$vars='')
 	{
 		//echo "<p>html::link(url='$url',vars='"; print_r($vars); echo "')</p>\n";
@@ -405,18 +429,21 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $this->form($this->submit_button($name,$lang),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
-	/*!
-	@function table
-	@abstracts creates table from array with rows
-	@discussion abstract the html stuff
-	@param $rows array with rows, each row is an array of the cols
-	@param $options options for the table-tag
-	@example $rows = array ( '1'  => array( 1 => 'cell1', '.1' => 'colspan=3',
-	@example                                2 => 'cell2', 3 => 'cell3', '.3' => 'width="10%"' ),
-	@example                 '.1' => 'BGCOLOR="#0000FF"' );
-	@example table($rows,'WIDTH="100%"') = '<table WIDTH="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
-	@result string with html-code of the table
-	*/
+	/**
+	 * creates table from array of rows
+	 *
+	 * abstracts the html stuff for the table creation
+	 * Example: $rows = array (
+	 *	'1'  => array(
+	 *		1 => 'cell1', '.1' => 'colspan=3',
+	 *		2 => 'cell2',
+	 *		3 => 'cell3', '.3' => 'width="10%"'
+	 *	),'.1' => 'BGCOLOR="#0000FF"' );
+	 *	table($rows,'width="100%"') = '<table width="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
+	 * @param $rows array with rows, each row is an array of the cols
+	 * @param $options options for the table-tag
+	 * @result string with html-code of the table
+	 */
 	function table($rows,$options = '',$no_table_tr=False)
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
@@ -539,14 +566,14 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return "<hr $options />\n";
 	}
 
-	/*!
-	@function formatOptions
-	@abstract formats option-string for most of the above functions
-	@param $options String (or Array) with option-values eg. '100%,,1'
-	@param $names String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
-	@example formatOptions('100%,,1','WIDTH,HEIGHT,BORDER') = ' WIDTH="100%" BORDER="1"'
-	@result option string
-	*/
+	/**
+	 * formats option-string for most of the above functions
+	 *
+	 * Example: formatOptions('100%,,1','width,height,border') = ' width="100%" border="1"'
+	 * @param $options mixed String (or Array) with option-values eg. '100%,,1'
+	 * @param $names mixed String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
+	 * @result string with options/attributes
+	 */
 	function formatOptions($options,$names)
 	{
 		if (!is_array($options)) $options = explode(',',$options);
@@ -562,21 +589,19 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 		return $html;
 	}
 
-	/*!
-	@function themeStyles
-	@abstract returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
-	@result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
-	*/
+	/**
+	 * returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
+	 * @result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
+	 */
 	function themeStyles()
 	{
 		return $this->style($this->theme2css());
 	}
 
-	/*!
-	@function theme2css
-	@abstract returns simple stylesheet for nextmatch row-colors
-	@result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
-	*/
+	/**
+	 * returns simple stylesheet for nextmatch row-colors
+	 * @result the classes 'th' = nextmatch header, 'row_on'+'row_off' = alternating rows
+	 */
 	function theme2css()
 	{
 		return ".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
