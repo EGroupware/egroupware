@@ -1,23 +1,144 @@
+%1 matches found	calendar	bg	Бяха намерени %1 съвпадения
+%1 records imported	calendar	bg	Бяха внесени %1 записа
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	bg	Бяха прочетени %1 записа (не са внесени още; можете да се върнете и да махнете отметката на "Изпробване на внасянето")
+1 match found	calendar	bg	Беше намерено 1 съвпадение
 accept	calendar	bg	Приемане
 accepted	calendar	bg	Прието
+add contact	calendar	bg	Добавяне на контакт
 added	calendar	bg	Добавено
+address book	calendar	bg	Адресна книга
+all categories	calendar	bg	Всички категории
 all day	calendar	bg	Всеки ден
+are you sure you want to delete this country ?	calendar	bg	Наистина ли искате да изтриете тази държава?
+are you sure you want to delete this holiday ?	calendar	bg	Наистина ли искате да изтриете този празник?
+are you sure\nyou want to\ndelete this entry ?	calendar	bg	Наистина ли\nискате да изтриете\nтози запис?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	bg	Наистина ли\nискате да изтриете\nтози запис?\n\nТова ще го премахне\nза всички потребители.
+before the event	calendar	bg	преди събитието
+brief description	calendar	bg	Кратко описание
 calendar	common	bg	Календар
 calendar - add	calendar	bg	Календар - добавяне
 calendar - edit	calendar	bg	Календар - редактиране
+calendar event	calendar	bg	Събитие в календара
+calendar holiday management	admin	bg	Управление на празниците в календара
+calendar preferences	calendar	bg	Предпочитания за календара
+calendar settings	admin	bg	Настройки на календара
+calendar-fieldname	calendar	bg	Календар - име на поле
 canceled	calendar	bg	Отказано
+change status	calendar	bg	Промяна на състоянието
+configuration	calendar	bg	Настройка
+countries	calendar	bg	Държави
+country	calendar	bg	Държава
+created by	calendar	bg	Създадено от
+days	calendar	bg	дни
+default calendar filter	calendar	bg	Филтър на календара по подразбиране
+default calendar view	calendar	bg	Изглед на календара по подразбиране
+delete a single entry by passing the id.	calendar	bg	Изтриване на отделен запис по зададено id
+delete an entire users calendar.	calendar	bg	Изтриване на целия потребителски календар
+delete selected contacts	calendar	bg	Изтриване на избраните контакти
+delete single	calendar	bg	Отделно изтриване
+deleted	calendar	bg	Изтрито
+description	calendar	bg	Описание
+determining window width ...	calendar	bg	Определяне на широчината на прозореца...
+disable	calendar	bg	Отмяна
+disabled	calendar	bg	отменено
+download	calendar	bg	Изтегляне
+duration	calendar	bg	Продължителност
+edit single	calendar	bg	Единично редактиране
+email notification	calendar	bg	Уведомяване по електронна поща
+email notification for %1	calendar	bg	Уведомяване по електронна поща за %1
+enable	calendar	bg	Активиране
+enabled	calendar	bg	активно
+end date/time	calendar	bg	Крайна дата/час
+enddate	calendar	bg	Крайна дата
+ends	calendar	bg	приключва
+enter output filename: ( .vcs appended )	calendar	bg	Въведете име на изходния файл (добавя се ".vcs")
+exceptions	calendar	bg	Изключения
+export	calendar	bg	Изнасяне
+external participants	calendar	bg	Външни участници
+fieldseparator	calendar	bg	Разделител на полетата
+firstname of person to notify	calendar	bg	Малко име на уведомяваното лице
+free/busy	calendar	bg	Свободен/Зает
+frequency	calendar	bg	Честота
 fri	calendar	bg	Пт
+full description	calendar	bg	Пълно описание
+fullname of person to notify	calendar	bg	Пълно име на уведомяваното лице
+global categories	calendar	bg	Общи категории
+high priority	calendar	bg	висок приоритет
+holiday	calendar	bg	Празник
+holiday management	calendar	bg	Управление на празниците
+holiday-management	calendar	bg	Управление на празниците
+holidays	calendar	bg	Празници
+i participate	calendar	bg	Участвам
+import	calendar	bg	Внасяне
+import csv-file	common	bg	Внасяне на CSV-файл
+interval	calendar	bg	Интервал
+invalid entry id.	calendar	bg	Невалидно id на запис.
+last	calendar	bg	последно
+lastname of person to notify	calendar	bg	Фамилия на уведомяваното лице
+length<br>(<= 255)	calendar	bg	Дължина<br>(<= 255)
+list all categories.	calendar	bg	Показване на всички категории
 minutes	calendar	bg	минути
+modified	calendar	bg	Променено
 mon	calendar	bg	Пон
 month	calendar	bg	Месец
+needs javascript to be enabled !!!	calendar	bg	Изисква включен javascript!
+new entry	calendar	bg	Нов запис
+next day	calendar	bg	следващ ден
+no filter	calendar	bg	Няма филтър
+no matches found	calendar	bg	Нама съвпадения
+no response	calendar	bg	Няма отговор
+number of months	calendar	bg	Брой месеци
+old startdate	calendar	bg	Стара начална дата
+olddate	calendar	bg	Стара дата
 order	calendar	bg	Подреждане
+participant	calendar	bg	Участник
+participants	calendar	bg	Участници
+participates	calendar	bg	Участва
+permission denied	calendar	bg	Достъпът отказан
+please enter a filename !!!	calendar	bg	мола въведете име на файл!
+previous day	calendar	bg	предишен ден
+printer friendly	calendar	bg	Изглед за печат
+re-edit event	calendar	bg	Повторно редактиране на събитието
+refresh	calendar	bg	Обновяване
+rejected	calendar	bg	Отхвърлено
+repeat type	calendar	bg	Вид повторяемост
+repetition	calendar	bg	Повторяемост
+rule	calendar	bg	Правило
 sa	calendar	bg	Сб
 sat	calendar	bg	Съб
+search results	calendar	bg	Резултати от търсенето
+selected contacts (%1)	calendar	bg	Избрани контакти (%1)
+sorry, the owner has just deleted this event	calendar	bg	Съжалявам, собственикът току-що изтри това събитие
+sorry, this event does not exist	calendar	bg	Съжалявам, такова събитие не съществува
+sort by	calendar	bg	Подреждане по
+start date/time	calendar	bg	Начална дата/час
+start- and enddates	calendar	bg	Начални и крайни дати
+startdate	calendar	bg	Начална дата
 su	calendar	bg	Нд
 sun	calendar	bg	Нед
 text	calendar	bg	Текст
+the user %1 is not participating in this event!	calendar	bg	Потребителят %1 не участва в това събитие!
+this month	calendar	bg	Този месец
+this week	calendar	bg	Тази седмица
+this year	calendar	bg	Тази година
 thu	calendar	bg	Чет
+title	calendar	bg	Заглавие
+title of the event	calendar	bg	Заглавие на събитието
 today	calendar	bg	Днес
 tue	calendar	bg	Вто
+updated	calendar	bg	Обновено
+view this entry	calendar	bg	Преглед на това събитие
 wed	calendar	bg	Сря
 week	calendar	bg	Седмица
+weekday starts on	calendar	bg	Седмицата започва от
+you do not have permission to read this record!	calendar	bg	Нямате права за прочитане на този запис!
+you have %1 high priority events on your calendar today.	common	bg	Днес имате %1 събития в календара с висок приоритет!
+you have 1 high priority event on your calendar today.	common	bg	Днес имате 1 събитие в календара с висок приоритет!
+you have a meeting scheduled for %1	calendar	bg	Имате среща, насрочена за %1
+you have not entered a title	calendar	bg	Не сте въвели заглавие
+you have not entered a valid date	calendar	bg	Не сте въвели валидна дата
+you have not entered a valid time of day	calendar	bg	Не сте въвели валидно време
+you have not entered participants	calendar	bg	Не се въвели участници
+you must enter one or more search keywords	calendar	bg	Трябва да въведете една или повече ключови думи
+your meeting scheduled for %1 has been canceled	calendar	bg	Срещата ви, насрочена за %1 беше отменена
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	bg	Насрочената ви среща за %1 беше променена за %2

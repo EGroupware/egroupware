@@ -1,5 +1,6 @@
 %1 records imported	addressbook	bg	Внесени са %1 записа
 (e.g. 1969)	addressbook	bg	(например 1969г.)
+actions	addressbook	bg	Действия
 address book	common	bg	Адресник
 addressbook	common	bg	Адресник
 addressbook preferences	addressbook	bg	Настройки на адресника
@@ -10,6 +11,7 @@ business email	addressbook	bg	Служебна ЕПоща
 business email type	addressbook	bg	Вид на служебната ЕПоща
 business fax	addressbook	bg	Служебен факс
 business phone	addressbook	bg	Служебен телефон
+business zip code	addressbook	bg	Служебен пощенски код
 car phone	addressbook	bg	Телефон в автомобил
 cell phone	addressbook	bg	клетъчен телефон
 city	common	bg	Град
@@ -17,6 +19,8 @@ company	common	bg	Фирма
 company name	common	bg	Име на фирмата
 configuration	common	bg	Настройка
 department	common	bg	Отдел
+download	addressbook	bg	Изтегляне
+download export file (uncheck to debug output in browser)	addressbook	bg	Изтегляне на експорт-файла (махнете отметката за показване в прозореца)
 extra	addressbook	bg	Допълнително
 fax	addressbook	bg	Факс
 fax number	common	bg	Номер на факс
@@ -28,8 +32,12 @@ fieldseparator	addressbook	bg	Разделител на полета
 home email	addressbook	bg	Домашна ЕПоща
 home email type	addressbook	bg	Вид на домашната ЕПоща
 home phone	addressbook	bg	Домашен телефон
+import	addressbook	bg	Внасяне
+import contacts	addressbook	bg	Внасяне на контакти
+import from outlook	addressbook	bg	Внасяне от Outlook
 isdn phone	addressbook	bg	ISDN телефон
 label	addressbook	bg	Етикет
+ldap host for contacts	admin	bg	LDAP сървър за контактите
 ldif	addressbook	bg	LDIF
 line 2	addressbook	bg	Ред 2
 mobile	addressbook	bg	Мобилен
@@ -39,9 +47,11 @@ other phone	addressbook	bg	Друг телефон
 pager	common	bg	Пейджър
 phone number	common	bg	Телефонен номер
 phone numbers	common	bg	Телефонни номера
+please enter a name for that field !	addressbook	bg	Моля въведете име за това поле!
 public key	addressbook	bg	Публичен ключ
 record access	addressbook	bg	Достъп до записа
 record owner	addressbook	bg	Собственик на записа
+select all	addressbook	bg	Избиране на всичко
 street	common	bg	Улица
 successfully imported %1 records into your addressbook.	addressbook	bg	Успешно са внесени %1 запис(а) в адресника ви.
 that field name has been used already !	addressbook	bg	Това име на поле вече е използвано!
@@ -50,5 +60,6 @@ this person's last name was not in the address book.	addressbook	bg	Тази фамилия
 today is %1's birthday!	common	bg	Днес е рожденият ден на %1!
 tomorrow is %1's birthday.	common	bg	Утре е рожденият ден на %1!
 video phone	addressbook	bg	Видеотелефон
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	bg	ВНИМАНИЕ! LDAP е валиден избор само ако НЕ използвате контактите за съхранение и на потребителските акаунти!
 work phone	addressbook	bg	Служебен телефон
 you must select at least 1 column to display	addressbook	bg	Трябва да изберете поне една колона за показване
