@@ -220,7 +220,7 @@
 			else
 			{
 				$code = '$v=' . $GLOBALS['_xh'][$parser]['st'] . '; $allOK=1;';
-				$code = ereg_replace(',,',",'',",$code);
+				$code = str_replace(',,',",'',",$code);
 				eval($code);
 				if ($GLOBALS['_xh'][$parser]['isf'])
 				{
