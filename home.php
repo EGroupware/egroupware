@@ -27,7 +27,8 @@
 		exit;
 	}
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array
+	(
 		'noheader'                => True,
 		'nonavbar'                => True,
 		'currentapp'              => 'home',
@@ -184,7 +185,8 @@
 	}
 	else
 	{
-		$sorted_apps = Array(
+		$sorted_apps = Array
+		(
 			'email',
 			'calendar',
 			'news',
@@ -193,6 +195,9 @@
 		);
 	}
 	@reset($sorted_apps);
+
+	$GLOBALS['phpgw']->portalbox = CreateObject('phpgwapi.listbox');
+
 	$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
 
 	if($GLOBALS['portal_order'])
@@ -206,5 +211,6 @@
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
 
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output,True);
 	$GLOBALS['phpgw']->xslttpl->pp();
 ?>

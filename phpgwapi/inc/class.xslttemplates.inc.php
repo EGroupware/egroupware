@@ -135,7 +135,6 @@
 		{
 			if($append)
 			{
-				//_debug_array($value);
 				if (is_array($value))
 				{
 					while(list($key,$val) = each($value))
@@ -143,6 +142,7 @@
 						$this->vars[$name][$key] = $val;
 					}
 				}
+				_debug_array($this->vars);
 			}
 			else
 			{

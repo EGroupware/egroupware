@@ -23,10 +23,12 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	CreateObject('phpgwapi.portalbox');
+	require_once('class.portalbox.inc.php');
 
 	class listbox extends portalbox
 	{
+		var $param;
+
 		/*
 		 Set up the Object. You will notice, we have not reserved
 		 memory space for variables. In this circumstance it is not necessary.
@@ -41,7 +43,11 @@
 		 the parent class, I simply call the parent constructor. Of course,
 		 if I then wanted to override any of the values, I could easily do so.
 		*/
-		function listbox($param)
+		function listbox()
+		{
+		}
+
+		function set_params($param)
 		{
 			@reset($param);
 			while(list($key,$value) = each($param))
@@ -52,7 +58,7 @@
 					$this->setvar($key,$value);
 				}
 			}
-			$this->portalbox($param['title']);
+			$this->title = $param['title'];
 
 			if($param['app_id'])
 			{
@@ -93,7 +99,7 @@
 						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
 				}
-				$this->output[]['listbox'] = $var;
+				$this->listbox = $var;
 			}
 			$this->set_internal($extra_data);
 			$this->draw_box();
@@ -121,7 +127,7 @@
 						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
 				}
-				$this->output[]['listbox'] = $var;
+				$this->listbox = $var;
 			}
 			$this->set_xinternal($extra_data);
 			$this->draw_box();

@@ -35,18 +35,36 @@
 		var $question;
 		var $edit;
 
+		var $extrabox;
+		var $xextrabox;
+		var $listbox;
+
 		var $output;
-		var $data = array();
+		var $data;
 
 		// Textual variables
 		var $title;
 
 		/* This is the constructor for the object. */
 
-		function portalbox($title = '')
+		function portalbox()
 		{
-			$this->setvar('title',$title);
-            // echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
+			$this->title = '';
+			$this->app_name = '';
+			$this->app_id = 0;
+
+			$this->up = '';
+			$this->down = '';
+			$this->close = '';
+			$this->question = '';
+			$this->edit = '';
+
+			$this->extrabox = '';
+			$this->xextrabox = '';
+			$this->listbox = '';
+
+			$this->output;
+			$this->data = array();
 		}
 
 		/*
@@ -80,17 +98,16 @@
 
 		function start_template($extra = '')
 		{
-			if ($extra && $this->getvar('app_name'))
+			echo 'APPNAME: ' . $this->app_name;
+
+			if ($extra && $this->app_name)
 			{
-				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->getvar('app_name'),'default') . SEP . 'extrabox'));
+				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrabox'));
 			}
 			else
 			{
 				$GLOBALS['phpgw']->xslttpl->add_file('portal');
 			}
-
-			$this->output[]['title'] = $this->getvar('title');
-			$this->output[]['space'] = '&nbsp;';
 		}
 
 		function set_controls($control='',$control_param='')
@@ -107,7 +124,7 @@
 		{
 			if($extra_data !='')
 			{
-				$this->output[]['extrabox'] = $extra_data;
+				$this->extrabox = $extra_data;
 			}
 		}
 
@@ -115,7 +132,7 @@
 		{
 			if($extra_data !='')
 			{
-				$this->output[]['xextrabox'] = $extra_data;
+				$this->xextrabox = $extra_data;
 			}
 		}
 
@@ -153,9 +170,31 @@
 					}
 				}
 
-				$this->output[]['control_link'] = $control_link;
+				$this->output['portal_data'][] = array
+				(
+					'title'			=> $this->title,
+					'control_link' 	=> $control_link,
+					'listbox'		=> $this->listbox,
+					'extrabox'		=> $this->extrabox,
+					'xextrabox'		=> $this->xextrabox
+				);
+
+				for ($i=0;$i<count($this->output['portal_data']);$i++)
+				{
+					if ($this->output['portal_data'][$i]['listbox'] == '')
+					{
+						unset($this->output['portal_data'][$i]['listbox']);
+					}
+					if ($this->output['portal_data'][$i]['extrabox'] == '')
+					{
+						unset($this->output['portal_data'][$i]['extrabox']);
+					}
+					if ($this->output['portal_data'][$i]['xextrabox'] == '')
+					{
+						unset($this->output['portal_data'][$i]['xextrabox']);
+					}
+				}
 			}
-			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('portal_data' => $this->output),True);
-			//return $GLOBALS['phpgw']->xslttpl->parse();
 		}
 	}
+?>
