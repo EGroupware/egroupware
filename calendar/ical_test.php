@@ -28,19 +28,45 @@
 	echo "Product ID = ".$vcalendar->prodid."<br>\n";
 	echo "Method = ".$vcalendar->method."<br>\n";
 	echo "Version = ".$vcalendar->version."<br>\n";
-	echo "Summary = ".$vcalendar->event[0]->summary."<br>\n";
-	echo "Location = ".$vcalendar->event[0]->location."<br>\n";
-	echo "Sequence = ".$vcalendar->event[0]->sequence."<br>\n";	
-	echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[0]->dtstart->hour,$vcalendar->event[0]->dtstart->min,$vcalendar->event[0]->dtstart->sec,$vcalendar->event[0]->dtstart->month,$vcalendar->event[0]->dtstart->mday,$vcalendar->event[0]->dtstart->year))."<br>\n";
-	echo "Organizer = ".$vcalendar->event[0]->organizer->mailto->user.'@'.$vcalendar->event[0]->organizer->mailto->host."<br>\n";
-	for($i=0;$i<3;$i++)
+
+	for($i=0;$i<count($vcalendar->event);$i++)
 	{
-		echo "Attendee[$i] CN = ".$vcalendar->event[0]->attendee[$i]->cn."<br>\n";
-		echo "Attendee[$i] Address= ".$vcalendar->event[0]->attendee[$i]->mailto->user.'@'.$vcalendar->event[0]->attendee[$i]->mailto->host."<br>\n";
-		echo "Attendee[$i] Role = ".$vcal->switch_role($vcalendar->event[0]->attendee[$i]->role)."<br>\n";
-//		echo "Attendee[$i] RSVP = ".$vcal->switch_rsvp($vcalendar->event[0]->attendee[$i]->rsvp)."<br>\n";
-		echo "Attendee[$i] RSVP = ".$vcalendar->event[0]->attendee[$i]->rsvp."<br>\n";
+		echo "<br>\nEVENT<br>\n";
+		echo "Summary = ".$vcalendar->event[$i]->summary."<br>\n";
+		echo "Description = ".$vcalendar->event[$i]->description."<br>\n";
+		echo "Location = ".$vcalendar->event[$i]->location."<br>\n";
+		echo "Sequence = ".$vcalendar->event[$i]->sequence."<br>\n";
+		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[$i]->dtstart->hour,$vcalendar->event[$i]->dtstart->min,$vcalendar->event[$i]->dtstart->sec,$vcalendar->event[$i]->dtstart->month,$vcalendar->event[$i]->dtstart->mday,$vcalendar->event[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
+		echo "Class = ".$vcal->switch_class($vcalendar->event[$i]->class)."<br>\n";
+		echo "Organizer = ".$vcalendar->event[$i]->organizer->mailto->user.'@'.$vcalendar->event[$i]->organizer->mailto->host."<br>\n";
+		for($j=0;$j<count($vcalendar->event[$i]->attendee);$j++)
+		{
+			echo "Attendee[$j] CN = ".$vcalendar->event[$i]->attendee[$j]->cn."<br>\n";
+			echo "Attendee[$j] Address= ".$vcalendar->event[$i]->attendee[$j]->mailto->user.'@'.$vcalendar->event[0]->attendee[$j]->mailto->host."<br>\n";
+			echo "Attendee[$j] Role = ".$vcal->switch_role($vcalendar->event[$i]->attendee[$j]->role)."<br>\n";
+			echo "Attendee[$j] RSVP = ".$vcal->switch_rsvp($vcalendar->event[$i]->attendee[$j]->rsvp)."<br>\n";
+//			echo "Attendee[$j] RSVP = ".$vcalendar->event[$i]->attendee[$j]->rsvp."<br>\n";
+			if($vcalendar->event[$i]->attendee[$j]->delegated_from->user && $vcalendar->event[$i]->attendee[$j]->delegated_from->host)
+			{
+				echo "Attendee[$j] DELEGATED_FROM = ".$vcalendar->event[$i]->attendee[$j]->delegated_from->user.'@'.$vcalendar->event[$i]->attendee[$j]->delegated_from->host."<br>\n";
+			}
+		}
 	}
-	echo "Class = ".$vcalendar->event[0]->class."<br>\n";
+	for($i=0;$i<count($vcalendar->todo);$i++)
+	{
+		echo "<br>\nTODO<br>\n";
+		echo "Summary = ".$vcalendar->todo[$i]->summary."<br>\n";
+		echo "Description = ".$vcalendar->todo[$i]->description."<br>\n";
+		echo "Location = ".$vcalendar->todo[$i]->location."<br>\n";
+		echo "Sequence = ".$vcalendar->todo[$i]->sequence."<br>\n";	
+		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->todo[$i]->dtstart->hour,$vcalendar->todo[$i]->dtstart->min,$vcalendar->todo[$i]->dtstart->sec,$vcalendar->todo[$i]->dtstart->month,$vcalendar->todo[$i]->dtstart->mday,$vcalendar->todo[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
+		echo "Class = ".$vcal->switch_class($vcalendar->todo[$i]->class)."<br>\n";
+	}
+
+	include(PHPGW_APP_INC.'/../setup/setup.inc.php');
+
+	$vcal->set_var($vcalendar,'prodid','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($phpgw_info['user']['preferences']['common']['lang']));
+	echo "<br><br><br>\n";
+	echo nl2br($vcal->build_vcal($vcalendar));
 	$phpgw->common->phpgw_footer();
 ?>

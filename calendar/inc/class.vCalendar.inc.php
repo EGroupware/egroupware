@@ -12,6 +12,8 @@
 
 	/* $Id$ */
 
+define('FOLD_LENGTH',79);
+
 define('VEVENT',1);
 define('VTODO',2);
 
@@ -98,7 +100,7 @@ class rrule
 	var $byday;
 }
 
-class vCalendar_event
+class vCalendar_item
 {
 	var $type;
 	var $attendee = Array();
@@ -128,6 +130,8 @@ class vCal
 class vCalendar
 {
 	var $vcal;
+	var $event = Array();
+	var $todo = Array();
 	
 	function splitdate($value)
 	{
@@ -157,6 +161,12 @@ class vCalendar
 
 	function split_address($address)
 	{
+		if(strpos(' '.$address,':'))
+		{
+			$parts = explode(':',$address);
+			$address = $parts[1];
+		}
+		
 		$parts = explode('@',$address);
 		if(count($parts) == 2)
 		{
@@ -196,6 +206,16 @@ class vCalendar
 			}
 			$next_line++;
 		}
+	}
+
+	function fold($str)
+	{
+//		$temp_str = $str;
+//		if(strlen($str) > FOLD_LENGTH)
+//		{
+			return chunk_split($str,FOLD_LENGTH,"\n");
+//		}
+//		return $temp_str;
 	}
 
 	function strip_quotes($str)
@@ -347,7 +367,7 @@ class vCalendar
 				return 0;
 			}
 		}
-		elseif(gettype($var) == 'boolean')
+		elseif(gettype($var) == 'integer')
 		{
 			if($var == 1)
 			{
@@ -364,9 +384,108 @@ class vCalendar
 		}
 	}
 
+	function switch_class($var)
+	{
+		if(gettype($var) == 'string')
+		{
+			switch($var)
+			{
+				case 'PRIVATE':
+					return PRIVATE;
+					break;
+				case 'PUBLIC':
+					return PUBLIC;
+					break;
+				case 'CONFIDENTIAL':
+					return CONFIDENTIAL;
+					break;
+			}
+		}
+		elseif(gettype($var) == 'integer')
+		{
+			switch($var)
+			{
+				case PRIVATE:
+					return 'PRIVATE';
+					break;
+				case PUBLIC:
+					return 'PUBLIC';
+					break;
+				case CONFIDENTIAL:
+					return 'CONFIDENTIAL';
+					break;
+			}
+		}
+		else
+		{
+			return $var;
+		}
+	}
+
+	function switch_transp($var)
+	{
+		if(gettype($var) == 'string')
+		{
+			switch($var)
+			{
+				case 'TRANSPARENT':
+					return TRANSPARENT;
+					break;
+				case 'OPAQUE':
+					return OPAQUE;
+					break;
+			}
+		}
+		elseif(gettype($var) == 'integer')
+		{
+			switch($var)
+			{
+				case TRANSPARENT:
+					return 'TRANSPARENT';
+					break;
+				case OPAQUE:
+					return 'OPAQUE';
+					break;
+			}
+		}
+		else
+		{
+			return $var;
+		}
+	}
+
 	function parse_attendee(&$event,$value)
 	{
 		$param = explode(':',$value);
+// Here down needs to be faster....		
+		$j = 0;
+		while($j<count($param))
+		{
+			if(strpos(' '.$param[$j],'DELEGATED-'))
+			{
+				$param[$j] .= ':'.$param[$j + 1];
+				$i = j + 1;
+				while($i + 1 <= count($param))
+				{
+					$param[$i] = $param[$i + 1];
+					$i++;
+				}
+			}
+			$j++;
+		}
+// Here up needs to be faster....		
+
+//		$j = 0;
+//		while(($j - 1)<count($param))
+//		{
+//			if(strpos(' '.$param[$j],'DELEGATED-'))
+//			{
+//				$param[$j] .= ':'.$param[$j + 1];
+//				unset($param[$j + 1]);
+//			}
+//			$j++;
+//		}
+
 		for($j=0;$j<count($param);$j++)
 		{
 			$param_sub = explode(';',$param[$j]);
@@ -387,6 +506,11 @@ class vCalendar
 							break;
 						case 'rsvp':
 							$val = $this->switch_rsvp($type[1]);
+							break;
+						case 'delegated-from':
+						case 'delegated-to':
+							$type[0] = str_replace('-','_',$type[0]);
+							$val = $this->split_address($type[1]);
 							break;
 						default:
 							$val = $type[1];
@@ -432,6 +556,11 @@ class vCalendar
 				$this->set_var($event,$type[0],$type[1]);
 			}
 		}
+	}
+
+	function new_vcal()
+	{
+		return new vCal;
 	}
 
 	function read($vcal_text)
@@ -498,20 +627,21 @@ class vCalendar
 					switch(strtolower($value))
 					{
 						case 'vcalendar':
-							$vcal = new vCal;
+							$vcal = $this->new_vcal();
 							break;
 						case 'vevent':
-							$event = new vCalendar_event;
+						case 'vtodo':
+							$event = new vCalendar_item;
 							$event->type = strtolower($value);
 							break;
+//						case 'vtodo':
+//							$event = new vCalendar_item;
+//							$event->type = strtolower($value);
+//							break;							
 					}
 					break;
 				case 'prodid':
-					$this->set_var($vcal,$majortype,$value);
-					break;
 				case 'version':
-					$this->set_var($vcal,$majortype,$value);
-					break;
 				case 'method':
 					$this->set_var($vcal,$majortype,$value);
 					break;
@@ -530,10 +660,16 @@ class vCalendar
 					{
 						case 'vevent':
 							$this->event[] = $event;
+							unset($event);
+							break;
+						case 'vtodo':
+							$this->todo[] = $event;
+							unset($event);
 							break;
 						case 'vcalendar':
 							$this->vcal = $vcal;
 							$this->vcal->event = $this->event;
+							$this->vcal->todo = $this->todo;
 							break 2;
 					}
 					break;
@@ -543,31 +679,10 @@ class vCalendar
 					$this->set_var($event,$majortype,$this->splitdate($value));
 					break;
 				case 'class':
-					switch(strtolower($value))
-					{
-						case 'private':
-							$class = PRIVATE;
-							break;
-						case 'public':
-							$class = PUBLIC;
-							break;
-						case 'confidential':
-							$class = CONFIDENTIAL;
-							break;
-					}
-					$this->set_var($event,$majortype,$class);
+					$this->set_var($event,$majortype,$this->switch_class($value));
 					break;
 				case 'transp':
-					switch(strtolower($value))
-					{
-						case 'transparent':
-							$transp = TRANSPARENT;
-							break;
-						case 'opaque':
-							$transp = OPAQUE;
-							break;
-					}
-					$this->set_var($event,$majortype,$transp);
+					$this->set_var($event,$majortype,$this->switch_transp($value));
 					break;
 				case 'rrule':
 					$event->$majortype = new $majortype;
@@ -580,6 +695,126 @@ class vCalendar
 			$i++;
 		}
 		return $this->vcal;
+	}
+
+	function out_organizer_attendee($event)
+	{
+		$str = '';
+		if(!empty($event->cn))
+		{
+			$str .= ';CN="'.$event->cn.'"';
+		}
+		if(!empty($event->role))
+		{
+			$str .= ';ROLE='.$this->switch_role($event->role);
+		}
+		if(!empty($event->rsvp))
+		{
+			$str .= ';RSVP='.$this->switch_rsvp($event->rsvp);
+		}
+		if(!empty($event->delegated_from->user) && !empty($event->delegated_from->host))
+		{
+			$str .= ';DELEGATED-FROM:MAILTO:"'.$event->delegated_from->user.'@'.$event->delegated_from->host.'"';
+		}
+		if(!empty($event->delegated_to->user) && !empty($event->delegated_to->host))
+		{
+			$str .= ';DELEGATED-TO:MAILTO:"'.$event->delegated_to->user.'@'.$event->delegated_to->host.'"';
+		}
+		if(!empty($event->mailto->user) && !empty($event->mailto->host))
+		{
+			$str .= ':MAILTO:'.$event->mailto->user.'@'.$event->mailto->host;
+		}
+		return $str;
+	}
+
+	function build_card_internals($event)
+	{
+		$str .= 'DTSART:'.sprintf("%4d%02d%02dT%02d%02d%02dZ",$event->dtstart->year,$event->dtstart->month,$event->dtstart->mday,$event->dtstart->hour,$event->dtstart->min,$event->dtstart->sec)."\n";
+		$str .= 'DTEND:'.sprintf("%4d%02d%02dT%02d%02d%02dZ",$event->dtend->year,$event->dtend->month,$event->dtend->mday,$event->dtend->hour,$event->dtend->min,$event->dtend->sec)."\n";
+// Still need to build recurrence portion......
+		iF(!empty($event->location))
+		{
+			$str .= $this->fold('LOCATION:'.$event->location);
+		}
+		else
+		{
+			$str .= 'LOCATION:\n'."\n";
+		}
+		$str .= 'TRANSP:'.$this->switch_transp($event->transp)."\n";
+		if(!empty($event->sequence))
+		{
+			$str .= 'SEQUENCE:'.$event->sequence."\n";
+		}
+		if(!empty($event->uid))
+		{
+			$str .= $this->fold('UID:'.$event->uid);
+		}
+		$str .= 'DTSTAMP:'.gmdate('Ymd\THms\Z')."\n";
+		if(!empty($event->description))
+		{
+			$str .= $this->fold('DESCRIPTION:'.$event->description);
+		}
+		else
+		{
+			$str .= 'DESCRIPTION:\n'."\n";
+		}
+		if(!empty($event->summary))
+		{
+			$str .= $this->fold('SUMMARY:'.$event->summary);
+		}
+		else
+		{
+			$str .= 'SUMMARY:\n'."\n";
+		}
+		if(!empty($event->priority))
+		{
+			$str .= 'PRIORITY:'.$event->priority."\n";
+		}
+		$str .= 'CLASS:'.$this->switch_class($event->class)."\n";
+
+		return $str;
+	}
+
+	function build_vcal($vcal)
+	{
+		$str = 'BEGIN:VCALENDAR'."\n";
+		$str .= 'PRODID:'.$vcal->prodid."\n";
+		$str .= 'VERSION:'.$vcal->version."\n";
+		$str .= 'METHOD:'.$vcal->method."\n";
+		if($vcal->event)
+		{
+			for($i=0;$i<count($vcal->event);$i++)
+			{
+				$str .= 'BEGIN:VEVENT'."\n";
+				for($j=0;$j<count($vcal->event[$i]->attendee);$j++)
+				{
+					$temp_attendee = $this->out_organizer_attendee($vcal->event[$i]->attendee[$j]);
+
+					if($temp_attendee)
+					{
+						$str .= 'ATTENDEE'.$temp_attendee."\n";
+					}
+				}
+				if(!empty($vcal->event[$i]->organizer))
+				{
+					$str .= 'ORGANIZER'.$this->out_organizer_attendee($vcal->event[$i]->organizer)."\n";
+				}
+				$str .= $this->build_card_internals($vcal->event[$i]);
+				$str .= 'END:VEVENT'."\n";
+			}
+		}
+		if($vcal->todo)
+		{
+			for($i=0;$i<count($vcal->todo);$i++)
+			{
+				$str .= 'BEGIN:VTODO'."\n";
+				$str .= $this->build_card_internals($vcal->todo[$i]);
+				$str .= 'END:VTODO'."\n";
+			}
+		}
+		$str .= 'END:VCALENDAR'."\n";
+
+		return $str;
 	}
 }
 ?>
