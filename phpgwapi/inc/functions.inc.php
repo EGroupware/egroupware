@@ -315,7 +315,7 @@
 		\**************************************************************************/
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','code=10'));
+			$GLOBALS['phpgw']->redirect_link('/login.php','code=10');
 		}
 
 		/***************************************************************************\

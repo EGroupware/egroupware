@@ -103,6 +103,11 @@
 			return $this->session->link($url, $extravars);
 		}
 
+		function redirect_link($url = '',$extravars='')
+		{
+			$this->redirect($this->session->link($url, $extravars));
+		}
+		
 		/**
 		 * Handles redirects under iis and apache
 		 *
@@ -110,7 +115,7 @@
 		 *
 		 * @access	public
 		 *	@param  string The url ro redirect to
-		 * @syntax redirect(key as string)
+		 * @syntax redirect($string)
 		 * @example None yet
 		 */
 		function redirect($url = '')
@@ -140,14 +145,14 @@
 				echo "\n</HEAD><BODY>";
 				echo "<H3>Please continue to <a href=\"$url\">this page</a></H3>";
 				echo "\n</BODY></HTML>";
-				exit;
 			}
 			else
 			{
 				Header("Location: $url");
 				print("\n\n");
-				exit;
 			}
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		/**
