@@ -120,6 +120,7 @@
 					$this->monthnames[$k] = lang($name);
 				}
 			}
+			$this->ui = $ui;
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
@@ -213,27 +214,46 @@
 					break;
 
 				case 'select-account':	// options: #rows,{accounts(default)|both|groups},{0(=lid)|1(default=name)|2(=lid+name))}
-					$cell['no_lang'] = True;
 					// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 					if ($cell['readonly'] || $readonlys)
 					{
+						$cell['no_lang'] = True;
 						foreach(is_array($value) ? $value : array($value) as $id)
 						{
 							$cell['sel_options'][$id] = $this->accountInfo($id,$acc,$type2,$type=='both');
 						}
 						break;
 					}
+					if ($this->ui == 'html' && $type != 'groups')	// use eGW's new account-selection (html only)
+					{
+						if (!is_object($GLOBALS['phpgw']->uiaccountsel))
+						{
+							$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
+						}
+						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
+						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
+						$onBlur  = "self.status=''; return true;";
+						$value = $GLOBALS['phpgw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
+							$value,$type,$rows > 0 ? $rows : 0,False,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"',
+							$cell['onchange'] == '1' ? 'this.form.submit();' : $cell['onchange'],
+							!empty($rows) && 0+$rows <= 0 ? lang($rows < 0 ? 'all' : $rows) : False);
+						$cell['type'] = 'html';
+						$cell['size'] = '';	// is interpreted as link otherwise
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'select';
+						break;
+					}
+					$cell['no_lang'] = True;
 					$accs = $GLOBALS['phpgw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
 					foreach($accs as $acc)
 					{
-						if ($acc['account_type'] == 'g')
+						if ($acc['account_type'] == 'u')
 						{
 							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 						}
 					}
 					foreach($accs as $acc)
 					{
-						if ($acc['account_type'] == 'u')
+						if ($acc['account_type'] == 'g')
 						{
 							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 						}
