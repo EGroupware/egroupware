@@ -307,13 +307,17 @@
 						$methName = $tmp[2];
 						$service  = $tmp[1];
 						$class    = $tmp[0];
+
 						if (ereg('^service',$method))
 						{
 							$t = 'phpgwapi.' . $class . '.exec';
 							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
 						}
-						else
+						elseif($GLOBALS['phpgw']->acl->check('run',1,$class))
 						{
+							/* This only happens if they have app access.  If not, we will
+							 * return a fault below.
+							 */
 							$listmeth = $tmp[0] . '.' . $service . '.' . 'list_methods';
 							$dmap = ExecMethod($listmeth,'xmlrpc');
 						}
