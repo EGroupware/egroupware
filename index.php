@@ -109,8 +109,6 @@
 	   . "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
      }
   }
-
-  echo '<p><table border="0" width="100%" align="center">';
 ?>
  <script langague="JavaScript">
     function opennotifywindow()
@@ -120,6 +118,7 @@
  </script>
 
 <?php
+  echo '<p><table border="0" width="100%" align="center">';
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
   
   if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {

@@ -6,9 +6,7 @@
   <td>
    <table border="1" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="{inner_bgcolor}">
     <tr>
-     <td>
 {output}
-     </td>
     </tr>
    </table>
   </td>
