@@ -24,14 +24,12 @@
 
 	/* $Id$ */
 	
-	/*!!
-	* @Type: class
-	* @Name: phpgw
-	* @Author: Seek3r
-	* @Title: Main class.
-	* @Description: Main class. Has a few functions but is more importantly used as a parent class for everything else.
-	* @Syntax: CreateObject('phpgwapi.phpgw');
-	* @Example1: $phpgw = CreateObject('phpgwapi.acl');
+	/*!
+	 @class phpgw
+	 @abstract Main class. Has a few functions but is more importantly used as a parent class for everything else.
+	 @discussion written by: Seek3r <br>
+	 Syntax: CreateObject('phpgwapi.phpgw'); <br>
+	 Example1: $phpgw = CreateObject('phpgwapi.acl'); 
 	*/
 	class phpgw
 	{
@@ -39,7 +37,8 @@
 		var $applications;
 		var $acl;
 		var $auth;
-		var $db;
+		 /*! @var db */
+		var $db; 
 		var $debug = 0;		// This will turn on debugging information.
 		var $crypto;
 		var $categories;
@@ -63,29 +62,24 @@
 		* Core functions                                                           *
 		\**************************************************************************/
 
-		/*!!
-		* @Type: function
-		* @Name: strip_html
-		* @Author: Seek3r
-		* @Title: Strips out html chars. 
-		* @Description: Used as a shortcut for stripping out html special chars.
-		* @Syntax: string strip_html(string as string)
-		* @Example1: $reg_string = strip_html($urlencode_string);
+		/*!
+		@function strip_html
+		@abstract strips out html chars
+		@discussion Author: Seek3r. <br>
+		Description: Used as a shortcut for stripping out html special chars. 
+		<br>  Example1: $reg_string = strip_html($urlencode_string);
+		@param urlencode_string string-the string to be stripped of html special chars.
+		@result Object - the string with html special characters removed
 		*/
     function strip_html($s)
     {
        return htmlspecialchars(stripslashes($s));
     }
 
-		/*!!
-		* @Type: function
-		* @Name: link
-		* @Author: Seek3r
-		* @Title: Wrapper to session->link() 
-		* @Description: Used for backward compatibility and as a shortcut.
-		* If no url is passed, it will use PHP_SELF
-		* @Syntax: string link(url as string, extra_vars as string)
-		* @Example1: <a href="<?php echo $phpgw->link('otherpage.php');?>">click here</a>
+		/*!
+		@function link
+		@abstract wrapper to session->link()
+		@discussion Used for backwards compatibility and as a shortcut. If not url is passed, it will use PHP_SELF <br>
 		*/
 		function link($url = "", $extravars = "")
 		{
@@ -93,15 +87,16 @@
 			return $this->session->link($url, $extravars);
 		}
 
-		/*!!
-		* @Type: function
-		* @Name: link
-		* @Author: Seek3r
-		* @Title: Handles redirects under iis and apache
-		* @Description: This function handles redirects under iis and apache
-		* it assumes that $phpgw->link() has already been called
-		* @Syntax: string redirect(url as string)
-		* @Example1: None yet
+		/*!
+		@function redirect
+		@abstract Handles redirects under iis and apache
+		@discussion Author: Seek3r <br>
+		Title: Handles redirects under iis and apache <br>
+		Description: This function handles redirects under iis and apache 
+		it assumes that $phpgw->link() has already been called <br>
+		Syntax: string redirect(url as string) <br>
+		Example1: None yet
+		@param url 
 		*/
 		function redirect($url = "")
 		{
@@ -127,14 +122,14 @@
 			}
 		}
 
-		/*!!
-		* @Type: function
-		* @Name: lang
-		* @Author: Jengo
-		* @Title: Shortcut to translation class
-		* @Description: This function is a basic wrapper to translation->translate()
-		* @Syntax: string redirect(key as string)
-		* @Example1: None yet
+		/*!
+		 @function lang
+		 @abstract Shortcut to tranlation class
+		 @discussion Author: Jengo <br>
+		 Title: Shortcut to translation class <br>
+		 Description: This function is a basic wrapper to translation->translate() <br>
+		 Syntax: string redirect(key as string) <br>
+		 Example1: None yet
 		*/
 		function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
 		{
