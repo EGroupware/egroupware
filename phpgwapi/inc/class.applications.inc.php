@@ -130,6 +130,10 @@
         $this->read_installed_apps();
       }
       $app_list = $phpgw->acl->get_app_list_for_id('run',1,$this->account_id);
+      if(!$app_list) {
+        reset($this->data);
+        return $this->data;
+      }
       @reset($app_list);
       while ($app = each($app_list)) {
         if ($this->is_system_enabled($app[1])) {
