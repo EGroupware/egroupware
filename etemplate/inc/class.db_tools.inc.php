@@ -839,7 +839,7 @@
 
 			$update .= $this->update_schema($app,$current,$tables);
 
-			$update .= "\n
+			$update .= "
 		\$GLOBALS['setup_info']['$app']['currentver'] = '$version';
 		return \$GLOBALS['setup_info']['$app']['currentver'];
 	}
@@ -931,14 +931,26 @@
 				{
 					$old_norm = $this->normalize($old[$name]);
 					$new_norm = $this->normalize($table_def);
+					$old_norm_fd = $old_norm['fd']; unset($old_norm['fd']);
+					$new_norm_fd = $new_norm['fd']; unset($new_norm['fd']);
+
+					// check if the indices are changed and refresh the table if so
+					$do_refresh = serialize($old_norm) != serialize($new_norm);
+					// we comment out the Add or AlterColumn code as it is not needed, but might be useful for more complex updates
 					foreach($table_def['fd'] as $col => $col_def)
 					{
 						if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
 							 serialize($old_norm['fd'][$col]) != serialize($new_norm['fd'][$col])) // column definition altered
 						{
-							$update .= "\t\t$"."GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
-							$update .= $this->write_array($col_def,2) . ");\n";
+							$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t". : '').
+								"\$GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
+							$update .= $this->write_array($col_def,2) . ');' . ($do_refresh ? '*/' : '') . "\n";
 						}
+					}
+					if ($do_refresh)
+					{
+						$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->RefreshTable('$name',";
+						$update .= $this->write_array($table_def,2).");\n";
 					}
 				}
 			}
