@@ -1,18 +1,6 @@
-These installation docs are created using lyx on
-a linux system.
+The documentation is writtend in DocBook SGML and converted to other formats use Jade.
 
-The makefile in this directory will generate the various other
-forms of the installation docs i.e. html, pdf, ps etc.
-In order to use the Makefile you need to have the following installed
-and in your path:
+The makefile in this directory is used to generate the various other forms on the docs server, it may or may not work on your particular installation.
 
-lyx (1.1.6fix1)
-latex2html
-dvips
-pdflatex
-
-
---Darryl VanDorp
-aka ||Maniac
-
+--Brandon Neill
 
