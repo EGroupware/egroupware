@@ -1,6 +1,6 @@
 %1 records imported	infolog	it	%1 record importati
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	it	%1 record letti (non ancora importati, è possibile tornare indietro e deselezionare Test Importazione)
-- subprojects from	infolog	it	- Sottoprogetto da
+- subprojects from	infolog	it	- Sub progetto da
 0%	infolog	it	0%
 10%	infolog	it	10%
 20%	infolog	it	20%
@@ -41,6 +41,7 @@ call	infolog	it	chiamata
 cancel	infolog	it	Annulla
 categories	infolog	it	Categorie
 category	infolog	it	Categoria
+change the status of an entry, eg. close it	infolog	it	Cambia lo stato della voce, es. chiudi
 charset of file	infolog	it	Set di Caratteri del file
 check to set startday	infolog	it	seleziona per impostare la data d'inizio
 click here to create the link	infolog	it	premi qui per creare un Link
@@ -89,6 +90,7 @@ duration	infolog	it	Durata
 each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
 edit	infolog	it	Modifica
 edit or create categories for ingolog	infolog	it	Modifica o crea una categoria di IngoLog
+edit status	infolog	it	Modifica lo Stato
 edit the entry	infolog	it	Modifica una voce
 edit this entry	infolog	it	Modifica questa voce
 empty for all	infolog	it	vuoto per tutti
@@ -115,14 +117,14 @@ infolog - delete	infolog	it	InfoLog - Cancella
 infolog - edit	infolog	it	InfoLog - Modifica
 infolog - import csv-file	infolog	it	InfoLog - Importa File CSV
 infolog - new	infolog	it	InfoLog - Nuovo
-infolog - new subproject	infolog	it	InfoLog - Nuovo Sottoprogetto
-infolog - subprojects from	infolog	it	InfoLog - Sottoprogetto da
+infolog - new subproject	infolog	it	InfoLog - Nuovo Sub progetto
+infolog - subprojects from	infolog	it	InfoLog - Sub progetto da
 infolog list	infolog	it	Lista di InfoLog
 infolog preferences	common	it	InfoLog Preferenze
 infolog-fieldname	infolog	it	InfoLog - Nome del Campo
 invalid filename	infolog	it	Nome di Campo non valido
 label<br>helptext	infolog	it	Etichetta<br>Testo di Help
-last changed	infolog	it	Ultimo cambiato
+last changed	infolog	it	Ultimo modificato
 last modified	infolog	it	Ultimo modificato
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
@@ -207,7 +209,7 @@ startdate enddate	infolog	it	Data Inizio Data Fine
 startrecord	infolog	it	Record Iniziale
 status	infolog	it	Stato
 status ...	infolog	it	Stato ...
-sub	infolog	it	sotto
+sub	infolog	it	Sub
 subject	infolog	it	Oggetto
 task	infolog	it	ToDo
 test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
@@ -242,7 +244,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 will-call	infolog	it	chiamerà
 yes - delete	infolog	it	Sì - Cancella
 you can't delete one of the stock types !!!	infolog	it	Non puoi cancellare uno dei tipi predefiniti !!!
-you have entered an invalid enddate	infolog	it	E' stata inserita una data di fine non valida
 you have entered an invalid ending date	infolog	it	E' stata inserita una data di fine non valida
 you have entered an invalid starting date	infolog	it	E' stata inserita una data di inizio non valida
+you have to enter a name, to create a new typ!!!	infolog	it	Per creare un nuovo tipo devi inserire un nome!!!
 you must enter a subject or a description	infolog	it	E' necessario inserire un oggetto o una descrizione
