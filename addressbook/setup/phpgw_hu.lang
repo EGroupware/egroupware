@@ -1,28 +1,165 @@
+%1 records imported	addressbook	hu	%1 bejegyzés importálva
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hu	%1 bejegyzés beolvasva (nincs importálva, visszakell menned %2back%3 és szüntetsd meg a Test Import kiválasztását)
+(e.g. 1969)	addressbook	hu	(pl.: 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	hu	<b>Nem találtam konverzió tipust &lt;none&gt;.</b>Kérlek válassz egy konverzió tipust a listáról.
+@-eval() is only availible to admins!!!	addressbook	hu	@-eval() csak rendszergazdáknak érhetö el!!!
+actions	addressbook	hu	Cselekedetek
+add a single entry by passing the fields.	addressbook	hu	Egyedi bejegyzés hozzáadása a a mezökhöz
+add custom field	addressbook	hu	Egyéni Mezö Hozzáadása
 address book	common	hu	Címjegyzék
-addressbook	common	hu	Címjegyzék
-addressbook preferences common  hu      Címjegyzék tulajdonságok
+address book - vcard in	addressbook	hu	Címjegyzék - VCard formában
 address book - view	addressbook	hu	Címjegyzék - nézet
-birthday	addressbook	hu	Születésnap
-city	addressbook	hu	Város
-company name	addressbook	hu	Cégnév
+address line 2	addressbook	hu	Cím sor 2
+address line 3	addressbook	hu	Cím sor 3
+address type	addressbook	hu	Cím tipus
+addressbook	common	hu	Címjegyzék
+addressbook preferences	addressbook	hu	Címjegyzék  tulajdonságok
+addressbook preferences common  hu      címjegyzék tulajdonságok		hu	
+addressbook-fieldname	addressbook	hu	Címjegyzék-Mezönév
+addvcard	addressbook	hu	VCard hozzáadása
+alt. csv import	addressbook	hu	Alternativ CSV Import
+are you sure you want to delete this field?	addressbook	hu	Biztos vagy benne hogy törlöd ezt a mezöt?
+bbs phone	addressbook	hu	BBS Telefon
+birthday	common	hu	Születésnap
+birthdays	common	hu	Születésnapok
+blank	addressbook	hu	Üres
+business	common	hu	Üzlet
+business address type	addressbook	hu	Üzleti Cím Tipus
+business city	addressbook	hu	Üzleti Város
+business country	addressbook	hu	Üzleti Megye
+business email	addressbook	hu	Üzleti EMail
+business email type	addressbook	hu	Üzleti EMail tipus
+business fax	addressbook	hu	Üzleti Fax
+business phone	addressbook	hu	Üzleti Telefon
+business state	addressbook	hu	Üzleti Ország
+business street	addressbook	hu	Üzleti Utca
+business zip code	addressbook	hu	Üzleti Irányító Szám
+car phone	addressbook	hu	Autó Telefon
+cell phone	addressbook	hu	mobil telefon
+charset of file	addressbook	hu	Állomány karakterkészlete
+city	common	hu	Város
+company	common	hu	Társaság
+company name	common	hu	Cégnév
+configuration	common	hu	Konfiguráció
+contact	common	hu	Kapcsolat
+contact application	admin	hu	Kapcsolat alkalmazás
+contact settings	admin	hu	Kapcsolat Beállítások
+copied by %1, from record #%2.	addressbook	hu	Másolva %1 által, a #%2 bejegyzéstöl
+country	common	hu	Megye
+csv-fieldname	addressbook	hu	CSV-Mezönév
+csv-filename	addressbook	hu	CSV-Fájlnév
+custom	addressbook	hu	Egyedi
+custom fields	addressbook	hu	Egyedi Mezök
+debug output in browser	addressbook	hu	Nyomkövetés kimenet a boöngészöben
+default filter	addressbook	hu	Alapértelmezett Szürö
+delete a single entry by passing the id.	addressbook	hu	Töröl egy bejegyzést az azonosító megadásával.
+department	common	hu	Iroda
+domestic	addressbook	hu	Belföldi
+download	addressbook	hu	Letölt
+download export file (uncheck to debug output in browser)	addressbook	hu	Export állomány letöltése (Szüntetsd meg a nyomkövetés megjelenítését a böngészöben)
 e-mail	addressbook	hu	E-mail
+edit custom field	addressbook	hu	Egyedi Mezö Szerkesztése
+edit custom fields	admin	hu	Egyedi Mezök Szerkesztése
+empty for all	addressbook	hu	minden ürítése
+enter the path to the exported file here	addressbook	hu	Írd be az exportált állomány elérési útját ide
+export contacts	addressbook	hu	Kapcsolatok Exportálása
+export file name	addressbook	hu	Export állomány neve
+export from addressbook	addressbook	hu	Export a Címjegyzékböl
+extra	addressbook	hu	
 fax	addressbook	hu	Fax
+fax number	common	hu	Fax Szám
+field %1 has been added !	addressbook	hu	%1 mezö hozzá lett adva!
+field %1 has been updated !	addressbook	hu	%1 mezö frissítve lett!
+field name	addressbook	hu	Mezö neve
+fields to show in address list	addressbook	hu	Cím jegyzékben megjelenö mezök
+fieldseparator	addressbook	hu	Mezö elválasztó
 first name	addressbook	hu	Keresztnév
+full name	addressbook	hu	Teljes Neve
+geo	addressbook	hu	
+global categories	addressbook	hu	Átfogó Kategóriák
+grant addressbook access	common	hu	Cím jegyzék elérés engedély
+home address type	addressbook	hu	Otthoni Cím Tipusa
+home city	addressbook	hu	Otthoni Város
+home country	addressbook	hu	Otthoni Megye
+home email	addressbook	hu	Otthoni  EMail
+home email type	addressbook	hu	Otthoni EMail Tipusa
 home phone	addressbook	hu	Otthoni telefon
+home state	addressbook	hu	Otthoni Ország
+home street	addressbook	hu	Otthoni utca
+home zip code	addressbook	hu	Otthoni Postai Irányítószám
+import	addressbook	hu	
+import contacts	addressbook	hu	Kapcsolat Importálás
+import csv-file into addressbook	addressbook	hu	CVS-Állomány Import a Címjegyzékbe
+import file	addressbook	hu	Állomány Import
+import from ldif, csv, or vcard	addressbook	hu	Importálás LDIF, CSV, vagy VCard formátumból
+import from outlook	addressbook	hu	Importálás Outlookból
+import next set	addressbook	hu	Következö beállítás importálása
+import_instructions	addressbook	hu	
+international	addressbook	hu	Nemzetközi
+isdn phone	addressbook	hu	ISDN Telefon
+label	addressbook	hu	Címke
 last name	addressbook	hu	Vezetéknév
+ldap context for contacts	admin	hu	LDAP összefüggés a kapcsolatokhoz
+ldap host for contacts	admin	hu	LDAP kiszolgáló a kapcsolatokhoz
+ldap root dn for contacts	admin	hu	LDAP root dn a kapcsolatokhoz
+ldap root pw for contacts	admin	hu	LDAP root pw a kapcsolatokhoz
+ldif	addressbook	hu	LDIF
 line 2	addressbook	hu	Line 2
+mark records as private	addressbook	hu	Bejegyzés megjelölése magánként
+message phone	addressbook	hu	Üzenet Telefon
+middle name	addressbook	hu	Középsö név
 mobile	addressbook	hu	Mobiltelefon
+mobile phone	addressbook	hu	Mobil Telefon
+modem phone	addressbook	hu	Modem Telefon
+no vcard	addressbook	hu	Nem VCard
 notes	addressbook	hu	Jegyzet
+number of records to read (%1)	addressbook	hu	Bejegyzések száma olvasáshoz (%1)
 other number	addressbook	hu	Más telefonszám
-pager	addressbook	hu	Személyhívó
+other phone	addressbook	hu	Egyéb Telefon
+pager	common	hu	Személyhívó
+parcel	addressbook	hu	Csomó
+phone number	common	hu	Telefon Szám
+phone numbers	common	hu	Telefon Számok
+please enter a name for that field !	addressbook	hu	Kérlek írj egy nevet ebbe a mezöbe!
+postal	common	hu	Postai
+pref	addressbook	hu	
+prefix	addressbook	hu	Elötag
+public key	addressbook	hu	Nyílvános Kulcs
+read a list of entries.	addressbook	hu	Egy bejegyzés lista olvasása.
+read a single entry by passing the id and fieldlist.	addressbook	hu	Egy egyedi bejegyzés olvasása az azonositó és mezölista alapján.
 record access	addressbook	hu	Record Access
 record owner	addressbook	hu	Record owner
-show birthday reminders on main screen	addressbook	hu	Születésnapi emlékeztetõk megjelenítése a fõképernyõn
-state	addressbook	hu	Állam
-street	addressbook	hu	Utca
+retrieve contacts	admin	hu	kapcsolatok fogadása
+select all	addressbook	hu	Minden kiválasztása
+select the type of conversion	addressbook	hu	Válaszd ki a konverzió tipusát
+select the type of conversion:	addressbook	hu	Válaszd ki a konverzió tipusát:
+select where you want to store	admin	hu	Válaszd ki hol akarod tárolni
+show birthday reminders on main screen	addressbook	hu	Születésnapi emlékeztet?k megjelenítése a f?képerny?n
+startrecord	addressbook	hu	Kezdö bejegyzés
+state	common	hu	Állam
+street	common	hu	Utca
+successfully imported %1 records into your addressbook.	addressbook	hu	Teljesen importált %1 bejegyzés(ek) a címjegyzékedbe
+suffix	addressbook	hu	Utótag
+test import (show importable records <u>only</u> in browser)	addressbook	hu	Test Import (<u>csupán</u> az importálható bejegyzések mutatása a böngészöben)
+that field name has been used already !	addressbook	hu	Ez a mezönév már használatban van!
+this person's first name was not in the address book.	addressbook	hu	Ennek a személynek a kereszt neve nem volt a címjegyzékben.
+this person's last name was not in the address book.	addressbook	hu	Ennek a személynek a Vezeték neve nem volt a címjegyzékben.
 title	addressbook	hu	Cím
+to many might exceed your execution-time-limit	addressbook	hu	elérted a futtatási-idö-határt
 today is %1's birthday!	common	hu	Ma van %1 születésnapja!
 tomorrow is %1's birthday.	common	hu	Holnap van %1 születésnapja.
+translation	addressbook	hu	Fordítás
+update a single entry by passing the fields.	addressbook	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
 url	addressbook	hu	URL
+use country list	addressbook	hu	Használja a Megye Listát
+vcard	common	hu	
+vcards require a first name entry.	addressbook	hu	VCardnak szüksége van egy kereszt név bejegyzésre.
+vcards require a last name entry.	addressbook	hu	VCardnak szüksége van egy vezeték név bejegyzésre.
+video phone	addressbook	hu	Videó Telefon
+voice phone	addressbook	hu	Hang Telefon
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hu	FIGYELEM!! LDAP csak akkor érvényes ha NEM használsz kapcsolatokat a hozzáférés tárolóhoz!
 work phone	addressbook	hu	Munkahelyi telefon
-zip code	addressbook	hu	Irányítószám
+you must select a vcard. (*.vcf)	addressbook	hu	Választanod kell egy vcardot. (*.vcf)
+you must select at least 1 column to display	addressbook	hu	Választanod kell legkevesebb 1 oszlopot a megjelenítéshez
+zip code	common	hu	Irányítószám
+zip_note	addressbook	hu	<p><b>Figyelem:</b> Az állomány lehet hogy zip állomány .csv, .vcf, vagy .ldif állományok gyüjteménye. Azonban, ne keverd össze az állomány tipusokat importáláksor.
