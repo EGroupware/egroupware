@@ -22,8 +22,7 @@
   $phpgw_info["flags"]["parent_page"] = "accounts.php";
 
   include("../header.inc.php");
-  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["account_repository"] . ".inc.php");
+  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));

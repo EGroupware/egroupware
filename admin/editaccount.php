@@ -14,8 +14,7 @@
   $phpgw_info = array();
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
   include("../header.inc.php");
-  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["account_repository"] . ".inc.php");
+  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));

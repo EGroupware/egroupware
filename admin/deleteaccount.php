@@ -20,8 +20,7 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   $phpgw_info["flags"]["enable_calendar_class"] = True;
   include("../header.inc.php");
-  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
-        . $phpgw_info["server"]["account_repository"] . ".inc.php");
+  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   // I didn't active this code until all tables are up to date using the owner field
   // The calendar isn't update to date.  (jengo)
