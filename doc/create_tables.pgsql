@@ -4,17 +4,25 @@ create table applications (
   app_name varchar(25) NOT NULL,
   app_title varchar(50),
   app_enabled int,
+  app_order    int,
+  app_tables   varchar(255),
   unique(app_name)
 );
 
-insert into applications (app_name, app_title, app_enabled) values ('admin', 'Administration', 1);
-insert into applications (app_name, app_title, app_enabled) values ('filemanager', 'File manager', 1);
-insert into applications (app_name, app_title, app_enabled) values ('addressbook', 'Address Book', 1);
-insert into applications (app_name, app_title, app_enabled) values ('todo', 'ToDo List', 1);
-insert into applications (app_name, app_title, app_enabled) values ('calendar', 'Calendar', 1);
-insert into applications (app_name, app_title, app_enabled) values ('email', 'Email', 1);
-insert into applications (app_name, app_title, app_enabled) values ('nntp', 'NNTP', 1);
-insert into applications (app_name, app_title, app_enabled) values ('cron_apps', 'cron_apps', 0);
+
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('admin', 'Administration', 1, 1, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('tts', 'Trouble Ticket System', 0, 2, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('inv', 'Inventory', 0, 3, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('chat', 'Chat', 0, 4, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('headlines', 'Headlines', 0, 5, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('filemanager', 'File manager', 1, 6, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('addressbook', 'Address Book', 1, 7, 'addressbook');
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('todo', 'ToDo List', 1, 8, 'todo');
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('calendar', 'Calendar', 1, 9, 'webcal_entry,webcal_entry_users,webcal_entry_groups,webcal_repeats');
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('email', 'Email', 1, 10,NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('nntp', 'NNTP', 1, 11, NULL);
+insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('cron_apps', 'cron_apps', 0, 0, NULL);
+
 
 create table accounts (
   con 	 	serial,
@@ -143,13 +151,13 @@ CREATE TABLE webcal_entry (
 );
 
 CREATE TABLE webcal_entry_user (
-  cal_id	int NOT NULL,
+  cal_id	     int,
   cal_login	varchar(25) NOT NULL,
   cal_status	char(1) DEFAULT 'A'
 );
 
 create table webcal_entry_repeats ( 
-  cal_id	int,
+  cal_id	     int,
   cal_type	varchar(20),
   cal_end	int,
   cal_frequency	int default 1,
@@ -164,15 +172,15 @@ create table webcal_entry_groups (
 CREATE TABLE newsgroups (
   con		serial,
   name		varchar(255) NOT NULL,
-  messagecount	int NOT NULL,
-  lastmessage	int NOT NULL,
+  messagecount	int,
+  lastmessage	int,
   active	char DEFAULT 'N' NOT NULL,
   lastread	int
 );
 
 CREATE TABLE users_newsgroups (
-  owner		int NOT NULL,
-  newsgroup	int NOT NULL
+  owner		int,
+  newsgroup	int
 );
 
 CREATE TABLE lang (
