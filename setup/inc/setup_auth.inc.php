@@ -61,8 +61,6 @@
         exit;
       }
     }else{
-      print "$FormPW<br>";
-	print $phpgw_domain["default"]["config_passwd"];
       if ($FormPW != $phpgw_domain["default"]["config_passwd"]) {
         loginForm("Invalid password.");
         exit;
