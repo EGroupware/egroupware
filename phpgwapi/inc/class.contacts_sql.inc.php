@@ -472,20 +472,24 @@
 
 			if ($query)
 			{
-				$sql = "SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
-					. "%$query%' OR n_given LIKE '%$query%' OR email LIKE '%$query%' OR "
-					. "adr_one_street LIKE '%$query%' OR adr_one_locality LIKE '%$query%' OR adr_one_region LIKE '%$query%' OR "
-					. "adr_one_postalcode LIKE '%$query%' OR adr_one_countryname LIKE '%$query%' OR "
-					. "adr_two_street LIKE '%$query%' OR adr_two_locality LIKE '%$query%' OR adr_two_region LIKE '%$query%' OR "
-					. "adr_two_postalcode LIKE '%$query%' OR adr_two_countryname LIKE '%$query%' OR "
-					. "org_name LIKE '%$query%' OR org_unit LIKE '%$query%') " . $fand . $filtermethod . $ordermethod;
+				$query  = ereg_replace("'",'',$query);
+				$query  = ereg_replace('"','',$query);
+
+				$sql = "SELECT * FROM $this->std_table WHERE (";
+				reset($this->stock_contact_fields);
+				while(list($f,$x) = each($this->stock_contact_fields))
+				{
+					$sql .= " $f LIKE '%$query%' OR ";
+				}
+				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				unset($f); unset($x);
 			}
 			else
 			{
 				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
 					. $filtermethod . ' ' . $ordermethod;
 			}
-			if ($DEBUG) { echo "<br>$sql"; }
+			if ($DEBUG) { echo '<br>' . $sql; }
 
 			$db2 = $this->db;
 
