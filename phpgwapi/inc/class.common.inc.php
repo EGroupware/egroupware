@@ -725,6 +725,32 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		}
 
 		/*!
+		@function is_image_dir
+		@abstract checks if image_dir exists and has more than just a navbar-icon
+		@note this is just a workaround for idots, better to use find_image, which has a fallback \
+			on a per image basis to the default dir
+		*/
+		function is_image_dir($dir)
+		{
+			if (!@is_dir($dir))
+			{
+				return False;
+			}
+			if ($d = opendir($dir))
+			{
+				while ($f = readdir($d))
+				{
+					$ext = strtolower(strrchr($f,'.'));
+					if (($ext == '.gif' || $ext == '.png') && strstr($f,'navbar') === False)
+					{
+						return True;
+					}
+				}
+			}
+			return False;
+		}
+
+		/*!
 		@function get_image_dir
 		@abstract get image dir of an application
 		@param $appname application name optional can be derived from $phpgw_info['flags']['currentapp'];
@@ -753,15 +779,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
-			if (@is_dir ($imagedir))
+			if ($this->is_image_dir ($imagedir))
 			{
 				return $imagedir;
 			}
-			elseif (@is_dir ($imagedir_default))
+			elseif ($this->is_image_dir ($imagedir_default))
 			{
 				return $imagedir_default;
 			}
-			elseif (@is_dir ($imagedir_olddefault))
+			elseif ($this->is_image_dir ($imagedir_olddefault))
 			{
 				return $imagedir_olddefault;
 			}
@@ -801,15 +827,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/'.$appname.'/images';
 
-			if (@is_dir ($imagedir))
+			if ($this->is_image_dir ($imagedir))
 			{
 				return $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
 			}
-			elseif (@is_dir ($imagedir_default))
+			elseif ($this->is_image_dir ($imagedir_default))
 			{
 				return $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$appname.'/templates/default/images';
 			}
-			elseif (@is_dir ($imagedir_olddefault))
+			elseif ($this->is_image_dir ($imagedir_olddefault))
 			{
 				return $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$appname.'/images';
 			}
