@@ -150,6 +150,8 @@ server password	admin	en	Server Password
 server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
+server x has been added	admin	en	Server %1 has been added
+server x has been updated	admin	en	Server %1 has been updated
 set preference values.	admin	en	Set preference values.
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 site	admin	en	Site
