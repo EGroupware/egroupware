@@ -139,19 +139,6 @@
 		}
 
 		/*!
-		@function isset_array($idx,$arr)
-		@abstract checks if idx, which may contain ONE subindex is set in array
-		*/
-		function isset_array($idx,$arr)
-		{
-			if (ereg('^([^[]*)\\[(.*)\\]$',$idx,$regs))
-			{
-				return $regs[2] && isset($arr[$regs[1]][$regs[2]]);
-			}
-			return isset($arr[$idx]);
-		}
-
-		/*!
 		@function show
 		@abstract creates HTML from an eTemplate
 		@discussion This is done by calling show_cell for each cell in the form. show_cell itself
@@ -298,20 +285,17 @@
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			$value = $content[$name];
 
-			$org_name = $name;
-			if ($cname == '')	// building the form-field-name depending on prefix $cname and possibl. Array-subscript in name
+			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
 			{
-				$form_name = $name;
-			}
-			elseif (ereg('^([^[]*)\\[(.*)\\]$',$name,$regs))	// name contains array-index
-			{
-				$form_name = $cname.'['.$regs[1].']['.$regs[2].']';
-				$value = $content[$regs[1]][$regs[2]];
-				$org_name = $regs[2];
+				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
+				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
+				$org_name = substr($regs[2],1,-1);
 			}
 			else
 			{
-				$form_name = $cname.'['.$name.']';
+				$form_name = $cname == '' ? $name : $cname.'['.$name.']';
+				$value = $content[$name];
+				$org_name = $name;
 			}
 			if ($readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'])
 			{

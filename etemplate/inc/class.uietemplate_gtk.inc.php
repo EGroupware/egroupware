@@ -113,8 +113,8 @@
 				$window = &new GtkWindow();
 				$window->connect('destroy',array('etemplate','destroy'));
 				$window->connect('delete-event',array('etemplate','delete_event'));
-				$window->set_title('phpGroupwareGTK');
-				$window->set_default_size(800,600);
+				$window->set_title('phpGroupWareGTK: '.$GLOBALS['phpgw_info']['server']['site_title']);
+				$window->set_default_size(1024,600);
 
 				$GLOBALS['phpgw_info']['etemplate']['window'] = &$window;
 			}
@@ -122,8 +122,8 @@
 			{
 				$window = &$GLOBALS['phpgw_info']['etemplate']['window'];
 			}
-			$result = array();
-			$table = &$this->show($result,$content,$sel_options,$readonlys);
+			$this->result = array('test' => 'test');
+			$table = &$this->show($this->result,$content,$sel_options,$readonlys);
 			$table->set_border_width(10);
 			$table->show();
 
@@ -148,8 +148,7 @@
 			// set application name so that lang, etc. works
 			list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$method);
 
-			//echo "<p>uietemplate.process_exec: ExecMethod('${exec['method']}')</p>\n";
-			ExecMethod($method,array_merge($result,$preserv));
+			ExecMethod($method,array_merge($this->result,$preserv));
 		}
 
 		/*
@@ -170,10 +169,16 @@
 			exit();
 		}
 
-		function button_clicked(&$data)
+		function button_clicked(&$var,$form_name)
 		{
-			$data = 'pressed';
-			echo "button pressed\n";
+			echo "button '$form_name' pressed\n";
+			$var = 'pressed';
+			Gtk::main_quit();
+		}
+
+		function submit()
+		{
+			echo "OnChange --> submit\n";
 			Gtk::main_quit();
 		}
 
@@ -184,24 +189,29 @@
 				$set = &$this->widgets[$i];
 				$widget = &$set['widget'];
 
+				$val_is_set = False;
 				echo "$i: $set[name]/$set[type]/".Gtk::type_name($widget->get_type());
 				switch ($set['type'])
 				{
-					case 'button':	// is already done in the signal-handler
+					case 'button':	// is set to 'pressed' or is '' (not unset !!!)
+						$val_is_set = ($val = $this->get_array($this->result,$set['name']));
 						break;
 					case 'int':
 					case 'float':
 					case 'text':
 					case 'textarea':
-						$set['var'] = $widget->get_chars(0,-1);
+						$val = $widget->get_chars(0,-1);
+						$val_is_set = True;
 						break;
 					case 'checkbox':
-						$set['var'] = $widget->get_active();
+						$val = $widget->get_active();
+						$val_is_set = True;
 						break;
 					case 'radio':
 						if ($widget->get_active())
 						{
-							$set['var'] = $set['set_val'];
+							$val = $set['set_val'];
+							$val_is_set = True;
 						}
 						break;
 					case 'select':
@@ -213,28 +223,18 @@
 						{
 							if ($val == $selected)
 							{
-								$set['var'] = $key;
+								$val = $key;
+								$val_is_set = True;
 								break;
 							}
 						}
 						break;
 					case 'date':
 				}
-				echo " = '$set[var]'\n";
-			}
-		}
+				echo $val_is_set && !$set['readonly'] ? " = '$val'\n" : " NOT SET\n";
 
-		/*!
-		@function isset_array($idx,$arr)
-		@abstract checks if idx, which may contain ONE subindex is set in array
-		*/
-		function isset_array($idx,$arr)
-		{
-			if (ereg('^([^[]*)\\[(.*)\\]$',$idx,$regs))
-			{
-				return $regs[2] && isset($arr[$regs[1]][$regs[2]]);
+				$this->set_array($this->result,$set['name'],$val,$val_is_set && !$set['readonly']);
 			}
-			return isset($arr[$idx]);
 		}
 
 		/*!
@@ -254,7 +254,7 @@
 		@param $show_xxx row,col name/index for name expansion
 		@returns the generated HTML
 		*/
-		function show(&$result,$content,$sel_options='',$readonlys='',$show_c=0,$show_row=0)
+		function show(&$result,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
 		{
 			if (!$sel_options)
 			{
@@ -422,29 +422,24 @@
 			list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
-			$value = $content[$name];
-			$var = &$result[$name];
 
-			$org_name = $name;
-			if ($cname == '')	// building the form-field-name depending on prefix $cname and possibl. Array-subscript in name
+			// building the form-field-name depending on prefix $cname and possibl. Array-subscript in name
+			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
 			{
-				$form_name = $name;
-			}
-			elseif (ereg('^([^[]*)\\[(.*)\\]$',$name,$regs))	// name contains array-index
-			{
-				$form_name = $cname.'['.$regs[1].']['.$regs[2].']';
-				$value = $content[$regs[1]][$regs[2]];
-				$var = &$result[$regs[1]][$regs[2]];
-				$org_name = $regs[2];
+				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
+				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
+				$org_name = substr($regs[2],1,-1);
+				eval(str_replace(']',"']",str_replace('[',"['",'$var = &$result['.$regs[1].']'.$regs[2].';')));
 			}
 			else
 			{
-				$form_name = $cname.'['.$name.']';
+				$form_name = $cname == '' ? $name : $cname.'['.$name.']';
+				$value = $content[$name];
+				$org_name = $name;
+				$var = &$result[$name];
 			}
-			if ($readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'])
-			{
-				$options .= ' READONLY';
-			}
+			$readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'];
+
 			if ($cell['disabled'] || $cell['type'] == 'button' && $readonly)
 			{
 				if ($this->rows == 1) {
@@ -464,6 +459,7 @@
 			}
 			list($left_label,$right_label) = explode('%s',$label);
 
+			//echo "show_cell: type='$cell[type]', name='$cell[name]'-->'$name', value='$value'\n";
 			$widget = False;
 			switch ($cell['type'])
 			{
@@ -580,7 +576,7 @@
 				case 'button':
 					//$html .= $this->html->submit_button($form_name,$cell['label'],'',strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
 					$widget = &new GtkButton(strlen($cell['label']) > 1 ? lang($cell['label']) : $cell['label']);
-					$widget->connect_object('clicked', array('etemplate', 'button_clicked'),&$var);
+					$widget->connect_object('clicked', array('etemplate', 'button_clicked'),&$var,$form_name);
 					break;
 				case 'hrule':
 					//$html .= $this->html->hr($cell['size']);
@@ -651,6 +647,10 @@
 					$entry->set_text($sel_options[$value]);
 					$entry->set_editable(False);
 					$entry->set_usize($maxlen*$this->font_width,0);
+					if ($cell['onchange'] == '1')
+					{
+						$entry->connect('changed',array('etemplate', 'submit'));
+					}
 					break;
 /*				case 'select-percent':
 					$html .= $this->sbox->getPercentage($form_name,$value,$options);
@@ -695,9 +695,9 @@
 				$this->widgets[] = array(
 					'widget' => &$widget,
 					'type' => $cell['type'],
-					'var' => &$var,
 					'set_val' => $cell['type'] == 'radio' ? $cell['size'] : $sel_options,
-					'name' => $form_name
+					'name' => $form_name,
+					'readonly' => $readonly
 				);
 			}
 			if ($cell['type'] != 'button' && $cell['type'] != 'image' && ($left_label || $right_label))

@@ -255,4 +255,54 @@
 			}
 			return $this->extension[$name];
 		}
+
+		/*!
+		@function isset_array($idx,$arr)
+		@abstract checks if idx, which may contain ONE subindex is set in array
+		*/
+		function isset_array($idx,$arr)
+		{
+			if (ereg('^([^[]*)\\[(.*)\\]$',$idx,$regs))
+			{
+				return $regs[2] && isset($arr[$regs[1]][$regs[2]]);
+			}
+			return isset($arr[$idx]);
+		}
+
+		function set_array(&$arr,$idx,$val,$set=True)
+		{
+			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
+			{
+				$arr_idx = '['.$regs[1].']'.$regs[2];
+			}
+			else
+			{
+				$arr_idx = "[$idx]";
+			}
+			if ($set)
+			{
+				$code = '$arr'.$arr_idx.' = $val;';
+			}
+			else
+			{
+				$code = 'unset($arr'.$arr_idx.');';
+			}
+			eval($code = str_replace(']',"']",str_replace('[',"['",$code)));
+
+			//echo "set_array: $code = '$val'\n";
+		}
+
+		function get_array(&$arr,$idx)
+		{
+			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
+			{
+				eval($code = str_replace(']',"']",str_replace('[',"['",'$val = $arr['.$regs[1].']'.$regs[2].';')));
+				//echo "get_array: $code = '$val'\n";
+			}
+			else
+			{
+				$val = $arr[$idx];
+			}
+			return $val;
+		}
 	};
