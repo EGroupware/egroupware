@@ -51,6 +51,6 @@
 	$setup_info['admin']['depends'][] = array
 	(
 		'appname' => 'phpgwapi',
-		'versions' => Array('0.9.15')
+		'versions' => Array('0.9.14','0.9.15')
 	);
 ?>
