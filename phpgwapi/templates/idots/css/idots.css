@@ -24,6 +24,12 @@ body
 	padding:14px;
 }
 
+img
+{
+	border-width:0px;
+	border-style:none;
+}
+
 a:link
 {
 	color: #006699; 
@@ -145,6 +151,13 @@ a.textSidebox
 	border-top-width:1px;
 	border-top-style:solid;
 	height:1px;
+}
+
+.prefSection
+{
+	font-weight:bold;
+	font-size:16px;
+	line-height:40px;
 }
 
 #extraIcons
@@ -281,6 +294,15 @@ a.textSidebox
 {
 	position:relative;
 	text-align:right;
+}
+
+#divGenTime
+{
+	bottom:14px;
+	font-size: 9px;
+	color: #ff0000;
+	text-align:center;
+	width:99%;
 }
 
 #divPoweredBy 

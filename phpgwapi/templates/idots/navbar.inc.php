@@ -221,7 +221,7 @@
 				if(isset($item_link['icon']))
 				{
 					$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['phpgw_info']['flags']['currentapp'];
-					$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'">';
+					$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
 				}
 				$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 				$var['item_link'] = $item_link['link'];
@@ -251,6 +251,18 @@
 			'version'        => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 		);
 		$GLOBALS['phpgw']->hooks->process('navbar_end');
+
+
+		if($GLOBALS['phpgw_info']['user']['preferences']['common']['show_generation_time'])
+		{
+			$mtime = microtime(); 
+			$mtime = explode(" ",$mtime); 
+			$mtime = $mtime[1] + $mtime[0]; 
+			$tend = $mtime; 
+			$totaltime = ($tend - $GLOBALS['page_start_time']); 
+
+			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
+		}
 
 		$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 		$GLOBALS['idots_tpl']->set_var($var);

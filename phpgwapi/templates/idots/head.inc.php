@@ -11,6 +11,16 @@
 
 	/* $Id$ */
 
+	
+	if($GLOBALS['phpgw_info']['user']['preferences']['common']['show_generation_time'])
+	{
+		$mtime = microtime(); 
+		$mtime = explode(" ",$mtime); 
+		$mtime = $mtime[1] + $mtime[0]; 
+		$GLOBALS['page_start_time'] = $mtime; 
+	}
+	
+	
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
 		. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
 		. $GLOBALS['phpgw_info']['theme']['vlink'] . '"';

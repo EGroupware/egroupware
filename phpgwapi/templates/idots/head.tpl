@@ -7,7 +7,7 @@
 		1. use lowercase is possible, because of xhtml validation
 		2. make your template validate either html 4.01 or xhtml 1
 		3. make your application validat both if possible
-		4. always use "" when possible (please help me I don't know the English word)
+		4. always use quotionmarks when possible e.g. <img src="/path/to/image" class="class" alt="this is an image :)" />
 		5. use png-graphics if possible, but keep in ming IE has a transparency bug when it renders png's
 		-->
 
