@@ -161,28 +161,38 @@
 			return $Ok;
 		}
 
+		function appsession_id()
+		{
+			list($msec,$sec) = explode(' ',microtime());
+			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] . (intval(1000000 * $msec) + 1000000 * ($sec % 100000));
+			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
+			return $id;
+		}
+
 		/*!
-		@function save_appsession()
+		@function save_appsession($data,$id='')
 		@abstract saves content,readonlys,template-keys, ... via the appsession function
 		@discussion As a user may open several windows with the same content/template wie generate a location-id from microtime
 		@discussion which is used as location for appsession to descriminate between the different windows. This location-id
 		@discussion is then saved as a hidden-var in the form. The above mentions session-id has nothing to do / is different
 		@discussion from the session-id which is constant for all windows opened in one session.
+		@param $data the data to save
+		@param $id the id to use or '' to generate a new id
 		@returns the location-id
 		*/
-		function save_appsession($data)
+		function save_appsession($data,$id='')
 		{
-			list($msec,$sec) = explode(' ',microtime());
-			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] . (intval(1000000 * $msec) + 1000000 * ($sec % 100000));
-			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
-
+			if (!$id)
+			{
+				$id = $this->appsession_id;
+			}
 			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
 			return $id;
 		}
 
 		/*!
-		@function get_appsession()
+		@function get_appsession($id)
 		@abstract gets content,readonlys,template-keys, ... back from the appsession function
 		@param $id the location-id
 		@returns the session-data
@@ -304,5 +314,28 @@
 				$val = $arr[$idx];
 			}
 			return $val;
+		}
+
+		/*!
+		@function complete_array_merge($old,$new)
+		@abstract merges $old and $new, content of $new has precedence over $old
+		@note THIS IS NOT THE SAME AS PHP4: array_merge (as it calls itself recursive for values which are arrays,
+		@note if there key does NOT start with a '_' (array_merge just overwrites the old (sub)array)
+		*/
+		function complete_array_merge($old,$new)
+		{
+			reset($new);
+			while (list($k,$v) = each($new))
+			{
+				if (!is_array($v) || !isset($old[$k]) || $k[0] == '_')
+				{
+					$old[$k] = $v;
+				}
+				else
+				{
+					$old[$k] = $this->complete_array_merge($old[$k],$v);
+				}
+			}
+			return $old;
 		}
 	};
