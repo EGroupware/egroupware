@@ -584,6 +584,7 @@
 		function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
 			$owner = (int)$owner;
+			$lid   = array();
 			// access, cat_id and tid can be in $fields now or as extra params
 			foreach(array('access','cat_id','tid') as $extra)
 			{
@@ -596,12 +597,11 @@
 			{
 				$fields['tid'] = 'n';
 			}
-			if (isset($fields['lid']))
+			if(isset($fields['lid']))
 			{
 				//fix by pim
 				//$lid = array('lid,' => $fields['lid']."','");
-				$lid[0]='lid,';
-				$lid[1]=$fields['lid']."','";
+				$lid = array('lid,', $fields['lid'] . "','");
 			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
@@ -609,12 +609,14 @@
 			$this->stock_contact_fields['last_mod'] = 'last_mod'; 
 			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
 
-			$SQL="INSERT INTO $this->std_table (owner,access,cat_id,tid,$lid[0]"
-			. implode(",",$this->stock_contact_fields)
-			. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]";
-			$this->db->query($SQL,__LINE__,__FILE__);
+			$sql = 'INSERT INTO ' . $this->std_table . " (owner,access,cat_id,tid," . $lid[0]
+				. implode(',',$this->stock_contact_fields)
+				. ') VALUES (' . $owner . ",'" . $fields['access'] . "','" . $fields['cat_id']
+				. "','" . $fields['tid'] . "','" . $lid[1]
+				. implode("','",$this->loop_addslashes($stock_fields)) . "')";
+			$this->db->query($sql,__LINE__,__FILE__);
 
-			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
+			$id = $this->db->get_last_insert_id($this->std_table, 'id');
 
 			if (count($extra_fields))
 			{
