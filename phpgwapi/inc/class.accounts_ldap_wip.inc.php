@@ -43,7 +43,7 @@
 		'qmailr'   => True, 'qmails'   => True
 	);
 
-	$phpgw_info["server"]["global_excluded_groups"] = array(
+	$phpgw_info["server"]["global_denied_groups"] = array(
 		'root'      => True, 'bin'       => True, 'daemon'    => True,
 		'sys'       => True, 'adm'       => True, 'tty'       => True,
 		'disk'      => True, 'lp'        => True, 'mem'       => True,
@@ -107,7 +107,8 @@
 			$this->data["firstname"]   	= $allValues[0]["givenname"][0];
 			$this->data["lastname"]    	= $allValues[0]["sn"][0];
 			$this->data["fullname"]    	= $allValues[0]["cn"][0];
-			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+			if ($phpgw_info["server"]["ldap_extra_attributes"])
+			{
 				$this->data["homedirectory"]  = $allValues[0]["homedirectory"][0];
 				$this->data["loginshell"] = $allValues[0]["loginshell"][0];
 			}
@@ -145,7 +146,8 @@
 			$entry["sn"]        = $this->data["lastname"];
 			$entry["givenname"] = $this->data["firstname"];
 
-			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+			if ($phpgw_info["server"]["ldap_extra_attributes"])
+			{
 				$entry["homedirectory"] = $this->data["homedirectory"];
 				$entry["loginshell"]    = $this->data["loginshell"];
 			}
@@ -187,10 +189,10 @@
 				// Groups
 				if ($this->data["account_type"] == "g" && $phpgw_info["server"]["ldap_group_context"] )
 				{
-					$dn = 'uid='.$this->data["account_lid"].','.$phpgw_info["server"]["ldap_group_context"];
+					$dn = 'cn='.$this->data["account_lid"].','.$phpgw_info["server"]["ldap_group_context"];
 					$entry["cn"] = $this->data["account_lid"];
 					$entry["gidnumber"] = $this->data["account_id"];
-					$entry["objectclass"] = "";
+					//$entry["objectclass"] = "";
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
 					$members = $this->members($this->data["account_id"]);
@@ -292,12 +294,11 @@
 				}
 			}
 
-			$this->db->query("update phpgw_accounts set account_lid='" . $this->data['account_lid']
+			$this->db->query("UPDATE phpgw_accounts SET account_lid='" . $this->data['account_lid']
 				. "', account_firstname='" . $this->data['firstname']
 				. "', account_lastname='"  . $this->data['lastname']
 				. "', account_status='"    . $this->data['status']
 				. "' where account_id='"   . $this->account_id . "'",__LINE__,__FILE__);
-
 		}
 
 		function isin_array($needle,$haystack=array()) 
@@ -324,6 +325,16 @@
 			if ($allValues[0]['dn'])
 			{
 				$del = ldap_delete($ds, $allValues[0]['dn']);
+			}
+			else
+			{
+				$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], 'cn='.$account_lid);
+				$allValues = ldap_get_entries($ds, $sri);
+
+				if ($allValues[0]['dn'])
+				{
+					$del = ldap_delete($ds, $allValues[0]['dn']);
+				}
 			}
 
 			// Do this last since we are depending upon this record to get the account_lid above
@@ -551,37 +562,9 @@
 			$this->acct_type = $account_type;
 
 			//echo '<br>in create for account_lid: "'.$account_lid.'"';
-			if (empty($account_id) || !$account_id) {
-				if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
-				if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
-
-				$nextid = $phpgw->common->last_id("accounts",$min,$max);
-
-				// Loop until we find a free id
-				$free = 0;
-				while (!$free) {
-					//echo '<br>calling search for id: '.$nextid;
-					if ($this->exists($nextid))
-					{
-						$nextid = $phpgw->common->next_id("accounts",$min,$max);
-					}
-					else
-					{
-						//echo '<br>calling search for lid: '.$account_lid;
-						if ($this->exists($account_lid))
-						{
-							$nextid = $phpgw->common->next_id("accounts",$min,$max);
-						}
-						else
-						{
-							$free = True;
-						}
-					}
-				}
-				if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
-					return False;
-				}
-				$account_id = $nextid;
+			if (empty($account_id) || !$account_id)
+			{
+				$account_id = $this->get_nextid();
 				//echo '<br>using'.$account_id;exit;
 			}
 
@@ -600,32 +583,32 @@
 			}
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry["gidnumber"]          = $account_id;
-			$entry["userpassword"]       = $phpgw->common->encrypt_password($account_pwd);
-
-			if ($phpgw_info["server"]["ldap_extra_attributes"] && $account_type != 'g') {
+			if ($phpgw_info["server"]["ldap_extra_attributes"] && $account_type != 'g')
+			{
 				if ($account_home)
 				{
-					$entry["homedirectory"]     = $account_home;
+					$entry["homedirectory"] = $account_home;
 				}
 				else
 				{
-					$entry["homedirectory"]     = $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid;
+					$entry["homedirectory"] = $phpgw_info["server"]["ldap_account_home"].SEP.$account_lid;
 				}
 
 				if ($account_shell)
 				{
-					$entry["loginshell"]        = $account_shell;
+					$entry["loginshell"] = $account_shell;
 				}
 				else
 				{
-					$entry["loginshell"]        = $phpgw_info["server"]["ldap_account_shell"];
+					$entry["loginshell"] = $phpgw_info["server"]["ldap_account_shell"];
 				}
 			}
 
-			if ($allValues[0]["dn"]) {
+			if ($allValues[0]["dn"])
+			{
 				// This should keep the password from being overwritten here on ldap import
 				unset($entry["userpassword"]);
+				$entry["gidnumber"] = $account_id;
 
 				while (list($key,$val) = each($entry))
 				{
@@ -659,41 +642,45 @@
 					$tmpentry["objectclass"][1] = 'person';
 					$tmpentry["objectclass"][2] = 'organizationalPerson';
 					$tmpentry["objectclass"][3] = 'inetOrgPerson';
+					$tmpentry["userpassword"]   = $phpgw->common->encrypt_password($account_pwd);
 					//$tmpentry["objectclass"][4] = 'account'; Causes problems with some LDAP servers
 					$tmpentry["objectclass"][5] = 'posixAccount';
 					$tmpentry["objectclass"][6] = 'shadowAccount';
 				}
 				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
-			} else {
+			}
+			else
+			{
 				// Not already there, we will add it
 				if ($account_type == "g")
 				{
 					$dn = 'cn='.$account_lid.','.$phpgw_info["server"]["ldap_group_context"];
 					unset($entry["homedirectory"]);
 					unset($entry["loginshell"]);
-					$entry["cn"] = $account_lid;
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
-
-					$members = $this->members($account_id);
-					$entry["memberuid"] = array();
-					for ($i=0;$i<count($members);$i++)
-					{
-						$currname = $this->id2name($members[$i]['account_id']);
-						if (!$this->isin_array($currname,$entry["memberuid"]))
-						{
-							$entry["memberuid"][] = $currname;
-						}
-					}
+					$entry["cn"]             = $account_lid;
+					$entry["gidnumber"]      = $account_id;
+					$entry["userpassword"]   = $phpgw->common->encrypt_password($account_pwd);
+					$entry["description"]    = 'phpgw-created group';
 				}
 				else
 				{
 					$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
-					$entry["cn"]             = sprintf("%s %s", $account_firstname, $account_lastname);
-					$entry["sn"]             = $account_lastname;
-					$entry["givenname"]      = $account_firstname;
-					$entry["uid"]            = $account_lid;
-					$entry["uidnumber"]      = $account_id;
+					$entry["cn"]        = sprintf("%s %s", $account_firstname, $account_lastname);
+					$entry["sn"]        = $account_lastname;
+					$entry["givenname"] = $account_firstname;
+					$entry["uid"]       = $account_lid;
+					$entry["uidnumber"] = $account_id;
+					if ($phpgw_info["server"]["ldap_group_id"])
+					{
+						$entry["gidnumber"] = $phpgw_info["server"]["ldap_group_id"];
+					}
+					else
+					{
+						$entry["gidnumber"] = $account_id;
+					}
+					$entry["userpassword"]   = $phpgw->common->encrypt_password($account_pwd);
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'person';
 					$entry["objectclass"][2] = 'organizationalPerson';
@@ -702,7 +689,19 @@
 					$entry["objectclass"][4] = 'posixAccount';
 					$entry["objectclass"][5] = 'shadowAccount';
 				}
-
+/*
+				echo '<br>dn: '.$dn;
+				while (list($key,$val) = each($entry)) {
+					if (is_array($val)) {
+						for ($i=0;$i<count($val);$i++) {
+							if ($val[$i]) { echo "<br>\nline ".$key.': '.$val[$i]; }
+						}
+					} else {
+						if ($val) { echo '<br>line '.$key.': '.$val; }
+					}
+				}
+				//exit;
+*/
 				ldap_add($ds, $dn, $entry);
 			}
 			//print ldap_error($ds);
@@ -714,26 +713,7 @@
 			exit();
 			global $phpgw, $phpgw_info;
 
-			if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
-			if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
-
-			$nextid = $phpgw->common->last_id("accounts",$min,$max);
-
-			// Loop until we find a free id
-			$free = 0;
-			while (!$free) {
-				if ($this->exists($nextid))
-				{
-					$nextid = $phpgw->common->next_id("accounts",$min,$max);
-				} else {
-					$free = True;
-				}
-			}
-			if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
-				return False;
-			}
-			$account_id = $nextid;
-			//echo $account_id;exit;
+			$accountid = $this->get_nextid();
 
 			if ($defaultprefs =="") {
 				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';

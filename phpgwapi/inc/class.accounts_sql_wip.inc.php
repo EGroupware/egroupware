@@ -25,6 +25,7 @@
   /* $Id$ */
 
   $phpgw_info["server"]["global_denied_users"] = array();
+  $phpgw_info["server"]["global_denied_groups"] = array();
 
   class accounts_
   {
@@ -211,39 +212,26 @@
 
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
 		{
-          // $account_home and $account_shell not used here
-	      $this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-	      	. "account_firstname, account_lastname, account_status) values ('" . $account_lid
-	      	. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
-	      	. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
+			//echo '<br>in create for account_lid: "'.$account_lid.'"';
+			if (empty($account_id) || !$account_id)
+			{
+				$account_id = $this->get_nextid();
+				//echo '<br>using'.$account_id;exit;
+			}
+
+			// $account_home and $account_shell not used here
+			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
+				. "account_firstname, account_lastname, account_status) values ("
+				. $account_id . ",'" . $account_lid . "','"
+				. $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname . "','"
+				. $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False)
 		{
 			global $phpgw, $phpgw_info;
 
-			if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
-			if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
-
-			$nextid = $phpgw->common->last_id("accounts",$min,$max);
-
-			// Loop until we find a free id
-			$free = 0;
-			while (!$free) {
-				if ($this->exists($nextid))
-				{
-					$nextid = $phpgw->common->next_id("accounts",$min,$max);
-				}
-				else
-				{
-					$free = True;
-				}
-			}
-			if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
-				return False;
-			}
-			$account_id = $nextid;
-			//echo $account_id;exit;
+			$account_id = $this->get_nextid();
 
 			if ($default_prefs == False) {
 				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
