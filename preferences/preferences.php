@@ -11,7 +11,13 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
+	$p       = $GLOBALS['HTTP_POST_VARS']['p'];
+	$user    = $GLOBALS['HTTP_POST_VARS']['user'];
+	$global  = $GLOBALS['HTTP_POST_VARS']['global'];
+	$default = $GLOBALS['HTTP_POST_VARS']['default'];
+
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'                => True,
 		'nonavbar'                => True,
 		'currentapp'              => $appname,
@@ -73,15 +79,15 @@
 
 	function create_input_box($label_name,$preference_name,$size = '',$max_size = '')
 	{
-		global $phpgw, $phpgw_info, $appname, $t, $dp, $gp;
+		global $appname, $t, $dp, $gp;
 
 		$_appname = check_app($appname);
 
-		$phpgw->nextmatchs->template_alternate_row_color(&$t);
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
 		$t->set_var('row_name',lang($label_name));
 		if (! is_forced_value($_appname,$preference_name))
 		{
-			$t->set_var('row_user','<input name="user[' . $preference_name . ']" value="' . $phpgw_info['user']['preferences'][$_appname][$preference_name] . '">');
+			$t->set_var('row_user','<input name="user[' . $preference_name . ']" value="' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '">');
 		}
 		else
 		{
@@ -111,17 +117,17 @@
 
 	function create_select_box($label_name,$preference_name,$values)
 	{
-		global $phpgw, $phpgw_info, $appname, $t, $dp, $gp;
+		global $appname, $t, $dp, $gp;
 
 		$_appname = check_app($appname);
 
-		$phpgw->nextmatchs->template_alternate_row_color(&$t);
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
 
 		$t->set_var('row_name',lang($label_name));
 		if (! is_forced_value($_appname,$preference_name))
 		{
 			$s = '<option value="">' . lang('Select one') . '</option>'
-				. create_option_string($phpgw_info['user']['preferences'][$_appname][$preference_name],$values);
+				. create_option_string($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name],$values);
 			$t->set_var('row_user','<select name="user[' . $preference_name . ']">' . $s . '</select>');
 		}
 		else
@@ -171,7 +177,7 @@
 	$gp->read_repository();
 
 	// Only check this once
-	if ($phpgw->acl->check('run',1,'admin'))
+	if ($GLOBALS['phpgw']->acl->check('run',1,'admin'))
 	{
 		// Don't use a global variable for this ...
 		define('HAS_ADMIN_RIGHTS',1);
@@ -180,7 +186,7 @@
 		$dp->read_repository();
 	}
 
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('preferences'));
+	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('preferences'));
 	$t->set_file(array(
 		'_preferences' => 'preferences.tpl'
 	));
@@ -194,7 +200,7 @@
 	$t->set_block('_preferences','footer');
 	$t->set_block('_preferences','row_error');
 
-	if ($submit)
+	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		process_array(&$p, $user);
 
@@ -204,11 +210,11 @@
 			process_array(&$dp, $default);
 		}
 
-		Header('Location: ' . $phpgw->link('/preferences/index.php#' . $appname));
-		$phpgw->common->phpgw_exit();
+		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php#' . $appname));
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
-	$phpgw->common->phpgw_header();
+	$GLOBALS['phpgw']->common->phpgw_header();
 	echo parse_navbar();
 
 	if ($appname == 'preferences')
@@ -217,13 +223,13 @@
 	}
 	else
 	{
-		$t->set_var('lang_title',lang('%1 - Preferences',$phpgw_info['navbar'][$appname]['title']));
+		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['navbar'][$appname]['title']));
 	}
-	$t->set_var('action_url',$phpgw->link('/preferences/preferences.php','appname=' . $appname));
-	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
-	$t->set_var('th_text',$phpgw_info['theme']['th_text']);
-	$t->set_var('row_on',$phpgw_info['theme']['row_on']);
-	$t->set_var('row_off',$phpgw_info['theme']['row_off']);
+	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname));
+	$t->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
+	$t->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
+	$t->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);
+	$t->set_var('row_off',$GLOBALS['phpgw_info']['theme']['row_off']);
 
 	if (is_admin())
 	{
@@ -236,10 +242,10 @@
 		$t->set_var('lang_user','&nbsp;');
 	}
 
-	if (! $phpgw->common->hook_single('settings',$appname,True))
+	if (! $GLOBALS['phpgw']->common->hook_single('settings',$appname,True))
 	{
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-				$phpgw_info['navbar'][$appname]['title'],PHPGW_SERVER_ROOT . SEP
+				$GLOBALS['phpgw_info']['navbar'][$appname]['title'],PHPGW_SERVER_ROOT . SEP
 				. $appname . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 		$error = True;
 	}
@@ -265,5 +271,5 @@
 		$t->pfp('out','footer');
 	}
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
