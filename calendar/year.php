@@ -74,5 +74,12 @@
 	. "status = '" . lang("Generate printer-friendly version") . "'\">["
 	. lang("Printer Friendly") . "]</A>";
   }
-  $phpgw->common->phpgw_footer();
+	if(!isset($friendly) || $friendly == False)
+	{
+		$phpgw->common->phpgw_footer();
+	}
+	else
+	{
+		$phpgw->common->phpgw_exit();
+	}
 ?>

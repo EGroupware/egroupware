@@ -14,7 +14,7 @@
 
 	/* $Id$ */
 	
-	if (isset($friendly) && $friendly)
+	if (isset($friendly) && $friendly == True)
 	{
 		$phpgw_flags = Array(
 			'currentapp'					=>	'calendar',
@@ -100,5 +100,12 @@
 
 	$p->set_var($var);
 	$p->pparse('out','week_t');
-	$phpgw->common->phpgw_footer();
+	if(!isset($friendly) || $friendly == False)
+	{
+		$phpgw->common->phpgw_footer();
+	}
+	else
+	{
+		$phpgw->common->phpgw_exit();
+	}
 ?>

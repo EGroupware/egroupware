@@ -78,5 +78,12 @@
 	$p->set_var($var);
 
 	$p->pparse('out','day_t');
-	$phpgw->common->phpgw_footer();
+	if(!isset($friendly) || $friendly == False)
+	{
+		$phpgw->common->phpgw_footer();
+	}
+	else
+	{
+		$phpgw->common->phpgw_exit();
+	}
 ?>
