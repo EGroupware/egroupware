@@ -12,15 +12,17 @@
   /* $Id$ */
 
   $phpgw_info["flags"] = array("noheader"   => True,   "nonavbar" => True,
-  							 "currentapp" => "home", "noapi"    => True);
+                               "currentapp" => "home", "noapi"    => True);
   include("../header.inc.php");
   include("./inc/functions.inc.php");
 
   // Authorize the user to use setup app and load the database
-  include("./inc/setup_auth.inc.php");
+  if (!$phpgw_setup->auth("Config")){
+    Header("Location: index.php");
+    exit;
+  }
   // Does not return unless user is authorized
-//  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
-  include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/class.common.inc.php");
+  include( PHPGW_INCLUDE_ROOT . "/phpgwapi/inc/class.common.inc.php");
 
   $common = new common;
   $phpgw_setup->loaddb(); 
