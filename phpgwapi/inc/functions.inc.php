@@ -4,7 +4,7 @@
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
 	 * and Joseph Engo <jengo@phpgroupware.org>                                 *
 	 * Has a few functions, but primary role is to load the phpgwapi            *
-	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	 * Copyright (C) 2000, 2001, 2002 Dan Kuykendall                                  *
 	 * -------------------------------------------------------------------------*
 	 * This library is part of the phpGroupWare API                             *
 	 * http://www.phpgroupware.org/api                                          * 
