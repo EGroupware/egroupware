@@ -12,9 +12,6 @@
 
 	/* $Id$ */
 
-	//$login  = 'anonymous';
-	//$passwd = 'anonymous1';
-
 	$phpgw_info['flags'] = array(
 		'disable_Template_class' => True,
 		'currentapp' => 'login',
@@ -22,12 +19,40 @@
 	);
 
 	include('./header.inc.php');
-	//$sessionid = $phpgw->session->create($login,$passwd);
 
 	$server = CreateObject('phpgwapi.soap_server');
 	/* _debug_array($server);exit; */
+	//include(PHPGW_API_INC . '/soaplib.soapinterop.php');
 
-	include(PHPGW_API_INC . '/soaplib.soapinterop.php');
+	$headers = getallheaders();
 
+	if(ereg('Basic',$headers['Authorization']))
+	{
+		$tmp = $headers['Authorization'];
+		$tmp = ereg_replace(' ','',$tmp);
+		$tmp = ereg_replace('Basic','',$tmp);
+		$auth = base64_decode(trim($tmp));
+		list($sessionid,$kp3) = split(':',$auth);
+
+		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
+		{
+			$server->authed = True;
+		}
+		elseif($GLOBALS['phpgw']->session->verify_server($sessionid,$kp3))
+		{
+			$server->authed = True;
+		}
+	}
+
+	$server->add_to_map(
+		'system_login',
+		array('string','string','string'),
+		array('array')
+	);
+	$server->add_to_map(
+		'system_logout',
+		array('string','string'),
+		array('array')
+	);
 	$server->service($HTTP_RAW_POST_DATA);
 ?>
