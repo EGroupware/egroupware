@@ -47,6 +47,7 @@ export file name	addressbook	en	Export file name
 extra	addressbook	en	Extra
 fax number	common	en	Fax Number
 field name	addressbook	en	Field Name
+field x has been added !	addressbook	en	Field x has been added !
 fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
