@@ -36,9 +36,8 @@
 		*/
 		function init_process()
 		{
-			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
+			$ConfigDomain = get_var('ConfigDomain',array('COOKIE','POST'));
 			$phpgw_domain = $GLOBALS['phpgw_domain'];
-			$phpgw_info   = $GLOBALS['phpgw_info'];
 
 			$GLOBALS['phpgw_setup']->oProc = CreateObject('phpgwapi.schema_proc',$phpgw_domain[$ConfigDomain]['db_type']);
 			$GLOBALS['phpgw_setup']->oProc->m_odb           = $GLOBALS['phpgw_setup']->db;
@@ -48,8 +47,6 @@
 			$GLOBALS['phpgw_setup']->oProc->m_odb->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
 			$GLOBALS['phpgw_setup']->oProc->m_odb->Halt_On_Error = 'report';
 			$GLOBALS['phpgw_setup']->oProc->m_odb->connect();
-			/* Legacy - update table scripts */
-			$this->oProc = $GLOBALS['phpgw_setup']->oProc;
 		}
 
 		/*!
@@ -62,7 +59,7 @@
 		*/
 		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
 		{
-			if (!$method)
+			if(!$method)
 			{
 				return False;
 			}
@@ -77,10 +74,10 @@
 			$passing = array();
 			$pass_string = implode (':', $pass);
 			$passing_string = implode (':', $passing);
-			while ($pass_string != $passing_string)
+			while($pass_string != $passing_string)
 			{
 				$passing = array();
-				if ($DEBUG) { echo '<br>process->pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
+				if($DEBUG) { echo '<br>process->pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
 				/* Check current versions and dependencies */
 				$setup_info = $GLOBALS['phpgw_setup']->detection->get_db_versions($setup_info);
 				$setup_info = $GLOBALS['phpgw_setup']->detection->compare_versions($setup_info);
@@ -91,9 +88,9 @@
 				/* stuff the rest of the apps, but only those with available upgrades */
 				while(list($key,$value) = @each($setup_info))
 				{
-					if (($value['name'] != 'phpgwapi') && ($value['status'] == 'U'))
+					if(($value['name'] != 'phpgwapi') && ($value['status'] == 'U'))
 					{
-						if ( ($passed[$value['name']]['status'] != 'F') && ($passed[$value['name']]['status'] != 'C') )
+						if(($passed[$value['name']]['status'] != 'F') && ($passed[$value['name']]['status'] != 'C'))
 						{
 							$pass[$value['name']] = $setup_info[$value['name']];
 						}
@@ -134,27 +131,27 @@
 					if($value['status'] == 'C')
 					{
 						$passed[$value['name']] = $passing[$value['name']];
-						if ($DEBUG) { echo '<br>process->pass(): '.$passed[$value['name']]['name'] . ' install completed'."\n"; }
+						if($DEBUG) { echo '<br>process->pass(): '.$passed[$value['name']]['name'] . ' install completed'."\n"; }
 					}
 					elseif($value['status'] == 'F')
 					{
 						$setup_info[$value['name']] = $passing[$value['name']];
-						if ($DEBUG) { echo '<br>process->pass(): '.$setup_info[$value['name']]['name'] . ' install failed'."\n"; }
+						if($DEBUG) { echo '<br>process->pass(): '.$setup_info[$value['name']]['name'] . ' install failed'."\n"; }
 					}
 					elseif($value['status'] == 'D')
 					{
 						$pass[$value['name']] = $setup_info[$value['name']];
-						if ($DEBUG) { echo '<br>process->pass(): '.$pass[$value['name']]['name'] . ' fails dependency check on this pass'."\n"; }
+						if($DEBUG) { echo '<br>process->pass(): '.$pass[$value['name']]['name'] . ' fails dependency check on this pass'."\n"; }
 					}
 					else
 					{
 						$tmp = $passing[$value['name']]['name'];
-						if ($DEBUG) { echo '<br>process->pass(): '.$tmp . ' skipped on this pass'."\n"; }
+						if($DEBUG) { echo '<br>process->pass(): '.$tmp . ' skipped on this pass'."\n"; }
 					}
 				}
 
 				$i++;
-				if ($i == 20) /* Then oops it broke */
+				if($i == 20) /* Then oops it broke */
 				{
 					echo '<br>Setup failure: excess looping in process->pass():'."\n";
 					echo '<br>Pass:<br>'."\n";
@@ -184,7 +181,7 @@
 		*/
 		function droptables($setup_info,$DEBUG=False)
 		{
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -198,16 +195,16 @@
 			}
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
-				if ($setup_info[$key]['tables'])
+				if($setup_info[$key]['tables'])
 				{
-					while (list($a,$table) = @each($setup_info[$key]['tables']))
+					while(list($a,$table) = @each($setup_info[$key]['tables']))
 					{
 						//echo $table;
-						if (in_array($table,$tables))
+						if(in_array($table,$tables))
 						{
-							if ($DEBUG){ echo '<br>process->droptables(): Dropping :'. $setup_info[$key]['name'] . ' table: ' . $table; }
+							if($DEBUG){ echo '<br>process->droptables(): Dropping :'. $setup_info[$key]['name'] . ' table: ' . $table; }
 							$GLOBALS['phpgw_setup']->oProc->DropTable($table);
 							// Update the array values for return below
 							$setup_info[$key]['status'] = 'U';
@@ -228,14 +225,14 @@
 		*/
 		function current($setup_info,$DEBUG=False)
 		{
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$enabled = False;
 				$appname  = $setup_info[$key]['name'];
@@ -245,14 +242,14 @@
 
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-				if ($setup_info[$key]['tables'] && file_exists($appdir.'tables_current.inc.php'))
+				if($setup_info[$key]['tables'] && file_exists($appdir.'tables_current.inc.php'))
 				{
 					if($DEBUG) { echo '<br>process->current(): Including: ' . $appdir.'tables_current.inc.php'; }
 					include ($appdir.'tables_current.inc.php');
 					$ret = $this->post_process($phpgw_baseline,$DEBUG);
 					if($ret)
 					{
-						if ($GLOBALS['phpgw_setup']->app_registered($appname))
+						if($GLOBALS['phpgw_setup']->app_registered($appname))
 						{
 							$GLOBALS['phpgw_setup']->update_app($appname);
 							$GLOBALS['phpgw_setup']->update_hooks($appname);
@@ -280,11 +277,11 @@
 					 A manual sql script install is needed, but we do add the hooks
 					*/
 					$enabled = 99;
-					if ($setup_info[$key]['tables'][0] != '')
+					if($setup_info[$key]['tables'][0] != '')
 					{
 						$enabled = False;
 					}
-					if ($GLOBALS['phpgw_setup']->app_registered($appname))
+					if($GLOBALS['phpgw_setup']->app_registered($appname))
 					{
 						$GLOBALS['phpgw_setup']->update_app($appname);
 						$GLOBALS['phpgw_setup']->update_hooks($appname);
@@ -310,22 +307,22 @@
 		*/
 		function default_records($setup_info,$DEBUG=False)
 		{
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-			$oProc = $GLOBALS['phpgw_setup']->oProc;
+//			$oProc = $GLOBALS['phpgw_setup']->oProc;
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-				if ($setup_info[$key]['tables'] && file_exists($appdir.'default_records.inc.php'))
+				if($setup_info[$key]['tables'] && file_exists($appdir.'default_records.inc.php'))
 				{
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->default_records(): Including default records for ' . $appname . "\n";
 					}
@@ -348,7 +345,7 @@
 		function add_langs($setup_info,$DEBUG=False,$force_en=False)
 		{
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				/* This is in the setup_lang class */
@@ -370,7 +367,7 @@
 		function drop_langs($setup_info,$DEBUG=False)
 		{
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				/* This is in the setup_lang class */
@@ -392,7 +389,7 @@
 		function upgrade_langs($setup_info,$DEBUG=False)
 		{
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				/* Don't upgrade lang files in the middle of an upgrade */
 				if($setup_info[$key]['status'] == 'R')
@@ -419,22 +416,22 @@
 		*/
 		function test_data($setup_info,$DEBUG=False)
 		{
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-			$oProc = $GLOBALS['phpgw_setup']->oProc;
+//			$oProc = $GLOBALS['phpgw_setup']->oProc;
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-				if (file_exists($appdir.'test_data.inc.php'))
+				if(file_exists($appdir.'test_data.inc.php'))
 				{
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->test_data(): Including baseline test data for ' . $appname . "\n";
 					}
@@ -455,20 +452,20 @@
 		*/
 		function baseline($setup_info,$DEBUG=False)
 		{
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-				if (file_exists($appdir.'tables_baseline.inc.php'))
+				if(file_exists($appdir.'tables_baseline.inc.php'))
 				{
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 					}
@@ -481,7 +478,7 @@
 				}
 				else
 				{
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->baseline(): No baseline tables for ' . $appname . "\n";
 					}
@@ -500,7 +497,7 @@
 		*/
 		function upgrade($setup_info,$DEBUG=False)
 		{
-			if (!@$GLOBALS['phpgw_setup']->oProc)
+			if(!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -508,12 +505,12 @@
 			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
 
 			@reset($setup_info);
-			while (list($key,$null) = @each($setup_info))
+			while(list($key,$null) = @each($setup_info))
 			{
 				/* Don't try to upgrade an app that is not installed */
 				if(!$GLOBALS['phpgw_setup']->app_registered($setup_info[$key]['name']))
 				{
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->upgrade(): Application not installed: ' . $appname . "\n";
 					}
@@ -522,8 +519,8 @@
 				}
 
 				/* if upgrade required, or if we are running again after an upgrade or dependency failure */
-				if ($DEBUG) { echo '<br>process->upgrade(): Incoming : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status']; }
-				if ($setup_info[$key]['status'] == 'U' ||
+				if($DEBUG) { echo '<br>process->upgrade(): Incoming : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status']; }
+				if($setup_info[$key]['status'] == 'U' ||
 					$setup_info[$key]['status'] == 'D' ||
 					$setup_info[$key]['status'] == 'V' ||
 					$setup_info[$key]['status'] == '') // TODO this is not getting set for api upgrade, sometimes ???
@@ -548,9 +545,9 @@
 					// This is because we are not keeping up with table changes, so a table in baseline
 					// either does not exist anymore, or the baseline is being lost.
 */
-					if ($setup_info[$key]['tables'] && file_exists($appdir.'tables_baseline.inc.php'))
+					if($setup_info[$key]['tables'] && file_exists($appdir.'tables_baseline.inc.php'))
 					{
-						if ($DEBUG)
+						if($DEBUG)
 						{
 							echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 						}
@@ -560,7 +557,7 @@
 					}
 					else
 					{
-						if ($DEBUG)
+						if($DEBUG)
 						{
 							echo '<br>process->baseline(): No baseline tables for ' . $appname . "\n";
 						}
@@ -568,21 +565,21 @@
 						break;
 						*/
 					}
-					if (file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
+					if(file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
 					{
 						include ($appdir . 'tables_update.inc.php');
 						$this->updateincluded[$appname] = True;
 
 						/* $test array comes from update file.  It is a list of available upgrade functions */
 						@reset($test);
-						while (list($x,$value) = @each($test))
+						while(list($x,$value) = @each($test))
 						{
 							$currentver = $setup_info[$key]['currentver'];
 
 							/* build upgrade function name */
 							$function = $appname . '_upgrade' . ereg_replace("\.", '_', $value);
 
-							if ($DEBUG)
+							if($DEBUG)
 							{
 								echo '<br>process->upgrade(): appname:    ' . $appname;
 								echo '<br>process->upgrade(): currentver: ' . $currentver;
@@ -592,7 +589,7 @@
 								echo '<br>process->upgrade(): function:   ' . $function;
 							}
 
-							if ($value == $targetver)
+							if($value == $targetver)
 							{
 								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 								/* Done upgrading */
@@ -603,7 +600,7 @@
 								$appstatus = 'C';
 								$setup_info[$key]['status']     = $appstatus;
 								$setup_info[$key]['currentver'] = $targetver;
-								if ($GLOBALS['phpgw_setup']->app_registered($appname))
+								if($GLOBALS['phpgw_setup']->app_registered($appname))
 								{
 									$GLOBALS['phpgw_setup']->update_app($appname);
 									$GLOBALS['phpgw_setup']->update_hooks($appname);
@@ -615,17 +612,17 @@
 								}
 								//break;
 							}
-							elseif (($value == $currentver) || !$currentver)
+							elseif(($value == $currentver) || !$currentver)
 							{
 								/* start upgrading db in addition to baseline */
 								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
-								if ($DEBUG) { echo '<br>process->upgrade(): running ' . $function; }
+								if($DEBUG) { echo '<br>process->upgrade(): running ' . $function; }
 								/* run upgrade function */
 								$success = $function();
-								if ($success != False)
+								if($success != False)
 								{
 									$setup_info[$key]['currentver'] = $success;
-									if ($DEBUG)
+									if($DEBUG)
 									{
 										echo '<br>process->upgrade(): Upgrade of ' . $appname
 											. ' from ' . $value
@@ -668,7 +665,7 @@
 							}
 							elseif ($GLOBALS['phpgw_setup']->alessthanb($value,$currentver))
 							{
-								if ($DEBUG) { echo '<br>process->upgrade(): running baseline delta only: ' . $function . '...'; }
+								if($DEBUG) { echo '<br>process->upgrade(): running baseline delta only: ' . $function . '...'; }
 								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
 								$success = $function();
 							}
@@ -680,11 +677,11 @@
 					}
 					else
 					{
-						if ($setup_info[$appname]['tables'])
+						if($setup_info[$appname]['tables'])
 						{
 							$appstatus  = 'F';
 
-							if ($DEBUG)
+							if($DEBUG)
 							{
 								echo '<br>process->upgrade(): No table upgrade available for ' . $appname . "\n";
 							}
@@ -693,7 +690,7 @@
 						{
 							$setup_info[$key]['currentver'] == $targetver;
 							$appstatus  = 'C';
-							if ($GLOBALS['phpgw_setup']->app_registered($appname))
+							if($GLOBALS['phpgw_setup']->app_registered($appname))
 							{
 								$GLOBALS['phpgw_setup']->update_app($appname);
 								$GLOBALS['phpgw_setup']->update_hooks($appname);
@@ -704,7 +701,7 @@
 								$GLOBALS['phpgw_setup']->register_hooks($appname);
 							}
 
-							if ($DEBUG)
+							if($DEBUG)
 							{
 								echo '<br>process->upgrade(): No table upgrade required for ' . $appname . "\n";
 							}
@@ -714,7 +711,7 @@
 				else
 				{
 					$appstatus  = 'C';
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>process->upgrade(): No upgrade required for ' . $appname . "\n";
 					}
@@ -722,7 +719,7 @@
 
 				/* Done with this app, update status */
 				$setup_info[$key]['status'] = $appstatus;
-				if ($DEBUG)
+				if($DEBUG)
 				{
 					echo '<br>process->upgrade(): Outgoing : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status'];
 				}
@@ -738,16 +735,16 @@
 		*/
 		function post_process($tables,$DEBUG=False)
 		{
-			if (!$tables)
+			if(!$tables)
 			{
 				return False;
 			}
 
 			$ret = $GLOBALS['phpgw_setup']->oProc->GenerateScripts($tables,$DEBUG);
-			if ($ret)
+			if($ret)
 			{
 				$oret = $GLOBALS['phpgw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
-				if ($oret)
+				if($oret)
 				{
 					return True;
 				}
@@ -769,19 +766,19 @@
 		*/
 		function sql_to_array($tablename='')
 		{
-			if (!$tablename)
+			if(!$tablename)
 			{
 				return False;
 			}
 
-			if (!$GLOBALS['phpgw_setup']->oProc)
+			if(!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 
 			$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc, $tablename, $sColumns, $sColumnName);
 
-			while (list($key,$tbldata) = each ($GLOBALS['phpgw_setup']->oProc->m_oTranslator->sCol))
+			while(list($key,$tbldata) = each($GLOBALS['phpgw_setup']->oProc->m_oTranslator->sCol))
 			{
 				$arr .= $tbldata;
 			}
