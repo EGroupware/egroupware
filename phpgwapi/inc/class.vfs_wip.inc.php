@@ -549,12 +549,12 @@ class vfs
 	@function write
 	@abstract write to a file
 	@param $file file name
-	@param $contents contents
 	@param $relatives Relativity array
+	@param $contents contents
 	@result Boolean True/False
 	*/		
 
-	function write ($file, $contents, $relatives = array (RELATIVE_CURRENT))
+	function write ($file, $relatives = array (RELATIVE_CURRENT), $contents)
 	{
 		global $phpgw;
 		global $phpgw_info;
@@ -971,8 +971,8 @@ class vfs
 	@function set_attributes
 	@abstract Update database entry for $file with the attributes in $attributes
 	@param $file file/directory to update
-	@param $attributes keyed array of attributes.  key is attribute name, value is attribute value
 	@param $relatives Relativity array
+	@param $attributes keyed array of attributes.  key is attribute name, value is attribute value
 	@result Boolean True/False
 	@discussion Valid attributes are:
 			owner_id
