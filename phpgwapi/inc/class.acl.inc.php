@@ -342,17 +342,24 @@ It should use the values in the $this->data
       while($groups = each($my_memberships))
       {
         $group = each($groups);
-        $security .= ",'" . $group_pre . $group[1] . "'";
+        $security .= ",'" . $group_pre . $group[1]['account_id'] . "'";
       }
 	  $security .= ')';
 	  $db2->query($sql . $security ,__LINE__,__FILE__);
 	  $rights = 0;
+	  $accounts = Array();
 	  if ($db2->num_rows() == 0 ){ return False; }
 	  while ($db2->next_record())
 	  {
 	    $grantor = $db2->f('acl_account');
 	    $rights = $db2->f('acl_rights');
-		if(!$accounts[$grantor])
+	    
+//	    if($grantor == $phpgw_info['user']['account_id'])
+//	    {
+//	      continue;
+//	    }
+	    
+		if(!isset($accounts[$grantor]))
 	    {
           $accounts[$grantor] = 0;
         }
