@@ -1,0 +1,44 @@
+This is a preliminary etiquette doc for phpGroupWare.  Please check it from time to
+time for updates:
+
+
+	phpGroupWare is a large project, with possibly over 50 developers at the time
+of this writing.  In its current location, it is impossible to restrict access
+for each developer to a particular module or application.  As such, it is
+important that some basic rules be followed when developing in CVS:
+
+1. Many of the developers, and all of the core developers, frequent the IRC
+	channel #phpgroupware on irc.openprojects.net.  Please take the time to
+	drop by and introduce yourself.
+
+2. If you want to begin some work on an existing app, please consult the
+	primary developer for the application first.  Most of the files will
+	contain some type of identification and/or contact information in the
+	head of each file.
+
+3. If you are unable to contact the author, please contact at least one of the
+	project leads (Seek3r, jengo, skeeter) or a core developer.
+
+4. Please see the coding_standard.txt document in this folder for some basic
+	guidelines for code formatting.  PHP can be interpreted in many forms,
+	and this document outlines our preference to ensure readability and
+	compatibility.
+
+5. If you have just joined the project, or have always kept to your own
+	application, etc., then please exercise caution when committing changes
+	in the phpgwapi (the API), admin, and preferences modules.  These can
+	affect the operation of all applications.  In particular, work done in
+	the API is typically allowed only with prior consent from one of the
+	project leads.  In other words, work done here without some notification
+	and authorization is very risky to your continued involvement with this
+	project ;)
+
+6. If you are working in the API, or on some other application which could
+	affect the useability for users and developers, please be sure to fully
+	test your changes.  It is recommended that you visit a large sampling of
+	applications to ensure that they still work as expected after your
+	changes.  This could include the functioning of one application or the
+	API against mysql AND pgsql, at least.  It could also affect the function
+	of an application that uses LDAP instead of SQL for storage and
+	retreival.
+
