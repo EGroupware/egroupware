@@ -19,8 +19,8 @@
 	error_reporting(error_reporting() & ~E_NOTICE);
 	
 	// for an old header, we need to setup the reference before including it
-	if (!is_array($GLOBALS['egw_info'])) $GLOBALS['egw_info'] =& $GLOBALS['egw_info'];
-	
+	$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+
 	if(file_exists('../header.inc.php'))
 	{
 		include('../header.inc.php');
