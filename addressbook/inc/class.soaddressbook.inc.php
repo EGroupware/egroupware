@@ -120,7 +120,9 @@
 		{
 			if ($this->rights & PHPGW_ACL_EDIT)
 			{
-				$this->contacts->update($fields['ab_id'],$fields['owner'],$fields,$fields['access'],$fields['cat_id']);
+				$owner = $fields['owner'];
+				unset($fields['owner']);
+				$this->contacts->update($fields['ab_id'],$owner,$fields,$fields['access'],$fields['cat_id']);
 			}
 			return;
 		}
