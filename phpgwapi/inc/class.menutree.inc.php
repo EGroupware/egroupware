@@ -29,22 +29,32 @@ class menutree {
 var $read_from_file;          // You can send the tree info from a string or file
 var $root_level_value;        // This is what the top level name or image will be
 
-	function menutree()
+	function menutree($read_from_file='T')
 	{
-		$this->read_from_file = True;
+		if($read_from_file == 'T')
+		{
+			settype($read_from_file,'integer');
+			$read_from_file = 1;
+		}
+		elseif($read_from_file == 'F')
+		{
+			settype($read_from_file,'integer');
+			$read_from_file = 0;
+		}
+		$this->read_from_file = $read_from_file;
 	}
 
 	function showtree($treefile, $expandlevels='', $num_menus = 50, $invisible_menus = Null)
 	{
-		global $phpgw_info, $phpgw, $SCRIPT_FILENAME;
+		global $phpgw_info, $phpgw, $SCRIPT_FILENAME, $REQUEST_URI;
     
-		$img_expand   = 'templates/default/images/tree_expand.gif';
-		$img_collapse = 'templates/default/images/tree_collapse.gif';
-		$img_line     = 'templates/default/images/tree_vertline.gif';
-		$img_split	   = 'templates/default/images/tree_split.gif';
-		$img_end      = 'templates/default/images/tree_end.gif';
-		$img_leaf     = 'templates/default/images/tree_leaf.gif';
-		$img_spc      = 'templates/default/images/tree_space.gif';
+		$img_expand   = $phpgw->common->image('manual','tree_expand.gif');
+		$img_collapse = $phpgw->common->image('manual','tree_collapse.gif');
+		$img_line     = $phpgw->common->image('manual','tree_vertline.gif');
+		$img_split	   = $phpgw->common->image('manual','tree_split.gif');
+		$img_end      = $phpgw->common->image('manual','tree_end.gif');
+		$img_leaf     = $phpgw->common->image('manual','tree_leaf.gif');
+		$img_spc      = $phpgw->common->image('manual','tree_space.gif');
     
 		/*********************************************/
 		/*  Read text file with tree structure       */
@@ -260,6 +270,11 @@ var $root_level_value;        // This is what the top level name or image will b
 				$params='';
 			}
 
+			if($params != '')
+			{
+				$params = '&'.$params;
+			}
+
         /****************************************/
         /* Always display the extreme top level */
         /****************************************/
@@ -316,13 +331,21 @@ var $root_level_value;        // This is what the top level name or image will b
 			/********************************************/
 			if($tree[$cnt+1][0]>$tree[$cnt][0])
 			{
+				$src = $REQUEST_URI;
+				if(strpos($src,'&p=') != 0)
+				{
+					$src = str_replace(substr($REQUEST_URI,strpos($src,'&p=')),'',$REQUEST_URI);
+				}
+//				echo 'Src = '.$src."<br>\n";
 				if($expand[$cnt]==0)
 				{
-					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
+//					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
+					$str .= '<td><a href="'.$src.$params.'"><img src="'.$img_expand.'" border="no" alt="+"></a></td>';
 				}
 				else
 				{
-					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
+//					$str .= '<td><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.basename($SCRIPT_FILENAME),$params).'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
+					$str .= '<td><a href="'.$src.$params.'"><img src="'.$img_collapse.'" border="no" alt="-"></a></td>';
 				}
 			}
 			elseif(isset($tree[$cnt+1][0]))
@@ -342,7 +365,7 @@ var $root_level_value;        // This is what the top level name or image will b
 			}
 			else
 			{
-				$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="2"><a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/'.$tree[$cnt][2],$params).'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a></td>';
+				$str .= '<td colspan="'.($maxlevel-$tree[$cnt][0]).'"><font face="'.$phpgw_info['theme']['font'].'" size="2"><a href="'.$tree[$cnt][2].$params.'" target="'.$tree[$cnt][3].'">'.$tree[$cnt][1].'</a></td>';
 			}
             
 			/****************************************/

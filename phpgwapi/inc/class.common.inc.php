@@ -643,6 +643,57 @@
 				return False;
 			}      
 		}
+
+		function find_image($appname,$image)
+		{
+			global $phpgw_info;
+			
+			$imagedir            = '/'.$appname.'/templates/'.$phpgw_info['server']['template_set'].'/images';
+			$imagedir_default    = '/'.$appname.'/templates/default/images';
+			$imagedir_olddefault = '/'.$appname.'/images';
+
+			if(file_exists(PHPGW_SERVER_ROOT.$imagedir.'/'.$image))
+			{
+				$imgfile = $phpgw_info['server']['webserver_url'].$imagedir.'/'.$image;
+			}
+			elseif(file_exists(PHPGW_SERVER_ROOT.$imagedir_default.'/'.$image))
+			{
+				$imgfile = $phpgw_info['server']['webserver_url'].$imagedir_default.'/'.$image;
+			}
+			elseif(file_exists(PHPGW_SERVER_ROOT.$imagedir_olddefault.'/'.$image))
+			{
+				$imgfile = $phpgw_info['server']['webserver_url'].$imagedir_olddefault.'/'.$image;
+			}
+			else
+			{
+				$imgfile = '';
+			}
+			return $imgfile;
+		}
+
+		function image($appname,$image='')
+		{
+			if(is_array($image))
+			{
+				$i = 0;
+				$image_found = $this->find_image($appname,$image[$i]);
+				$c_image = count($image);
+				while($image_found == '' && $i<$c_image)
+				{
+					$image_found = $this->find_image($appname,$image[$i]);
+					$i++;
+				}
+				return $image_found;
+			}
+			elseif($image != '')
+			{
+				return $this->find_image($appname,$image);
+			}
+			else
+			{
+				return '';
+			}
+		}
 		/*!
 		@function navbar
 		@abstract none yet

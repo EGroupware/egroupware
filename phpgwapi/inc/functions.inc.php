@@ -395,8 +395,6 @@
 		}
 	}
 
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
 	/************************************************************************\
 	* This function will return a properly formatted account_id.             *
 	* This needs to be placed here, or some classes will have a problem      *
@@ -435,4 +433,5 @@
 		}
 	}
 
+	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
