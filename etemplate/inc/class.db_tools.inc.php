@@ -337,6 +337,8 @@
 				{
 					$col_defs['default'] = is_int($col_defs['default']) ? '0' : "''";	// spezial value for empty, but set, default
 				}
+				$col_defs['notnull'] = isset($col_defs['nullable']) && !$col_defs['nullable'];
+
 				$col_defs['n'] = $n;
 
 				$content["Row$n"] = $col_defs;
@@ -404,10 +406,16 @@
 							case 'type':	// selectbox ensures type is not empty
 							case 'precision':
 							case 'scale':
-							case 'nullable':
+//							case 'nullable':
 								if ($val != '' || $prop == 'nullable')
 								{
 									$table['fd'][$name][$prop] = $prop=='default'&& $val=="''" ? '' : $val;
+								}
+								break;
+							case 'notnull':
+								if ($val)
+								{
+									$table['fd'][$name]['nullable'] = False;
 								}
 								break;
 							case 'pk':
@@ -866,7 +874,7 @@
 					'type' => ''.$props['type'],
 					'precision' => 0+$props['precision'],
 					'scale' => 0+$props['scale'],
-					'nullable' => !!$props['nullable'],
+					'nullable' => !isset($props['nullable']) || !!$props['nullable'],
 					'default' => ''.$props['default']
 				);
 			}

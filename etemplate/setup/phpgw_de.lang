@@ -25,7 +25,7 @@ attach file	etemplate	de	Datei anhängen
 blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
 border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
-can have special sql-value null	etemplate	de	darf speziellen SQL Wert NULL annehmen
+can not have special sql-value null	etemplate	de	darf nicht den speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
 category	etemplate	de	Kategorie
 cellpadding for the table-tag	etemplate	de	Innenabstand (cellpadding) der Tabelle
@@ -160,9 +160,9 @@ newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+not null	etemplate	de	NOT NULL
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchkriterium !!!
-nullable	etemplate	de	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von

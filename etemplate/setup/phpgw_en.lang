@@ -25,7 +25,7 @@ attach file	etemplate	en	attach file
 blurtext	etemplate	en	blurText
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
-can have special sql-value null	etemplate	en	can have special SQL-value NULL
+can not have special sql-value null	etemplate	en	can not have special SQL-value NULL
 cancel	etemplate	en	Cancel
 category	etemplate	en	Category
 cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
@@ -160,9 +160,9 @@ newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
 nextmatch	etemplate	en	Nextmatch
 no file	etemplate	en	no file
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
+not null	etemplate	en	NOT NULL
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria !!!
-nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
