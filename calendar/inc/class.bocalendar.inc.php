@@ -758,7 +758,7 @@
 			print_debug('ID',$l_cal['id']);
 
 			// don't wrap to the next day for no time
-			if ($l_end['hour'] == 24 && $l_end['min'] == 0) 
+			if ($l_end['hour'] == 24 && $l_end['min'] == 0)
 			{
 				$l_end['hour'] = 23;
 				$l_end['min'] = 59;
@@ -1069,7 +1069,7 @@
 					$this->so->add_entry($event);
 					$this->prepare_recipients($new_event,$old_event);
 				}
-				
+
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 				if($send_to_ui)
 				{
@@ -1693,7 +1693,7 @@
 		
 			return $str;
 		}
-	
+
 		function sort_event($event,$date)
 		{
 			$inserted = False;
@@ -1714,7 +1714,7 @@
 			}
 			if($this->cached_events[$date] && $inserted == False)
 			{
-				
+
 				if($this->debug)
 				{
 					echo '<!-- Cached Events found for '.$date.' -->'."\n";
@@ -1727,10 +1727,9 @@
 				{
 					echo '<!-- Date : '.$date.' Count : '.count($this->cached_events[$date]).' -->'."\n";
 				}
-				
+
 				for($i=0;$i<count($this->cached_events[$date]);$i++)
 				{
-					$events = $this->cached_events[$date][$i];
 					if($this->cached_events[$date][$i]['id'] == $event['id'] || $this->cached_events[$date][$i]['reference'] == $event['id'])
 					{
 						if($this->debug)
@@ -1771,7 +1770,7 @@
 					echo '<!-- Adding event ID: '.$event['id'].' to cached_events -->'."\n";
 				}
 				$this->cached_events[$date][] = $event;
-			}					
+			}
 		}
 
 		function check_repeating_events($datetime)
@@ -1823,7 +1822,7 @@
 					continue;
 				}
 				else
-				{				
+				{
 					$freq = $rep_events['recur_interval'];
 					$type = $rep_events['recur_type'];
 					switch($type)
@@ -1886,7 +1885,7 @@
 							{
 								continue;
 							}
-	  
+
 							if (($GLOBALS['phpgw']->datetime->day_of_week($rep_events['start']['year'],$rep_events['start']['month'],$rep_events['start']['mday']) == $GLOBALS['phpgw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
 								(ceil($rep_events['start']['mday']/7) == ceil($search_date_day/7)))
 							{
@@ -2035,6 +2034,10 @@
 				for($i=0;$i<$c_cached_ids;$i++)
 				{
 					$event = $this->so->read_entry($cached_event_ids[$i]);
+					if ($event['recur_type'])
+					{
+						continue;	// fetch recuring events only in 2. loop
+					}
 					$startdate = intval(date('Ymd',$this->maketime($event['start'])));
 					$enddate = intval(date('Ymd',$this->maketime($event['end'])));
 					$this->cached_events[$startdate][] = $event;
