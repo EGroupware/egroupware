@@ -97,7 +97,7 @@
 			{
 				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
 			}
-			if (!$app1 || !$app2 || !$id1 && isarray($id2) || $app1 == $app2 && $id1 == $id2)
+			if (!$app1 || !$app2 || !$id1 && is_array($id2) || $app1 == $app2 && $id1 == $id2)
 			{
 				return -1;
 			}

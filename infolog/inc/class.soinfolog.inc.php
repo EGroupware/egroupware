@@ -205,16 +205,19 @@
 
 		function write($values)  // did _not_ ensure ACL
 		{
+			include(PHPGW_SERVER_ROOT.'/infolog/setup/tables_current.inc.php');
+			$db_cols = $phpgw_baseline['phpgw_infolog']['fd'];
+			unset($phpgw_baseline);
+
 			while (list($key,$val) = each($values))
 			{
 				if ($key != 'info_id')
 				{
-					$key = 'info_'.$key;
-
+					if (!isset($db_cols[$key]))
+					{
+						continue;	// not in infolog-table
+					}
 					$this->data[$key] = $val;   // update internal data
-
-					if ($key == 'info_addr_id' || $key == 'info_proj_id' || $key == 'info_event_id')
-						continue;	// not longer in infolog-table
 
 					if ($this->maybe_slashes[$key])
 					{
@@ -229,8 +232,6 @@
 			{
 				$query = "UPDATE phpgw_infolog SET $query where info_id='".$values['info_id']."'";
 				$this->db->query($query,__LINE__,__FILE__);
-
-				$this->links->unlink(0,'infolog',$values['info_id']);
 			}
 			else
 			{
@@ -240,12 +241,13 @@
 			}
 			// echo "<p>soinfolog.write values= "; _debug_array($values);
 			// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
+			/*
 			if ($this->data['info_addr_id'])
 				$this->links->link('infolog',$this->data['info_id'],'addressbook',$this->data['info_addr_id']);
 			if ($this->data['info_proj_id'])
 				$this->links->link('infolog',$this->data['info_id'],'projects',$this->data['info_proj_id']);
 			if ($this->data['info_event_id'])
-				$this->links->link('infolog',$this->data['info_id'],'calendar',$this->data['info_event_id']);
+				$this->links->link('infolog',$this->data['info_id'],'calendar',$this->data['info_event_id']); */
 		}
 
 		function anzSubs( $info_id )

@@ -253,23 +253,31 @@
 
 		function write($values)
 		{
-			if ($values['responsible'] && $values['status'] == 'offer')
+			while (list($key,$val) = each($values))
 			{
-				$values['status'] = 'ongoing';   // have to match if not finished
+				if (substr($key,0,5) != 'info_')
+				{
+					$values['info_'.$key] = $val;
+					unset($values[$key]);
+				}
 			}
-			if (!$values['info_id'] && !$values['owner'])
+			if ($values['info_responsible'] && $values['info_status'] == 'offer')
 			{
-				$values['owner'] = $this->so->user;
+				$values['info_status'] = 'ongoing';   // have to match if not finished
 			}
-			$values['datemodified'] = time();
+			if (!$values['info_id'] && !$values['info_owner'])
+			{
+				$values['info_owner'] = $this->so->user;
+			}
+			$values['info_datemodified'] = time();
 
-			if (!$values['subject'])
+			if (!$values['info_subject'])
 			{
-				$values['subject'] = substr($values['des'],0,60).' ...';
+				$values['info_subject'] = substr($values['info_des'],0,60).' ...';
 			}
-			if ($values['addr_id'] && !$values['from'])
+			if ($values['info_addr_id'] && !$values['info_from'])
 			{
-				$values['from'] = $this->addr2name( $this->readAddr( $values['addr_id'] ));
+				$values['info_from'] = $this->addr2name( $this->readAddr( $values['info_addr_id'] ));
 			}
 			$this->so->write($values);
 		}

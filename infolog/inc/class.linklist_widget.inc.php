@@ -31,21 +31,30 @@
 			$this->link = CreateObject('infolog.bolink');
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
+		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$app = $value['app'] = 'addressbook';
-			$id  = $value['id']  = 921;
+			if (!is_array($value))
+			{
+				$value = array('to_id' => $value,'to_app' => $GLOBALS['phpgw_info']['flags']['currentapp']);
+			}
+			$app = $value['to_app'];
+			$id  = $value['to_id'];
 			//echo "<p>linklist_widget.preprocess: app='$app', id='$id', value="; _debug_array($value);
 
 			if (!$value['title'])
 			{
-				$value['title'] = $this->link->title($app,$id);
+				$value['title'] = $this->link->title($to_app,$to_id);
 			}
 			$extension_data = $value;
 
 			$links = $this->link->get_links($app,$id);
-
-			for($row=1; list(,$link) = each($links); ++$row)
+			if (!count($links))
+			{
+				$cell = $tmpl->empty_cell();
+				return False;
+			}
+			$tpl = new etemplate('infolog.linklist_widget');
+			for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
 			{
 				$value[$row] = $link;
 				$value[$row]['title'] = $this->link->title($link['app'],$link['id']);
@@ -53,11 +62,12 @@
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
 			$cell['name'] = 'infolog.linklist_widget';
+			$cell['obj'] = &$tpl;
 
 			return True;	// extra Label is ok
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			list($unlink) = @each($value['unlink']);
 			$pre_value = $extension_data;

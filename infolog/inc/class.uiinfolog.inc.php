@@ -18,8 +18,7 @@
 		var $public_functions = array
 		(
 			'get_list'    => True,
-			'view'        => True,
-			'add'         => True,
+			'index'       => True,
 			'edit'        => True,
 			'delete'      => True,
 			'get_file'    => True,
@@ -58,21 +57,28 @@
 			);
 
 			$this->filters = array(
-				'none'				=>	lang('no Filter'),
-				'done'				=>	lang('done'),
-				'own'					=>	lang('own'),
-				'own-open-today'	=>	lang('own open'),
-				'own-open-overdue'=>	lang('own overdue'),
-				'own-upcoming'		=>	lang('own upcoming'),
-				'open-today'		=>	lang('open'),
-				'open-overdue'		=>	lang('overdue'),
-				'upcoming'			=>	lang('upcoming')
+				'none'				=>	'no Filter',
+				'done'				=>	'done',
+				'own'					=>	'own',
+				'own-open-today'	=>	'own open',
+				'own-open-overdue'=>	'own overdue',
+				'own-upcoming'		=>	'own upcoming',
+				'open-today'		=>	'open',
+				'open-overdue'		=>	'overdue',
+				'upcoming'			=>	'upcoming'
 			);
-
+         
+			$this->messages = array(
+				'edit'    => 'InfoLog - Edit',
+				'add'     => 'InfoLog - New',
+				'add_sub' => 'InfoLog - New Subproject'
+			);
 			$this->html = CreateObject('etemplate.html');
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->link = CreateObject('infolog.uilink');
+			
+			$this->tmpl = CreateObject('etemplate.etemplate');
 		}
 
 		function menuaction($action = 'get_list',$app='infolog')
@@ -381,24 +387,25 @@
 					$action_vars = array('action'=>'sp','info_id'=>$action_id);
 					$GLOBALS['phpgw']->template->set_var(lang_info_action,lang('InfoLog - Subprojects from'));
 					break;
-			  case 'proj':
-					$action_vars += array( 'id_project' => $action_id,
-												  'proj_id' => $action_id);
+				case 'proj': case 'projects':
+					$action_vars = array( /*'id_project' => $action_id, 'proj_id' => $action_id */
+						'action' => 'projects', 'action_id' => $action_id );
 					$GLOBALS['phpgw']->template->set_var(lang_info_action,lang('InfoLog').' - '.
 									$this->bo->proj2name($action_id));
 					break;
-			  case 'addr':
-					$action_vars += array( 'id_addr' => $action_id,
-												  'addr_id' => $action_id );
+				case 'addr': case 'addressbook':
+					$action_vars = array( /*'id_addr' => $action_id,'addr_id' => $action_id */
+						'action' => 'addressbook', 'action_id' => $action_id );
 					$GLOBALS['phpgw']->template->set_var(lang_info_action,lang('InfoLog').' - '.
 									$this->bo->addr2name($action_id));
 					break;
-			  case 'event':
-					$action_vars += array( 'id_event' => $action_id,'event_id' => $action_id);
+				case 'event': case 'calendar':
+					$action_vars = array( /*'id_event' => $action_id,'event_id' => $action_id */
+						'action' => 'calendar', 'action_id' => $action_id );
 					$GLOBALS['phpgw']->template->set_var(lang_info_action,lang('InfoLog').' - '.
 									$this->bo->event2name($action_id));
 					break;
-			  default:
+				default:
 					if ($filter && $filter != 'none')
 					{
 						$filter_name = ': '.$this->filters[ $filter ];
@@ -685,8 +692,125 @@
 			$GLOBALS['phpgw']->template->fp('phpgw_body','info_add_file');
 		}
 
+		function index()
+		{
+			$this->get_list();
+		}
 
-		function edit( )
+		function edit($content = 0,$action = '',$action_id=0,$type='')
+		{
+			if (is_array($content))
+			{
+				$info_id   = $content['info_id'];
+				$action    = $content['action'];
+				$action_id = $content['action_id'];
+			
+				if ($content['save'] || $content['delete'] || $content['cancel'])
+				{
+					if ($content['save'] && (!$info_id || $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
+					{
+						$this->bo->write($content);
+
+						if (!$info_id && is_array($content['link_to']['to_id']))
+						{
+							$this->link->link('infolog',$this->bo->so->data['info_id'],$content['link_to']['to_id']);
+						}
+					}
+					elseif ($content['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
+					{
+						return $this->delete($info_id);
+					}
+					return $this->index();
+				}
+			}
+			else
+			{
+				$action    = $action    ? $action    : get_var('action',   array('POST','GET'));
+				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
+				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
+				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
+				if (!isset($this->bo->enums['type'][$type]))
+				{
+					$type = 'note';
+				}
+				$this->bo->read( $info_id );
+				$content = $this->bo->so->data;
+
+				if ($info_id && $action == 'sp')    // new SubProject
+				{
+					if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD))
+					{
+						return $this->index();
+						Header('Location: ' .  $this->html->link($referer));
+						$GLOBALS['phpgw']->common->phpgw_exit();
+					}
+					$parent = $this->bo->so->data;
+					$content['info_id'] = $info_id = 0;
+					$content['info_owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+					$content['info_id_parent'] = $parent['info_id'];
+					/*
+					if ($parent['info_type']=='task' && $parent['info_status']=='offer')
+					{
+						$content['info_type'] = 'confirm';   // confirmation to parent
+						$content['info_responsible'] = $parent['info_owner'];
+					}
+					*/
+					$content['info_status'] = 'ongoing';
+					$content['info_confirm'] = 'not';
+					$content['info_subject']=lang('Re:').' '.$parent['info_subject'];
+					$content['info_des'] = '';
+				}
+				else
+				{
+					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
+					{
+						return $this->index();
+						Header('Location: ' .  $this->html->link($referer));
+						$GLOBALS['phpgw']->common->phpgw_exit();
+					}
+				}
+				$content['links'] = $content['link_to'] = array(
+					'to_id' => $info_id,
+					'to_app' => 'infolog'
+				);
+				switch ($action)
+				{
+					case 'sp':
+						break;
+					case 'addressbook':
+					case 'projects':
+					case 'calendar':
+                  $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
+					case 'new':
+						$content['info_type'] = $type;
+						break;
+					default:
+						$action = '';
+						break;
+				}
+				if (!isset($this->bo->enums['type'][$content['info_type']]))
+				{
+					$content['info_type'] = 'note';
+				}
+			}
+			$readonlys['delete'] = $action != '';
+			$content['appheader'] = $this->messages[$action ? ($action == 'sp' ? 'add_sub' : 'add') : 'edit'];
+			
+			//echo "<p>uiinfolog.edit(info_id=$info_id,mode=$mode) content = "; _debug_array($content);
+			$this->tmpl->read('infolog.edit');
+			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
+				'info_type'     => $this->bo->enums['type'],
+				'info_priority' => $this->bo->enums['priority'],
+				'info_confirm'  => $this->bo->enums['confirm'],
+				'info_status'   => $this->bo->status[$content['info_type']]
+			),$readonlys,array(
+				'info_id'   => $info_id,
+				'action'    => $action,
+				'action_id' => $action_id
+			));
+		}
+
+		function old_edit( )
 		{
 			global $action,$info_id,$save,$add,$query_addr,$query_project;
 			// formular fields
@@ -1214,5 +1338,17 @@
 				$GLOBALS['phpgw']->template->parse('pref_lines','pref_line',True);
 			}
 			$GLOBALS['phpgw']->template->fp('phpgw_body','info_prefs');
+		}
+		
+		/*!
+		@function writeLangFile
+		@abstract writes langfile with all templates and messages registered here
+		@discussion can be called via http://domain/phpgroupware/index.php?infolog.uiinfolog.writeLangFile
+		*/
+		function writeLangFile()
+		{
+			$il = new uiinfolog(False);	// no lang on messages
+
+			$this->tmpl->writeLangFile('et_media','en',$il->messages);
 		}
 	}

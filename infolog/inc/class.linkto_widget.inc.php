@@ -31,13 +31,15 @@
 			$this->link = CreateObject('infolog.bolink');
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
+		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$search = $value['search'] ? 1 : 0;
-			$create = $value['create'] ? 1 : 0;
-			//echo "<p>linkto_widget.preprocess: query='$value[query]',app='$value[app]',search=$search,create=$create</p>\n";
+			if (!is_array($value))
+			{
+				$value = array('to_id' => $value,'to_app' => $GLOBALS['phpgw_info']['flags']['currentapp']);
+			}
+			//echo "<p>linkto_widget.preprocess: name='$name', query='$value[query]',app='$value[app]',button=$value[button]</p>\n";
 
-			if ($search && count($ids = $this->link->query($value['app'],$value['query'])))
+			if ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
 			{
 				$extension_data['app'] = $value['app'];
 
@@ -50,7 +52,7 @@
 			}
 			else
 			{
-				if (!$create)
+				if (!$value['button'])
 				{
 					$extension_data = $value;
 				}
@@ -58,7 +60,7 @@
 					'app' => $value['app'],
 					'options-app' => $this->link->app_list(),
 					'query' => $value['query'],
-					'msg' => $search ? 'Nothing found - try again !!!' : ''
+					'msg' => $value['button'] == 'search' ? 'Nothing found - try again !!!' : ''
 				);
 				$next = 'search';
 			}
@@ -69,15 +71,24 @@
 			return True;	// extra Label is ok
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			$search = $value['search'] ? 1 : 0;
-			$create = $value['create'] ? 1 : 0;
-			list($value['app']) = @$value['app'];	// no multiselection
-			list($value['id'])  = @$value['id'];
-			//echo "<p>linkto_widget.postprocess: query='$value[query]',app='$value[app]',id='$value[id]', search=$search,create=$create</p>\n";
+			if ($value['search'])
+			{
+				$button = 'search';
+			}
+			elseif ($value['create'])
+			{
+				$button = 'create';
+			}
+			elseif ($value['new'])
+			{
+				$button = 'new';
+			}
+			unset($value[$button]);
+			//echo "<p>linkto_widget.postprocess: query='$value[query]',app='$value[app]',id='$value[id]', button='$button'</p>\n";
 
-			if ($create)
+			if ($button == 'create')
 			{
 				$value = array_merge($value,$extension_data);
 				if ($value['to_app'])						// make the link
@@ -86,6 +97,7 @@
 					echo "<p>linkto($value[app],$value[id],'$value[remark]')</p>\n";
 				}
 			}
-			$loop = $search || $create;
+			$value['button'] = $button;
+			$loop = $button != '';
 		}
 	}
