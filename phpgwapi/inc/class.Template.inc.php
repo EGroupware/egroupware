@@ -61,6 +61,11 @@
 				$this->set_root(PHPGW_TEMPLATE_DIR);
 				$this->set_file('common', 'common.tpl');
 			}
+			else
+			{
+				$this->set_root(PHPGW_INCLUDE_ROOT.'/phpgwapi/templates/default');
+				$this->set_file('common', 'common.tpl');
+			}
 
 			/* This covers setting the theme values so that each app doesnt have to */
 			$theme_data = $GLOBALS['phpgw_info']['theme'];

@@ -83,6 +83,7 @@
 	function show_cookie()
 	{
 		global $code, $last_loginid, $login;
+//echo '$GLOBALS: <pre>';print_r($GLOBALS);echo '</pre>';
 		/* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
 		if ($code != 5 && (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies']))
 		{
@@ -92,22 +93,24 @@
 
 	function check_logoutcode($code)
 	{
+		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template');
+		$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 		switch($code)
 		{
 			case 1:
-				return lang('You have been successfully logged out');
+				return $GLOBALS['phpgw']->common->msgbox('You have been successfully logged out', True);
 				break;
 			case 2:
-				return lang('Sorry, your login has expired');
+				return $GLOBALS['phpgw']->common->msgbox('Sorry, your login has expired', False);
 				break;
 			case 5:
-				return '<font color="FF0000">' . lang('Bad login or password') . '</font>';
+				return $GLOBALS['phpgw']->common->msgbox('Bad login or password', False);
 				break;
 			case 10:
 				Setcookie('sessionid');
 				Setcookie('kp3');
 				Setcookie('domain');
-				return '<font color=FF0000>' . lang('Your session could not be verified.') . '</font>';
+				return $GLOBALS['phpgw']->common->msgbox('Your session could not be verified.',False);
 				break;
 			default:
 				return '&nbsp;';
