@@ -768,7 +768,7 @@
 		function find_image($appname,$image)
 		{
 
-			if (!is_array($this->found_files[$appname]['images']))
+			if (!is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
 				$imagedir_default    = '/'.$appname.'/templates/default/images';
@@ -781,7 +781,7 @@
 					{
 						if ($entry != '.' && $entry != '..')
 						{
-							$this->found_files[$appname]['images'][$entry] = $imagedir_olddefault;
+							$this->found_files[$appname][$entry] = $imagedir_olddefault;
 						}
 					}
 					$d->close();
@@ -794,7 +794,7 @@
 					{
 						if ($entry != '.' && $entry != '..')
 						{
-							$this->found_files[$appname]['images'][$entry] = $imagedir_default;
+							$this->found_files[$appname][$entry] = $imagedir_default;
 						}
 					}
 					$d->close();
@@ -807,28 +807,28 @@
 					{
 						if ($entry != '.' && $entry != '..')
 						{
-							$this->found_files[$appname]['images'][$entry] = $imagedir;
+							$this->found_files[$appname][$entry] = $imagedir;
 						}
 					}
 					$d->close();
 				}
 			}
 
-			if(isset($this->found_files[$appname]['images'][$image.'.png']))
+			if(isset($this->found_files[$appname][$image.'.png']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.png'].'/'.$image.'.png';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.png'].'/'.$image.'.png';
 			}
 			elseif(isset($this->found_files[$appname]['images'][$image.'.jpg']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.jpg'].'/'.$image.'.jpg';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.jpg'].'/'.$image.'.jpg';
 			}
-			elseif(isset($this->found_files[$appname]['images'][$image.'.gif']))
+			elseif(isset($this->found_files[$appname][$image.'.gif']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image.'.gif'].'/'.$image.'.gif';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.gif'].'/'.$image.'.gif';
 			}
-			elseif(isset($this->found_files[$appname]['images'][$image]))
+			elseif(isset($this->found_files[$appname][$image]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image].'/'.$image;
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image].'/'.$image;
 			}
 			else
 			{
