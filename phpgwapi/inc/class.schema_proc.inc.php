@@ -1,4 +1,4 @@
-<?php
+re<?php
   /**************************************************************************\
   * eGroupWare - Setup                                                       *
   * http://www.egroupware.org                                                *
@@ -219,6 +219,16 @@
 
 			return $retVal && $this->m_oTranslator->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
 		}
+		
+		function UpdateSequence($sTableName,$sColumnName)
+		{
+			if (method_exists($this->m_oTranslator,'UpdateSequence'))
+			{
+				return $this->m_oTranslator->UpdateSequence($this->m_odb,$sTableName,$sColumnName);
+			}
+			return True;
+		}
+			
 
 		// This function manually re-created the table incl. primary key and all other indices
 		// It is meant to use if the primary key, existing indices or column-order changes or
@@ -269,7 +279,7 @@
 				$select[] = $value;
 			}
 			$select = implode(',',$select);
-
+			
 			$Ok = $this->RenameTable($sTableName,$tmp_name) &&
 				$this->CreateTable($sTableName,$aTableDef) &&
 				$this->m_odb->query("INSERT INTO $sTableName SELECT DISTINCT $select FROM $tmp_name",__LINE__,__FILE__);
@@ -278,6 +288,11 @@
 			{
 				$this->m_odb->transaction_abort();
 				return False;
+			}
+			// do we need to update the new sequences value ?
+			if (count($aTableDef['pk']) == 1 && $aTableDef['fd'][$aTableDef['pk'][0]]['type'] == 'auto')
+			{
+				$this->UpdateSequence($sTableName,$aTableDef['pk'][0]);
 			}
 			$this->DropTable($tmp_name);
 			$this->m_odb->transaction_commit();

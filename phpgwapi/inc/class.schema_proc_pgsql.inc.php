@@ -699,6 +699,20 @@
 			return $Ok;
 		}
 
+		function UpdateSequence($oDb,$sTableName,$sColName)
+		{
+			$sql = "SELECT MAX($sColName) FROM $sTableName";
+			
+			$oDb->query($sql,__LINE__,__FILE__);
+			if ($oDb->next_record() && $oDb->f(0))
+			{
+				$sql = "SELECT setval('seq_$sTableName',".(1 + $oDb->f(0)).")";
+				if($GLOBALS['DEBUG']) { echo "<br>Updating sequence 'seq_$sTableName' using: $sql"; }
+				return $oDb->query($sql,__LINE__,__FILE__);
+			}
+			return True;
+		}
+			
 		function GetSequenceSQL($sTableName, &$sSequenceSQL)
 		{
 			$sSequenceSQL = sprintf("CREATE SEQUENCE seq_%s", $sTableName);
