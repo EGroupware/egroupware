@@ -180,9 +180,12 @@
 			return "UNIQUE($sFields)";
 		}
 
-		function GetIXSQL($sFields)
+		function GetIXSQL($sFields,&$append,$options,$sTableName)
 		{
-			return "INDEX($sFields)";
+			$append = True;
+			$ixsql  = '';
+			$index = $sTableName . '_' . $sFields . '_idx';
+			return "CREATE INDEX $index ON $sTableName ($sFields);\n";
 		}
 
 		function _GetColumns($oProc, $sTableName, &$sColumns, $sDropColumn='', $sAlteredColumn='', $sAlteredColumnType='')
@@ -444,6 +447,16 @@
 			return True;
 		}
 
+		function GetIndexesForTable($oProc,$table,&$sIndexNames)
+		{
+			$oProc->m_odb->query("SELECT a.attname FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$table' AND c.oid=d.adrelid AND d.adsrc LIKE '%$table%idx' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+			while($oProc->m_odb->next_record())
+			{
+				$sIndexNames[] = $oProc->m_odb->f('attname');
+			}
+			return True;
+		}
+
 		function DropSequenceForTable($oProc,$table)
 		{
 			if($GLOBALS['DEBUG']) { echo '<br>DropSequenceForTable: ' . $table; }
@@ -456,12 +469,28 @@
 			return True;
 		}
 
+		function DropIndexesForTable($oProc,$table)
+		{
+			if($GLOBALS['DEBUG']) { echo '<br>DropSequenceForTable: ' . $table; }
+
+			$this->GetIndexesForTable($oProc,$table,$sIndexNames);
+			if(@is_array($sIndexNames))
+			{
+				foreach($sIndexNames as $null => $index)
+				{
+					$oProc->m_odb->query("DROP INDEX $index",__LINE__,__FILE__);
+				}
+			}
+			return True;
+		}
+
 		function DropTable($oProc, &$aTables, $sTableName)
 		{
 			$this->DropSequenceForTable($oProc,$sTableName);
 
 			return $oProc->m_odb->query("DROP TABLE " . $sTableName) &&
-				$this->DropSequenceForTable($oProc, $sTableName);
+				$this->DropSequenceForTable($oProc, $sTableName) &&
+				$this->DropIndexesForTable($oProc, $sTableName);
 		}
 
 		function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
@@ -478,12 +507,19 @@
 
 			$this->DropTable($oProc, $aTables, $sTableName);
 
-			$oProc->_GetTableSQL($sTableName, $aNewTableDef, $sTableSQL, $sSequenceSQL);
+			$oProc->_GetTableSQL($sTableName, $aNewTableDef, $sTableSQL, $sSequenceSQL,$append_ix);
 			if($sSequenceSQL)
 			{
 				$oProc->m_odb->query($sSequenceSQL);
 			}
-			$query = "CREATE TABLE $sTableName ($sTableSQL)";
+			if($append_ix)
+			{
+				$query = "CREATE TABLE $sTableName ($sTableSQL";
+			}
+			else
+			{
+				$query = "CREATE TABLE $sTableName ($sTableSQL)";
+			}
 			if(!$bCopyData)
 			{
 				return !!($oProc->m_odb->query($query));
@@ -643,7 +679,7 @@
 
 		function CreateTable($oProc, $aTables, $sTableName, $aTableDef, $bCreateSequence = true)
 		{
-			if($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+			if($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL,$append_ix))
 			{
 				/* create sequence first since it will be needed for default */
 				if($bCreateSequence && $sSequenceSQL != '')
@@ -652,7 +688,14 @@
 					$oProc->m_odb->query($sSequenceSQL);
 				}
 
-				$query = "CREATE TABLE $sTableName ($sTableSQL)";
+				if($append_ix)
+				{
+					$query = "CREATE TABLE $sTableName ($sTableSQL";
+				}
+				else
+				{
+					$query = "CREATE TABLE $sTableName ($sTableSQL)";
+				}
 
 				return !!($oProc->m_odb->query($query));
 			}

@@ -43,10 +43,19 @@
 			foreach ($this->m_aTables as $sTableName => $aTableDef)
 			{
 				$sSequenceSQL = '';
-				if($this->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+				$append_ix = False;
+				if($this->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL,$append_ix))
 				{
-					$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n)"
-						. $this->m_oTranslator->m_sStatementTerminator;
+					if($append_ix)
+					{
+						$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n"
+							. $this->m_oTranslator->m_sStatementTerminator;
+					}
+					else
+					{
+						$sTableSQL = "CREATE TABLE $sTableName (\n$sTableSQL\n)"
+							. $this->m_oTranslator->m_sStatementTerminator;
+					}
 					if($sSequenceSQL != '')
 					{
 						$sAllTableSQL .= $sSequenceSQL . "\n";
@@ -255,10 +264,8 @@
 			return $this->m_odb->query($sQuery, $line, $file);
 		}
 
-		function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL)
+		function _GetTableSQL($sTableName, $aTableDef, &$sTableSQL, &$sSequenceSQL,&$append_ix)
 		{
-			global $DEBUG;
-
 			if(!is_array($aTableDef))
 			{
 				return False;
@@ -289,7 +296,7 @@
 				}
 				else
 				{
-					if($DEBUG) { echo 'GetFieldSQL failed for ' . $sFieldName; }
+					if($GLOBALS['DEBUG']) { echo 'GetFieldSQL failed for ' . $sFieldName; }
 					return False;
 				}
 			}
@@ -324,11 +331,10 @@
 				}
 			}
 
-			// fast hack to enable this only for MySQL, as I need to fix it for the other db's
-			// which dont like indices in contrain syntax
-			if(count($aTableDef['ix']) > 0 && $this->sType == 'mysql')
+			if(count($aTableDef['ix']) > 0)
 			{
-				if(!$this->_GetIX($aTableDef['ix'], $sIXSQL))
+				$append_ix = False;
+				if(!$this->_GetIX($aTableDef['ix'], $sIXSQL,$append_ix,$sTableName))
 				{
 					if($bOutputHTML)
 					{
@@ -337,6 +343,7 @@
 
 					return False;
 				}
+//				print('<br>HELLO!: ' .  $sIXSQL);
 			}
 
 			if($sPKSQL != '')
@@ -351,7 +358,15 @@
 
 			if($sIXSQL != '')
 			{
-				$sTableSQL .= ",\n" . $sIXSQL;
+				if($append_ix)
+				{
+					$sTableSQL .= ");\n" . $sIXSQL;
+					//pg: CREATE INDEX test1_id_index ON test1 (id);
+				}
+				else
+				{
+					$sTableSQL .= ",\n" . $sIXSQL;
+				}
 			}
 
 			return True;
@@ -360,8 +375,7 @@
 		// Get field DDL
 		function _GetFieldSQL($aField, &$sFieldSQL)
 		{
-			global $DEBUG;
-			if($DEBUG) { echo'<br>_GetFieldSQL(): Incoming ARRAY: '; var_dump($aField); }
+			if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Incoming ARRAY: '; var_dump($aField); }
 			if(!is_array($aField))
 			{
 				return false;
@@ -404,16 +418,16 @@
 
 				if(isset($aField['default']))
 				{
-					if($DEBUG) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $aField['default'] . '"'; }
+					if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $aField['default'] . '"'; }
 					// Get default DDL - useful for differences in date defaults (eg, now() vs. getdate())
 					$sTranslatedDefault = $aField['default'] == '0' ? $aField['default'] : $this->m_oTranslator->TranslateDefault($aField['default']);
 					$sFieldSQL .= " DEFAULT '$sTranslatedDefault'";
 				}
-				if($DEBUG) { echo'<br>_GetFieldSQL(): Outgoing SQL:   ' . $sFieldSQL; }
+				if($GLOBALS['DEBUG']) { echo'<br>_GetFieldSQL(): Outgoing SQL:   ' . $sFieldSQL; }
 				return true;
 			}
 
-			if($DEBUG) { echo '<br>Failed to translate field: type[' . $sType . '] precision[' . $iPrecision . '] scale[' . $iScale . ']<br>'; }
+			if($GLOBALS['DEBUG']) { echo '<br>Failed to translate field: type[' . $sType . '] precision[' . $iPrecision . '] scale[' . $iScale . ']<br>'; }
 
 			return False;
 		}
@@ -448,7 +462,7 @@
 			return True;
 		}
 
-		function _GetIX($aFields, &$sIXSQL)
+		function _GetIX($aFields, &$sIXSQL, &$append, $sTableName)
 		{
 			$sUCSQL = '';
 			if(count($aFields) < 1)
@@ -467,9 +481,16 @@
 					}
 					$mFields = implode(',',$mFields);
 				}
-				$aIXSQL[] = $this->m_oTranslator->GetIXSQL($mFields,$options);
+				$aIXSQL[] = $this->m_oTranslator->GetIXSQL($mFields,$append,$options,$sTableName);
 			}
-			$sIXSQL = implode(",\n",$aIXSQL);
+			if($append)
+			{
+				$sIXSQL = implode("\n",$aIXSQL);
+			}
+			else
+			{
+				$sIXSQL = implode(",\n",$aIXSQL);
+			}
 
 			return True;
 		}

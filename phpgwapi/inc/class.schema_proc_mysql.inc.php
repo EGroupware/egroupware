@@ -42,11 +42,11 @@
 					$sTranslated = 'blob';
 					break;
 				case 'char':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("char(%d)", $iPrecision);
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  'text';
 					}
@@ -58,7 +58,7 @@
 					$sTranslated =  sprintf("decimal(%d,%d)", $iPrecision, $iScale);
 					break;
 				case 'float':
-					switch ($iPrecision)
+					switch($iPrecision)
 					{
 						case 4:
 							$sTranslated = 'float';
@@ -69,7 +69,7 @@
 					}
 					break;
 				case 'int':
-					switch ($iPrecision)
+					switch($iPrecision)
 					{
 						case 2:
 							$sTranslated = 'smallint';
@@ -92,11 +92,11 @@
 					$sTranslated = 'datetime';
 					break;
 				case 'varchar':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  'text';
 					}
@@ -107,7 +107,7 @@
 
 		function TranslateDefault($sDefault)
 		{
-			switch ($sDefault)
+			switch($sDefault)
 			{
 				case 'current_date':
 				case 'current_timestamp':
@@ -120,9 +120,9 @@
 		function rTranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
 			$sTranslated = '';
-			if ($sType == 'int' || $sType == 'tinyint' ||  $sType == 'smallint' || $sType == 'bigint')
+			if($sType == 'int' || $sType == 'tinyint' ||  $sType == 'smallint' || $sType == 'bigint')
 			{
-				if ($iPrecision > 8)
+				if($iPrecision > 8)
 				{
 					$iPrecision = 8;
 				}
@@ -148,11 +148,11 @@
 					$sTranslated = "'type' => 'int', 'precision' => 8";
 					break;
 				case 'char':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated = "'type' => 'char', 'precision' => $iPrecision";
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  "'type' => 'text'";
 					}
@@ -173,11 +173,11 @@
 					$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
 					break;
 				case 'varchar':
-					if ($iPrecision > 0 && $iPrecision < 256)
+					if($iPrecision > 0 && $iPrecision < 256)
 					{
 						$sTranslated =  "'type' => 'varchar', 'precision' => $iPrecision";
 					}
-					if ($iPrecision > 255)
+					if($iPrecision > 255)
 					{
 						$sTranslated =  "'type' => 'text'";
 					}
@@ -202,15 +202,16 @@
 			return "UNIQUE($sFields)";
 		}
 
-		function GetIXSQL($sFields,$options=False)
+		function GetIXSQL($sFields,&$append,$options=False)
 		{
+			$append = False;
 			$type = 'INDEX';
 			$length = '';
-			if (strtoupper($options) == 'FULLTEXT')
+			if(strtoupper($options) == 'FULLTEXT')
 			{
 				$type = 'FULLTEXT';
 			}
-			if (is_numeric($options))
+			if(is_numeric($options))
 			{
 				$length = "($options)";
 			}
@@ -227,10 +228,10 @@
 
 			/* Field, Type, Null, Key, Default, Extra */
 			$oProc->m_odb->query("describe $sTableName");
-			while ($oProc->m_odb->next_record())
+			while($oProc->m_odb->next_record())
 			{
 				$type = $default = $null = $nullcomma = $prec = $scale = $ret = $colinfo = $scales = '';
-				if ($sColumns != '')
+				if($sColumns != '')
 				{
 					$sColumns .= ',';
 				}
@@ -253,14 +254,14 @@
 						}
 					}
 				}
-				elseif ($scales[1])
+				elseif($scales[1])
 				{
 					$prec  = $scales[0];
 					$scale = $scales[1];
 				}
 				$type = $this->rTranslateType($colinfo[0], $prec, $scale);
 
-				if ($oProc->m_odb->f(2) == 'YES')
+				if($oProc->m_odb->f(2) == 'YES')
 				{
 					$null = "'nullable' => True";
 				}
@@ -268,7 +269,7 @@
 				{
 					$null = "'nullable' => False";
 				}
-				if ($oProc->m_odb->f(4) != '')
+				if($oProc->m_odb->f(4) != '')
 				{
 					$default = "'default' => '".$oProc->m_odb->f(4)."'";
 					$nullcomma = ',';
@@ -278,22 +279,22 @@
 					$default = '';
 					$nullcomma = '';
 				}
-				if ($oProc->m_odb->f(5))
+				if($oProc->m_odb->f(5))
 				{
 					$type = "'type' => 'auto'";
 				}
 				$this->sCol[] = "\t\t\t\t'" . $oProc->m_odb->f(0)."' => array(" . $type . ',' . $null . $nullcomma . $default . '),' . "\n";
 /*
-				if ($oProc->m_odb->f(3) == 'PRI')
+				if($oProc->m_odb->f(3) == 'PRI')
 				{
 					$this->pk[] = $oProc->m_odb->f(0);
 				}
-				if ($oProc->m_odb->f(3) == 'UNI')
+				if($oProc->m_odb->f(3) == 'UNI')
 				{
 					$this->uc[] = $oProc->m_odb->f(0);
 				}
 				// index over multiple columns
-				if ($oProc->m_odb->f(3) == 'MUL')
+				if($oProc->m_odb->f(3) == 'MUL')
 				{
 					$this->ix[] = $oProc->m_odb->f(0);
 				}
@@ -313,28 +314,28 @@
 			$seq = $ix = $uc = 0;
 
 			$oProc->m_odb->query("show index from $sTableName");
-			while ($oProc->m_odb->next_record())
+			while($oProc->m_odb->next_record())
 			{
-				if ($seq >= $oProc->m_odb->f('Seq_in_index'))	// new index started
+				if($seq >= $oProc->m_odb->f('Seq_in_index'))	// new index started
 				{
 					$$type += 1;
 				}
-				if ($oProc->m_odb->f('Key_name') == 'PRIMARY')	// pk
+				if($oProc->m_odb->f('Key_name') == 'PRIMARY')	// pk
 				{
 					$aPk[] = $oProc->m_odb->f('Column_name');
 					$type = 'pk';
 				}
-				elseif ($oProc->m_odb->f('Non_unique'))	// ix
+				elseif($oProc->m_odb->f('Non_unique'))	// ix
 				{
 					$aIx[$ix][] = $oProc->m_odb->f('Column_name');
 					$type = 'ix';
-					if ($oProc->m_odb->f('Comment') == 'FULLTEXT')
+					if($oProc->m_odb->f('Comment') == 'FULLTEXT')
 					{
 						$aIx[$ix]['options'] = array('mysql' => 'FULLTEXT');
 					}
-					elseif (intval($oProc->m_odb->f('Sub_part')))
+					elseif((int)$oProc->m_odb->f('Sub_part'))
 					{
-						$aIx[$ix]['options'] = array('mysql' => intval($oProc->m_odb->f('Sub_part')));
+						$aIx[$ix]['options'] = array('mysql' => (int)$oProc->m_odb->f('Sub_part'));
 					}
 				}
 				else	// uc
@@ -368,9 +369,8 @@
 			 TODO: This really needs testing - it can affect primary keys, and other table-related objects
 			 like sequences and such
 			*/
-			global $DEBUG;
-			if ($DEBUG) { echo '<br>RenameColumn: calling _GetFieldSQL for ' . $sNewColumnName; }
-			if ($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
+			if($GLOBALS['DEBUG']) { echo '<br>RenameColumn: calling _GetFieldSQL for ' . $sNewColumnName; }
+			if($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
 			{
 				return !!($oProc->m_odb->query("ALTER TABLE $sTableName CHANGE $sOldColumnName $sNewColumnName " . $sNewColumnSQL));
 			}
@@ -379,9 +379,8 @@
 
 		function AlterColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
 		{
-			global $DEBUG;
-			if ($DEBUG) { echo '<br>AlterColumn: calling _GetFieldSQL for ' . $sNewColumnName; }
-			if ($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sColumnName], $sNewColumnSQL))
+			if($GLOBALS['DEBUG']) { echo '<br>AlterColumn: calling _GetFieldSQL for ' . $sNewColumnName; }
+			if($oProc->_GetFieldSQL($aTables[$sTableName]["fd"][$sColumnName], $sNewColumnSQL))
 			{
 				return !!($oProc->m_odb->query("ALTER TABLE $sTableName MODIFY $sColumnName " . $sNewColumnSQL));
 				/* return !!($oProc->m_odb->query("ALTER TABLE $sTableName CHANGE $sColumnName $sColumnName " . $sNewColumnSQL)); */
@@ -406,10 +405,10 @@
 
 		function CreateTable($oProc, &$aTables, $sTableName, $aTableDef)
 		{
-			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+			if($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
 			{
 				/* create sequence first since it will be needed for default */
-				if ($sSequenceSQL != '')
+				if($sSequenceSQL != '')
 				{
 					$oProc->m_odb->query($sSequenceSQL);
 				}
