@@ -41,7 +41,7 @@
      </select>
     </td>
    </tr>
-
+<!--
    <tr class="row_off">
     <td>{lang_read_translations_from}:</td>
     <td>
@@ -51,8 +51,8 @@
      </select>
     </td>
    </tr>
-
-   <tr class="row_on">
+-->
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
