@@ -49,18 +49,18 @@
 									</td>
 								</tr>
 								<tr width="100%">
-									<td width="33%" class="info"><xsl:value-of select="user_info_name"/></td>
+									<td width="25%" class="info"><xsl:value-of select="user_info_name"/></td>
 										<xsl:choose>
 											<xsl:when test="current_users">
 												<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
-												<td width="33%" class="info"><a href="{$url_current_users}"><xsl:value-of select="current_users"/></a></td>
+												<td width="25%" class="info"><a href="{$url_current_users}"><xsl:value-of select="current_users"/></a></td>
 											</xsl:when>
 											<xsl:otherwise>
-												<td width="33%"></td>
+												<td width="25%"></td>
 											</xsl:otherwise>
 										</xsl:choose>
-									<td width="33%" class="info" align="right"><xsl:value-of select="user_info_date"/></td>
-									<td>
+									<td class="info" width="25%" align="right"><xsl:value-of select="user_info_date"/></td>
+									<td width="25%">
 										<table cellspacing="0" cellpadding="0" align="right">
 											<tr>
 												<td><a href="{$home_link}" onMouseOver="" onMouseOut=""><img src="{$home_img}" border="0" name="nine" alt="{$home_title}" title="{$home_title}"/></a></td>

@@ -6,8 +6,8 @@
 
 	<xsl:template match="about_data">
 		<table cellpadding="2" cellspacing="2" align="center" class="about">
-			<xsl:variable name="phpgw_logo"><xsl:value-of select="phpgw_logo"/></xsl:variable>
-			<xsl:variable name="lang_url_statustext"><xsl:value-of select="lang_url_statustext"/></xsl:variable>
+			<xsl:variable name="phpgw_logo" select="phpgw_logo"/>
+			<xsl:variable name="lang_url_statustext" select="lang_url_statustext"/>
 			<tr>
 				<td colspan="2">
 					<a href="http://www.phpgroupware.org" target="_blank" onMouseover="window.status='{$lang_url_statustext}'; return true;" onMouseout="window.status=''; return true;">
@@ -24,7 +24,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td width="20%">
 					<xsl:value-of select="lang_version"/>
 				</td>
 				<td>
@@ -39,70 +39,89 @@
 	</xsl:template>
 
 	<xsl:template match="about_app">
+		<xsl:variable name="icon" select="icon"/>
 		<tr>
 			<td colspan="2" class="th_text">
-				<xsl:value-of select="app_title"/>
+				<xsl:if test="icon != ''">
+					<img src="{$icon}"/>
+				</xsl:if>
+				<xsl:value-of select="title"/>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<xsl:value-of disable-output-escaping="yes" select="app_descr"/>
+				<xsl:value-of select="description"/>
 			</td>
 		</tr>
+		<xsl:if test="note != ''">
+			<tr>
+				<td colspan="2">
+					<i><xsl:value-of select="note"/></i>
+				</td>
+			</tr>
+		</xsl:if>
 		<tr>
 			<td valign="top">
-				<xsl:value-of select="lang_written_by"/>
+				<xsl:value-of select="lang_author"/>
 			</td>
 			<td>
-				<xsl:value-of select="developers"/>
+				<xsl:value-of select="author"/>
 			</td>
 		</tr>
-		<tr valign="top">
-			<td>
-				<xsl:value-of select="lang_maintainer"/>
-			</td>
-			<td>
-				<xsl:value-of select="app_maintainer"/><br/>
-				<xsl:value-of disable-output-escaping="yes" select="app_maintainer_email"/>
-			</td>
-		</tr>
+		<xsl:if test="maintainer != ''">
+			<tr>
+				<td valign="top">
+					<xsl:value-of select="lang_maintainer"/>
+				</td>
+				<td>
+					<xsl:apply-templates select="maintainer"/>
+				</td>
+			</tr>
+		</xsl:if>
 		<tr>
 			<td>
 				<xsl:value-of select="lang_version"/>
 			</td>
 			<td>
-				<xsl:value-of select="app_version"/>
+				<xsl:value-of select="version"/>
 			</td>
 		</tr>
-		<tr>
-			<td>
-				<xsl:value-of select="lang_license"/>
-			</td>
-			<td>
-				<xsl:value-of select="app_license"/>
-			</td>
-		</tr>
-		<xsl:choose>
-			<xsl:when test="app_source">
-				<tr>
-					<td valign="top"><xsl:value-of select="lang_based_on"/></td>
-					<td><xsl:value-of select="app_source"/></td>
-				</tr>
-			</xsl:when>
-		</xsl:choose>
-		<xsl:choose>
-			<xsl:when test="app_source_url">
-				<tr>
-					<td height="5"></td>
-					<td>
-						<a target="_blank">
-							<xsl:attribute name="href">
-								<xsl:value-of select="app_source_url"/>
-							</xsl:attribute>
-							<xsl:value-of select="app_source_url_name"/>
-						</a>
-					</td>
-				</tr>
-			</xsl:when>
-		</xsl:choose>
+		<xsl:if test="license != ''">
+			<tr>
+				<td>
+					<xsl:value-of select="lang_license"/>
+				</td>
+				<td>
+					<xsl:value-of select="license"/>
+				</td>
+			</tr>
+		</xsl:if>
+		<xsl:if test="based_on != ''">
+			<tr>
+				<td valign="top"><xsl:value-of select="lang_based_on"/></td>
+				<td><xsl:value-of select="based_on"/></td>
+			</tr>
+		</xsl:if>
+		<xsl:if test="based_on_url != ''">
+			<tr>
+				<td height="5"></td>
+				<td>
+					<a target="_blank">
+						<xsl:attribute name="href">
+							<xsl:value-of select="based_on_url"/>
+						</xsl:attribute>
+						<xsl:value-of select="based_on_url"/>
+					</a>
+				</td>
+			</tr>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="maintainer">
+	<xsl:variable name="email"><xsl:value-of select="email"/></xsl:variable>
+		<table>
+			<tr>
+				<td><xsl:value-of select="name"/><xsl:text> [</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+			</tr>
+		</table>
 	</xsl:template>
