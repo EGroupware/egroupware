@@ -138,11 +138,11 @@
   <TD VALIGN="top"><b><?php echo lang("Participants"); ?>:</B></TD>
   <td><?php
 
-    $phpgw->db->query("SELECT webcal_entry_user.cal_login, accounts.lastname, "
-		. "accounts.firstname, webcal_entry_user.cal_status "
+    $phpgw->db->query("SELECT webcal_entry_user.cal_login, accounts.account_lastname, "
+		. "accounts.account_firstname, webcal_entry_user.cal_status "
 		. "FROM webcal_entry_user, accounts WHERE webcal_entry_user."
 		. "cal_id='$id' AND webcal_entry_user.cal_login = accounts."
-		. "loginid");
+		. "account_lid");
 
     $first = 1;
     while ($phpgw->db->next_record()) {
