@@ -598,7 +598,10 @@
 			}
 			if (isset($fields['lid']))
 			{
-				$lid = array('lid,' => $fields['lid']."','");
+				//fix by pim
+				//$lid = array('lid,' => $fields['lid']."','");
+				$lid[0]='lid,';
+				$lid[1]=$fields['lid']."','";
 			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
@@ -606,10 +609,10 @@
 			$this->stock_contact_fields['last_mod'] = 'last_mod'; 
 			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
 
-			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,$lid[0]"
-				. implode(",",$this->stock_contact_fields)
-				. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]"
-				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
+			$SQL="INSERT INTO $this->std_table (owner,access,cat_id,tid,$lid[0]"
+			. implode(",",$this->stock_contact_fields)
+			. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]"
+			$this->db->query($SQL,__LINE__,__FILE__);
 
 			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
 
