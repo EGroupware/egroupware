@@ -219,12 +219,15 @@
 	      	. "')",__LINE__,__FILE__);
 		}
 
-		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False)
+		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
 			global $phpgw, $phpgw_info;
 
-			// expire in 30 days by default
-			$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+			if (! $expiredate)
+			{
+				// expire in 30 days by default
+				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+			}
 
 			$acct_info = array(
 				'account_lid'       => $accountname,
@@ -232,7 +235,7 @@
 				'account_passwd'    => $passwd,
 				'account_firstname' => '',
 				'account_lastname'  => '',
-				'account_status'    => 'A',
+				'account_status'    => $account_status,
 				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
 			);
 			$this->create($acct_info);
