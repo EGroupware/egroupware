@@ -546,38 +546,481 @@
 	}
 
 
+  $test[] = "0.9.8pre5";
+  function upgrade0_9_8pre5(){
+    global $phpgw_info, $phpgw_setup;
+
+    // Since no applications are using it yet.  I am gonna drop it and create a new one.
+    // This is becuase I never finished the classes
+    $phpgw_setup->db->query("drop table categories");
+    $sql = "CREATE TABLE phpgw_categories (
+              cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+              cat_parent      int(9) DEFAULT '0' NOT NULL,
+              cat_owner       int(11) DEFAULT '0' NOT NULL,
+              cat_appname     varchar(50) NOT NULL,
+              cat_name        varchar(150) NOT NULL,
+              cat_description varchar(255) NOT NULL,
+              cat_data        text,
+              PRIMARY KEY (cat_id)
+           )";
+    $phpgw_setup->db->query($sql);
+
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9pre1";
+  }
+
+  $test[] = "0.9.9pre1";
+  function upgrade0_9_9pre1(){
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9";
+  }
+
+  $test[] = "0.9.9";
+  function upgrade0_9_9(){
+    global $phpgw_info, $phpgw_setup;
+    $db2 = $phpgw_setup->db;
+    //convert user settings
+    $phpgw_setup->db->query("select account_id, account_permissions from accounts",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $apps_perms = explode(":",$phpgw_setup->db->f("account_permissions"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          if ($apps_perms[$i] != ""){
+            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+            $db2->query($sql ,__LINE__,__FILE__);
+          }
+        }
+      }
+    }
+    $phpgw_setup->db->query("update accounts set account_permissions = ''",__LINE__,__FILE__);
+    //convert group settings
+    $phpgw_setup->db->query("select group_id, group_apps from groups",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $apps_perms = explode(":",$phpgw_setup->db->f("group_apps"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          if ($apps_perms[$i] != ""){
+            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("group_id").", 'g', 1)";
+            $db2->query($sql ,__LINE__,__FILE__);
+          }
+        }
+      }
+    }
+    $phpgw_setup->db->query("update groups set group_apps = ''",__LINE__,__FILE__);
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre1";
+  }
+
+
+  $test[] = "0.9.10pre1";                                                                                                                                                    
+  function upgrade0_9_10pre1(){                                                                                                                                              
+    global $phpgw_info, $phpgw_setup;                                                                                                                                   
+    $phpgw_setup->db->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre2";
+  }
+
+  $test[] = "0.9.10pre2";                                                                                                                                                                        
+  function upgrade0_9_10pre2(){                                                                                                                                                                  
+    global $phpgw_info, $phpgw_setup;
+    $db2 = $phpgw_setup->db;
+    $phpgw_setup->db->query("select account_groups,account_id from accounts",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $gl = explode(",",$phpgw_setup->db->f("account_groups"));
+        for ($i=1; $i<(count($gl)-1); $i++) {
+          $ga = explode(":",$gl[$i]);
+          $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+          $sql .= " values('phpgw_group', '".$ga[0]."', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+          $db2->query($sql ,__LINE__,__FILE__);
+        }
+      }
+    }
+    $phpgw_setup->db->query("update accounts set account_groups = ''",__LINE__,__FILE__);
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre3";
+  }
+
+  $test[] = "0.9.10pre3";
+  function upgrade0_9_10pre3()
+  {
+     global $phpgw_info, $phpgw_setup; 
+     $phpgw_setup->db->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_permissions",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_groups",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts add column account_type char(1)",__LINE__,__FILE__);
+     $phpgw_setup->db->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
+     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
+  }
+
+
+  function change_groups($table,$field,$old_id,$new_id,$db2,$db3)
+  {
+     $sql = $field[0];
+     for($i=1;$i<count($field);$i++) {
+       $sql .= ", ".$field[$i];
+     }
+     $db2->query("SELECT $sql FROM $table WHERE $field[0] like '%,".$old_id.",%'",__LINE__,__FILE__);
+     if($db2->num_rows()) {
+       while($db2->next_record()) {
+         $access = $db2->f($field[0]);
+         $id = $db2->f($field[1]);
+         $access = str_replace(','.$old_id.',' , ','.$new_id.',' , $access);
+         $db3->query("UPDATE $table SET ".$field[0]."='".$access."' WHERE ".$field[1]."=".$id,__LINE__,__FILE__);
+       }
+     }
+   }
+
+
+  $test[] = "0.9.10pre4";
+  function upgrade0_9_10pre4()
+  {
+     global $phpgw_info, $phpgw_setup;
+     
+     $db2 = $phpgw_setup->db;
+     $db3 = $phpgw_setup->db;
+     $phpgw_setup->db->query("SELECT MAX(group_id) FROM groups",__LINE__,__FILE__);
+     $phpgw_setup->db->next_record();
+     $max_group_id = $phpgw_setup->db->f(0);
+     
+     $tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
+     $fields["addressbook"] = Array('ab_access','ab_id');
+     $fields["calendar_entry"] = Array('cal_group','cal_id');
+     $fields["f_forums"] = Array('groups','id');
+     $fields["phpgw_categories"] = Array('cat_access','cat_id');
+     $fields["todo"] = Array('todo_access','todo_id');
+     
+     $phpgw_setup->db->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
+     while($phpgw_setup->db->next_record()) {
+       $old_group_id = $phpgw_setup->db->f("group_id");
+       $group_name = $phpgw_setup->db->f("group_name");
+       while(1) {
+         $new_group_id = mt_rand ($max_group_id, 60000);
+         $db2->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$new_group_id",__LINE__,__FILE__);
+         if(!$db2->num_rows()) { break; }
+       }
+       $db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
+       if($db2->num_rows()) {
+         $group_name .= "_group";
+       }
+       $db2->query("INSERT INTO phpgw_accounts(account_id, account_lid, account_pwd, "
+       			  ."account_firstname, account_lastname, account_lastlogin, "
+       			  ."account_lastloginfrom, account_lastpwd_change, "
+       			  ."account_status, account_type) "
+       			  ."VALUES ($new_group_id,'$group_name','x','','',$old_group_id,NULL,NULL,'A','g')");
+
+       for($i=0;$i<count($tables);$i++) {
+         change_groups($tables[$i],$fields[$tables[$i]],$old_group_id,$new_group_id,$db2,$db3);
+       }
+       $db2->query("UPDATE phpgw_acl SET acl_location='$new_group_id' "
+                  ."WHERE acl_appname='phpgw_group' AND acl_account_type='u' "
+                  ."AND acl_location='$old_group_id'");
+       $db2->query("UPDATE phpgw_acl SET acl_account=$new_group_id "
+                  ."WHERE acl_location='run' AND acl_account_type='g' "
+                  ."AND acl_account=$old_group_id");
+     }
+     $phpgw_setup->db->query("DROP TABLE groups",__LINE__,__FILE__);
+     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre5";
+  }
+ 
+  $test[] = "0.9.10pre5";
+  function upgrade0_9_10pre5()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+		// This is only temp data, so we can kill it.
+		$phpgw_setup->db->query('drop table phpgw_app_sessions',__LINE__,__FILE__);
+    $sql = "CREATE TABLE phpgw_app_sessions (
+      sessionid	   varchar(255) NOT NULL,
+      loginid	     varchar(20),
+      location      varchar(255),
+      app	         varchar(20),
+      content	     text
+    )";
+    $phpgw_setup->db->query($sql);  
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre6";
+  }
+
+  $test[] = "0.9.10pre6";
+  function upgrade0_9_10pre6()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table config rename phpgw_config",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
+  }
+
+  $test[] = "0.9.10pre7";
+  function upgrade0_9_10pre7()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table applications rename phpgw_applications",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
+  }
+
+  $test[] = "0.9.10pre8";
+  function upgrade0_9_10pre8()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table phpgw_sessions change session_info session_action varchar(255)",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre9";
+  }
+
+
+  $test[] = '0.9.10pre9';
+  function upgrade0_9_10pre9()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table preferences rename phpgw_preferences",__LINE__,__FILE__);
+     
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
+  }
+
+  $test[] = '0.9.10pre10';
+  function upgrade0_9_10pre10()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_acl drop column acl_account_type",__LINE__,__FILE__);
+     
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
+  }
+
+  $test[] = '0.9.10pre11';
+  function upgrade0_9_10pre11()
+  {
+                global $phpgw_info, $phpgw_setup;
+
+                $phpgw_setup->db->query("alter table notes rename phpgw_notes",__LINE__,__FILE__);
+
+                $phpgw_setup->db->query("alter table phpgw_notes add column note_category int(9) after note_date",__LINE__,__FILE__);
+
+                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre12';
+  }
+
+
+    $test[] = '0.9.10pre12';
+    function upgrade0_9_10pre12()
+    {
+	}
+
+
+	$test[] = '0.9.10pre14';
+	function upgrade0_9_10pre14()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_sessions add column session_flags char(2)");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre15';
+	}
+
+
+    $test[] = '0.9.10pre18';
+    function upgrade0_9_10pre18() {
+        global $phpgw_info, $phpgw_setup;
+
+        $sql = "create table phpgw_nextid (
+           appname varchar(25),
+           id      int(8),
+           UNIQUE (appname)
+          )";
+
+        $phpgw_setup->db->query($sql);
+        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre19';
+    }
+
+    $test[] = '0.9.10pre19';
+    function upgrade0_9_10pre19() {
+        global $phpgw_info, $phpgw_setup;
+
+		@$phpgw_setup->db->query("drop table if exists phpgw_nextid");
+
+        $sql = "create table phpgw_nextid (
+           appname varchar(25) NOT NULL,
+           id      int(8),
+           UNIQUE (appname)
+          )";
+
+        $phpgw_setup->db->query($sql);
+        $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre20';
+    }
+
+	$test[] = '0.9.10pre20';
+	function upgrade0_9_10pre20()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add column access char(7) after owner",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre21';
+	}
+
+
+	$test[] = '0.9.10pre21';
+	function upgrade0_9_10pre21()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook add column cat_id varchar(32) after access",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
+	}
+
+	$test[] = '0.9.10pre22';
+	function upgrade0_9_10pre22()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table todo rename phpgw_todo",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
+	}
+
+	$test[] = '0.9.10pre23';
+	function upgrade0_9_10pre23()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
+	}
+
+	$test[] = '0.9.10pre24';
+	function upgrade0_9_10pre24()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$sql = "alter table phpgw_categories add column cat_access char(7) after cat_owner";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
+	}
+
+	$test[] = '0.9.10pre25';
+	function upgrade0_9_10pre25()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_app_sessions add column session_dla int",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
+	}
+
+	$test[] = '0.9.10pre26';
+	function upgrade0_9_10pre26()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_todo add column todo_cat int after todo_access",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre27';
+	}
+
+	$test[] = '0.9.10pre27';
+	function upgrade0_9_10pre27()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_app_sessions change content content longtext");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre28';
+	}
+
+	$test[] = '0.9.10pre28';
+	function upgrade0_9_10pre28()
+	{
+		global $phpgw_info;
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
+	}
+
+
+	$test[] = '0.9.10pre28';
+	function upgrade0_9_10pre28()
+	{
+		global $phpgw_info;
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
+	}
+
+	$test[] = '0.9.10';
+	function upgrade0_9_10()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_notes add column note_access char(7) after note_owner");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
+	}
+
+
+	$test[] = '0.9.11.004';
+	function upgrade0_9_11_004()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_config add column config_app varchar(50) first",__LINE__,__FILE__);
+		$phpgw_setup->db->query("update phpgw_config set config_app='phpgwapi'",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
+	}
+
+	$test[] = '0.9.11.005';
+	function upgrade0_9_11_005()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_accounts add column account_expires int after account_status",__LINE__,__FILE__);
+		$phpgw_setup->db->query("update phpgw_accounts set account_expires='-1'",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
+	}
+	
 
 	$test[] = '0.9.11.008';
-	function phpgwapi_upgrade0_9_11_008()
+	function upgrade0_9_11_008()
 	{
-		global $phpgw_info,$phpgw_setup,$oProc;
+		global $phpgw_info,$phpgw_setup;
 
-		@$oProc->query("drop table profiles",__LINE__,__FILE__);
-
+		@$phpgw_setup->db->query("drop table profiles",__LINE__,__FILE__);
+		
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.009';
 	}
 
-	// following are three null upgrades for version only, for testing.
-	$test[] = '0.9.11';
-	function phpgwapi_upgrade0_9_11()
+	$test[] = '0.9.11.009';
+	function upgrade0_9_11_009()
 	{
-		global $setup_info;
-		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
-		return True;
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_cal_holidays add column observance_rule int DEFAULT '0' NOT NULL",__LINE__,__TABLE__);
+		$phpgw_setup->db->query("delete from phpgw_cal_holidays",__LINE__,__FILE__);
+		
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
 	}
 
 	$test[] = '0.9.11.010';
-	function phpgwapi_upgrade0_9_11_010()
+	function upgrade0_9_11_010()
 	{
 		global $phpgw_info;
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
 	}
 
 	$test[] = '0.9.11.011';
-	function phpgwapi_upgrade0_9_11_011()
+	function upgrade0_9_11_011()
 	{
 		global $phpgw_info;
-		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
 	}
 
 ?>
