@@ -43,12 +43,17 @@ country selection	admin	fr	Sélection du pays
 create group	admin	fr	Créer un groupe
 default file system space per user	admin	fr	Espace disque par utilisateur (par défaut)
 default file system space per user/group ?	admin	fr	Espace disque par utilisateur/groupe (par défaut) ?
+delete all records	admin	fr	Effacer tous les enregistrements
 deny access to applications	admin	fr	Refuser l'accès aux applications
+deny access to application registery	admin	fr	Refuser l'accès à l'enregistrement d'applications
 deny access to current sessions	admin	fr	Refuser l'accès aux sessions en cours
+deny access to error log	admin	fr	Refuser l'accès à la log d'erreurs
 deny access to global categories	admin	fr	Refuser l'accès aux catégories globales
 deny access to groups	admin	fr	Refuser l'accès aux groupes
 deny access to mainscreen message	admin	fr	Refuser l'accès au message de la page principale
 deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
+deny access to phpinfo	admin	fr	Refuser l'accès à phpinfo
+deny access to session log	admin	fr	Refuser l'accès à la log des connexions
 deny access to site configuration	admin	fr	Refuser  l'accès à la configuration du site
 deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
 deny all users access to grant other users access to their entries ?	admin	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
@@ -120,9 +125,9 @@ maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.
 message has been updated	admin	fr	le message a été mis à jour
 minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.e. 500 ou 100, etc.)
 mode	admin	fr	Mode
-never	admin	fr	Jamais
 new group name	admin	fr	Nouveau nom de groupe
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
+never	admin	fr	Jamais
 no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
 no matches found	admin	fr	Aucune occurrence trouvée
 outbound	admin	fr	sortant
@@ -163,8 +168,8 @@ site configuration	admin	fr	Configuration du site
 sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
 sorry, that group name has already been taking.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
 sorry, the follow users are still a member of the group x	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
-status	admin	fr	Etat
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
+status	admin	fr	Etat
 submit changes	admin	fr	Soumettre les changements
 template selection	admin	fr	Sélection du style
 text entry	admin	fr	Entrée de texte
