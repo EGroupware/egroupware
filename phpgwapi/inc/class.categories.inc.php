@@ -534,30 +534,33 @@
 		*/
 		function add($values)
 		{
-			if ($values['parent'] && $values['parent'] != 0)
+			$values['cat_id']	= intval($values['cat_id']);
+			$values['parent']	= intval($values['parent']);
+
+			if ($values['parent'] > 0)
 			{
-				$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
-				$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
+				$values['main']		= $this->id2item(array('cat_id' => $values['parent'],'item' => 'main'));
+				$values['level']	= $this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1;
 			}
 
 			$values['descr']	= $this->db->db_addslashes($values['descr']);
 			$values['name']		= $this->db->db_addslashes($values['name']);
 
-			if (isset($values['cat_id']))
+			if ($values['cat_id'] > 0)
 			{
 				$id_col = 'cat_id,';
 				$id_val = $values['cat_id'].',';
 			}
 			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
-				. "cat_main,cat_level,last_mod) VALUES ($id_val" . intval($values['parent']) . "," . $this->account_id . ",'" . $values['access']
+				. 'cat_main,cat_level,last_mod) VALUES (' . $id_val . $values['parent'] . ',' . $this->account_id . ",'" . $values['access']
 				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
-				. "'," . $values['main'] . "," . $values['level'] . "," . time() . ")",__LINE__,__FILE__);
+				. "'," . intval($values['main']) . ',' . intval($values['level']) . ',' . time() . ')',__LINE__,__FILE__);
 
 			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
-
-			if (!$values['parent'] || $values['parent'] == 0)
+			$max = intval($max);
+			if ($values['parent'] == 0)
 			{
-				$this->db->query("UPDATE phpgw_categories SET cat_main=" . $max . " WHERE cat_id=" . $max,__LINE__,__FILE__);
+				$this->db->query('UPDATE phpgw_categories SET cat_main=' . $max . ' WHERE cat_id=' . $max,__LINE__,__FILE__);
 			}
 			return $max;
 		}
@@ -694,6 +697,9 @@
 		*/
 		function edit($values)
 		{
+			$values['cat_id']	= intval($values['id']);
+			$values['parent']	= intval($values['parent']);
+
 			if (isset($values['old_parent']) && $values['old_parent'] != $values['parent'])
 			{
 				//$this->delete(array('cat_id' => $values['cat_id'],'drop_subs' => False,'modify_subs' => True));
@@ -703,15 +709,15 @@
 			}
 			if (!isset($values['main']) || !isset($values['level']))
 			{
-				if ($values['parent'] && ($values['parent'] != 0))
+				if ($values['parent'] > 0)
 				{
 					$values['main']		= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
 					$values['level']	= intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
 				}
 				else
 				{
-					$values['main']		= intval($values['cat_id']);
-					$values['parent']	= $values['level'] = 0;	// parent need to be set to 0, as it can be ''
+					$values['main']		= $values['cat_id'];
+					$values['level']	= 0;
 				}
 			}
 
@@ -719,11 +725,11 @@
 			$values['name']		= $this->db->db_addslashes($values['name']);
 
 			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
-					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
-					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level'] . ", last_mod=" . time()
-					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
+					. "', cat_data='" . $values['data'] . "', cat_parent=" . $values['parent'] . ", cat_access='"
+					. $values['access'] . "', cat_main=" . $values['main'] . ', cat_level=' . $values['level'] . ', last_mod=' . time()
+					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . $values['cat_id'];
 			$this->db->query($sql,__LINE__,__FILE__);
-			return intval($values['cat_id']);
+			return $values['cat_id'];
 		}
 
 		function name2id($cat_name)

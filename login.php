@@ -305,7 +305,7 @@
 		$data['login_standard']['msgbox_data'] = $GLOBALS['phpgw']->common->msgbox('',False);
 	}
 
-	$data['login_standard']['website_title']	= $GLOBALS['phpgw_info']['server']['site_title'];
+	$data['login_standard']['website_title']	= ($GLOBALS['phpgw_info']['server']['site_title']?$GLOBALS['phpgw_info']['server']['site_title']:'phpGroupWare');
 	$data['login_standard']['login_url']		= 'login.php' . $extra_vars;
 	$data['login_standard']['cookie']			= $last_loginid;
 	$data['login_standard']['lang_username']	= lang('username');
