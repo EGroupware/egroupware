@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (1,0,0,NULL,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
-	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (2,0,0,NULL,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
+	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (1,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
+	$oProc->query ("INSERT INTO phpgw_vfs (owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name, link_directory, link_name) VALUES (2,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
 
 ?>
