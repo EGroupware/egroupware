@@ -161,7 +161,7 @@
 
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
-				$groups = intval($security_equals[$idx]);
+				$groups = (int)$security_equals[$idx];
 				$this->memberships[] = Array('account_id' => $groups, 'account_name' => $this->id2name($groups));
 			}
 
@@ -184,8 +184,8 @@
 
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
-				$name = $this->id2name(intval($security_equals[$idx]));
-				$this->members[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
+				$name = $this->id2name((int)$security_equals[$idx]);
+				$this->members[] = Array('account_id' => (int)$security_equals[$idx], 'account_name' => $name);
 			}
 
 			return $this->members;
@@ -209,7 +209,7 @@
 			{
 				$type = 'accounts';
 			}
-			$nextid = intval($GLOBALS['phpgw']->common->last_id($type,$min,$max));
+			$nextid = (int)$GLOBALS['phpgw']->common->last_id($type,$min,$max);
 
 			/* Loop until we find a free id */
 			$free = 0;
@@ -219,7 +219,7 @@
 				//echo '<br>calling search for id: '.$nextid;
 				if ($this->exists($nextid))
 				{
-					$nextid = intval($GLOBALS['phpgw']->common->next_id($type,$min,$max));
+					$nextid = (int)$GLOBALS['phpgw']->common->next_id($type,$min,$max);
 				}
 				else
 				{
@@ -227,7 +227,7 @@
 					/* echo '<br>calling search for lid: '.$account_lid . '(from account_id=' . $nextid . ')'; */
 					if ($this->exists($account_lid))
 					{
-						$nextid = intval($GLOBALS['phpgw']->common->next_id($type,$min,$max));
+						$nextid = (int)$GLOBALS['phpgw']->common->next_id($type,$min,$max);
 					}
 					else
 					{
@@ -260,7 +260,7 @@
 			
 			if(isset($_POST['start']))
 			{
-				$start = intval($_POST['start']);
+				$start = (int)$_POST['start'];
 			}
 			else
 			{

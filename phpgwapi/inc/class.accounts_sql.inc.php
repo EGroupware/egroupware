@@ -65,7 +65,7 @@
 					);
 					return $xml_functions;
 					break;
- 				case 'soap':
+				case 'soap':
 					return $this->soap_functions;
 					break;
 				default:
@@ -80,7 +80,7 @@
 		*/
 		function read_repository()
 		{
-			$this->db->query('SELECT * FROM phpgw_accounts WHERE account_id=' . intval($this->account_id),__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_accounts WHERE account_id=' . (int)$this->account_id,__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$this->data['userid']            = $this->db->f('account_lid');
@@ -106,15 +106,15 @@
 		*/
 		function save_repository()
 		{
-			$this->db->query('UPDATE phpgw_accounts SET'.
-				" account_firstname='" . $this->db->db_addslashes($this->data['firstname']).
-				"', account_lastname='" . $this->db->db_addslashes($this->data['lastname']).
-				"', account_status='". $this->db->db_addslashes($this->data['status']).
-				"', account_expires=" . intval($this->data['expires']).
-				($this->data['account_lid']?", account_lid='".$this->db->db_addslashes($this->data['account_lid'])."'":'').
-				', person_id='.intval($this->data['person_id']).
-				', account_primary_group='.intval($this->data['account_primary_group']).
-				' WHERE account_id=' . intval($this->account_id),__LINE__,__FILE__);
+			$this->db->query('UPDATE phpgw_accounts SET'
+				. " account_firstname='" . $this->db->db_addslashes($this->data['firstname'])
+				. "', account_lastname='" . $this->db->db_addslashes($this->data['lastname'])
+				. "', account_status='". $this->db->db_addslashes($this->data['status'])
+				. "', account_expires=" . (int)$this->data['expires']
+				. ($this->data['account_lid']?", account_lid='".$this->db->db_addslashes($this->data['account_lid'])."'":'')
+				. ', person_id='.(int)$this->data['person_id']
+				. ', account_primary_group='.(int)$this->data['account_primary_group']
+				. ' WHERE account_id=' . (int)$this->account_id,__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -124,7 +124,7 @@
 			/* Do this last since we are depending upon this record to get the account_lid above */
 			$tables_array = Array('phpgw_accounts');
 			$this->db->lock($tables_array);
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
+			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
 			$this->db->unlock();
 		}
 
@@ -235,7 +235,7 @@
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
-				$name_list[$account_lid] = intval($this->db->f('account_id'));
+				$name_list[$account_lid] = (int)$this->db->f('account_id');
 			}
 			else
 			{
@@ -258,7 +258,7 @@
 				return $id_list[$account_id];
 			}
 
-			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
+			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -352,9 +352,9 @@
 				. "', '" . $this->db->db_addslashes($account_info['account_firstname'])
 				. "','" . $this->db->db_addslashes($account_info['account_lastname'])
 				. "','" . $this->db->db_addslashes($account_info['account_status'])
-				. "'," . intval($account_info['account_expires'])
-				. ',' . intval($account_info['person_id'])
-				. ',' . intval($account_info['account_primary_group']) . ')',__LINE__,__FILE__);
+				. "'," . (int)$account_info['account_expires']
+				. ',' . (int)$account_info['person_id']
+				. ',' . (int)$account_info['account_primary_group'] . ')',__LINE__,__FILE__);
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
 
@@ -371,7 +371,7 @@
 		{
 			if ($expiredate)
 			{
-				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 			}
 			else
 			{
@@ -384,14 +384,14 @@
 					else
 					{
 						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
-						$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+						$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 					}
 				}
 				else
 				{
 					/* expire in 30 days by default */
 					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
-					$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+					$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 				}
 			}
 
@@ -447,7 +447,7 @@
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
 			static $account_name;
-			
+
 			$account_id = get_account_id($accountid);
 			if(isset($account_name[$account_id]))
 			{
@@ -457,7 +457,7 @@
 				return;
 			}
 			$db = $GLOBALS['phpgw']->db;
-			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
+			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . (int)$account_id,__LINE__,__FILE__);
 			$db->next_record();
 			$account_name[$account_id]['lid']   = $db->f('account_lid');
 			$account_name[$account_id]['fname'] = $db->f('account_firstname');

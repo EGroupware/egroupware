@@ -363,7 +363,7 @@
 
 		function isin_array($needle,$haystack='') 
 		{
-			if(gettype($haystack) != 'array')
+			if(!@is_array($haystack))
 			{
 				return False;
 			}
@@ -587,7 +587,7 @@
 			
 			if (@$allValues[0]['gidnumber'][0])
 			{
-				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
+				$name_list[$account_lid] = (int)$allValues[0]['gidnumber'][0];
 			}
 
 			$sri = ldap_search($this->ds, $this->user_context, "(&(uid=$account_lid)(phpgwaccounttype=u))");
@@ -596,7 +596,7 @@
 
 			if (@$allValues[0]['uidnumber'][0])
 			{
-				$name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]);
+				$name_list[$account_lid] = (int)$allValues[0]['uidnumber'][0];
 			}
 
 			return $name_list[$account_lid];
@@ -673,7 +673,7 @@
 
 		/*
 		 * returns nonzero if $account exists in LDAP: 0: nowhere 1: user accounts, 2: group accounts, 3: both
-		 * $account can be an account_id (LDAP: uidnumber) or an account_lid (LDAP: uid) (is determinded by gettype($account) == 'integer')
+		 * $account can be an account_id (LDAP: uidnumber) or an account_lid (LDAP: uid) (is determinded by ettype($account) == 'integer')
 		 */
 		function exists($account)
 		{
@@ -936,7 +936,7 @@
 		{
 			if ($expiredate)
 			{
-				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 			}
 			else
 			{
@@ -949,14 +949,14 @@
 					else
 					{
 						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
-						$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+						$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 					}
 				}
 				else
 				{
 					/* expire in 30 days by default */
 					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
-					$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+					$expires   = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
 				}
 			}
 

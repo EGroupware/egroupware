@@ -90,7 +90,7 @@
 			$this->db = $GLOBALS['phpgw']->db;
 			if($serverid)
 			{
-				$this->serverid = intval($serverid);
+				$this->serverid = (int)$serverid;
 				$this->setup();
 			}
 		}
@@ -136,18 +136,18 @@
 		{
 			preg_match('/^(.*?\/\/.*?)(\/.*)/',$url,$matches);
 			$hostpart = $matches[1];
-			$hostpart = ereg_replace('https://','',$hostpart);
-			$hostpart = ereg_replace('http://','',$hostpart);
+			$hostpart = str_replace('https://','',$hostpart);
+			$hostpart = str_replace('http://','',$hostpart);
 			switch($this->mode)
 			{
 				case 'soap':
-					if(!ereg('soap.php',$matches[2]))
+					if(!strstr($matches[2],'soap.php'))
 					{
 						$matches[2] .= $this->urlparts['soap'];
 					}
 					break;
 				case 'xmlrpc':
-					if(!ereg('xmlrpc.php',$matches[2]))
+					if(!strstr($matches[2],'xmlrpc.php'))
 					{
 						$matches[2] .= $this->urlparts['xmlrpc'];
 					}
@@ -397,7 +397,7 @@
 			{
 				$serverid = $this->serverid;
 			}
-			$sql = "SELECT * FROM $this->table WHERE server_id=" . intval($serverid);
+			$sql = "SELECT * FROM $this->table WHERE server_id=" . (int)$serverid;
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
@@ -428,13 +428,13 @@
 					. "server_url='"  . $this->server['server_url']  . "',"
 					. "server_mode='" . $this->server['server_mode']  . "',"
 					. "server_security='" . $this->server['server_security']  . "',"
-					. "trust_level="  . intval($this->server['trust_level']) . ","
-					. "trust_rel="    . intval($this->server['trust_rel']) . ","
+					. "trust_level="  . (int)$this->server['trust_level'] . ","
+					. "trust_rel="    . (int)$this->server['trust_rel'] . ","
 					. "username='"    . $this->server['username']  . "',"
 					. "password='"    . $this->server['password']  . "',"
 					. "admin_name='"  . $this->server['admin_name']  . "',"
 					. "admin_email='" . $this->server['admin_email'] . "' "
-					. "WHERE server_id=" . intval($serverid);
+					. "WHERE server_id=" . (int)$serverid;
 				$this->db->query($sql,__LINE__,__FILE__);
 				return True;
 			}
@@ -451,7 +451,7 @@
 				. "trust_level,trust_rel,username,password,admin_name,admin_email) "
 				. "VALUES('" . $server_info['server_name'] . "','" . $server_info['server_url'] . "','"
 				. $server_info['server_mode'] . "','" . $server_info['server_security'] . "',"
-				. intval($server_info['trust_level']) . "," . intval($server_info['trust_rel']) . ",'"
+				. (int)$server_info['trust_level'] . "," . (int)$server_info['trust_rel'] . ",'"
 				. $server_info['username'] . "','" . $server_info['password'] . "','"
 				. $server_info['admin_name'] . "','" . $server_info['admin_email'] . "')";
 			$this->db->query($sql,__LINE__,__FILE__);
