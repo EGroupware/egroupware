@@ -8,6 +8,7 @@
 CREATE TABLE addressbook (
    id int(8) DEFAULT '0' NOT NULL,
    lid varchar(32),
+   tid char(1),
    owner int(8),
    FN varchar(64),
    SOUND varchar(64),
