@@ -1,9 +1,8 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - InfoLog                                                   *
+	* phpGroupWare - HTML creation class                                       *
 	* http://www.phpgroupware.org                                              *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -24,7 +23,7 @@ class html
 		$this->prefered_img_title = stristr($HTTP_USER_AGENT,'konqueror') ? 'title' : 'alt';
 	}
 
-	function input_hidden($vars,$value='')
+	function input_hidden($vars,$value='',$ignore_empty=True)
 	{
 		if (!is_array($vars))
 		{
@@ -32,30 +31,44 @@ class html
 		}
 		while (list($name,$value) = each($vars))
 		{
-			if ($value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
+			if (is_array($value)) $value = serialize($value);
+			$del = strchr($value,'"') ? "'" : '"';
+			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
-				$html .= "<input type=hidden name=\"$name\" value=\"$value\">\n";
+				$html .= "<INPUT TYPE=HIDDEN NAME=\"$name\" VALUE=$del$value$del>\n";
 			}
 		}
 		return $html;
 	}
 
+	function textarea($name,$value='',$options='' )
+	{
+		return "<TEXTAREA name=\"$name\" $options>$value</TEXTAREA>\n";
+	}
+
 	function input($name,$value='',$type='',$options='' )
 	{
-		if ($type) $type = "type=$type";
+		if ($type) $type = "TYPE=$type";
 
-		return "<input $type name=\"$name\" value=\"$value\" $options>\n";
+		return "<INPUT $type NAME=\"$name\" VALUE=\"$value\" $options>\n";
 	}
 
-	function submit_button($name,$lang,$onClick='')
+	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='')
 	{
-		return $this->input($name,lang($lang),'submit',$onClick ? "onClick=\"$onClick\"" : '');
+		if (!$no_lang) $lang = lang($lang);
+		if ($onClick) $options .= " onClick=\"$onClick\"";
+		return $this->input($name,$lang,'SUBMIT',$options);
 	}
 
-	/*
-	 * create absolute link: $url: phpgw-relative link, may include query
-	 *								 $vars: query or array with query
-	 */
+	/*!
+	@function link
+	@abstract creates an absolut link + the query / get-variables
+	@param $url phpgw-relative link, may include query / get-vars
+	@parm $vars query or array ('name' => 'value', ...) with query
+	@example link('/index.php?menuaction=infolog.uiinfolog.get_list',array('info_id' => 123))
+	@example  = 'http://domain/phpgw-path/index.php?menuaction=infolog.uiinfolog.get_list&info_id=123'
+	@result absolut link already run through $phpgw->link
+	*/
 	function link($url,$vars='')
 	{
 		if (is_array( $vars ))
@@ -82,9 +95,9 @@ class html
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
 	}
 
-	function form($content,$hidden_vars,$url,$url_vars='',$method='POST')
+	function form($content,$hidden_vars,$url,$url_vars='',$name='',$method='POST')
 	{
-		$html = "<form method=\"$method\" action=\"".$this->link($url,$url_vars)."\">\n";
+		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\">\n";
 		$html .= $this->input_hidden($hidden_vars);
 
 		if ($content) {
@@ -95,35 +108,40 @@ class html
 	}
 
 	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',
-								 $method='POST')
+								 $form_name='',$method='POST')
 	{
 		return $this->form($this->submit_button($name,$lang),
-								 $hidden_vars,$url,$url_vars,$method);
+								 $hidden_vars,$url,$url_vars,$form_name,$method);
 	}
 
-	/*
-	 * Example: $rows = array ( '1'	=> array( 1 => 'cell1', '.1' => 'colspan=3',
-	 * 														 2 => 'cell2',
-	 *														 3 => '3,, '.3' => 'width="10%"' ),
- 	 *									 '.1'	=> 'bgcolor="#0000FF"' );
-	 * table($rows,'width="100%"');
-	 */
-	function table($rows,$params = '')
+	/*!
+	@function table
+	@abstracts creates table from array with rows
+	@discussion abstract the html stuff
+	@param $rows array with rows, each row is an array of the cols
+	@param $options options for the table-tag
+	@example $rows = array ( '1'  => array( 1 => 'cell1', '.1' => 'colspan=3',
+	@example                                2 => 'cell2', 3 => 'cell3', '.3' => 'width="10%"' ),
+	@example                 '.1' => 'BGCOLOR="#0000FF"' );
+	@example table($rows,'WIDTH="100%"') = '<table WIDTH="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
+	@result string with html-code of the table
+	*/
+	function table($rows,$options = '')
 	{
-		$html = "<table $params>\n";
+		$html = "<TABLE $options>\n";
 
 		while (list($key,$row) = each($rows)) {
 			if (!is_array($row))
 				continue;					// parameter
-			$html .= "\t<tr ".$rows['.'.$key].">\n";
+			$html .= "\t<TR ".$rows['.'.$key].">\n";
 			while (list($key,$cell) = each($row)) {
 				if ($key[0] == '.')
 					continue;				// parameter
-				$html .= "\t\t<td ".$row['.'.$key].">$cell</td>\n";
+				$html .= "\t\t<TD ".$row['.'.$key].">$cell</TD>\n";
 			}
-			$html .= "\t</tr>\n";
+			$html .= "\t</TR>\n";
 		}
-		$html .= "</table>\n";
+		$html .= "</TABLE>\n";
 		
 		return $html;
 	}
@@ -139,28 +157,84 @@ class html
 		return $html;
 	}
 
-	function image( $app,$name,$title='',$opts='' )
+	function image( $app,$name,$title='',$options='' )
 	{
-		$html = '<img src="'.$GLOBALS['phpgw']->common->image($app,$name).'"';
+		if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
+			$path = $name;		// name may already contain absolut path
 
 		if ($title)
 		{
-			$html .= " $this->prefered_img_title=\"$title\"";
+			$options .= " $this->prefered_img_title=\"$title\"";
 		}
-		if ($opts)
-		{
-			$html .= " $opts";
-		}
-		return $html . '>';
+		return "<IMG SRC=\"$path\" $options>";
 	}
 
 	function a_href( $content,$url,$vars='',$options='')
 	{
+		if (!strstr($url,'/') && count(explode('.',$url)) == 3)
+			$url = "/index.php?menuaction=$url";
+
 		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
-	
+
 	function bold($content)
 	{
 		return '<b>'.$content.'</b>';
+	}
+
+	function italic($content)
+	{
+		return '<i>'.$content.'</i>';
+	}
+
+	function hr($width,$options='')
+	{
+		if ($width)
+			$options .= " WIDTH=$width";
+		return "<hr $options>\n";
+	}
+
+	/*!
+	@function formatOptions
+	@abstract formats option-string for most of the above functions
+	@param $options String (or Array) with option-values eg. '100%,,1'
+	@param $names String (or Array) with the option-names eg. 'WIDTH,HEIGHT,BORDER'
+	@example formatOptions('100%,,1','WIDTH,HEIGHT,BORDER') = ' WIDTH="100%" BORDER="1"'
+	@result option string
+	*/
+	function formatOptions($options,$names)
+	{
+		if (!is_array($options)) $options = explode(',',$options);
+		if (!is_array($names))   $names   = explode(',',$names);
+
+		while (list($n,$val) = each($options))
+			if ($val != '' && $names[$n] != '')
+				$html .= ' '.$names[$n].'="'.$val.'"';
+
+		return $html;
+	}
+
+	/*!
+	@function nextMatchStyles
+	@abstract returns simple stylesheet for nextmatch row-colors
+	@result the classes 'nmh' = nextmatch header, 'nmr0'+'nmr1' = alternating rows
+	*/
+	function nextMatchStyles()
+	{
+		return $this->style(
+			".nmh { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
+			".nmr1 { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
+			".nmr0 { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n"
+		);
+	}
+
+	function style($styles)
+	{
+		return $styles ? "<STYLE type=\"text/css\">\n<!--\n$styles\n-->\n</STYLE>" : '';
+	}
+
+	function label($content,$options='')
+	{
+		return "<LABEL $options>$content</LABEL>";
 	}
 }
