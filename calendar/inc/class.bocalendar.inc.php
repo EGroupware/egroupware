@@ -417,7 +417,7 @@
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
 				$this->so->set_end($l_end['year'],$l_end['month'],$l_end['mday'],$l_end['hour'],$l_end['min'],0);
 				$this->so->set_class($is_public);
-				$this->so->add_attribute('reference',$l_cal['reference']);
+				$this->so->add_attribute('reference',($l_cal['reference']?$l_cal['reference']:0));
 				if($l_cal['id'])
 				{
 					$this->so->add_attribute('id',$l_cal['id']);

@@ -51,7 +51,8 @@
 			'viewmatrix'	=> True,
 			'search' => True,
 			'header' => True,
-			'footer' => True
+			'footer' => True,
+			'css'		=> True
 		);
 
 		function uicalendar()
@@ -73,7 +74,7 @@
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir('calendar');
 			$this->cat      = CreateObject('phpgwapi.categories');
 
-			$this->holiday_color = (substr($this->theme['bg07'],0,1)=='#'?'':'#').$this->theme['bg07'];
+			$this->holiday_color = (substr($this->theme['bg06'],0,1)=='#'?'':'#').$this->theme['bg06'];
 			
 			$this->cat_id   = $this->bo->cat_id;
 
@@ -97,6 +98,14 @@
 				return;
 			}
 
+			$this->bo->store_to_cache(
+				Array(
+					'smonth'	=> $params['month'],
+					'sday'	=> 1,
+					'syear'	=> $params['year']
+				)
+			);
+			
 			$params['link']			= (!isset($params['link'])?'':$params['link']);
 			$params['buttons']		= (!isset($params['buttons'])?'none':$params['buttons']);
 			$params['outside_month']	= (!isset($params['outside_month'])?True:$params['outside_month']);
@@ -1477,6 +1486,18 @@
 
 			$p->pparse('out','footer_table');
 			unset($p);
+		}
+
+		function css()
+		{
+			return 'A.minicalendar { color: #000000 }'."\n"
+				. '  A.bminicalendar { color: #336699; font-weight: bold; font-style: italic }'."\n"
+				. '  A.minicalendargrey { color: #999999 }'."\n"
+				. '  A.bminicalendargrey { color: #336699; font-weight: bold; font-style: italic }'."\n"
+				. '  A.minicalhol { color: #000000; background-color: '.$this->holiday_color.' }'."\n"
+				. '  A.bminicalhol { color: #336699; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n"
+				. '  A.minicalgreyhol { color: #999999; background-color: '.$this->holiday_color.' }'."\n"
+				. '  A.bminicalgreyhol { color: #999999; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n";
 		}
 
 		function no_edit()
@@ -2975,6 +2996,19 @@
 					echo "set_week_array : Date : ".$date."<br>\n";
 				}
 
+				if($this->bo->cached_events[$date])
+				{
+					if($this->debug)
+					{
+						echo "Date : ".$date." Appointments found : ".count($this->bo->cached_events[$date])."<br>\n";
+					}
+					$appts = True;
+				}
+				else
+				{
+					$appts = False;
+				}
+
 				$holidays = $this->bo->cached_holidays[$date];
 				if($weekly)
 				{
@@ -2985,7 +3019,7 @@
 				if($holidays)
 				{
 					$extra = ' bgcolor="'.$this->bo->holiday_color.'"';
-					$class = 'minicalhol';
+					$class = ($appts?'b':'').'minicalhol';
 					if ($date == $this->bo->today)
 					{
 						$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
@@ -2994,12 +3028,12 @@
 				elseif ($date != $this->bo->today)
 				{
 					$extra = ' bgcolor="'.$cellcolor.'"';
-					$class = 'minicalendar';
+					$class = ($appts?'b':'').'minicalendar';
 				}
 				else
 				{
 					$extra = ' bgcolor="'.$GLOBALS['phpgw_info']['theme']['cal_today'].'"';
-					$class = 'minicalendar';
+					$class = ($appts?'b':'').'minicalendar';
 					$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
 				}
 
@@ -3023,18 +3057,6 @@
 					{
 						$holiday_name[] = $holidays[$k]['name'];
 					}
-				}
-				if($this->bo->cached_events[$date])
-				{
-					if($this->debug)
-					{
-						echo "Date : ".$date." Appointments found : ".count($this->bo->cached_events[$date])."<br>\n";
-					}
-					$appts = True;
-				}
-				else
-				{
-					$appts = False;
 				}
 				$week = '';
 				if (!$j || ($j && substr($date,6,2) == '01'))
