@@ -23,6 +23,7 @@
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
      $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"workdayends","calendar");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"defaultcalendar","common");
      if ($mainscreen_showevents) {
         $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
      }
@@ -96,6 +97,25 @@
 		      . $phpgw->common->formattime($i+1,"00") . "</option>";
 	   }
 	 ?>
+    </select>
+   </td>
+  </tr>
+  <?php
+    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+  ?>
+  <tr bgcolor="<?php echo $tr_color; ?>">
+   <td><?php echo lang("default calendar view"); ?></td>
+   <td align="center">
+    <select name="defaultcalendar">
+     <option value="year.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "year.php") " selected"; ?>>Yearly</option>
+<?php
+   echo "<option value=\"index.php\"";
+   if(!isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "index.php")
+     echo " selected";
+   echo ">Monthly</option>";
+?>
+     <option value="week.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "week.php") " selected"; ?>>Weekly</option>
+     <option value="day.php"<?php if($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "day.php") " selected"; ?>>Daily</option>
     </select>
    </td>
   </tr>

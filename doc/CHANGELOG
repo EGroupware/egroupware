@@ -33,6 +33,7 @@
 	- Fixed problem with moving to prev/next msg in NNTP.
 	- Fix possible problem connecting to LDAP server.
 	- Fix home page display of calendar events.
+	- Added ability to set users defaut calendar view of top icon.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
