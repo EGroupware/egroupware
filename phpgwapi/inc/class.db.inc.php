@@ -719,6 +719,10 @@
 		*/
 		function create_database($adminname = '', $adminpasswd = '')
 		{
+			$currentUser = $this->User;
+			$currentPassword = $this->Password;
+			$currentDatabase = $this->Database;
+
 			$extra = array();
 			switch ($this->type)
 			{
@@ -733,10 +737,6 @@
 					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->type'</p>\n";
 					break;
 			}
-			$currentUser = $this->User;
-			$currentPassword = $this->Password;
-			$currentDatabase = $this->Database;
-
 			if ($adminname != '')
 			{
 				$this->User = $adminname;
