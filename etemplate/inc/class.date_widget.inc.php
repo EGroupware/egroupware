@@ -65,10 +65,23 @@
 					'd' => date('d',$value)
 				);
 			}
+			$format = split('[/.-]',$sep=$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			$sep = $sep[1];
+			if ($cell['readonly'] || $readonlys)	// is readonly
+			{
+				for ($str='',$n = 0; $n < 3; ++$n)
+				{
+					$str .= ($str != '' ? $sep : '');
+					$str .= $value[$format[$n]];
+				}
+				$value = $str;
+				$cell['type'] = 'label';
+				$cell['no_lang'] = True;
+				return True;
+			}
 			$tpl = new etemplate;
 			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 
-			$format = split('[/.-]',$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			$fields = array('Y' => 'year', 'm' => 'month', 'd' => 'day');
 			$row = array();
 			for ($n=0; $n < 3; ++$n)
