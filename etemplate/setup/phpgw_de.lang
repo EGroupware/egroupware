@@ -101,7 +101,7 @@ error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der 
 error: while saveing !!!	etemplate	de	Fehler: beim Speichern !!!
 error: writeing !!!	etemplate	de	Fehler: schreiben !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
-etemplate	etemplate	de	eTemplate
+etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
 etemplate '%1' written to '%2'	etemplate	de	eTemplate '%1' wurde nach '%2' geschrieben
 etemplate editor	etemplate	de	eTemplate Editor
@@ -134,7 +134,7 @@ help	etemplate	de	Hilfe
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
 html	etemplate	de	HTML
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn eine Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 image	etemplate	de	Grafik
 import	etemplate	de	Import
 import an etemplate from a xml-file	etemplate	de	Importiert ein eTemplate aus einer XML Datei

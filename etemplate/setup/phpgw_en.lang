@@ -101,7 +101,7 @@ error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webse
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
 error: writeing !!!	etemplate	en	Error: writeing !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
-etemplate	etemplate	en	eTemplate
+etemplate	common	en	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
 etemplate '%1' written to '%2'	etemplate	en	eTemplate '%1' written to '%2'
 etemplate editor	etemplate	en	eTemplate Editor
