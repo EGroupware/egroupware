@@ -78,9 +78,9 @@
   }
   $first = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + $start);
   $last = $phpgw->calendar->splitdate($first["raw"] + 518400);
-  $phpgw->template->set_file(array("week" => "week.tpl"));
+  $phpgw->template->set_file(array("week_t" => "week.tpl"));
 
-  $phpgw->template->set_block("week");
+  $phpgw->template->set_block("week_t","week");
 
   if ($friendly) {
     $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
@@ -119,12 +119,12 @@
     $param = "year=".$thisyear."&month=".$thismonth."&day=".$thisday."&friendly=1";
     $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</A>");
-    $phpgw->template->parse("out","week");
-    $phpgw->template->pparse("out","week");
+    $phpgw->template->parse("out","week_t");
+    $phpgw->template->pparse("out","week_t");
     $phpgw->common->phpgw_footer();
   } else {
     $phpgw->template->set_var("print","");
-    $phpgw->template->parse("out","week");
-    $phpgw->template->pparse("out","week");
+    $phpgw->template->parse("out","week_t");
+    $phpgw->template->pparse("out","week_t");
   }
 ?>

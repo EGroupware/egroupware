@@ -1,5 +1,4 @@
 <!-- $Id$ -->
-<!-- BEGIN week -->
 {printer_friendly}
 <head>
 <style type="text/css">
@@ -32,4 +31,3 @@
 </table>
 {week_display}
 {print}
-<!-- END week -->
