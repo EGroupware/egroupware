@@ -65,5 +65,5 @@
   $p->set_var("lang_add",lang("add"));
   
   $p->pparse("out","list");
-  $p->common->phpgw_footer();
+  $phpgw->common->phpgw_footer();
 ?>
