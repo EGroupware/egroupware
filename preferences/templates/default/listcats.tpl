@@ -46,7 +46,7 @@
 
 <!-- END cat_list -->  
 
-<!-- BEGINN add   -->
+<!-- BEGIN add   -->
 
 </table>
 <table border="0" cellspacing="2" cellpadding="2" width="80%">
