@@ -531,49 +531,6 @@
 			$this->db->query("DELETE FROM phpgw_hooks WHERE hook_appname='". $appname ."'");
 		}
 
-		/* The following function is only used by config.php */
-		/*!
-		@function execute_script
-		@abstract Run scripts (form sections) per application for a particular setup screen
-		@param	$script		Name of script to run, e.g. 'config' == 'config.inc.php'
-		@param	$order		optional, set to a sorting array to run scripts in a
-							particular order
-		*/
-		function execute_script($script, $order = '')
-		{
-			if ($order != '' && !is_array($order))
-			{
-				$new_order = $order;
-				unset($order);
-				$order = array($new_order);
-			}
-			if ($order == '')
-			{
-				unset($order);
-				$order = array();
-			}
-			/* First include the ordered setup script file */
-			@reset ($order);
-			while (list (,$appname) = @each($order))
-			{
-				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/setup/' . $script . '.inc.php';
-				if (file_exists($f)) { include($f); }
-				$completed_scripts[$appname] = True;
-			}
-			/* Then add the rest */
-			/*
-			$d = dir(PHPGW_SERVER_ROOT);
-			while ($entry=$d->read())
-			{
-				if ($entry != "" && $completed_scripts[$entry] != True)
-				{
-					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/' . $script . '.inc.php';
-					if (file_exists($f)) { include($f); }
-				}
-			}
-			*/
-		}
-
 		/*!
 		@function alessthanb
 		@abstract phpgw version checking, is param 1 < param 2 in phpgw versionspeak?

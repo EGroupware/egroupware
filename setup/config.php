@@ -241,7 +241,6 @@
 		unset($t);
 	}
 
-	//$phpgw_setup->execute_script('config',array('phpgwapi','admin','preferences')); /* ;,'preferences','email','nntp')); */
 	$setup_tpl->set_var('more_configs',lang('Please login to phpgroupware and run the admin application for additional site configuration') . '.');
 
 	$setup_tpl->set_var('lang_submit',lang('submit'));
