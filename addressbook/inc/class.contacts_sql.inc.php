@@ -371,11 +371,11 @@
 			$tempcreate = substr($tempcreate,0,-1) . ")";
 			//echo $tempcreate;
 
-			if ($phpgw_info["server"]["db_type"]=="mysql") {
-				$ifexists = "IF EXISTS";
-			}
+			//if ($phpgw_info["server"]["db_type"]=="mysql") {
+			//	$ifexists = "IF EXISTS";
+			//}
 			
-			$this->db->query("DROP TABLE $ifexists $tmp_table");
+			//$this->db->query("DROP TABLE $ifexists $tmp_table");
 			$this->db->query($tempcreate);
 
 			for ($i=0;$i<count($tempinsert);$i++) {
