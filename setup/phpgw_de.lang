@@ -2,6 +2,7 @@
 1 match found	calendar	de	1 Treffer gefunden
 1 message has been deleted	email	de	1 Nachricht wurde gelöscht
 access	common	de	Zugriff
+access not permitted	common	de	Zugriff verweigert
 access type	common	de	Zugriffstyp
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
@@ -9,24 +10,30 @@ account has been deleted	common	de	Konto wurde gelöscht
 account has been updated	common	de	Konto wurde aktualisiert
 account permissions	admin	de	Zugriffsrechte
 account preferences 	common	de	Einstellungen der Benutzerkonten
+acl	common	de	ACL
+action	admin	de	Aktion
 active	admin	de	Aktiv
 add 	common	de 	Hinzufügen
 add a note for    notes    de        Notiz hinzufügen für
 add a single phrase	transy	de	Einzelne Phrase hinzufügen
 add new account	admin	de	Neues Konto hinzufügen
 add new application	admin	de	Neue Anwendung hinzufügen
+add new phrase	transy	de	Neue Übersetzung hinzufügen
 add new ticket	tts	de	Neues Ticket hinzufügen
-add note        notes   de      Notiz hinzufügen
+add note	notes	de	Notiz hinzufügen
 add ticket 	tts	de	Ticket hinzufügen
 add to addressbook	email	de	Zum Addressbuch hinzufügen
-address book	addressbook	de	Addressbuch
 address book	common	de	Adressbuch
+address book - view	addressbook	de	Adressbuch - Anzeigen
 addressbook	common	de	Adressbuch
 addressbook preferences	common	de	Adressbuch Einstellungen
+addsub	todo	de	AddSub
+addvcard	addressbook	de	VCard hinzufügen
 admin	common	de	Admin
 administration	common	de	Administration
 all	common	de	alle
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
+allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 anonymous user 	admin	de	Anonymer Benutzer
 any	transy	de	alle
 application	transy	de	Anwendung
@@ -34,15 +41,17 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 april	common	de	April
-arial   notes   de      Arial
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, daß Sie dieses Konto löschen wollen ?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, daß Sie diese Anwendung löschen wollen ?
 are you sure you want to delete this entry	todo	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
+are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, daß Sie diese Gruppe löschen wollen ?
 are you sure you want to delete this news site ?	admin	de	Sind Sie sicher, diese News Site löschen zu wollen ?
+are you sure you want to delete this note ?     notes   de      Sind Sie sicher, daß Sie diese Notiz löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, daß Sie diese Session killen wollen ?
 are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?
-are you sure you want to delete this note ?     notes   de      Sind Sie sicher, daß Sie diese Notiz löschen wollen ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	sind Sie sicher,\ndaß Sie diesen\nEintrag löschen wollen ?\n\nDieser Eintrag wird damit\nfür alle Benutzer gelöscht.
+arial   notes   de      Arial
 assign to	tts	de	zuweisen an
 august	common	de	August
 author	nntp	de	Autor
@@ -57,9 +66,8 @@ calendar	common	de	Kalender
 calendar - add	calendar	de	Kalendereintrag hinzufügen
 calendar - edit	calendar	de	Kalendereintrag bearbeiten
 calendar preferences 	common	de	Kalender Einstellungen
-grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
-cancel	filemanager	de	Abbrechen
 cancel	common	de	Abbruch
+cancel	filemanager	de	Abbrechen
 cannot display the requested article from the requested newsgroup	nntp	de	Der gewünschte Artikel kann leider nicht angezeigt werden
 cc	email	de	Kopie
 change	common	de	Ändern
@@ -81,6 +89,7 @@ completed	todo	de	fertig
 compose	email	de	Verfassen
 copy	filemanager	de	Kopieren
 copy_as	filemanager	de	Kopieren nach
+country	addressbook	de	Land
 courier new    notes    de      Courier New
 create	filemanager	de	Erstellen
 create group	admin	de	Erstelle Gruppe
@@ -91,9 +100,11 @@ currency	common	de	Währung
 current users	common	de	Derzeit angemeldete Benutzer
 current_file	filemanager	de	Aktuelle Datei
 daily	calendar	de	Täglich
+daily matrix view	calendar	de	Matrix-Ansicht des Tages
 date	common	de	Datum
 date due	todo	de	fällig am
 date format	preferences	de	Datumsformat
+days datedue	todo	en	Tage bis zur Fälligkeit
 days repeated	calendar	de	wiederholte Tage
 december	common	de	Dezember
 default application	preferences	de	Standard-Anwendung
@@ -101,14 +112,16 @@ default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
+department	addressbook	de	Abteilung
 description	calendar	de	Beschreibung
 detail	tts	de	Detail
 disabled	admin	de	Deaktiviert
 display	admin	de	Bezeichnung
 display missing phrases in lang set	transy	de	Im Sprachset fehlende Phrasen anzeigen
+display note for	notes	de	Display note for
+do_delete	filemanager	de	Lösche
 done	common	de	Fertig
 download	filemanager	de	Download
-do_delete	filemanager	de	Lösche
 duration	calendar	de	Dauer
 e-mail	common	de	E-Mail
 e-mail preferences	common	de	E-Mail Einstellungen
@@ -122,21 +135,26 @@ email account name	email	de	Name des E-Mail Kontos
 email address	email	de	E-Mail Adresse
 email password	email	de	E-Mail Passwort
 email signature	common	de	E-Mail Signatur
+email type	common	de	E-Mail Typ
 enabled	admin	de	Verfügbar
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 end date	common	de	Enddatum
+end date/time	calendar	de	Enddatum/-zeit
 end time	common	de	Endzeit
 enter your new password	preferences	de	Neues Passwort eingeben
 entry has been deleted sucessfully	common	de	Eintrag erfolgreich gelöscht
 entry updated sucessfully	common	de	Eintrag erfolgreich aktualisiert
-error	common	de	Fehler
 err_saving_file	filemanager	de	Fehler beim Schreiben der Datei
+error	common	de	Fehler
+error creating x x directory	common	de	Fehler beim Erstellen des Verzeichnisses %1%2
+error deleting x x directory	common	de	Fehler beim Löschen des Verzeichnisses %1%2
+error renaming x x directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1%2
 exit	filemanager	de	Exit
 fax	addressbook	de	Fax
 february	common	de	Februar
 file manager	common	de	Filemanager
-files	filemanager	de	Dateien
 file_upload	filemanager	de	Datei Upload
+files	common	de	Dateien
 filter	common	de	Filter
 first name	common	de	Vorname
 first page	common	de	erste Seite
@@ -144,12 +162,14 @@ folder	email	de	Ordner
 forum	common	de	Forum
 forward	email	de	Weiterleiten
 fr	calendar	de	Fr
+free/busy	calendar	de	frei/belegt
 frequency	calendar	de	Häufigkeit
 fri	calendar	de	Fr
 friday	common	de	Freitag
 from	email	de	Von
 ftp	common	de	FTP
 full description	calendar	de	vollständige Beschreibung
+full name	addressbook	de	vollständiger Name
 generate new lang.sql file	transy	de	Erzeuge neue lang.sql Datei
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
 georgia    notes        de      Georgia
@@ -157,6 +177,7 @@ global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
 global public only	common	de	nur öffentliche
 go!	calendar	de	Go!
+grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
 group	common	de	Gruppe
 group access 	common	de	Gruppenzugriff
 group has been added	common	de	Gruppe hinzugefügt
@@ -165,8 +186,9 @@ group has been updated	common	de	Gruppe aktualisiert
 group name	admin	de	Gruppenname
 group public	common	de	Group Public
 group public only	common	de	nur Gruppen
-groups	common	de	Gruppen
 group_files	filemanager	de	Gruppen Dateien
+groups	common	de	Gruppen
+groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, müssen die korrekten Zugriffsrechte für die Verzeichnisse files/groups erstellt werden.<BR> Auf *nix Systemen dient dazu folgender Befehl: chmod 707
 headline preferences	common	de	Schlagzeilen Einstellungen
 headline sites	admin	de	Sites für Schlagzeilen
 headlines	common	de	Schlagzeilen
@@ -175,13 +197,17 @@ helvetica    notes      de      Helvetica
 high	common	de	Hoch
 home	common	de	Home
 home phone	addressbook	de	Tel privat
+human resources	common	de	Personenverzeichnis
 i participate	calendar	de	Ich nehme teil
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
 idle	admin	de	idle
 if applicable	email	de	falls zutreffend
+ignore conflict	calendar	de	Konflikt ignorieren
 image	email	de	Grafik
 imap server type	email	de	Typ des IMAP Servers
+import file	addressbook	de	Datei importieren
+import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
 installed applications	admin	de	Installierte Anwendungen
 inventory	common	de	Inventar
@@ -223,6 +249,7 @@ medium	common	de	Mittel
 message	common	de	Nachricht
 message x	nntp	de	Nachricht %1
 messages	email	de	Nachrichten
+middle name	addressbook	de	Zweiter Vorname
 minutes	calendar	de	Minuten
 minutes between reloads	admin	de	Minuten zwischen Reloads
 mo	calendar	de	Mo
@@ -245,13 +272,14 @@ new entry added sucessfully	common	de	Neuer Eintrag erfolgreich hinzugefügt
 new group name	admin	de	Neuer Gruppenname
 new message	email	de	Neue Nachricht
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
+new phrase has been added	transy	de	Neue Übersetzung wurde hinzugefügt
 new ticket	tts	de	Neues Ticket
+new_file	filemanager	de	Neue Datei
 news file	admin	de	News File
 news headlines	common	de	News headlines
 news reader	common	de	News Reader
 news type	admin	de	Nachrichtentyp
 newsgroups	nntp	de	Newsgroups
-new_file	filemanager	de	Neue Datei
 next	nntp	de	Nächste
 next page	common	de	nächste Seite
 nntp	common	de	NNTP
@@ -259,19 +287,22 @@ no	common	de	Nein
 no matches found.	calendar	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
 no tickets found	tts	de	Keine Tickets gefunden
+no_file_name	filemanager	de	Es wurde kein Dateiname angegeben
 non-standard	email	de	nicht Standard
 none	calendar	de	Keiner
 normal	common	de	Normal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
 notes	addressbook	de	Notizen
 notes	common	de	Notizbuch
-notes list    notes    de      Liste der Notizen
-notes preferences      common	de	Notizbuch Einstellungen
+notes list	notes	de	Notizliste
+notes preferences	common	de	Notizbuch Einstellungen
 november	common	de	November
-no_file_name	filemanager	de	Es wurde kein Dateiname angegeben
 october	common	de	Oktober
 ok	common	de	OK
 on *nix systems please type: x 	common	de	Auf *nix Systemen  bitte eingeben: %1
 only yours	common	de	nur eigene
+or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
+or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
 other number	addressbook	de	andere Nr.
 other phone	common	de	Tel sonst.
@@ -283,12 +314,16 @@ percent of users that logged out	admin	de	Prozent der User, die sich korrekt abg
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
-personized notes for    notes        de         Persönliche Notizen für
+personalized notes for	notes	de	Persönliche Notizen von
+phpgroupware login	login	de	phpGroupWare Login
+phrase in english	transy	de	Phrase in English
+phrase in new language	transy	de	Phrase in der neuen Sprache
 please select a message first	email	de	Bitte zuerst eine Nachricht wählen
 please x by hand	common	de	Bitte manuell %1
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	de	Einstellungen
+prefix	addressbook	de	Vorwahl
 previous	email	de	Vorige
 previous page	common	de	vorige Seite
 print	common	de	Drucken
@@ -299,8 +334,13 @@ private and global public	common	de	private und öffentliche
 private and group public	common	de	private und Gruppen
 private only	common	de	nur private
 private_files	filemanager	de	private Dateien
+project description	todo	de	Beschreibung
+re-edit event	calendar	de	Event erneut bearbeiten
 re-enter password	admin	de	Passwort wiederholen
 re-enter your password	preferences	de	Neues Passwort wiederholen
+read	common	de	Lesen
+record access	addressbook	de	Zugriffsrechte
+record owner	addressbook	de	Datensatz Eigentümer
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 rename	filemanager	de	Umbenennen
 rename_to	filemanager	de	Umbenennen in
@@ -317,15 +357,16 @@ saturday	common	de	Samstag
 save	common	de	Speichern
 search	common	de	Suchen
 search results	calendar	de	Suchergebnisse
-section	email	de	Sektion
 section	admin	de	Abschnitt
+section	email	de	Sektion
 select application	transy	de	Anwendung auswählen
 select different theme	preferences	de	anderes Schema wählen
-select headline news sites	preferences	de	Sites für Schlagzeilen auswählen
-select headline news sites	headlines	de	verfügbare News Sites für Schlagzeilen
+select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
+select which application for this phrase	transy	de	Wählen sie die Applikation für diese Phrase
+select which language for this phrase	transy	en	Wählen sie die Sprache für diese Phrase
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 send	email	de	Senden
 send deleted messages to the trash	email	de	gelöschte Nachrichten in die Mülltonne befördern
@@ -353,6 +394,7 @@ sorry, your login has expired	login	de	Sorry - Login abgelaufen
 source language	transy	de	Quellsprache
 specify_file_name	filemanager	de	Es muß ein Name für die zu erstellende Datei angegeben werden
 start date	common	de	Startdatum
+start date/time	calendar	de	Startdatum/-zeit
 start time	common	de	Startzeit
 state	addressbook	de	Land
 status	common	de	Status
@@ -361,6 +403,7 @@ su	calendar	de	So
 subject	common	de	Betreff
 submit	common	de	Absenden
 submit changes	admin	de	Änderungen Speichern
+suffix	addressbook	de	Zusatz
 sun	calendar	de	So
 sunday	common	de	Sonntag
 switch current folder to	email	de	Wechseln zum Ordner
@@ -371,21 +414,27 @@ th	calendar	de	Do
 that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
 that phrase already exists	common	de	Diese Phrase existiert bereits
 that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
+the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 the login and password can not be the same	admin	de	Login und Passwort dürfen nicht identisch sein
-the two passwords are not the same	preferences	de	Die Eingaben stimmen nicht überein
+the two passwords are not the same	common	de	Die Eingaben stimmen nicht überein
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	de	Die Verbindung zum Mailserver ist leider fehlgeschlagen.<br>Bitte prüfen sie Ihren Usernamen und Ihr Passwort, oder setzen Sie sich mit Ihrem Administrator in Verbindung.
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 this folder is empty	email	de	Dieser Ordner ist leer
 this month	calendar	de	Dieser Monat
-this server is located in the x timezone	preferences	de	Dieser Server befindet sich in der Zeitzone %1
+this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
+this server is located in the x timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 this week 	calendar	de	Diese Woche
 threads	nntp	de	Threads
 thu	calendar	de	Do
 thursday	common	de	Donnerstag
 time	common	de	Zeit
+time created     notes         en       wann erstellt
 time format	preferences	de	Zeitformat
 time zone offset	preferences	de	Zeitzonen Differenz
+times new roman     notes      de      Times New Roman
 title	common	de	Titel
 to	email	de	An
+to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler für die Zukunft zu beheben, korrigieren Sie die Einstellungen
 today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 todo	todo	de	Beschreibung
@@ -396,6 +445,7 @@ tommorow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
 total	common	de	Total
 total records	admin	de	Anzahl Datensätze insgesamt
 translation	transy	de	Übersetzung
+translation management	common	de	Translation Management
 trouble ticket system	common	de	Trouble Ticket System
 tu	calendar	de	Di
 tue	calendar	de	Di
@@ -414,7 +464,9 @@ user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
 username	login	de	Benutzername
 users	common	de	Benutzer
+vcard	addressbook	de	VCard
 vcard      common   de      Visitenkarte
+vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 verdana    notes    de      Verdana
 very large   notes   de     Sehr Groß
 very small   notes   de     Sehr Klein
@@ -442,12 +494,15 @@ year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
 yes	common	de	ja
 you are required to change your password during your first login	common	de	Das Passwort muß beim ersten Login geändert werden!
+you have 1 high priority event on your calendar today.	common	de	Sie haben heute einen Eintrag mit hoher Priorität auf Ihrer Liste!
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 you have entered an invailed date	todo	de	Das angegebene Datum ist ungültig
+you have messages!	common	de	Sie haben Nachrichten!
 you have no new messages	common	de	Keine neuen Nachrichten
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
 you have not entered a\nvalid time of day	calendar	de	Sie haben keine a\ngültige Tageszeit eingegeben.
+you have x high priority events on your calendar today.	common	de	Sie haben heute %1 Einträge mit hoher Priorität auf Ihrer Liste!
 you have x new messages!	common	de	Sie haben %1 neue Nachrichten!
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter a base url	admin	de	Sie müssen eine Basis URL angeben
@@ -464,28 +519,5 @@ your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	de	Der von Ihnen gewählte Zeitraum <B> %1 - %2 </B> führt zu Konflikten mit folgenden bereits existierenden Kalendereinträgen:
 zip code	addressbook	de	PLZ
-address book - view	addressbook	de	Adressbuch - Anzeigen
-record owner	addressbook	de	Datensatz Eigentümer
-record access	addressbook	de	Zugriffsrechte
-this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
-vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
-start date/time	calendar	de	Startdatum/-zeit
-end date/time	calendar	de	Enddatum/-zeit
-project description	todo	de	Beschreibung
-or: select for today:	todo	de	alternativ: heute
-or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
-addsub	todo	de	AddSub
-you have messages!	common	de	Sie haben Nachrichten!
-vcard	addressbook	de	VCard
-addvcard	addressbook	de	VCard hinzufügen
-import file	addressbook	de	Datei importieren
-access not permitted	common	de	Zugriff verweigert
-personalized notes for	notes	de	Persönliche Notizen von
-notes list	notes	de	Notizliste
-add note	notes	de	Notiz hinzufügen
-add a note for	notes	de	Notiz hinzufügen für
-there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	de	Die Verbindung zum Mailserver ist leider fehlgeschlagen.<br>Bitte prüfen sie Ihren Usernamen und Ihr Passwort, oder setzen Sie sich mit Ihrem Administrator in Verbindung.
-action	admin	de	Aktion
-allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-translation management	common	de	Translation Management
