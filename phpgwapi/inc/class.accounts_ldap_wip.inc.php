@@ -199,8 +199,11 @@
 
 			// Changing the uid:  Need to delete and add new, since
 			// PHP cannot change the dn for the entry.
-			if ($allValues[0]["uid"][0] != $this->data["account_lid"])
+			if ($acct_type == 'g') { $test = $allValues[0]["cn"][0];  }
+			else                   { $test = $allValues[0]["uid"][0]; }
+			if ($test != $this->data["account_lid"])
 			{
+				echo $allValues[0]["cn"][0]; exit;
 				ldap_delete($ds,$allValues[0]["dn"]);
 				unset($allValues[0]["dn"]);
 				while (list($key,$val) = each($allValues[0]))
@@ -229,23 +232,27 @@
 					}
 				}
 
-				// All entries need this
-				$entry["cn"] = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
-
-				// Groups only
+				// Groups
 				if ($this->data["account_type"] == "g" && $phpgw_info["server"]["ldap_group_context"] )
 				{
 					$dn = 'uid='.$this->data["account_lid"].','.$phpgw_info["server"]["ldap_group_context"];
+					$entry["cn"] = $this->data["account_lid"];
 					$entry["gidnumber"] = $this->data["account_id"];
 					$entry["objectclass"] = "";
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
+					$members = $this->memberships($this->data["account_id"]);
+					for ($i=0;$i<count($members);$i++)
+					{
+						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
+					}
 				}
-				// Accounts only
+				// Accounts
 				else
 				{
 					$dn = 'uid='.$this->data["account_lid"].','.$phpgw_info["server"]["ldap_context"];
 					$entry["uidnumber"]      = $this->data["account_id"];
+					$entry["cn"] = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
 					$entry["uid"]       = $this->data["account_lid"];
 					$entry["givenname"]      = $this->data["firstname"];
 					$entry["sn"]             = $this->data["lastname"];
@@ -281,6 +288,16 @@
 			// Normal behavior for save_repository
 			else
 			{
+				if ($this->data["account_type"] == "g" && $phpgw_info["server"]["ldap_group_context"] )
+				{
+					$members = $this->memberships($this->data["account_id"]);
+					for ($i=0;$i<count($members);$i++)
+					{
+						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
+					}
+					unset($entry["givenname"]);
+					unset($entry["sn"]);
+				}
 				while (list($key,$val) = each($entry))
 				{
 					$tmpentry = '';
