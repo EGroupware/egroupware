@@ -828,7 +828,7 @@
 				}
 			}
       
-			if($id)
+			if(count($id) >= 1)
 			{
 				@reset($id);
 				$sql .= ' AND phpgw_cal.cal_id NOT IN ('.(count($id)==1?$id[0]:implode(',',$id)).')';
