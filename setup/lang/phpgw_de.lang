@@ -1,9 +1,17 @@
+(account deletion in sql only)	setup	de	(Benutzerkontenlöschung NUR in SQL)
+00 (disable)	setup	de	00 (abgeschaltet)
+13 (ntp)	setup	de	13 (ntp)
+80 (http)	setup	de	80 (http)
+<br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	de	<br><center>Import ist beendet! <a href="index.php">Hier clicken</a> um zum Setup zurück zu kommen</center>
 actions	setup	de	Aktionen
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper zufügen ('Default' wird versucht wenn nichts angegeben.)
 admin first name	setup	de	Admin Vorname
 admin last name	setup	de	Admin Nachname
 admin password	setup	de	Admin Passwort
 admin username	setup	de	Admin Username
+admins	setup	de	Administratoren
 all applications	setup	de	Alle Applikationen
+all users	setup	de	Alle Benutzer
 app details	setup	de	App Details
 app install/remove/upgrade	setup	de	Applikation installierenn/entfernen/aktualisieren
 application data	setup	de	Applikations Daten
@@ -11,100 +19,175 @@ application management	setup	de	Applikation Management
 application name and status	setup	de	Applikation Name und Status
 application name and status information	setup	de	Applikation Name und Status Information
 application title	setup	de	Applikation Titel
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	 Auf Ihre Anforderung hin wird dieses Script nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
+are you sure?	setup	de	SIND SIE SICHER?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Script nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
 at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Script nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Applikationen auf die gegenw&auml;rtige Version zu aktualisieren
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Tabellen auf das neue Format zu aktualisieren
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	de	auf Ihre Anforderung wird dieses Script die &uuml;ble Aktion auf sich nehmen, Ihre existierenden Tabellen zu l&ouml;schen und sie im neuen Format wieder herzustellen !
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	de	Auf Ihre Anforderung wird dieses Script die &uuml;ble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten l&ouml;schen wird !
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert 'application/octet-stream'
+authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
+auto create account records for authenticated users	setup	de	Benutzerkonten für authentifiziere Benutzer automatisch anlegen
+auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab am
 available version	setup	de	Verf&uuml;gbare Version
-backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br><em>Bitte legen Sie ein Sicherungskopie an, befor Sie weiters unternehmen !</em>
-because it depends upon	setup	de	weil es abh&auml;ngt von  
+backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br
+because it depends upon	setup	de	weil es abh&auml;ngt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Applikation ist, oder der Zugriff &uuml;ber ACL kontrolliert wird
 because it requires manual table installation, <br>or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br>oder die Tabellen-definition war nicht korrekt
+because it was manually disabled	setup	de	weil es manuell ausgeschaltet wurde
 because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installation fehlgeschlug
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlschlug, oder die Datenbank ist neuer als die installierte Version dieser Applikation
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verf&uuml;gbar-Eintrag f&uuml;r diese Applikation auf 0 gesetzt oder undefiniert ist
+bottom	setup	de	unten
 cancel	setup	de	Abbrechen
 charset	setup	de	ISO-8859-1
+check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 click here	setup	de	Hier clicken
-configuration completed	setup	de	Konfiguration abgeschlossen
 configuration	setup	de	Konfiguration
+configuration completed	setup	de	Konfiguration abgeschlossen
 configure now	setup	de	Jetzt konfigurieren
-create one now	setup	de	Jetzt erstellen
+country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
+create database	setup	de	Datenbank erzeugen
+create one now	setup	de	Jetzt erstellen
 creating tables	setup	de	erstelle Tabellen
-currently installed languages: x <br>	setup	de	Gegenw&auml;rtig installierte Sprachen: %1 <br>
 current version	setup	de	Gegenw&auml;rtige Version
+currently installed languages: x <br>	setup	de	Gegenw&auml;rtig installierte Sprachen: %1 <br>
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
+db root password	setup	de	Datenbank Root Passwort
+db root username	setup	de	Datenbank Root Benutzername
+default file system space per user/group ?	setup	de	Vorgabewert Festplatenplatz pro Benutzer / Gruppe ?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten l&ouml;schen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen l&ouml;schen und neu installieren
 deleting tables	setup	de	l&ouml;sche Tabellen
 demo server setup	setup	de	Demo Server Setup
+deny access	setup	de	Zugrif verweigern
+deny all users access to grant other users access to their entries ?	setup	de	Alle Benutzern verbieten anderen Benutzern Zugriff auf ihre Daten zu gewähren ?
 deregistered	setup	de	nicht registriert
 details for admin account	setup	de	Details des Admin Accounts
 domain	setup	de	Domain
+dont touch my data	setup	de	Meine Daten nicht verändern
 edit current configuration	setup	de	Gegenw&auml;rtige Konfiguration &uuml;berarbeiten
+enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüssellung der app session
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüssellung der app session<br>(benötigt mcrypt)
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	setup	de	URL zur phpGroupWare Installation.<br>Beispiel: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the site password for peer servers	setup	de	Site Passwort für Peer Server
+enter the site username for peer servers	setup	de	Site Benutzername für Peer Server
+enter the title for your site	setup	de	Titel der phpGroupWare Installation
+enter your default ftp server	setup	de	Default FTP Server
+enter your http proxy server	setup	de	HTTP Proxy Server
+enter your http proxy server port	setup	de	HTTP Proxy Server Port
+export phpgroupware accounts from sql to ldap	setup	de	phpGroupWare Benutzerkonten von SQL nach LDAP exportieren
 export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	F&uuml;r eine Neuinstallation, w&auml;hlen sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
+force selectbox	setup	de	Auswahl erzwingen
 go back	setup	de	Zur&uuml;ck gehen
+go to	setup	de	Gehen zu
+grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
+host information	setup	de	Host Informationen
 however, the application is otherwise installed	setup	de	Wie auch immer, die Applikation ist ansonsten installiert
+if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Applikation keine definierten Tabellen hat, w&auml;hlen Sie &uuml;berarbeiten. Das Problem sollte damit behoben werden.
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Applikationen
 if you did not receive any errors, your tables have been	setup	de	Wenn sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die phpGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
 import ldap users/groups	setup	de	LDAP Benutzer/Gruppen importieren
 insanity	setup	de	Irrsinn
-install Applications	setup	de	Applikationen installieren
-install language	setup	de	Sprachen installieren
 install	setup	de	Installieren
+install applications	setup	de	Applikationen installieren
+install language	setup	de	Sprachen installieren
+installed	setup	de	installiert
 is broken	setup	de	ist kaputt
 is disabled	setup	de	ist nicht aktiv
-ldap account import/export	setup	de	LDAP Account importieren/exportieren
+ldap account import/export	setup	de	LDAP Benutzerkonten importieren/exportieren
+ldap accounts configuration	setup	de	LDAP Benutzerkonten Konfiguration
+ldap accounts context	setup	de	LDAP Kontext für Benutzerkonten
+ldap config	setup	de	LDAP Konfiguration
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	de	LDAP Vorgabewert für Benutzerverzeichnisse (zB. /home für /home/username)
+ldap default shell (e.g. /bin/bash)	setup	de	LDAP Vorgabewert für Komandointerpreter (shell) (zB. /bin/bash)
+ldap encryption type	setup	de	LDAP Verschlüsselungstyp
 ldap export users	setup	de	LDAP-Benutzer exportieren
+ldap groups context	setup	de	LDAP Kontext für Gruppe
+ldap host	setup	de	LDAP Host
 ldap import users	setup	de	LDAP-Benutzer importieren
+ldap root password	setup	de	LDAP Root Passwort
+ldap rootdn	setup	de	LDAP rootdn
 logout	setup	de	Logout
 makesure	setup	de	Stellen Sie sicher, da&szlig; Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Applikationen verwalten
 manage languages	setup	de	Sprachen verwalten
+maximum account id (e.g. 65535 or 1000000)	setup	de	Maximum für Benutzer Id (zB. 65535 oder 1000000)
+mcrypt algorithm (default tripledes)	setup	de	Mcrypt Algorithmus (Vorgabe TRIPLEDES)
+mcrypt mode (default cbc)	setup	de	Mcrpyt Modus (Vorgabe CBC)
+mcrypt settings (requires mcrypt php extension)	setup	de	Mcrypt Einstellungen (benötigt die mcrypt Erweiterung von PHP)
+minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer Id (zB. 500 oder 100)
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP Benutzerkonten für die Benutzung durch phpGroupWare anpassen (für eine neue Installation mit LDAP Konten)
 multi-language support setup	setup	de	Mehr-Sprachen Unterst&uuml;tzung einrichten
-mysqlinstr	setup	de	 Hinweise zum erstellen der Datenbank in MySQL:<br>Login zu mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Erstellen Sie die leere Datenbank und bewilligen Sie Benutzer Erlaubnis -<br><i>mysql&gt; create database phpgroupware;</i><br><i>mysql&gt; grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+mysqlinstr	setup	de	Hinweise zum erstellen der Datenbank in MySQL:<br>Login zu mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Erstellen Sie die leere Datenbank und bewilligen Sie Benutzer Erlaubnis -<br><i>mysql&gt; create database phpgroupware;</i><br><i>mysql&gt
+never	setup	de	niemals
+no	setup	de	Nein
+no algorithms available	setup	de	Kein Algorithmus verfügbar
+no modes available	setup	de	kein Modus verfügbar
 not complete	setup	de	nicht komplett
-note: you will be able to customize this later	setup	de	Notiz: Sie k&ouml;nnen dies sp&auml;ter anpassen
+not completed	setup	de	Nicht komplett
 not ready for this stage yet	setup	de	Noch nicht fertig f&uuml;r diesen Schritt
+note: you will be able to customize this later	setup	de	Notiz: Sie k&ouml;nnen dies sp&auml;ter anpassen
 ok	setup	de	OK
 once the database is setup correctly	setup	de	Wenn die Datenbank einmal korrekt eingerichtet ist
+one month	setup	de	ein Monat
+one week	setup	de	eine Woche
 only add languages that are not in the database already	setup	de	Nur Sprachen hinzuf&uuml;gen, die noch nicht in der Datenbank sind
 only add new phrases	setup	de	Nur neue Begriffe hinzuf&uuml;gen
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht &uuml;berein, bitte nocheinmal eingeben
+path information	setup	de	Pfadinformationen
 pgsqlinstr	setup	de	Hinweise zum erstellen der Datenbank in PostgreSQL:<br>Starten des postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Erstellen Sie die leere Datenbank -<br><i>[user@server user]# createdb phpgroupware</i>
 please check for sql scripts within the application's directory	setup	de	Bitte schauen Sie nach sql-Scripten im Applikations-Ordner
-please configure phpGroupWare for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare f&uuml;r Ihre Umgebung
+please configure phpgroupware for your environment	setup	de	Bitte konfigurieren Sie phpGroupWare f&uuml;r Ihre Umgebung
 please install	setup	de	Bitte installieren
 please wait...	setup	de	Please Wait...
+please login to phpgroupware and run the admin application for additional site configuration	setup	de	Bitte in phpGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
 possible solutions	setup	de	M&ouml;gliche L&ouml;sungen
 potential problem	setup	de	Potentielles Problem
+preferences	setup	de	Einstellungen
 problem resolution	setup	de	Problem L&ouml;sung
 process	setup	de	Prozess
+re-check my database	setup	de	Datenbank erneut überprofen
+re-check my installation	setup	de	Installation erneut überprüfen
 re-enter password	setup	de	Passworteingabe wiederholen
+really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallieren
 registered	setup	de	registriert
 remove	setup	de	Entfernen
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	L&ouml;sen
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	de	W&auml;hlen Sie eine Applikation, geben Sie eine Zielversion ein, dann best&auml;tigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select the default applications to which your users will have access	setup	de	W&auml;hlen Sie die voreingestellten Applikationen, zu denen Ihre Benutzer Zugriff haben werden
 select the desired action(s) from the available choices	setup	de	W&auml;hlen Sie die verlangten Aktion(en) aus der verf&uuml;gbaren Auswahl
+select to download file	setup	de	Auswähle um die Datei herunterzuladen
+select where you want to store/retrieve filesystem information	setup	de	Wo wollen Sie Datei Informationen ablegen / lesen
+select where you want to store/retrieve user accounts	setup	de	Wo wollen Sie die Benutzerkonten speichern
 select which group(s) will be exported (group membership will be maintained)	setup	de	W&auml;hlen Sie die zu exportierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
 select which group(s) will be imported (group membership will be maintained)	setup	de	W&auml;hlen Sie die zu importierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
 select which languages you would like to use	setup	de	W&auml;hlen Sie die Sprachen, die Sie benutzen m&ouml;chten
 select which method of upgrade you would like to do	setup	de	W&auml;hlen Sie die Methode der Aktualisierung, die Sie durchf&uuml;hren m&ouml;chten
+select which type of authentication you are using	setup	de	Welche Art der Authentifizierung wollen Sie benutzen
 select which user(s) will be exported	setup	de	W&auml;hlen Sie den/die zu exportierenden Benutzer
 select which user(s) will be imported	setup	de	W&auml;hlen Sie den/die zu importierenden Benutzer
 select which user(s) will have admin privileges	setup	de	W&auml;hlen Sie den/die Benutzer, der/die Administrationsrechte hat/haben
 select your old version	setup	de	W&auml;hlen Sie Ihre alte Version
+selectbox	setup	de	Auswahlfeld
 setup	setup	de	Einrichtung
-some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen 
+setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
+show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
+some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 status	setup	de	Status
 step 1 - simple application management	setup	de	Schritt 1 - Einfache Applikations Verwaltung
 step 2 - configuration	setup	de	Schritt 2 - Konfiguration
@@ -116,30 +199,45 @@ tables dropped	setup	de	Tabellen wurden gel&ouml;scht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP Server aufzubauen. <br>Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP Servers.
+text entry	setup	de	Texteingabe
+the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
-this program will help you upgrade or install different languages for phpGroupWare	setup	en	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen f&uuml;r phpGroupWare behilflich sein
-this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	de	 Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus phpGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
-this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in phpGroupWare's Account Tabellen behilflich sein
+there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP Server aufzubauen. <br>Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP Servers.
+this program will help you upgrade or install different languages for phpgroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen f&uuml;r phpGroupWare behilflich sein
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus phpGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
+this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in phpGroupWare's Account Tabellen behilflich sein
 this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
-this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN L&Ouml;SCHEN!!!</b><br>
-Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	de	W&auml;hlen Sie eine Applikation, geben Sie eine Zielversion ein, dann best&auml;tigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLIKATION L&Ouml;SCHEN!!!</blink>
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	de	Dies wird 1 Admin- und 3 Demo Benutzerkonten erstellen<br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.<br><b>!!!DIES WIRD ALLE EXISTIERENDEN BENUTZERKONTEN L&Ouml;SCHEN!!!</b><br>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	de	zum einrichten von 1 Admin- und 3 Demo-Benutzerkonten.<br><b>Dies wird alle existierenden Benutzerkonten l&ouml;schen!</b>
-upgraded	setup	de	Aktualisiert
+top	setup	de	oben
+translations added	setup	de	Übersetzungen hinzugefügt
+translations removed	setup	de	Übersetzungen entfernt
+translations upgraded	setup	de	Übersetuungen upgedated
+two weeks	setup	de	zwei Wochen
+uninstall all applications	setup	de	Alle Anwendungen deinstallieren
+uninstalled	setup	de	nicht installiert
 upgrade	setup	de	Aktualisieren
+upgraded	setup	de	Aktualisiert
 upgrading tables	setup	de	aktualisiere Tabellen
+use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
+use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+users choice	setup	de	Benutzerauswahl
 version mismatch	setup	de	Falsche Versionsanpassung
 we will automatically update your tables/records to x	setup	de	Wir werden Ihre Tabellen/Eintr&auml;ge automatisch zu %1 aktualisieren
-you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>&Auml;ltere PHP-Versionen k&ouml;nnten phpGroupWare nicht korrekt laufen lassen, wenn &uuml;berhaupt. <br><br>Biite aktualisieren Sie auf mindestens Version 3.0.16
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht l&auml;nger unterst&uuml;tzt, und es gibt keinen Aktualisierungs-Pfad f&uuml;r sie im Einrichtung-Programm.<br>Sie m&ouml;chten vieleicht erst auf 0.9.10 (die letzte Version mit vor-beta Unterst&uuml;tzung) aktualisieren<br>und danach auf die aktuelle Version.
-you appear to be running version x of phpGroupWare	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
+would you like phpgroupware to cache the phpgw info array ?	setup	de	Soll phpGroupWare das phpgw info Array cachen ?
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	de	Soll phpGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
+would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
+yes	setup	de	Ja
+you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von phpGroupWare benutzen.<br>Diese Versionen werden nicht l&auml;nger unterst&uuml;tzt, und es gibt keinen Aktualisierungs-Pfad f&uuml;r sie im Einrichtung-Programm.<br>Sie m&ouml;chten vieleicht erst auf
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version 3.0.16	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>&Auml;ltere PHP-Versionen k&ouml;nnten phpGroupWare nicht korrekt laufen lassen, wenn &uuml;berhaupt. <br><br>Biite aktualisieren Sie 
+you appear to be running version x of phpgroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	de	Sie sind bereit f&uuml;r diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br>
 you do not have any languages installed. please install one now <br>	setup	de	sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
 you must enter a username for the admin	setup	de	sie m&uuml;ssen einen Benutzernamen f&uuml;r den Admin eingeben !
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 your applications are current	setup	de	Ihre Applikationen sind aktuell
 your database does not exist	setup	de	Ihre Datenbank existiert nicht !
 your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Applikationen installiert !
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables may be altered and you may lose data	setup	de	Ihre Tabellen k&ouml;nnten ver&auml;ndert werden, und Sie k&ouml;nnten Daten verlieren !
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gel&ouml;scht werden, und Sie werden Daten verlieren !
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
