@@ -390,7 +390,8 @@ text is a string, it contains the body of the message.
 
 	function v1_manyTypes($m)
 	{
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',array(
+		return CreateObject('phpgwapi.xmlrpcresp',
+			CreateObject('phpgwapi.xmlrpcval',array(
 				$m->getParam(0),
 				$m->getParam(1),
 				$m->getParam(2),
@@ -421,7 +422,8 @@ text is a string, it contains the body of the message.
 	{
 		$sno=$m->getParam(0);
 		$v=$sno->scalarval();
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',array(
+		return CreateObject('phpgwapi.xmlrpcresp',
+			CreateObject('phpgwapi.xmlrpcval',array(
 				'times10'   => CreateObject('phpgwapi.xmlrpcval',$v*10, 'int'),
 				'times100'  => CreateObject('phpgwapi.xmlrpcval',$v*100, 'int'),
 				'times1000' => CreateObject('phpgwapi.xmlrpcval',$v*1000, 'int')
@@ -479,14 +481,15 @@ text is a string, it contains the body of the message.
 					break;
 			}
 		}
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',array(
-			'ctLeftAngleBrackets'  => CreateObject('phpgwapi.xmlrpcval',$lt, 'int'),
-			'ctRightAngleBrackets' => CreateObject('phpgwapi.xmlrpcval',$gt, 'int'),
-			'ctAmpersands'         => CreateObject('phpgwapi.xmlrpcval',$amp, 'int'),
-			'ctApostrophes'        => CreateObject('phpgwapi.xmlrpcval',$ap, 'int'),
-			'ctQuotes'             => CreateObject('phpgwapi.xmlrpcval',$qu, 'int')
+		return CreateObject('phpgwapi.xmlrpcresp',
+			CreateObject('phpgwapi.xmlrpcval',array(
+				'ctLeftAngleBrackets'  => CreateObject('phpgwapi.xmlrpcval',$lt, 'int'),
+				'ctRightAngleBrackets' => CreateObject('phpgwapi.xmlrpcval',$gt, 'int'),
+				'ctAmpersands'         => CreateObject('phpgwapi.xmlrpcval',$amp, 'int'),
+				'ctApostrophes'        => CreateObject('phpgwapi.xmlrpcval',$ap, 'int'),
+				'ctQuotes'             => CreateObject('phpgwapi.xmlrpcval',$qu, 'int')
 			),
-   	     'struct'
+   		     'struct'
 		));
 	}
 
