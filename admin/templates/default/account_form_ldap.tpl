@@ -90,6 +90,6 @@
 
 <!-- BEGIN link_row -->
 	<tr bgcolor="{tr_color}">
-		<td colspan="2">&nbsp;&nbsp;<a href="{pref_link}">{pref_text}</a></td>
+		<td colspan="2">&nbsp;&nbsp;<a href="{row_link}">{row_text}</a></td>
 	</tr>
 <!-- END link_row -->
