@@ -1,8 +1,2 @@
-This version is our first beta version.  This means that the API is now stable enough to use for add on apps.
-There will be bugs, but the structure should change very much from this point on.
-
-This version contains a great deal of database changes.  We applogize for so many changes, but it is required
-to make things work correctly and to start rolling in support for Oracle.
-
-You will need to run the new phpgroupware/setup/index.php program.  Right now its kind of limited, but 
-in the future it might auto update database tables.
+This version will NOT work with PHP 4.0.3pl1.  This is due to the PHP devteam breaking serialize() and
+unserialize().  There is no known work around.
