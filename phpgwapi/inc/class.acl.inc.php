@@ -390,7 +390,7 @@ It should use the values in the $this->data
 	  $db2->query($sql . $security ,__LINE__,__FILE__);
 	  $rights = 0;
 	  $accounts = Array();
-	  if ($db2->num_rows() == 0 ){ return False; }
+	  if ($db2->num_rows() == 0){ return False; }
 	  while ($db2->next_record())
 	  {
 	    $grantor = $db2->f('acl_account');
