@@ -54,7 +54,11 @@
 		{
 			$this->public_functions += array(
 				'disable_cells' => True,
-				'set_cell_attribute' => True
+				'set_cell_attribute' => True,
+				'get_cell_attribute' => True,
+				'get_array' => True,
+				'set_array' => True,
+				'unset_array' => True
 			);
 			$this->soetemplate();
 
@@ -401,46 +405,49 @@
 			return isset($arr[$idx]);
 		}
 
-		function set_array(&$arr,$idx,$val,$set=True)
+		function set_array(&$arr,$idx,$val)
 		{
-			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
+			if (!is_array($arr))
 			{
-				$arr_idx = '['.$regs[1].']'.$regs[2];
+				die('set_array() $arr is no array');
 			}
-			else
+			$idxs = explode('[',str_replace(']','',$idx));
+			$pos = &$arr;
+			while (list($n,$idx) = each($idxs))
 			{
-				$arr_idx = "[$idx]";
+				$pos = &$pos[$idx];
 			}
-			if ($set)
-			{
-				$code = '$arr'.$arr_idx.' = $val;';
-			}
-			else
-			{
-				$code = 'unset($arr'.$arr_idx.');';
-			}
-			eval($code = str_replace(']',"']",str_replace('[',"['",$code)));
-
-			//echo "set_array: $code = '$val'<br>\n";
-		}
-
-		function unset_array(&$arr,$idx)
-		{
-			$this->set_array($arr,$idx,0,False);
+			$pos = $val;
 		}
 
 		function &get_array(&$arr,$idx)
 		{
-			if (ereg('^([^[]*)(\\[.*\\])$',$idx,$regs))	// idx contains array-index
+			if (!is_array($arr))
 			{
-				eval($code = str_replace(']',"']",str_replace('[',"['",'$val = &$arr['.$regs[1].']'.$regs[2].';')));
-				//echo "get_array: $code = '$val'<br>\n";
+				die('set_array() $arr is no array');
 			}
-			else
+			$idxs = explode('[',str_replace(']','',$idx));
+			$pos = &$arr;
+			while (list($n,$idx) = each($idxs))
 			{
-				$val = &$arr[$idx];
+				$pos = &$pos[$idx];
 			}
-			return $val;
+			return $pos;
+		}
+
+		function unset_array(&$arr,$idx)
+		{
+			if (!is_array($arr))
+			{
+				die('set_array() $arr is no array');
+			}
+			$idxs = explode('[',str_replace(']','',$idx));
+			$pos = &$arr;
+			while ((list($n,$idx) = each($idxs)) && $n < count($idxs)-1)
+			{
+				$pos = &$pos[$idx];
+			}
+			unset($pos[$idx]);
 		}
 
 		/*!

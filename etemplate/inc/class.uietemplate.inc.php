@@ -340,18 +340,18 @@
 			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
-			if (ereg('^([^[]*)(\\[.*\\])$',$name,$regs))	// name contains array-index
+			$name_parts = explode('[',str_replace(']','',$name));
+			if (!empty($cname))
 			{
-				$form_name = $cname == '' ? $name : $cname.'['.$regs[1].']'.$regs[2];
-				eval(str_replace(']',"']",str_replace('[',"['",'$value = $content['.$regs[1].']'.$regs[2].';')));
-				$org_name = substr($regs[2],1,-1);
+				array_unshift($name_parts,$cname);
 			}
-			else
+			$form_name = array_shift($name_parts);
+			if (count($name_parts))
 			{
-				$form_name = $cname == '' ? $name : $cname.'['.$name.']';
-				$value = $content[$name];
-				$org_name = $name;
+				$form_name .= '['.implode('][',$name_parts).']';
 			}
+			$value = $this->get_array($content,$name);
+
 			if ($readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'])
 			{
 				$options .= ' READONLY';
@@ -372,14 +372,7 @@
 				$ext_type = $type;
 				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
 
-				if (!$regs)
-				{
-					$content[$name] = $value;	// set result for template
-				}
-				else
-				{
-					eval(str_replace(']',"']",str_replace('[',"['",'$content['.$regs[1].']'.$regs[2].' = $value;')));
-				}
+				$this->set_array($content,$name,$value);
 			}
 			$label = $cell['label'];
 			if ($label[0] == '@')
@@ -592,9 +585,17 @@
 					{
 						$sels += $sel_options[$name];
 					}
-					elseif (isset($sel_options[$org_name]))
+					elseif (count($name_parts))
 					{
-						$sels += $sel_options[$org_name];
+						$org_name = array_shift($name_parts);
+						if (count($name_parts))
+						{
+							 $org_name .= '['.implode('][',$name_parts).']';
+						}
+						if (isset($sel_options[$org_name]))
+						{
+							$sels += $sel_options[$org_name];
+						}
 					}
 					if (isset($content["options-$name"]))
 					{
