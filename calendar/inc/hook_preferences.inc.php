@@ -12,7 +12,6 @@
   /* $Id$ */
 {
 // Only Modify the $file and $title variables.....
-	$title = $appname;
 	$file = array(
 		'Preferences' => $GLOBALS['phpgw']->link('/index.php',
 				Array(
@@ -23,6 +22,6 @@
 		'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname.'&cats_level=True&global_cats=True')
 	);
 //Do not modify below this line
-	display_section($appname,$title,$file);
+	display_section($appname,$file);
 }
 ?>
