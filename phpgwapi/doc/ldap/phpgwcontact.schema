@@ -1,165 +1,165 @@
 # $phpgroupware : addressbook/phpgwcontact.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
 
 # REQUIRED
-attributetype ( 2.3.6.1.1.1.1.100
+attributetype ( 1.3.6.1.4.1.9554.100
 	NAME 'phpgwContactTypeId'
 	EQUALITY numericStringMatch
 	SUBSTR numericStringSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
 
 # REQUIRED
-attributetype ( 2.3.6.1.1.1.1.101
+attributetype ( 1.3.6.1.4.1.9554.101
 	NAME 'phpgwContactCatId'
 	EQUALITY numericStringMatch
 	SUBSTR numericStringSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
 
 # REQUIRED
-attributetype ( 2.3.6.1.1.1.1.102
+attributetype ( 1.3.6.1.4.1.9554.102
 	NAME 'phpgwContactAccess'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
 # REQUIRED
-attributetype ( 2.3.6.1.1.1.1.103
+attributetype ( 1.3.6.1.4.1.9554.103
 	NAME 'phpgwContactOwner'
 	EQUALITY numericStringMatch
 	SUBSTR numericStringSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16} )
 
 # BELOW ARE OPTIONAL
-attributetype ( 2.3.6.1.1.1.1.105
+attributetype ( 1.3.6.1.4.1.9554.105
 	NAME 'phpgwMiddlename'
 	SUP name )
 
-attributetype ( 2.3.6.1.1.1.1.106
+attributetype ( 1.3.6.1.4.1.9554.106
 	NAME 'phpgwPrefix'
 	SUP name )
 
-attributetype ( 2.3.6.1.1.1.1.107
+attributetype ( 1.3.6.1.4.1.9554.107
 	NAME 'phpgwSuffix'
 	SUP name )
 
-attributetype ( 2.3.6.1.1.1.1.108
+attributetype ( 1.3.6.1.4.1.9554.108
 	NAME 'phpgwAudio'
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.4{25000} )
 
-attributetype ( 2.3.6.1.1.1.1.109
+attributetype ( 1.3.6.1.4.1.9554.109
 	NAME 'phpgwBirthday'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
-attributetype ( 2.3.6.1.1.1.1.110
+attributetype ( 1.3.6.1.4.1.9554.110
 	NAME 'phpgwTz'
 	EQUALITY integerMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
 
-attributetype ( 2.3.6.1.1.1.1.111
+attributetype ( 1.3.6.1.4.1.9554.111
 	NAME 'phpgwGeo'
  	EQUALITY integerMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 SINGLE-VALUE )
 
-attributetype ( 2.3.6.1.1.1.1.112
+attributetype ( 1.3.6.1.4.1.9554.112
 	NAME 'phpgwUrl'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
-attributetype ( 2.3.6.1.1.1.1.113
+attributetype ( 1.3.6.1.4.1.9554.113
 	NAME 'phpgwPublicKey'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
-attributetype ( 2.3.6.1.1.1.1.114
+attributetype ( 1.3.6.1.4.1.9554.114
 	NAME 'phpgwAdrOneType'
 	EQUALITY caseIgnoreMatch
 	SUBSTR caseIgnoreSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
-attributetype ( 2.3.6.1.1.1.1.115
+attributetype ( 1.3.6.1.4.1.9554.115
 	NAME 'phpgwAddressLabel'
 	EQUALITY caseIgnoreListMatch
 	SUBSTR caseIgnoreListSubstringsMatch
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.41 )
 
-attributetype ( 2.3.6.1.1.1.1.116
+attributetype ( 1.3.6.1.4.1.9554.116
 	NAME 'phpgwAdrTwoStreet'
 	SUP street )
 
-attributetype ( 2.3.6.1.1.1.1.117
+attributetype ( 1.3.6.1.4.1.9554.117
 	NAME 'phpgwAdrTwoLocality'
 	SUP l )
 
-attributetype ( 2.3.6.1.1.1.1.118
+attributetype ( 1.3.6.1.4.1.9554.118
 	NAME 'phpgwAdrTwoRegion'
 	SUP st )
 
-attributetype ( 2.3.6.1.1.1.1.119
+attributetype ( 1.3.6.1.4.1.9554.119
 	NAME 'phpgwAdrTwoPostalCode'
 	SUP postalcode )
 
-attributetype ( 2.3.6.1.1.1.1.120
+attributetype ( 1.3.6.1.4.1.9554.120
 	NAME 'phpgwAdrTwoCountryName'
 	SUP friendlyCountryName )
 
-attributetype ( 2.3.6.1.1.1.1.121
+attributetype ( 1.3.6.1.4.1.9554.121
 	NAME 'phpgwAdrTwoType'
 	SUP phpgwAdrOneType )
 
-attributetype ( 2.3.6.1.1.1.1.122
+attributetype ( 1.3.6.1.4.1.9554.122
 	NAME 'phpgwVoiceTelephoneNumber'
 	SUP telephonenumber )
 
-attributetype ( 2.3.6.1.1.1.1.123
+attributetype ( 1.3.6.1.4.1.9554.123
 	NAME 'phpgwMsgTelephoneNumber'
 	SUP telephonenumber )
 
-attributetype ( 2.3.6.1.1.1.1.124
+attributetype ( 1.3.6.1.4.1.9554.124
 	NAME 'phpgwPagerTelephoneNumber'
 	SUP telephonenumber )
  
-attributetype ( 2.3.6.1.1.1.1.125
+attributetype ( 1.3.6.1.4.1.9554.125
 	NAME 'phpgwCellTelephoneNumber'
 	SUP telephonenumber )
  
-attributetype ( 2.3.6.1.1.1.1.126
+attributetype ( 1.3.6.1.4.1.9554.126
 	NAME 'phpgwBbsTelephoneNumber'
 	SUP telephonenumber )
  
-attributetype ( 2.3.6.1.1.1.1.127
+attributetype ( 1.3.6.1.4.1.9554.127
 	NAME 'phpgwModemTelephoneNumber'
 	SUP telephonenumber )
 
-attributetype ( 2.3.6.1.1.1.1.128
+attributetype ( 1.3.6.1.4.1.9554.128
 	NAME 'phpgwMobileTelephoneNumber'
 	SUP telephonenumber )
  
-attributetype ( 2.3.6.1.1.1.1.129
+attributetype ( 1.3.6.1.4.1.9554.129
 	NAME 'phpgwIsdnphoneNumber'
 	SUP telephonenumber )
 
-attributetype ( 2.3.6.1.1.1.1.130
+attributetype ( 1.3.6.1.4.1.9554.130
 	NAME 'phpgwVideophoneNumber'
 	SUP telephonenumber )
 
-attributetype ( 2.3.6.1.1.1.1.131
+attributetype ( 1.3.6.1.4.1.9554.131
 	NAME 'phpgwPreferPhone'
 	EQUALITY caseExactIA5Match
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
 
-attributetype ( 2.3.6.1.1.1.1.132
+attributetype ( 1.3.6.1.4.1.9554.132
 	NAME 'phpgwMailType'
 	EQUALITY caseExactIA5Match
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
 
-attributetype ( 2.3.6.1.1.1.1.133
+attributetype ( 1.3.6.1.4.1.9554.133
 	NAME 'phpgwMailHome'
 	SUP mail )
 
-attributetype ( 2.3.6.1.1.1.1.134
+attributetype ( 1.3.6.1.4.1.9554.134
 	NAME 'phpgwMailHomeType'
 	SUP phpgwMailType )
 
@@ -167,7 +167,7 @@ attributetype ( 2.3.6.1.1.1.1.134
 # The phpgwContact represents people who are associated with a
 # phpgw install in some way.  It is a structural class and is derived
 # from the inetOrgPerson schema.
-objectclass	( 2.3.6.1.1.1.1.200
+objectclass	( 1.3.6.1.4.1.9554.200
 	NAME 'phpgwContact'
 	DESC 'phpGroupWare Contact Entry'
 	MUST(
