@@ -413,4 +413,4 @@
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'created by','todo','en','Created By')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'you have entered an invailed date','todo','en','you have entered an invailed date')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'are you sure you want to delete this entry','todo','en','Are you sure you want to delete this entry?')");
-  $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'Weather','Weather','en','weather')");
+  $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
