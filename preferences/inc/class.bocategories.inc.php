@@ -104,9 +104,12 @@
 			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
 		}
 
-		function delete($cat_id,$drop_subs,$modify_subs)
+		function delete($data)
 		{
-			$this->cats->delete($cat_id,$drop_subs,$modify_subs);
+			if (is_array($data))
+			{
+				$this->cats->delete($data);
+			}
 		}
 
 		function check_values($values)

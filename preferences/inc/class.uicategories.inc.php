@@ -530,11 +530,11 @@
 				switch (get_var('subs',array('POST')))
 				{
 					case 'move':
-						$this->bo->delete($this->cat_id,False,True);
+						$this->bo->delete(array('cat_id' => $this->cat_id,'modify_subs' => True));
 						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 						break;
 					case 'drop':
-						$this->bo->delete($this->cat_id,True);
+						$this->bo->delete(array('cat_id' => $this->cat_id,'drop_subs' => True));
 						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
 						break;
 					default:

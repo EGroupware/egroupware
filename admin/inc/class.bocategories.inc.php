@@ -147,14 +147,7 @@
 		{
 			if (is_array($data))
 			{
-				$cat_id			= $data['cat_id'];
-				$drop_subs		= (isset($data['drop_subs'])?$data['drop_subs']:False);
-				$modify_subs	= (isset($data['modify_subs'])?$data['modify_subs']:False);				
-
-				if ($cat_id > 0)
-				{
-					$this->cats->delete($cat_id,$drop_subs,$modify_subs);
-				}
+				$this->cats->delete($data);
 			}
 		}
 
