@@ -6,7 +6,8 @@
 	      - Fixed changing of password not getting set in session table
 	      - email now displays "Could not open mailbox" if mailbox could
 	        not be opened (formerly displayed just "mailbox empty")
-	      - Fixed displaying of repeated events by owner
+	      - Fixed displaying of repeated calendar events by owner
+	      - Fixed displaying of calendar events to include group events
 
 [09072000] - Added print icon that allows you to print out a page without having
 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
