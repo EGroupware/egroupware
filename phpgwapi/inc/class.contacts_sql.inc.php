@@ -581,31 +581,34 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields,$access='',$cat_id='',$tid='n')
+		function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
-			$tid = $fields['tid'] ? trim($fields['tid']) : $tid;
-			unset($fields['tid']);
-			if(empty($tid))
+			$owner = intval($owner);
+			// access, cat_id and tid can be in $fields now or as extra params
+			foreach(array('access','cat_id','tid') as $extra)
 			{
-				$tid = 'n';
+				if (!is_null($$extra))
+				{
+					$fields[$extra] = $$extra;
+				}
 			}
-
-			if ($fields['lid'])
+			if(empty($fields['tid']))
 			{
-				$lid[0] = 'lid,';
-				$lid[1] = $fields['lid']."','";
-				unset($fields['lid']);
+				$fields['tid'] = 'n';
 			}
-			
+			if (isset($fields['lid']))
+			{
+				$lid = array('lid,' => $fields['lid']."','");
+			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//this is added here so it is never tainted
 			$this->stock_contact_fields['last_mod'] = 'last_mod'; 
 			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
-			
-			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,".$lid[0]
+
+			$this->db->query("INSERT INTO $this->std_table (owner,access,cat_id,tid,$lid[0]"
 				. implode(",",$this->stock_contact_fields)
-				. ") VALUES ('$owner','$access','$cat_id','$tid','".$lid[1]
+				. ") VALUES ($owner,'$fields[access]','$fields[cat_id]','$fields[tid]','$lid[1]"
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
 			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
@@ -614,7 +617,7 @@
 			{
 				while (list($name,$value) = each($extra_fields))
 				{
-					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $this->account_id . "','"
+					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $owner . "','"
 						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
@@ -643,14 +646,17 @@
 
 		function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
+			$owner = intval($owner);
+			$id    = intval($id);
 			/* First make sure that id number exists */
-			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id=$id",__LINE__,__FILE__);
 			$this->db->next_record();
 			if (!$this->db->f(0))
 			{
 				return False;
 			}
 
+			list($stock_fields,,$extra_fields) = $this->split_stock_and_extras($fields);
 			// access, cat_id and tid can be in $fields now or as extra params
 			foreach(array('access','cat_id','tid') as $extra)
 			{
@@ -658,23 +664,17 @@
 				{
 					$fields[$extra] = $$extra;
 				}
-			}
-			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-
-			// we need to add the non-stockfields too
-			foreach(array('access','cat_id','tid') as $extra)
-			{
 				if (isset($fields[$extra]))
 				{
 					$stock_fields[$extra] = $fields[$extra];
-					$stock_fieldnames[$extra] = $extra;
 				}
 			}
+
 			if (count($stock_fields))
 			{
-				while (list($stock_fieldname) = each($stock_fieldnames))
+				foreach($stock_fields as $name => $value)
 				{
-					$ta[] = $stock_fieldname . "='" . $this->db->db_addslashes($stock_fields[$stock_fieldname]) . "'";
+					$ta[] = $name . "='" . $this->db->db_addslashes($value) . "'";
 				}
 				$ta[] = 'last_mod=' . $GLOBALS['phpgw']->datetime->gmtnow;
 				$fields_s = implode(',',$ta);
@@ -683,9 +683,8 @@
 					unset($field_s);
 				}
 				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
-					. "id='$id'",__LINE__,__FILE__);
+					. "id=$id",__LINE__,__FILE__);
 			}
-
 			while (list($x_name,$x_value) = @each($extra_fields))
 			{
 				if ($this->field_exists($id,$x_name))
@@ -697,11 +696,11 @@
 					else
 					{
 						$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
-							. "',contact_owner='$owner' WHERE contact_name='" . $this->db->db_addslashes($x_name)
-							. "' AND contact_id='$id'",__LINE__,__FILE__);
+							. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
+							. "' AND contact_id=$id",__LINE__,__FILE__);
 					}
 				}
-				else
+				elseif($x_value)	// dont write emtpy extra-fields
 				{
 					$this->add_single_extra_field($id,$owner,$x_name,$x_value);
 				}
