@@ -45,7 +45,7 @@
 		*/
 		function asyncservice()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->db->set_app('phpgwapi');
 				
 			$this->cronline = PHPGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['phpgw_info']['user']['domain'];
