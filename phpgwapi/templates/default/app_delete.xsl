@@ -7,17 +7,20 @@
 	<xsl:template match="delete">
 			<table cellpadding="2" cellspacing="2" align="center">
 				<xsl:choose>
-					<xsl:when test="lang_error_msg != ''">
-						<tr class="row_off">
-							<td align="center" colspan="2"><xsl:value-of select="lang_error_msg"/></td>
+					<xsl:when test="msgbox_data != ''">
+						<tr>
+							<td align="center" colspan="2"><xsl:call-template name="msgbox"/></td>
 						</tr>
 					</xsl:when>
 				</xsl:choose>
 				<tr>
-					<td align="center" colspan="2" class="row_on"><xsl:value-of select="lang_delete_msg"/></td>
+					<td align="center" colspan="2"><xsl:value-of select="lang_confirm_msg"/></td>
 				</tr>
 
 <!-- delete sub -->
+
+				<xsl:variable name="delete_url"><xsl:value-of select="delete_url"/></xsl:variable>
+				<form method="POST" action="{$delete_url}">
 				<xsl:choose>
 					<xsl:when test="subs = 'yes'">
 						<tr>
@@ -72,16 +75,27 @@
 						</tr>
 					</xsl:when>
 				</xsl:choose>
-
 				<tr>
-				<xsl:variable name="delete_url"><xsl:value-of select="delete_url"/></xsl:variable>
-				<form method="POST" action="{$delete_url}">
-					<td>
+				<xsl:choose>
+					<xsl:when test="show_done != ''">
+					<xsl:variable name="lang_done"><xsl:value-of select="lang_done"/></xsl:variable>
+						<td>
+						<input type="submit" name="done" value="{$lang_done}" onMouseout="window.status='';return true;">
+							<xsl:attribute name="onMouseover">
+								<xsl:text>window.status='</xsl:text>
+									<xsl:value-of select="lang_done_statustext"/>
+								<xsl:text>'; return true;</xsl:text>
+							</xsl:attribute>
+						</input>
+						</td>
+					</xsl:when>
+					<xsl:otherwise>
 					<xsl:variable name="lang_delete"><xsl:value-of select="lang_delete"/></xsl:variable>
+					<td>
 						<input type="submit" name="delete" value="{$lang_delete}" onMouseout="window.status='';return true;">
 							<xsl:attribute name="onMouseover">
 								<xsl:text>window.status='</xsl:text>
-									<xsl:value-of select="lang_yes_statustext"/>
+									<xsl:value-of select="lang_delete_statustext"/>
 								<xsl:text>'; return true;</xsl:text>
 							</xsl:attribute>
 						</input>
@@ -96,8 +110,10 @@
 							</xsl:attribute>
 						</input>
 					</td>
-				</form>
+					</xsl:otherwise>
+				</xsl:choose>
 				</tr>
+			</form>
 			</table>
 	</xsl:template>
 

@@ -100,7 +100,7 @@
 
 			if ($_POST['done'])
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.iumainscreen.mainscreen');
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uimainscreen.mainscreen');
 			}
 
 			if ($GLOBALS['appname'])
@@ -369,7 +369,7 @@
 				'global_cats' => $global_cats
 			);
 
-			if ($_POST['cancel'] || !$this->cat_id)
+			if ($_POST['done'] || $_POST['cancel'] || !$this->cat_id)
 			{
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
@@ -389,7 +389,9 @@
 							$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 							break;
 						default:
-							$error_msg = lang('Please choose one of the methods to handle the subcategories');
+							$error			= array('Please choose one of the methods to handle the subcategories');
+							$msgbox_error	= $GLOBALS['phpgw']->common->error_list($error);
+							$show_done		= 'yes';
 							break;
 					}
 				}
@@ -411,12 +413,14 @@
 												'cat_id'	=> $this->cat_id));
 			if ($apps_cats)
 			{
-				$lang_confirm_msg = lang('This category is currently being used by applications as a parent category. ')
-									. lang('You will need to reassign these subcategories before you can delete this category');
+				$error = array('This category is currently being used by applications as a parent category',
+								'You will need to reassign these subcategories before you can delete this category');
+
+				$msgbox_error = $GLOBALS['phpgw']->common->error_list($error);
 			}
 			else
 			{
-				$lang_confirm_msg = lang('Are you sure you want to delete this global category ?');
+				$confirm_msg = lang('Are you sure you want to delete this global category ?');
 
 				$exists = $this->bo->exists(array
 				(
@@ -435,15 +439,18 @@
 
 			$data = array
 			(
-				'lang_delete_msg'			=> $lang_confirm_msg,
+				'show_done'					=> $show_done,
+				'msgbox_data'				=> $msgbox_error,
 				'lang_delete'				=> lang('delete'),
 				'subs'						=> $subs,
 				'lang_sub_select_move'		=> $lang_sub_select_move,
 				'lang_sub_select_drop'		=> $lang_sub_select_drop,
 				'lang_delete_statustext'	=> lang('delete the category'),
 				'lang_cancel_statustext'	=> lang('do NOT delete the category and return back to the list'),
+				'lang_done_statustext'		=> lang('back to the list'),
 				'lang_cancel'				=> lang('cancel'),
-				'lang_error_msg'			=> $error_msg
+				'lang_done'					=> lang('done'),
+				'lang_confirm_msg'			=> $confirm_msg
 			);
 
 			$link_data['menuaction']	= 'admin.uicategories.delete';
