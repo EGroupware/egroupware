@@ -339,4 +339,56 @@
        return $accounts;
     }
 
+
+  function username2userid($user_name)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$user_name."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("account_id");
+      }else{
+        return False;
+      }
+    }
+
+    function userid2username($user_id)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT account_lid FROM accounts WHERE account_id='".$user_id."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("account_lid");
+      }else{
+        return False;
+      }
+    }
+
+    function groupname2groupid($group_name)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT group_id FROM groups WHERE group_name='".$group_name."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("group_id");
+      }else{
+        return False;
+      }
+    }
+
+    function groupid2groupname($group_id)
+    {
+      global $phpgw, $phpgw_info;
+      $db2 = $phpgw->db;
+      $db2->query("SELECT group_name FROM groups WHERE group_id='".$group_id."'",__LINE__,__FILE__);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        return $db2->f("group_name");
+      }else{
+        return False;
+      }
+    }
   }
