@@ -35,4 +35,9 @@
   $db->query("DROP TABLE newsgroups");
   $db->query("DROP TABLE users_newsgroups");
   $db->query("DROP TABLE lang");
+  $db->query("drop sequence news_msg_con_seq");
+  $db->query("DROP TABLE news_msg");
+  $db->query("DROP TABLE languages");
+  $db->query("drop sequence categories_cat_id_seq");
+  $db->query("DROP TABLE categories");
 ?>
