@@ -46,6 +46,10 @@
         . "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
         . "</b>";
   }
+  
+  if (isset($phpgw_info["server"]["mainscreen_message"])) {
+     echo "<center>" . $phpgw_info["server"]["mainscreen_message"] . "</center>";
+  }
 
   if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
        $phpgw_info["user"]["apps"]["admin"]) && 

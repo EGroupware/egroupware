@@ -37,6 +37,11 @@
 
   echo "<p>\n";
 
+  echo "<a href='" . $phpgw->link("mainscreen_message.php") . "'>";
+  echo lang("Change main screen message")."</a><br>\n";
+
+  echo "<p>\n";
+
   echo "<a href='" . $phpgw->link("currentusers.php") . "'>";
   echo lang("View sessions")."</a><br>\n";
 
