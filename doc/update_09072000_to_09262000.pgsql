@@ -73,3 +73,6 @@ insert into config (config_name, config_value) values ('httpproxy_port', '');
 insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom');
 insert into config (config_name, config_value) values ('checkfornewversion', 'False');
 
+insert into lang (message_id, app_name, lang, content) VALUES( 'charset','common','en','iso-8859-1');
+insert into lang (message_id, app_name, lang, content) VALUES( 'charset','common','de','iso-8859-1');
+

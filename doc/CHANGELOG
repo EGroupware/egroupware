@@ -26,6 +26,7 @@
 	      - Group public items should now be working.
 		 - Fixed a wrong data type error when calling sort() on 1 folder.
 		 - Added week number in month view of calendar. (Patch by grasl)
+	      - Moved charset setting from globalconfig.inc.php / DB to lang files.
 	      - A bunch of other minor bug fixes.
 
 [09072000] - Added print icon that allows you to print out a page without having
