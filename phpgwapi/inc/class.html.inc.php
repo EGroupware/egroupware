@@ -249,7 +249,7 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='')
 	{
-		if (!$plugins) $plugins = 'ContextMenu,TableOperations,SpellChecker,HtmlTidy';
+		if (!$plugins) $plugins = 'ContextMenu,TableOperations,SpellChecker';
 		if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
 
 		if (!is_object($GLOBALS['phpgw']->js))
