@@ -56,7 +56,8 @@
 
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
-			if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
+			//if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
+			if($app != 'preferences' && $app != 'about')
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
