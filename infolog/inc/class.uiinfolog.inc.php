@@ -250,22 +250,48 @@
 			return $headers;
 		}
 
-		function get_referer( )
+		function get_referer($vars=array('sort','order','query','start','filter','cat_id'))
 		{
 			global $HTTP_REFERER,$referer;
 
 			if (!$referer)
 				$referer = $HTTP_REFERER;
 
-			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',
-										  		  $referer));
-			$referer = $url['path'];
+			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$referer));
 
-			if ($url['query'])
+			if (!strstr($url['query'],'menuaction=infolog') || !is_array($vars))
 			{
-				$referer .= '?'.$url['query'];
+				return $url['path'].($url['query'] ? '?'.$url['query'] : '');
 			}
-			return $referer;
+			$args = explode('&',$url['query']);
+			if (!is_array($args))
+			{
+				$args = array();
+				if ($url['query'])
+					$args[] = $url['query'];
+			}
+			$query_arr = array( );
+			while (list($null,$arg) = each($args))
+			{
+				list($var,$val) = explode('=',$arg,2);
+				$query_arr[$var] = $val;
+			}
+			reset ($vars);
+			while (list($null,$var) = each($vars))
+			{
+				global $$var;								// merge in HTTP_{POST|GET}_VARS
+				if (isset($$var))
+					$query_arr[$var] = $$var;
+			}
+			$qstr = '';
+			reset ($query_arr);
+			while (list($var,$val) = each($query_arr))
+			{
+				if ($val && !($val == 'none' && $var == 'filter'))
+					$qstr .= ($qstr ? '&' : '?')."$var=$val";
+			}
+			//echo "<p>qstr='$qstr'</p>\n";
+			return $url['path'] . $qstr;
 		}
 
 	 	function get_list($for_include=0)
@@ -439,12 +465,10 @@
 				{
 					$t->set_var('edit',$html->a_href(
 						$this->icon('action','edit'),'/index.php',
-						$hidden_vars+array('info_id' => $id)+
-						$this->menuaction('edit')));
+						$this->menuaction('edit')+$hidden_vars+array('info_id' => $id)));
 					$t->set_var('addfiles',$html->a_href(
 						$this->icon('action','addfile'),'/index.php',
-						$hidden_vars+array('info_id' => $id)+
-						$this->menuaction('add_file')));
+						$this->menuaction('add_file')+$hidden_vars+array('info_id' => $id)));
 				}
 				else
 				{
@@ -455,8 +479,7 @@
 				{
 					$t->set_var('delete',$html->a_href(
 									$this->icon('action','delete'),'/index.php',
-									$hidden_vars+array('info_id' => $id)+
-									$this->menuaction('delete')));
+									$this->menuaction('delete')+$hidden_vars+array('info_id' => $id)));
 			  }
 			  else
 			  {
@@ -584,19 +607,16 @@
 			global $upload,$info_id;
 			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
 			global $filecomment;
-			global $sort,$order,$query,$start,$filter,$cat_id,$referer;
+			global $sort,$order,$query,$start,$filter,$cat_id;
 
 			$t = $this->template; $html = $this->html;
-			$hidden_vars = array('sort' => $sort,'order' => $order,
-										'query' => $query,'start' => $start,
-										'filter' => $filter,'cat_id' => $cat_id );
-			if (!isset($referer))
-				$referer = $this->get_referer();
+
+			$referer = $this->get_referer();
 
 			if (!isset($info_id) || !$info_id || !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
 			{
 				$error[]=lang('Access denied');
-				Header('Location: ' . $html->link($referer, $hidden_vars+array('cd'=>15)));
+				Header('Location: ' . $html->link($referer,array('cd'=>15)));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
@@ -611,7 +631,9 @@
 			$t->set_var( $this->setStyleSheet( ));
 			$t->set_var( $this->infoHeaders(  ));
 			$t->set_var( $this->formatInfo( $info_id ));
-			$t->set_var( 'hidden_vars',$html->input_hidden($hidden_vars+array('info_id' => $info_id)));
+			$t->set_var( 'hidden_vars',$html->input_hidden(array(
+				'info_id' => $info_id, 'referer' => $referer
+			)));
 
 			if (is_array($error))
 			{
@@ -626,7 +648,7 @@
 			$t->set_var('lang_comment',lang('comment').':');
 
 			$t->set_var('submit_button',$html->submit_button('upload','attach file'));
-			$t->set_var('cancel_button',$html->form_1button('cancel_button','Cancel','',$referer));
+			$t->set_var('cancel_button',$html->form_1button('cancel_button','Done','',$referer));
 
 			$t->pfp('out','info_add_file');
 		}
@@ -634,7 +656,6 @@
 
 		function edit( )
 		{
-			global $cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$info_id,$save,$add,$query_addr,$query_project;
 			// formular fields
 			global $selfortoday,$sday,$smonth,$syear;
@@ -646,16 +667,11 @@
 
 			$t = $this->template; $html = $this->html;
 
-			$hidden_vars = array('sort' => $sort,'order' => $order,
-										'query' => $query,'start' => $start,
-										'filter' => $filter,'cat_id' => $cat_id );
-
 			$referer = $this->get_referer();
 
 			if ((!isset($info_id) || !$info_id) && !$action)
 			{
-				Header('Location: ' .
-						 $html->link('/index.php',$hidden_vars+$this->menuaction()));
+				Header('Location: ' . $html->link($referer) );
 			}
 
 			// check wether to write dates or not
@@ -810,7 +826,7 @@
 			if (!$id_parent)
 				$id_parent = $this->bo->so->data['info_id_parent'];
 
-			$common_hidden_vars =  $html->input_hidden( $hidden_vars + array(
+			$common_hidden_vars = $html->input_hidden( array(
 				'info_id' => $info_id,
 				'action' => $action,
 				'id_parent' => $id_parent,
@@ -942,6 +958,8 @@
 
 			$t->set_var('edit_button',$html->submit_button('save','Save'));
 
+			$t->set_var('cancel_button',$html->form_1button('cancel','Cancel',0,$referer));
+
 			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
 				$t->set_var('delete_button',$html->form_1button('delete','Delete',
@@ -957,17 +975,12 @@
 
 		function delete( )
 		{
-			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $info_id,$confirm;
 
 			$t = $this->template; $html = $this->html;
 
 			$referer = $this->get_referer();
 
-			$hidden_vars = array('sort' => $sort,'order' => $order,
-										'query' => $query,'start' => $start,
-										'filter' => $filter,'cat_id' => $cat_id,
-										'referer' => $referer );
 			if (!$info_id ||
 			    !$this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
@@ -1007,9 +1020,8 @@
 				$t->set_var('no_button',$html->form_1button('no_button',
 					'No - Cancel','',$referer));
 				$t->set_var('yes_button',$html->form_1button('yes_button',
-					'Yes - Delete',$hidden_vars,'/index.php',
-					array('info_id' => $info_id,'confirm' => 'True')+
-					$this->menuaction('delete')));
+					'Yes - Delete',array('referer' => $referer),'/index.php',$this->menuaction('delete')+
+					array('info_id' => $info_id,'confirm' => 'True')));
 				$t->pfp('out','info_delete');
 			}
 		}
