@@ -72,7 +72,9 @@ image/x-xwindowdump		xwd
 model/iges			igs iges
 model/mesh			msh mesh silo
 model/vrml			wrl vrml
+text/calendar			ics vcs
 text/css			css
+text/directory			vcf
 text/html			html htm
 text/plain			asc txt
 text/richtext			rtx
