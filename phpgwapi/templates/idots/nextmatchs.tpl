@@ -1,11 +1,10 @@
 <!-- BEGIN nextmatchs -->
  <table width="{table_width}" border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0" cols="5">
   <tr>   {left}
-   <td align="center" bgcolor="{th_bg}" valign="top" width="92%">{cats_search_filter_data}</td>   {right}
+   <td align="center" bgcolor="{th_bg}" valign="top" width="92%">{cats_search_filter_data}</td>{right}
   </tr>
  </table>
-
-<br>
+<br/>
 
 <!-- END nextmatchs -->
 
@@ -45,9 +44,7 @@
 <td width="2%" align="{align}" valign="top">
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
-		<td align="{align}">
-			<img src="{img}" border="{border}" alt="{label}">
-		</td>
+		<td align="{align}"><img src="{img}" border="{border}" alt="{label}" hspace="2" /></td>
 	</tr>
 	</table>
 </td>

@@ -40,23 +40,23 @@
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . 
-					'" title="'. 	$title . '" border="0" height="60">';
+					'" title="'. 	$title . '" border="0" />';
 
-				$app_icons .= '<TD align="center"><a href="' . $app_data['url'] . '"';
+				$app_icons .= '<td height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
 				$GLOBALS['phpgw_info']['flags']['navbar_target'])
 				{
 					$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 				}
-				$app_icons .= '>' . $icon . '</a></TD>';
+				$app_icons .= '>' . $icon . '</a></td>';
 
-				$app_titles .= '<TD align=center class="mainnote"><a href="'.$app_data['url'] . '"';
+				$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$app_data['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
 				$GLOBALS['phpgw_info']['flags']['navbar_target'])
 				{
 					$app_titles .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 				}
-				$app_titles .= '>' . $title . '</a></TD>';
+				$app_titles .= '>' . $title . '</a></td>';
 
 				unset($icon);
 				unset($title);

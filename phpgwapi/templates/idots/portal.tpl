@@ -14,26 +14,44 @@
 </table>
 </p>
 <!-- END portal_box -->
+
+
+
 <!-- BEGIN portal_row -->
     <tr>
 {output}
     </tr>
 <!-- END portal_row -->
+
+
+
 <!-- BEGIN portal_listbox_header -->
      <td>
       <ul>
 <!-- END portal_listbox_header -->
+
+
+
 <!-- BEGIN portal_listbox_link -->
 <li><a href="{link}">{text}</a></li>
 <!-- END portal_listbox_link -->
+
+
+
 <!-- BEGIN portal_listbox_footer -->
       </ul>
      </td>
 <!-- END portal_listbox_footer -->
+
+
+
 <!-- BEGIN portal_control -->
   <td valign="middle" align="right" nowrap="nowrap">{control_link}
   </td>
 <!-- END portal_control -->
+
+
+
 <!-- BEGIN link_field -->
    {link_field_data}
 <!-- END link_field -->

@@ -1,11 +1,12 @@
-		    </tr>
-		  </table>
+		 							</div>
+		  <!-- Applicationbox Column -->
+		  </td>
+		  </tr>
+  </table>
+</div>
+</div>
 
-		  <br></td>
-<td width="15"></td>
-</tr>
-</table></tr>
-</table></tr>
-</table>
-<p align="center" class="copyright">{powered_by}</p>
+<div id="divPoweredBy"><br/><span>{powered_by}</span></div>	
+</body>
+</html>
 <!-- END footer.tpl -->
