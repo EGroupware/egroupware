@@ -31,9 +31,9 @@
 		function index()
 		{
 			$acl_app	= get_var('acl_app',array('POST','GET'));
-			$start		= get_var('start',array('POST','GET'));
+			$start		= get_var('start',array('POST','GET'),0);
 			$query		= get_var('query',array('POST','GET'));
-			$owner		= get_var('owner',array('POST','GET'));
+			$owner		= get_var('owner',array('POST','GET'),$GLOBALS['phpgw_info']['user']['account_id']);
 
 			if (!$acl_app)
 			{
@@ -61,18 +61,17 @@
 			}
 
 			if (($GLOBALS['phpgw_info']['server']['deny_user_grants_access'] || $owner != $GLOBALS['phpgw_info']['user']['account_id'])
-				&& !isset($GLOBALS['phpgw_info']['user']['apps']['admin']))
+				&& !isset($GLOBALS['phpgw_info']['user']['apps']['admin']) || $acl_app_not_passed)
 			{
+				$GLOBALS['phpgw']->common->phpgw_header();
+				echo parse_navbar();
 				echo '<center><b>' . lang('Access not permitted') . '</b></center>';
 				$GLOBALS['phpgw']->common->phpgw_footer();
+				return;
 			}
 
-			if((!isset($owner) || empty($owner)) || !$GLOBALS['phpgw_info']['user']['apps']['admin'])
-			{
-				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
-			}
-			$owner_name		= $GLOBALS['phpgw']->accounts->id2name($owner);		// get owner name for title
-			if($no_privat_grants	= $GLOBALS['phpgw']->accounts->get_type($owner) == 'g')
+			$owner_name = $GLOBALS['phpgw']->accounts->id2name($owner);		// get owner name for title
+			if($no_privat_grant = $GLOBALS['phpgw']->accounts->get_type($owner) == 'g')
 			{
 				$owner_name = lang('Group').' ('.$owner_name.')';
 			}
@@ -87,10 +86,10 @@
 			{
 				$processed = $_POST['processed'];
 				$to_remove = unserialize(urldecode($processed));
-
-				for($i=0;$i<count($to_remove);$i++)
+				foreach($to_remove as $uid)
 				{
-					$this->acl->delete($acl_app,$to_remove[$i]);
+					//echo "deleting acl-records for $uid=".$GLOBALS['phpgw']->accounts->id2name($uid)." and $acl_app<br>\n";
+					$this->acl->delete($acl_app,$uid);
 				}
 
 				/* Group records */
@@ -111,6 +110,7 @@
 							/* Don't allow group-grants or admin to grant private */
 							$rights &= ~PHPGW_ACL_PRIVATE;
 						}
+						//echo "adding acl-rights $rights for $group_id=".$GLOBALS['phpgw']->accounts->id2name($group_id)." and $acl_app<br>\n";
 						$this->acl->add($GLOBALS['phpgw_info']['flags']['currentapp'],$group_id,$rights);
 					}
 				}
@@ -123,7 +123,7 @@
 				{
 					foreach($user_variable as $rowinfo => $perm)
 					{
-						list($user_id,$rights) = split('_',$rowinfo);
+						list($user_id,$rights) = explode('_',$rowinfo);
 						$totalacl[$user_id] += $rights;
 					}
 					foreach($totalacl as $user_id => $rights)
@@ -133,10 +133,11 @@
 							/* Don't allow group-grants or admin to grant private */
 							$rights &= ~ PHPGW_ACL_PRIVATE;
 						}
+						//echo "adding acl-rights $rights for $user_id=".$GLOBALS['phpgw']->accounts->id2name($user_id)." and $acl_app<br>\n";
 						$this->acl->add($GLOBALS['phpgw_info']['flags']['currentapp'],$user_id,$rights);
 					}
-					$this->acl->save_repository();
 				}
+				$this->acl->save_repository();
 			}
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -193,6 +194,8 @@
 			));
 			$totalentries = $GLOBALS['phpgw']->accounts->total;
 			
+			$memberships = $GLOBALS['phpgw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
+
 			$header_type = '';
 			$processed = Array();
 			foreach($accounts as $uid => $data)
@@ -209,11 +212,11 @@
 
 				if ($data['account_type'] == 'g')
 				{
-					$this->display_row($tr_color,'g_',$data['account_id'],$data['account_lid'],$no_privat_grants);
+					$this->display_row($tr_color,'g_',$data['account_id'],$data['account_lid'],$no_privat_grants,$memberships);
 				}
 				else
 				{
-					$this->display_row($tr_color,'u_',$data['account_id'],$GLOBALS['phpgw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants);
+					$this->display_row($tr_color,'u_',$data['account_id'],$GLOBALS['phpgw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
 				}
 				$processed[] = $uid;
 			}
@@ -249,34 +252,44 @@
 			$this->template->set_var($acl.'_selected',$rights_set);
 		}
 
-		function display_row($bg_color,$label,$id,$name,$no_privat_grants)
+		function display_row($bg_color,$label,$id,$name,$no_privat_grants,$memberships)
 		{
 			$this->template->set_var('row_color',$bg_color);
 			$this->template->set_var('user',$name);
 			$rights = $this->acl->get_rights($id,$GLOBALS['phpgw_info']['flags']['currentapp']);
+			$is_group = $GLOBALS['phpgw']->accounts->get_type($id) == 'g';
 
-			$grantors = $this->acl->get_ids_for_location($id,$rights,$GLOBALS['phpgw_info']['flags']['currentapp']);
-			$is_group_set = False;
-			if (is_array($grantors))
+			foreach(array(
+				PHPGW_ACL_READ		=> 'read',
+				PHPGW_ACL_ADD		=> 'add',
+				PHPGW_ACL_EDIT		=> 'edit',
+				PHPGW_ACL_DELETE	=> 'delete',
+				PHPGW_ACL_PRIVATE	=> 'private',
+				PHPGW_ACL_CUSTOM_1	=> 'custom_1',
+				PHPGW_ACL_CUSTOM_2	=> 'custom_2',
+				PHPGW_ACL_CUSTOM_3	=> 'custom_3',
+			) as $right => $name)
 			{
-				foreach($grantors as $grantor)
+				$is_group_set = False;
+				if ($is_group)
 				{
-					if($GLOBALS['phpgw']->accounts->get_type($grantor) == 'g')
+					$grantors = $this->acl->get_ids_for_location($id,$right,$GLOBALS['phpgw_info']['flags']['currentapp']);
+					if (is_array($grantors))
 					{
-						$is_group_set = True;
+						foreach($grantors as $grantor)
+						{
+							//echo $GLOBALS['phpgw']->accounts->id2name($id)."=$id: $name-grant from ".$GLOBALS['phpgw']->accounts->id2name($grantor)."=$grantor<br>\n";
+							// check if the grant comes from a group, the owner is a member off, in that case he is NOT allowed to remove it
+							if(in_array($grantor,$memberships))
+							{
+								//echo "==> member of ==> set by group<br>";
+								$is_group_set = True;
+							}
+						}
 					}
 				}
+				$this->check_acl($label,$id,$name,$rights,$right,$is_group_set || $no_privat_grants && $right == PHPGW_ACL_PRIVATE);
 			}
-
-			$this->check_acl($label,$id,'read',$rights,PHPGW_ACL_READ,$is_group_set && $rights & PHPGW_ACL_READ);
-			$this->check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD,$is_group_set && $rights & PHPGW_ACL_ADD);
-			$this->check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT,$is_group_set && $rights & PHPGW_ACL_EDIT);
-			$this->check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE,$is_group_set && $rights & PHPGW_ACL_DELETE);
-			$this->check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE,$no_privat_grants);
-
-			$this->check_acl($label,$id,'custom_1',$rights,PHPGW_ACL_CUSTOM_1,$is_group_set && $rights & PHPGW_ACL_CUSTOM_1);
-			$this->check_acl($label,$id,'custom_2',$rights,PHPGW_ACL_CUSTOM_2,$is_group_set && $rights & PHPGW_ACL_CUSTOM_2);
-			$this->check_acl($label,$id,'custom_3',$rights,PHPGW_ACL_CUSTOM_3,$is_group_set && $rights & PHPGW_ACL_CUSTOM_3);
 			$this->template->parse('row','acl_row',True);
 		}
 	}
