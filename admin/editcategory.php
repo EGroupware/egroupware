@@ -47,7 +47,7 @@
 	$cat_description = addslashes($cat_description);
 	$cat_access = 'public';
 
-	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access);	}
+	if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access,$cat_main);	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
@@ -70,15 +70,15 @@
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
 
-    $cat_main = $cats[0]['main'];
     $t->set_var('lang_main',lang('Main category'));
     $t->set_var('lang_new_main',lang('New main category'));
-    $t->set_var('main_category_list',$c->formated_list('select','mains',$cat_main));
+    $t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main']));
+
     $cat_id = $cats[0]['id'];
-    $cat_parent = $cats[0]['parent'];
+
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
-    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent));
+    $t->set_var('category_list',$c->formated_list('select','all',$cats[0]['parent']));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');

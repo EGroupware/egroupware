@@ -39,14 +39,14 @@
 
     if (! $start) { $start = 0; }
 
-    if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] && $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0) {
-                $limit = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+    if($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0) {
+                $limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
     }
     else { $limit = 15; }
 
     $c = CreateObject('phpgwapi.categories');
     $c->categories($phpgw_info['user']['account_id'],'phpgw');
-    $categories = $c->return_array('all',$start,$limit,$query,$sort,$order,'False');
+    $categories = $c->return_array('all',$start,$limit,$query,$sort,$order);
 
 //--------------------------------- nextmatch --------------------------------------------
 
@@ -65,7 +65,7 @@
 
 //------------------- list header variable template-declarations ------------------------- 
 
-    $t->set_var('th_bg',$phpgw_info["theme"][th_bg]);
+    $t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
     $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/admin/categories.php',lang('Name')));
     $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/admin/categories.php',lang('Description')));
     $t->set_var('lang_edit',lang('Edit'));
