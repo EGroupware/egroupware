@@ -1,5 +1,16 @@
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+(shift-)click or drag to change value	common	nl	(Shift-)Klik of slepen om waarde te wijzigen
+- click on any of the time parts to increase it	common	nl	
+- hold mouse button on any of the above buttons for faster selection.	common	nl	
+- or click and drag for faster selection.	common	nl	
+- or shift-click to decrease it	common	nl	
+- use the %1, %2 buttons to select month	common	nl	
+- use the %1, %2 buttons to select year	common	nl	
+00 (disable)	admin	nl	
+13 (ntp)	admin	nl	
+80 (http)	admin	nl	
 about %1	common	nl	Over %1
+about the calendar	common	nl	Over de kalender
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
 access type	common	nl	Toegangstype
@@ -30,6 +41,7 @@ antarctica	common	nl	ANTARTICA
 antigua and barbuda	common	nl	ANTIGUA EN BARBUDA
 apply	common	nl	Toepassen
 april	common	nl	April
+are you sure you want to delete these entries ?	common	nl	Weet u zeker dat uw deze records wilt verwijderen?
 are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
 argentina	common	nl	ARGENTINIË
 armenia	common	nl	ARMENIË
@@ -38,9 +50,12 @@ august	common	nl	Augustus
 australia	common	nl	AUSTRALIË
 austria	common	nl	OOSTENRIJK
 author	common	nl	Auteur
+autohide sidebox menu's	common	nl	Automatisch Sideboxmenu's verbergen
+automacally hide the sidebox menu's?	common	nl	Automatisch Sideboxmenu's verbergen?
 autosave default category	common	nl	Automatisch standaard categorie opslaan
 azerbaijan	common	nl	AZERBEIDSJAN
 back	common	nl	Terug
+back to user login	common	nl	Terug naar gebruikers loginscherm
 bad login or password	common	nl	Onjuist gebruikersnaam of wachtwoord
 bahamas	common	nl	BAHAMAS
 bahrain	common	nl	BAHREIN
@@ -64,6 +79,7 @@ brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIË
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
+calendar	common	nl	Kalender
 cambodia	common	nl	CAMBODJA
 cameroon	common	nl	KAMEROEN
 canada	common	nl	CANADA
@@ -80,6 +96,7 @@ central african republic	common	nl	CENTRAAL-AFRIKAANSE REPUBLIEK
 chad	common	nl	CHAD
 change	common	nl	Veranderen
 charset	common	nl	iso-8859-1
+check installation	common	nl	Controleer installatie
 chile	common	nl	CHILI
 china	common	nl	CHINA
 choose the category	common	nl	Kies de categorie
@@ -87,6 +104,9 @@ choose the parent category	common	nl	Kies bovenliggende categorie
 christmas island	common	nl	CHRISTMASEILAND
 clear	common	nl	Wissen
 clear form	common	nl	Formulier wissen
+click	common	nl	Klik
+click or mouse over to show menu's	common	nl	Klik or Mouse Over om menu's weer te geven
+click or mouse over to show menu's?	common	nl	Klik or Mouse Over om menu's weer te geven?
 close	common	nl	Sluiten
 cocos (keeling) islands	common	nl	COCOS (KEELING) EILANDEN
 colombia	common	nl	COLOMBIA
@@ -111,6 +131,8 @@ czech republic	common	nl	TSJECHIË
 date	common	nl	Datum
 date due	common	nl	Einddatum
 date hired	common	nl	Datum in dienst
+date selection:	common	nl	Datumselectie
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	
 december	common	nl	December
 default category	common	nl	Standaard Categorie
 delete	common	nl	Verwijderen
@@ -118,6 +140,10 @@ denmark	common	nl	DENEMARKEN
 description	common	nl	Beschrijving
 detail	common	nl	Detail
 details	common	nl	Details
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het bugfixscript uitschakelen dat dient om transparante PNG-afbeeldingen juist weer te geven in Internet Explorer 5.5 en hoger?
+disable internet explorer png-image-bugfix	common	nl	Internet Explorer png-image-bugfix  uitschakelen?
+disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
+disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	nl	Schakel de bewegende schuifeffecten uit wanneer een langzame computer gebruikt of problemen met de uitklapmenu's ondervind.
 disabled	common	nl	Uitgeschakeld
 display monday first	common	nl	Begin de week maandag
 display sunday first	common	nl	Begin de week zondag
@@ -218,6 +244,7 @@ home	common	nl	Start
 home email	common	nl	email thuis
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
 hungary	common	nl	HONGARIJË
 iceland	common	nl	IJSLAND
 india	common	nl	INDIA
@@ -288,6 +315,7 @@ marshall islands	common	nl	MARSHALL EILANDEN
 martinique	common	nl	MARTINIQUE
 mauritania	common	nl	MAURITANIË
 mauritius	common	nl	MAURITIUS
+max number of icons in navbar	common	nl	Max. aantal iconen in navigatiebalk?
 may	common	nl	Mei
 mayotte	common	nl	MAYOTTE
 medium	common	nl	Gemiddeld
@@ -309,6 +337,7 @@ name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
 namibia	common	nl	NAMIBIË
 nauru	common	nl	NAURU
 nepal	common	nl	NEPAL
+Dutch	common	nl	Nederlands
 netherlands	common	nl	NEDERLAND
 netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
 never	common	nl	Nooit
@@ -335,6 +364,7 @@ norfolk island	common	nl	NORFOLK EILAND
 normal	common	nl	Normaal
 northern mariana islands	common	nl	NOORDELIJKE MARIANA-EILANDEN
 norway	common	nl	NOORWEGEN
+not a user yet? register now	common	nl	Nog geen gebruiker? Registreer nu.
 not assigned	common	nl	Niet toegewezen
 note	common	nl	Notitie
 notes	common	nl	Notities
@@ -345,6 +375,7 @@ ok	common	nl	Oké
 old value	common	nl	Oude waarde
 oman	common	nl	OMAN
 on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
+on mouse over	common	nl	Bij Mouse Over
 only private	common	nl	alleen privé
 only yours	common	nl	alleen eigen weergeven
 open notify window	common	nl	Attentievenster openen
@@ -353,6 +384,7 @@ original	common	nl	Origineel
 other	common	nl	Andere
 overview	common	nl	Overzicht
 owner	common	nl	Eigenaar
+page was generated in %1 seconds	common	nl	Deze pagina werd gegenereerd in %1 seconden.
 pager	common	nl	Buzzer
 pakistan	common	nl	PAKISTAN
 palau	common	nl	PALAU
@@ -365,6 +397,7 @@ parent category	common	nl	Bovenliggende categorie
 password	common	nl	Wachtwoord
 password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
+path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 pattern for search in addressbook	common	nl	Patroon voor zoekopdracht in Adressenboek
 pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Kalender
 pattern for search in projects	common	nl	Patroon voor zoekopdracht in Projecten
@@ -423,6 +456,7 @@ save	common	nl	Opslaan
 search	common	nl	Zoeken
 section	common	nl	Sectie
 select	common	nl	Selecteren
+select all %1 %2 for %3	common	nl	Selecteer alle %1 %2  voor %3
 select category	common	nl	Selecteer Categorie
 select date	common	nl	Selecteer datum
 select group	common	nl	Selecteer groep
@@ -437,9 +471,13 @@ server %1 has been added	common	nl	Server %1 is toegevoegd
 server name	common	nl	Servernaam
 session has been killed	common	nl	Sessie is beëindigd
 setup	common	nl	Setup
+setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
 show all	common	nl	laat alles zien
 show all categorys	common	nl	Alle categorieën weergegeven
+show page generation time	common	nl	Generatietijd van de pagina's weergeven?
+show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
+show_more_apps	common	nl	Meer applicaties weergeven
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 sierra leone	common	nl	SIERRA LEONE
@@ -481,6 +519,7 @@ this application requires an upgrade	common	nl	Deze toepassing vereist een upgra
 this name has been used already	common	nl	Deze naam is reeds in gebruik !
 thursday	common	nl	Donderdag
 time	common	nl	Tijd
+time selection:	common	nl	Tijdselectie:
 time tracking	common	nl	Tijdregistratie
 time zone	common	nl	Tijdzone
 time zone offset	common	nl	Tijdzoneverschil
