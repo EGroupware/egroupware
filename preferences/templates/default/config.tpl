@@ -89,6 +89,16 @@
    </tr>
 
    <tr bgcolor="{row_off}">
+    <td>{lang_Would_you_like_to_show_each_application's_upgrade_status_?}:</td><td>
+     <select name="newsettings[checkappversions]">
+      <option value="">No</option>
+      <option value="Admin"{selected_checkappversions_Admin}>{lang_Admins}</option>
+      <option value="All"{selected_checkappversions_All}>{lang_All_Users}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr bgcolor="{row_on}">
     <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array ?}:</td>
     <td>
      <select name="newsettings[cache_phpgw_info]">
