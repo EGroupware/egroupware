@@ -24,6 +24,12 @@ body
 	padding:3px;
 }
 
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
 img
 {
 	border-width:0px;
@@ -67,7 +73,7 @@ input,button
 	border: 1px #bbbbbb solid;
 }
 
-input[type=submit],input[type=button],button
+input[type=submit],input[type=button],input[type=reset],button
 {
 	margin:1px;
 	padding:1px;
