@@ -561,8 +561,8 @@
 				$values['level'] = $this->id2name($values['parent'],'level')+1;
 			}
 
-			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
-			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
+			$values['descr'] = $this->db->db_addslashes($values['descr']);
+			$values['name'] = $this->db->db_addslashes($values['name']);
 
 			if ($values['id'] > 0)
 			{
@@ -572,8 +572,8 @@
 
 			$this->db->query('INSERT INTO phpgw_categories (' . $id_col . 'cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,'
 				. 'cat_main,cat_level, last_mod) VALUES (' . $id_val  . intval($values['parent']) . ',' . $this->account_id . ",'" . $values['access']
-				. "','" . $this->app_name . "','" . $values['name'] . "','" . $cat_values['descr'] . "','" . $values['data']
-				. "'," . intval($cat_values['main']) . ',' . intval($values['level']) . ',' . time() . ')',__LINE__,__FILE__);
+				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
+				. "'," . intval($values['main']) . ',' . intval($values['level']) . ',' . time() . ')',__LINE__,__FILE__);
 
 			if ($values['id'] > 0)
 			{
