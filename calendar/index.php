@@ -39,7 +39,7 @@
 	//echo 'Local DateTime: '.date('Ymd H:i:s',$GLOBALS['phpgw']->datetime->users_localtime).'<br>'."\n";
 
 #	$GLOBALS['phpgw']->redirect_link('/index.php',$parms);
-#	$GLOBALS['phpgw']->common->phpgw_exit();
-
 	ExecMethod('calendar.uicalendar.index',$parms);
+	$GLOBALS['phpgw']->common->phpgw_exit();
+
 ?>
