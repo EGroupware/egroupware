@@ -299,14 +299,6 @@
     <td colspan="4"><font size="-1"></font></td>
   </tr>
   <tr>
-  <!-- BEGIN creator -->
-  {create}
-  <!-- END creator -->
-    <td colspan="3">
-      <font size="-1">
-    </td>
-  </tr>
-  <tr>
     <td><font size="-1">{lang_notes}:</font></td>
     <td colspan="3">
       <font size="-1">
@@ -331,5 +323,13 @@
 	<td></td>
   </tr>
 {custom}
+  <tr>
+  <!-- BEGIN creator -->
+  {create}
+  <!-- END creator -->
+    <td colspan="3">
+      <font size="-1">
+    </td>
+  </tr>
 </table>
 <!-- END addressbook entry form -->

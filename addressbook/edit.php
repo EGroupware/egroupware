@@ -50,7 +50,6 @@
 	}
 
 	// Read in user custom fields, if any
-	$phpgw->preferences->read_repository();
 	$customfields = array();
 	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
 		if ( substr($col,0,6) == 'extra_' ) {
@@ -70,7 +69,7 @@
 
 		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
-		addressbook_form("","edit.php","Edit",$fields[0],$customfields);
+		addressbook_form("edit","edit.php","Edit",$fields[0],$customfields);
 	} else {
 		if ($url == "http://") {
 			$url = "";

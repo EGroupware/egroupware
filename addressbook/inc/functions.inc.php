@@ -484,14 +484,17 @@
 
 		$birthday = $phpgw->common->dateformatorder($bday_year,$bday_month,$bday_day)
 					. '<font face="'.$theme["font"].'" size="-2">(e.g. 1969)</font>';
-
-		if ($format == "view")
-			$create .= '<tr><td><font size="-1">'.lang("Created by").':</font></td>'
-					. '<td colspan="3"><font size="-1">'
-					. grab_owner_name($fields["owner"]);
+		if ($format == 'edit')
+		{
+			$create .= '<tr><td><font size="-1">' . lang("Created by") . ':</font></td>'
+				. '<td colspan="3"><font size="-1">'
+				. $phpgw->common->grab_owner_name($fields["owner"]);
+		}
 		else
-			$create = '';
-  
+		{
+			$create .= '';
+		}
+ 
 		$t->set_var("lang_home",lang("Home"));
 		$t->set_var("lang_business",lang("Business"));
 		$t->set_var("lang_personal",lang("Personal"));
