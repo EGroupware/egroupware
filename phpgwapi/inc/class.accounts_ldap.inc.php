@@ -195,7 +195,7 @@
 					$this->data['account_lid'],
 					$GLOBALS['phpgw']->translation->charset(), 'utf-8'
 				);
-				$newData['gidnumber'] = $this->data['account_id'];
+				$newData['gidnumber'] = $this->account_id;
 				$newGroupID = $newData['cn'];
 				$oldGroupID = $newData['cn'];
 			}
@@ -254,7 +254,7 @@
 				if($this->data['account_type'] == 'g' && $this->group_context )
 				{
 					$newDN = 'cn='.$this->data['account_lid'].','.$this->group_context;
-					$members = $this->member($this->data['account_id']);
+					$members = $this->member($this->account_id);
 					$newData['memberuid'] = array();
 					for($i=0;$i<count($members);$i++)
 					{
