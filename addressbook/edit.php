@@ -34,8 +34,8 @@
 		$phpgw->common->phpgw_exit();
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir('addressbook'));
-	$t->set_file(array('edit'	=> 'edit.tpl'));
+	$t = new Template(PHPGW_APP_TPL);
+	$t->set_file(array('edit' => 'edit.tpl'));
 
 	if (!$ab_id)
 	{

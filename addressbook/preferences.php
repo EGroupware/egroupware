@@ -92,7 +92,7 @@
 		echo "<p><center>" . $phpgw->common->error_list($errors) . "</center>";
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array(
 		"preferences"	=> "preferences.tpl",
 	));

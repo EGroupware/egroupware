@@ -31,22 +31,26 @@
 
 	$sep = SEP;
 
-	if (!$convert) {
-		$t = new Template($phpgw_info["server"]["app_tpl"]);
+	if (!$convert)
+	{
+		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array("export" => "export.tpl"));
 
 		$dir_handle=opendir($phpgw_info["server"]["app_root"].$sep."export");
 		$i=0; $myfilearray="";
-		while ($file = readdir($dir_handle)) {
+		while ($file = readdir($dir_handle))
+		{
 			#echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."conv".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."export".$sep.$file) ) {
+			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."export".$sep.$file) )
+			{
 				$myfilearray[$i] = $file;
 				$i++;
 			}
 		}
 		closedir($dir_handle);
 		sort($myfilearray);
-		for ($i=0;$i<count($myfilearray);$i++) {
+		for ($i=0;$i<count($myfilearray);$i++)
+		{
 			$fname = ereg_replace('_',' ',$myfilearray[$i]);
 			$conv .= '        <OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>'."\n";
 		}
@@ -72,15 +76,19 @@
 		$t->pparse("out","export");
 
 		$phpgw->common->phpgw_footer();
-	} else {
+	}
+	else
+	{
 		include ($phpgw_info["server"]["app_root"].$sep."export".$sep.$conv_type);
 		$buffer=array();
 		$this = new export_conv;
 
 		// Read in user custom fields, if any
 		$customfields = array();
-		while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
-			if ( substr($col,0,6) == 'extra_' ) {
+		while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"]))
+		{
+			if ( substr($col,0,6) == 'extra_' )
+			{
 				$field = ereg_replace('extra_','',$col);
 				$field = ereg_replace(' ','_',$field);
 				$customfields[$field] = ucfirst($field);
@@ -91,7 +99,8 @@
 			"address2" => "address2",
 			"address3" => "address3"
 		);
-		if ($this->type != 'vcard') {
+		if ($this->type != 'vcard')
+		{
 			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
 		}
 
@@ -104,9 +113,11 @@
 			$buffer = $this->export_start_file($buffer);
 		}
 		
-		for ($i=0;$i<count($this->ids);$i++) {
+		for ($i=0;$i<count($this->ids);$i++)
+		{
 			$buffer = $this->export_start_record($buffer);
-			while( list($name,$value) = each($this->currentrecord) ) {
+			while( list($name,$value) = each($this->currentrecord) )
+			{
 				$buffer = $this->export_new_attrib($buffer,$name,$value);
 			}
 			$buffer = $this->export_end_record($buffer);
@@ -117,11 +128,14 @@
 
 		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
-		if ( ($download == "on") || ($o->type == 'pdb') ) {
+		if ( ($download == "on") || ($o->type == 'pdb') )
+		{
 			// filename, default application/octet-stream, length of file, default nocache True
 			$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
 			echo $buffer;
-		} else {
+		}
+		else
+		{
 			echo "<pre>\n";
 			echo $buffer;
 			echo "\n</pre>\n";

@@ -37,7 +37,7 @@
 			. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
 			. "<input type=\"hidden\" name=\"field\" value=\"$field\">\n";
 
-		$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
+		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array('field_delete' => 'delete_common.tpl'));
 		$t->set_var('messages',lang('Are you sure you want to delete this field?'));
 

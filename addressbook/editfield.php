@@ -26,7 +26,7 @@
 		Header('Location: ' . $phpgw->link('/addressbook/fields.php',"sort=$sort&query=$query&start=$start"));
 	}
 
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array('form' => 'field_form.tpl'));
 	$t->set_block('form','add','addhandle');
 	$t->set_block('form','edit','edithandle');

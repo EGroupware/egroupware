@@ -89,7 +89,7 @@
 		echo "<B><CENTER>You must select a vcard. (*.vcf)</B></CENTER><BR><BR>";
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array("vcardin" => "vcardin.tpl"));
 
 	$vcard_header  = "<p>&nbsp;<b>" . lang("Address book - VCard in") . "</b><hr><p>";

@@ -45,7 +45,7 @@
 		echo parse_navbar();
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir('addressbook'));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array(
 		'view'	      => 'view.tpl',
 		'view_header' => 'view_header.tpl',

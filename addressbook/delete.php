@@ -36,7 +36,7 @@
 		$phpgw->common->phpgw_exit();
 	}
 
-	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array("delete" => "delete.tpl"));
 
 	if ($confirm != "true") {

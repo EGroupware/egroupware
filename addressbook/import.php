@@ -32,22 +32,26 @@
 	}
 	$context = $phpgw_info["server"]["ldap_contact_context"];
 
-	if (!$convert) {
-		$t = new Template($phpgw_info["server"]["app_tpl"]);
+	if (!$convert)
+	{
+		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array("import" => "import.tpl"));
 
 		$dir_handle=opendir($phpgw_info["server"]["app_root"].$sep."import");
 		$i=0; $myfilearray="";
-		while ($file = readdir($dir_handle)) {
+		while ($file = readdir($dir_handle))
+		{
 			//echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file) ) {
+			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file) )
+			{
 				$myfilearray[$i] = $file;
 				$i++;
 			}
 		}
 		closedir($dir_handle);
 		sort($myfilearray);
-		for ($i=0;$i<count($myfilearray);$i++) {
+		for ($i=0;$i<count($myfilearray);$i++)
+		{
 			$fname = ereg_replace('_',' ',$myfilearray[$i]);
 			$conv .= '<OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>';
 		}
@@ -75,7 +79,9 @@
 		$t->set_var("cat_id",$cat_id);
 		$t->pparse("out","import");
 		$phpgw->common->phpgw_footer();
-	} else {
+	}
+	else
+	{
 		include ($phpgw_info["server"]["app_root"].$sep."import".$sep.$conv_type);
 
 		if ($private=="") { $private="public"; }
@@ -84,78 +90,108 @@
 		$this = new import_conv;
 		$buffer = $this->import_start_file($buffer,$basedn,$context);
 		$fp=fopen($tsvfile,"r");
-		if ($this->type == 'csv') {
-			while ($data = fgetcsv($fp,8000,",")) {
+		if ($this->type == 'csv')
+		{
+			while ($data = fgetcsv($fp,8000,","))
+			{
 				$num = count($data);
 				$row++;
-				if ($row == 1) {
+				if ($row == 1)
+				{
 					$header = $data;
-				} else {
+				}
+				else
+				{
 					$buffer = $this->import_start_record($buffer);
-					for ($c=0; $c<$num; $c++ ) {
+					for ($c=0; $c<$num; $c++ )
+					{
 						//Send name/value pairs along with the buffer
-						if ($this->import[$header[$c]]!="" && $data[$c]!="") {
+						if ($this->import[$header[$c]]!="" && $data[$c]!="")
+						{
 							$buffer = $this->import_new_attrib($buffer, $this->import[$header[$c]],$data[$c]);
 						}
 					}
 					$buffer = $this->import_end_record($buffer,$private);
 				}
 			}
-		} elseif ($this->type == 'ldif') {
-			while ($data = fgets($fp,8000)) {
+		}
+		elseif ($this->type == 'ldif')
+		{
+			while ($data = fgets($fp,8000))
+			{
 				$url = "";
 				list($name,$value,$extra) = split(':', $data);
-				if (substr($name,0,2) == 'dn') {
+				if (substr($name,0,2) == 'dn')
+				{
 					$buffer = $this->import_start_record($buffer);
 				}
 				
 				$test = trim($value);
-				if ($name && !empty($test) && $extra) {
+				if ($name && !empty($test) && $extra)
+				{
 					// Probable url string
 					$url = $test;
 					$value = $extra;
-				} elseif ($name && empty($test) && $extra) {
+				}
+				elseif ($name && empty($test) && $extra)
+				{
 					// Probable multiline encoding
 					$newval = base64_decode(trim($extra));
 					$value = $newval;
 					//echo $name.':'.$value;
 				}
 				
-				if ($name && $value) {
+				if ($name && $value)
+				{
 					$test = split(',mail=',$value);
-					if ($test[1]) {
+					if ($test[1])
+					{
 						$name = "mail";
 						$value = $test[1];
 					}
-					if ($url) {
+					if ($url)
+					{
 						$name = "homeurl";
 						$value = $url. ':' . $value;
 					}
 					//echo '<br>'.$j.': '.$name.' => '.$value;
-					if ($this->import[$name] != "" && $value != "") {
+					if ($this->import[$name] != "" && $value != "")
+					{
 						$buffer = $this->import_new_attrib($buffer, $this->import[$name],$value);
 					}
-				} else {
+				}
+				else
+				{
 					$buffer = $this->import_end_record($buffer,$private);
 				}
 			}
-		} else {
-			while ($data = fgets($fp,8000)) {
+		}
+		else
+		{
+			while ($data = fgets($fp,8000))
+			{
 				list($name,$value,$extra) = split(':', $data);
-				if (strtolower(substr($name,0,5)) == 'begin') {
+				if (strtolower(substr($name,0,5)) == 'begin')
+				{
 					$buffer = $this->import_start_record($buffer);
 				}
-				if (substr($value,0,5) == "http") {
+				if (substr($value,0,5) == "http")
+				{
 					$value = $value . ":".$extra;
 				}
-				if ($name && $value) {
+				if ($name && $value)
+				{
 					reset($this->import);
-					while ( list($fname,$fvalue) = each($this->import) ) {
-						if ( strstr(strtolower($name), $this->import[$fname]) ) {
+					while ( list($fname,$fvalue) = each($this->import) )
+					{
+						if ( strstr(strtolower($name), $this->import[$fname]) )
+						{
 							$buffer = $this->import_new_attrib($buffer,$name,$value);
 						}
 					}
-				} else {
+				}
+				else
+				{
 					$buffer = $this->import_end_record($buffer);
 				}
 			}
@@ -164,19 +200,25 @@
 		fclose($fp);
 		$buffer = $this->import_end_file($buffer,$private,$cat_id);
 
-		if ($download == "") {
-			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" ) {
+		if ($download == "")
+		{
+			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" )
+			{
 				// filename, default application/octet-stream, length of file, default nocache True
 				$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
 				echo $buffer;
-			} else {
+			}
+			else
+			{
 				echo "<pre>$buffer</pre>";
 				echo '<a href="'.$phpgw->link("/addressbook/index.php",
 					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
 					. '">'.lang("OK").'</a>';
 				$phpgw->common->phpgw_footer();
 			}
-		} else {
+		}
+		else
+		{
 			echo "<pre>$buffer</pre>";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php",
 				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")

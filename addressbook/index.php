@@ -20,13 +20,12 @@
 
 	include('../header.inc.php');
 
-	$t = new Template($phpgw->common->get_tpl_dir('addressbook'));
-	$t->set_file(array(
-		'addressbook_header' => 'header.tpl',
-		'column'             => 'column.tpl',
-		'row'                => 'row.tpl',
-		'addressbook_footer' => 'footer.tpl'
-	));
+	$t = new Template(PHPGW_APP_TPL);
+	$t->set_file(array('addressbook_list_t' => 'index.tpl'));
+	$t->set_block('addressbook_list_t','addressbook_header','addressbook_header');
+	$t->set_block('addressbook_list_t','column','column');
+	$t->set_block('addressbook_list_t','row','row');
+	$t->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
 
 	$this = CreateObject('phpgwapi.contacts');
 	//$this->delete_all($phpgw_info['user']['account_id']);

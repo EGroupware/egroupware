@@ -17,8 +17,7 @@
 
 	include('../header.inc.php');
 
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));
-
+	$t = new Template(PHPGW_APP_TPL);
 	$t->set_file(array(
 		'field_list_t' => 'listfields.tpl',
 		'field_list'   => 'listfields.tpl'));
