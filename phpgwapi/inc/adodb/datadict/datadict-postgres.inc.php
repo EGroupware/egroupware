@@ -1,7 +1,7 @@
 <?php
 
 /**
-  V3.94  13 Oct 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -16,6 +16,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 	var $seqField = false;
 	var $seqPrefix = 'SEQ_';
 	var $addCol = ' ADD COLUMN';
+	var $quote = '"';
 	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
@@ -107,12 +108,12 @@ class ADODB2_postgres extends ADODB_DataDict {
 		}
 	}
 	
-	/* The following does not work - does anyone want to contribute code? */
+	/* The following does not work in Pg 6.0 - does anyone want to contribute code? 
 	
 	//"ALTER TABLE table ALTER COLUMN column SET DEFAULT mydef" and
 	//"ALTER TABLE table ALTER COLUMN column DROP DEFAULT mydef"
 	//"ALTER TABLE table ALTER COLUMN column SET NOT NULL" and
-	//"ALTER TABLE table ALTER COLUMN column DROP NOT NULL"
+	//"ALTER TABLE table ALTER COLUMN column DROP NOT NULL"*/
 	function AlterColumnSQL($tabname, $flds)
 	{
 		if ($this->debug) ADOConnection::outp("AlterColumnSQL not supported for PostgreSQL");
@@ -135,7 +136,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		}
 		$suffix = '';
 		if (strlen($fdefault)) $suffix .= " DEFAULT $fdefault";
-		if ($fnotnull) $suffix .= 'NOT NULL';
+		if ($fnotnull) $suffix .= ' NOT NULL';
 		if ($fconstraint) $suffix .= ' '.$fconstraint;
 		return $suffix;
 	}
@@ -180,15 +181,31 @@ CREATE [ UNIQUE ] INDEX index_name ON table
 	*/
 	function _IndexSQL($idxname, $tabname, $flds, $idxoptions)
 	{
-		if (isset($idxoptions['REPLACE'])) $sql[] = "DROP INDEX $idxname";
-		if (isset($idxoptions['UNIQUE'])) $unique = ' UNIQUE';
-		else $unique = '';
+		$sql = array();
 		
-		if (is_array($flds)) $flds = implode(', ',$flds);
-		$s = "CREATE$unique INDEX $idxname ON $tabname ";
-		if (isset($idxoptions['HASH'])) $s .= 'USING HASH ';
-		if (isset($idxoptions[$this->upperName])) $s .= $idxoptions[$this->upperName];
-		$s .= "($flds)";
+		if ( isset($idxoptions['REPLACE']) || isset($idxoptions['DROP']) ) {
+			$sql[] = sprintf ($this->dropIndex, $idxname, $tabname);
+			if ( isset($idxoptions['DROP']) )
+				return $sql;
+		}
+		
+		if ( empty ($flds) ) {
+			return $sql;
+		}
+		
+		$unique = isset($idxoptions['UNIQUE']) ? ' UNIQUE' : '';
+		
+		$s = 'CREATE' . $unique . ' INDEX ' . $idxname . ' ON ' . $tabname . ' ';
+		
+		if (isset($idxoptions['HASH']))
+			$s .= 'USING HASH ';
+		
+		if ( isset($idxoptions[$this->upperName]) )
+			$s .= $idxoptions[$this->upperName];
+		
+		if ( is_array($flds) )
+			$flds = implode(', ',$flds);
+		$s .= '(' . $flds . ')';
 		$sql[] = $s;
 		
 		return $sql;

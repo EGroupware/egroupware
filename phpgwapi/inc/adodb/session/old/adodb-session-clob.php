@@ -1,6 +1,6 @@
 <?php
 /*
-  V3.92  2 Oct 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -110,7 +110,8 @@ GLOBAL 	$ADODB_SESSION_CONNECT,
 	$ADODB_SESS_DEBUG,
 	$ADODB_SESSION_EXPIRE_NOTIFY,
 	$ADODB_SESSION_CRC,
-	$ADODB_SESSION_USE_LOBS;
+	$ADODB_SESSION_USE_LOBS,
+	$ADODB_SESSION_TBL;
 	
 	if (!isset($ADODB_SESSION_USE_LOBS)) $ADODB_SESSION_USE_LOBS = 'CLOB';
 	
@@ -356,7 +357,8 @@ function adodb_sess_gc($maxlifetime)
 		reset($ADODB_SESSION_EXPIRE_NOTIFY);
 		$fn = next($ADODB_SESSION_EXPIRE_NOTIFY);
 		$savem = $ADODB_SESS_CONN->SetFetchMode(ADODB_FETCH_NUM);
-		$rs = $ADODB_SESS_CONN->Execute("SELECT expireref,sesskey FROM $ADODB_SESSION_TBL WHERE expiry < " . time());
+		$t = time();
+		$rs = $ADODB_SESS_CONN->Execute("SELECT expireref,sesskey FROM $ADODB_SESSION_TBL WHERE expiry < $t");
 		$ADODB_SESS_CONN->SetFetchMode($savem);
 		if ($rs) {
 			$ADODB_SESS_CONN->BeginTrans();
@@ -367,11 +369,14 @@ function adodb_sess_gc($maxlifetime)
 				$del = $ADODB_SESS_CONN->Execute("DELETE FROM $ADODB_SESSION_TBL WHERE sesskey='$key'");
 				$rs->MoveNext();
 			}
+			$rs->Close();
+			
+			//$ADODB_SESS_CONN->Execute("DELETE FROM $ADODB_SESSION_TBL WHERE expiry < $t");
 			$ADODB_SESS_CONN->CommitTrans();
+			
 		}
 	} else {
-		$qry = "DELETE FROM $ADODB_SESSION_TBL WHERE expiry < " . time();
-		$ADODB_SESS_CONN->Execute($qry);
+		$ADODB_SESS_CONN->Execute("DELETE FROM $ADODB_SESSION_TBL WHERE expiry < " . time());
 	
 		if ($ADODB_SESS_DEBUG) ADOConnection::outp("<p><b>Garbage Collection</b>: $qry</p>");
 	}

@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * @version V3.94  13 Oct 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * @version V4.20 22 Feb 2004 (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
  * Whenever there is any discrepancy between the two licenses, 
  * the BSD license will take precedence. 
@@ -63,13 +63,14 @@ FROM ADOXYZ WHERE lastname=".$conn->qstr($record['lastname']);
 
 $rs = $conn->Execute($sql); // Execute the query and get the existing record to update
 if (!$rs) print "<p>No record found!</p>";
+
 $record = array(); // Initialize an array to hold the record data to update
 
 // Set the values for the fields in the record
 $record["firstName"] = "Caroline".rand();
 $record["lasTname"] = "Smithy Jones"; // Update Caroline's lastname from Miranda to Smith
 $record["creAted"] = '2002-12-'.(rand()%30+1);
-
+$record['num'] = 3921;
 // Pass the single record recordset and the array containing the data to update
 // into the GetUpdateSQL function. The function will process the data and return
 // a fully formatted update sql statement.
@@ -79,7 +80,9 @@ $updateSQL = $conn->GetUpdateSQL($rs, $record);
 $conn->Execute($updateSQL); // Update the record in the database
 print "<p>Rows Affected=".$conn->Affected_Rows()."</p>";
 
-rs2html($conn->Execute("select * from adoxyz where lastname like 'Smith%'"));
+$rs = $conn->Execute("select * from adoxyz where lastname like 'Smith%'");
+adodb_pr($rs);
+rs2html($rs);
 }
 
 

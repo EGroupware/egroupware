@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.94  13 Oct 2003  (c) 2000-2003 John Lim. All rights reserved.
+V4.20 22 Feb 2004  (c) 2000-2004 John Lim. All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -24,14 +24,14 @@ class ADODB_sybase extends ADOConnection {
 	var $hasInsertID = true;
 	var $hasAffectedRows = true;
   	var $metaTablesSQL="select name from sysobjects where type='U' or type='V'";
-	var $metaColumnsSQL = "SELECT c.name,t.name,c.length FROM syscolumns c, systypes t, sysobjects o WHERE o.name='%s' and t.xusertype=c.xusertype and o.id=c.id";
+	// see http://sybooks.sybase.com/onlinebooks/group-aw/awg0800e/dbrfen8/@ebt-link;pt=5981;uf=0?target=0;window=new;showtoc=true;book=dbrfen8
+	var $metaColumnsSQL = "SELECT c.column_name, c.column_type, c.width FROM syscolumn c, systable t WHERE t.table_name='%s' AND c.table_id=t.table_id AND t.table_type='BASE'";
 	/*
 	"select c.name,t.name,c.length from 
 	syscolumns c join systypes t on t.xusertype=c.xusertype join sysobjects o on o.id=c.id 
 	where o.name='%s'";
 	*/
 	var $concat_operator = '+'; 
-	var $sysDate = 'GetDate()';
 	var $arrayClass = 'ADORecordSet_array_sybase';
 	var $sysDate = 'GetDate()';
 	var $leftOuter = '*=';
@@ -112,6 +112,8 @@ class ADODB_sybase extends ADOConnection {
 	// returns true or false
 	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('sybase_connect')) return false;
+		
 		$this->_connectionID = sybase_connect($argHostname,$argUsername,$argPassword);
 		if ($this->_connectionID === false) return false;
 		if ($argDatabasename) return $this->SelectDB($argDatabasename);
@@ -120,6 +122,8 @@ class ADODB_sybase extends ADOConnection {
 	// returns true or false
 	function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('sybase_connect')) return false;
+		
 		$this->_connectionID = sybase_pconnect($argHostname,$argUsername,$argPassword);
 		if ($this->_connectionID === false) return false;
 		if ($argDatabasename) return $this->SelectDB($argDatabasename);
@@ -140,14 +144,15 @@ class ADODB_sybase extends ADOConnection {
 	// See http://www.isug.com/Sybase_FAQ/ASE/section6.2.html#6.2.12
 	function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0) 
 	{
-		if ($secs2cache > 0) // we do not cache rowcount, so we have to load entire recordset
-			return ADOConnection::SelectLimit($sql,$nrows,$offset,$inputarr,$secs2cache);
-		
+		if ($secs2cache > 0) {// we do not cache rowcount, so we have to load entire recordset
+			$rs =& ADOConnection::SelectLimit($sql,$nrows,$offset,$inputarr,$secs2cache);
+			return $rs;
+		}
 		$cnt = ($nrows > 0) ? $nrows : 0;
 		if ($offset > 0 && $cnt) $cnt += $offset;
 		
 		$this->Execute("set rowcount $cnt"); 
-		$rs = &ADOConnection::SelectLimit($sql,$nrows,$offset,$inputarr,$secs2cache);
+		$rs =& ADOConnection::SelectLimit($sql,$nrows,$offset,$inputarr,$secs2cache);
 		$this->Execute("set rowcount 0"); 
 		
 		return $rs;
@@ -232,6 +237,23 @@ class ADODB_sybase extends ADOConnection {
             }
         }
         return $s;
+    }
+	
+	# Added 2003-10-07 by Chris Phillipson
+    # Used ASA SQL Reference Manual -- http://sybooks.sybase.com/onlinebooks/group-aw/awg0800e/dbrfen8/@ebt-link;pt=5981;uf=0?target=0;window=new;showtoc=true;book=dbrfen8
+    # to convert similar Microsoft SQL*Server (mssql) API into Sybase compatible version
+    function MetaPrimaryKeys($table)
+    {
+        $sql = "SELECT c.column_name " .
+               "FROM syscolumn c, systable t " .
+               "WHERE t.table_name='$table' AND c.table_id=t.table_id " .
+               "AND t.table_type='BASE' " .
+               "AND c.pkey = 'Y' " .
+               "ORDER BY c.column_id";
+
+        $a = $this->GetCol($sql);
+        if ($a && sizeof($a)>0) return $a;
+        return false;
     }
 }
 	

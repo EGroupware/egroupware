@@ -1,6 +1,6 @@
 <?php
 /*
-V3.94  13 Oct 2003  (c) 2000-2003 John Lim. All rights reserved.
+V4.20 22 Feb 2004  (c) 2000-2004 John Lim. All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -35,14 +35,14 @@ class ADODB_oci8po extends ADODB_oci8 {
 		return '?';
 	}
 	
-	function Prepare($sql)
+	function Prepare($sql,$cursor=false)
 	{
 		$sqlarr = explode('?',$sql);
 		$sql = $sqlarr[0];
 		for ($i = 1, $max = sizeof($sqlarr); $i < $max; $i++) {
 			$sql .=  ':'.($i-1) . $sqlarr[$i];
 		} 
-		return ADODB_oci8::Prepare($sql);
+		return ADODB_oci8::Prepare($sql,$cursor);
 	}
 	
 	// emulate handling of parameters ? ?, replacing with :bind0 :bind1
@@ -112,10 +112,18 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
 	// 10% speedup to move MoveNext to child class
 	function MoveNext() 
 	{
+	
 		if (!$this->EOF) {		
 			$this->_currentRow++;
 			if(@OCIfetchinto($this->_queryID,$this->fields,$this->fetchMode)) {
+			global $ADODB_ANSI_PADDING_OFF;
+	
 				if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
+				if (!empty($ADODB_ANSI_PADDING_OFF)) {
+					foreach($this->fields as $k => $v) {
+						if (is_string($v)) $this->fields[$k] = rtrim($v);
+					}
+				}
 				return true;
 			}
 			$this->EOF = true;
@@ -150,7 +158,7 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
 		$arr = array();
 		$lowercase = (ADODB_ASSOC_CASE == 0);
 		
-		foreach ($this->fields as $k => $v) {
+		foreach($this->fields as $k => $v) {
 			if (is_integer($k)) $arr[$k] = $v;
 			else {
 				if ($lowercase)
@@ -166,7 +174,14 @@ class ADORecordset_oci8po extends ADORecordset_oci8 {
 	{
 		$ret = @OCIfetchinto($this->_queryID,$this->fields,$this->fetchMode);
 		if ($ret) {
-			if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
+		global $ADODB_ANSI_PADDING_OFF;
+	
+				if ($this->fetchMode & OCI_ASSOC) $this->_updatefields();
+				if (!empty($ADODB_ANSI_PADDING_OFF)) {
+					foreach($this->fields as $k => $v) {
+						if (is_string($v)) $this->fields[$k] = rtrim($v);
+					}
+				}
 		}
 		return $ret;
 	}
