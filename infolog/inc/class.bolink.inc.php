@@ -156,7 +156,7 @@
 		{
 			if ($this->debug)
 			{
-				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner,$lastmod)</p>\n";
+				echo "<p>bolink.link('$app1',$id1,'".print_r($app2,true)."',$id2,'$remark',$owner,$lastmod)</p>\n";
 			}
 			if (!$app1 || !$app2 || $app1 == $app2 && $id1 == $id2)
 			{
@@ -191,11 +191,12 @@
 				{
 					if (!is_array($link))	// check for unlink-marker
 					{
+						echo "<b>link='$link' is no array</b><br>\n";
 						continue;
 					}
 					if ($link['app'] == $this->vfs_appname)
 					{
-						$link_id = -intval($this->attach_file($app1,$id1,$link['id'],$link['remark']));
+						$link_id = $this->attach_file($app1,$id1,$link['id'],$link['remark']);
 					}
 					else
 					{
@@ -207,11 +208,11 @@
 			}
 			if ($app1 == $this->vfs_appname)
 			{
-				return -intval($this->attach_file($app2,$id2,$id1,$remark));
+				return $this->attach_file($app2,$id2,$id1,$remark);
 			}
 			elseif ($app2 == $this->vfs_appname)
 			{
-				return -intval($this->attach_file($app1,$id1,$id2,$remark));
+				return $this->attach_file($app1,$id1,$id2,$remark);
 			}
 			return solink::link($app1,$id1,$app2,$id2,$remark,$owner);
 		}
@@ -549,6 +550,7 @@
 			$file['path'] path of the file on the client computer
 			$file['ip'] of the client (path and ip are only needed if u want a symlink (if possible))
 		@param $comment
+		@return int negative id of phpgw_vfs table as negative link-id's are for vfs attachments
 		*/
 		function attach_file($app,$id,$file,$comment='')
 		{
@@ -557,33 +559,25 @@
 				echo "<p>attach_file: app='$app', id='$id', tmp_name='$file[tmp_name]', name='$file[name]', size='$file[size]', type='$file[type]', path='$file[path]', ip='$file[ip]', comment='$comment'</p>\n";
 			}
 			// create the root for attached files in infolog, if it does not exists
-			//if (!($this->vfs->file_exists($this->vfs_basedir,array(RELATIVE_ROOT))))
 			$vfs_data = array('string'=>$this->vfs_basedir,'relatives'=>array(RELATIVE_ROOT));
 			if (!($this->vfs->file_exists($vfs_data)))
 			{
 				$this->vfs->override_acl = 1;
-				//$this->vfs->mkdir($this->vfs_basedir,array(RELATIVE_ROOT));
 				$this->vfs->mkdir($vfs_data);
 				$this->vfs->override_acl = 0;
 			}
 
-			//$dir=$this->vfs_path($app);
-			//if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
 			$vfs_data = $this->vfs_path($app,False,False,RELATIVE_ROOT);
 			if (!($this->vfs->file_exists($vfs_data)))
 			{
 				$this->vfs->override_acl = 1;
-				//$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
 				$this->vfs->mkdir($vfs_data);
 				$this->vfs->override_acl = 0;
 			}
-			//$dir=$this->vfs_path($app,$id);
-			//if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
 			$vfs_data = $this->vfs_path($app,$id,False,RELATIVE_ROOT);
 			if (!($this->vfs->file_exists($vfs_data)))
 			{
 				$this->vfs->override_acl = 1;
-				//$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
 				$this->vfs->mkdir($vfs_data);
 				$this->vfs->override_acl = 0;
 			}
@@ -600,34 +594,19 @@
 					//echo "<p>attach_file: ereg('".$this->send_file_ips[$valid]."', '$file[ip]')=".ereg($this->send_file_ips[$valid],$file['ip'])."</p>\n";
 					if ($check('^('.$valid2.')(.*)$',$file['path'],$parts) &&
 					    ereg($this->send_file_ips[$valid],$file['ip']) &&     // right IP
-//					    $this->vfs->file_exists($trans.$parts[2],array(RELATIVE_NONE|VFS_REAL)))
 					    $this->vfs->file_exists(array('string'=>$trans.$parts[2],'relatives'=>array(RELATIVE_NONE|VFS_REAL))))
 					{
 						$tfname = $trans.$parts[2];
 					}
 					//echo "<p>attach_file: full_fname='$file[path]', valid2='$valid2', trans='$trans', check=$check, tfname='$tfname', parts=(x,'${parts[1]}','${parts[2]}')</p>\n";
 				}
-				//if ($tfname && !$this->vfs->securitycheck($tfname))
 				if ($tfname && !$this->vfs->securitycheck(array('string'=>$tfname)))
 				{
 					return False; //lang('Invalid filename').': '.$tfname;
 				}
 			}
 			$this->vfs->override_acl = 1;
-/*
-			if ($tfname)	// file is local
-			{
-				$this->vfs->symlink($tfname,$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
-			}
-			else
-			{
-				$this->vfs->cp($file['tmp_name'],$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
-			}
-			$this->vfs->set_attributes ($fname, array (RELATIVE_ROOT),
-				array ('mime_type' => $file['type'],
-						 'comment' => stripslashes ($comment),
-						 'app' => $app));
-*/
+
 			$this->vfs->cp(array(
 				'symlink' => !!$tfname,		// try a symlink
 				'from' => $tfname ? $tfname : $file['tmp_name'],
@@ -645,7 +624,8 @@
 			$this->vfs->override_acl = 0;
 
 			$link = $this->info_attached($app,$id,$file['name']);
-			return is_array($link) ? $link['file_id'] : False;
+
+			return is_array($link) ? $link['link_id'] : False;
 		}
 
 		/*!
@@ -673,13 +653,10 @@
 			{
 				return False;	// dont delete more than all attachments of an entry
 			}
-			//$file = $this->vfs_path($app,$id,$fname);
-			//if ($this->vfs->file_exists($file,array(RELATIVE_ROOT)))
 			$vfs_data = $this->vfs_path($app,$id,$fname,RELATIVE_ROOT);
 			if ($this->vfs->file_exists($vfs_data))
 			{
 				$this->vfs->override_acl = 1;
-				//$Ok = $this->vfs->delete($file,array(RELATIVE_ROOT));
 				$Ok = $this->vfs->delete($vfs_data);
 				$this->vfs->override_acl = 0;
 				return $Ok;
@@ -699,7 +676,6 @@
 		function info_attached($app,$id,$filename)
 		{
 			$this->vfs->override_acl = 1;
-			//$attachments = $this->vfs->ls($this->vfs_path($app,$id,$filename),array(RELATIVE_NONE));
 			$attachments = $this->vfs->ls($this->vfs_path($app,$id,$filename,RELATIVE_NONE));
 			$this->vfs->override_acl = 0;
 
@@ -723,7 +699,6 @@
 		{
 			if (!is_array($fileinfo))
 			{
-				//$fileinfo = $this->vfs->fileinfo($fileinfo);
 				$fileinfo = $this->vfs->ls(array('file_id' => $fileinfo));
 				list(,$fileinfo) = each($fileinfo);
 
@@ -762,7 +737,6 @@
 		function list_attached($app,$id)
 		{
 			$this->vfs->override_acl = 1;
-			//$attachments = $this->vfs->ls($this->vfs_path($app,$id),array(RELATIVE_NONE));
 			$attachments = $this->vfs->ls($this->vfs_path($app,$id,False,RELATIVE_ROOT));
 			$this->vfs->override_acl = 0;
 
@@ -802,7 +776,6 @@
 				return False;
 			}
 			$this->vfs->override_acl = 1;
-			// $data = $this->vfs->read($this->vfs_path($app,$id,$filename),array(RELATIVE_ROOT));
 			$data = $this->vfs->read($this->vfs_path($app,$id,$filename,RELATIVE_ROOT));
 			$this->vfs->override_acl = 0;
 			return $data;
@@ -824,7 +797,6 @@
 			{
 				return False;
 			}
-			//$link = $this->vfs->readlink ($this->vfs_path($app,$id,$filename), array (RELATIVE_ROOT));
 			$link = $this->vfs->ls($this->vfs_path($app,$id,$filename,RELATIVE_ROOT)+array('readlink'=>True));
 			$link = @$link[0]['symlink'];
 
@@ -1020,7 +992,3 @@
 			return $content;
 		}
 	}
-
-
-
-
