@@ -21,8 +21,8 @@
        //echo "accounts_const called<br>line: $line<br>$file";
 
        $phpgw->accounts->phpgw_fillarray();
-       if(! $phpgw->preferences->account_id) {
-         $phpgw->preferences->preferences($phpgw_info["user"]["account_id"]);
+       if(!$phpgw->preferences->account_id) {
+         $phpgw->preferences = new preferences($phpgw_info["user"]["account_id"]);
        }
        $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
