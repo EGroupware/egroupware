@@ -313,14 +313,18 @@
       {notes}
     </font></td>
   </tr>
-
   <tr>
     <td><font size="-1">{lang_private}:</font></td>
     <td colspan="3">
      <input type="checkbox" name="access" value="True"{access_check}>
     </td>
   </tr>
-
+  <tr>
+    <td><font size="-1">{lang_cats}:</font></td>
+    <td>{cats_link}</td>
+    <td colspan="3">
+    </td>
+  </tr>
   <tr>
 	<td><font color="#000000" face="" size="-1">{lang_custom}</font></td>
 	<td></td>

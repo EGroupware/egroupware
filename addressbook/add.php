@@ -63,7 +63,8 @@
 		addressbook_add_entry($addnew['owner'],$addnew);
 		$fields = addressbook_read_last_entry($qfields);
 		$newid = $fields[0]['id'];
-		Header("Location: " . $phpgw->link('/addressbook/edit.php',"&ab_id=$newid&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: "
+			. $phpgw->link('/addressbook/edit.php',"&ab_id=$newid&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	} else {
 		if (! $bday_month && ! $bday_day && ! $bday_year) {
 			$bday = "";
@@ -147,17 +148,20 @@
 			$fields["access"]           = 'public';
 		}
 
-		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"]);
+		$fields["cat_id"]               = $cat_id;
+
+		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"],$fields["cat_id"]);
 		$ab_id = addressbook_get_lastid();
 
-		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start"));
+		Header("Location: "
+			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_clear",lang("clear"));
 	$t->set_var("lang_cancel",lang("cancel"));
-	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start"));
+	$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&cat_id=$cat_id"));
 	$t->parse("out","add");
 	$t->pparse("out","add");
 

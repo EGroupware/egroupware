@@ -29,7 +29,8 @@
 
 	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_EDIT) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
-		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: "
+			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -37,7 +38,8 @@
 	$t->set_file(array("edit"	=> "edit.tpl"));
 
 	if (! $ab_id) {
-		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: "
+			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -156,11 +158,14 @@
 			$fields["access"]           = 'public';
 		}
 
+		$fields["cat_id"]               = $cat_id;
+
 		$userid = $phpgw_info["user"]["account_id"];
 
-		addressbook_update_entry($ab_id,$userid,$fields,$fields['access']);
+		addressbook_update_entry($ab_id,$userid,$fields,$fields['access'],$fields["cat_id"]);
 
-		Header("Location: " . $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: "
+			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -174,7 +179,8 @@
 	$t->set_var("lang_cancel",lang("cancel"));
 	$t->set_var("lang_delete",lang("delete"));
 	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("cancel_link",'<form method="POST" action="'.$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&query=$query") . '">');
+	$t->set_var("cancel_link",'<form method="POST" action="'
+		. $phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id") . '">');
 	$t->set_var("delete_link",'<form method="POST" action="'.$phpgw->link("/addressbook/delete.php","ab_id=$ab_id") . '">');
 	
 	$t->parse("out","edit");

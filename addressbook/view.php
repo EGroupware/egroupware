@@ -29,7 +29,8 @@
 
 	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_PRIVATE) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
 	{
-		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		Header("Location: "
+			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
 
@@ -111,25 +112,37 @@
 		$columns_html .= "<td>" . $ref . $data . "</td>";
 	}
 
+	$cat = CreateObject('phpgwapi.categories');
+	$catinfo  = $cat->return_single($cat_id);
+	$catname  = $catinfo[0]["name"];
+	$cat->app_name = "phpgw";
+	$catinfo  = $cat->return_single($cat_id);
+	$catname .= $catinfo[0]["name"];
+
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
 		. $phpgw->common->grab_owner_name($record_owner) . '</td></tr>'
 		. '<tr><td><b>' . lang("Record access") . '</b></td><td>'
 		. $access_check . '</b></td></tr>'
+		. '<tr><td><b>' . lang("Category") . '</b></td><td>'
+		. $catname . '</b></td></tr>'
 		. '</td></td></table>';
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
 	if ($rights & PHPGW_ACL_EDIT) {
-		$editlink = '<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order"
+		$editlink = '<form method="POST" action="'.$phpgw->link("/addressbook/edit.php","ab_id=$ab_id&start=$start&sort=$sort&order=$order&cat_id=$cat_id"
 			. "&query=$query&sort=$sort").'">';
 	} else {
 		$editlink = '';
 	}
 
-	$copylink  = '<form method="POST" action="'.$phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$vcardlink = '<form method="POST" action="'.$phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$donelink  = '<form method="POST" action="'.$phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+	$copylink  = '<form method="POST" action="'
+		. $phpgw->link("/addressbook/add.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
+	$vcardlink = '<form method="POST" action="'
+		. $phpgw->link("/addressbook/vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
+	$donelink  = '<form method="POST" action="'
+		. $phpgw->link("/addressbook/index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id").'">';
 
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);

@@ -169,7 +169,7 @@
 
 			$this->db2 = $this->db;
  
-			$this->db->query("select id,lid,tid,owner,access $t_fields from $this->std_table WHERE id='$id'");
+			$this->db->query("select id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
        
 			$return_fields[0]["id"]        = $this->db->f("id"); // unique id
@@ -177,6 +177,7 @@
 			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
 			$return_fields[0]["owner"]     = $this->db->f("owner"); // id of owner/parent for the record
 			$return_fields[0]["access"]    = $this->db->f("access"); // public/private
+			$return_fields[0]["cat_id"]    = $this->db->f("cat_id");
 
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
@@ -232,7 +233,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner,access $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields from $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]["id"]		= $this->db->f("id");
@@ -240,6 +241,7 @@
 			$return_fields[0]["tid"]    = $this->db->f("tid");
 			$return_fields[0]["owner"]  = $this->db->f("owner");
 			$return_fields[0]["access"] = $this->db->f("access"); // public/private
+			$return_fields[0]["cat_id"]    = $this->db->f("cat_id");
 
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
@@ -335,7 +337,11 @@
 						reset($stock_fields);
 						while (list($fname,$fvalue)=each($stock_fields)) {
 							if ($fvalue==$name) {
-								$filterlist .= $name.'="'.$value.'",';
+								if (gettype($value) == "integer") {
+									$filterlist .= $name."=".$value.",";
+								} else {
+									$filterlist .= $name."='".$value."',";
+								}
 								break;
 							}
 						}
@@ -355,7 +361,7 @@
 				}
 			}
 
-			$fwhere .= " owner=" . $phpgw_info['user']['account_id'];
+			$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
 			if (is_array($this->grants))
 			{
 				$grants = $this->grants;
@@ -364,7 +370,7 @@
 					$public_user_list[] = $user;
 				}
 				reset($public_user_list);
-				$fwhere .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . ")) AND ";
+				$fwhere .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . "))) ";
 			}
 			else
 			{
@@ -387,7 +393,9 @@
 			if ($DEBUG && $ordermethod) {
 				echo "<br>DEBUG - $ordermethod";
 			}
-
+			
+			$filtermethod = "";
+			
 			// This logic allows you to limit rows, or not.
 			// The export feature, for example, does not limit rows.
 			// This way, it can retrieve all rows at once.
@@ -441,6 +449,7 @@
 				$return_fields[$i]["tid"]    = $this->db->f("tid");
 				$return_fields[$i]["owner"]  = $this->db->f("owner");
 				$return_fields[$i]["access"] = $this->db->f("access"); // public/private
+				$return_fields[$i]["cat_id"] = $this->db->f("cat_id");
 
 				if (gettype($stock_fieldnames) == "array") {
 					while (list($f_name) = each($stock_fieldnames)) {
@@ -462,14 +471,14 @@
 			return $return_fields;
 		}
 
-		function add($owner,$fields,$access='')
+		function add($owner,$fields,$access='',$cat_id='')
 		{
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//$this->db->lock(array("contacts"));
-			$this->db->query("insert into $this->std_table (owner,access,"
+			$this->db->query("insert into $this->std_table (owner,access,cat_id"
 				. implode(",",$this->stock_contact_fields)
-				. ") values ('$owner','$access','"
+				. ") values ('$owner','$access','$cat_id','"
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
 			$this->db->query("select max(id) from $this->std_table ",__LINE__,__FILE__);
@@ -504,7 +513,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='')
+		function update($id,$owner,$fields,$access='',$cat_id='')
 		{
 			// First make sure that id number exists
 			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
@@ -522,7 +531,7 @@
 				if ($field_s == ",") {
 					unset($field_s);
 				}
-				$this->db->query("update $this->std_table set access='$access' $fields_s where "
+				$this->db->query("update $this->std_table set access='$access',cat_id='$cat_id' $fields_s where "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 

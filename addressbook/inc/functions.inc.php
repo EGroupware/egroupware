@@ -33,6 +33,48 @@
 		}
 	}
 
+	function cat_option($cat_id) {
+		global $phpgw_info;
+		// Get global and app-specific category listings
+		$cats_link  = "<select name=\"cat_id\">";
+		$cats_link .= "<option value =\"0\"";
+		if (!$cat_id) {
+			$cats_link .= " selected";
+		}
+		$cats_link .= ">".lang("none");
+		$cats       = CreateObject('phpgwapi.categories');
+
+		$cats->categories($phpgw_info['user']['account_id'],'phpgw');
+		$cats_link .= $cats->formated_list('select','',$cat_id);
+
+		$cats->categories($phpgw_info['user']['account_id'],'addressbook');
+		$cats_link .= $cats->formated_list('select','',$cat_id);
+		$cats_link .= '</select>';
+		return $cats_link;
+	}
+
+	### SET THE FONT TO DEFAULT IF IT DOESNT EXISTS ###
+	function set_font() {
+		if($phpgw_info["user"]["preferences"]["notes"]["notes_font"] == "") {
+			$font = "Arial";
+			return $font;
+		} else {
+			$font = $phpgw_info["user"]["preferences"]["notes"]["notes_font"];
+			return $font;
+		}
+	}
+
+	### SET FONT SIZE ####
+	function set_font_size() {
+		if($phpgw_info["user"]["preferences"]["notes"]["notes_font_size"] == "") {
+			$font_size = "3";
+			return $font_size;
+		} else {
+			$font_size = $phpgw_info["user"]["preferences"]["notes"]["notes_font_size"];
+			return $font_size;
+		}
+	}
+
 	// this cleans up the fieldnames for display
 	function display_name($column) {
 		$abc = array(
@@ -122,10 +164,10 @@
 		}
 	}
 
-	function addressbook_add_entry($userid,$fields,$access) {
+	function addressbook_add_entry($userid,$fields,$access,$cat_id) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_ADD) {
-			$this->add($userid,$fields);
+			$this->add($userid,$fields,$access,$cat_id);
 		}
 		return;
 	}
@@ -137,10 +179,10 @@
 		return $ab_id;
 	}
 	
-	function addressbook_update_entry($id,$userid,$fields,$access) {
+	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_EDIT) {
-			$this->update($id,$userid,$fields,$access);
+			$this->update($id,$userid,$fields,$access,$cat_id);
 		}
 		return;
 	}
@@ -206,6 +248,9 @@
 		$url          = $fields["url"];
 		$pubkey       = $fields["pubkey"];
 		$access       = $fields["access"];
+		$cat_id       = $fields["cat_id"];
+	
+		$cats_link    = cat_option($cat_id);
 
 		if ($access == 'private') {
 			$access_check = ' checked';
@@ -462,6 +507,9 @@
 		$t->set_var("access_check",$access_check);
 
 		$t->set_var('lang_private',lang('Private'));
+
+		$t->set_var('lang_cats',lang('Category'));
+		$t->set_var('cats_link',$cats_link);
 		if ($customfields) {
 			$t->set_var('lang_custom',lang('Custom Fields').':');
 		} else {

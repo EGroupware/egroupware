@@ -3,6 +3,10 @@
 <center>{lang_addressbook}
 <br>{lang_showing}
 <br>{searchreturn}
+  <form action="{cats_url}" method="POST">
+{cats}{cats_link}
+    <input type="submit" name="cats" value="{lang_cats}">
+  </form>
 {search_filter}
 
 <table width=75% border=0 cellspacing=1 cellpadding=3>
