@@ -736,10 +736,9 @@
 			// things that might change
 			$out_vars['start'] = $feed_vars['start'];
 			// things that stay the same
+			$out_vars['common_uri'] = $feed_vars['common_uri'];
 			$out_vars['total'] = $feed_vars['total'];
-			$out_vars['cmd_prefix'] = $feed_vars['cmd_prefix'];
-			$out_vars['cmd_suffix'] = $feed_vars['cmd_suffix'];
-
+			
 			// first page
 			if (($feed_vars['start'] != 0) &&
 				($feed_vars['start'] > $this->maxmatches))
@@ -749,7 +748,7 @@
 			}
 			else
 			{
-				$return_array['first_page'] = $this->set_icon_imap('left','first-grey.gif',lang('First page'));
+				$return_array['first_page']= $this->set_icon_imap('left','first-grey.gif',lang('First page'));
 			}
 			// previous page
 			if ($feed_vars['start'] != 0)
@@ -797,7 +796,7 @@
 			}
 			return $return_array;
 		}
-
+		
 		/*!
 		@function set_link_imap
 		@abstract ?
@@ -809,10 +808,10 @@
 		function set_link_imap($align,$img,$alt_text,$out_vars)
 		{
 			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
-			$js_cmd = $out_vars['cmd_prefix'].$out_vars['start'].$out_vars['cmd_suffix'];
-			return '<img src="'.$img_full.'" border="0" alt="'.$alt_text.'" width="12" height="12" onclick="'.$js_cmd.'">'."\r\n";
+			$image_part = '<img src="'.$img_full.'" border="0" alt="'.$alt_text.'" width="12" height="12">';
+			return '<a href="'.$out_vars['common_uri'].'&start='.$out_vars['start'].'">'.$image_part.'</a>';
 		}
-
+		
 		function set_icon_imap($align,$img,$alt_text)
 		{
 			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
