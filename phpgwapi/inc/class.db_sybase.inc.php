@@ -175,5 +175,10 @@
 			printf("<b>Sybase Error</b><br>\n");
 			die("Session halted.");
 		}
+
+		function create_database($adminname = '', $adminpasswd = '')
+		{
+			return False;
+		}
 	}
 ?>

@@ -507,4 +507,9 @@
 			} 
 			return $info;
 		}
+
+		function create_database($adminname = '', $adminpasswd = '')
+		{
+			return False;
+		}
 	}

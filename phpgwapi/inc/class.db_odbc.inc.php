@@ -199,5 +199,10 @@
 			$this->Error);
 			die('Session halted.');
 		}
+
+		function create_database($adminname = '', $adminpasswd = '')
+		{
+			return False;
+		}
 	}
 ?>
