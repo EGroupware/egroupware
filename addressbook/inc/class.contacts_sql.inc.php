@@ -158,7 +158,7 @@
                                                                                    // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
-	$DEBUG = 1;
+	//$DEBUG = 1;
 
         list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
         if (count($stock_fieldnames)) {
@@ -168,7 +168,6 @@
            }
         }
 
-        // the following filter section is not working yet
         if ($filter) {
           if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
           $filterarray = split(',',$filter);
@@ -198,14 +197,17 @@
           
           if ($extra) {
             while (list($name,$value) = each($extra)) {
-              $filterextra .= " AND contact_name='".$name."' AND contact_value='".$value."',";
+              if ($name == "access" && $value != "private") {
+                $value = "%," . $value . ",%";
+              }
+              $filterextra .= " AND contact_name='".$name."' AND contact_value like '".$value."',";
             }
             $filterextra = substr($filterextra,0,-1);
           } else {
             $filterstock = " AND ($filterlist) ";
           }
         }
-	if ($DEBUG) {
+	if ($DEBUG && ($filterextra || $filterstock)) {
 	  if ($filterextra) {
 	    echo "<br>DEBUG - Filtering on extra fields with: #" . $filterextra . "#";
 	  } else {
