@@ -221,48 +221,18 @@
 		$this = CreateObject("phpgwapi.contacts");
 
 		if ($format != "view") {
-			$email 	    = "<input name=\"email\" value=\"$email\">";
-			$firstname  = "<input name=\"firstname\" value=\"$firstname\">";
-			$lastname   = "<input name=\"lastname\" value=\"$lastname\">";
-			$middle     = "<input name=\"middle\" value=\"$middle\">";
-			$prefix     = "<input name=\"prefix\" value=\"$prefix\" size=\"10\">";
-			$suffix     = "<input name=\"suffix\" value=\"$suffix\" size=\"10\">";
-			$title      = "<input name=\"title\" value=\"$title\">";
-
+			// Preferred phone number radio buttons
+			$pref[0] = "<font size=\"-2\">";
+			$pref[1] = "(".lang('pref').")</font>";
 			while (list($name,$val) = each($this->tel_types)) {
-				$str[$name] = "\n".'<INPUT type="radio" name="tel_prefer" value="'.$name.'"';
+				$str[$name] = "\n".'      <input type="radio" name="tel_prefer" value="'.$name.'"';
 				if ($name == $preferred) {
 					$str[$name] .= ' checked';
 				}
 				$str[$name] .= '>';
+				$str[$name] = $pref[0].$str[$name].$pref[1];
+				$t->set_var("pref_".$name,$str[$name]);
 			}
-			$hphone     = "<input name=\"hphone\"    value=\"$hphone\"> ".$str['home'];
-			$wphone	    = "<input name=\"wphone\"    value=\"$wphone\"> ".$str['work'];
-			$msgphone   = "<input name=\"msgphone\"  value=\"$msgphone\"> ".$str['msg'];
-			$isdnphone	= "<input name=\"isdnphone\" value=\"$isdnphone\"> ".$str['isdn'];
-			$carphone   = "<input name=\"carphone\"  value=\"$carphone\"> ".$str['car'];
-			$vidphone	= "<input name=\"vidphone\"  value=\"$vidphone\"> ".$str['video'];
-			$fax        = "<input name=\"fax\"       value=\"$fax\"> ".$str['fax'];
-			$pager      = "<input name=\"pager\"     value=\"$pager\"> ".$str['pager'];
-			$mphone     = "<input name=\"mphone\"    value=\"$mphone\"> ".$str['cell'];
-
-			$ophone	    = "<input name=\"ophone\" value=\"$ophone\">";
-			$bstreet    = "<input name=\"bstreet\" value=\"$bstreet\">";
-			$address2   = "<input name=\"address2\" value=\"$address2\">";
-			$address3   = "<input name=\"address3\" value=\"$address3\">";
-			$bcity      = "<input name=\"bcity\" value=\"$bcity\">";
-			$bstate     = "<input name=\"bstate\" value=\"$bstate\">";
-			$bzip       = "<input name=\"bzip\" value=\"$bzip\">";
-			$bcountry   = "<input name=\"bcountry\" value=\"$bcountry\">";
-			$company    = "<input name=\"company\" value=\"$company\">";
-			$department = "<input name=\"department\" value=\"$department\">";
-
-			$hemail      = "<input name=\"hemail\" value=\"$hemail\">";
-			$hstreet    = "<input name=\"hstreet\" value=\"$hstreet\">";
-			$hcity      = "<input name=\"hcity\" value=\"$hcity\">";
-			$hstate     = "<input name=\"hstate\" value=\"$hstate\">";
-			$hzip       = "<input name=\"hzip\" value=\"$hzip\">";
-			$hcountry   = "<input name=\"hcountry\" value=\"$hcountry\">";
 
 			if (strlen($bday) > 2) {
 				list( $month, $day, $year ) = split( '/', $bday );
