@@ -18,7 +18,7 @@
 
   $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
-  $phpgw->include_lang("nntp");
+  $phpgw->translation->add_app("nntp");
   function get_tg()
   {
     global $phpgw;
@@ -102,8 +102,7 @@
 
     $first = min($nntpavailgroups["con"]);
 
-    $common_hidden_vars = $phpgw->form_sessionid() . "\n"
-		        . "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
+    $common_hidden_vars = "<input type=\"hidden\" name=\"start\" value=\"".$start."\">\n"
 		        . "<input type=\"hidden\" name=\"first\" value=\"".$first."\">\n"
 		        . "<input type=\"hidden\" name=\"tg\" value=\"".$tg."\">\n"
 		        . "<input type=\"hidden\" name=\"usercon\" value=\"".$usercon."\">\n"
