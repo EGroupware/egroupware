@@ -394,7 +394,7 @@
 				}
 				else
 				{
-					if (isset($this->$set_from[$app_name][$var]) && $this->$set_from[$app_name][$var] !== '')
+					if ($var && isset($this->$set_from[$app_name][$var]) && $this->$set_from[$app_name][$var] !== '')
 					{
 						$this->data[$app_name][$var] = $this->$set_from[$app_name][$var];
 						break;
