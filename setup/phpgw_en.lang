@@ -26,6 +26,7 @@ addsub	todo	en	AddSub
 admin	common	en	Admin
 administration	common	en	Administration
 all	transy	en	All
+all	calendar	en	All
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 anonymous user	admin	en	Anonymous user
 any	transy	en	Any
@@ -86,6 +87,7 @@ created by	todo	en	Created By
 current users	common	en	Current users
 current_file	filemanager	en	Current File
 daily	calendar	en	Daily
+daily matrix view	calendar	en	Daily Matrix View
 date	common	en	Date
 date	email	en	Date
 date	nntp	en	Date
@@ -122,6 +124,7 @@ email password	email	en	Email Password
 email signature	email	en	E-Mail signature
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
+end date/time	calendar	en	End Date/Time
 enter your new password	preferences	en	Enter your new password
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
 entry updated sucessfully	common	en	Entry updated sucessfully
@@ -156,6 +159,8 @@ full description	calendar	en	Full Description
 generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 global public	common	en	Global Public
+global public and group public	calendar	en	Global Public and group public
+global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
 group access	common	en	Group Access
 group has been added	common	en	Group has been added
@@ -163,6 +168,7 @@ group has been deleted	common	en	Group has been deleted
 group has been updated	common	en	Group has been updated
 group name	admin	en	Group Name
 group public	common	en	Group Public
+group public only	calendar	en	Group Public Only
 groups	common	en	Groups
 groupsfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
 group_files	filemanager	en	group files
@@ -286,8 +292,11 @@ previous page	common	en	Previous page
 print	common	en	Print
 printer friendly	calendar	en	Printer Friendly
 priority	common	en	Priority
-private	common	en	Private
+private and global public	calendar	en	Private and Global Public
+private and group public	calendar	en	Private and Group Public
 private_files	filemanager	en	Private files
+private	common	en	Private
+private only	calendar	en	Private Only
 project description	todo	en	Project Description
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
@@ -301,6 +310,7 @@ rename_to	filemanager	en	Rename to
 repeat day	calendar	en	Repeat day
 repeat end date	calendar	en	Repeat End date
 repeat type	calendar	en	Repeat type
+repeating event information	calendar	en	Repeating Event Information
 repetition	calendar	en	Repetition
 reply	email	en	Reply
 reply all	email	en	Reply All
@@ -342,6 +352,7 @@ sorry, there was a problem processing your request.	common	en	Sorry, there was a
 sorry, your login has expired	login	en	Sorry, your login has expired
 source language	transy	en	Source Language
 specify_file_name	filemanager	en	You must specify a name for the file you wish to create
+start date/time	calendar	en	Start Date/Time
 state	addressbook	en	State
 status	todo	en	Status
 status	admin	en	Status

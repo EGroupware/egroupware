@@ -126,15 +126,7 @@
   $phpgw->template->set_var("data",$str);
   $phpgw->template->parse("output","list",True);
 
-//  $phpgw->template->set_var("action_url_button","");
-//  $phpgw->template->set_var("action_text_button",lang("Submit"));
-//  $phpgw->template->set_var("action_confirm_button","onClick=\"document.matrixform.submit();\"");
-//  $phpgw->template->parse("submit_button","form_button");
   $phpgw->template->set_var("submit_button",lang("Submit"));
-
-//<!-- {submit_button} -->
-
-
 
   $phpgw->template->set_var("action_url_button","");
   $phpgw->template->set_var("action_text_button",lang("Cancel"));

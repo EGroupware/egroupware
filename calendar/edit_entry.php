@@ -88,10 +88,11 @@
 
   $phpgw->template->set_file(array("edit_entry_begin" => "edit.tpl",
 				   "list"     	      => "list.tpl",
+				   "hr"     	      => "hr.tpl",
 				   "edit_entry_end"   => "edit.tpl",
 				   "form_button"      => "form_button_script.tpl"));
 
-  $phpgw->template->set_block("edit_entry_begin","list","edit_entry_end","form_button");
+  $phpgw->template->set_block("edit_entry_begin","list","hr","edit_entry_end","form_button");
 
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_text"]);
   if($id)
@@ -218,6 +219,8 @@
     display_item(lang("I Participate"),$str);
 
 // Repeat Type
+    $phpgw->template->parse("output","hr",True);
+    display_item("<hr>".lang("Repeating Event Information"),"<hr>");
     $str = "<select name=\"cal[rpt_type]\">";
     $rpt_type_str = Array("none","daily","weekly","monthlybyday","monthlybydate","yearly");
     $rpt_type_out = Array("none" => "None", "daily" => "Daily", "weekly" => "Weekly", "monthlybyday" => "Monthly (by day)", "monthlybydate" => "Monthly (by date)", "yearly" => "yearly");
