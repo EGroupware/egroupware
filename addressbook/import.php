@@ -16,7 +16,8 @@
 	$phpgw_info["flags"]["enable_contacts_class"] = True;
 	include("../header.inc.php");
 
-	$sep = $phpgw_info["server"]["dir_separator"];
+	//$sep = $phpgw_info["server"]["dir_separator"];
+	$sep = SEP;
 
 	// Construct a default basedn for Contacts if using LDAP
 	$tmpbasedn = split(",",$phpgw_info["server"]["ldap_context"]);
