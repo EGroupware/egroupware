@@ -94,7 +94,7 @@ class db {
   // This only affects systems not using persistant connections
   function disconnect()
   {
-    return mysql_close($this->Link_ID);
+    return @mysql_close($this->Link_ID);
   }
 
   function limit($start)

@@ -76,7 +76,7 @@ class db {
   // This only affects systems not using persistant connections
   function disconnect()
   {
-    return pg_close($this->Link_ID);
+    return @pg_close($this->Link_ID);
   }
 
   // I added the line and file section so we can have better error reporting. (jengo)
