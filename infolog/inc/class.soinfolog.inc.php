@@ -210,6 +210,22 @@
 			}
 		}
 
+		function change_delete_owner($owner,$new_owner=0)  // new_owner=0 means delete
+		{
+			if (!$new_owner)
+			{
+				$sql = "delete FROM phpgw_infolog where info_owner='$owner'";
+				$sql2 = "update phpgw_infolog set info_responsible='0' where info_responsible='$owner'";
+			}
+			else
+			{
+				$sql = "update phpgw_infolog set info_owner='$new_owner' where info_owner='$owner'";
+				$sql2 = "update phpgw_infolog set info_responsible='$new_owner' where info_responsible='$owner'";
+			}
+			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->query($sql2,__LINE__,__FILE__);
+		}
+
 		function write($values)  // did _not_ ensure ACL
 		{
 			include(PHPGW_SERVER_ROOT.'/infolog/setup/tables_current.inc.php');
