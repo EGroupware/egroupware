@@ -99,6 +99,18 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 	
+	$test[] = '0.9.14.502';
+	function phpgwapi_upgrade0_9_14_502()
+	{
+		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
+		// as 0.9.15.xxx are already used in HEAD
+		
+		// 0.9.15.001-10 are already included in 0.9.14.502
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.010';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+	
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -191,6 +203,7 @@
 			'nullable' => False
 		));
 		*/
+		$confs = array();
 		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM phpgw_config");
 		while ($GLOBALS['phpgw_setup']->oProc->next_record())
 		{
@@ -257,4 +270,27 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.009';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+	
+	$test[] = '0.9.15.009';
+	function phpgwapi_upgrade0_9_15_009()
+	{
+		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_async',array(
+			'fd' => array(
+				'id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'next' => array('type' => 'int','precision' => '4','nullable' => False),
+				'times' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'method' => array('type' => 'varchar','precision' => '80','nullable' => False),
+				'data' => array('type' => 'text','nullable' => False)
+			),
+			'pk' => array('id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.010';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
 ?>

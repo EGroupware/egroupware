@@ -349,6 +349,19 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'phpgw_async' => array(
+			'fd' => array(
+				'id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'next' => array('type' => 'int','precision' => '4','nullable' => False),
+				'times' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'method' => array('type' => 'varchar','precision' => '80','nullable' => False),
+				'data' => array('type' => 'text','nullable' => False)
+			),
+			'pk' => array('id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);
 
