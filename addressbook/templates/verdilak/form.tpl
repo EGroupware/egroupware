@@ -2,15 +2,36 @@
 <!-- BEGIN addressbook entry form -->
 <table width="75%" border="0" align="center">
   <tr>
+    <td><font color="#000000" face="" size="-1">{lang_prefix}:</font></td>
+    <td>
+      <font size="-1">
+      {prefix}
+    </font></td>
+  </tr>
+  <tr>
+    <td><font color="#000000" face="" size="-1">{lang_firstname}:</font></td>
+    <td>
+      <font size="-1">
+      {firstname}
+    </font></td>
+    <td><font color="#000000" face="" size="-1">{lang_middle}:</font></td>
+    <td>
+      <font size="-1">
+      {middle}
+    </font></td>
+  </tr>
+  <tr>
     <td><font color="#000000" face="" size="-1">{lang_lastname}:</font></td>
     <td>
       <font size="-1">
       {lastname}
     </font></td>
-    <td><font color="#000000" face="" size="-1">{lang_firstname}:</font></td>
+  </tr>
+  <tr>
+    <td><font color="#000000" face="" size="-1">{lang_suffix}:</font></td>
     <td>
       <font size="-1">
-      {firstname}
+      {suffix}
     </font></td>
   </tr>
   <tr>
@@ -52,7 +73,15 @@
     </td>
     <td><font size="-1"></font></td>
   </tr>
-  
+  <tr>
+     <td>
+     <font color="#000000" face="" size="-1">{lang_department}:</font>
+    </td>
+    <td>
+     <font size="-1">{department}</font>
+    </td>
+    <td><font size="-1"></font></td>
+  </tr> 
   <tr>
     <td><font color="#000000" face="" size="-1">{lang_hphone}:</font></td>
     <td>
@@ -142,9 +171,15 @@
       <font size="-1">
       {country}
     </font></td>
+    <td><font color="#000000" face="" size="-1">{lang_timezone}:</font></td>
+    <td>
+      <font size="-1">
+      {timezone}
+    </font></td>
     <td><font size="-1"></font></td>
     <td><font size="-1"></font></td>
   </tr>
+
   <tr>
     <td colspan="4"><font size="-1"></font></td>
   </tr>
