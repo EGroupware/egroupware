@@ -90,7 +90,11 @@
 				'out' => Array(
 					'string'
 				)
-			)
+			),
+			'categories' => array(
+				'in'  => array('bool'),
+				'out' => array('array')
+			),
 		);
 
 		var $debug = False;
@@ -131,6 +135,7 @@
 
 		var $sortby;
 		var $num_months;
+		var $xmlrpc = False;	// not called via xmlrpc
 
 		function bocalendar($session=0)
 		{
@@ -358,6 +363,7 @@
 					ob_end_clean();
 				}
 			}
+			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -379,23 +385,38 @@
 							'function'  => 'list_methods',
 							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
 							'docstring' => lang('Read this list of methods.')
- 						),
-						'read_entry' => array(
+						),
+						'read' => array(
 							'function'  => 'read_entry',
 							'signature' => array(array(xmlrpcStruct,xmlrpcInt)),
 							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
 						),
-						'add_entry' => array(
+						'read_entry' => array(	// deprecated, use read
+							'function'  => 'read_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcInt)),
+							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
+						),
+						'write' => array(
+							'function'  => 'update',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Add or update a single entry by passing the fields.')
+						),
+						'add_entry' => array(	// deprecated, use write
 							'function'  => 'update',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Add a single entry by passing the fields.')
 						),
-						'update_entry' => array(
+						'update_entry' => array(	// deprecated, use write
 							'function'  => 'update',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Update a single entry by passing the fields.')
 						),
-						'delete_entry' => array(
+						'delete' => array(
+							'function'  => 'delete_entry',
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'docstring' => lang('Delete a single entry by passing the id.')
+						),
+						'delete_entry' => array(	// deprecated, use delete
 							'function'  => 'delete_entry',
 							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
 							'docstring' => lang('Delete a single entry by passing the id.')
@@ -410,7 +431,12 @@
 							'signature' => array(array(xmlrpcInt,xmlrpcStruct)),
 							'docstring' => lang('Change all events for $params[\'old_owner\'] to $params[\'new_owner\'].')
 						),
-						'store_to_cache' => array(
+						'search' => array(
+							'function'  => 'store_to_cache',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a list of entries.')
+						),
+						'store_to_cache' => array(	// deprecated, use search
 							'function'  => 'store_to_cache',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Read a list of entries.')
@@ -419,7 +445,12 @@
 							'function'  => 'export_event',
 							'signature' => array(array(xmlrpcString,xmlrpcStruct)),
 							'docstring' => lang('Export a list of entries in iCal format.')
-						)
+						),
+						'categories' => array(
+							'function'  => 'categories',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('List all categories.')
+						),
 					);
 					return $xml_functions;
 					break;
@@ -523,10 +554,9 @@
 
 		function read_entry($id,$ignore_acl=False)
 		{
-			if (is_array($id) && count($id) == 1)	// xmlrpc
+			if (is_array($id) && count($id) == 1)
 			{
 				list(,$id) = each($id);
-				$xmlrpc = True;
 			}
 			if($ignore_acl || $this->check_perms(PHPGW_ACL_READ,$id))
 			{
@@ -537,7 +567,11 @@
 					$this->so->add_entry($event);
 					$event = $this->get_cached_event();
 				}
-				return $xmlrpc ? $this->xmlrpc_prepare($event) : $event;
+				return $this->xmlrpc ? $this->xmlrpc_prepare($event) : $event;
+			}
+			if ($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
 			return False;
 		}
@@ -571,20 +605,23 @@
 
 		function delete_entry($id)
 		{
-			if (is_array($id) && count($id) == 1)	// xmlrpc
+			if (is_array($id) && count($id) == 1)
 			{
 				list(,$id) = each($id);
-				$xmlrpc = True;
 			}
 			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
 				$this->so->delete_entry($id);
 
-				if ($xmlrpc)
+				if ($this->xmlrpc)
 				{
 					$this->so->expunge($id);
 				}
-				return 16;
+				return $this->xmlrpc ? True : 16;
+			}
+			if ($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
 			return 60;
 		}
@@ -697,7 +734,8 @@
 			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$_POST['recur_enddate']);
 
 			$send_to_ui = True;
-			if ((!is_array($l_start) || !is_array($l_end)) && !isset($_GET['readsess']))	// xmlrpc call
+			//if ((!is_array($l_start) || !is_array($l_end)) && !isset($_GET['readsess']))	// xmlrpc call
+			if ($this->xmlrpc)	// xmlrpc call
 			{
 				$send_to_ui = False;
 
@@ -706,7 +744,7 @@
 				foreach(array('start','end','recur_enddate') as $name)
 				{
 					$var = 'l_'.$name;
-					$$var = $this->iso86012date($params[$name]);
+					$$var = $GLOBALS['server']->iso86012date($params[$name]);
 					unset($l_cal[$name]);
 				}
 				if (!is_array($l_participants) || !count($l_participants))
@@ -727,23 +765,12 @@
 				{
 					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
 				}
-				$l_categories = array();
-				if (is_array($params['category']))
-				{
-					foreach($params['category'] as $id => $name)
-					{
-						if ($id > 0 || ($id = $GLOBALS['phpgw']->categories->name2id(addslashes(trim($name)))))
-						{
-							$l_categories[] = $id;
-						}
-						else
-						{	// create new cat
-							$GLOBALS['phpgw']->categories->add( array('name' => $name,'descr' => $name ));
-							$l_categories[] = $GLOBALS['phpgw']->categories->name2id( addslashes($name) );
-						}
-					}
-				}
+				$l_categories = $GLOBALS['server']->xmlrpc2cats($params['category']);
 				unset($l_cal['category']);
+
+				// using access={public|private} in all modules via xmlrpc
+				$l_cal['public'] = $params['access'] != 'private';
+				unset($l_cal['access']);
 /*
 				$fp = fopen('/tmp/xmlrpc.log','a+');
 				ob_start();
@@ -784,8 +811,13 @@
 			}
 			else
 			{
-				if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
+				if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) ||
+				   ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
 				{
+					if ($this->xmlrpc)
+					{
+						$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+					}
 					if (!$send_to_ui)
 					{
 						return array(($l_cal['id']?1:2) => 'permission denied');
@@ -1417,6 +1449,10 @@
 				}
 				if (!is_array($event))
 				{
+					if ($this->xmlrpc)
+					{
+						$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
+					}
 					return False;
 				}
 				$owner = $event['owner'];
@@ -1923,12 +1959,12 @@
 			{
 				return False;
 			}
-			if (isset($params['start']) && ($datearr = $this->iso86012date($params['start'])))
+			if (isset($params['start']) && ($datearr = $GLOBALS['server']->iso86012date($params['start'])))
 			{
 				$syear = $datearr['year'];
 				$smonth = $datearr['month'];
 				$sday = $datearr['mday'];
-				$params['xmlrpc'] = True;
+				$this->xmlrpc = True;
 			}
 			else
 			{
@@ -1936,12 +1972,12 @@
 				$smonth = $params['smonth'];
 				$sday = $params['sday'];
 			}
-			if (isset($params['end']) && ($datearr = $this->iso86012date($params['end'])))
+			if (isset($params['end']) && ($datearr = $GLOBALS['server']->iso86012date($params['end'])))
 			{
 				$eyear = $datearr['year'];
 				$emonth = $datearr['month'];
 				$eday = $datearr['mday'];
-				$params['xmlrpc'] = True;
+				$this->xmlrpc = True;
 			}
 			else
 			{
@@ -1949,7 +1985,7 @@
 				$emonth = (isset($params['emonth'])?$params['emonth']:0);
 				$eday = (isset($params['eday'])?$params['eday']:0);
 			}
-			if (!isset($params['owner']) && @$params['xmlrpc'])
+			if (!isset($params['owner']) && @$this->xmlrpc)
 			{
 				$owner_id = $GLOBALS['phpgw_info']['user']['user_id'];
 			}
@@ -2066,7 +2102,7 @@
 								}
 								$this->cached_events[$j][] = $event;
 							}
-							if ($j >= $cache_start && (@$params['no_doubles'] || @$params['xmlrpc']))
+							if ($j >= $cache_start && (@$params['no_doubles'] || @$this->xmlrpc))
 							{
 								break;	// add event only once on it's startdate
 							}
@@ -2109,7 +2145,7 @@
 			{
 				if(is_array($this->cached_events[$j]))
 				{
-					if ($params['xmlrpc'])
+					if ($this->xmlrpc)
 					{
 						foreach($this->cached_events[$j] as $event)
 						{
@@ -2135,14 +2171,14 @@
 			{
 				if (isset($event[$name]))
 				{
-					$event[$name] = $this->date2iso8601($event[$name]);
+					$event[$name] = $GLOBALS['server']->date2iso8601($event[$name]);
 				}
 			}
 			if (is_array($event['recur_exception']))
 			{
 				foreach($event['recur_exception'] as $key => $timestamp)
 				{
-					$event['recur_exception'][$key] = $this->date2iso8601($timestamp);
+					$event['recur_exception'][$key] = $GLOBALS['server']->date2iso8601($timestamp);
 				}
 			}
 			static $user_cache = array();
@@ -2168,52 +2204,20 @@
 			{
 				foreach($event['alarm'] as $id => $alarm)
 				{
-					$event['alarm'][$id]['time'] = $this->date2iso8601($alarm['time']);
+					$event['alarm'][$id]['time'] = $GLOBALS['server']->date2iso8601($alarm['time']);
 					if ($alarm['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
 					{
 						unset($event['alarm'][$id]);
 					}
 				}
 			}
-			if (!is_object($GLOBALS['phpgw']->categories))
-			{
-				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
-			}
-			$cats = explode(',',$event['category']);
-			$event['category'] = array();
-			foreach($cats as $cat)
-			{
-				if ($cat)
-				{
-					$event['category'][$cat] = stripslashes($GLOBALS['phpgw']->categories->id2name($cat));
-				}
-			}
+			$event['category'] = $GLOBALS['server']->cats2xmlrpc(explode(',',$event['category']));
+
+			// using access={public|privat} in all modules via xmlrpc
+			$event['access'] = $event['public'] ? 'public' : 'privat';
+			unset($event['public']);
+
 			return $event;
-		}
-
-		function date2iso8601($date)
-		{
-			if (!is_array($date))
-			{
-				return date('Y-m-d\TH:i:s',$date);
-			}
-			return sprintf('%04d-%02d-%02dT%02d:%02d:%02d',
-				$date['year'],$date['month'],$date['mday'],
-				$date['hour'],$date['min'],$date['sec']);
-		}
-
-		function iso86012date($isodate,$timestamp=False)
-		{
-			if (($arr = split('[-:T]',$isodate)) && count($arr) == 6)
-			{
-				foreach(array('year','month','mday','hour','min','sec') as $n => $name)
-				{
-					$date[$name] = (int)$arr[$n];
-				}
-				return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
-					$date['month'],$date['mday'],$date['year']) : $date;
-			}
-			return False;
 		}
 
 		/* Begin Appsession Data */
@@ -3191,6 +3195,12 @@
 				$GLOBALS['phpgw']->preferences->delete('calendar','send_updates');
 				$prefs = $GLOBALS['phpgw']->preferences->save_repository();
 			}
+		}
+
+		// return array with all infolog categories (for xmlrpc)
+		function categories($complete = False)
+		{
+			return $GLOBALS['server']->categories($complete);
 		}
 	}
 ?>
