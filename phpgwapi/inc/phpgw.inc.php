@@ -217,7 +217,8 @@
          $kp3 = $phpgw_info["user"]["kp3"];
 
       if (! $url) {                 // PHP won't allow you to set a var to a var
-         $url = $PHP_SELF;          // or function for default values
+        $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+        $url = $url_root[0]."//".$url_root[2].$PHP_SELF;          // or function for default values
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&
@@ -250,12 +251,6 @@
         } elseif ($app == "home" || $app == "logout" || $app == "login"){
           $url = $phpgw_info["server"]["webserver_url"]."/".$url; 
         }else{ 
-          /* This is going to be a problem for apps with subdirs. */
-          /* we can work around it using $PHP_SELF, striping out the file name, */
-          /* and replacing it with the one we want.*/
-          //$url = str_replace("$url", $SCRIPT_FILE, $url);
-
-          /* for now I will use this simplistic method */          
           $url = $phpgw_info["server"]["webserver_url"]."/".$app."/".$url; 
         }
       } 
