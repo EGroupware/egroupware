@@ -682,7 +682,7 @@
 				'print'						=>	$print
 			);
 
-			$p = $GLOBALS['phpgw']->template;
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
 			$p->set_file(
 				Array(
@@ -897,7 +897,7 @@
 				'printer_friendly'=> $printer
 			);
 
-			$p = $GLOBALS['phpgw']->template;
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 				Array(
 					'year_t' => 'year.tpl'
@@ -3644,7 +3644,7 @@
 				)
 			);
 
-			$p = $GLOBALS['phpgw']->template;
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('keep');
 
 			$templates = Array(
