@@ -6,6 +6,7 @@
 00 (disable)	setup	de	00 (abgeschaltet/empfohlen)
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	de	<b>Zeichensatz</b> (benutzen sie utf-8 wenn sie planen Sprachen mit verschiedenen Zeichensätzen zu verwenden)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
@@ -23,6 +24,7 @@ after backing up your tables first.	setup	de	Nach einer Datensicherung Ihrer Tab
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen als header.inc.php speichern. Danach auf "Weiter" klicken.
 all applications	setup	de	Alle Anwendungen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
+all languages (incl. not listed ones)	setup	de	alle Sprachen (einschl. nicht aufgeführte)
 all users	setup	de	Alle Benutzer
 analysis	setup	de	Analyse
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
@@ -194,6 +196,7 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
+header 0assword	setup	de	Passwor Headerverwaltung
 header admin login	setup	de	Login Headerverwaltung
 header password	setup	de	Passwort der Headerverwaltung
 header username	setup	de	Benutzername der Headerverwaltung
@@ -358,6 +361,8 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	de	Beispiel Konfiguration nicht gefunden, benutze eingebaute Voreinstellungen
 save	setup	de	Speichern
 save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
+schedule	setup	de	planen
+scheduled backups	setup	de	Regelmäßige Datensicherungen
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden
@@ -390,8 +395,6 @@ setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
-schedule	setup	de	planen
-scheduled backups	setup	de	Regelmäßige Datensicherungen
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
@@ -456,7 +459,6 @@ uploads a backup and installs it on your db	setup	de	lädt eine Datensicherung ho
 uploads a backup to the backup-dir, from where you can restore it	setup	de	Läde eine Datensicherung in das Datensicherungsverzeichnis, von wo sie diese zurücksichern können
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
-use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)	setup	de	utf-8 (Unicode) als Systemzeichensatz benutzen (empfohlen wenn Sie Sprachen mit verschiedenem Zeichensätzen verwenden oder ihrer Sprache utf-8 als Zeichensatz verwendet)
 user account prefix	setup	de	Präfix für Benutzernamen
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl

@@ -6,6 +6,7 @@
 00 (disable)	setup	en	00 (disable / recomended)
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
@@ -23,6 +24,7 @@ after backing up your tables first.	setup	en	After backing up your tables first.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 all applications	setup	en	all applications
 all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
+all languages (incl. not listed ones)	setup	en	all languages (incl. not listed ones)
 all users	setup	en	All Users
 analysis	setup	en	Analysis
 and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your webserver, so the above changes take effect !!!
@@ -191,8 +193,8 @@ go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
 has a version mismatch	setup	en	has a version mismatch
+header 0assword	setup	en	Header Password
 header admin login	setup	en	Header Admin Login
-header password	setup	en	Header Password
 header username	setup	en	Header Username
 historylog removed	setup	en	Historylog removed
 hooks deregistered	setup	en	hooks deregistered
@@ -355,6 +357,8 @@ safe_mode is turned on, which is generaly a good thing as it makes your install 
 sample configuration not found. using built in defaults	setup	en	Sample configuration not found. using built in defaults
 save	setup	en	Save
 save this text as contents of your header.inc.php	setup	en	Save this text as contents of your header.inc.php
+schedule	setup	en	schedule
+scheduled backups	setup	en	scheduled backups
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select one...	setup	en	select one...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
@@ -387,8 +391,6 @@ setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
-schedule	setup	en	schedule
-scheduled backups	setup	en	scheduled backups
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 size	setup	en	size
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
@@ -452,7 +454,6 @@ uploads a backup and installs it on your db	setup	en	uploads a backup and instal
 uploads a backup to the backup-dir, from where you can restore it	setup	en	uploads a backup to the backup-dir, from where you can restore it
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
-use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)	setup	en	use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)
 user account prefix	setup	en	User account prefix
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice

@@ -167,6 +167,12 @@
 	}
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'yes';
 
+	// Set the DB's client charset if a system-charset is set
+	$GLOBALS['phpgw']->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='system_charset'",__LINE__,__FILE__);
+	if ($GLOBALS['phpgw']->db->next_record() && $GLOBALS['phpgw']->db->f(0))
+	{
+		$GLOBALS['phpgw']->db->Link_ID->SetCharSet($GLOBALS['phpgw']->db->f(0));
+	}	
 	/* Fill phpgw_info["server"] array */
 	// An Attempt to speed things up using cache premise
 	$GLOBALS['phpgw']->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);

@@ -131,5 +131,51 @@
 			}
 			return $this->sql->install_langs($langs,'dumpold');
 		}
+		
+		/**
+		 * List availible charsets and it's supported languages
+		 * @param boolean/string $name=false name for selectbox or false to return an array
+		 * @param string $selected selected charset
+		 * @return string/array html for a selectbox or array with charset / languages pairs
+		 */
+		function get_charsets($name=false,$selected='')
+		{
+			$charsets = array(
+				'utf-8' => 'utf-8: '.lang('all languages (incl. not listed ones)'),
+			);
+			if (($f = fopen('lang/languages','r')))
+			{
+				while(($line = fgets($f)) !== false)
+				{
+					list($lang,$language) = explode("\t",trim($line));
+					if ($lang && ($lf = fopen("../phpgwapi/setup/phpgw_$lang.lang",'r')))
+					{
+						while(($line = fgets($lf)) !== false)
+						{
+							list($phrase,,,$charset) = explode("\t",$line);
+							if ($phrase == 'charset')
+							{
+								$charset = trim(strtolower($charset));
+								
+								if ($charset != 'utf-8')
+								{
+									$charsets[$charset] .= (isset($charsets[$charset]) ? ', ' : $charset.': ') . $language;
+								}
+								break;
+							}
+						}
+						fclose($lf);
+					}
+				}
+				fclose($f);
+			}
+			if (!$name)
+			{
+				return $charsets;
+			}
+			$html = CreateObject('phpgwapi.html');
+			
+			return $html->select($name,strtolower($selected),$charsets,true);
+		}								
 	}
 ?>

@@ -53,7 +53,7 @@
 		@function loaddb
 		@abstract include api db class for the ConfigDomain and connect to the db
 		*/
-		function loaddb()
+		function loaddb($connect_and_setcharset=true)
 		{
 			if(!isset($this->ConfigDomain) || empty($this->ConfigDomain))
 			{
@@ -75,6 +75,19 @@
 			$this->db->Password = $GLOBALS['phpgw_domain'][$this->ConfigDomain]['db_pass'];
 			
 			$this->db->set_app('phpgwapi');
+			
+			if ($connect_and_setcharset)
+			{
+				$this->Halt_On_Error = 'no';	// table might not be created at that stage
+				
+				// Set the DB's client charset if a system-charset is set
+				$this->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='system_charset'",__LINE__,__FILE__);
+				if ($this->db->next_record() && $this->db->f(0))
+				{
+					$this->db->Link_ID->SetCharSet($this->db->f(0));
+				}	
+				$this->db->Halt_On_Error = 'yes';	// setting the default again
+			}
 		}
 
 		/**

@@ -230,8 +230,8 @@
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
 			$setup_tpl->set_var('coreapps',lang('all applications'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
-			$setup_tpl->set_var('lang_system_charset',lang('use utf-8 (unicode) as system-charset (recomended if you use languages with different charsets or your language uses utf-8 as charset)'));
-			$setup_tpl->set_var('utf8_checked',lang('charset') == 'uft-8' ? 'checked' : '');
+			$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
+			$setup_tpl->set_var('system_charset',$GLOBALS['phpgw_setup']->translation->get_charsets('system_charset',lang('charset')));
 			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
 			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
@@ -322,6 +322,11 @@
 					else
 					{
 						$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
+						// Set the DB's client charset if a system-charset is set
+						if ($_REQUEST['system_charset'])
+						{
+							$GLOBALS['phpgw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
+						}
 						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
 						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}

@@ -68,8 +68,8 @@
 
 		{dbexists}<br>
         <input type="hidden" name="action" value="Install">
+		{lang_system_charset} {system_charset}<br>
 		<input type="checkbox" name="debug" value="1"> {lang_debug}<br>
-		<input type="checkbox" name="system_charset" value="utf-8" {utf8_checked}> {lang_system_charset}<br>
 		<input type="submit" name="label" value="{install}"> {coreapps}
 		<hr>
 		{lang_restore}<br>
