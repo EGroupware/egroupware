@@ -49,32 +49,32 @@
 		. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
 		. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
-		$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
-		$phpgw->template->set_file(array( 'info_delete' => 'delete.tpl' ));
-		$phpgw->template->set_var( $phpgw->infolog->setStyleSheet( ));
-		$phpgw->template->set_var( $phpgw->infolog->infoHeaders(  ));
-		$phpgw->template->set_var( $phpgw->infolog->formatInfo( $info_id ));
-		$phpgw->template->set_var('lang_info_action',lang('Info Log - Delete'));
+		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
+		$t->set_file(array( 'info_delete' => 'delete.tpl' ));
+		$t->set_var( $phpgw->infolog->setStyleSheet( ));
+		$t->set_var( $phpgw->infolog->infoHeaders(  ));
+		$t->set_var( $phpgw->infolog->formatInfo( $info_id ));
+		$t->set_var('lang_info_action',lang('Info Log - Delete'));
 
-		$phpgw->template->set_var('deleteheader',lang('Are you sure you want to delete this entry'));
+		$t->set_var('deleteheader',lang('Are you sure you want to delete this entry'));
 
 		$nolinkf = $phpgw->link('/infolog/index.php',"sort=$sort&order=$order&query=$query&start=$start&filter=$filter");
 		$nolink = '<a href="' . $nolinkf . '">' . lang('No') .'</a>';
 		
-		$phpgw->template->set_var('nolink',$nolink);
-		$phpgw->template->set_var('cancel_action',$nolinkf);
-		$phpgw->template->set_var('lang_cancel',lang('No - Cancel'));
+		$t->set_var('nolink',$nolink);
+		$t->set_var('cancel_action',$nolinkf);
+		$t->set_var('lang_cancel',lang('No - Cancel'));
 
 		$yeslinkf = $phpgw->link('/infolog/delete.php',"info_id=$info_id&confirm=True&sort="
 			. "$sort&order=$order&query=$query&start=$start&filter=$filter");
 		
 		$yeslink = '<a href="' . $yeslinkf . '">' . lang('Yes') . '</a>';
 
-		$phpgw->template->set_var('yeslink',$yeslink);
-		$phpgw->template->set_var('delete_action',$yeslinkf);
-		$phpgw->template->set_var('lang_delete',lang('Yes - Delete'));
+		$t->set_var('yeslink',$yeslink);
+		$t->set_var('delete_action',$yeslinkf);
+		$t->set_var('lang_delete',lang('Yes - Delete'));
 
-		$phpgw->template->pfp('out','info_delete');
+		$t->pfp('out','info_delete');
 
 		$phpgw->common->phpgw_footer();
 		echo parse_navbar_end();

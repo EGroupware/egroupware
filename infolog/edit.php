@@ -150,19 +150,19 @@
 	$pri_selected[$phpgw->infolog->data['info_pri']] = ' selected';
 	$status_selected[$phpgw->infolog->data['info_status']] = ' selected';
 
-	$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
-	$phpgw->template->set_file(array('info_edit' => 'form.tpl'));
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
+	$t->set_file(array('info_edit' => 'form.tpl'));
      
 	// ====================================================================
 	// create two seperate blocks, addblock will be cut off from template
 	// editblock contains the buttons and forms for edit
 	// ====================================================================
-	$phpgw->template->set_block('info_edit', 'add', 'addhandle');
-	$phpgw->template->set_block('info_edit', 'edit', 'edithandle');
-	$phpgw->template->set_block('info_edit', 'subpro', 'subprohandle');
+	$t->set_block('info_edit', 'add', 'addhandle');
+	$t->set_block('info_edit', 'edit', 'edithandle');
+	$t->set_block('info_edit', 'subpro', 'subprohandle');
      
 	if (is_array($error)) {
-		$phpgw->template->set_var('error_list',$phpgw->common->error_list($error));
+		$t->set_var('error_list',$phpgw->common->error_list($error));
 	}
 	switch ($action) {
 		case 'sp':
@@ -172,28 +172,28 @@
 		default:
 			$info_action = 'Info Log - Edit'; break;
 	}
-	$phpgw->template->set_var('lang_info_action',lang($info_action).($addrsearch?' - '.lang('Search for:')." '$addrsearch'":''));
-	$phpgw->template->set_var($phpgw->infolog->setStyleSheet( ));
-	$phpgw->template->set_var('lang_category',lang('Category'));
-	$phpgw->template->set_var('lang_none',lang('None'));
-	$phpgw->template->set_var('cat_list',$phpgw->categories->formated_list('select','all',$phpgw->infolog->data['info_cat'],'True'));
+	$t->set_var('lang_info_action',lang($info_action).($addrsearch?' - '.lang('Search for:')." '$addrsearch'":''));
+	$t->set_var($phpgw->infolog->setStyleSheet( ));
+	$t->set_var('lang_category',lang('Category'));
+	$t->set_var('lang_none',lang('None'));
+	$t->set_var('cat_list',$phpgw->categories->formated_list('select','all',$phpgw->infolog->data['info_cat'],'True'));
 
-	$phpgw->template->set_var('actionurl',$phpgw->link('/infolog/edit.php'));
-	$phpgw->template->set_var('common_hidden_vars',$common_hidden_vars);
+	$t->set_var('actionurl',$phpgw->link('/infolog/edit.php'));
+	$t->set_var('common_hidden_vars',$common_hidden_vars);
 
-	$phpgw->template->set_var('lang_owner',lang('Owner'));
-	$phpgw->template->set_var('owner_info',$phpgw->infolog->accountInfo($phpgw->infolog->data['info_owner']));
-	$phpgw->template->set_var('lang_type',lang('Type'));
-	$phpgw->template->set_var('type_list',$phpgw->infolog->getEnum('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
+	$t->set_var('lang_owner',lang('Owner'));
+	$t->set_var('owner_info',$phpgw->infolog->accountInfo($phpgw->infolog->data['info_owner']));
+	$t->set_var('lang_type',lang('Type'));
+	$t->set_var('type_list',$phpgw->infolog->getEnum('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
 
-	$phpgw->template->set_var('lang_prfrom', lang('From'));
-	$phpgw->template->set_var('fromval', $phpgw->strip_html($phpgw->infolog->data['info_from']));
-	$phpgw->template->set_var('lang_praddr', lang('Phone/Email'));
-	$phpgw->template->set_var('addrval', $phpgw->strip_html($phpgw->infolog->data['info_addr']));
+	$t->set_var('lang_prfrom', lang('From'));
+	$t->set_var('fromval', $phpgw->strip_html($phpgw->infolog->data['info_from']));
+	$t->set_var('lang_praddr', lang('Phone/Email'));
+	$t->set_var('addrval', $phpgw->strip_html($phpgw->infolog->data['info_addr']));
 
-	$phpgw->template->set_var('lang_search', lang('Search'));
-	$phpgw->template->set_var('lang_prproject', lang('Project'));
-	$phpgw->template->set_var('lang_proj_prompt', lang('Pattern for Search in Projects'));
+	$t->set_var('lang_search', lang('Search'));
+	$t->set_var('lang_prproject', lang('Project'));
+	$t->set_var('lang_proj_prompt', lang('Pattern for Search in Projects'));
 	
 	if (($proj_id = $phpgw->infolog->data['info_proj_id']) || $projectsearch) {
 		$projects = createobject('projects.projects');
@@ -220,10 +220,10 @@
 	}
 	if (!$project)
 		$project = '<span class=note>'.lang('not set, use Button to search for').'</span>';
-	$phpgw->template->set_var('project', $project);
+	$t->set_var('project', $project);
 	
-	$phpgw->template->set_var('lang_praddrbook', lang('Addressbook'));
-	$phpgw->template->set_var('lang_addr_prompt', lang('Pattern for Search in Addressbook'));
+	$t->set_var('lang_praddrbook', lang('Addressbook'));
+	$t->set_var('lang_addr_prompt', lang('Pattern for Search in Addressbook'));
 	
 	if (($addr_id = $phpgw->infolog->data['info_addr_id']) || $addrsearch) {
 		$contacts = createobject('phpgwapi.contacts');
@@ -250,12 +250,12 @@
 	if (!$addrbook)
 		$addrbook = '<span class=note>'.lang('not set, use Button to search for').'</span>';
 		
-	$phpgw->template->set_var('addrbook', $addrbook);
+	$t->set_var('addrbook', $addrbook);
 			
-	$phpgw->template->set_var('lang_prsubject', lang('Subject'));
-	$phpgw->template->set_var('subjectval', $phpgw->strip_html($phpgw->infolog->data['info_subject']));
-	$phpgw->template->set_var('lang_prdesc', lang('Description'));
-	$phpgw->template->set_var('descval', $phpgw->strip_html($phpgw->infolog->data['info_des']));
+	$t->set_var('lang_prsubject', lang('Subject'));
+	$t->set_var('subjectval', $phpgw->strip_html($phpgw->infolog->data['info_subject']));
+	$t->set_var('lang_prdesc', lang('Description'));
+	$t->set_var('descval', $phpgw->strip_html($phpgw->infolog->data['info_des']));
 
 	// get month/day/year fields for startdate and enddate
 	if ($phpgw->infolog->data['info_startdate'] == 0) {
@@ -277,44 +277,44 @@
 	// get an instance of select box class
 	$sm = CreateObject('phpgwapi.sbox');
 	  
-	$phpgw->template->set_var('lang_start_date',lang('Start Date'));
-	$phpgw->template->set_var('start_select_date',$phpgw->common->dateformatorder($sm->getYears('syear',$syear,$syear<date('Y')?$syear:date('Y')-2),
+	$t->set_var('lang_start_date',lang('Start Date'));
+	$t->set_var('start_select_date',$phpgw->common->dateformatorder($sm->getYears('syear',$syear,$syear<date('Y')?$syear:date('Y')-2),
 																											$sm->getMonthText('smonth', $smonth),$sm->getDays('sday', $sday)));
-	$phpgw->template->set_var('lang_end_date',lang('End Date'));
-	$phpgw->template->set_var('end_select_date',$phpgw->common->dateformatorder($sm->getYears('eyear', $eyear,$eyear<date('Y')?$eyear:date('Y')-2),
+	$t->set_var('lang_end_date',lang('End Date'));
+	$t->set_var('end_select_date',$phpgw->common->dateformatorder($sm->getYears('eyear', $eyear,$eyear<date('Y')?$eyear:date('Y')-2),
 																										 $sm->getMonthText('emonth', $emonth),$sm->getDays('eday', $eday)));
-	$phpgw->template->set_var('lang_selfortoday',lang('Today'));
-	$phpgw->template->set_var('selfortoday','<input type="checkbox" name="selfortoday" value="True">&nbsp;');
-	$phpgw->template->set_var('lang_dur_days',lang('Duration'));
-	$phpgw->template->set_var('days',lang('days'));
+	$t->set_var('lang_selfortoday',lang('Today'));
+	$t->set_var('selfortoday','<input type="checkbox" name="selfortoday" value="True">&nbsp;');
+	$t->set_var('lang_dur_days',lang('Duration'));
+	$t->set_var('days',lang('days'));
 
-	$phpgw->template->set_var('lang_status',lang('Status'));
-	$phpgw->template->set_var('status_list',$phpgw->infolog->getEnum('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
+	$t->set_var('lang_status',lang('Status'));
+	$t->set_var('status_list',$phpgw->infolog->getEnum('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
 
-	$phpgw->template->set_var('lang_priority',lang('Priority'));
-	$phpgw->template->set_var('priority_list',$phpgw->infolog->getEnum('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
+	$t->set_var('lang_priority',lang('Priority'));
+	$t->set_var('priority_list',$phpgw->infolog->getEnum('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
 
-	$phpgw->template->set_var('lang_confirm',lang('Confirm'));
-	$phpgw->template->set_var('confirm_list',$phpgw->infolog->getEnum('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
+	$t->set_var('lang_confirm',lang('Confirm'));
+	$t->set_var('confirm_list',$phpgw->infolog->getEnum('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
 
-	$phpgw->template->set_var('lang_responsible',lang('Responsible'));
-	$phpgw->template->set_var('responsible_list',$phpgw->infolog->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
+	$t->set_var('lang_responsible',lang('Responsible'));
+	$t->set_var('responsible_list',$phpgw->infolog->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
 
-	$phpgw->template->set_var('lang_access_type',lang('Private'));
-	$phpgw->template->set_var('access_list', '<input type="checkbox" name="access" value="True"' . ($phpgw->infolog->data['info_access'] == 'private'?' checked':'') . '>');
+	$t->set_var('lang_access_type',lang('Private'));
+	$t->set_var('access_list', '<input type="checkbox" name="access" value="True"' . ($phpgw->infolog->data['info_access'] == 'private'?' checked':'') . '>');
      
-	$phpgw->template->set_var('delete_action',$phpgw->link('/infolog/delete.php'));
+	$t->set_var('delete_action',$phpgw->link('/infolog/delete.php'));
 
-	$phpgw->template->set_var('edit_button','<input type="submit" name="submit" value="' . lang('Save') . '">');
+	$t->set_var('edit_button','<input type="submit" name="submit" value="' . lang('Save') . '">');
     
 	if (!$action && $phpgw->infolog->check_access($info_id,PHPGW_ACL_DELETE)) {
-		$phpgw->template->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
+		$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
 	}
-	$phpgw->template->set_var('edithandle','');
-	$phpgw->template->set_var('addhandle','');
-	$phpgw->template->set_var('subprohandle','');
-	$phpgw->template->pfp('out','info_edit');
-	$phpgw->template->pfp('edithandle','edit');
+	$t->set_var('edithandle','');
+	$t->set_var('addhandle','');
+	$t->set_var('subprohandle','');
+	$t->pfp('out','info_edit');
+	$t->pfp('edithandle','edit');
     
 	// I would like to have it calculate the amount of days and drop it in days from now.
     
