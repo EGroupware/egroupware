@@ -245,12 +245,12 @@
     $db->query("alter table $table change $field $field int(11) NOT NULL");
   }
 
-  function v0_9_2to0_9_3pre4(){
+  function v0_9_2to0_9_3pre5(){
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4") {
       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	update_owner("addressbook","ab_owner");
 	update_owner("todo","todo_owner");
@@ -276,9 +276,19 @@
         $currentver = "0.9.3pre3";
       }
       if ($currentver == "0.9.3pre3") {
-	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
-        $currentver = "0.9.3pre4";
+     	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
+         $currentver = "0.9.3pre4";
       }
+
+      if ($currentver == "0.9.3pre4") {
+     	$db->query("create table temp as select * from config");
+     	$db->query("drop table config");
+     	$db->query("create table config config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL");
+     	$db->query("insert into config select * from temp");
+     	$db->query("drop table config");
+         $currentver = "0.9.3pre4";
+      }
+      
 
        echo "  <tr bgcolor=\"e6e6e6\">\n";
        echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";

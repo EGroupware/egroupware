@@ -11,8 +11,10 @@
 
   /* $Id$ */
 
+  // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
+
   $sql = "CREATE TABLE config (
-    config_name     varchar(25) NOT NULL UNIQUE,
+    config_name     varchar(255) NOT NULL UNIQUE,
     config_value    varchar(100) NOT NULL
   )";
   $db->query($sql);

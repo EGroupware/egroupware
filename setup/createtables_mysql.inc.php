@@ -10,9 +10,11 @@
   \**************************************************************************/
 
   /* $Id$ */
+  
+  // NOTE: Please use spaces to seperate the field names.  It makes copy and pasting easier.
 
   $sql = "CREATE TABLE config (
-    config_name     varchar(25) NOT NULL,
+    config_name     varchar(255) NOT NULL,
     config_value    varchar(100),
     UNIQUE config_name (config_name)
   )";
@@ -188,9 +190,9 @@
   $db->query($sql);  
 
   $sql = "CREATE TABLE webcal_entry_user (
-    cal_id	int(11) DEFAULT '0' NOT NULL,
-    cal_login	varchar(25) NOT NULL,
-    cal_status	char(1) DEFAULT 'A',
+    cal_id       int(11) DEFAULT '0' NOT NULL,
+    cal_login    varchar(25) NOT NULL,
+    cal_status   char(1) DEFAULT 'A',
     PRIMARY KEY (cal_id, cal_login)
   )";
   $db->query($sql);  
@@ -202,23 +204,32 @@
   $db->query($sql);  
 
   $sql = "CREATE TABLE newsgroups (
-    con		int(11) NOT NULL auto_increment,
-    name		varchar(255) NOT NULL,
-    messagecount	int(11) NOT NULL,
-    lastmessage	int(11) NOT NULL,
-    active	char DEFAULT 'N' NOT NULL,
-    lastread	int(11),
+    con             int(11) NOT NULL auto_increment,
+    name            varchar(255) NOT NULL,
+    messagecount    int(11) NOT NULL,
+    lastmessage     int(11) NOT NULL,
+    active          char DEFAULT 'N' NOT NULL,
+    lastread        int(11),
     PRIMARY KEY (con),
     UNIQUE name (name)
   )";
   $db->query($sql);  
 
   $sql = "CREATE TABLE lang (
-    message_id varchar(150) DEFAULT '' NOT NULL,
-    app_name varchar(100) DEFAULT 'common' NOT NULL,
-    lang varchar(5) DEFAULT '' NOT NULL,
-    content text NOT NULL,
+    message_id      varchar(150) DEFAULT '' NOT NULL,
+    app_name        varchar(100) DEFAULT 'common' NOT NULL,
+    lang            varchar(5) DEFAULT '' NOT NULL,
+    content         text NOT NULL,
     PRIMARY KEY (message_id,app_name,lang)
+  )";
+  $db->query($sql);
+  
+  $sql = "create table domains (
+    domain_id       int NOT NULL auto_increment,
+    domain_name     varchar(255),
+    domain_database varchar(255),
+    domain_status   enum('Active,Disabled'),
+    primary key(domain_id)
   )";
   $db->query($sql);
 

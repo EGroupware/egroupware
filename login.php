@@ -31,7 +31,9 @@
   $deny_login = False;
 
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
-  $tmpl->set_file(array("login"  => "login.tpl"));
+  $tmpl->set_file(array("login_form"  => "login.tpl",
+                        "domain_row"  => "login_domain_row.tpl"));
+  $tmpl->set_block("login_form","domain_row");
 
   // When I am updating my server, I don't want people logging in a messing 
   // things up.
@@ -112,6 +114,30 @@
       }
     }
   }
+  if ($phpgw_info["server"]["multiable_domains"]) {
+     $tmpl->set_var("lang_domain",lang("Domain"));
+     if ($phpgw_info["server"]["multiable_domains_use_select_box"]) {
+        $domains_select = '<select name="domain">';
+     
+        $phpgw->db->query("select domain_id,domain_name from domains where domain_status='Active' "
+        				. "order by domain_name");
+        while ($phpgw->db->next_record()) {
+          $domains_select .= '<option value="' . $phpgw->db->f("domain_id") . '">'
+          				 . $phpgw->db->f("domain_name") . '</option>';
+        }
+        $domains_select .= "</select>";
+        $tmpl->set_var("domain_input",$domains_select);
+        $tmpl->parse("domain_row_out","domain_row");
+     } else {
+        $tmpl->set_var("domain_input",'<input name="domain">');
+        $tmpl->parse("domain_row_out","domain_row");     
+     }
+  } else {
+     $tmpl->set_var("domain_row","");
+     $tmpl->parse("null","domain_row");
+  }
+  
+  
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tmpl->set_var("cd",check_logoutcode($cd));
@@ -122,6 +148,6 @@
   $tmpl->set_var("lang_password",lang("password"));
   $tmpl->set_var("lang_login",lang("login"));
 
-  $tmpl->parse("loginout", "login");
+  $tmpl->parse("loginout", "login_form");
   $tmpl->p("loginout");
 ?>

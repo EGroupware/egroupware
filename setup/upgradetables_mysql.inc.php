@@ -256,12 +256,12 @@
     $db->query("alter table $table change $field $field int(11) NOT NULL");
   }
 
-  function v0_9_2to0_9_3pre4(){
+  function v0_9_2to0_9_3pre5(){
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
 
     // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3") {
+    if ($currentver == "0.9.2" || $currentver == "0.9.3pre1" || $currentver == "0.9.3pre2" || $currentver == "0.9.3pre3" || $currentver == "0.9.3pre4") {
       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
 	update_owner("addressbook","ab_owner");
 	update_owner("todo","todo_owner");
@@ -290,10 +290,16 @@
 	$db->query("alter table todo add todo_id_parent int(11) DEFAULT '0' NOT NULL");
         $currentver = "0.9.3pre4";
       }
+      
+      if ($currentver == "0.9.3pre4") {
+         $db->query("alter table config change config_name config_name varchar(255) NOT NULL");
+         $db->query("create table domains (domain_id int NOT NULL auto_increment, domain_name varchar(255),"
+         		 . "domain_database varchar(255),domain_status enum('Active,Disabled'),primary key(domain_id))");
+      }
 
-       echo "  <tr bgcolor=\"e6e6e6\">\n";
-       echo "    <td>Upgrade from 0.9.2 to 0.9.3pre4 is completed.</td>\n";
-       echo "  </tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from 0.9.2 to 0.9.3pre5 is completed.</td>\n";
+      echo "  </tr>\n";
     }
   }
 
