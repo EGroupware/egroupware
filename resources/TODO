@@ -9,9 +9,10 @@ TODO:
 	
 - edit/add
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
-	inputvalidation on selectbox --> eTemplate --> Ralf
+	bug: inputvalidation on selectbox --> eTemplate --> Ralf
+	bug: accessories get inserted a second time on page-refresh
+	bug: accessories aren't moved to cat of master if it changes
 	make some returnmessages js dialogs
-	accessories get inserted a second time on page-refresh
 
 - admin section
 	add configure picture size	
