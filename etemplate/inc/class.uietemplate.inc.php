@@ -96,16 +96,13 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$id = $this->appsession_id();
-
-
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$html .= $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
 				$this->html->form($this->include_java_script() .
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),
-					array('etemplate_exec_id' => $id),
-					'/index.php?menuaction=etemplate.etemplate.process_exec&app='.$GLOBALS['phpgw_info']['flags']['currentapp'],
-					'','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
+					array('etemplate_exec_id' => $id,'app' => $GLOBALS['phpgw_info']['flags']['currentapp']),
+					'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 
 			$id = $this->save_appsession($this->as_array(1) + array(
 				'readonlys' => $readonlys,
