@@ -38,7 +38,7 @@
         $filtermethod = " ab_access like '%,$filter,%' ";
      } else {
         $filtermethod = " (ab_owner='" . $phpgw_info["user"]["account_id"] ."' OR ab_access='public' "
-		            . $phpgw->accounts->sql_search("ab_access") . " ) ";
+                      . $phpgw->accounts->sql_search("ab_access") . " ) ";
      }
   } else {
      $filtermethod = " ab_owner='" . $phpgw_info["user"]["account_id"] . "' ";
@@ -52,7 +52,7 @@
        . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
        . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
        . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
-       . "'%$query%' OR c.company_name like '%$query%' OR a.ab_url like '%$query%')");
+       . "'%$query%' OR c.company_name like '%$query%' OR a.ab_url like '%$query%')",__LINE__,__FILE__);
 //       . "'%$query%' OR c.company_name like '%$query%')"
 //       . " $ordermethod limit $limit");
      } else {
@@ -62,7 +62,7 @@
        . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
        . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
        . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-       . "'%$query%' OR ab_company like '%$query%' OR ab_url like '%$query$%')");
+       . "'%$query%' OR ab_company like '%$query%' OR ab_url like '%$query$%')",__LINE__,__FILE__);
 //       . "'%$query%' OR ab_company like '%$query%')"
 //       . " $ordermethod limit $limit");
      }
@@ -74,7 +74,7 @@
      else
         echo "<br>" . lang("your search returned x matchs",$phpgw->db->f(0));
   } else {
-     $phpgw->db->query("select count(*) from addressbook where $filtermethod");
+     $phpgw->db->query("select count(*) from addressbook where $filtermethod",__LINE__,__FILE__);
      $phpgw->db->next_record();
   }
   if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
@@ -144,7 +144,7 @@
                         . "%$query%' OR a.ab_firstname like '%$query%' OR a.ab_email like '%$query%' OR "
                         . "a.ab_street like '%$query%' OR a.ab_city like '%$query%' OR a.ab_state "
                         . "like '%$query%' OR a.ab_zip like '%$query%' OR a.ab_notes like "
-                        . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit");
+                        . "'%$query%' OR c.company_name like '%$query%') $ordermethod limit $limit",__LINE__,__FILE__);
      } else {
        $phpgw->db->query("SELECT ab_id,ab_owner,ab_firstname,ab_lastname,"
                        . "ab_email,ab_wphone,ab_company "
@@ -153,16 +153,16 @@
                        . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
                        . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
                        . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
-                       . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit");
+                       . "'%$query%' OR ab_company like '%$query%') $ordermethod limit $limit",__LINE__,__FILE__);
     }
   } else {
     if ($phpgw_info["apps"]["timetrack"]["enabled"]){
        $phpgw->db->query("SELECT a.ab_id,a.ab_owner,a.ab_firstname,a.ab_lastname,"
                        . "a.ab_email,a.ab_wphone,c.company_name "
                        . "from addressbook as a, customers as c where a.ab_company_id = c.company_id "
-                       . "AND $filtermethod $ordermethod limit $limit");
+                       . "AND $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
     } else {
-       $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit");
+       $phpgw->db->query("SELECT * from addressbook WHERE $filtermethod $ordermethod limit $limit",__LINE__,__FILE__);
     }
   }		// else $query
 
