@@ -163,7 +163,9 @@
 					{															// this could be fatal if one already has an user with account_lid == uid
 						// $thisacctid = $acct_exist;					// and uses the LDAP uidnumber for an unix account
 						if ($acct_exist != $thisacctid)
+						{
 							echo "<p>WARNING: user '$thisacctlid'=$thisacctid already exist in SQL under the account_id=$acct_exist</p>";
+						}
 					}
 					$id_exist = $accounts->exists(intval($thisacctid));
 					// If the account does not exist in _both_ (== returnvalue < 3) create it
