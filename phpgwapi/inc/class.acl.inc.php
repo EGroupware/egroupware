@@ -244,7 +244,7 @@
 		{
 			reset($this->data);
 
-			$sql = 'delete from phpgw_acl where acl_account = '.$this->account_id;
+			$sql = 'delete from phpgw_acl where acl_account = '. intval($this->account_id);
 			$this->db->query($sql ,__LINE__,__FILE__);
 
 			$count = count($this->data);
@@ -532,8 +532,9 @@
 				$account_id = get_account_id($accountid,$this->account_id);
 				$cache_accountid[$accountid] = $account_id;
 			}
-			$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = '$location' and ";
-			$sql .= 'acl_account = '.$account_id;
+			$sql  = 'SELECT acl_appname, acl_rights from phpgw_acl ';
+			$sql .= "where acl_location = '" . $this->db->db_addslashes($location) . "' ";
+			$sql .= 'AND acl_account = ' . intval($account_id);
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
 			if ($this->db->num_rows() == 0 )
@@ -576,8 +577,10 @@
 				$account_id = get_account_id($accountid,$this->account_id);
 				$cache_accountid[$accountid] = $account_id;
 			}
-			$sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' and ";
-			$sql .= "acl_account = ".$account_id;
+			$sql  = 'SELECT acl_location, acl_rights ';
+			$sql .= "FROM phpgw_acl where acl_appname = '" . $this->db->db_addslashes($app) . "' ";
+			$sql .= 'AND acl_account =' . intval($account_id);
+			
 			$this->db->query($sql ,__LINE__,__FILE__);
 			$rights = 0;
 			if ($this->db->num_rows() == 0 )
@@ -714,7 +717,7 @@
 			$accounts = Array();
 			if ($db2->num_rows() == 0)
 			{
-				$grants[$GLOBALS['phpgw_info']['user']['account_id']] = 31;
+				$grants[$GLOBALS['phpgw_info']['user']['account_id']] = ~0;
 				return $grants;
 			}
 			while ($db2->next_record())
@@ -762,7 +765,8 @@
 				}
 				reset($accounts[$grantor]);
 			}
-			$grants[$GLOBALS['phpgw_info']['user']['account_id']] = 31;
+			$grants[$GLOBALS['phpgw_info']['user']['account_id']] = ~0;
+
 			return $grants;
 		}
 	} //end of acl class
