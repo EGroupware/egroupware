@@ -210,18 +210,15 @@
       if ($app == False){
         $app = $phpgw_info["flags"]["currentapp"];
       }
-      $sql = "select acl_account from phpgw_acl where acl_appname = '$app' and ";
-      $sql .= "acl_account_type = '".$id_type."' and acl_location = ".$location;
+      $sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and ";
+      $sql .= "acl_account_type = '".$id_type."' and acl_location = '".$location."'";
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
-        if ($this->db->f("acl_rights") == 0){ return False; }
         $rights |= $this->db->f("acl_rights");
         if (!!($rights & $required) == True){
           $accounts[] = $this->db->f("acl_account");
-        }else{
-          return False;
         }
       }
       return $accounts;

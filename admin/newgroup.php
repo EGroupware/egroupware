@@ -43,7 +43,7 @@
      }
 
      if (! $error) {
-        $phpgw->db->lock(array("accounts","groups","phpgw_acl","preferences"));
+        $phpgw->db->lock(array("groups","phpgw_acl","preferences"));
 
         $phpgw->db->query("INSERT INTO groups (group_name) VALUES ('$n_group')");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
@@ -62,12 +62,7 @@
         $apps->save_apps();
         
         for ($i=0; $i<count($n_users);$i++) {
-          $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
-          $phpgw->db->next_record();
-          $user_groups = $phpgw->db->f("account_groups") . ",$group_id:0,";
-
-          $user_groups = ereg_replace(",,",",",$user_groups);
-          $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
+          $phpgw->acl->add("phpgw_group","$group_id",$n_users[$i],"u",1);
 
           $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
           $t = $pref->get_preferences();
