@@ -104,8 +104,8 @@
 			$this->working_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->working_lid = $GLOBALS['phpgw']->accounts->id2name($this->working_id);
 			$this->now = date ('Y-m-d');
-//			$this->override_acl = 0;
-			$this->override_acl = 1;
+			$this->override_acl = 0;
+//			$this->override_acl = 1;
 
 			/*
 			   File/dir attributes, each corresponding to a database field.  Useful for use in loops
@@ -116,10 +116,22 @@
 			*/
 
 			$this->attributes = array(
-				'file_id', 'owner_id', 'createdby_id', 'modifiedby_id',
-				'created', 'modified', 'size', 'mime_type', 'deleteable',
-				'comment', 'app', 'directory', 'name',
-				'link_directory', 'link_name', 'version'
+				'file_id',
+				'owner_id',
+				'createdby_id',
+				'modifiedby_id',
+				'created',
+				'modified',
+				'size',
+				'mime_type',
+				'deleteable',
+				'comment',
+				'app',
+				'directory',
+				'name',
+				'link_directory',
+				'link_name',
+				'version'
 			);
 	
 			/*
@@ -648,6 +660,8 @@
 		*/
 		function path_parts ($string, $relatives = '', $object = True, $nolinks = False)
 		{
+			static $p_path_parts = Array();
+			
 			if (!is_array ($relatives))
 			{
 				$relatives = array (RELATIVE_CURRENT);
@@ -669,6 +683,11 @@
 			}
 
 			$string = $this->getabsolutepath ($string, array ($relatives[0]), $fake);
+
+			if($p_path_parts[$string][$rarray['mask']])
+			{
+				return $p_path_parts[$string][$rarray['mask']];
+			}
 
 			if ($fake)
 			{
@@ -706,7 +725,7 @@
 
 			if ($fake)
 			{
-				$rarray['real_extra_path'] ? $dispsep = $sep : $dispsep = '';
+				$dispsep = ($rarray['real_extra_path'] ? $sep : '');
 				$rarray['real_full_path'] = $opp_base . $rarray['real_extra_path'] . $dispsep . $rarray['real_name'];
 				if ($extra_path)
 				{
@@ -796,10 +815,12 @@
 
 			if ($object)
 			{
+				$p_path_parts[$string][$rarray['mask']] = $robject;
 				return ($robject);
 			}
 			else
 			{
+				$p_path_parts[$string][$rarray['mask']] = $rarray;
 				return ($rarray);
 			}
 		}
@@ -1896,7 +1917,7 @@
 			{
 				$sql = "INSERT INTO phpgw_vfs($sql_fields) VALUES ($sql_vals)";
 			}
-			$query = ($sql?$GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__):False);
+			$query = ($sql?$GLOBALS['phpgw']->db->query($sql, __LINE__, __FILE__):False);
 
 			if ($query) 
 			{
@@ -1951,6 +1972,46 @@
 			}
 		}
 
+		function get_mime_type($file)
+		{
+			static $mimetype = Array();
+			
+			$file=basename($file);
+			$mimefile=PHPGW_API_INC.'/phpgw_mime.types';
+			$fp=fopen($mimefile,'r');
+			$contents = explode("\n",fread($fp,filesize($mimefile)));
+			fclose($fp);
+
+			$parts=explode('.',$file);
+			$ext=$parts[(sizeof($parts)-1)];
+
+			if(isset($mimetype[$ext]))
+			{
+				return $mimetype[$ext];
+			}
+
+			for($i=0;$i<sizeof($contents);$i++)
+			{
+				if (!ereg("^#",$contents[$i]))
+				{
+					$line=split("[[:space:]]+", $contents[$i]);
+					if (sizeof($line) >= 2)
+					{
+						for($j=1;$j<sizeof($line);$j++)
+						{
+							if($line[$j] == $ext)
+							{
+								$mimetype[$ext] =  $line[0];
+								return $mimetype[$ext];
+							}
+						}
+					}
+				}
+			}
+			$mimetype[$ext] = '';
+			return $mimetype[$ext];
+		}
+
 		/*!
 		@function file_type
 		@abstract return file/dir type (MIME or other)
@@ -1992,8 +2053,15 @@
 			$query = $GLOBALS['phpgw']->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 			$GLOBALS['phpgw']->db->next_record ();
 			$mime_type = $GLOBALS['phpgw']->db->Record['mime_type'];
-
-			return ($mime_type);
+			if(!$mime_type)
+			{
+				$mime_type = $this->get_mime_type($file);
+				if($mime_type)
+				{
+					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+				}
+			}
+			return $mime_type;
 		}
 
 		/*!
@@ -2005,6 +2073,8 @@
 		*/
 		function file_exists ($string, $relatives = '')
 		{
+			static $fexists = Array();
+			
 			if (!is_array ($relatives))
 			{
 				$relatives = array (RELATIVE_CURRENT);
@@ -2017,14 +2087,21 @@
 				return file_exists ($p->real_full_path);
 			}
 
+			if(isset($fexists[$p->real_full_path]))
+			{
+				return $fexists[$p->real_full_path];
+			}
+			
 			$query = $GLOBALS['phpgw']->db->query ("SELECT name FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
 
 			if ($GLOBALS['phpgw']->db->num_rows())
 			{
+				$fexists[$p->real_full_path] = True;
 				return True;
 			}
 			else
 			{
+				$fexists[$p->real_full_path] = False;
 				return False;
 			}
 		}
@@ -2086,6 +2163,32 @@
 			}
 
 			return $size;
+		}
+
+		function get_version($file, $relatives = '')
+		{
+			static $fversion = Array();
+			
+			if (!is_array ($relatives))
+			{
+				$relatives = array (RELATIVE_CURRENT);
+			}
+
+			$p = $this->path_parts ($file, array ($relatives[0]));
+
+			if($fversion[$p->real_full_path])
+			{
+				return $fversion[$p->real_full_path];
+			}
+
+			$query = $GLOBALS['phpgw']->db->query ("SELECT version FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+
+			if ($GLOBALS['phpgw']->db->num_rows())
+			{
+				$GLOBALS['phpgw']->db->next_record ();
+				$fversion[$p->real_full_path] = $GLOBALS['phpgw']->db->Record['version'];
+				return $fversion[$p->real_full_path];
+			}
 		}
 
 		/*!
@@ -2170,6 +2273,14 @@
 				reset ($this->attributes);
 				while (list ($num, $attribute) = each ($this->attributes))
 				{
+					if($attribute == 'mime_type' && !$record[$attribute])
+					{
+						$record[$attribute] = $this->get_mime_type($p->fake_name_clean);
+						if($record[$attribute])
+						{
+							$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+						}
+					}
 					$rarray[0][$attribute] = $record[$attribute];
 				}
 
@@ -2249,6 +2360,14 @@
 				reset ($this->attributes);
 				while (list ($num, $attribute) = each ($this->attributes))
 				{
+					if($attribute == 'mime_type' && !$record[$attribute])
+					{
+						$record[$attribute] = $this->get_mime_type($p->real_full_path . SEP . $filename);
+						if($record[$attribute])
+						{
+							$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$record[$attribute]."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+						}
+					}
 					$rarray[$i][$attribute] = $record[$attribute];
 				}
 			}
@@ -2438,6 +2557,14 @@
 			if (is_dir ($p->real_full_path))
 			{
 				$mime_type = 'Directory';
+			}
+			else
+			{
+				$mime_type = $this->get_mime_type($p->fake_name);
+				if($mime_type)
+				{
+					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (VFS_SQL_SELECT), __LINE__, __FILE__);
+				}
 			}
 
 			$rarray = array(
