@@ -604,12 +604,12 @@
 						if(!$allValues[0][$key][0])
 						{
 							/* attribute was not in LDAP, add it */
-							ldap_mod_add($this->ds, $allValues[0]["dn"], $tmpentry);
+							ldap_mod_add($this->ds, $allValues[0]['dn'], $tmpentry);
 						}
 						else
 						{
 							/* attribute was in LDAP, modify it */
-							ldap_modify($this->ds, $allValues[0]["dn"], $tmpentry);
+							ldap_modify($this->ds, $allValues[0]['dn'], $tmpentry);
 						}
 					}
 				}
@@ -636,7 +636,7 @@
 					$tmpentry['phpgwaccounttype']      = $account_info['account_type'];
 					$tmpentry['phpgwaccountexpires']   = $account_info['account_expires'];
 				}
-				ldap_modify($this->ds, $allValues[0]["dn"], $tmpentry);
+				ldap_modify($this->ds, $allValues[0]['dn'], $tmpentry);
 			}
 			else
 			{
