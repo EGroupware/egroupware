@@ -1,5 +1,15 @@
 <!-- BEGIN list -->
 <p>
+  <div align="center">
+   <table border="0" width="70%">
+    <tr>
+     <td align="right">
+	{url_add}
+     </td>
+    </tr>
+   </table>
+  </div>
+<br>
  <div align="center">
   <table border="0" width="70%">
    <tr>
@@ -26,14 +36,9 @@
   </table>
  </div>
 
- <form method="POST" action="{actionurl}">
   <div align="center">
    <table border="0" width="70%">
     <tr>
-     <td align="left">
-      {input_add}
-      </form>
-     </td>
      <td align="right">
       <form method="POST" action="{accounts_url}">
        {input_search}

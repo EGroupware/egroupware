@@ -253,7 +253,6 @@
 				'lang_edit'    => lang('edit'),
 				'lang_delete'  => lang('delete'),
 				'lang_view'    => lang('view'),
-				'actionurl'    => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'),
 				'accounts_url' => $url,
 				'lang_search'  => lang('search')
 			);
@@ -261,7 +260,7 @@
 			
 			if (! $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
-				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
+				$p->set_var('url_add','<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user').'">' . lang('Add') . '</a>');
 			}
 
 			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
@@ -959,6 +958,8 @@
 			{
 				$userData = Array();
 				$userData=$_userData;
+				$userData['account_firstname']	= $userData['firstname'];
+				$userData['account_lastname']	= $userData['lastname'];
 				@reset($userData['account_groups']);
 				while (list($key, $value) = @each($userData['account_groups']))
 				{
@@ -1027,7 +1028,7 @@
 				$lang_homedir = lang('home directory');
 				$lang_shell = lang('login shell');
 				$homedirectory = '<input name="homedirectory" value="'
-					. ($_account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_lid)
+					. ($_account_id?$userData['homedirectory']:$GLOBALS['phpgw_info']['server']['ldap_account_home'].$account_lid)
 					. '">';
 				$loginshell = '<input name="loginshell" value="'
 					. ($_account_id?$userData['loginshell']:$GLOBALS['phpgw_info']['server']['ldap_account_shell'])

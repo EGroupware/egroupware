@@ -315,6 +315,7 @@
 					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
 					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
 					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
+					'account_primary_group'	=> $_POST['account_primary_group'],
 					'account_passwd_2'      => $_POST['account_passwd_2'],
 					'account_groups'        => $_POST['account_groups'],
 					'anonymous'             => $_POST['anonymous'],
@@ -672,17 +673,6 @@
 		{
 			$totalerrors = 0;
 
-			/*
-			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
-			{
-				if (strlen($_userData['account_lid']) > 8) 
-				{
-					$error[$totalerrors] = lang('The loginid can not be more then 8 characters');
-					$totalerrors++;
-				}
-			}
-			*/
-
 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && 
 				(!$_userData['account_lastname'] && !$_userData['lastname']))
 			{
@@ -695,7 +685,13 @@
 				$error[$totalerrors] = lang('You must enter a loginid');
 				$totalerrors++;
 			}
-
+			
+			if(!in_array($_userData['account_primary_group'],$_userData['account_groups']))
+			{
+				$error[$totalerrors] = lang('The groups must include the primary group');
+				$totalerrors++;
+			}
+			
 			if ($_userData['old_loginid'] != $_userData['account_lid']) 
 			{
 				if ($GLOBALS['phpgw']->accounts->exists($_userData['account_lid']))

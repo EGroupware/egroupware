@@ -45,10 +45,10 @@
 			    </tr>
 	
 			    <tr bgcolor="{tr_color2}">
-			     <td>{lang_primary_group}</td>
-			     <td>{primary_group_select}&nbsp;</td>
 			     <td>{lang_groups}</td>
 			     <td>{groups_select}&nbsp;</td>
+			     <td>{lang_primary_group}</td>
+			     <td>{primary_group_select}&nbsp;</td>
 			    </tr>
 
 			    {permissions_list}
