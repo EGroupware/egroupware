@@ -40,7 +40,8 @@
     $t = new Template($phpgw_info["server"]["app_tpl"]);
     $t->set_file(array( "form"	=> "form.tpl"));
 
-    $email        = $fields["D.EMAIL"];
+    $email        = $fields["D_EMAIL"];
+    $emailtype    = $fields["D_EMAILTYPE"];
     $firstname    = $fields["N_Given"];
     $lastname     = $fields["N_Family"];
     $title        = $fields["TITLE"];
@@ -142,9 +143,11 @@
         $bday_year = '<input name="bday_year" size="4" maxlength="4">';
       }
     $this = CreateObject("phpgwapi.contacts");
-    $email_type = "<select name=email_type>";
+    $email_type = '<select name=email_type>';
     while ($type = each($this->email_types)) {
-       $email_type .= "<option value=\"".$type[0]."\">".$type[1]."</option>";
+       $email_type .= '<option value="'.$type[0].'"';
+       if ($type[0] == $emailtype) { $email_type .= ' selected'; }
+       $email_type .= '>'.$type[1].'</option>';
     }
     $email_type .= "</select>";
     
