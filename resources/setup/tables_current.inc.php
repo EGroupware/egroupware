@@ -27,10 +27,8 @@
 				'buyable' => array('type' => 'varchar','precision' => '1'),
 				'prize' => array('type' => 'varchar','precision' => '200'),
 				'long_description' => array('type' => 'longtext'),
-				'accessories' => array('type' => 'varchar','precision' => '100'),
 				'picture_src' => array('type' => 'varchar','precision' => '20'),
-				'accessory_only' => array('type' => 'varchar','precision' => '1','default' => '0'),
-				'relatives' => array('type' => 'varchar','precision' => '100')
+				'accessoriy_of' => array('type' => 'int','precision' => '11','default' => '-1')
 			),
 			'pk' => array('id'),
 			'fk' => array(),

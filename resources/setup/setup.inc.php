@@ -15,7 +15,7 @@
 	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'resources';
-	$setup_info['resources']['version']	= '0.0.1.016';
+	$setup_info['resources']['version']	= '0.0.1.017';
 	$setup_info['resources']['app_order']	= 1;
 	$setup_info['resources']['tables']	= array('egw_resources');
 	$setup_info['resources']['enable']	= 1;
@@ -32,7 +32,7 @@
 	$setup_info['resources']['hooks']['preferences']	= 'resources.admin_prefs_sidebox_hooks.all_hooks';
 	$setup_info['resources']['hooks']['admin']		= 'resources.admin_prefs_sidebox_hooks.all_hooks';
 	$setup_info['resources']['hooks']['sidebox_menu']	= 'resources.admin_prefs_sidebox_hooks.all_hooks';
-	$setup_info['resources']['hooks']['search_link']	= 'resources.admin_prefs_sidebox_hooks.all_hooks';
+	$setup_info['resources']['hooks']['search_link']	= 'resources.admin_prefs_sidebox_hooks.search_link';
 //	$setup_info['resources']['hooks'][]	= 'home';
 //	$setup_info['resources']['hooks'][]	= 'settings';
 
@@ -48,6 +48,7 @@
 		 'appname' => 'infolog',
 		 'versions' => Array('1.0.0')
 	);
+
 
 
 

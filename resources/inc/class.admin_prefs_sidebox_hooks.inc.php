@@ -73,19 +73,16 @@ class admin_prefs_sidebox_hooks
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}
-		
-		if ($location == 'search_link')
-		{
-			$app_register = array(
-				'resources' => array(
-					'query' => 'resources_query',
-					'title' => 'resources_title',
-					'view' => array(
-						'menuaction' => 'resources.ui_resources.view'
-					),
-					'view_id' => 'id'
-				));
-		}
+	}
+	function search_link($args)
+	{
+		$appname = 'resources';
+		return array('resources' => array(
+				'query' => 'resources.ui_resources.link_query',
+				'title' => 'resources_title',
+				'view' => array('menuaction' => 'resources.ui_resources.view'),
+				'view_id' => 'id'
+		));
 	}
 }
 

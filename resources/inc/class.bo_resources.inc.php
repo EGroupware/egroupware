@@ -197,7 +197,32 @@ class bo_resources
 		}
 		return $acc_list;
 	}
-	
+
+		/*!
+		@function link_query
+		@syntax link_query(  $pattern  )
+		@author ralfbecker
+		@abstract query infolog for entries matching $pattern
+		*/
+		function link_query( $pattern )
+		{print_r($pattern);
+			$query = array(
+				'search' => $pattern,
+				'start'  => 0,
+				'subs'   => true,
+			);
+			$ids = $this->search($query);
+			$content = array();
+			if (is_array($ids))
+			{
+				foreach($ids as $id => $info )
+				{
+					$content[$id] = $this->link_title($id);
+				}
+			}
+			return $content;
+		}
+
 	/*!
 		@function save_picture
 		@abstract resizes and saves an pictures in vfs
