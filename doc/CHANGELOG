@@ -12,7 +12,7 @@
 		- Renamed the webcal_entry.cal_create_by field to webcal_entry.cal_owner.
 		- Split out auth class, so that you can auth from anywhere and still store your accounts in sql or ldap.
 		- Added mail auth class, that will authenticate users against their email accounts
-		- Added virtual domain support. (The setup program is not properly working yet)
+		- Added multiple domain support.
 		- Fixed a few problems with the categories class
 		- Fixed nextmatchs calling link() wrong causing the next pages to not be displayed.
 		- Removed javascript from the login template
