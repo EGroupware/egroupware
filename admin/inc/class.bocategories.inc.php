@@ -59,11 +59,11 @@
 			{
 				unset($this->cat_id);
 			}
-			if(isset($sort))
+			if(isset($sort) && !empty($sort))
 			{
 				$this->sort = $sort;
 			}
-			if(isset($order))
+			if(isset($order) && !empty($order))
 			{
 				$this->order = $order;
 			}

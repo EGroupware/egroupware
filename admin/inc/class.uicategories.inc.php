@@ -175,7 +175,7 @@
 
 			$new_parent = $GLOBALS['HTTP_POST_VARS']['new_parent'];
 			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'];
+			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
 			$cat_name   = $GLOBALS['HTTP_POST_VARS']['cat_name'];
 			$cat_description = $GLOBALS['HTTP_POST_VARS']['cat_description'];
 
