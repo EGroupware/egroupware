@@ -515,11 +515,6 @@
 		*/
 		function write($job,$exists = False)
 		{
-			$job['times'] = $this->db->db_addslashes(serialize($job['times']));
-			$job['data']  = $this->db->db_addslashes(serialize($job['data']));
-			$job['next']  = (int)$job['next'];
-			$job['account_id']  = (int)$job['account_id'];
-			
 			$data = array(
 				'async_next'      => $job['next'],
 				'async_times'     => serialize($job['times']),
