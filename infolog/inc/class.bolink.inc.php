@@ -818,7 +818,7 @@
 			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
 			$name .= ': ' . $event['title'];
 
-			return $GLOBALS['phpgw']->strip_html($name);
+			return $name;
 		}
 
 		/*!
@@ -875,7 +875,7 @@
 			{
 				$name = $addr['org_name'].': '.$name;
 			}
-			return $GLOBALS['phpgw']->strip_html($name);
+			return $name;
 		}
 
 		/*!
