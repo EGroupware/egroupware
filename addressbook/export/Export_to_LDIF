@@ -50,6 +50,7 @@
 
 		// Read full list of user's contacts only to get id's for each
 		function export_start_file($buffer) {
+			$this->id=-1;
 			$this->contacts = CreateObject('phpgwapi.contacts');
 			$tmp = $this->contacts->read(0,'');
 			for ($i=0;$i<count($tmp);$i++) {
@@ -62,7 +63,8 @@
 
 		// Read each entry
 		function export_start_record($buffer) {
-			$top = $this->contacts->read_single_entry($this->id,$this->qfields);
+			$this->id++;
+			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
 			return $buffer;
 		}
@@ -83,12 +85,32 @@
 			$buffer[$this->id]["xmozillauseconferenceserver"] = "";
 			$buffer[$this->id]["xmozillanickname"]            = "";
 			$buffer[$this->id]["xmozillausehtmlmail"]         = "";
-			$buffer[$this->id]["objectClass"]                 = "person";
 			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
 			return $buffer;
 		}
 
 		function export_end_file($buffer) {
+			reset($this->ids);
+			for ($i=0;$i<count($this->ids);$i++) {
+				$entries .= $buffer[$i]['dn'] . "\n";
+				reset($this->export);
+				while (list($name,$value)=each($this->export)) {
+					if ($value != 'dn') {
+						$entries .= $value . ": " . $buffer[$i][$value] . "\n";
+					}
+				}
+				$entries .= "xmozillauseconferenceserver: " . $buffer[$i]["xmozillauseconferenceserver"] . "\n";
+				$entries .= "xmozillanickname: "            . $buffer[$i]["xmozillanickname"] . "\n";
+				$entries .= "xmozillausehtmlmail: "         . $buffer[$i]["xmozillausehtmlmail"] . "\n";
+				$entries .= "objectClass: person\n";
+				$entries .= "account\n";
+				$entries .= "organizationalPerson\n";
+				$entries .= "posixAccount\n";
+				$entries .= "objectClass: inetOrgPerson\n";
+				$entries .= "objectClass: shadowAccount\n";
+				$entries .= "\n";
+			}
+			$buffer = $entries;
 			return $buffer;
 		}
 	}

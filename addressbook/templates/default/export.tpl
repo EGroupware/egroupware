@@ -19,7 +19,7 @@
             </SELECT><P></LI>
 			<LI>{filename}:
 			  <INPUT NAME="tsvfilename" VALUE="conversion.txt"></LI>
-            <LI><INPUT NAME="download" TYPE="checkbox" VALUE="{debug}" checked>Download export file (Uncheck to debug output in browser)</LI>
+            <LI><INPUT NAME="download" TYPE="checkbox" checked>Download export file (Uncheck to debug output in browser)</LI>
             <LI><INPUT NAME="convert" TYPE="submit" VALUE="{download}"></LI>
             </OL>
             </FORM></TD>

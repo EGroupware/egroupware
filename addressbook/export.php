@@ -12,6 +12,18 @@
 
   /* $Id$ */
 
+	if ($download =='on') {
+		$phpgw_info["flags"] = array(
+			"noheader" => True,
+			"nonavbar" => True
+		);
+	} else {
+		$phpgw_info["flags"] = array(
+			"noheader" => False,
+			"nonavbar" => False
+		);
+	}
+
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
 	$phpgw_info["flags"]["enable_contacts_class"] = True;
 	include("../header.inc.php");
@@ -42,7 +54,7 @@
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
-		$t->set_var("export_text",lang("Export from Addressbook to CSV or LDIF - NOT WORKING YET"));
+		$t->set_var("export_text",lang("Export from Addressbook to CSV or LDIF"));
 		$t->set_var("action_url",$phpgw->link("/addressbook/export.php"));
 		$t->set_var("filename",lang("Export file name"));
 		$t->set_var("conv",$conv);
@@ -77,7 +89,6 @@
 		$buffer = $this->export_start_file($buffer);
 		
 		for ($i=0;$i<count($this->ids);$i++) {
-			$this->id = $this->ids[$i];
 			$buffer = $this->export_start_record($buffer);
 			while( list($name,$value) = each($this->currentrecord) ) {
 				$buffer = $this->export_new_attrib($buffer,$name,$value);
@@ -85,25 +96,20 @@
 			$buffer = $this->export_end_record($buffer);
 		}
 
+		// Here, buffer becomes a string suitable for printing
 		$buffer = $this->export_end_file($buffer);
 
 		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
-		if ($download == "Submit") {
+		if ($download == "on") {
 			header("Content-disposition: attachment; filename=\"".$tsvfilename."\"");
 			header("Content-type: application/octetstream");
 			header("Pragma: no-cache");
 			header("Expires: 0");
-//			while(list($name,$value) = each($buffer)) {
-				//echo $name.': '.$value."\n";
-//			}
+			echo $buffer;
 		} else {
 			echo "<pre>\n";
-			$i=0;
-			while(list($name,$value) = each($buffer[$i])) {
-				echo $i.' - '.$name.': '.$value."\n";
-				$i++;
-			}
+			echo $buffer;
 			echo "\n</pre>\n";
 			echo '<a href="'.$phpgw->link("/addressbook/index.php").'">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();

@@ -65,49 +65,64 @@
 			"note"                => "Notes"
 		);
 
-		function export_start_file($buffer,$j="",$k="") {
+		// This will store the contacts object
+		var $contacts = '';
+
+		function export_start_file($buffer) {
+			$this->id=-1;
+			$this->contacts = CreateObject('phpgwapi.contacts');
+			$tmp = $this->contacts->read(0,'');
+			for ($i=0;$i<count($tmp);$i++) {
+				$this->ids[$i] = $tmp[$i]['id'];
+			}
+			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
+			// $buffer is still empty
+			return $buffer;
+		}
+
+		// Read each entry
+		function export_start_record($buffer) {
+			$this->id++;
+			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
+			$this->currentrecord = $top[0];
+			return $buffer;
+		}
+
+		// Read each attribute, populate buffer
+		// name/value are the fields from the export array above
+		function export_new_attrib($buffer,$name,$value) {
+			if ($this->export[$name]) {
+				$buffer[$this->id][$this->export[$name]] = $value;
+				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
+			}
+			return $buffer;
+		}
+
+		// Tack on some extra values
+		function export_end_record($buffer) {
 			return $buffer;
 		}
 
 		function export_end_file($buffer) {
-			global $phpgw,$phpgw_info;
+			// Build the header for the file (field list)
+			reset($this->export);
+			while (list($name,$value)=each($this->export)) {
+				$entries .= $value . ',';
+			}
+			$entries = substr($entries,0,-1);		
+			$entries .= "\r\n";
 
-			$contacts = CreateObject("phpgwapi.contacts");
-			echo '<br>'; 
-			for ($i=1;$i<=count($buffer);$i++) {
-				while ( list($name,$value) = @each($buffer[$i]) ) {
-					//echo '<br>'.$i.': '.$name.' => '.$value;
-					$entry[$i][$name] = $value;
+			// Now add all the data
+			reset($this->ids);
+			for ($i=0;$i<count($this->ids);$i++) {
+				reset($this->export);
+				while (list($name,$value)=each($this->export)) {
+					$entries .= $buffer[$i][$value] . ',';
 				}
-				//echo '<br>';
-				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
+				$entries = substr($entries,0,-1);
+				$entries .= "\r\n";
 			}
-			$num = $i - 1;
-			return "Successfully exported $num records from your addressbook.";
-		}
-
-		function export_start_record($buffer) {
-			$top=array();
-			++$this->id;
-			$this->currentrecord = $top;
-			return $buffer;
-		}
-
-		function export_end_record($buffer,$private="private") {
-			global $phpgw_info;
-			$buffer[$this->id]="";
-			while ( list($name, $value) = each($this->currentrecord)) {
-				$buffer[$this->id][$name] = $value;
-				//echo '<br>'.$name.' => '.$value;
-			}
-			return $buffer;
-		}
-
-		function export_new_attrib($buffer,$name,$value) {
-			$value = str_replace("\n","<BR>",$value);
-			$value = str_replace("\r","",$value);
-			$this->currentrecord += array($name => $value);
-
+			$buffer = $entries;
 			return $buffer;
 		}
 	}
