@@ -1,17 +1,34 @@
+%1 %2 in %3	calendar	nl	%1 %2 in %3
+%1 matches found	calendar	nl	%1 resultaten gevonden
+%1 records imported	calendar	nl	%1 records
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 (for weekly)	calendar	nl	(voor wekelijks)
 (i/v)cal	calendar	nl	(i/v)Cal
 1 match found	calendar	nl	1 resultaat gevonden
 a	calendar	nl	a
 accept	calendar	nl	Accepteren
 accepted	calendar	nl	Geaccepteerd
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	nl	Reden van de notificatie:Toegevoegd, Geannuleerd, Geaccepteerd, Geweigerd, ...
+add a single entry by passing the fields.	calendar	nl	Een enkele afspraak toevoegen door de afzonderlijke velden in te voeren.
 add alarm	calendar	nl	Alarm toevoegen
+add contact	calendar	nl	Contact toevoegen
 added	calendar	nl	Toegevoegd
-alarm management	calendar	nl	Alarm beheer
+address book	calendar	nl	Adresboek
+alarm	calendar	nl	Alarm
+alarm for %1 at %2 in %3	calendar	nl	Alarm voor %1 op %2 in %3
+alarm management	calendar	nl	Alarmbeheer
+alarm-management	calendar	nl	Alarmbeheer
+alarms	calendar	nl	Alarms
 all day	calendar	nl	Hele dag
+are you sure you want to delete this country ?	calendar	nl	Weet u zeker dat u dit land wilt verwijderen?
 are you sure you want to delete this holiday ?	calendar	nl	Weet u zeker dat u deze feestdag wilt verwijderen?
+are you sure\nyou want to\ndelete these alarms?	calendar	nl	Weet u zeker dat u deze alarms wilt verwijderen?
 are you sure\nyou want to\ndelete this entry ?	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?\nDit zal de afspraak bij\nalle gebruikers verwijderen.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze enkele afpraak wilt verwijdere?\n\nDeze afspraak zal voor iedere gebruiker worden verwijderd.
+before the event	calendar	nl	voor de afspraak
 brief description	calendar	nl	Korte omschrijving
+business	calendar	nl	Bedrijf
 calendar	common	nl	Kalender
 calendar - [iv]cal importer	calendar	nl	Kalender - [iv]Cal Importeren
 calendar - add	calendar	nl	Kalender - toevoegen
@@ -20,105 +37,249 @@ calendar event	calendar	nl	Kalender - Afspraak
 calendar holiday management	admin	nl	Kalender feestdagen beheer
 calendar preferences	calendar	nl	Kalender voorkeuren
 calendar settings	admin	nl	Kalender instellingen
+calendar-fieldname	calendar	nl	Kalender - Veldnaam
+canceled	calendar	nl	Geannuleerd
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	nl	Alle afspraken wijzigen voor $params['oude_eigenaar'] naar $params['nieuwe_eigenaar'].
+change status	calendar	nl	Verander status
+charset of file	calendar	nl	Karakterset van bestand
+click %1here%2 to return to the calendar.	calendar	nl	Klik %1here%2 om terug te keren naar de kalender.
+configuration	calendar	nl	Configuratie
+countries	calendar	nl	Landen
+country	calendar	nl	Land
+created by	calendar	nl	Aangemaakt door
+csv-fieldname	calendar	nl	CSV-veldnaam
+csv-filename	calendar	nl	CSV-bestandsnaam
+custom fields	calendar	nl	Aangepaste velden
+custom fields and sorting	common	nl	Aangepaste velden en volgorde
 daily	calendar	nl	Dagelijks
 daily matrix view	calendar	nl	Dagelijks matrix overzicht
+days	calendar	nl	dagen
 days repeated	calendar	nl	dagen herhaald
-default calendar filter	calendar	nl	Standaard kalender filter
-default calendar view	calendar	nl	Standaard kalender overzicht
+dayview	calendar	nl	Dagweergave
+default appointment length (in minutes)	calendar	nl	standaard afspraakduur (in minuten)
+default calendar filter	calendar	nl	Standaard kalenderfilter
+default calendar view	calendar	nl	Standaard kalenderoverzicht
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	nl	Standaard lengte van nieuw aangemaakte afspraken. De lengte is in minuten, bijv. 60 voor 1 uur.
+defines the size in minutes of the lines in the day view.	calendar	nl	Standaard grootte in minutes van de regels in de dagelijkse weergave.
+delete a single entry by passing the id.	calendar	nl	Verwijder een enkele afspraak door het ID in te voeren
+delete an entire users calendar.	calendar	nl	Een complete gebruikerskalender verwijderen.
+delete selected contacts	calendar	nl	Geselecteerde contacten verwijderen
+delete series	calendar	nl	Series verwijderen
+delete single	calendar	nl	Enkele verwijderen
 delete this entry ?	calendar	nl	Weet u zeker
 deleted	calendar	nl	Verwijderd
 description	calendar	nl	Omschrijving
+disable	calendar	nl	Deactiveer
+disabled	calendar	nl	gedeactiveerd
 display interval in day view	calendar	nl	Verdelingen in dagelijks overzicht
 display mini calendars when printing	calendar	nl	Mini kalenders tijdens het afdrukken
 display status of events	calendar	nl	Status van afspraken weergeven
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	nl	Geeft uw standaard kalender weer op de hoofdpagina
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	nl	Wilt u worden geïnformeerd over nieuwe of gewijzigde afspraken? U wordt geïnformeerd over wijzigingen die u zelf heeft gemaakt.<br/>U kunt de de notificaties beperken to alleen bepaalde wijzigingen. Elk item bevat alle notificaties hierboven weergegeven. "Alle wijzigingen" bevat wijziging va titel, beschrijving, deelnemers, maar niet reacties van deelnemers. Als de eigenaar van een afspraak verzocht heeft om een van de notificaties, zal hij of zij altijd reacties krijgen van de deelnemers zoals acceptaties en afwijzigingen.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	nl	Wilt u per email een periodieke overzichten ontvangen van uw afspraken? </br>Het overzicht wordt verzonden naar uw standaard emailadres op de ochtend dat de afspraak plaatsvind en op maandag voor wekelijkse overzichten. <br/> Er wordt alleen een overzicht verstuurd als er in die afspraken staan geregistreerd.
 do you wish to autoload calendar holidays files dynamically?	admin	nl	Wilt u de feestdagen automatisch downloaden
+download	calendar	nl	Downloaden
 duration	calendar	nl	Duur
 edit series	calendar	nl	Alles bewerken
 edit single	calendar	nl	Een bewerken
-end date/time	calendar	nl	Eind datum/tijd
-ends	calendar	nl	Einde
+email notification	calendar	nl	Email Notificatie
+email notification for %1	calendar	nl	Email Notificatie voor %1
+empty for all	calendar	nl	leeg voor alle
+enable	calendar	nl	Activeren
+enabled	calendar	nl	Geactiveerd
+end date/time	calendar	nl	Einddatum/-tijd
+enddate	calendar	nl	Einddatum
+ends	calendar	nl	eindigt
+enter output filename: ( .vcs appended )	calendar	nl	Voer een bestandsnaam in om naartoe te schrijven (inclusief .vcs extentie)
 event details follow	calendar	nl	Afspraak details volgen
+exceptions	calendar	nl	Uitzonderingen
 export	calendar	nl	Exporteren
+export a list of entries in ical format.	calendar	nl	Een lijst met afspraken exporteren in iCal-formaat.
+extended	calendar	nl	Uitgebreid
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	nl	Uitgebreide updates bevatten altijd de complete afspraakdetails. iCal's kunnen worden geïmporteerd door aan aantal kalendertoepassingen
+external participants	calendar	nl	Externe participanten
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	nl	Het versturen van een bericht naar '%1' #%2 onderwerp='%3', afzender='%4' is mislukt !!!
+fieldseparator	calendar	nl	Veldscheidingssymbool
+firstname of person to notify	calendar	nl	Voornaam van persoon om te op de hoogte te brengen
+format of event updates	calendar	nl	Formaat van afspraakbewerkingen
 fr	calendar	nl	Vr
 free/busy	calendar	nl	Vrij/Bezet
 frequency	calendar	nl	Frequentie
 fri	calendar	nl	Vri
 full description	calendar	nl	Volledige omschrijving
+fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
 generate printer-friendly version	calendar	nl	Genereer printervriendelijke versie
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
 go!	calendar	nl	Uitvoeren!
 grant calendar access	common	nl	Geef kalender toegang
+group planner	calendar	nl	Groepsplanner
 group public only	calendar	nl	Alleen group publiek
 has been canceled	calendar	nl	is geanulleerd
 has been rescheduled to	calendar	nl	is verplaats naar
+here is your requested alarm.	calendar	nl	Hier is uw verzochte alarm.
+high priority	calendar	nl	hoge prioriteit
+holiday	calendar	nl	Vakantie
+holiday management	calendar	nl	Vakantiebeheer
+holiday-management	calendar	nl	Vakantiebeheer
+holidays	calendar	nl	Vakanties
+hours	calendar	nl	uren
 i participate	calendar	nl	Ik doe mee
+ical / rfc2445	calendar	nl	iCal / rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen vakanties die vallen in het weekend, genomen worden op de maandag daarna.
 ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
+import csv-file	common	nl	CSV-bstand importen
 interval	calendar	nl	Herhaling
+intervals in day view	calendar	nl	Intervallen in dagelijke weergave
+intervals per day in planner view	calendar	nl	Intervallen per dag in planner weergave
+invalid entry id.	calendar	nl	Ongeldige record-ID
+last	calendar	nl	laatste
+lastname of person to notify	calendar	nl	Achternaam van persoon om te op de hoogte te brengen
+length shown<br>(emtpy for full length)	calendar	nl	Lengte weergeven<br/>(leeg laten voor de volledige lengte)
+length<br>(<= 255)	calendar	nl	Lengte<br/>(<= 255)
 load [iv]cal	calendar	nl	[iv]Cal laden
 location	calendar	nl	Plaats
 location to autoload from	admin	nl	Plaats om van te laden
+matrixview	calendar	nl	Matrixweergave
 minutes	calendar	nl	minuten
 mo	calendar	nl	Ma
 modified	calendar	nl	Gewijzigd
+modify list of external participants	calendar	nl	Wijzig lijst met extern deelnemers
 mon	calendar	nl	Maa
 month	calendar	nl	Maand
 monthly	calendar	nl	Maandelijks
 monthly (by date)	calendar	nl	Maandelijks (op datum)
 monthly (by day)	calendar	nl	Maandelijks (op dag)
+monthview	calendar	nl	Maandweergave
 new entry	calendar	nl	Nieuwe afspraak
+new name must not exist and not be empty!!!	calendar	nl	Nieuwe naam niet reeds bestaan en mag niet leeg zijn!!!
+no matches found	calendar	nl	Geen resultaten gevonden
 no matches found.	calendar	nl	Geen resultaten gevonden
 no response	calendar	nl	Geen Antwoord
+notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afsrpaken
+notification messages for canceled events	calendar	nl	Notificatieberichten voor geannuleerde afsrpaken
+notification messages for modified events	calendar	nl	Notificatieberichten voor gewijzigde afsrpaken
+notification messages for your alarms	calendar	nl	Notificatieberichten voor uw alarms
+notification messages for your responses	calendar	nl	Notificatieberichten voor uw reacties
 number of intervals per day in planner view	calendar	nl	Aantal items per dag in planner overzicht
 number of months	calendar	nl	Aantal maanden
+number of records to read (%1)	calendar	nl	Aantal records om te lezen (%1)
+observance rule	calendar	nl	Regel in acht neming
+occurence	calendar	nl	Gebeurtenis
+old startdate	calendar	nl	Oude startdatum
+olddate	calendar	nl	OudeDatum
 on %1 %2 %3 your meeting request for %4	calendar	nl	Op %1 %2 %3 uw afspraak aanvraag voor %4
+on all changes	calendar	nl	op alle wijzigingen
+on all modification, but responses	calendar	nl	op alle wijzigingen, behalve reacties
+on any time change too	calendar	nl	op iedere tijd ook wijzigen
+on invitation / cancelation only	calendar	nl	op uitnodiging / alleen annulering
+on participant responses too	calendar	nl	ook op deelnemerreacties
+on time change of more than 4 hours too	calendar	nl	ook op tijdswijziging van meer dan 4 uur
+open todo's:	calendar	nl	Openstaande taken:
+order	calendar	nl	Volgorde
+overlap holiday	calendar	nl	vakantie overlapt
 participant	calendar	nl	Deelnemer
 participants	calendar	nl	Deelnemers
 participates	calendar	nl	Deelnemen
+people holiday	calendar	nl	mensen vakantie
+permission denied	calendar	nl	Toegang geweigerd
 planner	calendar	nl	Planner
+planner by category	calendar	nl	Planner per categorie
+planner by user	calendar	nl	Planner per gebruiker
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	nl	Wilt u de afspraak in uw kalender bevestigen, accepteren, weigeren of bijken.
 preselected group for entering the planner	calendar	nl	Geselecteerde groep bij het openen van de planner
 print calendars in black & white	calendar	nl	Kalenders in zwart/wit afdrukken
+print the mini calendars	calendar	nl	Print minikalenders
 printer friendly	calendar	nl	Afdrukvriendelijk
-private and global public	calendar	nl	Prive en globaal publiek
-private and group public	calendar	nl	Prive en groep publiek
-private only	calendar	nl	Alleen prive
+privat	calendar	nl	Privé
+private and global public	calendar	nl	Privé en globaal publiek
+private and group public	calendar	nl	Privé en groep publiek
+private only	calendar	nl	Alleen privé
 re-edit event	calendar	nl	Afspraak opnieuw bewerken
+read a list of entries.	calendar	nl	Lees een lijst met records
+read a single entry by passing the id and fieldlist.	calendar	nl	Lees een enkel record door het ID en de veldenlijst in te voeren
+read this list of methods.	calendar	nl	Lees deze lijst met methodes.
+receive email updates	calendar	nl	Ontvang email updates
 receive extra information in event mails	calendar	nl	Ontvang extra informatie in afspraak berichten
+receive summary of appointments	calendar	nl	Ontvang overzicht van afspraken
+recurring event	calendar	nl	terugkerende afsrpaak
 refresh	calendar	nl	Verversen
+reinstate	calendar	nl	Opnieuw in gebruik nemen
 rejected	calendar	nl	Afgewezen
 repeat day	calendar	nl	Dag herhalen
 repeat end date	calendar	nl	Einddatum herhalingspatroon
 repeat type	calendar	nl	Herhalingstype
 repeating event information	calendar	nl	Afspraak herhalings informatie
 repetition	calendar	nl	Herhalingspatroon
+repetitiondetails (or empty)	calendar	nl	Details herhaling (of leeg laten)
+reset	calendar	nl	Herstel
+rule	calendar	nl	Regel
 sa	calendar	nl	Za
 sat	calendar	nl	Zat
 scheduling conflict	calendar	nl	Afspraak conflict
 search results	calendar	nl	Zoekresultaten
+selected contacts (%1)	calendar	nl	Geselecteerde contacten (%1)
 send updates via email	common	nl	Zend aanpassingen via e-mail
 send/receive updates via email	calendar	nl	Zend/ontvang aanpassingen via e-mail
+set a year only for one-time / non-regular holidays.	calendar	nl	Stel een een jaar in voor opzichstaande / niet reguliere vakanties
+set new events to private	calendar	nl	Zet nieuwe afspraken op privé
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	nl	Moeten uitnodigingen die u heeft afgewezen nog steeds worden weergegeven in uw kalender? <br/> U kunt ze alleen achteraf nog accepteren als ze in uw kalender worden weergegeven! (bijv. wanneer een planningsconflict is verwijderd)
+should new events created as private by default ?	calendar	nl	Moeten nieuwe afspraken standaard als privé worden aangemaakt?
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	nl	Moeten de minikalenders worden weergegeven en geprint in de printervriendelijke weergaves?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	nl	Moeten de printervriendelijke weergaves in kleur of in zwart wit worden weergegeven?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	nl	Moet de status van de afspraak-deelnemers (accepteren, afwijzen, ...) worden weergegeven tussen haakjes achter elke de namen van de deelnemers?
+show day view on main screen	calendar	nl	Dagelijkse weergave op hoofdscherm weergeven
 show default view on main screen	calendar	nl	Geeft standaard overzicht weer op beginscherm
 show high priority events on main screen	calendar	nl	Evenementen met hoge prioriteit weergeven op hoofdscherm
+show invitations you rejected	calendar	nl	Uitnodigingen weergeven die zijn afgewezen
+single event	calendar	nl	enkele afspraak
 sorry, the owner has just deleted this event	calendar	nl	Sorry, de eigenaar heeft deze afspraak zojuist verwijderd
+sorry, this event does not exist	calendar	nl	Excuses, deze afspraak bestaat niet
+sorry, this event does not have exceptions defined	calendar	nl	Excuses, deze afspraak heeft geen uitzonderingen gedefinieerd.
 sort by	calendar	nl	Sorteren op
-start date/time	calendar	nl	Start Datum/Tijd
-start- and enddates	calendar	nl	Start en Eind data
+specifies the the number of intervals shown in the planner view.	calendar	nl	Specificeerd het aantal intervallen die worden weergegeven in de plannerweergave
+start date/time	calendar	nl	Startdatum/ -tijd
+start- and enddates	calendar	nl	Start- en einddata
+startdate	calendar	nl	Startdatum
+startrecord	calendar	nl	Startregel
 su	calendar	nl	Zo
+submit to repository	calendar	nl	Naar repository inzenden
 sun	calendar	nl	Zon
-tentative	calendar	nl	
+tentative	calendar	nl	op proef
+test import (show importable records <u>only</u> in browser)	calendar	nl	Test import (te impoteren records alleen in uw browser weergeven)
+text	calendar	nl	Tekst
 th	calendar	nl	Do
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	nl	Het volgende levert een confilct op met de voorgestelde tijd:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	nl	Het volgende levert een conflict op met de voorgestelde tijd:<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	nl	De gebruiker %1 neemt niet deel aan deze afspraak!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	nl	Er was een probleem tijdens de verbinding met de news server.<br>Neem contact op met de beheerder om de servernaam, gebruikersnaam en wachtwoord te controleren.
+this day is shown as first day in the week or month view.	calendar	nl	Deze dag wordt weergegeven als de eerste dag in de week- and maandweergave.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	nl	Dit definieerd het einde van uw dagweergave. Afspraken die na deze tijd plaatsvinden worden  onderaan de dagweergave weergegeven.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	nl	Dit definieerd het begin van uw dagweergave. Afspraken die voor deze tijd plaatsvinden worden boven de dagweergave weergegeven.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	nl	Deze groep is voorgeselecteerd wanneer u de planner opent. U kunt deze selectie in de planner eventueel wijzigen.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	nl	Dit wordt meestal veroorzaakt door een verkeerd geconfigureerde SMTP-server. Waarschuw uw systeembeheerder.
+this message is sent for canceled or deleted events.	calendar	nl	Deze notificatie wordt verstuurd voor geannuleerde en verwijderde afspraken.
+this message is sent for modified or moved events.	calendar	nl	Deze notificatie wordt verstuurd voor gewijzigde afspraken.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	nl	Deze notificatie wordt verstuurd naar elke deelnemer van uw afspraken die notificatie voor nieuwe afspraken heeft geactiveerd.<br/> U kunt bepaalde plaatsvervangende woorden invullen  die worden gebruikt met de gegevens van de afspraak. De eerste regel is het onderwerp van de email.
+this message is sent when you accept, tentative accept or reject an event.	calendar	nl	Deze notificatie wordt verstuurd wanneer uw afspraken accepteerd, op proef accepteerd of afwijst.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	nl	Deze notificatie wordt verstuur als u een alarm instelt voor een bepaalde afspraak. Geef aan welke informatie u mogelijker nodig heeft.
 this month	calendar	nl	Deze maand
 this week	calendar	nl	Deze week
 this year	calendar	nl	Dit jaar
 thu	calendar	nl	Don
 title	calendar	nl	Titel
+title of the event	calendar	nl	Titel van afspraak
+title-row	calendar	nl	Regeltitel
+to many might exceed your execution-time-limit	calendar	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
+to-firstname	calendar	nl	Aan-Voornaam
+to-fullname	calendar	nl	Aan-Volledige-Naam
+to-lastname	calendar	nl	Aan-Achternaam
 today	calendar	nl	Vandaag
+translation	calendar	nl	Vertaling
 tu	calendar	nl	Di
 tue	calendar	nl	Din
+update a single entry by passing the fields.	calendar	nl	Werk een enkele afspraak bij door de afzonderlijke velden in te voeren.
+updated	calendar	nl	Bijgewerkt
 use end date	calendar	nl	Gebruik einddatum
 view this entry	calendar	nl	Deze afspraak bekijken
 we	calendar	nl	Wo
@@ -126,22 +287,37 @@ wed	calendar	nl	Woe
 week	calendar	nl	Week
 weekday starts on	calendar	nl	De week begint op
 weekly	calendar	nl	wekelijks
+weekview	calendar	nl	Weekweergave
 when creating new events default set to private	calendar	nl	Nieuwe afspraken standaard op prive zetten
+which events do you want to see when you enter the calendar.	calendar	nl	Welke afspraken wilt u zien wanneer u de kalender opent?
+which of calendar view do you want to see, when you start calendar ?	calendar	nl	Welke kalenderweergave wilt u zien wanneer u de kalender opent?
 work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
-%1 matches found	calendar	nl	%1 resultaten gevonden
+workdayends	calendar	nl	werkdag eindigt
 year	calendar	nl	Jaar
 yearly	calendar	nl	Jaarlijks
+yearview	calendar	nl	Jaarweergave
+you can either set a year or a occurence, not both !!!	calendar	nl	U kunt of een Jaar of een Gebeurtenis in, niet beide !!!
+you can only set a year or a occurence !!!	calendar	nl	U kunt alleen een Jaar of een Gebeurtenis instellen !!!
+you do not have permission to add alarms to this event !!!	calendar	nl	U heeft geen toegang om een alarm aan deze afspraak toe te voegen !!!
+you do not have permission to delete this alarm !!!	calendar	nl	U heeft geen toegang om dit ingestelde alarm te verwijderen !!!
+you do not have permission to enable/disable this alarm !!!	calendar	nl	U heeft geen toegang om dit ingestelde alarm te activeren of te deactiveren !!!
+you do not have permission to read this record!	calendar	nl	U heeft geen toegang om dit record in te lezen
+you have %1 high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
 you have 1 high priority event on your calendar today.	common	nl	U hebt vandaag 1 afspraak met hoge prioriteit op uw agenda staan.
 you have a meeting scheduled for	calendar	nl	U heeft een afspraak om
+you have a meeting scheduled for %1	calendar	nl	U heeft een vergadering gepland voor %1
 you have not entered a title	calendar	nl	U heeft geen titel opgegeven
 you have not entered a valid date	calendar	nl	U heeft geen geldige datum opgegeven
 you have not entered a valid time of day	calendar	nl	U heeft geen geldige tijd opgegeven
 you have not entered a\nbrief description	calendar	nl	U hebt geen korte\nomschrijving ingevoerd
 you have not entered a\nvalid time of day.	calendar	nl	U hebt geen geldige\n tijd ingevoerd
 you have not entered participants	calendar	nl	U heeft geen deelnemers opgegeven
-you have %1 high priority events on your calendar today.	common	nl	U hebt vandaag %1 afspraken met hoge prioriteit op uw agenda staan.
 you must enter one or more search keywords	calendar	nl	U moet een of meer zoektermen invoeren
+you must select a [iv]cal. (*.[iv]cs)	calendar	nl	U moet een iCal of vCal selecteren (*.ics of *.vcs)
+you need to set either a day or a occurence !!!	calendar	nl	U moet of een Dag  of een Gebeurtenis instellen !!!
 your meeting scheduled for	calendar	nl	Uw afspraak op
+your meeting scheduled for %1 has been canceled	calendar	nl	U geplande vergadering voor %1 is geannuleerd.
 your meeting that had been scheduled for	calendar	nl	Uw afspraak die was op
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	nl	Uw vergadering die stond gepland voor %1 is opnieuw ingepland naar %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	nl	Uw opgegeven tijd (%1 - %2) levert een conflict op met de volgende afspraken:
