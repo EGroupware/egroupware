@@ -68,10 +68,29 @@
 		}
 
 
-	function get_list($_type='both')
+	function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '')
 	{
 		global $phpgw, $phpgw_info;
-		
+
+		if ($start)
+		{
+			$limitclause = $phpgw->db->limit($start);
+		}
+
+		if (! $sort)
+		{
+			$sort = "desc";
+		}
+
+		if ($order)
+		{
+			$orderclause = "order by $order $sort";
+		}
+		else
+		{
+			$orderclause = "order by account_lid,account_lastname,account_firstname asc";
+		}
+
 		switch($_type)
 		{
 			case 'accounts':
@@ -84,7 +103,27 @@
 				$whereclause = "";
 		}
 
-		$sql = "select * from phpgw_accounts $whereclause";
+		if ($query)
+		{
+			if ($whereclause)
+			{
+				$whereclause .= ' and ( ';
+			}
+			else
+			{
+				$whereclause .= ' where ';
+			}
+
+			$whereclause .= " account_firstname like '%$query%' OR account_lastname like "
+				. "'%$query%' OR account_lid like '%$query%' ";
+			if ($whereclause)
+			{
+				$whereclause .= ' ) ';
+			}
+
+		}
+
+		$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
 		$this->db->query($sql,__LINE__,__FILE__);
 		while ($this->db->next_record()) {
 			$accounts[] = Array(
@@ -138,24 +177,29 @@
       }
     }
 
-    function exists($account_id)
-    {
-      global $phpgw, $phpgw_info;
-      if (gettype($account_id) == "string") { 
-        $account_id = $this->name2id($account_id);
-      }
-      $sql = "SELECT account_id FROM phpgw_accounts WHERE account_id='".$account_id."'";
-      $this->db->query($sql,__LINE__,__FILE__);
-      if ($this->db->num_rows()) {
-         return True;
-      } else {
-         return False;
-      }
-    }
+		function exists($account_lid)
+		{
+			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='" . $account_lid
+				. "'",__LINE__,__FILE__);
+			$this->db->next_record();
+
+			return $this->db->f(0);
+		}
+
+		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status)
+		{
+	      $this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
+	      	. "account_firstname, account_lastname, account_status) values ('" . $account_lid
+	      	. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
+	      	. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
+		}
 
     function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False)
     {
       global $phpgw, $phpgw_info;
+
+		// Why on earth is this a random number ?!
+		// This should also use the above function (jengo)
       $accountid = mt_rand (100, 600000);
       if ($default_prefs == False) {
          $default_prefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';

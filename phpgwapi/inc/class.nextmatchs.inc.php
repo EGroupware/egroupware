@@ -284,82 +284,52 @@ class nextmatchs
     return $str;
   } /* right() */
 
-  function alternate_row_color($currentcolor = "")
-  {
-    global $phpgw_info;
-    if (! $currentcolor) {
-       global $tr_color;
-       $currentcolor = $tr_color;
-    }
+		function alternate_row_color($currentcolor = '')
+		{
+			global $phpgw_info;
+			if (! $currentcolor)
+			{
+				global $tr_color;
+				$currentcolor = $tr_color;
+			}
     
-    if ($currentcolor == $phpgw_info["theme"]["row_on"]) {
-       $tr_color = $phpgw_info["theme"]["row_off"];
-    } else {
-       $tr_color = $phpgw_info["theme"]["row_on"];
-    }
-    return $tr_color;
-  }
+			if ($currentcolor == $phpgw_info['theme']['row_on'])
+			{
+				$tr_color = $phpgw_info['theme']['row_off'];
+			}
+			else
+			{
+				$tr_color = $phpgw_info['theme']['row_on'];
+			}
 
-  // If you are using the common bgcolor="{tr_color}"
-  // This function is a little cleanier approch
-  function template_alternate_row_color(&$tpl)
-  {
-     $tpl->set_var("tr_color",$this->alternate_row_color());
-  }
+			return $tr_color;
+		}
 
-  function show_sort_order($sort,$var,$order,$program,$text,$extra="")
-  {
-    global $phpgw, $filter, $qfield, $start, $query;
-    if (($order == $var) && ($sort == "ASC"))
-       $sort = "DESC";
-    else if (($order == $var) && ($sort == "DESC"))
-       $sort = "ASC";
-    else
-       $sort = "ASC";
+		// If you are using the common bgcolor="{tr_color}"
+		// This function is a little cleanier approch
+		function template_alternate_row_color(&$tpl)
+		{
+			$tpl->set_var('tr_color',$this->alternate_row_color());
+		}
 
-    return "<a href=\"".$phpgw->link($program,"order=$var&sort=$sort"
-	    . "&filter=$filter&qfield=$qfield"
-            . "&start=$start&query=$query".$extra)."\">$text</a>";
-  }
+		function show_sort_order($sort,$var,$order,$program,$text,$extra='')
+		{
+			global $phpgw, $filter, $qfield, $start, $query;
+			if (($order == $var) && ($sort == "ASC"))
+			{
+				$sort = "DESC";
+			}
+			else if (($order == $var) && ($sort == "DESC"))
+			{
+				$sort = "ASC";
+			}
+			else
+			{
+				$sort = "ASC";
+			}
 
-  // Postgre and MySQL switch the vars in limit.  This will make it easier
-  // if there are any other databases that pull this.
+			return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
+				. "qfield=$qfield&start=$start&query=$query" . $extra) . '">' . $text . '</a>';
+		}
 
-  // NOTE!!  This is is NO longer used.  Use db->limit() instead.
-  // This is here for people to get there code up to date.
-
-  function sql_limit($start)
-  {
-    echo "<center><b>WARNING:</b> Do not use sql_limit() anymore.  Use db->limit() from now on.</center>";
-    
-    global $phpgw_info;
-    $max = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
-
-    switch ($phpgw_info["server"]["db_type"]) {
-	case "pgsql":
-	  if ($start == 0)
-	    $l = $max;
-	  else
-	    $l = "$max,$start";
-	  return $l;
-	  break;
-	case "mysql":
-	  if ($start == 0)
-	    $l = $max;
-	  else
-	    $l = "$start,$max";
-	  return $l;
-	  break;
-	case "oracle":
-	  if ($start == 0)
-	    $l = "rownum < $max";
-	  else
-	    $l = "rownum >= $start AND rownum <= $max";
-//	  if ($new_where)
-//	    return "WHERE $l";
-//	  else
-//	    return "AND $l";
-	  break;
-    }
-  }
 }
