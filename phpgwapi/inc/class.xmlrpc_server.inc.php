@@ -218,45 +218,28 @@
 			}
 		}
 
-		function build_resp($_res,$recursed=False)
+		function build_resp($_res)
 		{
 			if (is_array($_res))
 			{
-				@reset($_res);
-				while (list($key,$val) = @each($_res))
+				foreach($_res as $key => $val)
 				{
 					$ele[$key] = $this->build_resp($val,True);
 				}
-				$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+				return CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
 			}
-			else
+			$_type = (is_integer($_res) ? 'int' : gettype($_res));
+
+			if ($_type == string && ereg('^[0-9]{8}T[0-9]{4}$',$_res))
 			{
-				$_type = (is_integer($_res)?'int':gettype($_res));
-				if ($recursed)
-				{
-					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
-					if ($_type == 'int' && $_res == 0)
-					{
-						return CreateObject('phpgwapi.xmlrpcval','0',$_type);
-					}
-					else
-					{
-						return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
-					}
-				}
-				else
-				{
-					// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
-					if ($_type == 'int' && $_res == 0)
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval','0',$_type);
-					}
-					else
-					{
-						$this->resp_struct[] = CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
-					}
-				}
+				$_type = 'dateTime.iso8601';
 			}
+			// Passing an integer of 0 to the xmlrpcval constructor results in the value being lost. (jengo)
+			if ($_type == 'int' && $_res == 0)
+			{
+				return CreateObject('phpgwapi.xmlrpcval','0',$_type);
+			}
+			return CreateObject('phpgwapi.xmlrpcval',$_res,$_type);
 		}
 
 		function parseRequest($data='')
@@ -271,7 +254,7 @@
 	
 			$GLOBALS['_xh'][$parser] = array();
 			$GLOBALS['_xh'][$parser]['st']     = '';
-			$GLOBALS['_xh'][$parser]['cm']     = 0; 
+			$GLOBALS['_xh'][$parser]['cm']     = 0;
 			$GLOBALS['_xh'][$parser]['isf']    = 0; 
 			$GLOBALS['_xh'][$parser]['params'] = array();
 			$GLOBALS['_xh'][$parser]['method'] = '';
@@ -424,8 +407,7 @@
 								}
 								/* $res = ExecMethod($method,$params); */
 								/* _debug_array($res);exit; */
-								$this->resp_struct = array();
-								$this->build_resp($res);
+								$this->resp_struct = array($this->build_resp($res,True));
 								/*_debug_array($this->resp_struct); */
 								@reset($this->resp_struct);
 								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->resp_struct,'struct'));
