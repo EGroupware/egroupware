@@ -118,14 +118,14 @@
 	$t->set_var("lang_add",lang("Add"));
 	$t->set_var("lang_addvcard",lang("AddVCard"));
 	$t->set_var("lang_import",lang("Import File"));
-	$t->set_var("import_url",$phpgw->link("import.php"));
+	$t->set_var("import_url",$phpgw->link("/addressbook/import.php"));
 	$t->set_var("start",$start);
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
 	$t->set_var("filter",$filter);
 	$t->set_var("qfield",$qfield);
 	$t->set_var("query",$query);
-	$t->set_var("actionurl",$phpgw->link("add.php","sort=$sort&order=$order&filter=$filter&start=$start"));
+	$t->set_var("actionurl",$phpgw->link("/addressbook/add.php","sort=$sort&order=$order&filter=$filter&start=$start"));
 	$t->set_var("start",$start);
 	$t->set_var("filter",$filter);
 	$t->set_var("cols",$cols);
@@ -149,7 +149,7 @@
 				$data=$coldata.'</a>';
 			} elseif ($column[0] == "d_email") {
 				if ($phpgw_info["user"]["apps"]["email"]) {
-					$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+					$ref='<a href="'.$phpgw->link("/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
 				} else {
 					$ref='<a href="mailto:'.$coldata.'">';
 				}
@@ -161,11 +161,11 @@
 			$t->parse("columns","column",True);
 		}
     
-		$t->set_var(row_view_link,$phpgw->link("view.php","ab_id=$myid&start=$start&order=$order&filter="
+		$t->set_var(row_view_link,$phpgw->link("/addressbook/view.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
-		$t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
+		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
-		$t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
+		$t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"/addressbook/edit.php",lang("edit"),"ab_id="
 			.$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
 		$t->set_var(row_owner,$phpgw->accounts->id2name($myowner));
 		
