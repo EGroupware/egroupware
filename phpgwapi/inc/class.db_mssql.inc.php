@@ -77,7 +77,13 @@
 
 		function free_result()
 		{
+/*
 			mssql_free_result($this->Query_ID);
+*/
+			if ($this->Query_ID)
+			{
+				mssql_free_result($this->Query_ID);
+			}
 			$this->Query_ID = 0;
 			$this->VEOF = -1;
 		}
@@ -248,7 +254,17 @@
 
 		function num_rows()
 		{
+/*
 			return mssql_num_rows($this->Query_ID);
+*/
+			if($this->Query_ID)
+			{
+				return mssql_num_rows($this->Query_ID);
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 		function num_fields()
