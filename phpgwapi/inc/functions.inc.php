@@ -309,22 +309,6 @@
 		\***************************************************************************/
 		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 
-		/* Make sure user is keeping his password in order */
-		/* Maybe we should create a common function in the phpgw_accounts_shared.inc.php file */
-		/* to get rid of duplicate code. */
-		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
-		{
-			$message = lang('You are required to change your password during your first login')
-				. '<br> Click this image on the navbar: <img src="'
-				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
-			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
-		}
-		elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
-		{
-			$message = lang('it has been more then x days since you changed your password',30);
-			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
-		}
-
 		/*************************************************************************\
 		* A few hacker resistant constants that will be used throught the program *
 		\*************************************************************************/
@@ -598,6 +582,22 @@
 				if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
 				{
 					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+
+				/* Make sure user is keeping his password in order */
+				/* Maybe we should create a common function in the phpgw_accounts_shared.inc.php file */
+				/* to get rid of duplicate code. */
+				if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
+				{
+					$message = lang('You are required to change your password during your first login')
+						. '<br> Click this image on the navbar: <img src="'
+						. $GLOBALS['phpgw']->common->image('preferences','navbar').'">';
+					$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
+				}
+				elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+				{
+					$message = lang('it has been more then x days since you changed your password',30);
+					$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
 				}
 
 				$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
