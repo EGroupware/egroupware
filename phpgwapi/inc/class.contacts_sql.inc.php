@@ -706,24 +706,27 @@
 				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
 					. "id=$id",__LINE__,__FILE__);
 			}
-			foreach($extra_fields as $x_name => $x_value)
+			if (is_array($extra_fields))
 			{
-				if ($this->field_exists($id,$x_name))
+				foreach($extra_fields as $x_name => $x_value)
 				{
-					if (!$x_value)
+					if ($this->field_exists($id,$x_name))
 					{
-						$this->delete_single_extra_field($id,$x_name);
+						if (!$x_value)
+						{
+							$this->delete_single_extra_field($id,$x_name);
+						}
+						else
+						{
+							$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
+								. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
+								. "' AND contact_id=" . (int)$id,__LINE__,__FILE__);
+						}
 					}
-					else
+					elseif($x_value)	// dont write emtpy extra-fields
 					{
-						$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
-							. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
-							. "' AND contact_id=" . (int)$id,__LINE__,__FILE__);
+						$this->add_single_extra_field($id,$owner,$x_name,$x_value);
 					}
-				}
-				elseif($x_value)	// dont write emtpy extra-fields
-				{
-					$this->add_single_extra_field($id,$owner,$x_name,$x_value);
 				}
 			}
 		}
