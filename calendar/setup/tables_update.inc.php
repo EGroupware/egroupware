@@ -344,25 +344,51 @@
 		return True;
 	}
 
+	$test[] = '0.9.11.002';
+	function calendar_upgrade0_9_11_002()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.11.003';
+		return True;
+	}
+
 	$test[] = '0.9.11.003';
 	function calendar_upgrade0_9_11_003()
 	{
 		global $setup_info, $phpgw_setup;
 
 		$oProc = $phpgw_setup->oProc;
-		$oProc->CreateTable('phpgw_cal_holidays', array(
-			'fd' => array(
-				'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
-				'name' => array('type' => 'varchar', 'precision' => 50,'nullable' => False),
-				'date_time' => array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0')
-			),
-			'pk' => array('locale','name'),
-			'fk' => array(),
-			'ix' => array(),
-			'uc' => array()
-		));
+		$oProc->CreateTable(
+			'phpgw_cal_holidays', array(
+				'fd' => array(
+					'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
+					'name' => array('type' => 'varchar', 'precision' => 50,'nullable' => False),
+					'date_time' => array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0')
+				),
+				'pk' => array('locale','name'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
 
 		$setup_info['calendar']['currentver'] = '0.9.11.004';
+		return True;
+	}
+
+	$test[] = '0.9.11.004';
+	function calendar_upgrade0_9_11_004()
+	{
+		global $setup_info
+		$setup_info['calendar']['currentver'] = '0.9.11.005';
+		return True;
+	}
+
+	$test[] = '0.9.11.005';
+	function calendar_upgrade0_9_11_005()
+	{
+		global $setup_info
+		$setup_info['calendar']['currentver'] = '0.9.11.006';
 		return True;
 	}
 
