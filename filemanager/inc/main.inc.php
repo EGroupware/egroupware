@@ -23,7 +23,7 @@ else
 
 define ("NULL", "");
 
-require ("./inc/db.inc.php");
+require (PHPGW_APP_INC . "/db.inc.php");
 
 /* Set up any initial db settings */
 db_init ();
@@ -47,7 +47,7 @@ define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', "Back to file manager");
 # Need to include this here so they recognize the settings
 ###
 
-require ("./inc/html.inc.php");
+require (PHPGW_APP_INC . "/html.inc.php");
 
 ###
 # Define the list of file attributes.  Format is "internal_name" => "Displayed name"
