@@ -31,6 +31,7 @@ attach file	etemplate	de	Datei anhängen
 blurtext	etemplate	de	blurText
 border	etemplate	de	Rand
 border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
+box	etemplate	de	Box
 can not have special sql-value null	etemplate	de	darf nicht den speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
 category	etemplate	de	Kategorie

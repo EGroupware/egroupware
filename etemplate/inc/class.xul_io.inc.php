@@ -82,7 +82,7 @@
 					'size'  => 'rows,options'
 				),
 				'template' => array(
-					'.name' => 'grid',
+					'.name' => 'template',
 					'size'  => 'content'
 				),
 				'image'   => array(
@@ -229,6 +229,7 @@
 				// fall-through
 			case 'vbox':
 			case 'hbox':
+			case 'box':
 			case 'deck':
 				list($anz,$options) = split(',',$cell['size'],2);
 				for ($n = 1; $n <= $anz; ++$n)
@@ -369,31 +370,6 @@
 			return $xml;
 		}
 
-		function add_cell(&$etempl,$cell,&$box,&$col,$node_level)
-		{
-			if (!isset($box[$node_level-1]))
-			{
-				list($spanned) = explode(',',$cell['span']);
-				$spanned = $spanned == 'all' ? $etempl->cols - $col : $spanned;
-
-				$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $cell;
-
-			/*	if ($attr['type'] == 'template' && !empty($attr['name']) && $attr['name'][0] != '@')
-				{
-					$etempl->data[$etempl->rows][$etempl->num2chrs($col++)]['obj'] = new etemplate($attr['name']);
-				} */
-				while (--$spanned > 0)
-				{
-					$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
-				}
-			}
-			else
-			{
-				$pcell = &$box[$node_level-1];
-				$pcell[++$pcell['anz']] = $cell;
-			}
-		}
-
 		function import(&$etempl,$data)
 		{
 			if ($this->debug)
@@ -417,8 +393,14 @@
 			{
 				return $err;
 			}
-			while (list($n,$node) = each($vals))
+			$parents = array();
+			$parent = null;
+			foreach($vals as $n => $node)
 			{
+				if ($this->debug)
+				{
+					echo "<h1>$n</h1><pre>".print_r($node,true)."</pre>";
+				}
 				$type = $node['type'];
 				$tag = $node['tag'];
 				$attr = is_array($node['attributes']) ? $node['attributes'] : array();
@@ -429,10 +411,6 @@
 				if (isset($attr['options']) && $attr['options'] != '')
 				{
 					$attr['size'] = $attr['options']; unset($attr['options']);
-				}
-				if ($tag == 'grid' && $type == 'complete' && !is_array($tab_attr))
-				{
-					$tag = 'template';
 				}
 				if ($tag != 'textbox' && !isset($attr['type']))
 				{
@@ -446,37 +424,76 @@
 				{
 					case 'overlay':
 						break;
+					case 'template':
 					case 'grid':
-						if ($type != 'close' && is_array($tab_attr))
+						if ($type != 'open' && is_array($tab_attr))	// templates/grids in a tabpanel
 						{
 							$tab_names[] = $attr['name'];
 							break;
 						}
-						if ($node['level'] > 2)	// level 1 is the overlay
+						if ($tag == 'template' && $node['level'] > 2)	// level 1 is the overlay
 						{
-							return "Can't import nested $node[tag]'s !!!";
+							return "Can't import nested $tag's !!!";
 						}
-						if ($type != 'open')
+						switch ($type)
 						{
-							break;
+							case 'close':
+								if (!count($parents) || $parent['.is_root'])	// templ import complet => save it
+								{
+									unset($parent['.is_root']);
+									unset($parent); $parents = array();
+									$etempl->fix_old_template_format(); 	// set the depricated compat vars
+									// save tmpl to the cache, as the file may contain more then one tmpl
+									$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
+									         ($etempl->lang == '' ? '' : '.'.$etempl->lang);
+									$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
+									if ($this->debug)
+									{
+										$etempl->echo_tmpl();
+									}
+									$imported[] = $etempl->name;
+								}
+								else
+								{
+									// poping the last used parent from the end of the parents array (array_pop does not work with references)
+									$parent = &$parents[count($parents)-1];
+									unset($parents[count($parents)-1]);
+								}
+								break;
+							case 'open':
+								if (($is_root = is_null($parent)))	// starting a new templ
+								{
+									$etempl->init($attr);
+									$etempl->children = array();	// init adds one grid by default
+									$parent = &$etempl->children;
+								}
+								if ($tag == 'grid')
+								{
+									$size_opts = array('padding','spacing','class','border','height','width');
+									for ($size = ''; list(,$opt) = each($size_opts); )
+									{
+										$size = $attr[$opt] . ($size != '' ? ",$size" : '');
+									}
+									$grid = array(	// empty grid
+										'type' => 'grid',
+										'data' => array(),
+										'cols' => 0,
+										'rows' => 0,
+										'size' => $size,
+									);
+									if ($is_root) $grid['.is_root'] = true;	// we need to remember we have no template as parent 
+									soetemplate::add_child($parent,$grid);
+									$parents[count($parents)] = &$parent;
+									$parent = &$grid;
+									unset($grid);
+								}
+								break;
+							case 'complete':	// reference to an other template
+								$attr['type'] = 'template';	// might be grid in old xet-files
+								soetemplate::add_child($parent,$attr);
+								unset($attr);
+								break;
 						}
-						if ($grid_started)	// more than one grid in the file --> place it into the cache
-						{
-							$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
-							         ($etempl->lang == '' ? '' : '.'.$etempl->lang);
-							$imported[] = $etempl->name;
-							$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
-						}
-						$grid_started = True;
-						$etempl->init($attr);
-						$size_opts = array('padding','spacing','class','border','height','width');
-						for ($size = ''; list(,$opt) = each($size_opts); )
-						{
-							$size = $attr[$opt] . ($size != '' ? ",$size" : '');
-						}
-						$etempl->size = $size;
-						$etempl->cols = $etempl->rows = 0;
-						$etempl->data = array();
 						break;
 					case 'columns':
 					case 'rows':
@@ -486,7 +503,7 @@
 						{
 							return 'place widgets in <row> and not in <column> !!!';
 						}
-						$etempl->data[0][$etempl->num2chrs($etempl->cols++)] = $attr['width'] .
+						$parent['data'][0][$etempl->num2chrs($parent['cols']++)] = $attr['width'] .
 							($attr['disabled'] ? ','.$attr['disabled'] : '');
 						break;
 					case 'row':
@@ -494,10 +511,9 @@
 						{
 							break;
 						}
-						$r = ++$etempl->rows;
-						$col = 0;
-						$etempl->data[0]["c$r"] = $attr['class'] . ($attr['valign'] ? ','.$attr['valign'] : '');
-						$etempl->data[0]["h$r"] = $attr['height'] .
+						$nul = null; soetemplate::add_child($parent,$nul);	// null = new row
+						$parent['data'][0]['c'.$parent['rows']] = $attr['class'] . ($attr['valign'] ? ','.$attr['valign'] : '');
+						$parent['data'][0]['h'.$parent['rows']] = $attr['height'] .
 							($attr['disabled'] ? ','.$attr['disabled'] : '');
 						break;
 					case 'styles':
@@ -518,7 +534,7 @@
 							$tab_attr['span'] .= $tab_attr['class'] ? ','.$tab_attr['class'] : '';
 							unset($tab_attr['class']);
 							
-							$this->add_cell($etempl,$tab_attr,$box,$col,$node['level']);
+							soetemplate::add_child($parent,$tab_attr);
 							unset($tab_attr);
 						}
 						break;
@@ -547,7 +563,7 @@
 						}
 						else
 						{
-							$this->add_cell($etempl,$menulist_attr,$box,$col,$node['level']);
+							soetemplate::add_child($parent,$menulist_attr);
 							unset($menulist_attr);
 						}
 						break; 
@@ -555,28 +571,32 @@
 					case 'hbox':
 					case 'deck':
 					case 'groupbox':
-						if ($type == 'open')
+					case 'box':
+						if ($type != 'close')	// open or complete
 						{
-							$box[$node['level']] = $attr;
+							soetemplate::add_child($parent,$attr);
+							$parents[count($parents)] = &$parent;	// $parents[] does not always the same - strange
+							$parent = &$attr;
+							unset($attr);
 						}
-						else
+						if ($type != 'open')	// close or complete
 						{
-							$cell = &$box[$node['level']];
-							$cell['size'] = $cell['anz'] . ($cell['size'] != '' ? ','.$cell['size'] : '');
-							unset($cell['anz']);
-							$this->add_cell($etempl,$cell,$box,$col,$node['level']);
-							unset($box[$node['level']]);
+							// poping the last used parent from the end of the parents array (array_pop does not work with references)
+							$parent = &$parents[count($parents)-1];
+							unset($parents[count($parents)-1]);
 						}
 						break;
 					case 'caption':	// caption of (group)box
-						if (isset($box[$node['level']-1]))
+						if ($parent['type'] == 'groupbox')
 						{
-							$box[$node['level']-1]['label'] = $attr['label'];
+							$parent['label'] = $attr['label'];
 						}
 						break;
+					// the following labels create automaticaly a child-entry in their parent
 					case 'textbox':
 						if ($attr['multiline'])
 						{
+							unset($attr['multiline']);
 							$attr['type'] = 'textarea';
 							$attr['size'] = $attr['rows'] . ($attr['cols'] ? ','.$attr['cols'] : '');
 							unset($attr['cols']);
@@ -629,16 +649,17 @@
 						{
 							break;
 						}
-						$this->add_cell($etempl,$attr,$box,$col,$node['level']);
+						soetemplate::add_child($parent,$attr);
+						unset($attr);
 						break;
 				}
+				if ($this->debug)
+				{
+					echo "<b>parent</b><pre>".print_r($parent,true)."</pre>";
+					echo "<b>parents</b><pre>".print_r($parents,true)."</pre>";
+					echo "<b>children</b><pre>".print_r($etempl->children,true)."</pre>";
+				}
 			}
-			if ($this->debug)
-			{
-				_debug_array($etempl->data);
-			}
-			$imported[] = $etempl->name;
-
 			return $imported;
 		}
 	}

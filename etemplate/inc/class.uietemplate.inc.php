@@ -207,8 +207,9 @@
 		 *
 		 * This function is only to submit forms to, create with exec.
 		 * All eTemplates / forms executed with exec are submited to this function
-		 * (via the global index.php and menuaction). It then calls process_show
-		 * for the eTemplate (to adjust the content of the _POST) and
+		 * via /etemplate/process_exec.php?menuaction=<callback>. We cant use the global index.php as
+		 * it would set some constants to etemplate instead of the calling app. 
+		 * process_exec then calls process_show for the eTemplate (to adjust the content of the _POST) and
 		 * ExecMethod's the given callback from the app with the content of the form as first argument.
 		 */
 		function process_exec()
@@ -279,39 +280,16 @@
 			}
 		}
 
-		function check_disabled($disabled,$content)
-		{
-			//return False;
-			if ($not = $disabled[0] == '!')
-			{
-				$disabled = substr($disabled,1);
-			}
-			list($val,$check_val) = $vals = explode('=',$disabled);
-
-			if ($val[0] == '@')
-			{
-				$val = $this->get_array($content,substr($val,1));
-			}
-			if ($check_val[0] == '@')
-			{
-				$check_val = $this->get_array($content,substr($check_val,1));
-			}
-			$result = count($vals) == 1 ? $val != '' : $val == $check_val;
-			if ($not) $result = !$result;
-			//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
-			return $result;
-		}
-
 		/**
 		 * creates HTML from an eTemplate
 		 *
 		 * This is done by calling show_cell for each cell in the form. show_cell itself
 		 * calls show recursivly for each included eTemplate.
-		 * You can use it in the UI-layer of an app, just make shure to call process_show !!!
+		 * You could use it in the UI-layer of an app, just make shure to call process_show !!!
 		 * This is intended as internal function and should NOT be called by new app's direct,
 		 * as it deals with HTML and is so UI-dependent, use exec instead.
 		 *
-		 * @param internal
+		 * @internal
 		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
 		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
 		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
@@ -322,8 +300,7 @@
 		 * @param $show_row string name/index for name expansion
 		 * @return string the generated HTML
 		 */
-		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0,
-			$no_table_tr=False,$tr_class='')
+		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
 		{
 			if (!$sel_options)
 			{
@@ -333,9 +310,61 @@
 			{
 				$readonlys = array();
 			}
-			if (is_int($this->debug) && $this->debug >= 1 || $this->debug == $this->name && $this->name)
+			if (is_int($this->debug) && $this->debug >= 1 || $this->name && $this->debug == $this->name)
 			{
 				echo "<p>etemplate.show($this->name): $cname =\n"; _debug_array($content);
+			}
+			if (!is_array($content))
+			{
+				$content = array();	// happens if incl. template has no content
+			}
+			$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n\n";
+			if (!$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name])
+			{
+				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
+				$html .= $this->html->style($this->style)."\n\n";
+			}
+			foreach ($this->children as $child)
+			{
+				$html .= $this->show_cell($child,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul);
+			}
+			return $html."<!-- END eTemplate $this->name -->\n\n";
+		}
+			
+		/**
+		 * creates HTML from an eTemplate
+		 *
+		 * This is done by calling show_cell for each cell in the form. show_cell itself
+		 * calls show recursivly for each included eTemplate.
+		 * You can use it in the UI-layer of an app, just make shure to call process_show !!!
+		 * This is intended as internal function and should NOT be called by new app's direct,
+		 * as it deals with HTML and is so UI-dependent, use exec instead.
+		 *
+		 * @internal
+		 * @param $grid array representing a grid
+		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
+		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
+		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
+		 * @param            This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param $cname string basename of names for form-elements, means index in $_POST
+		 *               eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param $show_c string name/index for name expansion
+		 * @param $show_row string name/index for name expansion
+		 * @return string the generated HTML
+		 */
+		function show_grid(&$grid,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0/*TEST-RB,$no_table_tr=False,$tr_class=''*/)
+		{
+			if (!$sel_options)
+			{
+				$sel_options = array();
+			}
+			if (!$readonlys)
+			{
+				$readonlys = array();
+			}
+			if (is_int($this->debug) && $this->debug >= 2 || $grid['name'] && $this->debug == $grid['name'])
+			{
+				echo "<p>etemplate.show_grid($grid[name]): $cname =\n"; _debug_array($content);
 			}
 			if (!is_array($content))
 			{
@@ -346,18 +375,19 @@
 				'.col' => $this->num2chrs($show_c-1),
 				'.row' => $show_row
 			);
-			reset($this->data);
-			if (isset($this->data[0]))
+			$data = &$grid['data'];
+			reset($data);
+			if (isset($data[0]))
 			{
-				list(,$opts) = each($this->data);
+				list(,$opts) = each($data);
 			}
 			else
 			{
 				$opts = array();
 			}
-			for ($r = 0; $row = 1+$r /*list($row,$cols) = each($this->data)*/; ++$r)
+			for ($r = 0; $row = 1+$r /*list($row,$cols) = each($data)*/; ++$r)
 			{
-				if (!(list($r_key) = each($this->data)))	// no further row
+				if (!(list($r_key) = each($data)))	// no further row
 				{
 					if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) ||
 					    (substr($cols['A']['type'],1) == 'box' && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname) && $idx_cname) ||
@@ -369,9 +399,9 @@
 				}
 				else
 				{
-					$cols = &$this->data[$r_key];
+					$cols = &$data[$r_key];
 					list($height,$disabled) = explode(',',$opts["h$row"]);
-					$class = $no_table_tr ? $tr_class : $opts["c$row"];
+					$class = /*TEST-RB$no_table_tr ? $tr_class :*/ $opts["c$row"];
 				}
 				if ($disabled != '' && $this->check_disabled($disabled,$content))
 				{
@@ -422,16 +452,16 @@
 							}
 						}
 					}
+					/*TEST-RB
 					if ($cell['type'] == 'template' && $cell['onchange'])
 					{
 						$cell['tr_class'] = $cl;
-					}
+					}*/
 					if ($col_disabled != '' && $this->check_disabled($col_disabled,$content))
 					{
 						continue;	// col is disabled
 					}
-					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,
-						$c,$r,$span,$cl);
+					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$cl);
 
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
@@ -472,19 +502,14 @@
 				}
 				$rows[$row] = $row_data;
 			}
-			if (!$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name])
-			{
-				$style = $this->html->style($this->style);
-				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
-			}
-			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'),$no_table_tr);
+			$html = $this->html->table($rows,$this->html->formatOptions($grid['size'],'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING')/*TEST-RB,$no_table_tr*/);
 
-			list($width,$height,,,,,$overflow) = explode(',',$this->size);
+			list($width,$height,,,,,$overflow) = explode(',',$grid['size']);
 			if (!empty($overflow)) {
 				$div_style=' STYLE="'.($width?"width: $width; ":'').($height ? "height: $height; ":'')."overflow: $overflow\"";
 				$html = $this->html->div($html,$div_style);
 			}
-			return "\n\n<!-- BEGIN $this->name -->\n$style\n".$html."<!-- END $this->name -->\n\n";
+			return "\n\n<!-- BEGIN grid $grid[name] -->\n$html<!-- END grid $grid[name] -->\n\n";
 		}
 
 		/**
@@ -763,13 +788,25 @@
 				case 'hrule':
 					$html .= $this->html->hr($cell_options);
 					break;
+				case 'grid':
+					if ($readonly)
+					{
+						if (!is_array($readonlys)) $readonlys = array();
+						$readonlys['__ALL__'] = True;
+					}
+					if ($name != '')
+					{
+						$cname .= $cname == '' ? $name : '['.str_replace('[','][',str_replace(']','',$name)).']';
+					}
+					$html .= $this->show_grid($cell,$name ? $value : $content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if (is_object($cell['name']))
 					{
 						$cell['obj'] = &$cell['name'];
 						unset($cell['name']);
 						$cell['name'] = 'was Object';
-						echo "<p>Object in Name in tpl '$this->name': "; _debug_array($this->data);
+						echo "<p>Object in Name in tpl '$this->name': "; _debug_array($grid);
 					}
 					$obj_read = 'already loaded';
 					if (!is_object($cell['obj']))
@@ -785,7 +822,7 @@
 						}
 						else
 						{  $obj_read = 'obj read';
-							$cell['obj'] = new etemplate(/*** TESTWEISE ***$cell['name']*/$name,$this->as_array());
+							$cell['obj'] = new etemplate($name,$this->as_array());
 						}
 					}
 					if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
@@ -815,7 +852,7 @@
 						if (!is_array($readonlys)) $readonlys = array();
 						$readonlys['__ALL__'] = True;
 					}
-					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row,$cell['onchange'],$cell['tr_class']);
+					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row/*TEST-RB,$cell['onchange'],$cell['tr_class']*/);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
 					$sels = array();
@@ -898,11 +935,12 @@
 				case 'vbox':
 				case 'hbox':
 				case 'groupbox':
+				case 'box':
 					$rows = array();
 					$box_row = 1;
 					$box_col = 'A';
 					$box_anz = 0;
-					for ($n = 1; $n <= intval($cell_options); ++$n)
+					for ($n = 1; $n <= (int) $cell_options; ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl);
 						if ($h != '' && $h != '&nbsp;')
@@ -915,7 +953,14 @@
 							{
 								$box_col = $this->num2chrs($n);
 							}
-							$rows[$box_row][$box_col] = $html = $h;
+							if ($cell['type'] == 'box')
+							{
+								$html .= $h;
+							}
+							else
+							{
+								$rows[$box_row][$box_col] = $html = $h;
+							}
 							$box_anz++;
 							if ($cell[$n]['align'])
 							{
@@ -926,7 +971,7 @@
 							$rows[$box_row]['.'.$box_col] .= $this->html->formatOptions($cl,'CLASS');
 						}
 					}
-					if ($box_anz > 1)	// a single cell is NOT placed into a table
+					if ($box_anz > 1 && $cell['type'] != 'box')	// a single cell is NOT placed into a table
 					{
 						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',CELLPADDING,CELLSPACING').
 							($cell['align'] && $type != 'hbox' ? ' WIDTH="100%"' : ''));	// alignment only works if table has full width
@@ -939,7 +984,15 @@
 						}
 						$html = $this->html->fieldset($html,$label);
 					}
-					if ($box_anz > 1)	// a single cell is NOT placed into a table
+					elseif ($cell['type'] == 'box')
+					{
+						$html = $this->html->div($html,$this->html->formatOptions(array(
+								$cell['height'],
+								$cell['width'],
+								$cell['class'],
+							),'HEIGHT,WIDTH,CLASS'));
+					}
+					if ($box_anz > 1)	// small docu in the html-source
 					{
 						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".$html."\n\n<!-- END $cell[type] -->\n\n";
 					}
@@ -1057,7 +1110,7 @@
 		 * This is only an internal function, dont call it direct use only exec
 		 * Process_show uses a list of input-fields/widgets generated by show.
 		 *
-		 * @param internal
+		 * @internal
 		 * @param $content array $_POST[$cname], on return the adjusted content
 		 * @param $to_process array list of widgets/form-fields to process
 		 * @param $cname string basename of our returnt content (same as in call to show)

@@ -31,6 +31,7 @@ attach file	etemplate	en	attach file
 blurtext	etemplate	en	blurText
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
+box	etemplate	en	Box
 can not have special sql-value null	etemplate	en	can not have special SQL-value NULL
 cancel	etemplate	en	Cancel
 category	etemplate	en	Category

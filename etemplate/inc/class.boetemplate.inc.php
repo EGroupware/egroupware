@@ -48,6 +48,7 @@
 			'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
 			'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols 
 			'groupbox' => 'GroupBox',	// a box with a label containing other elements to group them (html: fieldset)
+			'box'	=> 'Box',			// just a container for widgets (html: div)
 //			'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
 			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
 		);
@@ -75,6 +76,40 @@
 			{
 				$this->init($name);
 			}
+		}
+
+		/**
+		 * checks if a grid row or column is disabled
+		 *
+		 * Expression: [!][@]val[=[@]check] 
+		 * Parts in square brackets are optional, a ! negates the expression, @val evaluates to $content['val']
+		 * if no =check is given all set non-empty and non-zero strings are true (standard php behavior)
+		 *
+		 * @param string $disabled expression to check, eg. "!@var" for !$content['var']
+		 * @param array $content the content-array in the context of the grid
+		 * @return boolean true if the row/col is disabled or false if not
+		 */
+		function check_disabled($disabled,$content)
+		{
+			//return False;
+			if ($not = $disabled[0] == '!')
+			{
+				$disabled = substr($disabled,1);
+			}
+			list($val,$check_val) = $vals = explode('=',$disabled);
+
+			if ($val[0] == '@')
+			{
+				$val = $this->get_array($content,substr($val,1));
+			}
+			if ($check_val[0] == '@')
+			{
+				$check_val = $this->get_array($content,substr($check_val,1));
+			}
+			$result = count($vals) == 1 ? $val != '' : $val == $check_val;
+			if ($not) $result = !$result;
+			//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
+			return $result;
 		}
 
 		/**
@@ -348,6 +383,11 @@
 			$n = False;
 			foreach($this->data as $row => $cols)
 			{
+				if (!is_array($cols))	// should never happen
+				{
+					echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val') <b>cols not set for row '$row'</b></p>\n";					
+					$this->echo_tmpl();
+				}
 				foreach($cols as $col => $cell)
 				{
 					if ($cell['name'] == $name)
@@ -381,6 +421,8 @@
 							break;
 						case 'vbox':
 						case 'hbox':
+						case 'groupbox':
+						case 'box':
 							for ($i = 0; $i < (int)$cell['size']; ++$i)
 							{
 								if ($cell[$i]['name'] == $name)

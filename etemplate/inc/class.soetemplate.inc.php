@@ -41,10 +41,10 @@
 		var $lang;		// '' if general template else language short, e.g. 'de'
 		var $group;		// 0 = not specific else groupId or if < 0  userId
 		var $version;	// like 0.9.13.001
-		var $size;		// witdh,height,border of table
 		var $style;		// embeded CSS style-sheet
 		var $children;	// array with children
 		var $data;		// depricated: first grid of the children
+		var $size;		// depricated: witdh,height,border of first grid
 		var $db,$db_name = 'phpgw_etemplate'; // DB name
 		var $db_key_cols = array(
 			'et_name' => 'name',
@@ -113,6 +113,7 @@
 		 *
 		 * nothing fancy so far
 		 *
+		 * @static
 		 * @return array the cell
 		 */
 		function empty_cell($type='label',$name='')
@@ -169,19 +170,90 @@
 		}
 
 		/**
-		 * initialises internal vars rows & cols from the size of the data-array
+		 * adds $cell to it's parent at the parent-type spezific location for childs
+		 *
+		 * @static
+		 * @param array &$parent referenc to the parent
+		 * @param array &$cell cell to add (need to be unset after the call to add_child, as it's a referenc !)
+		 */
+		function add_child(&$parent,&$cell)
+		{
+			switch($parent['type'])
+			{
+				case 'vbox':
+				case 'hbox':
+				case 'groupbox':
+				case 'box':
+				case 'deck':
+					list($n,$options) = explode(',',$parent['size'],2);
+					$parent[++$n] = &$cell;
+					$parent['size'] = $n . ($options ? ','.$options : '');
+					break;
+
+				case 'grid':
+					$data = &$parent['data'];
+					$cols = &$parent['cols'];
+					$rows = &$parent['rows'];
+					$row = &$data[$rows];
+					$col = count($row);
+					if (is_array($cell))	// real cell to add
+					{
+						$row[soetemplate::num2chrs($col++)] = &$cell;
+						list($spanned) = explode(',',$cell['span']);
+						$spanned = $spanned == 'all' ? 1 + $cols - $col : $spanned;
+						while (--$spanned > 0)
+						{
+							$row[soetemplate::num2chrs($col++)] = soetemplate::empty_cell();
+						}
+						if ($col > $cols) $cols = $col;
+					}
+					else	// create a new row
+					{
+						$data[++$rows] = array();
+					}
+					break;
+					
+				default:	// parent is the template itself
+					$parent[] = &$cell;
+					break;
+			}
+		}
+
+		/**
+		 * initialises internal vars rows & cols from the data of a grid
+		 */
+		function set_grid_rows_cols(&$grid)
+		{
+			$grid['rows'] = count($grid['data']) - 1;
+			$grid['cols'] = 0;
+			for($r = 1; $r <= $grid['rows']; ++$r)
+			{
+				$cols = count($grid['data'][$r]);
+				if ($grid['cols'] < $cols)
+				{
+					$grid['cols'] = $cols;
+				}
+			}
+		}
+		
+		/**
+		 * initialises internal vars rows & cols from the data of the first (!) grid
+		 *
+		 * @depricated
 		 */
 		function set_rows_cols()
 		{
-			$this->rows = count($this->data) - 1;
-			$this->cols = 0;
-			for($r = 1; $r <= $this->rows; ++$r)
+			if (is_null($this->data))	// tmpl contains no grid
 			{
-				$cols = count($this->data[$r]);
-				if ($this->cols < $cols)
-				{
-					$this->cols = $cols;
-				}
+				$this->rows = $this->cols = 0;
+			}
+			else
+			{
+				$grid['data'] = &$this->data;
+				$grid['rows'] = &$this->rows;
+				$grid['cols'] = &$this->cols;
+				$this->set_grid_rows_cols($grid);
+				unset($grid);
 			}
 		}
 
@@ -239,6 +311,7 @@
 				$this->children[0]['data'] = &$this->data;
 				$this->children[0]['rows'] = &$this->rows;
 				$this->children[0]['cols'] = &$this->cols;
+				$this->children[0]['size'] = &$this->size;
 			}
 		}
 
@@ -495,6 +568,7 @@
 				$this->children[0]['data'] = &$this->data;
 				$this->children[0]['rows'] = &$this->rows;
 				$this->children[0]['cols'] = &$this->cols;
+				$this->children[0]['size'] = &$this->size;
 
 				// that code fixes a bug in very old templates, not sure if it's still needed
 				if ($this->name[0] != '.' && is_array($this->data))
@@ -520,6 +594,7 @@
 			}
 			else
 			{
+				unset($this->data);
 				// for the moment we make $this->data as a referenz to the first grid
 				foreach($this->children as $key => $child)
 				{
@@ -528,6 +603,14 @@
 						$this->data = &$this->children[$key]['data'];
 						$this->rows = &$this->children[$key]['rows'];
 						$this->cols = &$this->children[$key]['cols'];
+						if (!isset($this->children[$key]['size']) && !empty($this->size))
+						{
+							$this->children[$key]['size'] = &$this->size;
+						}
+						else
+						{
+							$this->size = &$this->children[$key]['size'];
+						}
 						break;
 					}
 				}
@@ -638,9 +721,8 @@
 			}
 			$this->delete();	// so we have always a new insert
 
-			if ($this->name[0] != '.')		// correct old messed up templates
+			if ($this->name[0] != '.' && is_array($data))		// correct old messed up templates
 			{
-if (!is_array($this->data)) { $db = &$this->db; unset($this->db); echo function_backtrace()."\ndata is no array in<pre>".print_r($this,true)."</pre>\n"; $this->db = &$db; unset($db); }
 				reset($this->data); each($this->data);
 				while (list($row,$cols) = each($this->data))
 				{
@@ -972,23 +1054,31 @@ if (!is_array($this->data)) { $db = &$this->db; unset($this->db); echo function_
 		/**
 		 * prints/echos the template's content, eg. for debuging
 		 * @param boolean $backtrace = true give a function backtrace
-		 * @param boolean $no_db_obj = true dump the db-obj too
+		 * @param boolean $no_other_objs = true dump other objs (db, html, ...) too
 		 */
-		function echo_tmpl($backtrace=true,$no_db_obj=true)
+		function echo_tmpl($backtrace=true,$no_other_objs=true)
 		{
+			static $objs = array('db','html','xul_io');
+			
 			if ($backtrace) echo "<p>".function_backtrace(1)."</p>\n";
 
-			if ($no_db_obj)
+			if ($no_other_objs)
 			{
-				$db = &$this->db;
-				unset($this->db);
+				foreach($objs as $obj)
+				{
+					$$obj = &$this->$obj;
+					unset($this->$obj);
+				}
 			}
 			_debug_array($this);
 			
-			if ($no_db_obj)
+			if ($no_other_objs)
 			{
-				$this->db = &$db;
-				unset($db);
+				foreach($objs as $obj)
+				{
+					$this->$obj = &$$obj;
+					unset($$obj);
+				}
 			}
 		}
 	};

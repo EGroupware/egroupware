@@ -630,7 +630,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	</td>
 </tr>
 <tr>
-	<td><b>VBox, HBox</b></td>
+	<td><b>VBox, HBox, Box</b></td>
 	<td>
 		&lt;vbox><br>
 		&nbsp; &lt;widget ...><br>
@@ -639,13 +639,18 @@ implement only a subset of XUL. Here are the main differences:</p>
 		&lt;hbox span="all"><br>
 		&nbsp; &lt;widget ...><br>
 		&nbsp; &lt;widget ...><br>
-		&lt;/hbox>
+		&lt;/hbox><p>
+		&lt;box><br>
+		&nbsp; &lt;widget ...><br>
+		&nbsp; &lt;widget ...><br>
+		&lt;/box>
 	</td>
 	<td>yes</td>
-	<td>vbox, hbox</td>
+	<td>vbox, hbox, box</td>
 	<td>
-		<b>vertical or horizontal container</b> to contain other widgets. This is useful if one needs more
-		widgets or widgets outside the column- / row-order of a grid.<br>
+		vertical or horizontal <b>container</b> for child widgets. This is useful if one needs more
+		widgets or widgets outside the column- / row-order of a grid. HBox or VBox is rendered as Grid/html:table
+		with only one row or colum. Box is rendered as a html:div containing all child-widgets.<br>
 		Disabled child-cells are completly left out (no empty cells or rows get generated).<p>
 		<b>Options</b> <i>in the editor</i>: the number of cells in the box (does NOT need to be set in xml).
 	</td>
@@ -662,7 +667,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>yes</td>
 	<td>groupbox</td>
 	<td>
-		container to <b>group other widgets</b> by putting a border around them.<br>
+		container to visualy <b>group other widgets</b> by putting a border around them.<br>
 		The upper line may contain a legend. The widgets are ordered vertical, like a VBox.
 		Disabled child-cells are completly left out (no empty cells or rows get generated).<p>
 		<b>Options</b> <i>in the editor</i>: the number of cells in the box (does NOT need to be set in xml).
