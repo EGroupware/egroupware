@@ -3075,7 +3075,7 @@
 
 			$var['updated'] = Array(
 				'field'	=> lang('Updated'),
-				'data'	=> $GLOBALS['phpgw']->common->show_date($this->maketime($event['modtime']) - $GLOBALS['phpgw']->datetime->tz_offset)
+				'data'	=> $GLOBALS['phpgw']->common->show_date($this->maketime($event['modtime']))
 			);
 
 			$var['access'] = Array(
