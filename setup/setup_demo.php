@@ -107,7 +107,7 @@
 		}
 
 		/* Group perms for the default group */
-		$GLOBALS['phpgw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences'),'run',$defaultgroupid);
+		$GLOBALS['phpgw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences','manual'),'run',$defaultgroupid);
 
 		// give admin access to all apps, to save us some support requests
 		$all_apps = array();
@@ -133,6 +133,7 @@
 					'default_app'   => 'calendar',
 					'currency'      => '$',
 					'show_help'     => True,
+					'max_icons'		=> 12,
 				),
 				'calendar' => array(
 					'workdaystarts' => 9,
