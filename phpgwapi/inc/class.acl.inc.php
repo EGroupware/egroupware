@@ -406,6 +406,8 @@
 					$where['acl_account'] = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 				}
 			}
+			if ($app == '%' || $app == '%%') unset($where['acl_appname']);
+
 			$this->db->delete($this->table_name,$where,__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
