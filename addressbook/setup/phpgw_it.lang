@@ -1,0 +1,56 @@
+address book - view	addressbook	it	Rubrica - visualizza
+address line 2	addressbook	it	Indirizzo linea 2
+address line 3	addressbook	it	Indirizzo linea 3
+address type	addressbook	it	Tipo di indirizzo
+bbs phone	addressbook	it	Telefono BBS
+birthday	addressbook	it	Compleanno
+business address type	addressbook	it	Tipo di indirizzo dell'ufficio
+car phone	addressbook	it	Telefono auto
+cell phone	addressbook	it	telefono cellulare
+city	addressbook	it	Città
+company name	addressbook	it	Nome società
+country	addressbook	it	Stato
+custom fields	addressbook	it	Campi Personalizzati
+department	addressbook	it	Dipartimento
+export contacts	addressbook	it	Esporta Contatti
+fax	addressbook	it	Fax
+fields to show in address list	addressbook	it	Campi da visualizzare nella lista dell'indirizzo
+full name	addressbook	it	Nome completo
+geo	addressbook	it	GEO
+home city	addressbook	it	Città casa
+home address type	addressbook	it	Tipo indirizzo di Casa
+home country	addressbook	it	Paese Casa
+home email	addressbook	it	Email a Casa
+home email type	addressbook	it	Tipo di email a Casa
+home phone	addressbook	it	Telefono Casa
+home state	addressbook	it	Stato Casa
+home street	addressbook	it	Via Casa
+home zip code	addressbook	it	CAP Casa
+import contacts	addressbook	it	Importa Contatti
+import file	addressbook	it	Importa File
+import from outlook	addressbook	it	Importa da Outlook
+isdn phone	addressbook	it	Telefono ISDN
+label	addressbook	it	Etichetta
+line 2	addressbook	it	Linea 2
+message phone	addressbook	it	Telefono per Messaggi
+middle name	addressbook	it	Secondo Nome
+mobile	addressbook	it	Mobile
+other number	addressbook	it	Altro Numero
+pager	addressbook	it	TeleDrin
+parcel	addressbook	it	Parcel
+phone numbers	addressbook	it	Numeri telefono
+postal	addressbook	it	Postal
+prefix	addressbook	it	Prefisso
+record access	addressbook	it	Accesso alla registrazione
+record owner	addressbook	it	Proprietario della registrazione
+show birthday reminders on main screen	addressbook	it	Mostra annunci dei compleanni nella schermata principale
+state	addressbook	it	Provincia
+street	addressbook	it	Via
+suffix	addressbook	it	Suffisso
+this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
+url	addressbook	it	URL
+vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
+video phone	addressbook	it	Videotelefono
+voice phone	addressbook	it	Telefono Vocale
+work phone	addressbook	it	Telefono Ufficio
+zip code	addressbook	it	CAP

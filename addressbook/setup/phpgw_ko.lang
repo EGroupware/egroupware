@@ -1,0 +1,16 @@
+address book	addressbook	ko	주소록
+birthday	addressbook	ko	생일
+city	addressbook	ko	도시
+e-mail	addressbook	ko	E-Mail
+fax	addressbook	ko	팩스
+first name	addressbook	ko	성
+home phone	addressbook	ko	집전화
+last name	addressbook	ko	이름
+mobile	addressbook	ko	핸드폰
+notes	addressbook	ko	기타
+other number	addressbook	ko	기타번호
+pager	addressbook	ko	삐삐
+state	addressbook	ko	지역
+street	addressbook	ko	주소
+work phone	addressbook	ko	직장전화
+zip code	addressbook	ko	우편번호

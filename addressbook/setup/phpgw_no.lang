@@ -1,0 +1,16 @@
+address book	addressbook	no	Addresse Bok
+birthday	addressbook	no	Fødselsdag
+city	addressbook	no	By
+e-mail	addressbook	no	E-Post
+fax	addressbook	no	Telefaks
+first name	addressbook	no	Fornavn
+home phone	addressbook	no	Hjemme telefon
+last name	addressbook	no	Etternavn
+mobile	addressbook	no	Mobil
+notes	addressbook	no	Annet
+other number	addressbook	no	Annet Nummer
+pager	addressbook	no	Personsøker
+state	addressbook	no	Stat
+street	addressbook	no	Gate
+work phone	addressbook	no	Arbeids telefon
+zip code	addressbook	no	Postnummer

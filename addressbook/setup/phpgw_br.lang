@@ -1,0 +1,16 @@
+address book	addressbook	br	Contatos
+birthday	addressbook	br	Aniversario
+city	addressbook	br	Cidade
+e-mail	addressbook	br	E-Mail
+fax	addressbook	br	Fax
+first name	addressbook	br	Primeiro Nome
+home phone	addressbook	br	Fone Residencial
+last name	addressbook	br	Ultimo Nome
+mobile	addressbook	br	Celular
+notes	addressbook	br	Notas
+other number	addressbook	br	Outro Numero
+pager	addressbook	br	Pager
+state	addressbook	br	Estado
+street	addressbook	br	Rua
+work phone	addressbook	br	Fone Comercial
+zip code	addressbook	br	CEP

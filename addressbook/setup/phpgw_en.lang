@@ -1,0 +1,59 @@
+address book - view	addressbook	en	Address book - view
+address line 2	addressbook	en	Address Line 2
+address line 3	addressbook	en	Address Line 3
+address type	addressbook	en	Address Type
+bbs phone	addressbook	en	BBS Phone
+birthday	addressbook	en	Birthday
+business address type	addressbook	en	Business Address Type
+car phone	addressbook	en	Car Phone
+cell phone	addressbook	en	cell phone
+city	addressbook	en	City
+company name	addressbook	en	Company Name
+country	addressbook	en	Country
+custom fields	addressbook	en	Custom Fields
+department	addressbook	en	Department
+export contacts	addressbook	en	Export Contacts
+fax	addressbook	en	Fax
+fields to show in address list	addressbook	en	Fields to show in address list
+full name	addressbook	en	Full Name
+geo	addressbook	en	GEO
+home city	addressbook	en	Home City
+home address type	addressbook	en	Home Address Type
+home country	addressbook	en	Home Country
+home email	addressbook	en	Home EMail
+home email type	addressbook	en	Home EMail Type
+home phone	addressbook	en	Home Phone
+home state	addressbook	en	Home State
+home street	addressbook	en	Home Street
+home zip code	addressbook	en	Home ZIP Code
+import contacts	addressbook	en	Import Contacts
+import file	addressbook	en	Import File
+import from outlook	addressbook	en	Import from Outlook
+isdn phone	addressbook	en	ISDN Phone
+label	addressbook	en	Label
+line 2	addressbook	en	Line 2
+message phone	addressbook	en	Message Phone
+middle name	addressbook	en	Middle Name
+mobile	addressbook	en	Mobile
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
+other number	addressbook	en	Other Number
+pager	addressbook	en	Pager
+parcel	addressbook	en	Parcel
+phone numbers	addressbook	en	Phone Numbers
+postal	addressbook	en	Postal
+prefix	addressbook	en	Prefix
+public key	addressbook	en	Public Key
+record access	addressbook	en	Record Access
+record owner	addressbook	en	Record owner
+show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
+state	addressbook	en	State
+street	addressbook	en	Street
+successfully imported x records into your addressbook.	addressbook	en	Successfully imported %1 records into your addressbook.
+suffix	addressbook	en	Suffix
+this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
+url	addressbook	en	URL
+vcards require a first name entry.	addressbook	en	VCards require a first name entry.
+video phone	addressbook	en	Video Phone
+voice phone	addressbook	en	Voice Phone
+work phone	addressbook	en	Work Phone
+zip code	addressbook	en	ZIP Code
