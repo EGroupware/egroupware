@@ -253,7 +253,7 @@ class bocal
 					continue;
 				}
 				// recur-exceptions have a reference to the original event
-				// we remember they are their for a certain date and id, to not insert their regular recurence
+				// we remember they are their for a certain date and id, to not insert their regular recurrence
 				if ($event['reference'])
 				{
 					for($ts = $event['start']['raw']; $ts < $event['end']['raw']; $ts += DAY_s)
@@ -308,7 +308,8 @@ class bocal
 			foreach($events as $event)
 			{
 				$e_start = max($event['start']['raw'],$start['raw']);
-				$e_end   = min($event['end']['raw'],$end['raw']);
+				// $event['end']['raw']-1 to allow events to end on a full hour/day without the need to enter it as minute=59
+				$e_end   = min($event['end']['raw']-1,$end['raw']);
 
 				// add event to each day in the reported time
 				for($ts = $e_start; $ts <= $e_end; $ts += DAY_s)
@@ -384,7 +385,7 @@ class bocal
 	 * @param $start array start-date
 	 * @param $end array end-date
 	 * @param $events array where the repetions get inserted
-	 * @param $recure_exceptions array with date (in Ymd) as key (and True as values)
+	 * @param $recur_exceptions array with date (in Ymd) as key (and True as values)
 	 */
 	function insert_all_repetitions($event,$start,$end,&$events,$recur_exceptions)
 	{
@@ -540,7 +541,7 @@ class bocal
 	 * Adds one repetion of $event for $date_ymd to the $events array, after adjusting its start- and end-time
 	 *
 	 * @param $events array in which the event gets inserted
-	 * @param $event array event to insert, it has start- and end-date of the first recurence, not of $date_ymd
+	 * @param $event array event to insert, it has start- and end-date of the first recurrence, not of $date_ymd
 	 * @param $date_ymd int/string of the date of the event
 	 */
 	function add_adjusted_event(&$events,$event,$date_ymd)
