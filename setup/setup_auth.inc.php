@@ -33,7 +33,6 @@ function loginForm($err="") {
         echo "    </form></td>\n";
         echo "  </tr>\n";
         echo "</table>\n";
-        echo "<!-- cookipw = ".$SetupCookie." should be ".$phpgw_info["server"]["config_passwd"]." -->\n";
 	echo "</body></html>\n";
 }
 
@@ -56,4 +55,3 @@ if (isset($FormPW) ) {
 }
 // Auth ok.
 setcookie("SetupCookie","$SetupCookie");
-?>
