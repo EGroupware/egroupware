@@ -14,12 +14,12 @@
 
 	/* $Id$ */
 
-if (@$phpgw_info['flags']['included_classes']['socalendar__'])
+if (@$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar__'])
 {
 	return;
 }
 
-$phpgw_info['flags']['included_classes']['socalendar__'] = True;
+$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar__'] = True;
 
 include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');
 
@@ -73,12 +73,7 @@ class socalendar__
 
 	function event_init()
 	{
-//		CreateObject('calendar.calendar_item');
 		$this->event = Array();
-//		$this->event['start'] = Array();
-//		$this->event['end'] = Array();
-//		$this->event['mod'] = Array();
-//		$this->event['recur_enddate'] = Array();
 		$this->add_attribute('owner',intval($this->user));
 	}
 

@@ -14,12 +14,12 @@
 
   /* $Id$ */
 
-if (@$phpgw_info['flags']['included_classes']['socalendar_'])
+if (@$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar_'])
 {
 	return;
 }
 
-$phpgw_info['flags']['included_classes']['socalendar_'] = True;
+$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar_'] = True;
 
 class socalendar_ extends socalendar__
 {
@@ -30,12 +30,12 @@ class socalendar_ extends socalendar__
 
 	function open($calendar='',$user='',$passwd='',$options='')
 	{
-		global $phpgw, $phpgw_info;
+		global $GLOBALS;
 
 		if($user=='')
 		{
 			settype($user,'integer');
-			$this->user = $phpgw_info['user']['account_id'];
+			$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
 		elseif(is_int($user)) 
 		{
@@ -43,10 +43,10 @@ class socalendar_ extends socalendar__
 		}
 		elseif(is_string($user))
 		{
-			$this->user = $phpgw->accounts->name2id($user);
+			$this->user = $GLOBALS['phpgw']->accounts->name2id($user);
 		}
 
-		$this->stream = $phpgw->db;
+		$this->stream = $GLOBALS['phpgw']->db;
 		return $this->stream;
 	}
 
@@ -95,7 +95,7 @@ class socalendar_ extends socalendar__
 
 	function fetch_event($event_id,$options='')
 	{
-		global $phpgw;
+		global $GLOBALS;
 		
 		if(!isset($this->stream))
 		{
@@ -117,8 +117,8 @@ class socalendar_ extends socalendar__
 			$this->add_attribute('id',intval($this->stream->f('cal_id')));
 			$this->set_class(intval($this->stream->f('is_public')));
 			$this->set_category(intval($this->stream->f('category')));
-			$this->set_title($phpgw->strip_html($this->stream->f('title')));
-			$this->set_description($phpgw->strip_html($this->stream->f('description')));
+			$this->set_title($GLOBALS['phpgw']->strip_html($this->stream->f('title')));
+			$this->set_description($GLOBALS['phpgw']->strip_html($this->stream->f('description')));
 			
 			// This is the preferred method once everything is normalized...
 			//$this->event->alarm = intval($this->stream->f('alarm'));
@@ -360,7 +360,7 @@ class socalendar_ extends socalendar__
 
 	function save_event(&$event)
 	{
-		global $phpgw_info;
+		global $GLOBALS;
 
 		$locks = Array(
 			'phpgw_cal',
@@ -370,7 +370,7 @@ class socalendar_ extends socalendar__
 		$this->stream->lock($locks);
 		if($event['id'] == 0)
 		{
-			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
+			$temp_name = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],'cal');
 			$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public) '
 				. "values('".$temp_name."',".$event['owner'].",".$event['priority'].",".$event['public'].")");
 			$this->stream->query("SELECT cal_id FROM phpgw_cal WHERE title='".$temp_name."'");
@@ -381,7 +381,6 @@ class socalendar_ extends socalendar__
 		$date = $this->maketime($event['start']) - $this->datetime->tz_offset;
 		$enddate = $this->maketime($event['end']) - $this->datetime->tz_offset;
 		$today = time() - $this->datetime->tz_offset;
-//		$today = time();
 
 		if($event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -479,10 +478,10 @@ class socalendar_ extends socalendar__
 
 	function group_search($owner=0)
 	{
-		global $phpgw, $phpgw_info;
+		global $GLOBALS;
       
-		$owner = $owner==$phpgw_info['user']['account_id']?0:$owner;
-		$groups = substr($phpgw->common->sql_search('phpgw_cal.groups',intval($owner)),4);
+		$owner = ($owner==$GLOBALS['phpgw_info']['user']['account_id']?0:$owner);
+		$groups = substr($GLOBALS['phpgw']->common->sql_search('phpgw_cal.groups',intval($owner)),4);
 		if (!$groups)
 		{
 			return '';
@@ -495,8 +494,6 @@ class socalendar_ extends socalendar__
 
 	function splittime_($time)
 	{
-		global $phpgw_info;
-
 		$temp = array('hour','minute','second','ampm');
 		$time = strrev($time);
 		$second = (int)strrev(substr($time,0,2));
