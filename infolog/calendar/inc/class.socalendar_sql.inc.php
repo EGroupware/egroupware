@@ -129,13 +129,13 @@ class socalendar_ extends socalendar__
 			// But until then, do it this way...
 		//Legacy Support (New)
 
-			$datetime = $this->datetime->localdates($this->stream->f('datetime'));
+			$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('datetime'));
 			$this->set_start($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-			$datetime = $this->datetime->localdates($this->stream->f('mdatetime'));
+			$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('mdatetime'));
 			$this->set_date('modtime',$datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-			$datetime = $this->datetime->localdates($this->stream->f('edatetime'));
+			$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('edatetime'));
 			$this->set_end($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
 		//Legacy Support
@@ -159,7 +159,7 @@ class socalendar_ extends socalendar__
 				$enddate = $this->stream->f('recur_enddate');
 				if($enddate != 0 && $enddate != Null)
 				{
-					$datetime = $this->datetime->localdates($enddate);
+					$datetime = $GLOBALS['phpgw']->datetime->localdates($enddate);
 					$this->add_attribute('recur_enddate',$datetime['year'],'year');
 					$this->add_attribute('recur_enddate',$datetime['month'],'month');
 					$this->add_attribute('recur_enddate',$datetime['day'],'mday');
@@ -459,9 +459,9 @@ class socalendar_ extends socalendar__
 			$event['id'] = $this->stream->f('cal_id');
 		}
 
-		$date = $this->maketime($event['start']) - $this->datetime->tz_offset;
-		$enddate = $this->maketime($event['end']) - $this->datetime->tz_offset;
-		$today = time() - $this->datetime->tz_offset;
+		$date = $this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
+		$enddate = $this->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
+		$today = time() - $GLOBALS['phpgw']->datetime->tz_offset;
 
 		if($event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -507,7 +507,7 @@ class socalendar_ extends socalendar__
 		{
 			if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
 			{
-				$end = $this->maketime($event['recur_enddate']) - $this->datetime->tz_offset;
+				$end = $this->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 			else
 			{

@@ -97,7 +97,6 @@
 		var $so;
 		var $cached_events;
 		var $repeating_events;
-		var $datetime;
 		var $day;
 		var $month;
 		var $year;
@@ -181,7 +180,7 @@
 
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
-				$this->users_timeformat = 'h:i a';
+				$this->users_timeformat = 'h:ia';
 			}
 			else
 			{
@@ -203,8 +202,7 @@
 					'g_owner'	=> $this->g_owner
 				)
 			);
-			$this->datetime = $this->so->datetime;
-			$localtime = $this->datetime->gmtnow + $this->datetime->tz_offset;
+			$localtime = $GLOBALS['phpgw']->datetme->users_localtime;
 
 			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
@@ -225,7 +223,7 @@
 				}
 				elseif($this->year == 0)
 				{
-					$this->year = date('Y',$localtime);
+					$this->year = date('Y',$GLOBALS['phpgw']->datetme->users_localtime);
 				}
 				if(isset($month) && $month!='')
 				{
@@ -233,7 +231,7 @@
 				}
 				elseif($this->month == 0)
 				{
-					$this->month = date('m',$localtime);
+					$this->month = date('m',$GLOBALS['phpgw']->datetme->users_localtime);
 				}
 				if(isset($day) && $day!='')
 				{
@@ -241,11 +239,11 @@
 				}
 				elseif($this->day == 0)
 				{
-					$this->day = date('d',$localtime);
+					$this->day = date('d',$GLOBALS['phpgw']->datetme->users_localtime);
 				}
 			}
 
-			$this->today = date('Ymd',$this->datetime->gmtnow);
+			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->gmtnow);
 
 			if($this->debug)
 			{
@@ -406,7 +404,7 @@
 			   $event = $this->read_entry(intval($param['id']));
 			   //RB if($this->owner == $event['owner'])
 			   //RB {
-			   	$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $this->datetime->tz_offset;
+			   	$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			   	$event['recur_exception'][] = intval($exception_time);
 			   	$this->so->cal->event = $event;
 			   	if($this->debug)
@@ -946,17 +944,17 @@
 			{
 				$error = 40;
 			}
-			elseif (($this->datetime->time_valid($event['start']['hour'],$event['start']['min'],0) == False) || ($this->datetime->time_valid($event['end']['hour'],$event['end']['min'],0) == False))
+			elseif (($GLOBALS['phpgw']->datetime->time_valid($event['start']['hour'],$event['start']['min'],0) == False) || ($GLOBALS['phpgw']->datetime->time_valid($event['end']['hour'],$event['end']['min'],0) == False))
 			{
 				$error = 41;
 			}
-			elseif (($this->datetime->date_valid($event['start']['year'],$event['start']['month'],$event['start']['mday']) == False) || ($this->datetime->date_valid($event['end']['year'],$event['end']['month'],$event['end']['mday']) == False) || ($this->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 1))
+			elseif (($GLOBALS['phpgw']->datetime->date_valid($event['start']['year'],$event['start']['month'],$event['start']['mday']) == False) || ($GLOBALS['phpgw']->datetime->date_valid($event['end']['year'],$event['end']['month'],$event['end']['mday']) == False) || ($GLOBALS['phpgw']->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 1))
 			{
 				$error = 42;
 			}
-			elseif ($this->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 0)
+			elseif ($GLOBALS['phpgw']->datetime->date_compare($event['start']['year'],$event['start']['month'],$event['start']['mday'],$event['end']['year'],$event['end']['month'],$event['end']['mday']) == 0)
 			{
-				if ($this->datetime->time_compare($event['start']['hour'],$event['start']['min'],0,$event['end']['hour'],$event['end']['min'],0) == 1)
+				if ($GLOBALS['phpgw']->datetime->time_compare($event['start']['hour'],$event['start']['min'],0,$event['end']['hour'],$event['end']['min'],0) == 1)
 				{
 					$error = 42;
 				}
@@ -1061,7 +1059,8 @@
 							}
 							$temp_event_start = sprintf("%d%02d",$event['start']['hour'],$event['start']['min']);
 							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);					
-							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
+//							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
+							if((($temp_start_time <= $temp_event_start) && ($temp_end_time > $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
 								(($temp_start_time >= $temp_event_start) && ($temp_start_time < $temp_event_end) && ($temp_end_time >= $temp_event_end)) ||
 								(($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_end)) ||
 								(($temp_start_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)))
@@ -1094,7 +1093,7 @@
 
 //			if($starttime == $endtime && $GLOBALS['phpgw']->common->show_date($starttime,'Hi') == 0)
 //			{
-//				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $this->datetime->tz_offset;
+//				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $GLOBALS['phpgw']->datetime->tz_offset;
 //			}
 //
 //	-		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
@@ -1285,8 +1284,8 @@
 
 		function get_week_label()
 		{
-			$first = $this->datetime->gmtdate($this->datetime->get_weekday_start($this->year, $this->month, $this->day));
-			$last = $this->datetime->gmtdate($first['raw'] + 518400);
+			$first = $GLOBALS['phpgw']->datetime->gmtdate($GLOBALS['phpgw']->datetime->get_weekday_start($this->year, $this->month, $this->day));
+			$last = $GLOBALS['phpgw']->datetime->gmtdate($first['raw'] + 518400);
 
 // Week Label
 			$week_id = lang(strftime("%B",$first['raw'])).' '.$first['day'];
@@ -1388,7 +1387,7 @@
 			$inserted = False;
 			if(isset($event['recur_exception']))
 			{
-				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $this->datetime->tz_offset;
+				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $GLOBALS['phpgw']->datetime->tz_offset;
 				while($inserted == False && list($key,$exception_time) = each($event['recur_exception']))
 				{
 					if($this->debug)
@@ -1576,7 +1575,7 @@
 								continue;
 							}
 	  
-							if (($this->datetime->day_of_week($rep_events['start']['year'],$rep_events['start']['month'],$rep_events['start']['mday']) == $this->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
+							if (($GLOBALS['phpgw']->datetime->day_of_week($rep_events['start']['year'],$rep_events['start']['month'],$rep_events['start']['mday']) == $GLOBALS['phpgw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
 								(ceil($rep_events['start']['mday']/7) == ceil($search_date_day/7)))
 							{
 								$this->sort_event($rep_events,$search_date_full);
@@ -1741,8 +1740,8 @@
 						echo '<!-- Cached Events ID: '.$cached_event_ids_repeating[$i].' ('.sprintf("%04d%02d%02d",$this->repeating_events[$i]['start']['year'],$this->repeating_events[$i]['start']['month'],$this->repeating_events[$i]['start']['mday']).') -->'."\n";
 					}
 				}
-//				$edate -= $this->datetime->tz_offset;
-//				for($date=mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;$date<=$edate;$date += 86400)
+//				$edate -= $GLOBALS['phpgw']->datetime->tz_offset;
+//				for($date=mktime(0,0,0,$smonth,$sday,$syear) - $GLOBALS['phpgw']->datetime->tz_offset;$date<=$edate;$date += 86400)
 				for($date=mktime(0,0,0,$smonth,$sday,$syear);$date<=$edate;$date += 86400)
 				{
 					if($this->debug)
@@ -1885,8 +1884,8 @@
 			for($k=0;$k<count($this->cached_events[$fulldate]);$k++)
 			{
 				$event = $this->cached_events[$fulldate][$k];
-				$eventstart = $this->datetime->localdates($this->maketime($event['start']) - $this->datetime->tz_offset);
-				$eventend = $this->datetime->localdates($this->maketime($event['end']) - $this->datetime->tz_offset);
+				$eventstart = $GLOBALS['phpgw']->datetime->localdates($this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset);
+				$eventend = $GLOBALS['phpgw']->datetime->localdates($this->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset);
 				$start = ($eventstart['hour'] * 10000) + ($eventstart['minute'] * 100);
 				$starttemp = $this->splittime("$start",False);
 				$subminute = 0;
@@ -2049,12 +2048,12 @@
 
 			if($old_event != False)
 			{
-				$old_event_datetime = $t_old_start_time - $this->datetime->tz_offset;
+				$old_event_datetime = $t_old_start_time - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 		
 			if($new_event != False)
 			{
-				$new_event_datetime = $this->maketime($new_event['start']) - $this->datetime->tz_offset;
+				$new_event_datetime = $this->maketime($new_event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 
 			while($participants && list($userid,$statusid) = each($participants))
@@ -2163,7 +2162,7 @@
 			$t_appt['hour'] = $GLOBALS['phpgw']->common->show_date($starttime,'H');
 			$t_appt['min']  = $GLOBALS['phpgw']->common->show_date($starttime,'i');
 			$t_appt['sec']  = 0;
-			$t_time = $this->maketime($t_appt) - $this->datetime->tz_offset;
+			$t_time = $this->maketime($t_appt) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$y_time = $t_time - 86400;
 			$tt_time = $t_time + 86399;
 			if($this->debug)
