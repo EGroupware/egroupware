@@ -471,7 +471,7 @@
 			$phpgw_info['flags']['currentapp'] != 'about')
 		{
 			// This will need to use ACL in the future
-			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']] || ($phpgw_info['flags']['admin_only'] && ! $phpgw_info['user']['apps']['admin']))
+			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']] || (@$phpgw_info['flags']['admin_only'] && ! $phpgw_info['user']['apps']['admin']))
 			{
 				$phpgw->common->phpgw_header();
 				if ($phpgw_info['flags']['noheader'])
