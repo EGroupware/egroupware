@@ -7,7 +7,6 @@
 <!-- BEGIN link_open -->
 <div id="calendar_event_entry">
 <a class="event_entry" href="{link_link}" onMouseOver="window.status='{lang_view}'; return true;" onMouseOut="window.status=''; return true;"><br>
-<!-- removed for favour of tooltip (NDEE) title="{desc}" -->
 <!-- END link_open -->
 
 <!-- BEGIN pict -->
