@@ -426,7 +426,7 @@
 			$query = $this->query;
 			$search_filter = $phpgw->nextmatchs->show_tpl('/index.php',
 				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list',"75%",
-				$phpgw_info["theme"]["th_bg"],1,1,1,1);
+				$phpgw_info["theme"]["th_bg"],1,1,1,1,$this->cat_id);
 			$query = '';
 
 			$lang_showing = $phpgw->nextmatchs->show_hits($total_records,$this->start);
@@ -443,7 +443,7 @@
 			$this->template->set_var('search_filter',$search_filter);
 			$this->template->set_var('cats',lang('Category'));
 			$this->template->set_var('cats_url',$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
-			$this->template->set_var('cats_link',$this->cat_option($this->cat_id));
+			/* $this->template->set_var('cats_link',$this->cat_option($this->cat_id)); */
 			$this->template->set_var('lang_cats',lang('Select'));
 			$this->template->set_var('lang_addressbook',lang('Address book'));
 			$this->template->set_var('th_bg',$phpgw_info['theme']['th_bg']);
