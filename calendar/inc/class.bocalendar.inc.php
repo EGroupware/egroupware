@@ -1126,6 +1126,15 @@
 						$bolink->link('calendar',$event['id'],'projects',$l_cal['project']);
 					}
 				}
+				
+				// just a hook
+				$singleHookValues = array
+				(
+					'location'	=> 'updateevent',
+					'hookValues'	=> $event
+				);
+				$GLOBALS['phpgw']->hooks->process($singleHookValues);
+				
 				if($send_to_ui)
 				{
 					$this->read_sessiondata();
