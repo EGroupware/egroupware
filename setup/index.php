@@ -34,7 +34,8 @@
   $db->Database   = $phpgw_info["server"]["db_name"];
   $db->User	    = $phpgw_info["server"]["db_user"];
   $db->Password   = $phpgw_info["server"]["db_pass"];
-  $db->Halt_On_Error = "report";
+//  $db->Halt_On_Error = "report";
+  $db->Halt_On_Error = "no";
 
   $db->query("select * from config");
   if ($db->num_rows() == 0){
