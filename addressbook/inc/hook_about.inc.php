@@ -1,38 +1,21 @@
 <?php
+  /**************************************************************************\
+  * phpGroupWare                                                             *
+  * http://www.phpgroupware.org                                              *
+  * Written by Mark Peters <skeeter@phpgroupware.org>                        *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
 
 	function about_app()
 	{
-		$appname = 'addressbook';
+		$GLOBALS['tpl']->set_var('developers','Joseph Engo&nbsp;&nbsp;[jengo@phpgroupware.org]<br>Miles Lott&nbsp;&nbsp;[milosch@phpgroupware.org]');
+		$GLOBALS['tpl']->set_var('description',lang('Addressbook is the phpgroupware default contact application. <br>It makes use of the phpgroupware contacts class to store and retrieve contact information via SQL or LDAP.'));
 
-		$imgfile = $GLOBALS['phpgw']->common->get_image_dir($appname) . SEP . $appname . '.gif';
-		if (file_exists($imgfile))
-		{
-			$imgpath = $GLOBALS['phpgw']->common->get_image_path($appname) . SEP . $appname . '.gif';
-		}
-		else
-		{
-			$imgpath = $GLOBALS['phpgw']->common->get_image_path($appname) . SEP . 'navbar.gif';
-		}
-
-		$browser = CreateObject('phpgwapi.browser');
-		$os      = $browser->get_platform();
-		$agent   = ucfirst(strtolower($browser->get_agent()));
-		$version = $browser->get_version();
-
-		$tpl = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
-
-		$tpl->set_file(array('body' => 'about.tpl'));
-
-		$tpl->set_var("about_addressbook",'Addressbook is the phpgroupware default contact application.  It makes use of the phpgroupware contacts class to store and retrieve contact information via SQL or LDAP.');
-
-		$tpl->set_var('url',$GLOBALS['phpgw']->link('/addressbook'));
-		$tpl->set_var('image',$imgpath);
-		$tpl->set_var('alt',lang('addressbook'));
-		$tpl->set_var('version',$version);
-		$tpl->set_var('agent',$agent);
-		$tpl->set_var('platform',$os);
-		$tpl->set_var('appear',lang('You appear to be running'));
-		$tpl->set_var('on',lang('on'));
-
-		return $tpl->parse('out','body');
+		return $GLOBALS['tpl']->fp('out','about');
 	}
