@@ -1,4 +1,18 @@
 <?php
+	/**************************************************************************\
+	* eGroupWare - eTemplates - xml-tools - helper class to create xml-files   *
+	* http://www.eGroupWare.org                                                *
+	* Originaly from the phpGW XSLT API                                        *
+	* Adapted by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+
+	/* $Id$ */
+
 	function var2xml($name, $data)
 	{
 		$doc = new xmltool('root','','');
@@ -480,7 +494,7 @@
 					reset($this->attributes);
 					while(list($key,$val) = each ($this->attributes))
 					{
-						$result .= ' '.$key.'="'.htmlspecialchars($val).'"';
+						$result .= ' '.$key.'="'.htmlspecialchars($val,ENT_COMPAT,'utf-8').'"';
 					}
 				}
 
@@ -509,12 +523,12 @@
 							}
 							else*/if(strlen($this->data) > 30 && !empty($this->indentstring))
 							{
-								$result .= "\n".$indentstring.$this->indentstring.htmlspecialchars($this->data)."\n";
+								$result .= "\n".$indentstring.$this->indentstring.htmlspecialchars($this->data,ENT_COMPAT,'utf-8')."\n";
 								$endtag_indent = $indentstring;
 							}
 							else
 							{
-								$result .= htmlspecialchars($this->data);
+								$result .= htmlspecialchars($this->data,ENT_COMPAT,'utf-8');
 								$endtag_indent = '';
 							}
 							break;
