@@ -28,10 +28,10 @@
 	section_start(ucfirst($appname),$imgpath);
 
 	echo '<a href="' . $phpgw->link('/addressbook/preferences.php') . '">'
-		. lang('Addressbook preferences') . '</a><br>';
+		. lang('Preferences') . '</a><br>';
 
 	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname) . '">'
-		. lang('Grant Addressbook Access') . '</a><br>';
+		. lang('Grant Access') . '</a><br>';
 
 	echo '<a href="' . $phpgw->link('/preferences/categories.php','cats_app='.$appname) . '">'
 		. lang('Edit Categories') . '</a><br>';
