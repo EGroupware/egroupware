@@ -21,6 +21,7 @@
 	include('../header.inc.php');
 
 	$obj = CreateObject('infolog.uiinfolog');
+	$QUERY_STRING = 'menuaction=infolog.uiinfolog.get_list'; // to make cats-selection work if called by index.php
 	$obj->get_list();
 
 	$phpgw->common->phpgw_footer();
