@@ -139,11 +139,11 @@
 	$setup_tpl->set_var('subaction',@$subaction);
 
 	// Old PHP
-	if (phpversion() < '3.0.16')
+	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
 		$GLOBALS['phpgw_setup']->html->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
 		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',
-			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16'));
+			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1','4.1'));
 		$GLOBALS['phpgw_setup']->html->show_footer();
 		exit;
 	}
@@ -169,13 +169,25 @@
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
 			$setup_tpl->set_var('create_database',lang('Create database'));
-			switch ($phpgw_domain[$GLOBALS['ConfigDomain']]['db_type'])
+			$info = $GLOBALS['phpgw_domain'][$GLOBALS['ConfigDomain']];
+			switch ($info['db_type'])
 			{
 				case 'mysql':
-					$setup_tpl->set_var('instr',lang('mysqlinstr'));
+					$setup_tpl->set_var('instr',
+						lang("Instructions for creating the database in %1:",'MySql').
+						'<br>'.lang('Login to mysql -').
+						'<br><i>[user@server user]# mysql -u root -p</i><br>'.
+						lang('Create the empty database and grant user permissions -').
+						"<br><i>mysql> create database $info[db_name];</i>".
+						"<br><i>mysql> grant all on $info[db_name].* to $info[db_user]@localhost identified by '$info[db_pass]';</i>");
 					break;
 				case 'pgsql':
-					$setup_tpl->set_var('instr',lang('pgsqlinstr'));
+					$setup_tpl->set_var('instr',
+						lang('Instructions for creating the database in %1:','PostgreSQL').
+						'<br>'.lang('Start the postmaster').
+						"<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>".
+						lang('Create the empty database -').
+						"<br><i>[user@server user]# createdb $info[db_name]</i>");
 					break;
 			}
 			$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
@@ -237,7 +249,7 @@
 			switch ($GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'])
 			{
 				case 'dbcreate':
-					$GLOBALS['phpgw_setup']->db->create_database($db_root, $db_pass);
+					$GLOBALS['phpgw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass']);
 					break;
 				case 'drop':
 					$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions($setup_info);
