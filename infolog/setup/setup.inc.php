@@ -34,7 +34,7 @@
 		The entries may be viewed or added from InfoLog direct or from within
 		the contact/address, project or calendar view.<p>
 		Other documents / files can be linked to InfoLog entries and are store in the VFS
-		(phpGroupWare\'s virtual file system). An extension of the VFS allows to symlink
+		(eGroupWare\'s virtual file system). An extension of the VFS allows to symlink
 		the files to a fileserver, instead of placeing a copy in the VFS 
 		(<i>need to be configured in the admin-section</i>).
 		It is planed to include emails and faxes into InfoLog in the future.';
@@ -44,7 +44,7 @@
 		expressions and direct calls to php-functions (e.g. to link the phone calls 
 		(again) to the addressbook entrys).<p>
 		<b>More information</b> about InfoLog and the current development-status can be found on the 
-		<a href="http://www.phpgroupware.org/wiki/InfoLog" target="_blank">InfoLog page in our Wiki</a>.';
+		<a href="http://www.egroupware.org/wiki/InfoLog" target="_blank">InfoLog page in our Wiki</a>.';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
@@ -57,6 +57,8 @@
 	$setup_info['infolog']['hooks']['projects_view']    = 'infolog.uiinfolog.hook_view';
 	$setup_info['infolog']['hooks']['calendar_view']    = 'infolog.uiinfolog.hook_view';
 	$setup_info['infolog']['hooks']['infolog']          = 'infolog.uiinfolog.hook_view';
+	$setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
+	$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(

@@ -4,34 +4,40 @@
 <table border="0" width="100%">
  <tr>
   <td valign="top" width="70%">
-   <tr>
-    <td>
-     <table border="0" width=100%>
-      <tr>
-       <td align="middle">
-        <font size="+2" color="{bg_text}"><b>{date}</b></font><br>
-        <font size="+1" color="{bg_text}">{username}</font>
-       </td>
-      </tr>
-     </table>
-     <table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="{bg_text}">
-      {day_events}
-     </table>
-    </td>
-    <td align="right">
-     {small_calendar}
-    </td>
-   </tr>
+   <table border="0" width=100%>
+    <tr>
+     <td align="middle">
+      <font size="+2" color="{bg_text}"><b>{date}</b></font><br>
+      <font size="+1" color="{bg_text}">{username}</font><br>&nbsp;
+     </td>
+    </tr>
+{day_events}
+   </table>
+   <p align="center">{print}</p>
+  </td>
+  <td align="center" valign="top">
+   <table width="100%">
+    <tr>
+     <td align="center">
+{small_calendar}
+     </td>
+    </tr>
+    <tr>
+     <td>
+      <b>{lang_todos}</b>
+{todos}
+     </td>
+    </tr>
+   </table>
   </td>
  </tr>
 </table>
-{print}
 <!-- END day -->
 <!-- BEGIN day_event -->
-      <tr>
-       <td>
-        {daily_events}
-       </td>
-      </tr>
+    <tr>
+     <td>
+{daily_events}
+     </td>
+    </tr>
 <!-- END day_event -->
 

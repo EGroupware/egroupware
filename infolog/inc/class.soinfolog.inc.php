@@ -88,15 +88,16 @@
 		@param $filter: none|all - list all entrys user have rights to see<br>
 			private|own - list only his personal entrys (incl. those he is responsible for !!!) 
 		@returns the necesary sql
-		*/           
+		*/
 		function aclFilter($filter = 'none')
 		{
-			ereg('.*(own|privat|all|none).*',$filter,$vars);
+			ereg('.*(own|privat|all|none|user)([0-9]*).*',$filter,$vars);
 			$filter = $vars[1];
+			$f_user   = intval($vars[2]);
 
-			if (isset($this->acl_filter[$filter]))
+			if (isset($this->acl_filter[$filter.$user]))
 			{
-				return $this->acl_filter[$filter];  // used cached filter if found
+				return $this->acl_filter[$filter.$user];  // used cached filter if found
 			}
 			if (is_array($this->grants))
 			{
@@ -113,13 +114,13 @@
 					}
 				}
 				if (count($private_user_list))
-				{               
+				{
 					$has_private_access = 'info_owner IN ('.implode(',',$private_user_list).')';
-				}            
+				}
 			}
 			$filtermethod = " (info_owner=$this->user"; // user has all rights
 
-			// private: own entries plus the one user is responsible for 
+			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'own')
 			{
 				$filtermethod .= " OR (info_responsible=$this->user OR info_status = 'offer')".
@@ -132,14 +133,18 @@
 					$filtermethod .= " OR $has_private_access";
 				}
 				if (count($public_user_list))
-				{ 
+				{
 					$filtermethod .= " OR (info_access='public' AND info_owner IN(" . implode(',',$public_user_list) . '))';
 				}
 			}
 			$filtermethod .= ') ';
-			
-			return $this->acl_filter[$filter] = $filtermethod;  // cache the filter
-		}      
+
+			if ($filter == 'user' && $f_user > 0)
+			{
+				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR info_responsible=$f_user) AND $filtermethod)";
+			}
+			return $this->acl_filter[$filter.$user] = $filtermethod;  // cache the filter
+		}
 	
 		/*!
 		@function statusFilter
@@ -173,12 +178,19 @@
 		*/
 		function dateFilter($filter = '')
 		{
-			ereg('.*(upcoming|today|overdue).*',$filter,$vars);
+			ereg('.*(upcoming|today|overdue|date)([-/.0-9]*).*',$filter,$vars);
 			$filter = $vars[1];
 
-			$now = getdate(time());
-			$tomorrow = mktime(0,0,0,$now['mon'],$now['mday']+1,$now['year']);
-
+			if (isset($vars[2]) && !empty($vars[2]) && ($date = split('[-/.]',$vars[2])))
+			{
+				$today = mktime(0,0,0,intval($date[1]),intval($date[2]),intval($date[0]));
+				$tomorrow = mktime(0,0,0,intval($date[1]),intval($date[2])+1,intval($date[0]));
+			}
+			else
+			{
+				$now = getdate(time());
+				$tomorrow = mktime(0,0,0,$now['mon'],$now['mday']+1,$now['year']);
+			}
 			switch ($filter)
 			{
 				case 'upcoming':
@@ -187,6 +199,12 @@
 					return " AND info_startdate < '$tomorrow'";
 				case 'overdue':
 					return " AND (info_enddate != 0 AND info_enddate < '$tomorrow')";
+				case 'date':
+					if (!$today || !$tomorrow)
+					{
+						return '';
+					}
+					return " AND ($today <= info_startdate AND info_startdate < $tomorrow)";
 			}
 			return '';
 		}
@@ -438,7 +456,7 @@
 		*/
 		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total)
 		{
-			//echo "<p>soinfolog.search(action='$action/$action_id')</p>\n";
+			//echo "<p>soinfolog.search(order='$order',,filter='$filter',,query='$query',action='$action/$action_id')</p>\n";
 			$action2app = array(
 				'addr'        => 'addressbook',
 				'proj'        => 'projects',
@@ -468,7 +486,7 @@
 			$filtermethod = $this->aclFilter($filter);
 			$filtermethod .= $this->statusFilter($filter);
 			$filtermethod .= $this->dateFilter($filter);
-			// echo "<p>filtermethod='$filtermethod'</p>";
+			//echo "<p>filtermethod='$filtermethod'</p>";
 
 			if (intval($cat_id))
 			{
@@ -501,6 +519,7 @@
 					$start = 0;
 				}
 				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $query $ordermethod",$start,__LINE__,__FILE__);
+
 				while ($this->db->next_record())
 				{
 					$this->db2data(&$info);

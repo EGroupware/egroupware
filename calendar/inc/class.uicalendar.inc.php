@@ -1276,6 +1276,7 @@
 			$p->set_block('day_t','day','day');
 			$p->set_block('day_t','day_event','day_event');
 
+			$todos = $this->get_todos($todo_label);
 			$var = Array(
 				'printer_friendly'	=> $printer,
 				'bg_text'			=> $this->theme['bg_text'],
@@ -1289,12 +1290,61 @@
 				'small_calendar'	=> $minical,
 				'date'				=> $this->bo->long_date($now),
 				'username'			=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
-				'print'				=> $print
+				'print'				=> $print,
+				'lang_todos'		=> $todo_label,
+				'todos'				=> $this->bo->printer_friendly ? $todos :
+					"<div style=\"overflow: auto; height: 200px\">\n$todos</div>\n"
 			);
 
 			$p->set_var($var);
 			$p->parse('day_events','day_event');
 			echo $this->printer_friendly($p->fp('out','day'),lang('Dayview'));
+		}
+
+		function get_todos(&$todo_label)
+		{
+			$todos_from_hook = $GLOBALS['phpgw']->hooks->process(array(
+				'location'  => 'calendar_include_todos',
+				'year'      => $this->bo->year,
+				'month'     => $this->bo->month,
+				'day'       => $this->bo->day,
+				'owner'     => $this->bo->owner	// num. id of the user, not necessary current user
+			));
+
+			$content = $todo_label = '';
+			if (is_array($todos_from_hook))
+			{
+				foreach($todos_from_hook as $todos)
+				{
+					if (is_array($todos) && count($todos))
+					{
+						$todo_label = lang("open ToDo's:");
+
+						if (!is_object($GLOBALS['phpgw']->html))
+						{
+							$GLOBALS['phpgw']->html = CreateObject('calendar.html');
+						}
+						foreach($todos as $todo)
+						{
+							$icons = '';
+							foreach($todo['icons'] as $name => $app)
+							{
+								$icons .= ($icons?' ':'').$GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
+							}
+							$content .= " <tr>\n  <td valign=\"top\" nowrap>".
+								($this->bo->printer_friendly?$icons:$GLOBALS['phpgw']->html->a_href($icons,$todo['view'])).
+								"</td>\n  <td>".($this->bo->printer_friendly?$todo['title']:
+								$GLOBALS['phpgw']->html->a_href($todo['title'],$todo['view']))."</td>\n </tr>\n";
+						}
+					}
+				}
+			}
+			if (!empty($content))
+			{
+				//echo "todos=<table border=\"0\">\n$content</table>\n";
+				return "<table border=\"0\">\n$content</table>\n";
+			}
+			return False;
 		}
 
 		function edit_status()
@@ -2492,18 +2542,18 @@
 			   $time_width = (intval($this->bo->prefs['common']['time_format']) == 12?10:7);
 			}
 
-			return 'A.minicalendar { color: #000000; font: xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.bminicalendar { color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.minicalendargrey { color: #999999; font: xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.bminicalendargrey { color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.minicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #000000; font: xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.bminicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.minicalgreyhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #999999; font: xx-small '.$this->theme['font'].' }'."\n"
-				. '  A.bminicalgreyhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #999999; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
-				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 80%/110% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle }'."\n"
+			return 'A.minicalendar { color: #000000; font: x-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalendar { color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalendargrey { color: #999999; font: x-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalendargrey { color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #000000; font: x-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #336699; font: italic bold x-small '.$this->theme['font'].' }'."\n"
+				. '  A.minicalgreyhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #999999; font: x-small '.$this->theme['font'].' }'."\n"
+				. '  A.bminicalgreyhol { padding-left:3px; padding-right:3px; background: '.$this->holiday_color.'; color: #999999; font: italic bold x-small '.$this->theme['font'].' }'."\n"
+				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
+				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
+				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
+				. '  .time { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: center; }'."\n"
 				. '  .tablecell { width: 80px; height: 80px }'."\n"
 				. '  .planner-cell { cursor:pointer; cursor:hand; border: thin solid black; }';
 		}
@@ -2572,7 +2622,7 @@
 			{
 				$text .= $this->bo->display_status($event['users_status']);
 			}
-			$text = '<font size="-2" face="'.$this->theme['font'].'"><nobr>&nbsp;'.$time.'&nbsp;</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.': <I>'.$this->bo->get_short_field($event,$is_private,'description').'</I></font>'.$GLOBALS['phpgw']->browser->br;
+			$text = '<nobr>&nbsp;'.$time.'&nbsp;</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.': <I>'.$this->bo->get_short_field($event,$is_private,'description').'</I>'.$GLOBALS['phpgw']->browser->br;
 
 			if ($editable)
 			{
@@ -3230,7 +3280,7 @@
 			$p->set_block('day_cal','day_event_off','day_event_off');
 			$p->set_block('day_cal','day_event_holiday','day_event_holiday');
 			$p->set_block('day_cal','day_time','day_time');
-			
+
 			$date_to_eval = sprintf("%04d%02d%02d",$params['year'],$params['month'],$params['day']);
 
 			$day_start = mktime(intval($this->bo->prefs['calendar']['workdaystarts']),0,0,$params['month'],$params['day'],$params['year']);
@@ -3242,7 +3292,7 @@
 				$events = $this->bo->cached_events[$date_to_eval];
 				print_debug('Date',$date_to_eval);
 				print_debug('Count',count($events));
-				$last_slot_end = -1;
+				$events_to_show = array();
 				foreach($events as $event)
 				{
 					if ($this->bo->rejected_no_show($event))
@@ -3253,23 +3303,52 @@
 					{
 						$this->bo->set_recur_date($event,$date_to_eval);
 					}
-					$starttime = $this->bo->maketime($event['start']);
-					$endtime = $this->bo->maketime($event['end']);
-					$slot = $this->slot_num($starttime,$day_start,$day_end);
-					$slot_end = $this->slot_num($endtime-1);	// -1 to no occupy eg. the 18.00 slot for a 17-18h date
+					$events_to_show[] = array(
+						'starttime' => $this->bo->maketime($event['start']),
+						'endtime'   => $this->bo->maketime($event['end']),
+						'content'   => $this->link_to_entry($event,$params['month'],$params['day'],$params['year'])
+					);
+				}
+				//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
+				$other = $GLOBALS['phpgw']->hooks->process(array(
+					'location'  => 'calendar_include_events',
+					'year'      => $params['year'],
+					'month'     => $params['month'],
+					'day'       => $params['day'],
+					'owner'     => $this->bo->owner	// num. id of the user, not necessary current user
+				));
+
+				if (is_array($other))
+				{
+					foreach($other as $evts)
+					{
+						if (is_array($evts))
+						{
+							$events_to_show = array_merge($events_to_show,$evts);
+						}
+					}
+					usort($events_to_show,create_function('$a,$b','return $a[\'starttime\']-$b[\'starttime\'];'));
+					//echo "events_to_show=<pre>"; print_r($events_to_show); echo "</pre>\n";
+				}
+
+				$last_slot_end = -1;
+				foreach($events_to_show as $event)
+				{
+					$slot = $this->slot_num($event['starttime'],$day_start,$day_end);
+					$slot_end = isset($event['endtime']) ? $this->slot_num($event['endtime']-1) : $slot;	// -1 to not occupy eg. the 18.00 slot for a 17-18h date
 
 					if ($slot <= $last_slot_end)
 					{
 						$slot = $last_slot;
 						$slot_end = max($last_slot_end,$slot_end);
 					}
-					$rows[$slot] .= $this->link_to_entry($event,$params['month'],$params['day'],$params['year']);
+					$rows[$slot] .= $event['content'];
 
 					print_debug('slot',$slot);
 					print_debug('row',$rows[$slot]);
 
 					$row_span[$slot] = 1 + $slot_end - $slot;
-					
+
 					$last_slot = $slot;
 					$last_slot_end = $slot_end;
 					print_debug('Time',$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $GLOBALS['phpgw']->datetime->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $GLOBALS['phpgw']->datetime->tz_offset));
@@ -3297,14 +3376,14 @@
 				$p->set_var('extras','');
 				if ($rowspan > 1)
 				{
-					$p->set_var('item','');
+					$p->set_var('event','');
 					$rowspan--;
 				}
 				elseif (!isset($rows[$slot]))
 				{
 					$p->set_var('event','&nbsp;');
 					$row_to_print = $this->nm_on_off();
-					$p->parse('item','day_event'.$row_to_print,False);
+					$p->parse('event','day_event'.$row_to_print);
 				}
 				else
 				{
@@ -3315,7 +3394,7 @@
 					}
 					$p->set_var('event',$rows[$slot]);
 					$row_to_print = $this->nm_on_off();
-					$p->parse('item','day_event'.$row_to_print,False);
+					$p->parse('event','day_event'.$row_to_print);
 				}
 				$open_link = $close_link = '';
 				$time = '&nbsp;';
@@ -3327,21 +3406,20 @@
 					$min  = date('i',$time);
 					$time = $GLOBALS['phpgw']->common->formattime($hour,$min);
 
-					$open_link = ' - ';
 					if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
 					{
-						$open_link .= '<a href="'.$this->page('add',"&date=$date_to_eval&hour=$hour&minute=$min").'">';
-						$close_link = '</a>';
+						$open_link = ' <a href="'.$this->page('add',"&date=$date_to_eval&hour=$hour&minute=$min").'">';
+						$close_link = '</a> ';
 					}
 				}
-				$var = Array(
+				$p->set_var(Array(
 					'open_link'  => $open_link,
 					'time'       => $time,
 					'close_link' => $close_link,
 					'tr_color'   => ''	// dummy to stop output_template_array to set it
-				);
-				$this->output_template_array($p,'item','day_time',$var);
-				
+				));
+				$p->parse('time','day_time');
+
 				$p->parse('row','day_row',True);
 			}
 			return $p->fp('out','day');

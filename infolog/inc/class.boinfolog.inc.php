@@ -27,7 +27,8 @@
 			'get_rows'       => True,
 			'link_title'     => True,
 			'link_query'     => True,
-			'link_id2from'   => True
+			'link_id2from'   => True,
+			'cal_to_include' => True
 		);
 		var $enums;
 		var $so;
@@ -271,5 +272,74 @@
 				$content[$id] = $this->link_title($id);
 			}
 			return $content;
+		}
+
+		/*!
+		@function cal_to_include
+		@syntax cal_to_include( $args )
+		@author ralfbecker
+		@abstract hook called be calendar to include events or todos in the cal-dayview
+		@param $args[year], $args[month], $args[day] date of the events
+		@param $args[owner] owner of the events
+		@param $args[location] calendar_include_{events|todos}
+		@returns array of events (array with keys starttime, endtime, title, view, icon, content)
+		*/
+		function cal_to_include($args)
+		{
+			//echo "<p>cal_to_include("; print_r($args); echo ")</p>\n";
+			$user = intval($args['owner']);
+			if ($user <= 0 && !checkdate($args['month'],$args['day'],$args['year']))
+			{
+				return False;
+			}
+			$do_events = $args['location'] == 'calendar_include_events';
+			$start = 0;
+			$to_include = array();
+			$date_wanted = sprintf('%04d/%02d/%02d',$args['year'],$args['month'],$args['day']);
+			while ($infos = $this->search('info_startdate','',"user$user".($do_events?'date':'opentoday').$date_wanted,'','','','','',$start,$total))
+			{
+				foreach($infos as $info)
+				{
+					$time = intval(date('Hi',$info['info_startdate']));
+					$date = date('Y/m/d',$info['info_startdate']);
+					if ($do_events && !$time ||
+					    !$do_events && $time && $date == $date_wanted)
+					{
+						continue;
+					}
+					if (!is_object($GLOBALS['phpgw']->html))	// only once and only if thers something to report
+					{
+						$GLOBALS['phpgw']->html = CreateObject('etemplate.html');
+						$GLOBALS['phpgw']->translation->add_app('infolog');
+					}
+					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']),date('i',$info['info_startdate'])).' ':'').
+						$info['info_subject'];
+					$view = $this->link->view('infolog',$info['info_id']);
+					$content = '';
+					foreach($icons = array(
+						$info['info_type']   => 'infolog',
+						$info['info_status'] => 'infolog'
+					) as $name => $app)
+					{
+						$content .= $GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
+					}
+					$content = '<p style="margin: 0px">'.$GLOBALS['phpgw']->html->a_href($content.'&nbsp;'.$title,$view).'</p>';
+
+					$to_include[] = array(
+						'starttime' => $info['info_startdate'],
+						'endtime'   => $info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate'],
+						'title'     => $title,
+						'view'      => $view,
+						'icons'     => $icons,
+						'content'   => $content
+					);
+				}
+				if ($total <= $start+count($infos))
+				{
+					break;	// no more availible
+				}
+			}
+			//echo "boinfolog::cal_to_include("; print_r($args); echo ")<pre>"; print_r($to_include); echo "</pre>\n";
+			return $to_include;
 		}
 	}

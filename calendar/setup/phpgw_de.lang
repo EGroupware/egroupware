@@ -180,6 +180,7 @@ on participant responses too	calendar	de	auch bei Antworten der Teilnehmer
 on time change of more than 4 hours too	calendar	de	bei zeitlichen Änderungen größer als 4 Stunden
 on time change of time of more than 4 hours (and above options)	calendar	de	wenn der Termin sich um mehr als 4 Stunde verschiebt (und obige Optionen)
 on time-changes >= 4 hours too	calendar	de	
+open todo's:	calendar	de	unerledigte Aufgaben:
 order	calendar	de	Reihenfolge
 overlap holiday	calendar	de	überlappender Feiertag
 participant	calendar	de	Teilnehmer
