@@ -149,20 +149,20 @@
       $this->db->query("select * from phpgw_applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         while ($this->db->next_record()) {
-          $name = $this->db->f("app_name");
-          $title  = $this->db->f("app_title");
-          $status = $this->db->f("app_enabled");
-          $phpgw_info["apps"]["$name"] = array("title" => $title, "name" => $name, "enabled" => True, "status" => $status);
+          $name = $this->db->f('app_name');
+          $title  = $this->db->f('app_title');
+          $status = $this->db->f('app_enabled');
+          $phpgw_info['apps'][$name] = array('title' => $title, 'name' => $name, 'enabled' => True, 'status' => $status);
         }
       }
     }
 
     function is_system_enabled($appname){
       global $phpgw_info;
-      if(gettype($phpgw_info["apps"]) != "array") {
+      if(gettype($phpgw_info['apps']) != 'array') {
         $this->read_installed_apps();
       }
-      if ($phpgw_info["apps"][$appname]["enabled"]) {
+      if ($phpgw_info['apps'][$appname]['enabled']) {
         return True;
       }else{
         return False;
