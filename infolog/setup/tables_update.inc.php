@@ -24,7 +24,7 @@
 
 
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.001';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 
 
@@ -50,7 +50,7 @@
 
 
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.002';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 
 
@@ -156,6 +156,6 @@
 
 
 		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.003';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 ?>
