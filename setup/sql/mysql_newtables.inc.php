@@ -60,6 +60,7 @@
     session_logintime int(11),
     session_dla       int(11),
     session_action    varchar(255),
+    session_flags     char(2),
     UNIQUE sessionid (session_id)
   )";
   $phpgw_setup->db->query($sql);  

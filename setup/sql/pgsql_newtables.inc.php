@@ -59,6 +59,7 @@
     session_logintime  int,
     session_dla        int,
     session_action     varchar(255),
+    session_flags      char(2),
     unique(session_id)
   )";
   $phpgw_setup->db->query($sql);
