@@ -1240,10 +1240,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			switch($GLOBALS['phpgw_info']['flags']['currentapp'])
 			{
 				case 'home':
-					if (!$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'])
-					{
-						$var['home'] = True;
-					}
+					$var['home'] = True;
 					break;
 				case 'about':
 					$var['about'] = True;

@@ -27,14 +27,27 @@
 		exit;
 	}
 
+	if ($GLOBALS['phpgw_info']['server']['force_default_app'] && $GLOBALS['phpgw_info']['server']['force_default_app'] != 'user_choice')
+	{
+		$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] = $GLOBALS['phpgw_info']['server']['force_default_app'];
+	}
+
+	if ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
+		&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
+	{
+		//$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
+	}
+	else
+	{
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
-		'noheader'                => True,
-		'nonavbar'                => True,
-		'currentapp'              => 'home',
-		'enable_network_class'    => True,
-		'enable_contacts_class'   => True,
-		'enable_nextmatchs_class' => True
+		'noheader'					=> True,
+		'nonavbar'					=> True,
+		'currentapp'				=> 'home',
+		'enable_network_class'		=> True,
+		'enable_contacts_class'		=> True,
+		'enable_nextmatchs_class'	=> True
 	);
 	include('header.inc.php');
 
@@ -50,45 +63,34 @@
 		$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link($GLOBALS['phpgw_forward'],$extra_vars));
 	}
 
-	if ($GLOBALS['phpgw_info']['server']['force_default_app'] && $GLOBALS['phpgw_info']['server']['force_default_app'] != 'user_choice')
+	$GLOBALS['phpgw']->translation->add_app('mainscreen');
+	if (lang('mainscreen_message') != 'mainscreen_message'.lang_char())
 	{
-		$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] = $GLOBALS['phpgw_info']['server']['force_default_app'];
+		echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
 	}
 
-		if ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
-			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
+	if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
+		$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
+		(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
+		$GLOBALS['phpgw_info']['server']['checkfornewversion']))
+	{
+		$GLOBALS['phpgw']->network->set_addcrlf(False);
+		$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
+		for ($i=0; $i<count($lines); $i++)
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
-		}
-
-		$GLOBALS['phpgw']->translation->add_app('mainscreen');
-		if (lang('mainscreen_message') != 'mainscreen_message'.lang_char())
-		{
-			echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
-		}
-
-		if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-			$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-			(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
-			$GLOBALS['phpgw_info']['server']['checkfornewversion']))
-		{
-			$GLOBALS['phpgw']->network->set_addcrlf(False);
-			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
-			for ($i=0; $i<count($lines); $i++)
+			if(@ereg('currentversion',$lines[$i]))
 			{
-				if(@ereg('currentversion',$lines[$i]))
-				{
-					$line_found = explode(':',chop($lines[$i]));
-				}
+				$line_found = explode(':',chop($lines[$i]));
 			}
-			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
-			{
-				$message = '<p>There is a new version of phpGroupWare available. <a href="'
+		}
+		if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
+		{
+			$message = '<p>There is a new version of phpGroupWare available. <a href="'
 					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
-				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=True;
-			}
+			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=True;
+		}
 
-			$_found = False;
+		$_found = False;
 			$GLOBALS['phpgw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
 			while($GLOBALS['phpgw']->db->next_record())
 			{
@@ -211,8 +213,6 @@
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
 
-	if (!$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'])
-	{
-		$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
 	}
 ?>
