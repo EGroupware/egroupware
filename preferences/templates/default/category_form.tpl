@@ -38,7 +38,7 @@
 <table width="50%" border="0" cellspacing="2" cellpadding="2">
 	<tr valign="bottom">
 		<td height="50" align="right">
-			<input type="submit" name="submit" value="{lang_add}"></td>
+			<input type="submit" name="submit" value="{lang_save}"></td>
 		<td height="50" align="center">
 			<input type="reset" name="reset" value="{lang_reset}"></form></td>
 		<td height="50">
@@ -55,7 +55,7 @@
 <table width="50%" border="0" cellspacing="2" cellpadding="2">
 	<tr valign="bottom">
 		<td height="50" align="right">
-			<input type="submit" name="submit" value="{lang_edit}"></form></td>
+			<input type="submit" name="submit" value="{lang_save}"></form></td>
 		<td height="50" align="center">
 			{delete}</td>
 		<td height="50">
