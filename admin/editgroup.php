@@ -48,13 +48,17 @@
 			 . "' where group_id=$group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
-           $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
+           $phpgw->db->query("SELECT account_groups, account_lid FROM accounts WHERE account_id=".$n_users[$i]);
 	   $phpgw->db->next_record();
+	   $account_lid = $phpgw->db->f("account_lid");
 	   if(strpos($phpgw->db->f("account_groups"),$group_id.":0,") == 0) {
              $user_groups = $phpgw->db->f("account_groups") . ",$group_id:0,";
              $user_groups = ereg_replace(",,",",",$user_groups);
              $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
 	   }
+
+	   // If the user is logged in, it will force a refresh of the session_info
+           $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$account_lid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.

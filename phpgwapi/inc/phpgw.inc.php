@@ -147,9 +147,16 @@
            $phpgw_info["server"][$this->db->f("config_name")] = $this->db->f("config_value");
          }
       } else {
-         $this->db->query("select config_value from config where config_name='encryptkey'",__LINE__,__FILE__);
-         $this->db->next_record();
-         $phpgw_info["server"]["encryptkey"] = $this->db->f("config_value");
+	 $config_var = array("encryptkey","auth_type","account_repository");
+	 $c= "";
+	 for ($i=0;$i<count($config_var);$i++) {
+	   if($i) $c .= " OR ";
+	   $c .= "config_name='".$config_var[$i]."'";
+	 }
+         $this->db->query("select * from config where $c",__LINE__,__FILE__);
+         while($this->db->next_record()) {
+           $phpgw_info["server"][$this->db->f("config_name")] = $this->db->f("config_value");
+         }
       }
 
       /**************************************************************************\
@@ -157,39 +164,36 @@
       \**************************************************************************/
       $this->common        = new common;
 
+      /* Load selected authentication class */
+      if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
+
+      $this->auth          = new auth;
+
+      /* Load selected accounts class */
+      if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+      include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
+
+      $this->accounts      = new accounts;
+      $this->preferences   = new preferences(0);
+
+      $this->session       = new sessions;
+
       if ($phpgw_info["flags"]["currentapp"] == "login") {
-        /* Load selected authentication class */
-        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
-        /* Load selected accounts class */
-        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
-        $this->auth          = new auth;
-        $this->session       = new sessions;
 	$log = explode("@",$login);
 	$this->preferences   = new preferences($log[0]);
       }else{
-        /* Load selected authentication class */
-        if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_auth_".$phpgw_info["server"]["auth_type"].".inc.php");
-        $this->session       = new sessions;
         if (! $this->session->verify()) {
-          Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
+          $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
+          $this->db->next_record();
+          Header("Location: " . $this->link($this->db->f("config_value")."/login.php","cd=10"));
           exit;
         }
-     
-        /* Load selected accounts class */
-        if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
-        $this->auth          = new auth;
-	$this->preferences   = new preferences(0);
         $this->preferences->preferences = $phpgw_info["user"]["preferences"];
         $this->preferences->account_id = $phpgw_info["user"]["account_id"];
 
      }
-      $this->accounts      = new accounts;
       $this->translation   = new translation;
       $this->acl           = new acl;
       $this->hooks         = new hooks;

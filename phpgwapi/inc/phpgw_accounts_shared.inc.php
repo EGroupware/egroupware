@@ -223,29 +223,39 @@
       if ($load_pref) {
 	$db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
 	$db2->next_record();
-	$this->preferences = unserialize($db2->f("preference_value"));
+	$pref_info = $db2->f("preference_value");
+//        if ($PHP_VERSION < "4.0.0") {
+//	  $pref_info = stripslashes($pref_info)
+//	}
+	$this->preferences = unserialize($pref_info);
       }
     }
 
     // This should be called when you are done makeing changes to the preferences
     function commit($line = "",$file = "")
     {
-       global $phpgw, $phpgw_info;
+      global $phpgw, $phpgw_info;
 
-       //echo "<br>commit called<br>Line: $line<br>File: $file".$phpgw_info["user"]["account_id"]."<br>";
+      //echo "<br>commit called<br>Line: $line<br>File: $file".$phpgw_info["user"]["account_id"]."<br>";
     
-       if ($this->account_id) {
-         $db = $phpgw->db;
+      if ($this->account_id) {
+        $db = $phpgw->db;
 
-         $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
+        $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
-         $db->query("insert into preferences (preference_owner,preference_value) values ("
-                  . $this->account_id . ",'" . serialize($this->preferences) . "')",__LINE__,__FILE__);
+        if ($PHP_VERSION < "4.0.0") {
+	  $pref_info = addslashes(serialize($this->preferences));
+	} else {
+	  $pref_info = serialize($this->preferences);
+	}
 
-         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-	    $phpgw->preferences->preferences = $this->get_preferences();
-            $phpgw->accounts->sync(__LINE__,__FILE__);
-         }
+        $db->query("insert into preferences (preference_owner,preference_value) values ("
+                  . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
+
+        if ($phpgw_info["user"]["account_id"] == $this->account_id) {
+	  $phpgw->preferences->preferences = $this->get_preferences();
+          $phpgw->accounts->sync(__LINE__,__FILE__);
+        }
       }
     }
 
