@@ -1157,10 +1157,8 @@
 				$fields['bday'] = $entry['bday_month'] . '/' . $bday_day . '/' . $entry['bday_year'];
 			}
 
-			if ($entry['url'] == 'http://')
-			{
-				$fields['url'] = '';
-			}
+			$fields['url'] = $entry['url'] == 'http://' ? '' : $entry['url'];
+
 
 			$fields['org_name']				= $entry['company'];
 			$fields['org_unit']				= $entry['department'];
