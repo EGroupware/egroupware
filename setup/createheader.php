@@ -8,34 +8,34 @@
       header("Content-type: application/octet-stream");
       header("Pragma: no-cache");
       header("Expires: 0");
-      $newheader = generate_header();
+      $newheader = $phpgw_setup->generate_header();
       echo $newheader;
       break;
     case "view":
-      show_header("Generated header.inc.php");
+      $phpgw_setup->show_header("Generated header.inc.php");
       echo "<br>Save this text as contents of your header.inc.php<br><hr>";
-      $newheader = generate_header();
+      $newheader = $phpgw_setup->generate_header();
       echo "<pre>";
       echo htmlentities($newheader);
       echo "</pre></body></html>";
       break;
     case "write config":
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
-        show_header("Saved header.inc.php");
-        $newheader = generate_header();
+        $phpgw_setup->show_header("Saved header.inc.php");
+        $newheader = $phpgw_setup->generate_header();
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
         echo "Created header.inc.php!<br>";
       }else{
-        show_header("Error generating header.inc.php");
+        $phpgw_setup->show_header("Error generating header.inc.php");
         echo "Could not open header.inc.php for writing!<br>\n";
         echo "Please check read/write permissions on directories or back up and use another option.<br>";
         echo "</td></tr></table></body></html>";
       }
       break;
     default:
-      show_header("Create/Edit your header.inc.php");
+      $phpgw_setup->show_header("Create/Edit your header.inc.php");
       echo '<table>
           <tr bgcolor="486591"><th colspan=2><font color="fefefe"> Analysis </font></th></tr>
           <tr><td colspan=2>';

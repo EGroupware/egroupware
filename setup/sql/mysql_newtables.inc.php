@@ -18,7 +18,7 @@
     config_value    varchar(100),
     UNIQUE config_name (config_name)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
  
   $sql = "CREATE TABLE applications (
     app_name     varchar(25) NOT NULL,
@@ -29,7 +29,7 @@
     app_version  varchar(20) NOT NULL default '0.0',
     UNIQUE app_name (app_name)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE accounts (
     account_id           int(11) DEFAULT '0' NOT NULL auto_increment,
@@ -46,7 +46,7 @@
     PRIMARY KEY (account_id),
     UNIQUE account_lid (account_lid)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "create table groups (
     group_id	int NOT NULL auto_increment,
@@ -54,13 +54,13 @@
     group_apps    varchar(255),
     primary key(group_id)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE preferences (
     preference_owner       int,
     preference_value       text
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_sessions (
     session_id        varchar(255) NOT NULL,
@@ -71,7 +71,7 @@
     session_info      text,
     UNIQUE sessionid (session_id)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_acl (
     acl_appname       varchar(50),
@@ -80,7 +80,7 @@
     acl_account_type  char(1),
     acl_rights        int
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_app_sessions (
     sessionid	varchar(255) NOT NULL,
@@ -88,7 +88,7 @@
     app	varchar(20),
     content	text
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "create table phpgw_access_log (
     sessionid	varchar(255),
@@ -97,7 +97,7 @@
     li		   int,
     lo		   varchar(255)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE profiles (
     con int(11) DEFAULT '0' NOT NULL auto_increment,
@@ -109,7 +109,7 @@
     picture blob,
     PRIMARY KEY (con)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE addressbook (
     ab_id       int(11) NOT NULL auto_increment,
@@ -137,7 +137,7 @@
     ab_url      varchar(255),
     PRIMARY KEY (ab_id)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
 
   $sql = "CREATE TABLE customers (
@@ -154,7 +154,7 @@
     notes text,
     PRIMARY KEY (company_id)
   );";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE todo (
     todo_id      int(11) DEFAULT '0' NOT NULL auto_increment,
@@ -169,7 +169,7 @@
     todo_enddate int(11),
     PRIMARY KEY (todo_id)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE calendar_entry (
     cal_id		int(11) DEFAULT '0' NOT NULL auto_increment,
@@ -185,7 +185,7 @@
     cal_description 	text,
     PRIMARY KEY (cal_id)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE calendar_entry_repeats (
     cal_id		int(11) DEFAULT '0' NOT NULL,
@@ -195,7 +195,7 @@
     cal_frequency	int(11) DEFAULT '1',
     cal_days		char(7)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE calendar_entry_user (
     cal_id       int(11) DEFAULT '0' NOT NULL,
@@ -203,7 +203,7 @@
     cal_status   char(1) DEFAULT 'A',
     PRIMARY KEY (cal_id, cal_login)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE newsgroups (
     con             int(11) NOT NULL auto_increment,
@@ -215,7 +215,7 @@
     PRIMARY KEY (con),
     UNIQUE name (name)
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE news_msg (
     con	        int(11)      NOT NULL,
@@ -251,7 +251,7 @@
     body        longtext     NOT NULL,
     primary key(con,msg)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE lang (
     message_id      varchar(150) DEFAULT '' NOT NULL,
@@ -260,7 +260,7 @@
     content         text NOT NULL,
     PRIMARY KEY (message_id,app_name,lang)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
   
   $sql = "CREATE TABLE categories (
      cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
@@ -270,7 +270,7 @@
      cat_description text NOT NULL,
      PRIMARY KEY (cat_id)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE languages (
      lang_id         varchar(2) NOT NULL,
@@ -278,7 +278,7 @@
      available       char(3) NOT NULL DEFAULT 'No', 
      PRIMARY KEY (lang_id)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE notes (
            note_id        int(20) NOT NULL auto_increment, 
@@ -287,7 +287,7 @@
            note_content   text, 
            PRIMARY KEY (note_id)
           )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table phpgw_hooks (
            hook_id       int not null auto_increment,
@@ -296,9 +296,10 @@
            hook_filename varchar(255),
            primary key hook_id (hook_id)
          );";
-  $db->query($sql); 
+  $phpgw_setup->db->query($sql); 
 
-  $currentver = "0.9.8pre5";
-  $oldversion = $currentver;
+  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre5";
+  $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
   update_version_table();
+//  $phpgw_setup->update_version_table();
 ?>

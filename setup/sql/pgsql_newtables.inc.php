@@ -17,7 +17,7 @@
     config_name     varchar(255) NOT NULL UNIQUE,
     config_value    varchar(100) NOT NULL
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table applications (
     app_name     varchar(25) NOT NULL,
@@ -28,7 +28,7 @@
     app_version  varchar(20) NOT NULL default '0.0',
     unique(app_name)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
 
   $sql = "create table accounts (
@@ -45,14 +45,14 @@
     account_status         char(1),
     unique(account_lid)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table groups (
     group_id     serial,
     group_name   varchar(50),
     group_apps   varchar(255)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
   
   $sql = "create table phpgw_sessions (
     session_id         varchar(255),
@@ -63,7 +63,7 @@
     session_info       text,
     unique(session_id)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE phpgw_acl (
     acl_appname       varchar(50),
@@ -72,7 +72,7 @@
     acl_account_type  char(1),
     acl_rights        int
   )";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
   $sql = "CREATE TABLE phpgw_app_sessions (
    sessionid	varchar(255) NOT NULL,
@@ -80,7 +80,7 @@
    app	        varchar(20),
    content	text
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table phpgw_access_log (
    sessionid    varchar(255),
@@ -89,13 +89,13 @@
    li           int,
    lo           varchar(255)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table preferences ( 
     preference_owner       int,
     preference_value       text
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE profiles (
    con		serial,
@@ -106,7 +106,7 @@
    picture_format varchar(255),
    picture 	text
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table addressbook (
     ab_id       serial,
@@ -133,7 +133,7 @@
     ab_address2 varchar(60),
     ab_url      varchar(255)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table todo (
     todo_id	     serial,
@@ -147,7 +147,7 @@
     todo_startdate	int,
     todo_enddate int
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE calendar_entry (
     cal_id		serial,
@@ -162,14 +162,14 @@
     cal_name		varchar(80) NOT NULL,
     cal_description	text
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE calendar_entry_user (
     cal_id		int DEFAULT 0 NOT NULL,
     cal_login		int DEFAULT 0 NOT NULL,
     cal_status		char(1) DEFAULT 'A'
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table calendar_entry_repeats ( 
     cal_id		int DEFAULT 0 NOT NULL,
@@ -179,7 +179,7 @@
     cal_frequency	int default 1,
     cal_days		char(7)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE newsgroups (
     con		serial,
@@ -189,7 +189,7 @@
     active	char DEFAULT 'N' NOT NULL,
     lastread	int
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE news_msg (
                 con	           serial,
@@ -224,7 +224,7 @@
                 msglines          int      DEFAULT 0,
                 body              text     NOT NULL
       )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
 
   $sql = "CREATE TABLE lang (
@@ -234,7 +234,7 @@
     content        text NOT NULL,
     unique(message_id,app_name,lang)
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE categories (
     cat_id          serial,
@@ -243,14 +243,14 @@
     cat_name        varchar(150) NOT NULL,
     cat_description text NOT NULL
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
   
   $sql = "CREATE TABLE languages (
      lang_id         varchar(2) NOT NULL,
      lang_name       varchar(50) NOT NULL,
      available       varchar(3) NOT NULL DEFAULT 'No'
   )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "CREATE TABLE notes (
            note_id        serial, 
@@ -258,7 +258,7 @@
            note_date      int,
            note_content   text
           )";
-  $db->query($sql);
+  $phpgw_setup->db->query($sql);
 
   $sql = "create table phpgw_hooks (
            hook_id       serial,
@@ -266,9 +266,9 @@
            hook_location varchar(255),
            hook_filename varchar(255)
           );";
-  $db->query($sql);  
+  $phpgw_setup->db->query($sql);  
 
-  $currentver = "0.9.8pre5";
-  $oldversion = $currentver;
+  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.8pre5";
+  $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
   update_version_table();
 ?>

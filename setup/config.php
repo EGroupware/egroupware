@@ -17,11 +17,11 @@
 
   // Authorize the user to use setup app and load the database
   // Does not return unless user is authorized
-  if (!auth()){
+  if (!$phpgw_setup->auth()){
     Header("Location: index.php");
     exit;
   }
-  loaddb();
+  $phpgw_setup->loaddb();
 
   /* Guessing default paths. */
   $current_config["files_dir"] = ereg_replace("/setup","/files",dirname($SCRIPT_FILENAME));
@@ -32,19 +32,19 @@
   }
 
   if ($submit) {
-    @$db->query("delete from config");
+    @$phpgw_setup->db->query("delete from config");
     while ($newsetting = each($newsettings)) {
    	  if ($newsetting[0] == "nntp_server") {
- 	      $db->query("select config_value FROM config WHERE config_name='nntp_server'");
-	      if ($db->num_rows()) {
-	        $db->next_record();
-  	      if ($db->f("config_value") <> $newsetting[1]) {
-	          $db->query("DELETE FROM newsgroups");
-   	        $db->query("DELETE FROM users_newsgroups");
+ 	      $phpgw_setup->db->query("select config_value FROM config WHERE config_name='nntp_server'");
+	      if ($phpgw_setup->db->num_rows()) {
+	        $phpgw_setup->db->next_record();
+  	      if ($phpgw_setup->db->f("config_value") <> $newsetting[1]) {
+	          $phpgw_setup->db->query("DELETE FROM newsgroups");
+   	        $phpgw_setup->db->query("DELETE FROM users_newsgroups");
    	      }
 	      }
    	  }
-      $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
+      $phpgw_setup->db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
         . "','" . addslashes($newsetting[1]) . "')");
     }
     if ($newsettings["auth_type"] == "ldap") {
@@ -58,12 +58,12 @@
   }
 
   if ($newsettings["auth_type"] != "ldap") {
-    show_header("Configuration");
+    $phpgw_setup->show_header("Configuration");
   }
 
-  @$db->query("select * from config");
-  while (@$db->next_record()) {
-    $current_config[$db->f("config_name")] = $db->f("config_value");
+  @$phpgw_setup->db->query("select * from config");
+  while (@$phpgw_setup->db->next_record()) {
+    $current_config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
   }
 
   if ($current_config["files_dir"] == "/path/to/dir/phpgroupware/files") {

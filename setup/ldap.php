@@ -23,11 +23,11 @@
   include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/phpgw_common.inc.php");
 
   $common = new common;
-  loaddb(); 
+  $phpgw_setup->loaddb(); 
 
-  $db->query("select config_name,config_value from config where config_name like 'ldap%'",__LINE__,__FILE__);
-  while ($db->next_record()) {
-     $config[$db->f("config_name")] = $db->f("config_value");
+  $phpgw_setup->db->query("select config_name,config_value from config where config_name like 'ldap%'",__LINE__,__FILE__);
+  while ($phpgw_setup->db->next_record()) {
+     $config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
   }
 
   // First, see if we can connect to the LDAP server, if not send `em back to config.php with an
@@ -60,10 +60,10 @@
      }
   }
   
-  $db->query("select app_name,app_title from applications where app_enabled != '0' and "
+  $phpgw_setup->db->query("select app_name,app_title from applications where app_enabled != '0' and "
            . "app_name != 'admin'",__LINE__,__FILE__);
-  while ($db->next_record()) {
-     $apps[$db->f("app_name")] = $db->f("app_title");
+  while ($phpgw_setup->db->next_record()) {
+     $apps[$phpgw_setup->db->f("app_name")] = $phpgw_setup->db->f("app_title");
   }
   
   if ($submit) {
@@ -98,7 +98,7 @@
            }
            // do some checks before we try to import the data
            if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
-           $db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
+           $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
                     . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
                     . $account[1]["account_lid"] . "','x','$np',',1:0,','A','".time()."')",__LINE__,__FILE__);
         }
@@ -108,16 +108,16 @@
   
   // Add a check to see if there is no users in LDAP, if not create a default user.
 
-  setup_header();
+  $phpgw_setup->setup_header();
   
   if ($error) {
      echo "<br><center><b>Error:</b> $error</center>";
   }
 
   if ($setup_complete) {
-     $db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
-     $db->next_record();
-     echo '<br><center>Setup has been completed!  Click <a href="' . $db->f("config_value")
+     $phpgw_setup->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
+     $phpgw_setup->db->next_record();
+     echo '<br><center>Setup has been completed!  Click <a href="' . $phpgw_setup->db->f("config_value")
         . '/login.php">here</a> to login</center>';
      exit;
   }
@@ -175,5 +175,3 @@
     
   </table>
  </form>
-
-  

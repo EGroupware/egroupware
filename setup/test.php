@@ -7,7 +7,7 @@
   loaddb();
 //  $currentver = "drop";
   $currentver = "new";
-  manage_tables();
+  $phpgw_setup->manage_tables();
 
-  execute_script("create_tables");
+  $phpgw_setup->execute_script("create_tables");
 ?>
