@@ -43,7 +43,7 @@
 		<tr>
 			<td colspan="2" valign="middle" class="th_text">
 				<xsl:if test="icon != ''">
-					<img src="{$icon}"/><xsl:text> </xsl:text>
+					<img src="{$icon}"/>&nbsp;
 				</xsl:if>
 				<xsl:value-of select="title"/>
 			</td>

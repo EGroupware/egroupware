@@ -65,7 +65,7 @@
 									<td class="menubar" width="100%">
 										<table width="100%" height="24" cellpadding="0" cellspacing="0">
 											<tr>
-												<td width="33%" class="menubar"><xsl:value-of select="user_info_name"/></td>
+												<td width="33%" class="menubar">&nbsp;<xsl:value-of select="user_info_name"/></td>
 													<xsl:choose>
 														<xsl:when test="current_users">
 															<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
@@ -75,7 +75,7 @@
 															<td></td>
 														</xsl:otherwise>
 													</xsl:choose>
-												<td width="33%" align="right" class="menubar"><xsl:value-of select="user_info_date"/></td>
+												<td width="33%" align="right" class="menubar"><xsl:value-of select="user_info_date"/>&nbsp;</td>
 											</tr>
 										</table>
 									</td>
