@@ -1,14 +1,16 @@
 <!-- BEGIN list -->
 <p>
- <table border="0" width="70%" align="center">
-  <tr>
-   <td align="left">{left_next_matchs}</td>
-   <td align="center">{lang_user_accounts}</td>
-   <td align="right">{right_next_matchs}</td>
-  </tr>
- </table>
+ <div align="center">
+  <table border="0" width="70%">
+   <tr>
+    <td align="left">{left_next_matchs}</td>
+    <td align="center">{lang_user_accounts}</td>
+    <td align="right">{right_next_matchs}</td>
+   </tr>
+  </table>
+ </div>
 
- <center>
+ <div align="center">
   <table border="0" width="70%">
    <tr bgcolor="{th_bg}">
     <td>{lang_loginid}</td>
@@ -22,23 +24,24 @@
    {rows}
 
   </table>
- </center>
+ </div>
 
  <form method="POST" action="{actionurl}">
-  <table border="0" width="70%" align="center">
-   <tr>
-    <td align="left">
-     {input_add}
-     </form>
-    </td>
-    <td align="right">
-     <form method="POST" action="{accounts_url}">
-      {input_search}
-     </form>
-    </td>
-   </tr>
-  </table>
-
+  <div align="center">
+   <table border="0" width="70%">
+    <tr>
+     <td align="left">
+      {input_add}
+      </form>
+     </td>
+     <td align="right">
+      <form method="POST" action="{accounts_url}">
+       {input_search}
+      </form>
+     </td>
+    </tr>
+   </table>
+  </div>
 <!-- END list -->
 
 <!-- BEGIN row -->

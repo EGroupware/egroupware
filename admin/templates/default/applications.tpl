@@ -2,14 +2,16 @@
 <p><b>{lang_installed}</b><hr><p>
 
 <p>
- <table border="0" width="45%" align="center">
+<div align="center">
+ <table border="0" width="45%">
   <tr bgcolor="{bg_color}">
 {left}
     <td align="center">{lang_showing}</td>
 {right}
   </tr>
  </table>
- <table border="0" width="45%" align="center">
+ 
+ <table border="0" width="45%">
   <tr bgcolor="{th_bg}">
    <td> {sort_title} </td>
    <td>{lang_edit}</td>
@@ -21,7 +23,7 @@
 
  </table>
 
- <table border="0" width="45%" align="center">
+ <table border="0" width="45%">
   <tr>
    <td align="left">
     <form method="POST" action="{new_action}">
@@ -30,7 +32,7 @@
    </td>
   </tr>
  </table>
-
+</div>
 <!-- END list -->
 
 <!-- BEGIN row -->

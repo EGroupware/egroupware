@@ -5,7 +5,8 @@
 
 <form action="{form_action}" method="POST">
  {hidden_vars}
- <table border="0" width="55%" align="center">
+ <div align="center">
+ <table border="0" width="55%">
   <tr bgcolor="{th_bg}">
    <td colspan="2">&nbsp;</td>
   </tr>
@@ -19,6 +20,7 @@
   </tr>
 
  </table>
+ </div>
 </form>
 <!-- END form -->
 

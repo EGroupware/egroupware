@@ -2,7 +2,7 @@
 {error_messages}
 
  <form method="POST" action="{form_action}">
-  <center>
+	<div align="center"> 
 	<table border="0" width="95%">
 		<tr>
 			<td valign="top">
@@ -57,7 +57,7 @@
    			</td>
    		</tr>
    	</table>
-  </center>
+	</div>
  </form>
 <!-- END form -->
 

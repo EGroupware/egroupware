@@ -2,15 +2,17 @@
 <b>{lang_header}</b>
 <hr><p>
 
- <table border="0" width="70%" align="center">
+ <div align="center">
+ <table border="0" width="70%">
   <tr>
    <td align="left">{left_next_matchs}</td>
    <td width="95%" align="center">&nbsp;</td>
    <td align="right">{right_next_matchs}</td>
   </tr>
  </table>
+ </div>
 
- <center>
+ <div align="center">
   <table border="0" width="70%">
    <tr bgcolor="{th_bg}">
     <td>{lang_loginid}</td>
@@ -22,10 +24,11 @@
    {rows}
 
   </table>
- </center>
+ </div>
 
  <form method="POST" action="{actionurl}">
-  <table border="0" width="70%" align="center">
+  <div align="center">
+  <table border="0" width="70%">
    <tr>
     <td align="right">
      <form method="POST" action="{accounts_url}">
@@ -34,6 +37,7 @@
     </td>
    </tr>
   </table>
+  </div>
 
 <!-- END list -->
 

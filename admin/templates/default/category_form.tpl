@@ -2,7 +2,7 @@
 
 <!-- BEGIN form -->
 
-	<center>
+	<div align="center">
 		<table border="0" width="80%" cellspacing="2" cellpadding="2">
 			<tr>
 				<td colspan="1" align="center" bgcolor="#c9c9c9"><b>{title_categories}<b/></td>
@@ -40,7 +40,6 @@
 					<input type="submit" name="done" value="{lang_done}"></form></td>
 			</tr>
 		</table>
-	</center>
 
 <!-- END add -->
 
@@ -61,7 +60,7 @@
 					<input type="submit" name="done" value="{lang_done}"></form></td>
 			</tr>
 		</table>
-	</center>
+	</div>
 
 <!-- END edit -->
 
