@@ -789,11 +789,11 @@
 			{
 			  $to = $start + $maxmatchs;
 			  if ($to > $total) $to = $total;
-			  $total_matchs = lang('showing x - x of x',($start + 1),$to,$total);
+			  $total_matchs = lang('showing %1 - %2 of %3',($start + 1),$to,$total);
 			}
 			else
 			{
-			  $total_matchs = lang('showing x',$total);
+			  $total_matchs = lang('showing %1',$total);
 			}
 			$GLOBALS['phpgw']->template->set_var('total_matchs',$total_matchs);
 
