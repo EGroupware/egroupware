@@ -147,7 +147,7 @@
 
 			// see if we got an HTTP 200 OK, else bomb
 			// but only do this if we're using the HTTP protocol.
-			if (ereg("^HTTP",$data) && !ereg("^HTTP/[0-9\.]+ 200 ", $data))
+			if (ereg("^HTTP",$data) && !ereg("^HTTP/[0-9.]+ 200 ", $data))
 			{
 				$errstr = substr($data, 0, strpos($data, "\n")-1);
 				error_log('HTTP error, got response: ' .$errstr);
@@ -233,7 +233,7 @@
 					$r = CreateObject('phpgwapi.xmlrpcresp',$v);
 				}
 			}
-			$r->hdrs = split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
+			$r->hdrs = $GLOBALS['_xh'][$parser]['ha']; //split("\r?\n", $GLOBALS['_xh'][$parser]['ha'][1]);
 			return $r;
 		}
 	}
