@@ -342,8 +342,25 @@
 	$tmpl->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
 	$tmpl->set_var('bg_color',($GLOBALS['phpgw_info']['server']['login_bg_color']?$GLOBALS['phpgw_info']['server']['login_bg_color']:'FFFFFF'));
 	$tmpl->set_var('bg_color_title',($GLOBALS['phpgw_info']['server']['login_bg_color_title']?$GLOBALS['phpgw_info']['server']['login_bg_color_title']:'486591'));
-	$tmpl->set_var('logo_url',($GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'www.egroupware.org'));
-	$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo'));
+	$tmpl->set_var('logo_url',($GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.egroupware.org'));
+
+	// retrieve logo from login template set 
+	// FIXME $GLOBALS['phpgw']->common->image must get extra argument: force to look in this template set thirst
+	$template_logo_file=$GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
+
+	if($GLOBALS['phpgw_info']['server']['login_logo_file'])
+	{
+		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']));
+	}
+	elseif(getimagesize($template_logo_file))
+	{
+		$tmpl->set_var('logo_file',$template_logo_file);
+	}
+	else
+	{
+		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi','logo'));
+	}
+	
 	$tmpl->set_var('logo_title',($GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'eGroupWare --&gt; home'));
 	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
