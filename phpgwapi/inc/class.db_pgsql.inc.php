@@ -321,4 +321,27 @@ class db {
      }
     return $return;
   }
+
+  function create_database($dbname, $adminname = "", $adminpasswd = "") {
+		$currentUser = $this->User;
+		$currentPassword = $this->Password;
+		$currentDatabase = $this->Database;
+
+		if ($adminname != "")
+		{
+			$this->User = $adminname;
+			$this->Password = $adminpasswd;
+			$this->Database = "mysql";
+		}
+		$this->disconnect();
+    $this->query("CREATE DATABASE $dbname");
+    $this->query("grant all on $dbname.* to $currentUser@localhost identified by '$currentPassword'");
+		$this->disconnect();
+
+		$this->User = $currentUser;
+		$this->Password = $currentPassword;
+		$this->Database = $currentDatabase;
+		$this->connect();
+		//return $return;
+  }
 }
