@@ -59,7 +59,7 @@
 			break;
 	}	
 	$t->set_var($phpgw->infolog->setStyleSheet( ));
-	$t->set_var(actionurl,$phpgw->link('/infolog/edit.php?action=new'));
+	$t->set_var(actionurl,$phpgw->link('/infolog/edit.php','action=new'));
 	$t->set_var('cat_form',$phpgw->link('/infolog/index.php'));
 	$t->set_var('lang_category',lang('Category'));
 	$t->set_var('lang_all',lang('All'));
