@@ -554,8 +554,8 @@
 
   $phpgw->db->query($sql);
   $hour_arr = Array();
-  $first_hour = ($phpgw_info["user"]["preferences"]["common"]["workdaystarts"] + 1);
-  $last_hour  = ($phpgw_info["user"]["preferences"]["common"]["workdayends"] + 1);
+  $first_hour = ($phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"] + 1);
+  $last_hour  = ($phpgw_info["user"]["preferences"]["calendar"]["workdayends"] + 1);
 
   $rowspan_arr = Array();
 

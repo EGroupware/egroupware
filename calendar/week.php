@@ -76,9 +76,11 @@
 
 <TABLE BORDER=0 WIDTH=100%>
 <TR>
-<?php if (! $friendly) { ?>
-<TD ALIGN="left"><A HREF="week.php?sessionid=<?php echo $phpgw_info["user"]["sessionid"]; ?>&year=<?php echo $prevyear;?>&month=<?php echo $prevmonth;?>&day=<?php echo $prevday;?>">&lt;&lt;</A></TD>
-<?php } ?>
+<?php 
+  if (! $friendly) {
+    echo "<td align=\"left\"><a href=\"".$phpgw->link("week.php","year=$prevyear&month=$prevmonth&day=$prevday")."\">&lt;&lt;</a></td>";
+  }
+?>
 <TD ALIGN="middle"><FONT SIZE="+2" COLOR="<?php echo $H2COLOR;?>"><B>
 <?php
   if (date("m", $sun) == date("m", $sat)) {
@@ -144,7 +146,7 @@
 
     echo "<TD VALIGN=\"top\" WIDTH=75 HEIGHT=75 ID=\"tablecell\"";
     if (date("Ymd", $date) == date("Ymd", $today))
-       echo "BGCOLOR=\"".$phpgw_info["theme"][cal_today]."\">";
+       echo "BGCOLOR=\"".$phpgw_info["theme"]["cal_today"]."\">";
     else
        echo "BGCOLOR=\"$CELLBG\">";
 
