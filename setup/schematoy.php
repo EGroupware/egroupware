@@ -113,8 +113,9 @@
 		$GLOBALS['setup_tpl']->set_var('description',lang('App process') . ':');
 		$GLOBALS['setup_tpl']->pparse('out','header');
 
-		$appname = get_var('appname',Array('POST'));
-		$install = get_var('install',Array('POST'));
+		$appname = get_var('appname','POST');
+		$install = get_var('install','POST');
+		$version = get_var('version','POST');
 
 		while (list($appname,$key) = @each($install))
 		{
@@ -152,6 +153,7 @@
 				$terror = $GLOBALS['phpgw_setup']->process->test_data($terror,$GLOBALS['DEBUG']);
 
 				$terror = $GLOBALS['phpgw_setup']->process->upgrade($terror,$GLOBALS['DEBUG']);
+				$terror[$appname]['version'] = $version[$appname];
 			}
 			else
 			{
@@ -161,7 +163,7 @@
 				. lang('tables installed, unless there are errors printed above') . '.';
 
 			$GLOBALS['setup_info'][$appname]['version'] = $terror[$appname]['version'];
-			$GLOBALS['phpgw_setup']->register_app($terror[$appname]['name']);
+			$GLOBALS['phpgw_setup']->register_app($appname);
 			echo '<br>' . $terror[$appname]['title'] . ' ' . lang('registered') . '.';
 		}
 
