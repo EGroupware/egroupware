@@ -184,7 +184,7 @@
 		$ab_id = $entry[0]["id"];
 		return $ab_id;
 	}
-	
+
 	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_EDIT) {
