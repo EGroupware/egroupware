@@ -37,6 +37,30 @@
 		var $valid_pathes = array();
 		var $send_file_ips = array();
 
+		var $xmlrpc_methods = array();
+		var $soap_functions = array(
+			'read' => array(
+				'in'  => array('int'),
+				'out' => array('array')
+			),
+			'search' => array(
+				'in'  => array('array'),
+				'out' => array('array')
+			),
+			'write' => array(
+				'in'  => array('array'),
+				'out' => array()
+			),
+			'delete' => array(
+				'in'  => array('int'),
+				'out' => array()
+			),
+			'categories' => array(
+				'in'  => array('bool'),
+				'out' => array('array')
+			),
+		);
+
 		function boinfolog( $info_id = 0)
 		{
 			$this->enums = $this->stock_enums = array(
@@ -108,6 +132,9 @@
 			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
 			$this->tz_offset_sec = 60*60*$this->tz_offset;
 
+			// are we called via xmlrpc?
+			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
+
 			$this->read( $info_id);
 		}
 
@@ -178,7 +205,27 @@
 
 		function read($info_id)
 		{
-			$err = $this->so->read($info_id) === False;
+			if (is_array($info_id))
+			{
+				$info_id = (int)$info_id['info_id'];
+			}
+
+			if ($this->so->read($info_id) === False)
+			{
+				if ($this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
+				}
+				return False;
+			}
+			if (!$this->check_access($info_id,PHPGW_ACL_READ))	// check behind read, to prevent a double read
+			{
+				if ($this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+				}
+				return False;
+			}
 			$data = &$this->so->data;
 
 			if ($data['info_subject'] == $this->subject_from_des($data['info_des']))
@@ -187,11 +234,30 @@
 			}
 			$this->link_id2from($data);
 
-			return $err ? False : $data;
+			if ($this->xmlrpc)
+			{
+				$data = $this->data2xmlrpc($data);
+			}
+			return $data;
 		}
 
-		function delete($info_id,$delete_children,$new_parent)
+		function delete($info_id,$delete_children=False,$new_parent=False)
 		{
+			if (is_array($info_id))
+			{
+				$delete_children = $info_id['delete_children'];
+				$new_parent = $info_id['new_parent'];
+				$info_id = $info_id['info_id'];
+			}
+			if (!$this->check_access($info_id,PHPGW_ACL_DELETE))
+			{
+				if ($this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+				}
+				return False;
+			}
+
 			$this->link->unlink(0,'infolog',$info_id);
 
 			$this->so->delete($info_id,$delete_children,$new_parent);
@@ -199,7 +265,20 @@
 
 		function write($values,$check_defaults=True,$touch_modified=True)
 		{
-			while (list($key,$val) = each($values))
+			if ($values['info_id'] && !$this->check_access($values['info_id'],PHPGW_ACL_EDIT) ||
+			    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],PHPGW_ACL_ADD))
+			{
+				if ($this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+				}
+				return False;
+			}
+			if ($this->xmlrpc)
+			{
+				$values = $this->xmlrpc2data($values);
+			}
+			foreach($values as $key => $val)
 			{
 				if ($key[0] != '#' && substr($key,0,5) != 'info_')
 				{
@@ -247,9 +326,32 @@
 			return $this->so->anzSubs( $info_id );
 		}
 
-		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total,$col_filter=False)
+		/*!
+		@function search
+		@abstract searches InfoLog for a certain pattern in $query
+		@syntax search( $query )
+		@param $query[order] column-name to sort after
+		@param $query[sort] sort-order DESC or ASC
+		@param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+		@param $query[cat_id] category to use or 0 or unset
+		@param $query[search] pattern to search, search is done in info_from, info_subject and info_des
+		@param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+		@param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+		@returns array with id's as key of the matching log-entries
+		*/
+		function search(&$query)
 		{
-			return $this->so->search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,$start,$total,$col_filter);
+			$ret = $this->so->search($query);
+			if ($this->xmlrpc && is_array($ret))
+			{
+				foreach($ret as $id => $data)
+				{
+					$ret[$id] = $this->data2xmlrpc($data);
+				}
+			}
+			//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";
+			return $ret;
 		}
 
 		/*!
@@ -280,12 +382,18 @@
 		*/
 		function link_query( $pattern )
 		{
-			$start = $total = 0;
-			$ids = $this->search('','','','',$pattern,'','','',&$start,&$total);
+			$query = array(
+				'search' => $pattern,
+				'start'  => 0,
+			);
+			$ids = $this->search($query);
 			$content = array();
-			while (is_array($ids) && list( $id,$info ) = each( $ids ))
+			if (is_array($ids))
 			{
-				$content[$id] = $this->link_title($id);
+				foreach($ids as $id => $info )
+				{
+					$content[$id] = $this->link_title($id);
+				}
 			}
 			return $content;
 		}
@@ -315,11 +423,15 @@
 			$GLOBALS['phpgw']->translation->add_app('infolog');
 
 			$do_events = $args['location'] == 'calendar_include_events';
-			$start = 0;
 			$to_include = array();
 			$date_wanted = sprintf('%04d/%02d/%02d',$args['year'],$args['month'],$args['day']);
-			while ($infos = $this->search('info_startdate'.($do_events?'':' DESC'),'',
-				"user$user".($do_events?'date':'opentoday').$date_wanted,'','','','','',$start,$total))
+			$query = array(
+				'order' => 'info_startdate',
+				'sort'  => $do_events ? 'ASC' : 'DESC',
+				'filter'=> "user$user".($do_events ? 'date' : 'opentoday').$date_wanted,
+				'start' => 0,
+			);
+			while ($infos = $this->search($query))
 			{
 				foreach($infos as $info)
 				{
@@ -352,12 +464,114 @@
 						'content'   => $content
 					);
 				}
-				if ($total <= ($start+=count($infos)))
+				if ($query['total'] <= ($query['start']+=count($infos)))
 				{
 					break;	// no more availible
 				}
 			}
 			//echo "boinfolog::cal_to_include("; print_r($args); echo ")<pre>"; print_r($to_include); echo "</pre>\n";
 			return $to_include;
+		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			/*
+			**  This handles introspection or discovery by the logged in client,
+			**  in which case the input might be an array.  The server always calls
+			**  this function to fill the server dispatch map using a string.
+			*/
+
+			if (is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'read' => array(
+							'function'  => 'read',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read one record by passing its id.')
+						),
+						'search' => array(
+							'function'  => 'search',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Returns a list / search for records.')
+						),
+						'write' => array(
+							'function'  => 'write',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Write (add or update) a record by passing its fields.')
+						),
+						'delete' => array(
+							'function'  => 'delete',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Delete one record by passing its id.')
+						),
+						'categories' => array(
+							'function'  => 'categories',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('List all categories.')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
+		}
+
+		function data2xmlrpc($data)
+		{
+			// translate timestamps
+			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
+			{
+				if (isset($data[$name]))
+				{
+					$data[$name] = $GLOBALS['server']->date2iso8601($data[$name]);
+				}
+			}
+			// translate cat_id
+			if (isset($data['cat_id']))
+			{
+				$data['cat_id'] = $GLOBALS['server']->cats2xmlrpc(array($data['cat_id']));
+			}
+			return $data;
+		}
+
+		function xmlrpc2data($data)
+		{
+			// translate timestamps
+			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
+			{
+				if (isset($data[$name]))
+				{
+					$data[$name] = $GLOBALS['server']->iso86012date($data[$name],True);
+				}
+			}
+			// translate cat_id
+			if (isset($data['cat_id']))
+			{
+				$cats = $GLOBALS['server']->xmlrpc2cats($data['cat_id']);
+				$data['cat_id'] = (int)$cats[0];
+			}
+			return $data;
+		}
+
+		// return array with all infolog categories (for xmlrpc)
+		function categories($complete = False)
+		{
+			return $GLOBALS['server']->categories($complete);
 		}
 	}

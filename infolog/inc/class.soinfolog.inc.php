@@ -18,7 +18,7 @@
 	@abstract storage object / db-layer for InfoLog
 	@author Ralf Becker
 	@copyright GPL - GNU General Public License
-	@note all values passed to this class are run either through intval or addslashes to prevent query-inserting
+	@note all values passed to this class are run either through intval or addslashes to prevent query-insertion
 		and for pgSql 7.3 compatibility
 	*/
 	class soinfolog 				// DB-Layer
@@ -72,17 +72,17 @@
 			}
 			$owner = $info['info_owner'];
 
-			$access_ok = $owner == $this->user ||                // user has all rights
-							 // ACL only on public entrys || $owner granted _PRIVATE
-							 (!!($this->grants[$owner] & $required_rights) ||
-							 // implicite read-rights for responsible user !!!
-							  $info['info_responsible'] == $this->user && $required_rights == PHPGW_ACL_READ) &&
-							 ($info['info_access'] == 'public' ||
-							 !!($this->grants[$owner] & PHPGW_ACL_PRIVATE));   
-							
+			$access_ok = $owner == $this->user ||	// user has all rights
+				// ACL only on public entrys || $owner granted _PRIVATE
+				(!!($this->grants[$owner] & $required_rights) ||
+				// implicite read-rights for responsible user !!!
+				$info['info_responsible'] == $this->user && $required_rights == PHPGW_ACL_READ) &&
+				($info['info_access'] == 'public' ||
+				!!($this->grants[$owner] & PHPGW_ACL_PRIVATE));
+
 			// echo "check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied");
-			
-			return $access_ok;         
+
+			return $access_ok;
 		}
 
 		/*!
@@ -104,7 +104,7 @@
 			}
 			if (is_array($this->grants))
 			{
-				while (list($user,$grant) = each($this->grants))
+				foreach($this->grants as $user => $grant)
 				{
 					// echo "<p>grants: user=$user, grant=$grant</p>";
 					if ($grant & (PHPGW_ACL_READ|PHPGW_ACL_EDIT))
@@ -180,7 +180,8 @@
 		@syntax dateFilter($filter = '')
 		@param $filter upcoming = startdate is in the future<br>
 			today startdate < tomorrow<br>
-			overdue enddate < tomorrow
+			overdue enddate < tomorrow<br>
+			limitYYYY/MM/DD not older or open 
 		@returns the necesary sql
 		*/
 		function dateFilter($filter = '')
@@ -212,6 +213,8 @@
 						return '';
 					}
 					return " AND ($today <= info_startdate AND info_startdate < $tomorrow)";
+				case 'limit':
+					return " AND (info_modified >= '$today' OR NOT (info_status IN ('done','billed')))";
 			}
 			return '';
 		}
@@ -223,12 +226,12 @@
 		*/
 		function init()
 		{
-			$this->data = array( 
+			$this->data = array(
 				'info_owner' => $this->user,
-				'info_pri'   => 'normal' 
+				'info_pri'   => 'normal'
 			);
-		}      
-		
+		}
+
 		/*!
 		@function db2data
 		@abstract copy data after a query into $data
@@ -454,53 +457,51 @@
 		/*!
 		@function search
 		@abstract searches InfoLog for a certain pattern in $query
-		@syntax search( $order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total )
-		@param $order comma-separated list of columns to order the result (no 'ORDER BY'), eg. 'info_subject DESC'
-		@param $sort comma-separated list of columns to to sort by (incl. 'SORT BY') or ''
-		@param $filter string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
-		@param $cat_id category to use or 0
-		@param $query pattern to search, search is done in info_from, info_subject and info_des
-		@param $action / $action_id if only entries linked to a specified app/entry show be used
-		@param &$start, &$total nextmatch-parameters will be used and set if query returns less entries
-		@param $col_filter array with column-name - data pairs, data == '' means no filter (!)
+		@syntax search( $query )
+		@param $query[order] column-name to sort after
+		@param $query[sort] sort-order DESC or ASC
+		@param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+		@param $query[cat_id] category to use or 0 or unset
+		@param $query[search] pattern to search, search is done in info_from, info_subject and info_des
+		@param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+		@param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
 		@returns array with id's as key of the matching log-entries
 		*/
-		function search($order,$sort,$filter,$cat_id,$query,$action,$action_id,$ordermethod,&$start,&$total,$col_filter=False)
+		function search(&$query)
 		{
-			//echo "<p>soinfolog.search(order='$order',,filter='$filter',,query='$query',action='$action/$action_id')</p>\n";
+			//echo "<p>soinfolog.search(".print_r($query,True).")</p>\n";
 			$action2app = array(
 				'addr'        => 'addressbook',
 				'proj'        => 'projects',
 				'event'       => 'calendar'
 			);
-			if (isset($action2app[$action]))
-			{
-				$action = $action2app[$action];
-			}
+			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
+
 			if ($action != '')
 			{
-				$links = $this->links->get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
-			
+				$links = $this->links->get_links($action=='sp'?'infolog':$action,$query['action_id'],'infolog');
+
 				if (count($links))
 				{
 					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' phpgw_infolog.info_id IN ('.implode(',',$links).')';
 				}
 			}
-			if ($order)
+			if ($query['order'])
 			{
-			  $ordermethod = 'ORDER BY ' . $this->db->db_addslashes($order) . ' ' . $this->db->db_addslashes($sort);
+			  $ordermethod = 'ORDER BY ' . $this->db->db_addslashes($query['order']) . ' ' . $this->db->db_addslashes($query['sort']);
 			}
 			else
 			{
 			  $ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 			}
-			$filtermethod = $this->aclFilter($filter);
-			$filtermethod .= $this->statusFilter($filter);
-			$filtermethod .= $this->dateFilter($filter);
+			$filtermethod = $this->aclFilter($query['filter']);
+			$filtermethod .= $this->statusFilter($query['filter']);
+			$filtermethod .= $this->dateFilter($query['filter']);
 
-			if (is_array($col_filter))
+			if (is_array($query['col_filter']))
 			{
-				foreach($col_filter as $col => $data)
+				foreach($query['col_filter'] as $col => $data)
 				{
 					$data = $this->db->db_addslashes($data);
 					if (!empty($data))
@@ -511,19 +512,19 @@
 			}
 			//echo "<p>filtermethod='$filtermethod'</p>";
 
-			if (intval($cat_id))
+			if (intval($query['cat_id']))
 			{
-			  $filtermethod .= ' AND info_cat='.intval($cat_id).' ';
+			  $filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
 			}
 			$join = '';
-			if ($query)			  // we search in _from, _subject, _des and _extra_value for $query
+			if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 			{
-				$query = $this->db->db_addslashes($query);
+				$query['search'] = $this->db->db_addslashes($query['query']);
 				$sql_query = "AND (info_from like '%$query%' OR info_subject ".
 								 "LIKE '%$query%' OR info_des LIKE '%$query%' OR info_extra_value LIKE '%$query%') ";
 				$join = 'LEFT JOIN phpgw_infolog_extra ON phpgw_infolog.info_id=phpgw_infolog_extra.info_id';
 			}
-			$pid = 'AND info_id_parent='.($action == 'sp' ? $action_id : 0);
+			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
 
 			if (!$GLOBALS['phpgw_info']['user']['preferences']['infolog']['listNoSubs'] &&
 				 $action != 'sp')
@@ -533,15 +534,15 @@
 			$ids = array( );
 			if ($action == '' || $action == 'sp' || count($links))
 			{
-				$query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
-				$this->db->query($sql='SELECT DISTINCT phpgw_infolog.info_id '.$query,__LINE__,__FILE__);
-				$total = $this->db->num_rows();
+				$sql_query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+				$this->db->query($sql='SELECT DISTINCT phpgw_infolog.info_id '.$sql_query,__LINE__,__FILE__);
+				$query['total'] = $this->db->num_rows();
 
-				if (!$start || $start > $total)
+				if (!$query['start'] || $query['start'] > $query['total'])
 				{
-					$start = 0;
+					$query['start'] = 0;
 				}
-				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $query $ordermethod",$start,__LINE__,__FILE__);
+				$this->db->limit_query($sql="SELECT DISTINCT phpgw_infolog.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
 				while ($this->db->next_record())
 				{
@@ -551,7 +552,7 @@
 			}
 			else
 			{
-				$start = $total = 0;
+				$query['start'] = $query['total'] = 0;
 			}
 			return $ids;
 		}

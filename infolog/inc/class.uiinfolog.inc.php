@@ -159,24 +159,23 @@
 			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
 			$this->save_sessiondata($query);
 
-			$ids = $this->bo->search($query['order'],$query['sort'],$query['filter'],$query['cat_id'],
-				$query['search'],$query['action'],$query['action_id'],$query['ordermethod'],
-				$query['start'],$total,$query['col_filter']);
+			$ids = $this->bo->search($query);
 
 			if (!is_array($ids))
 			{
 				$ids = array( );
 			}
-			$rows = array( $total );
+			$rows = array( $query['total'] );
 			$readonlys = array();
 			foreach($ids as $id => $info)
 			{
 				$rows[] = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
 			}
 			//echo "<p>readonlys = "; _debug_array($readonlys);
+			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 			reset($rows);
 
-			return $total;
+			return $query['total'];
 		}
 
 		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False)
@@ -253,7 +252,7 @@
 						$action_id = 0;
 						break;
 					}
-					$values['main'][1] = $this->get_info($action_id,&$readonlys['main']);
+					$values['main'][1] = $this->get_info($action_id,$readonlys['main']);
 					break;
 			}
 			$readonlys['cancel'] = $action != 'sp';
@@ -298,7 +297,7 @@
 				return $referer ? $this->tmpl->location($referer) : $this->index();
 			}
 			$readonlys = $values = array();
-			$values['main'][1] = $this->get_info($info_id,&$readonlys['main']);
+			$values['main'][1] = $this->get_info($info_id,$readonlys['main']);
 
 			$this->tmpl->read('infolog.delete');
 
@@ -659,8 +658,7 @@
 			$extra = $this->messages + $this->filters;
 			$enums = $this->bo->enums + $this->bo->status;
 			unset($enums['defaults']);
-			reset($enums);
-			while (list($key,$msg_arr) = each($enums))
+			foreach($enums as $key => $msg_arr)
 			{
 				$extra += $msg_arr;
 			}
