@@ -39,19 +39,19 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","preferences"));
 
-        $phpgw->preferences->add_with_value($n_loginid,"maxmatchs","15");
-        $phpgw->preferences->add_with_value($n_loginid,"theme","default");
-        $phpgw->preferences->add_with_value($n_loginid,"tz_offset","0");
-        $phpgw->preferences->add_with_value($n_loginid,"dateformat","m/d/Y");
-        $phpgw->preferences->add_with_value($n_loginid,"timeformat","12");
-        $phpgw->preferences->add_with_value($n_loginid,"lang","en");
+        $phpgw->common->preferences_add($n_loginid,"maxmatchs","15");
+        $phpgw->common->preferences_add($n_loginid,"theme","default");
+        $phpgw->common->preferences_add($n_loginid,"tz_offset","0");
+        $phpgw->common->preferences_add($n_loginid,"dateformat","m/d/Y");
+        $phpgw->common->preferences_add($n_loginid,"timeformat","12");
+        $phpgw->common->preferences_add($n_loginid,"lang","en");
 
         // Even if they don't have access to the calendar, we will add these.
         // Its better then the calendar being all messed up, they will be deleted
         // the next time the update there preferences.
-        $phpgw->preferences->add_with_value($n_loginid,"weekstarts","Monday");
-        $phpgw->preferences->add_with_value($n_loginid,"workdaystarts","9");
-        $phpgw->preferences->add_with_value($n_loginid,"workdayends","17");
+        $phpgw->common->preferences_add($n_loginid,"weekstarts","Monday");
+        $phpgw->common->preferences_add($n_loginid,"workdaystarts","9");
+        $phpgw->common->preferences_add($n_loginid,"workdayends","17");
 
         while ($permission = each($new_permissions)) {
           if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
