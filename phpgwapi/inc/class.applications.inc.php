@@ -63,8 +63,8 @@
         }
         if($owner_found) {
           $this->set_var("account_id",$lid);
-          $this->read_user_apps($this->set_var("account_id"));
-          $this->read_group_apps($this->set_var("account_id"));
+          $this->read_user_apps($this->get_var("account_id"));
+          $this->read_group_apps($this->get_var("account_id"));
         }
       }
     }
