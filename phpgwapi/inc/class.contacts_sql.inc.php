@@ -595,9 +595,7 @@
 				. ") VALUES ('$owner','$access','$cat_id','$tid','".$lid[1]
 				. implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
-			$this->db->query("SELECT max(id) FROM $this->std_table ",__LINE__,__FILE__);
-			$this->db->next_record();
-			$id = $this->db->f(0);
+			$id = $id = $this->db->get_last_insert_id($this->std_table, 'id');
 
 			if(count($extra_fields))
 			{
