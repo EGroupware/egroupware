@@ -312,11 +312,11 @@
 				($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
-				$ret_str .= $this->set_link('left','first.gif',$scriptname,lang('First page'),$extravars);
+				$ret_str .= $this->set_link('left','first.png',$scriptname,lang('First page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','first-grey.gif',lang('First page'));
+				$ret_str .= $this->set_icon('left','first-grey.png',lang('First page'));
 			}
 
 			if($start != 0)
@@ -330,11 +330,11 @@
 				{
 					$extravars['start'] = ($start - $this->maxmatches);
 				}
-				$ret_str .= $this->set_link('left','left.gif',$scriptname,lang('Previous page'),$extravars);
+				$ret_str .= $this->set_link('left','left.png',$scriptname,lang('Previous page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','left-grey.gif',lang('Previous page'));
+				$ret_str .= $this->set_icon('left','left-grey.png',lang('Previous page'));
 			}
 			return $ret_str;
 		} /* left() */
@@ -367,22 +367,22 @@
 				($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
-				$ret_str .= $this->set_link('right','right.gif',$scriptname,lang('Next page'),$extravars);
+				$ret_str .= $this->set_link('right','right.png',$scriptname,lang('Next page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
+				$ret_str .= $this->set_icon('right','right-grey.png',lang('Next page'));
 			}
 
 			if(($start != $total - $this->maxmatches) &&
 				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
-				$ret_str .= $this->set_link('right','last.gif',$scriptname,lang('Last page'),$extravars);
+				$ret_str .= $this->set_link('right','last.png',$scriptname,lang('Last page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','last-grey.gif',lang('Last page'));
+				$ret_str .= $this->set_icon('right','last-grey.png',lang('Last page'));
 			}
 			return $ret_str;
 		} /* right() */
@@ -711,8 +711,22 @@
 		@param $extra default ''
 		@param $build_an_href default True
 		*/
-		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_an_href=True)
+		function show_sort_order($sort, $var = '', $order = '', $program = '', $text = '', $extra='', $build_an_href = True)
 		{
+			if(is_array($sort))
+			{
+				$temp_format	= $sort['sort'];
+				$var			= (isset($sort['var'])?$sort['var']:'');
+				$order			= (isset($sort['order'])?$sort['order']:'');
+				$program		= (isset($sort['program'])?$sort['program']:'/index.php');
+				$text			= (isset($sort['text'])?$sort['text']:'xslt');
+				$extra			= (isset($sort['extra'])?$sort['extra']:'');
+				$build_an_href	= (isset($sort['build_an_href'])?$sort['build_an_href']:True);
+				settype($sort,'string');
+				$sort			= $temp_format;
+				unset($temp_format);
+			}
+
 			list($filter,$qfield,$start,$NULL1,$NULL) = $this->get_var();
 
 			if(($order == $var) && ($sort == 'ASC'))
@@ -737,7 +751,11 @@
 
 			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
-			if($build_an_href)
+			if ($text == 'xslt')
+			{
+				return $link;
+			}
+			elseif($build_an_href)
 			{
 				return '<a href="' . $link . '">' . $text . '</a>';
 			}
