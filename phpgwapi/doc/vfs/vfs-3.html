@@ -73,19 +73,15 @@ VFS, note that <EM>getabsolutepath () is depreciated</EM>. getabsolutepath () st
 exists (albeit in a much different form), and is responsible for some of the
 path translation, but it is an <EM>internal</EM> function only. Applications should
 only use path_parts (). We have shown you how to use path_parts () so you can
-experiment with it using different paths and relativities as we relativity
-in Section 
-<A HREF="vfs-4.html#sec:relativity"></A>.</P>
+experiment with it using different paths and relativities as we explore relativity.</P>
 <H2><A NAME="sec:cd"></A> <A NAME="ss3.2">3.2</A> <A HREF="vfs.html#toc3.2">cd ()</A>
 </H2>
 
-<P>Ok, one more thing before we discuss relativity, and that is the cd ()
-function. Part of the overall goal for the VFS in phpGroupWare is to give the
-user a seamless experience during their session. For example, if they upload
-a file using a file manager to /home/my_group/project1, and then go to download
-an email attachment, the default directory will be /home/my_group/project1.
-This is accomplished using the cd () function. The prototype and examples:</P>
-
+<P>Part of the overall goal for the VFS in phpGroupWare is to give the user
+a seamless experience during their session. For example, if they upload a file
+using a file manager to /home/my_group/project1, and then go to download an
+email attachment, the default directory will be /home/my_group/project1. This
+is accomplished using the cd () function. The prototype and examples: </P>
 <P>
 <PRE>
 function cd ($target = &quot;/&quot;, $relative = True, $relatives = array (RELATIVE_CURRENT))

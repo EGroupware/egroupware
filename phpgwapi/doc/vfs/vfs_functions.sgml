@@ -3,7 +3,7 @@
 <!-- LyX 1.1 created this file. For more info see http://www.lyx.org/ -->
 <article>
 <title>
-VFS class functions
+phpgwapi - VFS class
 </title>
 <author>
 Jason Wies
@@ -15,7 +15,7 @@ June 2001
 
 </abstract>
 <sect>
-VFS class functions
+phpgwapi - VFS class
 <sect1>
 class vfs<label id="sec:		class vfs" >
 <p>

@@ -210,7 +210,7 @@ Users and groups and synonymous
 As far as the actual paths are concerned, users and groups are the same.
  The VFS has no built in ACL support, so /home/username works the same as
  /home/groupname.
- See the note on AC L support in the Notes section.
+ See the note on ACL support in the Notes section.
 \layout Itemize
 
 You should never have to know the real path of files
@@ -415,13 +415,7 @@ internal
  function only.
  Applications should only use path_parts ().
  We have shown you how to use path_parts () so you can experiment with it
- using different paths and relativities as we relativity in Section\SpecialChar ~
-
-\begin_inset LatexCommand \ref{sec:relativity}
-
-\end_inset 
-
-.
+ using different paths and relativities as we explore relativity.
 \layout Subsection
 
 cd ()
@@ -432,8 +426,7 @@ cd ()
 
 \layout Standard
 
-Ok, one more thing before we discuss relativity, and that is the cd () function.
- Part of the overall goal for the VFS in phpGroupWare is to give the user
+Part of the overall goal for the VFS in phpGroupWare is to give the user
  a seamless experience during their session.
  For example, if they upload a file using a file manager to /home/my_group/proje
 ct1, and then go to download an email attachment, the default directory
@@ -496,7 +489,7 @@ Relativity
 
 Ok, just one last thing before we get into relativity.
  You will notice throughout the examples the use of $fakebase.
- $fakebase is by default 
+ $phpgw->vfs>fakebase is by default 
 \begin_inset Quotes eld
 \end_inset 
 
@@ -518,7 +511,7 @@ Ok, just one last thing before we get into relativity.
 \begin_inset Quotes eld
 \end_inset 
 
-Notes -> Fakebase directory
+Notes - Fakebase directory
 \begin_inset Quotes erd
 \end_inset 
 
@@ -698,7 +691,7 @@ rename (
 \begin_inset Quotes eld
 \end_inset 
 
-/var/www/phpgroupware/files/home/users/jason/attachments/actual_name.ext
+/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext
 \begin_inset Quotes erd
 \end_inset 
 
@@ -1930,4 +1923,45 @@ Application programmers need to recognize that /home is not absolute, and
 .
  I suggest setting $fakebase = $phpgw->vfs->fakebase; right off the bat
  to keep things neater.
+\layout Section
+
+About this Document
+\layout Subsection
+
+Copyright and License
+\layout Standard
+
+Copyright (c) 2001 Jason Wies
+\layout Standard
+
+Permission is granted to copy, distribute and/or modify this document under
+ the terms of the GNU Free Documentation License, Version 1.1 or any later
+ version published by the Free Software Foundation; with no Invarient Sections,
+ with no Front-Cover Texts, and no Back-Cover Texts.
+\layout Standard
+
+A copy of the license is available at 
+\begin_inset LatexCommand \url[http://www.gnu.org/copyleft/fdl.html]{http://www.gnu.org/copyleft/fdl.html}
+
+\end_inset 
+
+.
+\layout Subsection
+
+History
+\layout Standard
+
+Original document released in June 2001 by Jason Wies.
+\layout Subsection
+
+Contributing
+\layout Standard
+
+Contributions are always welcome.
+ Please send to the current maintainer, Jason Wies, 
+\begin_inset LatexCommand \url[zone@users.sourceforge.net]{mailto:zone@users.sourceforge.net}
+
+\end_inset 
+
+.
 \the_end

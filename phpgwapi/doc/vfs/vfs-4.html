@@ -15,9 +15,9 @@
 <H2><A NAME="sec:relativity"></A> <A NAME="s4">4.</A> <A HREF="vfs.html#toc4">Relativity</A></H2>
 
 <P>Ok, just one last thing before we get into relativity. You will notice
-throughout the examples the use of $fakebase. $fakebase is by
-default "/home". The old VFS was hard-coded to use "/home", but the naming choice
-for this is now up to administrators. See the "Notes -&gt; Fakebase directory"
+throughout the examples the use of $fakebase. $phpgw-&gt;vfs&gt;fakebase
+is by default "/home". The old VFS was hard-coded to use "/home", but the naming
+choice for this is now up to administrators. See the "Notes - Fakebase directory"
 section for more information. Throughout the rest of this document, you will
 see $fakebase used in calls to the VFS, and /home used in actual paths.
 <EM>You should always use $fakebase when making applications. </EM>I suggest
@@ -75,7 +75,7 @@ directory. So the actual file system call might look like this (keep in mind
 that $randomdir and $randomfile are just random strings):</P>
 <P>
 <PRE>
-rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/users/jason/attachments/actual_name.ext");
+rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext");
 </PRE>
 </P>
 <P>Of course you don't have to know that, nor should you be concerned with

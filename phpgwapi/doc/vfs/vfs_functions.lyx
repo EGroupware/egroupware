@@ -23,7 +23,7 @@
 
 \layout Title
 \added_space_top vfill \added_space_bottom vfill
-VFS class functions
+phpgwapi - VFS class
 \layout Author
 
 Jason Wies
@@ -38,7 +38,7 @@ June 2001
 
 \layout Section
 
-VFS class functions
+phpgwapi - VFS class
 
 \layout Subsection
 		class vfs

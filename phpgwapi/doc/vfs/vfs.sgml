@@ -81,7 +81,7 @@ Users and groups and synonymous
 </p><p>
 As far as the actual paths are concerned, users and groups are the same.
  The VFS has no built in ACL support, so /home/username works the same as /home/groupname.
- See the note on AC L support in the Notes section.
+ See the note on ACL support in the Notes section.
 </p>
 <p>
 <itemize>
@@ -196,19 +196,16 @@ As you can see, path_parts () is a very useful function and will save you
  exists (albeit in a much different form), and is responsible for some of the
  path translation, but it is an <em>internal</em> function only. Applications should
  only use path_parts (). We have shown you how to use path_parts () so you can
- experiment with it using different paths and relativities as we relativity
- in Section <ref id="sec:relativity" name="" >.
+ experiment with it using different paths and relativities as we explore relativity.
 </p>
 <sect1>
 cd ()<label id="sec:cd" >
 <p>
-Ok, one more thing before we discuss relativity, and that is the cd ()
- function. Part of the overall goal for the VFS in phpGroupWare is to give the
- user a seamless experience during their session. For example, if they upload
- a file using a file manager to /home/my_group/project1, and then go to download
- an email attachment, the default directory will be /home/my_group/project1.
- This is accomplished using the cd () function. The prototype and examples:
- 
+Part of the overall goal for the VFS in phpGroupWare is to give the user
+ a seamless experience during their session. For example, if they upload a file
+ using a file manager to /home/my_group/project1, and then go to download an
+ email attachment, the default directory will be /home/my_group/project1. This
+ is accomplished using the cd () function. The prototype and examples: 
 </p>
 <p>
 <verb>
@@ -229,9 +226,9 @@ Now you're ready for relativity.
 Relativity<label id="sec:relativity" >
 <p>
 Ok, just one last thing before we get into relativity. You will notice
- throughout the examples the use of &dollar;fakebase. &dollar;fakebase is by
- default "/home". The old VFS was hard-coded to use "/home", but the naming choice
- for this is now up to administrators. See the "Notes -&gt; Fakebase directory"
+ throughout the examples the use of &dollar;fakebase. &dollar;phpgw-&gt;vfs&gt;fakebase
+ is by default "/home". The old VFS was hard-coded to use "/home", but the naming
+ choice for this is now up to administrators. See the "Notes - Fakebase directory"
  section for more information. Throughout the rest of this document, you will
  see &dollar;fakebase used in calls to the VFS, and /home used in actual paths.
  <em>You should always use &dollar;fakebase when making applications. </em>I suggest
@@ -295,7 +292,7 @@ Those used to the old VFS will note that you do not have to translate the
 </p>
 <p>
 <verb>
-rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/users/jason/attachments/actual_name.ext");
+rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext");
 </verb>
 </p><p>
 Of course you don't have to know that, nor should you be concerned with
@@ -1142,6 +1139,33 @@ The old VFS was hard-coded to use &quot;/home&quot; as the fake base directory,
  that /home is not absolute, and use &dollar;phpgw-&gt;vfs-&gt;fakebase instead</em>.
  I suggest setting &dollar;fakebase = &dollar;phpgw-&gt;vfs-&gt;fakebase; right
  off the bat to keep things neater.
+</p>
+<sect>
+About this Document
+<sect1>
+Copyright and License
+<p>
+Copyright (c) 2001 Jason Wies
+</p>
+<p>
+Permission is granted to copy, distribute and/or modify this document under
+ the terms of the GNU Free Documentation License, Version 1.1 or any later version
+ published by the Free Software Foundation; with no Invarient Sections, with
+ no Front-Cover Texts, and no Back-Cover Texts.
+</p>
+<p>
+A copy of the license is available at <url url="http://www.gnu.org/copyleft/fdl.html" name="http://www.gnu.org/copyleft/fdl.html">.
+</p>
+<sect1>
+History
+<p>
+Original document released in June 2001 by Jason Wies.
+</p>
+<sect1>
+Contributing
+<p>
+Contributions are always welcome. Please send to the current maintainer,
+ Jason Wies, <url url="mailto:zone@users.sourceforge.net" name="zone@users.sourceforge.net">.
 </p>
 
 
