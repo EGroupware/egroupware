@@ -163,12 +163,17 @@
 				$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .=
 				'<style type="text/css">@import url(/egroupware/phpgwapi/js/htmlarea/htmlarea.css);</style>
 				<script type="text/javascript">
-				var _editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
+				_editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
+                //	var htmlareaConfig = new HTMLArea.Config();
+				//  htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
+				</script>\n";
+				
+				$GLOBALS['phpgw_info']['flags']['java_script'] .=
+				'<script type="text/javascript">
 				var htmlareaConfig = new HTMLArea.Config();
 				htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
 				</script>\n";
-				
-			}
+		}
 //			echo $GLOBALS['phpgw_info']['flags']['java_script'];
 //			die('test');
 			$id = str_replace(array('[',']'),array('_',''),$name);	// no brakets in the id allowed by js
