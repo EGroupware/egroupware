@@ -29,10 +29,19 @@
     <td>
      <select name="newsettings[template_set]">
     <?php
-      $templates = $phpgw_setup->get_template_list();
-      while (list ($key, $value) = each ($templates)){
-        echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
-      }
+	if ($phpgw_setup)
+	{
+		$templates = $phpgw_setup->get_template_list();
+	}
+	else
+	{
+		$templates = $phpgw->common->list_templates();
+	}
+	echo '<option value="user_choice"' . $selected['user_choice'] . '>Users Choice</option>';
+	while (list ($key, $value) = each ($templates))
+	{
+		echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
+	}
     ?>
      </select>
     </td>
@@ -45,20 +54,24 @@
     <td>
      <select name="newsettings[force_theme]">
     <?php
-
-      $themes = $phpgw_setup->list_themes();
-		echo '<option value="user_choice"' . $selected['user_choice'] . '>Users Choice</option>';
-		while (list ($key, $value) = each ($themes))
-		{
-			echo '<option value="'.$value.'" '.$selected[$value].'>'.$value.'</option>';
-		}
+	if ($phpgw_setup)
+	{
+		$themes = $phpgw_setup->list_themes();
+	}
+	else
+	{
+		$themes = $phpgw->common->list_themes();
+	}
+	echo '<option value="user_choice"' . $selected['user_choice'] . '>Users Choice</option>';
+	while (list ($key, $value) = each ($themes))
+	{
+		echo '<option value="'.$value.'" '.$selected[$value].'>'.$value.'</option>';
+	}
     ?>
      </select>
     </td>
    </tr>
    <?php $selected = array(); ?>
-
-
 
    <?php/* $selected[$current_config["useframes"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
