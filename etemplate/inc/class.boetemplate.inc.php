@@ -308,7 +308,7 @@
 			{
 				$id = $this->appsession_id;
 			}
-			$this/*GLOBALS['phpgw']->session*/->appsession($id,'etemplate',$data);
+			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
 			return $id;
 		}
@@ -323,7 +323,7 @@
 		*/
 		function get_appsession($id)
 		{
-			$data = $this/*GLOBALS['phpgw']->session*/->appsession($id,'etemplate');
+			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
 
 			//echo "<p>get_appsession('$id') data="; _debug_array($data);
 
