@@ -129,7 +129,7 @@
 			{
 				if($this->mcrypt_version != 'old')
 				{
-					if(phpversion() >= '4.1.1')
+					if(function_exists('mcrypt_generic_deinit'))
 					{
 						mcrypt_generic_deinit($this->td);
 					}
