@@ -43,8 +43,9 @@
 
     $cat_name = addslashes($cat_name);
     $cat_description = addslashes($cat_description);
+    $cat_access = 'public';
 
-    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data);	}
+    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access);	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }

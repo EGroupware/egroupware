@@ -75,7 +75,7 @@
 
     for ($i=0;$i<count($categories);$i++) {                                                                                                                    
 
-    if ($categories[$i]['owner'] == $phpgw_info["user"]["account_id"]) {    
+    if ($categories[$i]['owner'] == $phpgw_info["user"]["account_id"] && $categories[$i]['app_name'] == 'phpgw') {    
 
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var(tr_color,$tr_color);

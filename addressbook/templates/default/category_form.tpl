@@ -21,6 +21,10 @@
      <td>{lang_descr}:</td>
      <td colspan=2><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></td>
     </tr>
+    <tr>
+     <td>{lang_access}:</td>
+     <td colspan=2>{access}</td>
+    </tr>
     </table>
 
 <!-- BEGIN add -->

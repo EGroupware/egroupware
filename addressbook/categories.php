@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Inventory                                                 *
+  * phpGroupWare - Addressbook categories                                    *
   * http://www.phpgroupware.org                                              *
   * Written by Bettina Gille [ceb@phpgroupware.org]                          *
   * -----------------------------------------------                          *
@@ -10,12 +10,11 @@
   *  option) any later version.                                              *
   \**************************************************************************/
   /* $Id$ */
-  
-    $phpgw_info["flags"] = array("currentapp" => "addressbook",
-		    "enable_nextmatchs_class" => True,
-		    "enable_categories_class" => True);
 
-    include("../header.inc.php");
+    $phpgw_info["flags"] = array('currentapp' => 'addressbook',
+		    'enable_nextmatchs_class' => True);
+
+    include('../header.inc.php');
   
     $t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('addressbook'));                                                                                                             
   
@@ -38,10 +37,10 @@
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Categories for'));
     $t->set_var('lang_action',lang('Category list'));
-    $t->set_var('add_action',$phpgw->link("/addressbook/addcategory.php"));
+    $t->set_var('add_action',$phpgw->link('/addressbook/addcategory.php'));
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_search',lang('Search'));
-    $t->set_var('actionurl',$phpgw->link("/addressbook/categories.php"));
+    $t->set_var('actionurl',$phpgw->link('/addressbook/categories.php'));
     $t->set_var('lang_done',lang('Done'));
     $t->set_var('doneurl',$phpgw->link('/preferences/'));
 
@@ -83,16 +82,21 @@
 
     for ($i=0;$i<count($categories);$i++) {                                                                                                                    
 
-    if ($categories[$i]['owner'] == $phpgw_info["user"]["account_id"]) {    
-
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var(tr_color,$tr_color);
 
     $cat_id = $categories[$i]['id'];
     $owner = $categories[$i]['owner'];
-    $name = $phpgw->strip_html($categories[$i]['name']);
-    $descr = $phpgw->strip_html($categories[$i]['description']);                                                                                                                                                        
+    $space = '&nbsp;&nbsp;';
+    if ($categories[$i]['parent'] > 0) { $name = $space . $phpgw->strip_html($categories[$i]['name']); }
+
+    $descr = $phpgw->strip_html($categories[$i]['description']);
     if (! $descr) { $descr  = '&nbsp;'; }
+
+    if ($categories[$i]['parent'] == 0) {
+    $name = '<font color=FF0000><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
+    $descr = '<font color=FF0000><b>' . $descr . '</b></font>';
+    }
 
 //-------------------------- template declaration for list records ---------------------------                                                                                                               
                                                                                                                                                             
@@ -105,22 +109,21 @@
     if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
     $t->set_var('edit',$phpgw->link('/addressbook/editcategory.php',"cat_id=$cat_id"));                                                                                                                
     $t->set_var('lang_edit_entry',lang('Edit'));
-       }
+    }
     else { 
     $t->set_var('edit','');
     $t->set_var('lang_edit_entry','&nbsp;');
-     }
+    }
     if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
     $t->set_var('delete',$phpgw->link('/addressbook/deletecategory.php',"cat_id=$cat_id"));
     $t->set_var('lang_delete_entry',lang('Delete'));         
-     }
+    }
     else { 
     $t->set_var('delete','');
     $t->set_var('lang_delete_entry','&nbsp;');
-     }
-    $t->parse('list','cat_list',True);                                                                                                                   
-     }                                                                                                                                                          
     }
+    $t->parse('list','cat_list',True);                                                                                                                   
+    }                                                                                                                                                          
 // ---------------------------- end record declaration -----------------------------------------
 
     $t->parse('out','cat_list_t',True);                                                                                                           

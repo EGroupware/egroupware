@@ -32,8 +32,10 @@
     if (! $error) {
 	$cat_name = addslashes($cat_name);
 	$cat_description = addslashes($cat_description);
+        if ($access) { $cat_access = 'private'; }
+        else { $cat_access = 'public'; }
 
-    $c->add($cat_name,$cat_parent,$cat_description,$cat_data);
+	$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
 	}
     }
 
@@ -49,17 +51,17 @@
     $t->set_var('actionurl',$phpgw->link('/addressbook/addcategory.php'));
     $t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
     $t->set_var('lang_choose',lang('Choose the category'));
-    $t->set_var('lang_main_cat',lang('Category'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
-
-    $t->set_var('main_cat_list',$c->formated_list('select','mains'));
+    $t->set_var('lang_access',lang('Private'));
+    if ($access) { $t->set_var('access', '<input type="checkbox" name="private" value="True" checked>'); }
+    else { $t->set_var('access', '<input type="checkbox" name="private" value="True"'); }
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('cat_name',$cat_name);
     $t->set_var('cat_description',$cat_description);
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_reset',lang('Clear Form'));
-	$t->set_var('lang_done',lang('Done'));
+    $t->set_var('lang_done',lang('Done'));
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');
     $t->pparse('out','form');

@@ -37,6 +37,7 @@
     $cat_name = addslashes($cat_name);
     $cat_description = addslashes($cat_description);
 
+
     if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data);	}
     }
 
@@ -59,6 +60,9 @@
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
+    $t->set_var('lang_access',lang('Private'));
+    if ($access) { $t->set_var('access', '<input type="checkbox" name="private" value="True" checked>'); }
+    else { $t->set_var('access', '<input type="checkbox" name="private" value="True"'); }
 
     $cat_id = $cats[0]['id'];
 

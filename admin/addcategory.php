@@ -33,8 +33,9 @@
     if (! $error) {
 	$cat_name = addslashes($cat_name);
 	$cat_description = addslashes($cat_description);
+	$cat_access = 'public';
 
-    $c->add($cat_name,$cat_parent,$cat_description,$cat_data);
+	$c->add($cat_name,$cat_parent,$cat_description,$cat_data,$cat_access);
 	}
     }
 
