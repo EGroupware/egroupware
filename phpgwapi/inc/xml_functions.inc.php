@@ -91,6 +91,29 @@
 	// formulate backslashes for escaping regexp
 	$GLOBALS['xmlrpc_backslash'] = chr(92) . chr(92);
 
+	/*!
+	@function xmlrpcfault
+	@abstract Error reporting for XML-RPC
+	@discussion Author: jengo <br>
+	Returns XML-RPC fault and stops this execution of the application. <br>
+	Syntax: void xmlrpcfault(string) <br>
+	Example1: xmlrpcfault('Session could not be verifed'); <br>
+	@param $string Error message to be returned.
+	*/
+	function xmlrpcfault($string)
+	{
+		$r = CreateObject('phpgwapi.xmlrpcresp',
+			CreateObject('phpgwapi.xmlrpcval'),
+			$GLOBALS['xmlrpcerr']['unknown_method'],
+			$string
+		);
+		$payload = '<?xml version="1.0"?>' . "\n" . $r->serialize();
+		Header('Content-type: text/xml');
+		Header('Content-length: ' . strlen($payload));
+		print $payload;
+		$GLOBALS['phpgw']->common->phpgw_exit(False);
+	}
+
 	// used to store state during parsing
 	// quick explanation of components:
 	//   st - used to build up a string for evaluation
