@@ -30,3 +30,8 @@
   {
 
   }
+
+  function account_exsists($loginid)
+  {
+
+  }

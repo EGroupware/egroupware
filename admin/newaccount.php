@@ -15,6 +15,10 @@
   						 "disable_send_class" => True, "currentapp" => "admin");
 
   include("../header.inc.php");
+  include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
+        . $phpgw_info["server"]["auth_type"] . ".inc.php");
+
+  
   if ($submit) {
      $totalerrors = 0;
   
@@ -36,56 +40,16 @@
      if (count($n_groups) == 0)
         $error[$totalerrors++] = lang("Account must belong to at least 1 group");
 
-     $phpgw->db->query("select count(*) from accounts where account_lid='$n_loginid'");
-     $phpgw->db->next_record();
-     if ($phpgw->db->f(0) != 0)
+     if (account_exsists($n_loginid)) {
         $error[$totalerrors++] = lang("That loginid has already been taken");
+     }
 
      if (! $error) {
-        $phpgw->db->lock(array("accounts","preferences"));
-
-        $phpgw->common->preferences_add($n_loginid,"maxmatchs","common","15");
-        $phpgw->common->preferences_add($n_loginid,"theme","common","default");
-        $phpgw->common->preferences_add($n_loginid,"tz_offset","common","0");
-        $phpgw->common->preferences_add($n_loginid,"dateformat","common","m/d/Y");
-        $phpgw->common->preferences_add($n_loginid,"timeformat","common","12");
-        $phpgw->common->preferences_add($n_loginid,"lang","common","en");
-        $phpgw->common->preferences_add($n_loginid,"company","addressbook","True");
-        $phpgw->common->preferences_add($n_loginid,"lastname","addressbook","True");
-        $phpgw->common->preferences_add($n_loginid,"firstname","addressbook","True");
-
-        // Even if they don't have access to the calendar, we will add these.
-        // Its better then the calendar being all messed up, they will be deleted
-        // the next time the update there preferences.
-        $phpgw->common->preferences_add($n_loginid,"weekstarts","calendar","Monday");
-        $phpgw->common->preferences_add($n_loginid,"workdaystarts","calendar","9");
-        $phpgw->common->preferences_add($n_loginid,"workdayends","calendar","17");
-
-        while ($permission = each($new_permissions)) {
-          if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-             $phpgw->accounts->add_app($permission[0]);
-          }
-        }
-
-        $sql = "insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,"
-	        . "account_permissions,account_groups,account_status,account_lastpwd_change) values ('$n_loginid'"
-	        . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
-	        . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
-	        . "','" . $phpgw->accounts->groups_array_to_string($n_groups) . "','A',0)";
-
-        $phpgw->db->query($sql);
-        $phpgw->db->unlock();
-
-        $sep = $phpgw->common->filesystem_separator();
-
-        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
-
-        if (! @mkdir($basedir . $n_loginid, 0707)) {
-//         $cd = 36;
-        } else {
-           $cd = 28;
-        }
-
+        $cd = account_add(array("loginid"   => $n_loginid,   "permissions" => $new_permissions,
+        				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
+        				        "passwd"    => $n_passwd,
+        				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+        
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         exit;
      }
