@@ -76,6 +76,10 @@
 			{
 				$this->BROWSER_PLATFORM='Unix';
 			}
+			else if (strstr($HTTP_USER_AGENT,'Beos'))
+			{
+				$this->BROWSER_PLATFORM='Beos';
+			}
 			else
 			{
 				$this->BROWSER_PLATFORM='Other';
@@ -105,6 +109,42 @@
 		function get_platform()
 		{
 			return $this->BROWSER_PLATFORM;
+		}
+
+		function is_linux()
+		{
+			if ($this->get_platform()=='Linux')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function is_unix()
+		{
+			if ($this->get_platform()=='Unix')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function is_beos()
+		{
+			if ($this->get_platform()=='Beos')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		function is_mac()
