@@ -18,9 +18,15 @@
     global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
     global $matrixtype, $participants, $owner, $phpgw, $grants, $rights;
   }
+
+	$cols = 8;
+	if($phpgw->calendar->check_perms(PHPGW_ACL_PRIVATE) == True)
+	{
+		$cols++;
+	}
 ?>
 
-<table border="0" width="100%" cols="8" cellpadding="0" cellspacing="0">
+<table border="0" width="100%" cols="<?php echo $cols; ?>" cellpadding="0" cellspacing="0">
  <tr>
   <td width="2%">
    &nbsp;
@@ -50,8 +56,14 @@
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/view.gif" alt="<?php echo lang('Daily Matrix View'); ?>" border="0">
    </a>
   </td>
-  <form action="<?php echo $phpgw->link($PHP_SELF,'owner='.$owner); ?>" method="POST" name="filtermethod">
-   <td width="45%" align="center" valign="center">
+<?php
+	$remainder = 65;
+	if($phpgw->calendar->check_perms(PHPGW_ACL_PRIVATE) == True)
+	{
+		$remainder -= 30;
+?>
+  <form action="<?php echo $phpgw->link('/calendar/'.basename($SCRIPT_FILENAME),'owner='.$owner); ?>" method="POST" name="filtermethod">
+   <td width="30%" align="center" valign="center">
     <b><?php echo lang('Filter'); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
 <?php if(isset($date) && $date) { ?>
@@ -86,12 +98,12 @@
    </td>
   </form>
 <?php
+	}
     if(count($grants) > 0)
     {
-	    $script = '/calendar/' . basename($SCRIPT_FILENAME);
 ?>
-  <form action="<?php echo $phpgw->link($script); ?>" method="POST" name="setowner">
-   <td width="20%" align="center" valign="center">
+  <form action="<?php echo $phpgw->link('/calendar/'.basename($SCRIPT_FILENAME)); ?>" method="POST" name="setowner">
+   <td width="<?php echo $remainder; ?>%" align="center" valign="center">
     <b><?php echo lang('User'); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
 <?php if(isset($date) && $date) { ?>
@@ -122,7 +134,7 @@
 <?php
     }
 ?>
-  <form action="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/search.php','owner='.$owner); ?>" method="POST">
+  <form action="<?php echo $phpgw->link('/calendar/search.php','owner='.$owner); ?>" method="POST">
    <td align="right" valign="center">
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
     <?php if(isset($date) && $date) { ?>
