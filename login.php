@@ -86,7 +86,7 @@
     if (! $sessionid) {
        Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
     } else {
-       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]) . "/", "cd=yes");
+       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/", "cd=yes"));
     }
 
   } else {
