@@ -447,7 +447,7 @@
 							$opts[$col] = "0,$disable";
 						}
 					}
-					$row_data[".$col"] .= $this->html->formatOptions($cell['align'],'ALIGN');
+					$row_data[".$col"] .= $this->html->formatOptions($cell['align']?$cell['align']:'left','ALIGN');
 					$cl = $this->expand_name(isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl,
 						$c,$r,$show_c,$show_row,$content);
 					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
