@@ -61,9 +61,8 @@ august	common	en	August
 author	nntp	en	Author
 available groups	nntp	en	Available Groups
 bad login or password	login	en	Bad login or password
-bbs phone	addressbook	en	BBS Phone
 base url	admin	en	Base URL
-bbs phone	addressbook	en	bbs phone
+bbs phone	addressbook	en	BBS Phone
 birthday	addressbook	en	Birthday
 book marks	common	en	Book marks
 bookmarks	common	en	Bookmarks
@@ -328,7 +327,7 @@ next page	common	en	next page
 nntp	common	en	NNTP
 no	common	en	No
 no matches found.	calendar	en	No matches found.
-no matchs found	common	de	No matches found
+no matchs found	common	en	No matches found
 no subject	email	en	No Subject
 no tickets found	tts	en	No tickets found.
 no_file_name	filemanager	en	No filename was specified
