@@ -75,7 +75,7 @@
 		$var['powered_by_color'] = '#ffffff';
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
-			$var['powered_by'] = lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			$tpl->set_var($var);
 		}
 		else
@@ -114,7 +114,7 @@
 		}
 		elseif ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 		{
-			$api_messages = lang('it has been more then x days since you changed your password',30);
+			$api_messages = lang('it has been more then %1 days since you changed your password',30);
 		}
  
 		// This is gonna change
@@ -139,7 +139,7 @@
 #		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
 #		{
 #			$var = Array(
-#				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
+#				'powered'	=> lang('Powered by phpGroupWare version %1', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 #				'img_root'	=> PHPGW_IMAGES_DIR,
 #				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 #				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
