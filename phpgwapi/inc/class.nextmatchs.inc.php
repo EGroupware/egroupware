@@ -316,11 +316,11 @@
 				($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
-				$ret_str .= $this->set_link('left','first.gif',$scriptname,lang('First page'),$extravars);
+				$ret_str .= $this->set_link('left','first.png',$scriptname,lang('First page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','first-grey.gif',lang('First page'));
+				$ret_str .= $this->set_icon('left','first-grey.png',lang('First page'));
 			}
 
 			if ($start != 0)
@@ -334,11 +334,11 @@
 				{
 					$extravars['start'] = ($start - $this->maxmatches);
 				}
-				$ret_str .= $this->set_link('left','left.gif',$scriptname,lang('Previous page'),$extravars);
+				$ret_str .= $this->set_link('left','left.png',$scriptname,lang('Previous page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','left-grey.gif',lang('Previous page'));
+				$ret_str .= $this->set_icon('left','left-grey.png',lang('Previous page'));
 			}
 			return $ret_str;
 		} /* left() */
@@ -371,22 +371,22 @@
 				($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
-				$ret_str .= $this->set_link('right','right.gif',$scriptname,lang('Next page'),$extravars);
+				$ret_str .= $this->set_link('right','right.png',$scriptname,lang('Next page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
+				$ret_str .= $this->set_icon('right','right-grey.png',lang('Next page'));
 			}
 
 			if (($start != $total - $this->maxmatches) &&
 				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
-				$ret_str .= $this->set_link('right','last.gif',$scriptname,lang('Last page'),$extravars);
+				$ret_str .= $this->set_link('right','last.png',$scriptname,lang('Last page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','last-grey.gif',lang('Last page'));
+				$ret_str .= $this->set_icon('right','last-grey.png',lang('Last page'));
 			}
 			return $ret_str;
 		} /* right() */
@@ -857,11 +857,11 @@
 				($feed_vars['start'] > $this->maxmatches))
 			{
 				$out_vars['start'] = 0;
-				$return_array['first_page'] = $this->set_link_imap('left','first.gif',lang('First page'),$out_vars);
+				$return_array['first_page'] = $this->set_link_imap('left','first.png',lang('First page'),$out_vars);
 			}
 			else
 			{
-				$return_array['first_page'] = $this->set_icon_imap('left','first-grey.gif',lang('First page'));
+				$return_array['first_page'] = $this->set_icon_imap('left','first-grey.png',lang('First page'));
 			}
 			// previous page
 			if($feed_vars['start'] != 0)
@@ -875,11 +875,11 @@
 				{
 					$out_vars['start'] = ($feed_vars['start'] - $this->maxmatches);
 				}
-				$return_array['prev_page'] = $this->set_link_imap('left','left.gif',lang('Previous page'),$out_vars);
+				$return_array['prev_page'] = $this->set_link_imap('left','left.png',lang('Previous page'),$out_vars);
 			}
 			else
 			{
-				$return_array['prev_page'] = $this->set_icon_imap('left','left-grey.gif',lang('Previous page'));
+				$return_array['prev_page'] = $this->set_icon_imap('left','left-grey.png',lang('Previous page'));
 			}
 
 			// re-initialize the out_vars
@@ -890,22 +890,22 @@
 				($feed_vars['total'] > $feed_vars['start'] + $this->maxmatches))
 			{
 				$out_vars['start'] = ($feed_vars['start'] + $this->maxmatches);
-				$return_array['next_page'] = $this->set_link_imap('right','right.gif',lang('Next page'),$out_vars);
+				$return_array['next_page'] = $this->set_link_imap('right','right.png',lang('Next page'),$out_vars);
 			}
 			else
 			{
-				$return_array['next_page'] = $this->set_icon_imap('right','right-grey.gif',lang('Next page'));
+				$return_array['next_page'] = $this->set_icon_imap('right','right-grey.png',lang('Next page'));
 			}
 			// last page
 			if(($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches) &&
 				(($feed_vars['total'] - $this->maxmatches) > ($feed_vars['start'] + $this->maxmatches)))
 			{
 				$out_vars['start'] = ($feed_vars['total'] - $this->maxmatches);
-				$return_array['last_page'] = $this->set_link_imap('right','last.gif',lang('Last page'),$out_vars);
+				$return_array['last_page'] = $this->set_link_imap('right','last.png',lang('Last page'),$out_vars);
 			}
 			else
 			{
-				$return_array['last_page'] = $this->set_icon_imap('right','last-grey.gif',lang('Last page'));
+				$return_array['last_page'] = $this->set_icon_imap('right','last-grey.png',lang('Last page'));
 			}
 			return $return_array;
 		}
