@@ -38,6 +38,7 @@
 			'month' => True,
 			'get_month' => True,
 			'week'  => True,
+			'get_week' => True,
 			'year' => True,
 			'view' => True,
 			'edit' => True,
