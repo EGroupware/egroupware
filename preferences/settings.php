@@ -193,17 +193,16 @@
          <select name="settings[default_app]">
           <option value="">&nbsp;</option>
            <?php
- 			$db_perms = $phpgw->accounts->read_apps($phpgw_info["user"]["userid"]);
-             while ($permission = each($db_perms)) {
-               if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-				  echo "<option value=\"" . $permission[0] . "\"";
-				  if ($phpgw_info["user"]["preferences"]["common"]["default_app"] == $permission[0]) {
-					 echo " selected";
+              reset($phpgw_info["user"]["apps"]);
+              while ($permission = each($phpgw_info["user"]["apps"])) {
+                if ($phpgw_info["apps"][$permission[0]]["status"] != 2) {
+  		  		      echo "<option value=\"" . $permission[0] . "\"";
+	  		  	      if ($phpgw_info["user"]["preferences"]["common"]["default_app"] == $permission[0]) {
+		  		  	      echo " selected";
                   }
-				  echo ">" . lang($phpgw_info["apps"][$permission[0]]["title"])
-					 . "</option>";
-               }
-             }
+				          echo ">" . lang($phpgw_info["apps"][$permission[0]]["title"])."</option>";
+				        }
+              }
           ?></select>
         </td>
        </tr>
