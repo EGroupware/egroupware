@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<overlay>
+  <grid id="et_media.edit" template="" lang="" group="" version="" width="100%">
+    <columns>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+      </row>
+      <row>
+        <hrule span="all"/>
+      </row>
+      <row>
+        <description span="all"/>
+      </row>
+      <row>
+        <description value="Name"/>
+        <textbox size="100" maxlength="100" span="all" id="name" statustext="here goes the name of the publication / record"/>
+      </row>
+      <row>
+        <description value="Author"/>
+        <textbox size="100" maxlength="100" span="all" id="author" statustext="please use Name, First Name"/>
+      </row>
+      <row>
+        <description value="Type"/>
+        <menulist>
+          <menupopup span="all" id="type" statustext="select the type fitting most"/>
+        </menulist>
+      </row>
+      <row>
+        <description value="Description"/>
+        <textbox ="" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/>
+      </row>
+      <row>
+        <description span="all"/>
+      </row>
+      <row>
+        <button label="Read" id="read" statustext="reads or searches for entries matching the criteria above"/>
+        <button label="Save" id="save" statustext="saves the change to the db"/>
+        <button label="Cancel" id="cancel" statustext="clears the form, without changing anything"/>
+        <button label="Delete" id="delete" statustext="deletes an entry"/>
+      </row>
+    </rows>
+  </grid>
+</overlay>

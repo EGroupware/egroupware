@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<overlay>
+  <grid id="et_media.show" template="" lang="" group="" version="" width="100%">
+    <columns>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+      </row>
+      <row>
+        <hrule span="all"/>
+      </row>
+      <row>
+        <description span="all"/>
+      </row>
+      <row>
+        <grid content="entry" id="et_media.show.rows"/>
+      </row>
+    </rows>
+  </grid>
+</overlay>
