@@ -158,7 +158,7 @@
 			$fields["access"]           = 'public';
 		}
 
-		$fields["cat_id"]               = $cat_id;
+		$fields["cat_id"]               = $ncat_id;
 
 		$userid = $phpgw_info["user"]["account_id"];
 

@@ -186,7 +186,7 @@
 	$t->set_var(cats,lang('Category'));
 	$t->set_var(cats_url,$phpgw->link("/addressbook/index.php",
 		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
-	$t->set_var(cats_link,cat_option($cat_id));
+	$t->set_var(cats_link,cat_option($cat_id,'cat_id'));
 	$t->set_var(lang_cats,lang('Select'));
 	$t->set_var("lang_addressbook",lang("Address book"));
 	$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);

@@ -34,10 +34,10 @@
 	}
 
 	// Return a select form element with the categories options in it
-	function cat_option($cat_id='',$notall=False) {
+	function cat_option($cat_id='',$name='cat_id',$notall=False) {
 		global $phpgw_info;
 		// Setup all and none first
-		$cats_link  = "<select name=\"cat_id\">";
+		$cats_link  = "<select name=\"".$name."\">";
 		if (!$notall) {
 			$cats_link .= "<option value =\"all\"";
 			if ($cat_id=="all") {
@@ -258,7 +258,7 @@
 			$cat_id   = $fields["cat_id"];
 		}
 
-		$cats_link    = cat_option($cat_id,True);
+		$cats_link    = cat_option($cat_id,'ncat_id',True);
 
 		if ($access == 'private') {
 			$access_check = ' checked';
