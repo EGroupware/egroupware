@@ -21,7 +21,7 @@
 if ($id > 0) {
     $can_edit = false;
     $phpgw->db->query("SELECT cal_id FROM webcal_entry_user WHERE cal_login="
-		          . "'" . $phpgw_info["user"]["userid"] . "' AND cal_id = $id");
+		            . "'" . $phpgw_info["user"]["account_id"] . "' AND cal_id = $id");
     $phpgw->db->next_record();
     if ($phpgw->db->f("cal_id") > 0)
        $can_edit = true;
@@ -258,9 +258,10 @@ function validate_and_submit() {
 
 
 <?php
-  $phpgw->db->query("select account_lid,account_lastname, account_firstname from accounts where "
-	             . "account_status !='L' and account_lid != '" . $phpgw_info["user"]["userid"] . "' and "
-	             . "account_permissions like '%:calendar:%' order by account_lastname,account_firstname,account_lid");
+  $phpgw->db->query("select account_id,account_lid,account_lastname, account_firstname from "
+  			   . "accounts where account_status !='L' and account_lid != '"
+  			   . $phpgw_info["user"]["userid"] . "' and account_permissions like '%:calendar:%' "
+  			   . "order by account_lastname,account_firstname,account_lid");
 
   if ($phpgw->db->num_rows() > 50)
      $size = 15;
@@ -273,8 +274,8 @@ function validate_and_submit() {
      . "<TD>\n<SELECT NAME=\"participants[]\" multiple size=\"$size\">\n";
 
   while ($phpgw->db->next_record()) {
-    echo "<option value=\"" . $phpgw->db->f("account_lid") . "\"";  
-    if ($participants[$phpgw->db->f("account_lid")])
+    echo "<option value=\"" . $phpgw->db->f("account_id") . "\"";  
+    if ($participants[$phpgw->db->f("account_id")])
        echo " selected";
 
     echo ">" . $phpgw->common->display_fullname($phpgw->db->f("account_lid"),
@@ -284,7 +285,7 @@ function validate_and_submit() {
   }
 
   echo "</select><input type=\"hidden\" name=\"participants[]\" value=\""
-     . $phpgw_info["user"]["userid"] ."\">"
+     . $phpgw_info["user"]["account_id"] ."\">"
      . "</td></tr>\n";
 
 ?>

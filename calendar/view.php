@@ -196,7 +196,7 @@
 <P>
 
 <?php
-  if ($phpgw_info["user"]["userid"] == $create_by) {
+  if ($phpgw_info["user"]["account_id"] == $create_by) {
      echo "<A HREF=\"" . $phpgw->link("edit_entry.php","id=$id") . "\">"
 	. lang("Edit") . "</A><BR>\n<A HREF=\"" . $phpgw->link("delete.php","id=$id") . "\" onClick=\"return confirm('"
 	. lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.") . "');\">" . lang("Delete") . "</A><BR>\n";

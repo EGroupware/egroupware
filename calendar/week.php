@@ -137,7 +137,7 @@
 <TR>
 <?php
   // Pre-Load the repeated events
-  $repeated_events = read_repeated_events($phpgw_info["user"]["userid"]);
+  $repeated_events = read_repeated_events($phpgw_info["user"]["account_id"]);
 
   $today = mktime(2,0,0,date("m"), date("d"), date("Y"));
   for ($j = 0; $j < 7; $j++) {

@@ -51,7 +51,7 @@
 	         . "webcal_entry_groups WHERE (UPPER(webcal_entry.cal_name) LIKE UPPER('%"
               . $words[$i] . "%') OR UPPER(webcal_entry.cal_description) "
               . "LIKE UPPER('%" .  $words[$i] . "%')) AND (webcal_entry_user.cal_login = '"
-	         . $phpgw_info["user"]["userid"] . "' OR (webcal_entry.cal_access='public' "
+	         . $phpgw_info["user"]["account_id"] . "' OR (webcal_entry.cal_access='public' "
 	         . sql_search_calendar() . ")) ORDER BY cal_date";
 
          $phpgw->db->query($sql);

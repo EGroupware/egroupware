@@ -294,7 +294,7 @@
 	 . "WHERE webcal_entry.cal_id = webcal_entry_repeats.cal_id "
 	 . "AND webcal_entry.cal_id = webcal_entry_user.cal_id "
 	 . "AND webcal_entry_groups.cal_id = webcal_entry.cal_id "
-	 . "AND (webcal_entry_user.cal_login = '" . $phpgw_info["user"]["userid"] . "' OR (webcal_entry.cal_access='group' ";
+	 . "AND (webcal_entry_user.cal_login = '" . $phpgw_info["user"]["account_id"] . "' OR (webcal_entry.cal_access='group' ";
     $group_names = $phpgw->accounts->read_group_names();
     if ($group_names) {
       $sql .= " AND (";
@@ -377,7 +377,7 @@
 	    . "ON webcal_entry_groups.cal_id=webcal_entry.cal_id "
 	    . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
 	    . "AND webcal_entry.cal_type != 'M' "
-	    . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
+	    . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["account_id"] . "' "
 	    . sql_search_calendar() . ") "
 	    . "ORDER BY webcal_entry.cal_priority, webcal_entry.cal_time";
     } else {
@@ -388,7 +388,7 @@
             . "FROM webcal_entry, webcal_entry_user, webcal_entry_groups "
             . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
             . "AND webcal_entry.cal_type != 'M' AND "
-            . "(webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
+            . "(webcal_entry_user.cal_login='" . $phpgw_info["user"]["account_id"] . "' "
             . " AND webcal_entry.cal_id=webcal_entry_user.cal_id OR "
             . "(webcal_entry_groups.cal_id=webcal_entry.cal_id  "
             . sql_search_calendar() . ")) ORDER "
@@ -548,7 +548,7 @@
 	          . "ON webcal_entry_groups.cal_id=webcal_entry.cal_id "
 	 . "WHERE webcal_entry.cal_date='" . date("Ymd", $date) . "' "
 	 . "AND webcal_entry.cal_type != 'M' "
-	 . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["userid"] . "' "
+	 . "AND (webcal_entry_user.cal_login='" . $phpgw_info["user"]["account_id"] . "' "
 	 . sql_search_calendar() . ") "
 	 . "ORDER BY webcal_entry.cal_priority, webcal_entry.cal_time";
 

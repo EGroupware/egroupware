@@ -126,7 +126,7 @@ if (! $error) {
   $sql = "INSERT INTO webcal_entry (cal_create_by, cal_date, " .
     "cal_time, cal_mod_date, cal_mod_time, cal_duration, cal_priority, " .
     "cal_access, cal_type, cal_name, cal_description ) " .
-    "VALUES ('" . $phpgw_info["user"]["userid"] . "', ";
+    "VALUES ('" . $phpgw_info["user"]["account_id"] . "', ";
 
   $date = mktime(0,0,0,$month,$day,$year);
   $sql .= date("Ymd", $date) . ", ";
