@@ -19,9 +19,6 @@
 	}
 	unset($d1);
 
-	$tmp_app_inc = PHPGW_APP_INC;
-	define('PHPGW_APP_INC',$phpgw->common->get_inc_dir('addressbook'));
-
 	if ($phpgw_info['user']['apps']['addressbook']
 		&& $phpgw_info['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
@@ -59,6 +56,4 @@
 		}
 		echo "\n<!-- Birthday info -->\n";
 	}
-
-	define('PHPGW_APP_INC',$tmp_app_inc);
 ?>
