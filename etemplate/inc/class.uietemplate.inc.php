@@ -646,10 +646,11 @@
 						);
 					}
 					break;
-				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget]
+				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget][,plugins (comma-sep.)]
 					if (!$readonly)
 					{
-						$html .= $this->html->htmlarea($form_name,$value,$cell_options);
+						list($styles,$plugins) = explode(',',$cell_options,2);
+						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
 							'type'      => $cell['type'],
 							'needed'    => $cell['needed'],
