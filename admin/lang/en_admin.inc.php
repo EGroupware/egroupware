@@ -41,6 +41,7 @@
        case "enabled":			$s = "Enabled";				break;
        case "applications":		$s = "Applications";		break;
        case "edit group":		$s = "Edit Group";			break;
+       case "submit changes":		$s = "Submit Changes";		break;
 
        case "installed applications":
 	$s = "Installed applications";						break;

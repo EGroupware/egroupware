@@ -152,7 +152,7 @@
      }
   }
   $t->set_var("permissions_list",$permissions_list);
-  $t->set_var("lang_submit_button",lang_admin("Edit Group"));
+  $t->set_var("lang_submit_button",lang_admin("submit changes"));
 
   $t->pparse("out","form");
 
