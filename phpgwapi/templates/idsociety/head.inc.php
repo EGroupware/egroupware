@@ -12,16 +12,17 @@
   /* $Id$ */
 
 	// needed until hovlink is specified in all theme files
-	if ($phpgw_info['theme']['hovlink'] == '')
+	if (isset($phpgw_info['theme']['hovlink'])
+	 && ($phpgw_info['theme']['hovlink'] != ''))
 	{
-		$csshover = '';
+		$csshover = 'A:hover{ text-decoration:none; color: ' .$phpgw_info['theme']['hovlink'] .'; }';
 	}
 	else
 	{
-		$csshover = 'A:hover{ text-decoration:none; color: ' .$phpgw_info['theme']['hovlink'] .'; }';
+		$csshover = '';
 	};
 
-	$bodyheader = 'BGCOLOR="'.$phpgw_info['theme']['bg_color'].'" ALINK="'.$phpgw_info['theme']['alink'].'" LINK="'.$phpgw_info['theme']['link'].'" VLINK="'.$phpgw_info['theme']['vlink'].'"';
+	$bodyheader = 'bgcolor="'.$phpgw_info['theme']['bg_color'].'" alink="'.$phpgw_info['theme']['alink'].'" link="'.$phpgw_info['theme']['link'].'" vlink="'.$phpgw_info['theme']['vlink'].'"';
 	if (!$phpgw_info['server']['htmlcompliant'])
 	{
 		$bodyheader .= ' topmargin="0" marginheight="0" marginwidth="0" leftmargin="0"';
