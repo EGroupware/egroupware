@@ -35,6 +35,17 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["file_repository"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Select where you want to store/retrieve filesystem information.</td>
+    <td>
+     <select name="newsettings[file_repository]">
+      <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
    <tr bgcolor="e6e6e6">
     <td>Minimum account id (e.g. 500 or 100, etc.):</td>
     <td><input name="newsettings[account_min_id]" value="<?php echo $current_config["account_min_id"]; ?>"></td>
