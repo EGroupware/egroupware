@@ -368,6 +368,44 @@ It should use the values in the $this->data
       return $accounts;
     }
 
+	function get_user_applications($account_id = False)
+	{
+      global $phpgw, $phpgw_info;
+
+		$db2 = $this->db;
+
+		if ($account_id == False){
+			$account_id = $phpgw_info['user']['account_id'];
+		}
+		$memberships = $phpgw->accounts->memberships($account_id);
+		$sql = "select acl_appname, acl_rights from phpgw_acl where acl_location = 'run' and "
+			. 'acl_account in ';
+		$security = '('.$account_id;
+		while($groups = each($memberships))
+		{
+			$group = each($groups);
+			$security .= ','.$group[1]['account_id'];
+		}
+		$security .= ')';
+		$db2->query($sql . $security ,__LINE__,__FILE__);
+
+		if ($db2->num_rows() == 0){ return False; }
+		while ($db2->next_record())
+		{
+			if(isset($apps[$db2->f('acl_appname')]))
+			{
+				$rights = $apps[$db2->f('acl_appname')];
+			}
+			else
+			{
+				$rights = 0;
+			}
+			$rights |= $db2->f('acl_rights');
+			$apps[$db2->f('acl_appname')] |= $rights;
+		}
+		return $apps;
+	}
+
 	function get_grants($app=False){
       global $phpgw, $phpgw_info;
       

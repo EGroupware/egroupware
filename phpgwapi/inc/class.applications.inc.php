@@ -49,9 +49,12 @@
         $this->read_installed_apps();
       }
       $this->data = Array();
+      if($this->account_id == False) { return False; }
+      $apps = $phpgw->acl->get_user_applications($this->account_id);
       reset($phpgw_info['apps']);
       while ($app = each($phpgw_info['apps'])) {
-        $check = $phpgw->acl->check('run',1,$app[0]);
+//        $check = $phpgw->acl->check('run',1,$app[0]);
+        $check = $apps[$app[0]];
         if ($check) {
           $this->data[$app[0]] = array('title' => $phpgw_info['apps'][$app[0]]['title'], 'name' => $app[0], 'enabled' => True, 'status' => $phpgw_info['apps'][$app[0]]['status']);
         } 
