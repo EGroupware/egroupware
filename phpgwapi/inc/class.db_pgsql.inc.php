@@ -322,7 +322,7 @@ class db {
     return $return;
   }
 
-  function create_database($dbname, $adminname = "", $adminpasswd = "") {
+  function create_database($adminname = "", $adminpasswd = "") {
 		$currentUser = $this->User;
 		$currentPassword = $this->Password;
 		$currentDatabase = $this->Database;
@@ -334,8 +334,8 @@ class db {
 			$this->Database = "mysql";
 		}
 		$this->disconnect();
-    $this->query("CREATE DATABASE $dbname");
-    $this->query("grant all on $dbname.* to $currentUser@localhost identified by '$currentPassword'");
+    $this->query("CREATE DATABASE $currentDatabase");
+    $this->query("grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'");
 		$this->disconnect();
 
 		$this->User = $currentUser;
