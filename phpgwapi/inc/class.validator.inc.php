@@ -176,7 +176,7 @@
 		//	Returns true if string contains only numbers
 		function is_allnumbers ($text)
 		{
-			if( (gettype($text)) == 'integer')
+			if(is_int($text))
 			{
 				return true;
 			}
@@ -345,7 +345,7 @@
 				return false;
 			}
 
-			if( (gettype($Chars)) != 'array')
+			if(!is_array($Chars))
 			{
 				$this->ERROR = "custom_strip: [$Chars] is not an array";
 				return false;
@@ -372,7 +372,7 @@
 		{
 			if($this->CLEAR) { $this->clear_error(); }
 
-			if( (gettype($MyArray)) != 'array')
+			if(!is_array($MyArray))
 			{
 				return;
 			}
@@ -387,7 +387,7 @@
 					echo "><TR><TD VALIGN=TOP COLSPAN=4><B>$Name Contents:</B></TD\n";
 					echo "><TD COLSPAN=2><B>KEY</B></TD><TD COLSPAN=2><B>VAL</B></TD></TR\n>";
 				}
-				if( (gettype($val)) == 'array')
+				if(is_array($val))
 				{
 					$NewName = "$key [$Name $count]";
 					$NewArray = $MyArray[$key];
@@ -645,7 +645,7 @@
 
 			$chunks = explode(".",$hostname);
 
-			if( (gettype($chunks)) != 'array')
+			if(!is_array($chunks))
 			{
 				$this->ERROR = "is_hostname: Invalid hostname, no dot seperator [$hostname]";
 				return false;
