@@ -55,6 +55,7 @@
   }else{
     loaddb();
     /* First clear out exsisting tables */
+    $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
     $db->query("delete from accounts");
     $db->query("delete from preferences");
     $db->query("delete from phpgw_acl");
@@ -64,18 +65,7 @@
     $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_permissions, account_groups, account_lastpwd_change, account_status)";
     $sql .= "values (1, 'demo', '084e0343a0486ff05530df6c705c8bb4', 'Demo', 'Account', ':addressbook:filemanager:calendar:email:notes:todo:', ',1:0,', ".time().", 'A')";
     $db->query($sql);
-    $db->query("insert into preferences values(1, 'maxmatchs', '15', 'common')");
-    $db->query("insert into preferences values(1, 'theme', 'default', 'common')");
-    $db->query("insert into preferences values(1, 'tz_offset', '', 'common')");
-    $db->query("insert into preferences values(1, 'dateformat', 'm/d/Y', 'common')");
-    $db->query("insert into preferences values(1, 'timeformat', '12', 'common')");
-    $db->query("insert into preferences values(1, 'lang', 'en', 'common')");
-    $db->query("insert into preferences values(1, 'company', 'True', 'common')");
-    $db->query("insert into preferences values(1, 'lastname', 'True', 'common')");
-    $db->query("insert into preferences values(1, 'firstname', 'True', 'common')");
-    $db->query("insert into preferences values(1, 'weekstarts', 'Monday', 'common')");
-    $db->query("insert into preferences values(1, 'workdaystarts', '9', 'common')");
-    $db->query("insert into preferences values(1, 'workdayends', '17', 'common')");
+    $db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
     $sql = "insert into phpgw_acl";
     $sql .= "(acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
     $sql .= "values('preferences', 'changepassword', 1, 'u', 0)";
@@ -85,18 +75,7 @@
     $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_permissions, account_groups, account_lastpwd_change, account_status)";
     $sql .= "values (2, 'demo2', '084e0343a0486ff05530df6c705c8bb4', 'Demo2', 'Account', ':addressbook:filemanager:calendar:email:notes:todo:manual:', ',1:0,', ".time().", 'A')";
     $db->query($sql);
-    $db->query("insert into preferences values(2, 'maxmatchs', '15', 'common')");
-    $db->query("insert into preferences values(2, 'theme', 'default', 'common')");
-    $db->query("insert into preferences values(2, 'tz_offset', '', 'common')");
-    $db->query("insert into preferences values(2, 'dateformat', 'm/d/Y', 'common')");
-    $db->query("insert into preferences values(2, 'timeformat', '12', 'common')");
-    $db->query("insert into preferences values(2, 'lang', 'en', 'common')");
-    $db->query("insert into preferences values(2, 'company', 'True', 'common')");
-    $db->query("insert into preferences values(2, 'lastname', 'True', 'common')");
-    $db->query("insert into preferences values(2, 'firstname', 'True', 'common')");
-    $db->query("insert into preferences values(2, 'weekstarts', 'Monday', 'common')");
-    $db->query("insert into preferences values(2, 'workdaystarts', '9', 'common')");
-    $db->query("insert into preferences values(2, 'workdayends', '17', 'common')");
+    $db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
     $sql = "insert into phpgw_acl";
     $sql .= "(acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
     $sql .= "values('preferences', 'changepassword', 2, 'u', 0)";
@@ -106,18 +85,7 @@
     $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_permissions, account_groups, account_lastpwd_change, account_status)";
     $sql .= "values (3, 'demo3', '084e0343a0486ff05530df6c705c8bb4', 'Demo3', 'Account', ':addressbook:filemanager:calendar:email:notes:todo:transy:manual:', ',1:0,', ".time().", 'A')";
     $db->query($sql);
-    $db->query("insert into preferences values(3, 'maxmatchs', '15', 'common')");
-    $db->query("insert into preferences values(3, 'theme', 'default', 'common')");
-    $db->query("insert into preferences values(3, 'tz_offset', '', 'common')");
-    $db->query("insert into preferences values(3, 'dateformat', 'm/d/Y', 'common')");
-    $db->query("insert into preferences values(3, 'timeformat', '12', 'common')");
-    $db->query("insert into preferences values(3, 'lang', 'en', 'common')");
-    $db->query("insert into preferences values(3, 'company', 'True', 'common')");
-    $db->query("insert into preferences values(3, 'lastname', 'True', 'common')");
-    $db->query("insert into preferences values(3, 'firstname', 'True', 'common')");
-    $db->query("insert into preferences values(3, 'weekstarts', 'Monday', 'common')");
-    $db->query("insert into preferences values(3, 'workdaystarts', '9', 'common')");
-    $db->query("insert into preferences values(3, 'workdayends', '17', 'common')");
+    $db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
     $sql = "insert into phpgw_acl";
     $sql .= "(acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
     $sql .= "values('preferences', 'changepassword', 3, 'u', 0)";
@@ -128,18 +96,7 @@
     $sql .= "(account_id, account_lid, account_pwd, account_firstname, account_lastname, account_permissions, account_groups, account_lastpwd_change, account_status)";
     $sql .= "values (4, '$username', '".md5($passwd)."', '$fname', '$lname', ':admin:addressbook:filemanager:calendar:email:nntp:notes:todo:transy:manual:', ',1:0,', ".time().", 'A')";
     $db->query($sql);
-    $db->query("insert into preferences values(4, 'maxmatchs', '15', 'common')");
-    $db->query("insert into preferences values(4, 'theme', 'default', 'common')");
-    $db->query("insert into preferences values(4, 'tz_offset', '', 'common')");
-    $db->query("insert into preferences values(4, 'dateformat', 'm/d/Y', 'common')");
-    $db->query("insert into preferences values(4, 'timeformat', '12', 'common')");
-    $db->query("insert into preferences values(4, 'lang', 'en', 'common')");
-    $db->query("insert into preferences values(4, 'company', 'True', 'common')");
-    $db->query("insert into preferences values(4, 'lastname', 'True', 'common')");
-    $db->query("insert into preferences values(4, 'firstname', 'True', 'common')");
-    $db->query("insert into preferences values(4, 'weekstarts', 'Monday', 'common')");
-    $db->query("insert into preferences values(4, 'workdaystarts', '9', 'common')");
-    $db->query("insert into preferences values(4, 'workdayends', '17', 'common')");
+    $db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
   
     /* Create system records */
     $this_dir = dirname($SCRIPT_FILENAME);
