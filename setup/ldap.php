@@ -97,9 +97,9 @@
                  . " values('admin','run',".$account[1]["account_id"].",'u',1)";
             $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
 
-            $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
+            $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,"
                      . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
-                     . $account[1]["account_lid"] . "','x','$np',',1:0,','A','".time()."')",__LINE__,__FILE__);
+                     . $account[1]["account_lid"] . "','x',',1:0,','A','".time()."')",__LINE__,__FILE__);
         }
         $setup_complete = True;
      }
