@@ -79,7 +79,7 @@ clear	common	en	Clear
 clear form	common	en	Clear Form
 clear form	todo	en	Clear form
 clipboard_contents	filemanager	en	Clipboard Contents
-company name	addressbook	en	company name
+company name	addressbook	en	Company Name
 completed	todo	en	completed
 compose	email	en	Compose
 copy	common	en	Copy
@@ -111,6 +111,7 @@ delete	common	en	Delete
 delete	email	en	Delete
 delete	filemanager	en	Delete
 description	calendar	en	Description
+department	addressbook	en	Department
 disabled	admin	en	Disabled
 display	admin	en	Display
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
