@@ -20,10 +20,11 @@
 		$bodyheader .= '';
 	}
 
+	#_debug_array($GLOBALS['phpgw_info']['user']['preferences']['common']);
 	$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	if (!file_exists($theme_css))
 	{
-		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/idots.css';
+		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	}
 
 	$pngfix = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
