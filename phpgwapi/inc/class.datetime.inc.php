@@ -119,7 +119,7 @@ class datetime
 						$sday = mktime(2,0,0,$month,$day - ($weekday - 1),$year);
 						break;
 				}
-				return $sday;
+				return $sday - (60 * 60 * 2);
 				break;
 		}
 	}
