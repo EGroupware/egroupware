@@ -39,7 +39,7 @@
 				{
 					$GLOBALS['header_template']->set_var(strtoupper($x),$y);
 				}
-				$GLOBALS['header_template']->fp('domains','domain',True);
+				$GLOBALS['header_template']->parse('domains','domain',True);
 			}
 
 			$GLOBALS['header_template']->set_var('domain','');

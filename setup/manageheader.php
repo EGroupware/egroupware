@@ -21,12 +21,11 @@
 	);
 	include('./inc/functions.inc.php');
 
-	include('../phpgwapi/setup/setup.inc.php');
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
 	#include('../version.inc.php');
 
-	if($GLOBALS['HTTP_POST_VARS']['adddomain'])
+	if(@$GLOBALS['HTTP_POST_VARS']['adddomain'])
 	{
 	}
 
@@ -76,6 +75,7 @@
 	));
 	$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
 	$setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
+	$setup_tpl->set_block('T_setup_manage','manageheader','manageheader');
 	$setup_tpl->set_block('T_setup_manage','domain','domain');
 
 	/* Detect current mode */
@@ -264,51 +264,50 @@
 			{
 				$detected .= lang('Found existing configuration file. Loading settings from the file...') . '<br>' . "\n";
 				$GLOBALS['phpgw_info']['flags']['noapi'] = True;
-				include('../header.inc.php');
 				$no_guess = true;
 				/* This code makes sure the newer multi-domain supporting header.inc.php is being used */
-				if(!isset($phpgw_domain))
+				if(!isset($GLOBALS['phpgw_domain']))
 				{
 					$detected .= lang("You're using an old configuration file format...") . '<br>' . "\n";
 					$detected .= lang('Importing old settings into the new format....') . '<br>' . "\n";
 				}
 				else
 				{
-					if($GLOBALS['phpgw_info']['server']['header_version'] != $GLOBALS['phpgw_info']['server']['current_header_version'])
+					if(@$GLOBALS['phpgw_info']['server']['header_version'] != @$GLOBALS['phpgw_info']['server']['current_header_version'])
 					{
 						$detected .= lang("You're using an old header.inc.php version...") . '<br>' . "\n";
 						$detected .= lang('Importing old settings into the new format....') . '<br>' . "\n";
 					}
-					reset($phpgw_domain);
-					$default_domain = each($phpgw_domain);
+					reset($GLOBALS['phpgw_domain']);
+					$default_domain = each($GLOBALS['phpgw_domain']);
 					$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 					unset($default_domain); // we kill this for security reasons
-					$GLOBALS['phpgw_info']['server']['config_passwd'] = $phpgw_domain[$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
+					$GLOBALS['phpgw_info']['server']['config_passwd'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
 
-					if($GLOBALS['HTTP_POST_VARS']['adddomain'])
+					if(@$GLOBALS['HTTP_POST_VARS']['adddomain'])
 					{
-						$phpgw_domain[lang('new')] = array();
+						$GLOBALS['phpgw_domain'][lang('new')] = array();
 					}
 
-					reset($phpgw_domain);
-					while(list($key,$val) = each($phpgw_domain))
+					reset($GLOBALS['phpgw_domain']);
+					while(list($key,$val) = each($GLOBALS['phpgw_domain']))
 					{
 						$setup_tpl->set_var('lang_domain',lang('Domain'));
 						$setup_tpl->set_var('lang_delete',lang('Delete'));
 						$setup_tpl->set_var('db_domain',$key);
-						$setup_tpl->set_var('db_host',$phpgw_domain[$key]['db_host']);
-						$setup_tpl->set_var('db_name',$phpgw_domain[$key]['db_name']);
-						$setup_tpl->set_var('db_user',$phpgw_domain[$key]['db_user']);
-						$setup_tpl->set_var('db_pass',$phpgw_domain[$key]['db_pass']);
-						$setup_tpl->set_var('db_type',$phpgw_domain[$key]['db_type']);
-						$setup_tpl->set_var('config_pass',$phpgw_domain[$key]['config_passwd']);
+						$setup_tpl->set_var('db_host',$GLOBALS['phpgw_domain'][$key]['db_host']);
+						$setup_tpl->set_var('db_name',$GLOBALS['phpgw_domain'][$key]['db_name']);
+						$setup_tpl->set_var('db_user',$GLOBALS['phpgw_domain'][$key]['db_user']);
+						$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_domain'][$key]['db_pass']);
+						$setup_tpl->set_var('db_type',$GLOBALS['phpgw_domain'][$key]['db_type']);
+						$setup_tpl->set_var('config_pass',$GLOBALS['phpgw_domain'][$key]['config_passwd']);
 
 						$selected = '';
-						$db_type_option = '';
+						$dbtype_options = '';
 						$found_dbtype = False;
 						while(list($k,$v) = each($supported_db))
 						{
-							if($v == $phpgw_domain[$key]['db_type'])
+							if($v == $GLOBALS['phpgw_domain'][$key]['db_type'])
 							{
 								$selected = ' selected ';
 								$found_dbtype = true;
@@ -317,11 +316,11 @@
 							{
 								$selected = '';
 							}
-							$dbtype_options .= '<option ' . $selected . ' value="' . $v . '">' . $v . "\n";
+							$dbtype_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "\n";
 						}
 						$setup_tpl->set_var('dbtype_options',$dbtype_options);
 
-						$setup_tpl->fp('domains','domain',True);
+						$setup_tpl->parse('domains','domain',True);
 					}
 					$setup_tpl->set_var('domain','');
 				}
@@ -330,13 +329,13 @@
 					$GLOBALS['phpgw_info']['server']['server_root'] = PHPGW_SERVER_ROOT;
 					$GLOBALS['phpgw_info']['server']['include_root'] = PHPGW_INCLUDE_ROOT; 
 				}
-				elseif(!isset($GLOBALS['phpgw_info']['server']['include_root']) && $GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
+				elseif(!@isset($GLOBALS['phpgw_info']['server']['include_root']) && @$GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
 				{
-					$GLOBALS['phpgw_info']['server']['include_root'] = $GLOBALS['phpgw_info']['server']['server_root'];
+					$GLOBALS['phpgw_info']['server']['include_root'] = @$GLOBALS['phpgw_info']['server']['server_root'];
 				}
-				elseif(!isset($GLOBALS['phpgw_info']['server']['header_version']) && $GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
+				elseif(!@isset($GLOBALS['phpgw_info']['server']['header_version']) && @$GLOBALS['phpgw_info']['server']['header_version'] <= 1.6)
 				{
-					$GLOBALS['phpgw_info']['server']['include_root'] = $GLOBALS['phpgw_info']['server']['server_root'];
+					$GLOBALS['phpgw_info']['server']['include_root'] = @$GLOBALS['phpgw_info']['server']['server_root'];
 				}
 			}
 			else
@@ -364,7 +363,7 @@
 				}
 				$setup_tpl->set_var('dbtype_options',$dbtype_options);
 
-				$setup_tpl->fp('domains','domain',True);
+				$setup_tpl->parse('domains','domain',True);
 				$setup_tpl->set_var('domain','');
 
 				$setup_tpl->set_var('comment_l','<!-- ');
@@ -402,11 +401,11 @@
 			$setup_tpl->set_var('detected',$detected);
 			/* End of detected settings, now display the form with the detected or prior values */
 
-			$setup_tpl->set_var('server_root',$GLOBALS['phpgw_info']['server']['server_root']);
-			$setup_tpl->set_var('include_root',$GLOBALS['phpgw_info']['server']['include_root']);
-			$setup_tpl->set_var('header_admin_password',$GLOBALS['phpgw_info']['server']['header_admin_password']);
+			$setup_tpl->set_var('server_root',@$GLOBALS['phpgw_info']['server']['server_root']);
+			$setup_tpl->set_var('include_root',@$GLOBALS['phpgw_info']['server']['include_root']);
+			$setup_tpl->set_var('header_admin_password',@$GLOBALS['phpgw_info']['server']['header_admin_password']);
 
-			if($GLOBALS['phpgw_info']['server']['db_persistent'])
+			if(@$GLOBALS['phpgw_info']['server']['db_persistent'])
 			{
 				$setup_tpl->set_var('db_persistent_yes',' selected');
 			}
@@ -416,10 +415,10 @@
 			}
 
 			$selected = '';
-			$session_type_option = '';
+			$session_options = '';
 			while(list($k,$v) = each($supported_sessions_type))
 			{
-				if($v == $GLOBALS['phpgw_info']['server']['sessions_type'])
+				if($v == @$GLOBALS['phpgw_info']['server']['sessions_type'])
 				{
 					$selected = ' selected ';
 				}
@@ -427,11 +426,11 @@
 				{
 					$selected = '';
 				}
-				$session_options .= '<option ' . $selected . ' value="' . $v . '">' . $v . "\n";
+				$session_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "\n";
 			}
 			$setup_tpl->set_var('session_options',$session_options);
 
-			if($GLOBALS['phpgw_info']['server']['mcrypt_enabled'])
+			if(@$GLOBALS['phpgw_info']['server']['mcrypt_enabled'])
 			{
 				$setup_tpl->set_var('mcrypt_enabled_yes',' selected');
 			}
@@ -446,7 +445,7 @@
 			$setup_tpl->set_var('lang_setup_acl',lang('Limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)'));
 			$setup_tpl->set_var('setup_acl',$GLOBALS['phpgw_info']['server']['setup_acl']);
 
-			if($GLOBALS['phpgw_info']['server']['domain_selectbox'])
+			if(@$GLOBALS['phpgw_info']['server']['domain_selectbox'])
 			{
 				$setup_tpl->set_var('domain_selectbox_yes',' selected');
 			}
@@ -510,7 +509,7 @@
 			$setup_tpl->set_var('lang_domselect',lang('Domain select box on login'));
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 
-			$setup_tpl->pfp('out','T_setup_manage');
+			$setup_tpl->pfp('out','manageheader');
 			break; // ending the switch default
 	}
 ?>
