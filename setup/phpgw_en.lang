@@ -283,8 +283,7 @@ note: this feature does *not* change your email password. this will need to be d
 notes	addressbook	en	Notes
 notes   common          en      Notes
 notes list     notes    en      Notes list
-notes preferences      preferences     en       Notes preferences
-notes preferences      notes           en       Notes preferences
+notes preferences      common     en       Notes preferences
 november	common	en	November
 no_file_name	filemanager	en	No filename was specified
 october	common	en	October
