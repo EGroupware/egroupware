@@ -56,7 +56,7 @@
 	{
 		// PHP will automatically replace any dots in incoming
 		// variable names with underscores.
-		
+
 		$errors = '';
 		$domains = get_var('domains',Array('POST'));
 		@reset($domains);
@@ -410,7 +410,14 @@
 						$setup_tpl->set_var('db_user',$GLOBALS['phpgw_domain'][$key]['db_user']);
 						$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_domain'][$key]['db_pass']);
 						$setup_tpl->set_var('db_type',$GLOBALS['phpgw_domain'][$key]['db_type']);
-						$setup_tpl->set_var('config_user',$GLOBALS['phpgw_domain'][$key]['config_user']);
+						if(!@isset($GLOBALS['phpgw_domain'][$key]['config_user']))
+						{
+							$setup_tpl->set_var('config_user','admin');
+						}
+						else
+						{
+							$setup_tpl->set_var('config_user',$GLOBALS['phpgw_domain'][$key]['config_user']);
+						}
 						$setup_tpl->set_var('config_pass','');
 						$setup_tpl->set_var('config_password',$GLOBALS['phpgw_domain'][$key]['config_passwd']);
 
@@ -517,9 +524,17 @@
 
 			$setup_tpl->set_var('server_root',@$GLOBALS['phpgw_info']['server']['server_root']);
 			$setup_tpl->set_var('include_root',@$GLOBALS['phpgw_info']['server']['include_root']);
-			$setup_tpl->set_var('header_admin_user',@$GLOBALS['phpgw_info']['server']['header_admin_user']);
+			if(!@isset($GLOBALS['phpgw_info']['server']['header_admin_user']))
+			{
+				$setup_tpl->set_var('header_admin_user','admin');
+			}
+			else
+			{
+				$setup_tpl->set_var('header_admin_user',@$GLOBALS['phpgw_info']['server']['header_admin_user']);
+			}
 			$setup_tpl->set_var('header_admin_pass',@$GLOBALS['phpgw_info']['server']['header_admin_password']);
 			$setup_tpl->set_var('header_admin_password','');
+
 
 			if(@$GLOBALS['phpgw_info']['server']['db_persistent'])
 			{
