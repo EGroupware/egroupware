@@ -60,7 +60,9 @@ CREATE TABLE addressbook (
    D_EMAIL_Work enum('y','n') DEFAULT 'n' NOT NULL,
    D_EMAIL_Home enum('y','n') DEFAULT 'n' NOT NULL,
    PRIMARY KEY (id),
-   UNIQUE id (id)
+   UNIQUE id (id),
+   KEY lid (lid),
+   KEY tid (tid)
 );
 
 CREATE TABLE addressbook_extra (

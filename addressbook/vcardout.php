@@ -35,8 +35,12 @@
   $fields = $this->read_single_entry($ab_id,$this->stock_contact_fields);
 
   $email        = $fields[0]["D_EMAIL"];
+  $fullname     = $fields[0]["FN"];
+  $prefix       = $fields[0]["N_Prefix"];
   $firstname    = $fields[0]["N_Given"];
+  $middle       = $fields[0]["N_Middle"];
   $lastname     = $fields[0]["N_Family"];
+  $suffix       = $fields[0]["N_Suffix"];
   $title        = $fields[0]["TITLE"];
   $hphone       = $fields[0]["A_TEL"];
   $wphone       = $fields[0]["B_TEL"];
@@ -49,8 +53,9 @@
   $city         = $fields[0]["ADR_Locality"];
   $state        = $fields[0]["ADR_Region"];
   $zip          = $fields[0]["ADR_PostalCode"];
-  $country      = $fields[0]["ADR_Country"];
+  $country      = $fields[0]["ADR_CountryName"];
   $company      = $fields[0]["ORG_Name"];
+  $dept         = $fields[0]["ORG_Unit"];
   $bday         = $fields[0]["bday"];
   $notes        = $fields[0]["notes"];
   $access       = $fields[0]["access"];
@@ -78,7 +83,8 @@
 
     printf("BEGIN:VCARD\r\n");
     printf("N:%s;%s\r\n", $lastname, $firstname);
-    printf("FN:%s %s\r\n", $firstname, $lastname);
+    if (!$fullname) { printf("FN:%s %s\r\n", $firstname, $lastname); }
+    else            { printf("FN:%s\r\n", $fullname); }
 
     /* This stuff is optional. */
     if($title != "") /* Title */
@@ -110,7 +116,7 @@
     if($bday != "" && $bday != "//") /* Birthday */
       printf("BDAY:%s\r\n", $bday); /* This is not the right format. */
     if($company != "") /* Company Name (Really isn't company_name?) */
-      printf("ORG:%s\r\n", $company);
+      printf("ORG:%s %s\r\n", $company, $dept);
     if($notes != "") /* Notes */
       $NOTES .= $notes;
 

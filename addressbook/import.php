@@ -18,17 +18,17 @@
 
   $sep = $phpgw_info["server"]["dir_separator"];
 
-  # Construct a default basedn and context for Contacts if using LDAP
+  # Construct a default basedn for Contacts if using LDAP
   $tmpbasedn = split(",",$phpgw_info["server"]["ldap_context"]);
   array_shift($tmpbasedn);
   for ($i=0;$i<count($tmpbasedn);$i++) {
     if($i==0) {
-      $fakebasedn = $tmpbasedn[$i];
+      $basedn = $tmpbasedn[$i];
     } else {
-      $fakebasedn = $fakebasedn.",".$tmpbasedn[$i];
+      $basedn = $basedn.",".$tmpbasedn[$i];
     }
   }
-  $fakecontext = "ou=Contacts,".$fakebasedn;
+  $context = $phpgw_info["server"]["ldap_contact_context"];
 
   if (!$convert) {
     $t = new Template($phpgw_info["server"]["app_tpl"]);
@@ -58,8 +58,8 @@
     $t->set_var("tsvfilename","");
     $t->set_var("conv",$conv);
     $t->set_var("debug",lang("Debug output in browser"));
-    $t->set_var("fakebasedn",$fakebasedn);
-    $t->set_var("fakecontext",$fakecontext);
+    $t->set_var("basedn",$basedn);
+    $t->set_var("context",$context);
     $t->set_var("download",lang("Submit"));
 
     #$t->parse("out","import");

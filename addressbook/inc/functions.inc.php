@@ -17,7 +17,7 @@
 
         $abc = array("FN"              => "full name",        //'firstname lastname'
                      "SOUND"           => "",
-                     "ORG_Name"        => "company",  //company
+                     "ORG_Name"        => "company name",  //company
                      "ORG_Unit"        => "department",  //division
                      "TITLE"           => "title",
                      "N_Given"         => "first name",   //firstname
@@ -36,7 +36,7 @@
                      "ADR_Parcel"      => "", //yn
                      "ADR_Postal"      => "", //yn
                      "TZ"              => "timezone",
-                     "GEO"             => "",
+                     "GEO"             => "geo",
                      "A_TEL"           => "home phone",
                      "A_TEL_Work"      => "",   //yn
                      "A_TEL_Home"      => "",   //yn
@@ -83,6 +83,9 @@
     $email        = $fields["D_EMAIL"];
     $emailtype    = $fields["D_EMAILTYPE"];
     $firstname    = $fields["N_Given"];
+    $middle       = $fields["N_Middle"];
+    $prefix       = $fields["N_Prefix"];
+    $suffix       = $fields["N_Suffix"];
     $lastname     = $fields["N_Family"];
     $title        = $fields["TITLE"];
     $hphone       = $fields["A_TEL"];
@@ -96,16 +99,21 @@
     $city         = $fields["ADR_Locality"];
     $state        = $fields["ADR_Region"];
     $zip          = $fields["ADR_PostalCode"];
-    $country      = $fields["ADR_Country"];
+    $country      = $fields["ADR_CountryName"];
+    $timezone     = $fields["TZ"];
     $bday         = $fields["bday"];
     $notes        = $fields["notes"];
     $company      = $fields["ORG_Name"];
+    $department   = $fields["ORG_Unit"];
     $url          = $fields["url"];
 
     if ($format != "view") {
       $email 	 = "<input name=\"email\" value=\"$email\">";
       $firstname = "<input name=\"firstname\" value=\"$firstname\">";
       $lastname  = "<input name=\"lastname\" value=\"$lastname\">";
+      $middle    = "<input name=\"middle\" value=\"$middle\">";
+      $prefix    = "<input name=\"prefix\" value=\"$prefix\" size=\"10\">";
+      $suffix    = "<input name=\"suffix\" value=\"$suffix\" size=\"10\">";
       $title     = "<input name=\"title\" value=\"$title\">";
       $hphone	 = "<input name=\"hphone\" value=\"$hphone\">";
       $wphone	 = "<input name=\"wphone\" value=\"$wphone\">";
@@ -140,6 +148,7 @@
         $company .=  "</select>";
       } else { */
         $company = "<input name=\"company\" value=\"$company\">";
+        $department = "<input name=\"department\" value=\"$department\">";
 /*    } */
 
       if (strlen($bday) > 2) {
@@ -182,6 +191,19 @@
         $bday_day  = '<input name="bday_day" size="2" maxlength="2">';
         $bday_year = '<input name="bday_year" size="4" maxlength="4">';
       }
+
+    $time_zone = "<select name=\"timezone\">\n";
+         for ($i = -23; $i<24; $i++) {
+             $time_zone .= "<option value=\"$i\"";
+             if ($i == $timezone)
+                $time_zone .= " selected";
+             if ($i < 1)
+                $time_zone .= ">$i</option>\n";
+             else
+                $time_zone .= ">+$i</option>\n";
+         }
+    $time_zone .= "</select>\n";
+
     $this = CreateObject("phpgwapi.contacts");
     $email_type = '<select name=email_type>';
     while ($type = each($this->email_types)) {
@@ -291,8 +313,16 @@
     $t->set_var("lastname",$lastname);
     $t->set_var("lang_firstname",lang("First Name"));
     $t->set_var("firstname",$firstname);
+    $t->set_var("lang_middle",lang("Middle Name"));
+    $t->set_var("middle",$middle);
+    $t->set_var("lang_prefix",lang("Prefix"));
+    $t->set_var("prefix",$prefix);
+    $t->set_var("lang_suffix",lang("Suffix"));
+    $t->set_var("suffix",$suffix);
     $t->set_var("lang_company",lang("Company Name"));
     $t->set_var("company",$company);
+    $t->set_var("lang_department",lang("Department"));
+    $t->set_var("department",$department);
     $t->set_var("lang_title",lang("Title"));
     $t->set_var("title",$title);
     $t->set_var("lang_email",lang("Email"));
@@ -301,6 +331,8 @@
     $t->set_var("email_type",$email_type);
     $t->set_var("lang_url",lang("URL"));
     $t->set_var("url",$url);
+    $t->set_var("lang_timezone",lang("time zone offset"));
+    $t->set_var("timezone",$time_zone);
     $t->set_var("lang_hphone",lang("Home Phone"));
     $t->set_var("hphone",$hphone);
     $t->set_var("lang_fax",lang("fax"));

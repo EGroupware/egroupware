@@ -27,26 +27,26 @@ class outlook_conv {
   var $currentrecord; //used for buffering to allow uid lines to go first
 
   var $outlook = array(
-	"Title" => "", 
-	"First Name" => "ab_firstname",
-	"Middle Name" => "",
-	"Last Name" => "ab_lastname",
-	"Suffix" => "",
-	"Company" => "ab_company",  //objectclass: organization
-	"Department" => "", //objectclass: organizationalPerson
-	"Job Title" => "ab_title", //objectclass: organizationalPerson
-	"Business Street" => "ab_address2",
+	"Title" => "TITLE", 
+	"First Name" => "N.Given",
+	"Middle Name" => "N.Middle",
+	"Last Name" => "N.Family",
+	"Suffix" => "N.Suffix",
+	"Company" => "ORG.Name",  //objectclass: organization
+	"Department" => "ORG.Unit", //objectclass: organizationalPerson
+	"Job Title" => "TITLE", //objectclass: organizationalPerson
+	"Business Street" => "address2",
 	"Business Street 2" => "",
 	"Business Street 3" => "",
 	"Business City" => "",
 	"Business State" => "",
 	"Business Postal Code" => "",
 	"Business Country" => "",
-	"Home Street" => "ab_street",
-	"Home City" => "ab_city",
-	"Home State" => "ab_state",
-	"Home Postal Code" => "ab_zip",
-	"Home Country" => "",
+	"Home Street" => "ADR.Street",
+	"Home City" => "ADR.Locality",
+	"Home State" => "ADR.Region",
+	"Home Postal Code" => "ADR.PostalCode",
+	"Home Country" => "ADR.Country",
 	"Home Street 2" => "",
 	"Home Street 3" => "",
 	"Other Street" => "",
@@ -55,20 +55,20 @@ class outlook_conv {
 	"Other Postal Code" => "",
 	"Other Country" => "",
 	"Assistant's Phone" => "",
-	"Business Fax" => "ab_fax",
-	"Business Phone" => "ab_wphone",
-	"Business Phone 2" => "ab_ophone",
+	"Business Fax" => "C.TEL",
+	"Business Phone" => "B.TEL",
+	"Business Phone 2" => "ophone",
 	"Callback" => "",
 	"Car Phone" => "",
 	"Company Main Phone" => "",
 	"Home Fax" => "",
-	"Home Phone" => "ab_hphone",
+	"Home Phone" => "A.TEL",
 	"Home Phone 2" => "", //This will make another homePhone entry
 	"ISDN" => "",
-	"Mobile Phone" => "ab_mphone", //newPilotPerson
+	"Mobile Phone" => "mphone", //newPilotPerson
 	"Other Fax" => "",
 	"Other Phone" => "",
-	"Pager" => "ab_pager",
+	"Pager" => "pager",
 	"Primary Phone" => "",
 	"Radio Phone" => "",
 	"TTY/TDD Phone" => "",
@@ -77,11 +77,11 @@ class outlook_conv {
 	"Anniversary" => "",
 	"Assistant's Name" => "", //newPilotPerson
 	"Billing Information" => "",
-	"Birthday" => "ab_bday",
+	"Birthday" => "bday",
 	"Categories" => "", 
 	"Children" => "",
 	"Directory Server" => "",
-	"E-mail Address" => "ab_email",
+	"E-mail Address" => "D.EMAIL",
 	"E-mail Display Name" => "",
 	"E-mail 2 Address" => "",
 	"E-mail 2 Display Name" => "",
@@ -117,14 +117,14 @@ function outlook_start_file($buffer,$j="",$k="") {
 }
 
 function outlook_end_file($buffer) {
-  global $phpgw;
-  global $phpgw_info;
-  
-  $lines = split("\n",$buffer);
+  global $phpgw,$phpgw_info;
 
+  $lines = split("\n",$buffer);
+  $contacts = CreateObject("phpgwapi.contacts");
+ 
   for ($i=0;$i<count($lines);$i++) {
-    $sql=$lines[$i];
-    $phpgw->db->query($sql);
+    $entry=$lines[$i];
+    $contacts->add($phpgw_info["user"]["account_id"],$entry);
   }
   
   return "Successfully imported $i records into your addressbook.";
@@ -143,49 +143,13 @@ function outlook_end_record($buffer,$private="private") {
   $i=0;
   $lines = split("##",$this->currentrecord);
   
-  # Commence the ugly parsing of csv into sql
   for ($i=0;$i<count($lines)-1;$i++) {
     list($name, $value) = split("%%",$lines[$i]);
     $row++;
-    if ($row==1) {
-      if (!empty($name) && !empty($value)) {
-        if (count($lines)>2) {
-          $thisname=$name.",";
-          $thisvalu="'".$value."',";
-        } else {
-	  $thisname=$name.") ";
-	  $thisvalu="'".$value."');";
-        }
-      } else {
-        $thisname="";
-	$thisvalu="";
-      }
-      $namelist = $namelist."\nINSERT INTO addressbook (ab_owner,ab_access,".$thisname;
-      $valulist = $valulist."VALUES ('".$phpgw_info["user"]["account_id"]."','".$private."',".$thisvalu;
-    } elseif ($row==count($lines)-1) {
-      if (!empty($name) && !empty($value)) {
-        $thisname=$name.") ";
-        $thisvalu="'".$value."');";
-      } else {
-        $thisname="";
-	$thisvalu="";
-      }
-      $namelist = $namelist.$thisname;
-      $valulist = $valulist.$thisvalu;
-    } else {
-      if (!empty($name) && !empty($value)) {
-        $thisname=$name.",";
-        $thisvalu="'".$value."',";
-      } else {
-        $thisname=",";
-	$thisvalu=",";
-      }
-      $namelist = $namelist.$thisname;
-      $valulist = $valulist.$thisvalu;
-    }
+    $namelist = $namelist.array($name => $value);
   }
   
-  return $buffer.$namelist.$valulist;
+  return $buffer.$namelist;
 }
 
 function outlook_new_attrib($buffer,$name,$value) {
