@@ -211,6 +211,7 @@
 			return $return_fields;
 		}
 
+
 		function read_last_entry($fields="")
 		{
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
@@ -521,7 +522,7 @@
 				if ($field_s == ",") {
 					unset($field_s);
 				}
-				$this->db->query("update $this->std_table set owner='$owner', access='$access' $fields_s where "
+				$this->db->query("update $this->std_table set access='$access' $fields_s where "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 

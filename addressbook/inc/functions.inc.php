@@ -12,6 +12,8 @@
 
 /* $Id$ */
 
+	// I don't think this is needed anymore
+
 	// Perform acl check, set $rights
 	if(!isset($owner)) { $owner = 0; } 
 
@@ -450,8 +452,9 @@
 		$t->set_var("lang_pubkey",lang("Public Key"));
 		$t->set_var("pubkey",$pubkey);
 
+		$t->set_var('lang_private',lang('Private'));
 		if ($customfields) {
-			$t->set_var("lang_custom",lang("Custom Fields").':');
+			$t->set_var('lang_custom',lang('Custom Fields').':');
 		} else {
 			$t->set_var("lang_custom",'');
 		}

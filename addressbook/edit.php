@@ -12,26 +12,41 @@
 
 /* $Id$ */
 
-	if ($submit || ! $ab_id) {
-		$phpgw_info["flags"] = array(
-			"noheader" => True,
-			"nonavbar" => True
-		);
+	$phpgw_info['flags'] = array(
+		'noheader'              => True,
+		'nonavbar'              => True,
+		'currentapp'            => 'addressbook',
+		// is this really needed ?
+		'enable_contacts_class' => True
+	);
+
+	include('../header.inc.php');
+
+	$this = CreateObject('phpgwapi.contacts');
+
+	// First, make sure they have permission to this entry
+	$phpgw->db->query("select owner from phpgw_addressbook where id='$ab_id'");
+	$phpgw->db->next_record();
+
+	if (! $this->check_perms($this->grants[$phpgw->db->f('owner')],PHPGW_ACL_EDIT) && $phpgw->db->f('owner') != $phpgw_info['user']['account_id'])
+	{
+		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		$phpgw->common->phpgw_exit();
 	}
 
-	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	$phpgw_info["flags"]["enable_contacts_class"] = True;
-	include("../header.inc.php");
-
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
-	$t->set_file(array( "edit"	=> "edit.tpl"));
+	$t->set_file(array("edit"	=> "edit.tpl"));
 
 	if (! $ab_id) {
 		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
 		$phpgw->common->phpgw_exit();
 	}
 
-	$this = CreateObject("phpgwapi.contacts");
+	if (! $submit)
+	{
+		$phpgw->common->phpgw_header();
+		echo parse_navbar();
+	}
 
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
@@ -51,14 +66,10 @@
 			"address2" => "address2",
 			"address3" => "address3"
 		);
-		if ($rights & PHPGW_ACL_EDIT) {
-			$qfields = $this->stock_contact_fields + $extrafields + $customfields;
-			$fields = addressbook_read_entry($ab_id,$qfields);
-			addressbook_form("","edit.php","Edit",$fields[0],$customfields);
-		} else {
-			Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
-			$phpgw->common->phpgw_exit();
-		}
+
+		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+		$fields = addressbook_read_entry($ab_id,$qfields);
+		addressbook_form("","edit.php","Edit",$fields[0],$customfields);
 	} else {
 		if ($url == "http://") {
 			$url = "";
