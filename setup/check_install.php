@@ -382,24 +382,23 @@
 		{
 			if (isset($args['warning']))
 			{
-				echo $warning_icon.$msg.$args['warning']."</span>\n";
+				echo $warning_icon.$msg.$args['warning']."<br/></span>\n";
 			}
 			if (isset($args['error']))
 			{
-				echo $error_icon.$msg.$args['error']."\n";
+				echo $error_icon.$msg.$args['error']."</br></span>\n";
 			}
 			if (isset($args['safe_mode']) && $safe_mode || @$args['change'])
 			{
 				if (!isset($args['warning']) && !isset($args['error']))
 				{
-					echo $error_icon.$msg;
+					echo $error_icon.$msg."<br/></span>";
 				}
-				echo "<br/>";
+				echo "<span id='setup_error'>\n";
 				echo '*** '.lang('Please make the following change in your php.ini').' ('.get_php_ini().'): '.(@$args['safe_mode']?$args['safe_mode']:$args['change'])."<br>\n";
 				echo '*** '.lang('AND reload your webserver, so the above changes take effect !!!')."<br></span>\n";
 			}
 		}
-		echo "\n";
 		return $result;
 	}
 
