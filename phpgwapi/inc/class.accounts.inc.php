@@ -251,20 +251,13 @@
 				{
 					$this->total = $account_search[$serial2]['total'];
 				}
+				//echo "accounts_::get_list($param[type],$param[start],$param[sort],$param[order],$param[query],$param[offset],$param[query_type]) returned<pre>".print_r($account_search[$serial2],True)."</pre>\n";
 				if ($app || $group)	// limit the search on accounts with run-rights for app or a group
 				{
 					$valid = array();
 					if ($app)
 					{
-						$app_accounts = $this->split_accounts($app);
-						if ($param['type'] == 'groups' || $param['type'] == 'both')
-						{
-							$valid += $app_accounts['groups'];
-						}
-						if ($param['type'] == 'accounts' || $param['type'] == 'both')
-						{
-							$valid += $app_accounts['accounts'];
-						}
+						$valid = $this->split_accounts($app,$param['type'] == 'both' ? 'merge' : $param['type']);
 					}
 					if ($group)
 					{
@@ -281,7 +274,7 @@
 					foreach ($account_search[$serial2]['data'] as $id => $data)
 					{
 						if (!in_array($id,$valid))
-						{
+						{ echo "<p>Id $id not in valid scipping !!!</p>\n";
 							$this->total--;
 							continue;
 						}
@@ -532,7 +525,8 @@
 		*
 		* @param $app_users array of user-id's or app-name (if you use app-name the result gets cached!)
 		* @param $use string what should be returned only an array with id's of either 'accounts' or 'groups'.
-		*	Or an array with arrays for 'both' under the keys 'groups' and 'accounts'
+		*	Or an array with arrays for 'both' under the keys 'groups' and 'accounts' or 'merge' for accounts
+		*	and groups merged into one array
 		* @return see $use
 		*/
 		function split_accounts($app_users,$use='both')
@@ -587,7 +581,10 @@
 					return $accounts['groups'];
 				case 'accounts':
 					return $accounts['accounts'];
+				case 'merge':
+					return array_merge($accounts['accounts'],$accounts['groups']);
 			}
+			return False;
 		}
 
 		/**
