@@ -133,7 +133,7 @@
 				$subject .= $this->html->bold($this->html->a_href($proj['title'],
 									'/index.php',$this->menuaction()+
 								 	array( 'filter' => $filter,'action' => 'proj',
-											 'proj_id' => $proj_id )));
+											 'action_id' => $proj_id )));
 			}
 			if ($a_id != ($addr_id = $info['info_addr_id']) &&
 				 $addr = $this->bo->readAddr($addr_id))
@@ -144,7 +144,7 @@
 									array( 'menuaction' => 'addressbook.uiaddressbook.view',
 											 'ab_id' => $addr_id)
 									/* $this->menuaction() + array( 'filter' => $filter,'action' => 'addr',
-																			  'addr_id' => $addr_id )*/
+																			  'action_id' => $addr_id )*/
 								));
 			}
 			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from)))
