@@ -23,9 +23,9 @@
 			$GLOBALS['phpgw_info']['user']['apps']['admin']) ||
 			$GLOBALS['phpgw_info']['server']['checkappversions'] == 'All')
 		{
-			$_found = False;
+			$_current = False;
 			$app_name = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$GLOBALS['phpgw']->db->query("SELECT app_version FROM phpgw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("SELECT app_name,app_version FROM phpgw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
 			while($GLOBALS['phpgw']->db->next_record())
 			{
 				$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
@@ -34,17 +34,19 @@
 				if(file_exists($_versionfile))
 				{
 					include($_versionfile);
+					/* echo '<br>' . $_versionfile . ','; */
 					$_file_version = $setup_info[$app_name]['version'];
 					$_app_title    = $setup_info[$app_name]['title'];
 					unset($setup_info);
 
-					$api_str = '<br>' . lang('The API is current');
-					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
+					$api_str = '<br>' . lang('The API requires an upgrade');
+					/* echo $app_name . ',' . $_db_version . ',' . $_file_version; */
+					if(!$GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
 					{
-						$_found = True;
+						$_current = True;
 						if($app_name == 'phpgwapi')
 						{
-							$api_str = '<br>' . lang('The API requires an upgrade');
+							$api_str = '<br>' . lang('The API is current');
 						}
 					}
 					unset($_file_version);
@@ -53,7 +55,7 @@
 				unset($_db_version);
 				unset($_versionfile);
 			}
-			if($_found)
+			if(!$_current)
 			{
 				echo '<center>';
 				echo $api_str;
