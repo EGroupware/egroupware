@@ -59,33 +59,66 @@
         }
      }
 
-     if (count($new_permissions) == 0){
+     if (!count($new_permissions) || !count($n_groups)) {
         $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission to this account");
      }
      
      if (! $totalerrors) {
-        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
-        $phpgw->db->next_record();
-        $account_id = $phpgw->db->f("account_id");
+       $phpgw->db->lock(array("accounts","preferences","phpgw_sessions","phpgw_acl","applications"));
+       $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
+       $phpgw->db->next_record();
+       $account_id = $phpgw->db->f("account_id");
 
-        while ($permission = each($new_permissions)) {
-          if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-            $phpgw->accounts->add_app($permission[0]);
-          }
-        }
-        $apps_after = $phpgw->accounts->add_app("",True);
+       $apps = CreateObject('phpgwapi.applications',array(intval($account_id),'u'));
+       $apps->read_installed_apps();
+       $apps_before = $apps->read_account_specific();
 
-        $cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
-                                 "firstname" => $n_firstname,   "lastname"       => $n_lastname,
-                                 "passwd"    => $n_passwd,      "account_status" => $n_account_status,
-                                 "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
-                                 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+       // Read Old Group ID's
+       $old_groups = $phpgw->accounts->read_groups($account_id);
+       // Read Old Group Apps
+       if ($old_groups) {
+         $apps->account_type = 'g';
+         reset($old_groups);
+         while($groups = each($old_groups)) {
+           $apps->account_id = $groups[0];
+           $old_app_groups = $apps->read_account_specific();
+           @reset($old_app_groups);
+           while($old_group_app = each($old_app_groups)) {
+             if(!$apps_before[$old_group_app[0]]) {
+               $apps_before[$old_group_app[0]] = $old_app_groups[$old_group_app[0]];
+             }
+           }
+           // delete old groups user was associated to
+           $phpgw->acl->delete("phpgw_group",$groups[0],$account_id,'u');
+         }
+       }
+        
+       $apps->account_type = 'u';
+       $apps->account_id = intval($account_id);
+       $apps->account_apps = Array(Array());
+       while($app = each($new_permissions)) {
+         if($app[1]) {
+           $apps->add_app($app[0]);
+           if(!$apps_before[$app[0]]) {
+             $apps_after[] = $app[0];
+           }
+         }
+       }
+       $apps->save_apps();
+
+       $cd = account_edit(array("loginid"        => $n_loginid,        "firstname"   => $n_firstname,
+                                "lastname"       => $n_lastname,       "passwd"      => $n_passwd,
+                                "account_status" => $n_account_status, "old_loginid" => $old_loginid,
+                                "account_id"     => rawurldecode($account_id)));
 
        // If the user is logged in, it will force a refresh of the session_info
        //$phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
-
-
+       // Add new groups user is associated to
+       for($i=0;$i<count($n_groups);$i++) {
+         $phpgw->acl->add("phpgw_group",$n_groups[$i],$account_id,'u',1);
+       }
+       
        // The following sets any default preferences needed for new applications..
        // This is smart enough to know if previous preferences were selected, use them.
        
@@ -116,6 +149,8 @@
          $phpgw->common->hook_single("update_user_data", $value);
        }       
 
+       $phpgw->db->unlock();
+       
        Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
        $phpgw->common->phpgw_exit();
      }
@@ -140,6 +175,7 @@
      $n_firstname = $userData["firstname"];
      $n_lastname  = $userData["lastname"];
      $apps = CreateObject('phpgwapi.applications',intval($userData["account_id"]));
+     $db_perms = $apps->read_account_specific();
   }
 
   if ($phpgw_info["server"]["account_repository"] == "ldap") {
@@ -197,7 +233,7 @@
   $sorted_apps = $phpgw_info["apps"];
   @asort($sorted_apps);
   @reset($sorted_apps);
-  while ($permission = each($phpgw_info["apps"])) {
+  while ($permission = each($sorted_apps)) {
      if ($permission[1]["enabled"]) {
         $perm_display[$i][0] = $permission[0];
         $perm_display[$i][1] = $permission[1]["title"];
@@ -210,7 +246,7 @@
      $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $apps->user_apps[$perm_display[$i][0]]) {
+     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td>";
@@ -224,7 +260,7 @@
      $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $apps->user_apps[$perm_display[$i][0]]) {
+     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td></tr>\n";

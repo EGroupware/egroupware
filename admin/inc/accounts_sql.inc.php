@@ -100,8 +100,6 @@
   {
      global $phpgw_info, $phpgw;
   
-     $phpgw->db->lock(array("accounts","preferences","phpgw_sessions"));
-     
 //     $lid = $account_info["loginid"];
 
      if ($account_info["old_loginid"] != $account_info["loginid"]) {
@@ -124,12 +122,6 @@
 //                        . "' where session_lid='" . $account_info["loginid"] . "'");
       }
 
-      while ($permission = each($account_info["permissions"])) {
-         if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-            $phpgw->accounts->add_app($permission[0]);
-         }
-      }
-
       if (! $account_info["account_status"]) {
          $account_info["account_status"] = "L";
       }
@@ -147,14 +139,10 @@
 
       $phpgw->db->query("update accounts set account_firstname='"
       			 . addslashes($account_info["firstname"]) . "', account_lastname='"
-      			 . addslashes($account_info["lastname"]) . "', account_permissions='"
-	  	         . $phpgw->accounts->add_app("",True) . "', account_status='"
-			       . $account_info["account_status"] . "', account_groups='"
-    		       . $account_info["groups"] . "' where account_lid='" . $account_info["loginid"]
+      			 . addslashes($account_info["lastname"]) . "', account_status='"
+			       . $account_info["account_status"] . "', where account_lid='" . $account_info["loginid"]
     		       . "'");
 
-      $phpgw->db->unlock();
-  
       return $cd;
   }
   
