@@ -154,10 +154,8 @@
 				echo '<!-- BO Filter : ('.$this->filter.') -->'."\n";
 				echo '<!-- Owner : '.$this->owner.' -->'."\n";
 			}
-			
-			$owner = (isset($GLOBALS['owner'])?$GLOBALS['owner']:'');
-			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:$owner);
-			$owner = ($owner=='' && isset($GLOBALS['HTTP_POST_VARS']['owner'])?$GLOBALS['HTTP_POST_VARS']['owner']:$owner);
+
+			$owner = get_var('owner',Array('GLOBAL','HTTP_GET_VARS','HTTP_POST_VARS'));
 
 			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
 			{
@@ -190,31 +188,15 @@
 
 			$this->holiday_color = (substr($GLOBALS['phpgw_info']['theme']['bg07'],0,1)=='#'?'':'#').$GLOBALS['phpgw_info']['theme']['bg07'];
 
-			$friendly = (isset($GLOBALS['HTTP_GET_VARS']['friendly'])?$GLOBALS['HTTP_GET_VARS']['friendly']:'');
-			$friendly = ($friendly=='' && isset($GLOBALS['HTTP_POST_VARS']['friendly'])?$GLOBALS['HTTP_POST_VARS']['friendly']:$friendly);
+			$this->printer_friendly = (intval(get_var('friendly',Array('HTTP_GET_VARS','HTTP_POST_VARS','DEFAULT'),0)) == 1?True:False);
 
-			$this->printer_friendly = (intval($friendly) == 1?True:False);
-
-			if(isset($GLOBALS['HTTP_POST_VARS']['filter']))   { $this->filter = $GLOBALS['HTTP_POST_VARS']['filter']; }
-			if(isset($GLOBALS['HTTP_POST_VARS']['cat_id']))  { $this->cat_id = $GLOBALS['HTTP_POST_VARS']['cat_id']; }
-
-			if(!isset($this->filter))
-			{
-				$this->filter = ' '.$this->prefs['calendar']['defaultfilter'].' ';
-			}
-
-			$date = (isset($GLOBALS['date'])?$GLOBALS['date']:'');
-			$date = (isset($GLOBALS['HTTP_GET_VARS']['date'])?$GLOBALS['HTTP_GET_VARS']['date']:$date);
-			$date = ($date=='' && isset($GLOBALS['HTTP_POST_VARS']['date'])?$GLOBALS['HTTP_POST_VARS']['date']:$date);
-
-			$year = (isset($GLOBALS['HTTP_GET_VARS']['year'])?$GLOBALS['HTTP_GET_VARS']['year']:'');
-			$year = ($year=='' && isset($GLOBALS['HTTP_POST_VARS']['year'])?$GLOBALS['HTTP_POST_VARS']['year']:$year);
+			$this->filter = get_var('filter',Array('HTTP_POST_VARS','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
+			$this->cat_id = get_var('cat_id',Array('HTTP_POST_VARS'));
 			
-			$month = (isset($GLOBALS['HTTP_GET_VARS']['month'])?$GLOBALS['HTTP_GET_VARS']['month']:'');
-			$month = ($month=='' && isset($GLOBALS['HTTP_POST_VARS']['month'])?$GLOBALS['HTTP_POST_VARS']['month']:$month);
-			
-			$day = (isset($GLOBALS['HTTP_GET_VARS']['day'])?$GLOBALS['HTTP_GET_VARS']['day']:'');
-			$day = ($day=='' && isset($GLOBALS['HTTP_POST_VARS']['day'])?$GLOBALS['HTTP_POST_VARS']['day']:'');
+			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$month = get_var('month',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$day = get_var('day',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			
 			if(isset($date) && $date!='')
 			{
