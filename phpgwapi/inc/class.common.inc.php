@@ -723,7 +723,7 @@
 					continue;
 				}
 
-				if ($phpgw_info['apps'][$permission[0]]['status'] != 2)
+				if ($phpgw_info['apps'][$permission[0]]['status'] != 2 && $phpgw_info['apps'][$permission[0]]['status'] != 3)
 				{
 					$phpgw_info['navbar'][$permission[0]]['title'] = $phpgw_info['apps'][$permission[0]]['title'];
 					$phpgw_info['navbar'][$permission[0]]['url']   = $phpgw->link('/' . $permission[0] . '/index.php');

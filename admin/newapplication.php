@@ -107,11 +107,11 @@
 	display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');
 
 	if(!isset($n_app_status)) { $n_app_status = 1; }
-	$selected[$n_app_status] = " selected";
-	$status_html = '<option value="0"' . $selected[0] . '>' . lang("Disabled") . '</option>'
-		. '<option value="1"' . $selected[1] . '>' . lang("Enabled") . '</option>'
-		. '<option value="2"' . $selected[2] . '>' . lang("Enabled - Hidden from navbar") . '</option>';
-	display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
+	$selected[$n_app_status] = ' selected';
+	$status_html = '<option value="0"' . $selected[0] . '>' . lang('Disabled') . '</option>'
+		. '<option value="1"' . $selected[1] . '>' . lang('Enabled') . '</option>'
+		. '<option value="2"' . $selected[2] . '>' . lang('Enabled - Hidden from navbar') . '</option>';
+	display_row(lang('Status'),'<select name="n_app_status">' . $status_html . '</select>');
 
 	if (! $app_order)
 	{

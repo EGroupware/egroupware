@@ -25,16 +25,16 @@
 
 	if ($order)
 	{
-		$ordermethod = "order by $order $sort";
+		$ordermethod = "ORDER BY $order $sort";
 	}
 	else
 	{
-		$ordermethod = "order by app_title asc";
+		$ordermethod = "ORDER BY app_title ASC";
 	}
 
 	if (!$sort)
 	{
-		$sort = "desc";
+		$sort = "DESC";
 	}
 
 	$p->set_var('lang_installed',lang('Installed applications'));
@@ -46,7 +46,7 @@
 	$p->set_var('lang_delete',lang('Delete'));
 	$p->set_var('lang_enabled',lang('Enabled'));
 
-	$phpgw->db->query("select * from phpgw_applications $ordermethod",__LINE__,__FILE__);
+	$phpgw->db->query("SELECT * FROM phpgw_applications WHERE app_enabled!='3' $ordermethod",__LINE__,__FILE__);
 	while ($phpgw->db->next_record())
 	{
 		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -57,6 +57,7 @@
 
 		$p->set_var('tr_color',$tr_color);
 		$p->set_var('name',$name);
+
 		$p->set_var('edit','<a href="' . $phpgw->link('/admin/editapplication.php','app_name=' . urlencode($phpgw->db->f('app_name'))) . '"> ' . lang('Edit') . ' </a>');
 		$p->set_var('delete','<a href="' . $phpgw->link('/admin/deleteapplication.php','app_name=' . urlencode($phpgw->db->f('app_name'))) . '"> ' . lang('Delete') . ' </a>');
 

@@ -238,7 +238,7 @@
 	@reset($sorted_apps);
 	while ($permission = each($sorted_apps))
 	{
-		if ($permission[1]['enabled'] && $permission[1]['status'] != 2)
+		if ($permission[1]['enabled'] && $permission[1]['status'] != 3)
 		{
 			$perm_display[$i][0] = $permission[0];
 			$perm_display[$i][1] = $permission[1]['title'];
