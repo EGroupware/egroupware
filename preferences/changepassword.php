@@ -65,7 +65,7 @@ if (! $submit) {
       $error = lang("you must enter a password");
 
    if ($error) {
-      phpgw_navbar();
+      $phpgw->common->navbar();
       echo "<p><br>$error</p>";
       exit;
    }
@@ -82,3 +82,4 @@ if (! $submit) {
    Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
 	. "/preferences/","cd=18"));
 }
+?>
