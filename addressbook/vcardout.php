@@ -34,8 +34,8 @@
 	
 		$fields = $this->read_single_entry($ab_id,$this->stock_contact_fields);
 		
-		$rights = $phpgw->acl->get_rights('u_'.$$fields[0]["owner"],$phpgw_info["flags"]["currentapp"]);
-		if ( ($rights & PHPGW_ACL_READ) || ($owner == $account_id) ) {
+		$rights = $phpgw->acl->get_rights('u_'.$fields[0]["owner"],$phpgw_info["flags"]["currentapp"]);
+		if ( ($rights & PHPGW_ACL_READ) || ($fields[0]["owner"] == $phpgw_info["user"]["account_id"]) ) {
 	
 			$email        = $fields[0]["d_email"];
 			$fullname     = $fields[0]["fn"];
