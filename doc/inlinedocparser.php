@@ -14,6 +14,15 @@
 
 	include ('../phpgwapi/inc/class.Template.inc.php');
 
+	if (!isset($GLOBALS['HTTP_GET_VARS']['object_type']))
+	{
+		$GLOBALS['object_type'] = 'function';
+	}
+	else
+	{
+		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
+	}
+
 	function parseobject($input)
 	{
 		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
@@ -46,6 +55,11 @@
 				}
 			}
 		}
+		
+		if ($GLOBALS['object_type'].' '.$GLOBALS['HTTP_GET_VARS']['object'] == $t)
+		{
+			$GLOBALS['special_request'] = $output[$t];
+		}
 		return Array('name' => $t, 'value' => $output[$t]);
 	}
 
@@ -55,6 +69,10 @@
 		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 		$input = ereg_replace ("@", "@#", $input);
 		$new = explode("@",$input);
+		if (count($new) < 3)
+		{
+			return False;
+		}
 		unset ($new[0], $new[1]);
 		while (list($x,$y) = each($new))
 		{
@@ -82,6 +100,10 @@
 					$output[$t][$xkey][] = $out;
 				}
 			}
+		}
+		if ($GLOBALS['object_type'].' '.$GLOBALS['HTTP_GET_VARS']['object'] == $t)
+		{
+			$GLOBALS['special_request'] = $output[$t];
 		}
 		return Array('name' => $t, 'value' => $output[$t]);
 	}
@@ -210,16 +232,22 @@
 			}
 			else
 			{
-				if (isset($matches_starts[$startstop[$key]]))
+				if (!isset($class[$startstop[$key]][0]) && isset($matches_starts[$startstop[$key]]))
 				{
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
-					$class[$startstop[$key]][0] = $returndoc['value'];
-					//$class[$startstop[$key]][0] = $matches_starts[$startstop[$key]];
+					if ($returndoc != False)
+					{
+						$class[$startstop[$key]][0] = $returndoc['value'];
+					}
 				}
 				$class[$startstop[$key]][$returndata['name']] = $returndata['value'];
 			}
 		}
 
+		if(isset($GLOBALS['HTTP_GET_VARS']['object']))
+		{
+			$class = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
+		}
 		echo '<br><pre>';
 		print_r($class);
 		//        var_dump($elements);
