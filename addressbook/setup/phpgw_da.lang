@@ -1,5 +1,11 @@
+%1 records imported	addressbook	da	%1 posteringer importeret
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	da	%1 posteringer læst (ikke implamenteret endnu, du skalgå %2tilbage%3 og fravælge Test import
+(e.g. 1969)	addressbook	da	(f.eks 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	da	<b>Ingen konverteringstype &lt;none&gt; blev fundet.</b>  Vælg venligst en konverteringstype fra listen
 <b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	da	<b>Ingen konverteringstype &lt;none&gt; blev fundet.</b>  Vælg venligst en konverteringstype fra listen
+@-eval() is only availible to admins!!!	addressbook	da	@-eval() er kun tilgængelig for administratorer!!!
+actions	addressbook	da	Handling
+add a single entry by passing the fields.	addressbook	da	
 add custom field	addressbook	da	Tilføj valgfrit felt
 address book	common	da	Adressebog
 address book - vcard in	addressbook	da	Adressebog - importer VCard
@@ -9,11 +15,13 @@ address line 3	addressbook	da	Adresse Linie 3
 address type	addressbook	da	Adresse Type
 addressbook	common	da	Adressebog
 addressbook preferences	addressbook	da	Adressebog preferencer
+addressbook-fieldname	addressbook	da	Adressebog feltnavn
 addvcard	addressbook	da	Tilføj VCard
 alt. csv import	addressbook	da	Alt. CSV Importering
 are you sure you want to delete this field?	addressbook	da	Er du sikker på at du vil slette dette felt?
 bbs phone	addressbook	da	BBS Telefonnummer
 birthday	common	da	Fødselsdag
+birthdays	common	da	Fødselsdage
 blank	addressbook	da	Blank
 business	common	da	Firma
 business address type	addressbook	da	Firma Adresse Type
@@ -28,29 +36,40 @@ business street	addressbook	da	Firma Adresse
 business zip code	addressbook	da	Firma Postnummer
 car phone	addressbook	da	Bil telefonnummer
 cell phone	addressbook	da	Mobil telefonnummer
+charset of file	addressbook	da	Karakterset for fil
 city	common	da	By
 company	common	da	Firma
 company name	common	da	Firma navn
+configuration	common	da	Konfiguration
 contact	common	da	Kontakt
 contact application	admin	da	Kontakt applikation
 contact settings	admin	da	Kontakt Indstillinger
+copied by %1, from record #%2.	addressbook	da	Kopieret af %1, fra postering #%2.
 country	common	da	Land
+csv-fieldname	addressbook	da	CSV-Feltnavn
 csv-filename	addressbook	da	CVS-Filnavn
 custom	addressbook	da	Valgfri
 custom fields	addressbook	da	Valgfri Felter
+debug output in browser	addressbook	da	Vis fejlmeddelser i browser vinduet
 default filter	addressbook	da	Standard Filter
+delete a single entry by passing the id.	addressbook	da	
 department	common	da	Afdeling
-domestic	common	da	Indlands
+domestic	addressbook	da	Indlands
 download	addressbook	da	Download
+download export file (uncheck to debug output in browser)	addressbook	da	Hent eksporteret fil (fjern flag for fejlmeddelser i browser vinduet)
 e-mail	addressbook	da	E-mail
 edit custom field	addressbook	da	Ret Valgfrit Felt
 edit custom fields	admin	da	Ret Valgfrie Felter
+empty for all	addressbook	da	tøm for alt
+enter the path to the exported file here	addressbook	da	Indtast stien til den eksporteret fil her
 export contacts	addressbook	da	Eksporter Kontakter
 export file name	addressbook	da	Eksporter filnavn
 export from addressbook	addressbook	da	Eksporter fra adressebogen
 extra	addressbook	da	Ekstra
 fax	addressbook	da	Fax
 fax number	common	da	Faxnummer
+field %1 has been added !	addressbook	da	Felt %1 er tilføjet!
+field %1 has been updated !	addressbook	da	Felt %1 er opdateret!
 field name	addressbook	da	Feltnavn
 field x has been added !	addressbook	da	Feltet $1 er blevet tilføjet!
 fields to show in address list	addressbook	da	Felter der skal vises på adresselisten
@@ -58,6 +77,7 @@ fieldseparator	addressbook	da	Feltseperator
 first name	addressbook	da	Fornavn
 full name	addressbook	da	Fulde Navn
 geo	addressbook	da	GEO
+global categories	addressbook	da	Globale Kategorier
 grant addressbook access	common	da	Tildel adgang til adressbogen
 home address type	addressbook	da	Hjem Adresse Type
 home city	addressbook	da	Hjem By
@@ -68,55 +88,79 @@ home phone	addressbook	da	Hjem telefon
 home state	addressbook	da	Hjem Stat
 home street	addressbook	da	Hjem Adresse
 home zip code	addressbook	da	Hjem Postnummer
+import	addressbook	da	Importer
 import contacts	addressbook	da	Importer Kontakter
 import csv-file into addressbook	addressbook	da	Importer CVS-fil til adressebogen
 import file	addressbook	da	Importer Fil
 import from ldif, csv, or vcard	addressbook	da	Importer fra LDIF, CVS eller VCard
 import from outlook	addressbook	da	Importer fra Outlook
-international	common	da	International
+import next set	addressbook	da	Impoter næste
+import_instructions	addressbook	da	I Netscape, åben Adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i LDIF formatet.<p>Eller i Outlook, vælg din kontakt mappe, vælg <b>Import and Export...</b> fra b>File</b> menuen og eksporter dine kontakt personer til en komma separeret fil (CSV). <p>Eller, i Palm Desktop 4.0 eller nyere, brug adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i VCard formatet
+international	addressbook	da	International
 isdn phone	addressbook	da	ISDN Telefonnummer
 label	addressbook	da	Mærkat
 last name	addressbook	da	Efternavn
-ldap context for contacts	admin	da	
+ldap context for contacts	admin	da	LDAP context til kontakter
 ldap host for contacts	admin	da	LDAP vært for kontakter
-ldap root dn for contacts	admin	da	
-ldap root pw for contacts	admin	da	
+ldap root dn for contacts	admin	da	LDAP root dn til kontakter
+ldap root pw for contacts	admin	da	LDAP root pw til kontakter
+ldif	addressbook	da	LDIF
 line 2	addressbook	da	Linie 2
+mark records as private	addressbook	da	Markere posteringer som private
 message phone	addressbook	da	Meddellelses Telefonnummer
 middle name	addressbook	da	Mellemnavn(e)
 mobile	addressbook	da	Mobil
 mobile phone	addressbook	da	Mobiltelefonnummer
 modem phone	addressbook	da	Modem telefonnummer
 no vcard	addressbook	da	Ingen VCard
+number of records to read (%1)	addressbook	da	Antal posteringer at læse (%1)
 other number	addressbook	da	Andet nummer
 other phone	addressbook	da	Andet Telefonnummer
 pager	common	da	Pager
 parcel	addressbook	da	Pakke
 phone number	common	da	Telefonnummer
 phone numbers	common	da	Telefonnumre
+please enter a name for that field !	addressbook	da	Skriv venligst et navn for det felt!
 postal	common	da	Post
-pref	common	da	foretrukket
+pref	addressbook	da	foretrukket
 prefix	addressbook	da	Prefix
 public key	addressbook	da	Offentlig Nøgle
+read a list of entries.	addressbook	da	Læs en liste af indtastninger
+read a single entry by passing the id and fieldlist.	addressbook	da	
 record access	addressbook	da	Posterings adgang
 record owner	addressbook	da	Posterings ejer
 retrieve contacts	admin	da	hent kontakter
+select all	addressbook	da	Vælg alle
+select the type of conversion	addressbook	da	Vælg type af konvertering
+select the type of conversion:	addressbook	da	Vælg type af konvertering:
 select where you want to store	admin	da	Vælg hvor du vil gemme
 show birthday reminders on main screen	addressbook	da	Påmind om fødselsdage på forsiden
+startrecord	addressbook	da	Start postering
 state	common	da	Land
-street	common	da	Vejnavn
-successfully imported %1 records into your addressbook.	addressbook	da	Imported %1 posteringer til din adressebog.
+street	common	da	Vej navn
+successfully imported %1 records into your addressbook.	addressbook	da	Importerede %1 posteringer til din adressebog.
 suffix	addressbook	da	Suffix
+test import (show importable records <u>only</u> in browser)	addressbook	da	Test Import (viser <u>kun</u> importeret posteringer i browser vinduet)
+that field name has been used already !	addressbook	da	Det felt navn er allerede blevet brugt!
 this person's first name was not in the address book.	addressbook	da	Denne persons fornavn var ikke i adressebogen.
+this person's last name was not in the address book.	addressbook	da	Denne persons efternavn var ikke i adressebogen.
 time zone offset	addressbook	da	tidszone forskel
 title	addressbook	da	Titel
+to many might exceed your execution-time-limit	addressbook	da	
 today is %1's birthday!	common	da	I dag er det %1's fødselsdag!
 tomorrow is %1's birthday.	common	da	I morgen er det %1's fødselsdag.
+translation	addressbook	da	Oversættelse
+update a single entry by passing the fields.	addressbook	da	
 url	addressbook	da	URL
+use country list	addressbook	da	Brug Lande Liste
 vcard	common	da	VCard
 vcards require a first name entry.	addressbook	da	VCards kræver et fornavn indtastet.
+vcards require a last name entry.	addressbook	da	VCards kræver et efternavn indtastet.
 video phone	addressbook	da	Video telefonnummer
 voice phone	addressbook	da	Voice telefonnummer
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	da	ADVARSEL!! LDAP er kun tilgængeligt hvis du ikke bruger kontakter til at gemme kontoer!
 work phone	addressbook	da	Arbejds telefon
+you must select a vcard. (*.vcf)	addressbook	da	Du skal vælge et vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	da	Du skal mindst vælge en kolonne
 zip code	common	da	Postnummer
+zip_note	addressbook	da	<p><b>Note:</b>Filen kan være en zip file med komprimeret .csv, .vcf eller .ldif filer. Men, importer kun en type ad gangen.
