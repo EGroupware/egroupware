@@ -419,7 +419,7 @@
 
 					$sql = "INSERT INTO phpgw_config (config_app,config_name,config_value) "
 						."VALUES ('".$setup_info[$appname]['name']."','"
-						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."');";
+						.$appname."_tables_prefix','".$setup_info[$appname]['tables_prefix']."')";
 					$this->db->query($sql,__LINE__,__FILE__);
 				}
 				if($use_appid)
@@ -446,7 +446,7 @@
 					. $enable . ","
 					. (int)$setup_info[$appname]['app_order'] . ","
 					. "'" . $tables . "',"
-					. "'" . $setup_info[$appname]['version'] . "');"
+					. "'" . $setup_info[$appname]['version'] . "')"
 				);
 				$this->clear_session_cache();
 			}
