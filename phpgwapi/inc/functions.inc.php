@@ -46,10 +46,16 @@ function CreateObject($class,
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
 		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
 {
-	global $phpgw_info;
+	global $phpgw_info, $phpgw;
+
+	if (is_object($phpgw->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+	{
+		//$phpgw->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
+	}
 
   /*		error_reporting(0);		*/
 	list($appname,$classname) = explode(".", $class);
+
 	if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 	{
@@ -99,13 +105,15 @@ function CreateObject($class,
  */
 function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 {
- /* Need to make sure this is working against a single dimensional object */
+	 /* Need to make sure this is working against a single dimensional object */
+	//	$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This method was run: '.$method,'file'=>__FILE__,'line'=>__LINE__));
 	$partscount = substr_count($method, '.');
 	if ($partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $method);
 		if (!is_object($GLOBALS[$classname]))
 		{
+
 			if ($classparams != '_UNDEF_' && $classparams != True)
 			{
 				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
@@ -519,14 +527,16 @@ else
 	}
 
   /* A few hacker resistant constants that will be used throught the program */
-	define('PHPGW_TEMPLATE_DIR',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
-	define('PHPGW_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_path('phpgwapi'));
-	define('PHPGW_IMAGES_FILEDIR', $GLOBALS['phpgw']->common->get_image_dir('phpgwapi'));
-	define('PHPGW_APP_ROOT', $GLOBALS['phpgw']->common->get_app_dir());
-	define('PHPGW_APP_INC', $GLOBALS['phpgw']->common->get_inc_dir());
-	define('PHPGW_APP_TPL', $GLOBALS['phpgw']->common->get_tpl_dir());
-	define('PHPGW_IMAGES', $GLOBALS['phpgw']->common->get_image_path());
-	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir());
+	define('PHPGW_TEMPLATE_DIR', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir', 'phpgwapi'));
+	define('PHPGW_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi'));
+	define('PHPGW_IMAGES_FILEDIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir', 'phpgwapi'));
+	define('PHPGW_APP_ROOT', ExecMethod('phpgwapi.phpgw.common.get_app_dir'));
+	define('PHPGW_APP_INC', ExecMethod('phpgwapi.phpgw.common.get_inc_dir'));
+	define('PHPGW_APP_TPL', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir'));
+	define('PHPGW_IMAGES', ExecMethod('phpgwapi.phpgw.common.get_image_path'));
+	define('PHPGW_APP_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir'));
+
+	//	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir());
 
 	define('PHPGW_ACL_READ',1);
 	define('PHPGW_ACL_ADD',2);
