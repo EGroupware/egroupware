@@ -12,7 +12,7 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'admin',
@@ -65,7 +65,7 @@
 
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
-		while (list($key,$config) = each($newsettings))
+		while (list($key,$config) = each($GLOBALS['HTTP_POST_VARS']['newsettings']))
 		{
 			if ($config)
 			{
@@ -118,7 +118,7 @@
 				$newval = ereg_replace(' ','_',$newval);
 				$t->set_var($value,$current_config[$newval]);
 				break;
-/*			case "checked":
+/*			case 'checked':
 				$newval = ereg_replace(' ','_',$newval);
 				if ($current_config[$newval])
 				{
@@ -149,7 +149,7 @@
 					$t->set_var($value,'');
 				}
 				break;
-			case "hook":
+			case 'hook':
 				$newval = ereg_replace(' ','_',$newval);
 				$t->set_var($value,$newval($current_config));
 				break;
