@@ -47,9 +47,9 @@ class html
 		{
 			$arr = array('no','yes');
 		}
-		if (0+$multiple > 0)
+		if (intval($multiple) > 0)
 		{
-			$options .= ' MULTIPLE SIZE="'.(0+$multiple).'"';
+			$options .= ' MULTIPLE SIZE="'.intval($multiple).'"';
 			if (substr($name,-2) != '[]')
 			{
 				$name .= '[]';
@@ -61,9 +61,10 @@ class html
 		{
 			$key = implode(',',$key);
 		}
-		while (list($k,$text) = each($arr))
+		foreach($arr as $k => $text)
 		{
 			$out .= '<option value="'.htmlspecialchars($k).'"';
+
 			if("$k" == "$key" || strstr(",$key,",",$k,"))
 			{
 				$out .= " SELECTED";
@@ -86,9 +87,12 @@ class html
 		{
 			$vars = array( $vars => $value );
 		}
-		while (list($name,$value) = each($vars))
+		foreach($vars as $name => $value)
 		{
-			if (is_array($value)) $value = serialize($value);
+			if (is_array($value))
+			{
+				$value = serialize($value);
+			}
 			if (!$ignore_empty || $value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
 				$html .= "<INPUT TYPE=\"HIDDEN\" NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\">\n";
@@ -104,8 +108,10 @@ class html
 
 	function input($name,$value='',$type='',$options='' )
 	{
-		if ($type) $type = 'TYPE="'.$type.'"';
-
+		if ($type)
+		{
+			$type = 'TYPE="'.$type.'"';
+		}
 		return "<INPUT $type NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\" $options>\n";
 	}
 
@@ -113,7 +119,10 @@ class html
 	{
 		if ($image != '')
 		{
-			if (strpos($image,'.')) $image = substr($image,0,strpos($image,'.'));
+			if (strpos($image,'.')) 
+			{
+				$image = substr($image,0,strpos($image,'.'));
+			}
 			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)) &&
 			    !($path = $GLOBALS['phpgw']->common->image('phpgwapi',$image)))
 			{
@@ -159,23 +168,15 @@ class html
 	*/
 	function link($url,$vars='')
 	{
-		if (is_array( $vars ))
+		if (!is_array($vars))
 		{
-			$v = array( );
-			while(list($name,$value) = each($vars))
-			{
-				if ($value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
-				{
-					$v[] = "$name=$value";
-				}
-			}
-			$vars = implode('&',$v);
+			$vars = explode('&',$vars);
 		}
 		list($url,$v) = explode('?',$url);	// url may contain additional vars
-		if ($url == '') $url = '/index.php';
 		if ($v)
-			$vars .= ($vars ? '&' : '') . $v;
-
+		{
+			$vars += explode('&',$v);
+		}
 		return $GLOBALS['phpgw']->link($url,$vars);
 	}
 
@@ -189,18 +190,18 @@ class html
 		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"".$this->link($url,$url_vars)."\" $options>\n";
 		$html .= $this->input_hidden($hidden_vars);
 
-		if ($content) {
+		if ($content) 
+		{
 			$html .= $content;
 			$html .= "</form>\n";
 		}
 		return $html;
 	}
 
-	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',
-								 $form_name='',$method='POST')
+	function form_1button($name,$lang,$hidden_vars,$url,$url_vars='',$form_name='',$method='POST')
 	{
 		return $this->form($this->submit_button($name,$lang),
-								 $hidden_vars,$url,$url_vars,$form_name,'',$method);
+			$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
 
 	/*!
@@ -219,26 +220,39 @@ class html
 	{
 		$html = $no_table_tr ? '' : "<TABLE $options>\n";
 
-		while (list($key,$row) = each($rows)) {
+		foreach($rows as $key => $row)
+		{
 			if (!is_array($row))
+			{
 				continue;					// parameter
+			}
 			$html .= $no_table_tr && $key == 1 ? '' : "\t<TR ".$rows['.'.$key].">\n";
-			while (list($key,$cell) = each($row)) {
+
+			foreach($row as $key => $cell)
+			{
 				if ($key[0] == '.')
+				{
 					continue;				// parameter
+				}
 				$table_pos = strpos($cell,'<TABLE');
 				$td_pos = strpos($cell,'<TD');
 				if ($td_pos !== False && ($table_pos === False || $td_pos < $table_pos))
+				{
 					$html .= $cell;
+				}
 				else
+				{
 					$html .= "\t\t<TD ".$row['.'.$key].">$cell</TD>\n";
+				}
 			}
 			$html .= "\t</TR>\n";
 		}
 		$html .= "</TABLE>\n";
+
 		if ($no_table_tr)
+		{
 			$html = substr($html,0,-16);
-		
+		}
 		return $html;
 	}
 	
@@ -269,7 +283,7 @@ class html
 		}
 		if ($title)
 		{
-			$options .= " $this->prefered_img_title=\"".htmlentities($title).'"';
+			$options .= " $this->prefered_img_title=\"".htmlspecialchars($title).'"';
 		}
 		return "<IMG SRC=\"$path\" $options>";
 	}
@@ -277,8 +291,9 @@ class html
 	function a_href( $content,$url,$vars='',$options='')
 	{
 		if (!strstr($url,'/') && count(explode('.',$url)) == 3)
+		{
 			$url = "/index.php?menuaction=$url";
-		
+		}
 		if (is_array($url))
 		{
 			$vars = $url;
