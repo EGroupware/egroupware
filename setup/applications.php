@@ -263,9 +263,19 @@
 		$notables = $HTTP_GET_VARS['notables'];
 		$setup_tpl->set_var('description',lang('Problem resolution'). ':');
 		$setup_tpl->pparse('out','header');
-		if ($badinstall)
+
+		if($HTTP_GET_VARS['post'])
 		{
-			echo $setup_info[$resolve]['title'] . ' ' . lang('is broken') . ' ';
+			echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('may be broken') . ' ';
+			echo lang('because an application it depends upon was upgraded');
+			echo '<br>';
+			echo lang('to a version it does not know about') . '.';
+			echo '<br>';
+			echo lang('However, the application may still work') . '.';
+		}
+		elseif ($HTTP_GET_VARS['badinstall'])
+		{
+			echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('is broken') . ' ';
 			echo lang('because of a failed upgrade or install') . '.';
 			echo '<br>';
 			echo lang('Some or all of its tables are missing') . '.';
@@ -276,11 +286,11 @@
 		{
 			if($setup_info[$resolve]['enabled'])
 			{
-				echo $setup_info[$resolve]['title'] . ' ' . lang('is broken') . ' ';
+				echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('is broken') . ' ';
 			}
 			else
 			{
-				echo $setup_info[$resolve]['title'] . ' ' . lang('is disabled') . ' ';
+				echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('is disabled') . ' ';
 			}
 
 			if (!$notables)
@@ -463,6 +473,18 @@
 						$setup_tpl->set_var('upgrade','&nbsp;');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '">' . lang('Possible Solutions') . '</a>');
 						$status = lang('Dependency Failure') . ':' . $depstring . $value['status'];
+						break;
+					case 'P':
+						$setup_tpl->set_var('bg_color','FFCCFF');
+						$depstring = parsedep($value['depends']);
+						$depstring .= ')';
+						$setup_tpl->set_var('instimg','dep.gif');
+						$setup_tpl->set_var('instalt',lang('Post-install Dependency Failure'));
+						$setup_tpl->set_var('install','&nbsp;');
+						$setup_tpl->set_var('remove','&nbsp;');
+						$setup_tpl->set_var('upgrade','&nbsp;');
+						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&post=True">' . lang('Possible Solutions') . '</a>');
+						$status = lang('Post-install Dependency Failure') . ':' . $depstring . $value['status'];
 						break;
 					default:
 						$setup_tpl->set_var('instimg','incomplete.gif');

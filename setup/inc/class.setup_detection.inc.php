@@ -96,6 +96,7 @@
 		R	upgrade in pRogress
 		C	upgrade Completed successfully
 		D	Dependency failure
+		P	Post-install dependency failure
 		F	upgrade Failed
 		V	Version mismatch at end of upgrade (Not used, proposed only)
 		M	Missing files at start of upgrade (Not used, proposed only)
@@ -169,9 +170,16 @@
 						if ($setup_info['depends'][$depkey]['status'] == False)
 						{
 							/* Only set this if it has not already failed to upgrade - Milosch */
-							if (!( ($setup_info[$key]['status'] == 'F') || ($setup_info[$key]['status'] == 'C') ))
+							if ($setup_info[$key]['status'] != 'F' )//&& $setup_info[$key]['status'] != 'C')
 							{
-								$setup_info[$key]['status'] = 'D';
+								if($setup_info[$key]['status'] == 'C')
+								{
+									$setup_info[$key]['status'] = 'P';
+								}
+								else
+								{
+									$setup_info[$key]['status'] = 'D';
+								}
 							}
 						}
 					}
