@@ -167,7 +167,7 @@ function html_page_close ()
 //	html_page_body_end ();
 //	html_page_end ();
 	$phpgw->common->phpgw_footer ();
-	exit;
+	$phpgw->common->phpgw_exit ();
 }
 function html_text_bold ($text = NULL, $return = 0, $lang = 0)
 {
