@@ -41,7 +41,7 @@ popup with search	preferences	sl	Okno za iskanje
 re-enter your password	preferences	sl	Ponovno vpi¹i geslo
 select different theme	preferences	sl	Izberi drugaèno temo
 select one	preferences	sl	Izberi eno
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporo&#269;il in besedil znotraj eGroupWare-a.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisan angle¹ko obvestilo.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporo&#269;il in besedil znotraj eGroupWare-a.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisan angle¹ko obvestilo.
 selectbox	preferences	sl	Izbirno polje
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	sl	Spremeni glede na svoje potrebe. Iz varnostnih razlogov morda no&#269;e¹ razkriti svojega uporabni¹kega imena.
 should the number of active sessions be displayed for you all the time.	preferences	sl	Ali naj bo ¹tevilo aktivnih sej prikazano ves &#269;as?
