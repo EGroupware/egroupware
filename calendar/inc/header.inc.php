@@ -19,7 +19,7 @@
    </a>
   </td>
   <td align="right">
-   <form action="<?php echo $phpgw->link("search.php"); ?>">
+   <form action="<?php echo $phpgw->link("search.php"); ?>" method="POST">
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
     <input type="hidden" name="date" value="<?php echo $date; ?>">
     <input type="hidden" name="month" value="<?php echo $thismonth; ?>">
