@@ -78,7 +78,7 @@
 				/* Load hook file with functions to validate each config (one/none/all) */
 				$GLOBALS['phpgw']->hooks->single('config_validate',$appname);
 
-				while (list($key,$config) = each($_POST['newsettings']))
+				foreach($_POST['newsettings'] as $key => $config)
 				{
 					if ($config)
 					{
