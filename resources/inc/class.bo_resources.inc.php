@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - resources - Resource Management System                      *
 	* http://www.egroupware.org                                                *
-	* Written by Lukas Weiss [ichLukas@gmx.net] and                            *
+	* Written by Lukas Weiss [ichLukas@gmx.de] and                             *
 	*            Cornelius Weiss [nelius@gmx.net]                              *
 	* -----------------------------------------------                          *
 	*  This program is free software; you can redistribute it and/or modify it *
