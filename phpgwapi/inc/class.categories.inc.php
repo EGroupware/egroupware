@@ -495,14 +495,14 @@
 				. "','" . $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr'] . "','" . $cat_values['data']
 				. "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
 
+			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
+
 			if (!$cat_values['parent'] || $cat_values['parent'] == 0)
 			{
-				$this->db->query("SELECT MAX(cat_id) FROM phpgw_categories",__LINE__,__FILE__);
-				$this->db->next_record();
-				$max = $this->db->f(0);
 				$this->db->query("UPDATE phpgw_categories SET cat_main='" . $max . "' WHERE cat_id='"
-					. $max . "'",__LINE__,__FILE__);
+								. $max . "'",__LINE__,__FILE__);
 			}
+			return $max;
 		}
 
 		/*!
@@ -518,7 +518,7 @@
 			}
 
 			$this->db->query("DELETE FROM phpgw_categories WHERE cat_id='$cat_id' $subdelete AND cat_appname='"
-				. $this->app_name . "'",__LINE__,__FILE__);
+							. $this->app_name . "'",__LINE__,__FILE__);
 		}
 
 		/*!
