@@ -511,8 +511,8 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			// Note: this does not check the availiblitly of accounts via other auth-methods then sql !!!
 			$GLOBALS['phpgw_setup']->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u' AND account_lid!='anonymous'",__LINE__,__FILE__);
 			$no_accounts = !$GLOBALS['phpgw_setup']->db->next_record() || !$GLOBALS['phpgw_setup']->db->f(0);
-			$setup_tpl->set_var('admin_status_img',$no_account ? $incomplete : $completed);
-			$setup_tpl->set_var('admin_status_alt',$no_account ? lang('not completed') : lang('completed'));
+			$setup_tpl->set_var('admin_status_img',$no_accounts ? $incomplete : $completed);
+			$setup_tpl->set_var('admin_status_alt',$no_accounts ? lang('not completed') : lang('completed'));
 			$setup_tpl->set_var('admin_table_data',$GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				$no_accounts ? lang('No accounts existing') : lang('Accounts existing'),
 				'POST','setup_demo.php',
