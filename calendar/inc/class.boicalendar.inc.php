@@ -1294,7 +1294,7 @@ class boicalendar
 
 	function strip_quotes($str)
 	{
-		return str_replace('"','',$str);
+		return str_replace('\"','',$str);
 	}
 
 	function from_text($str)
@@ -1559,7 +1559,7 @@ class boicalendar
 		$quote = '';
 		if($seperator == '=')
 		{
-			$quote = '"';
+			$quote = '\"';
 		}
 		
 		$return_value = $this->fold('X-'.$x_type['name'].$seperator.$quote.$x_type['value'].$quote);
@@ -1608,7 +1608,7 @@ class boicalendar
 					$include_datetime = True;
 					continue;
 				}
-				$quote = (@$this->parameter[$key]['quoted']?'"':'');
+				$quote = (@$this->parameter[$key]['quoted']?'\"':'');
 				if(isset($event[$key]) && @$this->parameter[$key]['properties'][$property])
 				{
 					$change_text = @$this->parameter[$key]['to_text'];
@@ -1788,7 +1788,7 @@ class boicalendar
 				case 'function':
 					$str .= ';'.str_replace('_','-',strtoupper($value)).'=';
 					$function = @$this->parameter[$key]['function'];
-					$str .= (@$this->parameter[$key]['quoted']?'"':'').$this->$function($event[$key]).(@$this->parameter[$key]['quoted']?'"':'');
+					$str .= (@$this->parameter[$key]['quoted']?'\"':'').$this->$function($event[$key]).(@$this->parameter[$key]['quoted']?'\"':'');
 					break;
 				case 'float':
 					if(!empty($event[$value]))
@@ -3004,7 +3004,7 @@ class boicalendar
 					$this->check_owner($event,$ical['event'][$i],$so_event);
 					$event = $so_event->get_cached_event();
 					$so_event->add_entry($event);
-					$event = $so_event->get_cached_event();
+//					$event = $so_event->get_cached_event();
 				}
 				else
 				{
@@ -3188,7 +3188,7 @@ class boicalendar
 				
 					$event = $so_event->get_cached_event();
 					$so_event->add_entry($event);
-					$event = $so_event->get_cached_event();
+//					$event = $so_event->get_cached_event();
 				}
 			}
 			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
