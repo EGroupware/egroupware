@@ -165,7 +165,7 @@
 	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
 		case 1:
-			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!'));
+			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!').':<p>'.$GLOBALS['phpgw_setup']->db->Error);
 			$setup_tpl->set_var('makesure',lang('makesure'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
