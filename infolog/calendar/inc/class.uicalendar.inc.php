@@ -780,6 +780,8 @@
 			);
 			$p->set_var($var);
 			echo $p->fp('out','form_button').'</center>';
+
+			$GLOBALS['phpgw']->hooks->process('calendar_view');
 		}
 
 		function edit($params='')
