@@ -22,7 +22,11 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-
+		/*!
+		@class categories
+		@abstract class adds ability for applications to make use of categories
+		@discussion examples can be found in notes app
+		*/
 	class categories
 	{
 		var $account_id;
@@ -30,7 +34,12 @@
 		var $cats;
 		var $db;
 		var $total_records;
-
+		/*!
+		@function filter
+		@abstract ?
+		@param $type string
+		@result string either subs or mains
+		*/
 		function filter($type)
 		{
 			switch ($type)
@@ -40,7 +49,12 @@
 			}
 			return $s;
 		}
-
+		/*!
+		@function total
+		@abstract returns the total number of categories for app, subs or mains
+		@param $for one of either 'app' 'subs' or 'mains'
+		@result integer count of categories
+		*/
 		function total($for = 'app')
 		{
 			switch($for)
@@ -57,7 +71,17 @@
 			return $this->db->f(0);
 		}
 
-
+		/*!
+		@function return_array
+		@abstract return an array populated with categories
+		@param $type string defaults to 'all'
+		@param $start ?
+		@param $limit ?
+		@param $query string defaults to ''
+		@param $sort string sort order, either defaults to 'ASC'
+		@param $order order by
+		@result $cats array
+		*/
 		function return_array($type = 'all',$start,$limit,$query = '',$sort = '',$order = '')
 		{
 			global $phpgw, $phpgw_info;
@@ -108,7 +132,12 @@
 			return $cats;
 		}
 
-
+		/*!
+		@function return_single
+		@abstract return single
+		@param $id integer id of category 
+		@result $cats  array populated with 
+		*/
 		function return_single($id = '')
 		{
 
@@ -125,7 +154,12 @@
 			}
 			return $cats;
 		}
-
+		/*!
+		@function categories
+		@abstract constructor for categories class
+		@param $accountid account id
+		@param $app_name app name defaults to current app
+		*/
 		function categories($accountid = '',$app_name = '')
 		{
 			global $phpgw, $phpgw_info;
@@ -145,6 +179,14 @@
 		}
 
 		// Return into a select box, list or other formats
+		/*!
+		@function formated_list
+		@abstract return into a select box, list or other formats
+		@param $format currently only supports select (select box)
+		@param $type string - subs or mains
+		@param $selected ?
+		@result $s array - populated with categories
+		*/
 		function formated_list($format,$type,$selected = "")
 		{
 			global $phpgw;
@@ -166,7 +208,14 @@
 				return $s;
 			}
 		}
-
+		/*!
+		@function add
+		@abstract add categories
+		@param $cat_name category name
+		@param $cat_parent category parent
+		@param $cat_description category description defaults to ''
+		@param $cat_data category data defaults to ''
+		*/
 		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '')
 		{
 			$this->db->query('insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,'
@@ -174,13 +223,24 @@
                        . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
                        . "','$cat_data')",__LINE__,__FILE__);
 		}
-
+		/*!
+		@function delete
+		@abstract delete category
+		@param $cat_id int - category id
+		*/
 		function delete($cat_id)
 		{
 			$this->db->query("delete from phpgw_categories where cat_id='$cat_id' and cat_appname='"
                   . $this->app_name . "'",__LINE__,__FILE__);
 		}
-
+		/*!
+		@function edit
+		@abstract edit a category
+		@param $cat_id int - category id
+		@param $cat_parent category parent
+		@param $cat_description category description defaults to ''
+		@param $cat_data category data defaults to ''
+		*/
 		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '')
 		{
 			$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
@@ -188,7 +248,12 @@
                         . "$cat_data', cat_parent='$cat_parent' where cat_appname='"
                         . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
 		}
-
+		/*!
+		@function return_name
+		@abstract return category name given $cat_id
+		@param $cat_id
+		@result cat_name category name
+		*/
 		function return_name($cat_id)
 		{
 			$this->db->query("select cat_name from phpgw_categories where cat_id='"
@@ -204,7 +269,13 @@
 				return '--';
 			}
 		}
-
+		/*!
+		@function exists
+		@abstract used for checking if a category name exists
+		@param $type subs or mains
+		@param $cat_name category name
+		@result boolean true or false
+		*/
 		function exists($type,$cat_name)
 		{
 			$filter = $this->filter($type);
