@@ -23,7 +23,7 @@
 	*/
 	class soinfolog 				// DB-Layer
 	{
-		var $db,$db2;
+		var $db;
 		var $grants;
 		var $data = array( );
 		var $user;
@@ -36,7 +36,7 @@
 		*/
 		function soinfolog( $info_id = 0)
 		{
-			$this->db     = $GLOBALS['phpgw']->db;
+			$this->db     = clone($GLOBALS['phpgw']->db);
 			$this->db->set_app('infolog');
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('infolog');
 			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
@@ -313,7 +313,7 @@
 			// delete children, if they are owned by the user
 			if ($delete_children)
 			{
-				$db2 = $this->db;	// we need an extra result-set
+				$db2 = clone($this->db);	// we need an extra result-set
 				$db2->select($this->info_table,'info_id',array(
 						'info_id_parent'	=> $info_id,
 						'info_owner'		=> $this->user,
@@ -338,7 +338,7 @@
 		{
 			if (!(int) $new_owner)
 			{
-				$db2 = $this->db;	// we need an extra result-set
+				$db2 = clone($this->db);	// we need an extra result-set
 				$db2->select($this->info_table,'info_id',array('info_owner'=>$owner),__LINE__,__FILE__);
 				while($db2->next_record())
 				{
