@@ -374,7 +374,7 @@
 			}
 			else
 			{
-				$fwhere .= ') ';
+				$fwhere .= ') '; $fand = '';
 			}
 
 
