@@ -58,13 +58,16 @@
   $name 	= $phpgw->db->f(9);
   $description 	= $phpgw->db->f(10);
 
+  $name        = stripslashes($name);
+  $name        = htmlspecialchars($name);
+  $description = stripslashes($description);
   $description = htmlspecialchars($description);
   $description = nl2br($description);
 
 ?>
 <h2>
  <font color="<?php echo $H2COLOR; ?>">
-  <?php echo htmlspecialchars($name); ?>
+  <?php echo ($name); ?>
  </font>
 </h2>
 

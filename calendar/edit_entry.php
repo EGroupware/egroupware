@@ -47,6 +47,11 @@ if ($id > 0) {
     $name 	 = $phpgw->db->f(9);
     $description = $phpgw->db->f(10);
 
+    $name        = stripslashes($name);
+    $name        = htmlspecialchars($name);
+    $description = stripslashes($description);
+    $description = htmlspecialchars($description);
+
     $phpgw->db->query("SELECT cal_login FROM webcal_entry_user WHERE cal_id=$id");
     while ($phpgw->db->next_record()) {
       $participants[$phpgw->db->f("cal_login")] = 1;
@@ -124,7 +129,7 @@ function validate_and_submit() {
 <TR>
   <TD><B><?php echo lang_calendar("Brief Description"); ?>:</B></TD>
   <TD>
-   <INPUT NAME="name" SIZE=25 VALUE="<?php echo htmlentities($name); ?>">
+   <INPUT NAME="name" SIZE=25 VALUE="<?php echo ($name); ?>">
   </TD>
 </TR>
 
@@ -132,7 +137,7 @@ function validate_and_submit() {
   <TD VALIGN="top"><B><?php echo lang_calendar("Full Description"); ?>:</B></TD>
   <TD>
    <TEXTAREA NAME="description" ROWS=5 COLS=40 WRAP="virtual"><?php
-    echo htmlentities($description); ?></TEXTAREA>
+    echo ($description); ?></TEXTAREA>
   </TD>
 </TR>
 

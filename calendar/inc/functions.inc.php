@@ -509,7 +509,7 @@ function month_name ( $m ) {
          echo "&gt;";
        }
        echo "</NOBR>";
-       echo htmlentities($phpgw->db->f(1));
+       echo htmlspecialchars(stripslashes($phpgw->db->f(1)));
 
        if ($phpgw->db->f(2) == 3)
 	  echo "</font>";
@@ -602,10 +602,10 @@ function month_name ( $m ) {
     }
     $hour_arr[$ind] .= "] ";
   }
-  $hour_arr[$ind] .= "<img src=".$phpgw_info["server"]["app_images"]."/circle.gif border=0 alt=\"" . htmlentities($description) . "\"></a>";
+  $hour_arr[$ind] .= "<img src=".$phpgw_info["server"]["app_images"]."/circle.gif border=0 alt=\"" . htmlspecialchars(stripslashes($description)) . "\"></a>";
   if ($pri == 3)
      $hour_arr[$ind] .= "<font color=\"CC0000\">";
-  $hour_arr[$ind] .= htmlspecialchars($name);
+  $hour_arr[$ind] .= htmlspecialchars(stripslashes($name));
 
   if ($pri == 3)
      $hour_arr[$ind] .= "</font>";
