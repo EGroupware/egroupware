@@ -77,7 +77,7 @@
   } else {
     $start = 93600;
   }
-  $first = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + $start);
+  $first = $phpgw->calendar->splitdate($phpgw->calendar->get_weekday_start($thisyear, $thismonth, $thisday) + $start);
   $last = $phpgw->calendar->splitdate($first["raw"] + 518400);
   $phpgw->template->set_file(array("week_t" => "week.tpl"));
 
