@@ -44,7 +44,7 @@
 			'preferences' => True
 		);
 
-	 	var $extrafields = array(
+		var $extrafields = array(
 			'ophone'   => 'ophone',
 			'address2' => 'address2',
 			'address3' => 'address3'
@@ -243,7 +243,7 @@
 				'pubkey'              => 'public key',
 				'note'                => 'notes'
 			);
-		
+
 			if ($abc[$column])
 			{
 				return lang($abc[$column]);
@@ -358,7 +358,7 @@
 				$this->limit = 30;
 			}
 
-//			global $filter;
+			/*global $filter; */
 			if (empty($this->filter) || !isset($this->filter))
 			{
 				if($this->prefs['default_filter'])
@@ -385,7 +385,7 @@
 				case 'none':
 					break;
 				case 'private':
-					$qfilter .= ',access=private';	/* fall through */
+					$qfilter .= ',access=private'; /* fall through */
 				case 'yours':
 					$qfilter .= ',owner=' . $GLOBALS['phpgw_info']['user']['account_id'];
 					break;
@@ -556,8 +556,9 @@
 
 		function add_email()
 		{
-			global $name,$referer,$add_email;
-			
+			$name      = $GLOBALS['HTTP_POST_VARS']['name'] ? $GLOBALS['HTTP_POST_VARS']['name'] : $GLOBALS['HTTP_GET_VARS']['name'];
+			$referer   = $GLOBALS['HTTP_POST_VARS']['referer'] ? $GLOBALS['HTTP_POST_VARS']['referer'] : $GLOBALS['HTTP_GET_VARS']['referer'];
+			$add_email = $GLOBALS['HTTP_POST_VARS']['add_email'] ? $GLOBALS['HTTP_POST_VARS']['add_email'] : $GLOBALS['HTTP_GET_VARS']['add_email'];
 
 			$named = explode(' ', $name);
 			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
@@ -614,7 +615,7 @@
 				$ab_id = $this->bo->get_lastid();
 
 				Header('Location: '
-						. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
+					. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
@@ -707,12 +708,9 @@
 
 		function delete()
 		{
-			global $entry,$ab_id,$confirm;
+			$ab_id = $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] ? $GLOBALS['HTTP_POST_VARS']['entry']['ab_id'] : $GLOBALS['HTTP_POST_VARS']['ab_id'];
+			$confirm = $GLOBALS['HTTP_GET_VARS']['confirm'] ? $GLOBALS['HTTP_GET_VARS']['confirm'] :$GLOBALS['HTTP_POST_VARS']['confirm'];
 
-			if (!$ab_id)
-			{
-				$ab_id = $entry['ab_id'];
-			}
 			if (!$ab_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
@@ -732,19 +730,18 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
-		
+
 				$this->template->set_var('lang_sure',lang('Are you sure you want to delete this entry ?'));
 				$this->template->set_var('no_link',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 				$this->template->set_var('lang_no',lang('NO'));
 				$this->template->set_var('yes_link',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.delete&ab_id=' . $ab_id . '&confirm=true'));
 				$this->template->set_var('lang_yes',lang('YES'));
 				$this->template->pparse('out','delete');
-	
+
 			}
 			else
 			{
 				$this->bo->delete_entry(array('id' => $ab_id));
-	
 				@Header('Location: ' . $GLOBALS['phpgw']->link('/addressbook/index.php','menuaction=addressbook.uiaddressbook.get_list'));
 			}
 		}
@@ -754,7 +751,6 @@
 			$ab_id   = $GLOBALS['HTTP_GET_VARS']['ab_id'];
 			$submit  = $GLOBALS['HTTP_POST_VARS']['submit'];
 			$referer = $GLOBALS['HTTP_GET_VARS']['referer'];
-			
 
 			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
@@ -985,12 +981,6 @@
 				$this->template->set_var('vcard_button',lang('no vcard'));
 			}
 
-#			it's better to use $GLOBALS['phpgw_info']['server']['webserver_url'] instead of '/phpgroupware'
-#			right?
-#			and why do we replace /phpgroupware from the url, we already have a perfect url?
-
-#			$this->template->set_var('done_button',$this->html_1button_form('DoneForm','Done',
-#				$referer ? ereg_replace('/phpgroupware','',$referer) : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
 			$this->template->set_var('done_button',$this->html_1button_form('DoneForm','Done',
 				$referer ? $referer : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
 			$this->template->set_var('access_link',$access_link);
@@ -1276,7 +1266,7 @@
 			else
 			{
 				$fields['cat_id'] = $fcat_id;
-			}	
+			}
 
 			$fields['ab_id']   = $entry['ab_id'];
 			$fields['tid']     = $entry['tid'];
@@ -1293,7 +1283,7 @@
 		/* Following used for add/edit */
 		function addressbook_form($format,$action,$title='',$fields='',$customfields='',$cat_id='')
 		{
-			global $referer;
+			$referer = $GLOBALS['HTTP_GET_VARS']['referer'] ? $GLOBALS['HTTP_GET_VARS']['referer'] : $GLOBALS['HTTP_POST_VARS']['referer'];
 
 			$this->template->set_file(array('form' => 'form.tpl'));
 
@@ -1525,7 +1515,7 @@
 			else
 			{
 				$notes = '<form><TEXTAREA cols="60" name="entry[notes]" rows="4">'
-						. $notes . '</TEXTAREA></form>';
+					. $notes . '</TEXTAREA></form>';
 				if ($bday == '//')
 				{
 					$bday = '';
