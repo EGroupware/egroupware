@@ -1,6 +1,7 @@
 %1 already exists as a file	filemanager	zt	%1 檔案已經存在
 application	filemanager	zt	應用程式
 back to file manager	filemanager	zt	回到檔案管理員
+cancel editing %1 without saving	filemanager	zt	取消編輯%1，不儲存
 cannot create directory because it begins or ends in a space	filemanager	zt	資料夾名稱包含空白字元，無法建立資料夾
 cannot replace %1 because it is a directory	filemanager	zt	無法置換%1，因為它是一個資料夾
 command sucessfully run	filemanager	zt	指令執行完成
@@ -10,16 +11,19 @@ copied %1 to %2	filemanager	zt	複製 %1 到 %2
 copy to	filemanager	zt	複製到
 copy to:	filemanager	zt	複製到：
 could not copy %1 to %2	filemanager	zt	無法複製 %1 到 %2
+could not copy file because no destination directory is given	filemanager	zt	無法複製檔案，因為沒有目標資料夾
 could not create %1	filemanager	zt	無法建立%1
 could not create directory %1	filemanager	zt	無法建立資料夾%1
 could not delete %1	filemanager	zt	無法刪除%1
 could not move %1 to %2	filemanager	zt	無法搬移%1到%2
+could not move file because no destination directory is given	filemanager	zt	無法移動檔案，因為沒有目標資料夾
 could not rename %1 to %2	filemanager	zt	無法將%1改名為%2
 could not save %1	filemanager	zt	無法儲存%1
 create file	filemanager	zt	建立檔案
 create folder	filemanager	zt	建立資料夾
 created	filemanager	zt	建立日期
 created %1	filemanager	zt	建立%1
+created %1,%2	filemanager	zt	建立 %1,%2
 created by	filemanager	zt	建立者
 created directory %1	filemanager	zt	建立資料夾%1
 date	filemanager	zt	日期
@@ -48,12 +52,15 @@ filemanager preferences	filemanager	zt	檔案管理員設定
 files	filemanager	zt	檔案
 files in this directory	filemanager	zt	資料夾中的檔案
 folder	filemanager	zt	資料夾
+folder up	filemanager	zt	資料夾上移
+go home	filemanager	zt	回首頁
 go to	filemanager	zt	前往
 go to %1	filemanager	zt	到 %1
 go to your home directory	filemanager	zt	到主要目錄
 go to:	filemanager	zt	到：
 go up	filemanager	zt	上一層
 home	filemanager	zt	首頁
+location	filemanager	zt	位置
 locked	filemanager	zt	被鎖定
 mime type	filemanager	zt	MIME 類型
 modified	filemanager	zt	修改日期
@@ -66,6 +73,7 @@ no version history for this file/directory	filemanager	zt	這個檔案/資料夾
 operation	filemanager	zt	操作
 other settings	filemanager	zt	其他設定
 owner	filemanager	zt	擁有者
+please select a file to delete.	filemanager	zt	請選擇要刪除的檔案
 preview %1	filemanager	zt	預覽 %1
 preview of %1	filemanager	zt	%1 的預覽
 quick jump to	filemanager	zt	快速切換
@@ -74,7 +82,9 @@ rename	filemanager	zt	改名
 renamed %1 to %2	filemanager	zt	把%1 檔名改成 %2
 replaced %1	filemanager	zt	%1 完成修改
 save %1	filemanager	zt	儲存 %1
+save %1, and go back to file listing	filemanager	zt	儲存 %1，接著回到檔案列表
 save all	filemanager	zt	儲存全部
+save changes	filemanager	zt	儲存異動
 saved %1	filemanager	zt	%1 儲存完成
 show	filemanager	zt	顯示
 show ..	filemanager	zt	顯示 ..
@@ -83,6 +93,7 @@ show command line (experimental. dangerous.)	filemanager	zt	顯示命令列(危�
 show help	filemanager	zt	顯示說明
 size	filemanager	zt	大小
 sort by:	filemanager	zt	排序：
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	zt	未來的檔案管理，現在請只用來測試，任何的問題歡迎回報
 total files	filemanager	zt	檔案數
 unknown mime-type defaults to text/plain when viewing	filemanager	zt	不明的MIME格式，預設瀏覽格式為純文字
 unused space	filemanager	zt	剩餘空間
@@ -92,6 +103,7 @@ updated comment for %1	filemanager	zt	更新%1的備註
 upload	filemanager	zt	上傳
 upload fields	filemanager	zt	上傳區域
 upload files	filemanager	zt	上傳檔案
+use new experimental filemanager?	filemanager	zt	使用新的專業檔案管理？
 used space	filemanager	zt	使用空間
 users	filemanager	zt	使用者
 version	filemanager	zt	版本
@@ -99,3 +111,4 @@ view documents in new window	filemanager	zt	開啟新視窗瀏覽文件
 view documents on server (if available)	filemanager	zt	在伺服器上瀏覽文件(如果能夠)
 who	filemanager	zt	誰
 you do not have access to %1	filemanager	zt	%1沒有任何異動
+your home dir did not exist, egroupware created a new one.	filemanager	zt	您的家目錄不存在，eGroupWare建立一個新的

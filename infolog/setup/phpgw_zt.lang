@@ -76,6 +76,7 @@ default status for a new log entry	infolog	zt	事件紀錄的預設狀態
 delegation	infolog	zt	授權
 delete	infolog	zt	刪除
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	zt	刪除所有附屬的
+delete one record by passing its id.	infolog	zt	透過傳遞ID來刪除記錄
 delete the entry	infolog	zt	刪除這個事件
 delete this entry	infolog	zt	刪除這個事件
 deletes the selected typ	infolog	zt	刪除這個格式
@@ -134,6 +135,7 @@ length<br>rows	infolog	zt	長度<br>列
 link	infolog	zt	連結
 links	infolog	zt	連結
 links of this entry	infolog	zt	這個事件的連結
+list all categories	infolog	zt	列出所有類別
 list no subs/childs	infolog	zt	不要列出附屬資訊
 longer textual description	infolog	zt	較長的原文描述
 low	infolog	zt	低
@@ -181,12 +183,13 @@ priority	infolog	zt	優先權
 private	infolog	zt	私人的
 project	infolog	zt	專案
 re:	infolog	zt	回覆：
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zt	
+read one record by passing its id.	infolog	zt	透過傳遞ID來讀取記錄
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zt	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zt	標註
 remove this link (not the entry itself)	infolog	zt	移除這個連結(不是它的資料)
 responsible	infolog	zt	負責人
 responsible user, priority, ...	infolog	zt	負責人、權限、...
+returns a list / search for records.	infolog	zt	傳回一個清單 / 搜尋記錄
 save	infolog	zt	儲存
 saves the changes made and leaves	infolog	zt	儲存後離開
 saves this entry	infolog	zt	儲存這個事件
@@ -239,8 +242,6 @@ urgent	infolog	zt	緊急的
 use button to search for address	infolog	zt	使用按鈕搜尋通訊錄
 use button to search for project	infolog	zt	使用按鈕搜尋專案
 valid path on clientside<br>eg. \\server\share or e:\	infolog	zt	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	zt	
-valid path on clientside<br>eg. servershare or e:	infolog	zt	
 values for selectbox	infolog	zt	選單的值
 view all subs of this entry	infolog	zt	顯示這個事件的所有附屬資訊
 view other subs	infolog	zt	顯示其他附屬資訊
@@ -250,6 +251,7 @@ view the parent of this entry and all his subs	infolog	zt	顯示這個事件的�
 view this linked entry in its application	infolog	zt	在應用程式中顯示這個被連結的事件
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zt	待辦事項或是聯絡清單應該開始的時間？當過濾條件為"所有未完成"或是"自己未完成"時顯示在開始頁面。
 will-call	infolog	zt	將連絡
+write (add or update) a record by passing its fields.	infolog	zt	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
 yes - delete	infolog	zt	確定 - 刪除
 you can't delete one of the stock types !!!	infolog	zt	您不能刪除股票的種類！
 you have entered an invalid ending date	infolog	zt	您輸入了錯誤的結束日期

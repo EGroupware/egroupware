@@ -1,4 +1,4 @@
-﻿%1 does not exist !!!	setup	zt	%1不存在
+%1 does not exist !!!	setup	zt	%1不存在
 %1 is %2%3 !!!	setup	zt	%1 是 %2%3！
 (account deletion in sql only)	setup	zt	(您只能在使用SQL時刪除帳號)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	zt	***請不要透過安裝程式更新您的資料庫，因為執行過程可能超過系統預設允許的時間而遭到中斷，這可能會造成資料的遺失！
@@ -8,6 +8,7 @@
 80 (http)	setup	zt	80 (網站伺服器)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	zt	<b>這會產生 1 個管理者帳號以及 3 個測試帳號</b><br>測試帳號的密碼分別是： demo/guest, demo2/guest and demo3/guest。
 <br><center>import has been completed!  click <a href="index.php">here</a> to return to setup </center>	setup	zt	<br><center>匯入完成！點選<a href="index.php">此處</a>回到設定畫面。</center>
+accounts existing	setup	zt	帳號已經存在
 actions	setup	zt	動作
 add a domain	setup	zt	新增一個網域
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zt	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
@@ -24,6 +25,7 @@ all applications	setup	zt	所有的應用程式
 all core tables and the admin and preferences applications	setup	zt	所有的主要資料表、管理介面與應用程式
 all users	setup	zt	所有使用者
 analysis	setup	zt	分析
+and reload your webserver, so the above changes take effect !!!	setup	zt	重新啟動您的網站伺服器來套用改變！
 app details	setup	zt	應用程式詳細內容
 app install/remove/upgrade	setup	zt	應用程式安裝╱移除╱升級
 app process	setup	zt	應用程式處理
@@ -72,6 +74,7 @@ checking php.ini	setup	zt	檢查php.ini
 checking the egroupware installation	setup	zt	檢查eGroupWare安裝狀態
 click <a href="index.php">here</a> to return to setup.	setup	zt	<a href="index.php">按這裡</a>回到程式安裝。
 click here	setup	zt	點選此處
+click here to re-run the installation tests	setup	zt	點選這裡回到安裝測試
 completed	setup	zt	完成
 config password	setup	zt	設定管理員密碼
 config username	setup	zt	設定管理員帳號
@@ -87,6 +90,7 @@ convert	setup	zt	轉換
 could not open header.inc.php for writing!	setup	zt	無法寫入任何資料到header.inc.php！
 country selection	setup	zt	選擇國別
 create	setup	zt	建立
+create admin account	setup	zt	建立管理帳號
 create database	setup	zt	建立資料庫
 create demo accounts	setup	zt	建立展示性質帳號
 create one now	setup	zt	馬上建立
@@ -139,9 +143,7 @@ enable mcrypt	setup	zt	啟用MCrypt
 enter some random text for app session encryption	setup	zt	您可以輸入任意的文字來提供系統加密的依據
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	zt	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br>
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
-enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	zt	
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
-enter the full path for users and group files.<br>examples: /files, e:files	setup	zt	
 enter the hostname of the machine on which this server is running	setup	zt	輸入這個伺服器主機的主機名稱
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	zt	輸入 eGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>結尾無斜線</b>
 enter the site password for peer servers	setup	zt	輸入對接伺服器的主機密碼
@@ -183,6 +185,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	zt	如果您沒有看到任何錯誤訊息，您的應用程式已經
 if you did not receive any errors, your tables have been	setup	zt	如果您沒有看到任何錯誤訊息，您的資料表已經
 if you running this the first time, don't forget to manualy %1 !!!	setup	zt	如果您第一次執行，別忘了手動 %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	zt	如果您使用的語言都是同樣的編碼(例如：西歐)，您不需要設定系統編碼！
 image type selection order	setup	zt	圖片格式選取順序
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	zt	從LDAP匯入使用者帳號(如果是全新安裝且使用SQL資料庫)
 import has been completed!	setup	zt	匯入成功！
@@ -218,6 +221,7 @@ ldap modify	setup	zt	LDAP 修改
 ldap root password	setup	zt	LDAP 管理者密碼
 ldap rootdn	setup	zt	LDAP 主要端點﹝rootdn﹞
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	zt	限制安裝設定的網路位址(例如10.1.1, 127.0.0.1)
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zt	限制下面位址、網域或是主機存取安裝設定(例如：127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	zt	登入到MYSQL -
 logout	setup	zt	登出
 makesure	setup	zt	確認您的資料庫已經安裝完成、使用者帳號權限設定完成
@@ -243,6 +247,7 @@ name of db user egroupware uses to connect	setup	zt	eGroupWare用來與資料庫
 never	setup	zt	從未
 new	setup	zt	新
 no	setup	zt	否
+no accounts existing	setup	zt	沒有任何帳號
 no algorithms available	setup	zt	沒有任何可以使用的演算法
 no microsoft sql server support found. disabling	setup	zt	並未發現Microsoft SQL 伺服器，關閉中。
 no modes available	setup	zt	沒有可用的模式
@@ -266,6 +271,7 @@ one week	setup	zt	一星期
 only add languages that are not in the database already	setup	zt	只新增未在資料庫中的語言
 only add new phrases	setup	zt	只加入新的詞句
 or	setup	zt	或
+or %1continue to the header admin%2	setup	zt	或是%1繼續頁首管理%2
 or http://webdav.domain.com (webdav)	setup	zt	或是http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	zt	或者我們能夠為您嘗試去建立資料庫：
 password needed for configuration	setup	zt	需要密碼才能夠執行組態設定
@@ -279,6 +285,7 @@ please check for sql scripts within the application's directory	setup	zt	請檢�
 please check read/write permissions on directories, or back up and use another option.	setup	zt	請檢查資料夾讀取/寫入的權限或是備份後使用其他選項。
 please configure egroupware for your environment	setup	zt	請為您現在的環境設定 eGroupWare 的相關組態
 please consult the %1.	setup	zt	請查閱%1。
+please fix the above errors (%1) and warnings(%2)	setup	zt	請修正上面的錯誤(%1) 與警告(%2)
 please fix the above errors (%1) and warnings(%2) and	setup	zt	請修正上面的錯誤 (%1) 與警告(%2) 並且
 please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	zt	請修正上面的錯誤 (%1) 與警告(%2) 並且%3繼續頁首管理工作%4
 please install	setup	zt	請安裝
@@ -308,6 +315,7 @@ requires reinstall or manual repair	setup	zt	需要重新安裝或是手動修�
 requires upgrade	setup	zt	需要升級
 resolve	setup	zt	處理
 return to setup	setup	zt	回到安裝程式
+run installation tests	setup	zt	執行安裝測試
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	zt	安全模式啟用中，這樣一來您的安裝過程通常會比較安全。
 sample configuration not found. using built in defaults	setup	zt	找不到範例設定檔案，系統需要它用來設定預設值
 save	setup	zt	儲存
@@ -337,6 +345,7 @@ server root	setup	zt	根目錄
 sessions type	setup	zt	Sessions種類
 set	setup	zt	設定
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	zt	如果版本是 &lt; 2.4就設定為"old"，其他情形請設定為您目前使用的版本
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	zt	設定系統編碼為UTF-8 (萬國編碼)時可以同時在畫面中顯示多種不同的語言編碼
 settings	setup	zt	設定
 setup	setup	zt	安裝
 setup demo accounts in ldap	setup	zt	在LDAP安裝展示用的帳號
@@ -348,6 +357,11 @@ some or all of its tables are missing	setup	zt	遺失部份或所有的資料表
 sql encryption type	setup	zt	SQL 密碼加密的方式(預設為md5)
 start the postmaster	setup	zt	開始postmaster
 status	setup	zt	狀態
+step %1 - admin account	setup	zt	步驟%1 - 管理者帳號
+step %1 - advanced application management	setup	zt	步驟%1 - 進階應用程式管理
+step %1 - configuration	setup	zt	步驟%1 - 設定
+step %1 - language management	setup	zt	步驟%1 - 語言管理
+step %1 - simple application management	setup	zt	步驟%1 - 簡單的應用程式管理
 step 1 - simple application management	setup	zt	步驟一、基本應用程式管理
 step 2 - configuration	setup	zt	步驟二、組態設定
 step 3 - language management	setup	zt	步驟三、語言管理
@@ -363,6 +377,7 @@ text entry	setup	zt	文字記錄
 the %1 extension is needed, if you plan to use a %2 database.	setup	zt	如果您希望使用%2資料庫，您需要外掛%1。
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zt	這個伺服器不支援預設的資料庫(%1)，使用第一個使用的種類。
 the file	setup	zt	檔案
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	zt	安裝eGroupWare的第一步是確定您的安裝環境是否需要進一步設定來執行應用程式
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	zt	兩個電子郵件的應用程式需要imap外掛(即使您只有使用POP3的郵件協定)。
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zt	如果您希望系統完全支援多國語言編碼(utf-8)，您會需要mbstring外掛
 the table definition was correct, and the tables were installed	setup	zt	資料表定義正確且資料表已正確安裝
@@ -403,11 +418,14 @@ user account prefix	setup	zt	使用者帳號前置字元
 usernames are casesensitive	setup	zt	使用者帳號有大小寫之分
 users choice	setup	zt	使用者的選擇
 utf-8 (unicode)	setup	zt	utf-8 (多國語言編碼)
+version	setup	zt	版本
 version mismatch	setup	zt	版本不符
 view	setup	zt	瀏覽
 warning!	setup	zt	警告！
 we can proceed	setup	zt	我們可以處理
 we will automatically update your tables/records to %1	setup	zt	我們將自動幫您更新您的資料表及資料到 %1
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	zt	接下來我們會執行一系列的測試，這將會需要一點時間。點選下面的連結繼續。
+welcome to the egroupware installation	setup	zt	歡迎使用eGroupWare
 what type of sessions management do you want to use (php4 session management may perform better)?	setup	zt	您希望使用什麼樣的SESSION管理方式(PHP4 SESSION管理一般提供較好的效能)
 which database type do you want to use with egroupware?	setup	zt	您希望eGroupWare安裝在哪一種資料庫？
 world readable	setup	zt	所有人可讀取
@@ -457,3 +475,4 @@ your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blin
 your tables are current	setup	zt	您的資料表目前狀態
 your tables may be altered and you may lose data	setup	zt	您的資料表已經被更動過並有可能遺失部份資料
 your tables will be dropped and you will lose data	setup	zt	您的資料表將會被完全移除，您也將會遺失所有的資料。
+﻿%1 does not exist !!!	setup	zt	%1不存在

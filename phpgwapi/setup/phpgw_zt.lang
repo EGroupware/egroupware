@@ -1,4 +1,5 @@
-﻿%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
+%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
+%1 is not executable by the webserver !!!	common	zt	網頁伺服器無法執行 %1 ！
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
 (shift-)click or drag to change value	jscalendar	zt	(Shift鍵加)點選或拖拉滑鼠游標來改變數值
 - click on any of the time parts to increase it	jscalendar	zt	- 點選任意時間區來增加它
@@ -9,6 +10,8 @@
 - use the %1, %2 buttons to select year	jscalendar	zt	- 使用案牛 %1,%2來選擇年
 00 (disable)	admin	zt	00 (關閉)
 13 (ntp)	admin	zt	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	zt	日期的三個字元簡寫
+3 number of chars for month-shortcut	jscalendar	zt	月份的三個字元簡寫
 80 (http)	admin	zt	80 (http)
 about	common	zt	關於
 about %1	common	zt	關於 %1
@@ -154,6 +157,7 @@ disable internet explorer png-image-bugfix	common	zt	停用 IE png-image-bugfix
 disable slider effects	common	zt	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zt	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
 disabled	common	zt	停用
+display %s first	jscalendar	zt	先顯示 %s
 display monday first	jscalendar	zt	星期一在首
 display sunday first	jscalendar	zt	星期日在首
 djibouti	common	zt	DJIBOUTI
@@ -287,6 +291,7 @@ january	common	zt	一月
 japan	common	zt	JAPAN
 jordan	common	zt	JORDAN
 july	common	zt	七月
+jun	common	zt	六月
 june	common	zt	六月
 justify center	htmlarea	zt	置中
 justify full	htmlarea	zt	全螢幕
@@ -622,6 +627,7 @@ you have not entered participants	common	zt	您尚未輸入關係者
 you have selected an invalid date	common	zt	您選擇了不合法的日期！
 you have selected an invalid main category	common	zt	您選擇了錯誤的分類！
 you have successfully logged out	common	zt	您已經成功登出了
+you need to add the webserver user '%1' to the group '%2'.	common	zt	您必須將網站伺服器使用者 '%1' 新增到群組 '%2'
 your message could <b>not</b> be sent!<br>	common	zt	您的訊息<b>無法</b>送出！<br>
 your message has been sent	common	zt	您的訊息已經送出
 your search returned %1 matchs	common	zt	搜尋到 %1 筆資料
@@ -631,3 +637,4 @@ your settings have been updated	common	zt	您的設定已經更新。
 yugoslavia	common	zt	YUGOSLAVIA
 zambia	common	zt	ZAMBIA
 zimbabwe	common	zt	ZIMBABWE
+﻿%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
