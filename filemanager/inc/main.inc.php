@@ -159,6 +159,18 @@ function string_decode ($string, $return)
 	return (eor ($rstring, $return));
 }
 
+###
+# HTML encode a string
+# This should be used with anything in an HTML tag that might contain < or >
+###
+
+function html_encode ($string, $return)
+{
+	$rstring = htmlspecialchars ($string);
+
+	return (eor ($rstring, $return));
+}
+
 function translate ($text)
 {
 	global $phpgw;
