@@ -935,7 +935,9 @@
 					$f .= '.inc.php';
 				}
 
-				if (file_exists($f) && ($phpgw_info['user']['apps'][$appname] || $appname == 'preferences'))
+				if (file_exists($f) &&
+					((isset($phpgw_info['user']['apps'][$appname]) && $phpgw_info['user']['apps'][$appname])
+					 || $appname == 'preferences'))
 				{
 					include($f);
 				}
@@ -946,7 +948,8 @@
 			reset ($phpgw_info['user']['apps']);
 			while ($permission = each($phpgw_info['user']['apps']))
 			{
-				if ($completed_hooks[$permission[0]] != True)
+				if (!isset($completed_hooks[$permission[0]]) ||
+				    $completed_hooks[$permission[0]] != True)
 				{
 					$appname = $permission[0];
 					$f = PHPGW_SERVER_ROOT . '/' . $permission[0] . '/inc/hook_'.$phpgw_info['flags']['currentapp'];
