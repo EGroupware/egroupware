@@ -128,6 +128,7 @@
 			{
 				$cats[$i]['id']          = $this->db->f('cat_id');
 				$cats[$i]['owner']       = $this->db->f('cat_owner');
+				$cats[$i]['access']      = $this->db->f('cat_access');
 				$cats[$i]['app_name']    = $this->db->f('cat_appname');
 				$cats[$i]['parent']      = $this->db->f('cat_parent');
 				$cats[$i]['name']        = $this->db->f('cat_name');
@@ -153,6 +154,7 @@
 			while ($this->db->next_record()) {
 			    $cats[0]['id']          = $this->db->f('cat_id');
         		    $cats[0]['owner']       = $this->db->f('cat_owner');
+        		    $cats[0]['access']      = $this->db->f('cat_access');
         		    $cats[0]['parent']      = $this->db->f('cat_parent');
         		    $cats[0]['name']        = $this->db->f('cat_name');
         		    $cats[0]['description'] = $this->db->f('cat_description');
@@ -205,17 +207,16 @@
 
 			if ($format == 'select')
 			{
-				$this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name
-					. "' $public_cats $filter",__LINE__,__FILE__);
-				while ($this->db->next_record())
+			$list = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+				while (list($cats) = each($list))	
 				{
-					$s .= '<option value="' . $this->db->f('cat_id') . '"';
-					if ($this->db->f('cat_id') == $selected)
+					$s .= '<option value="' . $cats['id'] . '"';
+					if ($cats['id'] == $selected)
 					{
 						$s .= ' selected';
 					}
-					$s .= '>' . $phpgw->strip_html($this->db->f('cat_name'));
-					if ($this->db->f('cat_appname') == 'phpgw') 
+					$s .= '>' . $phpgw->strip_html($cats['name']);
+					if ($cats['app_name'] == 'phpgw') 
 					{
 					$s .=  '&lt;' . lang('Global') . '&gt;';
 					}
@@ -232,10 +233,10 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '')
+		function add($cat_name,$cat_parent,$cat_description = '', $cat_data = '',$cat_access = '')
 		{
-			$this->db->query('insert into phpgw_categories (cat_parent,cat_owner,cat_appname,cat_name,'
-                       . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','"
+			$this->db->query('insert into phpgw_categories (cat_parent,cat_owner,cat_access,cat_appname,cat_name,'
+                       . "cat_description,cat_data) values ('$cat_parent','" . $this->account_id . "','$cat_access','"
                        . $this->app_name . "','" . addslashes($cat_name) . "','" . addslashes($cat_description)
                        . "','$cat_data')",__LINE__,__FILE__);
 		}
@@ -257,11 +258,11 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '')
+		function edit($cat_id,$cat_parent,$cat_name,$cat_description = '',$cat_data = '',$cat_access = '')
 		{
 			$this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
                         . "cat_description='" . addslashes($cat_description) . "', cat_data='"
-                        . "$cat_data', cat_parent='$cat_parent' where cat_appname='"
+                        . "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access' where cat_appname='"
                         . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
 		}
 		/*!
