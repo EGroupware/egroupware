@@ -26,7 +26,6 @@
 			'view_user'			=> True,
 			'edit_view_user_hook' => True,
 			'group_manager'		=> True,
-			'accounts_popup'	=> True
 		);
 
 		var $bo;
@@ -836,11 +835,6 @@
 			}
 		}
 
-		function accounts_popup()
-		{
-			$GLOBALS['phpgw']->accounts->accounts_popup('admin');
-		}
-
 		function create_edit_group($group_info,$_errors='')
 		{
 			// Maybe we should list this in setup/setup.inc.php and put it into the
@@ -880,44 +874,11 @@
 
 			$accounts = CreateObject('phpgwapi.accounts',$group_info['account_id'],'u');
 
-			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['account_selection'] == 'popup')
+			if (!is_object($GLOBALS['phpgw']->uiaccountsel))
 			{
-				$p->set_var('accounts_link',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.accounts_popup'));
-				$p->set_var('lang_open_popup',lang('open popup window'));
-
-				while(is_array($group_info['account_user']) && list($ac_id,) = each($group_info['account_user']))
-				{
-					$ac_name = $GLOBALS['phpgw']->accounts->get_account_data($ac_id);
-
-					$user_list .= '<option value="' . $ac_id . '" selected>'
-						. $GLOBALS['phpgw']->common->display_fullname($ac_name[$ac_id]['lid'],$ac_name[$ac_id]['firstname'],$ac_name[$ac_id]['lastname'])
-						. '</option>'."\n";
-				}
-				$account_num = max(count($group_info['account_user']),5);
-				$p->set_var('select_size',($account_num < 25?$account_num:25));
-				$p->set_var('user_list',$user_list);
-				$p->fp('accounts','popwin',True);
+				$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
 			}
-			else
-			{
-				$account_list = $accounts->get_list('accounts');
-				$account_num = count($account_list);
-
-				$user_list = '';
-				while (list($key,$entry) = each($account_list))
-				{
-					$user_list .= '<option value="' . $entry['account_id'] . '"'
-					. $group_info['account_user'][(int)$entry['account_id']] . '>'
-					. $GLOBALS['phpgw']->common->display_fullname(
-						$entry['account_lid'],
-						$entry['account_firstname'],
-						$entry['account_lastname'])
-					. '</option>'."\n";
-				}
-				$p->set_var('select_size',($account_num < 7?$account_num:7));
-				$p->set_var('user_list',$user_list);
-				$p->fp('accounts','select',True);
-			}
+			$p->set_var('accounts',$GLOBALS['phpgw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10)));
 
 			$var = Array(
 				'form_action'       => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boaccounts.'.($group_info['account_id']?'edit':'add').'_group'),

@@ -1,11 +1,3 @@
-<script language="JavaScript">
-	self.name="first_Window";
-	function accounts_popup()
-	{
-		Window1=window.open('{accounts_link}',"Search","width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes");
-	}
-</script>
-
   {error}
   <table border="0" width="50%" align="center">
    <tr>
@@ -24,8 +16,8 @@
        <tr>
         <td>{lang_include_user}</td>
 
-		<td>
-		{accounts}
+        <td>
+         {accounts}
         </td>
        </tr>
 
