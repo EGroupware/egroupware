@@ -446,7 +446,7 @@
 		{
 			if ($this->node_type == 'root')
 			{
-				$result = '<?xml version="'.$this->xmlversion.'"?>'."\n";
+				$result = '<?xml version="'.$this->xmlversion.'" encoding="' . lang('charset') . '"?>'."\n";
 				if(count($this->doctype) == 1)
 				{
 					list($doctype_name,$doctype_uri) = each($this->doctype);
