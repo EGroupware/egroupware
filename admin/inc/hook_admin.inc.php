@@ -15,6 +15,7 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
+		'Site Configuration' => $phpgw->link('/admin/config.php','appname=' . $appname),
 		'User Accounts'	=> $phpgw->link('/admin/accounts.php'),
 		'User Groups'	=> $phpgw->link('/admin/groups.php'),
 		'Applications'		=> $phpgw->link('/admin/applications.php'),
