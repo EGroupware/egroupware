@@ -1495,6 +1495,7 @@
 	{
 		global $setup_info,$phpgw_setup;
 		$phpgw_setup->oProc->AddColumn('phpgw_accounts','account_file_space', array ('type' => 'varchar', 'precision' => 25));
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.003';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
