@@ -26,7 +26,7 @@
 		var $export = array(
 			'id'                  => 'uidnumber',
 			'lid'                 => 'uid',
-			'tid'                 => 'phpgwcontacttype',
+			'tid'                 => 'phpgwcontacttypeid',
 			'owner'               => 'phpgwcontactowner',
 			'access'              => 'phpgwcontactaccess',
 			'fn'                  => 'cn',        // 'prefix given middle family suffix'
