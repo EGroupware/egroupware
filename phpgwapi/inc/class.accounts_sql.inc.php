@@ -39,6 +39,8 @@
 		function accounts_()
 		{
 			copyobj($GLOBALS['phpgw']->db,$this->db);
+
+			unset($this->query_types['email']);
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -128,7 +130,7 @@
 			$this->db->unlock();
 		}
 
-		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
+		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
 			if (! $sort)
 			{
@@ -166,9 +168,26 @@
 				{
 					$whereclause = ' WHERE ( ';
 				}
-				$query = $this->db->db_addslashes($query);
-				$whereclause .= " account_firstname LIKE '%$query%' OR account_lastname LIKE "
-					. "'%$query%' OR account_lid LIKE '%$query%' )";
+				switch($query_type)
+				{
+					case 'all':
+					default:
+						$query = '%'.$query;
+						// fall-through
+					case 'start':
+						$query .= '%';
+						// fall-through
+					case 'exact':
+						$query = $this->db->quote($query);
+						$whereclause .= " account_firstname LIKE $query OR account_lastname LIKE $query OR account_lid LIKE $query )";
+						break;
+					case 'firstname':
+					case 'lastname':
+					case 'lid':
+						$query = $this->db->quote('%'.$query.'%');
+						$whereclause .= " account_$query_type LIKE $query )";
+						break;
+				}
 			}
 
 			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
@@ -184,7 +203,6 @@
 			{
 				$this->db->query($sql,__LINE__,__FILE__);
 			}
-
 			while ($this->db->next_record())
 			{
 				$accounts[] = Array(

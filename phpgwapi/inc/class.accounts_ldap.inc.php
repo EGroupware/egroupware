@@ -455,7 +455,7 @@
 			}
 		}
 
-		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
+		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
 			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset<br>";
 			$query = strtolower($query);
@@ -475,14 +475,37 @@
 
 			if($_type == 'accounts')
 			{
-				if(empty($query) || $query == "*")
+				$filter = "(&(uidnumber=*)(phpgwaccounttype=u)";
+				if (!empty($query) && $query != '*')
 				{
-					$filter = "(&(uidnumber=*)(phpgwaccounttype=u))";
+					switch($query_type)
+					{
+						case 'all':
+						default:
+							$query = '*'.$query;
+							// fall-through
+						case 'start':
+							$query .= '*';
+							// fall-through
+						case 'exact':
+							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(email=$query))";
+							break;
+						case 'firstname':
+						case 'lastname':
+						case 'lid':
+						case 'email':
+							$to_ldap = array(
+								'firstname' => 'sn',
+								'lastname'  => 'givenname',
+								'lid'       => 'uid',
+								'email'     => 'email',
+							);
+							$filter .= '('.$to_ldap[$query_type].'=*'.$query.'*)';
+							break;
+					}
 				}
-				else
-				{
-					$filter = "(&(uidnumber=*)(phpgwaccounttype=u)(|(uid=*$query*)(sn=*$query*)(cn=*$query*)(givenname=*$query*)))";
-				}
+				$filter .= ')';
+
 				$sri = ldap_search($this->ds, $this->user_context, $filter);
 				$allValues = ldap_get_entries($this->ds, $sri);
 				while (list($null,$allVals) = @each($allValues))

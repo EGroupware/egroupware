@@ -114,6 +114,15 @@
 				$this->account_type = $account_type;
 			}
 
+			$this->query_types = array(
+				'all' => 'all fields',
+				'firstname' => 'firstname',
+				'lastname' => 'lastname',
+				'lid' => 'LoginID',
+				'email' => 'email',	// sql-constructor unsets this again, til the email column is added
+				'start' => 'start with',
+				'exact' => 'exact',
+			);
 			$this->accounts_();			// call constructor of extended class
 
 			$this->xmlrpc_methods[] = array(
@@ -170,7 +179,7 @@
 			}
 		}
 
-		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
+		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
 			//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
 			$this->setup_cache();
@@ -185,6 +194,7 @@
 				$order  = $p['order'];
 				$query  = $p['query'];
 				$offset = $p['offset'];
+				$query_type = $p['query_type'];
 			}
 			else
 			{
@@ -193,7 +203,8 @@
 					'start' => $start,
 					'order' => $order,
 					'query' => $query,
-					'offset' => $offset
+					'offset' => $offset,
+					'query_type' => $query_type ,
 				);
 			}
 			$serial = serialize($p);
@@ -204,7 +215,7 @@
 			}
 			else
 			{
-				$account_list[$serial]['data'] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset);
+				$account_list[$serial]['data'] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset,$query_type);
 				$account_list[$serial]['total'] = $this->total;
 			}
 			return $account_list[$serial]['data'];
