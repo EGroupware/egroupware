@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Timed Asynchron Services for eGroupWare               *
+	* eGroupWare API - Timed Asynchron Services for eGroupWare                 *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* Class for creating cron-job like timed calls of eGroupWare methods       *
 	* -------------------------------------------------------------------------*

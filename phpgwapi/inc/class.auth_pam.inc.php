@@ -2,7 +2,7 @@
 /**************************************************************************\
 * eGroupWare API - Auth from PAM                                           *
 * -------------------------------------------------------------------------*       
-* This library is part of the phpGroupWare API                             *       
+* This library is part of the eGroupWare API                               *       
 * http://www.egroupware.org/api                                            *       
 * ------------------------------------------------------------------------ *       
 * This library is free software; you can redistribute it and/or modify it  *       

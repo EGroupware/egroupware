@@ -687,7 +687,7 @@
 	*/
 
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
-	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
+	$GLOBALS['_xmlrpcs_login_doc'] = 'eGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
 	{
 		$rdata = $m->getParam(0);
@@ -737,7 +737,7 @@
 	}
 
 	$GLOBALS['_xmlrpcs_phpgw_api_version_sig'] = array(array(xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_phpgw_api_version_doc'] = 'Returns the phpGroupWare API version';
+	$GLOBALS['_xmlrpcs_phpgw_api_version_doc'] = 'Returns the eGroupWare API version';
 	function _xmlrpcs_phpgw_api_version($server,$m)
 	{
 		$version = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
@@ -747,7 +747,7 @@
 
 
 	$GLOBALS['_xmlrpcs_logout_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
-	$GLOBALS['_xmlrpcs_logout_doc'] = 'phpGroupWare client or server logout via XML-RPC';
+	$GLOBALS['_xmlrpcs_logout_doc'] = 'eGroupWare client or server logout via XML-RPC';
 	function _xmlrpcs_logout($server,$m)
 	{
 		$rdata = $m->getParam(0);

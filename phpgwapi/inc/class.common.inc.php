@@ -1320,7 +1320,7 @@
 		/**
 		* Returns on(Un)Load attributes from js class
 		*
-		*@author Dave Hall - skwashd at phpgroupware.org
+		*@author Dave Hall - skwashd at egroupware.org
 		*@returns string body attributes
 		*/
 		function get_body_attribs()
@@ -1810,7 +1810,7 @@
 		*/
 		function phpgw_error($error,$line = '', $file = '')
 		{
-			echo '<p><b>phpGroupWare internal error:</b><p>'.$error;
+			echo '<p><b>eGroupWare internal error:</b><p>'.$error;
 			if ($line)
 			{
 				echo 'Line: '.$line;

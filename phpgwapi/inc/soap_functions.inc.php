@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - SOAP functions                                        *
+	* eGroupWare API - SOAP functions                                          *
 	* This file written by dietrich@ganx4.com                                  *
 	* shared functions and vars for use with soap client/server                *
 	* -------------------------------------------------------------------------*

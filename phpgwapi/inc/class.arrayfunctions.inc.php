@@ -1,10 +1,10 @@
 <?php
 	/*******************************************************************\
-	* phpGroupWare API - Arrayfunctions                                 *
+	* eGroupWare API - Arrayfunctions                                   *
 	* Written by Lars Kneschke <lkneschke@phpgw.de>                     *
 	* Copyright (C) 2002, 2003 Lars Kneschke                            *
 	* ----------------------------------------------------------------- *
-	* This library is part of the phpGroupWare API                      *
+	* This library is part of the eGroupWare API                        *
 	* ----------------------------------------------------------------- *
 	* This program is free software; you can redistribute it and/or     *
 	* modify it under the terms of the GNU General Public License as    *

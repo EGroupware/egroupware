@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - preferences                                               *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - preferences                                                 *
+	* http://www.egroupware.org                                                *
 	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *

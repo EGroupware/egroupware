@@ -549,7 +549,7 @@
 		 *
 		 * cd - Change current directory.  This function is used to store the
 		 *	current directory in a standard way, so that it may be accessed
-		 *	throughout phpGroupWare to provide a consistent view for the user.
+		 *	throughout eGroupWare to provide a consistent view for the user.
 		 *
 		 * pwd - Return current directory
 		 *
@@ -1086,7 +1086,7 @@
 		 * @function cd
 		 * @abstract Change current directory.  This function is used to store the
 		 *	     current directory in a standard way, so that it may be accessed
-		 *	     throughout phpGroupWare to provide a consistent view for the user.
+		 *	     throughout eGroupWare to provide a consistent view for the user.
 		 * @discussion To cd to the root '/', use:
 		 *		cd (array(
 		 *			'string' => '/',

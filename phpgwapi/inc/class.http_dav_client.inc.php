@@ -586,7 +586,7 @@
 	//		$this->http_client->addHeader('Keep-Alive','timeout=20, state="Accept,Accept-Language"');
 			$this->http_client->addHeader('Accept-Encoding','chunked');
 			$this->http_client->setProtocolVersion( '1.1' );
-			$this->http_client->addHeader( 'user-agent', 'Mozilla/5.0 (compatible; PHPGroupware dav_client/1; Linux)');
+			$this->http_client->addHeader( 'user-agent', 'Mozilla/5.0 (compatible; eGroupWare dav_client/1; Linux)');
 			return $this->http_client->Connect($dav_host,$dav_port);
 		}
 		function set_debug($debug)

@@ -6,7 +6,7 @@
   * and Ralf Becker <ralfbecker@outdoor-training.de>                         *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
+  * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
