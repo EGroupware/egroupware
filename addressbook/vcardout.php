@@ -41,7 +41,9 @@
 	$fieldlist = addressbook_read_entry($ab_id,$qfields);
 	$fields = $fieldlist[0];
 
+	$email        = $fields["email"];
 	$emailtype    = $fields["email_type"]; if (!$emailtype) { $fields["email_type"] = 'INTERNET'; }
+	$hemail       = $fields["email_home"];
 	$hemailtype   = $fields["email_home_type"]; if (!$hemailtype) { $fields["email_home_type"] = 'INTERNET'; }
 	$firstname    = $fields["n_given"];
 	$lastname     = $fields["n_family"];
@@ -58,11 +60,21 @@
 				"nofname=1&ab_id=$ab_id&start=$start&order=$order&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 		}
 
-		header("Content-type: text/x-vcard");
-		$fn = explode("@",$email);
-		$filename = sprintf("%s.vcf", $fn[0]);
-
-		header("Content-Disposition: attachment; filename=$filename");
+		if ($email)
+		{
+			$fn =  explode("@",$email);
+			$filename = sprintf("%s.vcf", $fn[0]);
+		}
+		elseif ($hemail)
+		{
+			$fn =  explode("@",$hemail);
+			$filename = sprintf("%s.vcf", $fn[0]);
+		}
+		else
+		{
+			$fn = strtolower($firstname);
+			$filename = sprintf("%s.vcf", $fn);
+		}
 
 		// create vcard object
 		$vcard = CreateObject("phpgwapi.vcard");
@@ -79,6 +91,8 @@
 		// create a vcard from this translated array
 	    $entry = $vcard->out($buffer);
 		// print it
+		header("Content-type: text/x-vcard");
+		header("Content-Disposition: attachment; filename=$filename");
 		echo $entry;
 		$phpgw->common->exit;
 	} /* !nolname && !nofname */
