@@ -12,6 +12,7 @@
 </HEAD>
 
 <BODY bgcolor="#FFFFFF">
+<A href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare"  border="0"></a>
 <p>&nbsp;</p>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
@@ -22,7 +23,7 @@
    <TABLE border="0" width="100%" bgcolor="486591" cellpadding="2" cellspacing="1">
     <TR bgcolor="486591">
      <TD align="LEFT" valign="MIDDLE">
-      <A href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare"  border="0"></a>
+      <font color="fefefe">&nbsp;phpGroupWare</font>
      </TD>
     </TR>
     <TR bgcolor="e6e6e6">
