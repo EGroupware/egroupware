@@ -31,27 +31,37 @@
 	{
 		// This array is used by vcard->in to aid in parsing the multiple
 		//   attributes that are possible with vcard.
+		// Import is messier than export and needs to be changed.
 		// You MUST use this in conjunction with the vcard->in function:
 		//
-		// $this->contacts = CreateObject("phpgwapi.contacts");
-		// $this->vcard = CreateObject("phpgwapi.vcard");
-		// $myimport = $this->vcard->import;
+		// $contacts = CreateObject("phpgwapi.contacts");
+		// $vcard = CreateObject("phpgwapi.vcard");
+		// $myimport = $vcard->import;
+		// $buffer = array();
 		//
-		// while ( list($fname,$fvalue) = each($myimport) ) {
-		//     if ( strstr(strtolower($name), $myimport[$fname]) ) {
-		//         $buffer = $this->import_new_attrib($buffer,$name,$value);
-		//         $value = trim($value);
-		//         $value = ereg_replace("=0D=0A","\n",$value);
-		//         $buffer += array($name => $value);
+		// $fp=fopen($filename,"r");
+		// while ($data = fgets($fp,8000)) {
+		//     list($name,$value,$extra) = split(':', $data);
+		//     if (substr($value,0,5) == "http") {
+		//         $value = $value . ":".$extra;
+		//     }
+		//     if ($name && $value) {
+		//         reset($vcard->import);
+		//         while ( list($fname,$fvalue) = each($vcard->import) ) {
+		//             if ( strstr(strtolower($name), $vcard->import[$fname]) ) {
+		//                 $value = trim($value);
+		//                 $value = ereg_replace("=0D=0A","\n",$value);
+		//                 $buffer += array($name => $value);
+		//             }
+		//         }
 		//     }
 		// }
+		// fclose($fp);
 		//
 		// Then, to convert the vcard array to a contacts class array:
 		//
-		// for ($i=1;$i<=count($buffer);$i++) {
-		//     $entry = $this->vcard->in($buffer[$i]);
-		//     $this->contacts->add($phpgw_info["user"]["account_id"],$entry);
-		// }
+		//$entry = $vcard->in($buffer);
+		//$contacts->add($phpgw_info["user"]["account_id"],$entry);
 		//
 		var $import = array(
 			"n"        => "n",

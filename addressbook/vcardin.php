@@ -51,7 +51,34 @@
 			// This has to be non-interactive in case of a multi-entry vcard.
 			$filename = $uploaddir . $newfilename;
 
-			parsevcard($filename,$access);
+			$contacts = CreateObject("phpgwapi.contacts");
+			$vcard = CreateObject("phpgwapi.vcard");
+			$myimport = $vcard->import;
+			$buffer = array();
+
+			$fp=fopen($filename,"r");
+			while ($data = fgets($fp,8000)) {
+				list($name,$value,$extra) = split(':', $data);
+				if (substr($value,0,5) == "http") {
+					$value = $value . ":".$extra;
+				}
+				if ($name && $value) {
+					reset($vcard->import);
+					while ( list($fname,$fvalue) = each($vcard->import) ) {
+						if ( strstr(strtolower($name), $vcard->import[$fname]) ) {
+							$value = trim($value);
+							$value = ereg_replace("=0D=0A","\n",$value);
+							$buffer += array($name => $value);
+						}
+					}
+				}
+			}
+			fclose($fp);
+
+			$entry = $vcard->in($buffer);
+			$contacts->add($phpgw_info["user"]["account_id"],$entry);
+
+			//parsevcard($filename,$access);
 			// Delete the temp file.
 			unlink($filename);
 			unlink($filename . ".info");
