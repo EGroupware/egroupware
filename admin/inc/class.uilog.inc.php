@@ -139,14 +139,14 @@
 		{
 			global $phpgw, $phpgw_info;
 /*
-$phpgw->log->write('I-TestWrite, write: %1','This message should appear in log');
-$phpgw->log->message('I-TestMsg, msg: %1','This message should appear in log');
-$phpgw->log->error('I-TestInfo, info: %1','This Informational should not be in log');
+$phpgw->log->write(array('text'=>'I-TestWrite, write: %1','p1'=>'This message should appear in log'));
+$phpgw->log->message(array('text'=>'I-TestMsg, msg: %1','p1'=>'This message should appear in log'));
+$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should not be in log'));
 $phpgw->log->clearstack();
-$phpgw->log->error('I-TestInfo, info: %1','This Informational should be in log');
-$phpgw->log->error('W-TestWarn, warn: %1','This is a test Warning');
-$phpgw->log->error('E-TestError, err: %1','This is a test Error');
-//$phpgw->log->error('F-Abend, abort: %1','Force abnormal termination');
+$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log'));
+$phpgw->log->error(array('text'=>'W-TestWarn, warn: %1','p1'=>'This is a test Warning'));
+$phpgw->log->error(array('text'=>'E-TestError, err: %1','p1'=>'This is a test Error'));
+$phpgw->log->error(array('text'=>'F-Abend, abort: %1','p1'=>'Force abnormal termination'));
 $phpgw->log->commit();  // commit error stack to log...
 */
 			$this->t->set_file(array('log_list_t' => 'log.tpl'));
