@@ -92,17 +92,17 @@
 			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
 			<td align="left">{select_domain}</td>
 		</tr>
-		<tr>
-			<td align="right">{lang_password}:&nbsp;</td>
-			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
-			<td>&nbsp;</td>
-		</tr>
 <!-- BEGIN language_select -->
 		<tr>
 			<td align="right">{lang_language}:&nbsp;</td>
 			<td align="left" colspan="2">{select_language}</td>
 		</tr>
 <!-- END language_select -->
+		<tr>
+			<td align="right">{lang_password}:&nbsp;</td>
+			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
+			<td>&nbsp;</td>
+		</tr>
 		<tr>
 			<td colspan="3">&nbsp;</td>
 		</tr>
