@@ -64,7 +64,7 @@
 
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
-			$this->phpgw_set_cookiedomain()
+			$this->phpgw_set_cookiedomain();
 		}
 
 		function DONTlist_methods($_type)
