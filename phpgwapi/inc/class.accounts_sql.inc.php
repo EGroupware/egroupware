@@ -127,7 +127,7 @@
 			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause";
 			if ($offset)
 			{
-				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
+				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
 			}
 			elseif ($start)
 			{
