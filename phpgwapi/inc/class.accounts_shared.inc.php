@@ -41,6 +41,8 @@
 			{
 				$this->account_id = get_account_id($account_id);
 			}
+			$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
+			$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
 		}
 
 		function is_expired()
