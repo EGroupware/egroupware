@@ -36,11 +36,13 @@
 			'index' => True,
 			'view' => True,
 			'add'  => True,
+			'addfromremote' => True,
 			'add_email' => True,
 			'copy' => True,
 			'edit' => True,
 			'delete' => True,
-			'preferences' => True
+			'preferences' => True,
+			'remote_search' => True
 		);
 
 		var $extrafields = array(
@@ -192,6 +194,34 @@
 			return $cats_link;
 		}
 
+		function remote_search_option()
+		{
+			$remote  = CreateObject('addressbook.remote');
+			$servers = $remote->servers;
+			$search_remote = '';
+
+			/* show search box and server dropdown */
+			while(list($server,$data) = @each($servers))
+			{
+				$search_remote .= '      <option value="' . $server . '"';
+				if($server == $this->server)
+				{
+					$search_remote .= ' selected';
+				}
+				$search_remote .= '>' . $server . '</option>' . "\n";
+			}
+
+			return $search_remote;
+		}
+
+		function remote_search()
+		{
+//			_debug_array($GLOBALS['HTTP_POST_VARS']);
+			$remote = CreateObject('addressbook.remote',$GLOBALS['HTTP_POST_VARS']['serverid']);
+			$entries = $remote->search($GLOBALS['HTTP_POST_VARS']['remote_query']);
+			$this->index($entries);
+		}
+
 		/* this cleans up the fieldnames for display */
 		function display_name($column)
 		{
@@ -257,7 +287,7 @@
 		/*
 			Former index.php
 		*/
-		function index()
+		function index($entries='')
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
@@ -411,12 +441,12 @@
 				$userid = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
-			if($nosearch && !$this->query)
+			if($nosearch && !$this->query && !$entries)
 			{
 				$entries = array();
 				$total_records = 0;
 			}
-			else
+			elseif(!$entries)
 			{
 				/* read the entry list */
 				$entries = $this->bo->read_entries(array(
@@ -429,29 +459,39 @@
 					'order'  => $this->order
 				));
 				$total_records = $this->bo->total;
+				$this->template->set_var('lang_view',lang('View'));
 			}
-
-			/* global here so nextmatchs accepts our setting of $query and $filter */
-//			$GLOBALS['query']  = $this->query;
-//			$GLOBALS['filter'] = $this->filter;
+			else
+			{
+				$total_records = count($entries);
+				$this->template->set_var('lang_view',lang('Add'));
+				$showadd = True;
+			}
 
 			$search_filter = $GLOBALS['phpgw']->nextmatchs->show_tpl('/index.php',
 				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.index&fcat_id='.$this->cat_id,'75%',
 				$GLOBALS['phpgw_info']['theme']['th_bg'],1,1,1,1,$this->cat_id);
-//			$query = $filter = '';
+
+			$search_remote = $this->remote_search_option();
 
 			$lang_showing = $GLOBALS['phpgw']->nextmatchs->show_hits($total_records,$this->start);
 
 			/* set basic vars and parse the header */
 			$this->template->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
-			$this->template->set_var('lang_view',lang('View'));
+			$this->template->set_var('row_on',$GLOBALS['phpgw_info']['theme']['row_on']);
+//			$this->template->set_var('lang_view',lang('View'));
 			$this->template->set_var('lang_vcard',lang('VCard'));
 			$this->template->set_var('lang_edit',lang('Edit'));
 			$this->template->set_var('lang_owner',lang('Owner'));
+			$this->template->set_var('lang_go',lang('Go'));
 
 			$this->template->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
+			$this->template->set_var('remote_search',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.remote_search'));
+			$this->template->set_var('remote_query',$GLOBALS['HTTP_POST_VARS']['remote_query']);
+			$this->template->set_var('lang_remote_search',lang('Remote Search'));
 			$this->template->set_var('lang_showing',$lang_showing);
 			$this->template->set_var('search_filter',$search_filter);
+			$this->template->set_var('search_remote',$search_remote);
 			$this->template->set_var('cats',lang('Category'));
 			$this->template->set_var('cats_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			/* $this->template->set_var('cats_link',$this->cat_option($this->cat_id)); */
@@ -531,15 +571,16 @@
 					$this->template->parse('columns','column',True);
 				}
 
-				if(1)
+				if(!$showadd)
 				{
 					$this->template->set_var('row_view_link',$GLOBALS['phpgw']->link('/index.php',
 						'menuaction=addressbook.uiaddressbook.view&ab_id=' . $entries[$i]['id']));
 				}
 				else
 				{
-					$this->template->set_var('row_view_link','');
-					$this->template->set_var('lang_view',lang('Private'));
+					$this->template->set_var('row_view_link',$GLOBALS['phpgw']->link('/index.php',
+						'menuaction=addressbook.uiaddressbook.addfromremote&fields=' . urlencode(serialize($entries[$i]))));
+//					$this->template->set_var('lang_view',lang('Add'));
 				}
 
 				$this->template->set_var('row_vcard_link',$GLOBALS['phpgw']->link('/index.php',
@@ -622,6 +663,16 @@
 			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.edit&ab_id=' . $ab_id));
 		}
 
+		function addfromremote()
+		{
+			$fields = get_var('fields',array('GET'));
+			$fields = stripslashes(urldecode($fields));
+			$fields = unserialize($fields);
+			$fields['note'] = "\nCopied from remote search.";
+			$ab_id = $this->bo->add_entry($fields);
+			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.edit&ab_id=' . $ab_id));
+		}
+
 		function add()
 		{
 			if($GLOBALS['HTTP_POST_VARS']['submit'])
@@ -646,7 +697,7 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$this->addressbook_form('','menuaction=addressbook.uiaddressbook.add','Add','',$customfields,$this->cat_id);
+			$this->addressbook_form('','menuaction=addressbook.uiaddressbook.add','Add','',$customfields,$this->cat_id,True);
 
 			$this->template->set_var('lang_ok',lang('ok'));
 			$this->template->set_var('lang_clear',lang('clear'));
