@@ -1,0 +1,10 @@
+infolog/calendar contains some special versions / adaptations of files from the calendar.
+
+They differ, because:
+- the planner is working fully
+- infolog is integrated in uicalendar.view
+- modifications / corrections on the ACL (still in progress)
+
+I use it to keep track of my changes and be able to sumbit the changes in small patches to skeeter.
+
+If you want to use this version of calendar, simply symlink the files to the coresponding calendar directory.
