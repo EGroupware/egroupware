@@ -109,10 +109,10 @@
 		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login')
-                      . '<br> Click this image on the navbar: <img src="'
-                      . $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
+				. '<br> Click this image on the navbar: <img src="'
+				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
 		}
-		else if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+		elseif($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 		{
 			$api_messages = lang('it has been more then %1 days since you changed your password',30);
 		}
@@ -167,9 +167,9 @@
 			)
 		);
 		$var = Array(
-			'img_root'	=> $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/verdilak/images',
-			'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-			'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
+			'img_root' => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/verdilak/images',
+			'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+			'version'  => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 		);
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{

@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$bodyheader = 'BGCOLOR="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'"';
-	if ($GLOBALS['phpgw_info']['server']['htmlcompliant'])
+	if($GLOBALS['phpgw_info']['server']['htmlcompliant'])
 	{
 		$bodyheader .= ' ALINK="'.$GLOBALS['phpgw_info']['theme']['alink'].'" LINK="'.$GLOBALS['phpgw_info']['theme']['link'].'" VLINK="'.$GLOBALS['phpgw_info']['theme']['vlink'].'"';
 	}
@@ -31,7 +31,7 @@
 		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'] . $app,
 		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
-		'css'		=> $GLOBALS['phpgw']->common->get_css(),
+		'css'           => $GLOBALS['phpgw']->common->get_css(),
 		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);

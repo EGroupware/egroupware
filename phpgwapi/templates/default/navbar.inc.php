@@ -11,15 +11,15 @@
 
   /* $Id$ */
 
-  function parse_navbar($force = False)
-  {
+	function parse_navbar($force = False)
+	{
 		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
 
 		$tpl->set_file(
 			array(
-				'navbar'		=> 'navbar.tpl',
-				'navbar_app'	=> 'navbar_app.tpl'
+				'navbar'     => 'navbar.tpl',
+				'navbar_app' => 'navbar_app.tpl'
 			)
 		);
 
@@ -146,7 +146,7 @@
 				)
 			);
 			$var = Array(
-				'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 			);
 			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 			if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
@@ -156,8 +156,8 @@
 			}
 			$now = time();
 			$var['user_info'] = $GLOBALS['phpgw']->common->display_fullname() . ' - '
-					. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-					. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+				. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 			$tpl->set_var($var);
 			$GLOBALS['phpgw']->hooks->process('navbar_end');
 			$tpl->pfp('out','footer');

@@ -165,7 +165,7 @@
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{
 			$var['current_users'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions')
-			 	. '">&nbsp;' . lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
+				. '">&nbsp;' . lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
 			$tpl->set_var($var);
 		}
 		else
@@ -177,8 +177,8 @@
 		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
 		$now = time();
 		$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';
@@ -248,11 +248,11 @@
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
 		{
 			$var = Array(
-				'powered'	=> lang('Powered by phpGroupWare version %1', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
-				'img_root'	=> PHPGW_IMAGES_DIR,
-				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
-//				'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
+				'powered'  => lang('Powered by phpGroupWare version %1', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
+				'img_root' => PHPGW_IMAGES_DIR,
+				'power_backcolor' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'power_textcolor' => $GLOBALS['phpgw_info']['theme']['navbar_text']
+//				'version'  => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
 			$tpl->set_var($var);
  			$tpl->parse('V_powered_bottom','B_powered_bottom');

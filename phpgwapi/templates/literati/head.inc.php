@@ -12,8 +12,8 @@
 	/* $Id$ */
 
 	$bodyheader = ' bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '" alink="'
-			. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
-			. $GLOBALS['phpgw_info']['theme']['vlink'] . '"';
+		. $GLOBALS['phpgw_info']['theme']['alink'] . '" link="' . $GLOBALS['phpgw_info']['theme']['link'] . '" vlink="'
+		. $GLOBALS['phpgw_info']['theme']['vlink'] . '"';
 
 	if (! $GLOBALS['phpgw_info']['server']['htmlcompliant'])
 	{
@@ -36,12 +36,12 @@
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
-		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
-		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'].$app,
-		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
-		'theme_css'	=> $theme_css,
-		'css'		=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
+		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'].$app,
+		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
+		'theme_css'     => $theme_css,
+		'css'           => $GLOBALS['phpgw']->common->get_css(),
+		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

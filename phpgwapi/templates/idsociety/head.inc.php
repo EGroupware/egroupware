@@ -23,11 +23,11 @@
 		'img_icon'      => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'       => $GLOBALS['phpgw']->translation->charset(),
-		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
-		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'] . $app,
-		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
-		'css'		=> $GLOBALS['phpgw']->common->get_css(),
-		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
+		'font_family'   => $GLOBALS['phpgw_info']['theme']['font'],
+		'website_title' => $GLOBALS['phpgw_info']['server']['site_title'] . $app,
+		'body_tags'     => $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
+		'css'           => $GLOBALS['phpgw']->common->get_css(),
+		'java_script'   => $GLOBALS['phpgw']->common->get_java_script(),
 	);
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');

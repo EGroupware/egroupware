@@ -20,7 +20,7 @@
 				'navbar' => 'navbar.tpl'
 			)
 		);
-		
+
 		$GLOBALS['idots_tpl']->set_block('navbar','navbar_header','navbar_header');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
 		$GLOBALS['idots_tpl']->set_block('navbar','extra_block_row','extra_block_row');
@@ -39,8 +39,8 @@
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
 				
-				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . 
-					'" title="'. 	$title . '" border="0" height="60">';
+				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title
+					. '" title="'. $title . '" border="0" height="60">';
 
 				$app_icons .= '<TD align="center"><a href="' . $app_data['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
@@ -80,21 +80,21 @@
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{
 			$var['current_users'] = '<a href="'
-			. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
-			. lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
+				. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
+				. lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
 		}
 		$now = time();
 		$var['user_info'] = '<b>'.$GLOBALS['phpgw']->common->display_fullname() .'</b>'. ' - '
-		. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-		. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+			. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
+			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 
 		if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] == 0)
 		{
 			$api_messages = lang('You are required to change your password during your first login')
-			. '<br> Click this image on the navbar: <img src="'
-			. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
+				. '<br> Click this image on the navbar: <img src="'
+				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
 		}
-		else if ($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
+		elseif($GLOBALS['phpgw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 		{
 			$api_messages = lang('it has been more then %1 days since you changed your password',30);
 		}
@@ -125,7 +125,7 @@
 		);
 
 		display_sidebox('',$menu_title,$file);
-		
+
 		$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['phpgw_info']['flags']['currentapp']);
 
 		$GLOBALS['idots_tpl']->pparse('out','navbar_footer');
@@ -145,13 +145,12 @@
 
 	function display_sidebox($appname,$menu_title,$file)
 	{
-		
 		if(!$appname || ($appname==$GLOBALS['phpgw_info']['flags']['currentapp'] && $file))
 		{
 			$var['lang_title']=$menu_title;//$appname.' '.lang('Menu');
 			$GLOBALS['idots_tpl']->set_var($var);
 			$GLOBALS['idots_tpl']->pfp('out','extra_blocks_header');
-			
+
 			while(list($text,$url) = each($file))
 			{
 				sidebox_menu_item($url,$text);
@@ -172,11 +171,11 @@
 			$var['icon_or_star']='<font color="#ff9933">*</font>';
 			$var['lang_item']=lang($item_text);
 			$var['item_link']=$item_link;
-			$GLOBALS['idots_tpl']->set_var($var);		
+			$GLOBALS['idots_tpl']->set_var($var);
 			$GLOBALS['idots_tpl']->pparse('out','extra_block_row');
 		}
 	}
-	
+
 	function parse_navbar_end()
 	{
 		$GLOBALS['idots_tpl'] = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
@@ -187,9 +186,9 @@
 			)
 		);
 		$var = Array(
-			'img_root'			=> $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images',
-			'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-			'version'			=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
+			'img_root'       => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/images',
+			'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+			'version'        => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 		);
 		$GLOBALS['phpgw']->hooks->process('navbar_end');
 

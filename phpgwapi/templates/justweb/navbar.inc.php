@@ -21,7 +21,7 @@
 			)
 		);
 		$tpl->set_block('navbar','preferences','preferences_icon');
-		
+
 		$var['img_root'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/justweb/images';
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
@@ -119,9 +119,9 @@
 		}
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
-		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($_GET['menuaction']))
 		{
-			list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+			list($app,$class,$method) = explode('.',$_GET['menuaction']);
 			if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['header'])
 			{
 				$GLOBALS[$class]->header();
@@ -141,10 +141,10 @@
 			)
 		);
 		$var = Array(
-			'img_root'	=> $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/justweb/images',
-			'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-			'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
-			'user_info'	=> $GLOBALS['phpgw']->common->display_fullname() . ' - '
+			'img_root'  => $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/justweb/images',
+			'table_bg_color' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+			'version'   => $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
+			'user_info' => $GLOBALS['phpgw']->common->display_fullname() . ' - '
 				. lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
 				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '     
 				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y')
