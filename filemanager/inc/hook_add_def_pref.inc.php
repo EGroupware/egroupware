@@ -3,7 +3,7 @@
 global $pref;
 
 $pref->change ('filemanager', 'name', True);
-$pref->change ('filemanager', 'mime_type', True);
+$pref->change ('filemanager', 'mime_type', False);
 $pref->change ('filemanager', 'size', True);
 $pref->change ('filemanager', 'created', True);
 $pref->change ('filemanager', 'modified', True);

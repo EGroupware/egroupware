@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['filemanager']['name']    = 'filemanager';
-	$setup_info['filemanager']['version'] = '0.9.13.005';
+	$setup_info['filemanager']['version'] = '0.9.15.001';
 	$setup_info['filemanager']['app_order'] = 10;
 	$setup_info['filemanager']['enable']  = 1;
 
@@ -21,10 +21,11 @@
 	$setup_info['filemanager']['hooks'][] = 'admin';
 	$setup_info['filemanager']['hooks'][] = 'deleteaccount';
 	$setup_info['filemanager']['hooks'][] = 'preferences';
+	$setup_info['filemanager']['hooks'][] = 'settings';
 
 	/* Dependencies for this app to work */
 	$setup_info['filemanager']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.13', '0.9.14','0.9.15')
+		 'versions' => array('0.9.15')
 	);
 ?>
