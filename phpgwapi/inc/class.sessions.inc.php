@@ -38,11 +38,12 @@
 
     function sessions()
     {
-      global $phpgw, $phpgw_info, $sessionid, $kp3;
-      $this->db = $phpgw->db;
-      $this->db2 = $phpgw->db;
-      $this->sessionid = $sessionid;
-      $this->kp3 = $kp3;
+       global $phpgw, $phpgw_info, $sessionid, $kp3;
+
+       $this->db        = $phpgw->db;
+       $this->db2       = $phpgw->db;
+       $this->sessionid = $sessionid;
+       $this->kp3       = $kp3;
     }
 
     function getuser_ip()
@@ -59,12 +60,12 @@
     function verify()
     {
        global $phpgw, $phpgw_info, $sessionid, $kp3;
-       $db  = $phpgw->db;
-       $db2 = $phpgw->db;
+
+       $db              = $phpgw->db;
+       $db2             = $phpgw->db;
        $this->sessionid = $sessionid;
        $this->kp3       = $kp3;
 
-       // PHP 3 complains that these are not defined when the already are defined.
        $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
        $phpgw->common->key .= $this->sessionid;
        $phpgw->common->key .= $this->kp3;
@@ -76,9 +77,10 @@
 
        $db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
        $db->next_record();
-       
+
+       // This is going to be replace with the session_flag field       
        if ($db->f("session_info") == "" || $db->f("session_info") == "NULL") {
-          $this->account_lid = $db->f("session_lid");
+/*        $this->account_lid = $db->f("session_lid");
           $phpgw_info["user"]["sessionid"]   = $this->sessionid;
           $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
 
@@ -87,7 +89,7 @@
 
           // Now we need to re-read eveything
           $db->query("select * from phpgw_sessions where session_id='$this->sessionid'",__LINE__,__FILE__);
-          $db->next_record();    
+          $db->next_record();   */
        }
 
        $phpgw_info["user"]["kp3"] = $this->kp3;
@@ -98,7 +100,7 @@
        $this->account_lid = $userid_array[0];
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
-//          return False;
+          return False;
        }
        if (PHP_OS != "Windows" && (! $phpgw_info["user"]["session_ip"] || $phpgw_info["user"]["session_ip"] != $this->getuser_ip())){
           return False;
@@ -114,7 +116,6 @@
        if (! $this->account_lid ) {
           return False;
        } else {
-          // PHP 3 complains that these are not defined when the already are defined.
           return True;
        }
     }
@@ -123,8 +124,6 @@
     function clean_sessions()
     {
        global $phpgw_info, $phpgw;
-
-       // Note: I need to add a db->lock() in here
 
        if (!isset($phpgw_info["server"]["cron_apps"]) || ! $phpgw_info["server"]["cron_apps"]) {
           $phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
