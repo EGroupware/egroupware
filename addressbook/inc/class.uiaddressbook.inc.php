@@ -553,6 +553,7 @@
 				reset($columns_to_display);
 			}
 
+			$GLOBALS['phpgw']->template->set_var('delete_button','');
 			if(count($entries))
 			{
 				$GLOBALS['phpgw']->template->fp('delete_button','delete_block');
