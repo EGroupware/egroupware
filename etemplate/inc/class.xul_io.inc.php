@@ -362,7 +362,7 @@
 			$doc->add_root($xul_overlay);
 			$xml = $doc->export_xml();
 
-			//if ($this->debug)
+			if ($this->debug)
 			{
 				echo "<pre>\n" . htmlentities($xml) . "\n</pre>\n";
 			}

@@ -135,7 +135,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.edit" template="" lang="" group="0" version="0.9.15.003" border="1" class="editorEdit">
+	<grid id="etemplate.editor.edit" template="" lang="" group="0" version="1.0.0.001" border="1" class="thinBorder">
 		<columns>
 			<column/>
 			<column/>
@@ -151,21 +151,22 @@
 			</row>
 		</rows>
 		<styles>
-			.editorEdit { border-color: black }
+			.thinBorder { border: 1px solid black; border-collapse: collapse; }
 		</styles>
 	</grid>
-	<grid id="etemplate.editor" template="" lang="" group="" version="0.9.15.004" width="100%" height="100%">
+	<grid id="etemplate.editor" template="" lang="" group="" version="1.0.0.001" width="100%" height="100%">
 		<columns>
-			<column/>
 			<column/>
 		</columns>
 		<rows>
-			<row>
-				<description options="bi" value="Editable Templates - Editor" no_lang="1" id="msg"/>
-				<button label="DB-Tools" align="right" id="db_tools" statustext="to start the DB-Tools"/>
+			<row disabled="!@msg">
+				<description class="redItalic" no_lang="1" id="msg"/>
 			</row>
-			<row>
-				<hrule span="all"/>
+			<row disabled="!@xml">
+				<groupbox span="all">
+					<caption label="@xml_label"/>
+					<html id="xml"/>
+				</groupbox>
 			</row>
 			<row>
 				<grid span="all" id="etemplate.editor.keys"/>
@@ -196,5 +197,8 @@
 				<textbox multiline="true" rows="10" cols="80" span="all" id="style" statustext="embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)"/>
 			</row>
 		</rows>
+		<styles>
+			.redItalic { color: red; font-style: italic; }
+		</styles>
 	</grid>
 </overlay>

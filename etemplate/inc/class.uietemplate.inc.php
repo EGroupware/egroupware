@@ -933,7 +933,7 @@
 					}
 					if ($cell['type'] == 'groupbox')
 					{
-						if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || (int)$cell['no_lang'] == 2))
+						if (strlen($label) > 1 && $cell['label'] == $label)
 						{
 							$label = lang($label);
 						}

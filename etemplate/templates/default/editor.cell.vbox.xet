@@ -48,7 +48,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.cell.vbox" template="" lang="" group="" version="0.9.15.003" height="100%" border="1">
+	<grid id="etemplate.editor.cell.vbox" template="" lang="" group="" version="1.0.0.001" height="100%" border="1" class="thinBorder">
 		<columns>
 			<column/>
 		</columns>

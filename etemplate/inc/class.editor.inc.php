@@ -57,7 +57,7 @@
 			$this->editor = new etemplate('etemplate.editor');
 		}
 
-		function edit($msg = '')
+		function edit($msg = '',$xml='',$xml_label='')
 		{
 			if (isset($_GET['name']) && !$this->etemplate->read($_GET))
 			{
@@ -90,7 +90,9 @@
 			}
 			$content = $this->etemplate->as_array() + array(
 				'cols' => $this->etemplate->cols,
-				'msg' => $msg
+				'msg' => $msg,
+				'xml_label' => $xml_label,
+				'xml' => $xml ? '<pre>'.$this->etemplate->html->htmlspecialchars($xml)."</pre>\n" : '',
 			);
 			$options = explode(',',$this->etemplate->size);
 			reset($this->options);
@@ -172,6 +174,7 @@
 			}
 			$types = array_merge($this->etemplate->types,$this->extensions);
 			unset($types['**loaded**']);
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
 					'type' => $types,
@@ -471,21 +474,22 @@
 			}
 			elseif ($content['export_xml'])
 			{
-				$msg = $this->export_xml();
+				$msg = $this->export_xml($xml,$xml_label);
 			}
 			elseif ($content['import_xml'])
 			{
-				$msg = $this->import_xml($content['file']['tmp_name']);
+				$msg = $this->import_xml($content['file']['tmp_name'],$xml);
+				$xml_label = $content['file']['name'];
 			}
 			elseif ($content['db_tools'])
 			{
 				ExecMethod('etemplate.db_tools.edit');
 				return;
 			}
-			$this->edit($msg);
+			$this->edit($msg,$xml,$xml_label);
 		}
 
-		function export_xml()
+		function export_xml(&$xml,&$xml_label)
 		{
 			$name = $this->etemplate->name;
 			$template = $this->etemplate->template != '' ? $this->etemplate->template : 'default';
@@ -521,7 +525,7 @@
 				rename($file,$old_file);
 			}
 
-			if (!($f = fopen($file,'w')))
+			if (!($f = fopen($xml_label=$file,'w')))
 			{
 				return 0;
 			}
@@ -529,28 +533,28 @@
 			{
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
-			$xul = $this->etemplate->xul_io->export($this->etemplate);
+			$xml = $this->etemplate->xul_io->export($this->etemplate);
 
-			fwrite($f,$xul);
+			fwrite($f,$xml);
 			fclose($f);
 
 			return lang("eTemplate '%1' written to '%2'",$name,$file);
 		}
 
-		function import_xml($file)
+		function import_xml($file,&$xml)
 		{
 			if ($file == 'none' || $file == '' || !($f = fopen($file,'r')))
 			{
 				return lang('no filename given or selected via Browse...');
 			}
-			$xul = fread ($f, filesize ($file));
+			$xml = fread ($f, filesize ($file));
 			fclose($f);
 
 			if (!is_object($this->etemplate->xul_io))
 			{
 				$this->etemplate->xul_io = CreateObject('etemplate.xul_io');
 			}
-			$imported = $this->etemplate->xul_io->import($this->etemplate,$xul);
+			$imported = $this->etemplate->xul_io->import($this->etemplate,$xml);
 			$this->etemplate->modified = @filemtime($f);
 			$this->etemplate->modified_set = 'xul-import';
 
@@ -631,6 +635,7 @@
 			$content = $this->etemplate->as_array();
 
 			$delete = new etemplate('etemplate.editor.delete');
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Delete Template');
 			$delete->exec('etemplate.editor.delete',$content,array(),array(),
 				$content+$preserv+array(
 					'**extensions**' => $this->extensions
@@ -709,7 +714,7 @@
 				$content[$row] = $param;
 			}
 			$list_result = new etemplate('etemplate.editor.list_result');
-			//$list_result->debug=1;
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 			$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 				'result' => $result,
 				'**extensions**' => $this->extensions
@@ -786,6 +791,7 @@
 						unserialize(substr($vals["A$r"],0,-5)) : $vals["A$r"];
 				}
 			}
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Show Template');
 			$show->exec('etemplate.editor.show',$content,array(),'',array(
 				'olds' => $vals,
 				'**extensions**' => $this->extensions
