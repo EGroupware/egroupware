@@ -355,8 +355,6 @@
 			$GLOBALS['phpgw']->template->set_var('no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list') . '">' . lang('No') . '</a>');
 			$GLOBALS['phpgw']->template->set_var('yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.delete&app_name=' . urlencode($app_name) . "&confirm=True") . '">' . lang('Yes') . '</a>');
 			$GLOBALS['phpgw']->template->pparse('out','body');
-
-			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 	}
 ?>
