@@ -328,7 +328,8 @@
 		\*************************************************************************/
 		function read_repositories()
 		{
-			global $phpgw;
+			global $phpgw, $phpgw_info;
+			$phpgw_info['user']['account_id'] = $this->account_id;
 			$phpgw->acl->acl($this->account_id);
 			$phpgw->accounts->accounts($this->account_id);
 			$phpgw->preferences->preferences($this->account_id);
