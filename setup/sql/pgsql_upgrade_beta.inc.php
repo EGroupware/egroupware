@@ -920,6 +920,7 @@
      $phpgw_setup->db->query($sql);
 
      $phpgw_setup->db->query("insert into phpgw_accounts select * from phpgw_temp",__LINE__,__FILE__);
+	 $phpgw_setup->db->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
      $phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
      $phpgw_setup->db->query("drop sequence accounts_account_id_seq");
      $phpgw_setup->db->query("drop table accounts");
