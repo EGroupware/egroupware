@@ -4,7 +4,7 @@
 		<TD vAlign=top> 
 			<TABLE cellSpacing=0 cellPadding=0 width="100%" bgColor=#ffffff border=0>
 				<TR> 
-					<TD width=185 rowSpan=2 align="center" vAlign=top class=toppannel><a href="http://www.phpgroupware.org" target="_blank"><IMG src="{img_root}/logo.png" border="0" title="www.phpGroupWare.org"></a></TD>
+					<TD width=185 rowSpan=2 align="center" vAlign=top class=toppannel><a href="{logo_url}" target="_blank"><IMG src="{logo_file}" border="0" title="{logo_title}"></a></TD>
 					<TD colspan="2" valign="top" background="{img_root}/panel.png" style="background-repeat: repeat-x;"> 
 						<TABLE width="100%" border=0 cellPadding=0 cellSpacing=0 background="{img_root}/panel.png" bgColor="#ffffff">
 							<TR valign="center"> 

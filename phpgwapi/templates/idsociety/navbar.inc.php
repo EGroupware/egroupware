@@ -140,7 +140,6 @@
 
 		$var['content_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','content_spacer_middle');
 		$var['em_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','em');
-		$var['logo_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','logo2');
 		$var['top_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
 		$var['nav_bar_left_spacer_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_spacer');
 		$var['nav_bar_left_top_bg_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_top_bg');
@@ -151,13 +150,17 @@
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
 			$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			$tpl->set_var($var);
 		}
 		else
 		{
 			$var['powered_by'] = '';
-			$tpl->set_var($var);
 		}
+
+		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo2');
+		$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+		$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+
+		$tpl->set_var($var);
 
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && $GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers'])
 		{

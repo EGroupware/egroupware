@@ -2,15 +2,15 @@
 	<tr> 
 		<td> 
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr> 
-					<td width="218" height="33"><img src="{img_root}/logo.gif" alt="phpGroupWare"></td>
-					<td width="100%" valign="bottom" background="{img_root}/menu_filler.gif">&nbsp;</td>
-					<td valign="bottom" width="56" background="{img_root}/blue_filler.gif"><a href="{home_link}"><img src="{img_root}/tab_home.gif" width="56" height="23" border="0"></a></td>
+				<tr background="{img_root}/menu_filler.gif">
+					<td width="218" height="33"><a href="{logo_url}" target="_blank"><img src="{logo_file}" title="{logo_title}" border="0"></a></td>
+					<td width="100%" valign="bottom">&nbsp;</td>
+					<td valign="bottom" width="56"><a href="{home_link}"><img src="{img_root}/tab_home.gif" width="56" height="23" border="0"></a></td>
 <!-- BEGIN preferences -->
-					<td valign="bottom" width="85" background="{img_root}/blue_filler.gif"><a href="{preferences_link}"><img src="{img_root}/tab_prefs.gif" width="85" height="23" border="0"></a></td>
+					<td valign="bottom" width="85"><a href="{preferences_link}"><img src="{img_root}/tab_prefs.gif" width="85" height="23" border="0"></a></td>
 <!-- END preferences -->
-					<td valign="bottom" width="56" background="{img_root}/blue_filler.gif"><a href="{logout_link}"><img src="{img_root}/tab_logout.gif" width="56" height="23" border="0"></a></td>
-					<td valign="bottom" width="39" background="{img_root}/blue_filler.gif"><a href="{help_link}"><img src="{img_root}/tab_help.gif" width="39" height="23" border="0"></a></td>
+					<td valign="bottom" width="56"><a href="{logout_link}"><img src="{img_root}/tab_logout.gif" width="56" height="23" border="0"></a></td>
+					<td valign="bottom" width="39"><a href="{help_link}"><img src="{img_root}/tab_help.gif" width="39" height="23" border="0"></a></td>
 				</tr>
 			</table>
 		</td>

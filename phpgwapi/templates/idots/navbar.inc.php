@@ -105,6 +105,10 @@
 			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
 		}
 
+		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
+		$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+		$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+
 		$GLOBALS['idots_tpl']->set_var($var);
 		$GLOBALS['idots_tpl']->pfp('out','navbar_header');
 
@@ -159,7 +163,7 @@
 
 	function sidebox_menu_item($item_link='',$item_text='')
 	{
-		if($item_text=='_NewLine_')
+		if($item_text == '_NewLine_' || $item_link == '_NewLine_')
 		{
 			$GLOBALS['idots_tpl']->pparse('out','extra_block_spacer');
 		}

@@ -61,6 +61,9 @@
 		{
 			$var['logo'] = 'logo.gif';
 		}
+		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:$var['logo']);
+		$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+		$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 
 		$var['home_link'] = $GLOBALS['phpgw_info']['navbar']['home']['url'];
 		$var['preferences_link'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
@@ -139,6 +142,7 @@
 		{
 			$tpl->set_var('preferences_icon','');
 		}
+
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
 		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && @isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
