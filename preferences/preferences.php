@@ -503,6 +503,11 @@
 			$GLOBALS['phpgw_info']['navbar'][$_GET['appname']]['title'],PHPGW_SERVER_ROOT . SEP
 			. $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
 	}
+	$tmpl_settings = PHPGW_TEMPLATE_DIR.'/hook_settings.inc.php';
+	if ($_GET['appname'] == 'preferences' && file_exists($tmpl_settings))
+	{
+		include($tmpl_settings);
+	}
 
 	if (count($notifys))	// there have been notifys in the hook, we need to save in the session
 	{
