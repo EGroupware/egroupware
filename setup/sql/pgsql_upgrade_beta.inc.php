@@ -856,6 +856,11 @@
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre1";
   }
 
+  $test[] = "0.9.10pre1";                                                                                                                                                                        
+  function upgrade0_9_10pre1(){                                                                                                                                                                  
+    global $phpgw_info, $phpgw_setup;
+    $phpgw_setup->db->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
+     }
 
   reset ($test);
   while (list ($key, $value) = each ($test)){
