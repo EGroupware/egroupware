@@ -15,14 +15,14 @@
 	{
 		function uimenuclass()
 		{
-			$this->t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+			$this->t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
 
 			$this->t->set_file(array('menurow' => 'menurow.tpl'));
 			$this->t->set_block('menurow','menu_links','menu_links');
 			$this->t->set_block('menurow','link_row','link_row');
 
-			$this->rowColor[0] = $phpgw_info["theme"]["row_on"];
-			$this->rowColor[1] = $phpgw_info["theme"]["row_off"];
+			$this->rowColor[0] = $GLOBALS['phpgw_info']["theme"]["row_on"];
+			$this->rowColor[1] = $GLOBALS['phpgw_info']["theme"]["row_off"];
 		}
 
 		function section_item($pref_link='',$pref_text='', $bgcolor)
