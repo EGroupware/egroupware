@@ -63,10 +63,10 @@
             				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
             				        "passwd"    => $n_passwd,
             				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
-        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
+        $phpgw->db->query("SELECT account_permissions, account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
         $phpgw->db->next_record();
         $apps = explode(":",$phpgw->db->f("account_permissions"));
-	$pref = new preferences($n_loginid);
+	$pref = new preferences($phpgw->db->f("account_id"));
         $phpgw->common->hook_single("add_def_pref", "admin");
         for ($i=1;$i<sizeof($apps) - 1;$i++) {
 	   if($apps[$i]<>"admin")

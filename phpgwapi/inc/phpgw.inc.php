@@ -188,10 +188,10 @@
         if (! $this->session->verify()) {
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
           $this->db->next_record();
-          Header("Location: " . $this->link($this->db->f("config_value")."/login.php","cd=10"));
+          Header("Location: " . $this->redirect($this->link($this->db->f("config_value")."/login.php","cd=10")));
           exit;
         }
-        $this->preferences->preferences = $phpgw_info["user"]["preferences"];
+        $this->preferences->preference = $phpgw_info["user"]["preferences"];
         $this->preferences->account_id = $phpgw_info["user"]["account_id"];
 
      }

@@ -64,10 +64,11 @@
      }
      
      if (! $totalerrors) {
-        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
+        $phpgw->db->query("SELECT account_permissions, account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
         $phpgw->db->next_record();
         $apps_before = $phpgw->db->f("account_permissions");
-     
+        $account_id = $phpgw->db->f("account_id");
+
         while ($permission = each($new_permissions)) {
           if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
             $phpgw->accounts->add_app($permission[0]);
@@ -95,7 +96,9 @@
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
    if (count($new_apps)) {
-      $pref = new preferences($n_loginid);
+
+      $pref = new preferences($account_id);
+      $t = $pref->get_preferences();
 
       $docommit = False;
       for ($j=0;$j<count($new_apps);$j++) {
@@ -103,7 +106,7 @@
 	    $check = "common";
 	 else
 	    $check = $new_apps[$j];
-	 if (!$pref->preferences[$check]) {
+	 if (!count($t["$check"])) {
             $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
             $docommit = True;
          }

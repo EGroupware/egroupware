@@ -57,13 +57,15 @@
            $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
 
 	   $pref = new preferences($n_users[$i]);
+	   $t = $pref->get_preferences();
+
 	   $docommit = False;
 	   for ($j=0;$j<count($new_apps);$j++) {
 	     if($new_apps[$j]=="admin")
 	       $check = "common";
 	     else
 	       $check = $new_apps[$j];
-	     if (!$pref->preferences[$check]) {
+	     if (!count($t["$check"])) {
 	       $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
 	       $docommit = True;
 	     }

@@ -121,10 +121,12 @@
 
     function read_groups($lid) {
       global $phpgw_info, $phpgw;
-       $phpgw->db->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
-       $phpgw->db->next_record();
 
-       $gl = explode(",",$phpgw->db->f("account_groups"));
+       $db = $phpgw->db;
+       $db->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
+       $db->next_record();
+
+       $gl = explode(",",$db->f("account_groups"));
        for ($i=1; $i<(count($gl)-1); $i++) {
           $ga = explode(":",$gl[$i]);
           $groups[$ga[0]] = $ga[1];
@@ -141,12 +143,13 @@
        }
        $groups = $this->read_groups($lid);
 
+       $db = $phpgw->db;
        $i = 0;
        while ($groups && $group = each($groups)) {
-           $phpgw->db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
-           $phpgw->db->next_record();
+           $db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
+           $db->next_record();
            $group_names[$i][0] = $group[0];
-	   $group_names[$i][1] = $phpgw->db->f("group_name");
+	   $group_names[$i][1] = $db->f("group_name");
 	   $group_names[$i++][2] = $group[1];
        }
        if (! $lid)
@@ -162,10 +165,11 @@
     {
        global $phpgw, $phpgw_info;
        
+       $db = $phpgw->db;
        // fing enabled apps in this system
-       $phpgw->db->query("select app_name from applications where app_enabled != 0 order by app_order",__LINE__,__FILE__);
+       $db->query("select app_name from applications where app_enabled != 0 order by app_order",__LINE__,__FILE__);
        while ($phpgw->db->next_record()) {
-         $enabled_apps[$phpgw->db->f("app_name")] = 1;
+         $enabled_apps[$db->f("app_name")] = 1;
        }
 
       // get a ldap connection handle
@@ -192,10 +196,10 @@
        }
 
        while ($group_list && $group = each($group_list)) {
-          $phpgw->db->query("select group_apps from groups where group_id=".$group[0]);
-          $phpgw->db->next_record();
+          $db->query("select group_apps from groups where group_id=".$group[0]);
+          $db->next_record();
 
-          $gp = explode(":",$phpgw->db->f("group_apps"));
+          $gp = explode(":",$db->f("group_apps"));
           for ($i=1,$j=0;$i<count($gp)-1;$i++,$j++) {
              $enabled_apps[$gp[$i]] = 2;
           }
@@ -271,10 +275,11 @@
     {
        global $phpgw;
 
-       $phpgw->db->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
-       $phpgw->db->next_record();
+       $db = $phpgw->db;
+       $db->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
+       $db->next_record();
 
-       $gp = explode(":",$phpgw->db->f("group_apps"));
+       $gp = explode(":",$db->f("group_apps"));
        for ($i=1,$j=0;$i<count($gp)-1;$i++,$j++) {
           $apps_array[$j] = $gp[$i];
        }
@@ -286,17 +291,19 @@
     {
        global $phpgw;
 
+       $db = $phpgw->db;
+
        if ($groups) {
-          $phpgw->db->query("select account_lid,account_firstname,account_lastname from accounts where account_groups"
+          $db->query("select account_lid,account_firstname,account_lastname from accounts where account_groups"
     				      . "like '%,$groups,%'",__LINE__,__FILE__);
        } else {
-          $phpgw->db->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
+          $db->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
        }
        $i = 0;
-       while ($phpgw->db->next_record()) {
-          $accounts["account_lid"][$i]       = $phpgw->db->f("account_lid");
-          $accounts["account_firstname"][$i] = $phpgw->db->f("account_firstname");
-          $accounts["account_lastname"][$i]  = $phpgw->db->f("account_lastname");
+       while ($db->next_record()) {
+          $accounts["account_lid"][$i]       = $db->f("account_lid");
+          $accounts["account_firstname"][$i] = $db->f("account_firstname");
+          $accounts["account_lastname"][$i]  = $db->f("account_lastname");
     	  $i++;
        }
        return $accounts;

@@ -198,7 +198,7 @@
   class preferences
   {
     var $account_id = 0;
-    var $preferences;
+    var $preference;
 
     function preferences($account_id)
     {
@@ -224,10 +224,7 @@
 	$db2->query("SELECT preference_value FROM preferences WHERE preference_owner=".$this->account_id,__LINE__,__FILE__);
 	$db2->next_record();
 	$pref_info = $db2->f("preference_value");
-//        if ($PHP_VERSION < "4.0.0") {
-//	  $pref_info = stripslashes($pref_info)
-//	}
-	$this->preferences = unserialize($pref_info);
+	$this->preference = unserialize($pref_info);
       }
     }
 
@@ -244,16 +241,16 @@
         $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
         if ($PHP_VERSION < "4.0.0") {
-	  $pref_info = addslashes(serialize($this->preferences));
+	  $pref_info = addslashes(serialize($this->preference));
 	} else {
-	  $pref_info = serialize($this->preferences);
+	  $pref_info = serialize($this->preference);
 	}
 
         $db->query("insert into preferences (preference_owner,preference_value) values ("
                   . $this->account_id . ",'" . $pref_info . "')",__LINE__,__FILE__);
 
         if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-	  $phpgw->preferences->preferences = $this->get_preferences();
+	  $phpgw->preferences->preference = $this->get_preferences();
           $phpgw->accounts->sync(__LINE__,__FILE__);
         }
       }
@@ -269,7 +266,7 @@
           $value = $$var;
        }
  
-       $this->preferences[$app_name][$var] = $value;
+       $this->preference["$app_name"]["$var"] = $value;
     }
     
     function delete($app_name,$var)
@@ -277,19 +274,19 @@
        if (! $var) {
 	  $this->reset($app_name);
        } else {
-	  unset($this->preferences[$app_name][$var]);
+	  unset($this->preference["$app_name"]["$var"]);
        }
     }
 
     // This will kill all preferences within a certain app
     function reset($app_name)
     {
-       $this->preferences[$app_name] = array();
+       $this->preference["$app_name"] = array();
     }
 
     function get_preferences()
     {
-       return $this->preferences;
+       return $this->preference;
     }
   } //end of preferences class
 
