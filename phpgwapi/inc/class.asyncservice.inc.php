@@ -525,7 +525,7 @@
 				'async_times'     => serialize($job['times']),
 				'async_method'    => $job['method'],
 				'async_data'      => serialize($job['data']),
-				'async_accont_id' => $job['account_id'],
+				'async_account_id'=> $job['account_id'],
 			);
 			if ($exists)
 			{ 
