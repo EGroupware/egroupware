@@ -104,8 +104,9 @@
 
   $db->query("insert into groups (group_name) values ('Default')");  
   $db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1:0,','A')");
-
-  $db->query("insert into preferences (preference_owner, preference_value) values ('1','a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}');
+  
+  $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
+  $db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
 
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");

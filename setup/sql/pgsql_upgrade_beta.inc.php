@@ -11,11 +11,9 @@
 
   /* $Id$ */
 
-  function v0_9_1to0_9_2(){
+  $test[] = "0.9.1";
+  function upgrade0_9_1(){
     global $currentver, $oldversion, $phpgw_info, $db;
-    $didupgrade = True;
-    if ($currentver == "0.9.1"){
-
       $db->query("alter table access_log change lo lo varchar(255)");
       $db->query("alter table addressbook  change ab_id ab_id int(11) NOT NULL auto_increment");
       $db->query("alter table addressbook add ab_company_id int(10) unsigned");
@@ -44,18 +42,13 @@
       $db->query("update preferences set preference_name='da' where preference_name='dk'");
       $db->query("update preferences set preference_name='ko' where preference_name='kr'");
 
-	//add weather support
+	    //add weather support
       $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
       $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
-
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.1 to 0.9.2 is completed.</td>\n";
-      echo "  </tr>\n";
-      $currentver = "0.9.2";
-    }
+    $currentver = "0.9.2";
   }
 
-  function update_owner($table,$field){
+  function v0_9_2to0_9_3update_owner($table,$field){
     global $db;
     $db->query("select distinct($field) from $table");
     if ($db->num_rows()) {
@@ -71,75 +64,88 @@
     $db->query("alter table $table change $field $field int(11) NOT NULL");
   }
 
-  function v0_9_2to0_9_3()
-  {
+  $test[] = "0.9.2";
+  function upgrade0_9_2(){
     global $currentver, $oldversion, $phpgw_info, $db;
+	  v0_9_2to0_9_3update_owner("addressbook","ab_owner");
+	  v0_9_2to0_9_3update_owner("todo","todo_owner");
+	  v0_9_2to0_9_3update_owner("webcal_entry","cal_create_by");
+	  v0_9_2to0_9_3update_owner("webcal_entry_user","cal_login");
+    $currentver = "0.9.3pre1";
+  }
 
-    // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.2" || ereg ("^0\.9\.3pre", $currentver)){
-       if ($currentver == "0.9.2" || $currentver == "0.9.3pre1") {
-	      update_owner("addressbook","ab_owner");
-      	update_owner("todo","todo_owner");
-      	update_owner("webcal_entry","cal_create_by");
-      	update_owner("webcal_entry_user","cal_login");
-      	$currentver = "0.9.3pre2";
-        update_version_table();
-     }
-       if ($currentver == "0.9.3pre2") {
-      	$db->query("select owner, newsgroup from users_newsgroups");
-      	if ($db->num_rows()) {
-   	   while($db->next_record()) {
-	        $owner[count($owner)] = $db->f("owner");
-   	     $newsgroup[count($newsgroup)] = $db->f("newsgroup");
- 	     }
-   	   for ($i=0;$i<count($owner);$i++) {
-	         $db->query("insert into preferences (preference_owner,preference_name,"
-		               ."preference_value,preference_appname) values ('".$owner[$i]."','".$newsgroup[$i]."','True',"
-		               ."'nntp')");
-    	  }
- 	     $db->query("drop table users_newsgroups");
-   	   $db->query("update applications set app_tables='newsgroups' where app_name='nntp'");
+  $test[] = "0.9.3pre1";
+  function upgrade0_9_3pre1(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+	  v0_9_2to0_9_3update_owner("addressbook","ab_owner");
+	  v0_9_2to0_9_3update_owner("todo","todo_owner");
+	  v0_9_2to0_9_3update_owner("webcal_entry","cal_create_by");
+	  v0_9_2to0_9_3update_owner("webcal_entry_user","cal_login");
+    $currentver = "0.9.3pre2";
+  }
+
+  $test[] = "0.9.3pre2";
+  function upgrade0_9_3pre2(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+	  $db->query("select owner, newsgroup from users_newsgroups");
+	  if($db->num_rows()) {
+	    while($db->next_record()) {
+	      $owner[count($owner)] = $db->f("owner");
+	      $newsgroup[count($newsgroup)] = $db->f("newsgroup");
+  	  }
+  	  for($i=0;$i<count($owner);$i++) {
+  	    $db->query("insert into preferences (preference_owner,preference_name,"
+  	     ."preference_value,preference_appname) values ('".$owner[$i]."','".$newsgroup[$i]."','True',"
+  	     ."'nntp')");
+   	  }
+  	  $db->query("drop table users_newsgroups");
+  	  $db->query("update applications set app_tables='newsgroups' where app_name='nntp'");
   	}
-        $currentver = "0.9.3pre3";
-        update_version_table();
-    }
+    $currentver = "0.9.3pre3";
+  }
 
-    if ($currentver == "0.9.3pre3") {
-   	$db->query("alter table todo add todo_id_parent int DEFAULT 0 NOT NULL");
-       $currentver = "0.9.3pre4";
-       update_version_table();
-   }
-
-    if ($currentver == "0.9.3pre4") {
+  $test[] = "0.9.3pre3";
+  function upgrade0_9_3pre3(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $db->query("alter table todo add todo_id_parent int(11) DEFAULT '0' NOT NULL");
+    $currentver = "0.9.3pre4";
+  }
+     
+  $test[] = "0.9.3pre4";
+  function upgrade0_9_3pre4(){
+    global $currentver, $oldversion, $phpgw_info, $db;
    	$db->query("create table temp as select * from config");
    	$db->query("drop table config");
    	$db->query("create table config config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL");
    	$db->query("insert into config select * from temp");
    	$db->query("drop table config");
-       $currentver = "0.9.3pre5";
-       update_version_table();
-    }
+    $currentver = "0.9.3pre5";
+  }
 
-    if ($currentver == "0.9.3pre5") {
-       $db->query("CREATE TABLE categories (
-                    cat_id          serial,
-                    account_id      int DEFAULT '0' NOT NULL,
-                    app_name        varchar(25) NOT NULL,
-                    cat_name        varchar(150) NOT NULL,
-                    cat_description text NOT NULL)"
-                 );
-       $currentver = "0.9.3pre6";
-       update_version_table();
-    }
+  $test[] = "0.9.3pre5";
+  function upgrade0_9_3pre5(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+      $db->query("CREATE TABLE categories (
+        cat_id          serial,
+        account_id      int DEFAULT '0' NOT NULL,
+        app_name        varchar(25) NOT NULL,
+        cat_name        varchar(150) NOT NULL,
+        cat_description text NOT NULL)"
+      );
+    $currentver = "0.9.3pre6";
+  }
 
-    if ($currentver == "0.9.3pre6") {
-       $db->query("alter table addressbook add ab_url varchar(255)");
-       $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
-       $currentver = "0.9.3pre7";
-       update_version_table();
-    }
-    
-    if ($currentver == "0.9.3pre7") {
+  $test[] = "0.9.3pre6";
+  function upgrade0_9_3pre6(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+      $db->query("alter table addressbook add ab_url varchar(255)");
+      $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
+    $currentver = "0.9.3pre7";
+  }
+
+  $test[] = "0.9.3pre7";
+  function upgrade0_9_3pre7(){
+    global $currentver, $oldversion, $phpgw_info, $db;
        $db->query("CREATE TABLE languages (
                     lang_id         varchar(2) NOT NULL,
                     lang_name       varchar(50) NOT NULL,
@@ -282,38 +288,37 @@
       @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('YO','Yoruba','No')");      
       @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZH','Chinese','No')");     
       @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");   
-
-      $currentver = "0.9.3pre8";
-      update_version_table();
-    }
-
-      if ($currentver == "0.9.3pre8") {
-         $currentver = "0.9.3pre9";
-         update_version_table();
-      }
-
-      if ($currentver == "0.9.3pre9") {
-         $currentver = "0.9.3pre10";
-         update_version_table();
-      }
-
-      
-    echo "  <tr bgcolor=\"e6e6e6\">\n";
-    echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-    echo "  </tr>\n";
-    }
+    $currentver = "0.9.3pre8";
   }
 
-  function v0_9_3to0_9_4(){
+ 
+  $test[] = "0.9.3pre8";
+  function upgrade0_9_3pre8(){
     global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.3pre9";
+  }
 
-    // The 0.9.3pre1 is only temp until release
-    if ($currentver == "0.9.3" || ereg ("^0\.9\.4pre", $currentver)){
-      if ($currentver == "0.9.3") {
-         $currentver = "0.9.4pre1";
-         update_version_table();
-      }
-      if ($currentver == "0.9.4pre1") {
+  $test[] = "0.9.3pre9";
+  function upgrade0_9_3pre9(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.3pre10";
+  }
+
+  $test[] = "0.9.3pre10";
+  function upgrade0_9_3pre10(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.3";
+  }
+
+  $test[] = "0.9.3";
+  function upgrade0_9_3(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.4pre1";
+  }
+
+  $test[] = "0.9.4pre1";
+  function upgrade0_9_4pre1(){
+    global $currentver, $oldversion, $phpgw_info, $db;
          $sql = "CREATE TABLE notes (
                   note_id        serial, 
                   note_owner     int,
@@ -322,23 +327,29 @@
                 )";
         $db->query($sql);
         $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 13, NULL, '".$phpgw_info["server"]["version"]."')");
-        $currentver = "0.9.4pre2";
-        update_version_table();
-      }
-      if ($currentver == "0.9.4pre2") {
+    $currentver = "0.9.4pre2";
+  }
+
+  $test[] = "0.9.4pre2";
+  function upgrade0_9_4pre2(){
+    global $currentver, $oldversion, $phpgw_info, $db;
 	      $db->query("alter table webcal_entry change cal_create_by cal_owner int NOT NULL");
-        $currentver = "0.9.4pre3";
-        update_version_table();
-      }
-      if ($currentver == "0.9.4pre3") {
+    $currentver = "0.9.4pre3";
+  }
+
+  $test[] = "0.9.4pre3";
+  function upgrade0_9_4pre3(){
+    global $currentver, $oldversion, $phpgw_info, $db;
    	    $sql = "ALTER TABLE todo ADD todo_startdate int not null";
    	    $db->query($sql);
 		  	$sql = "ALTER TABLE todo CHANGE todo_datedue todo_enddate int not null";
 	      $db->query($sql);	
-        $currentver = "0.9.4pre4";
-	      update_version_table();
-      }
-      if ($currentver == "0.9.4pre4") {
+    $currentver = "0.9.4pre4";
+  }
+
+  $test[] = "0.9.4pre4";
+  function upgrade0_9_4pre4(){
+    global $currentver, $oldversion, $phpgw_info, $db;
    	    $sql = "DROP TABLE sessions";
    	    $db->query($sql);
         $sql = "create table sessions (
@@ -351,27 +362,18 @@
           unique(session_id)
         )";
         $db->query($sql);
-        $currentver = "0.9.4pre5";
-	      update_version_table();
-      }
-      if ($currentver == "0.9.4pre5") {
-        $currentver = "0.9.4";
-        update_version_table();
-      }
-      if ($oldversion != $currentver){
-        echo "  </tr><td>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-        echo "  </tr>\n";
-      }
-    }
+    $currentver = "0.9.4pre5";
   }
-  function v0_9_4to0_9_5(){
-    global $currentver, $oldversion, $phpgw_info, $db;
 
-    // The 0.9.4pre1 is only temp until release
-    if ($currentver == "0.9.4" || ereg ("^0\.9\.5pre", $currentver)){
-      if ($currentver == "0.9.4") {
+  $test[] = "0.9.4pre5";
+  function upgrade0_9_4pre5(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.4";
+  }
+
+  $test[] = "0.9.4";
+  function upgrade0_9_4(){
+    global $currentver, $oldversion, $phpgw_info, $db;
         $db->query("delete from languages");
         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");
@@ -509,11 +511,12 @@
         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('yo','Yoruba','No')");
         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('zh','Chinese','No')");
         @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('zu','Zulu','No')");
+    $currentver = "0.9.5pre1";
+  }
 
-        $currentver = "0.9.5pre1";
-        update_version_table();
-      }
-      if ($currentver == "0.9.5pre1") {
+  $test[] = "0.9.5pre1";
+  function upgrade0_9_5pre1(){
+    global $currentver, $oldversion, $phpgw_info, $db;
         $db->query("DROP TABLE sessions");
         $sql = "create table phpgw_sessions (
           session_id         varchar(255),
@@ -553,44 +556,30 @@
           lo           varchar(255)
         )";
         $db->query($sql);
-
-        $currentver = "0.9.5pre2";
-        update_version_table();
-      }
-      if ($currentver == "0.9.5pre2") {
-        $currentver = "0.9.5";
-        update_version_table();
-      }
-      if ($oldversion != $currentver){
-        echo "  </tr><td>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-        echo "  </tr>\n";
-      }
-    }
+    $currentver = "0.9.5pre2";
   }
 
-  function v0_9_5to0_9_6()
-  {
+  $test[] = "0.9.5pre2";
+  function upgrade0_9_5pre2(){
     global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.5";
+  }
 
+  $test[] = "0.9.5";
+  function upgrade0_9_5(){
+    global $currentver, $oldversion, $phpgw_info, $db;
     $currentver = "0.9.6";
-    update_version_table();
-
-    echo "  <tr bgcolor=\"e6e6e6\">\n";
-    echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-    echo "  </tr>\n";
   }
 
-  function v0_9_6to0_9_7(){
+  $test[] = "0.9.6";
+  function upgrade0_9_6(){
     global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.7pre1";
+  }
 
-    if ($currentver == "0.9.6" || ereg ("^0\.9\.7pre", $currentver)){
-      if ($currentver == "0.9.6") {
-        $currentver = "0.9.7pre1";
-        update_version_table();
-      }
-      if ($currentver == "0.9.7pre1") {
+  $test[] = "0.9.7pre1";
+  function upgrade0_9_7pre1(){
+    global $currentver, $oldversion, $phpgw_info, $db;
   	    $db2 = $db;
   	    $db3 = $db;
   	    $sql = "CREATE TABLE calendar_entry (
@@ -678,11 +667,12 @@
       	$db->query("DROP TABLE webcal_entry_repeats",__LINE__,__FILE__);
 	      $db->query("UPDATE applications SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
 
-        $currentver = "0.9.7pre2";
-        update_version_table();	
-      }
+    $currentver = "0.9.7pre2";
+  }
 
-      if ($currentver == "0.9.7pre2") {
+  $test[] = "0.9.7pre2";
+  function upgrade0_9_7pre2(){
+    global $currentver, $oldversion, $phpgw_info, $db;
       	$db2 = $db;
       	$sql = "CREATE TABLE TEMP AS SELECT * FROM calendar_entry";
       	$db->query($sql,__LINE__,__FILE__);
@@ -723,38 +713,24 @@
       	}
       	$sql = "DROP TABLE TEMP";
 	      $db->query($sql,__LINE__,__FILE__);
-        $currentver = "0.9.7pre3";
-        update_version_table();	
-      }
-      if ($currentver == "0.9.7pre3") {
-        $currentver = "0.9.7";
-        update_version_table();	
-      }
-      if ($oldversion != $currentver){
-        echo "  </tr><td>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-        echo "  </tr>\n";
-      }
-    }
+    $currentver = "0.9.7pre3";
   }
 
-  function v0_9_7to0_9_8(){
+  $test[] = "0.9.7pre3";
+  function upgrade0_9_7pre3(){
     global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.7";
+  }
 
-    if ($currentver == "0.9.7" || ereg ("^0\.9\.8pre", $currentver)){
-      if ($currentver == "0.9.7") {
-        // upgrade code starts here
+  $test[] = "0.9.7";
+  function upgrade0_9_7(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+    $currentver = "0.9.8pre1";
+  }
 
-        /* The format completly changed, so I just removed these sections. */
-
-        // upgrade code ends here
-        $currentver = "0.9.8pre2";
-        update_version_table();
-      }
-      if ($currentver == "0.9.8pre2") {
-        // upgrade code starts here
-
+  $test[] = "0.9.8pre1";
+  function upgrade0_9_8pre1(){
+    global $currentver, $oldversion, $phpgw_info, $db;
         $db->query("select * from preferences order by preference_owner");
         while ($db->next_record()) {
            $t[$db->f("preference_owner")][$db->f("preference_appname")][$db->f("preference_var")] = $db->f("preference_value");
@@ -770,19 +746,23 @@
         while ($tt = each($t)) {
            $db->query("insert into preferences values ('$tt[0]','" . serialize($tt[1]) . "')");
         }
+    $currentver = "0.9.8pre2";
+  }
 
-        // upgrade code ends here
-        $currentver = "0.9.8pre3";
-        update_version_table();
-      }
-      if ($currentver == "0.9.8pre3") {
-        // upgrade code starts here
-
+  $test[] = "0.9.8pre2";
+  function upgrade0_9_8pre2(){
+    global $currentver, $oldversion, $phpgw_info, $db;
         $sql = "CREATE TABLE config (
           config_name     varchar(255) NOT NULL UNIQUE,
           config_value    varchar(100) NOT NULL
         )";
         @$db->query($sql);
+    $currentver = "0.9.8pre3";
+  }
+
+  $test[] = "0.9.8pre3";
+  function upgrade0_9_8pre3(){
+    global $currentver, $oldversion, $phpgw_info, $db;
 
       	$db->query("DROP TABLE phpgw_sessions",__LINE__,__FILE__);
         $sql = "create table phpgw_sessions (
@@ -795,58 +775,24 @@
           unique(session_id)
         )";
         $db->query($sql);
-
-        // upgrade code ends here
-        $currentver = "0.9.8pre3";
-        update_version_table();
-      }
-
-      if ($oldversion != $currentver){
-        echo "  </tr><td>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-        echo "  </tr>\n";
-      }
-    }
+    $currentver = "0.9.8pre4";
   }
-  function v0_9_8to0_9_9(){
-    global $currentver, $oldversion, $phpgw_info, $db;
 
-    if ($currentver == "0.9.8" || ereg ("^0\.9\.9pre", $currentver)){
-/*
-      if ($currentver == "0.9.8") {
-        // upgrade code starts here
-
-        // upgrade code ends here
-        $currentver = "0.9.9pre1";
-        update_version_table();
-      }
-*/
-/*
-      if ($currentver == "0.9.9pre1") {
-        // upgrade code starts here
-
-        // upgrade code ends here
-        $currentver = "0.9.9pre2";
-        update_version_table();
-      }
-*/
-      if ($oldversion != $currentver){
-        echo "  </tr><td>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
-        echo "  </tr>\n";
+  reset ($test);
+  while (list ($key, $value) = each ($test)){
+    if ($currentver == $value) {
+      $ver = "upgrade".ereg_replace("\.","_",$value);
+      $ver();
+      echo "<table>";
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from $value to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+      echo "</table>";
+      if ($tableschanged == True){$tablechanges = True;}
+      if (!$prebeta){
+        $db->query("update applications set app_version='".$currentver."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
       }
     }
   }
 
-  v0_9_1to0_9_2();
-  v0_9_2to0_9_3();
-  v0_9_3to0_9_4();
-  v0_9_4to0_9_5();
-  v0_9_5to0_9_6();
-  v0_9_6to0_9_7();
-  v0_9_7to0_9_8();
-  v0_9_8to0_9_9();
-  //v0_9_9to0_9_10();
 ?>
