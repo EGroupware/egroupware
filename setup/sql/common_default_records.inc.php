@@ -116,20 +116,18 @@
   
   $db->query("insert into groups (group_name) values ('Default')");
   
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','maxmatchs','10','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showbirthdays','True','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','mainscreen_showevents','True','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','timeformat','12','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','dateformat','m/d/Y','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','theme','default','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','tz_offset','0','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','lang','en','common')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','firstname','True','addressbook')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','lastname','True','addressbook')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','company','True','addressbook')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','workdaystarts','8')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','workdayends','15')");
-  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','weekdaystarts','Monday')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','maxmatchs','10','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','timeformat','12','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','dateformat','m/d/Y','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','theme','default','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','tz_offset','0','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','lang','en','common')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','firstname','True','addressbook')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','lastname','True','addressbook')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','company','True','addressbook')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','calendar','workdaystarts','8')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','calendar','workdayends','15')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('1','calendar','weekdaystarts','Monday')");
 
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");        
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");   
