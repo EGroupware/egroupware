@@ -388,7 +388,7 @@ class so_sql
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	 * @param boolean $only_keys True returns only keys, False returns all cols
 	 * @param string $order_by fieldnames + {ASC|DESC} separated by colons ','
-	 * @param string $extra_cols string to be added to the SELECT, eg. (count(*) as num)
+	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard appended befor and after each criteria
 	 * @param boolean $empty False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
@@ -412,23 +412,22 @@ class so_sql
 
 				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
 				{
-					if ($criteria[$col] === NULL)
-					{
-						$query .= ($query ? " $op " : '') . "$db_col IS NULL";
-					}	
-					else
-					{
-						$query .= ($query ? " $op " : '') . $db_col .
+					$query .= ($query ? " $op " : '') . $db_col .
 						($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
 						' LIKE '.$this->db->quote($wildcard.strtr(str_replace('_','\\_',$criteria[$col]),'*?','%_').$wildcard) :
 						"=".$this->db->quote($criteria[$col]));
-					}
 				}
 			}
 		}
 		if (is_array($filter))
 		{
 			$db_filter = array();
+			$data2db_filter = $this->data2db($filter);
+			if (!is_array($data2db_filter)) {
+				echo function_backtrace()."<br/>\n";
+				echo "filter=";_debug_array($filter);
+				echo "data2db(filter)=";_debug_array($data2db_filter);
+			}	
 			foreach($this->data2db($filter) as $col => $val)
 			{
 				if ($val !== '') $db_filter[array_search($col,$this->db_cols)] = $val;
@@ -441,9 +440,9 @@ class so_sql
 			$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 			$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 		}
-		$this->db->select($this->table_name,($only_keys ? $this->db_key_cols : '*').
-			($extra_cols != '' ? ','.$extra_cols : ''),$query,__LINE__,__FILE__,$start,
-			($order_by ? 'ORDER BY '.$order_by : ''));
+		$this->db->select($this->table_name,($only_keys ? implode(',',$this->db_key_cols) : '*').
+			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
+			$query,__LINE__,__FILE__,$start,$order_by ? 'ORDER BY '.$order_by : '');
 
 		if ($this->debug)
 		{
@@ -452,6 +451,14 @@ class so_sql
 		}
 		$arr = array();
 		$cols = $only_keys ? $this->db_key_cols : $this->db_cols;
+		if ($extra_cols)
+		{
+			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
+			{
+				if (stristr($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
+				$cols[$col] = $col;
+			}
+		}
 		for ($n = 0; $this->db->next_record(); ++$n)
 		{
 			$row = array();
