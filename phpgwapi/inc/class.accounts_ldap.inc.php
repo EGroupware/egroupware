@@ -1052,6 +1052,8 @@
 			$GLOBALS['hook_values']['account_id']	= $accountid;
 			$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
 			$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
+			$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_lid'];
+			$GLOBALS['hook_values']['account_lastname'] = 'eGW Account';
 			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'addaccount'
 			),False,True);  // called for every app now, not only enabled ones
