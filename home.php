@@ -125,9 +125,9 @@
 		{
 			$GLOBALS['phpgw']->network->set_addcrlf(False);
 			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
-			for ($i=0; $i<count($lines); $i++)
+			for($i=0; $i<count($lines); $i++)
 			{
-				if (ereg('currentversion',$lines[$i]))
+				if(strstr($lines[$i],'currentversion'))
 				{
 					$line_found = explode(':',chop($lines[$i]));
 				}
