@@ -1,25 +1,25 @@
 %1 does not exist !!!	setup	de	%1 existiert nicht !!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3 !!!
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten sie NICHT ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (ihre Daten sind VERLOREN) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGW vollständig / fehlerfrei ausführen zu können !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN) !!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGW vollständig / fehlerfrei ausführen zu können !!!
 00 (disable)	setup	de	00 (abgeschaltet / empfohlen)
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest and demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest.
 actions	setup	de	Aktionen
-add a domain	setup	de	Eine Domain zufügen
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper zufügen ('Default' wird versucht wenn nichts angegeben.)
+add a domain	setup	de	Eine Domain hinzufügen
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper hinzufügen ('Default' wird versucht wenn nichts angegeben.)
 additional settings	setup	de	Zusätzliche Einstellungen
-admin first name	setup	de	Admin Vorname
-admin last name	setup	de	Admin Nachname
-admin password	setup	de	Admin Passwort
-admin password to header manager	setup	de	Admin Passwort für header Manager
-admin user for header manager	setup	de	Admin Benutzer für header Manager
-admin username	setup	de	Admin Username
+admin first name	setup	de	Admin-Vorname
+admin last name	setup	de	Admin-Nachname
+admin password	setup	de	Admin-Passwort
+admin password to header manager	setup	de	Admin-Passwort für Header-Manager
+admin user for header manager	setup	de	Admin-Benutzer für Header-Manager
+admin username	setup	de	Admin-Benutzername
 admins	setup	de	Administratoren
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen, als header.inc.php speichern. Danach auf "weiter" klicken.
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen als header.inc.php speichern. Danach auf "Weiter" klicken.
 all applications	setup	de	Alle Applikationen
-all core tables and the admin and preferences applications	setup	de	all Kern-Tabellen und die Anwendungen Admin und Einstellungen
+all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all users	setup	de	Alle Benutzer
 analysis	setup	de	Analyse
 app details	setup	de	Details der Anwendung
@@ -31,15 +31,15 @@ application management	setup	de	Verwaltung der Anwendungen
 application name and status	setup	de	Name und Status der Anwendung
 application name and status information	setup	de	Name und Status Information der Anwendung
 application title	setup	de	Titel der Anwendung
-are you sure you want to delete your existing tables and data?	setup	de	Sind sie sicher, dass sie ihrer bestehenden Tabellen und Daten löschen wollen?
+are you sure you want to delete your existing tables and data?	setup	de	Sind Sie sicher, dass Sie Ihre bestehenden Tabellen und Daten löschen wollen?
 are you sure?	setup	de	SIND SIE SICHER?
-at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Script nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
-at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Script nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	de	Auf ihre Anforderung wird diese Skript nun versuchen die Kern-Tabellen und die Anwendungen Admin und Einstellungen für sie installieren.
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Anwendungen auf die gegenwärtige Version zu aktualisieren
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	de	Auf Ihre Anforderung wird dieses Script versuchen, Ihre Tabellen auf das neue Format zu aktualisieren
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	de	auf Ihre Anforderung wird dieses Script die üble Aktion auf sich nehmen, Ihre existierenden Tabellen zu löschen und sie im neuen Format wieder herzustellen !
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	de	Auf Ihre Anforderung wird dieses Script die &uuml;ble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten löschen wird !
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
+at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen die Kern-Tabellen und die Anwendungen Admin und Einstellungen für sie installieren.
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung hin wird dieses Skript versuchen, Ihre Anwendungen auf die gegenwärtige Version zu aktualisieren
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	de	Auf Ihre Anforderung hin wird dieses Skript versuchen, Ihre Tabellen auf das neue Format zu aktualisieren
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	de	Auf Ihre Anforderung hin wird dieses Skript die &uuml;ble Aktion auf sich nehmen, Ihre existierenden Tabellen zu löschen und sie im neuen Format wieder herzustellen!
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	de	Auf Ihre Anforderung hin wird dieses Skript die &uuml;ble Aktion auf sich nehmen, alle Ihre Applikationen zu deinstallieren, was ebenfalls Ihre existierenden Tabellen und Daten löschen wird!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert 'application/octet-stream'
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifiziere Benutzer automatisch anlegen
@@ -47,7 +47,7 @@ auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten 
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 back to user login	setup	de	Zurück zur Benutzer Anmeldung
-backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, da&szlig; dieses Script Ihre bestehenden Daten besch&auml;digt !<br><strong>Diese automatisierten Scripts k&ouml;nnen leicht Ihre Daten besch&auml;digen !.</strong><br
+backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong><br
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
@@ -67,16 +67,16 @@ check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüf
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2: %3	setup	de	Überprüfe die Datei-Zugriffsrechte von %1 auf %2: %3
 checking php.ini	setup	de	Überprüfe die php.ini Datei
-checking the egroupware installation	setup	de	Überprüfe die eGroupWare Installation
-click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier clicken</a> um zum Setup zurück zu kommen.
-click here	setup	de	Hier clicken
+checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
+click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zum Setup zurück zu kommen.
+click here	setup	de	Hier klicken
 completed	setup	de	Abgeschlossen
 config password	setup	de	Konfigurationspasswort
-config username	setup	de	Konfigurations Benutzername
+config username	setup	de	Konfigurationsbenutzername
 configuration	setup	de	Konfiguration
 configuration completed	setup	de	Konfiguration abgeschlossen
 configuration password	setup	de	Konfigurationspasswort
-configuration user	setup	de	Konfigurations Benutzer
+configuration user	setup	de	Konfigurationsbenutzer
 configure now	setup	de	Jetzt konfigurieren
 contain	setup	de	enthält
 continue	setup	de	Weiter
@@ -86,9 +86,9 @@ could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.
 country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
 create database	setup	de	Datenbank erzeugen
-create demo accounts	setup	de	Demo Benutzer anlegen
+create demo accounts	setup	de	Demo-Benutzer anlegen
 create one now	setup	de	Jetzt erstellen
-create the empty database -	setup	de	Leere Datenbank anlegen -
+create the empty database -	setup	de	Legen Sie eine leere Datenbank an -
 create the empty database and grant user permissions -	setup	de	Leere Datenbank anlegen und Benutzerrechte daran gewähren -
 create your header.inc.php	setup	de	Datei header.inc.php anlegen
 created	setup	de	erzeugt
@@ -99,38 +99,38 @@ current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br>	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von '%1' nach '%2' konvertiert
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
-db host	setup	de	Datenbank Host
-db name	setup	de	Datenbank Name
-db password	setup	de	Datenbank Passwort
-db port	setup	de	Datenbank Port
-db root password	setup	de	Datenbank Root Passwort
-db root username	setup	de	Datenbank Root Benutzername
-db type	setup	de	Datenbank Type
-db user	setup	de	Datenbank Benutzer
+db host	setup	de	Datenbank-Host
+db name	setup	de	Datenbank-Name
+db password	setup	de	Datenbank-Passwort
+db port	setup	de	Datenbank-Port
+db root password	setup	de	Datenbank Root-Passwort
+db root username	setup	de	Datenbank Root-Benutzername
+db type	setup	de	Datenbank-Typ
+db user	setup	de	Datenbank-Benutzer
 default file system space per user/group ?	setup	de	Vorgabewert Festplatenplatz pro Benutzer / Gruppe ?
 delete	setup	de	Löschen
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	de	Alle existierende SQL Benutzer, Gruppen, ACLs und Einstellungen löschen (normal nicht nötig)?
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	de	Alle existierende SQL-Benutzer, Gruppen, ACLs und Einstellungen löschen (normalerweise nicht nötig)?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
 deleting tables	setup	de	Lösche Tabellen
 demo server setup	setup	de	Demo Server Setup
 deny access	setup	de	Zugrif verweigern
-deny all users access to grant other users access to their entries ?	setup	de	Alle Benutzern verbieten anderen Benutzern Zugriff auf ihre Daten zu gewähren ?
+deny all users access to grant other users access to their entries ?	setup	de	Allen Benutzern verbieten anderen Benutzern Zugriff auf ihre Daten zu gewähren ?
 dependency failure	setup	de	Abhängigkeit Fehler
 deregistered	setup	de	nicht registriert
-details for admin account	setup	de	Details des Admin Accounts
+details for admin account	setup	de	Details des Admin-Kontos
 developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
-do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen sie eine permannente Datenbankverbindung (höher Performance, braucht aber mehr Resourcen)
+do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen sie eine permanente Datenbankverbindung (höhere Performance, braucht aber mehr Resourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
 domain	setup	de	Domain
-domain select box on login	setup	de	Domain Auswahlbox beim Einlogen
+domain select box on login	setup	de	Domain-Auswahlbox beim Einloggen
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
-edit your existing header.inc.php	setup	de	Bearbeiten ihrer existierenden header.inc.php
-edit your header.inc.php	setup	de	Bearbeiten ihrer header.inc.php
-egroupware administration manual	setup	de	eGroupWare Adminsitrationsmanual (nur in englisch)
+edit your existing header.inc.php	setup	de	Bearbeiten Ihrer existierenden header.inc.php
+edit your header.inc.php	setup	de	Bearbeiten Ihrer header.inc.php
+egroupware administration manual	setup	de	eGroupWare Administrationsmanual (nur in englisch)
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
@@ -158,19 +158,19 @@ file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Datei Typ, Größe, Version, usw.
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	Für eine Neuinstallation, wählen sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
 force selectbox	setup	de	Auswahl erzwingen
-found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationdate gefunden. Lade Einstellungen von der Datei ...
+found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 header admin login	setup	de	Header Admin Login
-header password	setup	de	Header Password
-header username	setup	de	Header Benutzername
+header password	setup	de	Header-Passwort
+header username	setup	de	Header-Benutzername
 historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen
-hostname/ip of database server	setup	de	Hostname/IP des Datenbank Servers
+hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag denoch funktionieren
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
@@ -179,14 +179,14 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ldap	setup	de	Wenn sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
-if you did not receive any errors, your tables have been	setup	de	Wenn sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
+if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn sie das zum ersten mal ausführen, vergessen sie nicht manuell die %1 !!!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die eGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
 import has been completed!	setup	de	Import ist beendet!
 import ldap users/groups	setup	de	LDAP Benutzer/Gruppen importieren
 importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
-include root (this should be the same as server root unless you know what you are doing)	setup	de	Include Root (sollte das gleiche Verzeichniss wie die Server Root sein, ausser sie wissen was sie tun)
+include root (this should be the same as server root unless you know what you are doing)	setup	de	Include-Root (sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun)
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
 insanity	setup	de	Irrsinn
 install	setup	de	Installieren
@@ -194,7 +194,7 @@ install all	setup	de	Alle Installieren
 install applications	setup	de	Anwendungen installieren
 install language	setup	de	Sprachen installieren
 installed	setup	de	installiert
-instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter '%1' anzulegen:
+instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter %1 anzulegen:
 invalid ip address	setup	de	Ungültige IP Adresse
 invalid password	setup	de	Ungültiges Passwort
 is broken	setup	de	ist kaputt
@@ -221,14 +221,14 @@ logout	setup	de	Abmelden
 makesure	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Scripts) ist auf weniger als 30 (Sekunden) gesetzt: eGroupWare benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: eGroupWare benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
 maximum account id (e.g. 65535 or 1000000)	setup	de	Maximum für Benutzer Id (zB. 65535 oder 1000000)
 may be broken	setup	de	kann kaput sein
-mcrypt algorithm (default tripledes)	setup	de	MCrypt Algorithmus (Vorgabe TRIPLEDES)
-mcrypt initialization vector	setup	de	MCrypt Initialisierungsvektor
-mcrypt mode (default cbc)	setup	de	MCrpyt Modus (Vorgabe CBC)
+mcrypt algorithm (default tripledes)	setup	de	MCrypt-Algorithmus (Vorgabe TRIPLEDES)
+mcrypt initialization vector	setup	de	MCrypt-Initialisierungsvektor
+mcrypt mode (default cbc)	setup	de	MCrpyt-Modus (Vorgabe CBC)
 mcrypt settings (requires mcrypt php extension)	setup	de	MCrypt Einstellungen (benötigt die mcrypt Erweiterung von PHP)
-mcrypt version	setup	de	MCrypt Version
+mcrypt version	setup	de	MCrypt-Version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als 16M gesetzt: einige eGroupWare Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer Id (zB. 500 oder 100)
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
@@ -248,10 +248,10 @@ no oracle-db support found. disabling	setup	de	Keine Unterstützung für Oracle ge
 no postgresql support found. disabling	setup	de	Keine Unterstützung für PostgreSQL gefunden. Abgeschaltet
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not	setup	de	nicht
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle mcrypt Algorithmen und Modi funktionieren mit eGroupWare. Wenn sie Probleme feststellen, versuchen sie es abzuschalten.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle MCrypt-Algorithmen und -Modi funktionieren mit eGroupWare. Wenn Sie Probleme feststellen, versuchen Sie es abzuschalten.
 not complete	setup	de	nicht komplett
 not completed	setup	de	Nicht komplett
-not ready for this stage yet	setup	de	Noch nicht fertig für diesen Schritt
+not ready for this stage yet	setup	de	Noch nicht bereit für diesen Schritt
 not set	setup	de	nicht gesetzt
 note: you will be able to customize this later	setup	de	Notiz: Sie können dies später anpassen
 now guessing better values for defaults...	setup	de	Nun wird versucht bessere Werte für die Vorgaben zu finden ...
@@ -263,22 +263,22 @@ only add languages that are not in the database already	setup	de	Nur Sprachen hi
 only add new phrases	setup	de	Nur neue Begriffe hinzufügen
 or	setup	de	oder
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
-or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für sie anzulegen:
-password needed for configuration	setup	de	Password wird für die Konfiguration benötgt
+or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
+password needed for configuration	setup	de	Passwort wird für die Konfiguration benötgt
 password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (Document-root) des Webservers sein!!!
-persistent connections	setup	de	Permanennte Verbindungen
+persistent connections	setup	de	Permanente Verbindungen
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen sie die lese/schreib Rechte der Verzeichnisse oder gehen sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
-please consult the %1.	setup	de	Bitte konsultieren sie das %1.
-please fix the above errors (%1) and warnings(%2) and	setup	de	Bitte beheben sie die obigen Fehler (%1) und Warnungen (%2) und gehen sie dann
-please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	de	Bitte beheben sie die obigen Fehler (%1) und Warnungen (%2) und machen Sie %3weiter mit dem Header Admin%4
+please consult the %1.	setup	de	Bitte konsultieren Sie das %1.
+please fix the above errors (%1) and warnings(%2) and	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2) und gehen Sie dann
+please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	de	Bitte beheben Sie die obigen Fehler (%1) und Warnungen (%2) und machen Sie %3weiter mit dem Header Admin%4
 please install	setup	de	Bitte installieren
-please login	setup	de	Bitte einlogen
+please login	setup	de	Bitte einloggen
 please login to egroupware and run the admin application for additional site configuration	setup	de	Bitte in eGroupWare einloggen und die Administration für weitere Konfigurationen aufrufen.
-please make the following change in your php.ini	setup	de	Bitte nehmen sie die folgenden Änderungen an ihrer php.ini Datei vor
+please make the following change in your php.ini	setup	de	Bitte nehmen sie die folgenden Änderungen an Ihrer php.ini Datei vor
 please wait...	setup	de	Bitte warten ...
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
@@ -302,10 +302,10 @@ requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manu
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
 return to setup	setup	de	Zurück zum Setup
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, das ist generell gut, da es ihre Installation sicherer macht.
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, was ist generell gut, da es Ihre Installation sicherer macht.
 sample configuration not found. using built in defaults	setup	de	Beispiel Konfiguration nicht gefunden, benutze eingebaute Voreinstellungen
 save	setup	de	Speichern
-save this text as contents of your header.inc.php	setup	de	Sichern sie diesen Text als Datei header.inc.php
+save this text as contents of your header.inc.php	setup	de	Speichern Sie diesen Text als Datei header.inc.php
 select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	de	Wählen Sie eine Applikation, geben Sie eine Zielversion ein, dann bestätigen Sie den Vorgang.<br>Wenn Sie keine Version angeben, werden nur die Basis-Tabellen der Applikation installiert werden.<br><blink>DIES WIRD ZUERST ALLE TABELLEN DER APPLI
 select one...	setup	de	Einen auswählen...
 select the default applications to which your users will have access	setup	de	Wählen Sie die voreingestellten Anwendungen, zu denen Ihre Benutzer Zugriff haben werden
@@ -327,10 +327,10 @@ select which user(s) will be modified	setup	de	Wählen sie den/die zu verändernde
 select which user(s) will have admin privileges	setup	de	Wählen Sie den/die Benutzer, der/die Administrationsrechte haben soll(en)
 select your old version	setup	de	Wählen Sie Ihre alte Version
 selectbox	setup	de	Auswahlfeld
-server root	setup	de	Server Root
-sessions type	setup	de	Session Typ
+server root	setup	de	Server-Root
+sessions type	setup	de	Session-Typ
 set	setup	de	gesetzt
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen sie dies auf "alt" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die sie benutzen.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
 setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
@@ -340,18 +340,18 @@ setup/config admin login	setup	de	Setup/Konfigurations Admin Login
 show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL verschlüsselungs typ für das passwort (standard - md5)
-start the postmaster	setup	de	Starten den postmaster
+start the postmaster	setup	de	Starten Sie den postmaster
 status	setup	de	Status
 step 1 - simple application management	setup	de	Schritt 1 - Einfache Verwaltung der Anwendungen
 step 2 - configuration	setup	de	Schritt 2 - Konfiguration
 step 3 - language management	setup	de	Schritt 3 - Verwaltung der Sprachen
 step 4 - advanced application management	setup	de	Schritt 4 - Erweiterte Verwaltung der Anwendungen
-table change messages	setup	de	Tabellen Änderungs Meldungen
+table change messages	setup	de	Tabellen&auml;nderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
-tcp port number of database server	setup	de	TCP Port des Datenbank Servers
+tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
 text entry	setup	de	Texteingabe
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (php extension) wird benötigt, wenn sie die %2 Datenbank einsetzen wollen.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
@@ -361,15 +361,15 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
 there was a problem tring to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP Server aufzubauen. <br>Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP Servers.
-there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu ihrem LDAP Server herzustellen.<br>Bitte überprüfen sie die Konfiguration ihres LDAP servers.
+there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP Server herzustellen.<br>
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP Server herzustellen.<br>Bitte überprüfen Sie die Konfiguration Ihres LDAP servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss ausserhalb der document-root des Webservers sein!!!
 this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
-this program will convert your database to a new system-charset.	setup	de	Diese Programm wird ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
+this program will convert your database to a new system-charset.	setup	de	Dieses Programm wird Ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim exportieren von Benutzern/Gruppen aus eGroupWare's Account Tabellen in Ihren LDAP Baum behilflich sein
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim importieren von Benutzern/Gruppen aus Ihrem LDAP Baum in eGroupWare's Account Tabellen behilflich sein
-this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird ihnen helfen ihrer LDAP Benutzer für eGroupWare vorzubereiten.
+this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird Ihnen helfen Ihre LDAP Benutzer für eGroupWare vorzubereiten.
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br>Hinweis: Die Vorgabe wurde zufällig erzeugt.
 this stage is completed<br>	setup	de	Dieser Schritt ist abgeschlossen<br>
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
@@ -399,8 +399,8 @@ view	setup	de	Anzeigen
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	de	Welches Session Management wollen sie verwenden (PHP4 Session Management hat eine bessere performance)?
-which database type do you want to use with egroupware?	setup	de	Welchen Datanbanktyp wollen sie mit eGroupWare verwenden?
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP4 Session-Management hat eine bessere Performance)?
+which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit eGroupWare verwenden?
 world readable	setup	de	lesbar von jedem (world readable)
 world writable	setup	de	schreibbar von jedem (world writeable)
 would you like egroupware to cache the phpgw info array ?	setup	de	Soll eGroupWare das phpgw info Array cachen ?
@@ -426,23 +426,23 @@ you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwor
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die header Verwaltung eingegeben
 you didn't enter a header admin username	setup	de	Sie haben keinen Benutzernamen für die header Verwaltung eingegeben
-you do not have any languages installed. please install one now <br>	setup	de	sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
+you do not have any languages installed. please install one now <br>	setup	de	Sie installierten noch keine Sprache. bitte installieren Sie nun eine. <br>
 you have not created your header.inc.php yet!<br> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br>Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
-you must enter a username for the admin	setup	de	sie müssen einen Benutzernamen für den Administrator eingeben !
-you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu ihrer header.inc.php zufügen.
-you need to select your current charset!	setup	de	Sie müssen ihren aktuellen Zeichensatz auswählen!
+you must enter a username for the admin	setup	de	sie müssen einen Benutzernamen für den Administrator eingeben!
+you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
+you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende schema bei ihrem LDAP Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
-you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationdatei ...
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende schema bei Ihrem LDAP Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell
-your database does not exist	setup	de	Ihre Datenbank existiert nicht !
+your database does not exist	setup	de	Ihre Datenbank existiert nicht
 your database is not working!	setup	de	Ihre Datenbank funktioniert nicht!
-your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Anwendungen installiert !
+your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Anwendungen installiert!
 your header admin password is not set. please set it now!	setup	de	Ihr header admin Passwort wurde NICHT gesetzt. Bitte setzen sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
 your tables are current	setup	de	Ihre Tabellen sind aktuell
-your tables may be altered and you may lose data	setup	de	Ihre Tabellen könnten verändert werden, und Sie könnten Daten verlieren !
-your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden, und Sie werden Daten verlieren !
+your tables may be altered and you may lose data	setup	de	Ihre Tabellen könnten verändert werden, und Sie könnten Daten verlieren!
+your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden Daten verlieren!

@@ -196,7 +196,7 @@ select a responsible user: a person you want to delegate this task	infolog	de	ei
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in ihren Einstellungen).
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
@@ -220,7 +220,7 @@ the name used internaly (<= 32 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	de	der Text der dem Benutzer angezeigt wird
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	de	Das ist der Filter, den InfoLog benutzt wenn es das erste mal aufgerufen wird. Filter beschränken die aktuelle Anzeige. Es gibt Filter um nur beendete, offene oder zukünftige Einträge von Ihnen oder allen Benutzern anzuzeigen.
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
-to many might exceed your execution-time-limit	infolog	de	zu viel können ihre Laufzeitbeschränkung überschreiten
+to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
 today	infolog	de	Heute
 todo	infolog	de	Auftrag
 translation	infolog	de	Translation

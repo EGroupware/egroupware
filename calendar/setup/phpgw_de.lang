@@ -81,7 +81,7 @@ disabled	calendar	de	ausgeschaltet
 display interval in day view	calendar	de	Intervall der Tagesansicht
 display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
 display status of events	calendar	de	Status von Terminen anzeigen
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt ihre Standard-Kalendar-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auch Home klicken)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalendar-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all changes include changes of title, description, participants and the acceptions and rejections of the appointment.	calendar	de	Möchten Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden benachrichtigt werden über Änderungen welche Sie selbst durchführen.<br> Sie können die benachrichtigungen beschränken auf bestimmte Änderungen. Jeder auszuwählende Punkt schließt auch die darüber aufgeführten Benachrichtigungen mit ein. Alle Änderungen beinhaltet Änderungen des Titels, der Beschreibung, Teilnehmer so wie Zusagen so wie Absagen von Terminen.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to be notified about new or changed appointments? you dont get notifications for changes you made yourself.<br>you can limit the notifications on certain changes only. every item include all notification above. all changes include changes of title, description, participants and the acceptions and rejections of them.	calendar	de	
@@ -177,8 +177,8 @@ notification message for updates you send	calendar	de	Mitteilungs Text für updat
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
 notification messages for canceled events	calendar	de	Benachrichtigungstext für stornierte Termine
 notification messages for modified events	calendar	de	Benachrichtigungstext für geänderte Termine
-notification messages for your alarms	calendar	de	Benachrichtigungstext für ihre Alarem
-notification messages for your responses	calendar	de	Benachrichtigungstext für ihre Antworten
+notification messages for your alarms	calendar	de	Benachrichtigungstext für Ihre Alarme
+notification messages for your responses	calendar	de	Benachrichtigungstext für Ihre Antworten
 number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag im Planer
 number of months	calendar	de	Anzahl Monate
 number of records to read (%1)	calendar	de	Anzeil Datensätze zu lesen (%1)
@@ -204,7 +204,7 @@ overlap holiday	calendar	de	überlappender Feiertag
 participant	calendar	de	Teilnehmer
 participants	calendar	de	Teilnehmer
 participates	calendar	de	nimmt teil
-password for not loged in users to your freebusy information?	calendar	de	Passwort für ihren Belegtzeiten für nicht angemeldete Personen?
+password for not loged in users to your freebusy information?	calendar	de	Passwort für Ihre Belegtzeiten für nicht angemeldete Personen?
 people holiday	calendar	de	Feiertag
 permission denied	calendar	de	Zugriff verweigert
 planner	calendar	de	Planer
@@ -254,7 +254,7 @@ should invitations you rejected still be shown in your calendar ?<br>you can onl
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your sheduling conflict disappears), if they are still in your calendar!	calendar	de	
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should new events created private by default ?	calendar	de	
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins.Die Adresse (URL) ihrer Belegtzeiten ist %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten an denen sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	de	Soll der Mini Kalender "gedruckt werden/angezeigt werden"  in einer Druck freundlichen Ansicht ?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	de	Soll die Drucker freundliche Ansicht in schwarz-weiß dargestellt werden oder in Farbe (identisch der normalen Ansicht)?
 should the printer friendly view be in black & white or in color, like the normal view?	calendar	de	
@@ -284,7 +284,7 @@ text	calendar	de	Text
 th	calendar	de	Do
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	de	Im gewählten Zeitraum gibt es einen Konflikt:<ul>%1</ul>
 the user %1 is not participating in this event!	calendar	de	Der Benutzer %1 nimmt nicht an diesem Event teil!
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	de	Fehler beim Kontaktieren Ihres News-Servers.<br>Bitte benachrichtigen Sie Ihren Administrator um Servername, Username und Passwort für News zu überprüfen.
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
 this defines the end of your dayview. events after that time, are shown below the dayview.	calendar	de	
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt.
@@ -293,7 +293,7 @@ this defines the start of your dayview. events before this time, are shown above
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt.
 this group got preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	de	Das wird meistens durch einen nicht oder falsch konfigurierten SMTP Server verursacht. Benachrichtigen sie ihren Administrator.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	de	Das wird meistens durch einen nicht oder falsch konfigurierten SMTP Server verursacht. Benachrichtigen Sie Ihren Administrator.
 this message is send to every participant of events you own, who requested notifcations.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versandt.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versandt.
