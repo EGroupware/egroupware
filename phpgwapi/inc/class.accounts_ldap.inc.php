@@ -37,6 +37,7 @@
 		'sync'     => True,
 		'shutdown' => True,
 		'halt'     => True,
+		'ldap'     => True,
 		'mail'     => True,
 		'news'     => True,
 		'uucp'     => True,
@@ -48,9 +49,21 @@
 		'pgsql'    => True,
 		'mysql'    => True,
 		'postgres' => True,
+		'oracle'   => True,
 		'ftp'      => True,
 		'gdm'      => True,
-		'named'    => True
+		'named'    => True,
+		'alias'    => True,
+		'web'      => True,
+		'sweep'    => True,
+		'cvs'      => True,
+		'qmaild'   => True,
+		'qmaill'   => True,
+		'qmaillog' => True,
+		'qmailp'   => True,
+		'qmailq'   => True,
+		'qmailr'   => True,
+		'qmails'   => True
 	);
 
 	class accounts_
@@ -108,18 +121,35 @@
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry["cn"] 		    = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
+			$entry["cn"]		    = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
 			$entry["sn"]		    = $this->data["lastname"];
-			$entry["givenname"]	    = $this->data["firstname"];
+			$entry["givenname"]		= $this->data["firstname"];
 
 			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
 				$entry["homedirectory"] = $this->data["homedirectory"];
 				$entry["loginshell"]    = $this->data["loginshell"];
 			}
 
-			ldap_modify($ds, $allValues[0]["dn"], $entry);
-			#print ldap_error($ds);
-			
+			while (list($key,$val) = each($entry))
+			{
+				$tmpentry = '';
+				$tmpentry[$key] = trim($val); // must trim!
+				//echo '<br>'.$key.' '.$val;
+				if ($tmpentry[$key] && $key)
+				{
+					if (!$allValues[0][$key][0])
+					{
+						// attribute was not in LDAP, add it
+						ldap_mod_add($ds, $allValues[0]["dn"], $tmpentry);
+					}
+					else
+					{
+						// attribute was in LDAP, modify it
+						ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
+					}
+				}
+			}
+
 			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
 				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
@@ -271,7 +301,7 @@
 			if(gettype($account_lid) == 'integer')
 			{
 				$account_id = $account_lid;
-				settype($acount_lid,'string');
+				settype($account_lid,'string');
 				$account_lid = $this->id2name($account_id);
 			}
 
@@ -336,21 +366,16 @@
 				. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
 				. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
 
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=$account_lid");
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry["uidnumber"]			= $account_id;
-			$entry["gidnumber"]			= $account_id;
-			$entry["uid"]				= $account_lid;
-			$entry["cn"] 				= sprintf("%s %s", $account_firstname, $account_lastname);
-			$entry["sn"]				= $account_lastname;
-			$entry["givenname"]			= $account_firstname;
-			$entry["userpassword"]		= $phpgw->common->encrypt_password($account_pwd);
-			$entry["objectclass"][0]	= 'person';
-			$entry["objectclass"][1]	= 'organizationalPerson';
-			$entry["objectclass"][2]	= 'account';
-			$entry["objectclass"][3]	= 'posixAccount';
-			$entry["objectclass"][4]	= 'shadowAccount';
+			$entry["uidnumber"]          = $account_id;
+			$entry["gidnumber"]          = $account_id;
+			$entry["uid"]                = $account_lid;
+			$entry["cn"]                 = sprintf("%s %s", $account_firstname, $account_lastname);
+			$entry["sn"]                 = $account_lastname;
+			$entry["givenname"]          = $account_firstname;
+			$entry["userpassword"]       = $phpgw->common->encrypt_password($account_pwd);
 
 			if ($phpgw_info["server"]["ldap_extra_attributes"] && $account_type != 'g') {
 				if ($account_home)
@@ -375,9 +400,61 @@
 			if ($allValues[0]["dn"]) {
 				// This should keep the password from being overwritten here ?
 				unset($entry["userpassword"]);
-				ldap_modify($ds, $allValues[0]["dn"], $entry);
+
+				while (list($key,$val) = each($entry))
+				{
+					$tmpentry = '';
+					$tmpentry[$key] = trim($val); // must trim!
+					//echo '<br>'.$key.' '.$val;
+					if ($tmpentry[$key])
+					{
+						if (!$allValues[0][$key][0])
+						{
+							// attribute was not in LDAP, add it
+							ldap_mod_add($ds, $allValues[0]["dn"], $tmpentry);
+						}
+						else
+						{
+							// attribute was in LDAP, modify it
+							ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
+						}
+					}
+				}
+
+				if ($account_type == "g")
+				{
+					$tmpentry["objectclass"][0] = 'top';
+					$tmpentry["objectclass"][1] = 'posixGroup';
+				}
+				else
+				{
+					$tmpentry["objectclass"][0] = 'top';
+					$tmpentry["objectclass"][1] = 'person';
+					$tmpentry["objectclass"][2] = 'organizationalPerson';
+					$tmpentry["objectclass"][3] = 'account';
+					$tmpentry["objectclass"][4] = 'posixAccount';
+					$tmpentry["objectclass"][5] = 'shadowAccount';
+				}
+
+				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 			} else {
 				$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
+
+				if ($account_type == "g")
+				{
+					$entry["objectclass"][0] = 'top';
+					$entry["objectclass"][1] = 'posixGroup';
+				}
+				else
+				{
+					$entry["objectclass"][0] = 'top';
+					$entry["objectclass"][1] = 'person';
+					$entry["objectclass"][2] = 'organizationalPerson';
+					$entry["objectclass"][3] = 'account';
+					$entry["objectclass"][4] = 'posixAccount';
+					$entry["objectclass"][5] = 'shadowAccount';
+				}
+
 				ldap_add($ds, $dn, $entry);
 			}
 			//print ldap_error($ds);
