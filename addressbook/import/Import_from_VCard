@@ -59,7 +59,7 @@
 			return $buffer;
 		}
 
-		function import_end_record($buffer,$private="private") {
+		function import_end_record($buffer) {
 			global $phpgw_info;
 			$buffer[$this->id]="";
 			while ( list($name, $value) = each($this->currentrecord)) {
@@ -67,11 +67,10 @@
 				//$buffer[$this->id]["private"] = $private;
 				//echo '<br>'.$name.' => '.$value;
 			}
-			$buffer[$this->id]['access'] = $private;
 			return $buffer;
 		}
 
-		function import_end_file($buffer) {
+		function import_end_file($buffer,$access="private",$cat_id=0) {
 			global $phpgw,$phpgw_info;
 
 			for ($i=1;$i<=count($buffer);$i++) {
@@ -80,7 +79,7 @@
 				// bogus values that get stuffed in.
 				$entry = $this->vcard->in($buffer[$i]);
 				// Now actually add the new entry
-				$this->contacts->add($phpgw_info["user"]["account_id"],$entry);
+				$this->contacts->add($phpgw_info["user"]["account_id"],$entry,$access,$cat_id);
 			}
 			$num = $i - 1;
 			return "Successfully imported $num records into your addressbook.";

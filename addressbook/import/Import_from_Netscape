@@ -70,18 +70,17 @@
 			return $buffer;
 		}
 
-		function import_end_record($buffer,$private="private") {
+		function import_end_record($buffer) {
 			global $phpgw_info;
 			$buffer[$this->id]="";
 			while ( list($name, $value) = each($this->currentrecord)) {
 				$buffer[$this->id][$name] = $value;
 				//echo '<br>'.$this->id.': '.$name.' => '.$value;
 			}
-			$buffer[$this->id]['access'] = $private;
 			return $buffer;
 		}
 
-		function import_end_file($buffer) {
+		function import_end_file($buffer,$access="private",$cat_id=0) {
 			global $phpgw,$phpgw_info;
 
 			$contacts = CreateObject("phpgwapi.contacts");
@@ -96,7 +95,7 @@
 				$entry[$i]['adr_one_type']    = 'intl';
 				$entry[$i]['adr_two_type']    = 'intl';
 				//echo '<br>';
-				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
+				$contacts->add($phpgw_info["user"]["account_id"],$entry[$i],$access,$cat_id);
 			}
 			$num = $i - 1;
 			return "Successfully imported $num records into your addressbook.";
