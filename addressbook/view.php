@@ -120,13 +120,14 @@
 				{
 					if ($key)
 					{
-						$data .= "</td></tr><tr><td></td><td>" .$info . "</td></tr>";
+						$data .= "</td></tr><tr><td>&nbsp;</td><td>" .$info;
 					}
 					else
 					{	// First row, don't close td/tr
-						$data .= $info . "</td></tr>";
+						$data .= $info;
 					}
 				}
+				$data .= "</tr>";
 			}
 			else
 			{
