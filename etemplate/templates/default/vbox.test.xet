@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.vbox.test" template="" lang="" group="" version="" border="1">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row valign="top">
+				<vbox span="2" class="test">
+					<description value="Hallo"/>
+					<description value="Ralf"/>
+				</vbox>
+				<description value="C1"/>
+			</row>
+			<row>
+				<description value="A2"/>
+				<description value="B2"/>
+				<description value="C2"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>

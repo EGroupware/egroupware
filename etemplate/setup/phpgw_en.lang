@@ -1,4 +1,3 @@
-	etemplate	en	
 %d etemplates found	etemplate	en	%d eTemplates found
 %s disabled	etemplate	en	%s Disabled
 %s needed	etemplate	en	%s needed
@@ -8,18 +7,7 @@
 %s readonly	etemplate	en	%s Readonly
 -1	etemplate	en	-1
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
-1a	etemplate	en	1A
-1b	etemplate	en	1B
-1c	etemplate	en	1C
-1d	etemplate	en	1D
-2a	etemplate	en	2A
-2b	etemplate	en	2B
-2c	etemplate	en	2C
-2d	etemplate	en	2D
-<<	etemplate	en	<<
->>	etemplate	en	>>
 a pattern to be searched for	etemplate	en	a pattern to be searched for
-access	etemplate	en	Access
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
@@ -27,37 +15,29 @@ alignment of label and input-field in table-cell	etemplate	en	alignment of label
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
 application name needed to write a langfile !!!	etemplate	en	Application name needed to write a langfile !!!
-array	etemplate	en	Array
-birtday	etemplate	en	Birtday
-birthday	etemplate	en	Birthday
 border	etemplate	en	Border
 border-line-thickness for the table-tag	etemplate	en	Border-line-thickness for the table-tag
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
-cancel	etemplate	en	Cancel
-cancel, discarding changes	etemplate	en	Cancel, discarding changes
 category	etemplate	en	Category
 cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
+cells	etemplate	en	Cells
 cellspacing for the table-tag	etemplate	en	Cellspacing for the table-tag
 center	etemplate	en	Center
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
-city	etemplate	en	City
 class	etemplate	en	class
 class, valign	etemplate	en	class, Valign
 click here to create the link	etemplate	en	click here to create the Link
 click here to start the search	etemplate	en	click here to start the search
 columnname	etemplate	en	ColumnName
 comment	etemplate	en	Comment
-companyname	etemplate	en	Companyname
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	en	CSS-styles
-data	etemplate	en	Data
-date	etemplate	en	Date
-datefield	etemplate	en	Datefield
+datefield	etemplate	en	DateField
 day	etemplate	en	Day
 db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
 db-tools	etemplate	en	DB-Tools
@@ -103,29 +83,22 @@ exchange this two rows	etemplate	en	exchange this two rows
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
-familyname	etemplate	en	Familyname
-fax	etemplate	en	Fax
-faxnumber	etemplate	en	Faxnumber
 fileupload	etemplate	en	FileUpload
 first	etemplate	en	First
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
-founded	etemplate	en	Founded
-free note-text	etemplate	en	free note-text
 go to the first entry	etemplate	en	go to the first entry
 go to the last entry	etemplate	en	go to the last entry
-go to the last page of entries	etemplate	en	go to the last page of entries
 go to the next page of entries	etemplate	en	go to the next page of entries
 go to the previous page of entries	etemplate	en	go to the previous page of entries
 group/-user	etemplate	en	Group/-User
+hbox	etemplate	en	HBox
 height	etemplate	en	Height
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	en	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
-height, disable	etemplate	en	Height, Disable
 height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
-hier kommt text rein	etemplate	en	Hier kommt text rein
 horizontal rule	etemplate	en	Horizontal Rule
 html	etemplate	en	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
@@ -170,12 +143,11 @@ newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
 nextmatch	etemplate	en	Nextmatch
 no	etemplate	en	No
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
-not started	etemplate	en	Not started
-note	etemplate	en	Note
 nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+number of rows in a vbox or cols in a hbox	etemplate	en	number of rows in a VBox or cols in a HBox
 of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
 optional note about the link	etemplate	en	optional note about the Link
@@ -183,36 +155,25 @@ options	etemplate	en	Options
 options:	etemplate	en	Options:
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
-padding for the table-tag	etemplate	en	Padding for the table-tag
-percentage	etemplate	en	Percentage
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
-privat	etemplate	en	Privat
-privat address	etemplate	en	privat address
-prozente	etemplate	en	Prozente
-put a date in here	etemplate	en	Put a date in here
-put a percentage here	etemplate	en	put a percentage here
 radiobutton	etemplate	en	Radiobutton
-raw	etemplate	en	Raw
 read	etemplate	en	Read
 read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
 read template from database (for the keys above)	etemplate	en	read template from database (for the keys above)
 readonly	etemplate	en	Readonly
-remark	etemplate	en	Remark
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 save	etemplate	en	Save
-save changes	etemplate	en	Save changes
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 save the template under the above keys (name, ...), change them for a saveas	etemplate	en	save the template under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
-select	etemplate	en	Select
 select a category	etemplate	en	select a Category
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
@@ -221,7 +182,6 @@ select an application	etemplate	en	Select an application
 select an entry to link with	etemplate	en	Select an entry to link with
 select an table of the application	etemplate	en	Select an table of the application
 select category	etemplate	en	Select Category
-select cathegory	etemplate	en	Select Cathegory
 select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
@@ -241,27 +201,18 @@ shows/displays etemplate for testing, does not save it before	etemplate	en	shows
 shows/displays the template for testing, does not save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
 size	etemplate	en	Size
 spacing	etemplate	en	Spacing
-spacing for the table-tag	etemplate	en	Spacing for the table-tag
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
-street	etemplate	en	Street
 submitbutton	etemplate	en	Submitbutton
-surname	etemplate	en	Surname
 tablename	etemplate	en	TableName
 tabs	etemplate	en	Tabs
-telefon	etemplate	en	Telefon
-telefonnumber	etemplate	en	Telefonnumber
 template	etemplate	en	Template
 template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
-test	etemplate	en	Test
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
-textfeld:	etemplate	en	Textfeld:
-this is a datefield	etemplate	en	This is a DateField
-this is a help message	etemplate	en	This is a help message
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
@@ -272,17 +223,13 @@ type of the field (select label if field should be empty)	etemplate	en	type of t
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
 update from version '%s' to	etemplate	en	Update from Version '%s' to
-upload	etemplate	en	Upload
 value	etemplate	en	Value
-value for data	etemplate	en	value for data
-value for test	etemplate	en	value for test
+vbox	etemplate	en	VBox
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	en	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-when was the company founded	etemplate	en	when was the company founded
 width	etemplate	en	Width
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	en	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
-width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Width of the table in % or pixels for the table-tag and (optional) div
 width, disable	etemplate	en	Width, Disable
 width, disabled	etemplate	en	Width, Disabled
@@ -293,9 +240,6 @@ width, height, border, class, spacing, padding	etemplate	en	Width, Height, Borde
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
 width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag)	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)
 width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag),	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
-width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag), 
-work	etemplate	en	Work
-work address	etemplate	en	work address
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
@@ -304,5 +248,3 @@ xml-file to import	etemplate	en	xml-file to import
 xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
 yes	etemplate	en	Yes
-you can enter some free text here.	etemplate	en	You can enter some free text here.
-zip code	etemplate	en	ZIP Code

@@ -613,6 +613,22 @@
 			return "$n eTemplates for Application '$app' dumped to '$file'";
 		}
 
+		function getToTranslateCell($cell,&$to_trans)
+		{
+			list($extra_row) = explode(',',$cell['size']);
+			if (substr($cell['type'],0,6) != 'select' || !empty($extra_row) && $extra_row > 0)
+				$extra_row = '';
+			$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:'').
+				(!empty($extra_row) ? '|'.$extra_row : ''));
+			while (list(,$str) = each($all))
+			{
+				if (strlen($str) > 1 && $str[0] != '@')
+				{
+					$to_trans[strtolower($str)] = $str;
+				}
+			}
+		}
+
 		/*!
 		@function getToTranslate
 		@abstract extracts all texts: labels and helptexts from an eTemplate-object
@@ -623,21 +639,22 @@
 		{
 			$to_trans = array();
 
+			if (stristr($this->name,'test'))	// dont write all test-tpls
+			{
+				return $to_trans;
+			}
 			reset($this->data); each($this->data); // skip width
 			while (list($row,$cols) = each($this->data))
 			{
 				while (list($col,$cell) = each($cols))
 				{
-					list($extra_row) = explode(',',$cell['size']);
-					if (substr($cell['type'],0,6) != 'select' || !empty($extra_row) && $extra_row > 0)
-						$extra_row = '';
-					$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:'').
-						(!empty($extra_row) ? '|'.$extra_row : ''));
-					while (list(,$str) = each($all))
+					$this->getToTranslateCell($cell,$to_trans);
+
+					if ($cell['type'] == 'vbox' || $cell['type'] == 'hbox')
 					{
-						if (strlen($str) > 1 && $str[0] != '@')
+						for ($n = 1; $n <= $cell['size']; ++$n)
 						{
-							$to_trans[strtolower($str)] = $str;
+							$this->getToTranslateCell($cell[$n],$to_trans);
 						}
 					}
 				}
@@ -701,6 +718,8 @@
 					$to_trans[strtolower($msg)] = $msg;
 				}
 			}
+			unset($to_trans['']);
+
 			for ($new = $n = 0; list($message_id,$content) = each($to_trans); ++$n) {
 				if (!isset($langarr[$content]) && !isset($langarr[$message_id]))
 				{	// caused by not lowercased-message_id's

@@ -225,7 +225,8 @@
 		@param $show_xxx row,col name/index for name expansion
 		@result the generated HTML
 		*/
-		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
+		function show($content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0,
+			$no_table_tr=False,$tr_class='')
 		{
 			if (!$sel_options)
 			{
@@ -272,12 +273,22 @@
 				{
 					$cols = &$this->data[$r_key];
 					list($height,$disabled) = explode(',',$opts["h$row"]);
-					$class = $opts["c$row"];
+					$class = $no_table_tr ? $tr_class : $opts["c$row"];
 				}
 				if ($disabled != '' && $this->check_disabled($disabled,$content))
 				{
 					continue;	// row is disabled
 				}
+				$rows[".$row"] .= $this->html->formatOptions($height,'HEIGHT');
+				list($cl) = explode(',',$class);
+				if ($cl == 'nmr' || $cl == 'row')
+				{
+					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
+				}
+				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
+				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
+				$rows[".$row"] .= $this->html->formatOptions($class,',VALIGN');
+
 				reset ($cols);
 				$row_data = array();
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
@@ -295,6 +306,10 @@
 					{
 						$cell = &$cols[$c_key];
 						list(,$col_disabled) = explode(',',$opts[$col]);
+					}
+					if ($cell['type'] == 'template' && $cell['onchange'])
+					{
+						$cell['tr_class'] = $cl;
 					}
 					if ($col_disabled != '' && $this->check_disabled($col_disabled,$content))
 					{
@@ -327,23 +342,13 @@
 					$row_data[".$col"] .= $this->html->formatOptions($cl,'CLASS');
 				}
 				$rows[$row] = $row_data;
-
-				$rows[".$row"] .= $this->html->formatOptions($height,'HEIGHT');
-				list($cl) = explode(',',$class);
-				if ($cl == 'nmr' || $cl == 'row')
-				{
-					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
-				}
-				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
-				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
-				$rows[".$row"] .= $this->html->formatOptions($class,',VALIGN');
 			}
 			if (!$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name])
 			{
 				$style = $this->html->style($this->style);
 				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
 			}
-			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'));
+			$html = $this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS,CELLSPACING,CELLPADDING'),$no_table_tr);
 
 			/* does NOT work with mozilla: shows nothing if a div is inside a form
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
@@ -410,7 +415,7 @@
 
 				$this->set_array($content,$name,$value);
 			}
-			$label = $cell['label'];
+			$label = $this->expand_name($cell['label'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			if ($label[0] == '@')
 			{
 				$label = $this->get_array($content,substr($label,1));
@@ -572,7 +577,7 @@
 						}
 						else
 						{  $obj_read = 'obj read';
-							$cell['obj'] = new etemplate($cell['name'],$this->as_array());
+							$cell['obj'] = new etemplate(/*** TESTWEISE ***$cell['name']*/$name,$this->as_array());
 						}
 					}
 					if ($this->debug >= 3 || $this->debug == $cell['type'])
@@ -601,7 +606,7 @@
 					{
 						$readonlys['__ALL__'] = True;
 					}
-					$html .= $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row,$cell['onchange'],$cell['tr_class']);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
 					$sels = array();
@@ -655,9 +660,10 @@
 					}
 					break;
 				case 'image':
+					$image = $value != '' ? $value : $name;
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-						$label,lang($help),'BORDER=0');
-					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
+						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'BORDER="0"');
+					$html .= $cell['size'] == '' ? $image : $this->html->a_href($image,$cell['size']);
 					$extra_label = False;
 					break;
 				case 'file':
@@ -667,6 +673,38 @@
 						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
 					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					$GLOBALS['phpgw_info']['etemplate']['to_process'][$path] = 'file-path';
+					break;
+				case 'vbox':
+				case 'hbox':
+					$rows = array();
+					$box_row = 1;
+					$box_col = 'A';
+					$box_anz = 0;
+					for ($n = 1; $n <= $cell['size']; ++$n)
+					{
+						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
+						if ($h != '' && $h != '&nbsp;')
+						{
+							if ($cell['type'] == 'vbox')
+							{
+								$box_row = $n;
+							}
+							else
+							{
+								$box_col = $this->num2chrs($n);
+							}
+							$rows[$box_row][$box_col] = $html = $h;
+							$box_anz++;
+							if ($cell[$n]['align'])
+							{
+								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'ALIGN');
+							}
+						}
+					}
+					if ($box_anz > 1)	// a single cell is NOT placed into a table
+					{
+						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".$this->html->table($rows)."\n\n<!-- END $cell[type] -->\n\n";
+					}
 					break;
 				default:
 					if ($ext_type && $this->haveExtension($ext_type,'render'))

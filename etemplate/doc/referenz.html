@@ -97,7 +97,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 		eTemplates get there content from an array passed to the exec or show-function of the template-object
 		and referenz to the content by the id / name-field of each widget.
 	<li>xul-files can contain an unlimited number of nested elements, where as the eTemplates xml-root-node
-		has to be a xul-grid and can not contain other grids or boxes as element.
+		has to be a xul-grid and can not contain other grids as element (vbox and hbox are Ok).
 		<i>This limitation might be removed in the near future, for now you have to use the non-xul-element
 		&lt;template id="app.template_name"/> us load an other template by its name.</i>
 </ul>
@@ -182,8 +182,9 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		Displayed in front of each widget (if not empty) or the widget is replacing a '%s' in the label
 		itself. Eg. '%s Name' to have the label Name behind a checkbox.
+		The label can contain variables, as descript for name.
 		If the label starts with a '@' it is replaced by the value of the content-array at this
-		index (with the '@'-removed).
+		index (with the '@'-removed and after expanding the variables).
 	</td>
 </tr>
 <tr>
@@ -486,13 +487,14 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Image</b></td>
-	<td>&lt;image src="foo.gif" id="app.class.method"/></td>
+	<td>&lt;image src="foo.gif" label="Get a foo" options="app.class.method"/></td>
 	<td>yes</td>
 	<td>image</td>
 	<td>
 		<b>shows an image</b><br>
-		<b>Label</b> xml: <b>src</b>: the name of the image to load, the image is search in the apps template-dirs<br>
-		<b>Name</b> xml: <b>id</b>: if set, a link to that methode = app.class.method is put around the image
+		<b>Label</b> xml: <b>label</b>: the label is shown as tooltip (like html-title)<br>
+		<b>Name</b> xml: <b>src</b>: the name of the image to load, the image is search in the apps template-dirs<br>
+		<b>Options</b> xml: <b>options</b>: if set, a link to that methode = app.class.method is put around the image
 	</td>
 </tr>
 <tr>
@@ -533,7 +535,42 @@ implement only a subset of XUL. Here are the main differences:</p>
 			<b>select-percent, select-priority, select-access, select-country, select-state</b>: as you expect
 				by the name<br>
 			<b>select-year, select-month, select-day</b>: options for year: ,start,end (start and end can be a number of
-				years from now or if > 100 a absolut year)
+				years from now or if > 100 a absolut year) 
+	</td>
+</tr>
+<tr>
+	<td><b>FileUpload</b></td>
+	<td>
+		&lt;file id="name"/><br>
+	</td>
+	<td>no</td>
+	<td>file</td>
+	<td>
+		<b>Input and Button to select a file for uploading</b><br>
+		Returns the file-name of the uploaded file in the servers tmp-dir (the webserver needs to have a
+		writable tmp-dir) plus, if javascript is enabled, the local filename of the client as "${name}_path".
+	</td>
+</tr>
+<tr>
+	<td><b>VBox, HBox</b></td>
+	<td>
+		&lt;vbox><br>
+		&nbsp; &lt;widget ...><br>
+		&nbsp; &lt;widget ...><br>
+		&lt;/vbox><p>
+		&lt;hbox span="all"><br>
+		&nbsp; &lt;widget ...><br>
+		&nbsp; &lt;widget ...><br>
+		&lt;/hbox>
+	</td>
+	<td>yes</td>
+	<td>vbox, hbox</td>
+	<td>
+		<b>vertical or horizontal container</b> to contain other widgets. This is useful if one needs more
+		widgets or widgets outside the column- / row-order of a grid.<br>
+		Disabled child-cells are completly left out (no empty cells or rows get generated).<p>
+		<b>Options</b> <i>in the editor</i>: the number of cells in the box (does NOT need to be set in xml).
+	</td>
 </tr>
 <tr>
 	<td><b>Tabs</b></td>

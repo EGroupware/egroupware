@@ -79,7 +79,7 @@
 				),
 				'image'   => array(
 					'.name' => 'image',
-					'label' => 'src'
+					'name' => 'src'
 				),
 				'tab' => array(
 					'.name' => 'tabbox,tabs,tabpanels'
@@ -90,7 +90,7 @@
 				)
 			);
 			$this->xul2widget = array(
-				'menupopup' => 'select',
+				'menulist' => 'select',
 				'listbox' => 'select',
 				'description' => 'label'
 			);
@@ -119,6 +119,125 @@
 					}
 				}
 			}
+		}
+
+		function cell2widget($cell,&$spanned,$etempl,&$root,$embeded_too=True)
+		{
+			$type = $cell['type'];
+			if (is_array($type))
+			{
+				list(,$type) = each($type);
+			}
+			if ($type == 'template' && $cell['name'][0] != '@' && $embeded_too)
+			{
+				$embeded = new etemplate();
+				if ($embeded->read($embeded->expand_name($cell['name'],0,0),'default','default',0,'',$etempl->as_array()))
+				{
+					$this->etempl2grid($embeded,&$root,$embeded_too);
+				}
+				unset($embeded);
+			}
+			if (substr($type,0,6) == 'select')
+			{
+				$type = $cell['size'] > 1 ? 'select-multi' : 'select';
+			}
+			$widgetattr2xul = isset($this->widget2xul[$type]) ? $this->widget2xul[$type] : array();
+			$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
+			list($parent,$child,$child2) = explode(',',$type);
+			$widget = new xmlnode($parent);
+			$attr_widget = &$widget;
+			if ($child)
+			{
+				$child = new xmlnode($child);
+				$attr_widget = &$child;
+			}
+			if ($child2)
+			{
+				$child2 = new xmlnode($child2);
+			}
+			if (isset($widgetattr2xul['.set']))	// set default-attr for type
+			{
+				$attrs = explode(',',$widgetattr2xul['.set']);
+				while (list(,$attr) = each($attrs))
+				{
+					list($attr,$val) = explode('=',$attr);
+					$widget->set_attribute($attr,$val);
+				}
+			}
+			switch ($parent)
+			{
+			case 'nextmatch':
+				$embeded = new etemplate($cell['size'],$etempl->as_array());
+				$this->etempl2grid($embeded,&$root,$embeded_too);
+				unset($embeded);
+				break;
+			case 'tabbox':
+				$labels = explode('|',$cell['label']);  unset($cell['label']);
+				$helps  = explode('|',$cell['help']);   unset($cell['help']);
+				$names  = explode('|',$cell['name']);   unset($cell['name']);
+				for ($n = 0; $n < count($labels); ++$n)
+				{
+					$tab = new xmlnode('tab');
+					$tab->set_attribute('label',$labels[$n]);
+					$tab->set_attribute('statustext',$helps[$n]);
+					$child->add_node($tab);
+
+					$embeded = new etemplate($names[$n],$etempl->as_array());
+					$this->etempl2grid($embeded,&$root,$embeded_too);
+					$grid = new xmlnode('grid');
+					$grid->set_attribute('id',$embeded->name);
+					$child2->add_node($grid);
+					unset($embeded);
+				}
+				break;
+			case 'menulist':	// id,options belongs to the 'menupopup' child
+				if ($cell['span'])
+				{
+					$widget->set_attribute('span',$cell['span']);
+					unset($cell['span']);
+				}
+				// fall-trought
+			case 'listbox':
+				if ($cell['type'] != 'select')	// one of the sub-types
+				{
+					$attr_widget->set_attribute('type',$cell['type']);
+				}
+				break; 
+			case 'vbox':
+			case 'hbox':
+				for ($n = 1; $n <= $cell['size']; ++$n)
+				{
+					$widget->add_node($this->cell2widget($cell[$n],$no_span,$etempl,$root,$embeded_too));
+					unset($cell[$n]);
+				}
+				unset($cell['size']);
+				break;
+			}
+			while (list($attr,$val) = each($cell))
+			{
+				if (is_array($val))	// correct old buggy etemplates
+				{
+					list(,$val) = each($val);
+				}
+				if (isset($widgetattr2xul[$attr]))
+				{
+					$attr = $widgetattr2xul[$attr];
+				}
+				elseif (isset($this->attr2xul[$attr]))
+				{
+					$attr = $this->attr2xul[$attr];
+				}
+				$this->set_attributes($attr_widget,$attr,$val,&$spanned);
+			}
+			if ($child)
+			{
+				$widget->add_node($child);
+			}
+			if ($child2)
+			{
+				$widget->add_node($child2);
+			}
+			return $widget;
 		}
 
 		function etempl2grid($etempl,&$root,$embeded_too=True)
@@ -156,109 +275,7 @@
 						--$spanned;
 						continue;	// spanned cells are not written
 					}
-					$type = $cell['type'];
-					if (is_array($type))
-					{
-						list(,$type) = each($type);
-					}
-					if ($type == 'template' && $cell['name'][0] != '@' && $embeded_too)
-					{
-						$embeded = new etemplate($cell['name'],$etempl->as_array());
-						$this->etempl2grid($embeded,&$root,$embeded_too);
-						unset($embeded);
-					}
-					if (substr($type,0,6) == 'select')
-					{
-						$type = $cell['size'] > 1 ? 'select-multi' : 'select';
-					}
-					$widgetattr2xul = isset($this->widget2xul[$type]) ? $this->widget2xul[$type] : array();
-					$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
-					list($parent,$child,$child2) = explode(',',$type);
-					$widget = new xmlnode($parent);
-					$attr_widget = &$widget;
-					if ($child)
-					{
-						$child = new xmlnode($child);
-						$attr_widget = &$child;
-					}
-					if ($child2)
-					{
-						$child2 = new xmlnode($child2);
-					}
-					if (isset($widgetattr2xul['.set']))	// set default-attr for type
-					{
-						$attrs = explode(',',$widgetattr2xul['.set']);
-						while (list(,$attr) = each($attrs))
-						{
-							list($attr,$val) = explode('=',$attr);
-							$widget->set_attribute($attr,$val);
-						}
-					}
-					switch ($parent)
-					{
-					case 'nextmatch':
-						$embeded = new etemplate($cell['size']);
-						$this->etempl2grid($embeded,&$root,$embeded_too);
-						unset($embeded);
-						break;
-					case 'tabbox':
-						$labels = explode('|',$cell['label']);  unset($cell['label']);
-						$helps  = explode('|',$cell['help']);   unset($cell['help']);
-						$names  = explode('|',$cell['name']);   unset($cell['name']);
-						for ($n = 0; $n < count($labels); ++$n)
-						{
-							$tab = new xmlnode('tab');
-							$tab->set_attribute('label',$labels[$n]);
-							$tab->set_attribute('statustext',$helps[$n]);
-							$child->add_node($tab);
-
-							$embeded = new etemplate($names[$n],$etempl->as_array());
-							$this->etempl2grid($embeded,&$root,$embeded_too);
-							$grid = new xmlnode('grid');
-							$grid->set_attribute('id',$embeded->name);
-							$child2->add_node($grid);
-							unset($embeded);
-						}
-						break;
-					case 'menulist':	// id,options belongs to the 'menupopup' child
-						if ($cell['span'])
-						{
-							$widget->set_attribute('span',$cell['span']);
-							unset($cell['span']);
-						}
-						// fall-trought
-					case 'listbox':
-						if ($cell['type'] != 'select')	// one of the sub-types
-						{
-							$attr_widget->set_attribute('type',$cell['type']);
-						}
-						break;
-					}
-					while (list($attr,$val) = each($cell))
-					{
-						if (is_array($val))	// correct old buggy etemplates
-						{
-							list(,$val) = each($val);
-						}
-						if (isset($widgetattr2xul[$attr]))
-						{
-							$attr = $widgetattr2xul[$attr];
-						}
-						elseif (isset($this->attr2xul[$attr]))
-						{
-							$attr = $this->attr2xul[$attr];
-						}
-						$this->set_attributes($attr_widget,$attr,$val,&$spanned);
-					}
-					if ($child)
-					{
-						$widget->add_node($child);
-					}
-					if ($child2)
-					{
-						$widget->add_node($child2);
-					}
-					$xul_row->add_node($widget);
+					$xul_row->add_node($this->cell2widget($cell,$spanned,$etempl,$root,$embeded_too));
 				}
 				$xul_rows->add_node($xul_row);
 			}
@@ -297,6 +314,31 @@
 				echo "<pre>\n" . htmlentities($xml) . "\n</pre>\n";
 			}
 			return $xml;
+		}
+
+		function add_cell(&$etempl,$cell,&$box,&$col,$node_level)
+		{
+			if (!isset($box[$node_level-1]))
+			{
+				list($spanned) = explode(',',$cell['span']);
+				$spanned = $spanned == 'all' ? $etempl->cols - $col : $spanned;
+
+				$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $cell;
+
+			/*	if ($attr['type'] == 'template' && !empty($attr['name']) && $attr['name'][0] != '@')
+				{
+					$etempl->data[$etempl->rows][$etempl->num2chrs($col++)]['obj'] = new etemplate($attr['name']);
+				} */
+				while (--$spanned > 0)
+				{
+					$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
+				}
+			}
+			else
+			{
+				$pcell = &$box[$node_level-1];
+				$pcell[++$pcell['size']] = $cell;
+			}
 		}
 
 		function import(&$etempl,$data)
@@ -420,16 +462,11 @@
 							$tab_attr['label'] = implode('|',$tab_labels);
 							$tab_attr['name'] = implode('|',$tab_names);
 							$tab_attr['help'] = implode('|',$tab_helps);
-							$spanned = $tab_attr['span'] == 'all' ? $etempl->cols - $col : $tab_attr['span'];
 							$tab_attr['span'] .= $tab_attr['class'] ? ','.$tab_attr['class'] : '';
 							unset($tab_attr['class']);
-							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $tab_attr;
+							
+							$this->add_cell($etempl,$tab_attr,&$box,&$col,$node['level']);
 							unset($tab_attr);
-
-							while (--$spanned > 0)
-							{
-								$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
-							}
 						}
 						break;
 					case 'tabs':
@@ -442,8 +479,35 @@
 							$tab_helps[]  = $attr['statustext'];
 						}
 						break;
+					case 'menupopup':
+						if (is_array($menulist_attr))
+						{
+							$attr['help'] = $attr['statustext']; unset($attr['statustext']);
+							$menulist_attr += $attr;
+						}
+						break;
 					case 'menulist':
-						$menulist_attr = $attr;	// save for following menupopup
+						if ($type == 'open')
+						{
+							$menulist_attr = $attr;
+						}
+						else
+						{
+							$this->add_cell($etempl,$menulist_attr,&$box,&$col,$node['level']);
+							unset($menulist_attr);
+						}
+						break; 
+					case 'vbox':
+					case 'hbox':
+						if ($type == 'open')
+						{
+							$box[$node['level']] = $attr;
+						}
+						else
+						{
+							$this->add_cell($etempl,$box[$node['level']],&$box,&$col,$node['level']);
+							unset($box[$node['level']]);
+						}
 						break;
 					case 'textbox':
 						if ($attr['multiline'])
@@ -479,18 +543,12 @@
 								unset($attr['content']);
 								break;
 							case 'image':
-								$attr['label'] = $attr['src'];
+								$attr['name'] = $attr['src'];
 								unset($attr['src']);
 								break;
 							case 'listbox':
 								$attr['size'] = ereg_replace(',*$','',$attr['rows'].','.$attr['size']);
 								unset($attr['rows']);
-								break;
-							case 'menupopup':
-								if (is_array($menulist_attr))
-								{
-									$attr += $menulist_attr;
-								}
 								break;
 							case 'button':
 								if ($attr['image'] || $attr['ro_image'])
@@ -501,22 +559,12 @@
 								break;
 						}
 						$attr['help'] = $attr['statustext']; unset($attr['statustext']);
-						$spanned = $attr['span'] == 'all' ? $etempl->cols - $col : $attr['span'];
 						$attr['span'] .= $attr['class'] ? ','.$attr['class'] : ''; unset($attr['class']);
 						if ($type == 'close')
 						{
 							break;
 						}
-						$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $attr;
-
-						if ($attr['type'] == 'template' && !empty($attr['name']) && $attr['name'][0] != '@')
-						{
-							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)]['obj'] = new etemplate($attr['name']);
-						}
-						while (--$spanned > 0)
-						{
-							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
-						}
+						$this->add_cell($etempl,$attr,&$box,&$col,$node['level']);
 						break;
 				}
 			}

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.editor.cell" template="" lang="" group="0" version="0.9.15.002" height="100%">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="row">
+				<description value="Type"/>
+				<menulist>
+					<menupopup id="type" statustext="type of the field (select Label if field should be empty)"/>
+				</menulist>
+				<description value="Options" align="center"/>
+				<textbox size="10" id="size" statustext="Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']"/>
+				<description value="Span, Class" align="center"/>
+				<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+			</row>
+			<row class="row">
+				<description value="Label"/>
+				<textbox id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"/>
+				<checkbox span="2" label="%s NoTranslation" align="center" id="no_lang" statustext="select if content of field should not be translated (label gets always translated)"/>
+				<description value="Align" align="center"/>
+				<menulist>
+					<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
+				</menulist>
+			</row>
+			<row class="row">
+				<description value="Name"/>
+				<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
+				<hbox span="4">
+					<checkbox label="%s needed" align="right" id="needed" statustext="check if field has to be filled by user"/>
+					<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
+					<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
+					<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
+				</hbox>
+			</row>
+			<row class="row">
+				<description value="Help"/>
+				<textbox size="50" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+			</row>
+		</rows>
+	</grid>
+	<grid id="etemplate.editor.cell.vbox" template="" lang="" group="" version="0.9.15.002" height="100%" border="1">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row class="th">
+				<hbox>
+					<description value="Type"/>
+					<menulist>
+						<menupopup id="type" statustext="type of the field (select Label if field should be empty)"/>
+					</menulist>
+					<description value="Cells" align="center"/>
+					<textbox size="3" id="size" statustext="number of rows in a VBox or cols in a HBox"/>
+					<description value="Span, Class" align="center"/>
+					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+				</hbox>
+			</row>
+			<row>
+				<grid content="$row" id="etemplate.editor.cell"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>

@@ -113,8 +113,14 @@ class html
 	{
 		if ($image != '')
 		{
+			if (strstr($image,'.') === False)
+			{
+				$image .= '.gif';
+			}
 			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
-				$path = $image;		// name may already contain absolut path
+			{
+				$path = $image;		// name may already contain absolut path 
+			}
 			$image = ' SRC="'.$path.'"';
 		}
 		if (!$no_lang)
@@ -209,22 +215,29 @@ class html
 	@example table($rows,'WIDTH="100%"') = '<table WIDTH="100%"><tr><td colspan=3>cell1</td><td>cell2</td><td width="10%">cell3</td></tr></table>'
 	@result string with html-code of the table
 	*/
-	function table($rows,$options = '')
+	function table($rows,$options = '',$no_table_tr=False)
 	{
-		$html = "<TABLE $options>\n";
+		$html = $no_table_tr ? '' : "<TABLE $options>\n";
 
 		while (list($key,$row) = each($rows)) {
 			if (!is_array($row))
 				continue;					// parameter
-			$html .= "\t<TR ".$rows['.'.$key].">\n";
+			$html .= $no_table_tr && $key == 1 ? '' : "\t<TR ".$rows['.'.$key].">\n";
 			while (list($key,$cell) = each($row)) {
 				if ($key[0] == '.')
 					continue;				// parameter
-				$html .= "\t\t<TD ".$row['.'.$key].">$cell</TD>\n";
+				$table_pos = strpos($cell,'<TABLE');
+				$td_pos = strpos($cell,'<TD');
+				if ($td_pos !== False && ($table_pos === False || $td_pos < $table_pos))
+					$html .= $cell;
+				else
+					$html .= "\t\t<TD ".$row['.'.$key].">$cell</TD>\n";
 			}
 			$html .= "\t</TR>\n";
 		}
 		$html .= "</TABLE>\n";
+		if ($no_table_tr)
+			$html = substr($html,0,-16);
 		
 		return $html;
 	}
@@ -242,9 +255,14 @@ class html
 
 	function image( $app,$name,$title='',$options='' )
 	{
+		if (strstr($name,'.') === False)
+		{
+			$name .= '.gif';
+		}
 		if (!($path = $GLOBALS['phpgw']->common->image($app,$name)))
+		{
 			$path = $name;		// name may already contain absolut path
-
+		}
 		if ($title)
 		{
 			$options .= " $this->prefered_img_title=\"$title\"";

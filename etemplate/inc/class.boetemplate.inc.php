@@ -41,7 +41,9 @@
 			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
 												// if size > 1 then multiple selections, size lines showed
 			'html'	=> 'Html',			// Raw html in $content[$cell['name']]
-			'file'	=> 'FileUpload'	// show an input type='file', set the local name as ${name}_path
+			'file'	=> 'FileUpload',	// show an input type='file', set the local name as ${name}_path
+			'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
+			'hbox'	=> 'HBox'			// a (horizontal) box to contain widgets in cols, size = # of cols
 		);
 		/*!
 		@function boetemplate
@@ -111,6 +113,7 @@
 			$col = $this->num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
 			$col_ = $this->num2chrs($c_-1);
 			$row_cont = $cont[$row];
+			$col_row_cont = $cont[$col.$row];
 
 			eval('$name = "'.$name.'";');
 
@@ -166,7 +169,8 @@
 				}
 				else
 				{
-					$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || substr($pat,0,4) == 'row_');
+					$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || 
+						substr($pat,0,4) == 'row_' && substr($pat,0,8) != 'row_cont');
 				}
 			}
 			if ($this->name && $this->name == $this->debug)
@@ -438,6 +442,10 @@
 			$pos = &$arr;
 			while (list($n,$idx) = each($idxs))
 			{
+				if (!is_array($pos))
+				{
+					return $pos = '';
+				}
 				$pos = &$pos[$idx];
 			}
 			return $pos;

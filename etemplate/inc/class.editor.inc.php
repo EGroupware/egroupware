@@ -159,6 +159,29 @@
 					else
 					{
 						$spanned = $cell['span'] == 'all' ? $this->etemplate->cols-$c : 0+$cell['span'];
+						
+						switch($cell['type'])	// load a cell-type-specific tpl
+						{
+							case 'vbox':
+							case 'hbox':
+								$cell['cell_tpl'] = '.vbox';
+								if ($cell['size'] < 2)
+								{
+									$cell['size'] = 2;
+								}
+								for ($n = 1; $n <= $cell['size']; ++$n)	// create new rows
+								{
+									if (!isset($cell[$n]) || !is_array($cell[$n]))
+									{
+										$cell[$n] = $this->etemplate->empty_cell();
+									}
+								}
+								while (isset($cell[$n]))	// unset not longer used rows
+								{
+									unset($cell[$n++]);
+								}
+								break;
+						}
 						$content[$col.$row] = $cell;
 					}
 					if ($row == 1)

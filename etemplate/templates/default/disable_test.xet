@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.disable_test" template="" lang="" group="" version="">
+		<columns>
+			<column width="50%" disabled="true"/>
+		</columns>
+		<rows>
+			<row disabled="!@data">
+				<description/>
+			</row>
+		</rows>
+	</grid>
+</overlay>
