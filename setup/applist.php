@@ -25,9 +25,9 @@
 	$setup_tpl->set_file(array('T_footer' => 'footer.tpl'));
 	$setup_tpl->set_block('T_footer','footer','footer');
 
-	$f = CreateObject('phpgwapi.xmlrpcmsg','system.listApps',array(CreateObject('phpgwapi.xmlrpcval',0, "int")));
-	print "<pre>" . htmlentities($f->serialize()) . "</pre>\n";
-	$c = CreateObject('phpgwapi.xmlrpc_client',"/phpgroupware/xmlrpc.php", $HTTP_HOST, 80);
+	$f = CreateObject('phpgwapi.xmlrpcmsg','system.listApps',array(CreateObject('phpgwapi.xmlrpcval',0,'int')));
+	print '<pre>' . htmlentities($f->serialize()) . "</pre>\n";
+	$c = CreateObject('phpgwapi.xmlrpc_client','/cvsdemo/xmlrpc.php','www.phpgroupware.org',80);
 	$c->setDebug(1);
 	$r = $c->send($f);
 	if (!$r)

@@ -17,13 +17,15 @@
 	// out from under other apps.  e.g. if they select to uninstall the api
 	// this will happen without further warning.
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
 		'noapi' => True
 	);
 	include ('./inc/functions.inc.php');
+
+	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
 
 	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -50,8 +52,8 @@
 	$setup_tpl->set_block('T_setup_main','footer','footer');
 
 	// Check header and authentication
-	$phpgw_info['setup']['stage']['header'] = $phpgw_setup->check_header();
-	if ($phpgw_info['setup']['stage']['header'] != '10')
+	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $phpgw_setup->check_header();
+	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 		Header("Location: manageheader.php");
 		exit;
@@ -97,7 +99,7 @@
 	}
 
 	$phpgw_setup->loaddb();
-	$phpgw_info['setup']['stage']['db'] = $phpgw_setup->check_db();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
 
 	$setup_info = $phpgw_setup->get_versions();
 	//var_dump($setup_info);exit;
@@ -117,7 +119,7 @@
 
 	if ($HTTP_POST_VARS['submit'])
 	{
-		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
+		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
 
@@ -204,7 +206,7 @@
 	}
 	else
 	{
-		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]["db_type"] . ')');
+		$phpgw_setup->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	}
 
 	if($HTTP_GET_VARS['detail'])

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
@@ -62,8 +62,8 @@
 	}
 
 	// Check header and authentication
-	$phpgw_info['setup']['stage']['header'] = $phpgw_setup->check_header();
-	if ($phpgw_info['setup']['stage']['header'] != '10')
+	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $phpgw_setup->check_header();
+	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 		Header("Location: manageheader.php");
 		exit;
@@ -80,83 +80,81 @@
 
 	function parse_vars($table,$term)
 	{
-		global $phpgw_setup,$setup_tpl;
+		$GLOBALS['setup_tpl']->set_var('table', $table);
+		$GLOBALS['setup_tpl']->set_var('term',$term);
 
-		$setup_tpl->set_var('table', $table);
-		$setup_tpl->set_var('term',$term);
-
-		list($arr,$pk,$fk,$ix,$uc) = $phpgw_setup->sql_to_array($table);
-		$setup_tpl->set_var('arr',$arr);
+		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['phpgw_setup']->sql_to_array($table);
+		$GLOBALS['setup_tpl']->set_var('arr',$arr);
 		if (count($pk) > 1)
 		{
-			$setup_tpl->set_var('pks', "'".implode("','",$pk)."'");
+			$GLOBALS['setup_tpl']->set_var('pks', "'".implode("','",$pk)."'");
 		}
 		elseif($pk && !empty($pk))
 		{
-			$setup_tpl->set_var('pks', "'" . $pk[0] . "'");
+			$GLOBALS['setup_tpl']->set_var('pks', "'" . $pk[0] . "'");
 		}
 		else
 		{
-			$setup_tpl->set_var('pks','');
+			$GLOBALS['setup_tpl']->set_var('pks','');
 		}
 
 		if (count($fk) > 1)
 		{
-			$setup_tpl->set_var('fks', "'" . implode("','",$fk) . "'");
+			$GLOBALS['setup_tpl']->set_var('fks', "'" . implode("','",$fk) . "'");
 		}
 		elseif($fk && !empty($fk))
 		{
-			$setup_tpl->set_var('fks', "'" . $fk[0] . "'");
+			$GLOBALS['setup_tpl']->set_var('fks', "'" . $fk[0] . "'");
 		}
 		else
 		{
-			$setup_tpl->set_var('fks','');
+			$GLOBALS['setup_tpl']->set_var('fks','');
 		}
 
 		if (count($ix) > 1)
 		{
-			$setup_tpl->set_var('ixs', "'" . implode("','",$ix) . "'");
+			$GLOBALS['setup_tpl']->set_var('ixs', "'" . implode("','",$ix) . "'");
 		}
 		elseif($ix && !empty($ix))
 		{
-			$setup_tpl->set_var('ixs', "'" . $ix[0] . "'");
+			$GLOBALS['setup_tpl']->set_var('ixs', "'" . $ix[0] . "'");
 		}
 		else
 		{
-			$setup_tpl->set_var('ixs','');
+			$GLOBALS['setup_tpl']->set_var('ixs','');
 		}
 
 		if (count($uc) > 1)
 		{
-			$setup_tpl->set_var('ucs', "'" . implode("','",$uc) . "'");
+			$GLOBALS['setup_tpl']->set_var('ucs', "'" . implode("','",$uc) . "'");
 		}
 		elseif($uc && !empty($uc))
 		{
-			$setup_tpl->set_var('ucs', "'" . $uc[0] . "'");
+			$GLOBALS['setup_tpl']->set_var('ucs', "'" . $uc[0] . "'");
 		}
 		else
 		{
-			$setup_tpl->set_var('ucs','');
+			$GLOBALS['setup_tpl']->set_var('ucs','');
 		}
 	}
 
 	function printout($template)
 	{
-		global $download,$setup_tpl,$appname,$table,$showall;
+		global $download,$appname,$table,$showall;
 
 		if ($download)
 		{
-			$setup_tpl->set_var('appname',$appname);
-			$string = $setup_tpl->parse('out',$template);
+			$GLOBALS['setup_tpl']->set_var('appname',$appname);
+			$string = $GLOBALS['setup_tpl']->parse('out',$template);
 		}
 		else
 		{
-			$setup_tpl->set_var('appname',$appname);
-			$setup_tpl->set_var('table',$table);
-			$setup_tpl->set_var('lang_download','Download');
-			$setup_tpl->set_var('showall',$showall);
-			$setup_tpl->set_var('action_url','sqltoarray.php');
-			$setup_tpl->pfp('out',$template);
+			$GLOBALS['setup_tpl']->set_var('appname',$appname);
+			$GLOBALS['setup_tpl']->set_var('table',$table);
+			$GLOBALS['setup_tpl']->set_var('lang_download','Download');
+			$GLOBALS['setup_tpl']->set_var('showall',$showall);
+			$GLOBALS['setup_tpl']->set_var('action_url','sqltoarray.php');
+			$GLOBALS['setup_tpl']->pfp('out',$template);
 		}
 		return $string;
 	}

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$phpgw_info["flags"] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'home',
@@ -29,9 +29,9 @@
 	}
 	// Does not return unless user is authorized
 
-	if ($cancel)
+	if ($HTTP_POST_VARS['cancel'])
 	{
-		Header("Location: index.php");
+		Header('Location: index.php');
 		exit;
 	}
 
@@ -65,12 +65,12 @@
 	$setup_tpl->set_var('ldapimport','ldapimport.php');
 	$setup_tpl->set_var('ldapexport','ldapexport.php');
 	$setup_tpl->set_var('action_url','index.php');
-	
 	$setup_tpl->set_var('cancel',lang('Cancel'));
 
 	$setup_tpl->pfp('out','header');
 	$setup_tpl->pfp('out','jump');
 	$setup_tpl->pfp('out','cancel_only');
 	$setup_tpl->pfp('out','footer');
+
 	$phpgw_setup->show_footer();
 ?>

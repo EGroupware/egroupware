@@ -13,7 +13,7 @@
 
 	if (!$included)
 	{
-		$phpgw_info['flags'] = array(
+		$GLOBALS['phpgw_info']['flags'] = array(
 			'noheader' => True,
 			'nonavbar' => True,
 			'currentapp' => 'home',
@@ -116,7 +116,7 @@
 							{
 								if($message_id && $content)
 								{
-									//echo "<br>adding - insert into lang values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+									// echo "<br>adding - insert into lang values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
 									$phpgw_setup->db->query("INSERT into lang VALUES ('$message_id','$app_name','$phpgw_setup->db_lang','$content')",__LINE__,__FILE__);
 								}
 							}
@@ -132,7 +132,6 @@
 			Header('Location: index.php');
 			exit;
 		}
-
 	}
 	else
 	{
@@ -204,6 +203,7 @@
 			$setup_tpl->set_var('lang_install',lang('install'));
 			$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
+			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
 			$phpgw_setup->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 			$setup_tpl->pparse('out','T_lang_main');
 			$phpgw_setup->show_footer();

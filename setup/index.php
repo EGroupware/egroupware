@@ -16,7 +16,7 @@
   //        page explaining what to do from there (ie, create there own account)
 	$DEBUG = False;
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
@@ -49,8 +49,8 @@
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_default','V_db_stage_default');
 
 	// Check header and authentication
-	$phpgw_info['setup']['stage']['header'] = $phpgw_setup->check_header();
-	if ($phpgw_info['setup']['stage']['header'] != '10')
+	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $phpgw_setup->check_header();
+	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 		Header('Location: manageheader.php');
 		exit;
@@ -66,17 +66,17 @@
 	// Database actions
 	$phpgw_setup->loaddb();
 	$setup_info = $phpgw_setup->get_versions();
-	$phpgw_info['setup']['stage']['db'] = $phpgw_setup->check_db();
-	if ($phpgw_info['setup']['stage']['db'] != 1)
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
+	if ($GLOBALS['phpgw_info']['setup']['stage']['db'] != 1)
 	{
 		$setup_info = $phpgw_setup->get_versions();
 		$setup_info = $phpgw_setup->get_db_versions($setup_info);
-		$phpgw_info['setup']['stage']['db'] = $phpgw_setup->check_db();
+		$GLOBALS['phpgw_info']['setup']['stage']['db'] = $phpgw_setup->check_db();
 	}
 
-	if ($DEBUG) { echo 'Stage: ' . $phpgw_info['setup']['stage']['db']; }
+	if ($DEBUG) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }
 	// begin DEBUG code
-	//$phpgw_info['setup']['stage']['db'] = 0;	
+	//$GLOBALS['phpgw_info']['setup']['stage']['db'] = 0;	
 	//$action = 'Upgrade';
 	// end DEBUG code	
 
@@ -86,29 +86,29 @@
 			$subtitle = lang('Create Database');
 			$submsg = lang('At your request, this script is going to attempt to create the database and assign the db user rights to it');
 			$subaction = 'created';
-			$phpgw_info['setup']['currentver']['phpgwapi'] = 'dbcreate';
-			$phpgw_info['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'dbcreate';
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
 			break;
 		case 'Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
 			$submsg = lang('At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data') . '.';
 			$subaction = 'uninstalled';
-			$phpgw_info['setup']['currentver']['phpgwapi'] = 'drop';
-			$phpgw_info['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'drop';
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
 			break;
 		case 'Upgrade':
 			$subtitle = lang('Upgrading Tables');
 			$submsg = lang('At your request, this script is going to attempt to upgrade your old applications to the current versions').'.';
 			$subaction = 'upgraded';
-			$phpgw_info['setup']['currentver']['phpgwapi'] = 'oldversion';
-			$phpgw_info['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
 			$submsg = lang('At your request, this script is going to attempt to install all the applications for you').'.';
 			$subaction = 'installed';
-			$phpgw_info['setup']['currentver']['phpgwapi'] = 'new';
-			$phpgw_info['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
 			break;
 	}
 	$setup_tpl->set_var('subtitle',$subtitle);
@@ -118,7 +118,7 @@
 	// Old PHP
 	if (phpversion() < '3.0.16')
 	{
-		$phpgw_setup->show_header($phpgw_info['setup']['header_msg'],True);
+		$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],True);
 		$phpgw_setup->show_alert_msg('Error',
 			 lang('You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16'));
 		$phpgw_setup->show_footer();
@@ -128,18 +128,18 @@
 	// BEGIN setup page
 	
 	//$phpgw_setup->app_status();
-	$phpgw_info['server']['app_images'] = 'templates/default/images';
-	$incomplete = $phpgw_info['server']['app_images'] . '/incomplete.gif';
-	$completed  = $phpgw_info['server']['app_images'] . '/completed.gif';
+	$GLOBALS['phpgw_info']['server']['app_images'] = 'templates/default/images';
+	$incomplete = $GLOBALS['phpgw_info']['server']['app_images'] . '/incomplete.gif';
+	$completed  = $GLOBALS['phpgw_info']['server']['app_images'] . '/completed.gif';
 
 	$setup_tpl->set_var('img_incomplete',$incomplete);
 	$setup_tpl->set_var('img_completed',$completed);
 
 	$setup_tpl->set_var('db_step_text',lang('Step 1 - Simple Application Management'));
 
-	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'];
+	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
 
-	switch($phpgw_info['setup']['stage']['db'])
+	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
 		case 1:
 			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!'));
@@ -203,7 +203,7 @@
 			// FIXME : CAPTURE THIS OUTPUT
 			$phpgw_setup->db->Halt_On_Error = 'report';
 
-			switch ($phpgw_info['setup']['currentver']['phpgwapi'])
+			switch ($GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'])
 			{
 				case 'dbcreate':
 					$phpgw_setup->db->create_database($db_root, $db_pass);
@@ -216,11 +216,11 @@
 					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG);
 					$included = True;
 					include('lang.php');
-					$phpgw_info['setup']['currentver']['phpgwapi'] = 'oldversion';
+					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 				case 'oldversion':
 					$setup_info = $phpgw_setup->process_pass($setup_info,'upgrade',$DEBUG);
-					$phpgw_info['setup']['currentver']['phpgwapi'] = 'oldversion';
+					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					break;
 			}
 
@@ -252,13 +252,13 @@
 
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step 2 - Configuration'));
-	$phpgw_info['setup']['stage']['config'] = $phpgw_setup->check_config();
+	$GLOBALS['phpgw_info']['setup']['stage']['config'] = $phpgw_setup->check_config();
 
 	// begin DEBUG code
-	//$phpgw_info['setup']['stage']['config'] = 10;
+	//$GLOBALS['phpgw_info']['setup']['stage']['config'] = 10;
 	// end DEBUG code
 
-	switch($phpgw_info['setup']['stage']['config'])
+	switch($GLOBALS['phpgw_info']['setup']['stage']['config'])
 	{
 		case 1:
 			$setup_tpl->set_var('config_status_img',$incomplete);
@@ -330,13 +330,13 @@
 
 	// Lang Section
 	$setup_tpl->set_var('lang_step_text',lang('Step 3 - Language Management'));
-	$phpgw_info['setup']['stage']['lang'] = $phpgw_setup->check_lang();
+	$GLOBALS['phpgw_info']['setup']['stage']['lang'] = $phpgw_setup->check_lang();
 
 	// begin DEBUG code
-	//$phpgw_info['setup']['stage']['lang'] = 0;
+	//$GLOBALS['phpgw_info']['setup']['stage']['lang'] = 0;
 	// end DEBUG code
 
-	switch($phpgw_info['setup']['stage']['lang'])
+	switch($GLOBALS['phpgw_info']['setup']['stage']['lang'])
 	{
 		case 1:
 			$setup_tpl->set_var('lang_status_img',$incomplete);
@@ -350,8 +350,8 @@
 			break;
 		case 10:
 			$langs_list = '';
-			reset ($phpgw_info['setup']['installed_langs']);
-			while (list ($key, $value) = each ($phpgw_info['setup']['installed_langs']))
+			reset ($GLOBALS['phpgw_info']['setup']['installed_langs']);
+			while (list ($key, $value) = each ($GLOBALS['phpgw_info']['setup']['installed_langs']))
 			{
 				if (!$notfirst)
 				{
@@ -381,8 +381,8 @@
 	}
 
 	$setup_tpl->set_var('apps_step_text',lang('Step 4 - Advanced Application Management'));
-//	$phpgw_info['setup']['stage']['apps'] = $phpgw_setup->check_apps();
-	switch($phpgw_info['setup']['stage']['db'])
+//	$GLOBALS['phpgw_info']['setup']['stage']['apps'] = $phpgw_setup->check_apps();
+	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
 	{
 		case 1:
 		case 10:
@@ -402,7 +402,7 @@
 			break;
 	}
 
-	$phpgw_setup->show_header($phpgw_info['setup']['header_msg'],False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+	$phpgw_setup->show_header($GLOBALS['phpgw_info']['setup']['header_msg'],False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_setup_main');
 	$phpgw_setup->show_footer();
 ?>

@@ -27,9 +27,7 @@
 		*/
 		function loaddb()
 		{
-			global $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-
-			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
 			if(empty($ConfigDomain))
 			{
 				/* This is to fix the reading of this value immediately after the cookie was set on login */
@@ -201,7 +199,7 @@
 		*/
 		function register_app($appname,$enable=99)
 		{
-			global $setup_info,$DEBUG;
+			$setup_info = $GLOBALS['setup_info'];
 
 			if(!$appname)
 			{
@@ -229,7 +227,7 @@
 				}
 			}
 
-			if($DEBUG)
+			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>register_app(): ' . $appname . ', version: ' . $setup_info[$appname]['version'] . ', table: ' . $appstbl . '<br>';
 				//var_dump($setup_info[$appname]);
@@ -279,7 +277,7 @@
 		*/
 		function app_registered($appname)
 		{
-			global $setup_info,$DEBUG;
+			$setup_info = $GLOBALS['setup_info'];
 
 			if(!$appname)
 			{
@@ -295,7 +293,7 @@
 				$appstbl = 'phpgw_applications';
 			}
 
-			if($DEBUG)
+			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $appstbl;
 				//var_dump($setup_info[$appname]);
@@ -305,13 +303,13 @@
 			$this->db->next_record();
 			if ($this->db->f(0))
 			{
-				if($DEBUG)
+				if($GLOBALS['DEBUG'])
 				{
 					echo '... app previously registered.';
 				}
 				return True;
 			}
-			if($DEBUG)
+			if($GLOBALS['DEBUG'])
 			{
 				echo '... app not registered';
 			}
@@ -326,7 +324,7 @@
 		*/
 		function update_app($appname)
 		{
-			global $setup_info,$DEBUG;
+			$setup_info = $GLOBALS['setup_info'];
 
 			if(!$appname)
 			{
@@ -342,7 +340,7 @@
 				$appstbl = 'phpgw_applications';
 			}
 
-			if($DEBUG)
+			if($GLOBALS['DEBUG'])
 			{
 				echo '<br>update_app(): ' . $appname . ', version: ' . $setup_info[$appname]['currentver'] . ', table: ' . $appstbl . '<br>';
 				//var_dump($setup_info[$appname]);
@@ -422,7 +420,8 @@
 			{
 				return False;
 			}
-			global $setup_info;
+			$setup_info = $GLOBALS['setup_info'];
+
 			if ($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
 			{
 				$appstbl = 'applications';
@@ -443,7 +442,7 @@
 		*/
 		function register_hooks($appname)
 		{
-			global $setup_info;
+			$setup_info = $GLOBALS['setup_info'];
 
 			if(!$appname)
 			{
@@ -486,7 +485,7 @@
 		*/
 		function update_hooks($appname)
 		{
-			global $setup_info;
+			$setup_info = $GLOBALS['setup_info'];
 
 			if(!$appname)
 			{

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
@@ -133,7 +133,7 @@
 
 	if ($GLOBALS['current_config']['files_dir'] == '/path/to/dir/phpgroupware/files')
 	{
-		$GLOBALS['current_config']['files_dir'] = $phpgw_info['server']['server_root'] . '/files';
+		$GLOBALS['current_config']['files_dir'] = $GLOBALS['phpgw_info']['server']['server_root'] . '/files';
 	}
 
 	if ($error == 'badldapconnection')
@@ -154,13 +154,13 @@
 		var $applications;
 		var $db;
 	}
-	$phpgw = new phpgw;
-	$phpgw->common = CreateObject('phpgwapi.common');
+	$GLOBALS['phpgw'] = new phpgw;
+	$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
 
 	$cfg_apps = array('phpgwapi','admin','preferences');
 	while(list(,$cfg_app) = each($cfg_apps))
 	{
-		$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($cfg_app));
+		$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($cfg_app));
 
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
@@ -171,7 +171,7 @@
 		$t->set_var('row_off', 'EEEEEE');
 
 		$vars = $t->get_undefined('body');
-		$phpgw->common->hook_single('config',$cfg_app);
+		$GLOBALS['phpgw']->common->hook_single('config',$cfg_app);
 
 		while (list($null,$value) = each($vars))
 		{

@@ -34,9 +34,7 @@
 		*/
 		function init_process()
 		{
-			global $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
-
-			$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
 			$phpgw_domain = $GLOBALS['phpgw_domain'];
 			$phpgw_info   = $GLOBALS['phpgw_info'];
 

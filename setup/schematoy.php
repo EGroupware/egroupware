@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$DEBUG = True;
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
 		'currentapp' => 'home',
@@ -20,9 +20,9 @@
 	);
 	include ('./inc/functions.inc.php');
 
-	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
-	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
-	$setup_tpl->set_file(array(
+	$tpl_root = $GLOBALS['phpgw_setup']->setup_tpl_dir('setup');
+	$GLOBALS['setup_tpl'] = CreateObject('phpgwapi.Template',$tpl_root);
+	$GLOBALS['setup_tpl']->set_file(array(
 		'T_head' => 'head.tpl',
 		'T_footer' => 'footer.tpl',
 		'T_alert_msg' => 'msg_alert_msg.tpl',
@@ -31,31 +31,31 @@
 		'T_setup_main' => 'schema.tpl'
 	));
 
-	$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
-	$setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
-	$setup_tpl->set_block('T_setup_main','header','header');
-	$setup_tpl->set_block('T_setup_main','app_header','app_header');
-	$setup_tpl->set_block('T_setup_main','apps','apps');
-	$setup_tpl->set_block('T_setup_main','detail','detail');
-	$setup_tpl->set_block('T_setup_main','table','table');
-	$setup_tpl->set_block('T_setup_main','hook','hook');
-	$setup_tpl->set_block('T_setup_main','dep','dep');
-	$setup_tpl->set_block('T_setup_main','app_footer','app_footer');
-	$setup_tpl->set_block('T_setup_main','submit','submit');
-	$setup_tpl->set_block('T_setup_main','footer','footer');
+	$GLOBALS['setup_tpl']->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
+	$GLOBALS['setup_tpl']->set_block('T_login_stage_header','B_single_domain','V_single_domain');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','header','header');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','app_header','app_header');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','apps','apps');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','detail','detail');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','table','table');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','hook','hook');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','dep','dep');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','app_footer','app_footer');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','submit','submit');
+	$GLOBALS['setup_tpl']->set_block('T_setup_main','footer','footer');
 
 	// Check header and authentication
-	$phpgw_info['setup']['stage']['header'] = $phpgw_setup->check_header();
-	if ($phpgw_info['setup']['stage']['header'] != '10')
+	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->check_header();
+	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
 		Header("Location: manageheader.php");
 		exit;
 	}
-	elseif (!$phpgw_setup->auth('Config'))
+	elseif (!$GLOBALS['phpgw_setup']->auth('Config'))
 	{
-		$phpgw_setup->show_header(lang('Please login'),True);
-		$phpgw_setup->login_form();
-		$phpgw_setup->show_footer();
+		$GLOBALS['phpgw_setup']->show_header(lang('Please login'),True);
+		$GLOBALS['phpgw_setup']->login_form();
+		$GLOBALS['phpgw_setup']->show_footer();
 		exit;
 	}
 
@@ -91,31 +91,32 @@
 		}
 	}
 
-	$phpgw_setup->loaddb();
-	$phpgw_info['setup']['stage']['db'] = $phpgw_setup->check_db();
+	$GLOBALS['phpgw_setup']->loaddb();
+	$GLOBALS['phpgw_info']['setup']['stage']['db'] = $GLOBALS['phpgw_setup']->check_db();
 
-	$setup_info = $phpgw_setup->get_versions();
-	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->get_db_versions($setup_info);
-	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->compare_versions($setup_info);
-	//var_dump($setup_info);exit;
-	$setup_info = $phpgw_setup->check_depends($setup_info);
-	//var_dump($setup_info);exit;
-	@ksort($setup_info);
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->get_versions();
+	//var_dump($GLOBALS['setup_info']);exit;
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->get_db_versions($GLOBALS['setup_info']);
+	//var_dump($GLOBALS['setup_info']);exit;
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->compare_versions($GLOBALS['setup_info']);
+	//var_dump($GLOBALS['setup_info']);exit;
+	$GLOBALS['setup_info'] = $GLOBALS['phpgw_setup']->check_depends($GLOBALS['setup_info']);
+	//var_dump($GLOBALS['setup_info']);exit;
+	@ksort($GLOBALS['setup_info']);
 
-	if ($cancel)
+	if ($HTTP_POST_VARS['cancel'])
 	{
-		Header("Location: index.php");
+		Header('Location: index.php');
 		exit;
 	}
 
-	$phpgw_setup->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
+	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+	$GLOBALS['phpgw_setup']->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
 
 	if ($HTTP_POST_VARS['submit'])
 	{
-		$setup_tpl->set_var('description',lang('App process') . ':');
-		$setup_tpl->pparse('out','header');
+		$GLOBALS['setup_tpl']->set_var('description',lang('App process') . ':');
+		$GLOBALS['setup_tpl']->pparse('out','header');
 
 		$appname = $HTTP_POST_VARS['appname'];
 		$install = $HTTP_POST_VARS['install'];
@@ -130,8 +131,8 @@
 			$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 			// Drop newest tables
-			$terror[$appname]['tables'] = $setup_info[$appname]['tables'];
-			$phpgw_setup->process_droptables($terror,$DEBUG);
+			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
+			$GLOBALS['phpgw_setup']->process_droptables($terror,$DEBUG);
 			$terror[$appname]['tables'] = array();
 
 			// Reset tables field to baseline table names
@@ -149,38 +150,39 @@
 			{
 				echo '<br>Processing ' . $terror[$appname]['name'] . ' to ' . $version[$appname];
 
-				$terror = $phpgw_setup->process_droptables($terror,$DEBUG);
-				$phpgw_setup->deregister_app($terror[$appname]['name']);
+				$terror = $GLOBALS['phpgw_setup']->process_droptables($terror,$DEBUG);
+				$GLOBALS['phpgw_setup']->deregister_app($terror[$appname]['name']);
 
-				$terror = $phpgw_setup->process_baseline($terror,$DEBUG);
-				$terror = $phpgw_setup->process_test_data($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_baseline($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_test_data($terror,$DEBUG);
 
-				$terror = $phpgw_setup->process_upgrade($terror,$DEBUG);
+				$terror = $GLOBALS['phpgw_setup']->process_upgrade($terror,$DEBUG);
 			}
 			else
 			{
 				echo '<br>Baseline-only completed for ' . $terror[$appname]['name'];
 			}
-			echo '<br>' . $setup_info[$appname]['title'] . ' '
+			echo '<br>' . $GLOBALS['setup_info'][$appname]['title'] . ' '
 				. lang('tables installed, unless there are errors printed above') . '.';
 
-			$setup_info[$appname]['version'] = $terror[$appname]['version'];
-			$phpgw_setup->register_app($terror[$appname]['name']);
+			$GLOBALS['setup_info'][$appname]['version'] = $terror[$appname]['version'];
+			$GLOBALS['phpgw_setup']->register_app($terror[$appname]['name']);
 			echo '<br>' . $terror[$appname]['title'] . ' ' . lang('registered') . '.';
 		}
 
 		echo '<br><a href="schematoy.php">' . lang('Go back') . '</a>';
-		$setup_tpl->pparse('out','footer');
+		$GLOBALS['setup_tpl']->pparse('out','footer');
 		exit;
 	}
-	if($detail)
+	if($HTTP_POST_VARS['detail'])
 	{
-		@ksort($setup_info[$detail]);
-		@reset($setup_info[$detail]);
-		$setup_tpl->set_var('description',lang('App details') . ':');
-		$setup_tpl->pparse('out','header');
+		$detail = $HTTP_POST_VARS['detail'];
+		@ksort($GLOBALS['setup_info'][$detail]);
+		@reset($GLOBALS['setup_info'][$detail]);
+		$GLOBALS['setup_tpl']->set_var('description',lang('App details') . ':');
+		$GLOBALS['setup_tpl']->pparse('out','header');
 		
-		while (list($key,$val) = each($setup_info[$detail]))
+		while (list($key,$val) = each($GLOBALS['setup_info'][$detail]))
 		{
 			if ($i) { $i = 0; }
 			else    { $i = 1; }
@@ -199,32 +201,32 @@
 			if ($key == 'depends') { $val = parsedep($val); }
 			if (is_array($val))    { $val = implode(',',$val); }
 
-			$setup_tpl->set_var('bg_color',$bgcolor[$i]);
-			$setup_tpl->set_var('name',$key);
-			$setup_tpl->set_var('details',$val);
-			$setup_tpl->pparse('out','detail');
+			$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
+			$GLOBALS['setup_tpl']->set_var('name',$key);
+			$GLOBALS['setup_tpl']->set_var('details',$val);
+			$GLOBALS['setup_tpl']->pparse('out','detail');
 		}
 
 		echo '<br><a href="schematoy.php">' . lang('Go back') . '</a>';
-		$setup_tpl->pparse('out','footer');
+		$GLOBALS['setup_tpl']->pparse('out','footer');
 		exit;
 	}
 	else
 	{
-		$setup_tpl->set_var('description',lang("Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"));
-		$setup_tpl->pparse('out','header');
+		$GLOBALS['setup_tpl']->set_var('description',lang("Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"));
+		$GLOBALS['setup_tpl']->pparse('out','header');
 
-		$setup_tpl->set_var('appdata',lang('Application Data'));
-		$setup_tpl->set_var('actions',lang('Actions'));
-		$setup_tpl->set_var('action_url','schematoy.php');
-		$setup_tpl->set_var('app_info',lang('Application Name and Status'));
-		$setup_tpl->set_var('app_title',lang('Application Title'));
-		$setup_tpl->set_var('app_version',lang('Target Version'));
-		$setup_tpl->set_var('app_install',lang('Process'));
-		$setup_tpl->pparse('out','app_header');
+		$GLOBALS['setup_tpl']->set_var('appdata',lang('Application Data'));
+		$GLOBALS['setup_tpl']->set_var('actions',lang('Actions'));
+		$GLOBALS['setup_tpl']->set_var('action_url','schematoy.php');
+		$GLOBALS['setup_tpl']->set_var('app_info',lang('Application Name and Status'));
+		$GLOBALS['setup_tpl']->set_var('app_title',lang('Application Title'));
+		$GLOBALS['setup_tpl']->set_var('app_version',lang('Target Version'));
+		$GLOBALS['setup_tpl']->set_var('app_install',lang('Process'));
+		$GLOBALS['setup_tpl']->pparse('out','app_header');
 
-		@reset ($setup_info);
-		while (list ($key, $value) = each ($setup_info))
+		@reset ($GLOBALS['setup_info']);
+		while (list ($key, $value) = each ($GLOBALS['setup_info']))
 		{
 			unset($test);
 			if (file_exists(PHPGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
@@ -242,7 +244,7 @@
 			{
 				$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
 			}
-			$setup_tpl->set_var('select_version',$s);
+			$GLOBALS['setup_tpl']->set_var('select_version',$s);
 
 			if ($value['name'])
 			{
@@ -254,25 +256,25 @@
 				{
 					$i = 1;
 				}
-				$setup_tpl->set_var('apptitle',$value['title']);
-				$setup_tpl->set_var('currentver',$value['currentver']);
-				$setup_tpl->set_var('bg_color',$bgcolor[$i]);
+				$GLOBALS['setup_tpl']->set_var('apptitle',$value['title']);
+				$GLOBALS['setup_tpl']->set_var('currentver',$value['currentver']);
+				$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
 
-				$setup_tpl->set_var('instimg','completed.gif');
-				$setup_tpl->set_var('instalt',lang('Completed'));
-				$setup_tpl->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']">');
+				$GLOBALS['setup_tpl']->set_var('instimg','completed.gif');
+				$GLOBALS['setup_tpl']->set_var('instalt',lang('Completed'));
+				$GLOBALS['setup_tpl']->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']">');
 				$status = lang('OK') . ' - ' . $value['status'];
 
-				$setup_tpl->set_var('appinfo',$value['name'] . '-' . $status);
-				$setup_tpl->set_var('appname',$value['name']);
+				$GLOBALS['setup_tpl']->set_var('appinfo',$value['name'] . '-' . $status);
+				$GLOBALS['setup_tpl']->set_var('appname',$value['name']);
 
-				$setup_tpl->pparse('out','apps',True);
+				$GLOBALS['setup_tpl']->pparse('out','apps',True);
 			}
 		}
 	}
-	$setup_tpl->set_var('submit',lang('Submit'));
-	$setup_tpl->set_var('cancel',lang('Cancel'));
-	$setup_tpl->pparse('out','app_footer');
-	$setup_tpl->pparse('out','footer');
-	$phpgw_setup->show_footer();
+	$GLOBALS['setup_tpl']->set_var('submit',lang('Submit'));
+	$GLOBALS['setup_tpl']->set_var('cancel',lang('Cancel'));
+	$GLOBALS['setup_tpl']->pparse('out','app_footer');
+	$GLOBALS['setup_tpl']->pparse('out','footer');
+	$GLOBALS['phpgw_setup']->show_footer();
 ?>
