@@ -49,89 +49,90 @@
 	 Example1: sanitize('number',$somestring);
 	*/
 
-	 /*
-		$GLOBALS['phpgw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
+	/*
+	$GLOBALS['phpgw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
 	*/
-	
-	function sanitize($string,$type) {
+
+	function sanitize($string,$type)
+	{
 		switch ($type)
 		{
-    	case "bool":
-      	if ($string == 1 || $string == 0)
-				{
-        	return True;
-				}
-	      break;
-  	  case "number":
-    	  if (preg_match("/^[0-9]+$/i", $string))
-				{
-      	  return True;
-				}
-	      break;
-  	  case "string":
-    	  if (preg_match("/^[a-z]+$/i", $string))
-				{
-      	  return True;
-				}
-	      break;
-  	  case "alpha":
-    	  if (preg_match("/^[a-z0-9 -._]+$/i", $string))
-				{
-      	  return True;
-				}
-	      break;
-  	  case "ip":
-    	  if (eregi("^[0-9]{1,3}(\.[0-9]{1,3}){3}$",$string))
-				{
-    			$octets = split('\.',$string);
-    			for ($i=0; $i != count($octets); $i++)
-					{
-	    			if ($octets[$i] < 0 || $octets[$i] > 255)
-						{
-  	  				return False;
-						}
-					}
-    			return True;
-    		}
-	    	return False;
-  	    break;
-    	case "file":
-	      if (preg_match("/^[a-z0-9_]+\.+[a-z]+$/i", $string))
-				{
-  	      return True;
-				}
-				break;
-    	case "email":
-		    if (eregi("^([[:alnum:]_%+=.-]+)@([[:alnum:]_.-]+)\.([a-z]{2,3}|[0-9]{1,3})$",$string))
+			case 'bool':
+				if ($string == 1 || $string == 0)
 				{
 					return True;
 				}
 				break;
-  	  case "any":
-    	  return True;
-      	break;
-	    default :
+			case 'number':
+				if (preg_match("/^[0-9]+$/i", $string))
+				{
+					return True;
+				}
+				break;
+			case 'string':
+				if (preg_match("/^[a-z]+$/i", $string))
+				{
+					return True;
+				}
+				break;
+			case 'alpha':
+				if (preg_match("/^[a-z0-9 -._]+$/i", $string))
+				{
+					return True;
+				}
+				break;
+			case 'ip':
+				if (eregi("^[0-9]{1,3}(\.[0-9]{1,3}){3}$",$string))
+				{
+					$octets = split('\.',$string);
+					for ($i=0; $i != count($octets); $i++)
+					{
+						if ($octets[$i] < 0 || $octets[$i] > 255)
+						{
+							return False;
+						}
+					}
+					return True;
+				}
+				return False;
+				break;
+			case 'file':
+				if (preg_match("/^[a-z0-9_]+\.+[a-z]+$/i", $string))
+				{
+					return True;
+				}
+				break;
+			case 'email':
+				if (eregi("^([[:alnum:]_%+=.-]+)@([[:alnum:]_.-]+)\.([a-z]{2,3}|[0-9]{1,3})$",$string))
+				{
+					return True;
+				}
+				break;
+			case 'any':
+				return True;
+				break;
+			default :
 				if (isset($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']))
 				{
-  	  	  if ($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['string'], $string))
+					if ($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['type']($GLOBALS['phpgw_info']['server']['sanitize_types'][$type]['string'], $string))
 					{
-    	  	  return True;
+						return True;
 					}
 				}
-			return False;
-	  }
-	}	
-
+				return False;
+		}
+	}
 
 	function registervar($varname, $valuetype = 'alpha', $posttype = 'post', $allowblank = True)
 	{
-  	switch ($posttype) {
-    	case "get":
+		switch ($posttype)
+		{
+			case 'get':
 				$posttype = 'HTTP_GET_VARS';
-	      break;
-  	  default :
+				break;
+			default :
 				$posttype = 'HTTP_POST_VARS';
-	  }
+		}
 
 		if (isset($GLOBALS[$posttype][$varname]))
 		{
