@@ -25,6 +25,26 @@
 
   class sessions
   {
+    var $login;
+    var $passwd;
+    var $account_id;
+    var $account_lid;
+    var $account_domain;
+    var $sessionid;
+    var $kp3;
+    var $data;
+    var $db;
+    var $db2;
+
+    function sessions()
+    {
+      global $phpgw, $phpgw_info, $sessionid, $kp3;
+      $this->db = $phpgw->db;
+      $this->db2 = $phpgw->db;
+      $this->sessionid = $sessionid;
+      $this->kp3 = $kp3;
+    }
+
     function getuser_ip()
     {
        global $REMOTE_ADDR, $HTTP_X_FORWARDED_FOR;
@@ -61,8 +81,9 @@
           $phpgw_info["user"]["session_ip"]  = $db->f("session_ip");
 
           $t = explode("@",$db->f("session_lid"));
-          $phpgw_info["user"]["userid"]      = $t[0];
+          $phpgw_info["user"]["account_lid"]      = $t[0];
 
+//          $this->read_repositories();
 //          $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["account_lid"]);
 //          $phpgw_info["user"] = $phpgw->accounts->read_repository();
 
@@ -77,7 +98,7 @@
        $phpgw_info          = $phpgw->crypto->decrypt($db->f("session_info"));
        $phpgw_info["flags"] = $phpgw_info_flags;
        $userid_array = explode("@",$db->f("session_lid"));
-       $phpgw_info["user"]["userid"] = $userid_array[0];
+       $phpgw_info["user"]["account_lid"] = $userid_array[0];
 
        if ($userid_array[1] != $phpgw_info["user"]["domain"]) {
 //          return False;
@@ -88,7 +109,7 @@
 
        $this->update_dla();
 
-       if (! $phpgw_info["user"]["userid"] ) {
+       if (! $phpgw_info["user"]["account_lid"] ) {
           return False;
        } else {
           // PHP 3 complains that these are not defined when the already are defined.
@@ -109,84 +130,113 @@
        }
     }
 
+    function read_repositories($account_id)
+    {
+      global $phpgw_info, $phpgw;
+      if (gettype($account_id) == "string") { $account_id = $phpgw->accounts->name2id($account_id); }
+      $this->account_id = $account_id;
+
+      $phpgw->accounts->accounts($this->account_id);
+      $phpgw->preferences->preferences($this->account_id);
+      $phpgw->applications->applications($this->account_id);
+      $phpgw->acl->acl($this->account_id);
+
+      $phpgw_info["user"] = $phpgw->accounts->read_repository();
+      $phpgw_info["user"]["acl"] = $phpgw->acl->read_repository();
+      $phpgw_info["user"]["preferences"] = $phpgw->preferences->read_repository();
+      $phpgw_info["user"]["apps"] = $phpgw->applications->read_repository();
+      @reset($phpgw_info["user"]["apps"]);
+
+      $phpgw_info["user"]["domain"]      = $this->account_domain;
+      $phpgw_info["user"]["sessionid"]   = $this->sessionid;
+      $phpgw_info["user"]["kp3"]         = $this->kp3;
+      $phpgw_info["user"]["session_ip"]  = $this->getuser_ip();
+      $phpgw_info["user"]["session_lid"] = $this->account_lid."@".$this->account_domain;
+      $phpgw_info["user"]["account_id"]  = $this->account_id;
+      $phpgw_info["user"]["account_lid"] = $this->account_lid;
+      $phpgw_info["user"]["userid"]      = $this->account_lid;
+      $phpgw_info["user"]["passwd"]      = $this->passwd;
+
+      $this->data["user"]        = $phpgw_info["user"];
+      $this->data["apps"]        = $phpgw_info["apps"];
+      $this->data["server"]      = $phpgw_info["server"];
+      $this->data["hooks"]       = $phpgw->hooks->read();
+      $this->data["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+      $this->data["user"]["kp3"] = "";
+    }
+
     function create($login,$passwd)
     {
-       global $phpgw_info, $phpgw;
+      global $phpgw_info, $phpgw;
+      $this->login = $login;
+      $this->passwd = $phpgw->common->encrypt($passwd);
+      $this->clean_sessions();
+      $login_array = explode("@", $login);
+      $this->account_lid = $login_array[0];
+      if ($login_array[1]!=""){
+        $this->account_domain = $login_array[1];
+      }else{
+        $this->account_domain = $phpgw_info["server"]["default_domain"];
+      }
 
-       $this->clean_sessions();
-       $login_array = explode("@", $login);
-       $phpgw_info["user"]["userid"] = $login_array[0];
-       if ($phpgw_info["server"]["global_denied_users"][$phpgw_info["user"]["userid"]]) {
-          return False;
-       }
+      if ($phpgw_info["server"]["global_denied_users"][$this->account_lid]) { return False; }
  
-       if (! $phpgw->auth->authenticate($phpgw_info["user"]["userid"], $passwd)) {
-          return False;
-          exit;
-       }
-       //$accts = CreateObject("phpgwapi.accounts");
-       
-       //if (!$accts->exists($phpgw_info["user"]["userid"])) {
-       //   $accts->auto_generate($phpgw_info["user"]["userid"], $passwd);
-       //}
+      if (! $phpgw->auth->authenticate($this->account_lid, $passwd)) {
+        return False;
+        exit;
+      }
 
-       $phpgw->accounts->account_id = $phpgw->accounts->name2id($phpgw_info["user"]["userid"]);
+      if (!$phpgw->accounts->exists($this->account_lid) && $phpgw_info["server"]["auto_create_acct"] == True) {
+        $this->account_id = $accts->auto_add($this->account_lid, $passwd);
+      }else{
+        $this->account_id = $phpgw->accounts->name2id($this->account_lid);
+      }
+      $phpgw->accounts->account_id = $this->account_id;
 
-       $t_domain = $phpgw_info["user"]["domain"];        // We loose this info on the next line
-       $phpgw_info["user"] = $phpgw->accounts->read_repository();
-       $phpgw_info["user"]["domain"] = $t_domain;
-       $phpgw_info["user"]["sessionid"] = md5($phpgw->common->randomstring(10));
-       $phpgw_info["user"]["kp3"]       = md5($phpgw->common->randomstring(15));
+      $phpgw_info["user"] = $phpgw->accounts->read_repository();
+      $this->sessionid = md5($phpgw->common->randomstring(10));
+      $this->kp3 = md5($phpgw->common->randomstring(15));
 
-       $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
-       $phpgw->common->key .= $phpgw_info["user"]["sessionid"];
-       $phpgw->common->key .= $phpgw_info["user"]["kp3"];
-       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
-       $cryptovars[0] = $phpgw->common->key;      
-       $cryptovars[1] = $phpgw->common->iv;      
-       $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
+      $phpgw->common->key  = $phpgw_info["server"]["encryptkey"];
+      $phpgw->common->key .= $this->sessionid;
+      $phpgw->common->key .= $this->kp3;
+      $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
+      $cryptovars[0] = $phpgw->common->key;      
+      $cryptovars[1] = $phpgw->common->iv;      
+      $phpgw->crypto = CreateObject("phpgwapi.crypto", $cryptovars);
 
-       $phpgw_info["user"]["passwd"]    = $phpgw->common->encrypt($passwd);
  
-       if ($phpgw_info["server"]["usecookies"]) {
-          Setcookie("sessionid",$phpgw_info["user"]["sessionid"]);
-          Setcookie("kp3",$phpgw_info["user"]["kp3"]);
-          Setcookie("domain",$phpgw_info["user"]["domain"]);
-          Setcookie("last_domain",$phpgw_info["user"]["domain"],time()+1209600);
-          if ($phpgw_info["user"]["domain"] ==$phpgw_info["server"]["default_domain"]) {
-             Setcookie("last_loginid",$phpgw_info["user"]["userid"],time()+1209600);  // For 2 weeks
-          } else {
-             Setcookie("last_loginid",$loginid,time()+1209600);  // For 2 weeks
-          }
-          unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
-       }
+      if ($phpgw_info["server"]["usecookies"]) {
+         Setcookie("sessionid",$this->sessionid);
+         Setcookie("kp3",$this->kp3);
+         Setcookie("domain",$this->account_domain);
+         Setcookie("last_domain",$this->account_domain,time()+1209600);
+         if ($this->account_domain == $phpgw_info["server"]["default_domain"]) {
+            Setcookie("last_loginid", $this->account_lid ,time()+1209600);  // For 2 weeks
+         } else {
+            Setcookie("last_loginid", $login ,time()+1209600);  // For 2 weeks
+         }
+         unset ($phpgw_info["server"]["default_domain"]); // we kill this for security reasons
+      }
 
-       $phpgw_info["user"]["session_ip"] = $this->getuser_ip();
-       $phpgw_info["user"]["session_lid"] = $phpgw_info["user"]["account_lid"]."@".$phpgw_info["user"]["domain"];
-       $phpgw_info_temp["user"]        = $phpgw_info["user"];
-       $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
-       $phpgw_info_temp["server"]      = $phpgw_info["server"];
-       $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
-       $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-       $phpgw_info_temp["user"]["kp3"] = "";
-       if ($PHP_VERSION < "4.0.0") {
-          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
-       } else {
-          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);       
-       }
-       $phpgw->db->query("insert into phpgw_sessions values ('" . $phpgw_info["user"]["sessionid"]
-                       . "','".$login."','" . $this->getuser_ip() . "','"
-                       . time() . "','" . time() . "','".$info_string."')",__LINE__,__FILE__);
+      $this->read_repositories($this->account_id);
 
-       //$phpgw->accounts->save_repository();
+      if ($PHP_VERSION < "4.0.0") {
+         $info_string = addslashes($phpgw->crypto->encrypt($this->data));
+      } else {
+         $info_string = $phpgw->crypto->encrypt($this->data);       
+      }
+      $phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
+                      . "','".$login."','" . $this->getuser_ip() . "','"
+                      . time() . "','" . time() . "','".$info_string."')",__LINE__,__FILE__);
 
-       $phpgw->db->query("insert into phpgw_access_log values ('" . $phpgw_info["user"]["sessionid"] . "','"
-                       . "$login','" . $this->getuser_ip() . "','" . time()
-                       . "','') ",__LINE__,__FILE__);
+      $phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
+                      . "$login','" . $this->getuser_ip() . "','" . time()
+                      . "','') ",__LINE__,__FILE__);
 
-       $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
+      $phpgw->auth->update_lastlogin($login,$this->getuser_ip());
 
-       return $phpgw_info["user"]["sessionid"];
+      return $this->sessionid;
     }
 
     // This will update the DateLastActive column, so the login does not expire
@@ -195,7 +245,7 @@
        global $phpgw_info, $phpgw;
  
        $phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "' where session_id='"
-                       . $phpgw_info["user"]["sessionid"]."'",__LINE__,__FILE__);
+                       . $this->sessionid."'",__LINE__,__FILE__);
     }
     
     function destroy()

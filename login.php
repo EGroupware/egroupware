@@ -34,8 +34,9 @@
   } 
 */
 
-  $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/default";
-  $tmpl = new Template($phpgw_info["server"]["template_dir"]);
+  $phpgw_info["server"]["template_dir"] = PHPGW_SERVER_ROOT."/phpgwapi/templates/default";
+//  $tmpl = new Template($phpgw_info["server"]["template_dir"]);
+  $tmpl = CreateObject("phpgwapi.Template", $phpgw_info["server"]["template_dir"]);
 
   if (! $deny_login && ! $phpgw_info["server"]["show_domain_selectbox"]) {
      $tmpl->set_file(array("login_form"  => "login.tpl"));
@@ -122,17 +123,18 @@
     // If there is something wrong with this code TELL ME!
     // Commenting out the code will not fix it. (jengo)
     if (isset($last_loginid)) {
-//echo "check point 1 - $last_loginid<br>\n";
-       $prefs = CreateObject("phpgwapi.preferences", $last_loginid);
-//echo "check point 2<br>\n";
-       $phpgw_info["user"]["preferences"] = $prefs->read_repository();
-//echo "check point 3<br>\n";
-       #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
-       $phpgw->translation->add_app("login");
-       $phpgw->translation->add_app("loginscreen");
-       if (lang("loginscreen_message") != "loginscreen_message*") {
-          $tmpl->set_var("lang_message",stripslashes(lang("loginscreen_message")));
-       }
+      $prefs = CreateObject("phpgwapi.preferences", $last_loginid);
+      if ($prefs->account_id == ""){
+        $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
+      }else{
+        $phpgw_info["user"]["preferences"] = $prefs->read_repository();
+      }
+      #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
+      $phpgw->translation->add_app("login");
+      $phpgw->translation->add_app("loginscreen");
+      if (lang("loginscreen_message") != "loginscreen_message*") {
+         $tmpl->set_var("lang_message",stripslashes(lang("loginscreen_message")));
+      }
     } else {
        // If the lastloginid cookies isn't set, we will default to english.
        // Change this if you need.
