@@ -1,0 +1,94 @@
+%1 already exists as a file	filemanager	en	%1 已经作为一个文件存在
+application	filemanager	en	应用程序
+back to file manager	filemanager	en	回到文件管理器
+cannot create directory because it begins or ends in a space	filemanager	en	由于以空格开始或结束不能创建目录
+cannot replace %1 because it is a directory	filemanager	en	不能替代 %1 因为它是一个目录
+command sucessfully run	filemanager	en	命令成功运行
+comment	filemanager	en	Comment
+comments cannot contain "%1"	filemanager	en	注解不能包含 "%1"
+copied %1 to %2	filemanager	en	拷贝 %1 到 %2
+copy to	filemanager	en	拷贝到
+copy to:	filemanager	en	拷贝到:
+could not copy %1 to %2	filemanager	en	不能拷贝 %1 到 %2
+could not create %1	filemanager	en	不能创建 %1
+could not create directory %1	filemanager	en	不能创建目录 %1
+could not delete %1	filemanager	en	不能删除 %1
+could not move %1 to %2	filemanager	en	不能移动 %1 到 %2
+could not rename %1 to %2	filemanager	en	不能将 %1 改名为 %2
+could not save %1	filemanager	en	不能保存 %1
+create file	filemanager	en	创建文件
+create folder	filemanager	en	创建文件夹
+created	filemanager	en	创建
+created %1	filemanager	en	创建 %1
+created by	filemanager	en	由创建
+created directory %1	filemanager	en	创建目录 %1
+date	filemanager	en	日期
+default number of upload fields to show	filemanager	en	要显示的默认上传区域数目
+delete	filemanager	en	删除
+deleted %1	filemanager	en	删除 %1
+directory	filemanager	en	目录
+directory %1 already exists	filemanager	en	目录 %1 已经存在
+directory %1 does not exist	filemanager	en	目录 %1 不存在
+directory names cannot contain "%1"	filemanager	en	目录名不能包含 "%1"
+display attributes	filemanager	en	显示属性
+download	filemanager	en	下载
+edit	filemanager	en	编辑
+edit comments	filemanager	en	编辑注解
+error running command	filemanager	en	错误运行命令
+execute	filemanager	en	执行
+failed to create directory	filemanager	en	创建目录失败
+file	filemanager	en	File
+file %1 already exists. please edit it or delete it first.	filemanager	en	文件 %1 已经存在. 请先编辑或删除.
+file %1 could not be created.	filemanager	en	文件 %1 不能创建.
+file name	filemanager	en	File Name
+file names cannot contain "%1"	filemanager	en	文件名不能包含 "%1"
+file names cannot contain \ or /	filemanager	en	文件名不能包含 \ 或 /
+filemanager	common	en	Filemanager
+filemanager preferences	filemanager	en	文件管理参数选择
+files	filemanager	en	文件
+folder	filemanager	en	文件夹
+go to	filemanager	en	进入
+go to %1	filemanager	en	进入 %1
+go to your home directory	filemanager	en	进入您的主目录
+go to:	filemanager	en	进入:
+home	filemanager	en	本地
+locked	filemanager	en	锁定
+mime type	filemanager	en	MIME 类型
+modified	filemanager	en	修改
+modified by	filemanager	en	由修改
+move to	filemanager	en	移动到
+move to:	filemanager	en	移动到:
+moved %1 to %2	filemanager	en	移动 %1 到 %2
+no version history for this file/directory	filemanager	en	没有该文件/文件夹历史版本
+operation	filemanager	en	操作
+owner	filemanager	en	Owner
+preview %1	filemanager	en	预览 %1
+preview of %1	filemanager	en	从 %1预览
+rename	filemanager	en	改名
+renamed %1 to %2	filemanager	en	 %1 改名为 %2
+replaced %1	filemanager	en	替换 %1
+save %1	filemanager	en	保存 %1
+save all	filemanager	en	保存所有
+saved %1	filemanager	en	保存 %1
+show	filemanager	en	显示
+show ..	filemanager	en	显示 ..
+show .files	filemanager	en	显示 .文件
+show command line (experimental. dangerous.)	filemanager	en	显示命令行(危险实验)
+show help	filemanager	en	显示帮助
+size	filemanager	en	大小
+sort by:	filemanager	en	由排列:
+total files	filemanager	en	所有文件
+unknown mime-type defaults to text/plain when viewing	filemanager	en	未知mime类型默认类型为文本类型
+unused space	filemanager	en	未使用空间
+up	filemanager	en	向上
+update	filemanager	en	更新
+updated comment for %1	filemanager	en	为 %1更新注解
+upload fields	filemanager	en	上传区域
+upload files	filemanager	en	上传文件
+used space	filemanager	en	使用空间
+users	filemanager	en	用户
+version	filemanager	en	版本
+view documents in new window	filemanager	en	在新窗口查看文档
+view documents on server (if available)	filemanager	en	在服务器上查看文档（如果可能）
+who	filemanager	en	谁
+you do not have access to %1	filemanager	en	您不能进入 %1

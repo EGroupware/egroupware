@@ -1,50 +1,50 @@
-1 match found	calendar	zh	共有 1 笔资料符合
-(i/v)cal	calendar	zh	(i/v)Cal
+1 match found	calendar	zh	共有 1 个符合要求的条目
+(i/v)cal	calendar	zh	(i/v)日历
 a	calendar	zh	一
 accept	calendar	zh	接受
 accepted	calendar	zh	已接受
-add alarm	calendar	zh	新增警示
-alarm management	calendar	zh	警示管理
+add alarm	calendar	zh	新增警告
+alarm management	calendar	zh	警告管理
 all day	calendar	zh	所有日期
-are you sure\nyou want to\ndelete this entry ?	calendar	zh	您确定要移除\n这笔资料吗？
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zh	您确定要移除这笔资料吗？\n所有使用者的资料将一并移除。
+are you sure\nyou want to\ndelete this entry ?	calendar	zh	您确定要移除这个条目吗？
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zh	您确定要移除这个纪录吗？\n\n所有使用者的这一纪录都将被移除。
 are you sure you want to delete this holiday ?	calendar	zh	您确定要移除这个假日吗？
 brief description	calendar	zh	简短叙述
-calendar	common	zh	行事历
-calendar preferences	common	zh	行事历喜好设定
-calendar - [iv]cal importer	calendar	zh	Calendar - [iv]Cal Importer
-calendar - add	calendar	zh	行事历 - 新增
-calendar - edit	calendar	zh	行事历 - 编辑
-calendar holiday management	admin	zh	行事历假日管理
-daily	calendar	zh	每日
-daily matrix view	calendar	zh	每日阵列检视模式
+calendar	common	zh	日历
+calendar preferences	common	zh	日历喜好设定
+calendar - [iv]cal importer	calendar	zh	Calendar - [iv]Cal 导入
+calendar - add	calendar	zh	日历 - 新增
+calendar - edit	calendar	zh	日历 - 编辑
+calendar holiday management	admin	zh	日历 - 假日管理
+daily	calendar	zh	每天
+daily matrix view	calendar	zh	每天矩形浏览
 days repeated	calendar	zh	日重覆
-default calendar filter	calendar	zh	预设行事历过滤器
-default calendar view	calendar	zh	预设行事历检视模式
-display mini calendars when printing	calendar	zh	列印时显示小行事历
+default calendar filter	calendar	zh	默认日历过滤器
+default calendar view	calendar	zh	默认日历浏览
+display mini calendars when printing	calendar	zh	打印时显示小日历
 display status of events	calendar	zh	显示事件的状态
 duration	calendar	zh	期间
 edit series	calendar	zh	编辑全系列约会
 edit single	calendar	zh	编辑单一约会
-end date/time	calendar	zh	结束日期时间
+end date/time	calendar	zh	结束日期/时间
 ends	calendar	zh	结束日期
-export	calendar	zh	汇出
+export	calendar	zh	导出
 (for weekly)	calendar	zh	（每周）
 fr	calendar	zh	五
 free/busy	calendar	zh	有空/忙录
 frequency	calendar	zh	频率
 fri	calendar	zh	五
 full description	calendar	zh	完整叙述
-generate printer-friendly version	calendar	zh	产生友善列印版本
-global public and group public	calendar	zh	全区公用及群组公用
-global public only	calendar	zh	全区公用
-go!	calendar	zh	出发！
-grant calendar access	common	zh	管理行事历权限
-group public only	calendar	zh	群组公用
-ignore conflict	calendar	zh	忽略重叠的约会
+generate printer-friendly version	calendar	zh	产生便于打印版本
+global public and group public	calendar	zh	全部公用与组共用
+global public only	calendar	zh	仅全部公用
+go!	calendar	zh	开始！
+grant calendar access	common	zh	允许日历访问
+group public only	calendar	zh	仅组共用
+ignore conflict	calendar	zh	忽略冲突
 i participate	calendar	zh	我要参与
-load [iv]cal	calendar	zh	Load [iv]Cal
-location	calendar	zh	约会位置
+load [iv]cal	calendar	zh	载入 [iv]日历
+location	calendar	zh	位置
 minutes	calendar	zh	分钟
 mo	calendar	zh	一
 mon	calendar	zh	一
@@ -52,42 +52,42 @@ month	calendar	zh	月
 monthly (by date)	calendar	zh	每月（以日期计）
 monthly (by day)	calendar	zh	每月（以天数计）
 monthly	calendar	zh	每月
-new entry	calendar	zh	新增资料
-no matches found.	calendar	zh	没有找到符合的资料
+new entry	calendar	zh	新增条目
+no matches found.	calendar	zh	没有找到符合的条目
 no repsonse	calendar	zh	没有回应
 no response	calendar	zh	没有回应
 participant	calendar	zh	与会者
 participants	calendar	zh	与会者
 participates	calendar	zh	参与
-printer friendly	calendar	zh	友善列印
-private and global public	calendar	zh	私人及全区公用
-private and group public	calendar	zh	私人及群组公用
-private only	calendar	zh	私人
-re-edit event	calendar	zh	重新编辑约会
-refresh	calendar	zh	重新整理
+printer friendly	calendar	zh	便于打印
+private and global public	calendar	zh	私人及全体公用
+private and group public	calendar	zh	私人及组公用
+private only	calendar	zh	仅私人
+re-edit event	calendar	zh	重新编辑事件
+refresh	calendar	zh	更新
 reject	calendar	zh	拒绝
-rejected	calendar	zh	拒绝
-repeat day	calendar	zh	重覆天数
-repeat end date	calendar	zh	重覆结束日期
-repeating event information	calendar	zh	约会重覆资讯
+rejected	calendar	zh	已拒绝
+repeat day	calendar	zh	重复日期
+repeat end date	calendar	zh	重复结束日期
+repeating event information	calendar	zh	重复约会信息
 repeat type	calendar	zh	重覆类型
-repetition	calendar	zh	重覆约会
+repetition	calendar	zh	重复
 sa	calendar	zh	六
 sat	calendar	zh	六
-scheduling conflict	calendar	zh	约会重叠
-search results	calendar	zh	搜寻结果
+scheduling conflict	calendar	zh	约会冲突
+search results	calendar	zh	搜索结果
 send/Receive updates via email	calendar	zh	透过电子邮件传送/接收最新消息
-send updates via email	common	zh	透过电子邮件传送最新消息
-show day view on main screen	calendar	zh	在首页显示当日行程
+send updates via email	common	zh	透过电子邮件发送最新消息
+show day view on main screen	calendar	zh	在首页显示当日日程安排
 show high priority events on main screen	calendar	zh	在首页显示高优先权的约会
-sorry, the owner has just deleted this event	calendar	zh	很抱歉，该约会的拥有者刚移除了该约会
+sorry, the owner has just deleted this event	calendar	zh	很抱歉，此约会的所有者刚删除了此约会
 start date/time	calendar	zh	开始日期/时间
 su	calendar	zh	日
 sun	calendar	zh	日
 tentative	calendar	zh	暂定
 th	calendar	zh	四
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	zh	下列的约会和您欲加入的约会重叠：<ul>%1</ul>
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zh	无法连结到您的新闻主机，<br>请和网路管理者联络，协助检查新闻主机的名称、使用者代号及密码。
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	zh	下列约会和您欲加入的约会冲突：<ul>%1</ul>
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zh	无法连结到您的新闻服务器，<br>请和网络管理者联系，检查新闻服务器的名称、用户名及密码。
 this month	calendar	zh	本月
 this week	calendar	zh	本周
 this year	calendar	zh	今年
@@ -95,25 +95,25 @@ thu	calendar	zh	四
 today	calendar	zh	今天
 tu	calendar	zh	二
 tue	calendar	zh	二
-use end date	calendar	zh	有结束日期
-view this entry	calendar	zh	检视此笔资料
-we	calendar	zh	叁
-wed	calendar	zh	叁
+use end date	calendar	zh	使用结束日期
+view this entry	calendar	zh	浏览此条目
+we	calendar	zh	三
+wed	calendar	zh	三
 week	calendar	zh	星期
-weekday starts on	calendar	zh	星期开始日
+weekday starts on	calendar	zh	每星期开始于
 weekly	calendar	zh	每周
-when creating new events default set to private	calendar	zh	新增约会时预设为私人性约会
-work day ends on	calendar	zh	每日结束时间
-work day starts on	calendar	zh	每日开始时间
-%1 matches found	calendar	zh	共有 %1 笔资料符合
+when creating new events default set to private	calendar	zh	新增约会默认为私人约会
+work day ends on	calendar	zh	每天结束时间
+work day starts on	calendar	zh	每天开始时间
+%1 matches found	calendar	zh	共有 %1 个条目符合
 year	calendar	zh	年
 yearly	calendar	zh	每年
 you have 1 high priority event on your calendar today.	common	zh	您今天有 1 个高重要性的约会。
 you have %1 high priority events on your calendar today.	common	zh	您今天有 %1 个高重要性的约会。
 you have not entered a valid date	calendar	zh	您没有输入正确的日期
-you have not entered a title	calendar	zh	您没有输入约会主题
+you have not entered a title	calendar	zh	您没有输入主题
 you have not entered a valid time of day	calendar	zh	您没有输入正确的时间
-you have not entered participants	calendar	zh	您没有选择与会者
+you have not entered participants	calendar	zh	您没有输入与会者
 you must enter one or more search keywords	calendar	zh	您必需输入一个或一个以上的关键字
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zh	您所使用的约会时间 <B> %1 - %2 </B> 和下列的约会重叠：
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zh	您所使用的约会时间 <B> %1 - %2 </B> 和下列的条目冲突：
 
