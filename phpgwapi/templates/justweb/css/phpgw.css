@@ -65,6 +65,15 @@ a.th,a.th_text
 	background: url(../images/side_bar_bg.png);
 }
 
+.left_top
+{
+	background: url(../images/side_bar_top.png);
+}
+
+.left_bottom
+{
+	background: url(../images/side_bar_bottom.png);
+}
 
 table.portal
 {

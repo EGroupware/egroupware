@@ -404,14 +404,14 @@
 				$lastname  = $GLOBALS['phpgw_info']['user']['lastname'];
 			}
 
-			if ($lastname)
-			{
-				$a[] = $lastname;
-			}
-
 			if ($firstname)
 			{
 				$a[] = $firstname;
+			}
+
+			if ($lastname)
+			{
+				$a[] = $lastname;
 			}
 
 			if(isset($a))
@@ -422,10 +422,10 @@
 						return $lid;
 						break;
 					case 1:
-						return '<' . $lid . '> ' . $a[0];
+						return $a[0] . ' <' . $lid . '>';
 						break;
 					case 2:
-						return '<' . $lid . '> ' . implode(', ',$a);
+						return $a[0] . ' ' . $a[1] .' <' . $lid . '>'; //implode(', ',$a);
 						break;
 				}
 			}
@@ -1069,6 +1069,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			(
 				'charset'			=> lang('charset'),
 				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'],
+				'webserver_url'		=> $GLOBALS['phpgw_info']['server']['webserver_url'],
 				'phpgw_css_file'	=> $css[0],
 				'theme_css_file'	=> $css[1],
 				'app_tpl'			=> $app_tpl
@@ -1152,6 +1153,13 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['logout_img']	= $this->image('phpgwapi','logout-grey');
 					$var['about_img']	= $this->image('phpgwapi','help');
 					$var['greybar']		= $this->image('phpgwapi','greybar');
+					break;
+				case 'justweb':
+					$var['logo_img']	= $this->image('phpgwapi','logo');
+					$var['home_img']	= $this->image('phpgwapi','tab_home');
+					$var['prefs_img']	= $this->image('phpgwapi','tab_prefs');
+					$var['logout_img']	= $this->image('phpgwapi','tab_logout');
+					$var['about_img']	= $this->image('phpgwapi','tab_help');
 					break;
 				default:
 					$var['home_img']	= $GLOBALS['phpgw_info']['navbar']['home']['icon'];
