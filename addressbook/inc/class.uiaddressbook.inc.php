@@ -577,13 +577,21 @@
 
 		function copy()
 		{
+			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['title'];
+			}
+
 			list($addnew) = $this->bo->read_entry(array(
 				'id' => $_GET['ab_id'],
-				'fields' => $this->bo->stock_contact_fields
+				'fields' => $this->bo->stock_contact_fields + $this->extrafields + $customfields
 			));
 
 			$addnew['note'] .= "\n".lang("Copied by %1, from record #%2.",$GLOBALS['phpgw']->accounts->id2name($addnew['owner']),$addnew['id']);
 			$addnew['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+			unset($addnew['rights']);
 			unset($addnew['id']);
 
 			$ab_id = $this->bo->add_entry($addnew);
