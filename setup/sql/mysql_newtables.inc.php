@@ -304,7 +304,9 @@
   
   $sql = "CREATE TABLE phpgw_categories (
             cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
+            cat_main      int(9) DEFAULT '0' NOT NULL,
             cat_parent      int(9) DEFAULT '0' NOT NULL,
+            cat_level      int(3) DEFAULT '0' NOT NULL,
             cat_owner       int(11) DEFAULT '0' NOT NULL,
 	    cat_access	    char(7),
             cat_appname     varchar(50) NOT NULL,
@@ -350,7 +352,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.003';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

@@ -276,7 +276,9 @@
 
   $sql = "CREATE TABLE phpgw_categories (
             cat_id          serial,
-            cat_parent      int,
+            cat_main        int,
+            cat_parent      int DEFAULT 0,
+            cat_level       int DEFAULT 0,
             cat_owner       int,
 	    cat_access	    char(7),
             cat_appname     varchar(50) NOT NULL,
@@ -318,7 +320,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.003';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>

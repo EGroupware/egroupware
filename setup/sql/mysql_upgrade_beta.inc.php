@@ -1561,6 +1561,18 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
 	}
 
+        $test[] = '0.9.11.002';
+        function upgrade0_9_11_002()
+        {
+                global $phpgw_info,$phpgw_setup;
+
+                $phpgw_setup->db->query("alter table phpgw_categories add column cat_main int(9) default '0' not null after cat_id",__LINE__,__FILE__);
+                $phpgw_setup->db->query("alter table phpgw_categories add column cat_level int(9) default '0' not null after cat_parent",__LINE__,__FILE__);
+
+                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.003';
+        }
+
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

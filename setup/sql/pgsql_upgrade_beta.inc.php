@@ -1989,6 +1989,36 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
 	}
 
+    $test[] = '0.9.11.002';
+    function upgrade0_9_11_002() {
+    global $phpgw_info, $phpgw_setup;
+
+	$phpgw_setup->db->query("create table temp as select * from phpgw_categories",__LINE__,__FILE__);
+
+	$phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq",__LINE__,__FILE__);
+
+	$phpgw_setup->db->query("drop table phpgw_categories",__LINE__,__FILE__);
+
+	$phpgw_setup->db->query("CREATE TABLE phpgw_categories (
+    	        cat_id          serial,
+		cat_main	int,
+        	cat_parent      int DEFAULT 0,
+		cat_level	int DEFAULT 0,
+        	cat_owner       int,
+        	cat_access      varchar(25),
+        	cat_appname     varchar(50) NOT NULL,
+        	cat_name        varchar(150) NOT NULL,
+        	cat_description varchar(255) NOT NULL,
+        	cat_data        text
+        	)");
+
+	$phpgw_setup->db->query("insert into phpgw_categories select * from temp",__LINE__,__FILE__);
+
+	$phpgw_setup->db->query("drop table temp",__LINE__,__FILE__);
+
+	$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.11.003";
+    }
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
