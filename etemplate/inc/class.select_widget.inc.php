@@ -301,11 +301,15 @@
 						define('MCAL_M_ALLDAYS',127);
 					}
 					$weekstart = $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts'];
-					$cell['sel_options'] = array(
-						MCAL_M_ALLDAYS	=> 'all days',
-						MCAL_M_WEEKDAYS	=> 'working days',
-						MCAL_M_WEEKEND	=> 'weekend',
-					);
+					$cell['sel_options'] = array();
+					if ($rows >= 2) 
+					{
+						$cell['sel_options'] = array(
+							MCAL_M_ALLDAYS	=> 'all days',
+							MCAL_M_WEEKDAYS	=> 'working days',
+							MCAL_M_WEEKEND	=> 'weekend',
+						);
+					}
 					if ($weekstart == 'Saturday') $cell['sel_options'][MCAL_M_SATURDAY] = 'saturday';
 					if ($weekstart != 'Monday') $cell['sel_options'][MCAL_M_SUNDAY] = 'sunday';
 					$cell['sel_options'] += array(
