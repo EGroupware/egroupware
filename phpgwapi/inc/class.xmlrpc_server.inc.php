@@ -73,7 +73,9 @@
 		function service()
 		{
 			$r = $this->parseRequest();
-			$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
+			$payload = '<?xml version="1.0" encoding="' . $GLOBALS['xmlrpc_defencoding'] . '"?>' . "\n"
+				. $this->serializeDebug()
+				. $r->serialize();
 			Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
 			print $payload;
 		}
