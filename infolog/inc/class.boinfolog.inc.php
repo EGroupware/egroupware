@@ -33,7 +33,9 @@
 			'info_attached'  => True,
 			'list_attached'  => True,
 			'read_attached'  => True,
-			'attached_local' => True
+			'attached_local' => True,
+			'link_title'     => True,
+			'link_query'     => True
 		);
 		var $enums;
 		var $so;
@@ -442,5 +444,33 @@
 				}
 			}
 			return False;
+		}
+		/*!
+		@function link_title( $id )
+		@abstract get title for an infolog entry identified by $id
+		*/
+		function link_title( $info )
+		{
+			if (!is_array($info))
+			{
+				$info = $this->read( $info ))
+			}
+			return $info['info_subject'];
+		}
+
+		/*!
+		@function link_query( $pattern )
+		@abstract query infolog for entries matching $pattern
+		*/
+		function link_title( $pattern )
+		{
+			$start = $total = 0;
+			$ids = $this->readIdArray('','','','',$pattern,'','','',&$start,&$total)
+			$content = array();
+			while (is_array($ids) && list( $id,$parent ) = each( $ids ))
+			{
+				$content[$id] = $this->link_title($id);
+			}
+			return $content;
 		}
 	}
