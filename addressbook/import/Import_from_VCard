@@ -31,11 +31,7 @@
 
 		var $import = array(
 			"fn"       => "fn",
-			"n_given"  => "n_given",
-			"n_family" => "n_family",
-			"n_middle" => "n_middle",
-			"n_prefix" => "n_prefix",
-			"n_suffix" => "n_suffix",
+			"n"        => "n",
 			"sound"    => "sound",
 			"bday"     => "bday",
 			"note"     => "note",
@@ -43,8 +39,7 @@
 			"geo"      => "geo",
 			"url"      => "url",
 			"pubkey"   => "pubkey",
-			"org_name" => "org_name",
-			"org_unit" => "org_unit",
+			"org"      => "org",
 			"title"    => "title",
 			"adr"      => "adr",
 			"label"    => "label",
@@ -58,31 +53,19 @@
 			return $buffer;
 		}
 
-		function import_end_file($buffer) {
-			global $phpgw,$phpgw_info;
-
-			$contacts = CreateObject("phpgwapi.contacts");
-			echo '<br>'; 
-			for ($i=1;$i<=count($buffer);$i++) {
-				while ( list($name,$value) = @each($buffer[$i]) ) {
-					echo '<br>'.$i.': '.$name.' => '.$value;
-					$entry[$i][$name] = $value;
-				}
-				$entry[$i]['email_type']      = 'INTERNET';
-				$entry[$i]['email_home_type'] = 'INTERNET';
-				$entry[$i]['adr_one_type']    = 'intl';
-				$entry[$i]['adr_two_type']    = 'intl';
-				echo '<br>';
-				//$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
-			}
-			$num = $i - 1;
-			return "Successfully imported $num records into your addressbook.";
-		}
-
 		function import_start_record($buffer) {
 			$top=array();
 			++$this->id;
 			$this->currentrecord = $top;
+			return $buffer;
+		}
+
+		function import_new_attrib($buffer,$name,$value) {
+			$value = trim($value);
+			$value = str_replace("\n","<BR>",$value);
+			$value = str_replace("\r","",$value);
+			$this->currentrecord += array($name => $value);
+
 			return $buffer;
 		}
 
@@ -96,13 +79,25 @@
 			return $buffer;
 		}
 
-		function import_new_attrib($buffer,$name,$value) {
-			$value = trim($value);
-			$value = str_replace("\n","<BR>",$value);
-			$value = str_replace("\r","",$value);
-			$this->currentrecord += array($name => $value);
+		function import_end_file($buffer) {
+			global $phpgw,$phpgw_info;
 
-			return $buffer;
+			$contacts = CreateObject("phpgwapi.contacts");
+			//echo '<br>'; 
+			for ($i=1;$i<=count($buffer);$i++) {
+				while ( list($name,$value) = @each($buffer[$i]) ) {
+					echo '<br>'.$i.': '.$name.' => '.$value;
+					$entry[$i][$name] = $value;
+				}
+				$entry[$i]['email_type']      = 'INTERNET';
+				$entry[$i]['email_home_type'] = 'INTERNET';
+				$entry[$i]['adr_one_type']    = 'intl';
+				$entry[$i]['adr_two_type']    = 'intl';
+				//echo '<br>';
+				//$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
+			}
+			$num = $i - 1;
+			return "Successfully imported $num records into your addressbook.";
 		}
 	}
 ?>
