@@ -26,7 +26,7 @@
   if ($order)
      $ordermethod = "order by $order $sort";
   else
-     $ordermethod = "order by lastname,firstname,email asc";
+     $ordermethod = "order by ab_lastname,ab_firstname,ab_email asc";
 
   if (! $filter) {
      $filter = "none";
@@ -34,21 +34,21 @@
 
   if ($filter != "private") {
      if ($filter != "none") {
-        $filtermethod = " access like '%,$filter,%' ";
+        $filtermethod = " ab_access like '%,$filter,%' ";
      } else {
-        $filtermethod = " (owner='" . $phpgw_info["user"]["userid"] ."' OR access='public' "
-		            . $phpgw->accounts->sql_search("access") . " ) ";
+        $filtermethod = " (ab_owner='" . $phpgw_info["user"]["userid"] ."' OR ab_access='public' "
+		            . $phpgw->accounts->sql_search("ab_access") . " ) ";
      }
   } else {
-     $filtermethod = " owner='" . $phpgw_info["user"]["userid"] . "' ";
+     $filtermethod = " ab_owner='" . $phpgw_info["user"]["userid"] . "' ";
   }
 
   if ($query) {
-     $phpgw->db->query("select count(*) from addressbook where $filtermethod AND (lastname "
-			. "like '%$query%' OR firstname like '%$query%' OR email like '%$query%"
-			. "' OR street like '%$query%' OR city like '%$query%' OR state like '"
-			. "%$query%' OR zip like '%$query%' OR notes like '%$query%' OR company"
-			. " like '%$query%')");
+     $phpgw->db->query("select count(*) from addressbook where $filtermethod AND (ab_lastname "
+			      . "like '%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%"
+			      . "' OR ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state like '"
+			      . "%$query%' OR ab_zip like '%$query%' OR ab_notes like '%$query%' OR ab_company"
+			      . " like '%$query%')");
 
     $phpgw->db->next_record();
 
@@ -70,9 +70,8 @@
 ?>
 
 <?php
- $phpgw->nextmatchs->show("index.php",$start,$phpgw->db->f(0),
-		   "&order=$order&filter=$filter&sort="
-		 . "$sort&query=$query", "75%", $phpgw_info["theme"][th_bg]);
+ $phpgw->nextmatchs->show("index.php",$start,$phpgw->db->f(0),"&order=$order&filter=$filter&sort="
+		              . "$sort&query=$query", "75%", $phpgw_info["theme"][th_bg]);
 ?>
 
   <table width=75% border=0 cellspacing=1 cellpadding=3>
@@ -81,35 +80,34 @@
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == "True" ) {
           echo '<td height="21">';
           echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-          echo $phpgw->nextmatchs->show_sort_order($sort,"company",$order,"index.php",
-                              lang("Company Name"));
+          echo $phpgw->nextmatchs->show_sort_order($sort,"ab_company",$order,"index.php",lang("Company Name"));
           echo '</font></td>';
        }
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_lastname"] == "True" ) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"lastname",$order,"index.php",
+           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_lastname",$order,"index.php",
                               lang("Last Name"));
            echo '</font></td>';
        }
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_firstname"] == "True" ) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"firstname",$order,"index.php",
+           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_firstname",$order,"index.php",
                               lang("First Name"));
            echo '</font></td>';
         }
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_email"] == "True" ) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"email",$order,"index.php",
+           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_email",$order,"index.php",
                               lang("Email"));
            echo '</font></td>';
        }
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_wphone"] == "True" ) {
            echo '<td height="21">';
            echo '<font size="-1" face="Arial, Helvetica, sans-serif">';
-           echo $phpgw->nextmatchs->show_sort_order($sort,"wphone",$order,"index.php",
+           echo $phpgw->nextmatchs->show_sort_order($sort,"ab_wphone",$order,"index.php",
                               lang("Work Phone"));
            echo '</font></td>';
        }
@@ -131,25 +129,24 @@
 
 <?php
   if ($query) {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod AND (lastname like '"
-			. "%$query%' OR firstname like '%$query%' OR email like '%$query%' OR "
-	            . "street like '%$query%' OR city like '%$query%' OR state "
-	            . "like '%$query%' OR zip like '%$query%' OR notes like "
-	            . "'%$query%' OR company like %$query%') $ordermethod limit $limit");
+     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod AND (ab_lastname like '"
+			      . "%$query%' OR ab_firstname like '%$query%' OR ab_email like '%$query%' OR "
+	                . "ab_street like '%$query%' OR ab_city like '%$query%' OR ab_state "
+	                . "like '%$query%' OR ab_zip like '%$query%' OR ab_notes like "
+	                . "'%$query%' OR ab_company like %$query%') $ordermethod limit $limit");
   } else {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit "
-			 . $limit);
+     $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit $limit");
   }
 
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 
-    $firstname	= $phpgw->db->f("firstname");
-    $lastname 	= $phpgw->db->f("lastname");
-    $email      = $phpgw->db->f("email");
-    $company    = $phpgw->db->f("company");
-    $wphone     = $phpgw->db->f("wphone");
-    $con	= $phpgw->db->f("con");
+    $firstname	= $phpgw->db->f("ab_firstname");
+    $lastname 	= $phpgw->db->f("ab_lastname");
+    $email     = $phpgw->db->f("ab_email");
+    $company   = $phpgw->db->f("ab_company");
+    $wphone    = $phpgw->db->f("ab_wphone");
+    $ab_id	= $phpgw->db->f("ab_id");
 
     if($firstname == "") $firstname = "&nbsp;";
     if($lastname  == "") $lastname  = "&nbsp;";
@@ -193,14 +190,14 @@
      ?>
        <td valign=top width=3%>
 	<font face=Arial, Helvetica, sans-serif size=2>
-          <a href="<?php echo $phpgw->link("view.php","con=$con&start=$start&order=$order&filter="
+          <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
 								 . "$filter&query=$query&sort=$sort");
 	  ?>"> <?php echo lang("View"); ?> </a>
         </font>
        </td>
        <td valign=top width=5%>
         <font face=Arial, Helvetica, sans-serif size=2>
-         <?php echo $phpgw->common->check_owner($phpgw->db->f("owner"),"edit.php",lang("edit"),"con=" . $phpgw->db->f("con")); ?>
+         <?php echo $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")); ?>
         </font>
        </td>
       </tr>

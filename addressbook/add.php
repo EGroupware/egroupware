@@ -33,9 +33,9 @@
 
      $access = $phpgw->accounts->array_to_string($access,$n_groups);
 
-     $sql = "insert into addressbook (owner,access,firstname,lastname,email,"
-       	  . "hphone,wphone,fax,pager,mphone,ophone,street,city,state,zip,bday,"
-          . "notes,company) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
+     $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_email,"
+       	. "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_city,ab_state,ab_zip,ab_bday,"
+          . "ab_notes,ab_company) values ('" . $phpgw_info["user"]["userid"] . "','$access','"
           . addslashes($firstname). "','"
           . addslashes($lastname) . "','"
           . addslashes($email) 	. "','" 

@@ -12,47 +12,47 @@
 
   /* $Id$ */
 
-  if ($submit) {
+  if ($submit || ! $ab_id) {
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
-  if (! $con)
-    Header("Location: " . $phpgw_info["server"]["webserver_url"] . 
-	      "/addressbook/?sessionid=" . $phpgw_info["user"]["sessionid"]);
+
+  if (! $ab_id) {
+    Header("Location: " . $phpgw->link("index.php"));
+  }
 
   if ($filter != "private")
-     $filtermethod = " or access='public' " . $phpgw->accounts->sql_search("access");
+     $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
 
-  $phpgw->db->query("SELECT * FROM addressbook WHERE con='$con' AND (owner='"
+  $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id='$ab_id' AND (ab_owner='"
 	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
   $phpgw->db->next_record();
 
-  $fields = array(
-		'con'		=> $phpgw->db->f("con"),
-		'owner'		=> $phpgw->db->f("owner"),
-		'access'	=> $phpgw->db->f("access"),
-		'firstname'	=> $phpgw->db->f("firstname"),
-		'lastname'	=> $phpgw->db->f("lastname"),
-		'email'		=> $phpgw->db->f("email"),
-		'hphone'	=> $phpgw->db->f("hphone"),
-		'wphone'	=> $phpgw->db->f("wphone"),
-		'fax'		=> $phpgw->db->f("fax"),
-		'pager'		=> $phpgw->db->f("pager"),
-		'mphone'	=> $phpgw->db->f("mphone"),
-		'ophone'	=> $phpgw->db->f("ophone"),
-		'street'	=> $phpgw->db->f("street"),
-		'city'		=> $phpgw->db->f("city"),
-		'state'		=> $phpgw->db->f("state"),
-		'zip'		=> $phpgw->db->f("zip"),
-		'bday'		=> $phpgw->db->f("bday"),
-		'company' 	=> $phpgw->db->f("company"),
-		'notes'		=> $phpgw->db->f("notes")
-		 );
+  $fields = array('ab_id'   => $phpgw->db->f("ab_id"),
+ 		        'owner'   => $phpgw->db->f("ab_owner"),
+			   'access'  => $phpgw->db->f("ab_access"),
+			   'firstname' => $phpgw->db->f("ab_firstname"),
+			   'lastname' => $phpgw->db->f("ab_lastname"),
+			   'email'   => $phpgw->db->f("ab_email"),
+			   'hphone'  => $phpgw->db->f("ab_hphone"),
+ 		        'wphone'  => $phpgw->db->f("ab_wphone"),
+			   'fax'	   => $phpgw->db->f("ab_fax"),
+			   'pager'   => $phpgw->db->f("ab_pager"),
+			   'mphone'  => $phpgw->db->f("ab_mphone"),
+			   'ophone'  => $phpgw->db->f("ab_ophone"),
+			   'street'  => $phpgw->db->f("ab_street"),
+			   'city'	   => $phpgw->db->f("ab_city"),
+			   'state'   => $phpgw->db->f("ab_state"),
+			   'zip'	   => $phpgw->db->f("ab_zip"),
+			   'bday'	   => $phpgw->db->f("ab_bday"),
+			   'company' => $phpgw->db->f("ab_company"),
+			   'notes'   => $phpgw->db->f("ab_notes")
+		        );
 
-  $owner = $phpgw->db->f("owner");
-  $con   = $phpgw->db->f("con");
+  $owner = $phpgw->db->f("ab_owner");
+  $ab_id = $phpgw->db->f("ab_id");
 
   form("view","","View",$fields);
 ?>
@@ -65,7 +65,7 @@
             <TR> 
               <TD align=left> 
                <?php
-                 echo $phpgw->common->check_owner($con,$owner,"Edit");
+                 echo $phpgw->common->check_owner($ab_id,$owner,"Edit");
                ?>
               </TD>
               <TD align=left>
@@ -79,5 +79,4 @@
       </TBODY>
     </TABLE>
 </DIV>
-<?php
-  //include($directorys["include_root"] . "/footer.inc.php");
+<?php include($phpgw_info["server"]["api_dir"] . "/footer.inc.php"); ?>

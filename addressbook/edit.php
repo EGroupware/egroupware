@@ -12,45 +12,44 @@
 
   /* $Id$ */
 
-  if ($submit) {
+  if ($submit || ! $ab_id) {
      $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
   }
 
   $phpgw_info["flags"]["currentapp"] = "addressbook";
   include("../header.inc.php");
   
-  if (! $con) {
+  if (! $ab_id) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	       "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
      exit;
   }
 
   if (! $submit) {
-     $phpgw->db->query("SELECT * FROM addressbook WHERE owner='"
-		           . $phpgw_info["user"]["userid"] . "' AND con='$con'");
+     $phpgw->db->query("SELECT * FROM addressbook WHERE ab_owner='"
+		           . $phpgw_info["user"]["userid"] . "' AND ab_id='$ab_id'");
      $phpgw->db->next_record();
 
-     $fields = array(
-                'con'           => $phpgw->db->f("con"),
-                'owner'         => $phpgw->db->f("owner"),
-                'access'        => $phpgw->db->f("access"),
-                'firstname'     => $phpgw->db->f("firstname"),
-                'lastname'      => $phpgw->db->f("lastname"),
-                'email'         => $phpgw->db->f("email"),
-                'hphone'        => $phpgw->db->f("hphone"),
-                'wphone'        => $phpgw->db->f("wphone"),
-                'fax'           => $phpgw->db->f("fax"),
-                'pager'         => $phpgw->db->f("pager"),
-                'mphone'        => $phpgw->db->f("mphone"),
-                'ophone'        => $phpgw->db->f("ophone"),
-                'street'        => $phpgw->db->f("street"),
-                'city'          => $phpgw->db->f("city"),
-                'state'         => $phpgw->db->f("state"),
-                'zip'           => $phpgw->db->f("zip"),
-                'bday'          => $phpgw->db->f("bday"),
-                'notes'         => $phpgw->db->f("notes"),
-		'company'		=> $phpgw->db->f("company")
-                    );
+     $fields = array('ab_id'	=> $phpgw->db->f("ab_id"),
+ 		           'owner'	=> $phpgw->db->f("ab_owner"),
+			      'access'	=> $phpgw->db->f("ab_access"),
+			      'firstname' => $phpgw->db->f("ab_firstname"),
+			      'lastname' => $phpgw->db->f("ab_lastname"),
+			      'email'	=> $phpgw->db->f("ab_email"),
+			      'hphone'	=> $phpgw->db->f("ab_hphone"),
+ 			      'wphone'	=> $phpgw->db->f("ab_wphone"),
+			      'fax'	=> $phpgw->db->f("ab_fax"),
+			      'pager'	=> $phpgw->db->f("ab_pager"),
+			      'mphone'	=> $phpgw->db->f("ab_mphone"),
+			      'ophone'	=> $phpgw->db->f("ab_ophone"),
+			      'street'	=> $phpgw->db->f("ab_street"),
+			      'city'	=> $phpgw->db->f("ab_city"),
+			      'state'	=> $phpgw->db->f("ab_state"),
+			      'zip'	=> $phpgw->db->f("ab_zip"),
+			      'bday'	=> $phpgw->db->f("ab_bday"),
+			      'company' => $phpgw->db->f("ab_company"),
+			      'notes'	=> $phpgw->db->f("ab_notes")
+		          );
 
      form("","edit.php","Edit",$fields);
 
@@ -58,29 +57,29 @@
     $bday = $bday_month . "/" . $bday_day . "/" . $bday_year;
     $access = $phpgw->accounts->array_to_string($access,$n_groups);
 
-    $sql = "UPDATE addressbook set email='" . addslashes($email)
-	 . "', firstname='"	. addslashes($firstname)
-	 . "', lastname='" 	. addslashes($lastname)
-	 . "', hphone='" 	. addslashes($hphone)
-	 . "', wphone='" 	. addslashes($wphone)
-	 . "', fax='" 		. addslashes($fax)
-	 . "', pager='" 	. addslashes($pager)
-	 . "', mphone='" 	. addslashes($mphone)
-	 . "', ophone='" 	. addslashes($ophone)
-	 . "', street='" 	. addslashes($street)
-	 . "', city='" 		. addslashes($city)
-	 . "', state='" 	. addslashes($state)
-	 . "', zip='" 		. addslashes($zip)
-	 . "', bday='" 		. addslashes($bday)
-	 . "', notes='" 	. addslashes($notes)
-	 . "', company='" 	. addslashes($company)
-	 . "', access='" 	. addslashes($access)
-	 . "'  WHERE owner='" . $phpgw_info["user"]["userid"] . "' AND con='$con'";
+    $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
+         . "', ab_firstname='". addslashes($firstname)
+	    . "', ab_lastname='" . addslashes($lastname)
+	    . "', ab_hphone='" 	. addslashes($hphone)
+	    . "', ab_wphone='" 	. addslashes($wphone)
+	    . "', ab_fax='" 	. addslashes($fax)
+	    . "', ab_pager='" 	. addslashes($pager)
+	    . "', ab_mphone='" 	. addslashes($mphone)
+	    . "', ab_ophone='" 	. addslashes($ophone)
+	    . "', ab_street='" 	. addslashes($street)
+	    . "', ab_city='" 	. addslashes($city)
+	    . "', ab_state='" 	. addslashes($state)
+	    . "', ab_zip='" 	. addslashes($zip)
+	    . "', ab_bday='" 	. addslashes($bday)
+	    . "', ab_notes='" 	. addslashes($notes)
+	    . "', ab_company='" 	. addslashes($company)
+	    . "', ab_access='" 	. addslashes($access)
+	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id='$ab_id'";
 
      $phpgw->db->query($sql);
 
      Header("Location: " . $phpgw->link("view.php","&con=$con&order=$order&sort=$sort&filter="
-	  . "$filter&start=$start"));
+ 	     . "$filter&start=$start"));
      exit;
   }
 

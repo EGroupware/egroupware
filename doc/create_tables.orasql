@@ -209,26 +209,26 @@ end;
 -----------------
 
 CREATE TABLE addressbook (
-  con		number(11) DEFAULT '0' NOT NULL , --auto-increment
-  owner	varchar2(25),
-  addr_access	varchar2(10),
-  firstname	varchar2(255),
-  lastname	varchar2(255),
-  email	varchar2(255),
-  hphone	varchar2(255),
-  wphone	varchar2(255),
-  fax		varchar2(255),
-  pager	varchar2(255),
-  mphone	varchar2(255),
-  ophone	varchar2(255),
-  street	varchar2(255),
-  city		varchar2(255),
-  state	varchar2(255),
-  zip		varchar2(255),
-  bday		varchar2(255),
-  notes	        varchar2(4000),
-  company	varchar2(255),
-  PRIMARY KEY (con)
+  ab_id		number(11) DEFAULT '0' NOT NULL , --auto-increment
+  ab_owner	varchar2(25),
+  ab_addr_access varchar2(10),
+  ab_firstname	varchar2(255),
+  ab_lastname	varchar2(255),
+  ab_email	varchar2(255),
+  ab_hphone	varchar2(255),
+  ab_wphone	varchar2(255),
+  ab_fax		varchar2(255),
+  ab_pager	varchar2(255),
+  ab_mphone	varchar2(255),
+  ab_ophone	varchar2(255),
+  ab_street	varchar2(255),
+  ab_city		varchar2(255),
+  ab_state	varchar2(255),
+  ab_zip		varchar2(255),
+  ab_bday		varchar2(255),
+  ab_notes	varchar2(4000),
+  ab_company	varchar2(255),
+  PRIMARY KEY (ab_id)
 );
 
 create sequence addressbook_seq
