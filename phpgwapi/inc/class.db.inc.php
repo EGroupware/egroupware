@@ -901,7 +901,7 @@
 		* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
 		*
 		* This is mostly copy & paste from adodb's datadict class
-		* @param string $name
+		* @param $name string
 		* @return string quoted string
 		*/
 		function name_quote($name = NULL)
@@ -937,8 +937,9 @@
 		*
 		* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
 		* Int and Auto types are casted to int: quote('1','int') === 1, quote('','int') === 0, quote('Hello','int') === 0
-		* @param mixed $value the value to be escaped
-		* @param string $type the type of the db-column, default False === varchar
+		*
+		* @param $value mixed the value to be escaped
+		* @param $type string the type of the db-column, default False === varchar
 		* @return string escaped sting
 		*/
 		function quote($value,$type=False)
@@ -979,16 +980,18 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param string $glue in most cases this will be either ',' or ' AND ', depending you your query
-		* @param array  $array column-value pairs, if the value is an array all its array-values will be quoted
+		* @param $glue string in most cases this will be either ',' or ' AND ', depending you your query
+		* @param $array array column-name / value pairs, if the value is an array all its array-values will be quoted
 		*	according to the type of the column, and the whole array with be formatted like (val1,val2,...)
-		*	If $use_key == True, a columname ' IN ' instead a '=' is used. Good for category- or user-lists.
-		* @param boolean/string If $use_key===True a "$key=" prefix each value (default), typically set to False
+		*	If $use_key == True, an ' IN ' instead a '=' is used. Good for category- or user-lists.
+		*	If the key is numerical (no key given in the array-definition) the value is used as is, eg.
+		*	array('visits=visits+1') gives just "visits=visits+1" (no quoting at all !!!)
+		* @param $use_key boolean/string If $use_key===True a "$key=" prefix each value (default), typically set to False
 		*	or 'VALUES' for insert querys, on 'VALUES' "(key1,key2,...) VALUES (val1,val2,...)" is returned
-		* @param array/boolean $only if set to an array only colums which are set (as data !!!) are written
+		* @param $only array/boolean if set to an array only colums which are set (as data !!!) are written
 		*	typicaly used to form a WHERE-clause from the primary keys.
 		*	If set to True, only columns from the colum_definitons are written.
-		* @param array/boolean $column_definitions this can be set to the column-definitions-array
+		* @param $column_definitions array/boolean this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 		*	If its set, the column-type-data determinates if (int) or addslashes is used.
 		*/
@@ -1017,6 +1020,10 @@
 						}
 						$values[] = ($use_key===True ? $key.' IN ' : '') . '('.implode(',',$data).')';
 					}
+					elseif (is_int($key) && $use_key===True)
+					{
+						$values[] = $data;
+					}
 					else
 					{
 						$values[] = ($use_key===True ? $key.'=' : '') . $this->quote($data,$column_type);
@@ -1032,7 +1039,7 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param array/boolean $column_definitions this can be set to the column-definitions-array
+		* @param $column_definitions array/boolean this can be set to the column-definitions-array
 		*	of your table ($tables_baseline[$table]['fd'] of the setup/tables_current.inc.php file).
 		*	If its set, the column-type-data determinates if (int) or addslashes is used.
 		*/
@@ -1041,33 +1048,202 @@
 			$this->column_definitions=$column_definitions;
 		}
 
+		function set_app($app)
+		{
+			$this->app = $app;
+		}
+
 		/**
 		* reads the table-definitions from the app's setup/tables_current.inc.php file
 		*
+		* The already read table-definitions are shared between all db-instances via $GLOBALS['phpgw_info']['apps'][$app]['table_defs']
+		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param string $app name of the app
-		* @param bool/string $table if set return only defintions of that table, else return all defintions
-		* @return the table-defintions or False if file not found
+		* @param $app bool/string name of the app or default False to use the app set by db::set_app or the current app
+		* @param $table bool/string if set return only defintions of that table, else return all defintions
+		* @return mixed array with table-defintions or False if file not found
 		*/
-		function get_table_definitions($app,$table=False)
+		function get_table_definitions($app=False,$table=False)
 		{
-			if (!isset($this->table_definitions[$app]))
+			if (!$app)
+			{
+				$app = $this->app ? $this->app : $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+			$app_data = &$GLOBALS['phpgw_info']['apps'][$app];
+
+			if (!isset($app_data['table_defs']))
 			{
 				$tables_current = PHPGW_INCLUDE_ROOT . "/$app/setup/tables_current.inc.php";
 
 				if (!@file_exists($tables_current))
 				{
-					return $this->table_definitions[$app] = False;
+					return $app_data['table_defs'] = False;
 				}
 				include($tables_current);
-				$this->table_definitions[$app] = $phpgw_baseline;
+				$app_data['table_defs'] = $phpgw_baseline;
 			}
-			if ($table && (!$this->table_definitions[$app] || !isset($this->table_definitions[$app][$table])))
+			if ($table && (!$app_data['table_defs'] || !isset($app_data['table_defs'][$table])))
 			{
 				return False;
 			}
-			return $table ? $this->table_definitions[$app][$table] : $this->table_definitions[$app];
+			return $table ? $app_data['table_defs'][$table] : $app_data['table_defs'];
+		}
+
+		/**
+		* Insert a row of data into a table, all data is quoted according to it's type
+		*
+		* @author RalfBecker<at>outdoor-training.de
+		*
+		* @param $table string name of the table
+		* @param $data array with column-name / value pairs
+		* @param $where mixed array with column-name / values pairs to check if a row with that keys already exists,
+		*	if the row exists db::update is called else a new row with $date merged with $where gets inserted (data has precedence)
+		* @param $line int line-number to pass to query
+		* @param $file string file-name to pass to query
+		* @param $app mixed string with name of app or False to use the current-app
+		* @return the return-value of the call to db::query
+		*/
+		function insert($table,$data,$where,$line,$file,$app=False)
+		{
+			$table_def = $this->get_table_definitions($app,$table);
+
+			if (is_array($where) && count($where))
+			{
+				$sql = "SELECT count(*) FROM $table WHERE ".
+					$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+
+				$this->query($sql,$line,$file);
+				if ($this->next_record() && $this->f(0))
+				{
+					return $this->update($table,$data,$where,$line,$file,$app);
+				}
+				$data = array_merge($check,$data);	// the checked values need to be inserted too, value in data has precedence
+			}
+			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']);
+
+			return $this->query($sql,$line,$file);
+		}
+
+		/**
+		* Updates the data of one or more rows in a table, all data is quoted according to it's type
+		*
+		* @author RalfBecker<at>outdoor-training.de
+		*
+		* @param $table string name of the table
+		* @param $data array with column-name / value pairs
+		* @param $where array column-name / values pairs and'ed together for the where clause
+		* @param $line int line-number to pass to query
+		* @param $file string file-name to pass to query
+		* @param $app mixed string with name of app or False to use the current-app
+		* @return the return-value of the call to db::query
+		*/
+		function update($table,$data,$where,$line,$file,$app=False)
+		{
+			$table_def = $this->get_table_definitions($app,$table);
+			$sql = "UPDATE $table SET ".
+				$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.
+				$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+
+			return $this->query($sql,$line,$file);
+		}
+
+		/**
+		* Deletes one or more rows in table, all data is quoted according to it's type
+		*
+		* @author RalfBecker<at>outdoor-training.de
+		*
+		* @param $table string name of the table
+		* @param $where array column-name / values pairs and'ed together for the where clause
+		* @param $line int line-number to pass to query
+		* @param $file string file-name to pass to query
+		* @param $app mixed string with name of app or False to use the current-app
+		* @return the return-value of the call to db::query
+		*/
+		function delete($table,$where,$line,$file,$app=False)
+		{
+			$table_def = $this->get_table_definitions($app,$table);
+			$sql = "DELETE FROM $table WHERE ".
+				$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+
+			return $this->query($sql,$line,$file);
+		}
+
+		/**
+		 * Formats and quotes a sql expression to be used eg. as where-clause
+		 *
+		 * The function has a variable number of arguments, from which the expession gets constructed
+		 * eg. db::expression('my_table','(',array('name'=>"test'ed",'lang'=>'en'),') OR ',array('owner'=>array('',4,10)))
+		 * gives "(name='test\'ed' AND lang='en') OR 'owner' IN (0,4,5,6,10)" if name,lang are strings and owner is an integer
+		 * @param $table string name of the table
+		 * @param $args mixed variable number of arguments of the following types:
+		 *	string: get's as is into the result
+		 *	array:	column-name / value pairs: the value gets quoted according to the type of the column and prefixed
+		 *		with column-name=, multiple pairs are AND'ed together, see db::column_data_implode
+		 *	bool: If False or is_null($arg): the next 2 (!) arguments gets ignored
+		 * @return string the expression generated from the arguments
+		 */
+		function expression($table,$args)
+		{
+			$table_def = $this->get_table_definitions($app,$table);
+			$sql = '';
+			$ignore_next = 0;
+			foreach(func_get_args() as $n => $arg)
+			{
+				if ($n < 1) continue;	// table-name
+
+				if ($ignore_next)
+				{
+					--$ignore_next;
+					continue;
+				}
+				if (is_null($arg)) $arg = False;
+
+				switch(gettype($arg))
+				{
+					case 'string':
+						$sql .= $arg;
+						break;
+					case 'boolean':
+						$ignore_next += !$arg ? 2 : 0;
+						break;
+					case 'array':
+						$sql .= $this->column_data_implode(' AND ',$arg,True,False,$table_def);
+						break;
+				}
+			}
+			//echo "<p>db::expression($table,<pre>".print_r(func_get_args(),True)."</pre>) ='$sql'</p>\n";
+			return $sql;
+		}
+
+		/**
+		* Selects one or more rows in table depending on where, all data is quoted according to it's type
+		*
+		* @author RalfBecker<at>outdoor-training.de
+		*
+		* @param $table string name of the table
+		* @param $cols mixed string or array of column-names / select-expressions
+		* @param $where array/string string or array with column-name / values pairs AND'ed together for the where clause
+		* @param $line int line-number to pass to query
+		* @param $file string file-name to pass to query
+		* @param $offset int/bool offset for a limited query or False (default)
+		* @param $app mixed string with name of app or False to use the current-app
+		* @return the return-value of the call to db::query
+		*/
+		function select($table,$cols,$where,$line,$file,$offset=False,$app=False)
+		{
+			$table_def = $this->get_table_definitions($app,$table);
+			if (is_array($cols))
+			{
+				$cols = implode(',',$cols);
+			}
+			if (is_array($where))
+			{
+				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+			}
+			$sql = "SELECT $cols FROM $table WHERE ".($where ? $where : '1=1');
+
+			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : 0);
 		}
 	}
 
