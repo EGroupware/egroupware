@@ -16,7 +16,9 @@
   if (! $account_id) {
      $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);
   }
-  $phpgw_info["flags"]["currentapp"] = "admin";
+
+  $phpgw_info["flags"]["enable_nextmatchs_class"] = True;
+  $phpgw_info["flags"]["currentapp"]  = "admin";
   $phpgw_info["flags"]["parent_page"] = "accounts.php";
 
   include("../header.inc.php");
@@ -27,12 +29,28 @@
      Header("Location: " . $phpgw->link("accounts.php"));
   }
 
+  function display_row($lable,$value)
+  {
+     global $phpgw, $tr_color;
+
+     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+
+     $phpgw->template->set_var("tr_color",$tr_color);
+     $phpgw->template->set_var("lable",$lable);
+     $phpgw->template->set_var("value",$value);
+     
+     $phpgw->template->parse("rows","row",True);
+  }
+
+  $phpgw->template->set_file(array("display" => "account_view.tpl",
+              			         "row"     => "account_view_row.tpl"));  
+
   $userData = $phpgw->accounts->read_userData($account_id);
 
   $loginid = $userData["account_lid"];
   $account_lastlogin      = $userData["account_lastlogin"];
   $account_lastloginfrom  = $userData["account_lastloginfrom"];
-  $account_status	  = $userData["account_status"];
+  $account_status	     = $userData["account_status"];
 
   $db_perms = $phpgw->accounts->read_apps($loginid);
 
@@ -46,79 +64,46 @@
   #$phpgw->db->query("select account_lastlogin,account_lastloginfrom,account_status from accounts "
   #				. "where account_id='$account_id'");
   #$phpgw->db->next_record();
-  
 
-  ?>
-   <center>
-   <p><table border=0 width=50%>
+  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
-     <td colspan="2">&nbsp;</td>
-    </tr>
+  display_row(lang("LoginID"),$loginid);
+  display_row(lang("First Name"),$userData["firstname"]);
+  display_row(lang("Last Name"),$userData["lastname"]);
 
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
-     <td width="40%"><?php echo lang("LoginID"); ?></td>
-     <td width="60%"><?php echo $loginid; ?></td>
-    </tr>
+  $i = 0;
+  while ($permission = each($db_perms)) {
+     if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+        $perm_display[$i] = lang($phpgw_info["apps"][$permission[0]]["title"]);
+        $i++;
+     }
+  }
+  display_row(lang("account permissions"),implode(", ", $perm_display));
 
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-     <td width="40%"><?php echo lang("First Name"); ?></td>
-     <td width="60%"><?php echo $userData["firstname"]; ?>&nbsp;</td>
-    </tr>
+  if ($userData["status"] == "A") {
+     $account_status = lang("yes");
+  } else {
+     $account_status = "<b>" . lang("no") . "</b>";
+  }
+  display_row(lang("account active"),$account_status);
 
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
-     <td width="40%"><?php echo lang("Last Name"); ?></td>
-     <td width="60%"><?php echo $userData["lastname"]; ?>&nbsp;</td>
-    </tr>
-
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-     <td width="40%"><?php echo lang("account_permissions"); ?>&nbsp;</td>
-    <?php
-
-      $i = 0;
-      while ($permission = each($db_perms)) {
-         if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-            $perm_display[$i] = lang($phpgw_info["apps"][$permission[0]]["title"]);
-            $i++;
-         }
+  $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
+  for ($i=0;$i<count($user_groups); $i++) {
+      $group_html .= $user_groups[$i][1];
+      if (count($user_groups) !=0 && $i != count($user_groups)-1) {
+         $group_html .= ", ";
       }
+  }
+  display_row(lang("Groups"),$group_html);
 
-      echo "<td>" . implode(", ", $perm_display) . "</td></tr>";
+  if (! $userData["lastlogin"]) {
+     $lastlogin = lang("Never");
+  } else {
+     $lastlogin = $phpgw->common->show_date($userData["lastlogin"]);
+  }
+  display_row(lang("Last login"),$lastlogin);
+  display_row(lang("Last login from"),$userData["lastloginfrom"]);
 
-      echo "<tr bgcolor=\"" . $phpgw_info["theme"]["row_on"] . "\"><td>"
-	 . lang("account active") . "</td> <td>";
-      if ($userData["status"] == "A")
-         echo lang("yes");
-      else
-         echo "<b>" . lang("no") . "</b>";
-
-    ?></td></tr>
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-      <td>Groups: </td>
-      <td><?php
-            $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
-	     for ($i=0;$i<count($user_groups); $i++) {
-                echo $user_groups[$i][1];
-                if (count($user_groups) !=0 && $i != count($user_groups)-1)
-                   echo ", ";
-             }
-      ?>&nbsp;</td>
-    </tr>
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_on"]; ?>">
-     <td>Last login</td><td> <?php 
-
-    if (! $userData["lastlogin"])
-       echo lang("Never");
-    else
-       echo $phpgw->common->show_date($userData["lastlogin"]);
-
-   ?></td></tr>
-    <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
-      <td>Last login from</td>
-      <td><?php echo $userData["lastloginfrom"]; ?>&nbsp;</td>
-    </tr>
-    </table>
-   </center>
-<?php
+  $phpgw->template->pparse("out","display");
   $phpgw->common->phpgw_footer();
 ?>

@@ -56,8 +56,8 @@
     $account_id = $account["account_id"];
     $loginid    = $account["account_lid"];
 
-    $phpgw->templater_color = $phpgw->nextmatchs->alternate_row_color($phpgw->templater_color);
-    $phpgw->template->set_var("tr_color",$phpgw->templater_color);
+    $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+    $phpgw->template->set_var("tr_color",$tr_color);
 
 //    $lastname  = $account["account_lastname"];
 //    $firstname = $account["account_firstname"];
