@@ -151,11 +151,11 @@
 					$i*=10;
 				}
 
-				$j=0;
-				while ($i!=$j)
+				$j = 0;
+				while($i != $j)
 				{
-					$k= $j+intval(($i-$j)/2);
-					if (odbc_fetch_row($this->Query_ID, $k))
+					$k = $j + (int)(($i-$j) / 2);
+					if(odbc_fetch_row($this->Query_ID, $k))
 					{
 						$j=$k;
 					}
