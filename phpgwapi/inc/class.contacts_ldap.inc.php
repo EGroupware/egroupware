@@ -299,7 +299,7 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields="",$query="",$filter="",$sort="",$order="")
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='')
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
@@ -314,7 +314,7 @@
 			/* turn filter's a=b,c=d OR a=b into an array */
 			if ($filter)
 			{
-				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
+				if ($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
 				$filterarray = split(',',$filter);
 				if ($filterarray[1])
 				{
@@ -324,7 +324,7 @@
 						list($name,$value) = split("=",$filterarray[$i]);
 						if ($name)
 						{
-							if ($DEBUG) { echo "<br>DEBUG - Filter strings: #".$this->non_contact_fields[$name]."# => #".$value."#"; }
+							if ($DEBUG) { echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#'; }
 							$filterfields[$this->non_contact_fields[$name]] = $value;
 						}
 					}
@@ -334,7 +334,7 @@
 					list($name,$value) = split('=',$filter);
 					if ($DEBUG)
 					{
-						echo "<br>DEBUG - Filter strings: #".$this->non_contact_fields[$name]."# => #".$value."#";
+						echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#';
 					}
 					$filterfields = array($this->non_contact_fields[$name] => $value);
 				}
@@ -342,7 +342,7 @@
 			else
 			{
 				$filterfields += array('phpgwcontacttypeid' => 'n');
-				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwtypeid=n#"; }
+				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwcontacttypeid=n#"; }
 			}	
 
 			if (is_array($this->grants))
@@ -352,7 +352,7 @@
 				$grants = $this->grants;
 				while (list($user) = each($grants))
 				{
-					if ($DEBUG) { echo "<br>DEBUG - Grant from owner: ".$user; }
+					if ($DEBUG) { echo '<br>DEBUG - Grant from owner: '.$user; }
 					$filterfields += array('phpgwcontactowner' => $user);
 				}
 			}
@@ -364,11 +364,11 @@
 			}
 			*/
 
-			if (!$sort) { $sort = "ASC";  }
+			if (!$sort) { $sort = 'ASC';  }
 
 			if (!$order)
 			{
-				$order = "n_family";
+				$order = 'n_family';
 			}
 
 			if ($DEBUG && $order)
@@ -759,7 +759,7 @@
 			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$old_owner);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			$entry = "";
+			$entry = '';
 			while (list($null,$entry) = each($ldap_fields))
 			{
 				$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner' => $new_owner));
