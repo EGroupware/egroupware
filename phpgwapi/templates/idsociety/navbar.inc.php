@@ -131,7 +131,7 @@
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
 
-  		$templates = Aarray('footer' => 'footer.tpl');
+  		$templates = array('footer' => 'footer.tpl');
 		$tpl->set_file($templates);
 		$tpl->set_var('img_root',PHPGW_IMAGES_DIR);
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
