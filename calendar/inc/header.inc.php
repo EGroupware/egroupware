@@ -19,7 +19,7 @@
    </a>
   </td>
   <td align="right">
-   <form action="<?php echo $phpgw_info["server"]["app_root"]; ?>/search.php">
+   <form action="search.php">
     <?php echo $phpgw->session->hidden_var(); ?>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
     <input type="hidden" name="date" value="<?php echo $date; ?>">

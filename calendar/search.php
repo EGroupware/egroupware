@@ -16,17 +16,16 @@
 
   $phpgw_flags["currentapp"] = "calendar";
 
-  include("../header.inc.php");
-
   if (! $keywords) {
      // If we reach this it becuase they didn't search for anything,
      // attempt to send them back to where they where.
      Header("Location: $from?sessionid=" . $phpgw->session->id . "&date=$date"
 	  . "month=$month&day=$day&year=$year");
-  } else {	// else keywords
-     $phpgw->common->header();
+  }
 
-     $error = "";
+  include("../header.inc.php");
+
+  $error = "";
 
   if (strlen($keywords) == 0)
      $error = lang_calendar("You must enter one or more search keywords.");
@@ -88,10 +87,9 @@
      echo $error;
   }
 
- } // End else keywords
 ?>
 
 <P>
 <?php 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-?>
+
