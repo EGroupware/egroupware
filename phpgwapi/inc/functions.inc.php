@@ -452,7 +452,10 @@
 		* Load the app include files if the exists                                *
 		\*************************************************************************/
 		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !isset($_GET['menuaction']))
+		if (PHPGW_APP_INC != "" &&
+                   ! preg_match ("/phpgwapi/i", PHPGW_APP_INC) &&
+                   file_exists(PHPGW_APP_INC . '/functions.inc.php') &&
+                   !isset($_GET['menuaction']))
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}

@@ -21,7 +21,7 @@
 			$d = dir(PHPGW_SERVER_ROOT);
 			while($entry=$d->read())
 			{
-				if(!ereg('setup',$entry) && is_dir(PHPGW_SERVER_ROOT . '/' . $entry))
+				if($entry != ".." && !ereg('setup',$entry) && is_dir(PHPGW_SERVER_ROOT . '/' . $entry))
 				{
 					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 					if (@file_exists ($f))
