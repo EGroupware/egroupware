@@ -124,7 +124,7 @@
 			global $phpgw,$phpgw_info;
 
 			$contacts = CreateObject("phpgwapi.contacts");
-			echo '<br>'; 
+			//echo '<br>'; 
 			for ($i=1;$i<=count($buffer);$i++) {
 				while ( list($name,$value) = @each($buffer[$i]) ) {
 					//echo '<br>'.$i.': '.$name.' => '.$value;
