@@ -163,6 +163,7 @@
       * Continue adding the classes                                              *
       \**************************************************************************/
       $this->common        = new common;
+      $this->hooks         = new hooks;
 
       /* Load selected authentication class */
       if (empty($phpgw_info["server"]["auth_type"])){$phpgw_info["server"]["auth_type"] = "sql";}
@@ -196,7 +197,6 @@
      }
       $this->translation   = new translation;
       $this->acl           = new acl;
-      $this->hooks         = new hooks;
 
       $sep = filesystem_separator();
       $template_root = $this->common->get_tpl_dir();
