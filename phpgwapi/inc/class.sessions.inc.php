@@ -148,6 +148,11 @@
 			else
 			{
 				$this->read_repositories();
+				if ($this->user['expires'] != -1 && $this->user['expires'] < time())
+				{
+					return False;
+				}
+
 				$phpgw_info['user']  = $this->user;
 				$phpgw_info['hooks'] = $this->hooks;
 			}
@@ -268,6 +273,11 @@
 			}
 
 			$this->read_repositories();
+			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
+			{
+				return False;
+			}
+
 			$phpgw_info['user']  = $this->user;
 			$phpgw_info['hooks'] = $this->hooks;
 			if ($phpgw_info['server']['cache_phpgw_info'])

@@ -44,17 +44,18 @@
 			$this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->data["userid"]            = $this->db->f("account_lid");
-			$this->data["account_id"]        = $this->db->f("account_id");
-			$this->data["account_lid"]       = $this->db->f("account_lid");
-			$this->data["firstname"]         = $this->db->f("account_firstname");
-			$this->data["lastname"]          = $this->db->f("account_lastname");
-			$this->data["fullname"]          = $this->db->f("account_firstname") . " "
-														. $this->db->f("account_lastname");
-			$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-			$this->data["status"]            = $this->db->f("account_status");
+			$this->data['userid']            = $this->db->f('account_lid');
+			$this->data['account_id']        = $this->db->f('account_id');
+			$this->data['account_lid']       = $this->db->f('account_lid');
+			$this->data['firstname']         = $this->db->f('account_firstname');
+			$this->data['lastname']          = $this->db->f('account_lastname');
+			$this->data['fullname']          = $this->db->f('account_firstname') . ' '
+														. $this->db->f('account_lastname');
+			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
+			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
+			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
+			$this->data['status']            = $this->db->f('account_status');
+			$this->data['expires']           = $this->db->f('account_expires');
 			return $this->data;
 		}
 
@@ -62,7 +63,8 @@
 		{
 			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+				. $this->data['status'] . "', account_expires='" . $this->data['expires'] . "' where account_id='"
+				. $this->account_id . "'",__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -142,12 +144,13 @@
 		$this->db->query($sql,__LINE__,__FILE__);
 		while ($this->db->next_record()) {
 			$accounts[] = Array(
-				"account_id" => $this->db->f("account_id"),
-				"account_lid" => $this->db->f("account_lid"),
-				"account_type" => $this->db->f("account_type"),
-				"account_firstname" => $this->db->f("account_firstname"),
-				"account_lastname" => $this->db->f("account_lastname"),
-				"account_status" => $this->db->f("account_status")
+				'account_id'        => $this->db->f('account_id'),
+				'account_lid'       => $this->db->f('account_lid'),
+				'account_type'      => $this->db->f('account_type'),
+				'account_firstname' => $this->db->f('account_firstname'),
+				'account_lastname'  => $this->db->f('account_lastname'),
+				'account_status'    => $this->db->f('account_status'),
+				'account_expires'   => $this->db->f('account_expires')
 			);
 		}
 		return $accounts;
@@ -207,6 +210,8 @@
 			return $this->db->f(0) > 0;
 		}
 
+		// !! NOTE: We should pass an array to this to make updates easier, plus I need to add account_expires
+		//          I didn't want to risk breaking too much code at once, I will do this soon. (jengo)
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
 		{
           // $account_home and $account_shell not used here

@@ -42,6 +42,7 @@
     account_lastloginfrom  varchar(255),
     account_lastpwd_change int(11),
     account_status         enum('A','L'),
+    account_expires        int,
     account_type           char(1),
     PRIMARY KEY (account_id),
     UNIQUE account_lid (account_lid)
@@ -361,7 +362,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

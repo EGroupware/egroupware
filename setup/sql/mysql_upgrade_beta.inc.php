@@ -1599,7 +1599,18 @@
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.005';
 	}
-        			
+
+	$test[] = '0.9.11.005';
+	function upgrade0_9_11_005()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_accounts add column account_expires int after account_status",__LINE__,__FILE__);
+		$phpgw_setup->db->query("update phpgw_accounts set account_expires='-1'",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

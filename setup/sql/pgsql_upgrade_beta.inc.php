@@ -2057,6 +2057,39 @@
 	}
 
 
+	$test[] = '0.9.11.005';
+	function upgrade0_9_11_005()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("create table phpgw_accounts_temp as select * from phpgw_accounts",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop sequence phpgw_accounts_account_id_seq",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_accounts",__LINE__,__FILE__);
+
+      $sql = "create table phpgw_accounts (
+        account_id             serial,
+        account_lid            varchar(25) NOT NULL,
+        account_pwd            char(32) NOT NULL,
+        account_firstname      varchar(50),
+        account_lastname       varchar(50),
+        account_lastlogin      int,
+        account_lastloginfrom  varchar(255),
+        account_lastpwd_change int,
+        account_status         char(1),
+        account_expires        int,
+        account_type           char(1),
+        unique(account_lid)
+      )";
+      $phpgw_setup->db->query($sql);
+
+		$phpgw_setup->db->query("insert into phpgw_accounts select * from phpgw_accounts_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_accounts_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("update phpgw_accounts set account_expires='-1'",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.006';
+	}
+
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
