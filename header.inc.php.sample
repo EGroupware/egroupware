@@ -47,8 +47,9 @@
    */
   $phpgw_info["server"]["mcrypt_iv"] = "cwjasud83l;la-0d.e/lc;[-%kl)ls,lf0;sa-;921kx;90flwl,skfcujd,wsodsp";
 
-  /* Use this for supporting different domains using this single install */
+  /* Uncomment this out and use this for supporting different domains using this single install */
   /* (ignore if you are only supporting a single domain)*/
+/*
   $phpgw_domain["domain2.com"] = array (
     "db_host" => "localhost", 
     "db_name" => "phpgw_domain1", 
@@ -57,12 +58,12 @@
     "db_type" => "mysql",
     "config_passwd" => "changeme"
   );
-
+*/
   /**************************************************************************\
   * Do not edit these lines                                                  *
   \**************************************************************************/
   include($phpgw_info["server"]["server_root"]."/version.inc.php");
-  $phpgw_info["server"]["header_version"] = "1.3";
+  $phpgw_info["server"]["header_version"] = "1.4";
   if (!$phpgw_info["flags"]["noapi"] == True){
     include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw.inc.php");
   }
