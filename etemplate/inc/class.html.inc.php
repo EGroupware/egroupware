@@ -63,7 +63,7 @@ class html
 		}
 		while (list($k,$text) = each($arr))
 		{
-			$out .= '<option value="'.$k.'"';
+			$out .= '<option value="'.htmlspecialchars($k).'"';
 			if("$k" == "$key" || strstr(",$key,",",$k,"))
 			{
 				$out .= " SELECTED";
@@ -99,14 +99,14 @@ class html
 
 	function textarea($name,$value='',$options='' )
 	{
-		return "<TEXTAREA name=\"$name\" $options>$value</TEXTAREA>\n";
+		return "<TEXTAREA name=\"$name\" $options>".htmlspecialchars($value)."</TEXTAREA>\n";
 	}
 
 	function input($name,$value='',$type='',$options='' )
 	{
 		if ($type) $type = 'TYPE="'.$type.'"';
 
-		return "<INPUT $type NAME=\"$name\" VALUE=\"$value\" $options>\n";
+		return "<INPUT $type NAME=\"$name\" VALUE=\"".htmlspecialchars($value)."\" $options>\n";
 	}
 
 	function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='')
