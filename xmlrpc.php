@@ -33,7 +33,7 @@
 		"Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 	);
 
-	$findstate_sig = array(array($xmlrpcString, $xmlrpcInt));
+	$findstate_sig = array(array(xmlrpcString, xmlrpcInt));
 
 	$findstate_doc = 'When passed an integer between 1 and 51 returns the
 name of a US state, where the integer is the index of that state name
@@ -41,7 +41,6 @@ in an alphabetic order.';
 
 	function findstate($m)
 	{
-		global $xmlrpcerruser, $stateNames;
 		$err="";
 		// get the first param
 		$sno=$m->getParam(0);
@@ -52,9 +51,9 @@ in an alphabetic order.';
 			// extract the value of the state number
 			$snv=$sno->scalarval();
 			// look it up in our array (zero-based)
-			if (isset($stateNames[$snv-1]))
+			if (isset($GLOBALS['stateNames'][$snv-1]))
 			{
-				$sname=$stateNames[$snv-1];
+				$sname=$GLOBALS['stateNames'][$snv-1];
 			}
 			else
 			{
@@ -71,7 +70,7 @@ in an alphabetic order.';
 		// if we generated an error, create an error return response
 		if ($err)
 		{
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $xmlrpcerruser, $err);
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerruser'], $err);
 		}
 		else
 		{
@@ -81,7 +80,7 @@ in an alphabetic order.';
 		}
 	}
 
-	$addtwo_sig=array(array($xmlrpcInt, $xmlrpcInt, $xmlrpcInt));
+	$addtwo_sig=array(array(xmlrpcInt, xmlrpcInt, xmlrpcInt));
 	$addtwo_doc='Add two integers together and return the result';
 
 	function addtwo($m)
@@ -91,7 +90,7 @@ in an alphabetic order.';
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),"int"));
 	}
 
-	$addtwodouble_sig=array(array($xmlrpcDouble, $xmlrpcDouble, $xmlrpcDouble));
+	$addtwodouble_sig=array(array(xmlrpcDouble, xmlrpcDouble, xmlrpcDouble));
 	$addtwodouble_doc='Add two doubles together and return the result';
 
 	function addtwodouble($m)
@@ -101,7 +100,7 @@ in an alphabetic order.';
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()+$t->scalarval(),"double"));
 	}
 
-	$stringecho_sig=array(array($xmlrpcString, $xmlrpcString));
+	$stringecho_sig=array(array(xmlrpcString, xmlrpcString));
 	$stringecho_doc='Accepts a string parameter, returns the string.';
 
 	function stringecho($m)
@@ -111,7 +110,7 @@ in an alphabetic order.';
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s->scalarval()));
 	}
 
-	$echoback_sig=array(array($xmlrpcString, $xmlrpcString));
+	$echoback_sig=array(array(xmlrpcString, xmlrpcString));
 	$echoback_doc='Accepts a string parameter, returns the entire incoming payload';
 
 	function echoback($m)
@@ -124,7 +123,7 @@ in an alphabetic order.';
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$s));
 	}
 
-	$echosixtyfour_sig=array(array($xmlrpcString, $xmlrpcBase64));
+	$echosixtyfour_sig=array(array(xmlrpcString, xmlrpcBase64));
 	$echosixtyfour_doc='Accepts a base64 parameter and returns it decoded as a string';
 
 	function echosixtyfour($m)
@@ -136,16 +135,14 @@ in an alphabetic order.';
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$incoming->scalarval(), "string"));
 	}
 
-	$bitflipper_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$bitflipper_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$bitflipper_doc='Accepts an array of booleans, and returns them inverted';
 
 	function bitflipper($m)
 	{
-		global $xmlrpcArray;
-
 		$v  = $m->getParam(0);
 		$sz = $v->arraysize();
-		$rv = CreateObject('phpgwapi.xmlrpcval',array(), $xmlrpcArray);
+		$rv = CreateObject('phpgwapi.xmlrpcval',array(), xmlrpcArray);
 
 		for($j=0; $j<$sz; $j++)
 		{
@@ -175,21 +172,19 @@ in an alphabetic order.';
 
 	function agesorter_compare($a, $b)
 	{
-		global $agesorter_arr;
-
 		// don't even ask me _why_ these come padded with
 		// hyphens, I couldn't tell you :p
 		$a=ereg_replace("-", "", $a);
 		$b=ereg_replace("-", "", $b);
 
-		if ($agesorter_arr[$a]==$agesorter[$b])
+		if ($GLOBALS['agesorter_arr'][$a]==$agesorter[$b])
 		{
 			return 0;
 		}
-		return ($agesorter_arr[$a] > $agesorter_arr[$b]) ? -1 : 1;
+		return ($GLOBALS['agesorter_arr'][$a] > $GLOBALS['agesorter_arr'][$b]) ? -1 : 1;
 	}
 
-	$agesorter_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$agesorter_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$agesorter_doc='Send this method an array of [string, int] structs, eg:
 <PRE>
  Dave   35
@@ -202,7 +197,7 @@ And the array will be returned with the entries sorted by their numbers.
 
 	function agesorter($m)
 	{
-		global $agesorter_arr, $xmlrpcerruser, $s;
+		global $s;
 
 		xmlrpc_debugmsg("Entering 'agesorter'");
 		// get the parameter
@@ -234,12 +229,12 @@ And the array will be returned with the entries sorted by their numbers.
 				$agar[$n->scalarval()] = $a->scalarval();
 			}
 
-			$agesorter_arr = $agar; 
+			$GLOBALS['agesorter_arr'] = $agar; 
 			// hack, must make global as uksort() won't
 			// allow us to pass any other auxilliary information
-			uksort($agesorter_arr, agesorter_compare);
+			uksort($GLOBALS['agesorter_arr'], agesorter_compare);
 			$outAr = array();
-			while (list($key,$val) = each($agesorter_arr))
+			while (list($key,$val) = each($GLOBALS['agesorter_arr']))
 			{
 				// recreate each struct element
 				$outAr[] = CreateObject('phpgwapi.xmlrpcval',array(
@@ -259,7 +254,7 @@ And the array will be returned with the entries sorted by their numbers.
 
 		if ($err)
 		{
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $xmlrpcerruser, $err);
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerruser'], $err);
 		}
 		else
 		{
@@ -271,9 +266,9 @@ And the array will be returned with the entries sorted by their numbers.
 
 	$mail_send_sig = array(
 		array(
-			$xmlrpcBoolean, $xmlrpcString, $xmlrpcString,
-			$xmlrpcString, $xmlrpcString, $xmlrpcString,
-			$xmlrpcString, $xmlrpcString
+			xmlrpcBoolean, xmlrpcString, xmlrpcString,
+			xmlrpcString, xmlrpcString, xmlrpcString,
+			xmlrpcString, xmlrpcString
 		)
 	);
 
@@ -291,7 +286,6 @@ text is a string, it contains the body of the message.
 	// the Bcc option.  Sneak on your friends at your own risk!
 	function mail_send($m)
 	{
-		global $xmlrpcerruser, $xmlrpcBoolean;
 		$err = '';
 
 		$mTo   = $m->getParam(0);
@@ -338,15 +332,15 @@ text is a string, it contains the body of the message.
 
 		if ($err)
 		{
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $xmlrpcerruser, $err);
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerruser'], $err);
 		}
 		else
 		{
-			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"true", $xmlrpcBoolean));
+			return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"true", xmlrpcBoolean));
 		}
 	}
 
-	$v1_arrayOfStructs_sig = array(array($xmlrpcInt, $xmlrpcArray));
+	$v1_arrayOfStructs_sig = array(array(xmlrpcInt, xmlrpcArray));
 	$v1_arrayOfStructs_doc = 'This handler takes a single parameter, an array of structs, each of which contains at least three elements named moe, larry and curly, all <i4>s. Your handler must add all the struct elements named curly and return the result.';
 
 	function v1_arrayOfStructs($m)
@@ -368,7 +362,7 @@ text is a string, it contains the body of the message.
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$numcurly, "int"));
 	}
 
-	$v1_easyStruct_sig = array(array($xmlrpcInt, $xmlrpcStruct));
+	$v1_easyStruct_sig = array(array(xmlrpcInt, xmlrpcStruct));
 	$v1_easyStruct_doc = 'This handler takes a single parameter, a struct, containing at least three elements named moe, larry and curly, all &lt;i4&gt;s. Your handler must add the three numbers and return the result.';
 
 	function v1_easyStruct($m)
@@ -381,7 +375,7 @@ text is a string, it contains the body of the message.
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$num, "int"));
 	}
 
-	$v1_echoStruct_sig=array(array($xmlrpcStruct, $xmlrpcStruct));
+	$v1_echoStruct_sig=array(array(xmlrpcStruct, xmlrpcStruct));
 	$v1_echoStruct_doc='This handler takes a single parameter, a struct. Your handler must return the struct.';
 
 	function v1_echoStruct($m)
@@ -392,9 +386,9 @@ text is a string, it contains the body of the message.
 
 	$v1_manyTypes_sig = array(
 		array(
-			$xmlrpcArray, $xmlrpcInt, $xmlrpcBoolean,
-			$xmlrpcString, $xmlrpcDouble, $xmlrpcDateTime,
-			$xmlrpcBase64
+			xmlrpcArray, xmlrpcInt, xmlrpcBoolean,
+			xmlrpcString, xmlrpcDouble, xmlrpcDateTime,
+			xmlrpcBase64
 		)
 	);
 	$v1_manyTypes_doc = 'This handler takes six parameters, and returns an array containing all the parameters.';
@@ -413,7 +407,7 @@ text is a string, it contains the body of the message.
 		));
 	}
 
-	$v1_moderateSizeArrayCheck_sig = array(array($xmlrpcString, $xmlrpcArray));
+	$v1_moderateSizeArrayCheck_sig = array(array(xmlrpcString, xmlrpcArray));
 	$v1_moderateSizeArrayCheck_doc = 'This handler takes a single parameter, which is an array containing between 100 and 200 elements. Each of the items is a string, your handler must return a string containing the concatenated text of the first and last elements.';
 
 	function v1_moderateSizeArrayCheck($m)
@@ -425,7 +419,7 @@ text is a string, it contains the body of the message.
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$first->scalarval() . $last->scalarval(), "string"));
 	}
 
-	$v1_simpleStructReturn_sig = array(array($xmlrpcStruct, $xmlrpcInt));
+	$v1_simpleStructReturn_sig = array(array(xmlrpcStruct, xmlrpcInt));
 	$v1_simpleStructReturn_doc = 'This handler takes one parameter, and returns a struct containing three elements, times10, times100 and times1000, the result of multiplying the number by 10, 100 and 1000.';
 
 	function v1_simpleStructReturn($m)
@@ -441,7 +435,7 @@ text is a string, it contains the body of the message.
 		));
 	}
 
-	$v1_nestedStruct_sig = array(array($xmlrpcInt, $xmlrpcStruct));
+	$v1_nestedStruct_sig = array(array(xmlrpcInt, xmlrpcStruct));
 	$v1_nestedStruct_doc = 'This handler takes a single parameter, a struct, that models a daily calendar. At the top level, there is one struct for each year. Each year is broken down into months, and months into days. Most of the days are empty in the struct you receive, but the entry for April 1, 2000 contains a least three elements named moe, larry and curly, all &lt;i4&gt;s. Your handler must add the three numbers and return the result.';
 
 function v1_nestedStruct($m) {
@@ -459,7 +453,7 @@ function v1_nestedStruct($m) {
 
 }
 
-$v1_countTheEntities_sig=array(array($xmlrpcStruct, $xmlrpcString));
+$v1_countTheEntities_sig=array(array(xmlrpcStruct, xmlrpcString));
 
 $v1_countTheEntities_doc='This handler takes a single parameter, a string, that contains any number of predefined entities, namely &lt;, &gt;, &amp; \' and ".<BR>Your handler must return a struct that contains five fields, all numbers:  ctLeftAngleBrackets, ctRightAngleBrackets, ctAmpersands, ctApostrophes, ctQuotes.';
 
@@ -503,36 +497,36 @@ function v1_countTheEntities($m) {
 	// trivial interop tests
 	// http://www.xmlrpc.com/stories/storyReader$1636
 
-	$i_echoString_sig=array(array($xmlrpcString, $xmlrpcString));
+	$i_echoString_sig=array(array(xmlrpcString, xmlrpcString));
 	$i_echoString_doc="Echoes string.";
 
-	$i_echoStringArray_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$i_echoStringArray_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$i_echoStringArray_doc="Echoes string array.";
 
-	$i_echoInteger_sig=array(array($xmlrpcInt, $xmlrpcInt));
+	$i_echoInteger_sig=array(array(xmlrpcInt, xmlrpcInt));
 	$i_echoInteger_doc="Echoes integer.";
 
-	$i_echoIntegerArray_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$i_echoIntegerArray_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$i_echoIntegerArray_doc="Echoes integer array.";
 
-	$i_echoFloat_sig=array(array($xmlrpcDouble, $xmlrpcDouble));
+	$i_echoFloat_sig=array(array(xmlrpcDouble, xmlrpcDouble));
 	$i_echoFloat_doc="Echoes float.";
 
-	$i_echoFloatArray_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$i_echoFloatArray_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$i_echoFloatArray_doc="Echoes float array.";
 
-	$i_echoStruct_sig=array(array($xmlrpcStruct, $xmlrpcStruct));
+	$i_echoStruct_sig=array(array(xmlrpcStruct, xmlrpcStruct));
 	$i_echoStruct_doc="Echoes struct.";
 
-	$i_echoStructArray_sig=array(array($xmlrpcArray, $xmlrpcArray));
+	$i_echoStructArray_sig=array(array(xmlrpcArray, xmlrpcArray));
 	$i_echoStructArray_doc="Echoes struct array.";
 
 	$i_echoValue_doc="Echoes any value back.";
 
-	$i_echoBase64_sig=array(array($xmlrpcBase64, $xmlrpcBase64));
+	$i_echoBase64_sig=array(array(xmlrpcBase64, xmlrpcBase64));
 	$i_echoBase64_doc="Echoes base64.";
 
-	$i_echoDate_sig=array(array($xmlrpcDateTime, $xmlrpcDateTime));
+	$i_echoDate_sig=array(array(xmlrpcDateTime, xmlrpcDateTime));
 	$i_echoDate_doc="Echoes dateTime.";
 
 	function i_echoParam($m)
@@ -590,12 +584,11 @@ function v1_countTheEntities($m) {
 
 	function i_whichToolkit($m)
 	{
-		global $xmlrpcName, $xmlrpcVersion,$SERVER_SOFTWARE,$xmlrpcStruct;
 		$ret = array(
 			"toolkitDocsUrl" => "http://xmlrpc.usefulinc.com/php.html",
-			"toolkitName"    => $xmlrpcName,
-			"toolkitVersion" => $xmlrpcVersion,
-			"toolkitOperatingSystem" => $SERVER_SOFTWARE
+			"toolkitName"    => $GLOBALS['xmlrpcName'],
+			"toolkitVersion" => $GLOBALS['xmlrpcVersion'],
+			"toolkitOperatingSystem" => $GLOBALS['SERVER_SOFTWARE']
 		);
 		return CreateObject('phpgwapi.xmlrpcresp',xmlrpc_encode($ret));
 	}
