@@ -66,19 +66,30 @@
 	$CPre = '|['; $CPreReg = '\|\['; // |{csv-fieldname} is expanded to the value of the csv-field
 	$CPos = ']';  $CPosReg = '\]';	// if used together with @ (replacement is eval-ed) value gets autom. quoted
 
-function addr_id( $n_family,$n_given,$org_name )
+function addr_id( $n_family,$n_given=False,$org_name=False )
 {		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
 	$contacts = createobject('phpgwapi.contacts');
 
-	$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
-	if (!count($addrs))
+	if ($org_name !== False)	// org_name given?
+	{
+		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
+		if (!count($addrs))
+		{
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name" );
+		}
+	}
+	if ($n_given !== False && ($org_name === False || !count($addrs)))	// first name given and no result so far
+	{
 		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given" );
-	if (!count($addrs))
-		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name" );
-
+	}
+	if ($n_given === False && $org_name === False)	// just one name given, check against fn (= full name)
+	{
+		$addrs = $contacts->read( 0,0,array('id'),'',"fn=$n_family" );
+	}
 	if (count($addrs))
+	{
 		return $addrs[0]['id'];
-
+	}
 	return False;
 }
 
