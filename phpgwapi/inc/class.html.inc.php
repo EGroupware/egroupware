@@ -177,7 +177,7 @@
 				else
 				{
 					$GLOBALS['phpgw_info']['flags']['java_script'] .=
-'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/htmlarea-lang.php',array('lang'=>$lang))).'"></script>'."\n";
+						'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/htmlarea-lang.php',array('lang'=>$lang))).'"></script>'."\n";
 				}
 
 				$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .=
@@ -189,7 +189,7 @@
 				</script>\n";
 
 				// set a base href to get relative image-pathes working
-				if ($base_href)
+				if ($base_href && $this->user_agent != 'msie')	// HTMLarea does not work in IE with base href set !!!
 				{
 					$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .= '<base href="'.
 						($base_href[0] != '/' && substr($base_href,0,4) != 'http' ? $GLOBALS['phpgw_info']['server']['webserver_url'].'/' : '').
@@ -201,8 +201,6 @@
 				htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
 				</script>\n";
 		}
-//			echo $GLOBALS['phpgw_info']['flags']['java_script'];
-//			die('test');
 			$id = str_replace(array('[',']'),array('_',''),$name);	// no brakets in the id allowed by js
 
 			$GLOBALS['phpgw']->js->set_onload("HTMLArea.replace('$id',htmlareaConfig);");
