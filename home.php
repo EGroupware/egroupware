@@ -100,8 +100,8 @@
 				}
 			}
 		}
-		elseif ($_GET['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
-			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
+		elseif ($_GET['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] &&
+			$GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
 		}
@@ -222,10 +222,10 @@
 		@ksort($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
 		while(list($order,$app) = each($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
 		{
-			if(!isset($app_check[intval($app)]) || !$app_check[intval($app)])
+			if(!isset($app_check[(int)$app]) || !$app_check[(int)$app])
 			{
-				$app_check[intval($app)] = True;
-				$sorted_apps[] = $GLOBALS['phpgw']->applications->id2name(intval($app));
+				$app_check[(int)$app] = True;
+				$sorted_apps[] = $GLOBALS['phpgw']->applications->id2name((int)$app);
 			}
 		}
 	}
@@ -241,13 +241,12 @@
 
 	// Now add the rest of the user's apps, to make sure we pick up any additions to the home display
 	@reset($GLOBALS['phpgw_info']['user']['apps']);
-	while (list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+	while(list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
 	{
 		$sorted_apps[] = $p['name'];
-
 	}
 	//$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
-	
+
 	function migrate_pref($appname,$var_old,$var_new,$type='user')
 	{
 		if(empty($appname) || empty($var_old) || empty($var_new))
@@ -273,10 +272,10 @@
 			if(isset($GLOBALS['phpgw']->preferences->$_type[$appname][$var_old]))
 			{
 				$GLOBALS['phpgw']->preferences->$_type[$appname][$var_new] =
-								$GLOBALS['phpgw']->preferences->$_type[$appname][$var_old];
+					$GLOBALS['phpgw']->preferences->$_type[$appname][$var_old];
 				$result = true;
 				$GLOBALS['phpgw_info']['user']['preferences'] =
-								$GLOBALS['phpgw']->preferences->save_repository(false,$_type);
+					$GLOBALS['phpgw']->preferences->save_repository(false,$_type);
 			}
 		}
 		return $result;
@@ -311,7 +310,7 @@
 	@reset($sorted_apps);
 	foreach($sorted_apps as $appname)
 	{
-		if(intval($done[$appname])==1 || empty($appname))
+		if((int)$done[$appname] == 1 || empty($appname))
 		{
 			continue;
 		}
@@ -320,15 +319,15 @@
 		$thisd = 0;
 		foreach($varnames as $varcheck)
 		{
-		 	//echo "$appname:$varcheck=".$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]."<br>";
-		 	if($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]=='True')
+			//echo "$appname:$varcheck=".$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]."<br>";
+			if($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]=='True')
 			{
 				$thisd = 1;
 				break;
 			}
 			else 
 			{
-				$_thisd = intval($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]);
+				$_thisd = (int)$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck];
 				if($_thisd>0)
 				{
 					//echo "Found $appname=$_thisd through $varcheck<br>";
