@@ -254,6 +254,7 @@
 		*/
 		function free()
 		{
+			unset($this->Query_ID);	// else copying of the db-object does not work
 			$this->Query_ID = 0;
 		}
 
@@ -302,7 +303,7 @@
 			$this->Row = 0;
 			$this->Errno  = $this->Link_ID->ErrorNo();
 			$this->Error  = $this->Link_ID->ErrorMsg();
-			$this->sql = $Query_String;
+
 			if (! $this->Query_ID)
 			{
 				$this->halt("Invalid SQL: ".$Query_String, $line, $file);
@@ -412,7 +413,21 @@
 		*/
 		function get_last_insert_id($table, $field)
 		{
-			return $this->Link_ID->Insert_ID();
+			$id = $this->Link_ID->Insert_ID();
+
+			if ($id === False)	// function not supported
+			{
+				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->type'</p>\n";
+				return -1;
+			}
+			if ($this->type != 'pgsql' || $id == -1)
+			{
+				return $id;
+			}
+			// pgsql code to transform the OID into the real id
+			$id = $this->Link_ID->GetOne("SELECT $field FROM $table WHERE oid=$id");
+
+			return $id !== False ? $id : -1;
 		}
 
 		/**
