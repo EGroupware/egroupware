@@ -57,7 +57,7 @@
 			}
 			if (!$this->Link_ID)
 			{
-				$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')..'connect failed');
+				$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'').'connect failed');
 			}
 			if(!sybase_select_db($Database, $this->Link_ID))
 			{
