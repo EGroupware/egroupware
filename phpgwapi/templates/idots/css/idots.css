@@ -30,30 +30,33 @@ img
 	border-style:none;
 }
 
-a:link
+a:link,a:visited
 {
+	cursor:pointer;
 	color: #006699; 
 	text-decoration: none;
 }
 
+/*
 a:visited 
 {
 	color: #006699; 
 	text-decoration: none;
 }
-
-a:hover 
+*/
+a:hover,a:active
 {
+	cursor:pointer;
 	color: #ff9933;
 	text-decoration: underline;
 }
-
+/*
 a:active 
 {
 	color: #006699; 
 	text-decoration: underline;
 }
-
+*/
 input,button
 {
 	font-size: 11px; 
@@ -305,8 +308,12 @@ a.textSidebox
 
 #fmLocation
 {
-	margin-left:4px;
+	position:relative;
+	/*background-image:url(../images/buttonbackgroundscaled.png);
+	background-repeat: repeat-x;*/
+	/*margin-left:4px;*/
 	margin-bottom:3px;
+	height:27px;
 
 }
 
