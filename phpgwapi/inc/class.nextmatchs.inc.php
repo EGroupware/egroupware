@@ -124,13 +124,13 @@
 		@param $start ?
 		@param $total ?
 		@param $extradate ?
-		*/  
+		*/
 		function left($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$tpl->set_file(array(
-				'link'       => 'nextmatchs_link.tpl'
+				'link' => 'nextmatchs_link.tpl'
 			));
 
 			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
@@ -182,7 +182,7 @@
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$tpl->set_file(array(
-				'link'       => 'nextmatchs_link.tpl'
+				'link' => 'nextmatchs_link.tpl'
 			));
 			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 
@@ -221,12 +221,12 @@
 			global $query;
 			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 			$tpl->set_file(array(
-				'search'       => 'nextmatchs_search.tpl'
+				'search' => 'nextmatchs_search.tpl'
 			));
 			$tpl->set_var('query_value',$query);
 			$tpl->set_var('searchby',$this->searchby($search_obj));
 			$tpl->set_var('lang_search',lang('Search'));
-      
+
 			return $tpl->fp('out','search');
 		} /* search() */
 
@@ -251,7 +251,7 @@
 				$filter_obj[$index][0] = $phpgw->db->f($idxfieldname);
 				$filter_obj[$index][1] = $phpgw->db->f($strfieldname);
 			}
-      
+
 			return $filter_obj;
 		} /* filterobj() */
 
@@ -259,7 +259,7 @@
 		@function searchby
 		@abstract ?
 		@param $search_obj ?
-		*/  
+		*/
 		function searchby($search_obj)
 		{
 			global $qfield, $phpgw, $phpgw_info;
@@ -267,7 +267,7 @@
 			if (is_array($search_obj))
 			{
 				$str = '<select name="qfield">';
-          
+
 				$indexlimit = count($search_obj);
 				for ($index=0; $index<$indexlimit; $index++)
 				{
@@ -275,7 +275,7 @@
 					{
 						$qfield = $search_obj[$index][0];
 					}
-              
+
 					$str .= '<option value="' . $search_obj[$index][0] . '"';
 
 					if ($qfield == $search_obj[$index][0])
@@ -294,7 +294,7 @@
 		@function filter
 		@abstract ?
 		@param $filter_obj
-		*/  
+		*/
 		function filter($filter_obj,$yours=0)
 		{
 			global $filter, $phpgw, $phpgw_info;
@@ -328,11 +328,11 @@
 					}
 				}
 			}
-      
+
 			if (is_array($filter_obj))
 			{
 				$str .= '<select name="filter">'."\n";
-          
+
 				$indexlimit = count($filter_obj);
 
 				for ($index=0; $index<$indexlimit; $index++)
@@ -341,7 +341,7 @@
 					{
 						$filter = $filter_obj[$index][0];
 					}
-              
+
 					$str .= '<option value="' . $filter_obj[$index][0] . '"';
 
 					if ($filter == $filter_obj[$index][0])
@@ -351,12 +351,12 @@
 
 					$str .= '>' . $filter_obj[$index][1] . '</option>'."\n";
 				}
-          
+
 				$str .= '</select>'."\n";
 				$tpl->set_var('select',$str);
 				$tpl->set_var('lang_filter',lang('Filter'));
 			}
-     
+
 			return $tpl->fp('out','filter');
 		} /* filter() */
 
@@ -374,7 +374,7 @@
 				global $tr_color;
 				$currentcolor = $tr_color;
 			}
-    
+
 			if ($currentcolor == $phpgw_info['theme']['row_on'])
 			{
 				$tr_color = $phpgw_info['theme']['row_off'];
