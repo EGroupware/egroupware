@@ -118,7 +118,7 @@
 				$this->clean_sessions();
 				session_unset();
 				session_destroy();
-				if ($GLOBALS['phpgw_info']['server']['use_cookies'])
+				if ($GLOBALS['phpgw_info']['server']['usecookies'])
 				{
 					$this->phpgw_setcookie(session_name());
 				}
