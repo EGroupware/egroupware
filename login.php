@@ -159,7 +159,7 @@
   $tmpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
   $tmpl->set_var("lang_password","password");
   $tmpl->set_var("lang_login","login");
-
+  $tmpl->set_var("template_set","default"); 
   $tmpl->parse("loginout", "login_form");
   $tmpl->p("loginout");
 ?>

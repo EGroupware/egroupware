@@ -35,7 +35,6 @@
                                 "frame_body"   => "frames_body.tpl",
                                 "frame_navbar" => "frames_navbar.tpl"
                                ));
-   
            $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
            if ($forward) {
               $tpl->set_var("body_link",$phpgw->link($phpgw_info["server"]["webserver_url"] . $forward));
