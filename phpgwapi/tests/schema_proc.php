@@ -14,14 +14,14 @@
 	/* $Id$ */
 
 	// For security reasons we exit by default if called via the webserver
-	/*if (isset($_SERVER['HTTP_HOST']))
+	if (isset($_SERVER['HTTP_HOST']))
 	{
 		die ('Access denied !!!');
-	}*/
+	}
 	// the used domain has to be given as first parameter if called on the commandline or as domain= on the url
 	if (!isset($_GET['domain'])) 
 	{
-		$_GET['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'default';
+		$_GET['domain'] = $_SERVER['argc'] > 1 ? $_SERVER['argv'][1] : 'default';
 	}
 	$path_to_egroupware = realpath(dirname(__FILE__).'/../..');	//  need to be adapted if this script is moved somewhere else
 
@@ -46,8 +46,8 @@
 	
 	// creating a schema_proc instance
 	$schema_proc = CreateObject('phpgwapi.schema_proc',$db->Type);
-	$schema_proc->debug = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : (isset($_GET['debug']) ? $_GET['debug'] : 0);
-	
+	$schema_proc->debug = isset($_GET['debug']) ? $_GET['debug'] : ($_SERVER['argc'] > 2 ? $_SERVER['argv'][2] :  0);
+
 	// define a test-table to create
 	$test_tables = array(
 		'schema_proc_test' => array(
@@ -63,7 +63,7 @@
 			'pk' => array('test_auto'),
 			'fk' => array(),
 			'ix' => array('test_varchar',array('test_text','options'=>array('mysql'=>'FULLTEXT','maxdb'=>false,'pgsql'=>false))),
-			'uc' => array()
+			'uc' => array('test_char')
 		),
 	);
 	
@@ -79,20 +79,24 @@
 		$schema_proc->CreateTable($name,$definition);
 	}
 	
-	echo "\nReading back the tables via MetaTables:\n";
-	$meta_tables = $adodb->MetaTables();
+	echo "\nReading back the tables via MetaColumns:\n";
 	foreach($test_tables as $name => $definition)
 	{
-		if (!in_array($name,$meta_tables) && !in_array(strtoupper($name),$meta_tables))
+		$columns = $adodb->MetaColumns($name);
+		if (!$columns || count($columns) <= 0)
 		{
 			echo "\n\n!!! Table '$name' has NOT been created !!!\n\n";
 		}
 		else
 		{
-			echo "Table '$name' found\n";
-			print_r($adodb->MetaColumns($name));
+			print_r($columns);
+			print_r($adodb->MetaIndexes($name));
 		}		
 	}
+	echo "Inserting some content:\n";
+	$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (1,'Hallo Ralf','0123456789')");
+	$adodb->Execute("INSERT INTO schema_proc_test (test_int4,test_varchar,test_char) VALUES (2,'Hallo wer noch?','9876543210')");
+	
 	echo "Droping column test_blob:\n";
 	$new_table_def = $test_tables['schema_proc_test'];
 	unset($new_table_def['fd']['test_blob']);
@@ -111,9 +115,17 @@
 	$schema_proc->RenameTable('schema_proc_test','schema_proc_renamed');
 	
 	print_r($adodb->MetaColumns('schema_proc_renamed'));
+	print_r($adodb->MetaIndexes('schema_proc_renamed'));
 	
-	$schema_proc->RenameTable('schema_proc_renamed','schema_proc_test');	// so we can drop it under its original name
+	echo "Inserting some more content:\n";
+	$db->query("INSERT INTO schema_proc_renamed (test_int4,test_varchar,test_char) VALUES (10,'Hallo Hallo Hallo ...','12345678901234567890123456789012')");
 
+	echo "Reading back the content:\n";
+	$all = $adodb->GetAll("SELECT * FROM schema_proc_renamed");
+	print_r($all);
+
+	$schema_proc->RenameTable('schema_proc_renamed','schema_proc_test');	// so we can drop it under its original name
+	
 	echo "\nDroping the test-tables again:\n";
 	if (!$schema_proc->DropAllTables($test_tables)) echo "!!!Failed !!!\n";
 	
