@@ -1243,9 +1243,11 @@
 		/**
 		 * clone function for php4, use as $new_obj = clone($old_obj);
 		 */
+		eval('
 		function clone($obj)
 		{
 			return $obj;
 		}
+		');
 	}
 ?>
