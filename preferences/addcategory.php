@@ -104,7 +104,7 @@
 	}
 
 	$t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
-	$t->set_var('title_categories',lang('Add x category for',$cats_app));
+	$t->set_var('title_categories',lang('Add x category for',lang($cats_app)));
 	$t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
 	$t->set_var('user_name',$phpgw_info['user']['fullname']);
 	$t->set_var('hidden_vars',$hidden_vars);

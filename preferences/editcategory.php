@@ -145,7 +145,7 @@
 
 	$t->set_var('font',$phpgw_info['theme']['font']);
 	$t->set_var('user_name',$phpgw_info['user']['fullname']);
-	$t->set_var('title_categories',lang('Edit x category for',$cats_app));
+	$t->set_var('title_categories',lang('Edit x category for',lang($cats_app)));
 	$t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
 	$t->set_var('actionurl',$phpgw->link('/preferences/editcategory.php'));
 	$t->set_var('deleteurl',$phpgw->link('/preferences/deletecategory.php'));
