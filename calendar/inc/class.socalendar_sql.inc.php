@@ -118,10 +118,10 @@ class socalendar_ extends socalendar__
 			$this->add_attribute('id',intval($this->stream->f('cal_id')));
 			$this->set_class(intval($this->stream->f('is_public')));
 			$this->set_category($this->stream->f('category'));
-			$this->set_title($GLOBALS['phpgw']->strip_html($this->stream->f('title')));
-			$this->set_description($GLOBALS['phpgw']->strip_html($this->stream->f('description')));
+			$this->set_title(stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('title'))));
+			$this->set_description(stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('description'))));
 			$this->add_attribute('uid',$GLOBALS['phpgw']->strip_html($this->stream->f('uid')));
-			$this->add_attribute('location',$GLOBALS['phpgw']->strip_html($this->stream->f('location')));
+			$this->add_attribute('location',stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('location'))));
 			$this->add_attribute('reference',intval($this->stream->f('reference')));
 			
 			// This is the preferred method once everything is normalized...

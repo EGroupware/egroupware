@@ -143,22 +143,42 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-
 			print_debug('BO Filter',$this->filter);
 			print_debug('Owner',$this->owner);
 
 			$this->prefs['calendar']    = $GLOBALS['phpgw_info']['user']['preferences']['calendar'];
+
+			$owner = (isset($GLOBALS['owner'])?$GLOBALS['owner']:'');
+			$owner = (isset($GLOBALS['HTTP_GET_VARS']['owner'])?$GLOBALS['HTTP_GET_VARS']['owner']:$owner);
+			$owner = ($owner=='' && isset($GLOBALS['HTTP_POST_VARS']['owner'])?$GLOBALS['HTTP_POST_VARS']['owner']:$owner);
 			
-			$owner = get_var('owner',Array('GLOBAL','GET','POST'));
-
-			if ((!isset($owner) || $owner == '')
-				 && MENUACTION == 'calendar.uicalendar.planner'
-				 && get_var('from',Array('POST')) != 'calendar.uicalendar.planner'
-				 && $this->prefs['calendar']['planner_start_with_group'] != '-1')
+			ereg('menuaction=([a-zA-Z.]+)',$GLOBALS['HTTP_REFERER'],$regs);
+			$from = $regs[1];
+			if ((substr($GLOBALS['PHP_SELF'],-8) == 'home.php' && substr($this->prefs['calendar']['defaultcalendar'],0,7) == 'planner'
+				 || $GLOBALS['HTTP_GET_VARS']['menuaction'] == 'calendar.uicalendar.planner' &&
+				    $from  != 'calendar.uicalendar.planner' && !$this->save_owner)
+				 && intval($this->prefs['calendar']['planner_start_with_group']) > 0)
 			{
-				$owner = $this->prefs['calendar']['planner_start_with_group'];
+				// entering planner for the first time ==> saving owner in save_owner, setting owner to default
+				//
+				$this->save_owner = $this->owner;
+				$owner = 'g_'.$this->prefs['calendar']['planner_start_with_group'];
 			}
-
+			elseif ($GLOBALS['HTTP_GET_VARS']['menuaction'] != 'calendar.uicalendar.planner' &&
+			        $this->save_owner)
+			{
+				// leaving planner with an unchanged user/owner ==> setting owner back to save_owner
+				//
+				$owner = intval(isset($GLOBALS['HTTP_GET_VARS']['owner']) ? $GLOBALS['HTTP_GET_VARS']['owner'] : $this->save_owner);
+				unset($this->save_owner);
+			}
+			elseif (!empty($owner) && $owner != $this->owner && $from == 'calendar.uicalendar.planner')
+			{
+				// user/owner changed within planner ==> forgetting save_owner
+				//
+				unset($this->save_owner);
+			}
+			
 			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
 			{
 				$this->set_owner_to_group(substr($owner,2));
@@ -186,7 +206,6 @@
 			{
 				$this->users_timeformat = 'H:i';
 			}
-
 			$this->holiday_color = (substr($GLOBALS['phpgw_info']['theme']['bg07'],0,1)=='#'?'':'#').$GLOBALS['phpgw_info']['theme']['bg07'];
 
 			$this->printer_friendly = (intval(get_var('friendly',Array('GET','POST','DEFAULT'),0)) == 1?True:False);
@@ -196,11 +215,7 @@
 			$this->sortby = get_var('sortby',Array('POST'));
 			if(!isset($this->sortby))
 			{
-				$default_calender = $this->prefs['calendar']['defaultcalendar'];
-				if ($default_calender == 'planner_cat' || $default_calender == 'planner_user')
-				{
-					$this->sortby = ($default_calender == 'planner_cat' ? 'category' : 'user');
-				}
+			   $this->sortby = $this->prefs['calendar']['defaultcalendar'] == 'planner_user' ? 'user' : 'category';
 			}
 
 			if($GLOBALS['phpgw']->accounts->get_type($this->owner)=='g')
@@ -375,7 +390,7 @@
 			return False;
 		}
 
-		function save_sessiondata($data)
+		function save_sessiondata($data='')
 		{
 			if ($this->use_session)
 			{
@@ -393,10 +408,12 @@
 			$this->cat_id = $data['cat_id'];
 			$this->sortby = $data['sortby'];
 			$this->owner  = intval($data['owner']);
+			$this->save_owner = intval($data['save_owner']);
 			$this->year   = intval($data['year']);
 			$this->month  = intval($data['month']);
 			$this->day    = intval($data['day']);
 			$this->num_months = intval($data['num_months']);
+			$this->return_to = $data['return_to'];
 		}
 
 		function read_entry($id)
@@ -444,7 +461,7 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE,$id))
 			{
-				$temp_event = $this->read_entry($id);
+//				$temp_event = $this->read_entry($id);
 //				if($this->owner == $temp_event['owner'])
 //				{
 				$this->so->delete_entry($id);
@@ -513,17 +530,20 @@
 
 		function expunge()
 		{
-			if($this->check_perms(PHPGW_ACL_DELETE))
+			reset($this->so->cal->deleted_events);
+			while(list($i,$event_id) = each($this->so->cal->deleted_events))
 			{
-				reset($this->so->cal->deleted_events);
-				for($i=0;$i<count($this->so->cal->deleted_events);$i++)
+				$event = $this->so->read_entry($event_id);
+				if($this->check_perms(PHPGW_ACL_DELETE,$event))
 				{
-					$event_id = $this->so->cal->deleted_events[$i];
-					$event = $this->so->read_entry($event_id);
 					$this->send_update(MSG_DELETED,$event['participants'],$event);
 				}
-				$this->so->expunge();
+				else
+				{
+					unset($this->so->cal->deleted_events[$i]);
+				}
 			}
+			$this->so->expunge();
 		}
 
 		function search_keywords($keywords)
@@ -795,6 +815,12 @@
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 				if($send_to_ui)
 				{
+					$this->read_sessiondata();
+					if ($this->return_to)
+					{
+						header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction='.$this->return_to));
+						$GLOBALS['phpgw']->common->phpgw_exit();
+					}
 					Execmethod('calendar.uicalendar.index');
 //					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
 //					exit;
@@ -841,11 +867,6 @@
 		function maketime($time)
 		{
 			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
-		}
-
-		function can_user_edit($event)
-		{
-			return $this->check_perms(PHPGW_ACL_EDIT,$event);
 		}
 
 		function fix_update_time(&$time_param)
@@ -1030,11 +1051,21 @@
 			return $retval;
 		}
 
-		function check_perms($needed,$event=0)
+		/*!
+		@function check_perms( )
+		@syntax check_perms($needed,$event=0,$other=0)
+		@abstract Checks if the current user has the necessary ACL rights 
+		@author ralfbecker
+		@discussion The check is performed on an event or general on the cal of an other user
+		@param $needed necessary ACL right: PHPGW_ACL_{READ|EDIT|DELETE}
+		@param $event event as array or the event-id or 0 for general check
+		@param $other uid to check (if event==0) or 0 to check against $this->owner
+		*/
+		function check_perms($needed,$event=0,$other=0)
 		{
 			if (is_int($event) && $event == 0)
 			{
-				$owner = $this->owner;
+				$owner = $other > 0 ? $other : $this->owner;
 			}
 			else
 			{
@@ -1052,8 +1083,15 @@
 			$user = $GLOBALS['phpgw_info']['user']['account_id'];
 			$grants = $this->grants[$owner];
 
-			$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
-			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$privat, grants=$grants ==> access=$access</p>\n";
+			if ($GLOBALS['phpgw']->accounts->get_type($owner) == 'g' && $needed == PHPGW_ACL_ADD)
+			{
+				$access = False;	// a group can't be the owner of an event
+			}
+			else
+			{
+				$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
+			}
+			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$private, grants=$grants ==> access=$access</p>\n";
 
 			return $access;
 		}
@@ -1076,8 +1114,10 @@
 
 		function display_status($user_status)
 		{
-			if(@$this->prefs['calendar']['display_status'])
+			if(@$this->prefs['calendar']['display_status'] && $user_status)
 			{
+				$user_status = substr($this->get_long_status($user_status),0,1);
+
 				return ' ('.$user_status.')';
 			}
 			else
@@ -1112,7 +1152,7 @@
 			{
 				$owner = $this->owner;
 			}
-			if ($owner == $GLOBALS['phpgw_info']['user']['account_id'] || ($event['public']==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$owner) && $event['public']==0) || $event['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
+			if ($owner == $GLOBALS['phpgw_info']['user']['account_id'] || ($event['public']==1) || ($this->check_perms(PHPGW_ACL_PRIVATE,$event) && $event['public']==0) || $event['owner'] == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
 				return False;
 			}
@@ -1157,27 +1197,69 @@
 			}
 		}
 
+		function long_date($first,$last=0)
+		{
+			$datefmt = $this->prefs['common']['dateformat'];
+			
+			$month_before_day = $datefmt[0] == 'm' || $datefmt[2] == 'm' && $datefmt[4] == 'd';
+
+			for ($i = 0; $i < 5; $i += 2)
+			{
+				switch($datefmt[$i])
+				{
+					case 'd':
+						$range .= $first['day'] . ($datefmt[1] == '.' ? '.' : '');
+						if ($first['month'] != $last['month'] || $first['year'] != $last['year'])
+						{
+							if (!$month_before_day)
+							{
+								$range .= ' '.lang(strftime('%B',$first['raw']));
+							}
+							if ($first['year'] != $last['year'] && $datefmt[0] != 'Y')
+							{
+								$range .= ($datefmt[0] != 'd' ? ', ' : ' ') . $first['year'];
+							}
+							if (!$last)
+							{
+								return $range;
+							}
+							$range .= ' - ';
+							
+							if ($first['year'] != $last['year'] && $datefmt[0] == 'Y')
+							{
+								$range .= $last['year'] . ', ';
+							}
+
+							if ($month_before_day)
+							{
+								$range .= lang(strftime('%B',$last['raw']));
+							}
+						}
+						else
+						{
+							$range .= ' - ';
+						}
+						$range .= ' ' . $last['day'] . ($datefmt[1] == '.' ? '.' : '');
+						break;
+					case 'm':
+						$range .= ' '.lang(strftime('%B',$month_before_day ? $first['raw'] : $last['raw'])) . ' ';
+						break;
+					case 'Y':
+						$range .= ($datefmt[0] == 'm' ? ', ' : ' ') . ($datefmt[0] == 'Y' ? $first['year'].', ' : $last['year'].' ');
+						break;
+				}
+			}
+			return $range;
+		}
+
 		function get_week_label()
 		{
 			$first = $GLOBALS['phpgw']->datetime->gmtdate($GLOBALS['phpgw']->datetime->get_weekday_start($this->year, $this->month, $this->day));
 			$last = $GLOBALS['phpgw']->datetime->gmtdate($first['raw'] + 518400);
-
-// Week Label
-			$week_id = lang(strftime("%B",$first['raw'])).' '.$first['day'];
-			if($first['month'] <> $last['month'] && $first['year'] <> $last['year'])
-			{
-				$week_id .= ', '.$first['year'];
-			}
-			$week_id .= ' - ';
-			if($first['month'] <> $last['month'])
-			{
-				$week_id .= lang(strftime("%B",$last['raw'])).' ';
-			}
-			$week_id .= $last['day'].', '.$last['year'];
-
-			return $week_id;
+         
+			return ($this->long_date($first,$last));
 		}
-
+		
 		function normalizeminutes(&$minutes)
 		{
 			$hour = 0;
@@ -1898,6 +1980,7 @@
 			if($new_event != False)
 			{
 				$new_event_datetime = $this->maketime($new_event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
+				$new_event_datetime_end = $this->maketime($new_event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 
  			//Added to construct the participant's list to an event
@@ -1959,6 +2042,7 @@
 					if($new_event != False)
 					{
 						$new_event_date = $GLOBALS['phpgw']->common->show_date($new_event_datetime);
+						$new_event_end = $GLOBALS['phpgw']->common->show_date($new_event_datetime_end);
 					}
 				
 					switch($msg_type)
@@ -1986,6 +2070,7 @@
 						case MSG_ACCEPTED:
 							$action_date = $old_event_date;
 							$body = 'On '.$GLOBALS['phpgw']->common->show_date(time() - $GLOBALS['phpgw']->datetime->tz_offset).' '.$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
+							$body = lang('On %1 %2 %3 your meeting request for %4',$GLOBALS['phpgw']->common->show_date(time() - $GLOBALS['phpgw']->datetime->tz_offset),$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']),lang($action),$old_event_date);
  							$event_head=$old_event['title'];
  							$event_description=$old_event['description'];
 							break;
@@ -1996,6 +2081,7 @@
  					{
 						$body .= "\n\n".'***'.lang('Please confirm,accept,reject or examine changes in the corresponding entry in your calendar').'***'."\n\n"
 							. '----'.lang('Event Details Follow').'----';
+						$body .= ($new_event_date ? "\n\n".lang('Start- and Enddates').":\n".$new_event_date.' -- '. $new_event_end : '');
 						$body .= ($event_head?"\n\n".lang('TITLE').':'."\n".'        '.$event_head:'');
 						$body .= ($event_description?"\n\n".lang('DESCRIPTION').':'."\n".'        '.$event_description:'');
 						$body .= ($event_participants?"\n\n".lang('Participants').':'."\n".'        '.$event_participants:'');

@@ -18,9 +18,8 @@
 </table>
 <input type="submit" value="{submit_button}">
 </form>
-</br>
-</br>
-{delete_button}
+<br/>
+{extra_buttons}
 </font>
 </center>
 <!-- END edit_entry -->

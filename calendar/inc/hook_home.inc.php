@@ -38,8 +38,8 @@
 		$GLOBALS['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
 
 		$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
-		$_page = $page_[0];
-		if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year'))
+		$_page = substr($page_[0],0,7);	// makes planner from planner_{user|category}
+		if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year' && $_page != 'planner'))
 		{
 			$_page = 'month';
 //			$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar','month');

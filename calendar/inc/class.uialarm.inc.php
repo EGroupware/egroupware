@@ -54,8 +54,8 @@
 		{
 			$this->event = $this->bo->read_entry($this->bo->cal_id);
 
-			$can_edit = $this->bo->can_user_edit($this->event);
-				
+			$can_edit = $this->bo->cal->check_perms(PHPGW_ACL_EDIT,$this->event);
+
 			if(!$can_edit)
 			{
 				Header('Location : '.$GLOBALS['phpgw']->link('/index.php',

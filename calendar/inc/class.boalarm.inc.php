@@ -67,11 +67,5 @@
 		{
 			return $this->cal->read_entry($cal_id);
 		}
-
-		function can_user_edit($event)
-		{
-			return $this->cal->can_user_edit($event);
-		}
-
 		/* Public functions */
 	}
