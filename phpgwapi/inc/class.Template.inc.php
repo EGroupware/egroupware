@@ -333,8 +333,11 @@
 					$str = preg_replace('/{([^ \t\r\n}]+)}/', "<!-- Template $handle: Variable \\1 undefined -->", $str);
 					break;
 			}
-
-			$str = str_replace (".gif", ".png",$str);
+			/* If they want NOGIF policy, then I do a global replace */
+			if ($GLOBALS['phpgw_info']['server']['imgtype_preference'] == 2)
+			{
+				$str = str_replace (".gif", ".png",$str);
+			}
 			return $str;
 		}
 
