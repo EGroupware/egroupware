@@ -35,7 +35,7 @@
      </select>
     </td>
    </tr>
-
+<!--
    <tr class="row_on">
     <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array_?}:</td>
     <td>
@@ -50,7 +50,7 @@
     <td>{lang_Maximum_entries_in_click_path_history}:</td>
     <td><input size="8" name="newsettings[max_history]" value="{value_max_history}"></td>
    </tr>
-
+-->
    <tr class="row_on">
     <td>{lang_Would_you_like_to_automaticaly_load_new_langfiles_(at_login-time)_?}:</td>
     <td>
@@ -205,7 +205,7 @@
     <td>
       <select name="newsettings[autocomplete_login]">
          <option value="">{lang_No}</option>
-	 <option value="True"{autocomplete_login}>{lang_Yes}</option>
+         <option value="True"{selected_autocomplete_login_True}>{lang_Yes}</option>
        </select>
     </td>
    </tr>
