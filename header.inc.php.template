@@ -93,8 +93,7 @@
 	/* 
 	  Leave off the final php closing tag, some editors will add
 	  a \n or space after which will mess up cookies later on
-	*/
-<!-- BEGIN domain -->
+	*/<!-- BEGIN domain -->
 	$GLOBALS['phpgw_domain']['{DB_DOMAIN}'] = array (
 		'db_host' => '{DB_HOST}', 
 		'db_name' => '{DB_NAME}', 
