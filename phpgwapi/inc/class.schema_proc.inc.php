@@ -223,7 +223,9 @@
 		// This function manually re-created the table incl. primary key and all other indices
 		// It is meant to use if the primary key, existing indices or column-order changes or
 		// columns are not longer used or new columns need to be created (with there default value or NULL)
-		function RefreshTable($sTableName, $aTableDef)
+		// Beside the default-value in the schema, one can give extra defaults via $aDefaults to eg. use an
+		// other colum or function to set the value of a new or changed column
+		function RefreshTable($sTableName, $aTableDef, $aDefaults=False)
 		{
 			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',<pre>".print_r($aTableDef,True).")\n\nm_aTables[$sTableName]=".print_r($this->m_aTables[$sTableName],True)."</pre>\n"; }
 			$old_fd = $this->m_aTables[$sTableName]['fd'];
@@ -239,7 +241,11 @@
 			$select = array();
 			foreach($aTableDef['fd'] as $name => $data)
 			{
-				if (isset($old_fd[$name]))	// existing column, use its value => column-name in query
+				if ($aDefaults && isset($aDefaults[$name]))	// use given default
+				{
+					$select[] = $aDefaults[$name];
+				}
+				elseif (isset($old_fd[$name]))	// existing column, use its value => column-name in query
 				{
 					$select[] = $name;
 				}
