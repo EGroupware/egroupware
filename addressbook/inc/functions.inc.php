@@ -429,7 +429,7 @@
 		$t->pparse("out","form");
 	} //end form function
 
-	function parsevcard($filename,$access) {
+	function parsevcard($filename,$access='') {
 		global $phpgw;
 		global $phpgw_info;
 
@@ -481,8 +481,8 @@
 				}
 			}
 
-			fillab($varray,$access); // Add this entry to the addressbook before
-								// moving on to the next one.
+			// Add this entry to the addressbook before moving on to the next one.
+			fillab($varray);
 		} // while(!feof($vcard))
 
 		fclose($vcard);
@@ -490,7 +490,7 @@
 	}
 
 
-	function fillab($varray,$access) {
+	function fillab($varray,$access='') {
 		global $phpgw;
 		global $phpgw_info;
 
@@ -513,6 +513,14 @@
 						break;
 					case "url":
 						$url = $v[0];
+						// Fix the result of exploding on ':' above
+						if (substr($url,0,5) == 'http/') {
+							$url = ereg_replace('http//','http://',$url);
+						} elseif (substr($url,0,6) == 'https/') {
+							$url = ereg_replace('https//','https://',$url);
+						} elseif (substr($url,0,7) != 'http://') {
+							$url = 'http://' . $url;
+						}
 						break;
 					case "adr": // This one is real ugly. :(
 						$street   = $v[2];
@@ -630,7 +638,7 @@
 */
 
 		$fields["owner"]          = $phpgw_info["user"]["account_id"];
-		$fields["access"]         = $access;
+		//$fields["access"]         = $access;
 		$fields["n_given"]        = addslashes($firstname);
 		$fields["n_family"]       = addslashes($lastname);
 		$fields["fn"]             = addslashes($firstname . " " . $lastname);
@@ -648,7 +656,7 @@
 		$fields["adr_region"]     = addslashes($state);
 		$fields["adr_postalcode"] = addslashes($zip);
 		$fields["bday"]           = addslashes($bday);
-		$fields["url"]            = addslashes($url);
+		$fields["url"]            = $url;
 		$fields["note"]           = addslashes($notes);
 		$fields["org_name"]       = addslashes($company);
 		
