@@ -59,7 +59,7 @@
 
 		function register_session($login,$user_ip,$now,$session_flags)
 		{
-			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='$this->sessionsid'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='$this->sessionid'",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
 				. "','".$login."','" . $user_ip . "','"
