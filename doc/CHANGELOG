@@ -14,14 +14,15 @@
         - Added select box option for multiable domains in login.php
         - Fixed proxy server support for headlines and check for new version on main screen.
         - Fixed headlines preferences and converted headline preferences to a template
-	- Fixed pgsql upgrade from beta path.
-	- Fixed chronological ordering of calendar events.
-	- Changed javascript validation to server side upon submitting calendar events.
-	- Merged patch for parsing of non-compliant rfc822 email addresses.
-	  Thanks bwulf
-	- Fixed the addressbook not opening when composing email.
-	- Applied patch to fix md5 en/decryption.
-	  Thanks milosch
+        - Fixed pgsql upgrade from beta path.
+        - Fixed chronological ordering of calendar events.
+        - Changed javascript validation to server side upon submitting calendar events.
+        - Merged patch for parsing of non-compliant rfc822 email addresses.
+          Thanks bwulf
+        - Fixed the addressbook not opening when composing email.
+        - Applied patch to fix md5 en/decryption.
+          Thanks milosch
+        - Fixed login message not showing up.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
