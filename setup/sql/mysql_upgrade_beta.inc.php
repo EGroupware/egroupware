@@ -550,20 +550,19 @@
       echo "  </tr>\n";
     }
   }
-  function v0_9_5to0_9_6(){
+
+  function v0_9_5to0_9_6()
+  {
     global $currentver, $phpgw_info, $db;
 
-    if ($currentver == "0.9.5" || ereg ("^0\.9\.6pre", $currentver)){
-      if ($currentver == "0.9.5") {
-        $currentver = "0.9.6";
-        update_version_table();
-      }
+    $currentver = "0.9.6";
+    update_version_table();
 
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.5 to $currentver is completed.</td>\n";
-      echo "  </tr>\n";
-    }
+    echo "  <tr bgcolor=\"e6e6e6\">\n";
+    echo "    <td>Upgrade from 0.9.5 to $currentver is completed.</td>\n";
+    echo "  </tr>\n";
   }
+
   function v0_9_6to0_9_7(){
     global $currentver, $phpgw_info, $db;
 
