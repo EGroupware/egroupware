@@ -34,7 +34,7 @@ business state	addressbook	en	Business State
 business street	addressbook	en	Business Street
 business zip code	addressbook	en	Business Postal Code
 car phone	addressbook	en	Car Phone
-cell phone	addressbook	en	cell phone
+cell phone	addressbook	en	Mobile phone
 charset of file	addressbook	en	Charset of file
 city	common	en	City
 company	common	en	Company

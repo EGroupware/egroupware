@@ -195,7 +195,7 @@ select a typ to edit it's status-values or delete it	infolog	en	select a type to
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phone calls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
