@@ -422,6 +422,7 @@ class calendar_
 		$this->event = CreateObject('calendar.calendar_item');
 		$this->event->owner = $this->user;
 //		echo 'Initializing Calendar Event<br>'."\n";
+//		echo 'Setting Owner = '.$this->event->owner."<br>\n";
 		return True;
 	}
 
@@ -875,8 +876,13 @@ class calendar_
 
 		while ($participant = each($event->participants))
 		{
+			$status = 'U';
+			if(intval($participant[1]) == intval($this->user))
+			{
+				$status = 'A';
+			}
 			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event->id.','.$participant[1].",'U')",__LINE__,__FILE__);
+				. 'VALUES('.$event->id.','.$participant[1].",'".$status."')",__LINE__,__FILE__);
 		}
 
 		if($event->recur_type != RECUR_NONE)

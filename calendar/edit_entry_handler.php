@@ -260,14 +260,14 @@
 	}
 	else
 	{
-		$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
+		$cal_stream = $phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
 		$phpgw->calendar->event_init($cal_stream);
 		$phpgw->calendar->event_set_category($cal_stream,'');
 		$phpgw->calendar->event_set_title($cal_stream,$cal_info->name);
 		$phpgw->calendar->event_set_description($cal_stream,$cal_info->description);
 		$phpgw->calendar->event_set_start($cal_stream,$cal_info->year,$cal_info->month,$cal_info->day,$cal_info->hour,$cal_info->minute,0);
 		$phpgw->calendar->event_set_end($cal_stream,$cal_info->end_year,$cal_info->end_month,$cal_info->end_day,$cal_info->end_hour,$cal_info->end_minute,0);
-		$phpgw->calendar->event_set_class($cal_stream,($cal_info->access == 'private'));
+		$phpgw->calendar->event_set_class($cal_stream,($cal_info->access != 'private'));
 		$phpgw->calendar->event_set_participants($cal_stream,$cal_info->participants);
 
 		if($cal_info->id != 0)
