@@ -28,11 +28,59 @@
 	$pref_tpl->set_block('pref','link_row');
 	$pref_tpl->set_block('pref','spacer_row');
 
+	if ($phpgw->acl->check('run',1,'admin'))
+	{
+		// This is where we will keep track of our postion.
+		// Developers won't have to pass around a variable then
+		$session_data = $phpgw->session->appsession('session_data','preferences');
+
+		if (! is_array($session_data))
+		{
+			$session_data = array(
+				'type' => 'user'
+			);
+			$phpgw->session->appsession('session_data','preferences',$session_data);
+		}
+
+		if (! $GLOBALS['type'])
+		{
+			$type = $session_data['type'];
+		}
+		else
+		{
+			$session_data = array(
+				'type' => $GLOBALS['type']
+			);
+			$phpgw->session->appsession('session_data','preferences',$session_data);
+		}
+
+		$tabs[] = array(
+			'label' => 'Your preferences',
+			'link'  => $phpgw->link('/preferences/index.php','type=user')
+		);
+		$tabs[] = array(
+			'label' => 'Default preferences',
+			'link'  => $phpgw->link('/preferences/index.php','type=default')
+		);
+		$tabs[] = array(
+			'label' => 'Forced preferences',
+			'link'  => $phpgw->link('/preferences/index.php','type=forced')
+		);
+
+		switch($type)
+		{
+			case 'user':		$selected = 0; break;
+			case 'default':	$selected = 1; break;
+			case 'forced':		$selected = 2; break;
+		}
+		$pref_tpl->set_var('tabs',$phpgw->common->create_tabs($tabs,$selected));
+	}
+
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='',$appname='')
 	{
 		global $phpgw_info, $pref_tpl;
-		
+
 		$pref_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
 //		$pref_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
 		$pref_tpl->set_var('a_name',$appname);
@@ -60,7 +108,7 @@
 	function section_end()
 	{
 		global $pref_tpl;
-		
+
 		$pref_tpl->parse('rows','spacer_row',True);
 	}
 
@@ -76,7 +124,7 @@
 		section_end(); 
 	}
 
-	$phpgw->common->hook('preferences');
-	$pref_tpl->pparse('out','list');
+	$phpgw->common->hook('preferences',array('preferences'));
+	$pref_tpl->pfp('out','list');
 	$phpgw->common->phpgw_footer();
 ?>

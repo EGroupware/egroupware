@@ -29,6 +29,17 @@
 		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
 	}
 
+	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('preferences'));
+	$t->set_file(array(
+		'_preferences' => 'preferences.tpl'
+	));
+	$t->set_block('_preferences','list');
+	$t->set_block('_preferences','row');
+
+	$t->set_block('_preferences','header');
+	$t->set_block('_preferences','footer');
+	$t->set_block('_preferences','row_error');
+
 	// Make things a little easier to follow
 	// Some places we will need to change this if there in common
 	function check_app($appname)
@@ -43,23 +54,9 @@
 		}
 	}
 
-	function parse_row(&$tpl)
-	{
-		if (is_admin())
-		{
-			$tpl->fp('rows','row_a',True);
-		}
-		else
-		{
-			$tpl->fp('rows','row_u',True);
-		}
-	}
-
 	function is_forced_value($appname,$preference_name)
 	{
-		global $gp;
-
-		if ($gp->data[$appname][$preference_name])
+		if ($GLOBALS['gp']->data[$appname][$preference_name] && $GLOBALS['type'] != 'forced')
 		{
 			return True;
 		}
@@ -72,25 +69,28 @@
 	function create_input_box($label_name,$preference_name,$size = '',$max_size = '')
 	{
 		global $appname, $t, $dp, $gp;
-
 		$_appname = check_app($appname);
 
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
 		$t->set_var('row_name',lang($label_name));
-		if (! is_forced_value($_appname,$preference_name))
+
+		if (is_forced_value($_appname,$preference_name))
 		{
-			$t->set_var('row_user','<input name="user[' . $preference_name . ']" value="' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '">');
+			return True;
 		}
-		else
+
+		switch ($GLOBALS['type'])
 		{
-			$t->set_var('row_user','&nbsp;');
+			case 'user':		$s = '<input name="user[' . $preference_name . ']" value="' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '">';
+				break;
+			case 'default':	$s = '<input name="default[' . $preference_name . ']" value="' . $dp->data[$_appname][$preference_name] . '">';
+				break;
+			case 'forced':		$s = '<input name="forced[' . $preference_name . ']" value="' . $gp->data[$_appname][$preference_name] . '">';
+				break;
 		}
-		if (is_admin())
-		{
-			$t->set_var('row_global','<input name="global[' . $preference_name . ']" value="' . $gp->data[$_appname][$preference_name] . '">');
-			$t->set_var('row_default','<input name="default[' . $preference_name . ']" value="' . $dp->data[$_appname][$preference_name] . '">');
-		}
-		parse_row(&$t);
+		$t->set_var('row_value',$s);
+
+		$t->fp('rows','row',True);
 	}
 
 	function create_option_string($selected,$values)
@@ -113,31 +113,35 @@
 
 		$_appname = check_app($appname);
 
+		if (is_forced_value($_appname,$preference_name))
+		{
+			return True;
+		}
+
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color(&$t);
 
 		$t->set_var('row_name',lang($label_name));
-		if (! is_forced_value($_appname,$preference_name))
+
+		switch ($GLOBALS['type'])
 		{
-			$s = '<option value="">' . lang('Select one') . '</option>'
-				. create_option_string($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name],$values);
-			$t->set_var('row_user','<select name="user[' . $preference_name . ']">' . $s . '</select>');
-		}
-		else
-		{
-			$t->set_var('row_user','&nbsp;');
+			case 'user':
+				$s = '<option value="">' . lang('Select one') . '</option>'
+					. create_option_string($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name],$values);
+				$t->set_var('row_value','<select name="user[' . $preference_name . ']">' . $s . '</select>');
+				break;
+			case 'default':
+				$s = '<option value="">' . lang('Select one') . '</option>'
+					. create_option_string($dp->data[$_appname][$preference_name],$values);
+				$t->set_var('row_value','<select name="default[' . $preference_name . ']">' . $s . '</select>');
+				break;
+			case 'forced':
+				$s = '<option value="**NULL**">' . lang('Users choice') . '</option>'
+					. create_option_string($gp->data[$_appname][$preference_name],$values);
+				$t->set_var('row_value','<select name="forced[' . $preference_name . ']">' . $s . '</select>');
+				break;
 		}
 
-		if (is_admin())
-		{
-			$s = '<option value="**NULL**">' . lang('Users choice') . '</option>'
-				. create_option_string($gp->data[$_appname][$preference_name],$values);
-			$t->set_var('row_global','<select name="global[' . $preference_name . ']">' . $s . '</select>');
-
-			$s = '<option value="">' . lang('Select one') . '</option>'
-				. create_option_string($dp->data[$_appname][$preference_name],$values);
-			$t->set_var('row_default','<select name="default[' . $preference_name . ']">' . $s . '</select>');
-		}
-		parse_row(&$t);
+		$t->fp('rows','row',True);
 	}
 
 	function process_array(&$_p, $array)
@@ -173,11 +177,69 @@
 	{
 		// Don't use a global variable for this ...
 		define('HAS_ADMIN_RIGHTS',1);
+	}
 
+	if (is_admin())
+	{
+		// This is where we will keep track of our postion.
+		// Developers won't have to pass around a variable then
+		$session_data = $phpgw->session->appsession('session_data','preferences');
+
+		if (! is_array($session_data))
+		{
+			$session_data = array(
+				'type' => 'user'
+			);
+			$phpgw->session->appsession('session_data','preferences',$session_data);
+		}
+
+		if (! $GLOBALS['type'])
+		{
+			$type = $session_data['type'];
+		}
+		else
+		{
+			$session_data = array(
+				'type' => $GLOBALS['type']
+			);
+			$phpgw->session->appsession('session_data','preferences',$session_data);
+		}
+
+		$tabs[] = array(
+			'label' => 'Your preferences',
+			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=user')
+		);
+		$tabs[] = array(
+			'label' => 'Default preferences',
+			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=default')
+		);
+		$tabs[] = array(
+			'label' => 'Forced preferences',
+			'link'  => $phpgw->link('/preferences/preferences.php','appname=' . $appname . '&type=forced')
+		);
+
+		switch($type)
+		{
+			case 'user':		$selected = 0; break;
+			case 'default':	$selected = 1; break;
+			case 'forced':		$selected = 2; break;
+		}
+		$t->set_var('tabs',$phpgw->common->create_tabs($tabs,$selected));
+	}
+	else
+	{
+		$GLOBALS['type'] = 'user';
+	}
+
+	// Only load if there working on the default preferences
+	if ($type == 'default')
+	{
 		$dp = createobject('phpgwapi.preferences',-2);
 		$dp->read_repository();
 	}
 
+	// Makes the ifs a little nicer, plus ... this will change once the ACL manager is in place
+	// and is able to create less powerfull admins.  This will handle the ACL checks for that (jengo)
 	function is_admin()
 	{
 		if (HAS_ADMIN_RIGHTS == 1)
@@ -190,31 +252,25 @@
 		}
 	}
 
-	$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('preferences'));
-	$t->set_file(array(
-		'_preferences' => 'preferences.tpl'
-	));
-	$t->set_block('_preferences','list_a');
-	$t->set_block('_preferences','row_a');
-
-	$t->set_block('_preferences','list_u');
-	$t->set_block('_preferences','row_u');
-
-	$t->set_block('_preferences','header');
-	$t->set_block('_preferences','footer');
-	$t->set_block('_preferences','row_error');
-
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
-		process_array(&$p, $user);
-
-		if (is_admin())
+		// Don't use a switch here, we need to check some permissions durring the ifs
+		if ($type == 'user')
 		{
-			process_array(&$gp, $global);
-			process_array(&$dp, $default);
+			process_array(&$p, $user);
 		}
 
-		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php#' . $appname));
+		if ($type == 'default' && is_admin())
+		{
+			process_array(&$dp, $default);		
+		}
+
+		if ($type == 'forced' && is_admin())
+		{
+			process_array(&$gp, $forced);
+		}
+
+		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname));
 		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
@@ -229,29 +285,33 @@
 	{
 		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['navbar'][$appname]['title']));
 	}
+
 	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname));
 	$t->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
 	$t->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
 	$t->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);
 	$t->set_var('row_off',$GLOBALS['phpgw_info']['theme']['row_off']);
 
-	if (is_admin())
+	if ($appname == 'preferences')
 	{
-		$t->set_var('lang_user',lang('Yours'));
-		$t->set_var('lang_global',lang('Forced'));
-		$t->set_var('lang_default',lang('Default'));
+		if (! $GLOBALS['phpgw']->common->hook_single('settings','preferences',True))
+		{
+			$error = True;
+		}
 	}
 	else
 	{
-		$t->set_var('lang_user','&nbsp;');
+		if (! $GLOBALS['phpgw']->common->hook_single('settings',$appname))
+		{
+			$error = True;
+		}	
 	}
 
-	if (! $GLOBALS['phpgw']->common->hook_single('settings',$appname,True))
+	if ($error)
 	{
 		$t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
 				$GLOBALS['phpgw_info']['navbar'][$appname]['title'],PHPGW_SERVER_ROOT . SEP
 				. $appname . SEP . 'inc' . SEP . 'hook_settings.inc.php'));
-		$error = True;
 	}
 	$t->pfp('out','header');
 
@@ -260,20 +320,10 @@
 
 	if (! $error)
 	{
-		if (is_admin())
-		{
-			$t->pfp('out','list_a');
-		}
-		else
-		{
-			$t->pfp('out','list_u');
-		}
-	}
-
-	if (! $error)
-	{
+		$t->pfp('out','list');
 		$t->pfp('out','footer');
 	}
 
 	$GLOBALS['phpgw']->common->phpgw_footer();
+
 ?>

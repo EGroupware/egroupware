@@ -1,4 +1,10 @@
 <!-- BEGIN list -->
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+ <tr>
+  <td align="left">{tabs}</td>
+ </tr>
+</table>
+
 <table width="75%" border="0" cellspacing="0" cellpadding="0">
  {rows}
 </table>
