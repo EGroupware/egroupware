@@ -161,7 +161,7 @@
 			{
 				for($i=0;$i<count($edata);$i++)
 				{
-					$GLOBALS['phpgw']->template->set_var('th_data','<td bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '">' . lang($edata[$i]) . '</td>');
+					$GLOBALS['phpgw']->template->set_var('sort_data','<td bgcolor="' . $GLOBALS['phpgw_info']['theme']['th_bg'] . '">' . lang($edata[$i]) . '</td>');
 					$GLOBALS['phpgw']->template->fp('column','data_column',True);
 				}
 			}
