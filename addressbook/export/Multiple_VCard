@@ -21,60 +21,10 @@
 		var $id;
 		//list of all id's
 		var $ids = array();
+		var $type = 'vcard';
 
-		var $export = array(
-			"fn"                  => "FN",
-			"n_given"             => "N;GIVEN",
-			"n_family"            => "N;FAMILY",
-			"n_middle"            => "N;MIDDLE",
-			"n_prefix"            => "N;PREFIX",
-			"n_suffix"            => "N;SUFFIX",
-			"sound"               => "SOUND",
-			"bday"                => "BDAY",
-			"note"                => "NOTE",
-			"tz"                  => "TZ",
-			"geo"                 => "GEO",
-			"url"                 => "URL",
-			"pubkey"              => "PUBKEY",
-			"org_name"            => "ORG;NAME",
-			"org_unit"            => "ORG;UNIT",
-			"title"               => "TITLE",
-
-			"adr_one_type"        => "ADR;TYPE;WORK",
-			"adr_two_type"        => "ADR;TYPE;HOME",
-			"tel_prefer"          => "TEL;PREFER",
-			"email_type"          => "EMAIL;TYPE;WORK",
-			"email_home_type"     => "EMAIL;TYPE;HOME",
-
-			"adr_one_street"      => "ADR;WORK;STREET",
-			"adr_one_locality"    => "ADR;WORK;LOCALITY", 
-			"adr_one_region"      => "ADR;WORK;REGION", 
-			"adr_one_postalcode"  => "ADR;WORK;POSTALCODE",
-			"adr_one_countryname" => "ADR;WORK;COUNTRYNAME",
-			"address2"            => "EXT",
-			"label"               => "LABEL",
-
-			"adr_two_street"      => "ADR;HOME;STREET",
-			"adr_two_locality"    => "ADR;HOME;LOCALITY",
-			"adr_two_region"      => "ADR;HOME;REGION",
-			"adr_two_postalcode"  => "ADR;HOME;POSTALCODE",
-			"adr_two_countryname" => "ADR;HOME;COUNTRYNAME",
-
-			"tel_work"            => "TEL;WORK",
-			"tel_home"            => "TEL;HOME",
-			"tel_voice"           => "TEL;VOICE",
-			"tel_fax"             => "TEL;FAX",
-			"tel_msg"             => "TEL;MSG",
-			"tel_cell"            => "TEL;CELL",
-			"tel_pager"           => "TEL;PAGER",
-			"tel_bbs"             => "TEL;BBS",
-			"tel_modem"           => "TEL;MODEM",
-			"tel_car"             => "TEL;CAR",
-			"tel_isdn"            => "TEL;ISDN",
-			"tel_video"           => "TEL;VIDEO",
-			"email"               => "EMAIL;WORK",
-			"email_home"          => "EMAIL;HOME",
-		);
+		// This will be filled by the vcard object
+		var $export = array();
 
 		// make sure to order how we ask for these
 		var $qfields = array(
@@ -130,13 +80,18 @@
 			"email_home"             => "email_home"
 		);
 
-		// This will store the contacts object
+		// This will store the contacts and vcard objects
 		var $contacts = '';
+		var $vcard = '';
 
 		// Read full list of user's contacts only to get id's for each
 		function export_start_file($buffer) {
 			$this->id=-1;
+			// Setup the contact and vcard objects, and the export fields var
 			$this->contacts = CreateObject('phpgwapi.contacts');
+			$this->vcard = CreateObject("phpgwapi.vcard");
+			$this->export = $this->vcard->export;
+
 			$tmp = $this->contacts->read();
 			for ($i=0;$i<count($tmp);$i++) {
 				$this->ids[$i] = $tmp[$i]['id'];
@@ -155,7 +110,7 @@
 		}
 
 		// Read each attribute, populate buffer
-		// name/value are the fields from the export array above
+		// name/value are the fields from the export array in the vcard class
 		function export_new_attrib($buffer,$name,$value) {
 			if ($this->export[$name] && ($value != "") ) {
 				$buffer[$this->id][$this->export[$name]] = $value;
@@ -169,11 +124,9 @@
 		}
 
 		function export_end_file($buffer) {
-			$vcard = CreateObject("phpgwapi.vcard");
-
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++) {
-				$vcards .= $vcard->out($buffer[$i]);
+				$vcards .= $this->vcard->out($buffer[$i]);
 			}
 			$buffer = $vcards;
 			return $buffer;

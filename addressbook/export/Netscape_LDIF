@@ -21,6 +21,7 @@
 		var $id;
 		//list of all id's
 		var $ids = array();
+		var $type = 'ldif';
 
 		var $export= array(
 			"title"               => "title", 

@@ -21,6 +21,7 @@
 		var $id;
 		//list of all id's
 		var $ids = array();
+		var $type = 'sql';
 				
 		var $export= array(
 			"id"                     => "id",
