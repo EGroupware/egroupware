@@ -18,8 +18,13 @@
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
 
-	$setup_info['phpgwapi']['author']      = 'phpGroupWare coreteam';
-	$setup_info['phpgwapi']['description'] = 'The core of phpGroupWare, the API itself...';
+	$setup_info['phpgwapi']['author'][] = array
+	(
+		'name'	=> 'phpGroupWare coreteam',
+		'email' => 'phpgroupware-developers@gnu.org'
+	);
+
+	$setup_info['phpgwapi']['description'] = 'The core of phpGroupWare, the API itself';
 
 	$setup_info['phpgwapi']['maintainer'][]  = array
 	(

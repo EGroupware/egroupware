@@ -41,16 +41,16 @@
 	<xsl:template match="about_app">
 		<xsl:variable name="icon" select="icon"/>
 		<tr>
-			<td colspan="2" class="th_text">
+			<td colspan="2" valign="middle" class="th_text">
 				<xsl:if test="icon != ''">
-					<img src="{$icon}"/>
+					<img src="{$icon}"/><xsl:text> </xsl:text>
 				</xsl:if>
 				<xsl:value-of select="title"/>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
-				<xsl:value-of select="description"/>
+				<xsl:value-of disable-output-escaping="yes" select="description"/>
 			</td>
 		</tr>
 		<xsl:if test="note != ''">
@@ -60,14 +60,16 @@
 				</td>
 			</tr>
 		</xsl:if>
+		<xsl:if test="author != ''">
 		<tr>
 			<td valign="top">
 				<xsl:value-of select="lang_author"/>
 			</td>
 			<td>
-				<xsl:value-of select="author"/>
+				<xsl:apply-templates select="author"/>
 			</td>
 		</tr>
+		</xsl:if>
 		<xsl:if test="maintainer != ''">
 			<tr>
 				<td valign="top">
@@ -99,19 +101,8 @@
 		<xsl:if test="based_on != ''">
 			<tr>
 				<td valign="top"><xsl:value-of select="lang_based_on"/></td>
-				<td><xsl:value-of select="based_on"/></td>
-			</tr>
-		</xsl:if>
-		<xsl:if test="based_on_url != ''">
-			<tr>
-				<td height="5"></td>
 				<td>
-					<a target="_blank">
-						<xsl:attribute name="href">
-							<xsl:value-of select="based_on_url"/>
-						</xsl:attribute>
-						<xsl:value-of select="based_on_url"/>
-					</a>
+					<xsl:apply-templates select="based_on"/>
 				</td>
 			</tr>
 		</xsl:if>
@@ -122,6 +113,31 @@
 		<table>
 			<tr>
 				<td><xsl:value-of select="name"/><xsl:text> [</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+			</tr>
+		</table>
+	</xsl:template>
+
+	<xsl:template match="author">
+	<xsl:variable name="email"><xsl:value-of select="email"/></xsl:variable>
+		<table>
+			<tr>
+				<td><xsl:value-of select="name"/><xsl:text> [</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+			</tr>
+		</table>
+	</xsl:template>
+
+	<xsl:template match="based_on">
+	<xsl:variable name="email"><xsl:value-of select="email"/></xsl:variable>
+	<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
+		<table>
+			<tr>
+				<td><xsl:value-of select="info"/></td>
+			</tr>
+			<tr>
+				<td><a href="mailto:{$email}"><xsl:value-of select="email"/></a></td>
+			</tr>
+			<tr>
+				<td><a href="{$url}" target="_blank"><xsl:value-of select="url"/></a></td>
 			</tr>
 		</table>
 	</xsl:template>

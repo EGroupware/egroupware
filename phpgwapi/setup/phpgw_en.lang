@@ -214,6 +214,7 @@ lebanon	common	en	LEBANON
 lesotho	common	en	LESOTHO
 liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
+license	about	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 list	common	en	List
 lithuania	common	en	LITHUANIA
@@ -227,6 +228,7 @@ macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOS
 madagascar	common	en	MADAGASCAR
 main category	common	en	Main category
 main screen	common	en	Main screen
+maintainer	about	en	Maintainer
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
 maldives	common	en	MALDIVES
@@ -303,6 +305,8 @@ password has been updated	common	en	Password has been updated
 personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
+is a multi-user, web-based groupware suite written in PHP	about	en	is a multi-user, web-based groupware suite written in PHP.
+phpgwapi	common	en	phpGroupWare API
 pitcairn	common	en	PITCAIRN
 please enter a name	common	en	Please enter a name !
 please run setup to become current	common	en	Please run setup to become current
@@ -310,7 +314,7 @@ please set your global preferences	common	en	Please set your global preferences 
 please set your preferences for this application	common	en	Please set your preferences for this application !
 poland	common	en	POLAND
 portugal	common	en	PORTUGAL
-powered by phpgroupware version x	common	en	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+powered by	common	en	Powered by
 preferences	common	en	Preferences
 print	common	en	Print
 priority	common	en	Priority
@@ -379,6 +383,7 @@ tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
 thailand	common	en	THAILAND
 the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
+The core of phpGroupWare, the API itself	about	en	The core of phpGroupWare, the API itself.
 the following applications require upgrades	common	en	The following applications require upgrades
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
