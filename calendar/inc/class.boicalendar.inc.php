@@ -3082,9 +3082,61 @@ class boicalendar
 						}
 					}
 
+//rrule
 					if(isset($ical['event'][$i]['rrule']))
 					{
-//rrule
+// recur_enddate
+//						if($ical['event'][$i]['rrule']['until'])
+//						{
+//							$recur_enddate['year'] = $ical['event'][$i]['rrule']['until']['year'];
+//							$recur_enddate['month'] = $ical['event'][$i]['rrule']['until']['month'];
+//							$recur_enddate['day'] = $ical['event'][$i]['rrule']['until']['mday'];
+//						}
+//						else
+//						{
+//							$recur_enddate['year'] = 0;
+//							$recur_enddate['month'] = 0;
+//							$recur_enddate['day'] = 0;
+//						}
+						
+						$recur_data = 0;
+						if($ical['event'][$i]['rrule']['byday'])
+						{
+							$week_days = Array(
+								MCAL_M_SUNDAY	=> 'SU',
+								MCAL_M_MONDAY	=> 'MO',
+								MCAL_M_TUESDAY	=> 'TU',
+								MCAL_M_WEDNESDAY	=> 'WE',
+								MCAL_M_THURSDAY	=> 'TH',
+								MCAL_M_FRIDAY	=> 'FR',
+								MCAL_M_SATURDAY	=> 'SA'
+							);
+							@reset($week_days);
+							while(list($key,$val) = each($week_days))
+							{
+								if(strpos(' '.$ical['event'][$i]['rrule']['byday'],$val))
+								{
+									$recur_data += $key;
+								}
+							}
+						}
+
+						switch($ical['event'][$i]['rrule']['freq'])
+						{
+							case DAILY:
+								$recur_type = MCAL_RECUR_DAILY;
+								break;
+							case WEEKLY:
+								$so_event->set_recur_weekly(intval($ical['event'][$i]['rrule']['until']['year']),intval($ical['event'][$i]['rrule']['until']['month']),intval($ical['event'][$i]['rrule']['until']['mday']),intval($ical['event'][$i]['rrule']['interval']),$recur_data);
+								break;
+							case MONTHLY:
+							
+//								$recur_type = MCAL_RECUR_M??????;
+								break;
+							case YEARLY:
+								$so_event->set_recur_yearly(intval($ical['event'][$i]['rrule']['until']['year']),intval($ical['event'][$i]['rrule']['until']['month']),intval($ical['event'][$i]['rrule']['until']['mday']),intval($ical['event'][$i]['rrule']['interval']));
+								break;
+						}
 					}
 				
 					if(!isset($ical['event'][$i]['organizer']) || (isset($ical['event'][$i]['organizer']) && $this->is_owner($ical['event'][$i]['organizer'])))
