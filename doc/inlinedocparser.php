@@ -23,6 +23,23 @@
 		$GLOBALS['object_type'] = $GLOBALS['HTTP_GET_VARS']['object_type'];
 	}
 
+	function _debug_array($array)
+	{
+		if(floor(phpversion()) == 4)
+		{
+			ob_start(); 
+			echo '<pre>'; print_r($array); echo '</pre>';
+			$contents = ob_get_contents(); 
+			ob_end_clean();
+			echo $contents;
+//			return $contents;
+		}
+		else
+		{
+			echo '<pre>'; var_dump($array); echo '</pre>';
+		}
+	}
+
 	function parseobject($input)
 	{
 		$types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
@@ -150,7 +167,8 @@
 		}
 		$d->close;
 
-		reset($files);
+		sort($files);
+		//reset($files);
 	}
 
 	while (list($p,$fn) = each($files))
@@ -226,9 +244,10 @@
 		{
 			preg_match_all("#@(.*)$#sUi",$val[1],$data);
 			$data[1][0] = ereg_replace ("@", "@#", $data[1][0]);
-			$returndata = parseobject($data[1][0]);
+			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
+				$class['file '.$fn][0]['file'] = $fn;
 				$class['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
 			else
@@ -238,8 +257,9 @@
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
 					if ($returndoc != False)
 					{
-						$class[$startstop[$key]][0] = $returndoc['value'];
+						$returndoc['value']['file'] = $fn;
 					}
+					$class[$startstop[$key]][0] = $returndoc['value'];
 				}
 				$class[$startstop[$key]][$returndata['name']] = $returndata['value'];
 			}
@@ -250,8 +270,5 @@
 	{
 		$class = Array($GLOBALS['HTTP_GET_VARS']['object'] => $GLOBALS['special_request']);
 	}
-	echo '<br><pre>';
-	print_r($class);
-	//        var_dump($elements);
-	echo '</pre>' . "\n";
+	_debug_array($class);
 ?>
