@@ -29,14 +29,14 @@ class jscalendar
 	*/
 	function jscalendar($do_header=True)
 	{
-		$this->phpgwapi_inc_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/inc';
+		$this->phpgwapi_js_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js';
 		$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
 
 		if ($do_header && !strstr($GLOBALS['phpgw_info']['flags']['java_script'],'jscalendar'))
 		{
 			$GLOBALS['phpgw_info']['flags']['java_script'] .=
-'<link rel="stylesheet" type="text/css" media="all" href="'.$this->phpgwapi_inc_url.'/jscalendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
-<script type="text/javascript" src="'.$this->phpgwapi_inc_url.'/jscalendar/calendar.js"></script>
+'<link rel="stylesheet" type="text/css" media="all" href="'.$this->phpgwapi_js_url.'/jscalendar/calendar-win2k-cold-1.css" title="win2k-cold-1" />
+<script type="text/javascript" src="'.$this->phpgwapi_js_url.'/jscalendar/calendar.js"></script>
 <script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/jscalendar-setup.php')).'"></script>
 ';
 		}
@@ -75,7 +75,7 @@ class jscalendar
 		return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
 <script type="text/javascript">
-	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->phpgwapi_inc_url.'/jscalendar/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
+	document.writeln(\'<img id="'.$name.'-trigger" src="'.$this->phpgwapi_js_url.'/jscalendar/img.gif" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>\');
 	Calendar.setup(
 	{
 		inputField  : "'.$name.'",
