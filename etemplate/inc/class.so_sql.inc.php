@@ -302,7 +302,7 @@ class so_sql
 			$this->db->query($sql = "INSERT INTO $this->table_name ($cols) VALUES ($vals)",__LINE__,__FILE__);
 
 			if ($this->autoinc_id)
-				$this->data[$this->db_key_cols[$this->autoinc_id]] = $this->db->last_insert_id();
+				$this->data[$this->db_key_cols[$this->autoinc_id]] = $this->db->get_last_insert_id($this->table_name,$this->autoinc_id);
 		}
 		else //update existing row, preserv other cols not used here
 		{
