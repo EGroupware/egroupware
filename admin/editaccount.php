@@ -201,14 +201,16 @@
 		$apps->account_type = 'u';
 		$apps->account_id = $_userData['account_id'];
 		$apps->account_apps = Array(Array());
-		while($app = each($_userData['account_permissions'])) 
-		{
-			if($app[1]) 
+		if ($_userData['account_permissions']) {
+			while($app = each($_userData['account_permissions'])) 
 			{
-				$apps->add($app[0]);
-				if(!$apps_before[$app[0]]) 
+				if($app[1]) 
 				{
-					$apps_after[] = $app[0];
+					$apps->add($app[0]);
+					if(!$apps_before[$app[0]]) 
+					{
+						$apps_after[] = $app[0];
+					}
 				}
 			}
 		}
@@ -218,10 +220,11 @@
 		$account = CreateObject('phpgwapi.accounts');
 		$allGroups = $account->get_list('groups');
 		
-		reset($_userData['account_groups']);
-		while (list($key,$value) = each($_userData['account_groups']))
-		{
-			$newGroups[$value] = $value;
+		if ($_userData['account_groups']) {
+			reset($_userData['account_groups']);
+			while (list($key,$value) = each($_userData['account_groups'])) {
+				$newGroups[$value] = $value;
+			}
 		}
 
 		$acl = CreateObject('phpgwapi.acl',$_userData['account_id']);
@@ -280,7 +283,7 @@
 			}
 		}
 		
-		if (!count($_userData['account_permissions']) || !count($_userData['account_groups'])) 
+		if (!count($_userData['account_permissions']) && !count($_userData['account_groups'])) 
 		{
 			$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
 			$totalerrors++;
