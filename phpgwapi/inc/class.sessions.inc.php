@@ -733,9 +733,14 @@
 //				return stripslashes($data);
 				// Changed by milosch 2001 Dec 20
 				// do not stripslashes here unless this proves to be a problem.
-				$data = $GLOBALS['phpgw']->common->decrypt($data);
-				//echo 'appsession returning: '; _debug_array($data);
-				return $data;
+				// Changed by milosch 2001 Dec 25
+				// do not decrypt and return if no data (decrypt returning garbage)
+				if($data)
+				{
+					$data = $GLOBALS['phpgw']->common->decrypt($data);
+					//echo 'appsession returning: '; _debug_array($data);
+					return $data;
+				}
 			}
 			else
 			{
