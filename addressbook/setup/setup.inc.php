@@ -31,7 +31,7 @@
 		 contact information via SQL or LDAP.';
 
 	$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
-	$setup_info['addressbook']['maintainer_email'] = 'egroupware-developer@lists.sourceforge.net';
+	$setup_info['addressbook']['maintainer_email'] = 'egroupware-developers@lists.sourceforge.net';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'admin';
