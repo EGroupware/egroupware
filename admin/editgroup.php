@@ -40,8 +40,9 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
+        $phpgw->accounts->add_app($n_group_permissions);        
         $phpgw->db->query("update groups set group_name='$n_group', group_apps='"
-				    . $phpgw->accounts->array_to_string("none",$n_group_permissions)
+				    . $phpgw->accounts->add_app("",True)
 				    . "' where group_id='$group_id'");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
 	   $phpgw->db->next_record();
@@ -50,7 +51,7 @@
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT groups FROM accounts WHERE con=".$n_users[$i]);
 	      $phpgw->db->next_record();
-           $user_groups = $phpgw->db->f("groups") . ",$group_con,";
+           $user_groups = $phpgw->db->f("groups") . ",$group_con:0,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
            $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con='" . $n_users[$i] ."'");
