@@ -44,7 +44,8 @@
 		'config',
 		'deleteaccount',
 		'manual',
-		'view_user',
+		'view_user' => 'admin.uiaccounts.edit_view_user_hook',
+		'edit_user' => 'admin.uiaccounts.edit_view_user_hook',
 		'sidebox_menu'
 	);
 

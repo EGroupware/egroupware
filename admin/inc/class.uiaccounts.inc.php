@@ -24,7 +24,7 @@
 			'edit_user_hook'	=> True,
 			'edit_group'		=> True,
 			'view_user'			=> True,
-			'view_user_hook'	=> True,
+			'edit_view_user_hook' => True,
 			'group_manager'		=> True,
 			'accounts_popup'	=> True
 		);
