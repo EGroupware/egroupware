@@ -146,7 +146,7 @@
 					$stock_fields[$field]     = $value;
 					$stock_fieldnames[$field] = $this->stock_contact_fields[$field];
 				}
-				else
+				elseif (!isset($this->non_contact_fields[$field]))
 				{
 					$extra_fields[$field] = $value;
 				}
