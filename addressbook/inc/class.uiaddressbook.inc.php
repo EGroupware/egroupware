@@ -244,6 +244,7 @@
 				$chars = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
 			}
 			$aar = explode(',', $chars);
+			unset($chars);
 			$aar[] = 'all';
 			foreach($aar as $char)
 			{
@@ -273,6 +274,8 @@
 				$GLOBALS['phpgw']->template->set_var('char',$char != 'all' ? strtoupper($char) : lang('all'));
 				$GLOBALS['phpgw']->template->fp('alphalinks','addressbook_alpha',True);
 			}
+			unset($aar);
+			unset($char);
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -611,7 +614,7 @@
 			{
 				$GLOBALS['phpgw']->template->fp('delete_button','delete_block');
 			}
-			$GLOBALS['phpgw']->template->pparse('out','addressbook_footer');
+			$GLOBALS['phpgw']->template->pfp('out','addressbook_footer');
 			$this->save_sessiondata();
 			/* $GLOBALS['phpgw']->common->phpgw_footer(); */
 		}
