@@ -105,8 +105,7 @@
   {
     global $phpgw, $phpgw_info, $friendly;
     if (! $friendly)
-       echo "<A HREF=\"".$phpgw->link($phpgw_info["server"]["app_root"]
-			."/view.php","id=$id")."\"><img src=\""
+       echo "<A HREF=\"".$phpgw->link("view.php","id=$id")."\"><img src=\""
 	   . $phpgw_info["server"]["app_images"]."/$pic\" "
 	   . "border=\"0\" alt=\"".htmlentities($description)."\"></a>";
   }

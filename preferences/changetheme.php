@@ -16,7 +16,13 @@
 
   $phpgw_flags["currentapp"] = "preferences";
   include("../header.inc.php");
-  $installed_themes = array('default','blue','mojo','heaven','yellows', 'rose');
+
+  $dh = opendir($phpgw_info["server"]["server_root"] . "/themes");
+  while ($file = readdir($dh)) {
+    if ($file != "." && $file != ".." && $file != "CVS") {
+       $installed_themes[] = substr($file,0,strpos($file,"."));
+    }
+  }
 
   if ($phpgw_info["user"]["permissions"]["anonymous"]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
