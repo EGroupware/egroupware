@@ -1,0 +1,94 @@
+%1 already exists as a file		es	%1 ya existe como un fichero
+application		es	Aplicación
+back to file manager		es	Volver al Administrador de ficheros
+cannot create directory because it begins or ends in a space		es	No se puede crear el directorio porque empieza o acaba con un espacio
+cannot replace %1 because it is a directory		es	No puedo reemplazar %1 porque está en un directorio
+command sucessfully run		es	Comando ejecutado correctamente
+comment		es	Comentario
+comments cannot contain "%1"		es	Los comentarios no pueden tener "%1"
+copied %1 to %2		es	Copiado %1 a %2
+copy to		es	Copiar A
+copy to:		es	Copiar a:
+could not copy %1 to %2		es	No se pudo copiar %1 a %2
+could not create %1		es	No se pudo crear %1
+could not create directory %1		es	No se pudo crear el directorio %1
+could not delete %1		es	No se pudo borrar %1
+could not move %1 to %2		es	No se pudo mover %1 a %2
+could not rename %1 to %2		es	No se pudo renombre %1 a %2
+could not save %1		es	No se pudo guardar %1
+create file		es	Crear fichero
+create folder		es	Crear carpeta
+created		es	Creado
+created %1		es	Se ha creado %1
+created by		es	Creado por
+created directory %1		es	Directorio %1 creado
+date		es	Fecha
+default number of upload fields to show		es	Número predeterminado de campos a mostrar
+delete		es	Borrar
+deleted %1		es	%1 ha sido borrado
+directory		es	Directorio
+directory %1 already exists		es	El directorio %1 ya existe
+directory %1 does not exist		es	El directorio %1 no existe
+directory names cannot contain "%1"		es	Los nombres de directorio no pueden tener "%1"
+display attributes		es	Mostrar atributos
+download		es	Descargar
+edit		es	Editar
+edit comments		es	Editar comentarios
+error running command		es	Error al ejecutar el comando
+execute		es	Ejecutar
+failed to create directory		es	fallo al crear el directorio
+file		es	Fichero
+file %1 already exists. please edit it or delete it first.		es	El fichero %1 ya existe. Por favor, edítelo o bórrelo antes.
+file %1 could not be created.		es	No se pudo crear el fichero %1.
+file name		es	Nombre del fichero
+file names cannot contain "%1"		es	Los nombres de fichero no pueden contener "%1"
+file names cannot contain \ or /		es	Los nombres de fichero no pueden contener \ o /
+filemanager		es	Administrador de archivos
+filemanager preferences		es	Preferencias del Administrador de archivos
+files		es	Ficheros
+folder		es	Carpeta
+go to		es	Ir A
+go to %1		es	Ir a %1
+go to your home directory		es	Ir al directorio personal
+go to:		es	Ir a:
+home		es	Inicio
+locked		es	Bloqueado
+mime type		es	Tipo MIME
+modified		es	Modificado
+modified by		es	Modificado por
+move to		es	Mover A
+move to:		es	Mover a:
+moved %1 to %2		es	Se ha movido %1 a %2
+no version history for this file/directory		es	No hay historial de versión para este fichero o directorio
+operation		es	Operación
+owner		es	Propietario
+preview %1		es	Vista previa de %1
+preview of %1		es	Vista previa de %1
+rename		es	Renombrar
+renamed %1 to %2		es	Se ha renombrado %1 a %2
+replaced %1		es	Reemplazado %1
+save %1		es	Guardar %1
+save all		es	Guardar todo
+saved %1		es	Guardado %1
+show		es	Mostrar
+show ..		es	Mostrar ..
+show .files		es	Mostrar ficheros ocultos
+show command line (experimental. dangerous.)		es	Mostrar línea de comandos (EXPERIMENTAL. PELIGROSO)
+show help		es	Mostrar la ayuda
+size		es	Tamaño
+sort by:		es	Ordenar por:
+total files		es	Total ficheros
+unknown mime-type defaults to text/plain when viewing		es	El tipo MIME desconocido se muestra como text/plain
+unused space		es	Espacio libre
+up		es	Arriba
+update		es	Actualizar
+updated comment for %1		es	Comentario actualizado para %1
+upload fields		es	Subir campos
+upload files		es	Subir ficheros
+used space		es	Espacio utilizado
+users		es	Usuarios
+version		es	Versión
+view documents in new window		es	Ver documentos en una ventana nueva
+view documents on server (if available)		es	Ver documentos en el servidor (si está disponible)
+who		es	Quién
+you do not have access to %1		es	No tiene acceso a %1
