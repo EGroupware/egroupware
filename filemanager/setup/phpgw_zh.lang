@@ -1,94 +1,103 @@
-%1 already exists as a file	filemanager	en	%1 已经作为一个文件存在
-application	filemanager	en	应用程序
-back to file manager	filemanager	en	回到文件管理器
-cannot create directory because it begins or ends in a space	filemanager	en	由于以空格开始或结束不能创建目录
-cannot replace %1 because it is a directory	filemanager	en	不能替代 %1 因为它是一个目录
-command sucessfully run	filemanager	en	命令成功运行
-comment	filemanager	en	Comment
-comments cannot contain "%1"	filemanager	en	注解不能包含 "%1"
-copied %1 to %2	filemanager	en	拷贝 %1 到 %2
-copy to	filemanager	en	拷贝到
-copy to:	filemanager	en	拷贝到:
-could not copy %1 to %2	filemanager	en	不能拷贝 %1 到 %2
-could not create %1	filemanager	en	不能创建 %1
-could not create directory %1	filemanager	en	不能创建目录 %1
-could not delete %1	filemanager	en	不能删除 %1
-could not move %1 to %2	filemanager	en	不能移动 %1 到 %2
-could not rename %1 to %2	filemanager	en	不能将 %1 改名为 %2
-could not save %1	filemanager	en	不能保存 %1
-create file	filemanager	en	创建文件
-create folder	filemanager	en	创建文件夹
-created	filemanager	en	创建
-created %1	filemanager	en	创建 %1
-created by	filemanager	en	由创建
-created directory %1	filemanager	en	创建目录 %1
-date	filemanager	en	日期
-default number of upload fields to show	filemanager	en	要显示的默认上传区域数目
-delete	filemanager	en	删除
-deleted %1	filemanager	en	删除 %1
-directory	filemanager	en	目录
-directory %1 already exists	filemanager	en	目录 %1 已经存在
-directory %1 does not exist	filemanager	en	目录 %1 不存在
-directory names cannot contain "%1"	filemanager	en	目录名不能包含 "%1"
-display attributes	filemanager	en	显示属性
-download	filemanager	en	下载
-edit	filemanager	en	编辑
-edit comments	filemanager	en	编辑注解
-error running command	filemanager	en	错误运行命令
-execute	filemanager	en	执行
-failed to create directory	filemanager	en	创建目录失败
-file	filemanager	en	File
-file %1 already exists. please edit it or delete it first.	filemanager	en	文件 %1 已经存在. 请先编辑或删除.
-file %1 could not be created.	filemanager	en	文件 %1 不能创建.
-file name	filemanager	en	File Name
-file names cannot contain "%1"	filemanager	en	文件名不能包含 "%1"
-file names cannot contain \ or /	filemanager	en	文件名不能包含 \ 或 /
-filemanager	common	en	Filemanager
-filemanager preferences	filemanager	en	文件管理参数选择
-files	filemanager	en	文件
-folder	filemanager	en	文件夹
-go to	filemanager	en	进入
-go to %1	filemanager	en	进入 %1
-go to your home directory	filemanager	en	进入您的主目录
-go to:	filemanager	en	进入:
-home	filemanager	en	本地
-locked	filemanager	en	锁定
-mime type	filemanager	en	MIME 类型
-modified	filemanager	en	修改
-modified by	filemanager	en	由修改
-move to	filemanager	en	移动到
-move to:	filemanager	en	移动到:
-moved %1 to %2	filemanager	en	移动 %1 到 %2
-no version history for this file/directory	filemanager	en	没有该文件/文件夹历史版本
-operation	filemanager	en	操作
-owner	filemanager	en	Owner
-preview %1	filemanager	en	预览 %1
-preview of %1	filemanager	en	从 %1预览
-rename	filemanager	en	改名
-renamed %1 to %2	filemanager	en	 %1 改名为 %2
-replaced %1	filemanager	en	替换 %1
-save %1	filemanager	en	保存 %1
-save all	filemanager	en	保存所有
-saved %1	filemanager	en	保存 %1
-show	filemanager	en	显示
-show ..	filemanager	en	显示 ..
-show .files	filemanager	en	显示 .文件
-show command line (experimental. dangerous.)	filemanager	en	显示命令行(危险实验)
-show help	filemanager	en	显示帮助
-size	filemanager	en	大小
-sort by:	filemanager	en	由排列:
-total files	filemanager	en	所有文件
-unknown mime-type defaults to text/plain when viewing	filemanager	en	未知mime类型默认类型为文本类型
-unused space	filemanager	en	未使用空间
-up	filemanager	en	向上
-update	filemanager	en	更新
-updated comment for %1	filemanager	en	为 %1更新注解
-upload fields	filemanager	en	上传区域
-upload files	filemanager	en	上传文件
-used space	filemanager	en	使用空间
-users	filemanager	en	用户
-version	filemanager	en	版本
-view documents in new window	filemanager	en	在新窗口查看文档
-view documents on server (if available)	filemanager	en	在服务器上查看文档（如果可能）
-who	filemanager	en	谁
-you do not have access to %1	filemanager	en	您不能进入 %1
+%1 already exists as a file	filemanager	zh	已存在文件%1
+application	filemanager	zh	应用程序
+back to file manager	filemanager	zh	返回文件管理器
+cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录，目录名开头或末尾不能带有空格
+
+cannot replace %1 because it is a directory	filemanager	zh	%1是目录，无法被替换
+
+command sucessfully run	filemanager	zh	命令执行
+成功
+
+comment	filemanager	zh	注释
+
+comments cannot contain "%1"	filemanager	zh	注释不能包含"%1"
+copied %1 to %2	filemanager	zh	%1已复制到%2
+copy to	filemanager	zh	复制到
+copy to:	filemanager	zh	复制到
+
+could not copy %1 to %2	filemanager	zh	无法将%1复制到%2
+could not create %1	filemanager	zh	无法创建%1
+could not create directory %1	filemanager	zh	无法创建目录%1
+could not delete %1	filemanager	zh	无法删除%1
+could not move %1 to %2	filemanager	zh	无法将%1移动到%2
+could not rename %1 to %2	filemanager	zh	无法将%1重命名为%2
+could not save %1	filemanager	zh	无法保存%1
+create file	filemanager	zh	创建文件
+create folder	filemanager	zh	创建文件夹
+
+created	filemanager	zh	已创建
+
+created %1	filemanager	zh	%1已创建
+created by	filemanager	zh	创建者
+created directory %1	filemanager	zh	目录%1已创建
+date	filemanager	zh	日期
+default number of upload fields to show	filemanager	zh	显示的默认上传区域数
+delete	filemanager	zh	删除
+deleted %1	filemanager	zh	%1删除
+directory	filemanager	zh	目录
+directory %1 already exists	filemanager	zh	目录%1已存在
+directory %1 does not exist	filemanager	zh	目录%1不存在
+
+directory names cannot contain "%1"	filemanager	zh	目录名不能包含"%1"
+display attributes	filemanager	zh	显示属性
+download	filemanager	zh	下载
+edit	filemanager	zh	编辑
+edit comments	filemanager	zh	编辑注释
+error running command	filemanager	zh	命令执行出错
+execute	filemanager	zh	执行
+failed to create directory	filemanager	zh	创建目录失败
+file	filemanager	zh	文件
+file %1 already exists. please edit it or delete it first.	filemanager	zh	文件%1已存在，请先编辑或删除它.
+file %1 could not be created.	filemanager	zh	文件 %1 不能创建.
+file name	filemanager	zh	文件名
+file names cannot contain "%1"	filemanager	zh	文件名不能包含"%1"
+file names cannot contain \ or /	filemanager	zh	文件名不能包含\或/
+filemanager	common	zh	文件管理
+filemanager preferences	filemanager	zh	文件管理个性化配置
+files	filemanager	zh	文件
+folder	filemanager	zh	文件夹
+go to	filemanager	zh	跳转到
+go to %1	filemanager	zh	跳转到%1
+go to your home directory	filemanager	zh	跳转到主目录
+go to:	filemanager	zh	跳转到：
+home	filemanager	zh	主页面
+locked	filemanager	zh	已锁定
+mime type	filemanager	zh	MIME类型
+modified	filemanager	zh	已修改
+modified by	filemanager	zh	修改者
+move to	filemanager	zh	移动到
+move to:	filemanager	zh	移动到：
+moved %1 to %2	filemanager	zh	%1已移动到%2
+no version history for this file/directory	filemanager	zh	该文件/文件夹无版本历史
+operation	filemanager	zh	操作
+owner	filemanager	zh	所有者
+preview %1	filemanager	zh	预览%1
+preview of %1	filemanager	zh	%1的预览
+rename	filemanager	zh	重命名
+renamed %1 to %2	filemanager	zh	 %1已重命名为%2
+replaced %1	filemanager	zh	%1已替换
+save %1	filemanager	zh	保存%1
+save all	filemanager	zh	全部保存
+saved %1	filemanager	zh	%1已保存
+show	filemanager	zh	显示
+show ..	filemanager	zh	显示...
+show .files	filemanager	zh	显示.文件
+show command line (experimental. dangerous.)	filemanager	zh	显示命令行(警告：仅用于测试)
+show help	filemanager	zh	显示帮助
+size	filemanager	zh	大小
+sort by:	filemanager	zh	排序方式
+total files	filemanager	zh	所有文件
+unknown mime-type defaults to text/plain when viewing	filemanager	zh	以文本方式查看未知mime类型的文件
+unused space	filemanager	zh	可用空间
+up	filemanager	zh	上级目录
+update	filemanager	zh	更新
+updated comment for %1	filemanager	zh	%1的注释已更新
+upload fields	filemanager	zh	上传区域
+upload files	filemanager	zh	上传文件
+used space	filemanager	zh	已用空间
+users	filemanager	zh	用户
+version	filemanager	zh	版本
+view documents in new window	filemanager	zh	打开新窗以查看文档
+view documents on server (if available)	filemanager	zh	可能的话，在服务器上查看文档
+who	filemanager	zh	谁
+you do not have access to %1	filemanager	zh	无权访问%1

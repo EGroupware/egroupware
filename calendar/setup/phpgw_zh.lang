@@ -1,119 +1,314 @@
-1 match found	calendar	zh	共有 1 个符合要求的条目
-(i/v)cal	calendar	zh	(i/v)日历
+%1 %2 in %3	calendar	zh	%1 %2 in %3
+%1 matches found	calendar	zh	找到%1个符合条件的记录
+1 match found	calendar	zh	找到1个符合条件的记录
+%1 records imported	calendar	zh	已导入%1个记录
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	zh	已读取%1个记录(尚未导入, 您可以返回并取消导入测试)
+(for weekly)	calendar	zh	(每周)
+(i/v)cal	calendar	zh	(i/v)日程表
 a	calendar	zh	一
 accept	calendar	zh	接受
 accepted	calendar	zh	已接受
-add alarm	calendar	zh	新增警告
-alarm management	calendar	zh	警告管理
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh	执行下列操作将发出通知：添加，取消，接受，拒绝...
+add a single entry by passing the fields.	calendar	zh	通过传递字段来添加一个条目
+add alarm	calendar	zh	添加提醒
+add contact	calendar	zh	添加联系人
+added	calendar	zh	已添加
+address book	calendar	zh	通讯录
+alarm	calendar	zh	提醒
+alarm for %1 at %2 in %3	calendar	zh	Alarm for %1 at %2 in %3
+alarm management	calendar	zh	提醒管理
+alarm-management	calendar	zh	提醒管理
+alarms	calendar	zh	提醒
 all day	calendar	zh	所有日期
-are you sure\nyou want to\ndelete this entry ?	calendar	zh	您确定要移除这个条目吗？
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zh	您确定要移除这个纪录吗？\n\n所有使用者的这一纪录都将被移除。
-are you sure you want to delete this holiday ?	calendar	zh	您确定要移除这个假日吗？
-brief description	calendar	zh	简短叙述
-calendar	common	zh	日历
-calendar preferences	common	zh	日历喜好设定
-calendar - [iv]cal importer	calendar	zh	Calendar - [iv]Cal 导入
-calendar - add	calendar	zh	日历 - 新增
-calendar - edit	calendar	zh	日历 - 编辑
-calendar holiday management	admin	zh	日历 - 假日管理
-daily	calendar	zh	每天
-daily matrix view	calendar	zh	每天矩形浏览
-days repeated	calendar	zh	日重覆
-default calendar filter	calendar	zh	默认日历过滤器
-default calendar view	calendar	zh	默认日历浏览
-display mini calendars when printing	calendar	zh	打印时显示小日历
-display status of events	calendar	zh	显示事件的状态
+are you sure you want to delete this country ?	calendar	zh	确定要删除该地区吗？
+are you sure you want to delete this holiday ?	calendar	zh	确定要删除该节日吗？
+are you sure\nyou want to\ndelete these alarms?	calendar	zh	确定要删除这些提醒吗？
+are you sure\nyou want to\ndelete this entry ?	calendar	zh	确定要删除该事项吗？
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zh	确定要删除该条目吗？\n\n所有用户的该条目都将被删除。
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zh	确定要删除该事项吗？所有用户的该事项都将被删除。
+before the event	calendar	zh	在事项前
+brief description	calendar	zh	简要说明
+business	calendar	zh	商务
+calendar	common	zh	日程表
+calendar - [iv]cal importer	calendar	zh	Calendar - [iv]Cal导入
+calendar - add	calendar	zh	日程表—添加
+calendar - edit	calendar	zh	日程表—编辑
+calendar event	calendar	zh	日程表事项
+calendar holiday management	admin	zh	日程表—节日管理
+calendar preferences	common	zh	日程表个性化配置
+calendar settings	admin	zh	日程表配置
+calendar-fieldname	calendar	zh	日程表—字段名
+canceled	calendar	zh	已取消
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	zh	$params['old_owner']安排的全部事项，更改为由$params['new_owner']安排。
+change status	calendar	zh	更改状态
+click %1here%2 to return to the calendar.	calendar	zh	点击%1此处%2返回日程表。
+configuration	calendar	zh	配置
+countries	calendar	zh	国家
+country	calendar	zh	国家/地区
+csv-fieldname	calendar	zh	CSV-字段名
+csv-filename	calendar	zh	CSV-文件名
+custom fields	calendar	zh	自定义字段
+custom fields and sorting	common	zh	自定义字段和排序方式
+daily	calendar	zh	日程
+daily matrix view	calendar	zh	日程安排
+days	calendar	zh	天
+days repeated	calendar	zh	重复日
+dayview	calendar	zh	每日安排
+default appointment length (in minutes)	calendar	zh	默认安排时间(单位：分钟)
+default calendar filter	calendar	zh	默认日程表筛选
+default calendar view	calendar	zh	默认日程表查看
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zh	新建事项的默认安排时间，单位：分钟。
+defines the size in minutes of the lines in the day view.	calendar	zh	定义每日安排中每行的分钟数
+delete a single entry by passing the id.	calendar	zh	通过传递代号来删除一个条目
+delete an entire users calendar.	calendar	zh	删除所有用户的日程表
+delete selected contacts	calendar	zh	删除选定的联系人
+delete series	calendar	zh	连续删除
+delete single	calendar	zh	单独删除
+deleted	calendar	zh	已删除
+description	calendar	zh	说明
+disable	calendar	zh	禁用
+disabled	calendar	zh	已禁用
+display interval in day view	calendar	zh	显示每日安排的间隔
+display mini calendars when printing	calendar	zh	打印时显示简明日程表
+display status of events	calendar	zh	显示事项状态
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zh	是否在起始页面(即登录后的页面，可点击“主页”按钮跳转至该页)显示每日安排？
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zh	新建或更改预约时是否需要通知您? 您只能收到自己所作更改的通知。<br>每项预约上都列出所有相关的通知，您可以指定作何种更改时发出通知。更改包括对标题、说明和参与者的变动，但参与者的回应不在此列。若启用更改通知，事项的安排者将收到参与者对更改的回应：接受或拒绝。
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh	您希望定期收到有关预约统计的EMail吗？<br>每日统计将在每天早上发送至您的EMail信箱，周一则发送每周统计。<br>该选项仅在当天或者该周有预约时生效。
+do you wish to autoload calendar holidays files dynamically?	admin	zh	是否自动加载节日文件？
+download	calendar	zh	下载
 duration	calendar	zh	期间
-edit series	calendar	zh	编辑全系列约会
-edit single	calendar	zh	编辑单一约会
-end date/time	calendar	zh	结束日期/时间
-ends	calendar	zh	结束日期
+edit series	calendar	zh	连续编辑
+edit single	calendar	zh	单独编辑
+email notification	calendar	zh	Email通知
+email notification for %1	calendar	zh	%1的Email通知
+enable	calendar	zh	启用
+enabled	calendar	zh	已启用
+end date/time	calendar	zh	终止日期/时刻
+enddate	calendar	zh	终止日期
+ends	calendar	zh	终止
+enter output filename: ( .vcs appended )	calendar	zh	输出文件名(扩展名.vcs)：
+event details follow	calendar	zh	事项细节随后
+exceptions	calendar	zh	例外
 export	calendar	zh	导出
-(for weekly)	calendar	zh	（每周）
+export a list of entries in ical format.	calendar	zh	使用iCal格式导出条目列表
+extended	calendar	zh	扩展
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zh	由于扩展更新包含完整的事项细节，iCal可被一些外部日程表程序导入。
+external participants	calendar	zh	外部参与者
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	zh	向'%1'发送消息失败 #%2，主题：'%3'，发件人：'%4'。
+fieldseparator	calendar	zh	字段分隔符
+firstname of person to notify	calendar	zh	被通知者的名字
+format of event updates	calendar	zh	事项格式更新
 fr	calendar	zh	五
-free/busy	calendar	zh	有空/忙录
+free/busy	calendar	zh	空闲/繁忙
 frequency	calendar	zh	频率
 fri	calendar	zh	五
-full description	calendar	zh	完整叙述
-generate printer-friendly version	calendar	zh	产生便于打印版本
-global public and group public	calendar	zh	全部公用与组共用
-global public only	calendar	zh	仅全部公用
-go!	calendar	zh	开始！
-grant calendar access	common	zh	允许日历访问
-group public only	calendar	zh	仅组共用
-ignore conflict	calendar	zh	忽略冲突
+full description	calendar	zh	完整说明
+fullname of person to notify	calendar	zh	被通知者的全名
+generate printer-friendly version	calendar	zh	生成便于打印的版本
+global categories	calendar	zh	全局类别
+global public and group public	calendar	zh	全局公有与组公有
+global public only	calendar	zh	仅全局公有
+go!	calendar	zh	开始
+grant calendar access	common	zh	授权日程表访问
+group planner	calendar	zh	组计划表
+group public only	calendar	zh	仅组公有
+here is your requested alarm.	calendar	zh	提醒
+high priority	calendar	zh	高优先级
+holiday	calendar	zh	节日
+holiday management	calendar	zh	节日管理
+holiday-management	calendar	zh	节日管理
+holidays	calendar	zh	节日
+hours	calendar	zh	小时
 i participate	calendar	zh	我要参与
-load [iv]cal	calendar	zh	载入 [iv]日历
+ical / rfc2445	calendar	zh	iCal/RFC2445标准
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	zh	周末指定的节日将在下周一生效。
+ignore conflict	calendar	zh	忽略冲突
+import	calendar	zh	导入
+import csv-file into calendar	calendar	zh	从CSV导入
+interval	calendar	zh	间隔
+intervals in day view	calendar	zh	每日安排间隔
+intervals per day in planner view	calendar	zh	日程规划中的每日间隔
+invalid entry id.	calendar	zh	条目代号无效
+last	calendar	zh	最后
+lastname of person to notify	calendar	zh	被通知者姓氏
+length shown<br>(emtpy for full length)	calendar	zh	显示的长度<br>(留空则完全显示)
+length<br>(<= 255)	calendar	zh	长度<br>(不大于255)
+load [iv]cal	calendar	zh	载入[iv]日程表
 location	calendar	zh	位置
+location to autoload from	admin	zh	自动加载的位置
+matrixview	calendar	zh	日程安排
 minutes	calendar	zh	分钟
 mo	calendar	zh	一
+modified	calendar	zh	已变动
+modify list of external participants	calendar	zh	更改外部参与者列表
 mon	calendar	zh	一
 month	calendar	zh	月
+monthly	calendar	zh	每月
 monthly (by date)	calendar	zh	每月（以日期计）
 monthly (by day)	calendar	zh	每月（以天数计）
-monthly	calendar	zh	每月
-new entry	calendar	zh	新增条目
-no matches found.	calendar	zh	没有找到符合的条目
-no repsonse	calendar	zh	没有回应
-no response	calendar	zh	没有回应
-participant	calendar	zh	与会者
-participants	calendar	zh	与会者
+monthview	calendar	zh	每月安排
+new entry	calendar	zh	新建事项
+new name must not exist and not be empty!!!	calendar	zh	新建的名字必须存在，且不可为空！
+no matches found.	calendar	zh	没有找到符合的记录
+no response	calendar	zh	无回应
+notification messages for added events	calendar	zh	已添加事项的通知邮件
+notification messages for canceled events	calendar	zh	已取消事项的通知邮件
+notification messages for modified events	calendar	zh	已变动事项的通知邮件
+notification messages for your alarms	calendar	zh	提醒的通知邮件
+notification messages for your responses	calendar	zh	回应的通知邮件
+number of intervals per day in planner view	calendar	zh	日程规划中的每日间隔数
+number of months	calendar	zh	月份数
+number of records to read (<=200)	calendar	zh	待读取记录数(不大于200)
+observance rule	calendar	zh	惯例
+occurence	calendar	zh	发生
+old startdate	calendar	zh	旧起始日期
+olddate	calendar	zh	旧日期
+on %1 %2 %3 your meeting request for %4	calendar	zh	On %1 %2 %3 your meeting request for %4
+on all changes	calendar	zh	任何更改发生时
+on all modification, but responses	calendar	zh	除回应外，任何变动发生时
+on any time change too	calendar	zh	任何更改发生时
+on invitation / cancelation only	calendar	zh	仅当邀请/取消发生时
+on participant responses too	calendar	zh	on participant responses too
+on time change of more than 4 hours too	calendar	zh	on time change of more than 4 hours too
+open todo's:	calendar	zh	open ToDo's:
+order	calendar	zh	顺序
+overlap holiday	calendar	zh	同一天的节日
+participant	calendar	zh	参与者
+participants	calendar	zh	参与者
 participates	calendar	zh	参与
+people holiday	calendar	zh	people holiday
+permission denied	calendar	zh	无权访问
+planner	calendar	zh	计划表
+planner by category	calendar	zh	类别计划表
+planner by user	calendar	zh	用户计划表
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zh	请确认、接受、拒绝或检查您日程表中相应条目的更改
+preselected group for entering the planner	calendar	zh	Preselected group for entering the planner
+print calendars in black & white	calendar	zh	以黑白方式打印日程表
+print the mini calendars	calendar	zh	打印简明日程表
 printer friendly	calendar	zh	便于打印
-private and global public	calendar	zh	私人及全体公用
-private and group public	calendar	zh	私人及组公用
-private only	calendar	zh	仅私人
-re-edit event	calendar	zh	重新编辑事件
-refresh	calendar	zh	更新
+privat	calendar	zh	私有
+private and global public	calendar	zh	私有及全局公有
+private and group public	calendar	zh	私有及组公有
+private only	calendar	zh	仅私有
+re-edit event	calendar	zh	重新编辑事项
+read a list of entries.	calendar	zh	读取条目列表.
+read a single entry by passing the id and fieldlist.	calendar	zh	通过传递代号和字段列表来读取一个条目
+read this list of methods.	calendar	zh	读取方法列表
+receive email updates	calendar	zh	接收EMail更新
+receive extra information in event mails	calendar	zh	接收事项EMail中的特别信息
+receive summary of appointments	calendar	zh	接收预约统计
+recurring event	calendar	zh	循环事项
+refresh	calendar	zh	刷新
+reinstate	calendar	zh	复原
 reject	calendar	zh	拒绝
 rejected	calendar	zh	已拒绝
 repeat day	calendar	zh	重复日期
-repeat end date	calendar	zh	重复结束日期
-repeating event information	calendar	zh	重复约会信息
-repeat type	calendar	zh	重覆类型
+repeat end date	calendar	zh	重复终止日期
+repeat type	calendar	zh	重复类型
+repeating event information	calendar	zh	重复事项信息
 repetition	calendar	zh	重复
+repetitiondetails (or empty)	calendar	zh	重复细节（或留空）
+reset	calendar	zh	复位
+rule	calendar	zh	规则
 sa	calendar	zh	六
 sat	calendar	zh	六
-scheduling conflict	calendar	zh	约会冲突
+scheduling conflict	calendar	zh	日程安排冲突
 search results	calendar	zh	搜索结果
-send/Receive updates via email	calendar	zh	透过电子邮件传送/接收最新消息
-send updates via email	common	zh	透过电子邮件发送最新消息
-show day view on main screen	calendar	zh	在首页显示当日日程安排
-show high priority events on main screen	calendar	zh	在首页显示高优先权的约会
-sorry, the owner has just deleted this event	calendar	zh	很抱歉，此约会的所有者刚删除了此约会
-start date/time	calendar	zh	开始日期/时间
+selected contacts (%1)	calendar	zh	已选择联系人（%1个）
+send updates via email	common	zh	通过电子邮件发送更新
+send/receive updates via email	calendar	zh	通过电子邮件发送/接收更新
+set a year only for one-time / non-regular holidays.	calendar	zh	Set a Year only for one-time / non-regular holidays.
+set new events to private	calendar	zh	新建事项设为私有
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zh	是否在日程表中已拒绝的邀请？<br>这样，您可以稍后再接受这些邀请，例如，当日程安排不冲突时。
+should new events created as private by default ?	calendar	zh	新建事项是否默认设为私有？
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	zh	是否以便于打印的形式打印/显示简明日程表？
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	zh	以黑白或彩色的方式查看便于打印的版本？
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zh	在事项参与者的名字后，是否以括号显示该参与者的情况（接受、拒绝...）？
+show day view on main screen	calendar	zh	在主页面显示每日安排
+show default view on main screen	calendar	zh	在主页面显示默认视图
+show high priority events on main screen	calendar	zh	在首页显示优先的事项
+show invitations you rejected	calendar	zh	显示已拒绝的邀请
+single event	calendar	zh	单一事项
+sorry, the owner has just deleted this event	calendar	zh	抱歉，该事项已被安排者取消
+sorry, this event does not exist	calendar	zh	抱歉，该事项不存在
+sorry, this event does not have exceptions defined	calendar	zh	抱歉，该事项尚未定义例外
+sort by	calendar	zh	排序方式
+specifies the the number of intervals shown in the planner view.	calendar	zh	在计划表视图中显示的间隔数
+start date/time	calendar	zh	起始日期/时刻
+start- and enddates	calendar	zh	起始和终止日期
+startdate	calendar	zh	起始日期
+startrecord	calendar	zh	起始记录
 su	calendar	zh	日
+submit to repository	calendar	zh	提交至存储室
 sun	calendar	zh	日
 tentative	calendar	zh	暂定
+test import (show importable records <u>only</u> in browser)	calendar	zh	导入测试(仅在浏览器中显示可导入记录)
+text	calendar	zh	文字
 th	calendar	zh	四
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	zh	下列约会和您欲加入的约会冲突：<ul>%1</ul>
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zh	无法连结到您的新闻服务器，<br>请和网络管理者联系，检查新闻服务器的名称、用户名及密码。
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	zh	以下日程安排与建议的时间冲突：<ul>%1</ul>
+the user %1 is not participating in this event!	calendar	zh	用户%1不是该事项参与者！
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	zh	无法连接新闻服务器，<br>请和网络管理员联系，以检查新闻服务器的名称、用户名及密码。
+this day is shown as first day in the week or month view.	calendar	zh	每周安排或每日安排中以该日作为起始日。
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	zh	此处定义了每日安排的终止时刻，之后的事项显示在每日安排下方。
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zh	此处定义了每日安排的起始时刻，之前的事项显示在每日安排上方。<br>该时刻也将作为新建事项的默认起始时刻。
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zh	当您输入计划表时，该组被预先选定。您随时可以在计划表中更改它。
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	zh	该错误通常是由于没有配置或错误配置了SMTP服务器引起的。请将此情况告知管理员。
+this message is sent for canceled or deleted events.	calendar	zh	事项取消或删除时，发送该邮件。
+this message is sent for modified or moved events.	calendar	zh	事项变动时，发送该邮件。
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zh	该邮件将被发送至所有指定接收事项通知的参与者。<br>您可以在邮件中使用变量来描述事项，邮件的第一行是主题。
+this message is sent when you accept, tentative accept or reject an event.	calendar	zh	接受、暂时接受或拒绝事项时，发送该邮件。
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zh	设定事项的提醒时发送该邮件，邮件包含了所有可能的信息。
 this month	calendar	zh	本月
 this week	calendar	zh	本周
 this year	calendar	zh	今年
 thu	calendar	zh	四
-today	calendar	zh	今天
+title	calendar	zh	标题
+title of the event	calendar	zh	事项标题
+title-row	calendar	zh	标题—行
+to-firstname	calendar	zh	发送给—名字
+to-fullname	calendar	zh	发送给—姓名
+to-lastname	calendar	zh	发送给—姓氏
+today	calendar	zh	今日
+translation	calendar	zh	翻译
 tu	calendar	zh	二
 tue	calendar	zh	二
-use end date	calendar	zh	使用结束日期
-view this entry	calendar	zh	浏览此条目
+update a single entry by passing the fields.	calendar	zh	通过传递字段来更新一个条目
+updated	calendar	zh	已更新
+use end date	calendar	zh	使用终止日期
+view this entry	calendar	zh	查看该事项
 we	calendar	zh	三
 wed	calendar	zh	三
 week	calendar	zh	星期
-weekday starts on	calendar	zh	每星期开始于
+weekday starts on	calendar	zh	每周始于
 weekly	calendar	zh	每周
-when creating new events default set to private	calendar	zh	新增约会默认为私人约会
-work day ends on	calendar	zh	每天结束时间
-work day starts on	calendar	zh	每天开始时间
-%1 matches found	calendar	zh	共有 %1 个条目符合
-year	calendar	zh	年
+weekview	calendar	zh	每周安排
+when creating new events default set to private	calendar	zh	新建事项默认设为私有事项
+which events do you want to see when you enter the calendar.	calendar	zh	打开日程表时，显示哪些事项？
+which of calendar view do you want to see, when you start calendar ?	calendar	zh	打开日程表时，以何种方式查看？
+work day ends on	calendar	zh	每日止于
+work day starts on	calendar	zh	每日始于
+workdayends	calendar	zh	每日止于
 yearly	calendar	zh	每年
-you have 1 high priority event on your calendar today.	common	zh	您今天有 1 个高重要性的约会。
-you have %1 high priority events on your calendar today.	common	zh	您今天有 %1 个高重要性的约会。
-you have not entered a valid date	calendar	zh	您没有输入正确的日期
-you have not entered a title	calendar	zh	您没有输入主题
-you have not entered a valid time of day	calendar	zh	您没有输入正确的时间
-you have not entered participants	calendar	zh	您没有输入与会者
-you must enter one or more search keywords	calendar	zh	您必需输入一个或一个以上的关键字
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zh	您所使用的约会时间 <B> %1 - %2 </B> 和下列的条目冲突：
+yearview	calendar	zh	每年安排
+you can either set a year or a occurence, not both !!!	calendar	zh	只能设定年份或事件发生其中之一！
+you can only set a year or a occurence !!!	calendar	zh	只能设定年份或事件发生！
+you do not have permission to add alarms to this event !!!	calendar	zh	您无权为该事项添加提醒！
+you do not have permission to delete this alarm !!!	calendar	zh	您无权删除该提醒！
+you do not have permission to enable/disable this alarm !!!	calendar	zh	您无权启用/禁用该提醒！
+you do not have permission to read this record!	calendar	zh	您无权读取该记录！
+you have %1 high priority events on your calendar today.	common	zh	您今天%1个重要事项。
+you have 1 high priority event on your calendar today.	common	zh	您今天有1个重要事项。
+you have a meeting scheduled for %1	calendar	zh	您在%1有一个会议安排
+you have not entered a title	calendar	zh	必须输入主题
+you have not entered a valid date	calendar	zh	输入的日期
+无效
+you have not entered a valid time of day	calendar	zh	输入的时刻
+无效
+you have not entered participants	calendar	zh	必须输入参与者
+you must enter one or more search keywords	calendar	zh	必须输入至少一个关键字
+you must select a [iv]cal. (*.[iv]cs)	calendar	zh	必须选择[iv]Cal(*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	zh	只能设定日期或事件发生其中之一！
+your meeting scheduled for %1 has been canceled	calendar	zh	您在%1的会议安排已取消
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zh	您在%1的会议已被重新安排至%2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	zh	安排的时间<B>%1—%2</B>和以下事项冲突：
 
