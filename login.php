@@ -98,8 +98,8 @@
 
   } else {
     if ($last_loginid) {
-       $phpgw->db->query("select value from preferences where owner='$last_loginid' "
-                       . "and name='lang'");
+       $phpgw->db->query("select preference_value from preferences where preference_owner='$last_loginid' "
+                       . "and preference_name='lang'");
        $phpgw->db->next_record();
        if (! $phpgw->db->f("value")) {
           $users_lang = "en";
