@@ -177,7 +177,6 @@ priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
 re:	infolog	en	Re:
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	en	
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
@@ -235,8 +234,6 @@ urgent	infolog	en	urgent
 use button to search for address	infolog	en	use Button to search for Address
 use button to search for project	infolog	en	use Button to search for Project
 valid path on clientside<br>eg. \\server\share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	en	
-valid path on clientside<br>eg. servershare or e:	infolog	en	
 values for selectbox	infolog	en	Values for selectbox
 view all subs of this entry	infolog	en	View all subs of this entry
 view other subs	infolog	en	view other Subs
