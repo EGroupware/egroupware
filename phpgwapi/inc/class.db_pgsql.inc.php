@@ -125,29 +125,64 @@ class db {
     return $stat;
   }
 
-  function seek($pos) {
-    $this->Row = $pos;
-  }
+	function seek($pos)
+	{
+		$this->Row = $pos;
+	}
 
-  function lock($table, $mode = "write") {
-    $result = pg_Exec($this->Link_ID, "begin work");
-    if ($mode == "write") {
-       if (is_array($table)) {
-          while ($t = each($table)) {
-	    $result = pg_Exec($this->Link_ID,"lock table $t[1] in share mode");
-          }
-       } else {
-	  $result = pg_Exec($this->Link_ID, "lock table $table in share mode");
-       }
-    } else {
-      $result = 1;
-    }
-    return $result;
-  }
+	function transaction_begin()
+	{
+		return pg_Exec($this->Link_ID,'begin');
+	}
+
+	function transaction_commit()
+	{
+		if (! $this->Errno)
+		{
+			return pg_Exec($this->Link_ID,'commit');
+		}
+		else
+		{
+			return False;
+		}
+	}
+
+	function transaction_abort()
+	{
+		return pg_Exec($this->Link_ID,'rollback');
+	}
+
+
+	function lock($table, $mode = 'write')
+	{
+		$result = $this->transaction_begin();
+
+		if ($mode == 'write')
+		{
+			if (is_array($table))
+			{
+				while ($t = each($table))
+				{
+					$result = pg_Exec($this->Link_ID,'lock table ' . $t[1] . ' in share mode');
+				}
+			}
+			else
+			{
+				$result = pg_Exec($this->Link_ID, "lock table $table in share mode");
+			}
+		}
+		else
+		{
+			$result = 1;
+		}
+
+		return $result;
+	}
   
-  function unlock() {
-    return pg_Exec($this->Link_ID, "commit work");
-  }
+	function unlock()
+	{
+		return $this->transaction_commit();
+	}
 
 
   /* public: sequence numbers */

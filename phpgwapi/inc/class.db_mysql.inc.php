@@ -198,6 +198,22 @@ class db {
     return 1;
   }
 
+	function transaction_begin()
+	{
+		return True;
+	}
+
+	function transaction_commit()
+	{
+		return True;
+	}
+
+	function transaction_abort()
+	{
+		return True;
+	}
+
+
   /* public: table locking */
   function lock($table, $mode="write") {
     $this->connect();
