@@ -439,7 +439,8 @@
 			$header   .= "VERSION:2.1\n";
 			$header   .= "X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\n";
 
-			while (list($name,$value)=each($this->export)) {
+			reset($this->export);
+			while ( list($name,$value) = each($this->export) ) {
 				if (!empty($buffer[$value])) {
 					$mult = explode(";",$value);
 					if (!$mult[1]) { // Normal
