@@ -681,7 +681,7 @@
 		@abstract get template dir of an application
 		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_tpl_dir($appname = '')
+		function get_tpl_dir($appname = '',$layout = '')
 		{
 			if (! $appname)
 			{
@@ -725,6 +725,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			$tpldir         = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'];
 			$tpldir_default = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default';
+
+			if ($layout == 'default')
+			{
+				$tpldir = $tpldir_default;
+			}
 
 			if (@is_dir($tpldir))
 			{
