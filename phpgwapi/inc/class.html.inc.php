@@ -363,7 +363,7 @@ class html
 	function theme2css()
 	{
 		return 
-			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; font-weight: bold; }\n".
+			".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
 			".row_on,.th_bright { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
 			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n";
 	}
