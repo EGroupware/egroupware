@@ -38,6 +38,7 @@
 		global $phpgw_info;
 		if ($java) {
 			$jselect = " onChange=\"this.form.submit();\"";
+			$name='cat_id';
 			//$jsubopen  = "<noscript>";
 			//$jsubclose = "</noscript>";
 		}
@@ -263,7 +264,7 @@
 			$cat_id   = $fields["cat_id"];
 		}
 
-		$cats_link    = cat_option($cat_id,'ncat_id',True);
+		$cats_link    = cat_option($cat_id,'ncat_id',True,False);
 
 		if ($access == 'private') {
 			$access_check = ' checked';
