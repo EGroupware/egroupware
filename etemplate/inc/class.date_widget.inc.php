@@ -120,7 +120,11 @@
 				}
 				$value = $str;
 				$cell['type'] = 'label';
-				$cell['no_lang'] = True;
+				if (!$cell['no_lang'])
+				{
+					$cell['no_lang'] = True;
+					$cell['label'] = strlen($cell['label']) > 1 ? lang($cell['label']) : $cell['label'];
+				}
 				return True;
 			}
 			$tpl = new etemplate;
