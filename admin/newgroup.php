@@ -145,7 +145,7 @@
   }
 
   $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM phpgw_accounts WHERE "
-	  	        . "account_status != 'L' ORDER BY account_lastname,account_firstname,account_lid asc");
+	  	        . "account_status != 'L' and account_type='u' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
      $user_list .= '<option value="' . $phpgw->db->f('account_id') . '"'
     	        . $selected_users[$phpgw->db->f('account_id')] . '>'
