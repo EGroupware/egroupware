@@ -12,27 +12,32 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
-	$GLOBALS['phpgw_info']['flags']['enable_contacts_class'] = True;
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'currentapp' => 'addressbook',
+		'noheader'   => True,
+		'enable_contacts_class' => True,
+	);
 	include('../header.inc.php');
+
+	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
+	$GLOBALS['phpgw']->common->phpgw_header();
 
 	$GLOBALS['phpgw']->contacts = createobject('phpgwapi.contacts');
 
-	$GLOBALS['phpgw']->template->set_file(array('import_t' => 'csv_import.tpl'));
-	$GLOBALS['phpgw']->template->set_block('import_t','filename');
-	$GLOBALS['phpgw']->template->set_block('import_t','fheader');
-	$GLOBALS['phpgw']->template->set_block('import_t','fields');
-	$GLOBALS['phpgw']->template->set_block('import_t','ffooter');
-	$GLOBALS['phpgw']->template->set_block('import_t','imported');
-	$GLOBALS['phpgw']->template->set_block('import_t','import');
+	$GLOBALS['phpgw']->template->set_file(array('import' => 'csv_import.tpl'));
+	$GLOBALS['phpgw']->template->set_block('import','filename','filenamehandle');
+	$GLOBALS['phpgw']->template->set_block('import','fheader','fheaderhandle');
+	$GLOBALS['phpgw']->template->set_block('import','fields','fieldshandle');
+	$GLOBALS['phpgw']->template->set_block('import','ffooter','ffooterhandle');
+	$GLOBALS['phpgw']->template->set_block('import','imported','importedhandle');
 
-	if($action == 'download' && (!$fieldsep || !$csvfile || !($fp=fopen($csvfile,'rb'))))
+	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
+
+	if($_POST['action'] == 'download' && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
-		$action = '';
+		$_POST['action'] = '';
 	}
 	$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/addressbook/csv_import.php'));
-	$GLOBALS['phpgw']->template->set_var('lang_addr_action',lang('Import CSV-File into Addressbook'));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 	$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -125,18 +130,18 @@
 		return  $id_str;
 	}
 
-	switch($action)
+	switch($_POST['action'])
 	{
 		case '':	// Start, ask Filename
 			$GLOBALS['phpgw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
 			$GLOBALS['phpgw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
-			$GLOBALS['phpgw']->template->set_var('fieldsep',$fieldsep ? $fieldsep : ',');
+			$GLOBALS['phpgw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
 			$GLOBALS['phpgw']->template->set_var('submit',lang('Download'));
 			$GLOBALS['phpgw']->template->set_var('csvfile',$csvfile);
 			$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 			$hiddenvars .= '<input type="hidden" name="action" value="download">'."\n";
 
-			$GLOBALS['phpgw']->template->parse('rows','filename');
+			$GLOBALS['phpgw']->template->parse('filenamehandle','filename');
 			break;
 
 		case 'download':
@@ -151,9 +156,9 @@
 			$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
 			$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
 			$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-			$GLOBALS['phpgw']->template->parse('rows','fheader');
+			$GLOBALS['phpgw']->template->parse('fheaderhandle','fheader');
 			$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n"
-				. '<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
+				. '<input type="hidden" name="fieldsep" value="'.$_POST['fieldsep']."\">\n";
 
 			$addr_names = $GLOBALS['phpgw']->contacts->stock_contact_fields + array(
 				'cat_id' => 'Categories: @cat_id(Cat1,Cat2)',
@@ -161,8 +166,7 @@
 				'owner'  => 'Owner: defaults to user',
 				'address2' => 'address line 2',
 				'address3' => 'address line 3',
-			 	'ophone'   => 'Other Phone',
-				'ab_id'    => 'Address Id: @addr_id(n_family,n_given,org_name)'
+			 	'ophone'   => 'Other Phone'
 			);
 			$config = CreateObject('phpgwapi.config','addressbook');
 			$config->read_repository();
@@ -172,7 +176,7 @@
 			}
 			unset($config);
 
-			while(list($field,$name) = each($addr_names))
+			foreach($addr_names as $field => $name)
 			{
 				if($dn = display_name($field))
 				{
@@ -180,23 +184,22 @@
 				}
 			}
 			$addr_name_options = "<option value=\"\">none\n";
-			reset($addr_names);
-			while(list($field,$name) = each($addr_names))
+			foreach($addr_names as $field => $name)
 			{
 				$addr_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
 			}
-			$csv_fields = fgetcsv($fp,8000,$fieldsep);
+			$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 			$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 			$csv_fields[] = 'no CSV 2';
 			$csv_fields[] = 'no CSV 3';
-			while(list($csv_idx,$csv_field) = each($csv_fields))
+			foreach($csv_fields as $csv_idx => $csv_field)
 			{
 				$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
 				$GLOBALS['phpgw']->template->set_var('csv_idx',$csv_idx);
 				if($def = $defaults[$csv_field])
 				{
-					list($addr,$trans) = explode($PSep,$def,2);
-					$GLOBALS['phpgw']->template->set_var('trans',$trans);
+					list($addr,$_POST['trans']) = explode($PSep,$def,2);
+					$GLOBALS['phpgw']->template->set_var('trans',$_POST['trans']);
 					$GLOBALS['phpgw']->template->set_var('addr_fields',str_replace('="'.$addr.'">','="'.$addr.'" selected>',$addr_name_options));
 				}
 				else
@@ -204,19 +207,19 @@
 					$GLOBALS['phpgw']->template->set_var('trans','');
 					$GLOBALS['phpgw']->template->set_var('addr_fields',$addr_name_options);
 				}
-				$GLOBALS['phpgw']->template->parse('rows','fields',True); 
+				$GLOBALS['phpgw']->template->parse('fieldshandle','fields',True); 
 			}
 			$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
-			$GLOBALS['phpgw']->template->set_var('start',$start);
+			$GLOBALS['phpgw']->template->set_var('start',$_POST['start']);
 			$GLOBALS['phpgw']->template->set_var('lang_max',lang('Number of records to read (<=200)'));
 			$GLOBALS['phpgw']->template->set_var('max',200);
-			$GLOBALS['phpgw']->template->parse('rows','ffooter',True); 
+			$GLOBALS['phpgw']->template->parse('ffooterhandle','ffooter'); 
 			fclose($fp);
 			$old = $csvfile; $csvfile = $GLOBALS['phpgw_info']['server']['temp_dir'].'/addrbook_import_'.basename($csvfile);
 			rename($old,$csvfile); 
 			$hiddenvars .= '<input type="hidden" name="csvfile" value="'.$csvfile.'">';
 			$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
-			$help_on_trans = "<a name='help'><b>How to use Translation's</b><p>".
+			$help_on_trans = "<a name=\"help\"></a><b>How to use Translation's</b><p>".
 				"Translations enable you to change / adapt the content of each CSV field for your needs. <br>".
 				"General syntax is: <b>pattern1 ${ASep} replacement1 ${PSep} ... ${PSep} patternN ${ASep} replacementN</b><br>".
 				"If the pattern-part of a pair is ommited it will match everything ('^.*$'), which is only ".
@@ -251,21 +254,22 @@
 			$GLOBALS['phpgw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 			break;
 		case 'import':
+			@set_time_limit(0);
 			$fp=fopen($csvfile,'rb');
-			$csv_fields = fgetcsv($fp,8000,$fieldsep);
+			$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
 			$csv_fields[] = 'no CSV 1'; // eg. for static assignments
 			$csv_fields[] = 'no CSV 2';
 			$csv_fields[] = 'no CSV 3';
 
-			$addr_fields = array_diff($addr_fields,array(''));	// throw away empty / not assigned entrys
+			$addr_fields = array_diff($_POST['addr_fields'],array(''));	// throw away empty / not assigned entrys
 
 			$defaults = array();
-			while(list($csv_idx,$addr) = each($addr_fields))
-			{	// convert $trans[$csv_idx] into array of pattern => value
+			foreach($addr_fields as $csv_idx => $addr)
+			{	// convert $_POST['trans'][$csv_idx] into array of pattern => value
 				$defaults[$csv_fields[$csv_idx]] = $addr;
-				if($trans[$csv_idx])
+				if($_POST['trans'][$csv_idx])
 				{
-					$defaults[$csv_fields[$csv_idx]] .= $PSep.$trans[$csv_idx];
+					$defaults[$csv_fields[$csv_idx]] .= $PSep.$_POST['trans'][$csv_idx];
 				}
 			}
 
@@ -275,15 +279,14 @@
 
 			$log = "<table border=1>\n\t<tr><td>#</td>\n";
 
-			reset($addr_fields);
-			while(list($csv_idx,$addr) = each($addr_fields))
-			{	// convert $trans[$csv_idx] into array of pattern => value
-				// if (!$debug) echo "<p>$csv_idx: ".$csv_fields[$csv_idx].": $addr".($trans[$csv_idx] ? ': '.$trans[$csv_idx] : '')."</p>";
-				$pat_reps = explode($PSep,stripslashes($trans[$csv_idx]));
+			foreach($addr_fields as $csv_idx => $addr)
+			{	// convert $_POST['trans'][$csv_idx] into array of pattern => value
+				// if (!$_POST['debug']) echo "<p>$csv_idx: ".$csv_fields[$csv_idx].": $addr".($_POST['trans'][$csv_idx] ? ': '.$_POST['trans'][$csv_idx] : '')."</p>";
+				$pat_reps = explode($PSep,stripslashes($_POST['trans'][$csv_idx]));
 				$replaces = ''; $values = '';
 				if($pat_reps[0] != '')
 				{
-					while(list($k,$pat_rep) = each($pat_reps))
+					foreach($pat_reps as $k => $pat_rep)
 					{
 						list($pattern,$replace) = explode($ASep,$pat_rep,2);
 						if($replace == '')
@@ -293,11 +296,11 @@
 						$values[$pattern] = $replace;	// replace two with only one, added by the form
 						$replaces .= ($replaces != '' ? $PSep : '') . $pattern . $ASep . $replace;
 					}
-					$trans[$csv_idx] = $values;
+					$_POST['trans'][$csv_idx] = $values;
 				}
 				else
 				{
-					unset( $trans[$csv_idx] );
+					unset( $_POST['trans'][$csv_idx] );
 				}
 				$log .= "\t\t<td><b>$addr</b></td>\n";
 			}
@@ -307,24 +310,22 @@
 
 				$auto_fn = array('n_prefix','n_given','n_middle','n_family','n_suffix');
 			}
-			if($start < 1)
-			{
-				$start = 1;
-			}
-			for($i = 1; $i < $start && fgetcsv($fp,8000,$fieldsep); ++$i); 	// overread lines before our start-record
+			$start = $_POST['start'] < 1 ? 1 : $_POST['start'];
 
-			for($anz = 0; $anz < $max && ($fields = fgetcsv($fp,8000,$fieldsep)); ++$anz)
+			for($i = 1; $i < $start && fgetcsv($fp,8000,$_POST['fieldsep']); ++$i); 	// overread lines before our start-record
+
+			for($anz = 0; $anz < $_POST['max'] && ($fields = fgetcsv($fp,8000,$_POST['fieldsep'])); ++$anz)
 			{
 				$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
 				reset($addr_fields); $values = array();
 				while(list($csv_idx,$addr) = each($addr_fields))
 				{
-					//echo "<p>$csv: $addr".($trans[$csv] ? ': '.$trans[$csv] : '')."</p>";
+					//echo "<p>$csv: $addr".($_POST['trans'][$csv] ? ': '.$_POST['trans'][$csv] : '')."</p>";
 					$val = $fields[$csv_idx];
-					if(isset($trans[$csv_idx]))
+					if(isset($_POST['trans'][$csv_idx]))
 					{
-						$trans_csv = $trans[$csv_idx];
+						$trans_csv = $_POST['trans'][$csv_idx];
 						while(list($pattern,$replace) = each($trans_csv))
 						{
 							if(ereg((string) $pattern,$val))
@@ -342,15 +343,22 @@
 								}
 								if($val[0] == '@')
 								{
-									// removing the $ to close security hole of showing vars, which contain eg. passwords
-									$val = 'return '.substr(str_replace('$','',$val),1).';';
-									// echo "<p>eval('$val')=";
-									$val = eval($val);
-									// echo "'$val'</p>";
+									if (!$GLOBALS['phpgw_info']['user']['apps']['admin'])
+									{
+										echo lang('@-eval() is only availible to admins!!!');
+									}
+									else
+									{
+										// removing the $ to close security hole of showing vars, which contain eg. passwords
+										$val = 'return '.substr(str_replace('$','',$val),1).';';
+										// echo "<p>eval('$val')=";
+										$val = eval($val);
+										// echo "'$val'</p>";
+									}
 								}
 								if($pattern[0] != '@' || $val)
 								{
-									break;
+									break; 
 								}
 							}
 						}
@@ -370,32 +378,24 @@
 					}
 					$log .= "\t\t<td>".$values['fn']."</td>\n";
 				}
-				if(!$debug)
+				if(!$_POST['debug'])
 				{
-					if (!$values['ab_id'])
-					{
-						$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
-							$values,$values['access'],$values['cat_id']);
-					}
-					else
-					{
-						$GLOBALS['phpgw']->contacts->update( $values['ab_id'],
-							$values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
-							$values,$values['access'],$values['cat_id']);
-					}
+					$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
+						$values,$values['access'],$values['cat_id']);
 					// echo "<p>adding: ".dump_array($values)."</p>\n";
 				}
 			}
 			$log .= "\t</tr>\n</table>\n";
 
-			$GLOBALS['phpgw']->template->set_var('anz_imported',$debug ? lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
+			$GLOBALS['phpgw']->template->set_var('anz_imported',$_POST['debug'] ? lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
 				$anz,'<a href="javascript:history.back()">','</a>') :
 				lang('%1 records imported',$anz));
 			$GLOBALS['phpgw']->template->set_var('log',$log);
-			$GLOBALS['phpgw']->template->parse('rows','imported');
+			$GLOBALS['phpgw']->template->parse('importedhandle','imported');
 			break;
 	}
 
 	$GLOBALS['phpgw']->template->set_var('hiddenvars',$hiddenvars);
-	$GLOBALS['phpgw']->template->fp('phpgw_body','import');
+	$GLOBALS['phpgw']->template->pfp('out','import',True);
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

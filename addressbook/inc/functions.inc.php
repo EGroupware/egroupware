@@ -43,8 +43,6 @@
 	/* Return a select form element with the categories option dialog in it */
 	function cat_option($cat_id='',$notall=False,$java=True,$multiple=False)
 	{
-		global $phpgw;
-
 		if ($java)
 		{
 			$jselect = ' onChange="this.form.submit();"';
@@ -62,7 +60,7 @@
 		}
 
 		/* Get global and app-specific category listings */
-		$cats_link .= $phpgw->categories->formatted_list('select','all',$cat_id,True);
+		$cats_link .= $GLOBALS['phpgw']->categories->formated_list('select','all',$cat_id,True);
 		$cats_link .= '</select>'."\n";
 		return $cats_link;
 	}
@@ -134,12 +132,10 @@
 
 	function read_custom_fields()
 	{
-		global $phpgw_info;
-
 		$i = 0; $j = 0;
 		$fields = array();
-		@reset($phpgw_info['user']['preferences']['addressbook']);
-		while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
+		@reset($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
+		while (list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
 		{
 			if ( substr($col,0,6) == 'extra_' )
 			{
@@ -166,17 +162,15 @@
 
 	function save_custom_field($old='',$new='')
 	{
-		global $phpgw,$phpgw_info;
-	
-		$phpgw->preferences->read_repository($phpgw_info['user']['account_id']);
+		$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
 		if ($old)
 		{
-			$phpgw->preferences->delete("addressbook","extra_".$old);
+			$GLOBALS['phpgw']->preferences->delete("addressbook","extra_".$old);
 		}
 		if($new)
 		{
-			$phpgw->preferences->add("addressbook","extra_".$new);
+			$GLOBALS['phpgw']->preferences->add("addressbook","extra_".$new);
 		}
-		$phpgw->preferences->save_repository(1);
+		$GLOBALS['phpgw']->preferences->save_repository(1);
 	}
 ?>

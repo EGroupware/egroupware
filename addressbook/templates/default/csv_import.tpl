@@ -1,3 +1,9 @@
+
+<br><center>
+
+  <FORM {enctype} action="{action_url}" method="post">
+      <TABLE>
+
 <!-- BEGIN filename -->
      <TR>
        <TD>{lang_csvfile}</td>
@@ -36,7 +42,7 @@
      {lang_max} <INPUT name="max" type="text" size="3" value="{max}"><td>
    </tr>
    <tr>
-    <td><INPUT name="debug" type="checkbox" value="1" checked> {lang_debug}</td>
+    <td colspan="3"><INPUT name="debug" type="checkbox" value="1" checked> {lang_debug}</td>
    </TR>
    <tr><td colspan=3>&nbsp;<p>
     {help_on_trans}
@@ -52,17 +58,7 @@
    </TR>
 <!-- END imported -->
 
-<!-- BEGIN import -->
-<p class=action>{lang_addr_action}<br>
-<hr noshade width="98%" align="center" size="1">
-<center>
-
-	<FORM {enctype} action="{action_url}" method="post">
-      <TABLE>
-			{rows}
-		</TABLE>
-		{hiddenvars}
-	</form>
+</TABLE>
+{hiddenvars}</form>
 
 </CENTER>
-<!-- END import -->

@@ -27,4 +27,6 @@ The instructions are as follows:
     echo "\n<A HREF=\"".$phpgw->link("/admin/navbar-sel.php","filename=".$phpgw_info["server"]["server_root"]."/".$key."/images/navbar.gif")."\">";
     echo $phpgw_info["apps"][$key]["title"]."</A><BR>";
   }
+
+  $phpgw->common->phpgw_footer();
 ?>

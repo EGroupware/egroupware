@@ -23,18 +23,18 @@
 
 	include('./header.inc.php');
 
-	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
-	$GLOBALS['kp3']       = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
+	$GLOBALS['sessionid'] = get_var('sessionid',array('GET','COOKIE'));
+	$GLOBALS['kp3']       = get_var('kp3',array('GET','COOKIE'));
 
 	$verified = $GLOBALS['phpgw']->session->verify();
-	if($verified)
+	if ($verified)
 	{
-		if(file_exists($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
+		if (file_exists($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
 		{
 			$dh = opendir($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
-			while($file = readdir($dh))
+			while ($file = readdir($dh))
 			{
-				if($file != '.' && $file != '..')
+				if ($file != '.' && $file != '..')
 				{
 					unlink($GLOBALS['phpgw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid'] . SEP . $file);
 				}
@@ -55,13 +55,13 @@
 			));
 		}
 	}
-
-	if($GLOBALS['phpgw_info']['server']['usecookies'])
+	$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
+	$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
+	$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
+	if($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
 	{
-		$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
-		$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
-		$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
+		$GLOBALS['phpgw']->session->phpgw_setcookie(PHPGW_PHPSESSID);
 	}
 
-	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?code=1',True);
+	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=1');
 ?>

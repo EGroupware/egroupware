@@ -8,9 +8,10 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
+
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
+	$phpgw_info = array();
 	if (!file_exists('header.inc.php'))
 	{
 		Header('Location: setup/index.php');
@@ -44,20 +45,17 @@
 		$invalid_data = True;
 	}
 
-	// FIX ME! Don't leave this, we need to create a common place where applications can access
-	// things like the spell check class that the API has. (jengo)
 	if ($app == 'phpgwapi')
 	{
 		$app = 'home';
 		$api_requested = True;
 	}
 
-	$GLOBALS['phpgw_info']['flags'] = array
-	(
-		//'noheader'   => True,
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'noheader'   => True,
+		'nonavbar'   => True,
 		'currentapp' => $app
 	);
-
 	include('./header.inc.php');
 
 	if ($app == 'home' && ! $api_requested)
@@ -76,12 +74,6 @@
 	{
 //		eval("\$GLOBALS['obj']->$method();");
 		execmethod($_GET['menuaction']);
-
-		if ($GLOBALS['phpgw_info']['server']['support_old_style_apps'])
-		{
-			$GLOBALS['phpgw']->common->stop_xslt_capture();	// send captured output to the xslttpl
-		}
-
 		unset($app);
 		unset($obj);
 		unset($class);
@@ -117,5 +109,10 @@
 		$_obj = CreateObject('home.home');
 		$_obj->get_list();
 		*/
+	}
+
+	if (! $GLOBALS['phpgw_info']['nofooter'])
+	{
+		$GLOBALS['phpgw']->common->phpgw_footer();
 	}
 ?>

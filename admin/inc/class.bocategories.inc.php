@@ -28,9 +28,9 @@
 
 		function bocategories()
 		{
-			if ($GLOBALS['appname'])
+			if ($_GET['appname'])
 			{
-				$this->cats = CreateObject('phpgwapi.categories',-1,$GLOBALS['appname']);
+				$this->cats = CreateObject('phpgwapi.categories',-1,$_GET['appname']);
 			}
 			else
 			{
@@ -39,24 +39,19 @@
 
 			$this->read_sessiondata();
 
-			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
-
-			$start  = intval(get_var('start',array('POST','GET')));
+			/* _debug_array($_POST); */
+			/* Might change this to '' at the end---> */
+			$start  = get_var('start',array('POST','GET'));
 			$query  = get_var('query',array('POST','GET'));
-			$sort   = get_var('sort',array('POST','GET'));
+			$sort   = get_var('sort', array('POST','GET'));
 			$order  = get_var('order',array('POST','GET'));
-			$cat_id = intval(get_var('cat_id', array('POST','GET')));
+			$cat_id = get_var('cat_id',array('POST','GET'));
 
-			if(!empty($start) || $start == 0)
+			if(!empty($start) || $start == '0' || $start == 0)
 			{
 				if($this->debug) { echo '<br>overriding start: "' . $this->start . '" now "' . $start . '"'; }
 				$this->start = $start;
 			}
-			else
-			{
-				$this->start = 0;
-			}
-
 			if((empty($query) && !empty($this->query)) || !empty($query))
 			{
 				if($this->debug) { echo '<br>setting query to: "' . $query . '"'; }
@@ -67,17 +62,14 @@
 			{
 				$this->cat_id = $cat_id;
 			}
-
-			if($cat_id == 0)
+			if($cat_id == '0' || $cat_id == 0 || $cat_id == '')
 			{
 				unset($this->cat_id);
 			}
-
 			if(isset($sort) && !empty($sort))
 			{
 				$this->sort = $sort;
 			}
-
 			if(isset($order) && !empty($order))
 			{
 				$this->order = $order;
@@ -105,23 +97,15 @@
 			}
 		}
 
-		function get_list($global_cats=False)
+		function get_list()
 		{
 			if($this->debug) { echo '<br>querying: "' . $this->query . '"'; }
-
-			if ($global_cats)
-			{
-				return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
-			}
-			else
-			{
-				return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order);
-			}
+			return $this->cats->return_sorted_array($this->start,True,$this->query,$this->sort,$this->order,True);
 		}
 
 		function save_cat($values)
 		{
-			if ($values['cat_id'] && $values['cat_id'] != 0)
+			if ($values['id'] && $values['id'] != 0)
 			{
 				return $this->cats->edit($values);
 			}
@@ -133,20 +117,19 @@
 
 		function exists($data)
 		{
-			return $this->cats->exists($data);
+			$data['type']   = $data['type'] ? $data['type'] : '';
+			$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
+			return $this->cats->exists($data['type'],$data['cat_name'],$data['cat_id']);
 		}
 
 		function formatted_list($data)
 		{
-			return $this->cats->formatted_list($data);
+			return $this->cats->formated_list($data['select'],$data['all'],$data['cat_parent'],True);
 		}
 
-		function delete($data)
+		function delete($cat_id,$subs=False)
 		{
-			if (is_array($data))
-			{
-				$this->cats->delete($data);
-			}
+			return $this->cats->delete($cat_id,$subs);
 		}
 
 		function check_values($values)
@@ -168,7 +151,7 @@
 					(
 						'type'     => 'appandmains',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['cat_id']
+						'cat_id'   => $values['id']
 					));
 				}
 				else
@@ -177,7 +160,7 @@
 					(
 						'type'     => 'appandsubs',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['cat_id']
+						'cat_id'   => $values['id']
 					));
 				}
 

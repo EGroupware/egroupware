@@ -20,6 +20,11 @@
 
 		function uiaccess_history()
 		{
+			if ($GLOBALS['phpgw']->acl->check('access_log_access',1,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php');
+			}
+			
 			$this->bo         = createobject('admin.boaccess_history');
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
 			$this->template   = $GLOBALS['phpgw']->template;
@@ -35,13 +40,14 @@
 
 		function list_history()
 		{
-			$account_id = ($GLOBALS['HTTP_GET_VARS']['account_id']?$GLOBALS['HTTP_GET_VARS']['account_id']:$GLOBALS['HTTP_POST_VARS']['account_id']);
-			$start = ($GLOBALS['HTTP_POST_VARS']['start']?$GLOBALS['HTTP_POST_VARS']['start']:0);
-			$sort = ($GLOBALS['HTTP_POST_VARS']['sort']?$GLOBALS['HTTP_POST_VARS']['sort']:0);
-			$order = ($GLOBALS['HTTP_POST_VARS']['order']?$GLOBALS['HTTP_POST_VARS']['order']:0);
+			$account_id = get_var('account_id',array('GET','POST'));
+			$start = get_var('start',array('POST'),0);
+			$sort = get_var('sort',array('POST'),0);
+			$order = get_var('order',array('POST'),0);
 			
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View access log');
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 
 			$total_records = $this->bo->total($account_id);
 

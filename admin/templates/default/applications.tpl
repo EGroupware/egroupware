@@ -1,10 +1,8 @@
 <!-- BEGIN list -->
-<p><b>{lang_installed}</b><hr><p>
-
-<p>
+<br>
 <div align="center">
  <table border="0" width="45%">
-  <tr class="bg_color">
+  <tr bgcolor="{bg_color}">
 {left}
     <td align="center">{lang_showing}</td>
 {right}
@@ -12,7 +10,7 @@
  </table>
  
  <table border="0" width="45%">
-  <tr class="th">
+  <tr bgcolor="{th_bg}">
    <td> {sort_title} </td>
    <td>{lang_edit}</td>
    <td>{lang_delete}</td>
@@ -22,10 +20,14 @@
   {rows}
 
  </table>
+ 
+ {addbutton}
+<!-- END list -->
 
+<!-- BEGIN add -->
  <table border="0" width="45%">
   <tr>
-   <td align="left">
+   <td align="left" nobreak>
     <form method="POST" action="{new_action}">
      <input type="submit" value="{lang_add}"> 
     </form>
@@ -36,13 +38,13 @@
   </tr>
  </table>
 </div>
-<!-- END list -->
+<!-- END add -->
 
 <!-- BEGIN row -->
-  <tr class="{tr_color}">
+  <tr bgcolor="{tr_color}">
    <td>{name}</td>
    <td width="5%">{edit}</td>
    <td width="5%">{delete}</td>
-   <td width="5%">{status}</td>
+   <td width="5%" align="center">{status}</td>
   </tr>
 <!-- END row -->

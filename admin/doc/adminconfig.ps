@@ -1,15 +1,15 @@
 %!PS-Adobe-2.0
 %%Creator: dvips(k) 5.86 Copyright 1999 Radical Eye Software
 %%Title: adminconfig.dvi
-%%Pages: 1
+%%Pages: 6
 %%PageOrder: Ascend
 %%BoundingBox: 0 0 612 792
-%%DocumentFonts: Times-Roman
+%%DocumentFonts: Helvetica-Bold Times-Roman Courier Times-Italic
 %%EndComments
 %DVIPSWebPage: (www.radicaleye.com)
 %DVIPSCommandLine: dvips -t letter -o adminconfig.ps adminconfig.dvi
 %DVIPSParameters: dpi=600, compressed
-%DVIPSSource:  TeX output 2002.03.19:1838
+%DVIPSSource:  TeX output 2001.12.22:1805
 %%BeginProcSet: texc.pro
 %!
 /TeXDict 300 dict def TeXDict begin/N{def}def/B{bind def}N/S{exch}N/X{S
@@ -314,13 +314,28 @@ setcmykcolor}DC/White{0 0 0 0 setcmykcolor}DC end
 
 %%EndProcSet
 TeXDict begin 40258431 52099146 1000 600 600 (adminconfig.dvi)
-@start /Fa 107[37 22[40 1[40 1[42 42 60 42 42 23 32 28
-42 42 42 42 65 23 42 1[23 42 42 28 37 42 37 42 37 1[42
-1[28 23 28 1[60 60 78 1[60 51 46 55 1[46 60 60 74 51
-2[28 60 60 46 51 60 55 55 60 76 1[47 47 47 23 23 7[42
-42 42 23 21 28 21 47 42 28 28 28 65 1[42 1[34 28 29[46
-46 2[{TeXBase1Encoding ReEncodeFont}76 83.022 /Times-Roman
-rf end
+@start /Fa 138[42 2[32 1[42 42 42 60 3[23 42 42 1[37
+42 37 1[42 9[69 15[60 16[42 42 42 42 42 42 1[23 21 43[42
+2[{TeXBase1Encoding ReEncodeFont}24 83.022 /Times-Italic
+rf /Fb 107[45 22[45 1[45 1[45 45 45 45 45 45 45 45 1[45
+45 45 45 45 45 1[45 45 45 45 45 45 45 45 45 1[45 1[45
+45 45 5[45 45 45 2[45 45 45 1[45 2[45 1[45 45 45 45 45
+45 45 2[45 45 45 45 45 7[45 1[45 45 45 45 45 1[45 45
+45 45 45 1[45 1[45 45 33[{TeXBase1Encoding ReEncodeFont}64
+74.7198 /Courier rf /Fc 137[66 73 40 1[47 73 73 73 73
+1[33 66 1[33 73 73 1[66 73 66 1[66 1[66 43[66 66 66 2[33
+4[40 40 37[73 2[{TeXBase1Encoding ReEncodeFont}25 119.552
+/Helvetica-Bold rf /Fd 140[80 6[40 2[40 3[80 30[88 20[80
+2[40 46[{TeXBase1Encoding ReEncodeFont}7 143.462 /Helvetica-Bold
+rf /Fe 107[37 22[40 1[40 1[42 42 60 42 42 23 32 28 1[42
+42 42 65 23 42 1[23 42 42 28 37 42 37 42 37 1[42 1[28
+1[28 2[60 78 2[51 46 55 1[46 60 60 74 51 2[28 60 60 46
+1[60 55 55 60 76 1[47 1[47 1[23 5[42 42 42 42 42 23 21
+28 21 2[28 28 28 2[42 32[46 46 2[{TeXBase1Encoding ReEncodeFont}66
+83.022 /Times-Roman rf /Ff 138[126 2[80 1[126 126 126
+184 3[57 126 126 1[115 126 115 1[115 9[195 15[161 23[57
+57 43[126 2[{TeXBase1Encoding ReEncodeFont}18 206.584
+/Helvetica-Bold rf end
 %%EndProlog
 %%BeginSetup
 %%Feature: *Resolution 600dpi
@@ -331,180 +346,188 @@ letter
 
 %%EndSetup
 %%Page: 1 1
-1 0 bop Black Black -434 -417 a Fa(phpGroupW)-7 b(are)39
-b(admin/con\002g.php)81 b(A)42 b(brief)f(introduction)f(to)i(writing)f
-(hooks)g(and)g(templates)h(for)f(an)o(y)g(application)f(to)i(use)h
-(this)f(admin)f(interf)o(ace,)-600 -318 y(by)93 b(Miles)47
-b(Lott)g(<milosch@phpgroupw)o(are.or)n(g)o(>)41 b(Dec)47
-b(22,)f(2001.)91 b(Files)k(con\002g.tpl)45 b(\(required\))91
-b(In)46 b(your)f(application/templates/def)o(ault)e(directory)-5
-b(,)-600 -218 y(create)38 b(a)g(ne)n(w)g(template)g(\002le)h(named)e
-('con\002g.tpl'.)e(This)k(will)g(be)f(included)e(by)i(con\002g.php)d
-(and)j(used)g(to)g(dra)o(w)g(the)g(page.)f(This)h(template)g(should)f
-(include)-600 -118 y(a)45 b(POST)g(method)f(form.)f(The)i(follo)n(wing)
-e(template)h(tags)h(may)f(be)h(used:)89 b({action_url})43
-b(-)i(A)g(phpgw->link)d(to)j(con\002g.php)d(will)k(be)e(inserted.)89
-b({title})-600 -19 y(-)50 b(This)g(will)g(be)f(parsed)g(to)h(display)f
-('Site)h(Con\002guration'.)97 b({th_bg},{th_te)o(xt},{ro)n(w_)o(on})o
-(,{ro)m(w_)o(of)n(f)o(})44 b(-)50 b(Replaced)f(with)h(the)f(current)g
-(theme)g(colors.)-600 81 y(and)c(the)g(follo)n(wing)e(special)i(types:)
-91 b({lang_XXX})44 b(-)h(Filled)h(with)f(lang\('XXX'\).)89
-b({v)n(alue_XXX})43 b(-)i(Filled)h(with)f(the)g(current)f(v)n(alue)h
-(of)f(con\002g)h(item)-600 180 y('XXX'.)95 b({selected_XXX})47
-b(-)h(set)h(to)e(\224,)h(or)g(')g(selected')f(if)h(an)g(option)e(v)n
-(alue)h(is)i(current.)94 b({hook_XXX})46 b(-)i(Calls)h(a)f(function)e
-(named)g(XXX)i(\(will)-600 280 y(be)54 b(discussed)g(later\).)109
-b({check)o(ed_XXX+YYY})51 b(-)k(Handles)f(checkbox/radio)c(v)n(alues)k
-(set)h(to)g(YYY)f(or)g(\224)h(\(will)f(be)h(discussed)f(later\).)108
-b(F)o(ollo)n(wing)-600 380 y(is)70 b(an)f(e)o(xample)e(from)h(the)h
-(addressbook)e(application:)g(<form)h(method="POST")f
-(action="{action_url}">)e(<table)k(border="0")d(align="center">)-600
-479 y(<tr)96 b(bgcolor="{th_bg}">)c(<td)k(colspan="2"><font)d
-(color="{th_te)o(xt}">&nbsp;<b>)o({title}</b>)o(</fon)o(t></td)o(>)e
-(</tr>)96 b(<tr)g(bgcolor="{th_err}">)-600 579 y(<td)62
-b(colspan="2">&nbsp;<b>{erro)o(r}</b)o(></fo)o(nt>)o(</td>)56
-b(</tr>)61 b(<!--)g(END)h(header)e(-->)i(<!--)f(BEGIN)g(body)f(-->)i
-(<tr)f(bgcolor="{ro)n(w_on}">)c(<td)-600 679 y(colspan="2">&nbsp;</td>)
-28 b(</tr>)33 b(<tr)g(bgcolor="{ro)n(w_of)n(f}">)27 b(<td)32
-b(colspan="2">&nbsp;<b>{lang_Ad)o(dre)o(ssbook)o(}/{lan)o(g_)o
-(Contact_)o(Setting)o(s}</b></f)o(on)o(t>)-600 778 y(</td>)121
-b(</tr>)g(<tr)h(bgcolor="{ro)n(w_on}">)116 b
-(<td>{lang_Contact_application}:</td)o(>)g(<td><input)j(name="ne)n
-(wsettings[contact_application])o(")-600 878 y(v)n(alue="{v)n
-(alue_contact_applicatio)o(n}")o(></td>)25 b(</tr>)31
-b(...)62 b(Note)30 b(the)h(\002eldname,)e(ne)n
-(wsettings[contact_application].)d(This)31 b(array)f(name)g(must)h(be)f
-(used)h(for)f(the)-600 977 y(form)e(v)n(alues.)h(Ne)o(xt,)g(note)f(the)
-i(v)n(alue)e(setting)h(for)g(this)h(form)e(element,)h({v)n
-(alue_contact_application}.)23 b(This)30 b(indicates)f(that)g(we)h(w)o
-(ant)f(the)g(current)f(v)n(alue)h(of)g(the)-600 1077
-y(con\002g)21 b(setting,)h('contact_application',)c(to)k(be)g(set)h
-(and)e(displayed)g(on)h(the)g(form.)f(Lastly)-5 b(,)21
-b(look)g(at)i(the)f(template)g(element,)f({lang_Contact_application}.)c
-(Here,)22 b(the)-600 1177 y(v)n(alue)k(from)g(the)h(lang)f(db)g(table)h
-(will)h(be)e(inserted)h(if)g(a)n(v)n(ailable.)53 b(Let')-5
-b(s)28 b(tak)o(e)e(a)i(look)e(at)h(part)f(of)h(the)g(preferences/def)o
-(ault/con\002g.tpl:)49 b(<tr)27 b(bgcolor="{ro)n(w_on}">)-600
-1276 y(<td>{lang_Country_Selection})35 b(\({lang_T)-6
-b(e)o(xt_Entry}/{lang_)o(SelectBox}\))o(:</td>)35 b(<td>)40
-b(<select)h(name="ne)n(wsettings[countrylist]">)36 b
-({hook_country_set})-600 1376 y(</select>)f(</td>)f(</tr>)70
-b(Here,)34 b(we)h(are)g(adding)e(a)i(ne)n(w)f(element,)g
-({hook_country_set}.)29 b(This)35 b(brings)f(up)g(the)g(ne)o(xt)g
-(\002le)i(we)e(will)i(need)e(to)g(parse)h(this)g(v)n(alue,)-600
-1476 y(hook_con\002g.inc.php.)56 b(But)62 b(\002rst,)g(let')-5
-b(s)63 b(look)d(at)j(the)e(last)i(template)e(type,)g('check)o(ed':)f
-(<input)g(name="ne)n(wsettings[enable_remote_ad)o(dr)o(essboo)o(k])o(")
--600 1575 y(type="radio")36 b(v)n(alue=""{check)o(ed_enable_r)o(emo)o
-(te_ad)o(dr)o(essboo)o(k+}>)o({lang)o(_n)o(o})c(<input)38
-b(name="ne)n(wsettings[enable_remo)o(te_ad)o(dr)o(essboo)o(k]")32
-b(type="radio")-600 1675 y(v)n(alue="T)m(rue"{check)o(ed_enab)o(le_re)o
-(mo)o(te_ad)o(dr)o(essboo)o(k+T)l(rue})o(>{lang)o(_y)o(es})g(W)-7
-b(e)20 b(w)o(ant)f(to)f(check)g(the)h(v)n(alue)e(of)i(the)f(setting)h
-('enable_remote_addressboo)o(k')o(.)13 b(The)-600 1774
-y(v)n(alue)18 b(could)h(be)g(\224)g(or)g('T)m(rue'.)f(W)-7
-b(e)20 b(use)g(the)f('+')g(character)f(to)h(isolate)h(the)f(con\002g)f
-(name)h(from)f(the)h(check)f(v)n(alue.)h(If)g(the)g(v)n(alue)f(is)i
-(empty)f(or)g(unset)g(in)g(the)g(phpgw_con\002g)-600
-1874 y(table,)38 b({check)o(ed_enable_remote_ad)o(dr)o(essboo)o(k+})32
-b(is)40 b(replaced)d(with)h(')h(check)o(ed'.)d(If)j(the)f(v)n(alue)g
-(is)h('T)m(rue',{check)o(ed_enable_r)o(emo)o(te_ad)o(dr)o(essboo)o(k+T)
-l(rue)o(})-600 1974 y(is)29 b(replaced)d(with)i(')g(check)o(ed'.)e
-(Note)h(that)h(the)g(part)f(after)g(the)h('+')f(character)g(matches)g
-(what)h(is)g(in)g(the)g(v)n(alue=\224XXX\224)e(part)i(in)g(the)f(html)h
-(for)f(this)h(form)f(element.)-600 2073 y(hook_con\002g.inc.php)19
-b(\(optional\))49 b(At)26 b(each)f(in)m(v)n(ocation)e(of)i
-(con\002g.php,)e(a)i(call)h(to)f(the)g(common)f(class)i(function)d
-(hook_single\(\))f(is)27 b(made.)d(It)h(attempts)g(to)h(include)-600
-2173 y(a)31 b(\002le,)g(hook_con\002g.inc.php)24 b(as)31
-b(a)g(set)g(of)f(code)g(for)g(con\002g.php)d(to)k(use.)f(In)g(the)h
-(case)f(of)g(the)h(preferences)d(e)o(xample)h(abo)o(v)o(e,)g(using)g
-(hook_country_set,)d(here)k(is)-600 2273 y(the)39 b(corresponding)d
-(function)i(in)i(preferences/inc/hook_con)o(\002g.in)o(c.ph)o(p:)34
-b(function)j(country_set\($con\002g\))e({)40 b($country)d(=)j(array\()e
-('user_choice')f(=>)j('Users)-600 2372 y(Choice',)30
-b('force_select')e(=>)j('F)o(orce)e(Selectbox')h(\);)g(while)h(\(list)g
-(\($k)o(e)o(y)-5 b(,)29 b($v)n(alue\))g(=)h(each)h(\($country\)\))c({)k
-(if)f(\($con\002g['countrylist'])c(==)31 b($k)o(e)o(y\))e({)i
-($selected)f(=)h(')-600 2472 y(selected';)23 b(})g(else)h({)g
-($selected)e(=)i(\224;)f(})h($descr)e(=)i(lang\($v)n(alue\);)c($out)i
-(.=)i('<option)d(v)n(alue="')h(.)h($k)o(e)o(y)f(.)i('"')e(.)i
-($selected)f(.)g('>')g(.)g($descr)g(.)g('</option>')e(.)i("\\n";)g(})h
-(return)-600 2571 y($out;)31 b(})63 b(Note)31 b(again)g(the)g(template)
-g(v)n(alue)g(we)g(used)g(earlier)m(,)g({hook_country_set}.)26
-b(This)31 b(causes)h(con\002g.php)d(to)i(look)g(for)f(a)i(function)e
-(named)g(country_set\(\).)-600 2671 y(Since)j(we)g(included)e(the)i
-(\002le)h(with)f(this)g(function)e(via)i(the)g(hook_single\(\))c(call,)
-34 b(this)f(function)e(is)j(e)o(x)o(ecuted.)c(It')-5
-b(s)34 b(return)e(is)h(a)h(string,)e(and)g(the)h(function)e(prints)-600
-2771 y(nothing)25 b(itself.)54 b(hook_con\002g_v)n(alidate.in)o(c.p)o
-(hp)20 b(\(optional\))52 b(Once)26 b(the)h(admin)e(clicks)i(the)f
-(submit)g(b)n(utton)g(to)g(post)h(the)f(form,)g(we)g(can)h(optionally)d
-(v)n(alidate)i(their)-600 2870 y(input)j(using)h(one)g(or)g(man)o(y)f
-(dif)n(ferent)f(functions.)h(This)h(is)h(done)e(by)h(\002rst)h(making)e
-(another)f(call)j(to)f(hook_single\(\))d(in)k(the)f(API)g(common)e
-(class.)j(This)g(time,)f(the)-600 2970 y(name)k(con\002g_v)n(alidate)e
-(is)j(used,)f(so)h(common)d(tries)j(to)g(include)e
-('application/inc/hook_con\002g_)o(v)n(alid)o(ate.in)o(c.ph)o(p')o(.)64
-b(If)34 b(this)h(\002le)g(e)o(xists,)g(it)g(sets)h(a)f(v)n(ar)f(to)g
-(tell)-600 3070 y(con\002g.php)c(it)j(w)o(as)g(found.)e(F)o(ollo)n
-(wing)g(then)h(are)h(functions)e(named)g(after)h(each)g(con\002g)g(we)h
-(w)o(ant)f(to)h(v)n(alidate.)f(The)g(follo)n(wing)f(e)o(xample)g(is)i
-(for)f(addressbook:)-600 3169 y($GLOB)m(ALS['phpgw_info'][')-5
-b(serv)n(er')o(][)o('fo)o(un)o(d_)o(v)n(alid)o(ation)o(_h)o(oo)o(k'])35
-b(=)41 b(T)m(rue;)f(/*)h(Check)g(a)g(speci\002c)g(setting.)f(Name)h
-(must)g(match)f(the)h(setting.)g(*/)g(function)-600 3269
-y(ldap_contact_conte)o(xt\($v)n(a)o(lue=\224\))e({)45
-b(if\($v)n(alue)f(==)h($GLOB)m(ALS['phpgw_info'][')-6
-b(serv)o(er)o('][)o(')o(ldap)o(_c)o(on)o(te)o(xt')o(]\))39
-b({)46 b($GLOB)m(ALS['con\002g_error'])40 b(=)45 b('Contact)-600
-3368 y(conte)o(xt)17 b(for)g(ldap)h(must)g(be)g(dif)n(ferent)f(from)g
-(the)h(conte)o(xt)f(used)h(for)f(accounts';)g(})h(elseif\($v)n(alue)f
-(==)h($GLOB)m(ALS['phpgw_info'][')-5 b(serv)n(er')o(][')n(ldap)o(_g)o
-(rou)o(p_)o(con)o(te)o(x)o(t']\))-600 3468 y({)22 b($GLOB)m
-(ALS['con\002g_error'])16 b(=)21 b('Contact)g(conte)o(xt)e(for)i(ldap)f
-(must)i(be)f(dif)n(ferent)e(from)h(the)h(conte)o(xt)f(used)h(for)f
-(groups';)g(})h(else)h({)f($GLOB)m(ALS['con\002g_error'])16
-b(=)-600 3568 y(\224;)24 b(})h(})48 b(Here)24 b(we)g(created)f(a)h
-(function)f(to)h(check)f(the)g(entered)g(v)n(alue)g(for)h(the)f
-(con\002g)g(item,)h(ldap_contact_conte)o(xt.)19 b(W)-7
-b(e)25 b(w)o(ant)f(to)g(mak)o(e)g(sure)f(the)h(admin)f(did)h(not)f(set)
--600 3667 y(this)d(v)n(alue)f(to)g(one)g(which)g(w)o(ould)g(con\003ict)
-g(with)h(another)e(con\002g)g(item,)i(used)f(for)g(accounts)f(or)h
-(groups)f(in)i(phpGroupW)-7 b(are.)36 b(con\002g.php)17
-b(calls)k(this)e(function,)f(sending)-600 3767 y(it)j(the)g(POST)-6
-b(ed)21 b(v)n(alue.)f(con\002g.php)e(continues,)h(adding)g(all)j(other)
-e(con\002g)f(items)j(from)d(the)i(POST)-6 b(ed)21 b(v)n(alues.)41
-b(The)21 b(v)n(ariable)e($GLOB)m(ALS['con\002g_error'])d(is)22
-b(parsed)-600 3867 y(through)e(lang\(\),)h(then)h(appended)e(to)j(the)f
-(local)h(v)n(ariable,)e($error)-5 b(.)21 b(If)h(this)h(has)g(an)o(y)f
-(v)n(alue)f(after)h(the)h(POST)-6 b(ed)22 b(v)n(ariables)g(are)g(check)
-o(ed,)f(the)i(form)e(then)h(has)h(its)g({error})-600
-3966 y(tag)f(\002lled)g(with)f(this)i(result.)e(The)g(form)g(is)h
-(displayed)f(again,)f(with)i(the)g(error)-5 b(.)20 b(If)i($error)e(has)
-i(no)f(v)n(alue,)g(con\002g.php)e(redirects)i(to)g(admin/inde)o(x.php.)
-40 b(Ho)n(we)n(v)o(er)m(,)19 b(there)-600 4066 y(is)i(one)e(more)g
-(function)f(that)i(may)g(be)g(included)e(in)i(hook_con\002g_v)n
-(alidate.inc.)o(ph)o(p:)35 b(/*)20 b(Check)g(all)g(settings)g(to)g(v)n
-(alidate)f(input.)g(Name)h(must)g(be)g('\002nal_v)n(alidation')d(*/)
--600 4165 y(function)36 b(\002nal_v)n(alidation\($v)n(alue=\224\))c({)
-38 b(if\($v)n(alue['contact_repository)o('])32 b(==)38
-b(')o(ldap')e(&&)i(!$v)n(alue[')o(ldap_contact_d)o(n')o(]\))32
-b({)38 b($GLOB)m(ALS['con\002g_error'])32 b(=)-600 4265
-y('Contact)37 b(dn)g(must)h(be)f(set';)h(})g(elseif\($v)n
-(alue['contact_repositor)o(y'])31 b(==)38 b(')o(ldap')f(&&)g(!$v)n
-(alue[')o(ldap_contact_co)o(nte)n(xt'])o(\))32 b({)38
-b($GLOB)m(ALS['con\002g_error'])32 b(=)-600 4365 y('Contact)24
-b(conte)o(xt)f(must)i(be)f(set';)h(})g(else)h({)f($GLOB)m
-(ALS['con\002g_error'])19 b(=)25 b(\224;)g(})g(})50 b(con\002g.php)22
-b(checks)i(for)g(the)g(e)o(xistence)g(of)g(the)h(function)e('\002nal_v)
-n(alidation\(\)'.)-600 4464 y(This)31 b(function)e(can)i(be)g(used)g
-(to)g(check)f(all)i(form)e(v)n(alues)g(at)i(once.)e(It)h(gets)h(sent)f
-(the)g(entire)g($ne)n(wsettings)f(array)g(POST)-6 b(ed)31
-b(from)f(the)h(form.)f(As)h(with)h(the)f(other)-600 4564
-y(functions)19 b(in)h(this)h(\002le,)f(\002nal_v)n(alidation\(\))e
-(should)h(set)i($GLOB)m(ALS['con\002g_error'])15 b(if)20
-b(there)g(is)h(a)g(problem.)p Black Black eop
+1 0 bop Black 0 TeXcolorgray Black Black 505 647 a Ff(phpGr)l(oupW)-8
+b(are)58 b(admin/con\002g.php)695 879 y Fe(A)21 b(brief)e(introduction)
+f(to)i(writing)g(hooks)f(and)h(templates)g(for)f(an)o(y)h(application)e
+(to)j(use)f(this)695 987 y(admin)f(interf)o(ace,)h(by)695
+1136 y(Miles)h(Lott)f(<milosch@phpgroupw)o(are.or)o(g)o(>)15
+b(Dec)20 b(22,)g(2001.)-2 1854 y Fd(1.)39 b(Files)-2
+2182 y Fc(1.1.)34 b(con\002g.tpl)h(\(required\))396 2350
+y Fe(In)20 b(your)f(application/templates/def)o(ault)e(directory)-5
+b(,)18 b(create)i(a)g(ne)n(w)g(template)g(\002le)h(named)e
+('con\002g.tpl'.)f(This)i(will)396 2458 y(be)g(included)f(by)h
+(con\002g.php)d(and)j(used)g(to)g(dra)o(w)g(the)g(page.)f(This)i
+(template)e(should)h(include)f(a)h(POST)h(method)396
+2566 y(form.)e(The)h(follo)n(wing)f(template)g(tags)i(may)e(be)i(used:)
+p Black 463 2798 a(1.)p Black 40 w({action_url})e(-)h(A)h(phpgw->link)c
+(to)j(con\002g.php)e(will)j(be)f(inserted.)p Black 463
+2947 a(2.)p Black 40 w({title})h(-)f(This)h(will)g(be)f(parsed)f(to)i
+(display)e('Site)i(Con\002guration'.)p Black 463 3097
+a(3.)p Black 40 w({th_bg},{th_te)o(xt},{ro)n(w_on)o(},{r)o(o)n(w_)o(of)
+m(f})15 b(-)20 b(Replaced)g(with)g(the)g(current)f(theme)h(colors.)396
+3246 y(and)g(the)g(follo)n(wing)f(special)h(types:)p
+Black 463 3479 a(1.)p Black 40 w({lang_XXX})f(-)i(Filled)f(with)h
+(lang\('XXX'\).)p Black 463 3628 a(2.)p Black 40 w({v)n(alue_XXX})e(-)h
+(Filled)h(with)f(the)g(current)f(v)n(alue)h(of)g(con\002g)f(item)h
+('XXX'.)p Black 463 3778 a(3.)p Black 40 w({selected_XXX})g(-)g(set)h
+(to)f(\224,)h(or)f(')g(selected')g(if)g(an)h(option)d(v)n(alue)i(is)h
+(current.)p Black 463 3927 a(4.)p Black 40 w({hook_XXX})d(-)j(Calls)g
+(a)g(function)d(named)h(XXX)i(\(will)f(be)h(discussed)f(later\).)396
+4077 y(F)o(ollo)n(wing)f(is)i(an)f(e)o(xample)f(from)g(the)h
+(addressbook)e(application:)396 4257 y Fb(<form)44 b(method="POST")f
+(action="{action_url}">)396 4354 y(<table)h(border="0")f
+(align="center">)441 4451 y(<tr)h(bgcolor="{th_bg}">)486
+4548 y(<td)g(colspan="2"><font)e
+(color="{th_text}">&nbsp;<b>{title}</b></f)o(ont><)o(/td>)441
+4645 y(</tr>)i(<tr)g(bgcolor="{th_err}">)486 4742 y(<td)g
+(colspan="2">&nbsp;<b>{error}</b></font></)o(td>)441
+4840 y(</tr>)p Black 3842 5278 a Fa(1)p Black eop
+%%Page: 2 2
+2 1 bop Black 0 TeXcolorgray Black 2778 67 a Fa(phpGr)l(oupW)-8
+b(ar)m(e)19 b(admin/con\002g)o(.php)p Black 396 579 a
+Fb(<!--)44 b(END)h(header)f(-->)396 676 y(<!--)g(BEGIN)g(body)h(-->)441
+773 y(<tr)f(bgcolor="{row_on}">)486 870 y(<td)g
+(colspan="2">&nbsp;</td>)441 967 y(</tr>)441 1065 y(<tr)g
+(bgcolor="{row_off}">)486 1162 y(<td)g
+(colspan="2">&nbsp;<b>{lang_Addressbook}/{)o(lang_C)o(ontact)o(_Setti)o
+(ngs}<)o(/b></f)o(ont>)396 1259 y(</td>)441 1356 y(</tr>)441
+1453 y(<tr)g(bgcolor="{row_on}">)486 1550 y
+(<td>{lang_Contact_application}:</td>)486 1647 y(<td><input)f
+(name="newsettings[contact_application]")38 b
+(value="{value_contact_application}"></td>)441 1745 y(</tr>)396
+1842 y(...)396 2130 y Fe(Note)20 b(the)h(\002eldname,)e(ne)n
+(wsettings[contact_application].)c(This)20 b(array)f(name)h(must)g(be)g
+(used)g(for)g(the)g(form)f(v)n(alues.)396 2238 y(Ne)o(xt,)h(note)g(the)
+g(v)n(alue)f(setting)i(for)e(this)i(form)e(element,)g({v)n
+(alue_contact_application}.)c(This)20 b(indicates)g(that)h(we)396
+2346 y(w)o(ant)g(the)f(current)f(v)n(alue)g(of)h(the)g(con\002g)g
+(setting,)g('contact_application',)c(to)k(be)g(set)h(and)f(displayed)f
+(on)g(the)i(form.)396 2454 y(Lastly)-5 b(,)20 b(look)f(at)i(the)f
+(template)g(element,)f({lang_Contact_application}.)d(Here,)j(the)i(v)n
+(alue)e(from)g(the)i(lang)e(db)h(table)396 2561 y(will)h(be)f(inserted)
+g(if)g(a)n(v)n(ailable.)396 2711 y(Let')-5 b(s)21 b(tak)o(e)f(a)h(look)
+e(at)i(part)f(of)g(the)g(preferences/def)o(ault/con\002g.tpl:)441
+2891 y Fb(<tr)44 b(bgcolor="{row_on}">)486 2988 y
+(<td>{lang_Country_Selection})c
+(\({lang_Text_Entry}/{lang_SelectBox}\):</)o(td>)486
+3085 y(<td>)531 3182 y(<select)j(name="newsettings[countrylist]">)396
+3280 y({hook_country_set})531 3377 y(</select>)486 3474
+y(</td>)441 3571 y(</tr>)396 3859 y Fe(Here,)20 b(we)h(are)f(adding)f
+(a)h(ne)n(w)g(element,)f({hook_country_set}.)d(This)k(brings)f(up)h
+(the)g(ne)o(xt)g(\002le)h(we)f(will)h(need)f(to)396 3967
+y(parse)g(this)h(v)n(alue...)-2 4337 y Fc(1.2.)34 b
+(hook_con\002g.inc.php)j(\(optional\))396 4504 y Fe(At)21
+b(each)f(in)m(v)n(ocation)e(of)i(con\002g.php,)d(a)k(call)g(to)f(the)g
+(common)f(class)i(function)d(hook_single\(\))f(is)k(made.)f(It)g
+(attempts)396 4612 y(to)h(include)e(a)h(\002le,)h
+(hook_con\002g.inc.php)14 b(as)21 b(a)g(set)g(of)f(code)f(for)h
+(con\002g.php)d(to)k(use.)f(In)g(the)g(case)h(of)f(the)g(preferences)
+396 4720 y(e)o(xample)f(abo)o(v)o(e,)f(using)i(hook_country_set,)15
+b(here)20 b(is)h(the)f(corresponding)d(function)i(in)396
+4828 y(preferences/inc/hook_con\002g.)o(inc.p)o(hp)o(:)p
+Black 3842 5278 a Fa(2)p Black eop
+%%Page: 3 3
+3 2 bop Black 0 TeXcolorgray Black 2778 67 a Fa(phpGr)l(oupW)-8
+b(ar)m(e)19 b(admin/con\002g)o(.php)p Black 396 579 a
+Fb(function)44 b(country_set\($config\))396 676 y({)576
+773 y($country)f(=)i(array\()f('user_choice')e(=>)j('Users)f(Choice',)f
+('force_select')f(=>)j('Force)f(Se-)396 870 y(lectbox')g(\);)576
+967 y(while)g(\(list)g(\($key,)f($value\))h(=)h(each)f(\($country\)\))
+576 1065 y({)755 1162 y(if)g(\($config['countrylist'])d(==)k($key\))755
+1259 y({)934 1356 y($selected)f(=)g(')h(selected';)755
+1453 y(})755 1550 y(else)755 1647 y({)934 1745 y($selected)f(=)g(\224;)
+755 1842 y(})755 1939 y($descr)g(=)g(lang\($value\);)755
+2036 y($out)g(.=)h('<option)e(value="')h(.)g($key)g(.)h('"')f(.)h
+($selected)e(.)i('>')f(.)h($descr)f(.)g('</option>')f(.)i("\\n";)576
+2133 y(})576 2230 y(return)e($out;)396 2327 y(})396 2615
+y Fe(Note)20 b(again)g(the)g(template)f(v)n(alue)h(we)h(used)e(earlier)
+m(,)h({hook_country_set}.)15 b(This)20 b(causes)h(con\002g.php)c(to)k
+(look)e(for)h(a)396 2723 y(function)f(named)g(country_set\(\).)e(Since)
+j(we)h(included)d(the)j(\002le)g(with)f(this)h(function)d(via)i(the)g
+(hook_single\(\))d(call,)396 2831 y(this)k(function)d(is)k(e)o(x)o
+(ecuted.)c(It')-5 b(s)21 b(return)e(is)i(a)f(string,)g(and)g(the)g
+(function)e(prints)i(nothing)f(itself.)-2 3201 y Fc(1.3.)34
+b(hook_con\002g_v)n(alidate)r(.inc.php)39 b(\(optional\))396
+3369 y Fe(Once)20 b(the)g(admin)g(clicks)g(the)g(submit)g(b)n(utton)f
+(to)i(post)f(the)g(form,)f(we)i(can)f(optionally)e(v)n(alidate)i(their)
+g(input)f(using)396 3477 y(one)h(or)g(man)o(y)f(dif)n(ferent)f
+(functions.)h(This)h(is)h(done)e(by)h(\002rst)h(making)e(another)g
+(call)h(to)h(hook_single\(\))c(in)j(the)g(API)396 3584
+y(common)f(class.)h(This)h(time,)f(the)g(name)g(con\002g_v)n(alidate)d
+(is)k(used,)f(so)h(common)d(tries)j(to)f(include)396
+3692 y('application/inc/hook_con\002g_)o(v)n(a)o(lidate.in)o(c.p)o(hp)o
+('.)396 3842 y(If)g(this)h(\002le)g(e)o(xists,)f(it)h(sets)g(a)g(v)n
+(ar)f(to)g(tell)h(con\002g.php)d(it)i(w)o(as)i(found.)c(F)o(ollo)n
+(wing)h(then)g(are)h(functions)f(named)g(after)396 3950
+y(each)h(con\002g)f(we)i(w)o(ant)f(to)h(v)n(alidate.)e(The)h(follo)n
+(wing)e(e)o(xample)h(is)i(for)f(addressbook:)576 4130
+y Fb($GLOBALS['phpgw_info']['server']['fou)o(nd_val)o(idatio)o(n_hook)o
+('])39 b(=)45 b(True;)576 4227 y(/*)f(Check)g(a)h(specific)e(setting.)h
+(Name)g(must)g(match)g(the)g(setting.)g(*/)576 4324 y(function)f
+(ldap_contact_context\($value=\224\))576 4421 y({)755
+4518 y(if\($value)g(==)i($GLOBALS['phpgw_info']['server']['ldap)o
+(_conte)o(xt']\))755 4616 y({)934 4713 y($GLOBALS['config_error'])c(=)k
+('Contact)e(context)h(for)g(ldap)g(must)g(be)h(differ-)396
+4810 y(ent)g(from)f(the)g(context)g(used)g(for)g(accounts';)p
+Black 3842 5278 a Fa(3)p Black eop
+%%Page: 4 4
+4 3 bop Black 0 TeXcolorgray Black 2778 67 a Fa(phpGr)l(oupW)-8
+b(ar)m(e)19 b(admin/con\002g)o(.php)p Black 755 579 a
+Fb(})755 676 y(elseif\($value)43 b(==)h
+($GLOBALS['phpgw_info']['server']['ldap_g)o(roup_)o(contex)o(t']\))755
+773 y({)934 870 y($GLOBALS['config_error'])d(=)k('Contact)e(context)h
+(for)g(ldap)g(must)g(be)h(differ-)396 967 y(ent)g(from)f(the)g(context)
+g(used)g(for)g(groups';)755 1065 y(})755 1162 y(else)755
+1259 y({)934 1356 y($GLOBALS['config_error'])d(=)k(\224;)755
+1453 y(})576 1550 y(})396 1838 y Fe(Here)20 b(we)f(created)g(a)h
+(function)e(to)i(check)e(the)i(entered)e(v)n(alue)h(for)g(the)g
+(con\002g)g(item,)g(ldap_contact_conte)o(xt.)c(W)-7 b(e)21
+b(w)o(ant)396 1946 y(to)g(mak)o(e)e(sure)h(the)h(admin)e(did)h(not)g
+(set)h(this)f(v)n(alue)g(to)g(one)g(which)g(w)o(ould)f(con\003ict)h
+(with)g(another)f(con\002g)g(item,)h(used)396 2054 y(for)g(accounts)f
+(or)h(groups)f(in)h(phpGroupW)-7 b(are.)396 2204 y(con\002g.php)18
+b(calls)j(this)g(function,)d(sending)h(it)i(the)f(POST)-6
+b(ed)20 b(v)n(alue.)f(con\002g.php)f(continues,)h(adding)g(all)h(other)
+g(con\002g)396 2312 y(items)h(from)e(the)h(POST)-6 b(ed)21
+b(v)n(alues.)396 2461 y(The)f(v)n(ariable)f($GLOB)m
+(ALS['con\002g_error'])c(is)21 b(parsed)f(through)e(lang\(\),)h(then)g
+(appended)f(to)j(the)f(local)g(v)n(ariable,)396 2569
+y($error)-5 b(.)19 b(If)h(this)h(has)f(an)o(y)g(v)n(alue)f(after)h(the)
+g(POST)-6 b(ed)20 b(v)n(ariables)g(are)g(check)o(ed,)f(the)h(form)f
+(then)h(has)g(its)h({error})e(tag)396 2677 y(\002lled)i(with)f(this)h
+(result.)f(The)g(form)f(is)i(displayed)e(again,)g(with)h(the)g(error)-5
+b(.)20 b(If)g($error)e(has)j(no)e(v)n(alue,)h(con\002g.php)396
+2785 y(redirects)g(to)g(admin/inde)o(x.php.)396 2934
+y(Ho)n(we)n(v)o(er)m(,)e(there)i(is)h(one)f(more)f(function)g(that)h
+(may)g(be)g(included)e(in)j(hook_con\002g_v)n(alidate.inc)o(.ph)o(p:)
+576 3114 y Fb(/*)44 b(Check)g(all)g(settings)g(to)g(validate)g(input.)g
+(Name)g(must)g(be)h('final_validation')c(*/)576 3212
+y(function)i(final_validation\($value=\224\))576 3309
+y({)755 3406 y(if\($value['contact_repository'])d(==)k('ldap')g(&&)g
+(!$value['ldap_contact_dn']\))755 3503 y({)934 3600 y
+($GLOBALS['config_error'])d(=)k('Contact)e(dn)i(must)f(be)g(set';)755
+3697 y(})755 3794 y(elseif\($value['contact_repository'])39
+b(==)44 b('ldap')g(&&)h(!$value['ldap_contact_context']\))755
+3891 y({)934 3989 y($GLOBALS['config_error'])c(=)k('Contact)e(context)h
+(must)g(be)h(set';)755 4086 y(})755 4183 y(else)755 4280
+y({)934 4377 y($GLOBALS['config_error'])c(=)k(\224;)755
+4474 y(})576 4571 y(})p Black 3842 5278 a Fa(4)p Black
+eop
+%%Page: 5 5
+5 4 bop Black 0 TeXcolorgray Black 2778 67 a Fa(phpGr)l(oupW)-8
+b(ar)m(e)19 b(admin/con\002g)o(.php)p Black 396 579 a
+Fe(con\002g.php)f(checks)i(for)f(the)h(e)o(xistence)g(of)g(the)g
+(function)e('\002nal_v)n(alidation\(\)'.)f(This)j(function)e(can)i(be)g
+(used)g(to)396 687 y(check)g(all)g(form)g(v)n(alues)f(at)i(once.)e(It)i
+(gets)f(sent)h(the)f(entire)g($ne)n(wsettings)f(array)g(POST)-6
+b(ed)21 b(from)e(the)h(form.)f(As)i(with)396 795 y(the)f(other)g
+(functions)f(in)h(this)h(\002le,)f(\002nal_v)n(alidation\(\))d(should)j
+(set)h($GLOB)m(ALS['con\002g_error'])15 b(if)20 b(there)g(is)h(a)396
+903 y(problem.)p Black 3842 5278 a Fa(5)p Black eop
+%%Page: 6 6
+6 5 bop Black 0 TeXcolorgray Black 2778 67 a Fa(phpGr)l(oupW)-8
+b(ar)m(e)19 b(admin/con\002g)o(.php)p Black Black 3840
+5278 a(6)p Black eop
 %%Trailer
 end
 userdict /end-hook known{end-hook}if

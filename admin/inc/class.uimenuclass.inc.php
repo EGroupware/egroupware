@@ -45,15 +45,18 @@
 		{
 			$i=0;
 
+			// reset the value of all_rows
+			$this->t->set_var('all_rows','');
+
 			while(list($key,$value) = each($_menuData))
 			{
 				if (!empty($value['extradata']))
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $GLOBALS['account_id'] . '&' . $value['extradata']);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')) . '&' . $value['extradata']);
 				}
 				else
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . $GLOBALS['account_id']);
+					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
 				}
 				$this->section_item($link,lang($value['description']),$this->rowColor[($i % 2)]);
 				$i++;
@@ -115,7 +118,6 @@
 			}
 
 			$GLOBALS['phpgw']->hooks->process($_hookname);
-
 			if (count($GLOBALS['menuData']) >= 1) 
 			{
 				$result = $this->display_section($GLOBALS['menuData']);

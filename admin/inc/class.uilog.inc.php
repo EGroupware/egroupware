@@ -26,6 +26,11 @@
 
 		function uilog()
 		{
+			if ($GLOBALS['phpgw']->acl->check('error_log_access',1,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php');
+			}
+			
 			$_cols    = $GLOBALS['HTTP_POST_VARS']['_cols'];
 			$nocols   = $GLOBALS['HTTP_POST_VARS']['nocols'];
 			$_delcol  = $GLOBALS['HTTP_POST_VARS']['_delcol'];
@@ -257,6 +262,7 @@
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.($this->editmode?lang('Edit Table format') : lang('View error log'));
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 			$this->t->pfp('out','log_list_t');
 //			$this->set_app_langs();
 		}

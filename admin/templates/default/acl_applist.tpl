@@ -1,21 +1,21 @@
 <!-- BEGIN list -->
-<b>{lang_header}</b>
-<hr><p>
-
 <table width="75%" border="0" cellspacing="0" cellpadding="0">
  {rows}
 </table>
+<form method="POST" action="{cancel_action}">
+	<input type="submit" name="cancel" value="{lang_cancel}">
+</form>
 <!-- END list -->
 
 <!-- BEGIN app_row -->
- <tr class="icon_backcolor">
+ <tr bgcolor="{icon_backcolor}">
   <td width="5%" valign="middle"><img src="{app_icon}" alt="[ {app_name} ]"> <a name="{a_name}"></a></td>
   <td width="95%" valign="middle"><strong>&nbsp;&nbsp;{app_name}</strong></td>
  </tr>
 <!-- END app_row -->
 
 <!-- BEGIN app_row_noicon -->
- <tr class="icon_backcolor">
+ <tr bgcolor="{icon_backcolor}">
   <td colspan="2" width="95%" valign="middle"><strong>&nbsp;&nbsp;{app_name}</strong> <a name="{a_name}"></a></td>
  </tr>
 <!-- END app_row_noicon -->

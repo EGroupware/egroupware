@@ -18,29 +18,14 @@
 
 		function index()
 		{
-			$referer = urldecode($GLOBALS['HTTP_GET_VARS']['referer']);
-
-			if($referer)
+			if ($GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
 			{
-				$_redir = $referer;
-				$GLOBALS['phpgw']->session->appsession('session_data','admin_config',$referer);
+				$GLOBALS['phpgw']->redirect_link('/index.php');
 			}
-			else
-			{
-				$referer = $GLOBALS['phpgw']->session->appsession('session_data','admin_config');
-				if($referer == '-1')
-				{
-					$referer = '';
-				}
-				$_redir  = $referer ? $referer : $GLOBALS['phpgw']->link('/admin/index.php');
-			}
-
-			$appname = $GLOBALS['HTTP_GET_VARS']['appname'];
-			switch($appname)
+			
+			switch($_GET['appname'])
 			{
 				case 'admin':
-				//case 'preferences':
-				//$appname = 'preferences';
 				case 'addressbook':
 				case 'calendar':
 				case 'email':
@@ -49,14 +34,16 @@
 					Other special apps can go here for now, e.g.:
 					case 'bogusappname':
 					*/
+					$appname = $_GET['appname'];
 					$config_appname = 'phpgwapi';
 					break;
 				case 'phpgwapi':
 				case '':
 					/* This keeps the admin from getting into what is a setup-only config */
-					Header('Location: ' . $_redir);
+					$GLOBALS['phpgw']->redirect_link('/admin/index.php');
 					break;
 				default:
+					$appname = $_GET['appname'];
 					$config_appname = $appname;
 					break;
 			}
@@ -76,17 +63,17 @@
 				$current_config = $c->config_data;
 			}
 
-			if ($GLOBALS['HTTP_POST_VARS']['cancel'])
+			if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['phpgw']->acl->check('site_config_access',2,'admin'))
 			{
-				Header('Location: ' . $_redir);
+				$GLOBALS['phpgw']->redirect_link('/admin/index.php');
 			}
 
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if ($_POST['submit'])
 			{
 				/* Load hook file with functions to validate each config (one/none/all) */
 				$GLOBALS['phpgw']->hooks->single('config_validate',$appname);
 
-				while (list($key,$config) = each($GLOBALS['HTTP_POST_VARS']['newsettings']))
+				while (list($key,$config) = each($_POST['newsettings']))
 				{
 					if ($config)
 					{
@@ -128,14 +115,11 @@
 					unset($GLOBALS['phpgw_info']['server']['found_validation_hook']);
 				}
 
-				$c->save_repository(True);
+				$c->save_repository();
 
 				if(!$errors)
 				{
-					$GLOBALS['phpgw']->session->appsession('session_data','admin_config',-1);
-					Header('Location: ' . $_redir);
-					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-					exit;
+					$GLOBALS['phpgw']->redirect_link('/admin/index.php');
 				}
 			}
 
@@ -149,12 +133,18 @@
 			else
 			{
 				$t->set_var('error','');
+				$t->set_var('th_err',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 
 			$t->set_var('title',lang('Site Configuration'));
 			$t->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
+			$t->set_var('th_bg',     $GLOBALS['phpgw_info']['theme']['th_bg']);
+			$t->set_var('th_text',   $GLOBALS['phpgw_info']['theme']['th_text']);
+			$t->set_var('row_on',    $GLOBALS['phpgw_info']['theme']['row_on']);
+			$t->set_var('row_off',   $GLOBALS['phpgw_info']['theme']['row_off']);
 			$t->pparse('out','header');
 
 			$vars = $t->get_undefined('body');
@@ -173,7 +163,7 @@
 				}
 				$newval = implode(' ',$new);
 
-				switch($type)
+				switch ($type)
 				{
 					case 'lang':
 						$t->set_var($value,lang($newval));
@@ -190,19 +180,19 @@
 							$t->set_var($value,$current_config[$newval]);
 						}
 						break;
+					/*
 					case 'checked':
-						/* '+' is used as a delimiter for the check value */
-						list($newvalue,$check) = split('\+',$newval);
-						$newval = ereg_replace(' ','_',$newvalue);
-						if($current_config[$newval] == $check)
+						$newval = ereg_replace(' ','_',$newval);
+						if ($current_config[$newval])
 						{
-							$t->set_var($value, ' checked');
+							$t->set_var($value,' checked');
 						}
 						else
 						{
-							$t->set_var($value, '');
+							$t->set_var($value,'');
 						}
 						break;
+					*/
 					case 'selected':
 						$configs = array();
 						$config  = '';
@@ -235,15 +225,15 @@
 						}
 						break;
 					default:
-						$t->set_var($value,'');
-						break;
+					$t->set_var($value,'');
+					break;
 				}
 			}
 
 			$t->pfp('out','body');
 
-			$t->set_var('lang_submit', lang('submit'));
-			$t->set_var('lang_cancel', lang('cancel'));
+			$t->set_var('lang_submit', $GLOBALS['phpgw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
+			$t->set_var('lang_cancel', lang('Cancel'));
 			$t->pfp('out','footer');
 		}
 	}

@@ -32,3 +32,4 @@ ryhmät joihin tunnus kuuluu ja mihin sovelluksiin käyttäjällä on käyttöoikeus.<p
 <i>Käyttäjäryhmät:</i><br/>
 Toiminnolla voit lisätä, muuttaa ja poistaa käyttäjäryhmiä.<p/>
 </ul></font>
+<?php $phpgw->common->phpgw_footer(); ?>

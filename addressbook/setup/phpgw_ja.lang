@@ -88,7 +88,7 @@ suffix	addressbook	ja	敬称
 that field name has been used already !	addressbook	ja	項目名は既に存在しています。
 this person's first name was not in the address book.	addressbook	ja	アドレス帳に名前がありません。
 today is %1's birthday!	common	ja	今日は %1 さんの誕生日です。
-tomorrow is %1's birthday.	common	ja	明日は %1 さんの誕生日です。
+tommorow is %1's birthday.	common	ja	明日は %1 さんの誕生日です。
 url	addressbook	ja	URL
 vcard	common	ja	VCard
 vcards require a first name entry.	addressbook	ja	VCard には、名前が必要です。

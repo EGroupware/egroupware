@@ -65,14 +65,13 @@
 				$data['query'],
 				$data['filter'],
 				$data['sort'],
-				$data['order'],
-				$data['cquery']
+				$data['order']
 			);
 		}
 
 		function read_entry($id,$fields)
 		{
-			if($this->rights & PHPGW_ACL_READ)
+			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_single_entry($id,$fields);
 			}
@@ -85,7 +84,7 @@
 
 		function read_last_entry($fields)
 		{
-			if($this->rights & PHPGW_ACL_READ)
+			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_last_entry($fields);
 			}
@@ -103,7 +102,7 @@
 			{
 				$fields['tid'] = 'n';
 			}
-			if($this->rights & PHPGW_ACL_ADD)
+			if ($this->rights & PHPGW_ACL_ADD)
 			{
 				$ab_id  = $fields['ab_id'];
 				$owner  = $fields['owner'];
@@ -130,26 +129,27 @@
 
 		function update_entry($fields)
 		{
-			if($this->rights & PHPGW_ACL_EDIT)
+			if ($this->rights & PHPGW_ACL_EDIT)
 			{
 				$ab_id  = $fields['ab_id'];
 				$owner  = $fields['owner'];
 				$access = $fields['access'];
 				$cat_id = $fields['cat_id'];
+				$tid = $fields['tid'];
 				unset($fields['owner']);
 				unset($fields['access']);
 				unset($fields['cat_id']);
 				unset($fields['ab_id']);
 				unset($fields['tid']);
 
-				$this->contacts->update($ab_id,$owner,$fields,$access,$cat_id);
+				$this->contacts->update($ab_id,$owner,$fields,$access,$cat_id,$tid);
 			}
 			return;
 		}
 
 		function delete_entry($data)
 		{
-			if($this->rights & PHPGW_ACL_DELETE)
+			if ($this->rights & PHPGW_ACL_DELETE)
 			{
 				$this->contacts->delete($data['id']);
 			}

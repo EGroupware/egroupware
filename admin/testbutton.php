@@ -28,4 +28,6 @@
 	print "<br>the same as ascii<br>";
 	print $button->createInputButton("Lars is the best ;)",'submit','ascii');
 	print "</form>";
+	
+	$phpgw->common->phpgw_footer();
 ?>

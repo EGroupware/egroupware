@@ -28,7 +28,7 @@
 			$this->db->next_record();
 			$app_info = array(
 				$this->db->f('app_name'),
-				$this->db->f('app_name'),
+				$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')]['title'],
 				$this->db->f('app_enabled'),
 				$this->db->f('app_name'),
 				$this->db->f('app_order')
@@ -44,7 +44,7 @@
 				while ($this->db->next_record())
 				{
 					$apps[$this->db->f('app_name')] = array(
-						'title'		=> str_replace('- ','-',ucwords(str_replace('_','- ',$this->db->f('app_name')))),
+						'title'  => $GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')],
 						'name'   => $this->db->f('app_name'),
 						'status' => $this->db->f('app_enabled')
 					);
@@ -74,7 +74,7 @@
 		function save($data)
 		{
 			$sql = "UPDATE phpgw_applications SET app_name='" . addslashes($data['n_app_name']) . "',"
-				. "app_enabled='" . $data['n_app_status'] . "',app_order='" . $data['app_order']
+				. "app_enabled='" . $data['n_app_status'] . "',app_order='" . $data['app_order'] 
 				. "' WHERE app_name='" . $data['old_app_name'] . "'";
 
 			$this->db->query($sql,__LINE__,__FILE__);

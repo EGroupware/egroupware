@@ -3,14 +3,12 @@
    <input type="hidden" name="entry[ab_id]" value="{ab_id}">
    <input type="hidden" name="entry[tid]" value="{tid}">
    <input type="hidden" name="entry[referer]" value="{referer}">
-   <table border="0" cellPadding="1" cellSpacing="1" width="95%">
+   <table border="0" cellPadding="1" cellSpacing="1" width="77%">
      <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td align="left" width="7%">
-       <input type="submit" name="submit" value="{lang_submit}"></form>
+      <td align="left" width="10%">
+       <input type="submit" name="submit" value="{lang_save}">&nbsp;</form>
       </TD>
-      <td align="left" width="7%">
+      <td align="left" width="10%">
        {cancel_link}
        <input type="submit" name="cancel" value="{lang_cancel}"></form>
       </td>
@@ -20,7 +18,6 @@
        {delete_button}
        </form>
       </td>
-      <td>&nbsp;</td>
      </tr>
    </table>
 <!-- END edit -->

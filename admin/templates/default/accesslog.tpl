@@ -23,7 +23,7 @@
 								</table>
 							</td>
 						</tr>
-						<tr class="th">
+						<tr bgcolor="{th_bg}">
 							<td width="10%">{lang_loginid}</td>
 							<td width="15%">{lang_ip}</td>
 							<td width="20%">{lang_login}</td>
@@ -31,10 +31,10 @@
 							<td>{lang_total}</td>
 						</tr>
 						{rows_access}
-						<tr class="bg_color">
+						<tr bgcolor="{bg_color}">
 							<td colspan="5" align="left">{footer_total}</td>
 						</tr>
-						<tr class="bg_color">
+						<tr bgcolor="{bg_color}">
 							<td colspan="5" align="left">{lang_percent}</td>
 						</tr>
 					</table>
@@ -46,7 +46,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
-	<tr class="{tr_color}">
+	<tr bgcolor="{tr_color}">
 		<td>{row_loginid}</td>
 		<td>{row_ip}</td>
 		<td>{row_li}</td>
@@ -56,7 +56,7 @@
 <!-- END row -->
 
 <!-- BEGIN row_empty -->
-	<tr class="{tr_color}">
+	<tr bgcolor="{tr_color}">
 		<td align="center" colspan="5">{row_message}</td>
 	</tr>
 <!-- END row_empty -->

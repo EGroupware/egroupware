@@ -19,10 +19,9 @@
 
 		function add_user($userData)
 		{
-			$GLOBALS['phpgw']->db->lock
-			(
-				array
-				(
+			$userData['account_expires'] = $userData['expires'];
+			$GLOBALS['phpgw']->db->lock(
+				Array(
 					'phpgw_accounts',
 					'phpgw_nextid',
 					'phpgw_preferences',
@@ -37,10 +36,9 @@
 			$GLOBALS['phpgw']->accounts->create($userData);
 
 			$userData['account_id'] = $GLOBALS['phpgw']->accounts->name2id($userData['account_lid']);
-
-			$apps = CreateObject('phpgwapi.applications',array($userData['account_id'],'u'));
+			
+			$apps = CreateObject('phpgwapi.applications',$userData['account_id']);
 			$apps->read_installed_apps();
-
 			// Read Group Apps
 			if ($userData['account_groups'])
 			{
@@ -63,7 +61,7 @@
 
 			$apps->account_type = 'u';
 			$apps->account_id = $userData['account_id'];
-			$apps->account_apps = Array(Array());
+			$apps->data = Array(Array());
 
 			if ($userData['account_permissions'])
 			{
@@ -82,8 +80,10 @@
 			}
 			$apps->save_repository();
 
-			$GLOBALS['phpgw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
-
+			if ($userData['changepassword'])
+			{
+				$GLOBALS['phpgw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
+			}
 			// Assign user to groups
 			if ($userData['account_groups'])
 			{
@@ -94,32 +94,11 @@
 				}
 			}
 
-/*			if ($apps_after)
-			{
-				$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$userData['account_id']);
-				$GLOBALS['phpgw']->hooks->single('add_def_pref','admin');
-				while ($apps = each($apps_after))
-				{
-					if (strcasecmp ($apps[0], 'admin') != 0)
-					{
-						$GLOBALS['phpgw']->hooks->single('add_def_pref', $apps[1]);
-					}
-				}
-				$GLOBALS['pref']->save_repository(False);
-			} */
-
 			$apps->account_apps = array(array());
 			$apps_after = array(array());
 
 			$GLOBALS['phpgw']->db->unlock();
 
-/*
-			// start inlcuding other admin tools
-			while($app = each($apps_after))
-			{
-				$GLOBALS['phpgw']->hooks->single('add_user_data', $value);
-			}
-*/
 			return $userData['account_id'];
 		}
 	}

@@ -24,21 +24,12 @@
 <head>
 	<meta http-equiv="Refresh" content="300">
 	<title>Notify Window</title>
-	
-	<script language="JavaScript">
-	<!-- Activate Cloaking Device
-	function CheckEmail()
-	{
-		window.opener.document.location.href="<?php echo $GLOBALS['phpgw']->link('/index.php','menuaction=email.uiindex.index'); ?>";
-	}
-	//-->
-	</script>
 </head>
 <body bgcolor="<?php echo $GLOBALS['phpgw_info']['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
 <table>
 	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>">Check Now</a></td></tr>
 <?php
-	$GLOBALS['phpgw']->hooks->process('notifywindow',array('email'));
+	$GLOBALS['phpgw']->hooks->process('notifywindow');
 ?>
 </table>
 </body>

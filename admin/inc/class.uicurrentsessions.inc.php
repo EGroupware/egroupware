@@ -23,6 +23,10 @@
 
 		function uicurrentsessions()
 		{
+			if ($GLOBALS['phpgw']->acl->check('current_sessions_access',1,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php');
+			}
 			$this->template   = createobject('phpgwapi.Template',PHPGW_APP_TPL);
 			$this->bo         = createobject('admin.bocurrentsessions');
 			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
@@ -31,6 +35,7 @@
 		function header()
 		{
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 		}
 
 		function store_location($info)
@@ -78,15 +83,9 @@
 			$this->template->set_block('current','list','list');
 			$this->template->set_block('current','row','row');
 
-			if (! $GLOBALS['phpgw']->acl->check('current_sessions_access',4,'admin'))
-			{
-				$can_view_ip = True;
-			}
-
-			if (! $GLOBALS['phpgw']->acl->check('current_sessions_access',2,'admin'))
-			{
-				$can_view_action = True;
-			}
+			$can_view_action = !$GLOBALS['phpgw']->acl->check('current_sessions_access',2,'admin');
+			$can_view_ip     = !$GLOBALS['phpgw']->acl->check('current_sessions_access',4,'admin');
+			$can_kill        = !$GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin');
 
 			$total = $this->bo->total();
 
@@ -115,14 +114,7 @@
 
 				$this->template->set_var('row_loginid',$value['session_lid']);
 
-				if ($can_view_ip)
-				{
-					$this->template->set_var('row_ip',$value['session_ip']);
-				}
-				else
-				{
-					$this->template->set_var('row_ip','&nbsp; -- &nbsp;');
-				}
+				$this->template->set_var('row_ip',$can_view_ip?$value['session_ip']:'&nbsp;');
 
 				$this->template->set_var('row_logintime',$value['session_logintime']);
 				$this->template->set_var('row_idle',$value['session_idle']);
@@ -131,16 +123,12 @@
 				{
 					$this->template->set_var('row_action',$GLOBALS['phpgw']->strip_html($value['session_action']));
 				}
-				elseif(! $can_view_action)
-				{
-					$this->template->set_var('row_action','&nbsp; -- &nbsp;');
-				}
 				else
 				{
 					$this->template->set_var('row_action','&nbsp;');
 				}
 
-				if ($value['session_id'] != $GLOBALS['phpgw_info']['user']['sessionid'] && ! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
+				if ($value['session_id'] != $GLOBALS['phpgw_info']['user']['sessionid'] && $can_kill)
 				{
 					$this->template->set_var('row_kill','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.kill&ksession='
 						. $value['session_id'] . '&kill=true') . '">' . lang('Kill').'</a>');
@@ -160,10 +148,8 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
 			{
-				$this->list_sessions();
-				return False;
+				$GLOBALS['phpgw']->redirect_link('/index.php');
 			}
-
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Kill session');
 			$this->header();
 			$this->template->set_file('form','kill_session.tpl');

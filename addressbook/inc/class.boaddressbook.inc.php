@@ -24,8 +24,8 @@
 			'update_entry'    => True
 		);
 
-		var $xml_functions = array();
-
+		var $xml_functions  = array();
+		var $xmlrpc_methods = array();
 		var $soap_functions = array(
 			'read_entries' => array(
 				'in'  => array('int','int','struct','string','int'),
@@ -53,6 +53,7 @@
 
 		var $so;
 		var $start;
+		var $limit;
 		var $query;
 		var $sort;
 		var $order;
@@ -73,41 +74,75 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
+			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
+			/* Might change this to '' at the end---> */
+			$_start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
+			$_query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
+			$_sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$_order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
+			$_filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
+			$_cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
+			$_fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
 
-			$start  = intval(get_var('start',   array('POST','GET')));
-			$query  = get_var('query',   array('POST','GET'));
-			$cquery = get_var('cquery',  array('GET'));
-			$sort   = get_var('sort',    array('POST','GET'));
-			$order  = get_var('order',   array('POST','GET'));
-			$filter = get_var('filter',  array('POST','GET'));
-			$cat_id = get_var('fcat_id', array('POST'));
-
-			$this->start  = (!empty($start) || ($start == '0')) ? $start : $this->start;
-			$this->query  = (empty($query) && !empty($this->query)) || !empty($query) ? $query : $this->query;
-			$this->cquery = (empty($cquery) && !empty($this->cquery)) || !empty($cquery) ? $cquery : $this->cquery;
-			$this->sort   = (!empty($sort)) ? $sort : $this->sort;
-			$this->order  = (!empty($order)) ? $order : $this->order;
-			$this->filter = (!empty($filter) || ($filter == '0')) ? $filter : $this->filter;
-
-			$this->cat_id = (isset($cat_id) && !empty($cat_id)) ? $cat_id : $this->cat_id;
-			$this->cat_id = ($cat_id == '0' || $cat_id == 0 || $cat_id == '') ? $cat_id : $this->cat_id;
-
-			if($this->debug)
+			if(!empty($_start) || ($_start == '0') || ($_start == 0))
 			{
-				$this->_debug_sqsof();
+				if($this->debug) { echo '<br>overriding $start: "' . $this->start . '" now "' . $_start . '"'; }
+				$this->start = $_start;
 			}
+			if($_limit)
+			{
+				$this->limit  = $_limit;
+			}
+			if((empty($_query) && !empty($this->query)) || !empty($_query))
+			{
+				$this->query  = $_query;
+			}
+
+			if(isset($GLOBALS['HTTP_POST_VARS']['fcat_id']) || isset($GLOBALS['HTTP_POST_VARS']['fcat_id']))
+			{
+				$this->cat_id = $_fcat_id;
+			}
+			else
+			{
+				$this->cat_id = -1;
+			}
+			
+			if(isset($_sort)   && !empty($_sort))
+			{
+				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
+				$this->sort   = $_sort;
+			}
+
+			if(isset($_order)  && !empty($_order))
+			{
+				if($this->debug) { echo '<br>overriding $order: "' . $this->order . '" now "' . $_order . '"'; }
+				$this->order  = $_order;
+			}
+
+			if(isset($_filter) && !empty($_filter))
+			{
+				if($this->debug) { echo '<br>overriding $filter: "' . $this->filter . '" now "' . $_filter . '"'; }
+				$this->filter = $_filter;
+			}
+
+			if($this->debug) { $this->_debug_sqsof(); }
+
+			$this->xmlrpc_methods[] = array(
+				'name'        => 'read_entries',
+				'description' => 'Get list of addressbook items'
+			);
 		}
 
 		function _debug_sqsof()
 		{
 			$data = array(
 				'start'  => $this->start,
+				'limit'  => $this->limit,
 				'query'  => $this->query,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
-				'cat_id' => $this->cat_id,
-				'cquery' => $this->cquery
+				'cat_id' => $this->cat_id
 			);
 			echo '<br>BO:';
 			_debug_array($data);
@@ -120,7 +155,7 @@
 			  in which case the input might be an array.  The server always calls
 			  this function to fill the server dispatch map using a string.
 			*/
-			if(is_array($_type))
+			if (is_array($_type))
 			{
 				$_type = $_type['type'] ? $_type['type'] : $_type[0];
 			}
@@ -172,12 +207,9 @@
 
 		function save_sessiondata($data)
 		{
-			if($this->use_session)
+			if ($this->use_session)
 			{
-				if($this->debug)
-				{
-					echo '<br>Save:'; _debug_array($data);
-				}
+				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
 				$GLOBALS['phpgw']->session->appsession('session_data','addressbook',$data);
 			}
 		}
@@ -185,14 +217,11 @@
 		function read_sessiondata()
 		{
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','addressbook');
-			if($this->debug)
-			{
-				echo '<br>Read:'; _debug_array($data);
-			}
+			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];
+			$this->limit  = $data['limit'];
 			$this->query  = $data['query'];
-			$this->cquery = $data['cquery'];
 			$this->sort   = $data['sort'];
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];
@@ -202,15 +231,15 @@
 
 		function strip_html($dirty = '')
 		{
-			if($dirty == '')
+			if ($dirty == '')
 			{
 				$dirty = array();
 			}
 			for($i=0;$i<count($dirty);$i++)
 			{
-				if(is_array($dirty[$i]))
+				if(gettype($dirty[$i]) == 'array')
 				{
-					while(list($name,$value) = @each($dirty[$i]))
+					while (list($name,$value) = @each($dirty[$i]))
 					{
 						$cleaned[$i][$name] = $GLOBALS['phpgw']->strip_html($dirty[$i][$name]);
 					}
@@ -227,11 +256,8 @@
 		{
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
-			if($this->debug)
-			{
-				echo '<br>Total records="' . $this->total . '"';
-			}
-			return $this->strip_html($entries);
+			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
+			return (is_array($entries) ? $this->strip_html($entries) : array());
 		}
 
 		function read_entry($data)
@@ -248,7 +274,7 @@
 
 		function add_vcard()
 		{
-			$uploadedfile = $GLOBALS['HTTP_POST_VARS']['uploadedfile'];
+			global $uploadedfile;
 
 			if($uploadedfile == 'none' || $uploadedfile == '')
 			{
@@ -289,15 +315,11 @@
 
 		function add_email()
 		{
-			$name    = $GLOBALS['HTTP_GET_VARS']['name'];
-			$referer = $GLOBALS['HTTP_GET_VARS']['referer'];
+			global $name,$referer;
 
 			$named = explode(' ', $name);
-			for($i=count($named);$i>=0;$i--)
-			{
-				$names[$i] = $named[$i];
-			}
-			if($names[2])
+			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
+			if ($names[2])
 			{
 				$fields['n_given']  = $names[0];
 				$fields['n_middle'] = $names[1];
@@ -341,13 +363,13 @@
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
 		{
 			$GLOBALS['phpgw']->preferences->read_repository();
-			if(is_array($prefs))
+			if (is_array($prefs))
 			{
 				/* _debug_array($prefs);exit; */
-				while(list($pref,$x) = each($qfields))
+				while (list($pref,$x) = each($qfields))
 				{
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */
-					if($prefs[$pref] == 'on')
+					if ($prefs[$pref] == 'on')
 					{
 						$GLOBALS['phpgw']->preferences->add('addressbook',$pref,'addressbook_on');
 					}
@@ -361,29 +383,26 @@
 			if(is_array($other))
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
-				if($other['mainscreen_showbirthdays'])
+	 			if ($other['mainscreen_showbirthdays'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
-				if($other['default_filter'])
+	 			if ($other['default_filter'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',$other['default_filter']);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
-				if($other['autosave_category'])
+	 			if ($other['autosave_category'])
 				{
 					$GLOBALS['phpgw']->preferences->add('addressbook','autosave_category',True);
 				}
 			}
 
-			if($fcat_id)
-			{
-				$GLOBALS['phpgw']->preferences->delete('addressbook','default_category');
-				$GLOBALS['phpgw']->preferences->add('addressbook','default_category',$fcat_id);
-			}
+			$GLOBALS['phpgw']->preferences->delete('addressbook','default_category');
+			$GLOBALS['phpgw']->preferences->add('addressbook','default_category',$fcat_id);
 
 			$GLOBALS['phpgw']->preferences->save_repository(True);
 			/* _debug_array($prefs);exit; */

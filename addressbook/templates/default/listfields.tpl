@@ -19,14 +19,14 @@
   <form method="post" action="{actionurl}">
  <input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}"></form></td>
  </tr>
-  <tr class="th">
-   <td width="16%" class="th">{sort_field}</td>
-   <td width="8%"  class="th" align="center">{lang_edit}</td>
-   <td width="8%"  class="th" align="center">{lang_delete}</td>
+  <tr bgcolor="{th_bg}">
+   <td width="16%" bgcolor="{th_bg}">{sort_field}</td>
+   <td width="8%"  bgcolor="{th_bg}" align="center">{lang_edit}</td>
+   <td width="8%"  bgcolor="{th_bg}" align="center">{lang_delete}</td>
   </tr>
 
 <!-- BEGIN field_list -->
-  <tr class="{tr_color}">
+  <tr bgcolor="{tr_color}">
    <td>{cfield}</td>
    <td align="center"><a href="{edit}">{lang_edit_entry}</a></td>
    <td align="center"><a href="{delete}">{lang_delete_entry}</a></td>  

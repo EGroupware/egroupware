@@ -32,3 +32,4 @@
 <p><i>アクセスログ参照:</i>
 <br>phpGroupWareへのアクセスログを表示します。ログインID,IPアドレス,ログイン時間,ログアウト時間,利用時間を表示します。
 </ul>
+<?php $phpgw->common->phpgw_footer(); ?>

@@ -15,11 +15,12 @@
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
+		'disable_Template_class' => True,
 		'currentapp' => 'notifywindow'
 	);
 	include('./header.inc.php');
 
 	echo '<html><body>';
-	$GLOBALS['phpgw']->hooks->process('simple',array('email'));
+	$GLOBALS['phpgw']->hooks->process('notifywindow_simple',array('email'));
 	echo '</body></html>';
 ?>

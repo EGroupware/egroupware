@@ -1,15 +1,19 @@
+%1 records imported	addressbook	de	%1 Datensätze importiert
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstype aus der Liste
-<b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstype aus der Liste
+@-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
+add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 address book	common	de	Adressbuch
+address book - vcard in	addressbook	de	Adressbuch - VCard in
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adreßzeile 2
 address line 3	addressbook	de	Adreßzeile 3
 address type	addressbook	de	Adreßtyp
 addressbook	common	de	Adressbuch
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
+addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
-alphabet	addressbook	de	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt. csv import	addressbook	de	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass sie dieses Feld löschen wollen?
 bbs phone	addressbook	de	BBS
@@ -35,27 +39,32 @@ company name	common	de	Firmenname
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
 contact settings	admin	de	Kontakt Einstellungen
+copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 country	common	de	Land
+csv-fieldname	addressbook	de	CSV-Feldname
+csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom fields	addressbook	de	Benutzerdefinierte Felder
-debug output in browser	addressbook	de	Ausgaben zur Fehlersuche im Webbrowser
+debug output in browser	addressbook	de	Debugausgaben in Browser
 default filter	addressbook	de	Standardfilter
+delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner Id.
 department	common	de	Abteilung
 domestic	addressbook	de	Wohnung
-download export file (uncheck to debug output in browser)	addressbook	de	Exportdatei herunterladen (nicht auswählen um eine Test-Ausgabe im Browser zu bekommen)
+download	addressbook	de	Herunterladen
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
-enable remote search	admin	de	Fern-Suche zulassen
-enter the path to the export file here	addressbook	de	Geben Sie hier den Pfad zur exportierent Datei an
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
+export from addressbook	addressbook	de	Export vom Addressbuch
 extra	addressbook	de	Extra
 fax	addressbook	de	Telefax
 fax number	common	de	Telefaxnummer
-field name	addressbook	de	Feldname
 field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
+field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
+field name	addressbook	de	Feldname
 fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
+fieldseparator	addressbook	de	Feldtrenner
 full name	addressbook	de	vollständiger Name
 geo	addressbook	de	GEO
 grant addressbook access	common	de	Berechtigungen
@@ -68,10 +77,12 @@ home phone	addressbook	de	Tel privat
 home state	addressbook	de	Land (priv)
 home street	addressbook	de	Straße (priv)
 home zip code	addressbook	de	PLZ (priv)
+import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
+import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Addressbuch
 import file	addressbook	de	Datei importieren
+import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder VCard
 import from outlook	addressbook	de	Aus Outlook importieren
-in netscape, open the addressbook and select <b>export</b> from the <b>file</b> menu.<br>the file exported will be in ldif format.<p>or, in outlook, select your contacts folder, select <b>import and export...</b> from	addressbook	de	
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN Tel.
 label	addressbook	de	Adreßetikett
@@ -79,15 +90,16 @@ ldap context for contacts	admin	de	LDAP Kontext für Kontakte
 ldap host for contacts	admin	de	LDAP Host für Kontakte
 ldap root dn for contacts	admin	de	LDAP rootdn für Kontakte
 ldap root pw for contacts	admin	de	LDAP Paswort für Kontakte
+ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
-mark records as private	addressbook	de	Einträge als privat markieren
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobil-Telefon
 modem phone	addressbook	de	Modem
 no vcard	addressbook	de	Keine VCard
-none	addressbook	de	keine
+number of records to read (<=200)	addressbook	de	Nummer der einzulesenden Datensätze (<= 200)
+on	addressbook	de	an
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
 other phone	addressbook	de	Anderes Telefon
@@ -96,182 +108,43 @@ parcel	addressbook	de	Lieferadresse
 personal	addressbook	de	Persönlich
 phone number	common	de	Telefon
 phone numbers	common	de	Telefonnummern
+please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen für das Feld an !
+please select	addressbook	de	Bitte auswählen
 postal	common	de	Postanschrift
 pref	addressbook	de	pref
 prefix	addressbook	de	Prefix
 public key	addressbook	de	öffentlicher Schlüssel
+read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.
+read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag über seine Id und Feldliste.
+read this list of methods.	addressbook	de	Liest diese Liste der Methoden.
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
 retrieve contacts	admin	de	Kontakte laden
-select the type of conversion	addressbook	de	Art der Umsetzung auswählen
+select	addressbook	de	Auswählen
 select where you want to store	admin	de	Auswählen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstags-Mahner auf der Startseite anzeigen
+startrecord	addressbook	de	Startdatensatz
 state	common	de	Land
 street	common	de	Straße
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
-the <b>file</b> menu and export your contacts into a comma separated text (csv) file. <p>or, in palm desktop 4.0 or greater, visit your addressbook and select <b>export</b> from the <b>file</b> menu. the file exported will be in vcard format.<p>	addressbook	de	
+test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
+that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt !
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
+this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch.
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
+translation	addressbook	de	Übersetzung
+update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
+use country list	addressbook	de	Länderliste benutzen
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
+vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachnamen.
 video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 work phone	addressbook	de	Tel dienstl.
+you appear to be running	addressbook	de	Sie benutzen gerade einen
+you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
+you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 zip code	common	de	PLZ
-<br>
-<b>Fatal error</b>:  Call to undefined function:  phpgw_exit() in <b>/www/drock/html/cvs_phpgroupware/developer_tools/inc/class.uilangfile.inc.php</b> on line <b>566</b><br>
-
-<!DOCTYPE html PUBLIC "-//W3C/DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <meta name="author" content="phpGroupWare http://www.phpgroupware.org">
-    <meta name="description" content="phpGroupWare">
-    <meta name="keywords" content="phpGroupWare">
-    <meta name="robots" content="noindex">
-    <link rel="icon" href="favicon.ico" type="image/x-ico">
-    <link rel="shortcut icon" href="favicon.ico">
-    <title>phpGroupWare@CVS@granit</title>
-    <link rel="stylesheet" type="text/css" href="/cvs_phpgroupware/phpgwapi/templates/verdilak/css/phpgw.css">
-    <link rel="stylesheet" type="text/css" href="/cvs_phpgroupware/phpgwapi/templates/verdilak/css/submarine.css">
-  </head>
-  <body>
-    <table width="100%" height="100%" cellspacing="0" cellpadding="0">
-      <tr height="30">
-        <td colspan="2" valign="top">
-          <table class="navbar" height="30" width="100%" cellspacing="0" cellpadding="0" border="0">
-            <tr valign="bottom">
-              <td>
-                <a href="http://www.phpgroupware.org" target="_blank" title="phpGroupWare --> homepage*"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/logo.png" border="0"></a>
-              </td>
-              <td class="info" width="99%" align="center">Ralf Becker &lt;ralf&gt; - Saturday 01.03.2003</td>
-              <td rowspan="2" nowrap>
-                <table cellspacing="0" cellpadding="0" border="0">
-                  <tr>
-                    <td>
-                      <a href="/cvs_phpgroupware/home.php"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/welcome-grey.png" border="0" alt="Home" title="Home"></a>
-                    </td>
-                    <td>
-                      <a href="/cvs_phpgroupware/preferences/index.php"><img src="/cvs_phpgroupware/preferences/templates/verdilak/images/preferences-grey.png" border="0" alt="Preferences" title="Preferences"></a>
-                    </td>
-                    <td>
-                      <a href="/cvs_phpgroupware/logout.php"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/logout.png" border="0" alt="Logout" title="Logout"></a>
-                    </td>
-                    <td>
-                      <a href="/cvs_phpgroupware/about.php?app=developer_tools"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/about-grey.png" border="0" alt="about Developer Tools" title="about Developer Tools"></a>
-                    </td>
-                    <td>
-                      <a href="/cvs_phpgroupware/help.php" target="_blank"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/help.png" border="0" alt="Manual" title="Manual"></a>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr valign="bottom">
-              <td colspan="2" valign="bottom"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/greybar.jpg" height="6" width="100%"></td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr height="20" valign="top">
-        <td class="left"></td>
-        <td align="right"></td>
-      </tr>
-      <tr valign="top">
-        <td class="left" width="32">
-          <table cellspacing="0" cellpadding="0" valign="top" class="left">
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/admin/index.php"><img src="/cvs_phpgroupware/admin/templates/default/images/navbar.png" border="0" alt="Admin" title="Admin"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/email/index.php"><img src="/cvs_phpgroupware/email/templates/default/images/navbar.png" border="0" alt="E-Mail" title="E-Mail"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/calendar/index.php"><img src="/cvs_phpgroupware/calendar/templates/default/images/navbar.png" border="0" alt="Calendar" title="Calendar"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/addressbook/index.php"><img src="/cvs_phpgroupware/addressbook/templates/default/images/navbar.png" border="0" alt="Addressbook" title="Addressbook"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/news_admin/index.php"><img src="/cvs_phpgroupware/news_admin/templates/default/images/navbar.png" border="0" alt="News Admin" title="News Admin"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/notes/index.php"><img src="/cvs_phpgroupware/notes/templates/default/images/navbar.png" border="0" alt="Notes" title="Notes"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/developer_tools/index.php"><img src="/cvs_phpgroupware/developer_tools/templates/default/images/navbar.png" border="0" alt="Developer Tools" title="Developer Tools"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/etemplate/index.php"><img src="/cvs_phpgroupware/etemplate/templates/default/images/navbar.png" border="0" alt="eTemplate" title="eTemplate"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/sitemgr/index.php"><img src="/cvs_phpgroupware/sitemgr/templates/default/images/navbar.png" border="0" alt="sitemgr*" title="sitemgr*"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/filemanager/index.php"><img src="/cvs_phpgroupware/filemanager/templates/default/images/navbar.png" border="0" alt="Filemanager" title="Filemanager"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/projects/index.php"><img src="/cvs_phpgroupware/projects/templates/default/images/navbar.png" border="0" alt="Projects" title="Projects"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/infolog/index.php"><img src="/cvs_phpgroupware/infolog/templates/default/images/navbar.png" border="0" alt="InfoLog" title="InfoLog"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/stocks/index.php"><img src="/cvs_phpgroupware/stocks/templates/default/images/navbar.png" border="0" alt="Stock Quotes" title="Stock Quotes"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/chora/index.php"><img src="/cvs_phpgroupware/chora/templates/default/images/navbar.png" border="0" alt="Chora" title="Chora"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/registration/index.php"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/nonav.png" border="0" alt="Registration" title="Registration"></a>
-              </td>
-            </tr>
-            <tr>
-              <td class="left">
-                <a href="/cvs_phpgroupware/et_media/index.php"><img src="/cvs_phpgroupware/phpgwapi/templates/verdilak/images/nonav.png" border="0" alt="et_media*" title="et_media*"></a>
-              </td>
-            </tr>
-          </table>
-        </td>
-        <td width="100%" height="100%" valign="top" align="center" style="padding-left: 5px"></td>
-      </tr>
-      <tr class="navbar">
-        <td colspan="2" align="center" class="info">Powered by<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;" onMouseover="window.status='phpGroupWare --> homepage*'; return true;"> phpGroupWare </a> Version 0.9.15.008</td>
-      </tr>
-    </table>
-  </body>
-</html>
-

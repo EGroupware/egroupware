@@ -23,12 +23,20 @@
 
 		function uiaclmanager()
 		{
+			$this->account_id = intval($_GET['account_id']);
+			if (!$this->account_id || $GLOBALS['phpgw']->acl->check('account_access',64,'admin'))
+			{
+				$GLOBALS['phpgw']->redirect_link('/index.php');
+			}
 			$this->template = createobject('phpgwapi.Template',PHPGW_APP_TPL);
 		}
 
 		function common_header()
 		{
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin') . ' - ' . lang('ACL Manager') .
+				': ' . $GLOBALS['phpgw']->common->grab_owner_name($this->account_id);
 			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
 		}
 
 		function list_apps()
@@ -46,14 +54,12 @@
 			$this->template->set_block('app_list','link_row');
 			$this->template->set_block('app_list','spacer_row');
 
-			$this->template->set_var('lang_header',lang('ACL Manager'));
-
 			while (is_array($GLOBALS['acl_manager']) && list($app,$locations) = each($GLOBALS['acl_manager']))
 			{
 				$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.gif',$app.'.gif'));
 				$this->template->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 				$this->template->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-				$this->template->set_var('app_name',lang($GLOBALS['phpgw_info']['navbar'][$app]['title']));
+				$this->template->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$app]['title']);
 				$this->template->set_var('a_name',$appname);
 				$this->template->set_var('app_icon',$icon);
 
@@ -68,83 +74,83 @@
 
 				while (is_array($locations) && list($loc,$value) = each($locations))
 				{
-					$total_rights = 0;
-					while (list($k,$v) = each($value['rights']))
-					{
-						$total_rights += $v;
-					}
-					reset($value['rights']);
+					$link_values = array(
+						'menuaction' => 'admin.uiaclmanager.access_form',
+						'location'   => urlencode($loc),
+						'acl_app'    => $app,
+						'account_id' => $this->account_id
+					);
 
-					// If all of there rights are denied, then they shouldn't even see the option
-					if ($total_rights != $GLOBALS['phpgw']->acl->get_rights($loc,$app))
-					{
-						$link_values = array(
-							'menuaction' => 'admin.uiaclmanager.access_form',
-							'location'   => urlencode(base64_encode($loc)),
-							'acl_app'    => $app,
-							'account_id' => $GLOBALS['account_id']
-						);
-
-						$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
-						$this->template->set_var('lang_location',lang($value['name']));
-						$this->template->fp('rows','link_row',True);
-					}
+					$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
+					$this->template->set_var('lang_location',lang($value['name']));
+					$this->template->fp('rows','link_row',True);
 				}
 
 				$this->template->parse('rows','spacer_row',True);
 			}
+			$this->template->set_var(array(
+				'cancel_action' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
+				'lang_cancel'   => lang('Cancel')
+			));
 			$this->template->pfp('out','list');
 		}
 
 		function access_form()
 		{
-			$GLOBALS['phpgw']->hooks->single('acl_manager',$GLOBALS['acl_app']);
-			$location = base64_decode($GLOBALS['location']);
+			$location = $_GET['location'];
 
-			$acl_manager = $GLOBALS['acl_manager'][$GLOBALS['acl_app']][$location];
+			if ($_POST['submit'] || $_POST['cancel'])
+			{
+				if ($_POST['submit'])
+				{
+					$total_rights = 0;
+					while (is_array($_POST['acl_rights']) && list(,$rights) = each($_POST['acl_rights']))
+					{
+						$total_rights += $rights;
+					}
+					if ($total_rights)
+					{
+						$GLOBALS['phpgw']->acl->add_repository($_GET['acl_app'], $location, $this->account_id, $total_rights);
+					}
+					else	// we dont need to save 0 rights (= no restrictions)
+					{
+						$GLOBALS['phpgw']->acl->delete_repository($_GET['acl_app'], $location, $this->account_id);
+					}
+				}
+				$this->list_apps();
+				return;
+			}
+			$GLOBALS['phpgw']->hooks->single('acl_manager',$_GET['acl_app']);
+			$acl_manager = $GLOBALS['acl_manager'][$_GET['acl_app']][$location];
 
 			$this->common_header();
 			$this->template->set_file('form','acl_manager_form.tpl');
 
-			$acc = createobject('phpgwapi.accounts',$GLOBALS['account_id']);
+			$acc = createobject('phpgwapi.accounts',$this->account_id);
 			$acc->read_repository();
 			$afn = $GLOBALS['phpgw']->common->display_fullname($acc->data['account_lid'],$acc->data['firstname'],$acc->data['lastname']);
 
-			$this->template->set_var('lang_message',lang('Check items to <b>%1</b> to %2 for %3',$acl_manager['name'],$GLOBALS['acl_app'],$afn));
+			$this->template->set_var('lang_message',lang('Check items to <b>%1</b> to %2 for %3',lang($acl_manager['name']),$GLOBALS['phpgw_info']['apps'][$_GET['acl_app']]['title'],$afn));
 			$link_values = array(
-				'menuaction' => 'admin.boaclmanager.submit',
-				'acl_app'    => $GLOBALS['acl_app'],
-				'location'   => urlencode($GLOBALS['location']),
-				'account_id' => $GLOBALS['account_id']
+				'menuaction' => 'admin.uiaclmanager.access_form',
+				'acl_app'    => $_GET['acl_app'],
+				'location'   => urlencode($_GET['location']),
+				'account_id' => $this->account_id
 			);
 
-			$acl    = createobject('phpgwapi.acl',$GLOBALS['account_id']);
+			$acl    = createobject('phpgwapi.acl',$this->account_id);
 			$acl->read_repository();
+			$grants = $acl->get_rights($location,$_GET['acl_app']);
 
 			$this->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php',$link_values));
-			$this->template->set_var('lang_title',lang('ACL Manager'));
 
 			$total = 0;
 			while (list($name,$value) = each($acl_manager['rights']))
 			{
-				$grants = $acl->get_rights($location,$GLOBALS['acl_app']);
-
-				if (! $GLOBALS['phpgw']->acl->check($location,$value,$GLOBALS['acl_app']))
-				{
-					$s .= '<option value="' . $value . '"';
-					$s .= (($grants & $value)?' selected':'');
-					$s .= '>' . lang($name) . '</option>';
-					$total++;
-				}
+				$cb .= '<input type="checkbox" name="acl_rights[]" value="'.$value.'"'.($grants & $value ? ' checked' : '').'>&nbsp;'.lang($name)."<br>\n";
 			}
-
-			$size = 7;
-			if ($total < 7)
-			{
-				$size = $total;
-			}
-			$this->template->set_var('select_values','<select name="acl_rights[]" multiple size="' . $size . '">' . $s . '</select>');
-			$this->template->set_var('lang_submit',lang('Submit'));
+			$this->template->set_var('select_values',$cb);
+			$this->template->set_var('lang_submit',lang('Save'));
 			$this->template->set_var('lang_cancel',lang('Cancel'));
 
 			$this->template->pfp('out','form');

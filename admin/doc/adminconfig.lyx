@@ -69,10 +69,6 @@ and the following special types:
 \layout Enumerate
 
 {hook_XXX} - Calls a function named XXX (will be discussed later).
-\layout Enumerate
-
-{checked_XXX+YYY} - Handles checkbox/radio values set to YYY or '' (will
- be discussed later).
 \layout Standard
 
 Following is an example from the addressbook application:
@@ -179,35 +175,7 @@ Let's take a look at part of the preferences/default/config.tpl:
 \layout Standard
 
 Here, we are adding a new element, {hook_country_set}.
- This brings up the next file we will need to parse this value, hook_config.inc.ph
-p.
- But first, let's look at the last template type, 'checked':
-\layout Code
-
-<input name="newsettings[enable_remote_addressbook]" type="radio" value=""{check
-ed_enable_remote_addressbook+}>{lang_no}
-\layout Code
-
-<input name="newsettings[enable_remote_addressbook]" type="radio" value="True"{c
-hecked_enable_remote_addressbook+True}>{lang_yes}
-\layout Standard
-
-We want to check the value of the setting 'enable_remote_addressbook'.
- The value could be '' or 'True'.
- We use the '+' character to isolate the config name from the check value.
- If the value is empty or unset in the phpgw_config table, {checked_enable_remot
-e_addressbook+} is replaced with ' checked'.
- If the value is 'True',{checked_enable_remote_addressbook+True} is replaced
- with ' checked'.
- Note that the part after the '+' character matches what is in the value=
-\begin_inset Quotes erd
-\end_inset 
-
-XXX
-\begin_inset Quotes erd
-\end_inset 
-
- part in the html for this form element.
+ This brings up the next file we will need to parse this value...
 \layout Subsection
 
 hook_config.inc.php (optional)

@@ -1,10 +1,10 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Addressbook                                               *
+	* phpGroupWare - Messenger                                                 *
 	* http://www.phpgroupware.org                                              *
-	* --------------------------------------------                             *
 	* This application written by Joseph Engo <jengo@phpgroupware.org>         *
-	*  and Miles Lott<milosch@phpgroupware.org>                                *
+	* --------------------------------------------                             *
+	* Funding for this program was provided by http://www.checkwithmom.com     *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -17,10 +17,14 @@
 	$GLOBALS['phpgw_info'] = array();
 
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp' => 'addressbook'
+		'currentapp' => 'addressbook',
+		'noheader'   => True,
+		'nonavbar'   => True
 	);
 	include('../header.inc.php');
 
 	$obj = CreateObject('addressbook.uiaddressbook');
 	$obj->index();
+
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

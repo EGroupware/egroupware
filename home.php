@@ -20,10 +20,33 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
 	if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
+		exit;
+	}
+
+	$GLOBALS['phpgw_info']['flags'] = array(
+		'noheader'                => True,
+		'nonavbar'                => True,
+		'currentapp'              => 'home',
+		'enable_network_class'    => True,
+		'enable_contacts_class'   => True,
+		'enable_nextmatchs_class' => True
+	);
+	include('header.inc.php');
+
+	if ($_GET['phpgw_forward'])
+	{
+		foreach($_GET as $name => $value)
+		{
+			if (ereg('phpgw_',$name))
+			{
+				$extra_vars .= '&' . $name . '=' . urlencode($value);
+			}
+		}
+		$GLOBALS['phpgw']->redirect_link($_GET['phpgw_forward'],$extra_vars);
 		exit;
 	}
 
@@ -32,67 +55,89 @@
 		$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] = $GLOBALS['phpgw_info']['server']['force_default_app'];
 	}
 
-	if ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
-		&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
-	{
-		//$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
-		Header('Location: ' . $GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
-	}
-	else
-	{
-	$GLOBALS['phpgw_info']['flags'] = array
-	(
-		'noheader'					=> True,
-		'nonavbar'					=> True,
-		'currentapp'				=> 'home',
-		'enable_network_class'		=> True,
-		'enable_contacts_class'		=> True,
-		'enable_nextmatchs_class'	=> True
-	);
-	include('header.inc.php');
-
-	if ($GLOBALS['phpgw_forward'])
-	{
-		while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
+	if (($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] &&
+		$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
+		($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 		{
-			if (ereg('phpgw_',$name))
+			if ($GLOBALS['HTTP_GET_VARS']['cd'] == 'yes')
 			{
-				$extra_vars .= '&' . $name . '=' . urlencode($value);
+				if (! $navbarframe && ! $framebody)
+				{
+					$tpl = new Template(PHPGW_TEMPLATE_DIR);
+					$tpl->set_file(array(
+						'frames'       => 'frames.tpl',
+						'frame_body'   => 'frames_body.tpl',
+						'frame_navbar' => 'frames_navbar.tpl'
+					));
+					$tpl->set_var('navbar_link',$GLOBALS['phpgw']->link('index.php','navbarframe=True&cd=yes'));
+					if ($GLOBALS['forward'])
+					{
+						$tpl->set_var('body_link',$GLOBALS['phpgw']->link($GLOBALS['forward']));
+					}
+					else
+					{
+						$tpl->set_var('body_link',$GLOBALS['phpgw']->link('index.php','framebody=True&cd=yes'));
+					}
+
+					if ($GLOBALS['phpgw_info']['user']['preferences']['common']['frame_navbar_location'] == 'bottom')
+					{
+						$tpl->set_var('frame_size','*,60');
+						$tpl->parse('frames_','frame_body',True);
+						$tpl->parse('frames_','frame_navbar',True);
+					}
+					else
+					{
+						$tpl->set_var('frame_size','60,*');
+						$tpl->parse('frames_','frame_navbar',True);
+						$tpl->parse('frames_','frame_body',True);
+					}
+					$tpl->pparse('out','frames');
+				}
+				if ($navbarframe)
+				{
+					$GLOBALS['phpgw']->common->phpgw_header();
+					echo parse_navbar();
+				}
 			}
 		}
-		$GLOBALS['phpgw']->redirect_link($GLOBALS['phpgw_forward'],$extra_vars);
-	}
-
-	$GLOBALS['phpgw']->translation->add_app('mainscreen');
-	if (lang('mainscreen_message') != 'mainscreen_message'.lang_char())
-	{
-		$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array(
-			'mainscreen_message' => stripslashes(lang('mainscreen_message'))
-		));
-	}
-
-	if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-		$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-		(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
-		$GLOBALS['phpgw_info']['server']['checkfornewversion']))
-	{
-		$GLOBALS['phpgw']->network->set_addcrlf(False);
-		$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
-		for ($i=0; $i<count($lines); $i++)
+		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
+			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
-			if(@ereg('currentversion',$lines[$i]))
-			{
-				$line_found = explode(':',chop($lines[$i]));
-			}
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
 		}
-		if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
+		else
 		{
-			$message = '<p>There is a new version of phpGroupWare available. <a href="'
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+		}
+
+		$GLOBALS['phpgw']->translation->add_app('mainscreen');
+		if (lang('mainscreen_message') != 'mainscreen_message*')
+		{
+			echo '<center>' . stripslashes(lang('mainscreen_message')) . '</center>';
+		}
+
+		if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
+			$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
+			(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
+			$GLOBALS['phpgw_info']['server']['checkfornewversion']))
+		{
+			$GLOBALS['phpgw']->network->set_addcrlf(False);
+			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
+			for ($i=0; $i<count($lines); $i++)
+			{
+				if (ereg('currentversion',$lines[$i]))
+				{
+					$line_found = explode(':',chop($lines[$i]));
+				}
+			}
+			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
+			{
+				echo '<p>There is a new version of phpGroupWare available. <a href="'
 					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
-			$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=True;
-		}
+			}
 
-		$_found = False;
+			$_found = False;
 			$GLOBALS['phpgw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
 			while($GLOBALS['phpgw']->db->next_record())
 			{
@@ -103,26 +148,25 @@
 				{
 					include($_versionfile);
 					$_file_version = $setup_info[$_app_name]['version'];
+					$_app_title    = $GLOBALS['phpgw_info']['apps'][$_app_name]['title'];
 					unset($setup_info);
 
 					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
 					{
 						$_found = True;
-						$_app_string .= '<br>' . $GLOBALS['phpgw_info']['apps'][$_app_name]['title'];
+						$_app_string .= '<br>' . $_app_title;
 					}
 					unset($_file_version);
+					unset($_app_title);
 				}
 				unset($_db_version);
 				unset($_versionfile);
 			}
 			if($_found)
 			{
-				$message = '<br>' . lang('The following applications require upgrades') . ':' . "\n";
-				$message .= $_app_string . "\n";
-				$message .= '<br>' . lang('Please run setup to become current') . '.' . "\n";
-
-				$GLOBALS['phpgw_info']['flags']['msgbox_data'][$message]=False;
-				unset($message);
+				echo '<br>' . lang('The following applications require upgrades') . ':' . "\n";
+				echo $_app_string . "\n";
+				echo '<br>' . lang('Please run setup to become current') . '.' . "\n";
 				unset($_app_string);
 			}
 		}
@@ -130,7 +174,7 @@
 	if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) &&
 		$GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
 	{
-/* need to figure out how to implement this properly
+?>
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 	var NotifyWindow;
 
@@ -152,8 +196,8 @@
 	}
 </SCRIPT>
 
+<?php
 		echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
-*/
 	}
 
 	/* This initializes the users portal_order preference if it does not exist. */
@@ -187,19 +231,15 @@
 	}
 	else
 	{
-		$sorted_apps = Array
-		(
+		$sorted_apps = Array(
 			'email',
 			'calendar',
-			'news',
+			'news_admin',
 			'addressbook',
 			'squirrelmail'
 		);
 	}
 	@reset($sorted_apps);
-
-	$GLOBALS['phpgw']->portalbox = CreateObject('phpgwapi.listbox');
-
 	$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
 
 	if($GLOBALS['portal_order'])
@@ -212,8 +252,8 @@
 		}
 		$GLOBALS['phpgw']->preferences->save_repository();
 	}
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'home';	// has been changed by hook_home's
 
-	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->portalbox->output);
-	}
+	//$phpgw->common->debug_phpgw_info();
+	//$phpgw->common->debug_list_core_functions();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

@@ -1,19 +1,13 @@
-<!-- $Id$ -->
-
 <!-- BEGIN header -->
-
 <form method="POST" action="{action_url}">
-<table border="0" align="center" width="85%">
+<table align="center" width="85%" callspacing="0" style="{ border: 1px solid #000000; }">
    <tr class="th">
     <td colspan="2">&nbsp;<b>{title}</b></td>
    </tr>
-
 <!-- END header -->
-
 <!-- BEGIN body -->
-
    <tr class="row_on">
-    <td>{lang_Would_you_like_phpGroupWare_to_check_for_new_application_versions_when_admins_login_?}:</td>
+    <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
     <td>
      <select name="newsettings[checkfornewversion]">
       <option value="">{lang_No}</option>
@@ -53,6 +47,11 @@
    </tr>
 
    <tr class="row_off">
+    <td>{lang_Maximum_entries_in_click_path_history}:</td>
+    <td><input size="8" name="newsettings[max_history]" value="{value_max_history}"></td>
+   </tr>
+
+   <tr class="row_on">
     <td>{lang_Would_you_like_to_automaticaly_load_new_langfiles_(at_login-time)_?}:</td>
     <td>
      <select name="newsettings[disable_autoload_langfiles]">
@@ -61,27 +60,6 @@
      </select>
     </td>
    </tr>
-
-<!-- not yet implemented (.16 only atm)
-   <tr class="row_on">
-    <td>{lang_Maximum_entries_in_click_path_history}:</td>
-    <td><input size="8" name="newsettings[max_history]" value="{value_max_history}"></td>
-   </tr>
--->
-<!--
-   <tr class="row_off">
-     <td>{lang_Default_file_system_space_per_user/lang_group_?}:</td>
-     <td>
-      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
-      <select name="newsettings[vfs_default_account_size_type]">
-       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
-       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
-       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
-       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
-      </select>
-     </td>
-    </tr>
--->
 
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_appearance}</b></td>
@@ -92,8 +70,7 @@
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
    </tr>
 
-<!-- not yet implemented (.16 only atm)
-    <tr class="row_off">
+   <tr class="row_off">
     <td>{lang_Enter_the_background_color_for_the_site_title}:</td>
     <td>#<input name="newsettings[login_bg_color_title]" value="{value_login_bg_color_title}"></td>
    </tr>
@@ -117,24 +94,32 @@
     <td>{lang_Enter_the_title_of_your_logo}:</td>
     <td><input name="newsettings[login_logo_title]" value="{value_login_logo_title}"></td>
    </tr>
--->
-<!--
-   <tr class="row_off">
-    <td>{lang_How_would_you_like_to_sort_applications_in_the_navbar?}:</td>
+
+   <tr class="row_on">
+    <td>{lang_Show_'powered_by'_logo_on}:</td>
     <td>
-     <select name="newsettings[app_order]">
-      <option value="">{lang_Order_id}</option>
-      <option value="True"{selected_app_order_True}>{lang_Alphabetically}</option>
+     <select name="newsettings[showpoweredbyon]">
+      <option value="bottom" {selected_showpoweredbyon_bottom}>{lang_bottom}</option>
+      <option value="top" {selected_showpoweredbyon_top}>{lang_top}</option>
      </select>
     </td>
    </tr>
--->
+
+   <tr class="row_off">
+    <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
+    <td>
+     <select name="newsettings[htmlcompliant]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_htmlcompliant_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
 
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_security}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Use_cookies_to_pass_sessionid}:</td>
     <td>
      <select name="newsettings[usecookies]">
@@ -144,7 +129,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_check_ip_address_of_all_sessions}:</td>
     <td>
      <select name="newsettings[sessions_checkip]">
@@ -164,38 +149,21 @@
     </td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_Minimum_password_length}:</td>
-    <td><input size="4" name="newsettings[pass_min_length]" value="{value_pass_min_length}"></td>
-   </tr>
 
-   <tr class="row_on">
-    <td>{lang_Require_non-alpha_characters}:</td>
-    <td>
-     <select name="newsettings[pass_require_non_alpha]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_pass_require_non_alpha_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
+<!--
    <tr class="row_off">
-    <td>{lang_Require_numerical_characters}:</td>
-    <td>
-     <select name="newsettings[pass_require_numbers]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_pass_require_numbers_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_on">
-    <td>{lang_Require_special_characters}:</td>
-    <td>
-     <select name="newsettings[pass_require_special_char]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_pass_require_special_char_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
+     <td>{lang_Default_file_system_space_per_user}/{lang_group_?}:</td>
+     <td>
+      <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
+      <select name="newsettings[vfs_default_account_size_type]">
+       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
+       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
+       <option value="kb"{selected_vfs_default_account_size_type_kb}>KB</option>
+       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
+      </select>
+     </td>
+    </tr>
+-->
 
    <tr class="row_off">
     <td>{lang_How_many_days_should_entries_stay_in_the_access_log,_before_they_get_deleted_(default_90)_?}:</td>
@@ -232,17 +200,15 @@
     </td>
    </tr>
 
-<!-- not yet implemented (.16 only atm)
    <tr class="row_on">
     <td>{lang_Disable_"auto_completion"_of_the_login_form_}:</td>
     <td>
       <select name="newsettings[autocomplete_login]">
          <option value="">{lang_No}</option>
-         <option value="True"{autocomplete_login}>{lang_Yes}</option>
+	 <option value="True"{autocomplete_login}>{lang_Yes}</option>
        </select>
     </td>
    </tr>
--->
 <!-- END body -->
 
 <!-- BEGIN footer -->
@@ -255,6 +221,7 @@
     <td colspan="2" align="center">
       <input type="submit" name="submit" value="{lang_submit}">
       <input type="submit" name="cancel" value="{lang_cancel}">
+		  <br>
     </td>
   </tr>
 </table>

@@ -37,16 +37,13 @@ country	common	es	Pais
 csv-fieldname	addressbook	es	Campo CSV
 csv-filename	addressbook	es	Archivo CSV
 custom fields	addressbook	es	Campos Personalizados
-debug output in browser	addressbook	es	Visualizar depuracion
 default filter	preferences	es	Filtro por Defecto
 department	common	es	Departmento
 domestic	common	es	Nacional
 download	addressbook	es	Descargar Archivo
-download export file (uncheck to debug output in browser)	addressbook	es	Descargar archivo exportado
 edit custom field	admin	es	Editar Campo Personalizado
 edit custom fields	admin	es	Editar Campos Personalizados
 e-mail	addressbook	es	E-Mail
-enter the path to the export file here	addressbook	es	Ingrese la ruta al archivo exportado aqui
 export contacts	addressbook	es	Exportar Contactos
 export file name	addressbook	es	Nombre del Archivo a Exportar
 export from addressbook	addressbook	es	Exportar de la Libreta de Direcciones
@@ -76,8 +73,6 @@ import file	addressbook	es	Importar Archivo
 import from ldif, csv, or vcard	addressbook	es	Importar desde LDIF, CSV o VCard
 import from netscape	addressbook	es	Importar desde Netscape
 import from outlook	addressbook	es	Importar desde Outlook
-In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	es	<P>
-the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	es	Desde Outlook, seleccione su carpeta de contactos, seleccione <b>Importar y Exportar</b> del menu <b>Archivo</b> y exporte sus contactos en un archivo de Texto separado por comas (CSV).</P>
 international	common	es	Internacional
 isdn phone	addressbook	es	Telefono ISDN
 label	addressbook	es	Etiqueta
@@ -87,14 +82,12 @@ ldap host for contacts	admin	es	Host LDAP para contacts
 ldap root dn for contacts	admin	es	Raiz LDAP dn para contactos
 ldap root pw for contacts	admin	es	Raiz LDAP pw para contactos
 line 2	addressbook	es	Linea 2
-mark records as private	addressbook	es	Marcar registros como Privados
 message phone	addressbook	es	Telefono de Mensajes
 middle name	addressbook	es	Segundo Nombre
 mobile	addressbook	es	Tel.Celular
 mobile phone	addressbook	es	Telefono Movil
 modem phone	addressbook	es	Telefono Modem
 no vcard	common	es	Sin VCard
-none	addressbook	es	Ninguno
 number of records to read (<=200)	addressbook	es	Registros a leer (menos de 200)
 other number	addressbook	es	Otro Numero
 other phone	addressbook	es	Otro Telefono
@@ -112,7 +105,6 @@ record access	addressbook	es	Acceso al registro
 record owner	addressbook	es	Dueño del registro
 records read (not yet imported, you may go back and uncheck test import)	addressbook	es	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
 retrieve contacts	admin	es	Recuperar Contactos
-select the type of conversion	addressbook	es	Seleccione el tipo de conversion
 select where you want to store	admin	es	Seleccione donde desea almacenar
 show birthday reminders on main screen	addressbook	es	Mostrar recordatorios de Cumplea&ntilde;os en la Pantalla Principal
 startrecord	addressbook	es	Registro Inicial

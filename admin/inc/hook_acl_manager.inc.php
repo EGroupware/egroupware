@@ -17,7 +17,7 @@
 			'List config settings'   => 1,
 			'Change config settings' => 2
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['account_access'] = array(
 		'name' => 'Deny access to user accounts',
@@ -27,9 +27,10 @@
 			'Add account'     => 4,
 			'View account'    => 8,
 			'Edit account'    => 16,
-			'Delete account'  => 32
+			'Delete account'  => 32,
+			'change ACL Rights' => 64
 		)
-	);
+	);	// was already there and seems to work ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['group_access'] = array(
 		'name' => 'Deny access to groups',
@@ -41,7 +42,7 @@
 			'Edit group'    => 16,
 			'Delete group'  => 32
 		)
-	);
+	);	// was already there and seems to work ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['peer_server_access'] = array(
 		'name' => 'Deny access to peer servers',
@@ -49,7 +50,7 @@
 			'Peer server list'    => 1,
 			'Search peer servers' => 2,
 			'Add peer server'     => 4,
-			'View peer server'    => 8,
+//			'View peer server'    => 8,		// there's no view-routine atm.
 			'Edit peer server'    => 16,
 			'Delete peer server'  => 32
 		)
@@ -61,9 +62,10 @@
 			'Applications list' => 1,
 			'Add application'   => 2,
 			'Edit application'  => 4,
-			'Delete application'  => 8
+			'Delete application'  => 8,
+			'Register application hooks' => 16
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['global_categories_access'] = array(
 		'name' => 'Deny access to global categories',
@@ -73,9 +75,10 @@
 			'Add category'      => 4,
 			'View category'     => 8,
 			'Edit category'     => 16,
-			'Delete category'   => 32
+			'Delete category'   => 32,
+			'Add sub-category'  => 64
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['mainscreen_message_access'] = array(
 		'name' => 'Deny access to mainscreen message',
@@ -83,7 +86,7 @@
 			'Main screen message' => 1,
 			'Login message'       => 2
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['current_sessions_access'] = array(
 		'name' => 'Deny access to current sessions',
@@ -93,33 +96,33 @@
 			'Show session IP address' => 4,
 			'Kill session'            => 8
 		)
-	);
+	);	// checked and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['access_log_access'] = array(
-		'name' => 'Deny access to session log',
+		'name' => 'Deny access to access log',
 		'rights' => array(
-			'Show session log' => 1
+			'Show access log' => 1
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['error_log_access'] = array(
 		'name' => 'Deny access to error log',
 		'rights' => array(
 			'Show error log' => 1
 		)
-	);
+	);	// added and working ralfbecker
 
-	$GLOBALS['acl_manager']['admin']['appreg_access'] = array(
-		'name' => 'Deny access to application registery',
+	$GLOBALS['acl_manager']['admin']['asyncservice_access'] = array(
+		'name' => 'Deny access to asynchronous timed services',
 		'rights' => array(
-			'Register applications' => 1
+			'Asynchronous timed services' => 1
 		)
-	);
+	);	// added and working ralfbecker
 
 	$GLOBALS['acl_manager']['admin']['info_access'] = array(
 		'name' => 'Deny access to phpinfo',
 		'rights' => array(
 			'Show phpinfo()' => 1
  		)
- 	);
+ 	);	// added and working ralfbecker
 

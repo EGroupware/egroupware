@@ -1,5 +1,5 @@
 
-<!-- BEGIN export -->
+<!-- BEGIN import -->
 <CENTER>
   <TABLE WIDTH=90%>
     <TR BGCOLOR="{navbar_bg}">
@@ -10,13 +10,13 @@
       <TD>
         <FORM ENCTYPE="multipart/form-data" action="{action_url}" method="POST">
         <OL>
-        <LI>{conversion}:
+        <LI>Select the type of conversion:
         <SELECT NAME="conv_type">
-        <OPTION VALUE="none">&lt;{none}&gt;</OPTION>
+        <OPTION VALUE="none">&lt;none&gt;</OPTION>
 {conv}        </SELECT><P></LI>
         <LI>{filename}:<INPUT NAME="tsvfilename" VALUE="export.txt"></LI>
         <LI>{lang_cat}:{cat_link}</LI>
-        <LI><INPUT NAME="download" TYPE="checkbox" checked>{download_export}</LI>
+        <LI><INPUT NAME="download" TYPE="checkbox" checked>Download export file (Uncheck to debug output in browser)</LI>
         <LI><INPUT NAME="convert" TYPE="submit" VALUE="{download}"></LI>
         </OL>
         <input type="hidden" name="sort" value="{sort}">

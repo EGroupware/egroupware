@@ -14,7 +14,7 @@
 
  <div align="center">
   <table border="0" width="70%">
-   <tr class="th">
+   <tr bgcolor="{th_bg}">
     <td>{lang_loginid}</td>
     <td>{lang_lastname}</td>
     <td>{lang_firstname}</td>
@@ -42,7 +42,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
-   <tr class="{tr_color}">
+   <tr bgcolor="{tr_color}">
     <td>{row_loginid}</td>
     <td>{row_lastname}</td>
     <td>{row_firstname}</td>

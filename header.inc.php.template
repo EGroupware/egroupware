@@ -44,12 +44,6 @@
 	/* Select which login template set you want, most people will use default */
 	$GLOBALS['phpgw_info']['login_template_set'] = 'default';
 
-	/* Select which login theme you want */
-	$GLOBALS['phpgw_info']['login_theme'] = 'submarine';
-
-	/* Enables support for non xslt apps or apps which weren't already ported to the last version of class.Templates.inc.php */
-	$GLOBALS['phpgw_info']['server']['support_old_style_apps'] = True;
-
 	/* This is used to control mcrypt's use */
 	$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 	/* Set this to 'old' for versions < 2.4, otherwise the exact mcrypt version you use. */

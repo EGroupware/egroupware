@@ -51,3 +51,4 @@ Täytä tiedot kenttiin ja napsauta OK.</li><p/></ul>
 Tiedon käyttöoikeus voidaan rajoittaa yksityiseksi, mikä ohittaa ACL:n
 asetuksen. Osoitekirjan asetuksista voit antaa muille käyttäjille
 oikeuden selata, muokata tai jopa poistaa tallentamiasi tietoja.<p/>
+<?php $phpgw->common->phpgw_footer(); ?>

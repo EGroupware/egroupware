@@ -34,3 +34,4 @@ on ollut tekemättä mitään ja mahdollisuus keskeyttää istunto.
 <p><i>Näytä käyttöloki:</i>
 <br>Tunnus, IP-osoite, Sisäänkirjautumisaika, Uloskirjautumisaika, Istunnon kesto.
 </ul>
+<?php $phpgw->common->phpgw_footer(); ?>
