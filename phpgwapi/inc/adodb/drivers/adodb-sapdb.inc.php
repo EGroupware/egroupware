@@ -45,6 +45,13 @@ class ADODB_SAPDB extends ADODB_odbc {
 		return $info;
 	}
 
+	function MetaPrimaryKeys($table)
+	{
+		$table = $this->Quote(strtoupper($table));
+
+		return $this->GetCol("SELECT columnname FROM COLUMNS WHERE tablename=$table AND mode='KEY' ORDER BY pos");
+	}
+		
  	function &MetaIndexes ($table, $primary = FALSE)
 	{
 		$table = $this->Quote(strtoupper($table));
@@ -75,13 +82,9 @@ class ADODB_SAPDB extends ADODB_odbc {
             $indexes[$row[0]]['columns'][] = $row[2];
     	}
 		if ($primary) {
-			$columns = array();
-			foreach($this->GetAll("SELECT columnname FROM COLUMNS WHERE tablename=$table AND mode='KEY' ORDER BY pos") as $row) {
-				$columns[] = $row['COLUMNNAME'];
-			}
 			$indexes['SYSPRIMARYKEYINDEX'] = array(
 					'unique' => True,	// by definition
-					'columns' => $columns,
+					'columns' => $this->GetCol("SELECT columnname FROM COLUMNS WHERE tablename=$table AND mode='KEY' ORDER BY pos"),
 				);
 		}
         return $indexes;
