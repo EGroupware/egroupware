@@ -961,7 +961,14 @@
 			$lastslashpos < $baselen ? $length = 0 : $length = $lastslashpos - $baselen;
 
 			$extra_path = $rarray['fake_extra_path'] = $rarray['real_extra_path'] = substr ($string, strlen ($base), $length);
-			$name = $rarray['fake_name'] = $rarray['real_name'] = substr ($string, strrpos ($string, $base_sep) + 1);
+			if($string[1] != ':')
+			{
+ 				$name = $rarray['fake_name'] = $rarray['real_name'] = substr ($string, strrpos ($string, $base_sep) + 1);
+			}
+			else
+			{
+				$name = $rarray['fake_name'] = $rarray['real_name'] = $string;
+			}
 
 			if ($fake)
 			{
@@ -987,7 +994,14 @@
 			}
 			else
 			{
-				$rarray['fake_full_path'] = $opp_base . $rarray['fake_extra_path'] . '/' . $rarray['fake_name'];
+				if($rarray['fake_name'][1] != ':')
+				{
+ 					$rarray['fake_full_path'] = $opp_base . $rarray['fake_extra_path'] . '/' . $rarray['fake_name'];
+				}
+				else
+				{
+					$rarray['fake_full_path'] = $rarray['fake_name'];
+				}
 				if ($extra_path)
 				{
 					$rarray['fake_leading_dirs'] = $opp_base . $extra_path;
