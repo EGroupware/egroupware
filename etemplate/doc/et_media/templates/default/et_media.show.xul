@@ -6,7 +6,7 @@
     </columns>
     <rows>
       <row>
-        <description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+        <description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
       </row>
       <row>
         <hrule span="all"/>

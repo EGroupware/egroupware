@@ -63,8 +63,8 @@ an eTemplate from the example app in the <a href="etemplate.html">Tutorial</a>
       &lt;/row>
       &lt;row>
         &lt;description value="Type"/>
-        &lt;menulist>
-          &lt;menupopup span="all" id="type" statustext="select the type fitting most"/>
+        &lt;menulist span="all" statustext="select the type fitting most">
+          &lt;menupopup id="type"/>
         &lt;/menulist>
       &lt;/row>
       &lt;row>
@@ -121,11 +121,13 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Type</b></td>
-	<td>no attr,<br>this is<br>the tag</td>
-	<td>yes</td>
+	<td>type<br><i>(only for<br>sub-types)</td>
+	<td>no</td>
 	<td>type</td>
 	<td>
-		The type of the widget. It has to be either the name of a standard eTemplate-widget or of
+		The type of the widget is stored in the tag itself, some widgets have sub-types (unknow to XUL).
+		In that case the subtype is stored in the type attribut.<br>
+		The Type / tag has to be either the name of a standard eTemplate-widget or of
 		an already existing <a href="#extensions">extension</a>.
 	</td>
 </tr>

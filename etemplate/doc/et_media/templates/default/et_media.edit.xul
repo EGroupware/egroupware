@@ -9,7 +9,7 @@
     </columns>
     <rows>
       <row>
-        <description size="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
+        <description options="ib" span="all" value="eTemplates MediaDB" no_lang="1" id="msg"/>
       </row>
       <row>
         <hrule span="all"/>
@@ -27,8 +27,8 @@
       </row>
       <row>
         <description value="Type"/>
-        <menulist>
-          <menupopup span="all" id="type" statustext="select the type fitting most"/>
+        <menulist span="all" statustext="select the type fitting most">
+          <menupopup id="type"/>
         </menulist>
       </row>
       <row>
