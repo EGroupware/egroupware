@@ -9,13 +9,10 @@
 	* Free Software Foundation; either version 2 of the License, or (at your    *
 	* option) any later version.                                                *
 	\***************************************************************************/
-
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
-		'currentapp'              => $cats_app,
-		'enable_nextmatchs_class' => True
-	);
+	$phpgw_info['flags'] = array('currentapp' => $cats_app,
+								'enable_nextmatchs_class' => True);
 
 	if (! $appheader)
 	{
@@ -60,15 +57,6 @@
 
 	if (! $start) { $start = 0; }
 
-	if($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
-	{
-		$limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-	}
-	else
-	{
-		$limit = 15;
-	}
-
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = $cats_app;
 
@@ -90,18 +78,7 @@
 	$t->set_var('left',$left);
 	$t->set_var('right',$right);
 
-	if (($start + $limit) > $c->total_records)
-	{
-		$t->set_var('lang_showing',lang('showing x - x of x',($start + 1),$c->total_records,$c->total_records));
-	}
-	elseif ($c->total_records > $limit)
-	{
-		$t->set_var('lang_showing',lang('showing x - x of x',($start + 1),($start + $limit),$c->total_records));
-	}
-	else
-	{
-		$t->set_var('lang_showing',lang('showing x',$c->total_records));
-	}
+	$t->set_var('lang_showing',$phpgw->nextmatchs->show_hits($c->total_records,$start));
 
 // ------------------------------ end nextmatch ------------------------------------------
 

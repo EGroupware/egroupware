@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$phpgw_info['flags'] = array('currentapp' => 'admin',
-				'enable_nextmatchs_class' => True);
+								'enable_nextmatchs_class' => True);
 
 	include('../header.inc.php');
 
@@ -39,15 +39,6 @@
 
 	if (! $start) { $start = 0; }
 
-	if($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
-	{
-		$limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-	}
-	else
-	{
-		$limit = 15;
-	}
-
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = 'phpgw';
 	$categories = $c->return_array('all',$start,True,$query,$sort,$order,True);
@@ -59,19 +50,7 @@
 	$t->set_var('left',$left);
 	$t->set_var('right',$right);
 
-	if (($start + $limit) > $c->total_records)
-	{
-		$lang_showing = lang('showing x - x of x',($start + 1),$c->total_records,$c->total_records);
-	}
-	elseif ($c->total_records > $limit)
-	{
-		$lang_showing=lang('showing x - x of x',($start + 1),($start + $limit),$c->total_records);
-	}
-	else
-	{
-		$lang_showing=lang('showing x',$c->total_records);
-	}
-	$t->set_var('lang_showing',$lang_showing);
+	$t->set_var('lang_showing',$phpgw->nextmatchs->show_hits($c->total_records,$start));
 
 // ------------------------------ end nextmatch ------------------------------------------
 
