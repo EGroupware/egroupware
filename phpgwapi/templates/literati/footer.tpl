@@ -8,4 +8,6 @@
 </TABLE></TR>
 </TABLE>
 <p align="center" class="copyright">{powered_by}</p>
+</body>
+</html>
 <!-- END footer.tpl -->

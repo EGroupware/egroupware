@@ -15,4 +15,6 @@
   <td background="{img_root}/bg_filler.gif" align="right"><font color=white>{powered_by}</font></td>
  </tr>
 </table>
+</body>
+</html>
 <!-- END footer -->

@@ -70,5 +70,5 @@
 		echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
 	}
 ?>
-</BODY>
-</HTML>
+<!--</BODY>
+</HTML>-->
