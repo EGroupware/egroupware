@@ -22,11 +22,12 @@
   \**************************************************************************/
 
   /* $Id$ */
-		/*!
-		@class vfs
-		@abstract virtual file system
-		@description Authors: Zone
-		*/
+
+	/*!
+	@class vfs
+	@abstract Virtual File System
+	@description Authors: Zone
+	*/
 
 	/* Relative defines.  Used mainly by getabsolutepath () */
 	define (RELATIVE_ROOT, 1);
@@ -953,7 +954,7 @@ class vfs
 		}
 
 		/* Check if they're in the group.  If so, they have access */
-		$memberships = $phpgw->accounts->memberships ($account_id);
+		$memberships = $phpgw->accounts->membership ($account_id);
 
 		reset ($memberships);
 		while (list ($num, $group_array) = each ($memberships))
