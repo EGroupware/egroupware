@@ -1,9 +1,9 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - addressbook                                               *
+  * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
-  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
-  * --------------------------------------------                             *
+  * Written by Miles Lott <milos@groupwhere.org>                             *
+  * ------------------------------------------------------------------------ *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
@@ -104,6 +104,17 @@
 
 			if($convert)
 			{
+				if($conv_type == 'none')
+				{
+					$GLOBALS['phpgw_info']['flags']['noheader'] = False;
+					$GLOBALS['phpgw_info']['flags']['noheader'] = True;
+					$GLOBALS['phpgw']->common->phpgw_header();
+					echo parse_navbar();
+					echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
+					echo '&nbsp<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import') . '">' . lang('OK') . '</a>';
+					$GLOBALS['phpgw']->common->phpgw_footer();
+					$GLOBALS['phpgw']->common->phpgw_exit();
+				}
 				$buffer = $this->bo->import($tsvfile['tmp_name'],$conv_type,$private,$fcat_id);
 
 				if($download == '')

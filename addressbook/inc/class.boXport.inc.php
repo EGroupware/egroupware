@@ -1,9 +1,9 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - addressbook                                               *
+  * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
-  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
-  * --------------------------------------------                             *
+  * Written by Miles Lott <milos@groupwhere.org>                             *
+  * ------------------------------------------------------------------------ *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
@@ -35,7 +35,7 @@
 
 		function boXport($session=False)
 		{
-			$this->contacts = $GLOBALS['phpgw']->contacts;
+			$this->contacts = &$GLOBALS['phpgw']->contacts;
 			$this->so = CreateObject('addressbook.soaddressbook');
 			if($session)
 			{
@@ -73,13 +73,13 @@
 				$this->cat_id = -1;
 			}
 
-			if(isset($_sort)   && !empty($_sort))
+			if(isset($_sort) && !empty($_sort))
 			{
 				if($this->debug) { echo '<br>overriding $sort: "' . $this->sort . '" now "' . $_sort . '"'; }
 				$this->sort   = $_sort;
 			}
 
-			if(isset($_order)  && !empty($_order))
+			if(isset($_order) && !empty($_order))
 			{
 				if($this->debug) { echo '<br>overriding $order: "' . $this->order . '" now "' . $_order . '"'; }
 				$this->order  = $_order;
