@@ -33,34 +33,31 @@
         $this->users_enabled_apps();
       }
     }
-    function users_enabled_apps(){
-      global $phpgw, $phpgw_info;
-      $acl_apps = $phpgw->acl->get_app_list('run', 1);
-      if ($acl_apps != False){
-        reset ($acl_apps);
-        while (list(,$value) = each($acl_apps)){
-          $apps[] = $value;
-        }
-      }
-      if(gettype($phpgw_info["apps"]) != "array") {
-        $this->read_installed_apps();
-      }
-      asort ($phpgw_info["apps"]);
-      if(count($apps)) {
-        for ($i=0;$i<count($apps);$i++) {
-          if ($phpgw_info["apps"][$apps[$i]]["enabled"] == True) {
-            $phpgw_info["user"]["apps"][$apps[$i]] = True;
+
+    function users_enabled_apps()
+    {
+       global $phpgw, $phpgw_info;
+       $acl_apps = $phpgw->acl->get_app_list('run', 1);
+       if ($acl_apps != False) {
+          reset ($acl_apps);
+          while (list($app) = each($phpgw_info["apps"])) {
+             if ($phpgw->acl->check("run",1,$app)) {
+                $phpgw_info["user"]["apps"][$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
+             } 
           }
-        }
-      }
+       }
+       if (gettype($phpgw_info["apps"]) != "array") {
+          $this->read_installed_apps();
+       }
     }
 
     function read_installed_apps(){
       global $phpgw, $phpgw_info;
       $phpgw->db->lock(array("applications"));
-      $phpgw->db->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
+      $phpgw->db->query("select * from applications where app_enabled != '0' order by app_order",__LINE__,__FILE__);
       if($phpgw->db->num_rows()) {
         while ($phpgw->db->next_record()) {
+#          echo "<br>TEST: " . $phpgw->db->f("app_order") . " - " . $phpgw->db->f("app_name");
           $name = $phpgw->db->f("app_name");
           $title  = $phpgw->db->f("app_title");
           $status = $phpgw->db->f("app_enabled");
