@@ -55,7 +55,10 @@
       $this->data = Array();
       $this->data = unserialize($pref_info);
       $this->db->unlock();
-      reset ($this->data);
+      // This is to supress warnings durring login
+      if (gettype($this->data) == "array") {
+         reset ($this->data);
+      }
       return $this->data;
     }
 
