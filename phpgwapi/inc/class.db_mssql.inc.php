@@ -70,6 +70,20 @@
 			}
 		}
 
+		function disconnect()
+		{
+			if($this->Link_ID <> 0)
+			{
+				@mssql_close($this->Link_ID);
+				$this->Link_ID = 0;
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
 		function db_addslashes($str)
 		{
 			if (!IsSet($str) || $str == '')
