@@ -1,6 +1,6 @@
 <!-- BEGIN portal_box -->
 <p>
-<table border=0 cellpadding="0" cellspacing="0" width="{outer_width}"  bgcolor="{outer_bgcolor}">
+<table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"  bgcolor="{outer_bgcolor}">
  <tr nowrap align="center">
   <td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
  </tr>
@@ -19,7 +19,9 @@
 
 <!-- BEGIN portal_row -->
     <tr>
+	  <td>
 {output}
+	  </td>
     </tr>
 <!-- END portal_row -->
 
