@@ -28,7 +28,8 @@ class calendar_ extends calendar__
 		$this->stream = $phpgw->db;
 		if($user=='')
 		{
-			$this->user = $phpgw_info['user']['account_id'];
+			settype($user,'integer');
+			$user = $phpgw_info['user']['account_id'];
 		}
 		elseif(is_int($user)) 
 		{
@@ -38,7 +39,7 @@ class calendar_ extends calendar__
 		{
 			$this->user = $phpgw->accounts->name2id($user);
 		}
-		
+
 		return $this->stream;
 	}
 
@@ -213,7 +214,7 @@ class calendar_ extends calendar__
 			$this->event->end->alarm	= 0;
 
 		//Legacy Support
-			$this->event->priority = $this->stream->f('cal_priority');
+			$this->event->priority = intval($this->stream->f('cal_priority'));
 			if($this->stream->f('cal_group'))
 			{
 				$groups = explode(',',$this->stream->f('cal_group'));

@@ -80,7 +80,7 @@ class calendar extends calendar_
 		$this->image_dir = $phpgw->common->get_image_path('calendar');
 		$this->today = $this->localdates(time());
 
-		$this->open($this->owner);
+		$this->open('',intval($this->owner));
 		$this->read_repeated_events($this->owner);
 		$this->set_filter();
 	}

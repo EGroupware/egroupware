@@ -47,13 +47,18 @@
 				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
 			}
 		}
+		else
+		{
+			$owner = $phpgw_info['user']['account_id'];
+			$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+		}
 	}
 
 	/* Load calendar class */
 	$parameters = Array(
 		'printer_friendly'=> ((isset($friendly) && ($friendly==1))?True:False),
-		'owner'				=> $owner,
-		'rights'				=> $rights
+		'owner'				=> intval($owner),
+		'rights'				=> intval($rights)
 	);
   
 	$phpgw->calendar  = CreateObject('calendar.calendar',$parameters);

@@ -88,8 +88,16 @@
 <?php
     if(count($grants) > 0)
     {
+    	$page_array = explode('/',$phpgw_info['server']['webserver_url']);
+    	$page_dir = '/';
+    	for($i=3;$i<count($page_array);$i++)
+    	{
+    		$page_dir .= $page_array[$i].'/';
+    	}
+    	$page_dir = substr($page_dir,0,strlen($page_dir)-1);
+    	$page = str_replace($page_dir,'',$PHP_SELF);
 ?>
-  <form action="<?php echo $phpgw->link($PHP_SELF); ?>" method="POST" name="setowner">
+  <form action="<?php echo $phpgw->link($page); ?>" method="POST" name="setowner">
    <td width="20%" align="center" valign="center">
     <b><?php echo lang('User'); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">

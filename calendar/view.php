@@ -55,33 +55,21 @@
 
 	echo '<center>';
 
-	if (($event->owner == $owner) && ($rights & PHPGW_ACL_EDIT))
+	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_EDIT) == True))
 	{
 		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button','  '.lang('Edit').'  ');
 		$p->set_var('action_confirm_button','');
-		$p->parse('edit_button','form_button');
-	}
-	else
-	{
-		$p->set_var('edit_button','');
+		echo $p->finish($p->parse('out','form_button'));
 	}
 
-	echo $p->finish($p->parse('out','form_button'));
-
-	if (($event->owner == $owner) && ($rights & PHPGW_ACL_DELETE))
+	if (($event->owner == $owner) && ($phpgw->calendar->check_perms(PHPGW_ACL_DELETE) == True))
 	{
 		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button',lang('Delete'));
 		$p->set_var('action_confirm_button',"onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"");
-		$p->parse('delete_button','form_button');
+		echo $p->finish($p->parse('out','form_button'));
 	}
-	else
-	{
-		$p->set_var('delete_button','');
-	}
-
-	echo $p->finish($p->parse('out','form_button'));
 
 	echo '</center>';
 	
