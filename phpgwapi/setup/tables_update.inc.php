@@ -971,13 +971,6 @@
 	}
 
 
-	$test[] = '0.9.10pre28';
-	function upgrade0_9_10pre28()
-	{
-		global $phpgw_info;
-		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10';
-	}
-
 	$test[] = '0.9.10';
 	function upgrade0_9_10()
 	{
@@ -987,7 +980,6 @@
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
 	}
-
 
 	$test[] = '0.9.11.004';
 	function upgrade0_9_11_004()
