@@ -214,7 +214,12 @@
 					{
 						$s .= ' selected';
 					}
-					$s .= '>' . $phpgw->strip_html($this->db->f('cat_name')) . '</option>';
+					$s .= '>' . $phpgw->strip_html($this->db->f('cat_name'));
+					if ($this->db->f('cat_appname') == 'phpgw') 
+					{
+					$s .=  '&lt;' . lang('Global') . '&gt;';
+					}
+					$s .=  '</option>';
 				}
 				return $s;
 			}
