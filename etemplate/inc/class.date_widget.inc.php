@@ -16,7 +16,10 @@
 	@class date_widget
 	@author ralfbecker
 	@abstract widget that reads a date and/or time 
-	@param Options/$cell['size'] = $format[,$year_no_select], $format: ''=timestamp or eg. 'Y-m-d' for 2002-12-31
+	@param Options/$cell['size'] = $format[,$options], 
+	@param $format: ''=timestamp or eg. 'Y-m-d H:i' for 2002-12-31 23:59
+	@param $options: &1 = year is int-input not selectbox, &2 = show a [Today] button, \
+		&4 = 1min steps for time (default is 5min, with fallback to 1min if value is not in 5min-steps)
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class date_widget
@@ -123,7 +126,7 @@
 			);
 			$opts = array(
 				'H' => $this->timeformat == '12' ? ',0,12' : ',0,23',
-				'i' => ',0,59,5'
+				'i' => $value['i'] % 5 || $options & 4 ? ',0,59' : ',0,59,5' // 5min steps, if ok with value
 			);
 			$help = array(
 				'Y' => 'Year',
@@ -140,6 +143,10 @@
 				$dcell['size'] = $opts[$format[$n]];
 				$dcell['name'] = $format[$n];
 				$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+				if ($n == 4)
+				{
+					$dcell['label'] = ':';	// put a : between hour and minute
+				}
 				$dcell['no_lang'] = True;
 				$row[$tpl->num2chrs($i)] = &$dcell;
 				unset($dcell);
