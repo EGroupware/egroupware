@@ -241,7 +241,8 @@
 					$setup_info = $phpgw_setup->process_droptables($setup_info);
 					break;
 				case 'new':
-					/* process all apps and langs(last param True) */
+					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
+					$setup_info = $phpgw_setup->upgrade_exclude($setup_info);
 					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG,True);
 					$included = True;
 					include('lang.php');

@@ -188,6 +188,23 @@
 			return $setup_info;
 		}
 
+		/*
+		 Called during the mass upgrade routine (Stage 1) to check for apps
+		 that wish to be excluded from this process.
+		*/
+		function upgrade_exclude($setup_info)
+		{
+			@reset ($setup_info);
+			while(list($key,$value) = @each($setup_info))
+			{
+				if(isset($value['no_mass_update']))
+				{
+					unset($setup_info[$key]);
+				}
+			}
+			return $setup_info;
+		}
+
 		function check_header()
 		{
 			if(!file_exists('../header.inc.php'))
