@@ -88,9 +88,14 @@ a:hover.portal_text
 }
 
 
-.row_on,.th_bright,.app_header
+.row_on,.app_header
 {
 	background-color: #ADADAD;
+}
+
+.th_bright
+{
+	background-color: #FFFFFF;
 }
 
 .msgbox

@@ -4,7 +4,7 @@
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	*                  and Bettina Gille [ceb@phpgroupware.org]                *
 	* Category manager                                                         *
-	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
+	* Copyright (C) 2000 - 2003 Joseph Engo                                    *
 	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          * 
@@ -53,7 +53,7 @@
 			}
 
 			$this->account_id	= $account_id;
-			$this->app_name		= $GLOBALS['phpgw']->db->db_addslashes($app_name);
+			$this->app_name		= $app_name;
 			$this->db			= $GLOBALS['phpgw']->db;
 			$this->db2			= $this->db;
 			$this->grants		= $GLOBALS['phpgw']->acl->get_grants($app_name);
@@ -142,8 +142,6 @@
 		{
 			$start = intval($start);
 			$query = $this->db->db_addslashes($query);
-			$sort  = $this->db->db_addslashes($sort);
-			$order = $this->db->db_addslashes($order);
 
 			if ($globals)
 			{
@@ -188,9 +186,9 @@
 				}
 			}
 
-			if (strlen($parent_id) != 0)
+			if (intval($parent_id) > 0)
 			{
-				$parent_id		= (int) $parent_id;
+				$parent_id		= intval($parent_id);
 				$parent_filter	= ' AND cat_parent=' . $parent_id;
 			}
 
@@ -225,10 +223,8 @@
 		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
 			$start		= intval($start);
-			$query		= $this->db->db_addslashes($query);
-			$sort		= $this->db->db_addslashes($sort);
-			$order		= $this->db->db_addslashes($order);
 			$parent_id	= intval($parent_id);
+			$query		= $this->db->db_addslashes($query);
 
 			if ($globals)
 			{
