@@ -562,6 +562,7 @@ if ($newfile && $createfile)
 		$fileman = array ();
 		$fileman[0] = $createfile;
 		$edit = 1;
+		$numoffiles++;
 	}
 	else
 	{
