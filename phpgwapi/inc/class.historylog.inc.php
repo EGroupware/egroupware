@@ -55,7 +55,7 @@
 		}
 
 		// array $filter_out
-		function return_array($filter_out,$orderby = '',$sort = '', $record_id = 0)
+		function return_array($filter_out,$only_show,$orderby = '',$sort = '', $record_id = 0)
 		{
 			while (is_array($filter_out) && list(,$_filter) = each($filter_out))
 			{
@@ -67,13 +67,23 @@
 				$filter = ' and ' . implode(' and ',$filtered);
 			}
 
+			while (is_array($only_show) && list(,$_filter) = each($only_show))
+			{
+				$_only_show[] = "history_status='$_filter'";
+			}
+
+			if (is_array($_only_show))
+			{
+				$only_show_filter = ' and ' . implode(' and ',$_only_show);
+			}
+
 			if ($record_id)
 			{
 				$record_filter = " and history_record_id='$record_id' ";
 			}
 
 			$this->db->query("select * from phpgw_history_log where history_appname='"
-				. $this->appname . "' $filter $record_filter order by history_timestamp,history_id",__LINE__,__FILE__);
+				. $this->appname . "' $filter $record_filter $only_show_filter order by history_timestamp,history_id",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				$return_values[] = array(
@@ -111,7 +121,7 @@
 			$this->template->set_var('sort_status',lang('Status'));
 			$this->template->set_var('sort_new_value',lang('New value'));
 
-			$values = $this->return_array($filter_out,$orderby,$sort,$record_id);
+			$values = $this->return_array($filter_out,array(),$orderby,$sort,$record_id);
 
 			if (! is_array($values))
 			{
