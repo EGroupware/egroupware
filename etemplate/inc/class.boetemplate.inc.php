@@ -112,6 +112,7 @@
 		*/
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
+			$is_index_in_content = $name[0] == '@';
 			if (strstr($name,'$') !== False)
 			{
 				if (!$cont)
@@ -125,7 +126,7 @@
 
 				eval('$name = "'.$name.'";');
 			}
-			if ($name[0] == '@')
+			if ($is_index_in_content)
 			{
 				$name = $this->get_array($cont,substr($name,1));
 			}
