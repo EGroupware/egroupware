@@ -44,7 +44,12 @@
   if (! $start)
      $start = 0;
 
-  $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+  if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] &&
+     $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0) {
+    $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+  } else {
+    $offset = 30;
+  }
 
   // insert acl stuff here in lieu of old access perms
   // following sets up the filter for read, then restores the filter string for later checking
@@ -55,8 +60,12 @@
   $qfilter = $filter;
   $filter = $savefilter;
 
+  if (!$columns_to_display ) {
+    $columns_to_display = array("n_given","n_family","org_name");
+    $noprefs=lang("Please set your preferences for this app");
+  }
   $qcols = $columns_to_display + array("access");
-
+  
   // read the entry list
   $entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order);
 
@@ -79,7 +88,7 @@
   $t->set_var("lang_vcard",lang("VCard"));
   $t->set_var("lang_edit",lang("Edit"));
 
-  $t->set_var(searchreturn,$searchreturn);
+  $t->set_var(searchreturn,$noprefs . " " . $searchreturn);
   $t->set_var(lang_showing,$lang_showing);
   $t->set_var(search_filter,$search_filter);
   $t->set_var("lang_addressbook",lang("Address book"));
@@ -109,6 +118,7 @@
          ($entries[$i]["access"] == "," . $filter . ",") ||
          ($filter == "") ||
          ($filter == "none")) {
+	 //strpos(' ,'.$entries[$i]["access"].', ',','.$filter.',')
       $t->set_var(columns,"");
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
       $t->set_var(row_tr_color,$tr_color);
