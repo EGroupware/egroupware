@@ -136,7 +136,8 @@
 			$entry['account_status']            = $this->data['status'];
 			$entry['account_expires']           = $this->data['expires'];
 
-			$this->contacts->update($entry['id'],$this->account_id,$entry);
+			if($this->debug) { echo '<br>Updating entry:<br>' . var_dump($entry); }
+			$this->contacts->update($entry['id'],0,$entry,'public','',$entry['tid']);
 		}
 
 		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
@@ -147,12 +148,11 @@
 		function delete($accountid = '')
 		{
 			global $phpgw, $phpgw_info;
+			$this->makeobj();
 
+			if($this->debug) { echo '<br>Deleting entry:<br>' . $account_id; }
 			$account_id = get_account_id($accountid);
 			$this->contacts->delete($account_id);
-
-			// Do this last since we are depending upon this record to get the account_lid above
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
 		}
 
 		function get_list($_type='both')
@@ -268,7 +268,12 @@
 		function create($account_info)
 		{
 			global $phpgw_info, $phpgw;
+			$this->makeobj();
 
+			if (!$$account_info['account_id'])
+			{
+				$account_info['account_id'] = $this->get_nextid();
+			}
 			$owner = $phpgw_info['user']['account_id'];
 			$entry['id']       = $account_info['account_id'];
 			$entry['lid']      = $account_info['account_lid'];
@@ -278,8 +283,9 @@
 			$entry['account_status']   = $account_info['account_status'];
 			$entry['account_expires']  = $account_info['account_expires'];
 
-			// 'public' access, no category id, tid set to account_type
-			$this->contacts->add($owner,$entry,'public','',$account_info['account_type']);
+			if($this->debug) { echo '<br>Adding entry:<br>' . var_dump($entry); }
+			/* 'public' access, no category id, tid set to account_type */
+			$this->contacts->add(0,$entry,'public','',$account_info['account_type']);
 			return;
 		}
 
