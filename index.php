@@ -70,7 +70,7 @@
   }
 
   if ($phpgw_info["user"]["permissions"]["email"]
-  && $phpgw_info["user"]["preferences"]["common"]["mainscreen_showmail"]) {
+  && $phpgw_info["user"]["preferences"]["email"]["mainscreen_showmail"]) {
     echo "<!-- Mailox info -->\n";
 
     $mbox = $phpgw->msg->login();
@@ -92,7 +92,7 @@
   }
 
   if ($phpgw_info["user"]["permissions"]["addressbook"]
-  && $phpgw_info["user"]["preferences"]["common"]["mainscreen_showbirthdays"]) {
+  && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
     $phpgw->db->query("select DISTINCT firstname,lastname from addressbook where "
       . "bday like '" . $phpgw->common->show_date(time(),"n/d")
@@ -122,7 +122,7 @@
 
   // This is disbaled until I can convert the calendar over
   if ($phpgw_info["user"]["permissions"]["calendar"]
-  && $phpgw_info["user"]["preferences"]["common"]["mainscreen_showevents"]) {
+  && $phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
     echo "<!-- Calendar info -->\n";
     include($phpgw_info["server"]["server_root"] . "/calendar/inc/functions.inc.php");
     $repeated_events = read_repeated_events($phpgw_info["user"]["userid"]);
