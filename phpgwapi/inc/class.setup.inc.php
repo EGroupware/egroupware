@@ -67,7 +67,7 @@
 		@abstract authenticate the setup user
 		@param	$auth_type	???
 		*/
-		function auth($auth_type='Config',$ConfigPW='',$HeaderPW='')
+		function auth($auth_type='Config')
 		{
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
 			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
@@ -76,8 +76,8 @@
 			$FormPW       = get_var('FormPW',      array('POST'));
 
 			$ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
-			$ConfigPW     = $ConfigPW ? $ConfigPW : get_var('ConfigPW',    array('POST','COOKIE'));
-			$HeaderPW     = $HeaderPW ? $HeaderPW : get_var('HeaderPW',    array('POST','COOKIE'));
+			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
+			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
 			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 
 			/* 6 cases:
