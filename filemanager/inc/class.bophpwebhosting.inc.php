@@ -369,13 +369,30 @@
 			{
 				if($this->fileman[$i])
 				{
-					if($this->vfs->delete($this->path.SEP.$this->fileman[$i],Array(RELATIVE_USER_NONE)))
+					$ls_array = $this->vfs->ls($this->path.SEP.$this->fileman[$i],Array(RELATIVE_NONE),False,False,True);
+					$fileinfo = $ls_array[0];
+					if($fileinfo)
 					{
-						$errors[] = '<font color="blue">File Deleted: '.$this->path.SEP.$this->fileman[$i].'</font>';
+						if($fileinfo['mime_type'] == 'Directory')
+						{
+							$mime_type = $fileinfo['mime_type'];
+						}
+						else
+						{
+							$mime_type = 'File';
+						}
+						if($this->vfs->delete($this->path.SEP.$this->fileman[$i],Array(RELATIVE_USER_NONE)))
+						{
+							$errors[] = '<font color="#0000FF">'.$mime_type.' Deleted: '.$this->path.SEP.$this->fileman[$i].'</font>';
+						}
+						else
+						{
+							$errors[] = '<font color="#FF0000">Could not delete '.$this->path.SEP.$this->fileman[$i].'</font>';
+						}
 					}
 					else
 					{
-						$errors[] = '<font color="red">Could not delete '.$this->path.SEP.$this->fileman[$i].'</font>';
+						$errors[] = '<font color="#FF0000">'.$this->path.SEP.$this->fileman[$i].' does not exist!</font>';
 					}
 				}
 			}
@@ -391,11 +408,11 @@
 				{
 					if($this->vfs->cp($this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i],Array(RELATIVE_NONE,RELATIVE_NONE)))
 					{
-						$errors[] = '<font color="blue">File copied: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$errors[] = '<font color="#0000FF">File copied: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
 					else
 					{					
-						$errors[] = '<font color="red">Could not copy '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$errors[] = '<font color="#FF0000">Could not copy '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
 				}
 			}
@@ -411,11 +428,11 @@
 				{
 					if($this->vfs->mv($this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i],Array(RELATIVE_NONE,RELATIVE_NONE)))
 					{
-						$errors[] = '<font color="blue">File moved: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$errors[] = '<font color="#0000FF">File moved: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
 					else
 					{					
-						$errors[] = '<font color="red">Could not move '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$errors[] = '<font color="#FF0000">Could not move '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
 					}
 				}
 			}
@@ -435,11 +452,11 @@
 							'file' => $this->fileman[$i]
 						)
 					);
-					$errors[] = '<font color="blue">File downloaded: '.$this->path.SEP.$this->fileman[$i].'</font>';
+					$errors[] = '<font color="#0000FF">File downloaded: '.$this->path.SEP.$this->fileman[$i].'</font>';
 				}
 				else
 				{
-					$errors[] = '<font color="red">File does not exist: '.$this->path.SEP.$this->fileman[$i].'</font>';
+					$errors[] = '<font color="#FF0000">File does not exist: '.$this->path.SEP.$this->fileman[$i].'</font>';
 				}
 			}
 			return $errors;
@@ -451,13 +468,13 @@
 			{
 				if ($badchar = $this->bad_chars($this->createdir,True,True))
 				{
-					$errors[] = '<font color="red">Directory names cannot contain "'.$badchar.'"</font>';
+					$errors[] = '<font color="#FF0000">Directory names cannot contain "'.$badchar.'"</font>';
 					return $errors;
 				}
 	
 				if (substr($this->createdir,strlen($this->createdir)-1,1) == ' ' || substr($this->createdir,0,1) == ' ')
 				{
-					$errors[] = '<font color="red">Cannot create directory because it begins or ends in a space</font>';
+					$errors[] = '<font color="#FF0000">Cannot create directory because it begins or ends in a space</font>';
 					return $errors;
 				}
 
@@ -468,23 +485,23 @@
 				{
 					if ($fileinfo['mime_type'] != 'Directory')
 					{
-						$errors[] = '<font color="red">'.$fileinfo['name'].' already exists as a file</font>';
+						$errors[] = '<font color="#FF0000">'.$fileinfo['name'].' already exists as a file</font>';
 					}
 					else
 					{
-						$errors[] = '<font color="red">Directory '.$fileinfo['name'].' already exists.</font>';
+						$errors[] = '<font color="#FF0000">Directory '.$fileinfo['name'].' already exists.</font>';
 					}
 				}
 				else
 				{
-					if ($this->vfs->mkdir($this->path.SEP.$this->createdir))
+					if ($this->vfs->mkdir($this->path.SEP.$this->createdir,Array(RELATIVE_NONE)))
 					{
-						$errors[] = '<font color="blue">Created directory '.$this->path.SEP.$this->createdir.'</font>';
-						$this->path = $this->path.SEP.$this->createdir;
+						$errors[] = '<font color="#0000FF">Created directory '.$this->path.SEP.$this->createdir.'</font>';
+//						$this->path = $this->path.SEP.$this->createdir;
 					}
 					else
 					{
-						$errors[] = '<font color="red">Could not create '.$this->path.SEP.$this->createdir.'</font>';
+						$errors[] = '<font color="#FF0000">Could not create '.$this->path.SEP.$this->createdir.'</font>';
 					}
 				}
 			}
@@ -497,22 +514,22 @@
 			{
 				if($badchar = $this->bad_chars($this->createfile,True,True))
 				{
-					$errors[] = '<font color="red">Filenames cannot contain "'.$badchar.'"</font>';
+					$errors[] = '<font color="#FF0000">Filenames cannot contain "'.$badchar.'"</font>';
 					return $errors;
 				}
 				if($this->vfs->file_exists($this->path.SEP.$this->createfile,Array(RELATIVE_NONE)))
 				{
-					$errors[] = '<font color="red">File '.$this->path.SEP.$this->createfile.' already exists.  Please edit it or delete it first.</font>';
+					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' already exists.  Please edit it or delete it first.</font>';
 					return $errors;
 				}
 				if(!$this->vfs->touch($this->path.SEP.$this->createfile,Array(RELATIVE_NONE)))
 				{
-					$errors[] = '<font color="red">File '.$this->path.SEP.$this->createfile.' could not be created.</font>';
+					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' could not be created.</font>';
 				}
 			}
 			else
 			{
-				$errors[] = '<font color="red">Filename not provided!</font>';
+				$errors[] = '<font color="#FF0000">Filename not provided!</font>';
 			}
 			return $errors;
 		}
