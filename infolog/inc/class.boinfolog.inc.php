@@ -297,8 +297,27 @@
 			$this->so->delete($info_id,$delete_children,$new_parent);
 		}
 
+		/**
+		* writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
+		*
+		* checks and asures ACL
+		*
+		* @param array $values values to write, if contains values for check_defaults and touch_modified, they have precedens over the parameters
+		* @param boolean $check_defaults=true check and set certain defaults
+		* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
+		* @return int/boolean info_id on a successfull write or false
+		*/
 		function write($values,$check_defaults=True,$touch_modified=True)
 		{
+			// allow to (un)set check_defaults and touch_modified via values, eg. via xmlrpc
+			foreach(array('check_defaults','touch_modified') as $var)
+			{
+				if(isset($values[$var]))
+				{
+					$$var = $values[$var];
+					unset($values[$var]);
+				}
+			}
 			foreach($values as $key => $val)
 			{
 				if ($key[0] != '#' && substr($key,0,5) != 'info_')
@@ -349,14 +368,14 @@
 				{
 					$values['info_status'] = 'ongoing';   // have to match if not finished
 				}
-				if (!$values['info_id'] && !$values['info_owner'])
-				{
-					$values['info_owner'] = $this->so->user;
-				}
 				if (isset($values['info_subject']) && empty($values['info_subject']))
 				{
 					$values['info_subject'] = $this->subject_from_des($values['info_des']);
 				}
+			}
+			if (!$values['info_id'] && !$values['info_owner'])
+			{
+				$values['info_owner'] = $this->so->user;
 			}
 			if ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))
 			{
