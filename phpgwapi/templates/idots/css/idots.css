@@ -190,6 +190,8 @@ a.textSidebox
 #tdAppbox
 {
 	background-color:white;
+	padding-left:9px;
+	width: 100%;
 }
 #divSideboxContainer
 {
