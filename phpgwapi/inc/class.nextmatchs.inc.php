@@ -105,7 +105,14 @@
 				$tpl->set_var(search,$this->search($search_obj));
 			}
 
-			$tpl->set_var('filter',$this->filter($filter_obj));
+			if ($filter_obj)
+			{
+				$tpl->set_var('filter',$this->filter($filter_obj));
+			}
+			else
+			{
+				$tpl->set_var('filter','');
+			}
 			$tpl->set_var('right',$this->right($sn,$start,$total,$extra));
 
 			return $tpl->fp('out','nextmatchs');
