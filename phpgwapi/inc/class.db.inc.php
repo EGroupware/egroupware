@@ -216,6 +216,10 @@
 			{
 				return addslashes($str);
 			}
+			if (!$this->Link_ID)
+			{
+				$this->connect();
+			}
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->quote($str),1,-1);
 		}
