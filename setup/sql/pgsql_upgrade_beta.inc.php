@@ -860,7 +860,29 @@
   function upgrade0_9_10pre1(){                                                                                                                                                                  
     global $phpgw_info, $phpgw_setup;
     $phpgw_setup->db->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
-     }
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre2";
+  }
+
+  $test[] = "0.9.10pre2";                                                                                                                                                                        
+  function upgrade0_9_10pre2(){                                                                                                                                                                  
+    global $phpgw_info, $phpgw_setup;
+    $db2 = $phpgw_setup->db;
+    $phpgw_setup->db->query("select account_groups,account_id from accounts",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $gl = explode(",",$phpgw_setup->db->f("account_groups"));
+        for ($i=1; $i<(count($gl)-1); $i++) {
+          $ga = explode(":",$gl[$i]);
+          $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+          $sql .= " values('phpgw_group', '".$ga[0]."', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+          $db2->query($sql ,__LINE__,__FILE__);
+        }
+      }
+    }
+    $phpgw_setup->db->query("update accounts set account_groups = ''",__LINE__,__FILE__);
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre3";
+  }
+
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

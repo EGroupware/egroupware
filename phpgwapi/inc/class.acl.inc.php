@@ -98,7 +98,10 @@
       $sql .= "acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
-      if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ return True; }
+      if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ 
+        echo "rows: ".$this->db->num_rows()."<br>";
+        return True; 
+      }
       while ($this->db->next_record()) {
         if ($this->db->f("acl_rights") == 0){ return False; }
         $rights |= $this->db->f("acl_rights");

@@ -145,21 +145,6 @@
       return implode(",",$group_names);
     }    
 
-    // Convert an array into the format needed for the groups column in the accounts table.
-    // This function is only temp, until we create the wrapper class's for different forms
-    // of auth.
-    function groups_array_to_string($groups)
-    {
-      $s = "";
-      if (count($groups)) {
-         while (list($t,$group,$level) = each($groups)) {
-		    $s .= "," . $group . ":0";
-         }
-         $s .= ",";
-      }
-      return $s;
-    }
-    
     // Convert an array into the format needed for the access column.
     function array_to_string($access,$array)
     {

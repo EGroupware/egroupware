@@ -134,34 +134,20 @@
       return $userData;
     }
 
-    function read_groups($lid) {
-       global $phpgw_info, $phpgw;
+    function read_groups($id)
+    {
+      global $phpgw_info, $phpgw;
        
-       $db2 = $phpgw->db;
-       
-       if (gettype($lid) == "integer") {
-         if ($phpgw_info["user"]["account_id"] != $lid || !$phpgw_info["user"]["groups"]) {
-           $db2->query("select account_groups from accounts where account_id=$lid",__LINE__,__FILE__);
-           $db2->next_record();
-           $gl = explode(",",$db2->f("account_groups"));
-         } else {
-          $gl = $phpgw_info["user"]["groups"];
-         }
-       } else {
-         if ($phpgw_info["user"]["userid"] != $lid || !$phpgw_info["user"]["groups"]) {
-           $db2->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
-           $db2->next_record();
-           $gl = explode(",",$db2->f("account_groups"));
-         } else {
-          $gl = $phpgw_info["user"]["groups"];
-         }
-       }
-
-       for ($i=1; $i<(count($gl)-1); $i++) {
-          $ga = explode(":",$gl[$i]);
-          $groups[$ga[0]] = $ga[1];
-       }
-       return $groups;
+      $db2 = $phpgw->db;
+      if (gettype($id) == "string") { $id = $this->username2userid($id); }
+      $groups = Array();
+      $group_memberhips = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", $id);
+      reset ($groups);
+      $num = count($group_memberhips);
+      for ($idx=0; $idx<$num; ++$idx){
+        $groups[$group_memberhips[$idx]] = 0;
+      }
+      return $groups;
     }
 
     function read_group_names($lid = "")
@@ -188,135 +174,6 @@
        return $group_names;
     }
 
-/*    // This works a little odd, but it is required for apps to be listed in the correct order.
-    // We first take an array of apps in the correct order and give it a value of 1.  Which local means false.
-    // After the app is verified, it is giving the value of 2, meaning true.
-    function read_apps($lid)
-    {
-       global $phpgw, $phpgw_info;
-       
-       $db = $phpgw->db;
-       // fing enabled apps in this system
-       $db->query("select app_name from applications where app_enabled != 0 order by app_order",__LINE__,__FILE__);
-       while ($phpgw->db->next_record()) {
-         $enabled_apps[$db->f("app_name")] = 1;
-       }
-
-      // get a ldap connection handle
-      $ds = $phpgw->common->ldapConnect();
-	
-      // search the dn for the given uid
-      $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=$lid");
-      $allValues = ldap_get_entries($ds, $sri);
-
-      for ($i=0; $i < $allValues[0]["phpgw_account_perms"]["count"]; $i++)
-      {
-      	$pl = $allValues[0]["phpgw_account_perms"][$i];
-      	if ($enabled_apps[$pl])
-      	{
-      		$enabled_apps[$pl] = 2;
-      	}
-      }
-
-       // This is to prevent things from being loaded twice
-       if ($phpgw_info["user"]["userid"] == $lid) {
-          $group_list = $this->groups;
-       } else {
-          $group_list = $this->read_groups($lid);
-       }
-
-       while ($group_list && $group = each($group_list)) {
-          $db->query("select group_apps from groups where group_id=".$group[0]);
-          $db->next_record();
-
-          $gp = explode(":",$db->f("group_apps"));
-          for ($i=1,$j=0;$i<count($gp)-1;$i++,$j++) {
-             $enabled_apps[$gp[$i]] = 2;
-          }
-       }
-       
-       while ($sa = each($enabled_apps)) {
-          if ($sa[1] == 2) {
-             $return_apps[$sa[0]] = True;
-          }
-       }
-     
-       return $return_apps;  
-    }
-*/
-   // This works a little odd, but it is required for apps to be listed in the correct order.
-    // We first take an array of apps in the correct order and give it a value of 1.  Which local means false.
-    // After the app is verified, it is giving the value of 2, meaning true.
-    function read_apps($lid)
-    {
-       global $phpgw, $phpgw_info;
-       
-       $db2 = $phpgw->db;
-
-       $db2->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
-       while ($db2->next_record()) {
-          $name   = $db2->f("app_name");
-          $title  = $db2->f("app_title");
-          $status = $db2->f("app_enabled");
-          $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
- 
-          $enabled_apps[$db2->f("app_name")] = 1;
-          $app_status[$db2->f("app_name")]   = $db2->f("app_status");
-       } 
-
-       if (gettype($lid) == "integer") {
-          $db2->query("select account_permissions from accounts where account_id=$lid",__LINE__,__FILE__);
-       } else {
-          $db2->query("select account_permissions from accounts where account_lid='$lid'",__LINE__,__FILE__);
-       }
-       $db2->next_record();
-
-       $pl = explode(":",$db2->f("account_permissions"));
-
-       for ($i=0; $i<count($pl); $i++) {
-          if ($enabled_apps[$pl[$i]]) {
-             $enabled_apps[$pl[$i]] = 2;
-          }
-       }
-
-       $group_list = $this->read_groups($lid);
-
-       while ($group_list && $group = each($group_list)) {
-          $db2->query("select group_apps from groups where group_id=".$group[0],__LINE__,__FILE__);
-          $db2->next_record();
-
-          $gp = explode(":",$db2->f("group_apps"));
-          for ($i=1,$j=0;$i<count($gp)-1;$i++,$j++) {
-             $enabled_apps[$gp[$i]] = 2;
-          }
-       }
-       
-       while ($sa = each($enabled_apps)) {
-          if ($sa[1] == 2) {
-             $return_apps[$sa[0]] = True;
-          }
-       }
-     
-       return $return_apps;  
-    }
-    
-    // This will return the group permissions in an array
-    function read_group_apps($group_id)
-    {
-       global $phpgw;
-
-       $db = $phpgw->db;
-       $db->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
-       $db->next_record();
-
-       $gp = explode(":",$db->f("group_apps"));
-       for ($i=1,$j=0;$i<count($gp)-1;$i++,$j++) {
-          $apps_array[$j] = $gp[$i];
-       }
-       return $apps_array;
-    }       
-    
-    // Note: This needs to work off LDAP (jengo)
     function listusers($groups="")
     {
        global $phpgw;
