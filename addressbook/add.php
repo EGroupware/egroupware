@@ -71,14 +71,14 @@
 		$fields["adr_locality"]		= $city;
 		$fields["adr_region"]		= $state;
 		$fields["adr_postalcode"]	= $zip;
-		$fields["adr_Countryname"]	= $country;
+		$fields["adr_countryname"]	= $country;
 		$fields["tz"]				= $timezone;
 		$fields["bday"]				= $bday;
 		$fields["url"]				= $url;
 		$fields["notes"]			= $notes;
 	
 		$this->add($phpgw_info["user"]["account_id"],$fields);
-		
+
 		Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]."/addressbook/","cd=14"));
 	}
 
