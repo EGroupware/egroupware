@@ -46,12 +46,8 @@
     
     function change_password($old_passwd, $new_passwd) {
       global $phpgw_info, $phpgw;
-      $ldap = ldap_connect($phpgw_info["server"]["ldap_host"]);
 
-      if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
-         echo "<p><b>Error binding to LDAP server.  Check your config</b>";
-         $phpgw->common->phpgw_exit();
-      }
+      $ldap = $phpgw->common->ldapConnect();
 
       $encrypted_passwd = $phpgw->common->encrypt_password($new_passwd);
       $entry["userpassword"] = $encrypted_passwd;
