@@ -13,7 +13,7 @@
 
 	$phpgw_info['flags'] = array(
 		'currentapp'  => 'admin',
-		'noheader'    => True,'
+		'noheader'    => True,
 		'nonavbar'    => True,
 		'parent_page' => 'accounts.php'
 	);
