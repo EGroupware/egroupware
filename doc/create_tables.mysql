@@ -120,15 +120,15 @@ CREATE TABLE addressbook (
 );
 
 CREATE TABLE todo (
-   con		int(11) DEFAULT '0' NOT NULL auto_increment,
-   owner	varchar(25),
-   access	varchar(10),
-   des		text,        
-   pri		int(11),
-   status	int(11),
-   datecreated	int(11),
-   datedue	int(11),
-   PRIMARY KEY (con)
+   todo_id      int(11) DEFAULT '0' NOT NULL auto_increment,
+   todo_owner   varchar(25),
+   todo_access  varchar(10),
+   todo_des     text,        
+   todo_pri     int(11),
+   todo_status  int(11),
+   todo_datecreated  int(11),
+   todo_datedue int(11),
+   PRIMARY KEY (todo_id)
 );
 
 CREATE TABLE webcal_entry (
