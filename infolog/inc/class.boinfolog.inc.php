@@ -288,6 +288,7 @@
 					return lang('Invalid filename').': '.$tfname;
 				}
 			}
+			$this->vfs->override_acl = 1;
 			if ($tfname)	// file is local
 			{
 				$this->vfs->symlink($tfname,$fname,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
@@ -300,6 +301,7 @@
 				array ('mime_type' => $type,
 						 'comment' => stripslashes ($comment),
 						 'app' => 'infolog'));
+			$this->vfs->override_acl = 0;
 		}
 
 		function delete_attached($info_id,$fname = '')
@@ -316,7 +318,9 @@
 
 		function info_attached($info_id,$filename)
 		{
+			$this->vfs->override_acl = 1;
 			$attachments = $this->vfs->ls($this->vfs_path($info_id,$filename),array(REALTIVE_NONE));
+			$this->vfs->override_acl = 0;
 
 			if (!count($attachments) || !$attachments[0]['name'])
 			{
@@ -327,7 +331,9 @@
 
 		function list_attached($info_id)
 		{
+			$this->vfs->override_acl = 1;
 			$attachments = $this->vfs->ls($this->vfs_path($info_id),array(REALTIVE_NONE));
+			$this->vfs->override_acl = 0;
 
 			if (!count($attachments) || !$attachments[0]['name'])
 			{
@@ -351,6 +357,7 @@
 			{
 				return False;
 			}
+			$this->vfs->override_acl = 1;
 			return $this->vfs->read($this->vfs_path($info_id,$filename),array(RELATIVE_ROOT));
 		}
 
