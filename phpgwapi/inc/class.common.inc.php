@@ -141,6 +141,38 @@
 			}
 			return $s;
 		}
+		
+		/**
+		* genrate a unique id, which can be used for syncronisation
+		*
+		* @param string $_appName the appname
+		* @param string $_eventID the id of the content
+		* @return string the unique id
+		*/
+		function generate_uid($_appName, $_eventID)
+		{
+			if(empty($_appName) || empty($_eventID)) return false;
+			
+			$suffix = $GLOBALS['phpgw_info']['server']['hostname'] ? $GLOBALS['phpgw_info']['server']['hostname'] : 'local';
+			$prefix = $_appName.'-'.$_eventID.'-'.$GLOBALS['phpgw_info']['server']['install_id'];
+			
+			return $prefix . '@' . $suffix;
+		}
+		
+		/**
+		* get the local content id from a global UID
+		*
+		* @param sting $_globalUid the global UID
+		* @return int local egw content id
+		*/
+		function get_egwId($_globalUid)
+		{
+			if(empty($_globalUid)) return false;
+			
+			$globalUidParts = explode('-',$_globalUid);
+			
+			return $globalUidParts[1];
+		}
 
 		// This is used for searching the access fields
 		/*!
