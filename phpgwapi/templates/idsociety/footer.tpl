@@ -1,7 +1,4 @@
 <!-- BEGIN footer -->
-			</td>
-		</tr>
-		</table>
 		<br>
 
 		<!-- BEGIN B_powered_bottom -->
@@ -15,7 +12,6 @@
 		<!-- END B_powered_bottom -->
 
 		<p>&nbsp;</p>
-
 	</td>
 </tr>
 </table>
