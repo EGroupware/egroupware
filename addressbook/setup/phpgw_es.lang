@@ -1,27 +1,127 @@
-address book	common	es	Libreta de Direcciones
+add custom field	addressbook	es	Agregar Campo Personalizado
 addressbook	common	es	Libreta de direcciones
-addressbook preferences common  es      Preferencias - Libreta de direcciones
-address book	addressbook	es	Libreta de direcciones
+address book	common	es	Libreta de Direcciones
+addressbook-fieldname	addressbook	es	Campo - Libreta de Direcciones
+addressbook preferences	addressbook	es      Preferencias - Libreta de direcciones
 address book - view	addressbook	es	Libreta de direcciones - ver
-birthday	addressbook	es	Cumpleaños
-city	addressbook	es	Ciudad
-company name	addressbook	es	Compania
+address line 2	addressbook	es	Direccion Linea 2
+address line 3	addressbook	es	Direccion Linea 3
+address type	addressbook	es	Tipo de Direccion
+addvcard	addressbook	es	Agregar VCard
+alt. csv import	addressbook	es	Importar CSV (Avanzado)
+are you sure you want to delete this field?	addressbok	es	Esta seguro que desea borrar este registro?
+bbs phone	addressbook	es	Telefono BBS
+birthday	common	es	Cumpleaños
+blank	addressbook	es	Vacio
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	es	<b>No se encontro el tipo de conversion.</b>  Seleccione uno de la lista
+business address type	addressbook	es	Tipo de Direccion del Trabajo
+business city	addressbook	es	Ciudad del Trabajo
+business	common	es	Trabajo
+business country	addressbook	es	Pais del Trabajo
+business email	addressbook	es	EMail del Trabajo
+business email type	addressbook	es	Tipo del Email del Trabajo
+business fax	addressbook	es	Fax del Trabajo
+business phone	addressbook	es	Telefono del Trabajo
+business state	addressbook	es	Provincia del Trabajo
+business street	addressbook	es	Direccion del Trabajo
+business zip code	addressbook	es	Codigo Postal del Trabajo
+car phone	addressbook	es	Telefono del Auto
+cell phone	addressbook	es	Telefono Celular
+city	common	es	Ciudad
+company	common	es	Compania
+company name	common	es	Nombre de la Compania
+contact application	admin	es	Aplicacion del Contacto
+contact	common	es	Contacto
+contact settings	admin	es	Seteos del Contacto
+country	common	es	Pais
+csv-fieldname	addressbook	es	Campo CSV
+csv-filename	addressbook	es	Archivo CSV
+custom fields	addressbook	es	Campos Personalizados
+default filter	preferences	es	Filtro por Defecto
+department	common	es	Departmento
+domestic	common	es	Nacional
+download	addressbook	es	Descargar Archivo
+edit custom field	admin	es	Editar Campo Personalizado
+edit custom fields	admin	es	Editar Campos Personalizados
 e-mail	addressbook	es	E-Mail
-fax	addressbook	es	Fax
+export contacts	addressbook	es	Exportar Contactos
+export file name	addressbook	es	Nombre del Archivo a Exportar
+export from addressbook	addressbook	es	Exportar de la Libreta de Direcciones
+extra	addressbook	es	Extra
+fax	common	es	Fax
+fax number	common	es	Numero de Fax
+fieldseparator	addressbook	es	Separador de Campos
+field name	addressbook	es	Nombre del Campo
+fields to show in address list	addressbook	es	Campos a mostrar en la lista de direcciones
 first name	addressbook	es	Nombre
-home phone	addressbook	es	Tel.Particular
+full name	addressbook	es	Nombre Completo
+geo	addressbook	es	GEO
+grant addressbook access	common	es	Ceder Acceso a la Libreta
+home address type	addressbook	es	Tipo de Direccion Personal
+home city	addressbook	es	Ciudad Personal
+home country	addressbook	es	Pais Personal
+home email	addressbook	es	E-mail Personal
+home email type	addressbook	es	Tipo de E-mail Personal
+home phone	addressbook	es	Telefono Personal
+home state	addressbook	es	Provincia Personal
+home street	addressbook	es	Direccion Personal
+home zip code	addressbook	es	Codigo Postal Personal
+import	addressbook	es	Importar
+import contacts	addressbook	es	Importar Contactos
+import csv-file into addressbook	addressbook	es	Importar Archivo CSV en la Libreta de Direcciones
+import file	addressbook	es	Importar Archivo
+import from ldif, csv, or vcard	addressbook	es	Importar desde LDIF, CSV o VCard
+import from netscape	addressbook	es	Importar desde Netscape
+import from outlook	addressbook	es	Importar desde Outlook
+international	common	es	Internacional
+isdn phone	addressbook	es	Telefono ISDN
+label	addressbook	es	Etiqueta
 last name	addressbook	es	Apellido
+ldap context for contacts	admin	es	Contexto LDAP para contactos
+ldap host for contacts	admin	es	Host LDAP para contacts
+ldap root dn for contacts	admin	es	Raiz LDAP dn para contactos
+ldap root pw for contacts	admin	es	Raiz LDAP pw para contactos
 line 2	addressbook	es	Linea 2
+message phone	addressbook	es	Telefono de Mensajes
+middle name	addressbook	es	Segundo Nombre
 mobile	addressbook	es	Tel.Celular
+mobile phone	addressbook	es	Telefono Movil
+modem phone	addressbook	es	Telefono Modem
+no vcard	common	es	Sin VCard
+number of records to read (<=200)	addressbook	es	Registros a leer (menos de 200)
 other number	addressbook	es	Otro Numero
-pager	addressbook	es	Pager
+other phone	addressbook	es	Otro Telefono
+owner	addressbook	es	Due&ntilde;o
+pager	common	es	Pager
+parcel	addressbook	es	Parcela
+phone number	common	es	Numero de Telefono
+phone numbers	common	es	Numeros de Telefono
+please set your preferences for this app	addressbook	es	Por favor, revise las preferencias de esta aplicacion
+postal	common	es	Postal
+pref	common	es	pref
+prefix	addressbook	es	Prefijo
+public key	addressbook	es	Clave Publica
 record access	addressbook	es	Acceso al registro
 record owner	addressbook	es	Dueño del registro
-state	addressbook	es	Estado
-street	addressbook	es	Calle
+records read (not yet imported, you may go back and uncheck test import)	addressbook	es	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
+retrieve contacts	admin	es	Recuperar Contactos
+select where you want to store	admin	es	Seleccione donde desea almacenar
+show birthday reminders on main screen	addressbook	es	Mostrar recordatorios de Cumplea&ntilde;os en la Pantalla Principal
+startrecord	addressbook	es	Registro Inicial
+state	common	es	Provincia
+street	common	es	Calle
+successfully imported x records into your addressbook.	addressbook	es	Se han importado %1 registros.
+suffix	addressbook	es	Sufijo
+test import (show importable records <u>only</u> in browser)	addressbook	es	Test - Solo mostrar registros en el navegador
+this person's first name was not in the address book.	addressbook	es	El primer nombre de esta persona no se encuentra almacenado.
 title	addressbook	es	Titulo
-today is x's birthday!	common	es	Hoy es el cumpleaños de %1!
-tomorrow is x's birthday.	common	es	Mañana es el cumpleaños de %1.
-work phone	addressbook	es	Tel.Trabajo
+today is x's birthday!	common	es	Hoy es el cumplea&ntilde;os de %1!
+tomorrow is x's birthday.	common	es	Ma&ntilde;ana es el cumplea&ntilde;os de %1!
+translation	addressbook	es	Traduccion
+vcard	common	es	VCard
+vcards require a first name entry.	addressbook	es	Las VCards requieren el primer nombre.
+video phone	addressbook	es	Telefono de VideoConferencia
+voice phone	addressbook	es	Telefono de Voz
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es	Atencion! LDAP es valido solo si no esta usando Contactos para almacenar las cuentas!
+work phone	addressbook	es	Telefono del Trabajo
 zip code	addressbook	es	Codigo Postal
-company	addressbook	es	Compañia
