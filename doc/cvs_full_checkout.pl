@@ -96,7 +96,7 @@
 
 		open(FP, ">$tmp_dir/createrelease.exp");
 		$contents = "#!/usr/bin/expect -f\n";
-		$contents = "send -- \"export CVS_RSH=ssh\"\n";
+		$contents .= "send -- \"export CVS_RSH=ssh\"\n";
 		$contents .= "set force_conservative 0\n";
 		$contents .= "if {\$force_conservative} {\n";
 		$contents .= "      set send_slow {1 .1}\n";
