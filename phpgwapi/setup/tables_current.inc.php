@@ -15,14 +15,14 @@
 	$phpgw_baseline = array(
 		'phpgw_config' => array(
 			'fd' => array(
-				'config_app' => array('type' => 'varchar','precision' => '50'),
+				'config_app' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'config_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
 				'config_value' => array('type' => 'text')
 			),
-			'pk' => array(),
+			'pk' => array('config_app','config_name'),
 			'fk' => array(),
 			'ix' => array(),
-			'uc' => array('config_name')
+			'uc' => array()
 		),
 		'phpgw_applications' => array(
 			'fd' => array(
@@ -35,24 +35,24 @@
 			),
 			'pk' => array('app_id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('app_enabled','app_order')),
 			'uc' => array('app_name')
 		),
 		'phpgw_acl' => array(
 			'fd' => array(
-				'acl_appname' => array('type' => 'varchar','precision' => '50'),
-				'acl_location' => array('type' => 'varchar','precision' => '255'),
-				'acl_account' => array('type' => 'int','precision' => '4'),
+				'acl_appname' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'acl_location' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'acl_account' => array('type' => 'int','precision' => '4','nullable' => False),
 				'acl_rights' => array('type' => 'int','precision' => '4')
 			),
-			'pk' => array(),
-			'ix' => array(),
+			'pk' => array('acl_appname','acl_location','acl_account'),
 			'fk' => array(),
+			'ix' => array('acl_account',array('acl_location','acl_account'),array('acl_appname','acl_account')),
 			'uc' => array()
 		),
 		'phpgw_accounts' => array(
 			'fd' => array(
-				'account_id' => array('type' => 'auto'),
+				'account_id' => array('type' => 'auto','nullable' => False),
 				'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
 				'account_pwd' => array('type' => 'varchar','precision' => '100','nullable' => False),
 				'account_firstname' => array('type' => 'varchar','precision' => '50'),
@@ -84,9 +84,9 @@
 		),
 		'phpgw_sessions' => array(
 			'fd' => array(
-				'session_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'session_lid' => array('type' => 'varchar','precision' => '255'),
-				'session_ip' => array('type' => 'varchar','precision' => '255'),
+				'session_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'session_lid' => array('type' => 'varchar','precision' => '128'),
+				'session_ip' => array('type' => 'varchar','precision' => '32'),
 				'session_logintime' => array('type' => 'int','precision' => '4'),
 				'session_dla' => array('type' => 'int','precision' => '4'),
 				'session_action' => array('type' => 'varchar','precision' => '255'),
@@ -94,19 +94,19 @@
 			),
 			'pk' => array(),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('session_flags','session_dla')),
 			'uc' => array('session_id')
 		),
 		'phpgw_app_sessions' => array(
 			'fd' => array(
-				'sessionid' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'loginid' => array('type' => 'varchar','precision' => '20'),
-				'location' => array('type' => 'varchar','precision' => '255'),
-				'app' => array('type' => 'varchar','precision' => '20'),
+				'sessionid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'loginid' => array('type' => 'int','precision' => '4','nullable' => False),
+				'app' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'location' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'content' => array('type' => 'longtext'),
 				'session_dla' => array('type' => 'int','precision' => '4')
 			),
-			'pk' => array(),
+			'pk' => array('sessionid','loginid','app','location'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
@@ -150,12 +150,12 @@
 		),
 		'phpgw_lang' => array(
 			'fd' => array(
-				'message_id' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => ''),
-				'app_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'default' => 'common'),
 				'lang' => array('type' => 'varchar','precision' => '5','nullable' => False,'default' => ''),
+				'app_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'default' => 'common'),
+				'message_id' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => ''),
 				'content' => array('type' => 'text')
 			),
-			'pk' => array('message_id','app_name','lang'),
+			'pk' => array('lang','app_name','message_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
@@ -186,7 +186,7 @@
 			),
 			'pk' => array('cat_id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('cat_appname','cat_owner','cat_parent','cat_level')),
 			'uc' => array()
 		),
 		'phpgw_addressbook' => array(
@@ -240,24 +240,24 @@
 				'tel_video' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
 				'tel_prefer' => array('type' => 'varchar','precision' => '32'),
 				'email' => array('type' => 'varchar','precision' => '64'),
-				'email_type' => array('type' => 'varchar','precision' => '32','nullable' => False,'default' => 'INTERNET'),
+				'email_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
 				'email_home' => array('type' => 'varchar','precision' => '64'),
-				'email_home_type' => array('type' => 'varchar','precision' => '32','nullable' => False,'default' => 'INTERNET'),
+				'email_home_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
 				'last_mod' => array('type' => 'int','precision' => '8','nullable' => False)
 			),
 			'pk' => array('id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('tid','owner','access','n_family','n_given','email'),array('tid','cat_id','owner','access','n_family','n_given','email')),
 			'uc' => array()
 		),
 		'phpgw_addressbook_extra' => array(
 			'fd' => array(
-				'contact_id' => array('type' => 'int','precision' => '4','nullable' => True),
-				'contact_owner' => array('type' => 'int','precision' => '8','nullable' => True),
-				'contact_name' => array('type' => 'varchar','precision' => '255','nullable' => True),
-				'contact_value' => array('type' => 'text','nullable' => True)
+				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'contact_owner' => array('type' => 'int','precision' => '8'),
+				'contact_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'contact_value' => array('type' => 'text')
 			),
-			'pk' => array(),
+			'pk' => array('contact_id','contact_name'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
@@ -318,25 +318,25 @@
 			'fd' => array(
 				'file_id' => array('type' => 'auto','nullable' => False),
 				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
-				'createdby_id' => array('type' => 'int','precision' => '4','nullable' => True),
-				'modifiedby_id' => array('type' => 'int','precision' => '4','nullable' => True),
+				'createdby_id' => array('type' => 'int','precision' => '4'),
+				'modifiedby_id' => array('type' => 'int','precision' => '4'),
 				'created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
-				'modified' => array('type' => 'date','nullable' => True),
-				'size' => array('type' => 'int','precision' => '4','nullable' => True),
-				'mime_type' => array('type' => 'varchar','precision' => '150','nullable' => True),
-				'deleteable' => array('type' => 'char','precision' => '1','nullable' => True,'default' => 'Y'),
-				'comment' => array('type' => 'text','nullable' => True),
-				'app' => array('type' => 'varchar','precision' => '25','nullable' => True),
-				'directory' => array('type' => 'text','nullable' => True),
-				'name' => array('type' => 'text','nullable' => False),
-				'link_directory' => array('type' => 'text','nullable' => True),
-				'link_name' => array('type' => 'text','nullable' => True),
+				'modified' => array('type' => 'date'),
+				'size' => array('type' => 'int','precision' => '4'),
+				'mime_type' => array('type' => 'varchar','precision' => '64'),
+				'deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'comment' => array('type' => 'varchar','precision' => '255'),
+				'app' => array('type' => 'varchar','precision' => '25'),
+				'directory' => array('type' => 'varchar','precision' => '255'),
+				'name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'link_directory' => array('type' => 'varchar','precision' => '255'),
+				'link_name' => array('type' => 'varchar','precision' => '128'),
 				'version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
-				'content' => array('type' => 'text','nullable' => True)
+				'content' => array('type' => 'longtext')
 			),
 			'pk' => array('file_id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('directory','name','mime_type')),
 			'uc' => array()
 		),
 		'phpgw_history_log' => array(
@@ -352,7 +352,7 @@
 			),
 			'pk' => array('history_id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array(array('history_appname','history_record_id','history_status','history_timestamp')),
 			'uc' => array()
 		),
 		'phpgw_async' => array(

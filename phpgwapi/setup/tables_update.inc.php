@@ -1038,3 +1038,320 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.015';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	// the following series of upgrades create indices for the api tables, RalfBecker 2004/04/03
+
+	$test[] = '0.9.99.015';
+	function phpgwapi_upgrade0_9_99_015()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_acl',array(
+			'fd' => array(
+				'acl_appname' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'acl_location' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'acl_account' => array('type' => 'int','precision' => '4','nullable' => False),
+				'acl_rights' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('acl_appname','acl_location','acl_account'),
+			'fk' => array(),
+			'ix' => array('acl_account',array('acl_location','acl_account'),array('acl_appname','acl_account')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.016';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.016';
+	function phpgwapi_upgrade0_9_99_016()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_categories',array(
+			'fd' => array(
+				'cat_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'cat_main' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cat_parent' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cat_level' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '0'),
+				'cat_owner' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cat_access' => array('type' => 'varchar','precision' => '7'),
+				'cat_appname' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'cat_name' => array('type' => 'varchar','precision' => '150','nullable' => False),
+				'cat_description' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'cat_data' => array('type' => 'text'),
+				'last_mod' => array('type' => 'int','precision' => '8','nullable' => False)
+			),
+			'pk' => array('cat_id'),
+			'fk' => array(),
+			'ix' => array(array('cat_appname','cat_owner','cat_parent','cat_level')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.017';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.017';
+	function phpgwapi_upgrade0_9_99_017()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_lang',array(
+			'fd' => array(
+				'lang' => array('type' => 'varchar','precision' => '5','nullable' => False,'default' => ''),
+				'app_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'default' => 'common'),
+				'message_id' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => ''),
+				'content' => array('type' => 'text')
+			),
+			'pk' => array('lang','app_name','message_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.018';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.018';
+	function phpgwapi_upgrade0_9_99_018()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_config',array(
+			'fd' => array(
+				'config_app' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'config_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'config_value' => array('type' => 'text')
+			),
+			'pk' => array('config_app','config_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.019';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.019';
+	function phpgwapi_upgrade0_9_99_019()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_applications',array(
+			'fd' => array(
+				'app_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'app_name' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'app_enabled' => array('type' => 'int','precision' => '4','nullable' => False),
+				'app_order' => array('type' => 'int','precision' => '4','nullable' => False),
+				'app_tables' => array('type' => 'text','nullable' => False),
+				'app_version' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => '0.0')
+			),
+			'pk' => array('app_id'),
+			'fk' => array(),
+			'ix' => array(array('app_enabled','app_order')),
+			'uc' => array('app_name')
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.020';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.020';
+	function phpgwapi_upgrade0_9_99_020()
+	{
+		// at least for postgres we need to change the colum-type, else we get an error in RefreshTable
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_app_sessions','loginid',array(
+			'type' => 'int','precision' => '4','nullable' => False
+		));
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_app_sessions',array(
+			'fd' => array(
+				'sessionid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'loginid' => array('type' => 'int','precision' => '4','nullable' => False),
+				'app' => array('type' => 'varchar','precision' => '25','nullable' => False),
+				'location' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'content' => array('type' => 'longtext'),
+				'session_dla' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('sessionid','loginid','location','app'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.021';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.021';
+	function phpgwapi_upgrade0_9_99_021()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_sessions',array(
+			'fd' => array(
+				'session_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'session_lid' => array('type' => 'varchar','precision' => '128'),
+				'session_ip' => array('type' => 'varchar','precision' => '32'),
+				'session_logintime' => array('type' => 'int','precision' => '4'),
+				'session_dla' => array('type' => 'int','precision' => '4'),
+				'session_action' => array('type' => 'varchar','precision' => '255'),
+				'session_flags' => array('type' => 'char','precision' => '2')
+			),
+			'pk' => array(),
+			'fk' => array(),
+			'ix' => array(array('session_flags','session_dla')),
+			'uc' => array('session_id')
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.022';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.022';
+	function phpgwapi_upgrade0_9_99_022()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_history_log',array(
+			'fd' => array(
+				'history_id' => array('type' => 'auto','precision' => '4','nullable' => False),
+				'history_record_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'history_appname' => array('type' => 'varchar','precision' => '64','nullable' => False),
+				'history_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'history_status' => array('type' => 'char','precision' => '2','nullable' => False),
+				'history_new_value' => array('type' => 'text','nullable' => False),
+				'history_timestamp' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
+				'history_old_value' => array('type' => 'text','nullable' => False)
+			),
+			'pk' => array('history_id'),
+			'fk' => array(),
+			'ix' => array(array('history_appname','history_record_id','history_status','history_timestamp')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.023';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.023';
+	function phpgwapi_upgrade0_9_99_023()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_vfs',array(
+			'fd' => array(
+				'file_id' => array('type' => 'auto','nullable' => False),
+				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'createdby_id' => array('type' => 'int','precision' => '4'),
+				'modifiedby_id' => array('type' => 'int','precision' => '4'),
+				'created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
+				'modified' => array('type' => 'date'),
+				'size' => array('type' => 'int','precision' => '4'),
+				'mime_type' => array('type' => 'varchar','precision' => '64'),
+				'deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'comment' => array('type' => 'varchar','precision' => '255'),
+				'app' => array('type' => 'varchar','precision' => '25'),
+				'directory' => array('type' => 'varchar','precision' => '255'),
+				'name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'link_directory' => array('type' => 'varchar','precision' => '255'),
+				'link_name' => array('type' => 'varchar','precision' => '128'),
+				'version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
+				'content' => array('type' => 'text')
+			),
+			'pk' => array('file_id'),
+			'fk' => array(),
+			'ix' => array(array('directory','name','mime_type')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.024';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.024';
+	function phpgwapi_upgrade0_9_99_024()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_addressbook_extra',array(
+			'fd' => array(
+				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'contact_owner' => array('type' => 'int','precision' => '8'),
+				'contact_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'contact_value' => array('type' => 'text')
+			),
+			'pk' => array('contact_id','contact_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.025';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.025';
+	function phpgwapi_upgrade0_9_99_025()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_addressbook',array(
+			'fd' => array(
+				'id' => array('type' => 'auto','nullable' => False),
+				'lid' => array('type' => 'varchar','precision' => '32'),
+				'tid' => array('type' => 'char','precision' => '1'),
+				'owner' => array('type' => 'int','precision' => '8'),
+				'access' => array('type' => 'varchar','precision' => '7'),
+				'cat_id' => array('type' => 'varchar','precision' => '32'),
+				'fn' => array('type' => 'varchar','precision' => '64'),
+				'n_family' => array('type' => 'varchar','precision' => '64'),
+				'n_given' => array('type' => 'varchar','precision' => '64'),
+				'n_middle' => array('type' => 'varchar','precision' => '64'),
+				'n_prefix' => array('type' => 'varchar','precision' => '64'),
+				'n_suffix' => array('type' => 'varchar','precision' => '64'),
+				'sound' => array('type' => 'varchar','precision' => '64'),
+				'bday' => array('type' => 'varchar','precision' => '32'),
+				'note' => array('type' => 'text'),
+				'tz' => array('type' => 'varchar','precision' => '8'),
+				'geo' => array('type' => 'varchar','precision' => '32'),
+				'url' => array('type' => 'varchar','precision' => '128'),
+				'pubkey' => array('type' => 'text'),
+				'org_name' => array('type' => 'varchar','precision' => '64'),
+				'org_unit' => array('type' => 'varchar','precision' => '64'),
+				'title' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_street' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_locality' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_region' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_postalcode' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_countryname' => array('type' => 'varchar','precision' => '64'),
+				'adr_one_type' => array('type' => 'varchar','precision' => '32'),
+				'label' => array('type' => 'text'),
+				'adr_two_street' => array('type' => 'varchar','precision' => '64'),
+				'adr_two_locality' => array('type' => 'varchar','precision' => '64'),
+				'adr_two_region' => array('type' => 'varchar','precision' => '64'),
+				'adr_two_postalcode' => array('type' => 'varchar','precision' => '64'),
+				'adr_two_countryname' => array('type' => 'varchar','precision' => '64'),
+				'adr_two_type' => array('type' => 'varchar','precision' => '32'),
+				'tel_work' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_home' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_voice' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_fax' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_msg' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_cell' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_pager' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_bbs' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_modem' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_car' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_isdn' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_video' => array('type' => 'varchar','precision' => '40','nullable' => False,'default' => '+1 (000) 000-0000'),
+				'tel_prefer' => array('type' => 'varchar','precision' => '32'),
+				'email' => array('type' => 'varchar','precision' => '64'),
+				'email_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
+				'email_home' => array('type' => 'varchar','precision' => '64'),
+				'email_home_type' => array('type' => 'varchar','precision' => '32','default' => 'INTERNET'),
+				'last_mod' => array('type' => 'int','precision' => '8','nullable' => False)
+			),
+			'pk' => array('id'),
+			'fk' => array(),
+			'ix' => array(array('tid','owner','access','n_family','n_given','email'),array('tid','cat_id','owner','access','n_family','n_given','email')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.026';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+?>
