@@ -20,7 +20,7 @@
   // include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 //  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
-  include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/phpgw_common.inc.php");
+  include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/class.common.inc.php");
 
   $common = new common;
   $phpgw_setup->loaddb(); 
