@@ -222,6 +222,18 @@
 			return $this->xmldata;
 		}
 		
+		function list_lineno($xml)
+		{
+			$xml = explode("\n",$xml);
+
+			echo "<pre>\n";
+			for ($n=1; isset($xml[$n]); ++$n)
+			{
+				echo "$n: ".htmlentities($xml[$n])."\n";
+			}
+			echo "</pre>\n";
+		}
+
 		function parse($parsexsl = True, $parsexml = True)
 		{
 			if($parsexsl)
@@ -244,8 +256,12 @@
 			{
 				xslt_process($this->xsldata, $this->xmldata,$html);
 			}
-
-			if (!$html) die($this->xsldata."\n\n XSLT processing error: ".xslt_error($xsltproc));
+			if (!$html)
+			{
+				echo "<p>xml-data = ";  $this->list_lineno($this->xmldata);
+				echo "<p>xsl-data = "; $this->list_lineno($this->xsldata);
+				die(/*$this->xsldata.*/"\n\n XSLT processing error: ".xslt_error($xsltproc));
+			}
 			xslt_free($xsltproc);
 			return $html;
 		}
