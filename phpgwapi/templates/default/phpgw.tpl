@@ -16,13 +16,13 @@
 	{phpgw_head_tags}
 </HEAD>
 <BODY {phpgw_body_tags}>
-	<TABLE border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+	<TABLE width="100%" height="100%" cellspacing="0" cellpadding="0">
 		<TR>
-			<TD width="100%" height="{phpgw_top_table_height}" align="left" valign="top" colspan="3">{phpgw_top}</TD>
+			<TD width="100%" valign="top" colspan="3">{phpgw_top}</TD>
 		</TR>
 		<TR>
-			<TD width="{phpgw_left_table_width}" height="{phpgw_body_table_height}" align="left" valign="top">{phpgw_left}</TD>
-			<TD width="{phpgw_body_table_width}" height="{phpgw_body_table_height}" align="left" valign="top">
+			<TD width="{phpgw_left_table_width}" height="{phpgw_body_table_height}" valign="top">{phpgw_left}</TD>
+			<TD width="{phpgw_body_table_width}" height="{phpgw_body_table_height}" valign="top">
 				{phpgw_msgbox}
 <!-- END phpgw_main_tables_start -->
 

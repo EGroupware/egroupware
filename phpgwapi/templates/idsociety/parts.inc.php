@@ -10,24 +10,16 @@
   \**************************************************************************/
 
   /* $Id$ */
-
-	$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','10%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_top_frame_height','90');
 	
 	$GLOBALS['phpgw']->template->set_var('phpgw_left_table_width','5%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_left_frame_width','165');
-
 	$GLOBALS['phpgw']->template->set_var('phpgw_body_table_height','85%');
-	
 	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_table_height','5%');
-	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_frame_height','30');
-	
+
 	function parse_toppart($output)
-  {
+	{
 		$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 		$GLOBALS['phpgw']->template->set_block('parts','top_part');
 		$var['img_root'] = PHPGW_IMAGES_DIR;
-		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
 		$find_double = strpos(strrev($GLOBALS['phpgw_info']['server']['webserver_url'].' '),'//');
@@ -93,23 +85,9 @@
 			$var['about_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
 		}
 
-		$var['em_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','em');
 		$var['logo_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','logo2');
-		$var['top_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
 
 		// "powered_by_color" and "_size" are is also used by number of current users thing
-		$var['powered_by_size'] = '2';
-		$var['powered_by_color'] = '#ffffff';
-		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
-		{
-			$var['powered_by'] = lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-			$GLOBALS['phpgw']->template->set_var($var);
-		}
-		else
-		{
-			$var['powered_by'] = '';
-			$GLOBALS['phpgw']->template->set_var($var);
-		}
 
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 		{
@@ -132,8 +110,6 @@
 				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
 				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
-		$var['user_info_size'] = '2';
-		$var['user_info_color'] = '#000000';
 
 		$GLOBALS['phpgw']->template->set_var($var);
 		$GLOBALS['phpgw']->template->fp($output,'top_part');
@@ -144,7 +120,6 @@
 		$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 		$GLOBALS['phpgw']->template->set_block('parts','left_part');
 		$applications = '';
-		$var['nav_bar_left_spacer_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_spacer');
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))
 		{
 			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && !ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
@@ -154,7 +129,7 @@
 				$img_src_over = $app[1]['icon_hover'];
 				$img_src_out = $app[1]['icon'];
 
-				$applications .= '<tr><td background="'.$var['nav_bar_left_spacer_img'].'"><a href="' . $app[1]['url'] . '"';
+				$applications .= '<tr><td class="left"><a href="' . $app[1]['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']))
 				{
 					$applications .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
@@ -200,22 +175,11 @@
 		$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
 		$GLOBALS['phpgw']->template->set_block('parts','bottom_part');
 
-		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
-		{
-			$var = Array(
-				'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
-				'img_root'	=> PHPGW_IMAGES_DIR,
-				'power_backcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'power_textcolor'	=> $GLOBALS['phpgw_info']['theme']['navbar_text']
-//				'version'	=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
-			);
-			$var['top_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
-			$var['em_bottom_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','em_bottom');
-			$GLOBALS['phpgw']->template->set_var($var);
-			$GLOBALS['phpgw']->template->fp($output,'bottom_part');
-		}
-		else
-		{
-			$GLOBALS['phpgw']->template->set_var($output,'');
-		}
+		$var = Array
+		(
+			'powered'	=> lang('Powered by phpGroupWare version x', $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
+		);
+		$var['top_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
+		$GLOBALS['phpgw']->template->set_var($var);
+		$GLOBALS['phpgw']->template->fp($output,'bottom_part');
 	}
