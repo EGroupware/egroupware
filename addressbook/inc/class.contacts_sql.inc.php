@@ -23,23 +23,20 @@
 
 /* $Id$ */
 
-	/*
-	phpgw_addressbook_extra (
-		contact_id          int,
-		contact_owner       int,
-		contact_name        varchar(255),
-		contact_value       varchar(255)
-	);
+  	/*!
+	 @class acl
+	 @abstract Contact List System
+	 @discussion Author: jengo/Milosch <br>
+	 This class provides a contact database scheme. <br>
+	 It attempts to be based on the vcard 2.1 standard, with mods as needed to make for more reasonable sql storage. <br>
+	 Syntax: CreateObject('phpgwapi.contacts'); <br>
+	 Example1: $contacts = CreateObject('phpgwapi.contacts');
 	*/
-  
-	/* ldap is a copy of sql for now */
-  
 	class contacts_
 	{
 		var $db;
 		var $std_table="phpgw_addressbook";
 		var $ext_table="phpgw_addressbook_extra";
-		// temp table definition for listings is in read function
 
 		var $account_id;
 		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
@@ -54,58 +51,88 @@
 			$this->account_id = $phpgw_info["user"]["account_id"];
 
     	    $this->stock_contact_fields = array(
-				"fn"              => "fn",        //'firstname lastname'
-				"sound"           => "sound",
-				"org_name"        => "org_name",  //company
-				"org_unit"        => "org_unit",  //division
-				"title"           => "title",
-				"n_given"         => "n_given",   //firstname
-				"n_family"        => "n_family",  //lastname
-				"n_middle"        => "n_middle",
-				"n_prefix"        => "n_prefix",
-				"n_suffix"        => "n_suffix",
-				"label"           => "label",
-				"adr_street"      => "adr_street",
-				"adr_locality"    => "adr_locality",   //city
-				"adr_region"      => "adr_region",     //state
-				"adr_postalcode"  => "adr_postalcode", //zip
-				"adr_countryname" => "adr_countryname",
-				"adr_work"        => "adr_work",   //yn
-				"adr_home"        => "adr_home",   //yn
-				"adr_parcel"      => "adr_parcel", //yn
-				"adr_postal"      => "adr_postal", //yn
-				"tz"              => "tz",
-				"geo"             => "geo",
-				"url"             => "url",
-				"bday"            => "bday",
-				"note"            => "note",
-				"a_tel"           => "a_tel",
-				"a_tel_work"      => "a_tel_work",   //yn
-				"a_tel_home"      => "a_tel_home",   //yn
-				"a_tel_voice"     => "a_tel_voice",  //yn
-				"a_tel_msg"       => "a_tel_msg",    //yn
-				"a_tel_fax"       => "a_tel_fax",    //yn
-				"a_tel_prefer"    => "a_tel_prefer", //yn
-				"b_tel"           => "b_tel",
-				"b_tel_work"      => "b_tel_work",   //yn
-				"b_tel_home"      => "b_tel_home",   //yn
-				"b_tel_voice"     => "b_tel_voice",  //yn
-				"b_tel_msg"       => "b_tel_msg",    //yn
-				"b_tel_fax"       => "b_tel_fax",    //yn
-				"b_tel_prefer"    => "b_tel_prefer", //yn
-				"c_tel"           => "c_tel",
-				"c_tel_work"      => "c_tel_work",   //yn
-				"c_tel_home"      => "c_tel_home",   //yn
-				"c_tel_voice"     => "c_tel_voice",  //yn
-				"c_tel_msg"       => "c_tel_msg",    //yn
-				"c_tel_fax"       => "c_tel_fax",    //yn
-				"c_tel_prefer"    => "c_tel_prefer", //yn
-				"d_email"         => "d_email",
-				"d_emailtype"     => "d_emailtype",   //'INTERNET','CompuServe',etc...
-				"d_email_work"    => "d_email_work",  //yn
-				"d_email_home"    => "d_email_home",  //yn
+				"fn"                     => "fn",        // 'prefix given middle family suffix'
+				"n_given"                => "n_given",   // firstname
+				"n_family"               => "n_family",  // lastname
+				"n_middle"               => "n_middle",
+				"n_prefix"               => "n_prefix",
+				"n_suffix"               => "n_suffix",
+				"sound"                  => "sound",
+				"bday"                   => "bday",
+				"note"                   => "note",
+				"tz"                     => "tz",
+				"geo"                    => "geo",
+				"url"                    => "url",
+				"pubkey"                 => "pubkey",
+
+				"org_name"               => "org_name",  // company
+				"org_unit"               => "org_unit",  // division
+				"title"                  => "title",
+
+				"adr_one_street"         => "adr_one_street",
+				"adr_one_locality"       => "adr_one_locality", 
+				"adr_one_region"         => "adr_one_region", 
+				"adr_one_postalcode"     => "adr_one_postalcode",
+				"adr_one_countryname"    => "adr_one_countryname",
+				"adr_one_type"           => "adr_one_type", // address is domestic/intl/postal/parcel/work/home
+				"label"                  => "label", // address label
+
+				"adr_two_street"         => "adr_two_street",
+				"adr_two_locality"       => "adr_two_locality", 
+				"adr_two_region"         => "adr_two_region", 
+				"adr_two_postalcode"     => "adr_two_postalcode",
+				"adr_two_countryname"    => "adr_two_countryname",
+				"adr_two_type"           => "adr_two_type", // address is domestic/intl/postal/parcel/work/home
+
+				"tel_work"               => "tel_work",
+				"tel_home"               => "tel_home",
+				"tel_voice"              => "tel_voice",
+				"tel_fax"                => "tel_fax", 
+				"tel_msg"                => "tel_msg",
+				"tel_cell"               => "tel_cell",
+				"tel_pager"              => "tel_pager",
+				"tel_bbs"                => "tel_bbs",
+				"tel_modem"              => "tel_modem",
+				"tel_car"                => "tel_car",
+				"tel_isdn"               => "tel_isdn",
+				"tel_video"              => "tel_video",
+				"tel_prefer"             => "tel_prefer", // home, work, voice, etc
+				"email"                  => "email",
+				"email_type"             => "email_type", //'INTERNET','CompuServe',etc...
+				"email_home"             => "email_home",
+				"email_home_type"        => "email_home_type" //'INTERNET','CompuServe',etc...
 			);
 
+			/* Used to flag an address as being:
+			   domestic OR  international(default)
+			   parcel(default)
+			   postal(default)
+			   work(default) OR home
+			*/
+			$this->adr_types = array(
+				"dom"    => lang("Domestic"),
+				"intl"   => lang("International"),
+				"parcel" => lang("Parcel"),
+				"postal" => lang("Postal")
+			);
+
+			// Used to set preferred number field
+			$this->tel_types = array(
+				"work"  => "work",
+				"home"  => "home",
+				"voice" => "voice",
+				"fax"   => "fax",
+				"msg"   => "msg",
+				"cell"  => "cell",
+				"pager" => "pager",
+				"bbs"   => "bbs",
+				"modem" => "modem",
+				"car"   => "car",
+				"isdn"  => "isdn",
+				"video" => "video"
+			);
+
+			// Used to set email_type fields
 	        $this->email_types = array(
 				"INTERNET"   => "INTERNET",
 				"CompuServe" => "CompuServe",
@@ -142,10 +169,27 @@
 			$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table WHERE id='$id'");
 			$this->db->next_record();
        
-			$return_fields[0]["id"]     = $this->db->f("id"); // unique id
-			$return_fields[0]["lid"]    = $this->db->f("lid"); // lid for group/account records
-			$return_fields[0]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
-			$return_fields[0]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
+			$return_fields[0]["id"]        = $this->db->f("id"); // unique id
+			$return_fields[0]["lid"]       = $this->db->f("lid"); // lid for group/account records
+			$return_fields[0]["tid"]       = $this->db->f("tid"); // type id (g/u) for groups/accounts
+			$return_fields[0]["owner"]     = $this->db->f("owner"); // id of owner/parent for the record
+
+			// Setup address type fields
+			if ($this->db->f("adr_one_type")) {
+				$one_type = $this->db->f("adr_one_type");
+				reset($this->adr_types);
+				while (list($name,$val) = each($this->adr_types)) {
+					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
+				}
+			}
+			if ($this->db->f("adr_two_type")) {
+				$two_type = $this->db->f("adr_two_type");
+				reset($this->adr_types);
+				while (list($name,$val) = each($this->adr_types)) {
+					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
+				}
+			}
+
 			if (gettype($stock_fieldnames) == "array") {
 				while (list($f_name) = each($stock_fieldnames)) {
 					$return_fields[0][$f_name] = $this->db->f($f_name);
@@ -316,7 +360,7 @@
 					}
 				}
 			}  else {
-				$ordermethod = "order by a.n_family,a.n_given,a.d_email $sort";
+				$ordermethod = "order by a.n_family,a.n_given,a.email $sort";
 			}
 
 			if ($DEBUG && $ordermethod) {
@@ -378,6 +422,7 @@
 			//	$ifexists = "IF EXISTS";
 			//}
 			
+
 			//$this->db->query("DROP TABLE $ifexists $tmp_table");
 			$this->db->query($tempcreate);
 
@@ -411,10 +456,10 @@
 
 			if ($query) {
 				$squery = " AND (n_family like '%$query%' OR n_middle like '"
-					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
-					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
-					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-					. "'%$query%' OR adr_countryname like '%$query%' OR "
+					. "%$query%' OR n_given like '%$query%' OR email like '%$query%' OR "
+					. "adr_one_street like '%$query%' OR adr_one_locality like '%$query%' OR adr_one_region "
+					. "like '%$query%' OR adr_one_postalcode like '%$query%' OR org_unit like "
+					. "'%$query%' OR adr_one_countryname like '%$query%' OR "
 					. "org_name like '%$query%')";
 			}
 
