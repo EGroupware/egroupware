@@ -144,7 +144,9 @@ enter the background color for the login page	admin	nl	CVoer de achtergrondkleur
 enter the background color for the site title	admin	nl	CVoer de achtergrondkleur in voor de sitetitel
 enter the file name of your logo	admin	nl	Voer het bestandsnaam in van uw logo
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br/>Bijv.: /tmp of C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br/>Bijv.: /tmp of C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGRoupWare's URL.<br/>Bijv.: http://www.domein.com/egroupware &nbsp; or &nbsp; /egroupware<br/><b>Gebruik geen afsluiten slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
@@ -309,7 +311,7 @@ template selection	admin	nl	Templateselectie
 text entry	admin	nl	Tekstinvoer
 that application name already exists.	admin	nl	Die toepassingsnaam bestaat reeds.
 that application order must be a number.	admin	nl	De invoer van de toepassingsvolgorde moet numeriek zijn.
-that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
+that loginid has already been taken	admin	nl	Die loginnaami is reeds in gebruik!
 that name has been used already	admin	nl	Die naam is reeds in Gebruik!
 that server name has been used already !	admin	nl	Die servernaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
@@ -349,6 +351,8 @@ view sessions	admin	nl	Sessies weergeven
 view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wilt u tevens ALLE records in eigendom van de verwijderde gebruikers
+would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> een nieuwe versie als de admin aanmeld?
+would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> nieuwe applicaties als de admin aanmeld?
 would you like phpgroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgwinfo-array laten cachen ? (EXTREEM GEVAARLIJK!)
 would you like phpgroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie wanneer beheerders inloggen?
 would you like phpgroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?

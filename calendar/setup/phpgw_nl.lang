@@ -1,6 +1,6 @@
 %1 %2 in %3	calendar	nl	%1 %2 in %3
 %1 matches found	calendar	nl	%1 resultaten gevonden
-%1 records imported	calendar	nl	%1 records
+%1 records imported	calendar	nl	%1 records geïmporteerd
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	nl	%1 records gelezen (nog niet geïmporteerd, u kunt teruggaan en Test Import uitzetten)
 (for weekly)	calendar	nl	(voor wekelijks)
 (i/v)cal	calendar	nl	(i/v)Cal
@@ -26,6 +26,10 @@ are you sure\nyou want to\ndelete these alarms?	calendar	nl	Weet u zeker dat u d
 are you sure\nyou want to\ndelete this entry ?	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?\nDit zal de afspraak bij\nalle gebruikers verwijderen.
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze enkele afpraak wilt verwijdere?\n\nDeze afspraak zal voor iedere gebruiker worden verwijderd.
+are you surenyou want tondelete these alarms?	calendar	nl	Weet u zeker dat u deze alarms wilt verwijderen?
+are you surenyou want tondelete this entry ?	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?
+are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze\nafspraak wilt verwijderen?\nDit zal de afspraak bij\nalle gebruikers verwijderen.
+are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	nl	Weet u zeker\n dat u deze enkele afpraak wilt verwijdere?\n\nDeze afspraak zal voor iedere gebruiker worden verwijderd.
 before the event	calendar	nl	voor de afspraak
 brief description	calendar	nl	Korte omschrijving
 business	calendar	nl	Bedrijf
@@ -122,16 +126,16 @@ has been rescheduled to	calendar	nl	is verplaats naar
 here is your requested alarm.	calendar	nl	Hier is uw verzochte alarm.
 high priority	calendar	nl	hoge prioriteit
 holiday	calendar	nl	Vakantie
-holiday management	calendar	nl	Vakantiebeheer
-holiday-management	calendar	nl	Vakantiebeheer
+holiday management	calendar	nl	Feestdagenbeheer
+holiday-management	calendar	nl	Feestdagenbeheer
 holidays	calendar	nl	Vakanties
 hours	calendar	nl	uren
 i participate	calendar	nl	Ik doe mee
 ical / rfc2445	calendar	nl	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen vakanties die vallen in het weekend, genomen worden op de maandag daarna.
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen feestdagen die vallen in het weekend, genomen worden op de maandag daarna.
 ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
-import csv-file	common	nl	CSV-bstand importen
+import csv-file	common	nl	CSV-bestand importen
 interval	calendar	nl	Herhaling
 intervals in day view	calendar	nl	Intervallen in dagelijke weergave
 intervals per day in planner view	calendar	nl	Intervallen per dag in planner weergave
@@ -224,7 +228,7 @@ search results	calendar	nl	Zoekresultaten
 selected contacts (%1)	calendar	nl	Geselecteerde contacten (%1)
 send updates via email	common	nl	Zend aanpassingen via e-mail
 send/receive updates via email	calendar	nl	Zend/ontvang aanpassingen via e-mail
-set a year only for one-time / non-regular holidays.	calendar	nl	Stel een een jaar in voor opzichstaande / niet reguliere vakanties
+set a year only for one-time / non-regular holidays.	calendar	nl	Stel een een jaar in voor opzichstaande / niet reguliere feestdagen
 set new events to private	calendar	nl	Zet nieuwe afspraken op privé
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	nl	Moeten uitnodigingen die u heeft afgewezen nog steeds worden weergegeven in uw agenda? <br/> U kunt ze alleen achteraf nog accepteren als ze in uw agenda worden weergegeven! (bijv. wanneer een planningsconflict is verwijderd)
 should new events created as private by default ?	calendar	nl	Moeten nieuwe afspraken standaard als privé worden aangemaakt?

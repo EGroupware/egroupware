@@ -21,6 +21,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	nl	wijzig aangepaste velden
 enter your new password	preferences	nl	Voer uw nieuwe wachtwoord in
 error: there was a problem finding the preference file for %1 in %2	preferences	nl	Fout: Er is een fout opgetreden bij het zoeken naar het voorkeurenbestand voor %1 in %2.
+failed to change password.  please contact your administrator.	preferences	nl	Wachtwoord kan niet worden gewijzigd. Neem contact op met uw beheerder.
 forced preferences	preferences	nl	Geforceerde voorkeuren
 help off	preferences	nl	Help uitgeschakeld
 hours	preferences	nl	uren
@@ -38,7 +39,8 @@ max matches per page	preferences	nl	Max. resultaten per pagina
 max matchs per page	preferences	nl	Maximum aantal resultaten per pagina
 max number of icons in navbar	preferences	nl	Max. aantal icoontjes in de navigatiebalk
 no default	preferences	nl	Geen standaard
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigd *niet* uw email-wachtwoord. Dit dient handmatig te gebeuren.
+note: this feature does *not* change your email password. this will	preferences	nl	Opmerking: Deze optie wijzigd uw email wachtwoord niet. Dit moet
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigd *niet* uw email-wachtwoord. Dit moet handmatig te gebeuren.
 please, select a new theme	preferences	nl	Selecteer een nieuw themak
 popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in

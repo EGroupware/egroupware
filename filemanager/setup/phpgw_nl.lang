@@ -41,16 +41,19 @@ file	filemanager	nl	Bestand
 file %1 already exists. please edit it or delete it first.	filemanager	nl	Bestand %1 bestaat reeds.
 file %1 could not be created.	filemanager	nl	Bestand %1 kon niet worden aangemaakt.
 file name	filemanager	nl	Bestandsnaam
+file names cannot contain  or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 file names cannot contain "%1"	filemanager	nl	Bestanden kunnen geen "%1" bevatten.
 file names cannot contain \ or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 filemanager	common	nl	Filemanager
 filemanager preferences	filemanager	nl	Filemanager voorkeuren
 files	filemanager	nl	Bestanden
+files in this directory	filemanager	nl	Bestanden in deze folder
 folder	filemanager	nl	Directory
 go to	filemanager	nl	Ga naar
 go to %1	filemanager	nl	Ga naar %1
 go to your home directory	filemanager	nl	Ga naar uw homedirectory
 go to:	filemanager	nl	Ga naar:
+go up	filemanager	nl	omhoog
 home	filemanager	nl	Home
 locked	filemanager	nl	Gesloten
 mime type	filemanager	nl	MIME-type
@@ -59,11 +62,15 @@ modified by	filemanager	nl	Gewijzigd door
 move to	filemanager	nl	Verplaatsen naar
 move to:	filemanager	nl	Verplaatsen naar:
 moved %1 to %2	filemanager	nl	%1 verplaatst naar %2
+no files in this directory.	filemanager	nl	Geen bestanden in deze folder.
 no version history for this file/directory	filemanager	nl	Geen versiegeschiedenis voor dit bestand of deze directory
 operation	filemanager	nl	Actie
+other settings	filemanager	nl	Overige instellingen
 owner	filemanager	nl	Eigenaar
 preview %1	filemanager	nl	Preview %1
 preview of %1	filemanager	nl	Preview van %1
+quick jump to	filemanager	nl	Snel naar
+reload	filemanager	nl	opnieuw opvragen
 rename	filemanager	nl	Hernoemen
 renamed %1 to %2	filemanager	nl	%1 hernoemd naar %2
 replaced %1	filemanager	nl	%1 vervangen
@@ -83,6 +90,7 @@ unused space	filemanager	nl	Ongebruikte schijfruimte
 up	filemanager	nl	Naar boven
 update	filemanager	nl	Bijgewerkt
 updated comment for %1	filemanager	nl	Opmerking voor %1 bijgewerkt
+upload	filemanager	nl	Upload
 upload fields	filemanager	nl	uploadvelden
 upload files	filemanager	nl	Bestanden uploaden
 used space	filemanager	nl	Gebruikte schijfruimte
