@@ -27,7 +27,7 @@
 
   if (! $submit) {
      $phpgw->db->query("SELECT * FROM addressbook WHERE ab_owner='"
-		           . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id");
+		           . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id");
      $phpgw->db->next_record();
 
      $fields = array('ab_id'	=> $phpgw->db->f("ab_id"),
@@ -59,7 +59,7 @@
   } else {
     $bday = $bday_month . "/" . $bday_day . "/" . $bday_year;
     if ($access != "private" && $access != "public") {
-     $access = $phpgw->accounts->array_to_string($access,$n_groups);
+       $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
     if($phpgw_info["apps"]["timetrack"]["enabled"]) {
@@ -82,7 +82,7 @@
 	    . "', ab_notes='" 	. addslashes($notes)
 	    . "', ab_company_id='" . addslashes($company)
 	    . "', ab_access='" 	. addslashes($access)
-	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id";
+	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
      } else {
       $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
             . "', ab_firstname='". addslashes($firstname)
@@ -103,7 +103,7 @@
             . "', ab_notes='"   . addslashes($notes)
             . "', ab_company='" . addslashes($company)
             . "', ab_access='"  . addslashes($access)
-            . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id";
+            . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
      }
 
      $phpgw->db->query($sql);

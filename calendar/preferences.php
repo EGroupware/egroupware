@@ -16,13 +16,13 @@
   include("../header.inc.php");
 
   if ($submit) {
-     $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["userid"],"calendar");
+     $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"calendar");
 
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"weekdaystarts","calendar");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdaystarts","calendar");
-     $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"workdayends","calendar");
+     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"weekdaystarts","calendar");
+     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"workdaystarts","calendar");
+     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"workdayends","calendar");
      if ($mainscreen_showevents) {
-        $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showevents","calendar");
+        $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showevents","calendar");
      }
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      exit;

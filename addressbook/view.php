@@ -29,11 +29,11 @@
   if($phpgw_info["apps"]["timetrack"]["enabled"]) {
    $phpgw->db->query("SELECT * FROM addressbook as a, customers as c WHERE a.ab_company_id = c.company_id "
 		     . "AND ab_id=$ab_id AND (ab_owner='"
-	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
+	             . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
   } else {
    $phpgw->db->query("SELECT * FROM addressbook "
                      . "WHERE ab_id=$ab_id AND (ab_owner='"
-                     . $phpgw_info["user"]["userid"] . "' $filtermethod)");
+                     . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
   }
   $phpgw->db->next_record();
 

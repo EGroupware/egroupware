@@ -37,11 +37,11 @@
      if ($filter != "none") {
         $filtermethod = " ab_access like '%,$filter,%' ";
      } else {
-        $filtermethod = " (ab_owner='" . $phpgw_info["user"]["userid"] ."' OR ab_access='public' "
+        $filtermethod = " (ab_owner='" . $phpgw_info["user"]["account_id"] ."' OR ab_access='public' "
 		            . $phpgw->accounts->sql_search("ab_access") . " ) ";
      }
   } else {
-     $filtermethod = " ab_owner='" . $phpgw_info["user"]["userid"] . "' ";
+     $filtermethod = " ab_owner='" . $phpgw_info["user"]["account_id"] . "' ";
   }
 
   if ($query) {

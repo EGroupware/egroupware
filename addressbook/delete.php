@@ -27,7 +27,7 @@
      $phpgw->db->query("select ab_owner from addressbook where ab_id='$ab_id'");
      $phpgw->db->next_record();
 
-     if ($phpgw->db->f("ab_owner") != $phpgw_info["user"]["userid"])
+     if ($phpgw->db->f("ab_owner") != $phpgw_info["user"]["account_id"])
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/"));
 
      ?>
@@ -43,8 +43,8 @@
      //exit;
   } else {
 
-     $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["userid"]
-		           . "' and ab_id='$ab_id'");
+     $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["account_id"]
+		             . "' and ab_id='$ab_id'");
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	    "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
   }

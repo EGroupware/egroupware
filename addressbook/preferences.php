@@ -21,12 +21,12 @@
      }
      
      if (! $totalerrors) {
-        $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["userid"],"addressbook");
+        $phpgw->common->preferences_delete("byapp",$phpgw_info["user"]["account_id"],"addressbook");
         while ($pref = each($ab_selected)) {
-          $phpgw->common->preferences_add($phpgw_info["user"]["userid"],$pref[0],"addressbook","addressbook_" . $pref[1]);
+          $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],$pref[0],"addressbook","addressbook_" . $pref[1]);
         }
         if ($mainscreen_showbirthdays) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["userid"],"mainscreen_showbirthdays","addressbook");
+           $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"mainscreen_showbirthdays","addressbook");
         }
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      }
@@ -72,7 +72,7 @@
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     ?>
     <tr bgcolor="<?php echo $tr_color; ?>">
-     <td colspan="2"><?php echo lang("show current users on navigation bar"); ?></td>
+     <td colspan="2"><?php echo lang("show birthday reminders on main screen"); ?></td>
      <td><input type="checkbox" name="mainscreen_showbirthdays" value="True"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
     </tr>
     <tr>

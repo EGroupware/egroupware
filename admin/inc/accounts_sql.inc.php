@@ -153,6 +153,7 @@
       // If they changed there loginid, we need to change the owner in ALL
       // tables to reflect on the new one
       if ($lid != $account_info["loginid"]) {
+/*
          change_owner("","preferences","preference_owner",$account_info["loginid"],$lid);
          change_owner("addressbook","addressbook","ab_owner",$account_info["loginid"],$lid);
          change_owner("todo","todo","todo_owner",$account_info["loginid"],$lid);
@@ -160,6 +161,7 @@
          change_owner("","sessions","session_lid",$account_info["loginid"],$lid);
          change_owner("calendar","webcal_entry","cal_create_by",$account_info["loginid"],$lid);
          change_owner("calendar","webcal_entry_user","cal_login",$account_info["loginid"],$lid);
+*/
 
          if ($lid != $n_loginid) {
             $sep = $phpgw->common->filesystem_separator();
@@ -194,7 +196,7 @@
      $lid = $phpgw->db->f(0);
 
      $i = 0;
-     $phpgw->db->query("select cal_id from webcal_entry where cal_create_by='$lid'");
+     $phpgw->db->query("select cal_id from webcal_entry where cal_create_by='$account_id'");
      while ($phpgw->db->next_record()) {
        $cal_id[$i] = $phpgw->db->f("cal_id");
        echo "<br>" . $phpgw->db->f("cal_id");
@@ -211,12 +213,12 @@
         $phpgw->db->query("delete from webcal_entry_groups where cal_id='$cal_id[$i]'");
      }
 
-     $phpgw->db->query("delete from webcal_entry where cal_create_by='$lid'");
-     $phpgw->db->query("delete from webcal_entry_user where cal_login='$lid'");
+     $phpgw->db->query("delete from webcal_entry where cal_create_by='$account_id'");
+     $phpgw->db->query("delete from webcal_entry_user where cal_login='$account_id'");
 
-     $phpgw->db->query("delete from todo where todo_owner='$lid'");
-     $phpgw->db->query("delete from addressbook where ab_owner='$lid'");
-     $phpgw->db->query("delete from accounts where account_lid='$lid'");
+     $phpgw->db->query("delete from todo where todo_owner='$account_id'");
+     $phpgw->db->query("delete from addressbook where ab_owner='$account_id'");
+     $phpgw->db->query("delete from accounts where account_lid='$account_id'");
      
      $phpgw->common->preferences_delete("all",$lid);
 
