@@ -111,7 +111,7 @@
 		*/
 		function set_cookie($cookiename,$cookievalue='',$cookietime=0)
 		{
-			if(!$this->cookie_domain)
+			if(!isset($this->cookie_domain) || !$this->cookie_domain)
 			{
 				$this->set_cookiedomain();
 			}

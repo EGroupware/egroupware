@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$DEBUG = $_POST['debug'] || $_GET['debug'];
+	$DEBUG = @$_POST['debug'] || @$_GET['debug'];
 	/*
 	 TODO: We allow a user to hose their setup here, need to make use
 	 of dependencies so they are warned that they are pulling the rug

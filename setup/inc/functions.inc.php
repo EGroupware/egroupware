@@ -28,6 +28,8 @@
 	unset($d1);unset($d2);unset($d3);
 	/* ######## End security check ########## */
 
+	error_reporting(error_reporting() & ~E_NOTICE);
+
 	if(file_exists('../header.inc.php'))
 	{
 		include('../header.inc.php');

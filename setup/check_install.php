@@ -22,7 +22,9 @@
 			'currentapp' => 'home',
 			'noapi' => True
 		);
+		$safe_er = error_reporting();
 		include ('./inc/functions.inc.php');
+		error_reporting($safe_er);
 
 		$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->detection->check_header();
 		if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
@@ -55,6 +57,7 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 *** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time,
 which leaves your DB in an unrecoverable state (your data is lost) !!!'
 		),
+/* not longer needed, as it gets set now on runtime (works even with safe_mode)
 		'error_reporting' => array(
 			'func' => 'php_ini_check',
 			'value' => E_NOTICE,
@@ -62,6 +65,7 @@ which leaves your DB in an unrecoverable state (your data is lost) !!!'
 			'check' => 'not set',
 			'safe_mode' => 'error_reporting = E_ALL & ~E_NOTICE'
 		),
+*/
 		'magic_quotes_runtime' => array(
 			'func' => 'php_ini_check',
 			'value' => 0,
@@ -169,8 +173,6 @@ expect ocasional failures',
 
 	function verbosePerms( $in_Perms )
 	{
-		$sP;
-
 		if($in_Perms & 0x1000)     // FIFO pipe
 		{
 			$sP = 'p';
@@ -243,8 +245,7 @@ expect ocasional failures',
 
 		if ($verbose)
 		{
-			echo "Checking file-permissions of $rel_name for $checks: ";
-
+			$perms = '';
 			if (file_exists($name))
 			{
 				$owner = function_exists('posix_getpwuid') ? posix_getpwuid(@fileowner($name)) : array('name' => 'nn');
@@ -256,15 +257,16 @@ expect ocasional failures',
 				if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?'not ':'').'world writable';
 				$checks = implode(', ',$checks);
 
-				echo "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
+				$perms = "$owner[name]/$group[name] ".verbosePerms(@fileperms($name));
 			}
-			echo "\n";
+			echo "Checking file-permissions of $rel_name for $checks: $perms\n";
 		}
 		if (!file_exists($name))
 		{
 			echo "$error_icon$rel_name does not exist !!!\n";
 			return False;
 		}
+		$warning = False;
 		if (!$GLOBALS['run_by_webserver'] && ($args['is_readable'] || $args['is_writable']))
 		{
 			echo "$warning_icon check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.\n";
@@ -299,7 +301,7 @@ expect ocasional failures',
 		}
 		if ($verbose) echo "\n";
 
-		if ($Ok && $args['recursiv'] && is_dir($name))
+		if ($Ok && @$args['recursiv'] && is_dir($name))
 		{
 			$handle = @opendir($name);
 			while($handle && ($file = readdir($handle)))
@@ -323,6 +325,7 @@ expect ocasional failures',
 		$ini_value = ini_get($name);
 		$check = isset($args['check']) ? $args['check'] : '=';
 		$verbose_value = isset($args['verbose_value']) ? $args['verbose_value'] : $args['value'];
+		$ini_value_verbose = '';
 		if ($verbose_value == 'On' || $verbose_value == 'Off')
 		{
 			$ini_value_verbose = ' = '.($ini_value ? 'On' : 'Off');
@@ -357,9 +360,9 @@ expect ocasional failures',
 			{
 				echo $error_icon.$args['error']."\n";
 			}
-			if (isset($args['safe_mode']) && $safe_mode || $args['change'])
+			if (isset($args['safe_mode']) && $safe_mode || @$args['change'])
 			{
-				echo "Please make the following change in your php.ini: ".($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
+				echo $error_icon."Please make the following change in your php.ini: ".($args['safe_mode']?$args['safe_mode']:$args['change'])."\n";
 			}
 			echo "\n";
 			return False;
@@ -379,7 +382,7 @@ expect ocasional failures',
 			'T_footer' => 'footer.tpl',
 		));
 		$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
-		$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+		$GLOBALS['phpgw_setup']->html->show_header(lang('Checking the eGroupWare Installation'),False,'config',$ConfigDomain . '(' . @$phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		echo '<h1>'.lang('Checking the eGroupWare Installation')."</h1>\n";
 		echo "<pre style=\"text-align: left;\">\n";;
 	}

@@ -28,6 +28,8 @@
 	* If running in PHP3, then force admin to upgrade                           *
 	\***************************************************************************/
 
+	error_reporting(error_reporting() & ~E_NOTICE);
+
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
 		echo 'eGroupWare requires PHP 4.1 or greater.<br>';
@@ -455,5 +457,3 @@
 			include(PHPGW_APP_INC . '/header.inc.php');
 		}
 	}
-
-	error_reporting(E_ERROR | E_WARNING | E_PARSE);
