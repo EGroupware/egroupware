@@ -101,9 +101,30 @@
 </tr>
 <!-- END B_db_stage_4 -->
 
+<!-- BEGIN B_db_stage_5 -->
+<tr>
+	<td>&nbsp;</td><td align="left">{are_you_sure}</td>
+</tr>
+<tr>
+	<td align="center">
+		<img src="{img_incomplete}" alt="{Complete}" border="0">
+	</td>
+	<td>
+		<form action="index.php" method="post">
+		<input type="hidden" name="oldversion" value="new">
+        <input type="hidden" name="action" value="REALLY Uninstall all applications">
+		<input type="submit" name="label" value="{really_uninstall_all_applications}"> {dropwarn}
+		</form>
+		<form action="index.php" method="post">
+		<input type="submit" name="cancel" value="{cancel}">
+		</form>
+	</td>
+</tr>
+<!-- END B_db_stage_5 -->
+
 &nbsp; <!-- ================================== --> &nbsp; 
 
-<!-- BEGIN B_db_stage_5_pre -->
+<!-- BEGIN B_db_stage_6_pre -->
 <tr>
 	<td align="center">
 		<img src="{img_incomplete}" alt="{notcomplete}" border="0">
@@ -125,11 +146,11 @@
 				<font color="#fefefe">&nbsp;<b>{tblchange}</b></font>
 			</td>
 		</tr>
-<!-- END B_db_stage_5_pre -->
+<!-- END B_db_stage_6_pre -->
 
 &nbsp; <!-- ================================== --> &nbsp; 
 
-<!-- BEGIN B_db_stage_5_post -->
+<!-- BEGIN B_db_stage_6_post -->
 		<tr bgcolor="#486591">
 			<td>
 				<font color="#fefefe">&nbsp;<b>{status}</b></font>
@@ -145,7 +166,7 @@
 		</form>
 	</td>
 </tr>
-<!-- END B_db_stage_5_post -->
+<!-- END B_db_stage_6_post -->
 
 &nbsp; <!-- ================================== --> &nbsp; 
 

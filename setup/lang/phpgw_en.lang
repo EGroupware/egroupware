@@ -3,6 +3,7 @@
 Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 Admins	setup	en	Admins
 All Users	setup	en	All Users
+are you sure?	setup	en	ARE YOU SURE?
 Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 Authentication / Accounts	setup	en	Authentication / Accounts
 Auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
@@ -151,6 +152,7 @@ process	setup	en	Process
 re-check my database	setup	en	Re-Check my database
 re-check my installation	setup	en	Re-Check My Installation
 re-enter password	setup	en	Re-enter password
+really uninstall all applications	setup	en	REALLY Uninstall all applications
 registered	setup	en	registered
 remove	setup	en	Remove
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
@@ -207,5 +209,5 @@ your applications are current	setup	en	Your applications are current
 your database does not exist	setup	en	Your database does not exist
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
 your tables are current	setup	en	Your tables are current
-your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data
-your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data
+your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
+your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!

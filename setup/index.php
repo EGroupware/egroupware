@@ -43,8 +43,9 @@
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_2','V_db_stage_2');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_3','V_db_stage_3');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_4','V_db_stage_4');
-	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_5_pre','V_db_stage_5_pre');
-	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_5_post','V_db_stage_5_post');
+	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_5','V_db_stage_5');
+	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_6_pre','V_db_stage_6_pre');
+	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_6_post','V_db_stage_6_post');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_10','V_db_stage_10');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_default','V_db_stage_default');
 
@@ -97,33 +98,40 @@
 
 	switch($action)
 	{
+		case 'Uninstall all applications':
+			$subtitle = lang('Deleting Tables');
+			$submsg = lang('Are you sure delete your existing tables and data?') . '.';
+			$subaction = 'uninstall';
+			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'predrop';
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			break;
 		case 'Create Database':
 			$subtitle = lang('Create Database');
 			$submsg = lang('At your request, this script is going to attempt to create the database and assign the db user rights to it');
 			$subaction = 'created';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'dbcreate';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
-		case 'Uninstall all applications':
+		case 'REALLY Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
-			$submsg = lang('At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data') . '.';
+			$submsg = lang('At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data') . '.';
 			$subaction = 'uninstalled';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'drop';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Upgrade':
 			$subtitle = lang('Upgrading Tables');
 			$submsg = lang('At your request, this script is going to attempt to upgrade your old applications to the current versions').'.';
 			$subaction = 'upgraded';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
 			$submsg = lang('At your request, this script is going to attempt to install all the applications for you').'.';
 			$subaction = 'installed';
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
-			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 5;
+			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 	}
 	$setup_tpl->set_var('subtitle',$subtitle);
@@ -209,11 +217,20 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 5:
+			$setup_tpl->set_var('are_you_sure',lang('ARE YOU SURE?'));
+			$setup_tpl->set_var('really_uninstall_all_applications',lang('REALLY Uninstall all applications'));
+			$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
+			$setup_tpl->set_var('cancel',lang('cancel'));
+			$setup_tpl->parse('V_db_stage_5','B_db_stage_5');
+			$db_filled_block = $setup_tpl->get_var('V_db_stage_5');
+			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
+			break;
+		case 6:
 			$setup_tpl->set_var('status',lang('Status'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('tblchange',lang('Table Change Messages'));
-			$setup_tpl->parse('V_db_stage_5_pre','B_db_stage_5_pre');
-			$db_filled_block = $setup_tpl->get_var('V_db_stage_5_pre');
+			$setup_tpl->parse('V_db_stage_6_pre','B_db_stage_6_pre');
+			$db_filled_block = $setup_tpl->get_var('V_db_stage_6_pre');
 			
 			// FIXME : CAPTURE THIS OUTPUT
 			$phpgw_setup->db->Halt_On_Error = 'report';
@@ -243,8 +260,8 @@
 
 			$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
-			$setup_tpl->parse('V_db_stage_5_post','B_db_stage_5_post');
-			$db_filled_block = $db_filled_block . $setup_tpl->get_var('V_db_stage_5_post');
+			$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');
+			$db_filled_block = $db_filled_block . $setup_tpl->get_var('V_db_stage_6_post');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 10:
