@@ -20,6 +20,14 @@
 	);
 	include ('./inc/functions.inc.php');
 
+	// Check header and authentication
+	if (!$phpgw_setup->auth('Config'))
+	{
+		Header('Location: index.php');
+		exit;
+	}
+	// Does not return unless user is authorized
+
 	$tpl_root = $GLOBALS['phpgw_setup']->setup_tpl_dir('setup');
 	$GLOBALS['setup_tpl'] = CreateObject('phpgwapi.Template',$tpl_root);
 	$GLOBALS['setup_tpl']->set_file(array(
@@ -43,21 +51,6 @@
 	$GLOBALS['setup_tpl']->set_block('T_setup_main','app_footer','app_footer');
 	$GLOBALS['setup_tpl']->set_block('T_setup_main','submit','submit');
 	$GLOBALS['setup_tpl']->set_block('T_setup_main','footer','footer');
-
-	// Check header and authentication
-	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->check_header();
-	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
-	{
-		Header("Location: manageheader.php");
-		exit;
-	}
-	elseif (!$GLOBALS['phpgw_setup']->auth('Config'))
-	{
-		$GLOBALS['phpgw_setup']->show_header(lang('Please login'),True);
-		$GLOBALS['phpgw_setup']->login_form();
-		$GLOBALS['phpgw_setup']->show_footer();
-		exit;
-	}
 
 	$bgcolor = array('DDDDDD','EEEEEE');
 

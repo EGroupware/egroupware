@@ -17,8 +17,6 @@
 		'currentapp' => 'home',
 		'noapi'      => True
 	);
-
-	include('../header.inc.php');
 	include('./inc/functions.inc.php');
 
 	// Authorize the user to use setup app and load the database

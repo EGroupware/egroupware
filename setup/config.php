@@ -18,7 +18,16 @@
 		'noapi' => True
 	);
 	include('./inc/functions.inc.php');
-	include('../header.inc.php');
+
+	/*
+	Authorize the user to use setup app and load the database
+	Does not return unless user is authorized
+	*/
+	if (!$phpgw_setup->auth('Config'))
+	{
+		Header('Location: index.php');
+		exit;
+	}
 
 	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -33,15 +42,6 @@
 	/* Following to ensure windows file paths are saved correctly */
 	set_magic_quotes_runtime(0);
 
-	/*
-	Authorize the user to use setup app and load the database
-	Does not return unless user is authorized
-	*/
-	if (!$phpgw_setup->auth('Config'))
-	{
-		Header('Location: index.php');
-		exit;
-	}
 	$phpgw_setup->loaddb();
 
 	/* Guessing default values. */

@@ -19,6 +19,14 @@
 	);
 	include ('./inc/functions.inc.php');
 
+	// Check header and authentication
+	if (!$phpgw_setup->auth('Config'))
+	{
+		Header('Location: index.php');
+		exit;
+	}
+	// Does not return unless user is authorized
+
 	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 
@@ -59,21 +67,6 @@
 		$setup_tpl->set_block('sqlarr','sqlheader','sqlheader');
 		$setup_tpl->set_block('sqlarr','sqlbody','sqlbody');
 		$setup_tpl->set_block('sqlarr','sqlfooter','sqlfooter');
-	}
-
-	// Check header and authentication
-	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $phpgw_setup->check_header();
-	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
-	{
-		Header("Location: manageheader.php");
-		exit;
-	}
-	elseif (!$phpgw_setup->auth('Config'))
-	{
-		$phpgw_setup->show_header(lang('Please login'),True);
-		$phpgw_setup->login_form();
-		$phpgw_setup->show_footer();
-		exit;
 	}
 
 	$phpgw_setup->loaddb();

@@ -20,7 +20,6 @@
 		'noapi'      => True
 	);
 	include('./inc/functions.inc.php');
-	include('../header.inc.php');
 
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
