@@ -253,6 +253,9 @@
 			case 'get':
 				$posttype = 'HTTP_GET_VARS';
 				break;
+			case 'cookie':
+				$posttype = 'HTTP_COOKIE_VARS';
+				break;
 			default :
 				$posttype = 'HTTP_POST_VARS';
 		}
@@ -326,6 +329,55 @@
 		}
 	}
 
+
+	/*!
+	 @function get_var
+	 @abstract retrieve a value from either a POST, GET, COOKIE, or from a class variable.
+	 @author skeeter
+	 @discussion This function is used to retrieve a value from a user defined order of methods. 
+	 @syntax get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
+	 @example $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
+	 @param $variable name
+	 @param $method ordered array of methods to search for supplied variable
+	 @param $default_value (optional)
+	*/
+	function get_var($variable,$method,$default_value='')
+	{
+		for($i=0;$i<count($method);$i++)
+		{
+			switch(strtoupper($method[$i]))
+			{
+				case 'DEFAULT':
+					if($default_value)
+					{
+						$var = $default_value;
+					}
+					break;
+				case 'GLOBAL':
+					if(@isset($GLOBALS[$variable]))
+					{
+						$var = $GLOBALS[$variable];
+					}
+					break;
+				case 'POST':
+				case 'GET':
+				case 'COOKIE':
+					if(@isset($GLOBALS['HTTP_'.strtoupper($method[$i]).'_VARS'][$variable]))
+					{
+						$var = $GLOBALS['HTTP_'.strtoupper($method[$i]).'_VARS'][$variable];
+					}
+					break;
+				default:
+					if(@isset($GLOBALS[strtoupper($method[$i])][$variable]))
+					{
+						$var = $GLOBALS[strtoupper($method[$i])][$variable];
+					}
+					break;
+			}
+		}
+		return $var;
+	}
+	
 	/*!
 	 @function CreateObject
 	 @abstract Load a class and include the class file if not done so already.
