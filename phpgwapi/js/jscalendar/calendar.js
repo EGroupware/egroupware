@@ -1158,7 +1158,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 	}
 	this.ar_days = ar_days;
 //	this.title.firstChild.data = Calendar._MN[month] + ", " + year;
-	this.title.firstChild.data = this.date.print(this.params.titleFormat);
+	this.title.firstChild.data = this.params ? this.date.print(this.params.titleFormat) : Calendar._MN[month] + ", " + year;
 	this.onSetTime();
 	this.table.style.visibility = "visible";
 	// PROFILE
@@ -1216,7 +1216,7 @@ Calendar.prototype.callHandler = function () {
 
 /** Calls the week-clicked user handler (selectedHandler). */
 Calendar.prototype.hasWeekHandler = function () {
-	return this.params.flat && this.params.flatWeekCallback;
+	return this.params && this.params.flat && this.params.flatWeekCallback;
 };
 
 Calendar.prototype.callWeekHandler = function (weekstart) {
@@ -1227,7 +1227,7 @@ Calendar.prototype.callWeekHandler = function (weekstart) {
 
 /** Calls the week-clicked user handler (selectedHandler). */
 Calendar.prototype.hasMonthHandler = function () {
-	return this.params.flat && this.params.flatMonthCallback;
+	return this.params && this.params.flat && this.params.flatMonthCallback;
 };
 
 Calendar.prototype.callMonthHandler = function () {
@@ -1582,7 +1582,7 @@ Calendar.prototype._displayWeekdays = function () {
 	for (var i = 0; i < 7; ++i) {
 		cell.className = "day name";
 		var realday = (i + fdow) % 7;
-		if (i && !this.params.disableFirstDowChange) {
+		if (i && !(this.params && this.params.disableFirstDowChange)) {
 			cell.ttip = Calendar._TT["DAY_FIRST"].replace("%s", Calendar._DN[realday]);
 			cell.navtype = 100;
 			cell.calendar = this;
