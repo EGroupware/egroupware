@@ -23,7 +23,7 @@
 
   if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
      echo "<p><b>Error binding to LDAP server.  Check your config</b>";
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   function getSearchLine($searchstring)

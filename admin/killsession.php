@@ -19,7 +19,7 @@
   include("../header.inc.php");
   if ($ksessionid == $phpgw_info["user"]["sessionid"]) {
      Header("Location: " . $phpgw->link("currentusers.php"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   if ($confirm) {

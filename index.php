@@ -68,7 +68,7 @@
       && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
      $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
 		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   //$phpgw->hooks->proccess("location","mainscreen");

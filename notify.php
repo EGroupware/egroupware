@@ -25,7 +25,7 @@
     $mbox = $phpgw->msg->login();
     if (! $mbox) {
        echo "Mail error: can not open connection to mail server";
-       exit;
+       $phpgw->common->phpgw_exit();
     }
 
     if (hasmsg == "yes"){

@@ -72,7 +72,7 @@
 	  }
 	}
         Header("Location: " . $phpgw->link("applications.php"));
-        exit;
+        $phpgw->common->phpgw_exit();
      } else {
         $phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
      }

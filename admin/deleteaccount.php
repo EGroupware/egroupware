@@ -51,7 +51,7 @@
   // If they are, they should not reach this point anyway.
   if ($phpgw_info["user"]["account_id"] == $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   if (($account_id) && (! $confirm)) {

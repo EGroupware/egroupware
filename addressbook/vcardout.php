@@ -24,7 +24,7 @@
 
   if (! $ab_id) {
     Header("Location: " . $phpgw->link("index.php"));
-    exit;
+    $phpgw->common->phpgw_exit();
   }
 
   if ($filter != "private")

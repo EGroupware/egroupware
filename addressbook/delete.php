@@ -41,7 +41,7 @@
             ?>"><?php echo lang("YES"); ?></a><center>
      <?php
 
-     //exit;
+     //$phpgw->common->phpgw_exit();
   } else {
 
      $phpgw->db->query("delete from addressbook where ab_owner='" . $phpgw_info["user"]["account_id"]

@@ -45,7 +45,7 @@
                         . "$n_app_status' where app_name='$old_app_name'",__LINE__,__FILE__);
 
         Header("Location: " . $phpgw->link("applications.php"));
-        exit;
+        $phpgw->common->phpgw_exit();
      }
   }
   $phpgw->db->query("select * from applications where app_name='$app_name'",__LINE__,__FILE__);

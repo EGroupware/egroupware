@@ -64,7 +64,7 @@
         $phpgw->db->unlock();
 
         Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
-        exit;
+        $phpgw->common->phpgw_exit();
      }
   }
 

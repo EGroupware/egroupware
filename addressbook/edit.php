@@ -23,7 +23,7 @@
   if (! $ab_id) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]. "/addressbook/",
 	       "cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   if (! $submit) {
@@ -124,7 +124,7 @@
 
      Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
  	     . "$filter&start=$start"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
 ?>

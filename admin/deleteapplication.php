@@ -22,7 +22,7 @@
         $phpgw->db->query("delete from applications where app_name='$app_name'");
 
         Header("Location: " . $phpgw->link("applications.php"));
-        exit;
+        $phpgw->common->phpgw_exit();
   }
 
   $phpgw->common->phpgw_header();

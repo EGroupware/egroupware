@@ -61,7 +61,7 @@
         echo "</table></center>";
         echo "<a href=\"" . $phpgw->link("deletegroup.php","group_id=" . $group_id . "&removeusers=True")
 	   . "\">" . lang("Remove all users from this group") . "</a>";
-        exit;
+        $phpgw->common->phpgw_exit();
      }
 
      if ($confirm) {

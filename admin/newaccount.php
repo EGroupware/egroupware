@@ -62,7 +62,7 @@
         }
         $phpgw->preferences->commit_newuser($n_loginid);
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
-        exit;
+        $phpgw->common->phpgw_exit();
      }
   }
 
