@@ -47,12 +47,12 @@
 						<!-- BEGIN top_part -->
 							<table width="100%" cellspacing="0" cellpadding="0">
 								<tr>
-									<td width="218" height="33" class="top_top"><img src="{$logo_img}" alt="phpGroupWare"/></td>
+									<td width="218" height="33" class="top_top"><img src="{$logo_img}" alt="phpGroupWare" title="phpGroupWare"/></td>
 									<td width="100%" valign="bottom" class="top_top"> </td>
-									<td valign="bottom" width="56" class="top"><a href="{$home_link}"><img src="{$home_img" width="56" height="23" border="0"/></a></td>
-									<td valign="bottom" width="85" class="top"><a href="{$prefs_link}"><img src="{$prefs_img}" width="85" height="23" border="0"/></a></td>
-									<td valign="bottom" width="56" class="top"><a href="{$logout_link}"><img src="{$logout_img}" width="56" height="23" border="0"/></a></td>
-									<td valign="bottom" width="39" class="top"><a href="{$about_link}"><img src="{$about_img}" width="39" height="23" border="0"/></a></td>
+									<td valign="bottom" width="56" class="top"><a href="{$home_link}"><img src="{$home_img" width="56" height="23" border="0" alt="{$home_title}" title="{$home_title}"/></a></td>
+									<td valign="bottom" width="85" class="top"><a href="{$prefs_link}"><img src="{$prefs_img}" width="85" height="23" border="0" alt="{$prefs_title}" title="{$prefs_title}"/></a></td>
+									<td valign="bottom" width="56" class="top"><a href="{$logout_link}"><img src="{$logout_img}" width="56" height="23" border="0" alt="{$logout_title}" title="{$logout_title}"/></a></td>
+									<td valign="bottom" width="39" class="top"><a href="{$about_link}"><img src="{$about_img}" width="39" height="23" border="0" alt="{$about_title}" title="{$about_title}"/></a></td>
 								</tr>
 							</table>
 						</td>
@@ -92,7 +92,9 @@
 								<tr>
 									<td height="7" width="59" valign="top" class="left_top"/>
 								</tr>
-								<xsl:apply-templates select="applications"/>
+								<xsl:apply-templates select="applications">
+									<xsl:with-param name="navbar_format" select="navbar_format"/>
+								</xsl:apply-templates>
 								<tr>
 									<td width="59" height="100%" valign="top" class="left"/>
 								</tr>
@@ -166,14 +168,20 @@
 	</xsl:template>
 
 	<xsl:template match="applications">
+	<xsl:param name="navbar_format"/>
 	<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
-	<xsl:variable name="name"><xsl:value-of select="name"/></xsl:variable>
-	<xsl:variable name="img_src_over"><xsl:value-of select="img_src_over"/></xsl:variable>
 	<xsl:variable name="icon"><xsl:value-of select="icon"/></xsl:variable>
 	<xsl:variable name="title"><xsl:value-of select="title"/></xsl:variable>
 		<tr>
 			<td class="left" align="center">
-				<a href="{$url}" onMouseOver="{$name}.src='{$img_src_over}'" onMouseOut="{$name}.src='{$icon}'"><img src="{$icon}" border="0" alt="{$title}" title="{$title}" name="{$name}"/></a>
+				<a href="{$url}">
+					<xsl:if test="$navbar_format != 'text'">
+						<img src="{$icon}" border="0" alt="{$title}" title="{$title}"/>
+					</xsl:if>
+					<xsl:if test="$navbar_format != 'icons'">
+						<br/><xsl:value-of select="title"/>
+					</xsl:if>
+				</a>
 			</td>
 		</tr>
 	</xsl:template>
