@@ -321,7 +321,13 @@
 
       return $phpgw->common->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
     }  
-
+		/*!
+		@function create_tabs
+		@abstract create tabs
+		@param $tabs ?
+		@param $selected ?
+		@param $fontsize optional
+		*/
     function create_tabs($tabs, $selected, $fontsize = '')
     {
        global $phpgw_info;
@@ -379,6 +385,9 @@
     }
 		/*!
 		@function get_app_dir
+		@abstract get directory of application
+		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
+		@param $appname name of application 
 		*/
     function get_app_dir($appname = ''){
       global $phpgw_info;
@@ -400,7 +409,12 @@
         return False;
       }      
     }
-
+		/*!
+		@function get_inc_dir
+		@abstract get inc (include dir) of application
+		@discussion $appname can either be passed or derived from $phpgw_info['flags']['currentapp'];
+		@param $appname name of application 
+		*/
     function get_inc_dir($appname = '')
     {
        global $phpgw_info;
@@ -423,7 +437,10 @@
           return False;
        }      
     }
-
+		/*!
+		@function list_themes
+		@abstract list themes available
+		*/
     function list_themes()
     {
        $dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
@@ -436,7 +453,10 @@
        reset ($list);
        return $list;
     }
-
+		/*!
+		@function list_templates
+		@abstract list available templates
+		*/
     function list_templates(){
       global $phpgw_info;
       $d = dir(PHPGW_SERVER_ROOT . '/phpgwapi/templates');
@@ -456,7 +476,11 @@
       reset ($list);
       return $list;
     }
-
+		/*!
+		@function get_tpl_dir
+		@abstract get template dir of an application
+		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
+		*/
     function get_tpl_dir($appname = '')
     {
        global $phpgw_info;
@@ -490,7 +514,11 @@
            return False;
         }      
     }
-
+		/*!
+		@function get_image_dir
+		@abstract get image dir of an application
+		@param $appname application name optional can be derived from $phpgw_info['flags']['currentapp'];
+		*/
     function get_image_dir($appname = ''){
       global $phpgw_info;
       if ($appname == '') {
@@ -515,7 +543,11 @@
          return False;
       }      
     }
-
+		/*!
+		@function get_image_path
+		@abstract get image path of an application
+		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
+		*/
 		function get_image_path($appname = '')
 		{
 			global $phpgw_info;
@@ -551,7 +583,11 @@
 				return False;
 			}      
 		}
-
+		/*!
+		@function navbar
+		@abstract none yet
+		@discussion *someone wanna add some detail here*
+		*/
 		function navbar()
 		{    
 			global $phpgw_info, $phpgw;
@@ -614,7 +650,10 @@
                                                 . $phpgw_info['server']['template_set'] . '/images/logout.gif';
 		}
 
-
+		/*!
+		@function app_header
+		@abstract load header.inc.php for an application
+		*/
 		function app_header()
 		{
 			if (file_exists(PHPGW_APP_INC . '/header.inc.php'))
@@ -622,7 +661,10 @@
 				include(PHPGW_APP_INC . '/header.inc.php');
 			}
 		}
-
+		/*!
+		@function phpgw_header
+		@abstract load the phpgw header
+		*/
 		function phpgw_header()
 		{
 			global $phpgw, $phpgw_info;
@@ -660,15 +702,23 @@
 			$len = strlen($data);
 			return pack('H' . $len, $data);
 		}
-
-		function encrypt($data)
+		/*!
+		@function encrypt
+		@abstract encrypt data passed to the function
+		@param $data data (string?) to be encrypted
+		*/
+				function encrypt($data)
 		{
 			global $phpgw_info, $phpgw;
 
 			$data = serialize($data);
 			return $phpgw->crypto->encrypt($data);
 		}
-
+		/*!
+		@function decrypt
+		@abstract decrypt $data
+		@param $data data to be decrypted
+		*/
 		function decrypt($data)
 		{
 			global $phpgw_info, $phpgw;
@@ -676,7 +726,12 @@
 			$data = $phpgw->crypto->decrypt($data);
 			return unserialize($data);
 		}
-
+		/*!
+		@function des_cryptpasswd
+		@abstract des encrypt a password
+		@param $userpass userpassword
+		@param $random random seed
+		*/
 		function des_cryptpasswd($userpass, $random)
 		{
 			$lcrypt = '{crypt}';
@@ -685,8 +740,13 @@
  
 			return $ldappassword;
 		}
-
-  function md5_cryptpasswd($userpass, $random)
+		/*!
+		@function md5_cryptpasswd
+		@abstract md5 encrypt password
+		@param $userpass user password
+		@param $random random seed
+		*/ 
+		  function md5_cryptpasswd($userpass, $random)
   {
     $bsalt = "$1$";
     $esalt = "$";						// patch
@@ -698,7 +758,12 @@
   
     return $ldappassword;
   }    
-
+		/*!
+		@function encrypt_password
+		@abstract encrypt password
+		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
+		@param $password password to encrypt
+		*/
   function encrypt_password($password)
   {
      global $phpgw, $phpgw_info;
@@ -714,7 +779,11 @@
       }
       return $e_password;
   }
-
+		/*!
+		@function hook
+		@abstract hooking function which allows applications to "hook" into each other
+		@discussion Someone flesh this out please
+		*/
 		function hook($location = '', $order = '')
 		{
 			global $phpgw, $phpgw_info;
@@ -769,7 +838,13 @@
 			}
 		}
 
-  function hook_single($location = '', $appname = '')
+		/*!
+		@function hook_single
+		@abstract call the hooks for a single application
+		@param $location hook location - optional
+		@param $appname application name - optional
+		*/
+		  function hook_single($location = '', $appname = '')
   {
      global $phpgw, $phpgw_info;
      if (! $appname) {
@@ -791,6 +866,10 @@
      }
   }
 
+		/*!
+		@function hook_count
+		@abstract loop through the applications and count the hooks
+		*/
   function hook_count($location = ''){
     global $phpgw, $phpgw_info;
     $count = 0;
@@ -808,7 +887,12 @@
     global $phpgw_info, $phpgw;
     return $phpgw->session->appsession('default','',$data);
   }
-
+		/*!
+		@function show_date
+		@abstract show current date
+		@param $t time - optional can be pulled from user preferences
+		@param $format - optional can be pulled from user prefernces
+		*/
     function show_date($t = '', $format = '')
     {
       global $phpgw_info;
