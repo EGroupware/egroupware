@@ -31,6 +31,34 @@
     var $data;
     var $memberships = Array();
     var $members;
+	// Dont know where to put this (seek3r)
+	// This is where it belongs (jengo)
+	// This is where it ended up (milosch)
+	/* Since LDAP will return system accounts, there are a few we don't want to login. */
+	$phpgw_info["server"]["global_denied_users"] = array(
+		'root'     => True,
+		'bin'      => True,
+		'daemon'   => True,
+		'adm'      => True,
+		'lp'       => True,
+		'sync'     => True,
+		'shutdown' => True,
+		'halt'     => True,
+		'mail'     => True,
+		'news'     => True,
+		'uucp'     => True,
+		'operator' => True,
+		'games'    => True,
+		'gopher'   => True,
+		'nobody'   => True,
+		'xfs'      => True,
+		'pgsql'    => True,
+		'mysql'    => True,
+		'postgres' => True,
+		'ftp'      => True,
+		'gdm'      => True,
+		'named'    => True
+	);
 
     function accounts_()
     {
