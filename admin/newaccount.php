@@ -64,7 +64,7 @@
 			$error[$totalerrors++] = lang('The two passwords are not the same');
 		}
 
-		if (!count($account_permissions) || !count($account_groups))
+		if (!count($account_permissions) && !count($account_groups))
 		{
 			$error[$totalerrors++] = lang('You must add at least 1 permission or group to this account');
 		}
@@ -113,36 +113,43 @@
 			$apps->account_type = 'u';
 			$apps->account_id = $account_id;
 			$apps->account_apps = Array(Array());
-			@reset($account_permissions);
-			while ($app = each($account_permissions))
-			{
-				if ($app[1])
+
+			if ($account_permissions) {
+				@reset($account_permissions);
+				while ($app = each($account_permissions))
 				{
-					$apps->add($app[0]);
-					if (!$apps_after[$app[0]])
+					if ($app[1])
 					{
-						$apps_after[] = $app[0];
+						$apps->add($app[0]);
+						if (!$apps_after[$app[0]])
+						{
+							$apps_after[] = $app[0];
+						}
 					}
 				}
 			}
 			$apps->save_repository();
 
 			// Assign user to groups
-			for ($i=0;$i<count($account_groups);$i++)
-			{
-				$phpgw->acl->add_repository('phpgw_group',$account_groups[$i],$account_id,1);
-			}
-
-			$pref = CreateObject('phpgwapi.preferences',$account_id);
-			$phpgw->common->hook_single('add_def_pref','admin');
-			while ($apps = each($apps_after))
-			{
-				if ($apps[0] != 'admin')
+			if ($account_groups) {
+				for ($i=0;$i<count($account_groups);$i++)
 				{
-					$phpgw->common->hook_single('add_def_pref', $apps[0]);
+					$phpgw->acl->add_repository('phpgw_group',$account_groups[$i],$account_id,1);
 				}
 			}
-			$pref->save_repository(False);
+
+			if ($apps_after) {
+				$pref = CreateObject('phpgwapi.preferences',$account_id);
+				$phpgw->common->hook_single('add_def_pref','admin');
+				while ($apps = each($apps_after))
+				{
+					if ($apps[0] != 'admin')
+					{
+						$phpgw->common->hook_single('add_def_pref', $apps[0]);
+					}
+				}
+				$pref->save_repository(False);
+			}
 
 			$apps->account_apps = Array(Array());
 			$apps_after = Array(Array());
