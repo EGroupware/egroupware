@@ -3502,7 +3502,7 @@
 				$week = '';
 				if (!$j || ($j && substr($date,6,2) == '01'))
 				{
-					$week = 'week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7);
+					$week = lang('week').' '.(int)((date('z',($startdate+(24*3600*4)))+7)/7);
 				}
 				$daily[$date] = Array(
 					'extra'		=> $extra,
