@@ -21,7 +21,14 @@
 		
     if ($fn)
     {
-        $files[] = $fn;
+				if (preg_match("/^class\.[a-zA-Z0-9]\.inc\.php+$/i",$fn)){
+						$files[] = $fn;
+				}
+				else
+				{
+						echo 'No valid file selected';
+						exit;
+				}
     }
     else
     {
@@ -34,7 +41,19 @@
             }
         }
         $d->close;
-        reset($files);
+
+				reset($files);
+
+				while(list($key, $value) = each($files))
+				{
+						//echo '$key = '.$key.' and $value = '.$value.'<br>';
+						if (!preg_match("/^(class\.).(\.inc\.php)+$/i",$value)){
+								//unset($files[$key]);
+								//echo '#'.$key.' is bad, and should be unset<br>';
+						}
+				}
+ 
+				reset($files);
     }
 
     while (list($p,$fn) = each($files))
@@ -86,7 +105,7 @@
 
                 if($out != $new[0])
                 {
-                    $elements[$class][$t][$xkey] = $out;
+                    $elements[$class][$t][$xkey][] = $out;
                 }
             }
         }
