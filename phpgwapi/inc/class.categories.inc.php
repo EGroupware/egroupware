@@ -207,16 +207,17 @@
 
 			if ($format == 'select')
 			{
-			$list = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
-				while (list($cats) = each($list))	
+			$cats = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+
+				for ($i=0;$i<count($cats);$i++)
 				{
-					$s .= '<option value="' . $cats['id'] . '"';
-					if ($cats['id'] == $selected)
+					$s .= '<option value="' . $cats[$i]['id'] . '"';
+					if ($cats[$i]['id'] == $selected)
 					{
 						$s .= ' selected';
 					}
-					$s .= '>' . $phpgw->strip_html($cats['name']);
-					if ($cats['app_name'] == 'phpgw') 
+					$s .= '>' . $phpgw->strip_html($cats[$i]['name']);
+					if ($cats[$i]['app_name'] == 'phpgw') 
 					{
 					$s .=  '&lt;' . lang('Global') . '&gt;';
 					}
