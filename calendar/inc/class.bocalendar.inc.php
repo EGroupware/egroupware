@@ -1808,6 +1808,11 @@
 			return $icalendar->build_ical($ical);
 		}
 
+		function get_alarms($event_id)
+		{
+			return $this->so->get_alarm($event_id);
+		}
+
 		function prepare_recipients(&$new_event,$old_event)
 		{
 			// Find modified and deleted users.....

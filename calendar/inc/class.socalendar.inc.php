@@ -59,7 +59,6 @@
 
 		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0)
 		{
-			$this->makeobj();
 			$extra = '';
 			$extra .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
 			$extra .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
@@ -73,7 +72,6 @@
 				return Array();
 			}
 
-			$this->makeobj();
 			$starttime = mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;
 			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $this->datetime->tz_offset;
 //			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
@@ -99,8 +97,6 @@
 
 		function list_events_keyword($keywords)
 		{
-			$this->makeobj();
-			
 			$sql = 'AND (phpgw_cal_user.cal_login='.$this->owner.') ';
 
 			$words = split(' ',$keywords);
@@ -132,31 +128,26 @@
 
 		function get_event_ids($include_repeats=False, $sql='')
 		{
-			$this->makeobj();
 			return $this->cal->get_event_ids($include_repeats,$sql);
 		}
 
 		function add_entry(&$event)
 		{
-			$this->makeobj();
 			$this->cal->store_event($event);
 		}
 
 		function delete_entry($id)
 		{
-			$this->makeobj();
 			$this->cal->delete_event($id);
 		}
 
 		function expunge()
 		{
-			$this->makeobj();
 			$this->cal->expunge();
 		}
 
 		function delete_calendar($owner)
 		{
-			$this->makeobj();
 			$this->cal->delete_calendar($owner);
 		}
 
@@ -171,8 +162,18 @@
 
 		function set_status($id,$status)
 		{
-			$this->makeobj();
 			$this->cal->set_status($id,$this->owner,$status);
+		}
+
+		function get_alarm($id)
+		{
+			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
+			{
+				return $this->cal->get_alarm($id);	
+			}
+			else
+			{
+			}
 		}
 
 		/* Begin mcal equiv functions */
@@ -188,7 +189,6 @@
 
 		function event_init()
 		{
-			$this->makeobj();
 			$this->cal->event_init();
 		}
 

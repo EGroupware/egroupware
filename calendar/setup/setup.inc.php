@@ -13,7 +13,7 @@
 
 	$setup_info['calendar']['name']    = 'calendar';
 	$setup_info['calendar']['title']   = 'Calendar';
-	$setup_info['calendar']['version'] = '0.9.13.003';
+	$setup_info['calendar']['version'] = '0.9.13.004';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -21,7 +21,8 @@
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_holidays';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_repeats';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_user';
-
+	$setup_info['calendar']['tables'][] = 'phpgw_cal_alarm';
+	
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['calendar']['hooks'] = array(
 		'preferences',
@@ -29,7 +30,8 @@
 		'manual',
 		'deleteaccount',
 		'add_def_prefs',
-		'email'
+		'email',
+		'home'
 	);
 
 	/* Dependencies for this app to work */

@@ -73,6 +73,18 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'phpgw_cal_alarm' => array(
+			'fd' => array(
+				'alarm_id' => array('type' => 'auto','nullable' => False),		
+				'cal_id' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+				'cal_time' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+				'cal_text' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False)
+			),
+			'pk' => array('alarm_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);
 ?>

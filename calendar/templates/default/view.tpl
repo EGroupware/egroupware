@@ -17,3 +17,10 @@
    <td valign="top" width="70%">{data}</td>
   </tr>
 <!-- END list -->
+<!-- BEGIN hr -->
+ <tr>
+  <td colspan="2">
+   {hr_text}
+  </td>
+ </tr>
+<!-- END hr -->

@@ -449,6 +449,24 @@ class socalendar_ extends socalendar__
 		return True;
 	}
 
+	function get_alarm($id)
+	{
+		$this->stream->query('SELECT cal_time, cal_text FROM phpgw_cal_alarm WHERE cal_id='.$id,__LINE__,__FILE__);
+		if($this->stream->num_rows())
+		{
+			while($this->stream->next_record())
+			{
+				$alarm[$this->stream->f('cal_time')] = $this->stream->f('cal_text');
+			}
+			@reset($alarm);
+			return $alarm;
+		}
+		else
+		{
+			return False;
+		}
+	}
+
 	function set_status($id,$owner,$status)
 	{
 		$status_code_short = Array(

@@ -2071,6 +2071,7 @@
    		);
 			$p->set_block('view','view_event','view_event');
 			$p->set_block('view','list','list');
+			$p->set_block('view','hr','hr');
 
 			$var = Array(
 				'bg_text'=>	$this->theme['bg_text'],
@@ -2248,6 +2249,27 @@
 			{
 				$this->output_template_array($p,'row','list',$var[$i]);
 			}
+
+			if($alarms = $this->bo->get_alarms($event['id']))
+			{
+				$p->set_var('hr_text','<hr>');
+				$p->parse('row','hr',True);
+				$p->set_var('hr_text','<center><b>'.lang('Alarms').'</b></center><br>');
+				$p->parse('row','hr',True);
+
+				@reset($alarms);
+				while(list($time,$text) = each($alarms))
+				{
+					$var = Array(
+						'field'	=>	$GLOBALS['phpgw']->common->show_date($time),
+						'data'	=>	$text
+					);
+					$this->output_template_array($p,'row','list',$var);
+				}
+			}
+
+			$p->set_var('hr_text','<hr>');
+			$p->parse('row','hr',True);
 
 			return $p->fp('out','view_event');
 		}
