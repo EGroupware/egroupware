@@ -582,6 +582,7 @@
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
+			return $this->nextid;
 		}
 
 		function field_exists($id,$field_name)

@@ -41,11 +41,11 @@
 		var $ext_table='phpgw_addressbook_extra';
 
 		var $account_id;
-		var $stock_contact_fields;	/* This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id */
-		var $non_contact_fields;    /* Here are the rest */
-		var $email_types;           /* VCard email type array */
-		var $total_records;         /* This will contain numrows for data retrieved */
-		var $grants;                /* This holds all of the users that have granted access to there entrys */
+		var $stock_contact_fields; /* This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id */
+		var $non_contact_fields;   /* Here are the rest */
+		var $email_types;          /* VCard email type array */
+		var $total_records;        /* This will contain numrows for data retrieved */
+		var $grants;               /* This holds all of the users that have granted access to there entrys */
 
 		function contacts_($useacl=True)
 		{
@@ -259,7 +259,7 @@
 			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$return_fields[0]['id']		= $this->db->f('id');
+			$return_fields[0]['id']     = $this->db->f('id');
 			$return_fields[0]['lid']    = $this->db->f('lid');
 			$return_fields[0]['tid']    = $this->db->f('tid');
 			$return_fields[0]['owner']  = $this->db->f('owner');
@@ -579,6 +579,7 @@
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
+			return $id;
 		}
 
 		function field_exists($id,$field_name)

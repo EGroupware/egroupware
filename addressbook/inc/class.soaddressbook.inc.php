@@ -102,9 +102,9 @@
 			}
 			if ($this->rights & PHPGW_ACL_ADD)
 			{
-				$this->contacts->add($fields['owner'],$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
+				$id = $this->contacts->add($fields['owner'],$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
 			}
-			return;
+			return $id;
 		}
 
 		function get_lastid()

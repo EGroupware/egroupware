@@ -591,15 +591,14 @@
 		{
 			global $phpgw,$phpgw_info,$ab_id;
 
-			$addnew = $this->bo->read_entry($ab_id,$this->contacts->stock_contact_fields,$phpgw_info['user']['account_id']);
+			$addnew = $this->bo->read_entry(array('id' => $ab_id, 'fields' => $this->contacts->stock_contact_fields));
 
 			$addnew[0]['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew[0]['owner']).", record #".$addnew[0]['id'].".";
 			$addnew[0]['owner'] = $phpgw_info['user']['account_id'];
-			$addnew[0]['id']    = '';
+			unset($addnew[0]['id']);
 			$fields = $addnew[0];
 
-			$this->bo->add_entry($fields);
-			$ab_id = $this->bo->get_lastid();
+			$ab_id = $this->bo->add_entry($fields);
 
 			Header("Location: " . $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.edit&ab_id=$ab_id"));
 		}
