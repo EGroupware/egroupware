@@ -684,9 +684,9 @@
 
 			$string = $this->getabsolutepath ($string, array ($relatives[0]), $fake);
 
-			if($p_path_parts[$string][$rarray['mask']])
+			if ($p_path_parts[$string][$rarray['mask'][$object]])
 			{
-				return $p_path_parts[$string][$rarray['mask']];
+				return ($p_path_parts[$string][$rarray['mask'][$object]]);
 			}
 
 			if ($fake)
@@ -771,7 +771,7 @@
 						$rarray['real_full_path'] = ereg_replace ("^$this->basedir", '', $rarray['real_full_path']);
 						$rarray['real_full_path'] = ereg_replace ("^$link_info[directory]" . SEP . "$link_info[name]", $link_info['link_directory'] . SEP . $link_info['link_name'], $rarray['real_full_path']);
 
-						$p = $this->path_parts ($rarray["real_full_path"], array (RELATIVE_NONE|VFS_REAL), True, True);
+						$p = $this->path_parts ($rarray['real_full_path'], array (RELATIVE_NONE|VFS_REAL), True, True);
 
 						$rarray['real_leading_dirs'] = $p->real_leading_dirs;
 						$rarray['real_extra_path'] = $p->real_extra_path;
@@ -815,12 +815,12 @@
 
 			if ($object)
 			{
-				$p_path_parts[$string][$rarray['mask']] = $robject;
+				$p_path_parts[$string][$rarray['mask'][$object]] = $robject;
 				return ($robject);
 			}
 			else
 			{
-				$p_path_parts[$string][$rarray['mask']] = $rarray;
+				$p_path_parts[$string][$rarray['mask'][$object]] = $rarray;
 				return ($rarray);
 			}
 		}
