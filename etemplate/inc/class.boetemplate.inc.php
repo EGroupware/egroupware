@@ -43,7 +43,8 @@
 			'html'	=> 'Html',			// Raw html in $content[$cell['name']]
 			'file'	=> 'FileUpload',	// show an input type='file', set the local name as ${name}_path
 			'vbox'	=> 'VBox',			// a (vertical) box to contain widgets in rows, size = # of rows
-			'hbox'	=> 'HBox'			// a (horizontal) box to contain widgets in cols, size = # of cols 
+			'hbox'	=> 'HBox',			// a (horizontal) box to contain widgets in cols, size = # of cols 
+			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
 		);
 		/*!
 		@function boetemplate
