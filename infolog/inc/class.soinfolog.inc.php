@@ -19,7 +19,9 @@
 		var $grants;
 		var $data = array( );
 		var $filters = array( );
-
+		var $maybe_slashes = array (
+			'info_des'=>1,'info_subject'=>1,'info_from'=>1,'info_addr'=>1
+		);
 		function soinfolog( $info_id = 0)
 		{
 			global $phpgw;
@@ -197,7 +199,12 @@
 			if ($info_id != $this->data['info_id'])      // data yet read in
 			{
 				$this->data = $this->db->Record;
-			}         
+				reset($this->maybe_slashes);
+				while (list($key) = each($this->maybe_slashes))
+				{
+					$this->data[$key] = stripslashes($this->data[$key]);
+				}
+			}
 			return $this->data;         
 		}
 		
@@ -220,17 +227,18 @@
 		{
 			while (list($key,$val) = each($values))
 			{
-				$this->data['info_'.$key] = $val;   // update internal data
-
-				switch ($key)
+				if ($key != 'info_id')
 				{
-					case 'info_id':
-						break;
-					case 'des': case 'subject': case 'from': case 'addr':
+					$key = 'info_'.$key;
+
+					$this->data[$key] = $val;   // update internal data
+
+					if ($this->maybe_slashes[$key])
+					{
 						$val = addslashes($val);
-					default:
-						if ($query) $query .= ',';
-						$query .= "info_$key='$val'";
+					}
+					if ($query) $query .= ',';
+					$query .= "$key='$val'";
 				}
 			}
 			if ($values['info_id'])
