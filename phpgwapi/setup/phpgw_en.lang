@@ -9,6 +9,8 @@
 - use the %1, %2 buttons to select year	jscalendar	en	- Use the %1, %2 buttons to select year
 00 (disable)	admin	en	00 (disable)
 13 (ntp)	admin	en	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day-shortcut
+3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month-shortcut
 80 (http)	admin	en	80 (http)
 about	common	en	About
 about %1	common	en	About %1
@@ -152,8 +154,7 @@ disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer p
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
 disabled	common	en	Disabled
-display monday first	jscalendar	en	Display Monday first
-display sunday first	jscalendar	en	Display Sunday first
+display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 domain	common	en	Domain

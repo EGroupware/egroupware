@@ -9,6 +9,8 @@
 - use the %1, %2 buttons to select year	jscalendar	de	- Benutzen Sie die %1, %2 Buttons um das Jahr auszuwählen
 00 (disable)	admin	de	00 (deaktiviert)
 13 (ntp)	admin	de	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	de	2
+3 number of chars for month-shortcut	jscalendar	de	3
 80 (http)	admin	de	80 (http)
 about	common	de	Über
 about %1	common	de	Über %1
@@ -157,8 +159,7 @@ disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG Bilde
 disable slider effects	common	de	Schwebeeffekte des Navigations Menüs abschalten
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim anzeigen oder verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
 disabled	common	de	Deaktiviert
-display monday first	jscalendar	de	Montag zuerst anzeigen
-display sunday first	jscalendar	de	Sonntag zuerst anzeigen
+display %s first	jscalendar	de	%s zuerst anzeigen
 djibouti	common	de	DJIBOUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 domain	common	de	Domain
