@@ -37,6 +37,7 @@
     $extrafields = array ("pager" => "pager",
                           "mphone" => "mphone",
 			  "ophone" => "ophone",
+                          "access" => "access",
 			  "address2" => "address2",
 			  "bday" => "bday",
 			  "url" => "url",
