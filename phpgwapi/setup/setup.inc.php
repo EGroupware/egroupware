@@ -2,7 +2,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']    = 'phpgwapi';
 	$setup_info['phpgwapi']['title']   = 'phpgwapi';
-	$setup_info['phpgwapi']['version'] = '0.9.11';
+	$setup_info['phpgwapi']['version'] = '0.9.12.001';
 //	$setup_info['phpgwapi']['app_order'] = '6';
 
 	/* The tables this app creates */

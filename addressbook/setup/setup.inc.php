@@ -13,6 +13,7 @@
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'preferences';
+	$setup_info['addressbook']['hooks'][] = 'admin';
 
 	/* Dependacies for this app to work */
 	$setup_info['addressbook']['depends'][] = array(

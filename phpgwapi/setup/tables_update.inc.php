@@ -48,7 +48,7 @@
 		
 		$oProc->AlterColumn($table, $field, array("type" => "int", "precision" => 4, "nullable" => false, "default" => 0));
 	}
-	
+
 	$test[] = "0.9.3pre4";
 	function phpgwapi_upgrade0_9_3pre4()
 	{

@@ -8,7 +8,14 @@
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_holidays';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_repeats';
 	$setup_info['calendar']['tables'][] = 'phpgw_cal_user';
-	$hooks = Array();
-	$hooks_string = implode (',', $hooks);
-	$setup_info['calendar']['hooks'] = $hooks_string;
+
+	/* The hooks this app includes, needed for hooks registration */
+	$setup_info['calendar']['hooks'][] = 'preferences';
+
+	/* Dependencies for this app to work */
+	$setup_info['calendar']['depends'][] = array(
+		 'appname' => 'phpgwapi',
+		 'versions' => Array('0.9.10', '0.9.11' , '0.9.12')
+	);
+
 ?>

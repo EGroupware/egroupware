@@ -11,12 +11,10 @@
 
   /* $Id$ */
 
-	$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.010';
-
 	$phpgw_baseline = array(
 		'phpgw_config' => array(
 			'fd' => array(
-				'config_app' => array('type' => 'varchar', 'precision' => 50)
+				'config_app' => array('type' => 'varchar', 'precision' => 50),
 				'config_name' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
 				'config_value' => array('type' => 'varchar', 'precision' => 100)
 			),
@@ -64,7 +62,8 @@
 				'account_lastloginfrom' => array('type' => 'varchar', 'precision' => 255),
 				'account_lastpwd_change' => array('type' => 'int', 'precision' => 4),
 				'account_status' => array('type' => 'char', 'precision' => 1, 'nullable' => false, 'default' => 'A'),
-				'account_expires' => array('type' => 'int', 'precision' => 4)
+				'account_expires' => array('type' => 'int', 'precision' => 4),
+				'account_type' => array('type' => 'char', 'precision' => 1, 'nullable' => true)
 			),
 			'pk' => array('account_id'),
 			'fk' => array(),
@@ -76,7 +75,7 @@
 				'preference_owner' => array('type' => 'varchar', 'precision' => 20, 'nullable' => false),
 				'preference_value' => array('type' => 'text')
 			),
-			'pk' => array('preference_owner', 'preference_name'),
+			'pk' => array('preference_owner'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
@@ -85,10 +84,9 @@
 			'fd' => array(
 				'session_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
 				'session_lid' => array('type' => 'varchar', 'precision' => 20),
-				'session_pwd' => array('type' => 'varchar', 'precision' => 255),
 				'session_ip' => array('type' => 'varchar', 'precision' => 255),
 				'session_logintime' => array('type' => 'varchar', 'precision' => 4),
-				'session_dla' => array('type' => 'varchar', 'precision' => 4)
+				'session_dla' => array('type' => 'varchar', 'precision' => 4),
 				'session_action' => array('type' => 'varchar', 'precision' => 255),
 				'session_flags' => array('type' => 'char', 'precision' => 2),
 			),
@@ -136,19 +134,6 @@
 			'fk' => array(),
 			'uc' => array()
 		),
-		'phpgw_categories' => array(
-			'fd' => array(
-				'cat_id' => array('type' => 'auto', 'nullable' => false),
-				'account_id' => array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => '0'),
-				'app_name' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
-				'cat_name' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false),
-				'cat_description' => array('type' => 'text', 'nullable' => false)
-			),
-			'pk' => array('cat_id'),
-			'ix' => array(),
-			'fk' => array(),
-			'uc' => array()
-		),
 		'languages' => array(
 			'fd' => array(
 				'lang_id' => array('type' => 'varchar', 'precision' => 2, 'nullable' => false),
@@ -174,7 +159,7 @@
 		),
 		'phpgw_nextid' => array(
 			'fd' => array(
-				'id' => array('type' => 'int', 'nullable' => true),
+				'id' => array('type' => 'int', 'precision' => 4, 'nullable' => true),
 				'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
 			),
 			'pk' => array(),
@@ -184,11 +169,11 @@
 		),
 		'phpgw_categories' => array(
 			'fd' => array(
-				'cat_id' => array('type' => 'auto', 'precision' => 9, 'default' => 0, 'nullable' => false),
-				'cat_main' => array('type' => 'int', 'precision' => 9, 'default' => 0, 'nullable' => false),
-				'cat_parent' => array('type' => 'int', 'precision' => 9, 'default' => 0, 'nullable' => false),
-				'cat_level' => array('type' => 'int', 'precision' => 3, 'default' =>0, 'nullable' => false),
-				'cat_owner' => array('type' => 'int', 'precision' => 11, 'default' => 0, 'nullable' => false),
+				'cat_id' => array('type' => 'auto', 'precision' => 8, 'default' => 0, 'nullable' => false),
+				'cat_main' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
+				'cat_parent' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
+				'cat_level' => array('type' => 'int', 'precision' => 4, 'default' =>0, 'nullable' => false),
+				'cat_owner' => array('type' => 'int', 'precision' => 8, 'default' => 0, 'nullable' => false),
 				'cat_access' => array('type' => 'char', 'precision' => 7),
 				'cat_appname' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
 				'cat_name' => array('type' => 'varchar', 'precision' => 150, 'nullable' => false),

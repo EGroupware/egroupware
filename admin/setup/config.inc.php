@@ -82,8 +82,13 @@
    </tr>
 
    <tr bgcolor="e6e6e6">
-    <td>LDAP context:</td>
+    <td>LDAP accounts context:</td>
     <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>" size="40"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>LDAP groups context:</td>
+    <td><input name="newsettings[ldap_group_context]" value="<?php echo $current_config["ldap_group_context"]; ?>" size="40"></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
