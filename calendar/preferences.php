@@ -66,6 +66,15 @@
 		{
 			$phpgw->preferences->delete('calendar','default_private');
 		}
+
+		if ($display_minicals == True)
+		{
+			$phpgw->preferences->add('calendar','display_minicals');
+		}
+		else
+		{
+			$phpgw->preferences->delete('calendar','display_minicals');
+		}
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
@@ -174,16 +183,19 @@
 //		. '<option value="private+group"'.$selected['private+group'].'>'.lang('private and group public').'</option>'
 //		. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
 		. '</select>';
-	display_item(lang('default calendar filter'),$str);
+	display_item(lang('Default calendar filter'),$str);
 
 	$str = '<input type="checkbox" name="send_updates" value="True"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
-	display_item(lang('send/receive updates via email'),$str);
+	display_item(lang('Send/receive updates via email'),$str);
 
 	$str = '<input type="checkbox" name="display_status" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_status'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
-	display_item(lang('display status of events'),$str);
+	display_item(lang('Display status of events'),$str);
 
 	$str = '<input type="checkbox" name="default_private" value="True"'.($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True?' checked':'').'>';
-	display_item(lang('when creating new events default set to private'),$str);
+	display_item(lang('When creating new events default set to private'),$str);
+
+	$str = '<input type="checkbox" name="display_minicals" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'] == True?' checked':'').'>';
+	display_item(lang('Display mini calendars when printing'),$str);
 
 	$country = CreateObject('phpgwapi.country');
 	display_item(lang('Select country for including holidays'),$country->form_select($phpgw_info['user']['preferences']['calendar']['locale'],'locale'));

@@ -57,20 +57,32 @@
 		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
 		$print = '<a href="'.$phpgw->link('/calendar/month.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+		$minical_prev = $phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php');
+		$minical_next = $phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php');
 	}
 	else
 	{
 		$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 		$print =	'';
+		if($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'])
+		{
+			$minical_prev = $phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php');
+			$minical_next = $phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php');
+		}
+		else
+		{
+			$minical_prev = '';
+			$minical_next = '';
+		}
 	}
 
 	$var = Array(
 		'printer_friendly'		=>	$printer,
 		'bg_text'					=> $phpgw_info['themem']['bg_text'],
-		'small_calendar_prev'	=>	$phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php'),
+		'small_calendar_prev'	=>	$minical_prev,
 		'month_identifier'		=>	lang(strftime("%B",$m)) . ' ' . $thisyear,
 		'username'					=>	$phpgw->common->grab_owner_name($owner),
-		'small_calendar_next'	=>	$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'),
+		'small_calendar_next'	=>	$minical_next,
 		'large_month'				=>	$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner),
 		'print'						=>	$print
 	);

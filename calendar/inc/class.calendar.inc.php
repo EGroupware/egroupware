@@ -800,7 +800,7 @@ class calendar extends calendar_
 		$p->set_block('mini_calendar','mini_week','mini_week');
 		$p->set_block('mini_calendar','mini_day','mini_day');
 
-		if($this->printer_firendly == False)
+		if($this->printer_friendly == False)
 		{
 			$month = '<a href="' . $phpgw->link('/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$this->owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>';
 		}
@@ -908,6 +908,7 @@ class calendar extends calendar_
 				}
 				else
 				{
+					$dayname = '';
 					$holiday_found = $this->holidays->find_date($cal['raw']);
 					if($outside_month == True)
 					{
@@ -919,15 +920,23 @@ class calendar extends calendar_
 						{
 							$class = 'minicalgreyhol';
 						}
-						$p->set_var('day_image','');
-						$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="'.$class.'">'.$cal['day'].'</a>');
+						if(!$this->printer_friendly)
+						{
+							$dayname .= '<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="'.$class.'">';
+						}
+						$dayname .= $cal['day'];
+
+						if(!$this->printer_friendly)
+						{
+							$dayname .= '</a>';
+						}
 					}
-					else
-					{
-						$p->set_var('day_image','');
-//						$p->set_var('bgcolor2','#FEFEFE');
-						$p->set_var('dayname','');
-					} 
+
+					$var = Array(
+						'day_image'	=> '',
+						'dayname'	=> $dayname
+					);
+					$p->set_var($var);
 				}
 				$p->parse('monthweek_day','mini_day',True);
 			}

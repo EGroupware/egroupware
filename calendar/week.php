@@ -75,6 +75,9 @@
 		$next_week_link = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','year='.$next['year'].'&month='.$next['month'].'&day='.$next['day']).'">&gt;&gt;</a>';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter.'&owner='.$owner;
 		$print = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+		$minical_this = $phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php');
+		$minical_prev = $phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php');
+		$minical_next = $phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php');
 	}
 	else
 	{
@@ -82,18 +85,30 @@
 		$prev_week_link = '&lt;&lt;';
 		$next_week_link = '&gt;&gt;';
 		$print =	'';
+		if($phpgw_info['user']['preferences']['calendar']['display_minicals'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_minicals'])
+		{
+			$minical_this = $phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php');
+			$minical_prev = $phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php');
+			$minical_next = $phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php');
+		}
+		else
+		{
+			$minical_this = '';
+			$minical_prev = '';
+			$minical_next = '';
+		}
 	}
 
 	$var = Array(
 		'printer_friendly'		=>	$printer,
 		'bg_text'					=> $phpgw_info['themem']['bg_text'],
-		'small_calendar_prev'	=>	$phpgw->calendar->mini_calendar(1,$thismonth - 1,$thisyear,'day.php'),
+		'small_calendar_prev'	=>	$minical_prev,
 		'prev_week_link'			=>	$prev_week_link,
-		'small_calendar_this'	=>	$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,'day.php'),
+		'small_calendar_this'	=>	$minical_this,
 		'week_identifier'			=>	$week_id,
 		'next_week_link'			=>	$next_week_link,
 		'username'					=>	$phpgw->common->grab_owner_name($owner),
-		'small_calendar_next'	=>	$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'),
+		'small_calendar_next'	=>	$minical_next,
 		'week_display'				=>	$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$owner),
 		'print'						=>	$print
 	);
