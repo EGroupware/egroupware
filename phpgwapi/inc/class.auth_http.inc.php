@@ -30,7 +30,7 @@
 
 		function authenticate($username, $passwd)
 		{
-			if (isset($GLOBALS['PHP_AUTH_USER']))
+			if (isset($_SERVER['PHP_AUTH_USER']))
 			{
 				return True;
 			}
