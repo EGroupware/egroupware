@@ -13,6 +13,18 @@
 	/* $Id$ */
 
 
+	if (!function_exists('var2xml'))
+	{
+		if (file_exists(PHPGW_API_INC.'class.xmltool.inc.php'))
+		{
+			include_once(PHPGW_API_INC.'class.xmltool.inc.php');
+		}
+		else
+		{
+			include_once('class.xmltool.inc.php');
+		}
+	}
+
 	class xul_io
 	{
 		var $widget2xul;
@@ -21,8 +33,6 @@
 
 		function xul_io()
 		{
-         $this->xmltool = CreateObject('etemplate.xmltool');
-
          $this->attr2xul = array(	// how to translate attr, common to all widgets
 				'name' => 'id',
 				'help' => 'statustext',
@@ -153,7 +163,7 @@
 					}
 					if ($type == 'template' && $cell['name'][0] != '@' && $embeded_too)
 					{
-						$embeded = new etemplate($cell['name']);
+						$embeded = new etemplate($cell['name'],$etempl->as_array());
 						$this->etempl2grid($embeded,&$root,$embeded_too);
 						unset($embeded);
 					}
@@ -497,6 +507,10 @@
 						}
 						$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $attr;
 
+						if ($attr['type'] == 'template' && !empty($attr['name']) && $attr['name'][0] != '@')
+						{
+							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)]['obj'] = new etemplate($attr['name']);
+						}
 						while (--$spanned > 0)
 						{
 							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
