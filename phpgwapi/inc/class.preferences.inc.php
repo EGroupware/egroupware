@@ -247,7 +247,17 @@
 						break;
 				}
 			}
-			$this->data = array_merge_recursive($this->user,$this->session);
+			$this->data = $this->user;
+
+			// let the (temp.) session prefs. override the user prefs.
+			//
+			foreach($this->session as $app => $values)
+			{
+				foreach($values as $var => $value)
+				{
+					$this->data[$app][$var] = $value;
+				}
+			}
 
 			// now use defaults if needed (user-value unset or empty)
 			//
