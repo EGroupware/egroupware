@@ -269,8 +269,8 @@
 			if ($full_fname)
 			{
 				$full_fname = str_replace('\\\\','/',$full_fname);	// vfs uses only '/'
-				reset($this->link_pathes);
-				while ((list($valid,$trans) = each($this->link_pathes)) && !$tfname)
+				@reset($this->link_pathes);
+				while ((list($valid,$trans) = @each($this->link_pathes)) && !$tfname)
 				{  // check case-insensitive for WIN etc.
 					$check = $valid[0] == '\\' || strstr(':',$valid) ? 'eregi' : 'ereg';
 					$valid2 = str_replace('\\','/',$valid);
