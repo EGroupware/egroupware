@@ -17,4 +17,4 @@
 	{
 		$ui = '_gtk';
 	}
-	include(PHPGW_API_INC . "/../../etemplate/inc/class.uietemplate$ui.inc.php");
+	include_once(PHPGW_INCLUDE_ROOT . "/etemplate/inc/class.uietemplate$ui.inc.php");

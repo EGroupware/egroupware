@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	include(PHPGW_API_INC . '/../../etemplate/inc/class.soetemplate.inc.php');
+	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
 
 	/*!
 	@class boetemplate
