@@ -18,9 +18,20 @@
 
 		function index()
 		{
-			if ($GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
+			if ($GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php');
+				$GLOBALS['egw']->redirect_link('/index.php');
+			}
+			$referer = $_POST['submit'] || $_POST['cancel'] ? $_POST['referer'] : $_SERVER['HTTP_REFERER'];
+			if (!$referer) $referer = $GLOBALS['egw']->link('/admin/index.php');
+			list(,$show_app) = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
+			list(,$show_app) = explode('/',$show_app);
+			if (!$show_app) $show_app = 'admin';
+
+			// load the translations of the app we show too, so they dont need to be in admin!
+			if ($_GET['appname'] != 'admin')
+			{
+				$GLOBALS['egw']->translation->add_app($_GET['appname']);
 			}
 
 			if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
@@ -45,15 +56,14 @@
 				case 'phpgwapi':
 				case '':
 					/* This keeps the admin from getting into what is a setup-only config */
-					$GLOBALS['phpgw']->redirect_link('/admin/index.php');
+					$GLOBALS['egw']->redirect_link('/admin/index.php');
 					break;
 				default:
 					$appname = $_GET['appname'];
 					$config_appname = $appname;
 					break;
 			}
-
-			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir($appname));
+			$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($appname));
 			$t->set_unknowns('keep');
 			$t->set_file(array('config' => 'config.tpl'));
 			$t->set_block('config','header','header');
@@ -68,21 +78,21 @@
 				$current_config = $c->config_data;
 			}
 
-			if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['phpgw']->acl->check('site_config_access',2,'admin'))
+			if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect_link('/admin/index.php');
+				$GLOBALS['egw']->redirect($referer);
 			}
 
 			if ($_POST['submit'])
 			{
 				/* Load hook file with functions to validate each config (one/none/all) */
-				$GLOBALS['phpgw']->hooks->single('config_validate',$appname);
+				$GLOBALS['egw']->hooks->single('config_validate',$appname);
 
 				foreach($_POST['newsettings'] as $key => $config)
 				{
 					if ($config)
 					{
-						if($GLOBALS['phpgw_info']['server']['found_validation_hook'] && function_exists($key))
+						if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists($key))
 						{
 							call_user_func($key,$config);
 							if($GLOBALS['config_error'])
@@ -109,7 +119,7 @@
 						}
 					}
 				}
-				if($GLOBALS['phpgw_info']['server']['found_validation_hook'] && function_exists('final_validation'))
+				if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists('final_validation'))
 				{
 					final_validation($newsettings);
 					if($GLOBALS['config_error'])
@@ -117,14 +127,14 @@
 						$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
 						$GLOBALS['config_error'] = False;
 					}
-					unset($GLOBALS['phpgw_info']['server']['found_validation_hook']);
+					unset($GLOBALS['egw_info']['server']['found_validation_hook']);
 				}
 
 				$c->save_repository();
 
 				if(!$errors)
 				{
-					$GLOBALS['phpgw']->redirect_link('/admin/index.php');
+					$GLOBALS['egw']->redirect($referer);
 				}
 			}
 
@@ -138,29 +148,32 @@
 			else
 			{
 				$t->set_var('error','');
-				$t->set_var('th_err',$GLOBALS['phpgw_info']['theme']['th_bg']);
+				$t->set_var('th_err',$GLOBALS['egw_info']['theme']['th_bg']);
 			}
 
-			if(!@is_object($GLOBALS['phpgw']->js))
+			if(!@is_object($GLOBALS['egw']->js))
 			{
-				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
 			}
-			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
-			$GLOBALS['phpgw']->common->phpgw_header();
+			// set currentapp to our calling app, to show the right sidebox-menu
+			$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
+			$GLOBALS['egw']->common->phpgw_header();
 			echo parse_navbar();
 
 			$t->set_var('title',lang('Site Configuration'));
-			$t->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
-			$t->set_var('th_bg',     $GLOBALS['phpgw_info']['theme']['th_bg']);
-			$t->set_var('th_text',   $GLOBALS['phpgw_info']['theme']['th_text']);
-			$t->set_var('row_on',    $GLOBALS['phpgw_info']['theme']['row_on']);
-			$t->set_var('row_off',   $GLOBALS['phpgw_info']['theme']['row_off']);
+			$t->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
+			$t->set_var('th_bg',     $GLOBALS['egw_info']['theme']['th_bg']);
+			$t->set_var('th_text',   $GLOBALS['egw_info']['theme']['th_text']);
+			$t->set_var('row_on',    $GLOBALS['egw_info']['theme']['row_on']);
+			$t->set_var('row_off',   $GLOBALS['egw_info']['theme']['row_off']);
+			$t->set_var('hidden_vars','<input type="hidden" name="referer" value="'.$referer.'">');
 			$t->pparse('out','header');
 
 			$vars = $t->get_undefined('body');
 
-			$GLOBALS['phpgw']->hooks->single('config',$appname);
+			$GLOBALS['egw']->hooks->single('config',$appname);
 
 			foreach($vars as $value)
 			{
@@ -237,7 +250,7 @@
 
 			$t->pfp('out','body');
 
-			$t->set_var('lang_submit', $GLOBALS['phpgw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
+			$t->set_var('lang_submit', $GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
 			$t->set_var('lang_cancel', lang('Cancel'));
 			$t->pfp('out','footer');
 		}
