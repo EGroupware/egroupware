@@ -29,10 +29,11 @@
 		var $BROWSER_AGENT;
 		var $BROWSER_VER;
 		var $BROWSER_PLATFORM;
+		var $data;
 
 		function browser ()
 		{
-			global $HTTP_USER_AGENT,$log_version;
+			global $HTTP_USER_AGENT;
 			/*
 				Determine browser and version
 			*/
@@ -94,6 +95,17 @@
 			echo "\nVersion: ".browser_get_version();
 			echo "\nAgent: ".browser_get_agent();
 			*/
+		}
+
+		function return_array()
+		{
+			$this->data = array(
+				'agent'    = $this->get_agent,
+				'version'  = $this->get_version,
+				'platform' = $this->get_platform
+			);
+
+			return $this->data;
 		}
 
 		function get_agent ()
