@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Info Log administration                                   *
+	* phpGroupWare - InfoLog Preferences                                               *
 	* http://www.phpgroupware.org                                              *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -8,17 +8,15 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
+
 	/* $Id$ */
 
-	{
-		$file = Array
-		(
-			'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array('menuaction' => 'infolog.uiinfolog.admin' )),
-			'Global Categories'  => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True'),
-			'CSV-Import' => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
-		);
+	create_check_box('Show open Events: Tasks/Calls/Notes on main screen','homeShowEvents');
+	
+	$ui = CreateObject('infolog.uiinfolog');	// need some labels from
+	create_select_box('Default Filter for InfoLog','defaultFilter',$ui->filters);
+	unset($ui);
+	
+	create_check_box('List no Subs/Childs','listNoSubs');
 
-//Do not modify below this line
-		display_section($appname,lang($appname),$file);	// please not 2. appname is for .14 compatibilty
-	}
-?>
+	create_check_box('Show full usernames','longNames');

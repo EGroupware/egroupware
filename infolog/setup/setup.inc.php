@@ -47,6 +47,7 @@
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
+	$setup_info['infolog']['hooks'][] = 'settings';
 	$setup_info['infolog']['hooks'][] = 'admin';
 	$setup_info['infolog']['hooks'][] = 'deleteaccount';
 	$setup_info['infolog']['hooks'][] = 'about';
