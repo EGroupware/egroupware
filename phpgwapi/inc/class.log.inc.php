@@ -82,26 +82,22 @@
 		
 			global $phpgw, $phpgw_info;
 			$db = $phpgw->db;
-			$db->query	('insert into phpgw_log (log_date, log_user, log_app, log_severity) values '
-						.'('.time()
-						.','.$phpgw->session->account_id
-						.',"'.$phpgw_info['flags']['currentapp'].'"'
-						.',"'.$this->severity().'"'
-						.')'
+			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
+						."(".time()
+						.",".$phpgw->session->account_id
+						.",'".$phpgw_info['flags']['currentapp']."'"
+						.",'".$this->severity()."'"
+						.")"
 						,__LINE__,__FILE__);
 
-        	$db->query ('select max(log_id) log_id from phpgw_log',__LINE__,__FILE__);					
-			$db->next_record();	
-			$log_id = $db->f('log_id');
 			$errorstack = $this->errorstack;
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
 				$err = $errorstack[$i];
 				$db->query	("insert into phpgw_log_msg "
-							."(log_msg_log_id, log_msg_seq_no, log_msg_date, "
+							."(log_msg_seq_no, log_msg_date, "
 							."log_msg_severity, log_msg_code, log_msg_msg, log_msg_parms) values "
-							."( " . $log_id 
-							.", " . $i
+							."(" . $i
 							.", " . $err->timestamp
 							.", '". $err->severity . "'"
 							.", '". $err->code     . "'"
