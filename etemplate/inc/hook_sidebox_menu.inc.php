@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\\
-  * phpGroupWare - Setup                                                     *
+  * eGroupWare - Setup                                                     *
   * http://www.eGroupWare.org                                                *
   * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
   * --------------------------------------------                             *

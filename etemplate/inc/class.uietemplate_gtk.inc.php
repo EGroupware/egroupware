@@ -114,7 +114,7 @@
 				$window = &new GtkWindow();
 				$window->connect('destroy',array('etemplate','destroy'));
 				$window->connect('delete-event',array('etemplate','delete_event'));
-				$window->set_title('phpGroupWareGTK: '.$GLOBALS['phpgw_info']['server']['site_title']);
+				$window->set_title('eGroupWareGTK: '.$GLOBALS['phpgw_info']['server']['site_title']);
 				$window->set_default_size(1024,600);
 
 				$GLOBALS['phpgw_info']['etemplate']['window'] = &$window;
