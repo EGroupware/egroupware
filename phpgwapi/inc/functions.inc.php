@@ -364,13 +364,12 @@
      * Load the app include files if the exists                                *
      \*************************************************************************/
      /* Then the include file */
-     if (!preg_match ("/phpgwapi/i", $phpgw_info["server"]["app_inc"]) && file_exists ($phpgw_info["server"]["app_inc"]."/functions.inc.php")){
-        include(PHPGW_API_INC."/functions.inc.php");
+     if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC."/functions.inc.php")){
+        include(PHPGW_APP_INC . "/functions.inc.php");
      }
-     if (!$phpgw_info["flags"]["noheader"] &&
-	    !$phpgw_info["flags"]["noappheader"] &&
-  	    file_exists ($phpgw_info["server"]["app_inc"]."/header.inc.php")) {
-        include(PHPGW_API_INC."/header.inc.php");
+     if (!$phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"] &&
+	    file_exists(PHPGW_APP_INC . "/header.inc.php")) {
+        include(PHPGW_APP_INC . "/header.inc.php");
       }
   }
   error_reporting(7);

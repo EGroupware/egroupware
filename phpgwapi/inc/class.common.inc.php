@@ -333,25 +333,27 @@
       }      
     }
 
-    function get_inc_dir($appname = ""){
-      global $phpgw_info;
-      if (! $appname){
-         $appname = $phpgw_info["flags"]["currentapp"];
-      }
-      if ($appname == "home" || $appname == "logout" || $appname == "login") {
-         $appname = "phpgwapi";
-      }
-
-      $incdir         = PHPGW_INCLUDE_ROOT . "/" . $appname . "/inc";
-      $incdir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/inc";
-
-      if (is_dir ($incdir)){
-        return $incdir;
-      }elseif (is_dir ($incdir_default)){
-        return $incdir_default;
-      }else{
-        return False;
-      }      
+    function get_inc_dir($appname = "")
+    {
+       global $phpgw_info;
+  
+       if (! $appname){
+          $appname = $phpgw_info["flags"]["currentapp"];
+       }
+       if ($appname == "home" || $appname == "logout" || $appname == "login") {
+          $appname = "phpgwapi";
+       }
+ 
+       $incdir         = PHPGW_INCLUDE_ROOT . "/" . $appname . "/inc";
+       $incdir_default = PHPGW_SERVER_ROOT . "/" . $appname . "/inc";
+ 
+       if (is_dir ($incdir)) {
+          return $incdir;
+       } elseif (is_dir ($incdir_default)) {
+          return $incdir_default;
+       } else {
+          return False;
+       }      
     }
 
     function list_themes()
@@ -486,7 +488,7 @@
              $phpgw_info["navbar"][$permission[0]]["title"] = $phpgw_info["apps"][$permission[0]]["title"];
              $phpgw_info["navbar"][$permission[0]]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                             . "/" . $permission[0] . "/index.php");
-            $icon_file = $phpgw_info["server"]["server_root"]."/".$permission[0] . "/templates/". $phpgw_info["server"]["template_set"]. "/images/navbar.gif";
+            $icon_file = PHPGW_SERVER_ROOT . "/".$permission[0] . "/templates/". $phpgw_info["server"]["template_set"]. "/images/navbar.gif";
             if (file_exists($icon_file)){
               $phpgw_info["navbar"][$permission[0]]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/"
                 . $permission[0] . "/templates/" . $phpgw_info["server"]["template_set"] . "/images/navbar.gif";
