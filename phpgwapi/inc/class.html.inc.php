@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - HTML creation class                                         *
 	* http://www.eGroupWare.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -41,13 +41,15 @@
 
 		function activate_links($content)
 		{
+			// Exclude everything which is already a link
+			$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
+
 			// spamsaver emailaddress
-			$result = preg_replace('/mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
+			$result = preg_replace('/'.$NotAnchor.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
 					'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
 					$content);
 
 			//  First match things beginning with http:// (or other protocols)
-			$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
 			$Protocol = '(http|ftp|https):\/\/';
 			$Domain = '([\w]+.[\w]+)';
 			$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
@@ -56,7 +58,6 @@
 			$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3</a>", $result );
 
 			//  Now match things beginning with www.
-			$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
 			$NotHTTP = '(?<!:\/\/)';
 			$Domain = 'www(.[\w]+)';
 			$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
