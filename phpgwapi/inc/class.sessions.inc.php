@@ -927,7 +927,7 @@
 				}
 			}
 
-			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$_SERVER['HTTPS'])
 			{
 				if(substr($url ,0,4) != 'http')
 				{
