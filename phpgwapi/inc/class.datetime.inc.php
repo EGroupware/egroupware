@@ -62,12 +62,12 @@
 				if(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
 				{
 					$this->gmtnow = time() - ((int)$GLOBALS['phpgw_info']['server']['tz_offset'] * 3600);
-					//echo "<p>set via tz_offset=".$GLOBALS['phpgw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow)."</p>\n";
+					print_debug('datetime::datetime::tz_offset',"set via tz_offset=".$GLOBALS['phpgw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
 				}
 				else
 				{
 					$this->gmtnow = time() - ($this->getbestguess() * 3600);
-					//echo "<p>set via bestguess=".$this->getbestguess().": gmtnow=".date('Y/m/d H:i',$this->gmtnow)."</p>\n";
+					print_debug('datetime::datetime::bestguess',"set via bestguess=".$this->getbestguess().": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
 				}
 			}
 			$this->users_localtime = time() + $this->tz_offset;
