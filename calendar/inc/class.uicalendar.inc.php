@@ -2510,7 +2510,8 @@
 					$GLOBALS['phpgw']->preferences->save_repository();
 				}
 			}
-			if($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
+			if($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' ||
+			   strstr($GLOBALS['phpgw_info']['flags']['currentapp'],'mail'))	// email, felamimail, ...
 			{
 				$page_app = 'calendar';
 			}
@@ -3952,8 +3953,7 @@
 			$pix = $GLOBALS['phpgw']->common->image('calendar','pix');
 
 			$str = '<center>'.lang($GLOBALS['phpgw']->common->show_date($date['raw'],'l'))
-				. ', '.lang($GLOBALS['phpgw']->common->show_date($date['raw'],'F'))
-				. ' '.$GLOBALS['phpgw']->common->show_date($date['raw'],'d, Y').'<br>'
+				. ', '.$this->bo->long_date($date).'<br>'
 				. '<table width="85%" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">'
 				. '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$pix.'"></td></tr>'
 				. '<tr><td width="15%"><font color="'.$this->theme['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'.lang('Participant').'</font></td>';

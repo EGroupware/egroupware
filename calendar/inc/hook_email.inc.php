@@ -16,7 +16,7 @@
 
 	global $calendar_id;
 
-	$d1 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+	$d1 = strtolower(substr($GLOBALS['phpgw_info']['server']['app_inc'],0,3));
 	if($d1 == 'htt' || $d1 == 'ftp')
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
@@ -25,26 +25,28 @@
 	}
 	unset($d1);
 
+	$GLOBALS['phpgw']->translation->add_app('calendar');
+
 	$cal = CreateObject('calendar.uicalendar');
-	echo 'Event ID: '.$calendar_id."<br>\n";
+	//echo "Event ID: $calendar_id<br>\n";
 
 	$event = $cal->bo->read_entry($calendar_id);
 
-	reset($event['participants']);
-	while(list($particpants,$status) = each($event['participants']))
-	{
-		$parts[] = $participants;
-	}
-	@reset($parts);
+	echo $cal->timematrix(
+		Array(
+			'date'		=> $GLOBALS['phpgw']->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $phpgw->calendar->tz_offset),
+			'starttime'	=> $cal->bo->splittime('000000',False),
+			'endtime'	=> 0,
+			'participants'	=> $event['participants'])
+			) .
 
-	$freetime = $cal->bo->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $phpgw->calendar->tz_offset);
-	echo $cal->timematrix($freetime,$cal->bo->splittime('000000',False),0,$parts);
+		'</td></tr><tr><td>' .
 
-	echo '</td></tr><tr><td>';
+		$cal->view_event($event) .
 
-	echo $cal->view_event($event);
+		'</td></tr><tr><td align="center">' .
 
-	echo '</td></tr><td align="center"><tr>';
-
-	echo $cal->get_response($calendar_id);
+		$cal->get_response($calendar_id);
+		
+	unset($cal); unset($event);
 ?>
