@@ -9,6 +9,7 @@
 <table border="0" width="75%">
  <tr>
   <td colspan="2">
+   <center><h1>{errormsg}</h1></center>
    <hr>
   </td>
  </tr>
