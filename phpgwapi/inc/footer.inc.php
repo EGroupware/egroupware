@@ -37,10 +37,10 @@
 	if (PHPGW_APP_INC != PHPGW_API_INC &&	// this prevents an endless inclusion on the homepage 
 		                                	// (some apps set currentapp in hook_home => it's not releyable)
 		(file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($_GET['menuaction'])) &&
-		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+		$GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
+		$GLOBALS['egw_info']['flags']['currentapp'] != 'login' &&
+		$GLOBALS['egw_info']['flags']['currentapp'] != 'logout' &&
+		!@$GLOBALS['egw_info']['flags']['noappfooter'])
 	{
 		if ($_GET['menuaction'])
 		{
@@ -60,9 +60,9 @@
 			include(PHPGW_APP_INC . '/footer.inc.php');
 		}
 	}
-	if ($GLOBALS['phpgw_info']['flags']['need_footer'])
+	if ($GLOBALS['egw_info']['flags']['need_footer'])
 	{
-		echo $GLOBALS['phpgw_info']['flags']['need_footer'];
+		echo $GLOBALS['egw_info']['flags']['need_footer'];
 	}
 	if(function_exists('parse_navbar_end'))
 	{
@@ -70,6 +70,7 @@
 	}
 	if (DEBUG_TIMER)
 	{
-		$GLOBALS['debug_timer_stop'] = perfgetmicrotime();
-		echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
+		$totaltime = sprintf('%4.2lf',perfgetmicrotime() - $GLOBALS['egw_info']['flags']['page_start_time']); 
+
+		echo lang('Page was generated in %1 seconds',$totaltime);
 	}

@@ -13,14 +13,15 @@
 
 	/* $Id$ */
 
-	$phpgw_info = array();
 	$submit = False;			// set to some initial value
 
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'disable_Template_class' => True,
-		'login'                  => True,
-		'currentapp'             => 'login',
-		'noheader'               => True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'disable_Template_class' => True,
+			'login'                  => True,
+			'currentapp'             => 'login',
+			'noheader'               => True,
+		)
 	);
 
 	if(file_exists('./header.inc.php'))
@@ -28,7 +29,7 @@
 		include('./header.inc.php');
 		if(function_exists('CreateObject'))
 		{
-			$GLOBALS['phpgw']->session = CreateObject('phpgwapi.sessions',array_keys($GLOBALS['phpgw_domain']));
+			$GLOBALS['egw']->session = CreateObject('phpgwapi.sessions',array_keys($GLOBALS['egw_domain']));
 		}
 		else
 		{
@@ -42,15 +43,15 @@
 		exit;
 	}
 
-	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
-    $tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+	$GLOBALS['egw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
+    $tmpl = CreateObject('phpgwapi.Template', $GLOBALS['egw_info']['server']['template_dir']);
 	
 
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
-	$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
+	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
 	// This is used for system downtime, to prevent new logins.
-	if($GLOBALS['phpgw_info']['server']['deny_all_logins'])
+	if($GLOBALS['egw_info']['server']['deny_all_logins'])
 	{
 		$deny_msg=lang('Oops! You caught us in the middle of system maintainance.<br/>
 		Please, check back with us shortly.');
@@ -73,17 +74,17 @@
 
 	// whoooo scaring
 /*
-	if($GLOBALS['phpgw_info']['server']['usecookies'] == True)
+	if($GLOBALS['egw_info']['server']['usecookies'] == True)
 	{
-		$GLOBALS['phpgw']->session->phpgw_setcookie('eGroupWareLoginTime', time());
+		$GLOBALS['egw']->session->phpgw_setcookie('eGroupWareLoginTime', time());
 	}
 */
 /*
-	if($_GET['cd'] != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
+	if($_GET['cd'] != 10 && $GLOBALS['egw_info']['server']['usecookies'] == False)
 	{
-		$GLOBALS['phpgw']->session->setcookie('sessionid');
-		$GLOBALS['phpgw']->session->setcookie('kp3');
-		$GLOBALS['phpgw']->session->setcookie('domain');
+		$GLOBALS['egw']->session->setcookie('sessionid');
+		$GLOBALS['egw']->session->setcookie('kp3');
+		$GLOBALS['egw']->session->setcookie('domain');
 	}
 */
 
@@ -120,14 +121,14 @@
 				return '<font color="FF0000">' . lang('Blocked, too many attempts') . '</font>';
 				break;
 			case 10:
-				$GLOBALS['phpgw']->session->phpgw_setcookie('sessionid');
-				$GLOBALS['phpgw']->session->phpgw_setcookie('kp3');
-				$GLOBALS['phpgw']->session->phpgw_setcookie('domain');
+				$GLOBALS['egw']->session->phpgw_setcookie('sessionid');
+				$GLOBALS['egw']->session->phpgw_setcookie('kp3');
+				$GLOBALS['egw']->session->phpgw_setcookie('domain');
 
 				//fix for bug php4 expired sessions bug
-				if($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
+				if($GLOBALS['egw_info']['server']['sessions_type'] == 'php4')
 				{
-					$GLOBALS['phpgw']->session->phpgw_setcookie(PHPGW_PHPSESSID);
+					$GLOBALS['egw']->session->phpgw_setcookie(PHPGW_PHPSESSID);
 				}
 
 				return '<font color="#FF0000">' . lang('Your session could not be verified.') . '</font>';
@@ -139,7 +140,7 @@
 	
 	/* Program starts here */
 
-	if($GLOBALS['phpgw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
+	if($GLOBALS['egw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
 	{
 		$submit = True;
 		$login  = $_SERVER['PHP_AUTH_USER'];
@@ -154,7 +155,7 @@
 
 	# Apache + mod_ssl style SSL certificate authentication
 	# Certificate (chain) verification occurs inside mod_ssl
-	if($GLOBALS['phpgw_info']['server']['auth_type'] == 'sqlssl' && isset($_SERVER['SSL_CLIENT_S_DN']) && !isset($_GET['cd']))
+	if($GLOBALS['egw_info']['server']['auth_type'] == 'sqlssl' && isset($_SERVER['SSL_CLIENT_S_DN']) && !isset($_GET['cd']))
 	{
 		# an X.509 subject looks like:
 		# /CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
@@ -191,11 +192,11 @@
 		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=5'));
+			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
 		#{
-		#	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','cd=4'));
+		#	$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=4'));
 		#}
 		
 		// don't get login data again when $submit is true
@@ -211,7 +212,7 @@
 		if (count($login_parts) > 1)
 		{
 			//Last part of login string, when separated by @, is a domain name
-			if (array_key_exists(array_pop($login_parts),$GLOBALS['phpgw_domain']))
+			if (array_key_exists(array_pop($login_parts),$GLOBALS['egw_domain']))
 			{
 				$got_login = true;
 			}
@@ -223,28 +224,28 @@
 			{
 				$login .= '@' . $_POST['logindomain'];
 			}
-			elseif(!isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
+			elseif(!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))
 			{
-				$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
+				$login .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
 			}
 		}
-		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$passwd,$passwd_type,'u');
+		$GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($login,$passwd,$passwd_type,'u');
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['phpgw']->session->cd_reason);
+			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
 		{
 			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
-			    $_POST['lang'] != $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
+			    $_POST['lang'] != $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
 			{
-				$GLOBALS['phpgw']->preferences->add('common','lang',$_POST['lang'],'session');
+				$GLOBALS['egw']->preferences->add('common','lang',$_POST['lang'],'session');
 			}
 
-			if(!$GLOBALS['phpgw_info']['server']['disable_autoload_langfiles'])
+			if(!$GLOBALS['egw_info']['server']['disable_autoload_langfiles'])
 			{
-				$GLOBALS['phpgw']->translation->autoload_changed_langfiles();
+				$GLOBALS['egw']->translation->autoload_changed_langfiles();
 			}
 			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 			if (!$forward)
@@ -256,8 +257,8 @@
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
 			}
-			//echo "redirecting to ".$GLOBALS['phpgw']->link($forward,$extra_vars);
-			$GLOBALS['phpgw']->redirect_link($forward,$extra_vars);
+			//echo "redirecting to ".$GLOBALS['egw']->link($forward,$extra_vars);
+			$GLOBALS['egw']->redirect_link($forward,$extra_vars);
 		}
 	}
 	else
@@ -272,12 +273,12 @@
 
 			if($prefs->account_id)
 			{
-				$GLOBALS['phpgw_info']['user']['preferences'] = $prefs->read_repository();
+				$GLOBALS['egw_info']['user']['preferences'] = $prefs->read_repository();
 			}
 		}
 		if ($_GET['lang'])
 		{
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
+			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
 		}
 		elseif(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
 		{
@@ -288,16 +289,16 @@
 			{
 				$lang = substr($lang,0,2);
 			}
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $lang;
+			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $lang;
 		}
-		#print 'LANG:' . $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] . '<br>';
+		#print 'LANG:' . $GLOBALS['egw_info']['user']['preferences']['common']['lang'] . '<br>';
 
-		$GLOBALS['phpgw']->translation->init();	// this will set the language according to the (new) set prefs
-		$GLOBALS['phpgw']->translation->add_app('login');
-		$GLOBALS['phpgw']->translation->add_app('loginscreen');
+		$GLOBALS['egw']->translation->init();	// this will set the language according to the (new) set prefs
+		$GLOBALS['egw']->translation->add_app('login');
+		$GLOBALS['egw']->translation->add_app('loginscreen');
 		if(lang('loginscreen_message') == 'loginscreen_message*')
 		{
-			$GLOBALS['phpgw']->translation->add_app('loginscreen','en');	// trying the en one
+			$GLOBALS['egw']->translation->add_app('loginscreen','en');	// trying the en one
 		}
 		if(lang('loginscreen_message') != 'loginscreen_message*')
 		{
@@ -309,10 +310,10 @@
 	$domain_select = '&nbsp;';
 	$lang_domain_select = '&nbsp;';
 	$last_loginid = $_COOKIE['last_loginid'];
-	if($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
+	if($GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
 		$domain_select = "<select name=\"logindomain\">\n";
-		foreach($GLOBALS['phpgw_domain'] as $domain_name => $domain_vars)
+		foreach($GLOBALS['egw_domain'] as $domain_name => $domain_vars)
 		{
 			$domain_select .= '<option value="' . $domain_name . '"';
 
@@ -327,8 +328,8 @@
 	}
 	elseif($last_loginid !== '')
 	{
-		reset($GLOBALS['phpgw_domain']);
-		list($default_domain) = each($GLOBALS['phpgw_domain']);
+		reset($GLOBALS['egw_domain']);
+		list($default_domain) = each($GLOBALS['egw_domain']);
 
 		if($_COOKIE['last_domain'] != $default_domain && !empty($_COOKIE['last_domain']))
 		{
@@ -338,7 +339,7 @@
 	$tmpl->set_var('lang_select_domain',$lang_domain_select);
 	$tmpl->set_var('select_domain',$domain_select);
 	
-	if(!$GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
+	if(!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
 	   /* trick to make domain selection disappear */
 		$tmpl->set_var('domain_selection','');
@@ -388,7 +389,7 @@
 		  $tmpl->set_var('lostpassword_link',$lostpw_link);
 		  $tmpl->set_var('lostid_link',$lostid_link) ;
 		  
-		  //$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
+		  //$tmpl->set_var('registration_url',$GLOBALS['egw_info']['server']['webserver_url'] . '/registration/');
 	   }
 	   else
 	   {
@@ -399,13 +400,13 @@
 	}
 
 	// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-	header('Content-type: text/html; charset='.$GLOBALS['phpgw']->translation->charset());
+	header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
 	
-	$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
+	$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
-	$tmpl->set_var('charset',$GLOBALS['phpgw']->translation->charset());
-	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
-	$tmpl->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+	$tmpl->set_var('charset',$GLOBALS['egw']->translation->charset());
+	$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
+	$tmpl->set_var('version',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 	$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
 	$tmpl->set_var('cookie',$last_loginid);
 
@@ -413,37 +414,37 @@
 	$tmpl->set_var('lang_password',lang('password'));
 	$tmpl->set_var('lang_login',lang('login'));
 
-	$tmpl->set_var('website_title', $GLOBALS['phpgw_info']['server']['site_title']);
-	$tmpl->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
-	$tmpl->set_var('bg_color',($GLOBALS['phpgw_info']['server']['login_bg_color']?$GLOBALS['phpgw_info']['server']['login_bg_color']:'FFFFFF'));
-	$tmpl->set_var('bg_color_title',($GLOBALS['phpgw_info']['server']['login_bg_color_title']?$GLOBALS['phpgw_info']['server']['login_bg_color_title']:'486591'));
+	$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
+	$tmpl->set_var('template_set',$GLOBALS['egw_info']['login_template_set']);
+	$tmpl->set_var('bg_color',($GLOBALS['egw_info']['server']['login_bg_color']?$GLOBALS['egw_info']['server']['login_bg_color']:'FFFFFF'));
+	$tmpl->set_var('bg_color_title',($GLOBALS['egw_info']['server']['login_bg_color_title']?$GLOBALS['egw_info']['server']['login_bg_color_title']:'486591'));
 
-	if (substr($GLOBALS['phpgw_info']['server']['login_logo_file'],0,4) == 'http')
+	if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http')
 	{
-		$var['logo_file'] = $GLOBALS['phpgw_info']['server']['login_logo_file'];
+		$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
 	}
 	else
 	{
-		$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']?$GLOBALS['phpgw_info']['server']['login_logo_file']:'logo');
+		$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
 	}
-	$var['logo_url'] = $GLOBALS['phpgw_info']['server']['login_logo_url']?$GLOBALS['phpgw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+	$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 	if (substr($var['logo_url'],0,4) != 'http')
 	{
 		$var['logo_url'] = 'http://'.$var['logo_url'];
 	}
-	$var['logo_title'] = $GLOBALS['phpgw_info']['server']['login_logo_title']?$GLOBALS['phpgw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+	$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
 	$tmpl->set_var($var);
 
 
 	/* language section if activated in site config */
-	if (@$GLOBALS['phpgw_info']['server']['login_show_language_selection'])
+	if (@$GLOBALS['egw_info']['server']['login_show_language_selection'])
 	{
 		$select_lang = '<select name="lang" onchange="'."if (this.form.login.value && this.form.passwd.value) this.form.submit(); else location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
-		$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
+		$langs = $GLOBALS['egw']->translation->get_installed_langs();
 		uasort($langs,'strcasecmp');
 		foreach ($langs as $key => $name)	// if we have a translation use it
 		{
-			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] ? ' selected="1"' : '').'>'.$name.'</option>';
+			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['egw_info']['user']['preferences']['common']['lang'] ? ' selected="1"' : '').'>'.$name.'</option>';
 		}
 		$select_lang .= "\n</select>\n";
 		$tmpl->set_var(array(
@@ -458,7 +459,7 @@
 		$tmpl->set_var('language_select','');
 	}
 
-	$tmpl->set_var('autocomplete', ($GLOBALS['phpgw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
+	$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
 
 	$tmpl->pfp('loginout','login_form');
 ?>

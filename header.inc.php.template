@@ -18,11 +18,23 @@
 	* the absolute path to fit your site, and you should be up and running.    *
 	\**************************************************************************/
 
+	// allow to migrate from phpgw_info to egw_info
+	if (isset($GLOBALS['egw_info']))
+	{
+		$GLOBALS['phpgw_info'] =& $GLOBALS['egw_info'];
+	}
+	else
+	{
+		$GLOBALS['egw_info'] =& $GLOBALS['phpgw_info'];
+	}
+	
+	define('EGW_SERVER_ROOT','{SERVER_ROOT}');
+	define('EGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
 	define('PHPGW_SERVER_ROOT','{SERVER_ROOT}');
 	define('PHPGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
-	$GLOBALS['phpgw_info']['server']['header_admin_user'] = '{HEADER_ADMIN_USER}';
-	$GLOBALS['phpgw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
-	$GLOBALS['phpgw_info']['server']['setup_acl'] = '{SETUP_ACL}';
+	$GLOBALS['egw_info']['server']['header_admin_user'] = '{HEADER_ADMIN_USER}';
+	$GLOBALS['egw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
+	$GLOBALS['egw_info']['server']['setup_acl'] = '{SETUP_ACL}';
 
 	/* eGroupWare domain-specific db settings */{domains}
 	/*
@@ -31,9 +43,9 @@
 	** Note: This is only for virtual domain support, default domain users can login only using
 	** there loginid.
 	*/
-	$GLOBALS['phpgw_info']['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
+	$GLOBALS['egw_info']['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
 
-	$GLOBALS['phpgw_info']['server']['db_persistent'] = {DB_PERSISTENT};
+	$GLOBALS['egw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
 	/*
 	** eGroupWare can handle session management using the database or 
@@ -41,15 +53,15 @@
 	** performance. 
 	** Your choices are 'db' or 'php4'
 	*/
-	$GLOBALS['phpgw_info']['server']['sessions_type'] = '{SESSIONS_TYPE}';
+	$GLOBALS['egw_info']['server']['sessions_type'] = '{SESSIONS_TYPE}';
 
 	/* Select which login template set you want, most people will use default */
-	$GLOBALS['phpgw_info']['login_template_set'] = 'idots';
+	$GLOBALS['egw_info']['login_template_set'] = 'idots';
 
 	/* This is used to control mcrypt's use */
-	$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
+	$GLOBALS['egw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 	/* Set this to 'old' for versions < 2.4, otherwise the exact mcrypt version you use. */
-	$GLOBALS['phpgw_info']['server']['versions']['mcrypt'] = '{MCRYPT_VERSION}';
+	$GLOBALS['egw_info']['server']['versions']['mcrypt'] = '{MCRYPT_VERSION}';
 
 	/*
 	** This is a random string used as the initialization vector for mcrypt
@@ -57,9 +69,9 @@
 	** but you must not change it after that point!
 	** It should be around 30 bytes in length.
 	*/
-	$GLOBALS['phpgw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
+	$GLOBALS['egw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 
-	if(!isset($GLOBALS['phpgw_info']['flags']['nocachecontrol']) || !$GLOBALS['phpgw_info']['flags']['nocachecontrol'])
+	if(!isset($GLOBALS['egw_info']['flags']['nocachecontrol']) || !$GLOBALS['egw_info']['flags']['nocachecontrol'])
 	{
 		header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
 		header('Pragma: no-cache');                          // HTTP/1.0
@@ -83,34 +95,32 @@
 		list($usec, $sec) = explode(' ',microtime());
 		return ((float)$usec + (float)$sec);
 	}
-
-	if (DEBUG_TIMER)
-	{
-		$GLOBALS['debug_timer_start'] = perfgetmicrotime();
-	}
+	$GLOBALS['egw_info']['flags']['page_start_time'] = perfgetmicrotime();
 
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
 	\**************************************************************************/
-	define('PHPGW_API_INC',PHPGW_INCLUDE_ROOT.'/phpgwapi/inc');
-	include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
-	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
-	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+	define('EGW_API_INC',EGW_INCLUDE_ROOT.'/phpgwapi/inc');
+	define('PHPGW_API_INC',EGW_INCLUDE_ROOT.'/phpgwapi/inc');
+	include(EGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
+	$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
+	$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.27';
+	$GLOBALS['egw_info']['server']['versions']['header'] = '1.28';
 	/* This is a fix for NT */
-	if(!isset($GLOBALS['phpgw_info']['flags']['noapi']) || !$GLOBALS['phpgw_info']['flags']['noapi'] == True)
+	if(!isset($GLOBALS['egw_info']['flags']['noapi']) || !$GLOBALS['egw_info']['flags']['noapi'] == True)
 	{
-		include(PHPGW_API_INC . '/functions.inc.php');
-		include(PHPGW_API_INC . '/xml_functions.inc.php');
-		include(PHPGW_API_INC . '/soap_functions.inc.php');
+		ob_start();	// to prevent error messages to be send before our headers
+		include(EGW_API_INC . '/functions.inc.php');
+		include(EGW_API_INC . '/xml_functions.inc.php');
+		include(EGW_API_INC . '/soap_functions.inc.php');
 	}
 
 	/*
 	  Leave off the final php closing tag, some editors will add
 	  a \n or space after which will mess up cookies later on
 	*/<!-- BEGIN domain -->
-	$GLOBALS['phpgw_domain']['{DB_DOMAIN}'] = array(
+	$GLOBALS['egw_domain']['{DB_DOMAIN}'] = array(
 		'db_host' => '{DB_HOST}',
 		'db_port' => '{DB_PORT}',
 		'db_name' => '{DB_NAME}',
