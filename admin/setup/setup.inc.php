@@ -23,28 +23,11 @@
 		'email' => 'phpgroupware-developers@gnu.org'
 	);
 
-	$setup_info['admin']['maintainer'][]  = array
+	$setup_info['admin']['maintainer'][] = array
 	(
-		'name'	=> 'Joseph Engo',
-		'email'	=> 'jengo@phpgroupware.org'
-	);
-
-	$setup_info['admin']['maintainer'][]  = array
-	(
-		'name'	=> 'Marc A. Peters',
-		'email'	=> 'skeeter@phpgroupware.org'
-	);
-
-	$setup_info['admin']['maintainer'][]	= array
-	(
-		'name'	=> 'Bettina Gille',
-		'email'	=> 'ceb@phpgroupware.org'
-	);
-
-	$setup_info['admin']['maintainer'][]  = array
-	(
-		'name'	=> 'Dan Kuykendall',
-		'email'	=> 'seek3r@phpgroupware.org'
+		'name'	=> 'phpGroupWare coreteam',
+		'email' => 'phpgroupware-developers@gnu.org',
+		'url'	=> 'www.phpgroupware.org/coredevelopers'
 	);
 
 	$setup_info['admin']['license']  = 'GPL';

@@ -8,6 +8,11 @@ body
 	background-color: #CCCCCC;
 }
 
+table.left_app
+{
+	border-color: #660000;
+}
+
 .top_top
 {
 	background-color: #FF3300
@@ -33,7 +38,7 @@ td.left
 	background-color: #0000A0;
 }
 
-.user_info
+.user_info,.date
 {
 	background-color: #FF3300;
 	color: #FFFFFF;

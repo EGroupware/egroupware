@@ -8,6 +8,11 @@ body
 	background-color: #CCCCCC;
 }
 
+table.left_app
+{
+	border-color: #FFCCCC;
+}
+
 .top_top
 {
 	background-color: #999999;
@@ -33,7 +38,7 @@ td.left
 	background-color: #990000;
 }
 
-.user_info
+.user_info,.date
 {
 	background-color: #ADADAD;
 	color: #FFFFFF;
@@ -76,14 +81,14 @@ a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected
 .login,.portal,.about
 {
 	background-color: #ADADAD;
-	border-color: #000000;
+	border-color: #FF3300;
 }
 
 a.portal_text,.portal_text
 {
 	color: #FFFFFF;
 	text-decoration: none;
-    background-color: #000066;
+    background-color: #FF3300;
 }
 
 a:hover.portal_text

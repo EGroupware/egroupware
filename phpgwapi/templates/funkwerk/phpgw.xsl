@@ -78,7 +78,7 @@
 								<td class="admin_info"/>
 							</xsl:otherwise>
 						</xsl:choose>
-						<td height="30" width="19%" class="user_info" align="right" valign="bottom">[<xsl:value-of select="user_info_date"/>]</td>
+						<td height="30" width="19%" class="date" align="right" valign="bottom">[<xsl:value-of select="user_info_date"/>]</td>
 					</tr>
 					<tr align="right" height="30">
 						<td colspan="4" class="top_bottom">

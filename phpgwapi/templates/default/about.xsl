@@ -32,7 +32,26 @@
 				</td>
 			</tr>
 			<tr>
-				<td height="15"> </td>
+				<td height="15">&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="20%" class="th_text">
+					<xsl:value-of select="lang_layout"/>
+				</td>
+				<td class="th_text">
+					<xsl:value-of select="name_layout"/>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" valign="top">
+					<xsl:value-of select="lang_author"/>
+				</td>
+				<td>
+					<xsl:apply-templates select="layout"/>
+				</td>
+			</tr>
+			<tr>
+				<td height="15">&nbsp;</td>
 			</tr>
 			<xsl:apply-templates select="about_app"/>
 		</table>
@@ -112,7 +131,21 @@
 	<xsl:variable name="email"><xsl:value-of select="email"/></xsl:variable>
 		<table>
 			<tr>
-				<td><xsl:value-of select="name"/><xsl:text> [</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+				<td>
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td><xsl:value-of select="name"/></td>
+							<td><xsl:text>&nbsp;[</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+						</tr>
+						<xsl:if test="url != ''">
+						<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
+						<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;[<a href="http://{$url}" target="_blank"><xsl:value-of select="url"/></a>]</td>
+						</tr>
+						</xsl:if>
+					</table>
+				</td>
 			</tr>
 		</table>
 	</xsl:template>
@@ -138,6 +171,29 @@
 			</tr>
 			<tr>
 				<td><a href="{$url}" target="_blank"><xsl:value-of select="url"/></a></td>
+			</tr>
+		</table>
+	</xsl:template>
+
+	<xsl:template match="layout">
+	<xsl:variable name="email"><xsl:value-of select="email"/></xsl:variable>
+		<table>
+			<tr>
+				<td>
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td><xsl:value-of select="name"/></td>
+							<td><xsl:text>&nbsp;[</xsl:text><a href="mailto:{$email}"><xsl:value-of select="email"/></a><xsl:text>]</xsl:text></td>
+						</tr>
+						<xsl:if test="url != ''">
+						<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
+						<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;[<a href="http://{$url}" target="_blank"><xsl:value-of select="url"/></a>]</td>
+						</tr>
+						</xsl:if>
+					</table>
+				</td>
 			</tr>
 		</table>
 	</xsl:template>

@@ -51,7 +51,7 @@
 		<xsl:variable name="app_icon" select="app_icon"/>
 		<xsl:variable name="app_title" select="app_title"/>
 		<xsl:variable name="app_name" select="app_name"/>
-		<tr class="th">
+		<tr class="th_bright">
 			<td width="5%" valign="middle"><img src="{$app_icon}" alt="{$app_title}" name="{$app_title}"/></td>
 			<td width="95%" valign="middle" class="th_text"><xsl:value-of select="app_title"/></td>
 		</tr>
@@ -62,8 +62,8 @@
 	</xsl:template>
 
 	<xsl:template match="app_row_noicon">
-		<tr class="th">
-			<td height="20" colspan="2" width="100%" valign="bottom" class="th_text">&nbsp;<xsl:value-of select="app_title"/></td>
+		<tr class="th_bright">
+			<td colspan="2" width="100%" class="th_text">&nbsp;<xsl:value-of select="app_title"/></td>
 		</tr>
 		<xsl:apply-templates select="link_row"/>
 		<tr>

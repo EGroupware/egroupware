@@ -23,9 +23,38 @@ table
 	border-width: 0;
 }
 
+table.portal
+{
+	width: 100%;
+}
+
+table.about
+{
+	width: 70%;
+}
+
+table.login
+{
+	margin-top: 130px;
+	width: 40%;
+	text-align: center;
+}
+
+table.left_app
+{
+	border-width: 1px;
+	border-style: solid;
+}
+
 td.alarm
 {
 	color: #FF3300;
+}
+
+td.left
+{
+	height: 30;
+	width: 131;
 }
 
 a:link,a:visited,a:active
@@ -69,33 +98,10 @@ a.th,a.th_text
 	height: 30;
 }
 
-td.left
-{
-	height: 30;
-	width: 131;
-}
-
 .bottom
 {
 	width: 100%;
 	height: 5%;
-}
-
-table.portal
-{
-	width: 100%;
-}
-
-table.about
-{
-	width: 70%;
-}
-
-table.login
-{
-	margin-top: 130px;
-	width: 40%;
-	text-align: center;
 }
 
 .login,.portal,.about,.msgbox

@@ -1,6 +1,6 @@
 body,p,td,th,table,input,form,option
 {
-	color: #000066;
+	color: #333333;
 }
 
 body
@@ -8,57 +8,58 @@ body
 	background-color: #CCCCCC;
 }
 
-table.left_app
-{
-	border-color: #000000;
-}
-
 .top_top
 {
-	background-color: #0000A0;
+	background-color: #999999;
 }
 
 .top_bottom
 {
-	background-color: #660000;
+	background-color: #FFCCCC;
 }
 
 td.left
 {
-	background-color: #000066;
+	background-color: #999999;
 }
 
 .left_app
 {
-	background-color: #0000A0;
+	background-color: #FF3300;
 }
 
 .top_menu
 {
-	background-color: #0000A0;
+	background-color: #FF3300;
 }
 
-.user_info,.date
+.user_info
 {
-	background-color: #0000A0;
+	background-color: #FF3300;
+	color: #FFFFFF;
+}
+
+.date
+{
+	background-color: #ADADAD;
 	color: #FFFFFF;
 }
 
 .admin_info,a:link.admin_info,a:active.admin_info,a:visited.admin_info,a:hover.admin_info
 {
-	background-color: #000066;
+	background-color: #999999;
 	color: #FFFFFF;
 }
 
 .bottom
 {
 	color: #FFFFFF;
-	background-color: #0000A0;
+	background-color: #999999;
 }
 
 a:link,a:active,a:visited,a:hover
 {
-	color: #0000A0;
+	color: #333333;
 }
 
 a:link.bottom,a:active.bottom,a:visited.bottom,a:hover.bottom,a:link.top_menu,a:active.top_menu,a:visited.top_menu,a:link.left,a:active.left,a:visited.left
@@ -66,29 +67,40 @@ a:link.bottom,a:active.bottom,a:visited.bottom,a:hover.bottom,a:link.top_menu,a:
 	color: #FFFFFF;
 }
 
-a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected,a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
+a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.top_menu_selected,a:hover.top_menu_selected
 {
-	color: #660000;
-	background-color: orange;
+	color: #990000;
+	background-color: #FFFFFF;
+}
+
+a:hover.left,a:link.left_selected,a:active.left_selected,a:visited.left_selected,a:hover.left_selected
+{
+	color: #990000;
+	background-color: #FFFFFF;
 }
 
 .login,.portal,.about
 {
 	background-color: #ADADAD;
-	border-color: #000000;
+	border-color: #990000;
+}
+
+table.left_app
+{
+	border-color: #990000;
 }
 
 a.portal_text,.portal_text
 {
 	color: #FFFFFF;
 	text-decoration: none;
-    background-color: #000066;
+    background-color: #990000;
 }
 
 a:hover.portal_text
 {
 	text-decoration: underline;
-	color: #000066;
+	color: #660000;
 	background-color: #FFFFFF;
 }
 
@@ -115,12 +127,12 @@ a:hover.portal_text
 
 .th
 {
-	background-color: orange;
+	background-color: #FFCCCC;
 }
 
 .th_text
 {
-	color: #660000;
+	color: #333333;
 }
 
 .cal_today
