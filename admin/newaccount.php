@@ -1,59 +1,78 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - administration                                            *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare - administration                                            *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info = array();
-  $phpgw_info["flags"] = array("currentapp"  => "admin", "noheader" => True, "nonavbar" => True,
-               			       "parent_page" => "accounts.php");
-  include("../header.inc.php");
+	$phpgw_info['flags'] = array(
+		'currentapp'  => 'admin',
+		'noheader'    => True,'
+		'nonavbar'    => True,
+		'parent_page' => 'accounts.php'
+	);
+	include('../header.inc.php');
 
-  function is_odd($n)
-  {
-     $ln = substr($n,-1);
-     if ($ln == 1 || $ln == 3 || $ln == 5 || $ln == 7 || $ln == 9) {
-        return True;
-     } else {
-        return False;
-     }
-  }
+	function is_odd($n)
+	{
+		$ln = substr($n,-1);
+
+		if ($ln == 1 || $ln == 3 || $ln == 5 || $ln == 7 || $ln == 9)
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
+	}
 
   if ($submit) {
      $totalerrors = 0;
 
-     if ($phpgw_info["server"]["account_repository"] == "ldap" && ! $allow_long_loginids) {
-        if (strlen($n_loginid) > 8) {
-           $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
-        }
-     }
+		if ($phpgw_info['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
+		{
+			if (strlen($n_loginid) > 8)
+			{
+				$error[$totalerrors++] = lang('The loginid can not be more then 8 characters');
+			}
+		}
   
-     if (! $account_lid)
-        $error[$totalerrors++] = lang("You must enter a loginid");
+		if (! $account_lid)
+		{
+			$error[$totalerrors++] = lang('You must enter a loginid');
+		}
 
-     if (! $account_passwd)
-        $error[$totalerrors++] = lang("You must enter a password");
+		if (! $account_passwd)
+		{
+			$error[$totalerrors++] = lang('You must enter a password');
+		}
 
-     if ($account_passwd == $account_lid)
-        $error[$totalerrors++] = lang("The login and password can not be the same");
+		if ($account_passwd == $account_lid)
+		{
+			$error[$totalerrors++] = lang('The login and password can not be the same');
+		}
 
-     if ($account_passwd != $account_passwd_2)
-        $error[$totalerrors++] = lang("The two passwords are not the same");
+		if ($account_passwd != $account_passwd_2)
+		{
+			$error[$totalerrors++] = lang('The two passwords are not the same');
+		}
 
-     if (!count($account_permissions) || !count($account_groups)) {
-        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
-     }
+		if (!count($account_permissions) || !count($account_groups))
+		{
+			$error[$totalerrors++] = lang('You must add at least 1 permission or group to this account');
+		}
 
-     if ($phpgw->accounts->exists($account_lid)) {
-        $error[$totalerrors++] = lang("That loginid has already been taken");
-     }
+		if ($phpgw->accounts->exists($account_lid))
+		{
+			$error[$totalerrors++] = lang('That loginid has already been taken');
+		}
 
 		if (! $error)
 		{
@@ -130,7 +149,8 @@
 
 			$phpgw->db->unlock();
 
-/*       // start inlcuding other admin tools
+/*
+       // start inlcuding other admin tools
        while($app = each($apps_after))
        {
          $phpgw->common->hook_single('add_user_data', $value);
@@ -282,18 +302,18 @@
 	$phpgw->template->set_var('permissions_list',$perms_html);
 
 	$includedSomething = False;
-// Skeeter: I don't see this as a player, if creating new accounts...
 
-  // start inlcuding other admin tools
-//  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
-//  {
+	// Skeeter: I don't see this as a player, if creating new accounts...
+	// start inlcuding other admin tools
+	//  while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
+	//  {
 	// check if we have something included, when not ne need to set
 	// {gui_hooks} to ""
-//  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
-//  }       
+	//  	if ($phpgw->common->hook_single("show_newuser_data", $value)) $includedSomething="true";
+	//  }       
 
-  $phpgw->template->set_var('lang_button',Lang('Add'));
-  $phpgw->template->pfp('out','form');
+	$phpgw->template->set_var('lang_button',Lang('Add'));
+	$phpgw->template->pfp('out','form');
   
-  $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>

@@ -147,7 +147,7 @@
 			
 			if ($perm_display[$i]['translatedName'])
 			{
-				$part1 = sprintf("<td>%s</td><td><input type=\"checkbox\" name=\"account_permissions[%s]\" value=\"True\" %s></td>",
+				$part1 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
 					lang($perm_display[$i]['translatedName']),
 					$perm_display[$i]['appName'],
 					$checked);
@@ -155,15 +155,15 @@
 
 			$i++;			
 			
-			$checked = "";
+			$checked = '';
 			if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
 			{
-				$checked = " checked";
+				$checked = ' checked';
 			}
 			
-			if($perm_display[$i]['translatedName'])
+			if ($perm_display[$i]['translatedName'])
 			{
-				$part2 = sprintf("<td>%s</td><td><input type=\"checkbox\" name=\"account_permissions[%s]\" value=\"True\" %s></td>",
+				$part2 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
 					lang($perm_display[$i]['translatedName']),
 					$perm_display[$i]['appName'],
 					$checked);
@@ -173,7 +173,7 @@
 				$part2 = '<td colspan="2">&nbsp;</td>';
 			}
 			
-			$appRightsOutput .= sprintf("<tr bgcolor=\"%s\">$part1$part2</tr>\n",$phpgw_info["theme"]["row_on"]);
+			$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$phpgw_info['theme']['row_on'], $part1, $part2);
 		}
 	
 		$t->set_var('permissions_list',$appRightsOutput);
@@ -212,7 +212,6 @@
 			}
 		}
 		$apps->save_repository();
-		
 
 
 		$account = CreateObject('phpgwapi.accounts');
@@ -282,7 +281,7 @@
 		
 		if (!count($_userData['account_permissions']) || !count($_userData['account_groups'])) 
 		{
-			$error[$totalerrors] = '<br>' . lang('You must add at least 1 permission or group to this account');
+			$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
 			$totalerrors++;
 		}
 		
@@ -370,7 +369,7 @@
 			$check = $after_apps[$i];
 		}
 
-		if (!$t["$check"])
+		if (! $t[$check])
 		{
 			$phpgw->common->hook_single('add_def_pref', $after_apps[$i]);
 			$docommit = True;
