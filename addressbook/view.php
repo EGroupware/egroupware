@@ -42,6 +42,19 @@
 			$colname[$column[0]] = $column[1];
 		}
 	}
+
+	// No prefs?
+	if (!$columns_to_display ) {
+		$columns_to_display = array(
+			"n_given"  => "n_given",
+			"n_family" => "n_family",
+			"org_name" => "org_name"
+		);
+		while ($column = each($columns_to_display)) {
+			$colname[$column[0]] = $column[1];
+		}
+	}
+
 	// merge in extra fields
 	$extrafields = array (
 		"pager"    => "pager",
@@ -57,6 +70,7 @@
 	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
 
+	reset($columns_to_display);
 	while ($column = each($columns_to_display)) { // each entry column
 		$columns_html .= "<tr><td><b>" . display_name($colname[$column[0]]) . "</b>:</td>";
 		$ref=$data="";
