@@ -38,6 +38,14 @@
 		$invalid_data = True;
 	}
 
+	// FIX ME! Don't leave this, we need to create a common place where applications can access
+	// things like the spell check class that the API has. (jengo)
+	if ($app == 'phpgwapi')
+	{
+		$app = 'home';
+		$api_requested = True;
+	}
+
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
@@ -45,9 +53,14 @@
 	);
 	include('./header.inc.php');
 
-	if ($app == 'home')
+	if ($app == 'home' && ! $api_requested)
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
+	}
+
+	if ($api_requested)
+	{
+		$app = 'phpgwapi';
 	}
 
 	$GLOBALS['obj'] = CreateObject(sprintf('%s.%s',$app,$class));
@@ -60,10 +73,21 @@
 	else
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/home.php'));
-		$GLOBALS['phpgw']->log->message(array('text'=>'W-BadmenuactionVariable, menuaction missing or corrupt: %1','p1'=>$menuaction));
+		$GLOBALS['phpgw']->log->message(array(
+			'text' => 'W-BadmenuactionVariable, menuaction missing or corrupt: %1',
+			'p1'   => $menuaction,
+			'line' => __LINE__,
+			'file' => __FILE__
+
+		));
 		if (! is_array($obj->public_functions) || ! $obj->public_functions[$method])
 		{
-			$GLOBALS['phpgw']->log->message(array('text'=>'W-BadmenuactionVariable, attempted to access private method: %1','p1'=>$method));
+			$GLOBALS['phpgw']->log->message(array(
+				'text' => 'W-BadmenuactionVariable, attempted to access private method: %1',
+				'p1'   => $method,
+				'line' => __LINE__,
+				'file' => __FILE__
+			));
 		}
 		$GLOBALS['phpgw']->log->commit();
 
