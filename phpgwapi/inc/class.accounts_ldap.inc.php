@@ -740,6 +740,16 @@
 			$this->db->transaction_begin();
 			if($default_acls == False)
 			{
+				$apps = Array(
+					'addressbook',
+					'calendar',
+					'email',
+					'notes',
+					'todo',
+					'phpwebhosting',
+					'manual'
+				);
+
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
 				$default_group_id  = $this->name2id($default_group_lid);
 				$defaultgroupid = $default_group_id ? $default_group_id : $this->name2id('Default');
@@ -749,12 +759,11 @@
 						. $defaultgroupid . ", " . $accountid . ", 1)",__LINE__,__FILE__);
 				}
 				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				@reset($apps);
+				while(list($key,$app) = each($apps))
+				{
+					$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('".$app."', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				}
 			}
 			$this->db->transaction_commit();
 			return $accountid;

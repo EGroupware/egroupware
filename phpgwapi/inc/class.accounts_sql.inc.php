@@ -357,12 +357,22 @@
 					// If they dont have a default group, they need some sort of permissions.
 					// This generally doesn't / shouldn't happen, but will (jengo)
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+
+					$apps = Array(
+						'addressbook',
+						'calendar',
+						'email',
+						'notes',
+						'todo',
+						'phpwebhosting',
+						'manual'
+					);
+
+					@reset($apps);
+					while(list($key,$app) = each($apps))
+					{
+						$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('".$app."', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					}
 				}
 			}
 			$this->db->transaction_commit();
