@@ -120,8 +120,6 @@
 			$this->query($query);
 		}
 
-		function db_($query='') {}	// only for NOT useing ADOdb
-
 		/**
 		* @return int current connection id
 		*/
@@ -317,13 +315,6 @@
 		}
 
 		/**
-		* @deprecated
-		* @see limit_query()
-		*/
-		function limit($start)
-		{}
-
-		/**
 		* Discard the current query result
 		*/
 		function free()
@@ -340,7 +331,7 @@
 		* @param string $file the file method was called from - use __FILE__
 		* @param int $offset row to start from
 		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
-		* @return int current query id if sucesful and null if fails
+		* @return ADORecordSet or false, if the query fails
 		*/
 		function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1)
 		{
@@ -393,7 +384,7 @@
 		* @param mixed $line the line method was called from - use __LINE__
 		* @param string $file the file method was called from - use __FILE__
 		* @param int $num_rows number of rows to return (optional), if unset will use $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']
-		* @return int current query id if sucesful and null if fails
+		* @return ADORecordSet or false, if the query fails
 		*/
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 		{
@@ -947,6 +938,7 @@
 		*
 		* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
 		* Int and Auto types are casted to int: quote('1','int') === 1, quote('','int') === 0, quote('Hello','int') === 0
+		* Unset php-variables and those set to NULL are now returned as SQL NULL! If this is not desired, set them to ''.
 		*
 		* @param $value mixed the value to be escaped
 		* @param $type string the type of the db-column, default False === varchar
@@ -955,7 +947,11 @@
 		function quote($value,$type=False)
 		{
 			if ($this->Debug) echo "<p>db::quote('$value','$type')</p>\n";
-
+			
+			if (is_null($value))	// writing unset php-variables and thouse set to NULL now as SQL NULL
+			{
+				return 'NULL';
+			}
 			switch($type)
 			{
 				case 'int':
