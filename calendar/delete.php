@@ -18,17 +18,15 @@
   include("../header.inc.php");
 
   if ($id > 0) {
-     $phpgw->db->query("SELECT cal_date FROM webcal_entry WHERE cal_id = $id");
-     // date format is 19991231
+     $phpgw->db->query("SELECT cal_datetime FROM calendar_entry WHERE cal_id = $id",__LINE__,__FILE__);
      $phpgw->db->next_record();
 
-     $thisyear = (int)($phpgw->db->f(0) / 10000);
-     $thismonth = ($phpgw->db->f(0) / 100) % 100;
+     $thisyear = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"Y"));
+     $thismonth = intval($phpgw->common->show_date($phpgw->db->f("cal_datetime"),"n"));
 
-     $phpgw->db->query("DELETE FROM webcal_entry WHERE cal_id = $id");
-     $phpgw->db->query("DELETE FROM webcal_entry_user WHERE cal_id = $id");
-     $phpgw->db->query("DELETE FROM webcal_entry_repeats WHERE cal_id = $id");
-     $phpgw->db->query("DELETE FROM webcal_entry_groups WHERE cal_id = $id");
+     $phpgw->db->query("DELETE FROM calendar_entry WHERE cal_id = $id",__LINE__,__FILE__);
+     $phpgw->db->query("DELETE FROM calendar_entry_user WHERE cal_id = $id",__LINE__,__FILE__);
+     $phpgw->db->query("DELETE FROM calendar_entry_repeats WHERE cal_id = $id",__LINE__,__FILE__);
   }
 
   Header("Location: " . $phpgw->link("index.php","year=$thisyear&month=$thismonth"));
