@@ -398,6 +398,8 @@
 	   }
 	}
 
+	// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+	header('Content-type: text/html; charset='.$GLOBALS['phpgw']->translation->charset());
 	
 	$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
 
@@ -436,7 +438,7 @@
 	/* language section if activated in site config */
 	if (@$GLOBALS['phpgw_info']['server']['login_show_language_selection'])
 	{
-		$select_lang = '<select name="lang" onchange="'."location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
+		$select_lang = '<select name="lang" onchange="'."if (this.form.login.value && this.form.passwd.value) this.form.submit(); else location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
 		$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
 		uasort($langs,'strcasecmp');
 		foreach ($langs as $key => $name)	// if we have a translation use it
