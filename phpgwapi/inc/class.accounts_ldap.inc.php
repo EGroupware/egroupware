@@ -455,7 +455,7 @@
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
-			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset<br>";
+			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
 			$query = strtolower($query);
 			if($offset)
 			{
@@ -486,15 +486,15 @@
 							$query .= '*';
 							// fall-through
 						case 'exact':
-							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(email=$query))";
+							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
 							break;
 						case 'firstname':
 						case 'lastname':
 						case 'lid':
 						case 'email':
 							$to_ldap = array(
-								'firstname' => 'sn',
-								'lastname'  => 'givenname',
+								'firstname' => 'givenname',
+								'lastname'  => 'sn',
 								'lid'       => 'uid',
 								'email'     => 'mail',
 							);
