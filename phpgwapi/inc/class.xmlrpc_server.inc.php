@@ -31,9 +31,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-	// XML RPC Server class
-	// requires: xmlrpc.inc
-	
+	/* $Id$ */
+
 	/* BEGIN server class */
 	class xmlrpc_server
 	{
@@ -263,6 +262,7 @@
 				xml_parser_free($parser);
 				$m = CreateObject('phpgwapi.xmlrpcmsg',$GLOBALS['_xh'][$parser]['method']);
 				// now add parameters in
+				$plist = '';
 				for($i=0; $i<sizeof($GLOBALS['_xh'][$parser]['params']); $i++)
 				{
 					//print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n";
