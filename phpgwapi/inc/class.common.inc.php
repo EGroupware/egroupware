@@ -47,7 +47,7 @@
 
 		// Convert an array into the format needed for the access column.
 		/*!
-		@functionn array_to_string
+		@function array_to_string
 		@abstract Convert an array into the format needed for the access column
 		@param $access
 		@param $array
