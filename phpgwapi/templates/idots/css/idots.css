@@ -151,7 +151,7 @@ a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:16px;
-	background-color:#eeeeee;
+	background-color:#FDFDFD;
 }
 
 a.appTitles,.appTitles
@@ -263,7 +263,7 @@ a.textSidebox
 
 #divAppbox
 {
-	background-color:#f7f7f7;
+	background-color:#ffffff;
 	padding:5px;
 	border-bottom:solid 1px #9c9c9c;
 	border-left:solid 1px #9c9c9c;
