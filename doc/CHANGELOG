@@ -1,12 +1,12 @@
-[08--2000] - Added print icon that allows you to print out a page without having the navbar.
-	     Thanks Sam Wynn Jr <sam.wynn@lmco.com>
+[08--2000] - Added print icon that allows you to print out a page without having
+	     the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
 	   - on group creation the files directory tried to be created in
 	     "filemanager/groups/" instead of in "files/groups/" - fixed.
 	     Same for the user directory.
 	   - Added error checking for creating/editing an account with no permissions.
 	   - Fixed a db->unlock() issue in editaccount.php
 	   - Fixed a few $phpgw_flags out of place.
-	   - Fixed a problem with attachments not handled properly
+	   - Fixed email/folder.php
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
