@@ -86,7 +86,7 @@
     if (! $phpgw->db->f("lastlogin"))
        echo "Never";
     else
-       echo $phpgw->preferences->show_date($phpgw->db->f("lastlogin"));
+       echo $phpgw->common->show_date($phpgw->db->f("lastlogin"));
 
    ?></td></tr>
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">

@@ -89,17 +89,17 @@
   && $phpgw_info["user"]["preferences"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
     $phpgw->db->query("select DISTINCT firstname,lastname from addressbook where "
-      . "bday like '" . $phpgw->preferences->show_date_other("n/d",time())
+      . "bday like '" . $phpgw->common->show_date(time(),"n/d")
       . "/%' and (owner='" . $phpgw->session->loginid . "' or access='"
       . "public')");
       while ($phpgw->db->next_record()) {
         echo "<tr><td>" . lang_common("Today is x's birthday!", $phpgw->db->f("firstname") . " "
 	  . $phpgw->db->f("lastname")) . "</td></tr>\n";
       }
-      $tommorow = $phpgw->preferences->show_date_other("n/d", mktime(0,0,0,
-      $phpgw->preferences->show_date_other("m",time()),
-      $phpgw->preferences->show_date_other("d",time())+1,
-      $phpgw->preferences->show_date_other("Y",time())) );
+      $tommorow = $phpgw->common->show_date(mktime(0,0,0,
+      $phpgw->common->show_date(time(),"m"),
+      $phpgw->common->show_date(time(),"d")+1,
+      $phpgw->common->show_date(time(),"Y")),"n/d" );
       $phpgw->db->query("select firstname,lastname from addressbook where "
         . "bday like '$tommorow/%' and (owner='"
         . $phpgw->session->loginid . "' or access='public')");
@@ -121,7 +121,7 @@
     include($phpgw_info["server"]["server_root"] . "/calendar/inc/functions.inc.php");
     $repeated_events = read_repeated_events($phpgw->session->loginid);
     $phpgw->db->query("select count(*) from webcal_entry,webcal_entry_user"
-      . " where cal_date='" . $phpgw->preferences->show_date_other("Ymd", time())
+      . " where cal_date='" . $phpgw->common->show_date(time(),"Ymd")
       . "' and (webcal_entry_user.cal_login='" . $phpgw->session->loginid
       . "' and webcal_entry.cal_id = webcal_entry_user.cal_id) and "
       . "(cal_priority='3')");

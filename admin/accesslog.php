@@ -56,12 +56,12 @@
        $total = "&nbsp;";
 
     if ($phpgw->db->f("li"))
-       $li = $phpgw->preferences->show_date($phpgw->db->f("li"));
+       $li = $phpgw->common->show_date($phpgw->db->f("li"));
     else
        $li = "&nbsp;";
 
     if ($phpgw->db->f("lo"))
-       $lo = $phpgw->preferences->show_date($phpgw->db->f("lo"));
+       $lo = $phpgw->common->show_date($phpgw->db->f("lo"));
     else
        $lo = "&nbsp;";
 

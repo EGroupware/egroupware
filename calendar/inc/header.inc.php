@@ -4,17 +4,17 @@
    &nbsp;
   </td>
   <td width="2%">
-   <a href="<?php echo $phpgw->link("day.php","year=".$phpgw->preferences->show_date_other("Y",time())."&month=".$phpgw->preferences->show_date_other("m", time())."&day=".$phpgw->preferences->show_date_other("d",time())); ?>">
+   <a href="<?php echo $phpgw->link("day.php","year=".$phpgw->common->show_date(time(),"Y")."&month=".$phpgw->common->show_date(time(),"m")."&day=".$phpgw->common->show_date(time(),"d")); ?>">
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/today.gif" alt="<?php echo lang_calendar("Today"); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link("week.php","date=".$phpgw->preferences->show_date_other("Ymd",time())); ?>">
+   <a href="<?php echo $phpgw->link("week.php","date=".$phpgw->common->show_date(time(),"Ymd")); ?>">
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/week.gif" alt="<?php echo lang_calendar("This week"); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link("index.php","date=".$phpgw->preferences->show_date_other("Ymd",time())); ?>">
+   <a href="<?php echo $phpgw->link("index.php","date=".$phpgw->common->show_date(time(),"Ymd")); ?>">
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/month.gif" alt="<?php echo lang_calendar("This month"); ?>" border="0">
    </a>
   </td>

@@ -64,7 +64,7 @@
 
      $t->set_var("row_loginid",$phpgw->db->f("loginid"));
      $t->set_var("row_ip",$phpgw->db->f("ip"));
-     $t->set_var("row_logintime",$phpgw->preferences->show_date($phpgw->db->f("logintime")));
+     $t->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("logintime")));
      $t->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("dla"))));
 
      if ($phpgw->db->f("sessionid") != $phpgw->session->id) {
