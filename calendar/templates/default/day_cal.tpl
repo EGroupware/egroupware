@@ -15,8 +15,8 @@
     .time
     {
       width: {time_width}%;
-      background-image: url('{bg_time_image}');
-      background-repeat: repeat;
+      background-color: {time_bgcolor};
+      border-color: {time_border_color};
       border-width: 1;
       color: {font_color};
       font-family: {font};

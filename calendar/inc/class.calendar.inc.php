@@ -1421,9 +1421,9 @@ class calendar extends calendar_
 		}
 		$var = Array(
 			'time_width'		=> $time_width,
-			'time_bgcolor'		=>	$phpgw_info['theme']['cal_dayview'],
-			'bg_time_image'	=>	$this->phpgwapi_template_dir.'/navbar_filler.jpg',
+			'time_bgcolor'		=>	$phpgw_info['theme']['navbar_bg'],
 			'font_color'		=>	$phpgw_info['theme']['bg_text'],
+			'time_border_color'	=> $phpgw_info['theme']['navbar_text'],
 			'font'				=>	$phpgw_info['theme']['font']
 		);
 
