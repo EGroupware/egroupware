@@ -73,15 +73,24 @@ class db {
 		return $this->Query_ID;
 	}
 
-	function limit_query($Query_String, $offset, $num_rows, $line = '', $file = '')
+	function limit_query($Query_String, $_offset, $line = '', $file = '')
 	{
 		global $phpgw_info;
 
 		if ($this->Debug)
+		{
 			printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+		}
 
-		if (!IsSet($num_rows) || $num_rows < 1)
+		if (is_array($_offset))
+		{
+			list($offset,$num_rows) = $_offset;
+		}
+		else
+		{
 			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+			$offset = $_offset;
+		}
 
 		$this->query($Query_String, $line, $file);
 		if ($this->Query_ID)
