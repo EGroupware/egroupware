@@ -95,7 +95,7 @@
 
 		$allAccounts;
 		$userGroups;
-		
+
 		$groups_select = '<select name="account_groups[]" multiple>';
 		reset($allGroups);
 		while (list($key,$value) = each($allGroups)) 
@@ -114,10 +114,14 @@
 		$groups_select .= '</select>';
 		$t->set_var('groups_select',$groups_select);
 
-		
-		// create list of available app
+
+		// create list of available apps
 		$i = 0;
-		
+
+		$apps = CreateObject('phpgwapi.applications',intval($_account_id));
+		$db_perms = $apps->read_account_specific();
+
+		@reset($phpgw_info['apps']);
 		$availableApps = $phpgw_info['apps'];
 		@asort($availableApps);
 		@reset($availableApps);
@@ -132,11 +136,8 @@
 		}
 
 		// create apps output
-		$apps = CreateObject('phpgwapi.applications',intval($_account_id));
-		$db_perms = $apps->read_account_specific();
-		
 		@reset($db_perms);
-		
+
 		for ($i=0;$i<=count($perm_display);$i++) 
 		{
 			$checked = '';
