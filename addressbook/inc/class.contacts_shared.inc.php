@@ -41,7 +41,7 @@
 				}
 				if ($this->stock_contact_fields[$field]) {
 					$stock_fields[$field]     = $value;
-					$stock_fieldnames[$field] = $field;
+					$stock_fieldnames[$field] = $this->stock_contact_fields[$field];
 				} else {
 					$extra_fields[$field] = $value;
 				}
