@@ -102,6 +102,7 @@
 			$tpl->set_file(array(
 				'nextmatchs' => 'nextmatchs.tpl'
 			));
+			$_query = stripslashes($query);
 
 			$tpl->set_var('form_action',$phpgw->link($sn, $extra));
 			$tpl->set_var('filter_value',$filter);
@@ -109,7 +110,7 @@
 			$tpl->set_var('start_value',$start);
 			$tpl->set_var('order_value',$order);
 			$tpl->set_var('sort_value',$sort);
-			$tpl->set_var('query_value',$query);
+			$tpl->set_var('query_value',urlencode($_query));
 			$tpl->set_var('table_width',$twidth);
 			$tpl->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
@@ -147,6 +148,7 @@
 			$tpl->set_file(array(
 				'link' => 'nextmatchs_link.tpl'
 			));
+			$_query = stripslashes($query);
 
 //			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 			$maxmatchs = $this->maxmatchs;
@@ -154,7 +156,7 @@
 			if (($start != 0) && ($start > $maxmatchs))
 			{
 				$this->set_link(&$tpl,'left','/first.gif','First page',$scriptname,'start=0&order=' . $order . '&filter='
-						. $filter . '&qfield=' . $qfield . '&sort=' . $sort . '&query=' . $query . $extradata);
+						. $filter . '&qfield=' . $qfield . '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
 			}
 			else
 			{
@@ -175,7 +177,7 @@
 
 				$this->set_link(&$tpl,'left','/left.gif','Previous page',$scriptname,'start=' . $t_start
 					. '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield . '&sort=' . $sort
-					. '&query=' . $query . $extradata);
+					. '&query=' . urlencode($_query) . $extradata);
 			}
 			else
 			{
@@ -203,11 +205,13 @@
 //			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
 			$maxmatchs = $this->maxmatchs;
 
+			$_query = stripslashes($query);
+
 			if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
 			{
 				$this->set_link(&$tpl,'right','/right.gif','Next page',$scriptname,'start='
 					. ($start+$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' . $qfield
-					. '&sort=' . $sort . '&query=' . $query . $extradata);
+					. '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
 			}
 			else
 			{
@@ -218,7 +222,7 @@
 			{
 				$this->set_link(&$tpl,'right','/last.gif','Last page',$scriptname,'start='
 					. ($total-$maxmatchs) . '&order=' . $order . '&filter=' . $filter . '&qfield=' .$qfield
-					. '&sort=' . $sort . '&query=' . $query . $extradata);
+					. '&sort=' . $sort . '&query=' . urlencode($_query) . $extradata);
 			}
 			else
 			{
@@ -240,7 +244,17 @@
 			$tpl->set_file(array(
 				'search' => 'nextmatchs_search.tpl'
 			));
-			$tpl->set_var('query_value',$query);
+
+			$_query = stripslashes($query);
+
+			// If the place a " in there search, it will mess everything up
+			// Our only option is to remove it
+			if (ereg('"',$_query))
+			{
+				$_query = ereg_replace('"','',$_query);
+			}
+
+			$tpl->set_var('query_value',stripslashes($_query));
 			$tpl->set_var('searchby',$this->searchby($search_obj));
 			$tpl->set_var('lang_search',lang('Search'));
 
@@ -429,6 +443,8 @@
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='')
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
+			$_query = stripslashes($query);
+
 
 			if (($order == $var) && ($sort == 'ASC'))
 			{
@@ -444,7 +460,7 @@
 			}
 
 			return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
-				. "qfield=$qfield&start=$start&query=$query" . $extra) . '">' . $text . '</a>';
+				. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra) . '">' . $text . '</a>';
 		}
 
 		function show_sort_order_imap($sort,$order,$program,$text,$extra='')
