@@ -278,7 +278,7 @@
 
 			$acl->save_repository();
 
-			$basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
+			$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
 			$cd = 31;
 			umask(000);
 			if (! @mkdir ($basedir . $group_info['account_name'], 0707))
