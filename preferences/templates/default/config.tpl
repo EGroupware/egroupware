@@ -120,6 +120,37 @@
     </td>
    </tr>
 
+   <tr bgcolor="{row_off}">
+    <td>{lang_Minimum_password_length}.</td>
+    <td><input size="4" name="newsettings[pass_min_length]" value="{value_pass_min_length}"></td>
+   </tr>
+   <tr bgcolor="{row_on}">
+    <td>{lang_Require_non-alpha_characters}:</td>
+    <td>
+     <select name="newsettings[pass_require_non_alpha]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_pass_require_non_alpha_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   <tr bgcolor="{row_off}">
+    <td>{lang_Require_numerical_characters}:</td>
+    <td>
+     <select name="newsettings[pass_require_numbers]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_pass_require_numbers_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   <tr bgcolor="{row_on}">
+    <td>{lang_Require_special_characters}:</td>
+    <td>
+     <select name="newsettings[pass_require_special_char]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_pass_require_special_char_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
 <!--
    <tr bgcolor="{row_off}">
      <td>{lang_Default_file_system_space_per_user}/{lang_group_?}:</td>
