@@ -261,7 +261,7 @@ start- and enddates	calendar	zh	起始和终止日期
 startdate	calendar	zh	起始日期
 startrecord	calendar	zh	起始记录
 su	calendar	zh	日
-submit to repository	calendar	zt	送出到儲藏庫中	calendar	zh		
+submit to repository	calendar	zt	送出到儲藏庫中	calendar	zh
 sun	calendar	zh	日
 tentative	calendar	zh	暂定
 test import (show importable records <u>only</u> in browser)	calendar	zh	导入测试(仅在浏览器中显示可导入记录)
