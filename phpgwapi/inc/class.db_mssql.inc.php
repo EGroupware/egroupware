@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - MS SQL Server support                                 *
+  * eGroupWare API - MS SQL Server support                                   *
   * (C) Copyright 1998 Cameron Taggart (cameront@wolfenet.com)               *
   *  Modified by Guarneri carmelo (carmelo@melting-soft.com)                 *
-  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                     *
+  *	 Modified by Cameron Just     (C.Just@its.uq.edu.au)                 *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
+  * This is not part of eGroupWare, but is used by eGroupWare.               * 
+  * http://www.egroupware.org/                                               * 
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published    *

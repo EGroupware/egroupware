@@ -1,11 +1,11 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API -                                                       *
+	* eGroupWare API -                                                         *
 	* Copyright (c) 1998-2000 Luis Francisco Gonzalez Hernandez                *
 	* Oracle accessor based on Session Management for PHP3                     *
 	* ------------------------------------------------------------------------ *
-	* This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-	* http://www.phpgroupware.org/                                             * 
+	* This is not part of phpGroupWare, but is used by eGroupWare.             * 
+	* http://www.egroupware.org/                                               * 
 	* ------------------------------------------------------------------------ *
 	* This program is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published	   *

@@ -1,7 +1,7 @@
 <?php
 	/*******************************************************************\
-	* phpGroupWare - GD Graph                                           *
-	* http://www.phpgroupware.org                                       *
+	* eGroupWare - GD Graph                                             *
+	* http://www.egroupware.org                                       *
 	* This program is part of the GNU project, see http://www.gnu.org/  *
 	*                                                                   *
 	* Written by Bettina Gille [ceb@phpgroupware.org]                   *
@@ -13,7 +13,7 @@
 	* Double Choco Latte - Source Configuration Management System       *
 	* Copyright (C) 1999  Michael L. Dean & Tim R. Norman               *
 	* ----------------------------------------------------------------- *
-	* This library is part of the phpGroupWare API                      *
+	* This library is part of the eGroupWare API                        *
 	* ----------------------------------------------------------------- *
 	* This library is free software; you can redistribute it and/or     *
 	* modify it under the terms of the GNU General Public License as    *

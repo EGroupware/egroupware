@@ -1,14 +1,14 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Categories                                            *
+	* eGroupWare API - Categories                                              *
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	*                  and Bettina Gille [ceb@phpgroupware.org]                *
 	* Category manager                                                         *
 	* Copyright (C) 2000, 2001 Joseph Engo, Bettina Gille                      *
 	* Copyright (C) 2002, 2003 Bettina Gille                                   *
 	* ------------------------------------------------------------------------ *
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              *
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org                                                *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -137,7 +137,7 @@
 		@param $query string defaults to ''
 		@param $sort string sort order, either defaults to 'ASC'
 		@param $order order by
-		@param $globals True or False, includes the global phpgroupware categories or not
+		@param $globals True or False, includes the global egroupware categories or not
 		@result $cats array
 		*/
 		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '', $lastmod = -1, $column = '')
@@ -453,7 +453,7 @@
 		@param $format currently supports select (select box) or list
 		@param $type string - subs or mains
 		@param $selected - cat_id or array with cat_id values
-		@param $globals True or False, includes the global phpgroupware categories or not
+		@param $globals True or False, includes the global egroupware categories or not
 		@result $s array - populated with categories
 		*/
 		function formatted_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')

@@ -1,14 +1,14 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Contact Management Shared Routines                    *
+	* eGroupWare API - Contact Management Shared Routines                      *
 	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-	*        and Miles Lott <milosch@phpgroupware.org>                         *
+	*        and Miles Lott <milosch@groupwhere.org>                           *
 	*        and Bettina Gille <ceb@phpgroupware.org>                          *
 	* View and manipulate contact records                                      *
 	* Copyright (C) 2001, 2002 Joseph Engo, Miles Lott, Bettina Gille          *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org                                              * 
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org                                                * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -84,7 +84,7 @@
 		}
 
 		/**
-		* Get the the person data what you want. Wrapper function to stay compatible with phpgroupware.
+		* Get the the person data what you want. Wrapper function to stay compatible with egroupware.
 		*
 		* @author Lars Kneschke <lars@kneschke.de>
 		* @param array $fields The fields that you can see from person

@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar Holidays                                         *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Calendar Holidays                                           *
+  * http://www.egroupware.org                                              *
   * Written by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

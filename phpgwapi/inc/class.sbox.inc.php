@@ -1,11 +1,11 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Select Box                                            *
+	* eGroupWare API - Select Box                                              *
 	* This file written by Marc Logemann <loge@phpgroupware.org>               *
 	* Class for creating predefines select boxes                               *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
+	* This library is part of the eGroupWare API                               *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

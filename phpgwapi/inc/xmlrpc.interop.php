@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare xmlrpc server                                               *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare xmlrpc server                                                 *
+  * http://www.egroupware.org                                                *
   * Written by Dan Kuykendall <dan@kuykendall.org>                           *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *

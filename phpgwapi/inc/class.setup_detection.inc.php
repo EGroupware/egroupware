@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Setup                                                       *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   * This file written by Dan Kuykendall<seek3r@phpgroupware.org>             *
   *  and Miles Lott<milos@groupwhere.org>                                    *

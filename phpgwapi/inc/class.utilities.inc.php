@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Utilies loader                                        *
+  * eGroupWare API - Utilies loader                                          *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * This simply loads up additional utility libraries                        *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - eventlog                                                  *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - eventlog                                                    *
+	* http://www.egroupware.org                                                *
 	* This application written by jerry westrick <jerry@westrick.com>          *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *

@@ -1,11 +1,11 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Validator                                             *
+  * eGroupWare API - Validator                                               *
   * This file written by Dave Hall <skwashd@phpgroupware.org>                *
   * Copyright (C) 2003 Free Software Foundation                              *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   *  This program is Free Software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -293,8 +293,8 @@
 			echo 'definition</a> , therefore it has been removed. <br><br>';
 			echo 'If you are a application maintainer, please update your app. ';
 			echo 'If you are a user, please file a bug report on ';
-			echo '<a href="https://savannah.gnu.org/bugs/?group=phpgroupware">';
-			echo 'our project page at savannah.gnu.org</a>. Please copy and paste ';
+			echo '<a href="http://sourceforge.net/projects/egroupwaregroup">';
+			echo 'our project page at sourceforge.net</a>. Please copy and paste ';
 			echo 'the following information into the bug report:<br>';
 			echo '<b>Summary<b>: ' . $GLOBALS['phpgw_info']['flags']['currentapp'];
 			echo 'calls class.validator.inc.php';

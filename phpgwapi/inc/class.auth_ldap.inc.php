@@ -1,14 +1,14 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Auth from LDAP                                        *
+	* eGroupWare API - Auth from LDAP                                          *
 	* This file written by Lars Kneschke <lkneschke@linux-at-work.de>          *
 	* and Joseph Engo <jengo@phpgroupware.org>                                 *
 	* Authentication based on LDAP Server                                      *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
 	* Copyright (C) 2002, 2003 Lars Kneschke                                   *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Translation class for phpgw lang files                *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * eGroupWare API - Translation class for phpgw lang files                  *
+  * This file written by Miles Lott <milosch@groupwhere.org>                 *
   * and Dan Kuykendall <seek3r@phpgroupware.org>                             *
   * Handles multi-language support using flat files                          *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *  
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

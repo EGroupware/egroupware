@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Auth from SQL                                         *
+  * eGroupWare API - Auth from SQL                                           *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * Encryption types other than md5() added by                               *

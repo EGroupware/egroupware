@@ -1,10 +1,10 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - HTTP and WebDAV protocol class                        *
-  * http://www.phpgroupware.org/api                                          *
+  * eGroupWare API - HTTP and WebDAV protocol class                          *
+  * http://www.egroupware.org/api                                            *
   * Original Author: Leo West <west_leo@yahoo-REMOVE-.com>                   *
   * ------------------------------------------------------------------------ *
-  * This library is not part of phpGroupWare, but is used by phpGroupWare.   * 
+  * This library is not part of eGroupWare, but is used by eGroupWare.       * 
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU General Public License as published by the    *

@@ -1,10 +1,10 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * wGroupWare - Setup                                                       *
+  * http://www.egroupware.org                                                *
   * --------------------------------------------                             *
   * This file written by Michael Dean<mdean@users.sourceforge.net>           *
-  *  and Miles Lott<milosch@phpgroupware.org>                                *
+  *  and Miles Lott<milosch@groupwhere.org>                                  *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *

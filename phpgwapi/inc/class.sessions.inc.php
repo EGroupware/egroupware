@@ -1,14 +1,14 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Session management                                    *
+  * eGroupWare API - Session management                                      *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Ralf Becker <ralfbecker@outdoor-training.de>                         *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * Parts Copyright (C) 2003 Free Software Foundation Inc                    *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               * 
+  * http://www.egroupware.org/api                                            *  
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -30,7 +30,7 @@
 	/**
 	* Session Management Libabray
 	*
-	* This allows phpGroupWare to use php4 or database sessions
+	* This allows eGroupWare to use php4 or database sessions
 	*
 	* @package phpgwapi
 	* @subpackage sessions
@@ -1094,7 +1094,7 @@
 		/**
 		* Generate a url which supports url or cookies based sessions
 		*
-		* @param string $url a url relative to the phpgroupware install root
+		* @param string $url a url relative to the egroupware install root
 		* @param array $extravars query string arguements
 		* @return string generated url
 		*/

@@ -1,13 +1,13 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Sybase DB support                                     *
+  * eGroupWare API - Sybase DB support                                       *
   * Copyright (c) 1998,1999 SH Online Dienst GmbH Boris Erdmann,             *
   * Kristian Koehntopp                                                       *
   * Adapted from db_mysql.inc by Sascha Schumann <sascha@schumann.cx>        *
   * metadata() contributed by Adelino Monteiro <adelino@infologia.pt>        *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
+  * This is not part of eGroupWare, but is used by eGroupWare.               *  
+  * http://www.egroupware.org/                                               * 
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published    *

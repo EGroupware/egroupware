@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - WebDAV                                                *
+  * eGroupWare API - WebDAV                                                  *
   * This file written by Jonathon Sim (for Zeald Ltd) <jsim@free.net.nz>     *
   * Provides methods for manipulating an RFC 2518 DAV repository             *
   * Copyright (C) 2002 Zeald Ltd                                             *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

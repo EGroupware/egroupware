@@ -1,13 +1,13 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Session management                                    *
+  * eGroupWare API - Session management                                      *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Ralf Becker <ralfbecker@outdoor-training.de>                         *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

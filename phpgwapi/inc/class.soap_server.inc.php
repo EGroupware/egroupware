@@ -113,7 +113,7 @@
 			}
 			else
 			{
-				/* phpgroupware customization - createobject based on methodname */
+				/* egroupware customization - createobject based on methodname */
 				list($app,$class,$method) = explode('.',$this->methodname);
 				if(ereg("^service",$app))
 				{

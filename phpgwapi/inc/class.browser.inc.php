@@ -1,13 +1,13 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Browser detect functions                              *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * eGroupWare API - Browser detect functions                                *
+  * This file written by Miles Lott <milosch@groupwhere.org>                 *
   * Majority of code borrowed from Sourceforge 2.5                           *
   * Copyright 1999-2000 (c) The SourceForge Crew - http://sourceforge.net    *
-  * Browser detection functions for phpGroupWare developers                  *
+  * Browser detection functions for eGroupWare developers                    *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

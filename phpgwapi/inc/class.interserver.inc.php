@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - phpgw Inter-server communications class               *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * eGroupWare API - phpgw Inter-server communications class                 *
+  * This file written by Miles Lott <milosch@groupwhere.org>                 *
   * Maintain list and provide send interface to remote phpgw servers         *
   * Copyright (C) 2001 Miles Lott                                            *
   * -------------------------------------------------------------------------*

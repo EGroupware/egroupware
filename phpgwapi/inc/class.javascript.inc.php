@@ -1,11 +1,11 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - JavaScript                                            *
+  * eGroupWare API - JavaScript                                              *
   * Written by Dave Hall skwashd at phpgroupware.org                         *
   * Copyright (C) 2003 Free Software Foundation Inc                          *		
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   *  This program is Free Software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -15,7 +15,7 @@
   /* $Id$ */
 
        /**
-       * phpGroupWare javascript support class
+       * eGroupWare javascript support class
        *
        * Only instanstiate this class using:
        * <code>
@@ -38,7 +38,6 @@
        * @copyright &copy; 2003 Free Software Foundation
        * @license GPL
        * @uses template
-       * @link http://docs.phpgroupware.org/wiki/classJavaScript
        */
 	class javascript
 	{

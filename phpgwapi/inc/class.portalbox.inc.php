@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Portal Box manager                                    *
+  * eGroupWare API - Portal Box manager                                      *
   * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * Helps manage the portal boxes for phpGroupWares main page                *
+  * Helps manage the portal boxes for eGroupWares main page                  *
   * Copyright (C) 2000, 2001  Joseph Engo                                    *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

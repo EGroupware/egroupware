@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - smtp mailer                                           *
+  * eGroupWare API - smtp mailer                                             *
   * This file written by Itzchak Rehberg <izzysoft@qumran.org>               *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * This module should replace php's mail() function. It is fully syntax     *
@@ -9,8 +9,8 @@
   * details on this variable).                                               *
   * Copyright (C) 2000, 2001 Itzchak Rehberg                                 *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

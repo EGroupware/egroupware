@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Graphical                                             *
-  * This file written by Lars Kneschke <knecke@phpgroupware.org>             *
+  * eGroupWare API - Graphical                                               *
+  * This file written by Lars Kneschke <lars@kneschke.de>                    *
   * Allows the creation of graphical buttons                                 *
   * Copyright (C) 2001 Lars Kneschke                                         *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

@@ -1,7 +1,7 @@
 <?php
   /********************************************************************\
-  * phpGroupWare - phpGroupWare API - mime magic                       *
-  * http://www.phpgroupware.org                                        *
+  * eGroupWare - eGroupWare API - mime magic                           *
+  * http://www.egroupware.org                                          *
   * This program is part of the GNU project, see http://www.gnu.org    *
   *                                                                    *
   * Originally taken from the Horde Framework http://horde.org         *

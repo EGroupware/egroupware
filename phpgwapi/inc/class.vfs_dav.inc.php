@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - VFS                                                   *
+  * eGroupWare API - VFS                                                     *
   * This file written by Jason Wies (Zone) <zone@phpgroupware.org>           *
-  * This class handles file/dir access for phpGroupWare                      *
-  * Copyright (C) 2001-2003 Jason Wies, Jonathon Sim		                 *
+  * This class handles file/dir access for eGroupWare                        *
+  * Copyright (C) 2001-2003 Jason Wies, Jonathon Sim		             *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

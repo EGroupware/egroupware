@@ -1,13 +1,13 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Preferences                                           *
+	* eGroupWare API - Preferences                                             *
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	* and Mark Peters <skeeter@phpgroupware.org>                               *
 	* Manages user preferences                                                 *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          *
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

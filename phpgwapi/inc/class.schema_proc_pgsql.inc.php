@@ -1,14 +1,14 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
+  * eGroupWare - Setup                                                       *
+  * http://www.egroupware.org                                                *
   * SQL for table properties taken from phpPgAdmin Version 2.2.1             *
   *   http://www.greatbridge.org/project/phppgadmin                          *
   * Copyright (C) 1999-2000 Dan Wilson <phpPgAdmin@acucore.com>              *
   * Copyright (C) 1998-1999 Tobias Ratschiller <tobias@dnet.it>              *
   * --------------------------------------------                             *
   * This file written by Michael Dean<mdean@users.sourceforge.net>           *
-  *  and Miles Lott<milosch@phpgroupware.org>                                *
+  *  and Miles Lott<milosch@groupwhere.org>                                  *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *

@@ -1,11 +1,11 @@
 <?php  
   /**************************************************************************\
-  * phpGroupWare API - MenuTree                                              *
+  * eGroupWare API - MenuTree                                                *
   * This file based on PHP3 TreeMenu                                         *
   * (c)1999 Bjorge Dijkstra <bjorge@gmx.net>                                 *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
+  * This is not part of eGroupWare, but is used by eGroupWare.               *   
+  * http://www.egroupware.org/                                               * 
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU General Public License as published by the    *

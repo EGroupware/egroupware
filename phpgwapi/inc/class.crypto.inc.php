@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Crypto                                                *
+  * eGroupWare API - Crypto                                                  *
   * This file written by Joseph Engo <jengo@phpgroupware.org>                *
   * Handles encrypting strings based on various encryption schemes           *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *
   * -------------------------------------------------------------------------*
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

@@ -1,7 +1,7 @@
 <?php
 	/*******************************************************************\
-	* phpGroupWare - GD Image                                           *
-	* http://www.phpgroupware.org                                       *
+	* eGroupWare - GD Image                                             *
+	* http://www.egroupware.org                                         *
 	*                                                                   *
 	* Written by by Bettina Gille [ceb@phpgroupware.org]                *
 	*                                                                   *
@@ -12,7 +12,7 @@
 	* Double Choco Latte - Source Configuration Management System       *
 	* Copyright (C) 1999  Michael L. Dean & Tim R. Norman               *
 	* ----------------------------------------------------------------- *
-	* This library is part of the phpGroupWare API                      *
+	* This library is part of the eGroupWare API                        *
 	* ----------------------------------------------------------------- *
 	* This library is free software; you can redistribute it and/or     *
 	* modify it under the terms of the GNU General Public License as    *

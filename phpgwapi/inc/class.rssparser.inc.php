@@ -1,9 +1,9 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - rss parser                                            *
+  * eGroupWare API - rss parser                                              *
   * ------------------------------------------------------------------------ *
-  * This is not part of phpGroupWare, but is used by phpGroupWare.           * 
-  * http://www.phpgroupware.org/                                             * 
+  * This is not part of eGroupWare, but is used by eGroupWare.               * 
+  * http://www.egroupware.org/                                               * 
   * ------------------------------------------------------------------------ *
   * This program is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published    *

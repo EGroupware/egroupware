@@ -1,14 +1,14 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Core class and functions for phpGroupWare             *
+	* eGroupWare API - Core class and functions for eGroupWare                 *
 	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
 	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* This is the central class for the phpGroupWare API                       *
+	* This is the central class for the eGroupWare API                         *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	* Parts Copyright (C) 2003 Free Software Foundation                        *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          *
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

@@ -1,12 +1,12 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Accounts manager for the contacts class               *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * eGroupWare API - Accounts manager for the contacts class                 *
+  * This file written by Miles Lott <milosch@groupwhere.org>                 *
   * View and manipulate account records using the contacts class             *
   * Copyright (C) 2000, 2001 Miles Lott                                      *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Commononly used functions                             *
+	* eGroupWare API - Commononly used functions                               *
 	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
 	* and Joseph Engo <jengo@phpgroupware.org>                                 *
 	* and Mark Peters <skeeter@phpgroupware.org>                               *

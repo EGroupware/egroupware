@@ -1,12 +1,12 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare API - Auth from NIS	                                       *
+	* eGroupWare API - Auth from NIS	                                   *
 	* Authentication based on NIS maps                                         *
 	* by Dylan Adams <dadams@jhu.edu>                                          *
 	* Copyright (C) 2001 Dylan Adams                                           *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            *  
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *

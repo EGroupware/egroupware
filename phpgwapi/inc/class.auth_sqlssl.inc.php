@@ -1,12 +1,12 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Auth from SQL, with optional SSL authentication       *
+	* eGroupWare API - Auth from SQL, with optional SSL authentication         *
 	* This file written by Andreas 'Count' Kotes <count@flatline.de>           *
 	* Authentication based on SQL table and X.509 certificates                 *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/api                                          * 
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
