@@ -273,7 +273,7 @@ class html
 			}
 
 			$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .=
-				'<style type="text/css">@import url(/egroupware/phpgwapi/js/htmlarea/htmlarea.css);</style>
+				'<style type="text/css">@import url(' . $this->phpgwapi_js_url . '/htmlarea/htmlarea.css);</style>
 <script type="text/javascript">
 
 _editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
