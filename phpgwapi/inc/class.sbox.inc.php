@@ -635,12 +635,14 @@
 
 			$address = $d->read_single_entry($id,$fields);
 
+			if ($address[0]['title'])
+			{
+				$title = $address[0]['title'] . '&nbsp;';
+			}
+
 			$a = '<table border="0" cellpadding="2" cellspacing="2"' . "\n";
 			$a .= '<tr>' . "\n";
-			$a .= '<td><font face="' . $font . '">' . $address[0]['title'] . '</font></td>' . "\n";
-			$a .= '</tr>' . "\n";
-			$a .= '<tr>' . "\n";
-			$a .= '<td><font face="' . $font . '">' . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'] . '</font></td>' . "\n";
+			$a .= '<td><font face="' . $font . '">' . $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'] . '</font></td>' . "\n";
 			$a .= '</tr>' . "\n";
 			$a .= '<tr>' . "\n";
 			$a .= '<td><font face="' . $font . '">' . $address[0]['org_name'] . '</font></td>' . "\n";
