@@ -1,6 +1,7 @@
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
 %1 is %2%3 !!!	setup	es-es	¡¡%1 está %2%3 !!
 (account deletion in sql only)	setup	es-es	(borrado de cuentas sólo en SQL)
+(searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que eGW funcione completamente ***
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
@@ -34,6 +35,7 @@ application management	setup	es-es	Administración de Aplicaciones
 application name and status	setup	es-es	Nombre de la Aplicación y estado
 application name and status information	setup	es-es	Nombre de la aplicación e Información de estado
 application title	setup	es-es	Título de la Aplicación
+application: %1, file: %2, line: "%3"	setup	es-es	Aplicación: %1, Fichero: %2, Línea: "%3"
 are you sure you want to delete your existing tables and data?	setup	es-es	¿Seguro que desea borrar las tablas y datos existentes?
 are you sure?	setup	es-es	¿ESTA SEGURO?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	es-es	Por petición suya, este guión intentará crear la base de datos y asignar permisos al usuario de la base de datos para ella
@@ -65,6 +67,7 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	es-es	Cambiar el juego de caracteres del sistema
 charset	setup	es-es	ISO-8859-1
 charset to convert to	setup	es-es	Juego de caracteres al que convertir
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	es-es	Sólo se puede realizar a través de un servidor web, mientras no sea conocido el id de usuario o nombre del servidor web.
 check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
@@ -223,6 +226,7 @@ ldap import users	setup	es-es	Importar usuarios LDAP
 ldap modify	setup	es-es	Modificar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
 ldap rootdn	setup	es-es	rootdn LDAP
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=eGW-domain
 limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones o redes (p. ej. 10.1.1,127.0.0.1)
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	es-es	Iniciar sesión en mysql -
@@ -310,6 +314,7 @@ really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas
 recommended: filesystem	setup	es-es	Recomendado: sistema de ficheros
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y eGroupWare NO lo necesita, por lo que es más seguro tenerlo en Off (desactivado).
 registered	setup	es-es	registrado
+rejected lines	setup	es-es	Líneas rechazadas
 remove	setup	es-es	Eliminar
 remove all	setup	es-es	Eliminar todo
 requires reinstall or manual repair	setup	es-es	Requiere reinstalación o reparación manual
@@ -378,6 +383,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	es-es	La extensión imap es necesaria por las dos aplicaciones de correo, incluso si usa pop3.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
 the table definition was correct, and the tables were installed.	setup	es-es	La definición de las tablas fué correcta, y las tablas fueron instaladas
 the tables	setup	es-es	las tablas

@@ -20,6 +20,7 @@ alarm for %1 at %2 in %3	calendar	it	Allarme per %1 a %2 in %3
 alarm management	calendar	it	Gestione Allarmi
 alarm-management	calendar	it	Gestione-Allarmi
 alarms	calendar	it	Allarmi
+all categories	calendar	it	Tutte le categorie
 all day	calendar	it	Tutto il giorno
 are you sure you want to delete this country ?	calendar	it	Confermi la cancellazione di questa Nazione ?
 are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività ?
@@ -42,7 +43,7 @@ calendar-fieldname	calendar	it	Campi-Agenda
 canceled	calendar	it	Cancellato
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	it	Modifica tutti gli eventi per $params['old_owner'] a $params['new_owner'].
 change status	calendar	it	Cambia Stato
-charset of file	calendar	it	Charset dei file
+charset of file	calendar	it	Charset del file
 click %1here%2 to return to the calendar.	calendar	it	Per ritornare all'agenda premi %1qui%2.
 configuration	calendar	it	Configurazione
 countries	calendar	it	Nazioni
@@ -53,15 +54,16 @@ csv-filename	calendar	it	Nomefile-CSV
 custom fields	calendar	it	Personalizza i Campi
 custom fields and sorting	common	it	Personalizzazione e Ordinamento dei Campi
 daily	calendar	it	Giornaliero
-daily matrix view	calendar	it	Visualizzazione Matrice Giornaliera
+daily matrix view	calendar	it	Vista Matrice Giornaliera
 days	calendar	it	giorni
 days repeated	calendar	it	giorni ripetuti
-dayview	calendar	it	Visualizzazione Giornaliera
+dayview	calendar	it	Vista Giornaliera
 default appointment length (in minutes)	calendar	it	lunghezza predefinita degli appuntamenti (in minuti)
 default calendar filter	calendar	it	Filtro agenda predefinito
-default calendar view	calendar	it	Visualizzazione agenda predefinita
+default calendar view	calendar	it	Vista agenda predefinita
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	it	Lunghezza predefinita dei nuovi eventi. La lunghezza è in minuti, es. 60 per 1 ora.
-defines the size in minutes of the lines in the day view.	calendar	it	Definisci la lunghezza in minuti delle linee nella visualizzazione giornaliera.
+default week view	calendar	it	Vista settimanale predefinita
+defines the size in minutes of the lines in the day view.	calendar	it	Definisci la lunghezza in minuti delle linee nella vista giornaliera.
 delete a single entry by passing the id.	calendar	it	Cancella una singola voce inserendo l'ID
 delete an entire users calendar.	calendar	it	Cancella tutto il calendario di un utente
 delete selected contacts	calendar	it	Cancella il contatto selezionato
@@ -69,12 +71,15 @@ delete series	calendar	it	Cancella serie
 delete single	calendar	it	Cancellazione singola
 deleted	calendar	it	Eliminato
 description	calendar	it	Descrizione
+determining window width ...	calendar	it	Determinazione larghezza finestra ...
 disable	calendar	it	Disabilita
 disabled	calendar	it	disabilitato
-display interval in day view	calendar	it	Visualizza intervallo nella Visualizzazione Giornaliera
+display interval in day view	calendar	it	Visualizza intervallo nella Vista Giornaliera
 display mini calendars when printing	calendar	it	Visualizza mini calendari quando stampi
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
+displayed view	calendar	it	vista mostrata
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	it	Visualizzare la tua vista agenda predefinita sulla pagina iniziale (la pagina che appare quando entri in eGroupWare o clicchi sull'icona HOME) ?
+do you want a weekview with or without weekend?	calendar	it	Vuoi una vista settimanale con o senza weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi una notifica per i nuovi appuntamenti o per quelli cambiati? Sarai avvertito dei cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. TUTTE LE VOCI include tutte le notifiche elencate sopra di esso. TUTTE LE MODIFICHE include il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
 do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
@@ -104,7 +109,7 @@ firstname of person to notify	calendar	it	Nome della persona da avvisare
 format of event updates	calendar	it	Formato degli aggiornamenti degli eventi
 fr	calendar	it	V
 free/busy	calendar	it	Libero/Occupato
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	it	freebusy: Utente sconosciuto '%1', password sbagliata o non disponibile per tra gli utenti non loggati !!!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	it	libero/occupato: Utente '%1' sconosciuto, password errata o non disponibile agli utenti non loggati !!!
 frequency	calendar	it	Frequenza
 fri	calendar	it	Ven
 full description	calendar	it	Descrizione completa
@@ -132,7 +137,7 @@ ignore conflict	calendar	it	Ignora Conflitto
 import	calendar	it	Importa
 import csv-file	common	it	Importa File-CSV
 interval	calendar	it	Intervallo
-intervals in day view	calendar	it	Intervallo nella visualizzazione giornaliera
+intervals in day view	calendar	it	Intervallo nella Vista giornaliera
 intervals per day in planner view	calendar	it	Intervallo giornaliero nel pianificatore
 invalid entry id.	calendar	it	ID della voce non valido
 last	calendar	it	ultimo
@@ -146,7 +151,7 @@ load [iv]cal	calendar	it	Carica [iv]Cal
 location	calendar	it	Località
 location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
 make freebusy information availible to not loged in persons?	calendar	it	Rendi le informazioni di disponibilità alle persone non loggate?
-matrixview	calendar	it	Visualizzazione a Matrice
+matrixview	calendar	it	Vista a Matrice
 minutes	calendar	it	minutes
 mo	calendar	it	L
 modified	calendar	it	Modificato
@@ -156,9 +161,12 @@ month	calendar	it	Mese
 monthly	calendar	it	Mensile
 monthly (by date)	calendar	it	Mensile (per data)
 monthly (by day)	calendar	it	Mensile (per giorno)
-monthview	calendar	it	Visualizzazione Mensile
+monthview	calendar	it	Vista Mensile
+needs javascript to be enabled !!!	calendar	it	Necessita dell'abilitazione di javascript !!!
 new entry	calendar	it	Nuova Voce
 new name must not exist and not be empty!!!	calendar	it	I nuovi nomi devono esistere e non essere vuoti!!!
+next day	calendar	it	giorno seguente
+no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
 no response	calendar	it	Nessuna Risposta
 notification messages for added events	calendar	it	Messaggi di notifica per gli eventi aggiunti
@@ -195,7 +203,8 @@ planner by user	calendar	it	Pianificatore per utente
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	it	Per favore conferma, accetta, rifiuta o esamina i cambiamenti della voce corrispondente nel tuo calendario
 please enter a filename !!!	calendar	it	Prego inserire un nome File !!!
 preselected group for entering the planner	calendar	it	Gruppo predefinito per aggiunte al pianificatore
-print calendars in black & white	calendar	it	Stampa agende in bianco & nero
+previous day	calendar	it	giorno prededente
+print calendars in black & white	calendar	it	Stampa agende in bianco e nero
 print the mini calendars	calendar	it	Stampa la mini agenda
 printer friendly	calendar	it	Versione Stampabile
 privat	calendar	it	Privato
@@ -225,6 +234,7 @@ sa	calendar	it	Sa
 sat	calendar	it	Sab
 scheduling conflict	calendar	it	Conflitto di orario
 search results	calendar	it	Risultati Ricerca
+select a %1	calendar	it	Seleziona %1
 selected contacts (%1)	calendar	it	Contatti selezionati (%1)
 send updates via email	common	it	Invia aggiornamenti via e-mail
 send/receive updates via email	calendar	it	Invia/Ricevi aggiornamenti via e-mail
@@ -233,14 +243,19 @@ set new events to private	calendar	it	Imposta il nuovo evento come privato
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	it	Gli inviti non accettati compaiono nel tuo calendario?<br>Potrai accettarli più tardi (es. quando l'appuntamento in conflitto sarà rimosso), se li lascierai visibili nell'agenda!
 should new events created as private by default ?	calendar	it	I nuovi eventi sono creati come privati normalmente ?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	it	Le persone non loggate possono vedere le tue informazioni di disponibilità? Puoi impostare una password extra, diversa dalla tua normale password, per proteggere queste imformazioni. Le informazioni di disponibilità sono nel formato iCal e includono solo i tempi in cui sei occupato. Non includono i nomi degli eventi, descrizioni o luoghi. L'URL delle informazioni di disponibilità è %1.
-should the mini calendars by printed / displayed in the printer friendly views ?	calendar	it	La mini agenda sarà stampata / mostrata nella visualizzazione stampabile?
-should the printer friendly view be in black & white or in color (as in normal view)?	calendar	it	La visualizzazione stampabile è in bianco e nero o a colori (come nella visualizzazione normale)?
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	it	Le mini agende devono essere stampate / mostrate nella vista stampabile?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	it	La vista stampabile è in bianco e nero o a colori (come nella vista normale)?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	it	Lo stato dei partecipanti agli eventi (accettato, rifiutato, ...) sarà visualizzato tra parentesi dopo il nome?
-show day view on main screen	calendar	it	Mostra la visualizzazione giornaliera nella schermata principale
-show default view on main screen	calendar	it	Mostra la visualizzazione prefedinita sulla maschera principale
+show day view on main screen	calendar	it	Mostra la vista giornaliera nella schermata principale
+show default view on main screen	calendar	it	Mostra la vista prefedinita sulla maschera principale
 show high priority events on main screen	calendar	it	Mostra eventi ad alta priorità nella schermata principale
 show invitations you rejected	calendar	it	Visualizza inviti rifiutati
 show list of upcoming events	calendar	it	Visualizza la lista degli eventi imminenti
+show next seven days	calendar	it	Mostra sette giorni seguenti
+show only one day	calendar	it	Mostra solo un giorno
+show the calendar of multiple users	calendar	it	mostra l'agenda di molteplici utenti
+show this month	calendar	it	mostra questo mese
+show this week	calendar	it	mostra questa settimana
 single event	calendar	it	singolo evento
 sorry, the owner has just deleted this event	calendar	it	Spiacente, il proprietario ha appena cancellato questo evento
 sorry, this event does not exist	calendar	it	Spiacente, questo evento non esiste
@@ -261,9 +276,9 @@ th	calendar	it	G
 the following conflicts with the suggested time:<ul>%1</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
 the user %1 is not participating in this event!	calendar	it	L'utente %1 non parteciperà all'evento!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	it	Si è verificato un errore nella connessione al server delle news. <br> Contattare l'amministratore
-this day is shown as first day in the week or month view.	calendar	it	Questo giorno è visualizzato come primo giorno nella visualizzazione settimanale o in quella mensile.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	it	Questo definisce la fine della tua visualizzazione giornaliera. Eventi dopo quest'ora sono mostrati dopo la visualizzazione giornaliera.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	it	Questo definisce l'inizio della tua visualizzazione giornaliera. Eventi prima di quest'ora sono visualizzati prima della visualizzazione giornaliera.<br>Quest'ora è utilizzata anche come ora d'inizio dei nuovi eventi.
+this day is shown as first day in the week or month view.	calendar	it	Questo giorno è visualizzato come primo giorno nella vista settimanale o in quella mensile.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	it	Questo definisce la fine della tua vista giornaliera. Eventi dopo quest'ora sono mostrati dopo la vista giornaliera.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	it	Questo definisce l'inizio della tua vista giornaliera. Eventi prima di quest'ora sono visualizzati prima della vista giornaliera.<br>Quest'ora è utilizzata anche come ora d'inizio dei nuovi eventi.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	it	Questo gruppo è preselezionato quando entri nel pianificatore. Quando vorrai potrai cambiarlo nel pianificatore.
 this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	it	Questo è causato da un impostazione sbagliata del server SMTP. Avvisa l'Amministratore.
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.
@@ -273,7 +288,7 @@ this message is sent when you accept, tentative accept or reject an event.	calen
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	it	Questo messaggio è inviato quando imposti un Allarme per certi eventi.  Include tutte le informazioni di cui hai bisogno.
 this month	calendar	it	Questo mese
 this week	calendar	it	Questa settimana
-this year	calendar	it	Quest'anno
+this year	calendar	it	Questo anno
 thu	calendar	it	Gio
 title	calendar	it	Titolo
 title of the event	calendar	it	Titolo dell'evento
@@ -286,6 +301,7 @@ today	calendar	it	Oggi
 translation	calendar	it	Traduzione
 tu	calendar	it	M
 tue	calendar	it	Mar
+two dayview	calendar	it	vista due giorni
 update a single entry by passing the fields.	calendar	it	Aggiornamento di una singola voce compilando i campi
 updated	calendar	it	Modificato
 use end date	calendar	it	Usa data di termine
@@ -295,16 +311,19 @@ wed	calendar	it	Mer
 week	calendar	it	Settimana
 weekday starts on	calendar	it	La settimana inizia di
 weekly	calendar	it	Settimanale
-weekview	calendar	it	Visualizzazione Settimanale
+weekview	calendar	it	Vista Settimanale
+weekview including weekend	calendar	it	Vista settimanale con weekend
+weekview without weekend	calendar	it	Vista settimanale senza weekend
 when creating new events default set to private	calendar	it	Quando vengono creati nuovi eventi settali automaticamente come privati
 which events do you want to see when you enter the calendar.	calendar	it	Quali eventi vuoi vedere quando entri nell'agenda.
-which of calendar view do you want to see, when you start calendar ?	calendar	it	Quale visualizzazione dell'agenda vuoi vedere quanto inizia l'agenda?
+which of calendar view do you want to see, when you start calendar ?	calendar	it	Quale vista dell'agenda vuoi vedere quanto apri l'agenda?
+wk	calendar	it	Sett
 work day ends on	calendar	it	La giornata lavorativa termina alle
 work day starts on	calendar	it	La giornata lavorativa inizia alle
 workdayends	calendar	it	fine giornata
 yearly	calendar	it	Annuale
-yearview	calendar	it	Visualizzazione Annuale
-you can either set a year or a occurence, not both !!!	calendar	it	Puoi impostare un Anno o un Occorrenza, not entrambi !!!
+yearview	calendar	it	Vista Annuale
+you can either set a year or a occurence, not both !!!	calendar	it	Puoi impostare un Anno o un'Occorrenza, non entrambi !!!
 you can only set a year or a occurence !!!	calendar	it	E' possibile impostare solo un anno o una occorrenza!!!
 you do not have permission to add alarms to this event !!!	calendar	it	Non hai l'autorizzazione per aggiungere allarmi a questo evento !!!
 you do not have permission to delete this alarm !!!	calendar	it	Non hai l'autorizzazione per cancellare questo allarme !!!
@@ -312,14 +331,14 @@ you do not have permission to enable/disable this alarm !!!	calendar	it	Non hai 
 you do not have permission to read this record!	calendar	it	Non hai l'autorizzazione per leggere questo record
 you have %1 high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nella tua agenda.
 you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nella tua agenda.
-you have a meeting scheduled for %1	calendar	it	Hai un appuntamento fissato alle %1
+you have a meeting scheduled for %1	calendar	it	Hai un meeting fissato alle %1
 you have not entered a title	calendar	it	Non hai inserito alcun titolo
-you have not entered a valid date	calendar	it	Hai inserito una data non valida
-you have not entered a valid time of day	calendar	it	Hai inserito un orario non valido
+you have not entered a valid date	calendar	it	Non hai inserito una data valida
+you have not entered a valid time of day	calendar	it	Non hai inserito un orario valido
 you have not entered participants	calendar	it	Non hai inserito i partecipanti
-you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca
+you must enter one or more search keywords	calendar	it	Devi inserire una o più parola chiave per la ricerca
 you must select a [iv]cal. (*.[iv]cs)	calendar	it	Devi selezionare un [iv]Cal (*.[iv]cs)
-you need to set either a day or a occurence !!!	calendar	it	Impostare un giorno o una ricorrenza!!!
+you need to set either a day or a occurence !!!	calendar	it	Impostare un giorno o una ricorrenza !!!
 your meeting scheduled for %1 has been canceled	calendar	it	Il tuo meeting fissato per il %1 è stato cancellato
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	it	Il tuo meeting fissato per il %1 è stato spostato al %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflitto con i seguenti appuntamenti presenti in agenda:
