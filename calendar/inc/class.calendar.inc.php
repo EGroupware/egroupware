@@ -1691,7 +1691,7 @@ class calendar extends calendar_
 				}
 				if (!!($event->recur_data & M_TUESDAY) == True)
 				{
-					$this->view_add_day(lang('Tuesay'),$repeat_days);
+					$this->view_add_day(lang('Tuesday'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_WEDNESDAY) == True)
 				{
