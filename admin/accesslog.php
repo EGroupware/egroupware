@@ -18,9 +18,10 @@
 	include('../header.inc.php');
 
 	$phpgw->template->set_file(array(
-		'list' => 'accesslog.tpl',
-		'row'  => 'accesslog_row.tpl'
+		'accesslog' => 'accesslog.tpl',
 	));
+	$phpgw->template->set_block('accesslog','list','list');
+	$phpgw->template->set_block('accesslog','row','row');
 
 	$show_maxlog = 30;
 
