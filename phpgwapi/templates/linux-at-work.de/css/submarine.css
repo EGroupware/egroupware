@@ -1,86 +1,40 @@
 body,p,td,th,table,input,form,option
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: #000000;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 body
 {
-	margin-right: 0em;
-	margin-left: 0em;
-	margin-top: 0em;
-	margin-bottom: 0em;
 	background-color: #FFFFFF;
-}
-
-table
-{
-	border-width: 0;
 }
 
 a:link,a:visited,a:active
 {
 	color: mediumblue;
-	text-decoration: none;
 }
 
 a:hover
 {
 	color: #cc0000;
-	text-decoration: none;
 }
 
-.portal
+.navbar,.th
 {
 	background-color: #80BBFF;
-	border-width: 1px;
+}
+
+.login,.portal,.about
+{
+	background-color: #80BBFF;
 	border-color: #000000;
-	border-style: ridge;
-	width: 100%;
 }
 
 .portal_text
 {
 	color: #FFFFFF;
-	font-weight: bold;
-	background: url(../../default/images/bg_filler.png);
 }
 
-.whitetext
-{
-	color: #FFFFFF;
-}
-
-.small_text
-{
-	font-size: 80%;
-}
-
-.headertext
-{
-	font-size: 110%;
-	font-weight: bold;
-	color: #FFFFFF;
-}
-
-.inputtext
-{
-	background-color: #FFFFFF;
-}
-
-.button_text,.linktext,.cal_dayview
-{
-	background-color: #c0c0c0;
-}
-
-.row_on,.th_bright
+.row_on,.th_bright,.app_header
 {
 	background-color: #CCEEFF;
 }
@@ -90,25 +44,14 @@ a:hover
 	background-color: #DDF0FF;
 }
 
-.th
-{
-	background-color: #80BBFF;
-}
-
-.th_text,.app_header_text
-{
-	font-weight: bold;
-}
-
-.app_header
-{
-	font-weight: bold;
-	background-color: #CCEEFF;
-}
-
 .cal_today
 {
 	background-color: #FFFFCC;
+}
+
+.cal_dayview
+{
+	background-color: #C0C0C0;
 }
 
 .email_folder

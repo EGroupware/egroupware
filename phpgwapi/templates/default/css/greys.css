@@ -1,84 +1,34 @@
+body,p,td,th,table,input,form,option
+{
+	color: #000000;
+}
+
 body
 {
-	margin-right: 0em;
-	margin-left: 0em;
-	margin-top: 0em;
-	margin-bottom: 0em;
 	background-color: #dfdfdf;
 }
 
 table
 {
-	border-width: 0;
 	color: #222222;
-}
-
-td
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	color: #000000;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 a:link
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: #0000ff;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 a:visited
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: #5555ff;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
-a:active
+a:active,a:hover
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
 	color: black;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
-a:hover
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: black;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
-}
-
-.navbar
+.navbar,.th
 {
 	background-color: #aaaaaa;
 	color: #000000;
@@ -89,7 +39,18 @@ a:hover
 	background-image: url(logo_003300.gif);	
 }
 
-.row_on
+.login,.portal,.about
+{
+	background-color: #aaaaaa;
+	border-color: #000000;
+}
+
+.portal_text
+{
+	color: #FFFFFF;
+}
+
+.row_on,.th_bright,.app_header
 {
 	background-color: #eeeeee;
 }
@@ -97,49 +58,6 @@ a:hover
 .row_off
 {
 	background-color: #cccccc;
-}
-
-.th
-{
-	background-color: #aaaaaa;
-}
-
-.th_bright
-{
-	background-color: #eeeeee;
-}
-
-.th_text
-{
-	font-style: bold;
-	font-weight: bold;
-	color: #000000;
-}
-
-.appheader
-{
-	font-style: bold;
-	font-weight: bold;
-	background-color: #eeeeee;
-}
-
-.functionmsg
-{
-	font-style: bold;
-	font-weight: bold;
-}
-
-.forms
-{
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	color: #000000;
-	font-style: normal;
-	font-weight: normal;
-	line-height: normal;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
 }
 
 .cal_today

@@ -51,7 +51,7 @@ table.login
 	text-align: center;
 }
 
-.login,.portal
+.login,.portal,.about
 {
 	border-width: 1px;
 	border-style: ridge;
