@@ -45,7 +45,7 @@
 		echo parse_navbar();
 	}
 
-	$t = new Template(PHPGW_APP_TPL);
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_file(array('view_t' => 'view.tpl'));
 	$t->set_block('view_t','view_header','view_header');
 	$t->set_block('view_t','view_row','view_row');

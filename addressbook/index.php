@@ -20,7 +20,7 @@
 
 	include('../header.inc.php');
 
-	$t = new Template(PHPGW_APP_TPL);
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_file(array('addressbook_list_t' => 'index.tpl'));
 	$t->set_block('addressbook_list_t','addressbook_header','addressbook_header');
 	$t->set_block('addressbook_list_t','column','column');

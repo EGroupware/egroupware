@@ -293,8 +293,8 @@
 
 		$t = new Template(PHPGW_APP_TPL);
 		$t->set_file(array('form' => 'form.tpl'));
-		$t->set_block('form','add','add');
-		$t->set_block('form','edit','edit');
+		//$t->set_block('form','add','add');
+		//$t->set_block('form','edit','edit');
 
 		$email        = $fields['email'];
 		$emailtype    = $fields['email_type'];

@@ -71,7 +71,7 @@
 		$fields = addressbook_read_entry($ab_id,$qfields);
 		addressbook_form('edit','edit.php','Edit',$fields[0],$customfields);
 
-		$t = new Template(PHPGW_APP_TPL);
+		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_file(array("edit" => "edit.tpl"));
 
 		$t->set_var('ab_id',$ab_id);
