@@ -1697,7 +1697,6 @@
 				$icalendar->set_var($ical_event['uid'],'value','phpGW/'.$event['id']);
 				$ical_event['priority'] = $event['priority'];
 				$ical_event['class'] = intval($event['public']);
-//				$ical_event['class']['value'] = 1;
 				$icalendar->set_var($ical_event['description'],'value',$event['title']);
 				$icalendar->set_var($ical_event['summary'],'value',$event['description']);
 				$dtstart_mktime = $this->maketime($event['start']) - $this->datetime->tz_offset;
@@ -1733,9 +1732,70 @@
 						}
 					}
 				}
-				if(!$event['recur_type'])
+				if($event['recur_type'])
 				{
-					
+					$str = '';
+					switch($event['recur_type'])
+					{
+						case MCAL_RECUR_DAILY:
+							$str .= 'FREQ=DAILY';
+							break;
+						case MCAL_RECUR_WEEKLY:
+							$str .= 'FREQ=WEEKLY';
+							if($event['recur_data'])
+							{
+								$str .= ';BYDAY=';
+								for($i=1;$i<MCAL_M_ALLDAYS;$i=$i*2)
+								{
+									if($i & $event['recur_data'])
+									{
+										switch($i)
+										{
+											case MCAL_M_SUNDAY:
+												$day[] = 'SU';
+												break;
+											case MCAL_M_MONDAY:
+												$day[] = 'MO';
+												break;
+											CASE MCAL_M_TUESDAY:
+												$day[] = 'TU';
+												break;
+											case MCAL_M_WEDNESDAY:
+												$day[] = 'WE';
+												break;
+											case MCAL_M_THURSDAY:
+												$day[] = 'TH';
+												break;
+											case MCAL_M_FRIDAY:
+												$day[] = 'FR';
+												break;
+											case MCAL_M_SATURDAY:
+												$day[] = 'SA';
+												break;
+										}
+									}
+								}
+								$str .= implode(',',$day);
+							}
+							break;
+						case MCAL_RECUR_MONTHLY_MDAY:
+							break;
+						case MCAL_RECUR_MONTHLY_WDAY:
+							break;
+						case MCAL_RECUR_YEARLY:
+							$str .= 'FREQ=YEARLY';
+							break;
+					}
+					if($event['recur_interval'])
+					{
+						$str .= ';INTERVAL='.$event['recur_interval'];
+					}
+					if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
+					{
+						$recur_mktime = $this->maketime($event['recur_enddate']) - $this->datetime->tz_offset;
+						$str .= ';UNTIL='.date('Ymd\THis\Z',$recur_mktime);
+					}
+					$icalendar->parse_value($ical_event,'rrule',$str,'vevent');
 				}
 				$ical_events[] = $ical_event;
 			}
