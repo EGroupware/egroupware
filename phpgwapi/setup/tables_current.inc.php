@@ -371,18 +371,18 @@
 		),
 		'egw_api_content_history' => array(
 			'fd' => array(
-				'sync_appname'	=>  array('type' => 'varchar','precision' => '60','nullable' => False),
+				'sync_appname' => array('type' => 'varchar','precision' => '60','nullable' => False),
 				'sync_contentid' => array('type' => 'varchar','precision' => '60','nullable' => False),
-				'sync_added'	=>  array('type' => 'timestamp', 'nullable' => False),
-				'sync_modified'	=>  array('type' => 'timestamp', 'nullable' => False),
-				'sync_deleted'	=>  array('type' => 'timestamp', 'nullable' => False),
-				'sync_id'	=>  array('type' => 'auto','nullable' => False),
-				'sync_guid'	=>  array('type' => 'varchar','precision' => '120','nullable' => False),
-				'sync_changedby' => array('type' => 'int','precision' => '4','nullable' => False),
+				'sync_added' => array('type' => 'timestamp'),
+				'sync_modified' => array('type' => 'timestamp'),
+				'sync_deleted' => array('type' => 'timestamp'),
+				'sync_id' => array('type' => 'auto','nullable' => False),
+				'sync_guid' => array('type' => 'varchar','precision' => '120','nullable' => False),
+				'sync_changedby' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('sync_id'),
 			'fk' => array(),
-			'ix' => array(array('sync_appname','sync_contentid'),'sync_added','sync_modified','sync_deleted','sync_guid','sync_changedby'),
+			'ix' => array('sync_added','sync_modified','sync_deleted','sync_guid','sync_changedby',array('sync_appname','sync_contentid')),
 			'uc' => array()
-		),
+		)
 	);

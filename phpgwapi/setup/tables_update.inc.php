@@ -161,3 +161,21 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.004';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '1.0.1.004';
+	function phpgwapi_upgrade1_0_1_004()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_added',array(
+			'type' => 'timestamp'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_modified',array(
+			'type' => 'timestamp'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_deleted',array(
+			'type' => 'timestamp'
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.005';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+?>
