@@ -59,16 +59,17 @@
           }
         }else{
           /* no tables, so checking if we can create them */
+
+          /* I cannot get either to work properly
           $db->free();
           $isdb = $db->connect("kljkjh", "localhost", "phpgroupware", "phpgr0upwar3");
-          echo "isdb: ".$isdb."<br>\n";
-
-
+          */
+          
           $db->free();
           $db_rights = $db->query("CREATE TABLE phpgw_testrights ( testfield varchar(5) NOT NULL )");
-echo "db_rights: ".$db_rights."<br>\n";
 
           if (isset($db_rights)){
+          //if (isset($isdb)){
             $stage = 2.3;
             $header_msg = "Stage 2 (Create tables)";
           }else{

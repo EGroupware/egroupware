@@ -126,7 +126,7 @@
   }
 
   function show_steps($stage, $note = False) {
-    global $phpgw_info, $PHP_SELF;
+    global $phpgw_info, $phpgw_domain, $SetupDomain, $PHP_SELF;
 
     /* The stages are as follows:
       Stage 1.1 = header does not exists yet
@@ -160,7 +160,28 @@
     }elseif ($stage == 2.2) {
       echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist but your pre-beta tables need upgrading.<br> <input type=submit value="Create one now"></form></td></tr>';
     }elseif ($stage == 2.3) {
-      echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
+/* commented out because I cannot accuratly figure out if the DB exists */
+//      echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist, would you like to create your tables now?<br> <input type=submit value="Create tables"></form></td></tr>';
+      echo '<tr><td align="center">O</td><td>Make sure that your database is created and the account permissions are set.<br>';
+      if ($phpgw_domain[$SetupDomain]["db_type"] == "mysql"){
+        echo "
+        <br>Instructions for creating the database in MySQL:<br>
+        Login to mysql -<br>
+        <i>[user@server user]# mysql -u root -p</i><br>
+        Create the empty database and grant user permissions -<br>
+        <i>mysql> create database phpgroupware;</i><br>
+        <i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i><br>
+        ";
+      }elseif ($phpgw_domain[$SetupDomain]["db_type"] == "pgsql"){
+        echo "
+        <br>Instructions for creating the database in PostgreSQL:<br>
+        Start the postmaster<br>
+        <i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>
+        Create the empty database -<br>
+        <i>[user@server user]# createdb phpgroupware</i><br>
+        ";
+      }
+      echo '<form action="./tables.php" method=post>Once the database is setup correctly <br><input type=submit value="Create the tables"></form></td></tr>';
     }elseif ($stage == 2.4) {
       echo '<tr><td align="center">O</td><td><form action="./tables.php" method=post>Your database exist but your tables need upgrading.<br> <input type=submit value="upgrade now"></form></td></tr>';
     }elseif ($stage == 2.5) {

@@ -16,11 +16,17 @@
   //        page explaining what to do from there (ie, create there own account)
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+  include("./inc/functions.inc.php");
   include("../header.inc.php");
-  include("../version.inc.php");  // To set the current core version
 
   // Authorize the user to use setup app and load the database
-  include("./inc/setup_auth.inc.php");
+  if (!auth()){
+    Header("Location: index.php");
+    exit;
+  }
+
+echo "keep going";
+exit;
   // Does not return unless user is authorized
 
 //  $db->Halt_On_Error = "report";
