@@ -70,6 +70,12 @@
     <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
     <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True" {checked_checkfornewversion}></td>
    </tr>
+
+   <tr bgcolor="{row_off}">
+    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array ?}:</td>   
+    <td><input type="checkbox" name="newsettings[cache_phpgw_info]" value="True" {checked_cache_phpgw_info}></td>
+   </tr> 
+
 <!-- END body -->
 
 <!-- BEGIN footer -->
