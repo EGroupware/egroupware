@@ -301,7 +301,7 @@
            hook_appname  varchar(255),
            hook_location varchar(255),
            hook_filename varchar(255)
-          );";
+          )";
   $phpgw_setup->db->query($sql);  
 
   $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre17';
