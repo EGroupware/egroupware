@@ -9,9 +9,14 @@
 %s notranslation	etemplate	fr	%s PasDeTraduction
 %s onchange	etemplate	fr	%s surChangement
 %s readonly	etemplate	fr	%s LectureSeule
+'%1' has an invalid format !!!	etemplate	fr	'%1' a un format invalide !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	fr	'%1' n'est pas un nombre à virgule flottante valide !!!
+'%1' is not a valid integer !!!	etemplate	fr	'%1' n'est pas un entier valide !!!
 a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
 add a new column (after the existing ones)	etemplate	fr	Ajouter une nouvelle colonne (après celles existant déjà)
+add a new multi-column index	etemplate	fr	Ajouter un nouvel index multi-colonne
 add column	etemplate	fr	Ajouter une colonne
+add index	etemplate	fr	Ajouter un Index
 add table	etemplate	fr	Ajouter une table
 align	etemplate	fr	Aligner
 alignment of label and input-field in table-cell	etemplate	fr	Alignement du label et du champ de saisie dans la cellule de la table
@@ -22,9 +27,11 @@ application	etemplate	fr	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fr	L'application Nom a eu besoin d'écrire un fichier de langue ou de dumper les eTemplates !!!
 attach	etemplate	fr	Attacher
 attach file	etemplate	fr	Attacher fichier
+blurtext	etemplate	fr	texteFlou
 border	etemplate	fr	Bord
 border-line-thickness for the table-tag	etemplate	fr	Epaisseur de la ligne de bord pour le tag de la table eTemplate
 can have special sql-value null	etemplate	fr	Peut avoir la valeur SQL spéciale NULL
+can not have special sql-value null	etemplate	fr	ne peut pas avoir une valeur SQL spéciale NULL
 cancel	etemplate	fr	Annuler
 category	etemplate	fr	Catégorie
 cellpadding for the table-tag	etemplate	fr	Remplissage de cellule pour le tag de la table
@@ -40,6 +47,7 @@ click here to attach the file	etemplate	fr	Cliquer ici pour attacher le fichier
 click here to create the link	etemplate	fr	Cliquer ici pour créer le lien
 click here to start the search	etemplate	fr	Cliquer ici pour démarrer la recherche
 click here to upload the file	etemplate	fr	Cliquer ici pour uploader le fichier
+click to order after that criteria	etemplate	fr	cliquez pour trier d'après ce critère
 columnname	etemplate	fr	NomDeColonne
 comment	etemplate	fr	Commentaire
 create a new table for the application	etemplate	fr	Créer une nouvelle table pour l'application
@@ -51,6 +59,7 @@ date+time	etemplate	fr	Date+Heure
 datum	etemplate	fr	Datum
 day	etemplate	fr	Jour
 db ensures that every row has a unique value in that column	etemplate	fr	La base de données s'assure que chaque ligne a une valeur unique dans cette colonne
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	fr	les options d'index spécifiques à la base de données (séparés par des virgules), p.ex. mysql(FULLTEXT) ou mysql(100) pour la longeur indexée d'une colonne
 db-tools	etemplate	fr	Outils base de données
 deck	etemplate	fr	Bureau (interne)
 default	etemplate	fr	Défaut
@@ -58,6 +67,7 @@ delete	etemplate	fr	Effacer
 delete a single entry by passing the id.	etemplate	fr	Effacer une unique entrée en passant l'ID.
 delete all selected etemplates, without further inquiry	etemplate	fr	Effacer TOUS les eTemplates sélectionnés, sans plus demander de confirmation
 delete column	etemplate	fr	Effacer la colonne
+delete index	etemplate	fr	Effacer Index
 delete this etemplate	etemplate	fr	Effacer cet eTemplate
 delete whole column (can not be undone!!!)	etemplate	fr	Effacer la colonne entière (ne peut PAS être annulé!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	fr	Efface le eTemplate spécifié ci-dessus de la base de données, ne peut PAS être annulé
@@ -67,6 +77,7 @@ discard changes	etemplate	fr	Annuler les changements
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché en face de l'entrée our l'entrée est insérée pour un '%s' dans le label (le label du Boutonsoumettre ou le nom du fichierimage)
 displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
 do you want to save the changes you made in table %s?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez effectuées dans la table %s?
+documentation	etemplate	fr	Documentation
 drop a table - this can not be undone	etemplate	fr	Détruire une table - ceci ne peut PAS être annulé
 drop table	etemplate	fr	Effacer table
 dump4setup	etemplate	fr	DumpPourRéglage
@@ -88,15 +99,20 @@ entry saved	etemplate	fr	Entrée enregistrée
 error: template not found !!!	etemplate	fr	Erreur: Template non trouvé !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
 error: while saveing !!!	etemplate	fr	Erreur: pendant la sauvegarde !!!
+error: writeing !!!	etemplate	fr	Erreur: écriture !!!
+error: writing file (no write-permission for the webserver) !!!	etemplate	fr	Erreur: écriture fichier (pas d'autorisation pour le serveur Web) !!!
 etemplate	common	fr	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	fr	eTemplate '%1' importé, utilisez Enregistrer pour le mettre dans la base de données
 etemplate '%1' written to '%2'	etemplate	fr	eTemplate '%1' écrit dans '%2'
 etemplate editor	etemplate	fr	Editeur d'eTemplate
+etemplate referenz	etemplate	fr	Référence eTemplate
+etemplate tutorial	etemplate	fr	Tutoriel eTemplate
 exchange this row with the one above	etemplate	fr	Echanger cette ligne avec celle du dessus
 exchange this two columns	etemplate	fr	Echanger ces deux colonnes
 export the loaded etemplate into a xml-file	etemplate	fr	exporter l'eTemplate chargé dans un fichier XML
 export xml	etemplate	fr	Exporter XML
 extensions loaded:	etemplate	fr	Extensions chargées:
+field must not be empty !!!	etemplate	fr	Le champ ne doit pas être vide !!!
 file	etemplate	fr	Fichier
 file contains more than one etemplate, last one is shown !!!	etemplate	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
 file writen	etemplate	fr	Fichier écrit
@@ -104,6 +120,7 @@ fileupload	etemplate	fr	UploadFichier
 first	etemplate	fr	Premier
 floating point	etemplate	fr	Virgule flottante
 foreign key	etemplate	fr	Clé étrangère
+formatted text (html)	etemplate	fr	Texte Formaté (HTML)
 go to the first entry	etemplate	fr	Aller à la première entrée
 go to the last entry	etemplate	fr	Aller à la dernière entrée
 go to the next page of entries	etemplate	fr	Aller à la page suivante d'entrées
@@ -125,6 +142,7 @@ import table-definitions from existing db-table	etemplate	fr	Importer les défini
 import xml	etemplate	fr	Importer XML
 index/name of returned content (name of the template, link / method for image)	etemplate	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
 indexed	etemplate	fr	Indexé
+indexoptions	etemplate	fr	Options d'Index
 insert new column behind this one	etemplate	fr	Insérer une nouvelle colonne derrière celle-ci
 insert new column in front of all	etemplate	fr	Insérer une nouvelle colonne devant toutes les autres
 insert new row after this one	etemplate	fr	Insérer une nouvelle ligne devant celle-ci
@@ -145,6 +163,7 @@ linkto	etemplate	fr	LierVers
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
 minute	etemplate	fr	Minute
 month	etemplate	fr	Mois
+multicolumn indices	etemplate	fr	Indices Multi-colonne
 name	etemplate	fr	Nom
 name of other table where column is a key from	etemplate	fr	Nom de l'autre table où la colonne est une clé de
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	fr	Nom de l'ensemble phpgw-template (p.e. verdilak): '' = défaut (va lire le template dans les préférences, utiliser 'default' pour lire le template par défaut '')
@@ -155,8 +174,11 @@ new search	etemplate	fr	Nouvelle recherche
 new table created	etemplate	fr	Nouvelle table créée
 newer version '%1' exists !!!	etemplate	fr	La nouvelle version '%1' existe !!!
 nextmatch	etemplate	fr	Occurrence trouvée suivante
+nextmatch filterheader	etemplate	fr	Prochaine occurence Entête de Filtre
+nextmatch sortheader	etemplate	fr	Prochaine occurence Entête de Tri
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
+not null	etemplate	fr	PAS NULL
 nothing found - try again !!!	etemplate	fr	Rien trouvé - essayez encore !!!
 nothing matched search criteria !!!	etemplate	fr	Aucune occurrence correspondant aux critères de recherche !!!
 nullable	etemplate	fr	Positionnable à zéro
@@ -209,7 +231,9 @@ select one ...	etemplate	fr	CHoisissez un ...
 select percentage	etemplate	fr	Choisissez un pourcentage
 select priority	etemplate	fr	Choisissez une priorité
 select state	etemplate	fr	Choisissez un état
+select the indexed columns in their desired order	etemplate	fr	Sélectionnez la colonne indexée dans leur ordre désiré
 select this etemplate to delete it	etemplate	fr	Choisissez cet eTemplate pour l'effacer
+select which values to show	etemplate	fr	veuillez sélectionner les valeurs à afficher
 select year	etemplate	fr	Choisissez l'année
 selectbox	etemplate	fr	Boîte de sélection
 sets today as date	etemplate	fr	Règle aujourd'hui comme date
@@ -233,6 +257,7 @@ template deleted	etemplate	fr	Template effacé
 template saved	etemplate	fr	Template enregistré
 text	etemplate	fr	Texte
 textarea	etemplate	fr	ChampTexte
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 time	etemplate	fr	Heure
 to start the db-tools	etemplate	fr	Pour démarre les outils base de données
 to start the etemplate editor	etemplate	fr	Pour démarre l'éditeur d'eTemplate
@@ -247,6 +272,8 @@ update a single entry by passing the fields.	etemplate	fr	Mettre à jour une uniq
 update from version '%s' to	etemplate	fr	Mettre à jour depuis la Version '%s' vers
 upload	etemplate	fr	Uploader
 value	etemplate	fr	Valeur
+value has to be at least '%1' !!!	etemplate	fr	La valeur doit être d'au moins '%1' !!!
+value has to be at maximum '%1' !!!	etemplate	fr	La valeur doit être au maximum '%1' !!!
 vbox	etemplate	fr	BoîteV
 version	etemplate	fr	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	fr	Numéro de version, devrait être de la forme: majeur.mineur.revision.nombre (p.e. 0.9.13.001 tous les nombres remplis avec des zéros)
