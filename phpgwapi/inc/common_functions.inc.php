@@ -1188,7 +1188,7 @@
 	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS','HTTP_REQUEST_VARS') as $where)
 	{
 		$pregs = array(
-			'order' => '/^[a-zA-Z0-9_, ]*$/',
+			'order' => '/^[a-zA-Z0-9_]*$/',
 			'sort'  => '/^(ASC|DESC|asc|desc){0,1}$/',
 		);
 		foreach(array('order','sort') as $name)
