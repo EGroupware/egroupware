@@ -14,7 +14,7 @@
 	$setup_info['filemanager']['name']    = 'filemanager';
 	$setup_info['filemanager']['title']   = 'Filemanager';
 	$setup_info['filemanager']['version'] = '0.9.13.005';
-	$setup_info['filemanager']['app_order'] = 10;
+	$setup_info['filemanager']['app_order'] = 6;
 	$setup_info['filemanager']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
@@ -34,6 +34,6 @@
 	$setup_info['filemanager']['depends'][] = array
 	(
 		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.14','0.9.16')
+		 'versions' => array('0.9.14','0.9.16','1.0.0')
 	);
 ?>
