@@ -694,7 +694,7 @@
 	$db->query("SELECT cal_id,cal_datetime,cal_owner,cal_edatetime,cal_mdatetime FROM calendar_entry ORDER BY cal_id",__LINE__,__FILE__);
 	if($db->num_rows()) {
 	  while($db->next_record()) {
-	    $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->("cal_owner"),__LINE__,__FILE__);
+	    $db2->query("SELECT preference_value FROM preferences WHERE preference_name='tz_offset' AND preference_appname='common' AND preference_owner=".$db->f("cal_owner"),__LINE__,__FILE__);
 	    $db2->next_record();
 	    $tz = $db2->f("preference_value");
 	    $cal_id = $db->f("cal_id");
