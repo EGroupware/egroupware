@@ -487,7 +487,7 @@
 				$fixed_array[] = rawurlencode($name);
 			}
 			$fixed_path = implode('/', $fixed_array);
-			if (empty($parsed_uri['scheme']))
+			if (!empty($parsed_uri['scheme']))
 			{
 				$parsed_uri['path'] = $fixed_path;
 				$newuri = $this->glue_url($parsed_uri);
@@ -524,7 +524,7 @@
 				$fixed_array[]  = rawurldecode($name);
 			}
 			$fixed_path = implode('/', $fixed_array);
-			if (empty($parsed_uri['scheme']))
+			if (!empty($parsed_uri['scheme']))
 			{
 				$parsed_uri['path'] = $fixed_path;
 				$newuri = $this->glue_url($parsed_uri);
