@@ -3,6 +3,7 @@
 a	calendar	en	a
 accept	calendar	en	Accept
 accepted	calendar	en	Accepted
+add a single entry by passing the fields.	calendar	en	Add a single entry by passing the fields.
 add alarm	calendar	en	Add Alarm
 added	calendar	en	Added
 alarm management	calendar	en	Alarm Management
@@ -19,11 +20,17 @@ calendar event	calendar	en	Calendar Event
 calendar holiday management	admin	en	Calendar Holiday Management
 calendar preferences	calendar	en	Calendar Preferences
 calendar settings	admin	en	Calendar Settings
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	en	Change all events for $params['old_owner'] to $params['new_owner'].
+countries	calendar	en	Countries
 daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 days repeated	calendar	en	days repeated
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
+delete a single entry by passing the id.	calendar	en	Delete a single entry by passing the id.
+delete an entire users calendar.	calendar	en	Delete an entire users calendar.
+delete series	calendar	en	Delete Series
+delete single	calendar	en	Delete Single
 deleted	calendar	en	Deleted
 description	calendar	en	DESCRIPTION
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
@@ -35,9 +42,11 @@ edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
 end date/time	calendar	en	End Date/Time
 ends	calendar	en	ends
+enter output filename: ( .vcs appended )	calendar	en	Enter Output Filename: ( .vcs appended )
 event details follow	calendar	en	Event Details Follow
 export	calendar	en	Export
 (for weekly)	calendar	en	(for Weekly)
+export a list of entries in ical format.	calendar	en	Export a list of entries in iCal format.
 fr	calendar	en	F
 free/busy	calendar	en	Free/Busy
 frequency	calendar	en	Frequency
@@ -52,9 +61,13 @@ group public only	calendar	en	Group Public Only
 ignore conflict	calendar	en	Ignore Conflict
 has been canceled	calendar	en	has been canceled
 has been rescheduled to	calendar	en	has been rescheduled to
+high priority	calendar	en	high priority
+holiday	calendar	en	Holiday
+holidays	calendar	en	Holidays
 i participate	calendar	en	I Participate
 import	calendar	en	Import
 interval	calendar	en	Interval
+invalid entry id.	calendar	en	Invalid entry id.
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
@@ -68,14 +81,20 @@ monthly (by day)	calendar	en	Monthly (by day)
 monthly	calendar	en	Monthly
 new entry	calendar	en	New Entry
 no matches found.	calendar	en	No matches found.
+no matches found	calendar	en	No matches found
 no response	calendar	en	No Response
 number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
 number of months	calendar	en	Number of months
-on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
+observance Rule	calendar	en	Observance Rule
+occurence	calendar	en	Occurence
+on x x x your meeting request for x	calendar	en	On %1 %2 %3 your meeting request for %4
+overlap holiday	calendar	en	overlap holiday
 participant	calendar	en	Participant
 participants	calendar	en	Participants
 participates	calendar	en	Participates
 planner	calendar	en	Planner
+planner by category	calendar	en	Planner by category
+planner by user	calendar	en	Planner by user
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	en	Please confirm, accept, reject or examine changes in the corresponding entry in your calendar
 preselected group for entering the planner	calendar	en	Preselected group for entering the planner
 print calendars in black & white	calendar	en	Print calendars in black & white
@@ -84,14 +103,19 @@ private and global public	calendar	en	Private and Global Public
 private and group public	calendar	en	Private and Group Public
 private only	calendar	en	Private Only
 re-edit event	calendar	en	Re-Edit Event
+read a list of entries.	calendar	en	Read a list of entries.
+read a single entry by passing the id and fieldlist.	calendar	en	Read a single entry by passing the id and fieldlist.
+read this list of methods.	calendar	en	Read this list of methods.
 receive extra information in event mails	calendar	en	Receive extra information in event mails
 refresh	calendar	en	Refresh
+reinstate	calendar	en	Reinstate
 rejected	calendar	en	Rejected
 repeat day	calendar	en	Repeat day
 repeat end date	calendar	en	Repeat End date
 repeating event information	calendar	en	Repeating Event Information
 repeat type	calendar	en	Repeat type
 repetition	calendar	en	Repetition
+reset	calendar	en	Reset
 sa	calendar	en	Sa
 sat	calendar	en	Sat
 scheduling conflict	calendar	en	Scheduling Conflict
@@ -101,12 +125,16 @@ send updates via email	common	en	Send updates via EMail
 show default view on main screen	calendar	en	Show default view on main screen
 show high priority events on main screen	calendar	en	Show high priority events on main screen
 sorry, the owner has just deleted this event	calendar	en	Sorry, the owner has just deleted this event
+sorry, this event does not exist	calendar	en	Sorry, this event does not exist
+sorry, this event does not have exceptions defined	calendar	en	Sorry, this event does not have exceptions defined
 sort by	calendar	en	Sort by
 start date/time	calendar	en	Start Date/Time
 start- and enddates	calendar	en	Start- and Enddates
 su	calendar	en	Su
+submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
+text	calendar	en	Text
 th	calendar	en	T
 the following conflicts with the suggested time:<ul>x</ul>	calendar	en	The following conflicts with the suggested time:<ul>%1</ul>
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
@@ -118,6 +146,8 @@ title	calendar	en	TITLE
 today	calendar	en	Today
 tu	calendar	en	T
 tue	calendar	en	Tue
+update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
+updated	calendar	en	Updated
 use end date	calendar	en	Use End date
 view this entry	calendar	en	View this entry
 we	calendar	en	W
@@ -130,6 +160,7 @@ work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 x matches found	calendar	en	%1 matches found
 yearly	calendar	en	Yearly
+you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
 you have a meeting scheduled for	calendar	en	You have a meeting scheduled for
@@ -138,6 +169,7 @@ you have not entered a title	calendar	en	You have not entered a title
 you have not entered a valid time of day	calendar	en	You have not entered a valid time of day
 you have not entered participants	calendar	en	You have not entered participants
 you must enter one or more search keywords	calendar	en	You must enter one or more search keywords
-your meeting scheduled for	calendar	en	Your meeting scheduled for 
+you must select a [iv]cal. (*.[iv]cs)	calendar	en	You must select a [iv]Cal. (*.[iv]cs)
+your meeting scheduled for	calendar	en	Your meeting scheduled for
 your meeting that had been scheduled for	calendar	en	Your meeting that had been scheduled for
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
