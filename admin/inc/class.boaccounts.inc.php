@@ -366,11 +366,14 @@
 					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
 					$GLOBALS['hook_values']['account_id'] = $account_id;
 					$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
+					$GLOBALS['hook_values']['account_status'] = $userData['account_status'];
 					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
 					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
+
 					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 						'location' => 'addaccount'
-					));
+					),False,True);	// called for every app now, not only enabled ones
+
 					ExecMethod('admin.uiaccounts.list_users');
 					return False;
 				}
@@ -602,11 +605,13 @@
 					$this->save_user($userData);
 					$GLOBALS['hook_values']['account_id'] = $userData['account_id'];
 					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
+					$GLOBALS['hook_values']['account_status'] = $userData['account_status'];
 					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
 					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
+
 					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 						'location' => 'editaccount'
-					));
+					),False,True);	// called for every app now, not only enabled ones)
 
 					// check if would create a menu
 					// if we do, we can't return to the users list, because
@@ -802,9 +807,10 @@
 				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
 				$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
+
 				$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'changepassword'
-				));
+				),False,True);	// called for every app now, not only enabled ones)
 			}
 
 			$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
