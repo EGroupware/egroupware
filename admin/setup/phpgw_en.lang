@@ -152,12 +152,10 @@ select where you want to store/retrieve filesystem information	admin	en	Select w
 select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
 server list	admin	en	Server List
-server name	admin	en	Server name
 server password	admin	en	Server Password
 server type(mode)	admin	en	Server Type(mode)
 server url	admin	en	Server URL
 server username	admin	en	Server Username
-server x has been added	admin	en	Server %1 has been added
 server x has been updated	admin	en	Server %1 has been updated
 set preference values.	admin	en	Set preference values.
 show 'powered by' logo on	admin	en	Show 'powered by' logo on

@@ -337,6 +337,8 @@ section	common	en	Section
 select category	common	en	Select Category
 senegal	common	en	SENEGAL
 september	common	en	September
+server x has been added	common	en	Server %1 has been added
+server name	common	en	Server Name
 session has been killed	common	en	Session has been killed
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
