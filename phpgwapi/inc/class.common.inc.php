@@ -1411,7 +1411,7 @@
 					$format .= 'H:i';
 				}
 			}
-                        if((PHP_OS == 'Windows'||PHP_OS == 'WINNT') && (int)$t < 21600)
+			if((PHP_OS == 'Windows' || PHP_OS == 'WINNT') && (int)$t < 21600)
 			/*if(PHP_OS == 'Windows' && (int)$t < 21600)*/
 			{
 				$t = 21600;

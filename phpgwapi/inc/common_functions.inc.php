@@ -935,7 +935,7 @@
 	*/
 	function filesystem_separator()
 	{
-		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2')
+		if(PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WINNT')
 		{
 			return '\\';
 		}

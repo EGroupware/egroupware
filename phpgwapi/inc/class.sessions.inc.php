@@ -353,7 +353,9 @@
 
 			if (@$GLOBALS['phpgw_info']['server']['sessions_checkip'])
 			{
-				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
+				if((PHP_OS != 'Windows') && (PHP_OS != 'WINNT') &&
+					(!$GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip())
+				)
 				{
 					if(is_object($GLOBALS['phpgw']->log))
 					{
@@ -752,9 +754,11 @@
 				return False;
 			}
 
-			if (@$GLOBALS['phpgw_info']['server']['sessions_checkip'])
+			if(@$GLOBALS['phpgw_info']['server']['sessions_checkip'])
 			{
-				if (PHP_OS != 'Windows' && (! $GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip()))
+				if((PHP_OS != 'Windows') && (PHP_OS != 'WINNT') &&
+					(!$GLOBALS['phpgw_info']['user']['session_ip'] || $GLOBALS['phpgw_info']['user']['session_ip'] != $this->getuser_ip())
+				)
 				{
 					if(is_object($GLOBALS['phpgw']->log))
 					{
