@@ -253,7 +253,7 @@
 		function content_header($fn='',$mime='',$length='',$nocache=True)
 		{
 			// if no mine-type is given or it's the default binary-type, guess it from the extension
-			if(empty($mine) || $mime == 'application/octet-stream')
+			if(empty($mime) || $mime == 'application/octet-stream')
 			{
 				$mime_magic = createObject('phpgwapi.mime_magic');
 				$mime = $mime_magic->filename2mine($fn);
