@@ -60,7 +60,7 @@
 
 	if ($apps_cats==True)
 	{
-	    $t->set_var('messages',lang('This category is used from applications as parent category !'));
+	    $t->set_var('messages',lang('This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category !'));
 	    $t->set_var('hidden_vars',$hidden_vars);
 	    $t->set_var('lang_subs','');
 	    $t->set_var('subs','');
