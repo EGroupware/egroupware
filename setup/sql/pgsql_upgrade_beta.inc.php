@@ -1339,6 +1339,114 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre15';
 	}
 
+    $test[] = '0.9.10pre15';
+    function upgrade0_9_10pre15() {
+		global $phpgw_info, $phpgw_setup;
+		$db1 = $phpgw_setup->db;
+
+		$sql = "CREATE TABLE phpgw_addressbook_temp (
+                    id                  serial,
+                    lid                 varchar(32),
+                    tid                 char(1),
+                    owner               int,
+                    fn                  varchar(64),
+                    sound               varchar(64),
+                    org_name            varchar(64),
+                    org_unit            varchar(64),
+                    title               varchar(64),
+                    n_family            varchar(64),
+                    n_given             varchar(64),
+                    n_middle            varchar(64),
+                    n_prefix            varchar(64),
+                    n_suffix            varchar(64),
+                    label               text,       
+                    adr_poaddr          varchar(64),
+                    adr_extaddr         varchar(64),
+                    adr_street          varchar(64),
+                    adr_locality        varchar(32),
+                    adr_region          varchar(32),
+                    adr_postalcode      varchar(32),
+                    adr_countryname     varchar(32),
+                    adr_work            char(1) DEFAULT 'n' NOT NULL,
+                    adr_home            char(1) DEFAULT 'n' NOT NULL,
+                    adr_parcel          char(1) DEFAULT 'n' NOT NULL,
+                    adr_postal          char(1) DEFAULT 'n' NOT NULL,
+                    tz                  varchar(8),
+                    geo                 varchar(32),
+					url					varchar(128),
+					bday				varchar(32),
+					note				text,
+                    a_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    a_tel_work          char(1) DEFAULT 'n' NOT NULL,
+                    a_tel_home          char(1) DEFAULT 'n' NOT NULL,
+                    a_tel_voice         char(1) DEFAULT 'n' NOT NULL,
+                    a_tel_msg           char(1) DEFAULT 'n' NOT NULL,
+                    a_tel_fax           char(1) DEFAULT 'n' NOT NULL,
+                    a_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
+                    b_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    b_tel_work          char(1) DEFAULT 'n' NOT NULL,
+                    b_tel_home          char(1) DEFAULT 'n' NOT NULL,
+                    b_tel_voice         char(1) DEFAULT 'n' NOT NULL,
+                    b_tel_msg           char(1) DEFAULT 'n' NOT NULL,
+                    b_tel_fax           char(1) DEFAULT 'n' NOT NULL,
+                    b_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
+                    c_tel               varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
+                    c_tel_work          char(1) DEFAULT 'n' NOT NULL,
+                    c_tel_home          char(1) DEFAULT 'n' NOT NULL,
+                    c_tel_voice         char(1) DEFAULT 'n' NOT NULL,
+                    c_tel_msg           char(1) DEFAULT 'n' NOT NULL,
+                    c_tel_fax           char(1) DEFAULT 'n' NOT NULL,
+                    c_tel_prefer        char(1) DEFAULT 'n' NOT NULL,
+                    d_emailtype         text check(d_emailtype in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
+                    d_email             varchar(64),
+                    d_email_work        char(1) DEFAULT 'n' NOT NULL,
+                    d_email_home        char(1) DEFAULT 'n' NOT NULL,
+                    UNIQUE (id)
+		)";
+		$phpgw_setup->db->query($sql);
+
+		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook");
+		while ($db->next_record()) {
+                    $fields['id']         = $db1->f("id");
+                    $fields['owner']      = $db1->f("owner");
+                    $fields['n_given']    = $db1->f("firstname");
+                    $fields['n_family']   = $db1->f("lastname");
+                    $fields['d_email']    = $db1->f("email");
+                    $fields['b_tel']      = $db1->f("hphone");
+                    $fields['a_tel']      = $db1->f("wphone");
+                    $fields['c_tel']      = $db1->f("fax");
+                    $fields['fn']         = $db1->f("fn");
+                    $fields["a_tel_work"] = "y";
+                    $fields["b_tel_home"] = "y";
+                    $fields["c_tel_fax"]  = "y";
+                    $fields['org_name']   = $db1->f("org_name");
+                    $fields['title']      = $db1->f("title");
+                    $fields['adr_street'] = $db1->f("adr_street");
+                    $fields['adr_locality']       = $db1->f("adr_locality");
+                    $fields['adr_region']         = $db1->f("adr_region");
+                    $fields['adr_postalcode']     = $db1->f("adr_postalcode");
+                    $fields['bday']        = $db1->f("bday");
+                    $fields['note']        = $db1->f("note");
+                    $fields['url']         = $db1->f("url");
+
+			$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
+				. "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner,bday,url,note)"
+				. " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
+				. $fields["fn"]."','".$fields["d_email"]."','".$fields["title"]."','".$fields["a_tel"]."','"
+				. $fields["a_tel_work"]."','".$fields["b_tel"]."','".$fields["b_tel_home"]."','"
+				. $fields["c_tel"]."','".$fields["c_tel_fax"]."','".$fields["adr_street"]."','"
+				. $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."','"
+				. $fields["owner"] ."','".$fields["bday"]."','".$fields["url"]."','".$fields["note"]."')";
+
+			$db->query($sql,__LINE__,__FILE__);
+		}
+
+		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
+		$phpgw_setup->db->query("ALTER TABLE phpgw_addressbook_temp RENAME TO phpgw_addressbook",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre16';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

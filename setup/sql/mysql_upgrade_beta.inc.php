@@ -1221,6 +1221,39 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre15';
 	}
 
+	$test[] = '0.9.10pre15';
+	function upgrade0_9_10pre15()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_work adr_work char(1) DEFAULT 'n' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_home adr_home char(1) DEFAULT 'n' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_parcel adr_parcel char(1) DEFAULT 'n' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change adr_postal adr_postal char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_work a_tel_work char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_home a_tel_home char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_voice a_tel_voice char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_msg a_tel_msg char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_fax a_tel_fax char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change a_tel_prefer a_tel_prefer char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_work b_tel_work char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_home b_tel_home char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_voice b_tel_voice char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_msg b_tel_msg char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_fax b_tel_fax char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change b_tel_prefer b_tel_prefer char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_work c_tel_work char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_home c_tel_home char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_voice c_tel_voice char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_msg c_tel_msg char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_fax c_tel_fax char(1) DEFAULT 'n' NOT NULL");
+ 		$phpgw_setup->db->query("alter table phpgw_addressbook change c_tel_prefer c_tel_prefer char(1) DEFAULT 'n' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_work d_email_work char(1) DEFAULT 'n' NOT NULL");
+		$phpgw_setup->db->query("alter table phpgw_addressbook change d_email_home d_email_home char(1) DEFAULT 'n' NOT NULL");
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre16';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
