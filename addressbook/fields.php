@@ -52,6 +52,7 @@
 	reset($fields);
 	for($i=0;$i<count($fields);$i++) {
 		if ($fields[$i]) {
+			$found = True;
 			$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
 
 			$phpgw->template->set_var("field_name",$fields[$i]);
@@ -68,6 +69,13 @@
 
 			$phpgw->template->parse("rows","row",True);
 		}
+	}
+	if (!$found) {
+		$phpgw->nextmatchs->template_alternate_row_color(&$phpgw->template);
+		$phpgw->template->set_var("field_name",'&nbsp;');
+		$phpgw->template->set_var("field_edit",'&nbsp;');
+		$phpgw->template->set_var("field_delete",'&nbsp;');
+		$phpgw->template->parse("rows","row",False);
 	}
 
 	$phpgw->template->set_var("add_field",'<a href="'
