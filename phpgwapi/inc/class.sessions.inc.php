@@ -1,4 +1,4 @@
-<?php 
+<?php
   /**************************************************************************\
   * phpGroupWare API - Session management                                    *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
@@ -1177,7 +1177,7 @@
 			}
 			
 			//used for repost prevention
-			$extravars['click_history'] = $this->generate_click_history();
+//			$extravars['click_history'] = $this->generate_click_history();
 
 			/* if we end up with any extravars then we generate the url friendly string */
 			/* and return the result */
