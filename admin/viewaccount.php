@@ -70,7 +70,7 @@
 	}
 
 	// Last login time
-	if ($userData['account_lastlogin'])
+	if ($userData['lastlogin'])
 	{
 		$t->set_var('account_lastlogin',$phpgw->common->show_date($userData['lastlogin']));
 	}
@@ -80,7 +80,7 @@
 	}
 
 	// Last login IP
-	if ($userData['account_lastloginfrom'])
+	if ($userData['lastloginfrom'])
 	{
 		$t->set_var('account_lastloginfrom',$userData['lastloginfrom']);
 	}
