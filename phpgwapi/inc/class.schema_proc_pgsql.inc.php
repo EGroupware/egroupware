@@ -598,7 +598,7 @@
 			}
 			// renameing existing indexes and primary keys
 			$indexes = $oProc->m_odb->Link_ID->MetaIndexes($sOldTableName,True);
-			if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Fetching indexes: '.print_r($indexes,True); }
+			if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Fetching indexes: '; _debug_array($indexes); }
 			foreach($indexes as $name => $data)
 			{
 				$new_name = str_replace($sOldTableName,$sNewTableName,$name);
