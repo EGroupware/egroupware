@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 
 	<center>
-		<table border="0" cellspacing="2" cellpadding="2">
+		<table border="0" cellspacing="2" cellpadding="2" width="100%">
 			<tr>
 				<td colspan="5" align="left">
 					<table border="0" width="100%">
@@ -23,8 +23,9 @@
 			<tr class="th">
 				<td width="20%">{sort_name}</td>
 				<td width="32%">{sort_description}</td>
-				<td>{lang_icon}</td>
-				<td width="8%" align="center">{lang_sub}</td>
+				<td width="8%">{lang_color}</td>							
+				<td width="6%">{lang_icon}</td>
+				<td width="14%" align="center">{lang_sub}</td>
 				<td width="8%" align="center">{lang_edit}</td>
 				<td width="8%" align="center">{lang_delete}</td>
 			</tr>
@@ -34,6 +35,7 @@
 			<tr bgcolor="{tr_color}" {color}>
 				<td>{name}</td>
 				<td>{descr}</td>
+				<td bgcolor="{td_color}"></td>							
 				<td>{icon}</td>
 				<td align="center">{add_sub}</a></td>
 				<td align="center">{edit}</a></td>

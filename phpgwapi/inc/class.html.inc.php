@@ -53,9 +53,9 @@ class html
 	function inputColor($name,$value='',$title='')
 	{
 		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
-		$onclick = "if (this != '') { window.open(this+'&color='+encodeURIComponent(document.getElementById('$id').value),this.target,'width=240,height=187,scrollbars=no,resizable=no'); return false; } else { return true; }";
+		$onclick = "javascript:window.open('".$this->phpgwapi_js_url.'/colorpicker/select_color.html?id='.urlencode($id)."&color='+document.getElementById('$id').value,'colorPicker','width=240,height=187,scrollbars=no,resizable=no,toolbar=no');";
 		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.$this->htmlspecialchars($value).'" /> '.
-			'<a href="'.$this->phpgwapi_js_url.'/colorpicker/select_color.html?id='.urlencode($id).'" target="_blank" onclick="'.$onclick.'">'.
+			'<a href="#" onclick="'.$onclick.'">'.
 			'<img src="'.$this->phpgwapi_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
 	}
 

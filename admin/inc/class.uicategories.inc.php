@@ -193,14 +193,24 @@
 
 				if ($data['color'])
 				{
-					$this->template->set_var('tr_color',$data['color']);
+					$this->template->set_var('td_color',$data['color']);
 					$gray = (hexdec(substr($data['color'],1,2))+hexdec(substr($data['color'],3,2))+hexdec(substr($data['color'],5,2)))/3;
 				}
+				
+
 				else
 				{
-					$this->nextmatchs->template_alternate_row_color($this->template);
+					$this->template->set_var('td_color','');
+					//$this->nextmatchs->template_alternate_row_color($this->template);
 					$gray = 255;
 				}
+
+				//else
+				//{
+					$this->nextmatchs->template_alternate_row_color($this->template);
+					$gray = 255;
+				// }
+				
 				$this->template->set_var('color',$gray < 128 ? 'style="color: white;"' : '');
 
 				$id = $cat['id'];
@@ -285,7 +295,11 @@
 				$data = unserialize($cat['data']);
 				$icon = $data['icon'];
 				$dir_img = $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . 'phpgwapi' . SEP . 'images' . SEP;
-				$this->template->set_var('icon', "<img src='". $dir_img . $icon  ."'>");
+				
+				if (strlen($icon) > 0)
+				    $this->template->set_var('icon', "<img src='". $dir_img . $icon  ."'>");
+				else
+				    $this->template->set_var('icon', "&nbsp;");
 
 				$this->template->fp('list','cat_list',True);
 			}
@@ -408,7 +422,8 @@
 			}
 			$this->template->set_var('color',$GLOBALS['phpgw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
-			$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
+			//$options = '<option value=""'.(!$cat['data']['icon'] ? ' selected="1"':'').'>'.lang('none')."</options>\n";
+			$options = '';
 			foreach ($this->icons as $icon)
 			{
 				$options .= '<option value="'.$icon.'"'.($icon == $cat['data']['icon'] ? ' selected="1"':'').'>'.
