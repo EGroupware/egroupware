@@ -323,7 +323,7 @@
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
 			// start create sql for temp table
-			$tempcreate  = "CREATE TABLE ".$tmp_table." (id int(11),";
+			$tempcreate  = "CREATE TABLE ".$tmp_table." (id int,";
 
 			// construct query and count rows based on filter sent to function
 			$this->db->query("select id from $this->std_table ".$filtermethod,__LINE__,__FILE__);
