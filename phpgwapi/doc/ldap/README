@@ -90,3 +90,10 @@ include		/etc/openldap/phpgw.at.conf
 include		/etc/openldap/phpgwcontact.oc.conf
 include		/etc/openldap/phpgwcontact.at.conf
 
+
+Novell eDirectory:
+
+The following are for use with Novell eDirectory (EXPERIMENTAL):
+	phpgwaccount.nds.schema
+	phpgwcontact.nds.schema
+

@@ -1,0 +1,327 @@
+# $Id egroupware : phpgwcontact.schema,v 1.0 2000/07/29 01:53:16 milosch Exp $
+
+# (C) 2001-2004 Miles Lott <milos@groupwhere.org>
+# Redistribution and use in original text and binary forms, with or
+# without modification, are permitted provided that the following
+# conditions are met:
+#
+# 1. Redistributions of this schema and/or documentation must retain
+#    the above copyright notice, this list of conditions and the
+#    following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+#    this list of conditions and the following disclaimer in the documentation
+#    and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+# REQUIRED
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.100
+	NAME 'phpgwContactTypeId'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{16}
+	SINGLE-VALUE )
+
+# REQUIRED
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.101
+	NAME 'phpgwContactCatId'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{16})
+
+# REQUIRED
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.102
+	NAME 'phpgwContactAccess'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024}
+	SINGLE-VALUE )
+
+# REQUIRED
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.103
+	NAME 'phpgwContactOwner'
+	EQUALITY numericStringMatch
+	SUBSTR numericStringSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{16}
+	SINGLE-VALUE )
+
+# BELOW ARE OPTIONAL
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.105
+	NAME 'phpgwMiddlename'
+	SUP name )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.106
+	NAME 'phpgwPrefix'
+	SUP name )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.107
+	NAME 'phpgwSuffix'
+	SUP name )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.108
+	NAME 'phpgwAudio'
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.4{25000} )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.109
+	NAME 'phpgwBirthday'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.110
+	NAME 'phpgwTz'
+	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+	SINGLE-VALUE )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.111
+	NAME 'phpgwGeo'
+ 	EQUALITY integerMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+	SINGLE-VALUE )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.112
+	NAME 'phpgwUrl'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.113
+	NAME 'phpgwPublicKey'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.114
+	NAME 'phpgwAdrOneType'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.115
+	NAME 'phpgwAddressLabel'
+	EQUALITY caseIgnoreListMatch
+	SUBSTR caseIgnoreListSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.41 )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.116
+	NAME 'phpgwAdrTwoStreet'
+	SUP street )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.117
+	NAME 'phpgwAdrTwoLocality'
+	SUP l )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.118
+	NAME 'phpgwAdrTwoRegion'
+	SUP st )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.119
+	NAME 'phpgwAdrTwoPostalCode'
+	SUP postalcode )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.120
+	NAME 'phpgwAdrTwoCountryName'
+	SUP friendlyCountryName )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.121
+	NAME 'phpgwAdrTwoType'
+	SUP phpgwAdrOneType )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.122
+	NAME 'phpgwVoiceTelephoneNumber'
+	SUP telephonenumber )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.123
+	NAME 'phpgwMsgTelephoneNumber'
+	SUP telephonenumber )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.124
+	NAME 'phpgwPagerTelephoneNumber'
+	SUP telephonenumber )
+ 
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.125
+	NAME 'phpgwCellTelephoneNumber'
+	SUP telephonenumber )
+ 
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.126
+	NAME 'phpgwBbsTelephoneNumber'
+	SUP telephonenumber )
+ 
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.127
+	NAME 'phpgwModemTelephoneNumber'
+	SUP telephonenumber )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.128
+	NAME 'phpgwMobileTelephoneNumber'
+	SUP telephonenumber )
+ 
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.129
+	NAME 'phpgwIsdnphoneNumber'
+	SUP telephonenumber )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.130
+	NAME 'phpgwVideophoneNumber'
+	SUP telephonenumber )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.131
+	NAME 'phpgwPreferPhone'
+	EQUALITY caseExactIA5Match
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.132
+	NAME 'phpgwMailType'
+	EQUALITY caseExactIA5Match
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.133
+	NAME 'phpgwMailHome'
+	SUP mail )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributeTypes: ( 1.3.6.1.4.1.9554.134
+	NAME 'phpgwMailHomeType'
+	SUP phpgwMailType )
+
+# phpgwContact
+# The phpgwContact represents people who are associated with a
+# phpgw install in some way.  It is a structural class and is derived
+# from the inetOrgPerson schema.
+dn: cn=schema
+changetype: modify
+add: objectClasses
+objectClasses: ( 1.3.6.1.4.1.9554.200
+	NAME 'phpgwContact'
+	DESC 'phpGroupWare Contact Entry'
+	SUP inetOrgPerson
+	MUST(
+		uid $ uidnumber $ phpgwContactTypeId $ phpgwContactCatId $
+		phpgwContactAccess $ phpgwContactOwner )
+	MAY ( cn $ givenname $ sn $ phpgwMiddlename $ phpgwPrefix $
+		phpgwSuffix $ phpgwAudio $ phpgwBirthday $ phpgwTz $ phpgwGeo $
+		phpgwUrl $ phpgwPublicKey $ o $ ou $ title $ streetaddress $
+		l $ st $ postalcode $ friendlyCountryName $ c $ co $ countryname $
+		phpgwAdrOneType $ phpgwAddressLabel $
+		phpgwAdrTwoStreet $ phpgwAdrTwoLocality $ phpgwAdrTwoRegion $
+		phpgwAdrTwoPostalCode $ phpgwAdrTwoCountryName $ phpgwAdrTwoType $
+		telephonenumber $ homephone $ phpgwVoiceTelephoneNumber $ facsimiletelephonenumber $
+		phpgwMsgTelephoneNumber $ phpgwCellTelephoneNumber $ phpgwPagerTelephoneNumber $
+		phpgwBbsTelephoneNumber $ phpgwModemTelephoneNumber $
+		phpgwMobileTelephoneNumber $ phpgwIsdnphoneNumber $
+		phpgwVideophoneNumber $ phpgwPreferPhone $
+		mail $ phpgwMailType $ phpgwMailHome $ phpgwMailHomeType )
+	)
+
