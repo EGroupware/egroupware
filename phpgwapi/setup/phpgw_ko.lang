@@ -11,8 +11,6 @@ administration	common	ko	관리
 april	common	ko	 4월
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
 august	common	ko	 8월
-book marks	common	ko	북마크
-bookmarks	common	ko	북마크
 calendar	common	ko	일정
 cancel	common	ko	취소
 change	common	ko	변경
@@ -104,10 +102,8 @@ thursday	common	ko	목요일
 time	common	ko	시간
 to correct this error for the future you will need to properly set the	common	ko	To correct this error for the future you will need to properly set the
 today is x's birthday!	common	ko	오늘은 %1의 생일입니다!
-todo list	common	ko	할일
 tomorrow is x's birthday.	common	ko	내일은 %1의 생일입니다.
 total	common	ko	합계
-trouble ticket system	common	ko	에러리포트시스템
 tuesday	common	ko	화요일
 updated	common	ko	최종 수정
 users	common	ko	사용자

@@ -13,8 +13,6 @@ administration	common	es	Administración
 april	common	es	Abril
 are you sure you want to delete this entry ?	common	es	Seguro de querer borrar esta entrada ?
 august	common	es	Agosto
-book marks	common	es	Book marks
-bookmarks	common	es	Bookmarks
 calendar	common	es	Calendario
 calendar preferences	common	es	Preferencias - Calendario
 cancel	common	es	Cancelar
@@ -112,11 +110,9 @@ thursday	common	es	Jueves
 time	common	es	Hora
 to correct this error for the future you will need to properly set the	common	es	Para corregir este error para el futuro necesitara setear apropiadamente el
 today is x's birthday!	common	es	Hoy es el cumpleaños de %1!
-todo list	common	es	Lista de Tareas
 tomorrow is x's birthday.	common	es	Mañana es el cumpleaños de %1.
 total	common	es	Total
 translation management	common	es	Manejador de Traducción
-trouble ticket system	common	es	Sistema de Ticket de problemas
 tuesday	common	es	Martes
 updated	common	es	Actualizado
 users	common	es	usuarios

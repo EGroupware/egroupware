@@ -11,10 +11,6 @@ account preferences	common	ja	アカウントユーザ設定
 acl	common	ja	許可設定
 active	common	ja	アクティブ
 add	common	ja	追加
-add addressbook category for	common	ja	アドレス帳カテゴリ追加
-add category	common	ja	カテゴリ追加
-add notes category for	common	ja	ノートカテゴリ追加
-add todo category for	common	ja	プロジェクトカテゴリ追加
 add x category for	common	ja	%1 カテゴリ追加
 address book	common	ja	アドレス帳
 addressbook	common	ja	アドレス帳
@@ -29,10 +25,6 @@ are you sure you want to delete this category ?	common	ja	このカテゴリを削除して
 are you sure you want to delete this entry ?	common	ja	この項目を削除してもよろしいですか。
 august	common	ja	８月
 autosave default category	common	ja	デフォルトカテゴリを自動保存
-book marks	common	ja	ブックマーク
-bookkeeping	common	ja	経理
-bookkeeping admins	common	ja	経理環境設定
-bookmarks	common	ja	ブックマーク
 business	common	ja	ビジネス
 business city	common	ja	市区町村
 business country	common	ja	国
@@ -81,11 +73,6 @@ download	common	ja	ダウンロード
 e-mail	common	ja	電子メール
 e-mail preferences	common	ja	電子メールユーザ設定
 edit	common	ja	訂正
-edit addressbook category for	common	ja	アドレス帳カテゴリ訂正
-edit categories	common	ja	カテゴリ訂正
-edit category	common	ja	カテゴリ訂正
-edit notes category for	common	ja	ノートカテゴリ訂正
-edit todo category for	common	ja	プロジェクトカテゴリ訂正
 edit x category for	common	ja	%1 カテゴリ訂正
 email	common	ja	電子メール
 email type	common	ja	電子メールタイプ
@@ -133,7 +120,6 @@ human resources	common	ja	人材
 images	common	ja	Images
 inc	common	ja	Inc
 international	common	ja	国際
-inventory	common	ja	在庫管理
 it has been more then x days since you changed your password	common	ja	It has been more then %1 days since you changed your password
 january	common	ja	１月
 july	common	ja	７月
@@ -235,20 +221,15 @@ time zone offset	common	ja	時差
 title	common	ja	タイトル
 to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
 today is x's birthday!	common	ja	今日は %1 さんの誕生日です。
-todo	common	ja	プロジェクト
-todo list	common	ja	プロジェクトリスト
-todo preferences	common	ja	プロジェクト環境設定
 tommorow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
 tomorrow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
 total	common	ja	合計
 translation management	common	ja	言語環境
-trouble ticket system	common	ja	チケットシステム
 tuesday	common	ja	火曜日
 updated	common	ja	更新日時
 users	common	ja	ユーザ
 vcard	common	ja	VCard
 view	common	ja	表示
-weather	common	ja	お天気
 wednesday	common	ja	水曜日
 which groups	common	ja	グループ選択
 yes	common	ja	はい

@@ -10,7 +10,6 @@ admin	common	br	Administrador
 administration	common	br	Administracao
 april	common	br	Abril
 august	common	br	Agosto
-book marks	common	br	book marks
 calendar	common	br	Calendario
 cancel	common	br	Cancelar
 change	common	br	Mudar
@@ -94,10 +93,8 @@ sunday	common	br	Domingo
 thursday	common	br	Quinta
 time	common	br	Hora
 today is x's birthday!	common	br	Hoje e' aniversario de %1!
-todo list	common	br	Agenda
 tomorrow is x's birthday.	common	br	Amanha e' aniversario de %1.
 total	common	br	Total
-trouble ticket system	common	br	Sistema de gestao de tickets
 tuesday	common	br	Terca
 updated	common	br	Atualizado
 view	common	br	Visualizar

@@ -13,8 +13,6 @@ administration	common	hu	Adminisztráció
 april	common	hu	Április
 are you sure you want to delete this entry ?	common	hu	Biztosan törölni akarja ezt a bejegyzést?
 august	common	hu	Augusztus
-book marks	common	hu	Könyvjelzõk
-bookmarks	common	hu	Könyvjelzõk
 calendar	common	hu	Naptár
 calendar preferences	common	hu	Kalendárium tulajdonságok
 cancel	common	hu	Mégse
@@ -62,7 +60,6 @@ help	common	hu	Súgó
 high	common	hu	Sürgõs
 home	common	hu	Kezdõlap
 human resources	common	hu	Emberi erõforrások
-inventory	common	hu	Leltár
 it has been more then x days since you changed your password	common	hu	Több mint %1 nap telt el az utolsó jelszómódosítás óta
 january	common	hu	Január
 july	common	hu	Július
@@ -114,11 +111,9 @@ thursday	common	hu	Csütörtök
 time	common	hu	Idõ
 to correct this error for the future you will need to properly set the	common	hu	A hiba kijavításához helyesen kell beállítani a
 today is x's birthday!	common	hu	Ma van %1 születésnapja!
-todo list	common	hu	Tennivalók listája
 tomorrow is x's birthday.	common	hu	Holnap van %1 születésnapja.
 total	common	hu	összesen
 translation management	common	hu	Fordítás menedzsment
-trouble ticket system	common	hu	Trouble Ticket System
 tuesday	common	hu	Kedd
 updated	common	hu	Módosítva
 users	common	hu	felhasználók

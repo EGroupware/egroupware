@@ -48,8 +48,6 @@ available groups	common	fr	Groups disponibles
 bad login or password	common	fr	Mauvais login ou mot de passe
 base url	common	fr	URL de base
 birthday	common	fr	Anniversaire
-book marks	common	fr	Signets
-bookmarks	common	fr	Signet
 brief description	common	fr	Description R&eacute;sum&eacute;
 calendar	common	fr	Calendrier
 calendar - add	common	fr	Calendrier - Ajout
@@ -333,16 +331,11 @@ to	common	fr	A
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur vous devriez dans le future mettre correctement le
 today	common	fr	Aujourd'hui
 today is x's birthday!	common	fr	Aujourd'hui, c'est l'anniversaire de %1 !
-todo	common	fr	t&acirc;ches
-todo list	common	fr	Liste de t&acirc;ches
-todo list - add	common	fr	Liste de t&acirc;ches - ajouter
-todo list - edit	common	fr	Liste de t&acirc;ches - &eacute;diter
 tomorrow is x's birthday.	common	fr	Demain, c'est l'anniversaire de %1.
 total	common	fr	Total
 total records	common	fr	Nombre total d'enregistrements
 translation	common	fr	Traduction
 translation management	common	fr	Direction de Traduction
-trouble ticket system	common	fr	Trouble Ticket System
 tu	common	fr	M
 tue	common	fr	Mar
 tuesday	common	fr	Mardi

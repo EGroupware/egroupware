@@ -17,8 +17,6 @@ all	common	de	alle
 april	common	de	April
 are you sure you want to delete this entry ?	common	de	Sind Sie sicher, daß Sie diesen Eintrag löschen wollen?
 august	common	de	August
-book marks 	common	de	Bookmarks
-bookmarks	common	de	Lesezeichen
 calendar	common	de	Kalender
 calendar preferences 	common	de	Kalender Einstellungen
 cancel	common	de	Abbruch
@@ -180,12 +178,9 @@ time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler für die Zukunft zu beheben, korrigieren Sie die Einstellungen
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
-todo	common	de	Aufgabenliste
-todo list	common	de	Aufgabenliste
 tomorrow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
 total	common	de	Total
 translation management	common	de	Translation Management
-trouble ticket system	common	de	Trouble Ticket System
 tuesday	common	de	Dienstag
 update	common	de	Aktualisieren
 updated	common	de	Updated

@@ -13,8 +13,6 @@ administration	common	da	Administration
 april	common	da	April
 are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
 august	common	da	August
-book marks	common	da	Bogmærke
-bookmarks	common	da	Bogmærke
 calendar	common	da	Kalender
 calendar preferences	common	da	Kalender preferencer
 cancel	common	da	Annullér
@@ -120,11 +118,9 @@ time	common	da	Tid
 time tracking	common	da	Tidsregistrering
 to correct this error for the future you will need to properly set the	common	da	For at rette denne fejl for fremtiden skal Du korrekt opsætte
 today is x's birthday!	common	da	I dag er det %1's fødselsdag!
-todo list	common	da	At-gøre liste
 tomorrow is x's birthday.	common	da	I morgen er det %1's fødselsdag.
 total	common	da	Total
 translation management	common	da	Håndtering af oversættelser
-trouble ticket system	common	da	Problem registrerings system
 tuesday	common	da	Tirsdag
 updated	common	da	Opdatéret
 users	common	da	Brugere

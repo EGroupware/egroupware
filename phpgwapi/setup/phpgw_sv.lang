@@ -16,8 +16,6 @@ april	common	sv	April
 are you sure you want to delete this entry ?	common	sv	Är du säker att du vill radera denna entry ?
 august	common	sv	Augusti
 birthday	common	sv	Födelsedag
-book marks	common	sv	Bokmärken
-bookmarks	common	sv	Bookmarks
 calendar	common	sv	kalender
 calendar preferences	common	sv	Kalender inställningar
 cancel	common	sv	Avbryt
@@ -125,11 +123,9 @@ thursday	common	sv	Torsdag
 time	common	sv	Tid
 to correct this error for the future you will need to properly set the	common	sv	För att framgent rätta till detta problem måste du riktigt sätta
 today is x's birthday!	common	sv	I dag har %1 födelsedag!
-todo list	common	sv	Att göra lista
 tomorrow is x's birthday.	common	sv	I morgon är det %1's födelsedag.
 total	common	sv	Total
 translation management	common	sv	Översättnings hanteraren
-trouble ticket system	common	sv	Trouble Ticket System
 tuesday	common	sv	Tisdag
 updated	common	sv	Uppdaterat
 users	common	sv	användare
