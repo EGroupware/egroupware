@@ -73,8 +73,6 @@ class db {
     if ("" == $Password)
       $Password = $this->Password;
 
-echo "user: $User using: $Password on db: $Database<br>";
-
     /* establish connection, select database */
     if ( 0 == $this->Link_ID ) {
       $this->Link_ID=mysql_pconnect($Host, $User, $Password);
@@ -460,8 +458,6 @@ echo "user: $User using: $Password on db: $Database<br>";
     $this->query("CREATE DATABASE $currentDatabase");
     $this->query("grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'");
 		$this->disconnect();
-
-echo "grant command: grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'<br>";
 
 		$this->User = $currentUser;
 		$this->Password = $currentPassword;
