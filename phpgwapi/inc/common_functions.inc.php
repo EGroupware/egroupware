@@ -1209,7 +1209,7 @@
 				}
 				else
 				{
-					if (preg_match('/<\/?script>/i',$val))
+					if (preg_match('/<\/?[^>]*(script|onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onselect|onsubmit|onunload|javascript)+[^>]*>/i',$val))
 					{
 						unset($var[$key]);
 					}
