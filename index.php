@@ -11,6 +11,7 @@
 
 	/* $Id$ */
 
+	$phpgw_info = array();
 	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? @$GLOBALS['HTTP_GET_VARS']['sessionid'] : @$GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
 	if (! $GLOBALS['sessionid'])
 	{

@@ -1,23 +1,25 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare                                                             *
-  * http://www.phpgroupware.org                                              *
-  * The file written by Joseph Engo <jengo@phpgroupware.org>                 *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare                                                             *
+	* http://www.phpgroupware.org                                              *
+	* The file written by Joseph Engo <jengo@phpgroupware.org>                 *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
+	$phpgw_info = array();
 	if (!is_file('header.inc.php'))
 	{
 		echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
 			. 'here</a>.</center>';
 		exit;
 	}
+
 	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
 	if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 	{
