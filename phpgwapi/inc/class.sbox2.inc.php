@@ -44,7 +44,7 @@
 		 * In the submitted page the vars $query_XXX and $id_XXX are set according to what is selected, see getAddress as Example
 		 */
 
-		function getId($name,$lang_name,$prompt,$id_name,$content='') {
+		function getId($name,$lang_name,$prompt,$id_name,$content='',$note='') {
 			// echo "<p>getId('$name','$lang_name','$prompt',$id_name,'$content') =";
 			global $phpgw;
 			
@@ -61,7 +61,7 @@
 " }\n".
 '</script>';
 
-			$ret[$name.'_title'] =
+			$ret[$name.'_title'] = is_array($content) && count($content) ? $lang_name : 
 '<script language="JavaScript">'."\n".
 " document.writeln('<input type=\"hidden\" name=\"query_$name\" value=\"\">');\n".
 " document.writeln('<input type=\"button\" onClick=\"doSearch(this.form.query_$name,\'$prompt\')\" value=\"$lang_name\">');\n".
@@ -86,7 +86,7 @@
 				if ($id_name) {			
 					$ret[$name] = $content . "\n<input type=\"hidden\" name=\"id_$name\" value=\"$id_name\">";
 				} else {
-					$ret[$name] = '<span class=note>'.lang('use Button to search for').' '.$lang_name.'</span>';
+					$ret[$name] = "<span class=note>$note</span>";
 				}				
 			}			
 			
@@ -147,7 +147,7 @@
 			}
 			if (!$title) $title = lang('Addressbook');
 			
-			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content);
+			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'));
 		}		
 
 		function addr2email( $addr,$home='' ) {
@@ -233,7 +233,7 @@
 			}			
 			if (!$title) $title = lang('Project');
 			
-			return $this->getId($name,$title,lang('Pattern for Search in Projects'),$id_name,$content);
+			return $this->getId($name,$title,lang('Pattern for Search in Projects'),$id_name,$content,lang('use Button to search for Project'));
 		}	
 
 		/*
