@@ -102,7 +102,7 @@
 			return $extra;
 		}
 			
-		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$owner_id=0)
+		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$owner_id=0,$modified=0)
 		{
 			$extra = '';
 			$extra .= strpos($this->filter,'private') ? "AND $this->table.cal_public=0 " : '';
@@ -110,6 +110,11 @@
 			if ($this->cat_id)
 			{
 				$extra .= ' AND '.$this->cat_filter($this->cat_id);
+			}
+			if ((int) $modified > 0)
+			{
+				$modified -=  $GLOBALS['phpgw']->datetime->tz_offset;
+				$extra .= " AND $this->table.cal_modified >= ".(int) $modified;
 			}
 			if($owner_id)
 			{
@@ -127,7 +132,7 @@
 		 * The startdate of an repeating events is the regular event-startdate.
 		 * Events are "still running" if no recur-enddate is set or its after e{year,month,day}
 		 */
-		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id=0)
+		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id=0,$modified=0)
 		{
 			if(!$owner_id)
 			{
@@ -143,6 +148,12 @@
 
 			$sql = "AND $this->table.cal_type='M' AND $this->user_table.cal_user_id IN (".
 				(is_array($owner_id) ? implode(',',$owner_id) : $owner_id).')';
+			
+			if ((int) $modified > 0)
+			{
+				$modified -=  $GLOBALS['phpgw']->datetime->tz_offset;
+				$sql .= " AND $this->table.cal_modified >= ".(int) $modified;
+			}
 /* why ???
 			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
 			@reset($member_groups);

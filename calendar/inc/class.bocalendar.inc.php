@@ -2094,6 +2094,10 @@
 				}
 				$edate = mktime(23,59,59,$emonth,$eday,$eyear);
 			}
+			if (isset($params['modified']) && @$this->xmlrpc)
+			{
+				$params['modified'] = $GLOBALS['server']->iso86012date($params['modified'],true);
+			}
 			//echo "<p>bocalendar::store_to_cache(".print_r($params,True).") syear=$syear, smonth=$smonth, sday=$sday, eyear=$eyear, emonth=$emonth, eday=$eday, xmlrpc='$param[xmlrpc]'</p>\n";
 			if($this->debug)
 			{
@@ -2101,16 +2105,8 @@
 				echo '<!-- End   Date : '.sprintf("%04d%02d%02d",$eyear,$emonth,$eday).' -->'."\n";
 			}
 
-			if($owner_id)
-			{
-				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
-				$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
-			}
-			else
-			{
-				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
-				$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday);
-			}
+			$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday,(int)$owner_id,(int)$params['modified']);
+			$cached_event_ids_repeating = $this->so->list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,(int)$owner_id,(int)$params['modified']);
 
 			$c_cached_ids = count($cached_event_ids);
 			$c_cached_ids_repeating = count($cached_event_ids_repeating);
