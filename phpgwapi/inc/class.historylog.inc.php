@@ -36,7 +36,7 @@
 		);
 		var $alternate_handlers = array();
 
-		function historylog($appname)
+		function historylog($appname='')
 		{
 			if (! $appname)
 			{
@@ -49,8 +49,13 @@
 
 		function delete($record_id)
 		{
-			$this->db->query("delete from phpgw_history_log where history_record_id='".intval($record_id)."' and "
-				. "history_appname='" . $this->appname . "'",__LINE__,__FILE__);
+			$appname = intval($record_id) ? $this->appname : $record_id;
+			$record_id = intval($record_id);
+			$this->db->query('DELETE FROM phpgw_history_log WHERE'.
+				($record_id ? " history_record_id='$record_id' AND" : '').
+				" history_appname='$appname'",__LINE__,__FILE__);
+
+			return $this->db->affected_rows();
 		}
 
 		function add($status,$record_id,$new_value,$old_value)
