@@ -45,6 +45,10 @@
        case "application name":		$s = "Name der Anwendung";	break;
        case "application title":	$s = "Titel der Anwendung";	break;
        case "edit application":		$s = "Anwendung editieren";	break;
+       case "edit group":		$s = "Gruppe editieren";	break;
+
+       case "permissions this group has":
+	$s = "Zugriffsrechte f&uuml;r diese Gruppe";					break;
 
        case "select permissions this group will have":
 	$s = "W&auml;hlen Sie die Zugriffsrechte f&uuml;r diese Gruppe.";	break;
