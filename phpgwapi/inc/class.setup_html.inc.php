@@ -43,7 +43,14 @@
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
 				while(list($x,$y) = @each($dom))
 				{
-					$GLOBALS['header_template']->set_var(strtoupper($x),$y);
+					if(strtoupper($x) == 'CONFIG_PASS' || strtoupper($x) == 'CONFIG_PASSWORD')
+					{
+						$GLOBALS['header_template']->set_var(strtoupper($x),md5($y));
+					}
+					else
+					{
+						$GLOBALS['header_template']->set_var(strtoupper($x),$y);
+					}
 				}
 				/* If the admin didn't select a db_port, set to the default */
 				if(!$dom['db_port'])
@@ -58,7 +65,15 @@
 			$setting = get_var('setting',Array('POST'));
 			while($setting && list($k,$v) = @each($setting))
 			{
-				$var[strtoupper($k)] = $v;
+				if(strtoupper($k) == 'HEADER_ADMIN_PASSWORD' ||
+					strtoupper($k) == 'HEADER_PASSWORD')
+				{
+					$var[strtoupper($k)] = md5($v);
+				}
+				else
+				{
+					$var[strtoupper($k)] = $v;
+				}
 			}
 			$GLOBALS['header_template']->set_var($var);
 			return $GLOBALS['header_template']->parse('out','header');
@@ -163,6 +178,13 @@
 			/* begin use TEMPLATE login_main.tpl */
 			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',@$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
 			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',@$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('lang_header_username',lang('Header Username'));
+			$GLOBALS['setup_tpl']->set_var('lang_header_password',lang('Header Password'));
+			$GLOBALS['setup_tpl']->set_var('lang_header_login',lang('Header Admin Login'));
+			$GLOBALS['setup_tpl']->set_var('lang_config_login',lang('Setup/Config Admin Login'));
+			$GLOBALS['setup_tpl']->set_var('lang_config_username',lang('Config Username'));
+			$GLOBALS['setup_tpl']->set_var('lang_config_password',lang('Config Password'));
+			$GLOBALS['setup_tpl']->set_var('lang_domain',lang('Domain'));
 
 			$GLOBALS['setup_tpl']->set_var('lang_select',lang_select());
 

@@ -126,20 +126,35 @@
 		function auth($auth_type='Config')
 		{
 			#phpinfo();
-			$remoteip     = $_SERVER['REMOTE_ADDR'];
+			#$remoteip   = $_SERVER['REMOTE_ADDR'];
 
-			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
+			$FormLogout = get_var('FormLogout',  array('GET','POST'));
 			if(!$FormLogout)
 			{
 				$ConfigLogin  = get_var('ConfigLogin', array('POST'));
 				$HeaderLogin  = get_var('HeaderLogin', array('POST'));
 				$FormDomain   = get_var('FormDomain',  array('POST'));
+				$FormUser     = get_var('FormUser',    array('POST'));
 				$FormPW       = get_var('FormPW',      array('POST'));
 
 				$this->ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
+				$ConfigUser   = get_var('ConfigUser',  array('POST','COOKIE'));
 				$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
+				$HeaderUser   = get_var('HeaderUser',  array('POST','COOKIE'));
 				$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
 				$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
+
+				/* Setup defaults to aid in header upgrade to version 1.26.
+				 * This was the first version to include the following values.
+				 */
+				if(!@isset($GLOBALS['phpgw_domain'][$FormDomain]['config_user']))
+				{
+					@$GLOBALS['phpgw_domain'][$FormDomain]['config_user'] = 'admin';
+				}
+				if(!@isset($GLOBALS['phpgw_info']['server']['header_admin_user']))
+				{
+					@$GLOBALS['phpgw_info']['server']['header_admin_user'] = 'admin';
+				}
 			}
 
 			/* if(!empty($remoteip) && !$this->checkip($remoteip)) { return False; } */
@@ -150,6 +165,7 @@
 				case 'config':
 					/* config logout */
 					$expire = time() - 86400;
+					$this->set_cookie('ConfigUser','',$expire,'/');
 					$this->set_cookie('ConfigPW','',$expire,'/');
 					$this->set_cookie('ConfigDomain','',$expire,'/');
 					$this->set_cookie('ConfigLang','',$expire,'/');
@@ -160,6 +176,7 @@
 				case 'header':
 					/* header admin logout */
 					$expire = time() - 86400;
+					$this->set_cookie('HeaderUser','',$expire,'/');
 					$this->set_cookie('HeaderPW','',$expire,'/');
 					$this->set_cookie('ConfigLang','',$expire,'/');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
@@ -177,8 +194,13 @@
 					if(!empty($HeaderLogin))
 					{
 						/* header admin login */
-						if($FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						/* New test is md5, cleartext version is for header < 1.26 */
+						if($FormUser == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_user']) &&
+							(md5($FormPW) == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']) ||
+							$FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						)
 						{
+							$this->set_cookie('HeaderUser',"$FormUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$FormPW",$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
 							return True;
@@ -193,8 +215,13 @@
 					elseif(!empty($HeaderPW) && $auth_type == 'Header')
 					{
 						// Returning after login to header admin
-						if($HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						/* New test is md5, cleartext version is for header < 1.26 */
+						if($HeaderUser == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_user']) &&
+							(md5($HeaderPW) == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']) ||
+							$HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
+						)
 						{
+							$this->set_cookie('HeaderUser',"$HeaderUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$HeaderPW",$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');
 							return True;
@@ -211,8 +238,14 @@
 					if(!empty($ConfigLogin))
 					{
 						/* config login */
-						if(isset($GLOBALS['phpgw_domain'][$FormDomain]) && $FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
+						/* New test is md5, cleartext version is for header < 1.26 */
+						if(isset($GLOBALS['phpgw_domain'][$FormDomain]) &&
+							$FormUser == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_user']) &&
+							(md5($FormPW) == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']) ||
+							$FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
+						)
 						{
+							$this->set_cookie('ConfigUser',"$FormUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$FormPW",$expire,'/');
 							$this->set_cookie('ConfigDomain',"$FormDomain",$expire,'/');
 							/* Set this now since the cookie will not be available until the next page load */
@@ -230,8 +263,13 @@
 					elseif(!empty($ConfigPW))
 					{
 						// Returning after login to config
-						if($ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
+						/* New test is md5, cleartext version is for header < 1.26 */
+						if($ConfigUser == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_user']) &&
+							(md5($ConfigPW) == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']) ||
+							$ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
+						)
 						{
+							$this->set_cookie('ConfigUser',"$ConfigUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$ConfigPW",$expire,'/');
 							$this->set_cookie('ConfigDomain',$this->ConfigDomain,$expire,'/');
 							$this->set_cookie('ConfigLang',"$ConfigLang",$expire,'/');

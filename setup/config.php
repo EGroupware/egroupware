@@ -226,7 +226,7 @@
 				case 'value':
 					$newval = str_replace(' ','_',$newval);
 					/* Don't show passwords in the form */
-					if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
+					if(strstr($value,'passwd') || strstr($value,'password') || strstr($value,'root_pw'))
 					{
 						$t->set_var($value,'');
 					}

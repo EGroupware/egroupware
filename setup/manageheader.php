@@ -69,16 +69,24 @@
 				continue;
 			}
 			$dom = get_var('setting_'.$variableName,Array('POST'));
-			if(!$dom['config_pass'])
+			if(!$dom['config_pass'] && !$dom['config_password'])
 			{
 				$errors .= '<br>' . lang("You didn't enter a config password for domain %1",$v);
+			}
+			if(!$dom['config_user'])
+			{
+				$errors .= '<br>' . lang("You didn't enter a config username for domain %1",$v);
 			}
 		}
 
 		$setting = get_var('setting',Array('POST'));
-		if(!$setting['HEADER_ADMIN_PASSWORD'])
+		if(!$setting['HEADER_ADMIN_PASSWORD'] && !$setting['HEADER_ADMIN_PASS'])
 		{
 			$errors .= '<br>' . lang("You didn't enter a header admin password");
+		}
+		if(!$setting['HEADER_ADMIN_USER'])
+		{
+			$errors .= '<br>' . lang("You didn't enter a header admin username");
 		}
 
 		if($errors)
@@ -349,6 +357,7 @@
 					$setup_tpl->set_var('db_user','egroupware');
 					$setup_tpl->set_var('db_pass','your_password');
 					$setup_tpl->set_var('db_type','mysql');
+					$setup_tpl->set_var('config_user','changeme');
 					$setup_tpl->set_var('config_pass','changeme');
 					while(list($k,$v) = @each($supported_db))
 					{
@@ -378,6 +387,9 @@
 					$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 					unset($default_domain); // we kill this for security reasons
 					$GLOBALS['phpgw_info']['server']['config_passwd'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
+					$GLOBALS['phpgw_info']['server']['config_user'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_user'];
+
+
 
 					if(@$adddomain)
 					{
@@ -400,7 +412,9 @@
 						$setup_tpl->set_var('db_user',$GLOBALS['phpgw_domain'][$key]['db_user']);
 						$setup_tpl->set_var('db_pass',$GLOBALS['phpgw_domain'][$key]['db_pass']);
 						$setup_tpl->set_var('db_type',$GLOBALS['phpgw_domain'][$key]['db_type']);
-						$setup_tpl->set_var('config_pass',$GLOBALS['phpgw_domain'][$key]['config_passwd']);
+						$setup_tpl->set_var('config_user',$GLOBALS['phpgw_domain'][$key]['config_user']);
+						$setup_tpl->set_var('config_pass','');
+						$setup_tpl->set_var('config_password',$GLOBALS['phpgw_domain'][$key]['config_passwd']);
 
 						$selected = '';
 						$dbtype_options = '';
@@ -505,7 +519,9 @@
 
 			$setup_tpl->set_var('server_root',@$GLOBALS['phpgw_info']['server']['server_root']);
 			$setup_tpl->set_var('include_root',@$GLOBALS['phpgw_info']['server']['include_root']);
-			$setup_tpl->set_var('header_admin_password',@$GLOBALS['phpgw_info']['server']['header_admin_password']);
+			$setup_tpl->set_var('header_admin_user',@$GLOBALS['phpgw_info']['server']['header_admin_user']);
+			$setup_tpl->set_var('header_admin_pass',@$GLOBALS['phpgw_info']['server']['header_admin_password']);
+			$setup_tpl->set_var('header_admin_password','');
 
 			if(@$GLOBALS['phpgw_info']['server']['db_persistent'])
 			{
@@ -585,6 +601,7 @@
 			list($firstDomain) = @each($GLOBALS['phpgw_domain']);
 			$setup_tpl->set_var(array(
 				'FormDomain' => $firstDomain,
+				'FormUser'   => $GLOBALS['phpgw_domain'][$firstDomain]['config_user'],
 				'FormPW'     => $GLOBALS['phpgw_domain'][$firstDomain]['config_passwd']
 			));
 			$setup_tpl->set_var('errors',$errors);
@@ -593,6 +610,7 @@
 			$setup_tpl->set_var('lang_adddomain',lang('Add a domain'));
 			$setup_tpl->set_var('lang_serverroot',lang('Server Root'));
 			$setup_tpl->set_var('lang_includeroot',lang('Include Root (this should be the same as Server Root unless you know what you are doing)'));
+			$setup_tpl->set_var('lang_adminuser',lang('Admin user for header manager'));
 			$setup_tpl->set_var('lang_adminpass',lang('Admin password to header manager'));
 			$setup_tpl->set_var('lang_dbhost',lang('DB Host'));
 			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server'));
@@ -606,6 +624,7 @@
 			$setup_tpl->set_var('lang_dbpassdescr',lang('Password of db user'));
 			$setup_tpl->set_var('lang_dbtype',lang('DB Type'));
 			$setup_tpl->set_var('lang_whichdb',lang('Which database type do you want to use with eGroupWare?'));
+			$setup_tpl->set_var('lang_configuser',lang('Configuration User'));
 			$setup_tpl->set_var('lang_configpass',lang('Configuration Password'));
 			$setup_tpl->set_var('lang_passforconfig',lang('Password needed for configuration'));
 			$setup_tpl->set_var('lang_persist',lang('Persistent connections'));
@@ -621,6 +640,7 @@
 			$setup_tpl->set_var('lang_domselect',lang('Domain select box on login'));
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 			$setup_tpl->set_var('lang_continue',lang('Continue'));
+
 
 			$setup_tpl->pfp('out','manageheader');
 

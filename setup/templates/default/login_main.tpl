@@ -7,7 +7,7 @@
 	<td colspan="2">&nbsp;</strong></td>
 </tr>
 <tr class="th">
-		<td bgcolor="#cccccc" colspan="2">&nbsp;<strong>Header Admin Login</strong></td>
+		<td bgcolor="#cccccc" colspan="2">&nbsp;<strong>{lang_header_login}</strong></td>
 	</tr>
 	<tr class="row_on">
 		<td colspan="2" class="msg" align="center">{HeaderLoginMSG}</td>
@@ -15,9 +15,15 @@
 	<tr class="row_on">
 		<td>
 	<form action="manageheader.php" method="post" name="admin">
-			Header Password:
-			<input type="password" name="FormPW" value="">
+			{lang_header_username}:
+			<input type="text" name="FormUser" value="">
 			{lang_select}
+		</td>
+	</tr>
+	<tr class="row_on">
+		<td>
+			{lang_header_password}:
+			<input type="password" name="FormPW" value="">
 			<input type="submit" name="Submit" value="Login">
 			<input type="hidden" name="HeaderLogin" value="Login">
 	</form>

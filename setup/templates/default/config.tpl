@@ -133,7 +133,7 @@
     <td colspan="2"><b>{lang_Authentication_/_Accounts}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Select_which_type_of_authentication_you_are_using}:</td>
     <td>
      <select name="newsettings[auth_type]">
@@ -148,7 +148,8 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+
+   <tr class="row_off">
     <td>{lang_Select_where_you_want_to_store/retrieve_user_accounts}:</td>
     <td>
      <select name="newsettings[account_repository]">
@@ -159,6 +160,14 @@
     </td>
    </tr>
 
+   <tr class="row_on">
+    <td>{lang_sql_encryption_type}:</td>
+    <td>
+     <select name="newsettings[sql_encryption_type]">
+{hook_sql_passwdhashes}
+     </select>
+    </td>
+   </tr>
 
    <tr class="row_off">
     <td>{lang_Minimum_account_id_(e.g._500_or_100,_etc.)}:</td>

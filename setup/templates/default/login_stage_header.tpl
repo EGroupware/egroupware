@@ -2,7 +2,7 @@
 <tbody>
 <tr class="th">
 		<td colspan="2" bgcolor="#cccccc">
-			&nbsp;<strong>Setup/Config Admin Login</strong>
+			&nbsp;<strong>{lang_config_login}</strong>
 		</td>
 	</tr>
 	<tr class="row_on">
@@ -14,18 +14,24 @@
 			<!-- BEGIN B_multi_domain -->
 				<table>
 				<tr>
-					<td>Domain:</td>
+					<td>{lang_domain}:</td>
 					<td colspan="2">
 						<select name="FormDomain">{domains}</select>
 					</td>
 				</tr>
 				<tr>
-					<td>Config Password:</td>
+					<td>{lang_config_username}:</td>
 					<td>
-						<input type="password" name="FormPW" value="">
+						<input type="text" name="FormUser" value="">
 					</td>
 					<td>
 						{lang_select}
+					</td>
+				</tr>
+				<tr>
+					<td>{lang_config_password}:</td>
+					<td>
+						<input type="password" name="FormPW" value="">
 					</td>
 				</tr>
 				</table>
@@ -34,12 +40,18 @@
 		<!-- BEGIN B_single_domain -->
 				<table>
 				<tr>
-					<td>Config Password:</td>
+					<td>{lang_config_username}:</td>
 					<td>
-						<input type="password" name="FormPW" value="">
+						<input type="text" name="FormUser" value="">
 					</td>
 					<td>
 						{lang_select}
+					</td>
+				</tr>
+				<tr>
+					<td>{lang_config_password}:</td>
+					<td>
+						<input type="password" name="FormPW" value="">
 					</td>
 				</table>
 				<input type="hidden" name="FormDomain" value="{default_domain_zero}">

@@ -16,7 +16,7 @@
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'phpgwapi';
 	$setup_info['phpgwapi']['version']   = '0.9.99.010';
-	$setup_info['phpgwapi']['versions']['current_header'] = '1.25';
+	$setup_info['phpgwapi']['versions']['current_header'] = '1.26';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
 

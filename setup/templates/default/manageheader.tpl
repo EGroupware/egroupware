@@ -35,7 +35,10 @@
     <td colspan="2"><b>{lang_includeroot}</b><br><input type="text" name="setting[include_root]" size="80" value="{include_root}"></td>
   </tr>
   <tr>
-    <td colspan="2"><b>{lang_adminpass}</b><br><input type="password" name="setting[HEADER_ADMIN_PASSWORD]" size="80" value="{header_admin_password}"></td>
+    <td colspan="2"><b>{lang_adminuser}</b><br><input type="text" name="setting[HEADER_ADMIN_USER]" size="30" value="{header_admin_user}"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>{lang_adminpass}</b><br><input type="password" name="setting[HEADER_ADMIN_PASSWORD]" size="80" value="{header_admin_password}"><input type="hidden" name="setting[HEADER_ADMIN_PASS]" value="{header_admin_pass}"></td>
   </tr>
   <br><br>
   <tr>
@@ -93,8 +96,8 @@
  <form action="index.php" method="post">
   <br>{lang_finaldescr}<br>
   <input type="hidden" name="FormLogout"  value="header">
-  <input type="hidden" name="FormLogout"  value="config">
   <input type="hidden" name="ConfigLogin" value="Login">
+  <input type="hidden" name="FormUser"    value="{FormUser}">
   <input type="hidden" name="FormPW"      value="{FormPW}">
   <input type="hidden" name="FormDomain"  value="{FormDomain}">
   <input type="submit" name="junk"        value="{lang_continue}">
@@ -138,7 +141,10 @@
     <td><b>{lang_dbpass}</b><br><input type="password" name="setting_{db_domain}[db_pass]" value="{db_pass}"></td><td>{lang_dbpassdescr}</td>
   </tr>
   <tr>
-    <td><b>{lang_configpass}</b><br><input type="password" name="setting_{db_domain}[config_pass]" value="{config_pass}"></td>
+    <td><b>{lang_configuser}</b><br><input type="text" name="setting_{db_domain}[config_user]" value="{config_user}"></td>
+  </tr>
+  <tr>
+    <td><b>{lang_configpass}</b><br><input type="password" name="setting_{db_domain}[config_pass]" value="{config_pass}"><input type="hidden" name="setting_{db_domain}[config_password]" value="{config_password}"></td>
     <td>{lang_passforconfig}</td>
   </tr>
 <!-- END domain -->

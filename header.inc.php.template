@@ -20,6 +20,7 @@
 
 	define('PHPGW_SERVER_ROOT','{SERVER_ROOT}');
 	define('PHPGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
+	$GLOBALS['phpgw_info']['server']['header_admin_user'] = '{HEADER_ADMIN_USER}';
 	$GLOBALS['phpgw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
 
 	/* eGroupWare domain-specific db settings */{domains}
@@ -92,7 +93,7 @@
 	$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
 	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.25';
+	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.26';
 	/* This is a fix for NT */
 	if(!isset($GLOBALS['phpgw_info']['flags']['noapi']) || !$GLOBALS['phpgw_info']['flags']['noapi'] == True)
 	{
@@ -105,7 +106,7 @@
 	  Leave off the final php closing tag, some editors will add
 	  a \n or space after which will mess up cookies later on
 	*/<!-- BEGIN domain -->
-	$GLOBALS['phpgw_domain']['{DB_DOMAIN}'] = array (
+	$GLOBALS['phpgw_domain']['{DB_DOMAIN}'] = array(
 		'db_host' => '{DB_HOST}',
 		'db_port' => '{DB_PORT}',
 		'db_name' => '{DB_NAME}',
@@ -114,6 +115,7 @@
 		// Look at the README file
 		'db_type' => '{DB_TYPE}',
 		// This will limit who is allowed to make configuration modifications
+		'config_user'   => '{CONFIG_USER}',
 		'config_passwd' => '{CONFIG_PASS}'
 	);
 
