@@ -53,7 +53,7 @@ daily	calendar	en	Daily
 daily matrix view	calendar	en	Daily Matrix View
 days	calendar	en	days
 days repeated	calendar	en	days repeated
-dayview	calendar	en	Dayview
+dayview	calendar	en	Day View
 default appointment length (in minutes)	calendar	en	default appointment length (in minutes)
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
@@ -65,7 +65,7 @@ delete selected contacts	calendar	en	Delete selected contacts
 delete series	calendar	en	Delete Series
 delete single	calendar	en	Delete Single
 deleted	calendar	en	Deleted
-description	calendar	en	DESCRIPTION
+description	calendar	en	Description
 disable	calendar	en	Disable
 disabled	calendar	en	disabled
 display interval in day view	calendar	en	Display interval in Day View
@@ -136,7 +136,7 @@ length<br>(<= 255)	calendar	en	Length<br>(<= 255)
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
-matrixview	calendar	en	Matrixview
+matrixview	calendar	en	Matrix View
 minutes	calendar	en	minutes
 mo	calendar	en	M
 modified	calendar	en	Modified
@@ -146,7 +146,7 @@ month	calendar	en	Month
 monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
-monthview	calendar	en	Monthview
+monthview	calendar	en	Month View
 new entry	calendar	en	New Entry
 new name must not exist and not be empty!!!	calendar	en	New name must not exist and not be empty!!!
 no matches found	calendar	en	No matches found
@@ -248,20 +248,20 @@ the following conflicts with the suggested time:<ul>%1</ul>	calendar	en	The foll
 the user %1 is not participating in this event!	calendar	en	The user %1 is not participating in this event!
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	en	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your dayview. Events after this time, are shown below the dayview.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	en	This defines the end of your day view. Events after this time are shown below the day view.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	en	This defines the start of your day view. Events before this time are shown above the day view.<br>This time is also used as a default start time for new events.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
 this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	en	This is mostly caused by a not or wrongly configured SMTP server. Notify your administrator.
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	en	This message is sent to every participant of events you own, who has requested notifcations about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.
-this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentative accept or reject an event.
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event. Include all information you might need.
+this message is sent when you accept, tentative accept or reject an event.	calendar	en	This message is sent when you accept, tentatively accept, or reject an event.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	en	This message is sent when you set an Alarm for a certain event.  Include all information you might need.
 this month	calendar	en	This month
 this week	calendar	en	This week
 this year	calendar	en	This year
 thu	calendar	en	Thu
-title	calendar	en	TITLE
+title	calendar	en	Title
 title of the event	calendar	en	Title of the event
 title-row	calendar	en	Title-row
 to-firstname	calendar	en	To-Firstname
@@ -280,15 +280,15 @@ wed	calendar	en	Wed
 week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
 weekly	calendar	en	Weekly
-weekview	calendar	en	Weekview
+weekview	calendar	en	Week View
 when creating new events default set to private	calendar	en	When creating new events default set to private
 which events do you want to see when you enter the calendar.	calendar	en	Which events do you want to see when you enter the calendar.
-which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar view do you want to see, when you start calendar ?
+which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar view do you want to see when you start calendar ?
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 workdayends	calendar	en	workdayends
 yearly	calendar	en	Yearly
-yearview	calendar	en	Yearview
+yearview	calendar	en	Year View
 you can either set a year or a occurence, not both !!!	calendar	en	You can either set a Year or a Occurence, not both !!!
 you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurence !!!
 you do not have permission to add alarms to this event !!!	calendar	en	You do not have permission to add alarms to this event !!!
