@@ -61,18 +61,18 @@
     global $phpgw_info;
     switch($code){
       case "1":
-        return lang("You have been successfully logged out");
+        return "You have been successfully logged out";
         break;
       case "2":
-        return lang("Sorry, your login has expired");
+        return "Sorry, your login has expired";
         break;
       case "5":
-        return "<font color=FF0000>" . lang("Bad login or password") . "</font>";
+        return "<font color=FF0000>" . "Bad login or password" . "</font>";
         break;
       case "10":
         Setcookie("sessionid");
         Setcookie("kp3");
-        return "<font color=FF0000>" . lang("Your session could not be verified.") . "</font>";
+        return "<font color=FF0000>" . "Your session could not be verified." . "</font>";
         break;
       default:
       return "&nbsp;";
@@ -98,15 +98,15 @@
     }
 
   } else {
-    if (isset($last_loginid) && $last_loginid) {
-       $phpgw->preferences->read_preferences("common",$last_loginid); 
+    if (isset($last_loginid)) {
+//       $phpgw->preferences->read_preferences("common",$last_loginid); 
        #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
-       $phpgw->translation->add_app("login");
+//       $phpgw->translation->add_app("login");
     }
   }
 /*  This has been put on hold until 0.9.4pre1, we have a different method of doing it (jengo)
   if ($phpgw_info["server"]["multiable_domains"]) {
-     $tmpl->set_var("lang_domain",lang("Domain"));
+     $tmpl->set_var("lang_domain","Domain");
      if ($phpgw_info["server"]["multiable_domains_use_select_box"]) {
         $domains_select = '<select name="domain">';
      
@@ -135,11 +135,11 @@
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
-  $tmpl->set_var("lang_username",lang("username"));
-  $tmpl->set_var("lang_phpgw_login",lang("phpGroupWare login"));
+  $tmpl->set_var("lang_username","username");
+  $tmpl->set_var("lang_phpgw_login","phpGroupWare login");
   $tmpl->set_var("version",$phpgw_info["server"]["version"]);
-  $tmpl->set_var("lang_password",lang("password"));
-  $tmpl->set_var("lang_login",lang("login"));
+  $tmpl->set_var("lang_password","password");
+  $tmpl->set_var("lang_login","login");
 
   $tmpl->parse("loginout", "login_form");
   $tmpl->p("loginout");
