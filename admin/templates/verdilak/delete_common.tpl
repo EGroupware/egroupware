@@ -1,10 +1,14 @@
 <!-- BEGIN form -->
  <center>
   <table border="0" with="65%">
-   {messages}
    <tr>
-    <td>{no}</td>
-    <td>{yes}</td>
+    <td colspan="2" align="center">
+     {messages}
+    </td>
+   </tr>
+   <tr>
+    <td align="center">{no}</td>
+    <td align="center">{yes}</td>
    </tr>
   </table>
  </center>
