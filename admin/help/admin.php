@@ -17,7 +17,7 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../header.inc.php');
 ?>
-<img src="<?php echo $phpgw->common->image('calendar','navbar.gif'); ?>" border=0> 
+<img src="<?php echo $phpgw->common->image('admin','navbar.gif'); ?>" border=0> 
 <font face="<?php echo $phpgw_info['theme']['font']; ?>" size="2">
 <p>
 This function is usually only available to the systems administrator of the system.
