@@ -1023,7 +1023,8 @@
 							}
 							$temp_event_start = sprintf("%d%02d",$event['start']['hour'],$event['start']['min']);
 							$temp_event_end = sprintf("%d%02d",$event['end']['hour'],$event['end']['min']);					
-							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
+//							if((($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
+							if((($temp_start_time <= $temp_event_start) && ($temp_end_time > $temp_event_start) && ($temp_end_time <= $temp_event_end)) ||
 								(($temp_start_time >= $temp_event_start) && ($temp_start_time < $temp_event_end) && ($temp_end_time >= $temp_event_end)) ||
 								(($temp_start_time <= $temp_event_start) && ($temp_end_time >= $temp_event_end)) ||
 								(($temp_start_time >= $temp_event_start) && ($temp_end_time <= $temp_event_end)))
