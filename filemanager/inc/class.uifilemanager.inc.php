@@ -1719,16 +1719,6 @@
 				}
 				$viewable = array('','text/plain','text/csv','text/html','text/text');
 
-				//hack for powerpoint (NDEE 070804)
-				//manage some special mimetypes here
-				$extension = strstr($this->file,'.');
-				if($extension="ppt")
-				{
-					$mime_type="x-application/powerpoint";
-				}
-				// END
-
-
 				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
 	   				
