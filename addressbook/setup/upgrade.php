@@ -127,7 +127,7 @@
 			$extra["notes"]				= $db1->f("ab_notes");
 			$extra["access"]			= $db1->f("ab_access");
 
-			// add this record's standard with current entry's owner as owner
+			// add this record's standard fields with current entry's owner as owner
 			$sql="INSERT INTO phpgw_addressbook ("
 				. "id,org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
 				. "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner)"
@@ -141,7 +141,7 @@
 			$db2->query($sql);
 
 			//echo "<br>Inserting id '".$fields["id"]."'";
-			// insert extra data for this record into extra fields table
+			// insert extra fields for this record into extra fields table
 			while (list($name,$value) = each($extra)) {
 				//echo "<br>Inserting '".$name."' = '".$value."'";
 				$db2->query("INSERT INTO phpgw_addressbook_extra VALUES ('".$fields["id"]."','" . $$fields["owner"] . "','"
