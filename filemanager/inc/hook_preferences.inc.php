@@ -13,9 +13,9 @@
   /* $Id$ */
 {
 // Only Modify the $file and $title variables.....
-	$title = $appname;
+	$title = "PHPWebHosting";
 	$file = Array(
-		'PHPWebHosting preferences'	=> $phpgw->link('/phpwebhosting/preferences.php')
+		'Preferences'	=> $phpgw->link('/phpwebhosting/preferences.php')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
