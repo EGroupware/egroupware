@@ -26,17 +26,17 @@
      $phpgw->db->next_record();
 
      if ($phpgw->db->f(0) != 0) {
-        $error = "<br>" . lang("Sorry, that group name has already been taking.");
+        $error = "<br>" . lang("Sorry, that group name has already been taken.");
      }
      if (! $n_group) {
         $error = "<br>" . lang("You must enter a group name.");
      }
 
      if (! $error) {
-        $phpgw->db->lock(array("accounts","groups"));
+        $phpgw->db->lock(array("accounts","groups","preferences"));
 
         $phpgw->accounts->add_app($n_group_permissions);
-	$apps = $phpgw->accounts->add_app("",True);
+        $apps = $phpgw->accounts->add_app("",True);
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
 				. $apps . "')");
@@ -48,30 +48,31 @@
           $new_apps[] = $after_apps[$i];
         }
         for ($i=0; $i<count($n_users);$i++) {
-           $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
-           $phpgw->db->next_record();
-           $user_groups = $phpgw->db->f("account_groups") . ",$group_con:0,";
+          $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
+          $phpgw->db->next_record();
+          $user_groups = $phpgw->db->f("account_groups") . ",$group_con:0,";
 
-           $user_groups = ereg_replace(",,",",",$user_groups);
-           $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
+          $user_groups = ereg_replace(",,",",",$user_groups);
+          $phpgw->db->query("UPDATE accounts SET account_groups='$user_groups' WHERE account_id=".$n_users[$i]);
 
-	   $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
-	   $t = $pref->get_preferences();
+          $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
+          $t = $pref->get_preferences();
 
-	   $docommit = False;
-	   for ($j=0;$j<count($new_apps);$j++) {
-	     if($new_apps[$j]=="admin")
-	       $check = "common";
-	     else
-	       $check = $new_apps[$j];
-	     if (!$t["$check"]) {
-	       $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
-	       $docommit = True;
-	     }
-	   }
-	   if ($docommit) {
-	     $pref->commit();
-	   }
+          $docommit = False;
+          for ($j=0;$j<count($new_apps);$j++) {
+            if($new_apps[$j]=="admin") {
+              $check = "common";
+            } else {
+              $check = $new_apps[$j];
+            }
+            if (!$t["$check"]) {
+              $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+              $docommit = True;
+            }
+          }
+          if ($docommit) {
+            $pref->commit();
+          }
         }
 
         $sep = $phpgw->common->filesystem_separator();
