@@ -69,7 +69,7 @@
 				'upcoming'			=>	lang('upcoming')
 			);
 
-			$this->html = CreateObject('infolog.html');
+			$this->html = CreateObject('etemplate.html');
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 			$this->link = CreateObject('infolog.uilink');

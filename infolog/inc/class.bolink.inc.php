@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	include_once(PHPGW_API_INC . '/../../infolog/inc/class.solink.inc.php');
+	include_once(PHPGW_INCLUDE_ROOT . '/infolog/inc/class.solink.inc.php');
 
 	/*!
 	@class bolink

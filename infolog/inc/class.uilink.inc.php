@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	include_once(PHPGW_API_INC . '/../../infolog/inc/class.bolink.inc.php');
+	include_once(PHPGW_INCLUDE_ROOT . '/infolog/inc/class.bolink.inc.php');
 
 	/*!
 	@class uilink
@@ -65,7 +65,7 @@
 					'remark' => ''
 				);
 				$etemplate = CreateObject('etemplate.etemplate','infolog.linkto_widget.create');
-				$html = CreateObject('infolog.html');
+				$html = CreateObject('etemplate.html');
 				$out = $etemplate->show($value,'','',$name)."\n".$html->input_hidden($name.'[app]',$value['app']);
 			}
 			else
@@ -143,7 +143,7 @@
 			{
 				return False;
 			}
-			$html = CreateObject('infolog.html');
+			$html = CreateObject('etemplate.html');
 			return $content == '' ? $html->link('/index.php',$view) : $html->a_href($content,'/index.php',$view);
 		}
 
