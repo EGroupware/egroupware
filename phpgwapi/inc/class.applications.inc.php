@@ -21,7 +21,11 @@
   \**************************************************************************/
 
   /* $Id$ */
-  
+  	/*!
+  	@class applicatons
+  	@abstract functions for managing and installing apps
+  	@discussion Author: skeeter
+  	*/
   class applications
   {
     var $account_id;
@@ -31,6 +35,11 @@
     /**************************************************************************\
     * Standard constructor for setting $this->account_id                       *
     \**************************************************************************/
+    	/*!
+    	@function applications
+    	@abstract standard constructor for setting $this->account_id
+    	@param $account_id account id
+    	*/
     function applications($account_id = False)
     {
       global $phpgw, $phpgw_info;
@@ -41,7 +50,11 @@
     /**************************************************************************\
     * These are the standard $this->account_id specific functions              *
     \**************************************************************************/
-
+		/*!
+		@function read_repository
+		@abstract read from repository
+		@discussion private should only be called from withing this class
+		*/
     function read_repository()
     {
       global $phpgw, $phpgw_info;
@@ -63,12 +76,22 @@
       return $this->data;
     }
 
+		/*!
+		@function read()
+		@abstract read from the repository
+		@discussion pubic function that is used to determine what apps a user has rights to
+		*/
     function read() {
       if (count($this->data) == 0){ $this->read_repository(); }
       reset($this->data);
       return $this->data;
     }
-
+		/*!
+		@function add
+		@abstract add an app to a user profile
+		@discussion
+		@param $apps array containing apps to add for a user
+		*/	
     function add($apps) {
       global $phpgw_info;
       if(gettype($apps) == 'array') {
@@ -81,7 +104,12 @@
       reset($this->data);
       return $this->data;
     }
-
+		/*!
+		@function delete
+		@abstract delete an app from a user profile
+		@discussion
+		@param $appname appname to remove
+		*/
     function delete($appname) {
       if($this->data[$appname]) {
         unset($this->data[$appname]);
@@ -89,7 +117,12 @@
       reset($this->data);
       return $this->data;
     }
-
+		/*!
+		@function update_data
+		@abstract update the array(?)
+		@discussion
+		@param $data update the repository array(?)
+		*/
     function update_data($data) {
       reset($data);
       $this->data = Array();
@@ -97,7 +130,11 @@
       reset($this->data);
       return $this->data;
     }
-   
+		/*!
+		@function save_repository()
+		@abstract save the repository
+		@discussion 
+		*/   
     function save_repository(){
       global $phpgw;
       $num_rows = $phpgw->acl->delete_repository("%%", 'run', $this->account_id);
@@ -150,7 +187,10 @@
     /**************************************************************************\
     * These are the generic functions. Not specific to $this->account_id       *
     \**************************************************************************/
-
+		/*!
+		@function read_installed_apps()
+		@abstract populate array with a list of installed apps
+		*/
     function read_installed_apps(){
       global $phpgw_info;
       $this->db->query("select * from phpgw_applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
@@ -163,7 +203,11 @@
         }
       }
     }
-
+		/*!
+		@function is_system_enabled
+		@abstract check if an app is enabled
+		@param $appname name of the app to check for
+		*/
     function is_system_enabled($appname){
       global $phpgw_info;
       if(gettype($phpgw_info['apps']) != 'array') {
