@@ -175,6 +175,10 @@
 
 			return $this->members;
 		}
+	/*!
+	 @class_start accounts
+	 @abstract a test.
+	*/
 
 		/*!
 		@function get_nextid
@@ -229,4 +233,8 @@
 			return $nextid;
 		}
 	}
+	/*!
+	 @class_end accounts
+	 @abstract a test.
+	*/
 ?>
