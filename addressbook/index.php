@@ -17,8 +17,6 @@
                                "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  //echo "<br>Time track = " . $phpgw_info["apps"]["timetrack"]["enabled"];
-
   $t = new Template($phpgw_info["server"]["app_tpl"]);
   $t->set_file(array( "addressbook_header"	=> "header.tpl",
 		      "column"			=> "column.tpl",
@@ -27,12 +25,12 @@
 
   $this = CreateObject("phpgwapi.contacts");
 
-  while ($column = each($this->stock_addressbook_fields)) {
-    if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
-      $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
+  while ($column = each($this->stock_contact_fields)) {
+    if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) &&
+      $phpgw_info["user"]["preferences"]["addressbook"][$column[1]]) {
       $cols .= "  <td height=\"21\">\n";
       $cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-      $cols .= $phpgw->nextmatchs->show_sort_order($sort,"ab_" . $column[0],$order,"index.php",lang($column[1]));
+      $cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"index.php",lang($column[1]));
       $cols .= "</font>\n  </td>";
       $cols .= "\n";
              
@@ -48,7 +46,7 @@
 
   $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
 
-  $entries = $this->read($start,$offset,$access,$columns_to_display,$query,$filter,$sort,$order);
+  $entries = $this->read($start,$offset,$columns_to_display,$query,$sort,$order);
 
   $search_filter = $phpgw->nextmatchs->show_tpl("index.php",
                    $start, $this->total_records,
@@ -99,7 +97,7 @@
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var(row_tr_color,$tr_color);
     $myid    = $entries[$i]["id"];
-    $myowner = $entries[$i]["owner"];
+    $myowner = $entries[$i]["uid"];
 
     while ($column = each($columns_to_display)) { // each entry column
       $ref=$data="";

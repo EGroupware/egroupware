@@ -18,13 +18,15 @@
                                
   include("../header.inc.php");
 
+  $this = CreateObject("phpgwapi.contacts");
+ 
   if ($submit) {
      $totalerrors = 0;
      if (! count($ab_selected)) {
         $errors[$totalerrors++] = lang("You must select at least 1 column to display");
      }
      if (! $totalerrors) {
-        while (list($pref[0]) = each($abc)) {
+        while (list($pref[0]) = each($this->stock_contact_fields)) {
            if ($ab_selected["$pref[0]"]) {
               $phpgw->preferences->change("addressbook",$pref[0],"addressbook_" . $ab_selected["$pref[0]"]);
            } else {
@@ -61,7 +63,7 @@
       $i = 0; $j = 0;
       $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
       echo '<tr bgcolor="' . $tr_color . '">';
-      while (list($col, $descr) = each($abc)) {
+      while (list($col, $descr) = each($this->stock_contact_fields)) {
 //       echo "<br>test: $col - $i $j - " . count($abc);
          $i++; $j++;
 
@@ -77,7 +79,7 @@
             $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
             echo '<tr bgcolor="' . $tr_color . '">';
          }
-         if ($j == count($abc)) {
+         if ($j == count($this->stock_contact_fields)) {
             if ($i == 1) {
                echo "<td>&nbsp;</td><td>&nbsp;</td>";
             }
