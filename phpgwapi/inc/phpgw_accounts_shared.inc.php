@@ -235,11 +235,11 @@
 
          $db->query("delete from preferences where preference_owner='" . $this->account_id . "'",__LINE__,__FILE__);
 
-         $db->query("insert into preferences (preference_owner,preference_value) values ('"
-                  . $this->account_id . "','" . serialize($this->preferences) . "')",__LINE__,__FILE__);
+         $db->query("insert into preferences (preference_owner,preference_value) values ("
+                  . $this->account_id . ",'" . serialize($this->preferences) . "')",__LINE__,__FILE__);
 
          if ($phpgw_info["user"]["account_id"] == $this->account_id) {
-	    $phpgw_info["user"]["preferences"] = $this->preferences;
+	    $phpgw->preferences->preferences = $this->get_preferences();
             $phpgw->accounts->sync(__LINE__,__FILE__);
          }
       }

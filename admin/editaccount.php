@@ -95,10 +95,7 @@
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
    if (count($new_apps)) {
-      $phpgw->db->query("select account_id from accounts where account_lid='$new_loginid'",__LINE__,__FILE__);
-      $phpgw->db->next_record();
-
-      $pref = new preferences($phpgw->db->f("account_id"));
+      $pref = new preferences($n_loginid);
 
       $docommit = False;
       for ($j=0;$j<count($new_apps);$j++) {
