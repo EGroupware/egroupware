@@ -18,34 +18,34 @@ include(PHPGW_SERVER_ROOT.'/calendar/version.inc.php');
 
 if(extension_loaded('mcal') == False)
 {
-	define(RECUR_NONE,0);
-	define(RECUR_DAILY,1);
-	define(RECUR_WEEKLY,2);
-	define(RECUR_MONTHLY_MDAY,3);
-	define(RECUR_MONTHLY_WDAY,4);
-	define(RECUR_YEARLY,5);
+	define('RECUR_NONE',0);
+	define('RECUR_DAILY',1);
+	define('RECUR_WEEKLY',2);
+	define('RECUR_MONTHLY_MDAY',3);
+	define('RECUR_MONTHLY_WDAY',4);
+	define('RECUR_YEARLY',5);
 	
-	define(M_SUNDAY,1);
-	define(M_MONDAY,2);
-	define(M_TUESDAY,4);
-	define(M_WEDNESDAY,8);
-	define(M_THURSDAY,16);
-	define(M_FRIDAY,32);
-	define(M_SATURDAY,64);
+	define('M_SUNDAY',1);
+	define('M_MONDAY',2);
+	define('M_TUESDAY',4);
+	define('M_WEDNESDAY',8);
+	define('M_THURSDAY',16);
+	define('M_FRIDAY',32);
+	define('M_SATURDAY',64);
 	
-	define(M_WEEKDAYS,63);
-	define(M_WEEKEND,65);
-	define(M_ALLDAYS,127);
+	define('M_WEEKDAYS',63);
+	define('M_WEEKEND',65);
+	define('M_ALLDAYS',127);
 }
 
-define(MSG_DELETED,0);
-define(MSG_MODIFIED,1);
-define(MSG_ADDED,2);
+define('MSG_DELETED',0);
+define('MSG_MODIFIED',1);
+define('MSG_ADDED',2);
 
-define(REJECTED,0);
-define(NO_RESPONSE,1);
-define(TENTATIVE,2);
-define(ACCEPTED,3);
+define('REJECTED',0);
+define('NO_RESPONSE',1);
+define('TENTATIVE',2);
+define('ACCEPTED',3);
 
 class calendar__
 {
