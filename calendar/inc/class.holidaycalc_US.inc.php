@@ -15,9 +15,28 @@
 
 	class holidaycalc
 	{
+		function add($holiday,&$holidays,$year,&$i,$day_offset=0)
+		{
+			$i++;
+			$holidays[$i]= $holiday;
+			if ($day_offset)
+			{
+				$holidays[$i]['name'] .= ' (Observed)';
+			}
+			$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$holiday['day']+$day_offset,$year);
+			foreach(array('day'=>'d','month'=>'m','occurence'=>'Y') as $key => $frmt)
+			{
+				$holidays[$i][$key] = date($frmt,$holidays[$i]['date']);
+			}
+			$holidays[$i]['obervance_rule'] = 0;
+
+			//echo "<p>holidaycalc::add(".print_r($holiday,True).",,$year,,$day_offset)=".print_r($holidays[$i],True)."</p>";
+		}
+
 		function calculate_date($holiday, &$holidays, $year, &$i)
 		{
-	//		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+			//echo "<p>holidaycalc::calculate_date(".print_r($holiday,True).",,$year,)</p>";
+
 			if($holiday['day'] == 0 && $holiday['occurence'] != 0)
 			{
 				if($holiday['occurence'] != 99)
@@ -25,9 +44,6 @@
 					$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],1);
 					$day = (((7 * $holiday['occurence']) - 6) + ((($holiday['dow'] + 7) - $dow) % 7));
 					$day += ($day < 1 ? 7 : 0);
-					// What is the point of this?
-					// Add 7 when the holiday falls on a Monday???
-					//$day += ($holiday['dow']==1 ? 7 : 0);
 
 					// Sometimes the 5th occurance of a weekday (ie the 5th monday)
 					// can spill over to the next month.  This prevents that.
@@ -51,29 +67,33 @@
 				{
 					$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
 					// This now calulates Observed holidays and creates a new entry for them.
-					if($dow == 0)
+
+					// 0 = sundays are observed on monday (+1), 6 = saturdays are observed on fridays (-1)
+					if($dow == 0 || $dow == 6)
 					{
-						$i++;
-						$holidays[$i]['locale'] = $holiday['locale'];
-						$holidays[$i]['name'] = $holiday['name'].' (Observed)';
-						$holidays[$i]['day'] = $holiday['day'] + 1;
-						$holidays[$i]['month'] = $holiday['month'];
-						$holidays[$i]['occurence'] = $holiday['occurence'];
-						$holidays[$i]['dow'] = $holiday['dow'];
-						$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
-						$holidays[$i]['obervance_rule'] = 0;
+						$this->add($holiday,&$holidays,$year,$i,$dow == 0 ? 1 : -1);
 					}
-					elseif($dow == 6)
+					if ($holiday['month'] == 1 && $day == 1)
 					{
-						$i++;
-						$holidays[$i]['locale'] = $holiday['locale'];
-						$holidays[$i]['name'] = $holiday['name'].' (Observed)';
-						$holidays[$i]['day'] = $holiday['day'] - 1;
-						$holidays[$i]['month'] = $holiday['month'];
-						$holidays[$i]['occurence'] = $holiday['occurence'];
-						$holidays[$i]['dow'] = $holiday['dow'];
-						$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
-						$holidays[$i]['obervance_rule'] = 0;
+						$dow = $GLOBALS['phpgw']->datetime->day_of_week($year+1,$holiday['month'],$day);
+						// checking if next year's newyear might be observed in this year
+						if ($dow == 6)
+						{
+							$this->add($holiday,&$holidays,$year+1,$i,-1);
+						}
+						// add the next years newyear, to show it in a week- or month-view
+						$this->add($holiday,&$holidays,$year+1,$i);
+					}
+					// checking if last year's new year's eve might be observed in this year
+					if ($holiday['month'] == 12 && $day == 31)
+					{
+						$dow = $GLOBALS['phpgw']->datetime->day_of_week($year-1,$holiday['month'],$day);
+						if ($dow == 0)
+						{
+							$this->add($holiday,&$holidays,$year-1,$i,1);
+						}
+						// add the last years new year's eve, to show it in a week- or month-view
+						$this->add($holiday,&$holidays,$year-1,$i);
 					}
 				}
 			}

@@ -28,6 +28,10 @@
 		/* Begin Holiday functions */
 		function save_holiday($holiday)
 		{
+			// observance_rule is either "True" or unset !
+			$holiday['observance_rule'] = @$holiday['observance_rule'] ? 1 : 0;
+			$holiday['locale'] = strtoupper($holiday['locale']);
+
 			if(@$holiday['hol_id'])
 			{
 				if($this->debug)
@@ -43,9 +47,9 @@
 					echo "Inserting LOCALE='".$holiday['locale']."' NAME='".$holiday['name']."' extra=(".$holiday['mday'].'/'.$holiday['month_num'].'/'.$holiday['occurence'].'/'.$holiday['dow'].'/'.$holiday['observance_rule'].")<br>\n";
 				}
 				unset($holiday['hol_id']);	// in case its 0
-				$holiday['locale'] = strtoupper($holiday['locale']);
 				$sql = "INSERT INTO $this->table ".$this->db->column_data_implode(',',$holiday,'VALUES',True);
 			}
+			//echo "<p>soholiday::save_holiday(".print_r($holiday,True).") sql='$sql'</p>\n";
 			$this->db->query($sql,__LINE__,__FILE__);
 		}
 
