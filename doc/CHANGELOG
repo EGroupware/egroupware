@@ -15,6 +15,10 @@
 	      - Fixed sorting order in navbar when apps where assigned to a group.
 	      - Fixed groups not being assinged an app properly.
 	      - Fixed timeout for email receiving/sending.
+	      - Changed the format for the accounts, sessions, and preferences tables.
+	      - Started adding support for Oracle databases (Not working yet)
+	      - Added new layout for admin and preferences sections.
+	      - Fixed acounts not using link() properly and kicking admin out of searchs.
 
 [09072000] - Added print icon that allows you to print out a page without having
 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
