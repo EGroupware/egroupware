@@ -23,21 +23,20 @@
 
 	$server = CreateObject('phpgwapi.xmlrpc_server');
 	$server->authed = False;
-//	debug($server);exit;
 
 	/* uncomment here if you want to show all of the testing functions for compatibility */
-//	include(PHPGW_API_INC . '/xmlrpc.interop.php');
+	//include(PHPGW_API_INC . '/xmlrpc.interop.php');
 
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
+	//print_r($headers);
 
-	if(ereg('Basic',$headers['Authorization']))
+	$auth_header = $headers['Authorization'] ? $headers['Authorization'] : $headers['authorization'];
+
+	if(eregi('Basic *([^ ]*)',$auth_header,$auth))
 	{
-		$tmp = $headers['Authorization'];
-		$tmp = str_replace(' ','',$tmp);
-		$tmp = str_replace('Basic','',$tmp);
-		$auth = base64_decode(trim($tmp));
-		list($sessionid,$kp3) = split(':',$auth);
+		list($sessionid,$kp3) = explode(':',base64_decode($auth[1]));
+		//echo "auth='$auth[1]', sessionid='$sessionid', kp3='$kp3'\n";
 
 		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
 		{
