@@ -214,7 +214,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 				// we need to explicit convert varchar to a number to be able to do an AlterColumn of a char column to a nummeric one
 				if (preg_match('/'.$fld->name.' (I|I2|I4|I8|N|F)/i',$tableflds,$matches) && 
 					in_array($fld->type,array('varchar','char','text','bytea'))) {
-					$copyflds[] = "to_number($fld->name,'S99D99')";
+					$copyflds[] = "to_number($fld->name,'S9999999999999D99')";
 				} else {
 					$copyflds[] = $fld->name;
 				}

@@ -438,7 +438,7 @@
 						in_array($old_table_def['fd'][$name]['type'],array('char','varchar','text','blob')) &&
 						in_array($data['type'],array('int','decimal')))
 					{
-						$value = "to_number($name,'S99D99')";
+						$value = "to_number($name,'S9999999999999D99')";
 					}
 				}
 				else	// new column => use default value or NULL
