@@ -76,12 +76,10 @@
 
 				if ($_POST['test'])
 				{
-					$prefs = $GLOBALS['phpgw']->preferences->create_email_preferences();
-					if (!$async->set_timer($times,'test','admin.uiasyncservice.test',$prefs['email']['address']))
+					if (!$async->set_timer($times,'test','admin.uiasyncservice.test',$GLOBALS['phpgw_info']['user']['email']))
 					{
 						echo '<p><b>'.lang("Error setting timer, wrong syntax or maybe there's one already running !!!")."</b></p>\n";
 					}
-					unset($prefs);
 				}
 				if ($_POST['cancel'])
 				{
