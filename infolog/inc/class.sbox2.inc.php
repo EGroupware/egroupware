@@ -589,7 +589,7 @@
 			}
 
 			/* Get global and app-specific category listings */
-			$cats_link .= $this->cat->formated_list('select','all',$cat_id,True);
+			$cats_link .= $this->cat->formatted_list('select','all',$cat_id,True);
 			$cats_link .= '</select>'."\n";
 
 			return $cats_link;
