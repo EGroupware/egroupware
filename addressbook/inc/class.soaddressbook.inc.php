@@ -71,6 +71,11 @@
 		function add_entry($userid,$fields)
 		{
 			$this->makeobj();
+			$fields['tid'] = trim($fields['tid']);
+			if(empty($fields['tid']))
+			{
+				$fields['tid'] = 'n';
+			}
 			if ($this->rights & PHPGW_ACL_ADD)
 			{
 				$this->contacts->add($userid,$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
