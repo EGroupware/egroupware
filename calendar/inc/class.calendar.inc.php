@@ -55,6 +55,8 @@ class calendar extends calendar_
 	var $rowspan_arr = Array();
 	var $rowspan;
 
+	var $holidays;
+
 	function calendar($params=False)
 	{
 		global $phpgw, $phpgw_info;
@@ -98,8 +100,8 @@ class calendar extends calendar_
 		{
 			$this->users_timeformat = 'H:i';
 		}
-		$cal = CreateObject('calendar.calendar_holiday',$this->owner);
-		$cal->read_holiday();
+		$this->holidays = CreateObject('calendar.calendar_holiday',$this->owner);
+		$this->holidays->read_holiday();
 	}
 
 // Generic functions that are derived from mcal functions.
@@ -894,7 +896,8 @@ class calendar extends calendar_
 			'month_day'			=> 'month_day.tpl',
 			'week_day_event'	=> 'week_day_event.tpl',
 			'week_day_events'	=> 'week_day_events.tpl',
-			'link_pict'			=>	'link_pict.tpl'
+			'link_pict'			=>	'link_pict.tpl',
+			'month_filler'		=> 'month_filler.tpl'
 		);
 		$p->set_file($templates);
 
@@ -917,6 +920,11 @@ class calendar extends calendar_
 			);
 			$p->set_var($var);
 			
+			$day = $phpgw->common->show_date($date['raw'],'d');
+			$month = $phpgw->common->show_date($date['raw'],'m');
+			$year = $phpgw->common->show_date($date['raw'],'Y');
+			$date = $this->gmtdate(mktime(0,0,0,$month,$day,$year));
+			
 			if ($weekly || ($date['full'] >= $monthstart && $date['full'] <= $monthend))
 			{
 				if($weekly)
@@ -931,12 +939,19 @@ class calendar extends calendar_
 				else
 				{
 					$extra = ' bgcolor="'.$phpgw_info['theme']['cal_today'].'"';
+//					echo 'Today = '.$date['raw'].'  '.$phpgw->common->show_date($date['raw'])."<br>\n";
 				}
 
-				$day = $phpgw->common->show_date($date['raw'],'d');
-				$month = $phpgw->common->show_date($date['raw'],'m');
-				$year = $phpgw->common->show_date($date['raw'],'Y');
-				$date = $this->gmtdate(mktime(0,0,0,$month,$day,$year));
+				$holiday_found = $this->holidays->find_date($date['raw']);
+				if($holiday_found != False)
+				{
+					$extra = ' bgcolor="'.$phpgw_info['theme']['bg04'].'"';
+				}
+
+//				$day = $phpgw->common->show_date($date['raw'],'d');
+//				$month = $phpgw->common->show_date($date['raw'],'m');
+//				$year = $phpgw->common->show_date($date['raw'],'Y');
+//				$date = $this->gmtdate(mktime(0,0,0,$month,$day,$year));
 				$new_event_link = '';
 				if (!$this->printer_friendly)
 				{
@@ -962,6 +977,15 @@ class calendar extends calendar_
 				$p->set_var($var);
 				
 				$p->parse('column_data','month_day',True);
+
+				if($holiday_found != False)
+				{
+					while(list(,$value) = each($holiday_found))
+					{
+						$p->set_var('month_filler_text',$this->holidays->get_name($value));
+						$p->parse('column_data','month_filler',True);
+					}
+				}
 
 				$rep_events = $this->get_sorted_by_date($date['raw'],$owner);
 
