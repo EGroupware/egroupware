@@ -75,6 +75,15 @@
   )";
   $db->query($sql);  
 
+  $sql = "CREATE TABLE acl (
+    acl_appname       varchar(50) NOT NULL,
+    acl_location      varchar(255),
+    acl_account       varchar(50),
+    acl_account_type  varchar(15),
+    acl_rights        int
+  )";
+//  $db->query($sql);  
+
   $sql = "CREATE TABLE app_sessions (
     sessionid	varchar(255) NOT NULL,
     loginid	varchar(20),
