@@ -43,17 +43,16 @@
 
   // The account stuff that should be at the top of the list
   $appname = "preferences";
-  $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/prefrences.inc.php";
+  $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/preferences.inc.php";
   if (file_exists($f)) {
     include($f);
   }
   while (list(,$appname) = each($phpgw_info["user"]["app_perms"])) {
-	$f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/prefrences.inc.php";
+	$f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/preferences.inc.php";
 	if (file_exists($f)) {
 		echo "<p>\n";
 		include($f);
 	}
   }
-
-
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?>
