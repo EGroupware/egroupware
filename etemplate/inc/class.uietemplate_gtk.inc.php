@@ -312,7 +312,7 @@
 					list($nul,$cell) = each($cols); reset($cols);
 					if (!($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) &&
 						!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
-						!$this->isset_array($idx,$content))
+						!$this->isset_array($content,$idx))
 					{
 						break;                     	// no auto-row-repeat
 					}
@@ -341,7 +341,7 @@
 					{
 						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-							!$this->isset_array($idx,$content))
+							!$this->isset_array($content,$idx))
 						{
 							break;	// no auto-col-repeat
 						}

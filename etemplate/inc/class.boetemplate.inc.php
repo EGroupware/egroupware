@@ -267,10 +267,10 @@
 		}
 
 		/*!
-		@function isset_array($idx,$arr)
+		@function isset_array($arr,$idx)
 		@abstract checks if idx, which may contain ONE subindex is set in array
 		*/
-		function isset_array($idx,$arr)
+		function isset_array($arr,$idx)
 		{
 			if (ereg('^([^[]*)\\[(.*)\\]$',$idx,$regs))
 			{

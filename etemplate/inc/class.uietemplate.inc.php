@@ -228,7 +228,7 @@
 					list($nul,$cell) = each($cols); reset($cols);
 					if (!($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) &&
 						!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
-						!$this->isset_array($idx,$content))
+						!$this->isset_array($content,$idx))
 					{
 						break;                     	// no auto-row-repeat
 					}
@@ -246,7 +246,7 @@
 					{
 						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-							!$this->isset_array($idx,$content))
+							!$this->isset_array($content,$idx))
 						{
 							break;	// no auto-col-repeat
 						}
@@ -315,6 +315,10 @@
 			}
 			list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
+			if ($cell['name'][0] == '@')
+			{
+				$cell['name'] = $this->get_array($content,substr($cell['name'],1));
+			}
 			$name = $this->expand_name($cell['name'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
 			if (strstr($name,'|'))	// extension which uses whole content array
@@ -590,9 +594,9 @@
 					$cols = $old_cols;
 					list($nul,$cell) = each($cols); reset($cols);
 					if ((!$this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) ||
-						$idx_cname == '' || !$this->isset_array($idx,$content)) &&
+						$idx_cname == '' || !$this->isset_array($content,$idx)) &&
 						(!$this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) ||
-						$idx_cname == '' || !$this->isset_array($idx,$content)))
+						$idx_cname == '' || !$this->isset_array($content,$idx)))
 					{
 						break;	// no auto-row-repeat
 					}
@@ -605,7 +609,7 @@
 					{
 						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-							$idx_cname == '' || !$this->isset_array($idx,$content))
+							$idx_cname == '' || !$this->isset_array($content,$idx))
 						{
 							break;	// no auto-col-repeat
 						}
