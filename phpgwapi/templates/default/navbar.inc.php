@@ -79,3 +79,22 @@
      }
      return $tpl->finish($tpl->parse("out","navbar"));
   }
+
+  function parse_navbar_end()
+  {
+    global $phpgw_info, $phpgw;
+    if ($phpgw_info["server"]["showpoweredbyon"] == "bottom") {
+       $msg = "<P><P>\n" . lang("Powered by phpGroupWare version x", $phpgw_info["server"]["versions"]["phpgwapi"]);
+    }
+
+    $tpl = new Template($phpgw_info["server"]["template_dir"]);
+    $tpl->set_unknowns("remove");
+  
+    $tpl->set_file(array("footer" => "footer.tpl"));
+    $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images");
+    $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
+    $tpl->set_var("msg",$msg);
+    $tpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
+    echo $tpl->finish($tpl->parse("out","footer"));
+
+  }
