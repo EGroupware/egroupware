@@ -624,7 +624,7 @@
 				for ($r = 1; list($key,$val) = @each($cont); ++$r)
 				{
 					$vals["@$r"] = $key;
-					$vals["A$r"] = $val;
+					$vals["A$r"] = is_array($val) ? htmlspecialchars(serialize($val)).'#SeR#' : $val;
 				}
 				$show->data[$show->rows]['A']['name'] = 'etemplate.editor.values';
 				$show->data[$show->rows]['A']['size'] = 'vals';
@@ -638,7 +638,8 @@
 
 				for ($r = 1; isset($vals["A$r"]); ++$r)
 				{
-					$content['cont'][$olds["@$r"]] = $vals["A$r"];
+					$content['cont'][$olds["@$r"]] = substr($vals["A$r"],-5)=='#SeR#' ?
+						unserialize(substr($vals["A$r"],0,-5)) : $vals["A$r"];
 				}
 			}
 			$show->exec('etemplate.editor.show',$content,array(),'',array('olds' => $vals),'');
