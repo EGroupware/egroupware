@@ -234,8 +234,9 @@
 
 			if (!$this->bo->printer_friendly)
 			{
+				unset($phpgw_info['flags']['noheader']);
+				unset($phpgw_info['flags']['nonavbar']);
 				$phpgw->common->phpgw_header();
-				echo parse_navbar();
 				$printer = '';
 				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1';
 				$print = '<a href="'.$this->page('month'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';

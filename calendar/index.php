@@ -27,14 +27,6 @@
 	
 	include('../header.inc.php');
 
-	$newpage = $phpgw_info['user']['preferences']['calendar']['defaultcalendar'];
-	if ($newpage=='index.php' || ($newpage != 'day.php' && $newpage != 'week.php' && $newpage != 'month.php' && $newpage != 'year.php'))
-	{
-		$newpage = 'month.php';
-		$phpgw->preferences->add('calendar','defaultcalendar','month.php');
-		$phpgw->preferences->save_repository();
-	}
-
-	Header('Location: '.$newpage.'?'.$QUERY_STRING);
+	Header('Location: '.$phpgw->link('/index.php','menuaction=calendar.uicalendar.index'));
 	$phpgw->common->phpgw_exit();
 ?>
