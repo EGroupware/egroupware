@@ -16,7 +16,6 @@
 		'noheader'              => True,
 		'nonavbar'              => True,
 		'currentapp'            => 'addressbook',
-		// is this really needed ?
 		'enable_contacts_class' => True
 	);
 
@@ -33,9 +32,6 @@
 			. $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$phpgw->common->phpgw_exit();
 	}
-
-	$t = new Template(PHPGW_APP_TPL);
-	$t->set_file(array('edit' => 'edit.tpl'));
 
 	if (!$ab_id)
 	{
@@ -74,6 +70,31 @@
 		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
 		$fields = addressbook_read_entry($ab_id,$qfields);
 		addressbook_form('edit','edit.php','Edit',$fields[0],$customfields);
+
+		$t = new Template(PHPGW_APP_TPL);
+		$t->set_file(array("edit" => "edit.tpl"));
+
+		$t->set_var('ab_id',$ab_id);
+		$t->set_var('sort',$sort);
+		$t->set_var('order',$order);
+		$t->set_var('filter',$filter);
+		$t->set_var('query',$query);
+		$t->set_var('start',$start);
+		$t->set_var('cat_id',$cat_id);
+		$t->set_var('lang_ok',lang('ok'));
+		$t->set_var('lang_clear',lang('clear'));
+		$t->set_var('lang_cancel',lang('cancel'));
+		$t->set_var('lang_submit',lang('submit'));
+		$t->set_var('cancel_link','<form method="POST" action="' . $phpgw->link("/addressbook/index.php") . '">');
+
+		if (($this->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
+		{
+			$t->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php") . '">');
+			$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
+		}
+
+		$t->pfp('out','edit');
+		$phpgw->common->phpgw_footer();
 	}
 	else
 	{
@@ -197,27 +218,4 @@
 			. $phpgw->link('/addressbook/view.php',"ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id&referer=$referer"));
 		$phpgw->common->phpgw_exit();
 	}
-
-	$t->set_var('ab_id',$ab_id);
-	$t->set_var('sort',$sort);
-	$t->set_var('order',$order);
-	$t->set_var('filter',$filter);
-	$t->set_var('query',$query);
-	$t->set_var('start',$start);
-	$t->set_var('cat_id',$cat_id);
-	$t->set_var('lang_ok',lang('ok'));
-	$t->set_var('lang_clear',lang('clear'));
-	$t->set_var('lang_cancel',lang('cancel'));
-	$t->set_var('lang_submit',lang('submit'));
-	$t->set_var('cancel_link','<form method="POST" action="' . $phpgw->link("/addressbook/index.php") . '">');
-
-	if (($this->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
-	{
-		$t->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php") . '">');
-		$t->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
-	}
-
-	$t->pfp('out','edit');
-	
-	$phpgw->common->phpgw_footer();
 ?>
