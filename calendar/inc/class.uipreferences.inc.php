@@ -171,6 +171,7 @@
 
 			$checkboxes = Array(
 				'send_updates'	=> lang('Send/receive updates via email'),
+				'send_extra'	=> lang('Receive extra information in event mails'),
 				'weekdays_only'	=> lang('Display week days only in Month/Week View'),
 				'display_status'	=> lang('Display status of events'),
 				'default_private'	=> lang('When creating new events default set to private'),

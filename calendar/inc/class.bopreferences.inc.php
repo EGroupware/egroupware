@@ -53,8 +53,30 @@
 				}
 
 				$pref_list = Array(
-					'mainscreen_showevents',
 					'send_updates',
+					'send_extra'
+				);
+
+				if($prefs[$pref_list[1] == True)
+				{
+					$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[1],$prefs[$pref_list[1]]);
+					if($prefs[$pref_list[2] == True)
+					{
+						$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[2],$prefs[$pref_list[2]]);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->preferences->delete('calendar',$pref_list[2]);
+					}
+				}
+				else
+				{
+					$GLOBALS['phpgw']->preferences->delete('calendar',$pref_list[1]);
+					$GLOBALS['phpgw']->preferences->delete('calendar',$pref_list[2]);
+				}
+
+				$pref_list = Array(
+					'mainscreen_showevents',
 					'display_status',
 					'default_private',
 					'display_minicals',

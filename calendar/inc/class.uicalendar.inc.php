@@ -85,10 +85,7 @@
 
 			$this->bo = CreateObject('calendar.bocalendar',1);
 
-			if($this->debug)
-			{
-				echo "BO Owner : ".$this->bo->owner."<br>\n";
-			}
+			print_debug('BO Owner',$this->bo->owner);
 
 			$this->template = $GLOBALS['phpgw']->template;
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir('calendar');
@@ -116,10 +113,7 @@
 				$this->save_sessiondata();
 			}
 
-			if($this->debug)
-			{
-				$this->_debug_sqsof();
-			}
+			print_debug('UI',$this->_debug_sqsof());
 		}
 
 		/* Public functions */
@@ -2171,8 +2165,7 @@
 				'sortby'     => $this->bo->sortby,
 				'num_months' => $this->bo->num_months
 			);
-			echo '<br>UI:';
-			_debug_array($data);
+			return _debug_array($data,False);
 		}
 
 		/* Called only by get_list(), just prior to page footer. */

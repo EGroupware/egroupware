@@ -238,7 +238,7 @@
 				{
 					$this->year = $year;
 				}
-				else	// if($this->year == 0)
+				else
 				{
 					$this->year = date('Y',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
@@ -246,7 +246,7 @@
 				{
 					$this->month = $month;
 				}
-				else	// if($this->month == 0)
+				else
 				{
 					$this->month = date('m',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
@@ -254,7 +254,7 @@
 				{
 					$this->day = $day;
 				}
-				else	// if($this->day == 0)
+				else
 				{
 					$this->day = date('d',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
@@ -272,11 +272,8 @@
 
 			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
 
-			if($this->debug)
-			{
-				echo '<!-- BO Filter : ('.$this->filter.') -->'."\n";
-				echo '<!-- Owner : '.$this->owner.' -->'."\n";
-			}
+			print_debug('BO Filter','('.$this->filter.')');
+			print_debug('Owner',$this->owner);
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -724,10 +721,9 @@
 				$event['description'] = $GLOBALS['phpgw']->db->db_addslashes($event['description']);
 				$this->store_to_appsession($event);
 				$datetime_check = $this->validate_update($event);
-				if($this->debug)
-				{
-					echo '<!-- bo->validate_update() returned : '.$datetime_check.' -->'."\n";
-				}
+
+				print_debug('bo->validate_update() returnval',$datetime_check);
+
 				if($datetime_check)
 				{
 				   ExecMethod('calendar.uicalendar.edit',
@@ -780,24 +776,15 @@
 			{
 				if(!$event['id'])
 				{
-					if($this->debug)
-					{
-						echo '<!-- Creating a new event. -->'."\n";
-					}
+					print_debug('Creating a new event.');
 					$this->so->cal->event = $event;
 					$this->so->add_entry($event);
 					$this->send_update(MSG_ADDED,$event['participants'],'',$this->get_cached_event());
-					if($this->debug)
-					{
-						echo '<!-- New event ID = '.$event['id'].' -->'."\n";
-					}
+					print_debug('New Event ID',$event['id']);
 				}
 				else
 				{
-					if($this->debug)
-					{
-						echo '<!-- Updating an existing event. -->'."\n";
-					}
+					print_debug('Updating an existing event.');
 					$new_event = $event;
 					$old_event = $this->read_entry($event['id']);
 					$this->prepare_recipients($new_event,$old_event);
@@ -927,10 +914,6 @@
 				$temp_cache_events = $this->cached_events;
 			}
 
-//			$temp_start = intval($GLOBALS['phpgw']->common->show_date($starttime,'Ymd'));
-//			$temp_start_time = intval($GLOBALS['phpgw']->common->show_date($starttime,'Hi'));
-//			$temp_end = intval($GLOBALS['phpgw']->common->show_date($endtime,'Ymd'));
-//			$temp_end_time = intval($GLOBALS['phpgw']->common->show_date($endtime,'Hi'));
 			$temp_start = intval(date('Ymd',$starttime));
 			$temp_start_time = intval(date('Hi',$starttime));
 			$temp_end = intval(date('Ymd',$endtime));
@@ -1043,98 +1026,7 @@
 			}
 
 			return $retval;
-
-//			if($starttime == $endtime && $GLOBALS['phpgw']->common->show_date($starttime,'Hi') == 0)
-//			{
-//				$endtime = mktime(23,59,59,$GLOBALS['phpgw']->common->show_date($starttime,'m'),$GLOBALS['phpgw']->common->show_date($starttime,'d') + 1,$GLOBALS['phpgw']->common->show_date($starttime,'Y')) - $GLOBALS['phpgw']->datetime->tz_offset;
-//			}
-//
-//	-		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
-//					.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$starttime.' < phpgw_cal.edatetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
-//	-				.  'OR (('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
-//	-				.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime))) ';
-//
-//			if(count($participants) > 0)
-//			{
-//				$p_g = '';
-//				if(count($participants))
-//				{
-//					$users = Array();
-//					while(list($user,$status) = each($participants))
-//					{
-//						$users[] = $user;
-//					}
-//					if($users)
-//					{
-//						$p_g .= 'phpgw_cal_user.cal_login IN ('.implode(',',$users).')';
-//					}
-//				}
-//				if($p_g)
-//				{
-//					$sql .= ' AND (' . $p_g . ')';
-//				}
-//			}
-//
-//			if(count($id) >= 1)
-//			{
-//				@reset($id);
-//				$sql .= ' AND phpgw_cal.cal_id NOT IN ('.(count($id)==1?$id[0]:implode(',',$id)).')';
-//			}
-//
-//			$sql .= ' ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
-//
-//			$events = $this->so->get_event_ids(False,$sql);
-//			if($events == False)
-//			{
-//				return false;
-//			}
-//		
-//			$db2 = $GLOBALS['phpgw']->db;
-//
-//			for($i=0;$i<count($events);$i++)
-//			{
-//				$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
-//				if($db2->num_rows() == 0)
-//				{
-//					$retval[] = $events[$i];
-//					$ok = True;
-//				}
-//				else
-//				{
-//					$db2->next_record();
-//					if($db2->f('recur_type') <> MCAL_RECUR_MONTHLY_MDAY)
-//					{
-//						$retval[] = $events[$i];
-//						$ok = True;
-//					}
-//				}
-//			}
-//			if($ok == True)
-//			{
-//				return $retval;
-//			}
-//			else
-//			{
-//				return False;
-//			}
 		}
-
-//		function check_perms($needed,$user=0)
-//		{
-//			if($user == 0)
-//			{
-//				$allowed = !!($this->grants[$this->owner] & $needed);
-//				if($this->debug)
-//				{
-//					echo '<!-- Grantor: '.$this->owner.' Rights: '.$this->grants[$this->owner].' Allowed: '.$allowed.'-->'."\n";
-//				}
-//				return $allowed;
-//			}
-//			else
-//			{
-//				return !!($this->grants[intval($user)] & $needed);
-//			}
-//		}
 
 		function check_perms($needed,$event=0)
 		{
@@ -1371,10 +1263,9 @@
 				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $GLOBALS['phpgw']->datetime->tz_offset;
 				while($inserted == False && list($key,$exception_time) = each($event['recur_exception']))
 				{
-					if($this->debug)
-					{
-						echo '<!-- checking exception datetime '.$exception_time.' to event datetime '.$event_time.' -->'."\n";
-					}
+					print_debug('Checking Exception DateTime',$exception_time);
+					print_debug('Checking Event     DateTime',$event_time);
+
 					if($exception_time == $event_time)
 					{
 						$inserted = True;
@@ -1383,29 +1274,22 @@
 			}
 			if($this->cached_events[$date] && $inserted == False)
 			{
-				
-				if($this->debug)
-				{
-					echo '<!-- Cached Events found for '.$date.' -->'."\n";
-				}
+
+				print_debug('Cached Events Found',$date);
+
 				$year = substr($date,0,4);
 				$month = substr($date,4,2);
 				$day = substr($date,6,2);
 
-				if($this->debug)
-				{
-					echo '<!-- Date : '.$date.' Count : '.count($this->cached_events[$date]).' -->'."\n";
-				}
+				print_debug('Date',$date);
+				print_debug('Count',count($this->cached_events[$date]));
 				
 				for($i=0;$i<count($this->cached_events[$date]);$i++)
 				{
 					$events = $this->cached_events[$date][$i];
 					if($this->cached_events[$date][$i]['id'] == $event['id'] || $this->cached_events[$date][$i]['reference'] == $event['id'])
 					{
-						if($this->debug)
-						{
-							echo '<!-- Item already inserted! -->'."\n";
-						}
+						print_debug('Item Already Inserted!');
 						$inserted = True;
 						break;
 					}
@@ -1423,10 +1307,7 @@
 						{
 							$this->cached_events[$date][$j] = $this->cached_events[$date][$j-1];
 						}
-						if($this->debug)
-						{
-							echo '<!-- Adding event ID: '.$event['id'].' to cached_events -->'."\n";
-						}
+						print_debug('Adding to cached events:ID',$event['id']);
 						$inserted = True;
 						$this->cached_events[$date][$i] = $event;
 						break;
@@ -1435,10 +1316,7 @@
 			}
 			if(!$inserted)
 			{
-				if($this->debug)
-				{
-					echo '<!-- Adding event ID: '.$event['id'].' to cached_events -->'."\n";
-				}
+				print_debug('Adding to cached events:ID',$event['id']);
 				$this->cached_events[$date][] = $event;
 			}					
 		}
@@ -1452,10 +1330,9 @@
 			$search_date_day = date('d',$datetime);
 			$search_date_dow = date('w',$datetime);
 			$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
-			if($this->debug)
-			{
-				echo '<!-- Search Date Full = '.$search_date_full.' -->'."\n";
-			}
+
+			print_debug('Search Date Full',$search_date_full);
+
 			$repeated = $this->repeating_events;
 			$r_events = count($repeated);
 			for ($i=0;$i<$r_events;$i++)
@@ -1474,12 +1351,9 @@
 				$end_recur_date = date('Ymd',$event_recur_time);
 				$full_event_date = date('Ymd',$event_beg_day);
 
-				if($this->debug)
-				{
-					echo '<!-- check_repeating_events - Processing ID - '.$id.' -->'."\n";
-					echo '<!-- check_repeating_events - Recurring End Date - '.$end_recur_date.' -->'."\n";
-				}
-
+				print_debug('check_repeating_events:Processing ID',$id);
+				print_debug('check_repeating_events:Recurring End Date',$end_recur_date);
+				
 				// only repeat after the beginning, and if there is an rpt_end before the end date
 				if (($search_date_full > $end_recur_date) || ($search_date_full < $full_event_date))
 				{
@@ -1605,10 +1479,7 @@
 			{
 				unset($owner_id);
 				$owner_id = $this->g_owner;
-				if($this->debug)
-				{
-					echo '<!-- owner_id in ('.implode($owner_id,',').') -->'."\n";
-				}
+				print_debug('owner_id in','('.implode($owner_id).')');
 			}
 			
 			if(!$eyear && !$emonth && !$eday)
@@ -1639,13 +1510,10 @@
 				}
 				$edate = mktime(23,59,59,$emonth,$eday,$eyear);
 			}
-			
-			if($this->debug)
-			{
-				echo '<!-- Start Date : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
-				echo '<!-- End   Date : '.sprintf("%04d%02d%02d",$eyear,$emonth,$eday).' -->'."\n";
-			}
 
+			print_debug('Start Date',sprintf("%04d%02d%02d",$syear,$smonth,$sday));
+			print_debug('End Date',sprintf("%04d%02d%02d",$eyear,$emonth,$eday));
+			
 			if($owner_id)
 			{
 				$cached_event_ids = $this->so->list_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id);
@@ -1660,11 +1528,9 @@
 			$c_cached_ids = count($cached_event_ids);
 			$c_cached_ids_repeating = count($cached_event_ids_repeating);
 
-			if($this->debug)
-			{
-				echo '<!-- events cached : '.$c_cached_ids.' : for : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
-				echo '<!-- repeating events cached : '.$c_cached_ids_repeating.' : for : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
-			}
+			print_debug('Date',sprintf("%04d%02d%02d",$syear,$smonth,$sday));
+			print_debug('Events Cached',$c_cached_ids);
+			print_debug('Repeating Events Cached',$c_cached_ids_repeating);
 
 			$this->cached_events = Array();
 			
@@ -1693,16 +1559,11 @@
 							{
 								$c_evt_day = 0;
 							}
-							if($this->debug)
-							{
-								echo '<!-- Date: '.$j.' Count : '.$c_evt_day.' -->'."\n";
-							}
+							print_debug('Date',$j);
+							print_debug('Count',$c_evt_day);
 							if($this->cached_events[$j][$c_evt_day]['id'] != $event['id'])
 							{
-								if($this->debug)
-								{
-									echo '<!-- Adding Event for Date: '.$j.' -->'."\n";
-								}
+								print_debug('Adding Event For Date',$j);
 								$this->cached_events[$j][] = $event;
 							}
 						}
@@ -2037,6 +1898,21 @@
 				$new_event_datetime = $this->maketime($new_event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			}
 
+ 			//Added to construct the participant's list to an event
+ 			$event_participants = '';
+ 			reset($participants);
+ 			$ac=CreateObject('phpgwapi.accounts');
+ 
+ 			while(list($userid,$statid)=each($participants))
+ 			{
+ 				$event_participants .= ($event_participants?"\n":'');
+ 				$ac->account_id=$userid;
+ 				$ac->read_repository();
+ 				$event_participants .= '<'.$ac->data['account_lid'].'> '.$ac->data['fullname'];
+ 			}
+ 			//End
+
+ 			reset($participants);
 			while($participants && list($userid,$statusid) = each($participants))
 			{
 				if((intval($userid) != $GLOBALS['phpgw_info']['user']['account_id']) &&
@@ -2071,7 +1947,7 @@
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
 				
-					$new_tz_offset = ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+					$GLOBALS['phpgw']->datetime->tz_offset = ((60 * 60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 
 					if($old_event != False)
 					{
@@ -2088,23 +1964,40 @@
 						case MSG_DELETED:
 							$action_date = $old_event_date;
 							$body = lang ('Your meeting scheduled for') .' '. $old_event_date .' '. lang('has been canceled');
+ 							$event_head=$old_event['title'];
+ 							$event_description=$old_event['description'];
 							break;
 						case MSG_MODIFIED:
 							$action_date = $new_event_date;
 							$body = lang ('Your meeting that had been scheduled for').' '.$old_event_date.' '. lang('has been rescheduled to') .' '.$new_event_date;
+ 							$event_head=$old_event['title'];
+ 							$event_description=$old_event['description'];
 							break;
 						case MSG_ADDED:
 							$action_date = $new_event_date;
 							$body = lang ('You have a meeting scheduled for').' '. $new_event_date;
+ 							$event_head=$new_event['title'];
+ 							$event_description=$new_event['description'];
 							break;
 						case MSG_REJECTED:
 						case MSG_TENTATIVE:
 						case MSG_ACCEPTED:
 							$action_date = $old_event_date;
-							$body = 'On '.$GLOBALS['phpgw']->common->show_date(time() - $new_tz_offset).' '.$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
+							$body = 'On '.$GLOBALS['phpgw']->common->show_date(time() - $GLOBALS['phpgw']->datetime->tz_offset).' '.$GLOBALS['phpgw']->common->grab_owner_name($GLOBALS['phpgw_info']['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
+ 							$event_head=$old_event['title'];
+ 							$event_description=$old_event['description'];
 							break;
 					}
+
 					$subject = lang('Calendar Event') . ' ('. lang($action) .') #'.$event_id.': '.$action_date.' (L)';
+					if(isset($part_prefs['calendar']['send_extra']) && $part_prefs['calendar']['send_extra'])
+ 					{
+						$body .= "\n\n".'***'.lang('Please confirm,accept,reject or examine changes in the corresponding entry in your calendar').'***'."\n\n"
+							. '----'.lang('Event Details Follow').'----';
+						$body .= ($event_head?"\n\n".lang('TITLE').':'."\n".'        '.$event_head:'');
+						$body .= ($event_description?"\n\n".lang('DESCRIPTION').':'."\n".'        '.$event_description:'');
+						$body .= ($event_participants?"\n\n".lang('Participants').':'."\n".'        '.$event_participants:'');
+ 					}
 					$returncode = $send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
 				}
 			}
@@ -2117,6 +2010,7 @@
 			}
 
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
+			$GLOBALS['phpgw']->datetime->tz_offset = ((60 * 60) * $temp_tz_offset);
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] = $temp_dateformat;
 		}
