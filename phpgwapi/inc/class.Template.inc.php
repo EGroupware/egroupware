@@ -296,15 +296,34 @@ class Template {
   /* private: filename($filename)
    * filename: name to be completed.
    */
-  function filename($filename) {
+  function filename($filename,$root='',$time=1) {
+  	global $phpgw_info;
+    if($root=='')
+    {
+    	$root=$this->root;
+    }
     if (substr($filename, 0, 1) != "/") {
-      $filename = $this->root."/".$filename;
+      $new_filename = $root.'/'.$filename;
+    }
+    else
+    {
+    	$new_filename = $filename;
     }
     
-    if (!file_exists($filename))
-      $this->halt("filename: file $filename does not exist.");
-
-    return $filename;
+    if (!file_exists($new_filename))
+    {
+    	if($time==2)
+    	{
+    		$this->halt("filename: file $new_filename does not exist.");
+    	}
+    	else
+    	{
+    		$new_root = str_replace($phpgw_info['server']['template_set'],'default',$root);
+    		$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
+    	}
+    }
+    	
+    return $new_filename;
   }
   
   /* private: varname($varname)
