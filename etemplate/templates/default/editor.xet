@@ -17,10 +17,8 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.edit-buttons" template="" lang="" group="0" version="0.9.15.002">
+	<grid id="etemplate.editor.options" template="" lang="" group="0" version="0.9.15.001">
 		<columns>
-			<column/>
-			<column/>
 			<column/>
 			<column/>
 			<column/>
@@ -31,15 +29,15 @@
 		</columns>
 		<rows>
 			<row>
-				<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
-				<button label="Show (no save)" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
-				<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
-				<button label="Delete" id="delete" statustext="deletes the eTemplate spez. above"/>
-				<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
-				<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
-				<button label="Export XML" id="export_xml" statustext="export the loaded eTemplate into a xml-file"/>
-				<button label="Import XML" id="import_xml" statustext="import an eTemplate from a xml-file"/>
-				<file id="file" statustext="xml-file to import"/>
+				<textbox size="8" label="Width" id="width" statustext="Width of the table in % or pixels for the table-tag and (optional) div"/>
+				<textbox size="8" label="Height" id="height" statustext="Height of the table in % or pixels for the table-tag and (optional) div"/>
+				<menulist>
+					<menupopup label="Overflow" no_lang="1" id="overflow" statustext="what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)"/>
+				</menulist>
+				<int label="Border" id="border" statustext="Border-line-thickness for the table-tag"/>
+				<textbox size="12" label="Class" id="class" statustext="CSS class for the table-tag"/>
+				<int label="Spacing" id="spacing" statustext="Cellspacing for the table-tag"/>
+				<int label="Padding" id="padding" statustext="Cellpadding for the table-tag"/>
 			</row>
 		</rows>
 	</grid>
@@ -135,7 +133,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="etemplate.editor.edit" template="" lang="" group="0" version="0.9.15.002" border="1" class="editorEdit">
+	<grid id="etemplate.editor.edit" template="" lang="" group="0" version="0.9.15.003" border="1" class="editorEdit">
 		<columns>
 			<column/>
 			<column/>
@@ -145,7 +143,7 @@
 				<image align="center" src="navbar.gif"/>
 				<grid content="Col$col," id="etemplate.editor.col_header"/>
 			</row>
-			<row>
+			<row valign="top">
 				<grid content="Row$row," class="th" id="etemplate.editor.row_header"/>
 				<grid content="$col$row" id="etemplate.editor.cell"/>
 			</row>
@@ -154,7 +152,7 @@
 			.editorEdit { border-color: black }
 		</styles>
 	</grid>
-	<grid id="etemplate.editor" template="" lang="" group="" version="0.9.15.002" width="100%">
+	<grid id="etemplate.editor" template="" lang="" group="" version="0.9.15.004" width="100%" height="100%">
 		<columns>
 			<column/>
 			<column/>
@@ -171,10 +169,20 @@
 				<grid span="all" id="etemplate.editor.keys"/>
 			</row>
 			<row>
-				<grid span="all" id="etemplate.editor.edit-buttons"/>
+				<hbox span="all">
+					<button label="Read" id="read" statustext="read eTemplate from database (for the keys above)"/>
+					<button label="Show (no save)" id="show" statustext="shows/displays eTemplate for testing, does NOT save it before"/>
+					<button label="Save" id="save" statustext="save the eTemplate under the above keys (name, ...), change them for a SaveAs"/>
+					<button label="Delete" id="delete" statustext="deletes the eTemplate spez. above"/>
+					<button label="Dump4Setup" id="dump" statustext="writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app"/>
+					<button label="Write Langfile" id="langfile" statustext="creates an english ('en') langfile from label and helptexts (for application in Name)"/>
+					<button label="Export XML" id="export_xml" statustext="export the loaded eTemplate into a xml-file"/>
+					<button label="Import XML" id="import_xml" statustext="import an eTemplate from a xml-file"/>
+					<file id="file" statustext="xml-file to import"/>
+				</hbox>
 			</row>
 			<row>
-				<textbox span="all" label="Width, Height, Border, class, Spacing, Padding" id="size" statustext="width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag)"/>
+				<grid content="options" span="all" id="etemplate.editor.options"/>
 			</row>
 			<row>
 				<grid span="all" id="etemplate.editor.edit"/>

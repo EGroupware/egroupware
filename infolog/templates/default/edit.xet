@@ -71,7 +71,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.001" width="100%">
+	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.002" width="100%">
 		<columns>
 			<column width="103"/>
 			<column width="300"/>
@@ -131,7 +131,10 @@
 			</row>
 			<row class="row">
 				<description value="Startdate"/>
-				<date id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+				<hbox options="0,0">
+					<date id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+					<checkbox label="%s Today" id="set_today" statustext="check to set startday"/>
+				</hbox>
 				<description value="Enddate"/>
 				<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished"/>
 			</row>

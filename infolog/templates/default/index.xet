@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="infolog.index.rows" template="" lang="" group="0" version="0.9.15.002">
+	<grid id="infolog.index.rows" template="" lang="" group="0" version="0.9.15.003">
 		<columns>
 			<column width="2%"/>
 			<column width="4%"/>
@@ -27,15 +27,16 @@
 				<image label="$row_cont[info_type]" align="center" src="${row}[info_type]"/>
 				<image label="$row_cont[info_status]" align="center" src="${row}[info_status]"/>
 				<vbox options="0,0">
-					<html no_lang="1" id="${row}[subject]"/>
+					<description options="b,@${row}[info_link_view]" value="%s $row_cont[info_addr]" no_lang="1" id="${row}[info_from]" statustext="view this linked entry in its application"/>
+					<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 					<description no_lang="1" id="${row}[info_des]"/>
 					<html id="${row}[filelinks]"/>
 				</vbox>
 				<vbox options="0,0">
 					<date id="${row}[info_startdate]" readonly="true"/>
-					<html id="${row}[enddate]" readonly="true"/>
+					<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
 				</vbox>
-				<vbox options="0,0" class="$row_cont[info_access]">
+				<vbox options="0,0">
 					<menulist>
 						<menupopup type="select-account" options=",,0" id="${row}[info_owner]" readonly="true"/>
 					</menulist>
@@ -43,7 +44,12 @@
 						<menupopup type="select-account" options=",,0" id="${row}[info_responsible]" readonly="true"/>
 					</menulist>
 				</vbox>
-				<date id="${row}[info_datemodified]" readonly="true"/>
+				<vbox options="0,0">
+					<date id="${row}[info_datemodified]" readonly="true"/>
+					<menulist>
+						<menupopup type="select-account" options=",,0" id="${row}[info_modifier]" readonly="true"/>
+					</menulist>
+				</vbox>
 				<vbox options="0,0" align="center">
 					<button image="new.gif" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry"/>
 					<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
@@ -57,19 +63,17 @@
 			</row>
 		</rows>
 		<styles>
-			.low,.pri_low_done { color:#606060; }
-.normal,.pri_normal_done { color:black }
-.high { color:#cc0000; } .high_done { color:#800000; }
-.urgent { color:#ff00ff; } .urgent_done { color:#800080; }
+			.low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
+.low,.low_done { color:#606060; }
+.normal,.normal_done { color:black }
+.high { color:#cc0000; } 
+.high_done { color:#800000; }
+.urgent { color:#ff00ff; } 
+.urgent_done { color:#800080; }
 .overdue { color:#cc0000; font-weight:bold; }
 .private { font-style:italic; }
-.note { color:#808080; font-style:italic; }
 
 		</styles>
-	</grid>
-	<grid id="infolog.index.rows,1" template="" lang="" group="0" version="">
-		<columns/>
-		<rows/>
 	</grid>
 	<grid id="infolog.index" template="" lang="" group="" version="0.9.15.003" width="100%" border="0" spacing="0" padding="0">
 		<columns>
@@ -94,7 +98,7 @@
 				<grid content="main" span="all" id="infolog.index.rows"/>
 			</row>
 			<row>
-				<nextmatch options="infolog.index.rows,1" span="all" id="nm"/>
+				<nextmatch options="infolog.index.rows" span="all" id="nm"/>
 			</row>
 			<row>
 				<hbox span="all">
