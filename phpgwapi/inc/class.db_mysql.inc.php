@@ -100,7 +100,7 @@ class db {
   function limit($start,$offset)
   {
      if ($start == 0) {
-        $s = "limit $start";
+        $s = "limit $offset";
      } else {
         $s = "limit $start,$offset";
      }
