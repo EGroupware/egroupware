@@ -105,6 +105,7 @@
 			{
 				$ipd .= $data;
 			}
+			/* echo $ipd;exit; */
 			return $this->parseResponse($ipd);
 		}
 
@@ -198,7 +199,7 @@
 						xml_get_current_line_number($parser));
 				}
 				error_log($errstr);
-				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
+				$r = CreateObject('phpgwapi.xmlrpcresp', 0, $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 				xml_parser_free($parser);
 				return $r;
 			}
@@ -214,7 +215,7 @@
 				// then something odd has happened
 				// and it's time to generate a client side error
 				// indicating something odd went on
-				$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'), $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
+				$r = CreateObject('phpgwapi.xmlrpcresp', 0, $GLOBALS['xmlrpcerr']['invalid_return'],$GLOBALS['xmlrpcstr']['invalid_return']);
 			}
 			else
 			{
