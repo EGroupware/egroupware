@@ -2212,7 +2212,7 @@
 				while (list($g,$event) = each($this->cached_events[$v]))
 				{
 					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
-					print_debug('EVENT',print_r($event,False));
+					print_debug('EVENT',_debug_array($event,False));
 					print_debug('start',$start);
 					print_debug('v',$v);
 
