@@ -35,11 +35,11 @@
 		$t = new Template($phpgw_info["server"]["app_tpl"]);
 		$t->set_file(array("import" => "import.tpl"));
 
-		$dir_handle=opendir($phpgw_info["server"]["app_root"].$sep."conv");
+		$dir_handle=opendir($phpgw_info["server"]["app_root"].$sep."import");
 		$i=0; $myfilearray="";
 		while ($file = readdir($dir_handle)) {
-			//echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."conv".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."conv".$sep.$file) ) {
+			//echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file)." -->";
+			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."import".$sep.$file) ) {
 				$myfilearray[$i] = $file;
 				$i++;
 			}
@@ -68,7 +68,7 @@
 		$t->pparse("out","import");
 		$phpgw->common->phpgw_footer();
 	} else {
-		include ($phpgw_info["server"]["app_root"].$sep."conv".$sep.$conv_type);
+		include ($phpgw_info["server"]["app_root"].$sep."import".$sep.$conv_type);
 
 		if ($private=="") { $private="public"; }
 		$row=0;
@@ -76,7 +76,7 @@
 		$o = new import_conv;
 		$buffer = $o->import_start_file($buffer,$basedn,$context);
 		$fp=fopen($tsvfile,"r");
-		if ($o->type != 'ldif') {
+		if ($o->type == 'csv') {
 			while ($data = fgetcsv($fp,8000,",")) {
 				$num = count($data);
 				$row++;
