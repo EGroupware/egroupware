@@ -176,7 +176,7 @@
 			);
 		}
 		$memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
-		while(list($key,$group_info) = each($memberships))
+		while($memberships != False && list($key,$group_info) = each($memberships))
 		{
 			$account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar');
 			while($account_perms && list($key,$group_id) = each($account_perms))
