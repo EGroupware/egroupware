@@ -78,15 +78,13 @@
 							'function'  => 'update_dla',
 							'signature' => array(array(xmlrpcBoolean)),
 							'docstring' => lang('Returns an array of todo items')
-						),
+						)
 					);
 					return $xml_functions;
 					break;
-
 				case 'soap':
 					return $this->soap_functions;
 					break;
-
 				default:
 					return array();
 					break;
