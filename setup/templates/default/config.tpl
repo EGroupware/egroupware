@@ -79,7 +79,7 @@
      </select>
     </td>
    </tr>
-
+<!-- this is not working correct
    <tr class="row_on">
     <td>{lang_Datetime_port.<br>If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br>(Port:_13_/_Host:_129.6.15.28)}</td>
     <td>
@@ -90,23 +90,23 @@
       </select>
     </td>
    </tr>
-
-   <tr class="row_off">
+-->
+   <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server}:</td>
     <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server_port}:</td>
     <td><input name="newsettings[httpproxy_port]" value="{value_httpproxy_port}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_username}:</td>
     <td><input name="newsettings[httpproxy_server_username]" value="{value_httpproxy_server_username}"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enter_your_HTTP_proxy_server_password}:</td>
     <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}"></td>
    </tr>
@@ -143,7 +143,7 @@
       <option value="mail"{selected_auth_type_mail}>Mail</option>
       <option value="http"{selected_auth_type_http}>HTTP</option>
       <option value="nis"{selected_auth_type_nis}>NIS</option>
-      <option value="pam"{selected_auth_type_pam}>PAM (Not Ready)</option>
+      <!--<option value="pam"{selected_auth_type_pam}>PAM (Not Ready)</option>-->
      </select>
     </td>
    </tr>
@@ -154,7 +154,7 @@
      <select name="newsettings[account_repository]">
       <option value="sql"{selected_account_repository_sql}>SQL</option>
       <option value="ldap"{selected_account_repository_ldap}>LDAP</option>
-      <option value="contacts"{selected_account_repository_contacts}>Contacts - EXPERIMENTAL</option>
+      <!--<option value="contacts"{selected_account_repository_contacts}>Contacts - EXPERIMENTAL</option>-->
      </select>
     </td>
    </tr>
