@@ -14,8 +14,11 @@ class phpgw_schema_proc_mysql
 		$sTranslated = "";
 		switch($sType)
 		{
-			case "autoincrement":
-				$sTranslated = "auto_increment";
+			case "auto":
+				$sTranslated = "int(11) auto_increment";
+				break;
+			case "blob":
+				$sTranslated = "blob";
 				break;
 			case "char":
 				if ($iPrecision > 0 && $iPrecision < 256)
@@ -56,14 +59,20 @@ class phpgw_schema_proc_mysql
 						break;
 				}
 				break;
+			case "text":
+				$sTranslated = "text";
+				break;
 			case "timestamp":
-				$sTranslated =  "datetime";
+				$sTranslated = "datetime";
+				break;
 			case "varchar":
 				if ($iPrecision > 0 && $iPrecision < 256)
 					$sTranslated =  sprintf("varchar(%d)", $iPrecision);
 				
 				if ($iPrecision > 255)
 					$sTranslated =  "text";
+				
+				break;
 		}
 		
 		return (strlen($sTranslated) > 0);
@@ -80,5 +89,93 @@ class phpgw_schema_proc_mysql
 		
 		return $sDefault;
 	}
+	
+	function GetPKSQL($sFields)
+	{
+		return "PRIMARY KEY($sFields)";
+	}
+	
+	function GetUCSQL($sFields)
+	{
+		return "UNIQUE($sFields)";
+	}
+	
+	
+	function _GetColumns(&$oProc, $sTableName, &$sColumns, $sDropColumn = "")
+	{
+		$sColumns = "";
+		
+		$oProc->m_odb->query("describe $sTableName");
+		while ($oProc->m_odb->next_record())
+		{
+			if ($sColumns != "")
+				$sColumns .= ",";
+			$sColumns .= $oProc->m_odb->f(0);
+		}
+		
+		return false;
+	}
+	
+	function DropTable(&$oProc, $sTableName)
+	{
+		return !!($oProc->m_odb->query("DROP TABLE " . $sTableName));
+	}
+	
+	function DropColumn(&$oProc, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
+	{
+		return !!($oProc->m_odb->query("ALTER TABLE $sTableName DROP COLUMN $sColumnName"));
+	}
+	
+	function RenameTable(&$oProc, $sOldTableName, $sNewTableName)
+	{
+		return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
+	}
+	
+	function RenameColumn(&$oProc, $sTableName, $sOldColumnName, $sNewColumnName, $bCopyData = true)
+	{
+		// This really needs testing - it can affect primary keys, and other table-related objects
+		// like sequences and such
+		if ($oProc->_GetFieldSQL($oProc->m_aTables[$sTableName]["fd"][$sNewColumnName], $sNewColumnSQL))
+			return !!($oProc->m_odb->query("ALTER TABLE $sTableName CHANGE $sOldColumnName $sNewColumnName " . $sNewColumnSQL));
+		
+		return false;
+	}
+	
+	function AlterColumn(&$oProc, $sTableName, $sColumnName, &$aColumnDef, $bCopyData = true)
+	{
+		if ($oProc->_GetFieldSQL($oProc->m_aTables[$sTableName]["fd"][$sColumnName], $sNewColumnSQL))
+			return !!($oProc->m_odb->query("ALTER TABLE $sTableName MODIFY $sColumnName " . $sNewColumnSQL));
+		
+		return false;
+	}
+	
+	function AddColumn(&$oProc, $sTableName, $sColumnName, &$aColumnDef)
+	{
+		$oProc->_GetFieldSQL($aColumnDef, $sFieldSQL);
+		$query = "ALTER TABLE $sTableName ADD COLUMN $sColumnName $sFieldSQL";
+		
+		return !!($oProc->m_odb->query($query));
+	}
+	
+	function GetSequenceSQL($sTableName, $sFieldName, &$sSequenceSQL)
+	{
+		$sSequenceSQL = "";
+		return true;
+	}
+	
+	function CreateTable(&$oProc, $sTableName, $aTableDef)
+	{
+		if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+		{
+			// create sequence first since it will be needed for default
+			if ($sSequenceSQL != "")
+				$oProc->m_odb->query($sSequenceSQL);
+			
+			$query = "CREATE TABLE $sTableName ($sTableSQL)";
+			return !!($oProc->m_odb->query($query));
+		}
+		
+		return false;
+	}	
 }
 ?>

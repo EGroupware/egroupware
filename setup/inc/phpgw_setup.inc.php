@@ -83,7 +83,6 @@
         $phpgw_info["setup"]["header_msg"] = "Stage One";
         return "1";
       }else{
-        include("../header.inc.php");
         if (!isset($phpgw_info["server"]["header_admin_password"])){
           $phpgw_info["setup"]["header_msg"] = "Stage One (No header admin password set)";
           return "2";
@@ -93,11 +92,11 @@
         }elseif ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]) {
           $phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
           return "3";
-        }else{ /* header.inc.php part settled. Moving to authentication */
-          $phpgw_info["setup"]["header_msg"] = "Stage One (Completed)";
-          return "10";
         }
       }
+      /* header.inc.php part settled. Moving to authentication */
+      $phpgw_info["setup"]["header_msg"] = "Stage One (Completed)";
+      return "10";
     }
   
     function generate_header()
