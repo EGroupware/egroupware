@@ -24,15 +24,6 @@
   /* This is the basic include needed on each page for phpGroupWare application compliance */
   $phpgw_info["flags"]["htmlcompliant"] = __HTMLCOMPLIANT__;
 
-
-  /* These are the settings for the database system */
-  $phpgw_info["server"]["db_host"] = "__DB_HOST__";
-  $phpgw_info["server"]["db_name"] = "__DB_NAME__";
-  $phpgw_info["server"]["db_user"] = "__DB_USER__";
-  $phpgw_info["server"]["db_pass"] = "__DB_PASS__";
-  $phpgw_info["server"]["db_type"] = "__DB_TYPE__";
-
-
   $phpgw_domain["default"] = array (
     "db_host" => "__DB_HOST__", 
     "db_name" => "__DB_NAME__", 
