@@ -758,7 +758,7 @@
 
 
 			// The file and directory information
-			$vars[lang_files_in_this_dir]=lang('Files is this directory');
+			$vars[lang_files_in_this_dir]=lang('Files in this directory');
 			$vars[files_in_this_dir]=$this->numoffiles;
 
 			$vars[lang_used_space]=lang('Used space');
@@ -902,7 +902,7 @@
 					$toolbar.='<select name="cdtodir" onChange="document.formfm.changedir.value=\'true\';document.formfm.submit()">'.$current_option.$dirs_options.'</select>
 					<input type="hidden" name="changedir" value="false"></td>
 					';
-					$toolbar.=$this->inputImage('goto','goto','Quick jump to');
+					$toolbar.=$this->inputImage('goto','goto',lang('Quick jump to'));
 					// upload button
 					if ($this->path != '/' && $this->path != $GLOBALS['fakebase'] && $this->can_add)
 					{
