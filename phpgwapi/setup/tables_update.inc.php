@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Setup                                                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Setup                                                       *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -12,7 +12,7 @@
 	// $Id$
 	// $Source$
 
-	/* Include older phpGroupWare update support */
+	/* Include older eGroupWare update support */
 	include('tables_update_0_9_9.inc.php');
 	include('tables_update_0_9_10.inc.php');
 	include('tables_update_0_9_12.inc.php');

@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Setup                                                     *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Setup                                                       *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -790,13 +790,13 @@
 	}
 
 	/*
-	 * Updates from phpGroupWare .16 branch
+	 * Updates from eGroupWare .16 branch
 	 */
 
 	$test[] = '0.9.14.509';
 	function phpgwapi_upgrade0_9_14_509()
 	{
-		// this is the phpGW .16RC1 with the new contacts tables
+		// this is the eGW .16RC1 with the new contacts tables
 		// we need to drop them here to not run into problems later on, if we install them
 		foreach(array(
 			'phpgw_contact',
@@ -821,7 +821,7 @@
 	}
 
 	/*
-	 * Updates / downgrades from phpGroupWare HEAD branch
+	 * Updates / downgrades from eGroupWare HEAD branch
 	 */
 
 	$test[] = '0.9.15.013';
