@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$GLOBALS['acl_manager']['admin']['site_config_access'] = array(
-		'name' => 'Deny to site configuration',
+		'name' => 'Deny access to site configuration',
 		'rights' => array(
 			'List config settings'   => 1,
 			'Change config settings' => 2
@@ -94,3 +94,32 @@
 			'Kill session'            => 8
 		)
 	);
+
+	$GLOBALS['acl_manager']['admin']['access_log_access'] = array(
+		'name' => 'Deny access to session log',
+		'rights' => array(
+			'Show session log' => 1
+		)
+	);
+
+	$GLOBALS['acl_manager']['admin']['error_log_access'] = array(
+		'name' => 'Deny access to error log',
+		'rights' => array(
+			'Show error log' => 1
+		)
+	);
+
+	$GLOBALS['acl_manager']['admin']['appreg_access'] = array(
+		'name' => 'Deny access to application registery',
+		'rights' => array(
+			'Register applications' => 1
+		)
+	);
+
+	$GLOBALS['acl_manager']['admin']['info_access'] = array(
+		'name' => 'Deny access to phpinfo',
+		'rights' => array(
+			'Show phpinfo()' => 1
+ 		)
+ 	);
+

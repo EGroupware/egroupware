@@ -49,9 +49,9 @@ deny access to global categories	admin	fr	Refuser l'accès aux catégories globale
 deny access to groups	admin	fr	Refuser l'accès aux groupes
 deny access to mainscreen message	admin	fr	Refuser l'accès au message de la page principale
 deny access to peer servers	admin	fr	Refuser l'accès aux serveurs pairs
+deny access to site configuration	admin	fr	Refuser  l'accès à la configuration du site
 deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
 deny all users access to grant other users access to their entries ?	admin	fr	Les utilisateurs ne peuvent permettre aux autres l'accès à leurs données ?
-deny to site configuration	admin	fr	Refuser  l'accès à la configuration du site
 display	admin	fr	Afficher
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
 edit application	admin	fr	Modifier l'application

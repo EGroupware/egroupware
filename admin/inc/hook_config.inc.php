@@ -24,7 +24,8 @@
 			$algos = @mcrypt_list_algorithms();
 			$found = False;
 
-			while(list($key, $value) = each($algos))
+			$out = '';
+			while(list($key,$value) = each($algos))
 			{
 				$found = True;
 				/* Only show each once - seems this is a problem in some installs */
@@ -69,7 +70,8 @@
 			$modes = @mcrypt_list_modes();
 			$found = False;
 
-			while(list($key, $value) = each($modes))
+			$out = '';
+			while(list($key,$value) = each($modes))
 			{
 				$found = True;
 				/* Only show each once - seems this is a problem in some installs */

@@ -19,9 +19,11 @@
 	include('../header.inc.php');
 
 	$GLOBALS['admin_tpl'] = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$GLOBALS['admin_tpl']->set_file(array(
-		'admin' => 'index.tpl'
-	));
+	$GLOBALS['admin_tpl']->set_file(
+		Array(
+			'admin' => 'index.tpl'
+		)
+	);
 
 	$GLOBALS['admin_tpl']->set_block('admin','list');
 	$GLOBALS['admin_tpl']->set_block('admin','app_row');
@@ -46,7 +48,7 @@
 		else
 		{
 			$GLOBALS['admin_tpl']->parse('rows','app_row_noicon',True);
-		} 
+		}
 	}
 
 	function section_item($pref_link='',$pref_text='')
@@ -54,7 +56,7 @@
 		$GLOBALS['admin_tpl']->set_var('pref_link',$pref_link);
 		$GLOBALS['admin_tpl']->set_var('pref_text',$pref_text);
 		$GLOBALS['admin_tpl']->parse('rows','link_row',True);
-	} 
+	}
 
 	function section_end()
 	{
@@ -63,16 +65,26 @@
 
 	function display_section($appname,$title,$file)
 	{
-		section_start($title,$GLOBALS['phpgw']->common->image($appname,
-				Array('navbar',$appname,'nonav')
-			),$appname
-		);
-
-		while(list($text,$url) = each($file))
+		if(is_array($file))
 		{
-			section_item($url,lang($text));
+			section_start($title,
+				$GLOBALS['phpgw']->common->image(
+					$appname,
+					Array(
+						'navbar',
+						$appname,
+						'nonav'
+					)
+				),
+				$appname
+			);
+
+			while(list($text,$url) = each($file))
+			{
+				section_item($url,lang($text));
+			}
+			section_end();
 		}
-		section_end(); 
 	}
 
 	$GLOBALS['phpgw']->hooks->process('admin');

@@ -44,14 +44,18 @@ create group	admin	en	Create Group
 default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group ?
 deny access to applications	admin	en	Deny access to applications
+deny access to application registery	admin	en	Deny access to application registery
 deny access to current sessions	admin	en	Deny access to current sessions
+deny access to error log	admin	en	Deny access to error log
 deny access to global categories	admin	en	Deny access to global categories
 deny access to groups	admin	en	Deny access to groups
 deny access to mainscreen message	admin	en	Deny access to mainscreen message
 deny access to peer servers	admin	en	Deny access to peer servers
+deny access to phpinfo	admin	en	Deny access to phpinfo
+deny access to session log	admin	en	Deny access to session log
+deny access to site configuration	admin	en	Deny access to site configuration
 deny access to user accounts	admin	en	Deny access to user accounts
 deny all users access to grant other users access to their entries ?	admin	en	Deny all users access to grant other users access to their entries ?
-deny to site configuration	admin	en	Deny to site configuration
 display	admin	en	Display
 do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global subcategories ?
 edit application	admin	en	Edit application

@@ -54,7 +54,7 @@ deny access to applications	admin	ja	アプリケーションの制限
 deny access to global categories	admin	ja	グローバルカテゴリの制限
 deny access to mainscreen message	admin	ja	メイン画面メッセージ変更の制限
 deny access to current sessions	admin	ja	セッションの制限
-deny to site configuration	admin	ja	サイト環境設定の制限
+deny access to site configuration	admin	ja	サイト環境設定の制限
 disabled	admin	ja	不可
 display	admin	ja	表示
 edit account	admin	ja	アカウント訂正

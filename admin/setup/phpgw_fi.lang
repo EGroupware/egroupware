@@ -48,9 +48,9 @@ deny access to global categories	admin	fi	Est‰ p‰‰sy yleisiin luokkiin
 deny access to groups	admin	fi	Est‰ p‰‰sy ryhmiin
 deny access to mainscreen message	admin	fi	Est‰ p‰‰sy p‰‰n‰ytˆn viestiin
 deny access to peer servers	admin	fi	Est‰ p‰‰sy rinnakkaispalvelimille
+deny access to site configuration	admin	fi	Est‰ p‰‰sy palvelun asetuksiin
 deny access to user accounts	admin	fi	Est‰ p‰‰sy k‰ytt‰j‰tunnuksiin
 deny all users access to grant other users access to their entries ?	admin	fi	Est‰ kaikilta k‰ytt‰jilt‰ tietojensa julkistaminen?
-deny to site configuration	admin	fi	Est‰ p‰‰sy palvelun asetuksiin
 display	admin	fi	N‰yt‰
 do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myˆs yleiset alaluokat?
 edit application	admin	fi	Muokkaa sovellusta

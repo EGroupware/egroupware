@@ -51,12 +51,26 @@
 		$file['View Sessions'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 	}
 
-	/* These need to be added still */
-	$file['View Access Log'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
-	$file['View Error Log']  = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log');
-	$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boapplications.register_all_hooks');
-	$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
+	if (! $GLOBALS['phpgw']->acl->check('access_log_access',1,'admin'))
+	{
+		$file['View Access Log'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
+	}
 
+	if (! $GLOBALS['phpgw']->acl->check('error_log_access',1,'admin'))
+	{
+		$file['View Error Log']  = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log');
+	}
+
+	if (! $GLOBALS['phpgw']->acl->check('appreg_access',1,'admin'))
+	{
+		$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boapplications.register_all_hooks');
+	}
+
+	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
+	{
+		$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
+	}
+ 
 	/* Do not modify below this line */
 	display_section('admin','admin',$file);
 ?>
