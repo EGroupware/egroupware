@@ -33,6 +33,8 @@
 	$setup_info['phpgwapi']['tables'][] = 'lang';
 	$setup_info['phpgwapi']['tables'][] = 'languages';
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_nextid';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_addressbook';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_addressbook_extra';
 
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
