@@ -556,7 +556,8 @@
 
 		function add_email()
 		{
-			global $name,$refereri,$add_email;
+			global $name,$referer,$add_email;
+			
 
 			$named = explode(' ', $name);
 			for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
@@ -753,6 +754,7 @@
 			$ab_id   = $GLOBALS['HTTP_GET_VARS']['ab_id'];
 			$submit  = $GLOBALS['HTTP_POST_VARS']['submit'];
 			$referer = $GLOBALS['HTTP_GET_VARS']['referer'];
+			
 
 			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner','tid' => 'tid')));
@@ -983,8 +985,14 @@
 				$this->template->set_var('vcard_button',lang('no vcard'));
 			}
 
+#			it's better to use $GLOBALS['phpgw_info']['server']['webserver_url'] instead of '/phpgroupware'
+#			right?
+#			and why do we replace /phpgroupware from the url, we already a perfect url?
+
+#			$this->template->set_var('done_button',$this->html_1button_form('DoneForm','Done',
+#				$referer ? ereg_replace('/phpgroupware','',$referer) : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
 			$this->template->set_var('done_button',$this->html_1button_form('DoneForm','Done',
-				$referer ? ereg_replace('/phpgroupware','',$referer) : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
+				$referer ? $referer : $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list')));
 			$this->template->set_var('access_link',$access_link);
 
 			$this->template->pfp('out','view_t');
