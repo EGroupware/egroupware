@@ -446,7 +446,14 @@
 				$is_public = ($l_cal['private'] == 'public'?1:0);
 				$this->so->event_init();
 				$this->add_attribute('uid',$l_cal['uid']);
-				$this->so->set_category(implode(',',$l_categories));
+				if(count($l_categories) >= 2)
+				{
+					$this->so->set_category(implode(',',$l_categories));
+				}
+				else
+				{
+					$this->so->set_category(strval($l_categories[0]));
+				}
 				$this->so->set_title($l_cal['title']);
 				$this->so->set_description($l_cal['description']);
 				$this->so->set_start($l_start['year'],$l_start['month'],$l_start['mday'],$l_start['hour'],$l_start['min'],0);
