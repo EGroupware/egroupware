@@ -92,7 +92,7 @@
 		$accounts->db = $phpgw_setup->db;
 
 		$phpgw_setup->oProc->query("select * from phpgw_access_log");
-		while ($phpgw_setup->oProc->next_record())
+		while($phpgw_setup->oProc->next_record())
 		{
 			$lid         = explode('@',$phpgw_setup->oProc->f('loginid'));
 			$account_lid = $lid[0];
@@ -462,7 +462,7 @@
 		// tables_current, but on running tables_baseline throught all update-scripts.
 		// Which gives at the end two different versions of the table on new or updated installs.
 		// I fix it now in the (wrong) order of the tables_current, as some apps might depend on!
-		
+
 		$confs = array();
 		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM phpgw_config");
 		while ($GLOBALS['phpgw_setup']->oProc->next_record())
@@ -474,7 +474,7 @@
 			);
 		}
 		$GLOBALS['phpgw_setup']->oProc->DropTable('phpgw_config');
-		
+
 		$GLOBALS['phpgw_setup']->oProc->CreateTable('phpgw_config',array(
 			'fd' => array(
 				'config_app' => array('type' => 'varchar', 'precision' => 50),
@@ -486,20 +486,20 @@
 			'ix' => array(),
 			'uc' => array('config_name')
 		));
-		
+
 		foreach($confs as $conf)
 		{
 			$GLOBALS['phpgw_setup']->oProc->query(
 				"INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('".
 				$conf['config_app']."','".$conf['config_name']."','".$conf['config_value']."')");
 		}
-		
+
 		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages SET available='Yes' WHERE lang_id='cs'");
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.002';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-	
+
 	$test[] = '0.9.14.002';
 	function phpgwapi_upgrade0_9_14_002()
 	{
@@ -510,8 +510,8 @@
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
 
 		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-		
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -521,13 +521,13 @@
 	{
 		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
 		// as 0.9.15.xxx are already used in HEAD
-		
+
 		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
 
 		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-		
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -537,13 +537,13 @@
 	{
 		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
 		// as 0.9.15.xxx are already used in HEAD
-		
+
 		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
 
 		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-		
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -553,13 +553,13 @@
 	{
 		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
 		// as 0.9.15.xxx are already used in HEAD
-		
+
 		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
 
 		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-		
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -569,12 +569,12 @@
 	{
 		// 0.9.14.5xx are the development-versions of the 0.9.16 release (based on the 0.9.14 api)
 		// as 0.9.15.xxx are already used in HEAD
-		
+
 		// this is the 0.9.15.003 update, needed for the new filemanager and vfs-classes in the api
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs','content', array ('type' => 'text', 'nullable' => True));
 
 		// this is the 0.9.15.004 update, needed for the polish translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -622,11 +622,10 @@
 			'ix' => array(),
 			'uc' => array('app_name')
 		),'app_title');
-		
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.502';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.14.502';
 	function phpgwapi_upgrade0_9_14_502()
@@ -650,7 +649,7 @@
 		{
 			$owner = intval($GLOBALS['phpgw_setup']->oProc->f('preference_owner'));
 			$prefs = unserialize($GLOBALS['phpgw_setup']->oProc->f('preference_value'));
-			
+
 			if (is_array($prefs))
 			{
 				foreach ($prefs as $app => $pref)
@@ -676,10 +675,10 @@
 	function phpgwapi_upgrade0_9_14_503()
 	{
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_addressbook','last_mod',array(
-				'type' => 'int',
-				'precision' => '4',
-				'nullable' => False
-			));
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False
+		));
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.504';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -689,15 +688,14 @@
 	function phpgwapi_upgrade0_9_14_504()
 	{
 		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_categories','last_mod',array(
-				'type' => 'int',
-				'precision' => '4',
-				'nullable' => False
-			));
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False
+		));
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.505';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.14.505';
 	function phpgwapi_upgrade0_9_14_505()
@@ -709,11 +707,9 @@
 			'default' => '0'
 		));
 
-
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.506';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.14.506';
 	function phpgwapi_upgrade0_9_14_506()
@@ -723,11 +719,9 @@
 			'nullable' => True
 		));
 
-
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.507';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.14.507';
 	function phpgwapi_upgrade0_9_14_507()
@@ -739,11 +733,9 @@
 			'default' => '0'
 		));
 
-
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-
 
 	$test[] = '0.9.14.508';
 	function phpgwapi_upgrade0_9_14_508()
@@ -825,7 +817,7 @@
 	function phpgwapi_upgrade0_9_99_002()
 	{
 		// needed for the chinese(simplified) translations
-		$GLOBALS['phpgw_setup']->db->query("UPDATE phpgw_languages SET lang_name='Chinese(simplified)',available='Yes' WHERE lang_id='zh'");
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET lang_name='Chinese(simplified)',available='Yes' WHERE lang_id='zh'");
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.003';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -925,7 +917,6 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-
 	$test[] = '0.9.99.004';
 	function phpgwapi_upgrade0_9_99_004()
 	{
@@ -937,11 +928,10 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-
 	$test[] = '0.9.99.005';
 	function phpgwapi_upgrade0_9_99_005()
 	{
-		$GLOBALS['phpgw_setup']->db->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='sl'");
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='sl'");
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.006';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
