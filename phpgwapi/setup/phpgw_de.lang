@@ -16,6 +16,7 @@ after retrieving the file, put it into place as the header.inc.php.  then, click
 all applications	setup	de	Alle Applikationen
 all core tables and the admin and preferences applications	setup	de	all Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all users	setup	de	Alle Benutzer
+alphabet	common	de	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,ä,ö,ü
 analysis	setup	de	Analyse
 app details	setup	de	Applikations-Details
 app install/remove/upgrade	setup	de	Applikation installierenn/entfernen/aktualisieren
