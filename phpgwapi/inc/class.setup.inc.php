@@ -802,16 +802,16 @@
 				return False;
 			}
 		}
-	
-       
-       function get_hooks_table_name()
-       {
-       		if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5') && ($setup_info['phpgwapi']['currentver'] != ''))
+
+		function get_hooks_table_name()
+		{
+			if($this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'],'0.9.8pre5') &&
+			   $GLOBALS['setup_info']['phpgwapi']['currentver'] != '')
 			{
 				/* No phpgw_hooks table yet. */
 				return False;
 			}
-                return 'phpgw_hooks';
-       }
+			return 'phpgw_hooks';
+		}
 	}
 ?>
