@@ -16,14 +16,14 @@
 		'currentapp'  => 'admin',
 		'parent_page' => 'accounts.php'
 	);
-  	
+ 
 	include('../header.inc.php');
-  	
+
 	// creates the html for the user data
 	function createPageBody($_account_id,$_userData='',$_errors='')
 	{
 		global $phpgw, $phpgw_info;
-  		
+  
 		$t = new Template($phpgw->common->get_tpl_dir('admin'));
 		$t->set_unknowns('remove');
 		$t->set_file(array(
@@ -31,7 +31,7 @@
 			'form_passwordinfo' => 'account_form_password.tpl',
 			'form_buttons_'     => 'account_form_buttons.tpl',
 		));
-		
+
 		if ($_userData)
 		{
 			$userData=$_userData;
@@ -114,7 +114,6 @@
 		$groups_select .= '</select>';
 		$t->set_var('groups_select',$groups_select);
 
-
 		// create list of available apps
 		$i = 0;
 
@@ -137,7 +136,6 @@
 
 		// create apps output
 		@reset($db_perms);
-
 		for ($i=0;$i<=count($perm_display);$i++) 
 		{
 			$checked = '';
@@ -145,7 +143,7 @@
 			{
 				$checked = ' checked';
 			}
-			
+
 			if ($perm_display[$i]['translatedName'])
 			{
 				$part1 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
@@ -155,13 +153,13 @@
 			}
 
 			$i++;			
-			
+
 			$checked = '';
 			if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
 			{
 				$checked = ' checked';
 			}
-			
+
 			if ($perm_display[$i]['translatedName'])
 			{
 				$part2 = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s></td>',
@@ -176,7 +174,7 @@
 			
 			$appRightsOutput .= sprintf('<tr bgcolor="%s">%s%s</tr>',$phpgw_info['theme']['row_on'], $part1, $part2);
 		}
-	
+
 		$t->set_var('permissions_list',$appRightsOutput);
 
 		echo $t->finish($t->parse('out','form'));
@@ -195,13 +193,12 @@
 		}
 
 		$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
-#		$apps->read_installed_apps();
-#		$apps_before = $apps->read_account_specific();
-		
+
 		$apps->account_type = 'u';
 		$apps->account_id = $_userData['account_id'];
 		$apps->account_apps = Array(Array());
-		if ($_userData['account_permissions']) {
+		if ($_userData['account_permissions'])
+		{
 			while($app = each($_userData['account_permissions'])) 
 			{
 				if($app[1]) 
@@ -216,10 +213,9 @@
 		}
 		$apps->save_repository();
 
-
 		$account = CreateObject('phpgwapi.accounts');
 		$allGroups = $account->get_list('groups');
-		
+
 		if ($_userData['account_groups']) {
 			reset($_userData['account_groups']);
 			while (list($key,$value) = each($_userData['account_groups'])) {
@@ -246,16 +242,16 @@
 			}
 		}
 	}
-  	
+
 	// checks if the userdata are valid
 	// returns FALSE if the data are correct
 	// otherwise the error array
 	function userDataInvalid($_userData)
 	{
 		global $phpgw_info;
-		
+
 		$totalerrors = 0;
-		
+
 		if ($phpgw_info['server']['account_repository'] == 'ldap' && ! $allow_long_loginids) 
 		{
 			if (strlen($_userData['account_lid']) > 8) 
@@ -264,7 +260,7 @@
 				$totalerrors++;
 			}
 		}
-		
+
 		if ($_userData['old_loginid'] != $_userData['account_lid']) 
 		{
 			if (account_exsists($_userData['account_loginid']))
@@ -273,7 +269,7 @@
 				$totalerrors++;
 			}
 		}
-		
+
 		if ($_userData['account_passwd'] || $_userData['account_passwd_2']) 
 		{
 			if ($_userData['account_passwd'] != $_userData['account_passwd_2']) 
@@ -282,13 +278,13 @@
 				$totalerrors++;
 			}
 		}
-		
+
 		if (!count($_userData['account_permissions']) && !count($_userData['account_groups'])) 
 		{
 			$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
 			$totalerrors++;
 		}
-		
+
 		if ($totalerrors == 0)
 		{
 			return FALSE;
@@ -298,7 +294,7 @@
 			return $error;
 		}
 	}
-  	
+
 	// todo
 	// not needed if i use the same file for new users too
 	if (! $account_id)
@@ -397,5 +393,4 @@
 	{
 		$phpgw->common->hook_single('show_user_data', $app[0]);
 	}       
-
 ?>
