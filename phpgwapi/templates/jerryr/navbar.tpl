@@ -8,7 +8,7 @@
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td width="180" valign="top" align="left"><img src="{img_root}/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td width="180" valign="top" align="left"><img src="{img_root}/grey-pixel.png" width="1" height="40" alt="spacer" /></td>
 				<td>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -23,7 +23,7 @@
 
 				{app_extra_icons_icon}
 	
-				<td width="1" valign="top" align="right"><img src="{img_root}/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td width="1" valign="top" align="right"><img src="{img_root}/grey-pixel.png" width="1" height="40" alt="spacer" /></td>
 			</tr>
 		</table>
 	</div>
@@ -47,10 +47,10 @@
 <!-- BEGIN sidebox_hide_header -->
 	<!--<script language="javascript" src="SlideOut.js"></script>-->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 165, 160, 200)
+		new ypSlideOutMenu("menu2", "right", 0, 60, 160, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="position:absolute;left:0px;top:175px">
+	<div id="sideboxdragarea" style="position:absolute;left:0px;top:70px">
 	<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" onmouseover="//ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
