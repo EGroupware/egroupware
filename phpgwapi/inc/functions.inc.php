@@ -27,11 +27,14 @@
   function CreateObject($classname, $constructor_param = ""){
     global $phpgw, $phpgw_info, $phpgw_domain;
     $classpart = explode (".", $classname);
-    if (!$phpgw_info["flags"]["included_classes"][$classpart[1]]){
-      $phpgw_info["flags"]["included_classes"][$classpart[1]] = True;   
-      include($phpgw_info["server"]["include_root"]."/".$classpart[0]."/inc/class.".$classpart[1].".inc.php");
+    $appname = $classpart[0];
+    $classname = $classpart[1];
+    if (!$phpgw_info["flags"]["included_classes"][$classname]){
+      $phpgw_info["flags"]["included_classes"][$classname] = True;   
+      include($phpgw_info["server"]["include_root"]."/".$appname."/inc/class.".$classname.".inc.php");
     }
-    $obj = new $classpart[1]($constructor_param);
+//    if ($constructor_param == ""){ $obj = new $classname; }else{$obj = new $classname($constructor_param); }
+    $obj = new $classname($constructor_param);
     return $obj;
   }
 

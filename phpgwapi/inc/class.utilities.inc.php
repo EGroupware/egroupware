@@ -36,6 +36,7 @@
       $phpgw->matrixview = CreateObject("phpgwapi.matrixview");
       $phpgw->menutree = CreateObject("phpgwapi.menutree");
       $phpgw->sbox = CreateObject("phpgwapi.sbox");
+      $phpgw->sbox = CreateObject("phpgwapi.portalbox");
     }
   }
 ?>

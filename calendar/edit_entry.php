@@ -16,8 +16,8 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
 
   include("../header.inc.php");
-  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_sbox.inc.php");
-  $sb = new sbox;
+  
+  $sb = CreateObject("phpgwapi.sbox");
 
   $cal_info = new calendar_item;
 

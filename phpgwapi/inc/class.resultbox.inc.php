@@ -1,0 +1,49 @@
+<?php
+  /**************************************************************************\
+  * phpGroupWare - API                                                       *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
+
+if (!$phpgw_info["flags"]["included_classes"]["portalbox"]){
+  $phpgw_info["flags"]["included_classes"]["portalbox"] = True;
+  include($phpgw_info["server"]["include_root"]."/".$appname."/inc/class.portalbox.inc.php");
+}
+class resultbox extends portalbox { 
+    /* 
+        Set up the Object. You will notice, we have not reserved memory  
+        space for variables. In this circumstance it is not necessary. 
+    */ 
+
+    //constructor 
+    function resultbox($title="", $primary="", $secondary="", $tertiary="") { 
+        $this->portalbox($title, $primary, $secondary, $tertiary);
+        $this->setvar("outerwidth",400);
+        $this->setvar("innerwidth",400);
+    } 
+    /* 
+        This is the only method within the class. Quite simply, as you can see  
+        it draws the table(s), placing the required data in the appropriate place. 
+    */     
+    function draw() { 
+        echo '<table border="'.$this->getvar("outerborderwidth").'" cellpadding="0" cellspacing="0" width="'.$this->getvar("outerwidth").'" bordercolor="'.$this->getvar("outerbordercolor").'" bgcolor="'.$this->getvar("titlebgcolor").'">';
+        echo '<tr><td align="center">'.$this->getvar("title").'</td></tr>';
+        echo '<tr><td>';
+        echo '<table border="0" cellpadding="0" cellspacing="0" width="'.$this->getvar("innerwidth").'" bgcolor="'.$this->getvar("innerbgcolor").'">';
+        for ($x = 0; $x < count($this->data); $x++) { 
+            echo '<tr>';
+            echo '<td width="50%">'.$this->data[$x][0].'</td>';
+            echo '<td width="50%">'.$this->data[$x][1].'</td>'; 
+            echo '</tr>';
+        } 
+        echo '</table>';
+        echo '</td></tr>';
+        echo '</table>';
+    } 
+} 
