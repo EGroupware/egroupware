@@ -443,6 +443,7 @@
 			return $this->gmtdate(mktime($hour, $minute, $second, $month, $day, $year));
 		}
 
+		// Note common:show_date converts server- to user-time, before it returns the requested format !!!
 		function localdates($localtime)
 		{
 			$date = Array('raw','day','month','year','full','dow','dm','bd');
