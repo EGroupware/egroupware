@@ -336,3 +336,7 @@ your suggested time of <b> %1 - %2 </b> conflicts with the following existing ca
 weekview without weekend	calendar	fr	Vue Hebdo sans Weekend
 All categories	calendar	fr	Toutes catégories
 No filter	calendar	fr	Pas de filtres
+previous day	calendar	fr	Jour précédent
+next day	calendar	fr	Jour suivant
+Show next seven days	calendar	fr	Voir les sept prochains jours
+Show only one day	calendar	fr	Voir un jour seulement
