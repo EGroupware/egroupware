@@ -1177,26 +1177,21 @@
 		@abstract uses code in /email class msg to obtain the appropriate password for email
 		@param  (none - it will abtain the info it needs on its own)
 		*/
+		/*
 		function get_email_passwd_ex()
 		{
 			global $phpgw_info, $phpgw;
 
-			// we need mail_server_type in order to completely create the msg object
-			// at this point, the real mail_server_type does not matter, we only need the password related functions
-			if (empty($phpgw_info['user']['preferences']['email']['mail_server_type']))
+			// ----  Create the email Message Class  if needed  -----
+			if (isset($phpgw->msg))
 			{
-				$phpgw_info['user']['preferences']['email']['mail_server_type'] = 'imap';
-				$server_type_was_empty = True;
+				$do_free_me = False;
 			}
 			else
 			{
-				$server_type_was_empty = False;
+				$phpgw->msg = CreateObject("email.mail_msg");
+				$do_free_me = True;
 			}
-
-			// ----  Create the email Message Class    -----
-			$phpgw->msg = CreateObject("email.msg");
-			$phpgw->msg->msg_common_();
-
 			// use the Msg class to obtain the appropriate password
 			$tmp_prefs = $phpgw->preferences->read();
 			if (!isset($tmp_prefs['email']['passwd']))
@@ -1207,15 +1202,16 @@
 			{
 				$email_passwd = $phpgw->msg->decrypt_email_passwd($tmp_prefs['email']['passwd']);
 			}
-			
-			// return mail_server_type value to its previous state, if necessary
-			if ($server_type_was_empty)
+			// cleanup and return
+			if ($do_free_me)
 			{
-				$phpgw_info['user']['preferences']['email']['mail_server_type'] = '';
+				unset ($phpgw->msg);
 			}
-			
 			return $email_passwd;
 		}
+		*/
+		
+
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/*!
 		@function create_emailpreferences
@@ -1223,7 +1219,33 @@
 		@discussion This is not the best place for it, but it needs to be shared between Aeromail and SM
 		@param $prefs
 		@param $account_id -optional defaults to : phpgw_info['user']['account_id']	
-		*/	
+		*/
+		function create_emailpreferences($prefs='',$accountid='')
+		{
+			global $phpgw, $phpgw_info;
+
+			// ----  Create the email Message Class  if needed  -----
+			if (isset($phpgw->msg))
+			{
+				$do_free_me = False;
+			}
+			else
+			{
+				$phpgw->msg = CreateObject("email.mail_msg");
+				$do_free_me = True;
+			}
+
+			// this sets the prederences into the phpgw_info structure
+			$phpgw->msg->create_email_preferences();
+
+			// cleanup and return
+			if ($do_free_me)
+			{
+				unset ($phpgw->msg);
+			}
+		}
+
+		/*
 		function create_emailpreferences($prefs,$accountid='')
 		{
 			global $phpgw, $phpgw_info;
@@ -1233,7 +1255,7 @@
 			// NEW EMAIL PASSWD METHOD (shared between SM and aeromail)
 			$prefs['email']['passwd'] = $this->get_email_passwd_ex();
 			
-			/* Add default preferences info */
+			// Add default preferences info
 			if (!isset($prefs['email']['userid']))
 			{
 				if ($phpgw_info['server']['mail_login_type'] == 'vmailmgr')
@@ -1246,13 +1268,13 @@
 					$prefs['email']['userid'] = $phpgw->accounts->id2name($account_id);
 				}
 			}
-			/* Set Server Mail Type if not defined */
+			// Set Server Mail Type if not defined
 			if (empty($phpgw_info['server']['mail_server_type']))
 			{
 				$phpgw_info['server']['mail_server_type'] = 'imap';
 			}
 			
-			/* // OLD EMAIL PASSWD METHOD
+			// OLD EMAIL PASSWD METHOD
 			if (!isset($prefs['email']['passwd']))
 			{
 				$prefs['email']['passwd'] = $phpgw_info['user']['passwd'];
@@ -1260,7 +1282,7 @@
 			else
 			{
 				$prefs['email']['passwd'] = $this->decrypt($prefs['email']['passwd']);
-			} */
+			}
 			// NEW EMAIL PASSWD METHOD Located at the begining of this function
 			
 			if (!isset($prefs['email']['address']))
@@ -1280,8 +1302,7 @@
 			{
 				$prefs['email']['imap_server_type'] = $phpgw_info['server']['imap_server_type'];
 			}
-
-			/* These sets the mail_port server variable */
+			// These sets the mail_port server variable
 			if ($prefs['email']['mail_server_type']=='imap')
 			{
 				$prefs['email']['mail_port'] = '143';
@@ -1290,19 +1311,17 @@
 			{
 				$prefs['email']['mail_port'] = '110';
 			}
-
-			/* This is going to be used to switch to the nntp class */
+			// This is going to be used to switch to the nntp class
 			if (isset($phpgw_info['flags']['newsmode']) &&
 				$phpgw_info['flags']['newsmode'])
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
-			
 			// DEBUG
 			//echo "<br>prefs['email']['passwd']: " .$prefs['email']['passwd'] .'<br>';
-			
 			return $prefs;
 		}
+		*/
 
 
 
