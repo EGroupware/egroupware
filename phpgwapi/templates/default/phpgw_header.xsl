@@ -19,6 +19,16 @@
 			</head>
 			<body>
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
+					<xsl:choose>
+						<xsl:when test="app_header">
+							<tr valign="top" width="100%">
+								<td>
+									<xsl:attribute name="class">app_header</xsl:attribute>
+									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
+								</td>
+							</tr>
+						</xsl:when>
+					</xsl:choose>
 					<tr valign="top" width="100%">
 						<td>
 							<xsl:choose>
@@ -36,8 +46,8 @@
 							</xsl:choose>
 						</td>
 					</tr>
-					<tr valign="top">
-						<td align="center" valign="top" class="bottom">
+					<tr valign="bottom">
+						<td align="center" valign="bottom" class="bottom">
 						<!-- BEGIN bottom_part -->
 							<xsl:value-of select="lang_powered_by"/>
 							<a href="http://www.phpgroupware.org" target="blank" onMouseout="window.status='';return true;">

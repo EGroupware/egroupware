@@ -78,7 +78,7 @@ table.login
 	font-weight: bold;
 }
 
-.th_text,.app_header,.th
+.th_text,.th
 {
 	font-weight: bold;
 }
@@ -87,9 +87,5 @@ table.login
 {
 	padding: 5px;
 	text-align: left;
-}
-
-.app_body
-{
-	padding: 5px;
+	font-weight: bold;
 }

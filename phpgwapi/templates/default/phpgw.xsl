@@ -113,17 +113,17 @@
 						</td>
 					</tr>
 					<!-- BEGIN app_header -->
-					<tr valign="top">
-						<td height="15" class="app_body">
-							<xsl:choose>
-								<xsl:when test="app_header">
+					<xsl:choose>
+						<xsl:when test="app_header">
+							<tr valign="top">
+								<td>
 									<xsl:attribute name="class">app_header</xsl:attribute>
 									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
 									<hr/>
-								</xsl:when>
-							</xsl:choose>
-						</td>
-					</tr>
+								</td>
+							</tr>
+						</xsl:when>
+					</xsl:choose>
 					<!-- END app_header -->
 					<tr>
 						<td width="100%" height="100%" valign="top" align="center" class="app_body">
