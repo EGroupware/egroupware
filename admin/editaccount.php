@@ -40,8 +40,10 @@
 		$t->set_block('account','form_passwordinfo','form_passwordinfo');
 		$t->set_block('account','form_buttons_','form_buttons_');
 
+		print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
 		if (is_array($_userData))
 		{
+			$userData = Array();
 			$userData=$_userData;
 			@reset($userData['account_groups']);
 			while (list($key, $value) = @each($userData['account_groups']))
@@ -52,7 +54,7 @@
 			$account = CreateObject('phpgwapi.accounts');
 			$allGroups = $account->get_list('groups');
 		}
-		else
+		elseif(is_string($_userData) && $_userData=='')
 		{
 			$account = CreateObject('phpgwapi.accounts',$_account_id);
 			$userData = $account->read_repository();
@@ -184,7 +186,7 @@
 		for ($i=0;$i<count($perm_display);$i++) 
 		{
 			$checked = '';
-			if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
+			if ($userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
 			{
 				$checked = ' checked';
 			}
@@ -200,7 +202,7 @@
 			$i++;			
 
 			$checked = '';
-			if ($_userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']]) 
+			if ($userData['account_permissions'][$perm_display[$i]['appName']] || $db_perms[$perm_display[$i]['appName']])
 			{
 				$checked = ' checked';
 			}
