@@ -879,7 +879,8 @@
 		if(floor(phpversion()) > 4)
 		{
 //			$b = $a->__clone();
-			$b = clone $a;
+//			$b = clone $a;
+			$b = $a;
 		}
 		else
 		{
