@@ -18,7 +18,7 @@
 		'currentapp'	=>	'calendar',
 		'noheader'	=>	True,
 		'nonavbar'	=>	True,
-		'noappheader	=>	True,
+		'noappheader'	=>	True,
 		'noappfooter'	=>	True,
 		'nofooter'	=>	True
 	);
