@@ -230,7 +230,7 @@
 			// Loop until we find a free id
 			$free = 0;
 			while (!$free) {
-				if $this->exists($nextid)
+				if ($this->exists($nextid))
 				{
 					$nextid = $phpgw->common->next_id("accounts_sql",$min,$max);
 				}
