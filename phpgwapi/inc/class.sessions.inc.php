@@ -430,32 +430,15 @@
 		*/
 		function phpgw_set_cookiedomain()
 		{
-			$dom = $_SERVER['HTTP_HOST'];
-			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
+			$this->cookie_domain = $_SERVER['HTTP_HOST'];
+
+			// remove port from HTTP_HOST
+			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
 			{
-				$dom = $arr[1];
-			}
-			$parts = explode('.',$dom);
-			if (count($parts) > 2)
-			{
-				if (!ereg('[0-9]+',$parts[1]))
-				{
-					for($i=0;$i<count($parts);$i++)
-					{
-						$this->cookie_domain .= '.'.$parts[$i];
-					}
-				}
-				else
-				{
-					$this->cookie_domain = '';
-				}
-			}
-			else
-			{
-				$this->cookie_domain = '';
+				$this->cookie_domain = $arr[1];
 			}
 			print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
-			
+
 			$this->set_cookie_params($this->cookie_domain);	// for php4 sessions necessary
 		}
 
@@ -472,7 +455,7 @@
 			{
 				$this->phpgw_set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain); 
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
 		}
 
 		/**
