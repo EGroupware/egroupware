@@ -52,13 +52,20 @@
 			}
 		}
 
+		$applications .= '<tr><td class="main_menu_bottom">'.$GLOBALS['phpgw']->common->display_fullname().'<br>'
+			. lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
+			. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
+			. $GLOBALS['phpgw']->common->show_date(time(),'d, Y').'<br>'
+			. lang('version').': '.$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
+			. '</td></tr>'."\r\n";
+
 		$var['applications'] = $applications;
      
 		$var['home_link'] 	= $GLOBALS['phpgw_info']['navbar']['home']['url'];
 		$var['preferences_link'] = $GLOBALS['phpgw_info']['navbar']['preferences']['url'];
 		$var['logout_link'] 	= $GLOBALS['phpgw_info']['navbar']['logout']['url'];
 		$var['help_link'] 	= $GLOBALS['phpgw_info']['navbar']['about']['url'];
-		$var['lang_welcome']	= lang('welcome');
+		$var['lang_welcome']	= lang('Welcome');
 		$var['lang_preferences']	= lang('preferences');
 		$var['lang_logout']	= lang('logout');
 		$var['lang_help']	= lang('help');
@@ -76,7 +83,6 @@
 			$var['powered_by'] = '';
 			$tpl->set_var($var);
 		}
-		$var['phpgw_version'] = lang("version").": ".$GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 		$tpl->set_var($var);
 
 		if (isset($GLOBALS['phpgw_info']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
@@ -94,11 +100,6 @@
 			$tpl->set_var($var);
 		}
 
-		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
-		$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
-				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
-				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';

@@ -30,18 +30,6 @@
 	</table>
 </div>
 
-<div class="main_menu" style="width : 15% ; height : 50px ; left : 0px ; bottom : 0px ;">
-	<table summary="" style="width : 100%; ">
-		<tr>
-			<td class="main_menu_bottom">
-				{user_info_name}<br>
-				{user_info_date}<br>
-				{phpgw_version}
-			</td>
-		</tr>
-	</table>
-</div>
-
 <div class="main_body" style="position: absolute; padding: 0px; height:100%; left:15% ; top :0px ;
 width:85%; overflow : auto">
 <!-- END navbar -->
