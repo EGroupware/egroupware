@@ -72,7 +72,7 @@
        $this->sessionid = $sessionid;
        $this->kp3       = $kp3;
 
-       $phpgw->common->key  = $this->kp3;
+       $phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info["server"]["encryptkey"]);
        $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
 
        $cryptovars[0] = $phpgw->common->key;      
@@ -192,7 +192,7 @@
       $this->sessionid		= md5($phpgw->common->randomstring(10));
       $this->kp3          = md5($phpgw->common->randomstring(15));
 
-      $phpgw->common->key  = $this->kp3;
+			$phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info["server"]["encryptkey"]);
       $phpgw->common->iv   = $phpgw_info["server"]["mcrypt_iv"];
       $cryptovars[0] = $phpgw->common->key;
       $cryptovars[1] = $phpgw->common->iv;
@@ -303,7 +303,7 @@
        $phpgw_info_temp["flags"] = array();
 
 			if ($phpgw_info["server"]["cache_phpgw_info"]) {
-					$this->appsessions("phpgw_info_cache","phpgwapi",$phpgw_info_temp);
+					$this->appsession("phpgw_info_cache","phpgwapi",$phpgw_info_temp);
 			}
     }
 
@@ -329,9 +329,8 @@
 	      $phpgw->db->query('select content from phpgw_app_sessions where '
 												. 'sessionid = "'.$this->sessionid.'" and loginid = "'.$this->account_id.'" '
 												. 'and app = "'.$appname.'" and location = "'.$location.'"',__LINE__,__FILE__);
-
 	      if ($phpgw->db->num_rows()==0) {
-      		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
+    		$data = addslashes($phpgw->crypto->encrypt(serialize($data)));
 		      $phpgw->db->query('INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) '
 													. 'VALUES ("'.$this->sessionid.'","'.$this->account_id.'","'.$appname
 													. '","'.$location.'","'.$data.'")',__LINE__,__FILE__);
