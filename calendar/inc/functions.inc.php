@@ -388,14 +388,18 @@ function month_name ( $m ) {
 	 . "WHERE webcal_entry.cal_id = webcal_entry_repeats.cal_id "
 	 . "AND webcal_entry.cal_id = webcal_entry_user.cal_id "
 	 . "AND webcal_entry_groups.cal_id = webcal_entry.cal_id "
-	 . "AND (webcal_entry_user.cal_login = '" . $phpgw_info["user"]["userid"] . "' OR (webcal_entry.cal_access='group' AND (";
+	 . "AND (webcal_entry_user.cal_login = '" . $phpgw_info["user"]["userid"] . "' OR (webcal_entry.cal_access='group' ";
     $group_names = $phpgw->accounts->read_group_names();
-    for ($i=0;$i<count($group_names);$i++) {
-      $sql .= "webcal_entry_groups.groups like '%".$group_names[$i][1]."%'";
-      if (count($group_names) != 0 && $i != count($group_names)-1)
-	$sql .= " OR ";
+    if ($group_names) {
+      $sql .= " AND (";
+      for ($i=0;$i<count($group_names);$i++) {
+        $sql .= "webcal_entry_groups.groups like '%".$group_names[$i][1]."%'";
+        if (count($group_names) != 0 && $i != count($group_names)-1)
+  	$sql .= " OR ";
+      }
+      $sql .= ")";
     }
-    $sql .= "))) AND webcal_entry.cal_type='M'";
+    $sql .= ")) AND webcal_entry.cal_type='M'";
 
     $phpgw->db->query($sql);
 
