@@ -327,79 +327,44 @@
 				$check_stock = $this->stock_contact_fields + $this->non_contact_fields;
 
 				if ($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
-				$filterarray = split(',',$filter);
-				if ($filterarray[1])
-				{
-					$i=0;
-					for ($i=0;$i<count($filterarray);$i++)
-					{
-						list($name,$value) = split('=',$filterarray[$i]);
-						if ($name)
-						{
-							if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#'; }
-							$filterfields[$name] = $value;
-						}
-					}
-				}
-				else
-				{
-					list($name,$value) = split('=',$filter);
-					if ($DEBUG)
-					{
-						echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#';
-					}
-					$filterfields = array($name => $value);
-				}
 
-				/* now check each element of the array and convert into SQL for queries below */
-				$i = 0;
-				foreach($filterfields as $name => $value)
+				$filterlist = array();
+				foreach(explode(',',$filter) as $pair)
 				{
+					list($name,$value) = explode('=',$pair,2);
+					if (!$name || !isset($check_stock[$name]))	// only use valid column-names
+					{
+						continue;
+					}
 					if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
-					$isstd=0;
-					if ($name && empty($value))
+
+					if (empty($value))
 					{
 						if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
-						foreach($check_stock as $fname => $fvalue)
-						{
-							if($fvalue == $name)
-							{
-								$filterlist .= $name.' is NULL,';
-								if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is a stock field'; }
-								break;
-							}
-						}
+
+						$filterlist[] = $name.' is NULL';
 					}
-					elseif($name && $value)
+					else
 					{
-						foreach($check_stock as $fname => $fvalue)
+						if($name == 'cat_id')
 						{
-							if($fvalue == $name)
-							{
-								if($name == 'cat_id')
-								{
-									$filterlist .= "(" . $name . " LIKE '%," . $value . ",%' OR " . $name."='".$value."');";
-								}
-								elseif(@is_int($value))
-								{
-									$filterlist .= $name . '=' . $value . ';';
-								}
-								elseif ($value == "!''")	// check for not empty
-								{
-									$filterlist .= $name . "!='';";
-								}
-								else
-								{
-									$filterlist .= $name . "='" . $value . "';";
-								}
-								break;
-							}
+							$filterlist[] = "(" . $name . " LIKE '%," . (int)$value . ",%' OR " . $name."='".(int)$value."')";
+						}
+						elseif(@is_int($value))
+						{
+							$filterlist[] = $name . '=' . $value;
+						}
+						elseif ($value == "!''")	// check for not empty
+						{
+							$filterlist[] = $name . "!=''";
+						}
+						else
+						{
+							$filterlist[] = $name . "='" . $this->db->db_addslashes($value) . "'";
 						}
 					}
-					$i++;
 				}
-				$filterlist = substr($filterlist,0,-1);
-				$filterlist = str_replace(';',' AND ',$filterlist);
+				$filterlist = implode(' AND ',$filterlist);
 
 				if ($DEBUG)
 				{
@@ -447,7 +412,6 @@
 				{
 					$public_user_list[] = $user;
 				}
-				reset($public_user_list);
 				$fwhere .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . "))) ";
 				$fand   .= " OR (access='public' AND owner in(" . implode(',',$public_user_list) . "))) ";
 			}
@@ -463,13 +427,13 @@
 
 			if (!$sort) { $sort = 'ASC'; }
 
-			if ($order)
+			if (!empty($order) && preg_match('/^[a-zA-Z_0-9, ]+$/',$order) && (empty($sort) || preg_match('/^(DESC|ASC|desc|asc)$/',$sort)))
 			{
 				$ordermethod = "ORDER BY $order $sort ";
 			}
 			else
 			{
-				$ordermethod = "ORDER BY n_family,n_given,email $sort";
+				$ordermethod = "ORDER BY n_family,n_given,email ASC";
 			}
 
 			if ($DEBUG && $ordermethod)
@@ -479,11 +443,11 @@
 
 			if($lastmod >= 0 && $fwhere)
 			{
-				$fwhere .= " AND last_mod > $lastmod ";
+				$fwhere .= " AND last_mod > ".(int)$lastmod.' ';
 			}
 			elseif($lastmod >= 0)
 			{
-				$fwhere = " WHERE last_mod > $lastmod ";
+				$fwhere = " WHERE last_mod > ".(int)$lastmod.' ';
 			}
 
 			if ($DEBUG && $last_mod_filter && $fwhere)
@@ -495,17 +459,17 @@
 
 			if($cquery)
 			{
-				$cfields = array(
+				$sql = 'SELECT * FROM ' . $this->std_table . ' WHERE (';
+				$sqlcount = 'SELECT COUNT(id) FROM ' . $this->std_table  . ' WHERE (';
+				foreach(array(
 					'fn'       => 'cn',
 					'n_family' => 'sn',
 					'org_name' => 'o'
-				);
-				$sql = 'SELECT * FROM ' . $this->std_table . ' WHERE (';
-				$sqlcount = 'SELECT COUNT(id) FROM ' . $this->std_table  . ' WHERE (';
-				while(list($f,$x) = each($cfields))
+				) as $f => $x)
 				{
-					$sql .= " UPPER($f) LIKE UPPER('$cquery%') OR ";
-					$sqlcount .= " UPPER($f) LIKE UPPER('$cquery%') OR ";
+					$cquery = strtoupper($this->db->db_addslashes($cquery));
+					$sql .= " UPPER($f) LIKE '$cquery%' OR ";
+					$sqlcount .= " UPPER($f) LIKE '$cquery%' OR ";
 				}
 				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
 				$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod;
@@ -519,13 +483,13 @@
 					$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
 					foreach($query as $queryKey => $queryValue)
 					{
-						// how to do real addslashes????
-						$queryKey  = str_replace("'",'',$queryKey);
-						$queryKey  = str_replace('"','',$queryKey);
-						$queryValue  = str_replace("'",'',$queryValue);
-						$queryValue  = str_replace('"','',$queryValue);
-						$sql .= " UPPER($queryKey) LIKE UPPER('$queryValue') AND ";
-						$sqlcount .= " UPPER($queryKey) LIKE UPPER('$queryValue') AND ";
+						if (!preg_match('/^[a-zA-Z0-9_]+$/',$queryKey))
+						{
+							continue;	// this can be something nasty
+						}
+						$queryValue  = strtoupper($this->db->db_addslashes($queryValue));
+						$sql .= " UPPER($queryKey) LIKE '$queryValue' AND ";
+						$sqlcount .= " UPPER($queryKey) LIKE '$queryValue' AND ";
 					}
 					$sql = substr($sql,0,-5) . ') ' . $fand . $filtermethod . $ordermethod;
 					$sqlcount = substr($sqlcount,0,-5) . ') ' . $fand . $filtermethod;
@@ -533,15 +497,14 @@
 				}
 				else
 				{
-					$query  = str_replace("'",'',$query);
-					$query  = str_replace('"','',$query);
+					$query = strtoupper($this->db->db_addslashes($query));
 
 					$sql = "SELECT * FROM $this->std_table WHERE (";
 					$sqlcount = "SELECT COUNT(id) FROM $this->std_table WHERE (";
 					foreach($this->stock_contact_fields as $f => $x)
 					{
-						$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
-						$sqlcount .= " UPPER($f) LIKE UPPER('%$query%') OR ";
+						$sql .= " UPPER($f) LIKE '%$query%' OR ";
+						$sqlcount .= " UPPER($f) LIKE '%$query%' OR ";
 					}
 					$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
 					$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod;
@@ -682,7 +645,7 @@
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'$owner','" . $this->db->db_addslashes($field_name)
+			$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'".(int)$owner."','" . $this->db->db_addslashes($field_name)
 				. "','" . $this->db->db_addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
@@ -747,7 +710,7 @@
 						{
 							$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
 								. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
-								. "' AND contact_id=" . (int)$id,__LINE__,__FILE__);
+								. "' AND contact_id=$id",__LINE__,__FILE__);
 						}
 					}
 					elseif($x_value)	// dont write emtpy extra-fields
@@ -760,17 +723,16 @@
 		}
 
 		/* Used by admin to change ownership on account delete */
-		function change_owner($old_owner='',$new_owner='')
+		function change_owner($old_owner,$new_owner)
 		{
-			if (!($new_owner && $old_owner))
+			$old_owner = (int) $old_owner;
+			$new_owner = (int) $new_owner;
+			if (!$new_owner || !$old_owner)
 			{
 				return False;
 			}
-
 			$this->db->query("UPDATE $this->std_table SET owner='$new_owner' WHERE owner=$old_owner",__LINE__,__FILE__);
 			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
-
-			return;
 		}
 
 		/* This is where the real work of delete() is done, shared class file contains calling function */
@@ -783,12 +745,12 @@
 		/* This is for the admin script deleteaccount.php */
 		function delete_all($owner=0)
 		{
+			$owner = (int) $owner;
 			if ($owner)
 			{
 				$this->db->query("DELETE FROM $this->std_table WHERE owner=$owner",__LINE__,__FILE__);
 				$this->db->query("DELETE FROM $this->ext_table WHERE contact_owner=$owner",__LINE__,__FILE__);
 			}
-			return;
 		}
 	}
 ?>
