@@ -1,11 +1,9 @@
 <?php
   /**************************************************************************\
-  * eGroupWare API - XML-RPC Server using builtin php functions              *
-  * Portions of code from xmlrpcs.inc by Edd Dumbill <edd@usefulinc.com>     *
-  *  part of the xml-rpc for php library                                     *
-  *  http://sourceforge.net/projects/phpxmlrpc/                              *
-  * Incorporated for egroupware by Miles Lott <milos@groupwhere.org>         *
-  * Copyright (C) 2003 Miles Lott                                            *
+  * eGroupWare API - XML-RPC Server                                          *
+  * ------------------------------------------------------------------------ *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *

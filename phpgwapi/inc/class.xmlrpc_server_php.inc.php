@@ -31,7 +31,11 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-	/* $Id$ */
+  /*
+   * Incorporated for egroupware by Miles Lott <milos@groupwhere.org>         
+   */
+
+  /* $Id$ */
 
 	/* BEGIN server class */
 	class xmlrpc_server extends xmlrpc_server_shared
