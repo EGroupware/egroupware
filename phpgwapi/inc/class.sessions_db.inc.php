@@ -25,9 +25,9 @@
 
 	class sessions extends sessions_
 	{
-		function sessions()
+		function sessions($domain_names=null)
 		{
-			$this->sessions_();
+			$this->sessions_($domain_names);
 		}
 		
 		function read_session()

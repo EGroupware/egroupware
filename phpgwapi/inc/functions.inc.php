@@ -127,6 +127,7 @@
 		$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_type'];
 	}
 
+	$domain_names = array_keys($GLOBALS['phpgw_domain']);
 	if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
 		unset ($GLOBALS['phpgw_domain']); // we kill this for security reasons
@@ -230,7 +231,7 @@
 	$GLOBALS['phpgw']->auth         = CreateObject('phpgwapi.auth');
 	$GLOBALS['phpgw']->accounts     = CreateObject('phpgwapi.accounts');
 	$GLOBALS['phpgw']->acl          = CreateObject('phpgwapi.acl');
-	$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions');
+	$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions',$domain_names);
 	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
 	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
 	print_debug('main class loaded', 'messageonly','api');

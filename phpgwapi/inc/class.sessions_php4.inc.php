@@ -26,9 +26,9 @@
 
 	class sessions extends sessions_
 	{
-		function sessions()
+		function sessions($domain_names=null)
 		{
-			$this->sessions_();
+			$this->sessions_($domain_names);
 			//controls the time out for php4 sessions - skwashd 18-May-2003
 			ini_set('session.gc_maxlifetime', $GLOBALS['phpgw_info']['server']['sessions_timeout']);
 			session_name('sessionid');

@@ -130,13 +130,21 @@
 		var $xmlrpc_method_called;
 
 		/**
+		* @var Array with the name of the system domains
+		*/
+		var $phpgw_domains;
+
+		/**
 		* Constructor just loads up some defaults from cookies
 		*/
-		function sessions_()
+		function sessions_($domain_names=null)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->sessionid = get_var('sessionid',array('GET','COOKIE'));
 			$this->kp3       = get_var('kp3',array('GET','COOKIE'));
+
+			$this->phpgw_domains = $domain_names;
+
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
 			if ($GLOBALS['phpgw_info']['server']['usecookies'])
@@ -245,9 +253,27 @@
 		function split_login_domain($both,&$login,&$domain)
 		{
 			$parts = explode('@',$both);
-			$domain = count($parts) > 1 ? array_pop($parts) :
-				$GLOBALS['phpgw_info']['server']['default_domain'];
-			$login = implode('@',$parts);
+
+//			var_dump(debug_backtrace());
+			//conference - for strings like vinicius@thyamad.com@default ,
+			//allows that user have a login that is his e-mail. (viniciuscb)
+			if (count($parts) > 1)
+			{
+				$probable_domain = array_pop($parts);
+				//Last part of login string, when separated by @, is a domain name
+				if (in_array($probable_domain,$this->phpgw_domains))
+				{
+					$got_login = true;
+					$domain = $probable_domain;
+					$login = implode('@',$parts);
+				}
+			}
+
+			if (!$got_login)
+			{
+				$domain = $GLOBALS['phpgw_info']['server']['default_domain'];
+				$login = $both;
+			}
 		}
 
 		/**
@@ -283,7 +309,7 @@
 
 			$this->session_flags = $session['session_flags'];
 
-			sessions_::split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
+			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
 
@@ -465,7 +491,7 @@
 			}
 
 			$this->clean_sessions();
-			sessions_::split_login_domain($login,$this->account_lid,$this->account_domain);
+			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
 
 			$now = time();
 
@@ -794,21 +820,15 @@
 		function create_server($login,$passwd)
 		{
 			$GLOBALS['phpgw']->interserver = CreateObject('phpgwapi.interserver');
-			$this->login  = $login;
+//			$this->login  = $login;
 			$this->passwd = $passwd;
 			$this->clean_sessions();
 			$login_array = explode('@', $login);
-			$this->account_lid = $login_array[0];
+//			$this->account_lid = $login_array[0];
 			$now = time();
 
-			if ($login_array[1] != '')
-			{
-				$this->account_domain = $login_array[1];
-			}
-			else
-			{
-				$this->account_domain = $GLOBALS['phpgw_info']['server']['default_domain'];
-			}
+			$this->split_login_domain($login,$this->account_lid,$this->account_domain);
+			$this->login = $this->account_lid . '@' . $this->account_domain;
 
 			$serverdata = array(
 				'server_name' => $this->account_domain,
