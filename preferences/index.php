@@ -14,15 +14,13 @@
 
 	$phpgw_info['flags']['currentapp'] = 'preferences';
 	include('../header.inc.php');
-	
-	$pref_tpl = new Template($phpgw->common->get_tpl_dir('preferences'));
+
+	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$pref_tpl->set_file(array(
 		'T_icon_cell' => 'index_icon_cell.tpl',
 		'T_link_cell' => 'index_link_cell.tpl',	
 		'index_out' => 'index.tpl',
 	));
-	// initialize
-	
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='')
