@@ -297,7 +297,12 @@
 		//$t->set_block('form','add','add');
 		//$t->set_block('form','edit','edit');
 
-		$countrylist  = $phpgw_info['server']['countrylist'];
+		if ( ($phpgw_info['server']['countrylist'] == 'user_choice' &&
+			$phpgw_info['user']['preferences']['common']['countrylist'] == 'use_select') ||
+			($phpgw_info['server']['countrylist'] == 'force_select'))
+		{
+			$countrylist  = True;
+		}
 
 		$email        = $fields['email'];
 		$emailtype    = $fields['email_type'];
