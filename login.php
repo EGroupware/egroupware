@@ -14,12 +14,15 @@
 	/* $Id$ */
 
 	$phpgw_info = array();
+	$submit = false;				// set to some initial value
+	
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'disable_template_class' => True,
 		'login'                  => True,
 		'currentapp'             => 'login',
 		'noheader'               => True
 	);
+	
 	if(file_exists('./header.inc.php'))
 	{
 		include('./header.inc.php');
@@ -155,7 +158,13 @@
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','code=5'));
 		}
-		$login = $_POST['login'];
+		
+		// don't get login data again when $submit is true
+		if($submit == false)
+		{
+			$login = $_POST['login'];
+		}
+		
 		if (strstr($login,'@') === False && isset($_POST['logindomain']))
 		{
 			$login .= '@' . $_POST['logindomain'];
