@@ -42,7 +42,6 @@
 			$p->set_var($acl.'_selected','');
 		}
 	}
-  
 
 	function display_row($bg_color,$label,$id,$name)
 	{
@@ -64,7 +63,7 @@
 		{
 			check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
 		}
-    
+ 
 		$p->parse('row','acl_row',True);
 	}
 
@@ -78,16 +77,16 @@
 	unset($acct);
 	$acl = CreateObject('phpgwapi.acl',intval($owner));
 	$acl->read_repository();
-  
+
 	if ($submit)
 	{
 		$to_remove = unserialize(urldecode($processed));
-		
+
 		for($i=0;$i<count($to_remove);$i++)
 		{
 			$acl->delete($phpgw_info['flags']['currentapp'],$to_remove[$i]);
 		}
-		
+
 		// Group records
 		$group_variable = 'g_'.$phpgw_info['flags']['currentapp'];
 
@@ -174,17 +173,17 @@
 	if($private_acl == True)
 	{
 		$templates = Array (
-									'preferences'	=>	'preference_acl.tpl',
-									'row_colspan'	=>	'preference_colspan_private.tpl',
-									'acl_row'		=> 'preference_acl_row_private.tpl'
+			'preferences'	=>	'preference_acl.tpl',
+			'row_colspan'	=>	'preference_colspan_private.tpl',
+			'acl_row'		=> 'preference_acl_row_private.tpl'
 		);
   }
   else
   {
 		$templates = Array (
-									'preferences'	=>	'preference_acl.tpl',
-									'row_colspan'	=>	'preference_colspan.tpl',
-									'acl_row'		=> 'preference_acl_row.tpl'
+			'preferences'	=>	'preference_acl.tpl',
+			'row_colspan'	=>	'preference_colspan.tpl',
+			'acl_row'		=> 'preference_acl_row.tpl'
 		);
   }
 
@@ -192,22 +191,22 @@
 //	$p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
 
 	$common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
-							. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
-							. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
-							. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
-							. '     <input type="hidden" name="start" value="'.$start.'">'."\n"
-							. '     <input type="hidden" name="query" value="'.$query.'">'."\n"
-							. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
+						. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
+						. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
+						. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
+						. '     <input type="hidden" name="start" value="'.$start.'">'."\n"
+						. '     <input type="hidden" name="query" value="'.$query.'">'."\n"
+						. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
 
 	$var = Array(
-						'errors'							=>	'',
-						'title'							=>	'<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
-						'action_url'					=>	$phpgw->link('/addressbook/acl_preferences.php'),
-						'bg_color'						=>	$phpgw_info['theme']['th_bg'],
-						'submit_lang'					=> lang('submit'),
-						'common_hidden_vars_form'	=>	$common_hidden_vars
+		'errors'					=>	'',
+		'title'						=>	'<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
+		'action_url'				=>	$phpgw->link('/addressbook/acl_preferences.php'),
+		'bg_color'					=>	$phpgw_info['theme']['th_bg'],
+		'submit_lang'				=> lang('submit'),
+		'common_hidden_vars_form'	=>	$common_hidden_vars
 	);
-	
+
 	$p->set_var($var);
 
 	if(isset($query_result) && $query_result)
@@ -218,12 +217,12 @@
 	$p->set_var('common_hidden_vars',$common_hidden_vars);
 
 	$var = Array(
-						'read_lang'		=>	lang('Read'),
-						'add_lang'		=>	lang('Add'),
-						'edit_lang'		=>	lang('Edit'),
-						'delete_lang'	=>	lang('Delete')
+		'read_lang'		=>	lang('Read'),
+		'add_lang'		=>	lang('Add'),
+		'edit_lang'		=>	lang('Edit'),
+		'delete_lang'	=>	lang('Delete')
 	);
-	
+
 	$p->set_var($var);
                     
 	if($private_acl == True)
@@ -241,7 +240,7 @@
 		{
 			$group = $groups[$k];
 			$go = True;
-			
+
 			if($query)
 			{
 				if(!strpos(' '.$group['account_id'].' ',$query))
@@ -249,7 +248,7 @@
 					$go = False;
 				}
 			}
-			
+
 			if($go)
 			{
 				$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -292,7 +291,7 @@
 							$go = False;
 						}
 					}
-					
+
 					if($go)
 					{
 						$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -314,13 +313,13 @@
 	$extra_parms = '&s_users='.$s_users.'&s_groups='.$s_groups.'&maxm='.$maxm.'&totalentries='.$totalentries.'&total='.($start + $total).'&owner='.$owner;
 
 	$var = Array(
-						'nml'				=>	$phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms),
-						'nmr'				=>	$phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms),
-						'search_value'	=>	(isset($query) && $query?$query:''),
-						'search'			=>	lang('search'),
-						'processed'		=>	urlencode(serialize($processed))
+		'nml'			=>	$phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms),
+		'nmr'			=>	$phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms),
+		'search_value'	=>	(isset($query) && $query?$query:''),
+		'search'		=>	lang('search'),
+		'processed'		=>	urlencode(serialize($processed))
 	);
-	
+
 	$p->set_var($var);
 
 	$p->pparse('out','preferences');
