@@ -198,13 +198,13 @@
 			if (!$r->faultCode())
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
+				$this->result = xmlrpc_decode($v);
 			}
 			else
 			{
 				$this->debug('Fault Code: ' . $r->faultCode() . ' Reason "' . $r->faultString() . '"<br>',$debug);
+				$this->result = htmlentities($r->serialize());
 			}
-
-			$this->result = xmlrpc_decode($v);
 			return $this->result;
 		}
 
@@ -251,13 +251,13 @@
 			if (!$r->faultCode())
 			{
 				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
+				$this->result = xmlrpc_decode($v);
 			}
 			else
 			{
 				$this->debug('Fault Code: ' . $r->faultCode() . ' Reason "' . $r->faultString() . '"<br>',$debug);
+				$this->result = htmlentities($r->serialize());
 			}
-
-			$this->result = xmlrpc_decode($v);
 			return $this->result;
 		}
 

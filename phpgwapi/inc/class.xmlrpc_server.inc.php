@@ -249,7 +249,7 @@
 			if (!xml_parse($parser, $data, 1))
 			{
 				// return XML error as a faultCode
-				$r = CreateObject('phpgwapi.xmlrpcresp',0,
+				$r = CreateObject('phpgwapi.xmlrpcresp','',
 					$GLOBALS['xmlrpcerrxml'] + xml_get_error_code($parser),
 					sprintf('XML error: %s at line %d',
 					xml_error_string(xml_get_error_code($parser)),
@@ -293,10 +293,9 @@
 					if($sysCall && $this->authed)
 					{
 						$r = CreateObject('phpgwapi.xmlrpcresp',
-							CreateObject('phpgwapi.xmlrpcval',
-								$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName,
-								'string'
-							)
+							'',
+							$GLOBALS['xmlrpcerr']['unknown_method'],
+							$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName
 						);
 						return $r;
 					}
@@ -384,10 +383,9 @@
 					else
 					{
 						$r = CreateObject('phpgwapi.xmlrpcresp',
-							CreateObject('phpgwapi.xmlrpcval',
-								$GLOBALS['xmlrpcstr']['incorrect_params'] . ': ' . $sr[1],
-								'string'
-							)
+							'',
+							$GLOBALS['xmlrpcerr']['incorrect_params'],
+							$GLOBALS['xmlrpcstr']['incorrect_params'] . ': ' . $sr[1]
 						);
 					}
 				}
@@ -396,15 +394,19 @@
 					// else prepare error response
 					if(!$this->authed)
 					{
-						$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval','UNAUTHORIZED','string'));
+						$r = CreateObject('phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval',
+								'UNAUTHORIZED',
+								'string'
+							)
+						);
 					}
 					else
 					{
 						$r = CreateObject('phpgwapi.xmlrpcresp',
-							CreateObject('phpgwapi.xmlrpcval',
-								$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName,
-								'string'
-							)
+							'',
+							$GLOBALS['xmlrpcerr']['unknown_method'],
+							$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName
 						);
 					}
 				}

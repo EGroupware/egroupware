@@ -114,20 +114,21 @@
 			}
 			if($timeout>0)
 			{
-				$fp = fsockopen($server, $port,&$this->errno, &$this->errstr, $timeout);
+				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr, $timeout);
 			}
 			else
 			{
-				$fp = fsockopen($server, $port,&$this->errno, &$this->errstr);
+				$fp = fsockopen($server, $port, &$this->errno, &$this->errstr);
 			}
 			if (!$fp)
 			{
-				return CreateObject(
+				$r = CreateObject(
 					'phpgwapi.xmlrpcresp',
-					0,
+					'',
 					$GLOBALS['xmlrpcerr']['http_error'],
 					$GLOBALS['xmlrpcstr']['http_error']
 				);
+				return $r;
 			}
 			// Only create the payload if it was not created previously
 			if(empty($msg->payload))
@@ -157,7 +158,7 @@
 				$this->errstr = 'Write error';
 				return CreateObject(
 					'phpgwapi.xmlrpcresp',
-					0,
+					'',
 					$GLOBALS['xmlrpcerr']['http_error'],
 					$GLOBALS['xmlrpcstr']['http_error']
 				);
@@ -174,7 +175,7 @@
 			{
 				return CreateObject(
 					'phpgwapi.xmlrpcresp',
-					0,
+					'',
 					$GLOBALS['xmlrpcerr']['no_ssl'],
 					$GLOBALS['xmlrpcstr']['no_ssl']
 				);
@@ -236,7 +237,7 @@
 				$this->errstr = 'Write error';
 				$resp = CreateObject(
 					'phpgwapi.xmlrpcresp',
-					0,
+					'',
 					$GLOBALS['xmlrpcerr']['curl_fail'],
 					$GLOBALS['xmlrpcstr']['curl_fail'] . ': ' . curl_error($curl)
 				);

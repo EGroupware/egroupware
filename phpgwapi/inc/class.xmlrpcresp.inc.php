@@ -68,7 +68,7 @@
 		function serialize()
 		{
 			$rs='<methodResponse>'."\n";
-			if ($this->fn)
+			if (isset($this->fn) && !empty($this->fn))
 			{
 				$rs .= '<fault>
   <value>
