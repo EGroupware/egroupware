@@ -78,6 +78,10 @@
 		if (! $bday_month && ! $bday_day && ! $bday_year) {
 			$bday = "";
 		} else {
+			if (strlen ($bday_day) == 1)
+			{
+				$bday_day = "0".$bday_day;
+			}
 			$bday = "$bday_month/$bday_day/$bday_year";
 		}
 	
