@@ -285,7 +285,7 @@
     if ($currentver == "0.9.3pre4") {
    	$db->query("create table temp as select * from config");
    	$db->query("drop table config");
-   	$db->query("create table config config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL");
+   	$db->query("create table config (config_name varchar(255) NOT NULL UNIQUE, config_value varchar(100) NOT NULL)");
    	$db->query("insert into config select * from temp");
    	$db->query("drop table config");
        $currentver = "0.9.3pre5";
