@@ -81,7 +81,14 @@
 		$phpgw->template->set_var('row_loginid',$loginid);
 		$phpgw->template->set_var('row_ip',$phpgw->db->f('session_ip'));
 		$phpgw->template->set_var('row_logintime',$phpgw->common->show_date($phpgw->db->f('session_logintime')));
-		$phpgw->template->set_var('row_action',$phpgw->strip_html($phpgw->db->f('session_action')));
+		if($phpgw->db->f('session_action'))
+		{
+			$phpgw->template->set_var('row_action',$phpgw->strip_html($phpgw->db->f('session_action')));
+		}
+		else
+		{
+			 $phpgw->template->set_var('row_action','&nbsp;');
+		}
 		$phpgw->template->set_var('row_idle',gmdate('G:i:s',(time() - $phpgw->db->f('session_dla'))));
 
 		if ($phpgw->db->f('session_id') != $phpgw_info['user']['sessionid'])
