@@ -131,7 +131,7 @@
 
 		function link_id2from(&$info,$not_app='',$not_id='')
 		{
-			//echo "<p>boinfolog::link_id2title(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]')";
+			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]')";
 			if ($info['info_link_id'] > 0 &&
 				 ($link = $this->link->get_link($info['info_link_id'])) !== False)
 			{
@@ -165,7 +165,7 @@
 			{
 				$data['info_subject'] = '';
 			}
-			$data['info_link_title'] = $this->link_id2title($data,$data['info_link_view']);
+			$this->link_id2from($data);
 			if ($data['info_link_title'] == $data['info_from'])
 			{
 				$data['info_from'] = '';
@@ -205,9 +205,9 @@
 				{
 					$values['info_subject'] = substr($values['info_des'],0,60).' ...';
 				}
-				if ($values['info_link_id'] && $values['info_from'] == '')
+				if ($values['info_link_id'] && empty($values['info_from']))
 				{
-					$values['info_from'] = $this->link_id2title($values);
+					$this->link_id2from($values);
 				}
 			}
 			$values['info_datemodified'] = time();

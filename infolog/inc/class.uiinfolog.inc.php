@@ -96,7 +96,7 @@
 			}
 			$info['info_des'] = nl2br($info['info_des']);
 			$info['info_anz_subs'] = $this->bo->anzSubs($id);
-			$this->bo->link_id2from($info,$action,$action_id);
+			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
@@ -286,10 +286,6 @@
 							$info_link_id = $content['info_link_id'];
 							$content['info_link_id'] = 0;	// as field has to be int
 						}
-						if ($content['info_link_id'] && empty($content['info_from']))
-						{
-							$this->bo->link_id2from($content);
-						}
 						$this->bo->write($content);
 
 						if (!$info_id && is_array($content['link_to']['to_id']))	// writing link for new entry
@@ -302,10 +298,6 @@
 								$link = $this->link->get_link('infolog',$content['info_id'],$app,$id);
 								$content['info_link_id'] = $link['link_id'];
 
-								if (empty($content['info_from']))
-								{
-									$this->bo->link_id2from($content);
-								}
 								$this->bo->write(array(
 									'info_id' => $content['info_id'],
 									'info_link_id' => $content['info_link_id'],
