@@ -12,33 +12,37 @@
 
 /* $Id$ */
 
-	if ($nolname || $nofname) {
-		$phpgw_info["flags"] = array(
-			"noheader"    => False,
-			"nonavbar"    => False,
-			"noappheader" => False,
-			"noappfooter" => False
+	if ($nolname || $nofname)
+	{
+		$phpgw_info['flags'] = array(
+			'noheader'    => False,
+			'nonavbar'    => False,
+			'noappheader' => False,
+			'noappfooter' => False
 		);
-	} else {
-		$phpgw_info["flags"] = array(
-			"noheader"    => True,
-			"nonavbar"    => True,
-			"noappheader" => True,
-			"noappfooter" => True
+	}
+	else
+	{
+		$phpgw_info['flags'] = array(
+			'noheader'    => True,
+			'nonavbar'    => True,
+			'noappheader' => True,
+			'noappfooter' => True
 		);
 	}
 
-	$phpgw_info["flags"]["enable_contacts_class"] = True;
-	$phpgw_info["flags"]["enable_browser_class"] = True;
-	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	include("../header.inc.php");
+	$phpgw_info['flags']['enable_contacts_class'] = True;
+	$phpgw_info['flags']['enable_browser_class'] = True;
+	$phpgw_info['flags']['currentapp'] = 'addressbook';
+	include('../header.inc.php');
 
-	if (! $ab_id) {
-		Header("Location: " . $phpgw->link("/addressbook/index.php"));
+	if (!$ab_id)
+	{
+		Header('Location: ' . $phpgw->link('/addressbook/index.php'));
 		$phpgw->common->phpgw_exit();
 	}
 
-	$this = CreateObject("phpgwapi.contacts");
+	$this = CreateObject('phpgwapi.contacts');
 
 	// First, make sure they have permission to this entry
 	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
@@ -51,39 +55,50 @@
 		$phpgw->common->phpgw_exit();
 	}
 
- 	$extrafields = array("address2" => "address2");
+ 	$extrafields = array('address2' => 'address2');
 	$qfields = $this->stock_contact_fields + $extrafields;
 
 	$fieldlist = addressbook_read_entry($ab_id,$qfields);
 	$fields = $fieldlist[0];
 
-	$email        = $fields["email"];
-	$emailtype    = $fields["email_type"]; if (!$emailtype) { $fields["email_type"] = 'INTERNET'; }
-	$hemail       = $fields["email_home"];
-	$hemailtype   = $fields["email_home_type"]; if (!$hemailtype) { $fields["email_home_type"] = 'INTERNET'; }
-	$firstname    = $fields["n_given"];
-	$lastname     = $fields["n_family"];
+	$email        = $fields['email'];
+	$emailtype    = $fields['email_type'];
+	if (!$emailtype)
+	{
+		$fields['email_type'] = 'INTERNET';
+	}
+	$hemail       = $fields['email_home'];
+	$hemailtype   = $fields['email_home_type'];
+	if (!$hemailtype)
+	{
+		$fields['email_home_type'] = 'INTERNET';
+	}
+	$firstname    = $fields['n_given'];
+	$lastname     = $fields['n_family'];
 
-	if(!$nolname && !$nofname) {
+	if(!$nolname && !$nofname)
+	{
 		/* First name and last must be in the vcard. */
-		if($lastname == "") {
+		if($lastname == '')
+		{
 			/* Run away here. */
-			Header("Location: " . $phpgw->link("/addressbook/vcardout.php",
+			Header('Location: ' . $phpgw->link('/addressbook/vcardout.php',
 				"nolname=1&ab_id=$ab_id&start=$start&order=$order&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 		}
-		if($firstname == "" ) {
-			Header("Location: " . $phpgw->link("/addressbook/vcardout.php",
+		if($firstname == '')
+		{
+			Header('Location: ' . $phpgw->link('/addressbook/vcardout.php',
 				"nofname=1&ab_id=$ab_id&start=$start&order=$order&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 		}
 
 		if ($email)
 		{
-			$fn =  explode("@",$email);
+			$fn =  explode('@',$email);
 			$filename = sprintf("%s.vcf", $fn[0]);
 		}
 		elseif ($hemail)
 		{
-			$fn =  explode("@",$hemail);
+			$fn =  explode('@',$hemail);
 			$filename = sprintf("%s.vcf", $fn[0]);
 		}
 		else
@@ -93,13 +108,15 @@
 		}
 
 		// create vcard object
-		$vcard = CreateObject("phpgwapi.vcard");
+		$vcard = CreateObject('phpgwapi.vcard');
 		// set translation variable
 		$myexport = $vcard->export;
 		// check that each $fields exists in the export array and
 		// set a new array to equal the translation and original value
-		while( list($name,$value) = each($fields) ) {
-			if ($myexport[$name] && ($value != "") ) {
+		while( list($name,$value) = each($fields) )
+		{
+			if ($myexport[$name] && ($value != "") )
+			{
 				//echo '<br>'.$name."=".$fields[$name]."\n";
 				$buffer[$myexport[$name]] = $value;
 			}
@@ -114,25 +131,28 @@
 		$phpgw->common->exit;
 	} /* !nolname && !nofname */
 
-	if($nofname) {
-		echo "<BR><BR><CENTER>";
-		echo lang("This person's first name was not in the address book.") ."<BR>";
-		echo lang("Vcards require a first name entry.") . "<BR><BR>";
-		echo "<a href=" . $phpgw->link("/addressbook/index.php",
-			"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . ">OK</a>";
-		echo "</CENTER>";
+	if($nofname)
+	{
+		echo '<br><br><center>';
+		echo lang("This person's first name was not in the address book.") .'<br>';
+		echo lang('Vcards require a first name entry.') . '<br><br>';
+		echo '<a href="' . $phpgw->link('/addressbook/index.php',
+			"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('OK') . '</a>';
+		echo '</center>';
 	}
 
-	if($nolname) {
-		echo "<BR><BR><CENTER>";
-		echo lang("This person's last name was not in the address book.") . "<BR>";
-		echo lang("Vcards require a last name entry.") . "<BR><BR>";
-		echo "<a href=" . $phpgw->link("/addressbook/index.php",
-			"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . ">OK</a>";
-		echo "</CENTER>";
+	if($nolname)
+	{
+		echo '<br><br><center>';
+		echo lang("This person's last name was not in the address book.") . '<br>';
+		echo lang('Vcards require a last name entry.') . '<br><br>';
+		echo '<a href="' . $phpgw->link('/addressbook/index.php',
+			"order=$order&start=$start&filter=$filter&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('OK') . '</a>';
+		echo '</center>';
 	}
 
 	if($nolname || $nofname)
+	{
 		$phpgw->common->phpgw_footer();
-	/* End of php. */
+	}
 ?>
