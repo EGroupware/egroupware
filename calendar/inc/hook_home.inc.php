@@ -22,22 +22,19 @@
 	}
 	unset($d1);
 
-	$tmp_app_inc = $phpgw->common->get_inc_dir('calendar');
+	global $date;
 
 	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
-		include($tmp_app_inc . '/functions.inc.php');
-		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n";
-		echo $phpgw->calendar->mini_calendar($phpgw->calendar->today["day"],$phpgw->calendar->today["month"],$phpgw->calendar->today["year"],"day.php").'</td><td align="center">';
-		echo '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
-			. lang(date("F",$phpgw->calendar->today["raw"])).' '.$phpgw->calendar->today["day"].', '.$phpgw->calendar->today["year"].'</tr></td>'
-			. '<tr><td bgcolor="'.$phpgw_info["theme"]["bg_text"].'" valign="top">';
-//		$phpgw->calendar->printer_friendly = True;
-		$now = $phpgw->calendar->datetime->makegmttime(0,0,0,$phpgw->calendar->today['month'],$phpgw->calendar->today['day'],$phpgw->calendar->today['year']);
-		$now['raw'] += $phpgw->calendar->datetime->tz_offset;
-		echo $phpgw->calendar->print_day_at_a_glance($now).'</td></tr></table>'."\n";
-//		$phpgw->calendar->printer_friendly = False;
-		echo "\n".'<!-- END Calendar info --></table></td></tr>'."\n";
-		unset($phpgw->calendar);
+		$date = $phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'Ymd');
+		$cal = CreateObject('calendar.uicalendar');
+		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
+			. $cal->mini_calendar($cal->bo->day,$cal->bo->month,$cal->bo->year,'day').'</td><td align="center">'
+			. '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
+			. lang($phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'F')).' '.$cal->bo->day.', '.$cal->bo->year.'</tr></td>'
+			. '<tr><td bgcolor="'.$phpgw_info['theme']['bg_text'].'" valign="top">'
+			. $cal->print_day($cal->bo->year,$cal->bo->month,$cal->bo->day).'</td></tr></table>'."\n"
+			. "\n".'<!-- END Calendar info --></table></td></tr>'."\n";
+		unset($cal);
 	} 
 ?>
