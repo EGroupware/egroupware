@@ -62,7 +62,7 @@
 		$errorcount = 0;
 
 		$tmp = $is->name2id($server_name);
-		if($tmp != $server_id)
+		if($tmp)
 		{
 			$error[$errorcount++] = lang('That server name has been used already !');
 		}
