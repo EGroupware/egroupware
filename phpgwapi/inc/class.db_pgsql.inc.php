@@ -277,6 +277,9 @@
 
 		function lock($table, $mode = 'write')
 		{
+			// don't lock any tables in pgsql anymore
+			return 1;
+
 			$result = $this->transaction_begin();
 
 			if ($mode == 'write')
@@ -303,6 +306,9 @@
 
 		function unlock()
 		{
+			// we don't lock tables anymore in pgsql
+			return 1;
+
 			return $this->transaction_commit();
 		}
 
