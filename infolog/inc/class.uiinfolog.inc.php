@@ -1488,7 +1488,15 @@
 				++$i;
 			} while ($valid);
 
-			$GLOBALS['phpgw']->template->fp('phpgw_body','info_admin');
+			if ($this->tmpl->stable)
+			{
+				echo parse_navbar();
+				$GLOBALS['phpgw']->template->pfp('phpgw_body','info_admin');
+			}
+			else
+			{
+				$GLOBALS['phpgw']->template->fp('phpgw_body','info_admin');
+			}
 		}
 
 		function preferences( )
@@ -1551,7 +1559,15 @@
 				}
 				$GLOBALS['phpgw']->template->parse('pref_lines','pref_line',True);
 			}
-			$GLOBALS['phpgw']->template->fp('phpgw_body','info_prefs');
+			if ($this->tmpl->stable)
+			{
+				echo parse_navbar();
+				$GLOBALS['phpgw']->template->pfp('phpgw_body','info_prefs');
+			}
+			else
+			{
+				$GLOBALS['phpgw']->template->fp('phpgw_body','info_prefs');
+			}
 		}
 		
 		/*!
