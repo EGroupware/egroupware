@@ -372,6 +372,8 @@
 					$to_write[$key] = $this->data[$key] = $val;   // update internal data
 				}
 			}
+			if (!isset($to_write['info_id_parent'])) $to_write['info_id_parent'] = 0;	// must not be null
+
 			if (($this->data['info_id'] = $info_id))
 			{
 				$this->db->update($this->info_table,$to_write,array('info_id'=>$info_id),__LINE__,__FILE__);
