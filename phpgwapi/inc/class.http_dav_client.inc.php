@@ -693,7 +693,14 @@ if (DEBUG_CACHE)
 				$this->debug($newitem);
 				$newitem['name'] = $this->decodeurl($newitem['name']);
 				$result[$fixed_name]=$newitem;
-				$this->cached_props[$name.'//1//1'] = array($fixed_name=>$newitem);
+				if ($newitem['is_dir']==1)
+				{
+					$this->cached_props[$name.'//0//1'] = array($fixed_name=>$newitem);
+				}
+				else
+				{
+					$this->cached_props[$name.'//1//1'] = array($fixed_name=>$newitem);
+				}
 			}
 			if ($sorted)
 			{
