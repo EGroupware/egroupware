@@ -3,102 +3,490 @@
 <HEAD>
  <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
  <TITLE>  phpGroupWare Application Development</TITLE>
- <LINK HREF="phpGW_Developers-HOWTO-1.html" REL=next>
 
 
 </HEAD>
 <BODY>
-<A HREF="phpGW_Developers-HOWTO-1.html">Next</A>
-Previous
-Contents
-<HR>
 <H1>  phpGroupWare Application Development</H1>
 
-<H2>Dan Kuykendall &lt;dan@kuykendall.org&gt;</H2>  v0.3, 12 August 2000
+<H2>Dan Kuykendall &lt;dan@kuykendall.org&gt;</H2>  v0.4, 30 August 2000
 <P><HR>
-<EM>  This document explains phpGroupWare's infastructure and API, along what is required to integrate applications into it.</EM>
+<EM>  This document explains phpGroupWare's infastructure and API, along with what is required to integrate applications into it.</EM>
+<HR>
+<H2><A NAME="s1">1. Introduction</A></H2>
+
+<P>phpGroupWare is a web based groupware application framework (API), for writing applications. Integrated applications such as 
+email, calendar, todo list, address book, and file manager are included.
+<H2>1.1 Overview of application writing</H2>
+
+<P>We have attempted to make writing application for phpGroupWare as painless as possible. 
+We hope any pain and suffering is cause by making your application work, but not dealing with phpGroupWare itself.
+<H2>1.2 What does the phpGroupWare API provide?</H2>
+
+<P>The phpGroupWare API handles session management, user/group management, has support for multiple databases, using the PHPLIB database abstraction method, we support templates using the PHPLIB Templates class, a file system interface, and even a network i/o interface.<BR>
+On top of these standard functions, phpgroupWare provides several functions to give you the information you need about the users environment, and to properly plug into phpgroupWare.
+<H2><A NAME="s2">2. Guidelines</A></H2>
+
+<H2>2.1 Requirements</H2>
+
+<P>These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare deluxe.
+<P>It must run on PHP3 and PHP4. <BR>
+SQL statements must be compatible with both MySQL and PostgreSQL.<BR>
+It must use our default header.inc.php include.<BR>
+It must use our <CODE>$phpgw_link($url)</CODE> for all links (this is for session support).<BR>
+It must respect phpGW group rights and phpGW user permissions.<BR>
+It must use our directory structure, template support and lang (multi-language) support.<BR>
+Where possible it should run on both Unix and NT platforms.
+<P>For applications that do not meet these requirements, they can be avalible to users via the phpGroupWare Apps project, or whatever means the developers decide.<BR>
+If you need help converting your application to templates and our lang support, we will try to connect you with someone to help.
+<H2>2.2 Writing/porting your application</H2>
+
+<H3>Include files</H3>
+
+<P>Each PHP page you write will need to include the header.inc.php along with a few variables.<BR>
+This is done by putting this at the top of each PHP page.
+<HR>
+<PRE>
+  &lt;?php
+  $phpgw_flags["currentapp"] = "appname";
+  include("../header.inc.php");
+  ?>
+</PRE>
+<HR>
+
+Of course change application name to fit.<BR>
+This include will provide the following things: 
+<UL>
+<LI> The phpgwAPI - The phpGroupWare API will be loaded.</LI>
+<LI> The phpGW navbar will be loaded (by default, but can be disabled until a later point.</LI>
+<LI> appname/inc/functions.inc.php - This file is loaded just after the phpgwAPI and before any html code is generated. This file should include all your application specific functions.. You are welcome to include any additional files you need from within this file.</LI>
+<LI> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
+<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
+<LI> The phpGW footer will be loaded, which closes several connections.</LI>
+</UL>
+<P>
+<H2><A NAME="s3">3. Installing your application</A></H2>
+
+<H2>3.1 Overview</H2>
+
+<P>It is fairly simple to add and delete applications to/from phpGroupWare.
+<H2>3.2 Automatic features</H2>
+
+<P>To make things easy for developers we go ahead and load the following files.
+<UL>
+<LI> appname/inc/functions.inc.php - This file should include all your application specific functions.</LI>
+<LI> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.</LI>
+<LI> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.</LI>
+</UL>
+<H2>3.3 Adding files, directories and icons.</H2>
+
+<P>You will need to create the following directories for your code <BR>
+(replace 'appname' with your application name)<BR>
+<PRE>
+  `-- appname
+      `-- images
+      |   `-- navbar.gif
+      `-- inc
+      |   |-- functions.inc.php
+      |   |-- header.inc.php
+      |   `-- footer.inc.php
+      `-- templates
+          `-- default
+  
+</PRE>
+<H2>3.4 Making phpGroupWare aware of your application</H2>
+
+<P>To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a sql script.
+<PRE>
+  insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
+</PRE>
+<H2><A NAME="s4">4. Infastructure</A></H2>
+
+<H2>4.1 Overview</H2>
+
+<P>phpGroupWare attempts to provide developers with a sound directory structure to work from.<BR>
+The directory layout may seem complex at first, but after some use, you will see that it is designed to accommidate a large number of applications and functions.
+<H2>4.2 Directory tree</H2>
+
+<P>
+<PRE>
+.-- addressbook
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- admin
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- calendar
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- cron
+|-- doc
+|-- email
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- filemanager
+|-- files
+|   |-- groups
+|   `-- users
+|-- inc
+|   |-- phpgwapi
+    |   |-- phpgw.inc.php
+    |   |-- phpgw_info.inc.php
+    |   |-- phpgw_common.inc.php
+|   |   `-- etc...
+|   `-- templates
+|       |-- default
+|       |   |-- addressbook
+|       |   |-- admin
+|       |   |-- calendar
+|       |   |-- common
+|       |   |-- email
+|       |   |-- filemanager
+|       |   |-- headlines
+|       |   |-- preferences
+|       |   |-- todo
+|       |   `-- tts
+|       `-- icons
+|           |-- email
+|           |-- calendar
+|           `-- tts
+|-- preferences
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- themes
+`-- todo
+    `-- images
+    |   `-- navbar.gif
+    `-- inc
+    |   |-- functions.inc.php
+    |   |-- header.inc.php
+    |   `-- footer.inc.php
+    `-- templates
+        `-- default
+  
+</PRE>
+<H2>4.3 Translations</H2>
+
+<P>The translations are now being done thru the database, and will be configurable to use other mechanism.<BR>
+I will document all the new abilities during my next update of this document.
+<H2><A NAME="s5">5. The API</A></H2>
+
+<H2>5.1 Introduction</H2>
+
+<P>phpGroupWare attempts to provide developers with a useful API to handle common tasks.<BR>
+To do this we have created a multi-dimensional class $phpgw->.<BR>
+This allows for terrific code organization, and help developers easily identify the file that the function is in.
+All the files that are patr of this class are in the inc/core directory and are named to match the sub-class.<BR>
+Example:
+<CODE>$phpgw->send->msg()</CODE> is in the <CODE>inc/phpgwapi/phpgw_send.inc.php</CODE> file.
+<H2>5.2 Basic functions</H2>
+
+<H3>$phpgw->link</H3>
+
+<P><CODE>$phpgw->link($url)</CODE><BR>
+Add support for session management. ALL links must use this, that includes href's form actions and header location's.<BR>
+If you are just doing a form action back to the same page, you can use it without any paramaters.<BR>
+This function is right at the core of the class because it is used so often, we wanted to save developers a few keystrokes.
+Example:
+<HR>
+<PRE>
+&lt;form name=copy method=post action="&lt;?php echo $phpgw->link();?>">
+/* If session management is done via passing url paramaters */
+/* The the result would be */
+/* &lt;form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"> */
+</PRE>
+<HR>
+<H2>5.3 Application Functions</H2>
+
+<P>
+<H3>$phpgw->common->appsession</H3>
+
+<P><CODE>$phpgw->common->appsession($data)</CODE><BR>
+Store important information session information that your application needs.<BR>
+<CODE>$phpgw->appsession</CODE> will return the value of your session data is you leave the paramater enmpty [i.e. <CODE>$phpgw->appsession("")</CODE>], otherwise it will store whatever data you send to it.<BR>
+You can also store a comma delimited string and use <CODE>explode()</CODE> to turn it back into an array when you recieve the value back.<BR>
+Example:
+<HR>
+<PRE>
+  $phpgw->common->appsession("/path/to/something");
+  echo "Dir: " . $phpgw->common->appsession();
+</PRE>
+<HR>
+<H2>5.4 File functions</H2>
+
+<H3>$phpgw->vfs->read_file</H3>
+
+<P><CODE>$phpgw->vfs->read_file($file)</CODE><BR>
+Returns the data from $file.<BR>
+You must send the complete path to the file.<BR>
+Example:
+<HR>
+<PRE>
+$data = $phpgw->vfs->read_file("/some/dir/to/file.txt");
+</PRE>
 <HR>
 <P>
-<H2><A NAME="toc1">1.</A> <A HREF="phpGW_Developers-HOWTO-1.html">Introduction</A></H2>
+<H3>$phpgw->vfs->write_file</H3>
 
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-1.html#ss1.1">1.1 Overview of application writing</A>
-<LI><A HREF="phpGW_Developers-HOWTO-1.html#ss1.2">1.2 What does the phpGroupWare API provide?</A>
-</UL>
-<P>
-<H2><A NAME="toc2">2.</A> <A HREF="phpGW_Developers-HOWTO-2.html">Guidelines</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-2.html#ss2.1">2.1 Requirements</A>
-<LI><A HREF="phpGW_Developers-HOWTO-2.html#ss2.2">2.2 Writing/porting your application</A>
-</UL>
-<P>
-<H2><A NAME="toc3">3.</A> <A HREF="phpGW_Developers-HOWTO-3.html">Installing your application</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-3.html#ss3.1">3.1 Overview</A>
-<LI><A HREF="phpGW_Developers-HOWTO-3.html#ss3.2">3.2 Automatic features</A>
-<LI><A HREF="phpGW_Developers-HOWTO-3.html#ss3.3">3.3 Adding files, directories and icons.</A>
-<LI><A HREF="phpGW_Developers-HOWTO-3.html#ss3.4">3.4 Making phpGroupWare aware of your application</A>
-</UL>
-<P>
-<H2><A NAME="toc4">4.</A> <A HREF="phpGW_Developers-HOWTO-4.html">Infastructure</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-4.html#ss4.1">4.1 Overview</A>
-<LI><A HREF="phpGW_Developers-HOWTO-4.html#ss4.2">4.2 Directory tree</A>
-<LI><A HREF="phpGW_Developers-HOWTO-4.html#ss4.3">4.3 The lang Directory</A>
-</UL>
-<P>
-<H2><A NAME="toc5">5.</A> <A HREF="phpGW_Developers-HOWTO-5.html">The API</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-5.html#ss5.1">5.1 Introduction</A>
-<LI><A HREF="phpGW_Developers-HOWTO-5.html#ss5.2">5.2 Basic functions</A>
-<LI><A HREF="phpGW_Developers-HOWTO-5.html#ss5.3">5.3 Application Functions</A>
-<LI><A HREF="phpGW_Developers-HOWTO-5.html#ss5.4">5.4 File functions</A>
-<LI><A HREF="phpGW_Developers-HOWTO-5.html#ss5.5">5.5 Email/NNTP Functions</A>
-</UL>
-<P>
-<H2><A NAME="toc6">6.</A> <A HREF="phpGW_Developers-HOWTO-6.html">Configuration Variables</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.1">6.1 Introduction</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.2">6.2 User information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.3">6.3 Group information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.4">6.4 Server information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.5">6.5 Database information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.6">6.6 Mail information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.7">6.7 NNTP information</A>
-<LI><A HREF="phpGW_Developers-HOWTO-6.html#ss6.8">6.8 Application information</A>
-</UL>
-<P>
-<H2><A NAME="toc7">7.</A> <A HREF="phpGW_Developers-HOWTO-7.html">Using Language Support</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-7.html#ss7.1">7.1 Overview</A>
-<LI><A HREF="phpGW_Developers-HOWTO-7.html#ss7.2">7.2 How to use lang support</A>
-</UL>
-<P>
-<H2><A NAME="toc8">8.</A> <A HREF="phpGW_Developers-HOWTO-8.html">Using Templates</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-8.html#ss8.1">8.1 Overview</A>
-<LI><A HREF="phpGW_Developers-HOWTO-8.html#ss8.2">8.2 How to use templates</A>
-</UL>
-<P>
-<H2><A NAME="toc9">9.</A> <A HREF="phpGW_Developers-HOWTO-9.html">About this document</A></H2>
-
-<UL>
-<LI><A HREF="phpGW_Developers-HOWTO-9.html#ss9.1">9.1 New versions </A>
-<LI><A HREF="phpGW_Developers-HOWTO-9.html#ss9.2">9.2 Comments </A>
-<LI><A HREF="phpGW_Developers-HOWTO-9.html#ss9.3">9.3 History </A>
-<LI><A HREF="phpGW_Developers-HOWTO-9.html#ss9.4">9.4 Copyrights and Trademarks </A>
-<LI><A HREF="phpGW_Developers-HOWTO-9.html#ss9.5">9.5 Acknowledgements and Thanks </A>
-</UL>
+<P><CODE>$phpgw->vfs->write_file($file, $contents)</CODE><BR>
+Write data to $file.<BR>
+You must send the complete path to the file.<BR>
+Example:
 <HR>
-<A HREF="phpGW_Developers-HOWTO-1.html">Next</A>
-Previous
-Contents
+<PRE>
+$data = $phpgw->vfs->write_file("/some/dir/to/file.txt");
+</PRE>
+<HR>
+<P>
+<H3>$phpgw->vfs->read_userfile</H3>
+
+<P><CODE>$phpgw->vfs->read_userfile($file)</CODE><BR>
+Returns the data from $file, which resides in the users private dir.<BR>
+Example:
+<HR>
+<PRE>
+$data = $phpgw->vfs->read_userfile("file.txt");
+</PRE>
+<HR>
+<P>
+<H3>$phpgw->vfs->write_userfile</H3>
+
+<P><CODE>$phpgw->write_userfile($file, $contents)</CODE><BR>
+Writes data to $file, which resides in the users private dir.<BR>
+Example:
+<HR>
+<PRE>
+$data = $phpgw->vfs->write_userfile("file.txt");
+</PRE>
+<HR>
+<P>
+<H3>$phpgw->vfs->list_userfiles</H3>
+
+<P><CODE>$phpgw->vfs->list_userfiles()</CODE><BR>
+Returns an array which has the list of files in the users private dir.<BR>
+Example:
+<HR>
+<PRE>
+$filelist = array();
+$filelist = $phpgw->vfs->list_userfiles();
+</PRE>
+<HR>
+<H2>5.5 Email/NNTP Functions</H2>
+
+<P>
+<P>
+<H3>$phpgw->send->msg</H3>
+
+<P><CODE>$phpgw->msg->send($service, $to, $subject, $body, $msgtype, $cc, $bcc)</CODE><BR>
+Send a message via email or NNTP and returns any error codes.<BR>
+Example:
+<HR>
+<PRE>
+$to = "someuser@domain.com";
+$subject = "Hello buddy";
+$body = "Give me a call\n Been wondering what your up to.";
+$errors = $phpgw->msg->send("email", $to, $subject, $body);
+</PRE>
+<HR>
+<H2><A NAME="s6">6. Configuration Variables</A></H2>
+
+<H2>6.1 Introduction</H2>
+
+<P>phpGroupWare attempt to provide developers with as much information about the user, group, server, and application configuration as possible.<BR>
+To do this we provide a multi-dimensional array called '$phpgw_info[]', which includes all the information about your environment.<BR>
+Due to the multi-dimensional array approach. getting these values is easy. <BR>
+Here are some examples:
+<HR>
+<PRE>
+  &lt;?php
+  // To do a hello username
+  echo "Hello " . $phpgw_info["user"]["fullname"];
+  //If username first name is John and last name is Doe, prints: 'Hello John Doe'
+  ?>
+  &lt;?php
+  // To find out the location of the imap server
+  echo "IMAP Server is named: " . $phpgw_info["server"]["imap_server"]; 
+  //If imap is running on localhost, prints: 'IMAP Server is named: localhost'
+  ?>
+  
+</PRE>
+<HR>
+<H2>6.2 User information</H2>
+
+<P><CODE>$phpgw_info["user"]["userid"] = </CODE>The user ID.<BR>
+<CODE>$phpgw_info["user"]["sessionid"] = </CODE>The session ID<BR>
+<CODE>$phpgw_info["user"]["theme"] = </CODE>Selected theme<BR>
+<CODE>$phpgw_info["user"]["private_dir"] = </CODE>Users private dir. Use phpgroupware core functions for access to the files.<BR>
+<CODE>$phpgw_info["user"]["firstname"] = </CODE>Users first name<BR>
+<CODE>$phpgw_info["user"]["lastname"] = </CODE>Users last name<BR>
+<CODE>$phpgw_info["user"]["fullname"] = </CODE>Users Full Name<BR>
+<CODE>$phpgw_info["user"]["groups"] = </CODE>Groups the user is a member of<BR>
+<CODE>$phpgw_info["user"]["app_perms"] = </CODE>If the user has access to the current application<BR>
+<CODE>$phpgw_info["user"]["lastlogin"] = </CODE>Last time the user logged in.<BR>
+<CODE>$phpgw_info["user"]["lastloginfrom"] = </CODE>Where they logged in from the last time.<BR>
+<CODE>$phpgw_info["user"]["lastpasswd_change"] = </CODE>Last time they changed their password.<BR>
+<CODE>$phpgw_info["user"]["passwd"] = </CODE>Hashed password.<BR>
+<CODE>$phpgw_info["user"]["status"] = </CODE>If the user is enabled.<BR>
+<CODE>$phpgw_info["user"]["logintime"] = </CODE>Time they logged into their current session.<BR>
+<CODE>$phpgw_info["user"]["session_dla"] = </CODE>Last time they did anything in their current session<BR>
+<CODE>$phpgw_info["user"]["session_ip"] = </CODE>Current IP address<BR>
+<H2>6.3 Group information</H2>
+
+<P><CODE>$phpgw_info["group"]["group_names"] = </CODE>List of groups.<BR>
+<H2>6.4 Server information</H2>
+
+<P><CODE>$phpgw_info["server"]["server_root"] = </CODE>Main installation directory<BR>
+<CODE>$phpgw_info["server"]["include_root"] = </CODE>Location of the '<CODE>inc</CODE>' directory.<BR>
+<CODE>$phpgw_info["server"]["temp_dir"] = </CODE>Directory that can be used for temporarily storing files<BR>
+<CODE>$phpgw_info["server"]["common_include_dir"] = </CODE>Location of the core/shared include files.<BR>
+<CODE>$phpgw_info["server"]["template_dir"] = </CODE>Active template files directory. This is defaulted by the server, and changeable by the user.<BR>
+<CODE>$phpgw_info["server"]["dir_separator"] = </CODE>Allows compatibility with WindowsNT directory format,<BR>
+<CODE>$phpgw_info["server"]["encrpytkey"] = </CODE><BR>
+<CODE>$phpgw_info["server"]["site_title"] = </CODE>Site Title will show in the title bar of each webpage.<BR>
+<CODE>$phpgw_info["server"]["webserver_url"] = </CODE>URL to phpGroupWare installation.<BR>
+<CODE>$phpgw_info["server"]["charset"]   = </CODE>Unknown<BR>
+<CODE>$phpgw_info["server"]["version"] = </CODE>phpGroupWare version.<BR>
+<H2>6.5 Database information</H2>
+
+<P>It is unlikely you will need these, because $phpgw_info_db will already be loaded as a database for you to use.
+<CODE>$phpgw_info["server"]["db_host"] = </CODE>Address of the database server. Usually this is set to localhost.<BR>
+<CODE>$phpgw_info["server"]["db_name"] = </CODE>Database name.<BR>
+<CODE>$phpgw_info["server"]["db_user"] = </CODE>User name.<BR>
+<CODE>$phpgw_info["server"]["db_pass"] = </CODE>Password<BR>
+<CODE>$phpgw_info["server"]["db_type"] = </CODE>Type of database. Currently MySQL and PostgreSQL are supported.<BR>
+<H2>6.6 Mail information</H2>
+
+<P>It is unlikely you will need these, because most email needs are services thru core phpGroupWare functions.
+<CODE>$phpgw_info["server"]["mail_server"] = </CODE>Address of the IMAP server. Usually this is set to localhost.<BR>
+<CODE>$phpgw_info["server"]["mail_server_type"] = </CODE>IMAP or POP3<BR>
+<CODE>$phpgw_info["server"]["imap_server_type"] = </CODE>Cyrus or Uwash<BR>
+<CODE>$phpgw_info["server"]["imap_port"] = </CODE>This is usually 143, and should only be changed if there is a good reason.<BR>
+<CODE>$phpgw_info["server"]["mail_suffix] = </CODE>This is the domain name, used to add to email address<BR>
+<CODE>$phpgw_info["server"]["mail_login_type"] = </CODE>This adds support for VMailMgr. Generally this hsould be set to '<CODE>standard</CODE>'.<BR>
+<CODE>$phpgw_info["server"]["smtp_server"] = </CODE>Address of the SMTP server. Usually this is set to localhost.<BR>
+<CODE>$phpgw_info["server"]["smtp_port"] = </CODE>This is usually 25, and should only be changed if there is a good reason.<BR>
+<H2>6.7 NNTP information</H2>
+
+<P><CODE>$phpgw_info["server"]["nntp_server"] = </CODE>Address of the NNTP server.<BR>
+<CODE>$phpgw_info["server"]["nntp_port"] = </CODE>This is usually XX, and should only be changed if there is a good reason.<BR>
+<CODE>$phpgw_info["server"]["nntp_sender"] = </CODE>Unknown<BR>
+<CODE>$phpgw_info["server"]["nntp_organization"] = </CODE>Unknown<BR>
+<CODE>$phpgw_info["server"]["nntp_admin"] = </CODE>Uknown<BR>
+<H2>6.8 Application information</H2>
+
+<P>Each application has the following information avalible.
+<CODE>$phpgw_info["apps"]["appname"]["title"] = </CODE>The title of the application.<BR>
+<CODE>$phpgw_info["apps"]["appname"]["enabled"] = </CODE>If the application is enabled. True or False.<BR>
+<CODE>$phpgw_info["server"]["app_include_dir"] = </CODE>Location of the current application include files.<BR>
+<CODE>$phpgw_info["server"]["app_template_dir"] = </CODE>Location of the current application tpl files.<BR>
+<CODE>$phpgw_info["server"]["app_lang_dir"] = </CODE>Location of the current lang directory.<BR>
+<CODE>$phpgw_info["server"]["app_auth"] = </CODE>If the server and current user have access to current application<BR>
+<CODE>$phpgw_info["server"]["app_current"] = </CODE>name of the current application.<BR>
+<H2><A NAME="s7">7. Using Language Support</A></H2>
+
+<H2>7.1 Overview</H2>
+
+<P>phpGroupWare is built using a multi-language support scheme. This means the pages can be translated to other languages
+very easily. It is done thru a series of lang files, which can be translated and selected by the user.
+<H2>7.2 How to use lang support</H2>
+
+<P>Some instructions on using the lang files.<BR>
+Under inc/lang there needs to be a sub-directory for each langague.  Inside the
+directory there are a number of files for each application.  There is one common file
+which contains a list of words that all applications use.  ie, add, delete, edit, etc...<BR>
+Words that are specific to a application should be stored with that applications include file.
+<HR>
+<PRE>
+  function lang_todo($message, $m1 = "", $m2 = "", $m3 = "", $m4 = "")
+  {
+    $message = strtolower($message);
+    switch($message)
+    {
+       case "urgency": $s = "Urgency"; break;
+       case "completed": $s = "completed"; break;
+       [ snip ]
+       default: $s = "&lt;b&gt;*&lt;/b&gt; " . $message;
+    }
+    return $s;
+  }
+  
+</PRE>
+<HR>
+
+The list of words in the left column should always be written in english.  The
+second column is used to return those words in that includes language.  <CODE>$m1, $m2,
+$m3, and $m4</CODE> are used to pass extra data to be place in the middle of a sentence.<BR>
+For example:
+<PRE>
+You have 29 new messages!
+</PRE>
+
+The default should return a bold faced * and the word that wasn't found. This allows users to notice that something is missing in the files and make changes if
+necessary.
+<H2><A NAME="s8">8. Using Templates</A></H2>
+
+<H2>8.1 Overview</H2>
+
+<P>phpGroupWare is built using a templates based design. This means the display pages, stored in tpl files, can be translated to other languages, made to look completely different.
+<H2>8.2 How to use templates</H2>
+
+<P>Some instructions on using templates<BR>
+For Further info read the PHPLIBs documentation for their template class.
+<H2><A NAME="s9">9. About this document</A></H2>
+
+<H2>9.1 New versions </H2>
+
+<P>The newest version of this document can be found on our website 
+<A HREF="http://www.phpgroupware.org">http://www.phpgroupware.org</A> as SGML source, as HTML and as TEXT.
+<H2>9.2 Comments </H2>
+
+<P>Comments on this HOWTO should be directed to the phpGroupWare developers mailing list 
+<A HREF="mailto:phpgroupware-developers@lists.sourceforge.net">phpgroupware-developers@lists.sourceforge.net</A>.
+<P>To subscribe, go to 
+<A HREF="http://sourceforge.net/mail/?group_id=7305">http://sourceforge.net/mail/?group_id=7305</A><H2>9.3 History </H2>
+
+<P>This document was written by Dan Kuykendall.
+<H2>9.4 Copyrights and Trademarks </H2>
+
+<P>Copyright (c)  Dan Kuykendall.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1
+or any later version published by the Free Software Foundation
+<P>A copy of the license is available at
+<A HREF="http://www.gnu.org/copyleft/fdl.txt">GNU Free Documentation License</A>.
+<H2>9.5 Acknowledgements and Thanks </H2>
+
+<P>Thanks to Joesph Engo for starting phpGroupWare (at the time called webdistro). 
+Thanks to all the developers and users who contribute to making phpGroupWare such a success.
 </BODY>
 </HTML>

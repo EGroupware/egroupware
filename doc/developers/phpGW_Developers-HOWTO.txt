@@ -1,9 +1,9 @@
   phpGroupWare Application Development
   Dan Kuykendall <dan@kuykendall.org>
-  v0.3, 12 August 2000
+  v0.4, 30 August 2000
 
   This document explains phpGroupWare's infastructure and API, along
-  what is required to integrate applications into it.
+  with what is required to integrate applications into it.
   ______________________________________________________________________
 
   Table of Contents
@@ -86,7 +86,7 @@
 
      4.1 Overview
      4.2 Directory tree
-     4.3 The lang Directory
+     4.3 Translations
 
   5. The API
 
@@ -140,8 +140,7 @@
 
   phpGroupWare is a web based groupware application framework (API), for
   writing applications. Integrated applications such as email, calendar,
-  todo list, address book, file manager, headline news, and a trouble
-  ticket system are included.
+  todo list, address book, and file manager are included.
 
   11..11..  OOvveerrvviieeww ooff aapppplliiccaattiioonn wwrriittiinngg
 
@@ -166,7 +165,7 @@
   22..11..  RReeqquuiirreemmeennttss
 
   These guidelines must be followed for any application that wants
-  considered for inclusion into phpGroupWare proper.
+  considered for inclusion into phpGroupWare deluxe.
 
   It must run on PHP3 and PHP4.
   SQL statements must be compatible with both MySQL and PostgreSQL.
@@ -178,8 +177,9 @@
   language) support.
   Where possible it should run on both Unix and NT platforms.
 
-  For applications that do not meet these requirements, we will store
-  them in a seperate location, indicating their status.
+  For applications that do not meet these requirements, they can be
+  avalible to users via the phpGroupWare Apps project, or whatever means
+  the developers decide.
   If you need help converting your application to templates and our lang
   support, we will try to connect you with someone to help.
 
@@ -198,39 +198,34 @@
 
   ______________________________________________________________________
     <?php
-    $phpgw_flags["currentapp"] = "newapp";
+    $phpgw_flags["currentapp"] = "appname";
     include("../header.inc.php");
     ?>
   ______________________________________________________________________
 
 
   Of course change application name to fit.
-  This will include the standard functions, verify the sessionid,
-  rights to the application, and will toss in the navbar.
+  This include will provide the following things:
 
-  If you have other includes, or functions that need to be inserted/run
-  before the navbar replace
+  +o  The phpgwAPI - The phpGroupWare API will be loaded.
 
-  ______________________________________________________________________
-    $phpgw_flags["currentapp"] = "newapp";
-  ______________________________________________________________________
+  +o  The phpGW navbar will be loaded (by default, but can be disabled
+     until a later point.
 
+  +o  appname/inc/functions.inc.php - This file is loaded just after the
+     phpgwAPI and before any html code is generated. This file should
+     include all your application specific functions.. You are welcome
+     to include any additional files you need from within this file.
 
-  with
+  +o  appname/inc/header.inc.php - This file is loaded just after the
+     system header/navbar, and allows developers to use it for whatever
+     they need to load.
 
-  ______________________________________________________________________
-    $phpgw_flags["currentapp"] = "newapp";
-    $phpgw_flags["nonavbar"] = True;
-  ______________________________________________________________________
+  +o  appname/inc/footer.inc.php - This file is loaded just before the
+     system footer, allowing developers to close connections and
+     whetever else they need.
 
-
-  Then when you are done you need to display the navbar by adding this
-  line:
-
-  ______________________________________________________________________
-       $phpgw->common->navbar();
-  ______________________________________________________________________
-
+  +o  The phpGW footer will be loaded, which closes several connections.
 
 
   33..  IInnssttaalllliinngg yyoouurr aapppplliiccaattiioonn
@@ -245,33 +240,36 @@
   To make things easy for developers we go ahead and load the following
   files.
 
-  +o  inc/appname/appname.inc.php - This file should include all your
+  +o  appname/inc/functions.inc.php - This file should include all your
      application specific functions.
 
-  +o  inc/appname/header.inc.php - This file is loaded just after the
+  +o  appname/inc/header.inc.php - This file is loaded just after the
      system header/navbar, and allows developers to use it for whatever
      they need to load.
 
-  +o  inc/appname/footer.inc.php - This file is loaded just before the
+  +o  appname/inc/footer.inc.php - This file is loaded just before the
      system footer, allowing developers to close connections and
      whetever else they need.
 
   33..33..  AAddddiinngg ffiilleess,, ddiirreeccttoorriieess aanndd iiccoonnss..
 
   You will need to create the following directories for your code
-  (replace 'newapp' with your application name)
+  (replace 'appname' with your application name)
 
 
-    `-- newapp
-        `-- icons
+
+
+
+
+
+    `-- appname
+        `-- images
         |   `-- navbar.gif
         `-- inc
+        |   |-- functions.inc.php
         |   |-- header.inc.php
         |   `-- footer.inc.php
-        |-- lang
-        |   `-- en
-        |       `-- newapp.inc.php
-        `-- template
+        `-- templates
             `-- default
 
 
@@ -280,11 +278,10 @@
   33..44..  MMaakkiinngg pphhppGGrroouuppWWaarree aawwaarree ooff yyoouurr aapppplliiccaattiioonn
 
   To make the application aware of your application, add your
-  application setup in the inc/globalconfig.inc.php.
-  Simply add the following line just after '/* ADD NEW APPS HERE */'
-  (replace 'newapp' with your application name)
+  application details to the applications table. This can be done via
+  the GUI administration screen, or via a sql script.
 
-    $phpgw_info["apps"]["newapp"] = array ("title" => "Title of Application", "enabled" => True);
+    insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
 
 
 
@@ -328,27 +325,57 @@
 
 
 
+
+
+
   .-- addressbook
+  |   `-- images
+  |   |   `-- navbar.gif
+  |   `-- inc
+  |   |   |-- functions.inc.php
+  |   |   |-- header.inc.php
+  |   |   `-- footer.inc.php
+  |   `-- templates
+  |       `-- default
   |-- admin
+  |   `-- images
+  |   |   `-- navbar.gif
+  |   `-- inc
+  |   |   |-- functions.inc.php
+  |   |   |-- header.inc.php
+  |   |   `-- footer.inc.php
+  |   `-- templates
+  |       `-- default
   |-- calendar
+  |   `-- images
+  |   |   `-- navbar.gif
+  |   `-- inc
+  |   |   |-- functions.inc.php
+  |   |   |-- header.inc.php
+  |   |   `-- footer.inc.php
+  |   `-- templates
+  |       `-- default
   |-- cron
   |-- doc
   |-- email
+  |   `-- images
+  |   |   `-- navbar.gif
+  |   `-- inc
+  |   |   |-- functions.inc.php
+  |   |   |-- header.inc.php
+  |   |   `-- footer.inc.php
+  |   `-- templates
+  |       `-- default
   |-- filemanager
   |-- files
   |   |-- groups
   |   `-- users
-  |-- headlines
   |-- inc
-  |   |-- addressbook
-  |   |-- calendar
-  |   |-- core
-  |   |-- email
-  |   |-- headlines
-  |   |-- lang
-  |   |   |-- en
-  |   |   |-- gr
-  |   |   `-- sp
+  |   |-- phpgwapi
+      |   |-- phpgw.inc.php
+      |   |-- phpgw_info.inc.php
+      |   |-- phpgw_common.inc.php
+  |   |   `-- etc...
   |   `-- templates
   |       |-- default
   |       |   |-- addressbook
@@ -366,66 +393,34 @@
   |           |-- calendar
   |           `-- tts
   |-- preferences
+  |   `-- images
+  |   |   `-- navbar.gif
+  |   `-- inc
+  |   |   |-- functions.inc.php
+  |   |   |-- header.inc.php
+  |   |   `-- footer.inc.php
+  |   `-- templates
+  |       `-- default
   |-- themes
-  |-- todo
-  `-- tts
-      `-- newapp
-          `-- icons
-          |   `-- navbar.gif
-          `-- inc
-          |   |-- header.inc.php
-          |   `-- footer.inc.php
-          |-- lang
-          |   `-- en
-          |       `-- newapp.inc.php
-          `-- template
-              `-- default
+  `-- todo
+      `-- images
+      |   `-- navbar.gif
+      `-- inc
+      |   |-- functions.inc.php
+      |   |-- header.inc.php
+      |   `-- footer.inc.php
+      `-- templates
+          `-- default
 
 
 
 
-  44..33..  TThhee llaanngg DDiirreeccttoorryy
+  44..33..  TTrraannssllaattiioonnss
 
-  The lang directory is pretty basic. The lang files are simply named
-  appname.inc.php.
-
-
-
-
-
-
-  .-- inc
-      `-- lang
-          |-- en
-          |   |-- admin.inc.php
-          |   |-- common.inc.php
-          |   |-- login.inc.php
-          |   |-- todo.inc.php
-          |   |-- addressbook.inc.php
-          |   |-- calendar.inc.php
-          |   |-- filemanager.inc.php
-          |   `-- preferences.inc.php
-          |-- de
-          |   |-- admin.inc.php
-          |   |-- common.inc.php
-          |   |-- login.inc.php
-          |   |-- todo.inc.php
-          |   |-- addressbook.inc.php
-          |   |-- calendar.inc.php
-          |   |-- filemanager.inc.php
-          |   `-- preferences.inc.php
-          `-- sp
-              |-- admin.inc.php
-              |-- common.inc.php
-              |-- login.inc.php
-              |-- todo.inc.php
-              |-- addressbook.inc.php
-              |-- calendar.inc.php
-              |-- filemanager.inc.php
-              `-- preferences.inc.php
-
-
-
+  The translations are now being done thru the database, and will be
+  configurable to use other mechanism.
+  I will document all the new abilities during my next update of this
+  document.
 
   55..  TThhee AAPPII
 
@@ -438,7 +433,7 @@
   identify the file that the function is in.  All the files that are
   patr of this class are in the inc/core directory and are named to
   match the sub-class.
-  Example: $phpgw->msg->send() is in the inc/core/phpgw_msg.inc.php
+  Example: $phpgw->send->msg() is in the inc/phpgwapi/phpgw_send.inc.php
   file.
 
   55..22..  BBaassiicc ffuunnccttiioonnss
@@ -459,6 +454,11 @@
   /* The the result would be */
   /* <form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"> */
   ______________________________________________________________________
+
+
+
+
+
 
   55..33..  AApppplliiccaattiioonn FFuunnccttiioonnss
 

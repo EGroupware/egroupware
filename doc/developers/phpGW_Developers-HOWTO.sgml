@@ -9,17 +9,17 @@
   Dan Kuykendall &lt;dan@kuykendall.org&gt;
 </author>
 <date>
-  v0.3, 12 August 2000
+  v0.4, 30 August 2000
 </date>
 <abstract>
-  This document explains phpGroupWare's infastructure and API, along what is required to integrate applications into it.
+  This document explains phpGroupWare's infastructure and API, along with what is required to integrate applications into it.
 </abstract>
 
 <toc>
 <sect>Introduction
 <p>
   phpGroupWare is a web based groupware application framework (API), for writing applications. Integrated applications such as 
-  email, calendar, todo list, address book, file manager, headline news, and a trouble ticket system are included.
+  email, calendar, todo list, address book, and file manager are included.
 </p>
 <sect1>Overview of application writing
 <p>
@@ -34,7 +34,7 @@
 <sect>Guidelines
 <sect1>Requirements
 <p>
-  These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare proper.
+  These guidelines must be followed for any application that wants considered for inclusion into phpGroupWare deluxe.
 </P>
 <P>
   It must run on PHP3 and PHP4. <newline>
@@ -46,7 +46,7 @@
   Where possible it should run on both Unix and NT platforms.
 </p>
 <p>
-  For applications that do not meet these requirements, we will store them in a seperate location, indicating their status.<newline>
+  For applications that do not meet these requirements, they can be avalible to users via the phpGroupWare Apps project, or whatever means the developers decide.<newline>
   If you need help converting your application to templates and our lang support, we will try to connect you with someone to help.
 </P>
 <sect1>Writing/porting your application
@@ -56,26 +56,21 @@
   This is done by putting this at the top of each PHP page.
 <code>
   <?php
-  $phpgw_flags["currentapp"] = "newapp";
+  $phpgw_flags["currentapp"] = "appname";
   include("../header.inc.php");
   ?>
 </code>
   Of course change application name to fit.<newline>
-  This will include the standard functions, verify the sessionid,  rights to the application, and will toss in the navbar.
-<p>
-  If you have other includes, or functions that need to be inserted/run before the navbar replace
-<code>
-  $phpgw_flags["currentapp"] = "newapp";
-</code>
-with
-<code>
-  $phpgw_flags["currentapp"] = "newapp";
-  $phpgw_flags["nonavbar"] = True;
-</code>
-  Then when you are done you need to display the navbar by adding this line:
-<code>
-     $phpgw->common->navbar();
-</code>
+  This include will provide the following things: 
+  <itemize>
+  <item> The phpgwAPI - The phpGroupWare API will be loaded.
+  <item> The phpGW navbar will be loaded (by default, but can be disabled until a later point.
+  <item> appname/inc/functions.inc.php - This file is loaded just after the phpgwAPI and before any html code is generated. This file should include all your application specific functions.. You are welcome to include any additional files you need from within this file.
+  <item> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.
+  <item> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.
+  <item> The phpGW footer will be loaded, which closes several connections.
+  </itemize>
+  
 </p>
 
 <sect>Installing your application
@@ -87,35 +82,32 @@ with
 <P>
   To make things easy for developers we go ahead and load the following files.
   <itemize>
-  <item> inc/appname/appname.inc.php - This file should include all your application specific functions.
-  <item> inc/appname/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.
-  <item> inc/appname/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.
+  <item> appname/inc/functions.inc.php - This file should include all your application specific functions.
+  <item> appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.
+  <item> appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whetever else they need.
   </itemize>
 </p>
 <sect1>Adding files, directories and icons.
 <p>
   You will need to create the following directories for your code <newline>
-  (replace 'newapp' with your application name)<newline>
+  (replace 'appname' with your application name)<newline>
   <verb>
-  `-- newapp
-      `-- icons
+  `-- appname
+      `-- images
       |   `-- navbar.gif
       `-- inc
+      |   |-- functions.inc.php
       |   |-- header.inc.php
       |   `-- footer.inc.php
-      |-- lang
-      |   `-- en
-      |       `-- newapp.inc.php
-      `-- template       
+      `-- templates
           `-- default
   </verb>
 </p>
 <sect1>Making phpGroupWare aware of your application
 <p>
-  To make the application aware of your application, add your application setup in the inc/globalconfig.inc.php.<newline>
-  Simply add the following line just after <tt>'/* ADD NEW APPS HERE */'</tt> (replace 'newapp' with your application name)
+  To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a sql script.
 <verb>
-  $phpgw_info["apps"]["newapp"] = array ("title" => "Title of Application", "enabled" => True);
+  insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);
 </verb>
 </p>
 
@@ -129,26 +121,53 @@ with
 <p>
   <verb>
 .-- addressbook
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- admin
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- calendar
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- cron
 |-- doc
 |-- email
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- filemanager
 |-- files
 |   |-- groups
 |   `-- users
-|-- headlines
 |-- inc
-|   |-- addressbook
-|   |-- calendar
-|   |-- core
-|   |-- email
-|   |-- headlines
-|   |-- lang
-|   |   |-- en
-|   |   |-- gr
-|   |   `-- sp
+|   |-- phpgwapi
+    |   |-- phpgw.inc.php
+    |   |-- phpgw_info.inc.php
+    |   |-- phpgw_common.inc.php
+|   |   `-- etc...
 |   `-- templates
 |       |-- default
 |       |   |-- addressbook
@@ -166,56 +185,30 @@ with
 |           |-- calendar
 |           `-- tts
 |-- preferences
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
 |-- themes
-|-- todo
-`-- tts  
-    `-- newapp
-        `-- icons
-        |   `-- navbar.gif
-        `-- inc
-        |   |-- header.inc.php
-        |   `-- footer.inc.php
-        |-- lang
-        |   `-- en
-        |       `-- newapp.inc.php
-        `-- template       
-            `-- default
+`-- todo
+    `-- images
+    |   `-- navbar.gif
+    `-- inc
+    |   |-- functions.inc.php
+    |   |-- header.inc.php
+    |   `-- footer.inc.php
+    `-- templates
+        `-- default
   </verb>
 </p>
-<sect1>The lang Directory
+<sect1>Translations
 <p>
-  The lang directory is pretty basic. The lang files are simply named appname.inc.php.
-  <verb>
-.-- inc
-    `-- lang
-        |-- en
-        |   |-- admin.inc.php
-        |   |-- common.inc.php
-        |   |-- login.inc.php
-        |   |-- todo.inc.php
-        |   |-- addressbook.inc.php
-        |   |-- calendar.inc.php
-        |   |-- filemanager.inc.php
-        |   `-- preferences.inc.php
-        |-- de
-        |   |-- admin.inc.php
-        |   |-- common.inc.php
-        |   |-- login.inc.php
-        |   |-- todo.inc.php
-        |   |-- addressbook.inc.php
-        |   |-- calendar.inc.php
-        |   |-- filemanager.inc.php
-        |   `-- preferences.inc.php
-        `-- sp
-            |-- admin.inc.php
-            |-- common.inc.php
-            |-- login.inc.php
-            |-- todo.inc.php
-            |-- addressbook.inc.php
-            |-- calendar.inc.php
-            |-- filemanager.inc.php
-            `-- preferences.inc.php
-  </verb>
+  The translations are now being done thru the database, and will be configurable to use other mechanism.<newline>
+  I will document all the new abilities during my next update of this document.
 </p>
 <sect>The API
 <sect1>Introduction
@@ -225,7 +218,7 @@ with
   This allows for terrific code organization, and help developers easily identify the file that the function is in.
   All the files that are patr of this class are in the inc/core directory and are named to match the sub-class.<newline>
   Example:
-  <tt>$phpgw->msg->send()</tt> is in the <tt>inc/core/phpgw_msg.inc.php</tt> file.
+  <tt>$phpgw->send->msg()</tt> is in the <tt>inc/phpgwapi/phpgw_send.inc.php</tt> file.
 <sect1>Basic functions
 
 <sect2>$phpgw->link
