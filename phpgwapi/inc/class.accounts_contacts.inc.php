@@ -26,8 +26,8 @@
 
 	// THIS NEEDS WORK!!!!!!!!! - Milosch
 
-	$phpgw_info["server"]["global_denied_users"] = array();
-	$phpgw_info["server"]["global_denied_groups"] = array();
+	$phpgw_info['server']['global_denied_users'] = array();
+	$phpgw_info['server']['global_denied_groups'] = array();
 
 	class accounts_
 	{
@@ -65,33 +65,33 @@
 			$allValues = $this->contacts->read_single_entry($this->account_id,$qcols);
 
 			/* Now dump it into the array */
-			$this->data["account_id"]	     = $allValues[0]["id"];
-			$this->data["account_lid"] 	     = $allValues[0]["lid"];
-			$this->data["account_type"]      = $allValues[0]["tid"];
-			$this->data["firstname"]   	     = $allValues[0]["n_given"];
-			$this->data["lastname"]    	     = $allValues[0]["n_family"];
-			$this->data["fullname"]    	     = $allValues[0]["fn"];
-			$this->data["lastlogin"]         = $allValues[0]["account_lastlogin"];
-			$this->data["lastloginfrom"]     = $allValues[0]["account_lastloginfrom"];
-			$this->data["lastpasswd_change"] = $allValues[0]["account_lastpwd_change"];
-			$this->data["status"]            = $allValues[0]["account_status"];
-			$this->data["status"] = 'A';
+			$this->data['account_id']	     = $allValues[0]['id'];
+			$this->data['account_lid'] 	     = $allValues[0]['lid'];
+			$this->data['account_type']      = $allValues[0]['tid'];
+			$this->data['firstname']   	     = $allValues[0]['n_given'];
+			$this->data['lastname']    	     = $allValues[0]['n_family'];
+			$this->data['fullname']    	     = $allValues[0]['fn'];
+			$this->data['lastlogin']         = $allValues[0]['account_lastlogin'];
+			$this->data['lastloginfrom']     = $allValues[0]['account_lastloginfrom'];
+			$this->data['lastpasswd_change'] = $allValues[0]['account_lastpwd_change'];
+			$this->data['status']            = $allValues[0]['account_status'];
+			$this->data['status'] = 'A';
 
 			return $this->data;
 		}
 
 		function save_repository()
 		{
-			$entry["id"]                        = $this->data["account_id"];
-			$entry["lid"]                       = $this->data["account_lid"];
-			$entry["tid"]                       = $this->data["account_type"];
-			$entry["fn"]                        = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
-			$entry["n_family"]                  = $this->data["lastname"];
-			$entry["n_given"]                   = $this->data["firstname"];
-			$entry["account_lastlogin"]         = $this->data["lastlogin"];
-			$entry["account_lastloginfrom"]     = $this->data["lastloginfrom"];
-			$entry["account_lastpasswd_change"] = $this->data["lastpwd_change"];
-			$entry["account_status"]    = $this->data["status"];		
+			$entry['id']                        = $this->data['account_id'];
+			$entry['lid']                       = $this->data['account_lid'];
+			$entry['tid']                       = $this->data['account_type'];
+			$entry['fn']                        = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+			$entry['n_family']                  = $this->data['lastname'];
+			$entry['n_given']                   = $this->data['firstname'];
+			$entry['account_lastlogin']         = $this->data['lastlogin'];
+			$entry['account_lastloginfrom']     = $this->data['lastloginfrom'];
+			$entry['account_lastpasswd_change'] = $this->data['lastpwd_change'];
+			$entry['account_status']            = $this->data['status'];
 
 			$this->contacts->update($this->account_id,$entry);
 		}
@@ -119,13 +119,13 @@
 			switch($_type)
 			{
 				case 'accounts':
-					$filter = "tid=u";
+					$filter = 'tid=u';
 					break;
 				case 'groups':
-					$filter = "tid=g";
+					$filter = 'tid=g';
 					break;
 				default:
-					$filter = "tid=u,tid=g";
+					$filter = 'tid=u,tid=g';
 			}
 
 			$allValues = $this->contacts->read(0,0,$qcols,'',$filter);
@@ -133,16 +133,16 @@
 			// get user information for each user/group
 			for($i=0;$i<count($allValues);$i++) {
 				$accounts[] = Array(
-					"account_id"        => $allValues[$i]["id"],
-					"account_lid"       => $allValues[$i]["lid"],
-					"account_type"      => $allValues[$i]["tid"],
-					"account_firstname" => $allValues[$i]["n_given"],
-					"account_lastname"  => $allValues[$i]["n_family"]
+					'account_id'        => $allValues[$i]['id'],
+					'account_lid'       => $allValues[$i]['lid'],
+					'account_type'      => $allValues[$i]['tid'],
+					'account_firstname' => $allValues[$i]['n_given'],
+					'account_lastname'  => $allValues[$i]['n_family']
 				);
 
-				$this->db->query("select account_status from phpgw_accounts where account_id='" . $allValues[$i]["id"] . "'",__LINE__,__FILE__);
+				$this->db->query("SELECT account_status FROM phpgw_accounts WHERE account_id='" . $allValues[$i]['id'] . "'",__LINE__,__FILE__);
 				$this->db->next_record();
-				$accounts[$i]["account_status"] = $this->db->f("account_status");
+				$accounts[$i]['account_status'] = $this->db->f('account_status');
 			}
 
 			return $accounts;
@@ -168,10 +168,12 @@
 			$allValues = $this->contacts->read_single_entry($account_id);
 			echo '<br>id2name: '.$allValues[0]['lid'];
 
-			if($allValues[0]['lid']) {
-
+			if($allValues[0]['lid'])
+			{
 				return intval($allValues[0]['lid']);
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -203,7 +205,7 @@
 				$account_lid = $this->id2name($account_id);
 			}
 
-			$allValues = $this->contacts->read(0,0,$qcols,'',"lid=".$account_lid);
+			$allValues = $this->contacts->read(0,0,$qcols,'','lid='.$account_lid);
 			if ($allValues[0]['id'])
 			{
 				return True;
@@ -218,7 +220,7 @@
 		{
 			global $phpgw_info, $phpgw;
 
-			$owner = $phpgw_info["user"]["account_id"];
+			$owner = $phpgw_info['user']['account_id'];
 			$entry['n_given']  = $account_firstname;
 			$entry['n_family'] = $account_lastname;
 			$entry['password'] = $account_pwd;
@@ -231,7 +233,7 @@
 
 		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
 		{
-			print "not done until now auto_generate class.accounts_contacts.inc.php<br>";
-			exit();
+			print 'not done until now auto_generate class.accounts_contacts.inc.php<br>';
+			exit;
 		}
 	}
