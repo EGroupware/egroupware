@@ -5,6 +5,7 @@ account has been updated	common	en	Account has been updated
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account Preferences
 acl manager	admin	en	ACL Manager
+acl rights	admin	en	ACL Rights
 action	admin	en	Action
 add a new account.	admin	en	Add a new account.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
@@ -72,6 +73,7 @@ enter the title for your site	admin	en	Enter the title for your site
 enter your default FTP server	admin	en	Enter your default FTP server
 enter your HTTP proxy server	admin	en	Enter your HTTP proxy server
 enter your HTTP proxy server port	admin	en	Enter your HTTP proxy server port
+expires	admin	en	Expires
 find and register all application hooks	admin	en	Find and Register all Application Hooks
 global categories	admin	en	Global Categories
 group ?	admin	en	group ?
@@ -94,6 +96,7 @@ last login	admin	en	last login
 last login from	admin	en	last login from
 last time read	admin	en	Last Time Read
 last x logins	admin	en	Last %1 logins
+last x logins for x	admin	en	Last %1 logins for %2
 ldap accounts context	admin	en	LDAP accounts context
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
 ldap default shell (e.g. /bin/bash)	admin	en	LDAP Default shell (e.g. /bin/bash)
@@ -103,16 +106,18 @@ ldap host	admin	en	LDAP host
 ldap rootdn	admin	en	LDAP rootdn
 ldap root password	admin	en	LDAP root password
 list of current users	admin	en	list of current users
-loginid	admin	en	LoginID
+login history	admin	en	Login History
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell
 login time	admin	en	Login Time
+loginid	admin	en	LoginID
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id (e.g. 65535 or 1000000)
 message has been updated	admin	en	message has been updated
 minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500 or 100, etc.)
 mode	admin	en	Mode
+never	admin	en	Never
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
 no login history exists for this user	admin	en	No login history exists for this user
@@ -177,10 +182,11 @@ trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
-user accounts	admin	en	User accounts
-userdata	admin	en	userdata
-user groups	admin	en	User groups
 use theme	admin	en	Use theme
+user accounts	admin	en	User accounts
+user data	admin	en	User Data
+user groups	admin	en	User groups
+userdata	admin	en	userdata
 view access log	admin	en	View access log
 view error log	admin	en	View error log
 view sessions	admin	en	View sessions
