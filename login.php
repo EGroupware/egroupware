@@ -30,7 +30,7 @@
 		$tmpl->set_file(array(
 			'login_form'  => 'login_denylogin.tpl'
 		));
-		$tmpl->set_var('template_set','default');		
+		$tmpl->set_var('template_set','default');
 		$tmpl->pfp('loginout','login_form');
 		exit;
 	}
@@ -115,29 +115,29 @@
 
 	# Apache + mod_ssl style SSL certificate authentication
 	# Certificate (chain) verification occurs inside mod_ssl
-	if ($phpgw_info['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]) && !isset($cd))
+	if ($phpgw_info['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']) && !isset($cd))
 	{
 		# an X.509 subject looks like:
 		# /CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
 		# the username is deliberately lowercase, to ease LDAP integration
-		$sslattribs = explode("/",$HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]);
-		# skip the part in front of the first "/" (nothing)
+		$sslattribs = explode('/',$HTTP_SERVER_VARS['SSL_CLIENT_S_DN']);
+		# skip the part in front of the first '/' (nothing)
 		while ($sslattrib = next($sslattribs))
 		{
-			list($key,$val) = explode("=",$sslattrib);
+			list($key,$val) = explode('=',$sslattrib);
 			$sslattributes[$key] = $val;
 		}
 
-		if (isset($sslattributes["Email"]))
+		if (isset($sslattributes['Email']))
 		{
 			$submit = True;
 
 			# login will be set here if the user logged out and uses a different username with
 			# the same SSL-certificate.
-			if (!isset($login)&&isset($sslattributes["Email"])) {
-				$login = $sslattributes["Email"];
+			if (!isset($login)&&isset($sslattributes['Email'])) {
+				$login = $sslattributes['Email'];
 				# not checked against the database, but delivered to authentication module
-				$passwd = $HTTP_SERVER_VARS["SSL_CLIENT_S_DN"];
+				$passwd = $HTTP_SERVER_VARS['SSL_CLIENT_S_DN'];
 			}
 		}
 		unset($key);
@@ -147,15 +147,15 @@
 
 	if (isset($HTTP_POST_VARS['submit']) && $HTTP_POST_VARS['submit'] || $submit_x || $submit_y)
 	{
-		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]))
+		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
 		{
-			$phpgw->redirect($phpgw->link('/login.php','code=5'));
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/login.php','code=5'));
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($GLOBALS['login'],$GLOBALS['HTTP_POST_VARS']['passwd']);
 
 		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$phpgw->redirect($phpgw_info['server']['webserver_url'] . '/login.php?cd=5');
+			$GLOBALS['phpgw']->redirect($phpgw_info['server']['webserver_url'] . '/login.php?cd=5');
 		}
 		else
 		{
@@ -184,15 +184,15 @@
 
 			if (! $prefs->account_id)
 			{
-				$phpgw_info['user']['preferences']['common']['lang'] = 'en';
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = 'en';
 			}
 			else
 			{
-				$phpgw_info['user']['preferences'] = $prefs->read_repository();
+				$GLOBALS['phpgw_info']['user']['preferences'] = $prefs->read_repository();
 			}
 			#print 'LANG:' . $phpgw_info['user']['preferences']['common']['lang'] . '<br>';
-			$phpgw->translation->add_app('login');
-			$phpgw->translation->add_app('loginscreen');
+			$GLOBALS['phpgw']->translation->add_app('login');
+			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
 				$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
@@ -202,9 +202,9 @@
 		{
 			// If the lastloginid cookies isn't set, we will default to english.
 			// Change this if you need.
-			$phpgw_info['user']['preferences']['common']['lang'] = 'en';
-			$phpgw->translation->add_app('login');
-			$phpgw->translation->add_app('loginscreen');
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = 'en';
+			$GLOBALS['phpgw']->translation->add_app('login');
+			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
 				$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
@@ -217,7 +217,7 @@
 		$cd = '';
 	}
 
-	if ($phpgw_info['server']['show_domain_selectbox'])
+	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
 		reset($phpgw_domain);
 		unset($domain_select);      // For security ... just in case

@@ -1,41 +1,41 @@
 <?php
-	//$debugme = "on";
-	 /**************************************************************************\
-	 * phpGroupWare API - phpgwapi loader                                       *
-	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	 * and Joseph Engo <jengo@phpgroupware.org>                                 *
-	 * Has a few functions, but primary role is to load the phpgwapi            *
-	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	 * -------------------------------------------------------------------------*
-	 * This library is part of the phpGroupWare API                             *
-	 * http://www.phpgroupware.org/api                                          * 
-	 * ------------------------------------------------------------------------ *
-	 * This library is free software; you can redistribute it and/or modify it  *
-	 * under the terms of the GNU Lesser General Public License as published by *
-	 * the Free Software Foundation; either version 2.1 of the License,         *
-	 * or any later version.                                                    *
-	 * This library is distributed in the hope that it will be useful, but      *
-	 * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	 * See the GNU Lesser General Public License for more details.              *
-	 * You should have received a copy of the GNU Lesser General Public License *
-	 * along with this library; if not, write to the Free Software Foundation,  *
-	 * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	 \**************************************************************************/
+	/* $debugme = 'on'; */
+	/**************************************************************************\
+	* phpGroupWare API - phpgwapi loader                                       *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* Has a few functions, but primary role is to load the phpgwapi            *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* -------------------------------------------------------------------------*
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 	
-	 /* $Id$ */
+	/* $Id$ */
 	
-	 /****************************************************************************\
-	 * If running in PHP3, then load up the support functions file for            *
-	 * transparent support.                                                       *
-	 \****************************************************************************/
+	/****************************************************************************\
+	* If running in PHP3, then load up the support functions file for            *
+	* transparent support.                                                       *
+	\****************************************************************************/
 
-    if (floor(phpversion()) == 3)
-    {
+	if (floor(phpversion()) == 3)
+	{
 		include(PHPGW_API_INC.'/php3_support_functions.inc.php');
-    }
+	}
 
-	 /****************************************************************************\
+	/****************************************************************************\
 	 * Direct functions, which are not part of the API class                      *
 	 * because they are require to be availble at the lowest level.               *
 	 \****************************************************************************/
@@ -49,7 +49,7 @@
 	 Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
 	 @param $classname name of class
 	 @param $p1-$p16 class parameters (all optional)
-	 */
+	*/
 	function CreateObject($class,
 		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
 		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
@@ -100,7 +100,7 @@
 		return $obj;
 	}
 
-	 /*!
+	/*!
 	 @function ExecObject
 	 @abstract Execute a function, and load a class and include the class file if not done so already.
 	 @discussion Author: seek3r<br>
@@ -112,7 +112,7 @@
 	 @param $functionparams function param should be an array
 	 @param $loglevel developers choice of logging level
 	 @param $classparams params to be sent to the contructor
-	 */
+	*/
 	function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
 		/* Need to make sure this is working against a single dimensional object */
@@ -156,7 +156,7 @@
 			unset ($GLOBALS['methodparts'][$partscount]);
 			reset ($GLOBALS['methodparts']);
 			$firstparent = 'True';
-			while (list ($key, $val) = each ($GLOBALS['methodparts'])) 
+			while (list ($key, $val) = each ($GLOBALS['methodparts']))
 			{
 				if ($firstparent == 'True')
 				{
@@ -209,7 +209,7 @@
 	/*!
 	 @function lang
 	 @abstract function to handle multilanguage support
-	 */
+	*/
 	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
 	{
 		if(gettype($m1) == 'array')
@@ -224,13 +224,13 @@
 		return $value;
 	}
 
-	 /* Just a temp wrapper. ###DELETE_ME#### (Seek3r) */
+	/* Just a temp wrapper. ###DELETE_ME#### (Seek3r) */
 	function check_code($code)
 	{
 		return $GLOBALS['phpgw']->common->check_code($code);
 	}
 
-	 /*!
+	/*!
 	 @function get_account_id()
 	 @abstract Return a properly formatted account_id.
 	 @discussion Author: skeeter <br>
@@ -241,7 +241,7 @@
 	 Example1: $account_id = get_account_id($accountid);
 	 @param $account_id either a name or an id
 	 @param $default_id either a name or an id
-	 */
+	*/
 	function get_account_id($account_id = '',$default_id = '')
 	{
 		if (gettype($account_id) == 'integer')
@@ -316,14 +316,14 @@
 	* Quick verification of sane environment                                     *
 	\****************************************************************************/
 	//	error_reporting(7);
-	 /* Make sure the header.inc.php is current. */
+	/* Make sure the header.inc.php is current. */
 	if ($GLOBALS['phpgw_info']['server']['versions']['header'] < $GLOBALS['phpgw_info']['server']['versions']['current_header'])
 	{
 		echo '<center><b>You need to port your settings to the new header.inc.php version.</b></center>';
 		exit;
 	}
 
-	 /* Make sure the developer is following the rules. */
+	/* Make sure the developer is following the rules. */
 	if (!isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 	{
 		/* This object does not exist yet. */
@@ -351,31 +351,34 @@
 	$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
+	$GLOBALS['login'] = $GLOBALS['HTTP_POST_VARS']['login'];
+	$GLOBALS['logindomain'] = $GLOBALS['HTTP_POST_VARS']['logindomain'];
+
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
 	if (isset($domain))
 	{
 		$GLOBALS['phpgw_info']['user']['domain'] = $domain;
 	}
-	elseif (isset($login) && isset($logindomain))
+	elseif (isset($GLOBALS['login']) && isset($GLOBALS['logindomain']))
 	{
-		if (!ereg ("\@", $login))
+		if (!ereg ("\@", $GLOBALS['login']))
 		{
-			$login = $login."@".$logindomain;
+			$GLOBALS['login'] = $GLOBALS['login'] . '@' . $GLOBALS['logindomain'];
 		}
-		$GLOBALS['phpgw_info']['user']['domain'] = $logindomain;
-		unset ($logindomain);
+		$GLOBALS['phpgw_info']['user']['domain'] = $GLOBALS['logindomain'];
+		unset ($GLOBALS['logindomain']);
 	}
-	elseif (isset($login) && !isset($logindomain))
+	elseif (isset($GLOBALS['login']) && !isset($GLOBALS['logindomain']))
 	{
-		if (ereg ("\@", $login))
+		if (ereg ("\@", $GLOBALS['login']))
 		{
-			$login_array = explode("@", $login);
+			$login_array = explode('@', $GLOBALS['login']);
 			$GLOBALS['phpgw_info']['user']['domain'] = $login_array[1];
 		}
 		else
 		{
 			$GLOBALS['phpgw_info']['user']['domain'] = $GLOBALS['phpgw_info']['server']['default_domain'];
-			$login = $login . '@' . $GLOBALS['phpgw_info']['user']['domain'];
+			$GLOBALS['login'] = $GLOBALS['login'] . '@' . $GLOBALS['phpgw_info']['user']['domain'];
 		}
 	}
 
@@ -398,7 +401,7 @@
 
 	if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		unset ($GLOBALS['phpgw_domain']); // we kill this for security reasons  
+		unset ($GLOBALS['phpgw_domain']); // we kill this for security reasons
 	}
 	unset ($domain); // we kill this to save memory
 
@@ -479,9 +482,9 @@
 	}
 	unset($cache_query);
 	unset($server_info_cache);
-	 /************************************************************************\
-	 * Required classes                                                       *
-	 \************************************************************************/
+	/************************************************************************\
+	* Required classes                                                       *
+	\************************************************************************/
 	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
 	$GLOBALS['phpgw']->common       = CreateObject('phpgwapi.common');
 	$GLOBALS['phpgw']->hooks        = CreateObject('phpgwapi.hooks');
@@ -501,10 +504,10 @@
 		$GLOBALS['phpgw_info']['flags']['included_classes']['error'] = True;
 	}
 
-	 /****************************************************************************\
-	 * This is a global constant that should be used                              *
-	 * instead of / or \ in file paths                                            *
-	 \****************************************************************************/
+	/****************************************************************************\
+	* This is a global constant that should be used                              *
+	* instead of / or \ in file paths                                            *
+	\****************************************************************************/
 	define('SEP',filesystem_separator());
 
 	/*****************************************************************************\
@@ -516,9 +519,9 @@
 	define('PHPGW_ACL_DELETE',8);
 	define('PHPGW_ACL_PRIVATE',16);
 
-	 /****************************************************************************\
-	 * Stuff to use if logging in or logging out                                  *
-	 \****************************************************************************/
+	/****************************************************************************\
+	* Stuff to use if logging in or logging out                                  *
+	\****************************************************************************/
 	if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'logout')
 	{
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
@@ -531,10 +534,10 @@
 				$GLOBALS['phpgw']->preferences->preferences($login_id);
 			}
 		}
-	/****************************************************************************\
-	 * Everything from this point on will ONLY happen if                        *
-	 * the currentapp is not login or logout                                    *
-	\****************************************************************************/
+	/**************************************************************************\
+	* Everything from this point on will ONLY happen if                        *
+	* the currentapp is not login or logout                                    *
+	\**************************************************************************/
 	}
 	else
 	{
@@ -629,7 +632,7 @@
 			/* Hope we don't get to this point.  Better then the user seeing a */
 			/* complety back screen and not know whats going on                */
 			echo '<body bgcolor="FFFFFF">';
-			$phpgw->log->write(array('text'=>'F-Abort, No themes found'));
+			$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
 
 			exit;
 		}
@@ -664,7 +667,7 @@
 					echo parse_navbar();
 				}
 
-				$phpgw->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
+				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
 				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
