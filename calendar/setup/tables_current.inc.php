@@ -25,7 +25,7 @@
 				'cal_priority' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '2'),
 				'cal_type' => array('type' => 'varchar','precision' => '10'),
 				'cal_public' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '1'),
-				'cal_title' => array('type' => 'varchar','precision' => '80','nullable' => False,'default' => '1'),
+				'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
 				'cal_description' => array('type' => 'text'),
 				'cal_location' => array('type' => 'varchar','precision' => '255'),
 				'cal_reference' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')

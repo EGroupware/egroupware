@@ -1120,4 +1120,19 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.003';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	$test[] = '1.0.0.003';
+	function calendar_upgrade1_0_0_003()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_cal','cal_title',array(
+			'type' => 'varchar',
+			'precision' => '255',
+			'nullable' => False,
+			'default' => '1'
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.004';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>
