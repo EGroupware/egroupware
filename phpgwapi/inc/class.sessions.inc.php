@@ -26,7 +26,6 @@
 	/*
 	** Reserved session_flags
 	** A - anonymous session
-	** U - Force update of phpgw_info cache
 	** N - None, normal session
 	*/
 
@@ -95,21 +94,6 @@
 
 			$this->session_flags = $db->f('session_flags');
 
-			// This is going to be replace with the session_flag field       
-			if ($this->session_flags == 'U')
-			{
-/*        $this->account_lid = $db->f('session_lid');
-          $phpgw_info['user']['sessionid']   = $this->sessionid;
-          $phpgw_info['user']['session_ip']  = $db->f('session_ip');
-
-          $t = explode('@',$db->f('session_lid'));
-          $this->account_lid = $t[0];
-
-          // Now we need to re-read eveything
-          $db->query("select * from phpgw_sessions where session_id='$this->sessionid'",__LINE__,__FILE__);
-          $db->next_record();   */
-			}
-
 			$login_array = explode('@', $db->f('session_lid'));
 			$this->account_lid = $login_array[0];
 
@@ -140,28 +124,17 @@
 
 			$phpgw_info['user']['account_id'] = $this->account_id;
 			
-			if (isset($phpgw_info['server']['cache_phpgw_info']) &&
-			    $phpgw_info['server']['cache_phpgw_info'])
+			$this->read_repositories();
+			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$t = $this->appsession('phpgw_info_cache','phpgwapi');
-				$phpgw_info['server'] = $t['server'];
-				$phpgw_info['user']   = $t['user'];
-				$phpgw_info['hooks']  = $t['hooks'];
+				return False;
 			}
-			else
-			{
-				$this->read_repositories();
-				if ($this->user['expires'] != -1 && $this->user['expires'] < time())
-				{
-					return False;
-				}
 
-				$phpgw_info['user']  = $this->user;
-				$phpgw_info['hooks'] = $this->hooks;
-			}
+			$phpgw_info['user']  = $this->user;
+			$phpgw_info['hooks'] = $this->hooks;
 
 			$phpgw_info['user']['session_ip']  = $db->f('session_ip');
-			$phpgw_info['user']['passwd']		= $this->appsession('password','phpgwapi');
+			$phpgw_info['user']['passwd']		  = $this->appsession('password','phpgwapi');
 
 			if ($userid_array[1] != $phpgw_info['user']['domain'])
 			{
@@ -206,7 +179,7 @@
 
 		function create($login,$passwd)
 		{
-			global $phpgw_info, $phpgw;
+			global $phpgw_info, $phpgw, $PHP_SELF;
 
 			$this->login  = $login;
 			$this->passwd = $passwd;
@@ -280,12 +253,7 @@
 
 			$phpgw_info['user']  = $this->user;
 			$phpgw_info['hooks'] = $this->hooks;
-			if ($phpgw_info['server']['cache_phpgw_info'])
-			{
-				$this->appsession('phpgw_info_cache','phpgwapi',$phpgw_info);
-			}
 
-			// If they are not useing cache, we need to store it somewhere
 			$this->appsession('password','phpgwapi',$this->passwd);
 			if ($phpgw->acl->check('anonymous',1,'phpgwapi'))
 			{
@@ -301,7 +269,7 @@
 			$phpgw->db->transaction_begin();
 			$phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
 								. "','".$login."','" . $user_ip . "','"
-								. $now . "','" . $now . "','".$info_string."','" . $session_flags
+								. $now . "','" . $now . "','" . $PHP_SELF . "','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
 			$phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
