@@ -551,6 +551,12 @@
 		{
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
+			$fields['tid'] = trim($fields['tid']);
+			if(empty($fields['tid']))
+			{
+				$fields['tid'] = 'n';
+			}
+
 			if ($fields['lid'])
 			{
 				$lid[0] = 'lid,';
