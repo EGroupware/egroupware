@@ -19,7 +19,7 @@
 
   function grab_group($db,$id)
   {
-    $db->query("select groups from webcal_entry_groups where cal_id='$id'");
+    $db->query("select groups from webcal_entry_groups where cal_id=$id");
     $db->next_record();
 
     return $db->f("groups");
@@ -41,8 +41,8 @@
 
   // first see who has access to view this entry
   $is_my_event = false;
-  $phpgw->db->query("SELECT cal_id FROM webcal_entry_user WHERE cal_login='"
-	      . "$loginid' AND cal_id = $id");
+  $phpgw->db->query("SELECT cal_id FROM webcal_entry_user WHERE cal_login="
+	      . $phpgw_info["user"]["account_id"]." AND cal_id = $id");
 
   $phpgw->db->next_record();
   if ($phpgw->db->f(0) == $id)
@@ -52,7 +52,7 @@
 	      . "cal_mod_time,cal_duration,cal_priority,cal_type,cal_access, "
 	      . "cal_name,cal_description,account_firstname, account_lastname "
               . " FROM webcal_entry, accounts WHERE cal_id=$id "
-              . " and webcal_entry.cal_create_by = accounts.account_lid");
+              . " and webcal_entry.cal_create_by = accounts.account_id");
 
   $phpgw->db->next_record();
 
@@ -144,7 +144,7 @@
 		. "accounts.account_firstname, webcal_entry_user.cal_status "
 		. "FROM webcal_entry_user, accounts WHERE webcal_entry_user."
 		. "cal_id='$id' AND webcal_entry_user.cal_login = accounts."
-		. "account_lid");
+		. "account_id");
 
     $first = 1;
     while ($phpgw->db->next_record()) {
