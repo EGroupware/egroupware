@@ -858,7 +858,6 @@
 				{
 					echo parse_navbar();
 				}
-echo 'navbar_bg = '. $GLOBALS['phpgw_info']['theme']['navbar_bg'].'<br>';
 
 				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
