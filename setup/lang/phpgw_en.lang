@@ -41,6 +41,7 @@ cancel	setup	en	Cancel
 charset	setup	en	ISO-8859-1
 check ip address of all sessions	setup	en	check ip address of all sessions
 click here	setup	en	Click Here
+completed	setup	en	Completed
 configuration completed	setup	en	Configuration completed
 configuration	setup	en	Configuration
 configure now	setup	en	Configure Now
@@ -106,6 +107,7 @@ invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
 ldap account import/export	setup	en	LDAP account import/export
+ldap accounts configuration	setup	en	LDAP Accounts Configuration
 LDAP accounts context	setup	en	LDAP accounts context
 LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
 LDAP Default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
@@ -133,6 +135,7 @@ no algorithms available	setup	en	no algorithms available
 no modes available	setup	en	no modes available
 no	setup	en	No
 not complete	setup	en	not complete
+not completed	setup	en	Not Completed
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 not ready for this stage yet	setup	en	Not ready for this stage yet
 ok	setup	en	OK
