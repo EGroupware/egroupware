@@ -1,55 +1,45 @@
 <?php
+  include("./inc/functions.inc.php");
+  include("../version.inc.php");
+
   if ($download) {
     header("Content-disposition: attachment; filename=header.inc.php");
     header("Content-type: application/octet-stream");
     header("Pragma: no-cache");
     header("Expires: 0");
-    $ftemplate = fopen(dirname($SCRIPT_FILENAME)."../header.inc.php.template","r");
-    $template = fread($ftemplate,filesize(dirname($SCRIPT_FILENAME)."../header.inc.php.template"));
-    fclose($ftemplate);
-    while(list($k,$v) = each($HTTP_POST_VARS)) {
-      $template = ereg_replace("__".strtoupper($k)."__",$v,$template);
-    }
-    echo $template;
+    echo $newheader;
     exit;
-  }else{
-?>
-<html><head></head><body bgcolor="#ffffff">
-if you are done and wrote the config without errors you can go <a href="./">here</a> to 
-finish the setup
-<table>
-<tr bgcolor="486591">
-<th colspan=2><font color="fefefe"> Analysis </font></th></tr>
-<tr><td colspan=2>
-<?
-  // Hardly try to find what DB-support is compiled in
-  // this dont work with PHP 3.0.10 and lower !
-  if(isset($write_config) && !empty($write_config)) {
-    $fsetup = true;
-    $ftemplate = fopen(dirname($SCRIPT_FILENAME)."../header.inc.php.template","r");
-    if($ftemplate){
-      $fsetup = fopen($server_root."/header.inc.php","w");
-      if(!$fsetup){
-        echo "could not open header.inc.php for writing !<br>";
-        echo "please check read/write permissions on directories or back up and download the file. Then save it to the correct location<br>";
-        echo "</td></tr></table></body></html>";
-        exit;
-      }else{
-        $template = fread($ftemplate,filesize(dirname($SCRIPT_FILENAME)."../header.inc.php.template"));
-        fclose($ftemplate);
-        while(list($k,$v) = each($HTTP_POST_VARS)) {
-          echo "Replace token '__".strtoupper($k)."__' with value '$v'<br>\n";
-          $template = ereg_replace("__".strtoupper($k)."__",$v,$template);
-        }
-        fwrite($fsetup,$template);
-        fclose($fsetup);
-        echo "Created header.inc.php!<br>";
-      }
+  }elseif ($view) {
+    show_header("Generated header.inc.php");
+    echo "<br>Save this text as contents of your header.inc.php<br><hr>";
+    $newheader = generate_header();
+    echo "<pre>";
+    echo htmlentities($newheader);
+    echo "</pre></body></html>";
+    exit;
+  }elseif ($createfile) {
+    if(!is_writeable ($server_root."/header.inc.php")){
+      show_header("Error generating header.inc.php");
+      echo "Could not open header.inc.php for writing!<br>\n";
+      echo "Please check read/write permissions on directories or back up and use another option.<br>";
+      echo "</td></tr></table></body></html>";
+      exit;
     }else{
-      echo "could not open template header for reading !<br>";
+      show_header("Saved header.inc.php");
+      $newheader = generate_header();
+      $fsetup = fopen($server_root."/header.inc.php","w");
+      fwrite($fsetup,$newheader);
+      fclose($fsetup);
+      echo "Created header.inc.php!<br>";
       exit;
     }
-  }
+  }else{
+    show_header("Create/Edit your header.inc.php");
+    echo '<table>
+        <tr bgcolor="486591"><th colspan=2><font color="fefefe"> Analysis </font></th></tr>
+        <tr><td colspan=2>';
+  // Hardly try to find what DB-support is compiled in
+  // this dont work with PHP 3.0.10 and lower !
 
   $supported_db = array();
   if(extension_loaded("mysql")) {
@@ -79,15 +69,32 @@ finish the setup
     echo "<b><p align=center><font size=+2 color=red>did not found any valid DB support !<br>try to configure your php to support one of the above mentioned dbs or install phpgroupware by hand </font></p></b><td></tr></table></body></html>";
     exit;
   }
-
   $no_guess = false;
-  $may_test = false;
   if(file_exists("../header.inc.php") && is_file("../header.inc.php")) {
-    echo "found configuration. using this for defaults<br>\n";
+    echo "Found existing configuration file. Loading settings from the file...<br>\n";
     $phpgw_info["flags"]["noapi"] = True;
     include("../header.inc.php");
     $no_guess = true;
-    $may_test  = true;
+    /* This code makes sure the newer multi-domain supporting header.inc.php is being used */
+    if (!isset($phpgw_domain)) {
+      echo "Your using an old configuration file format...<br>\n";
+      echo "Importing old settings into the new format....<br>\n";
+    }else{
+      if ($phpgw_info["server"]["header_version"] != $phpgw_info["server"]["current_header_version"]) {
+        echo "Your using an old header.inc.php version...<br>\n";
+        echo "Importing old settings into the new format....<br>\n";
+      }
+      reset($phpgw_domain);
+      $default_domain = each($phpgw_domain);
+      $phpgw_info["server"]["default_domain"] = $default_domain[0];
+      unset ($default_domain); // we kill this for security reasons
+      $phpgw_info["server"]["db_host"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_host"];
+      $phpgw_info["server"]["db_name"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_name"];
+      $phpgw_info["server"]["db_user"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_user"];
+      $phpgw_info["server"]["db_pass"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_pass"];
+      $phpgw_info["server"]["db_type"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_type"];
+      $phpgw_info["server"]["config_passwd"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"];
+    }
   } else {      
     echo "sample configuration not found. using built in defaults<br>\n";
     $phpgw_info["server"]["server_root"] = "/path/to/phpgroupware";
@@ -119,21 +126,6 @@ finish the setup
   }
 ?>
 </td></tr>
-<?
-  if($may_test) {
-?>
-<tr bgcolor=486591><th colspan=2><font color="fefefe">Test DB Connection</font></th></tr>
-<tr><td colspan=2 align=center><form action="<? echo $PHP_SELF ?>" method=post>
-<input type=hidden name=test_con value=1>
-<input type=submit value="Test Connection Now">
-</form>
-<?
-    if(isset($test_con) && $test_con == 1) {
-      echo "Not yet implemented !<br>\n";
-    }
-    echo "</td></tr>\n";
-  }
-?>
 <tr bgcolor=486591><th colspan=2><font color="fefefe">Settings</font></th></tr>
 <form action="<? echo $PHP_SELF ?>"  method=post>
 <input type=hidden name=write_config value=true>
@@ -179,7 +171,7 @@ finish the setup
 
   <tr><td><b>Configuration Password</b><br><input type=text name=config_pass value="<? echo $phpgw_info["server"]["config_passwd"] ?>"></td><td>Password needed for configuration</td></tr>
   <tr><td colspan=2><b>Enable MCrypt<br>
-  <select name=mcrypt_enabled >
+  <select name=enable_mcrypt >
   <? if($phpgw_info["flags"]["mcrypt_enabled"] == True) { ?>
   <option value=True selected>True
   <option value=False>False
@@ -191,16 +183,26 @@ finish the setup
   </td></tr>
   <tr><td><b>MCrypt version</b><br><input type=text name=mcrypt_version value="<? echo $phpgw_info["server"]["mcrypt_version"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
   <tr><td><b>MCrypt initilazation vector</b><br><input type=text name=mcrypt_iv value="<? echo $phpgw_info["server"]["mcrypt_iv"] ?>"></td><td>It should be around 30 bytes in length</td></tr>
+</table>
 <?
   if(!$found_dbtype) {
     echo "<br><font color=red>Warning!<br>The db_type in defaults (".$phpgw_info["server"]["db_type"].") is not supported on this server. using first supported type.</font>";
   }
 ?>
-  </td></tr>
-  <tr><th colspan=2 align=center><input type=submit value="write config"> or <input type=submit name="download" value="download"></th></tr>
-</form>
-</td></tr>
-</table>
+  <br>
+  <form>
+<?php
+
+  if(is_writeable ($server_root."/header.inc.php")){
+    echo '<input type=submit name="createfile" value="write config">';
+  }else{
+    echo 'Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can ';
+    echo'<input type=submit name="download" value="download">or <input type=submit name="view" value="view"> the file.';
+    echo'<br> After retrieving the file put it into place as the header.inc.php, then click continue.<br>';
+    echo'<input type=submit name="continue" value="continue">';
+  }
+?>
+  </form>
 </body>
 </html>
 <?php } ?>

@@ -84,8 +84,8 @@
  	  echo "</body></html>\n";
   }
 
-//  function loaddb(){
-//    global $phpgw_domain, $FormLogout, $FormDomain, $SetupPW, $SetupDomain, $db, $PHP_SELF;
+  function loaddb(){
+    global $phpgw_domain, $FormLogout, $FormDomain, $SetupPW, $SetupDomain, $db, $PHP_SELF, $HTTP_POST_VARS;
 
     /* This code makes sure the newer multi-domain supporting header.inc.php is being used */
     if (!isset($phpgw_domain)) {
@@ -134,6 +134,6 @@
     $db->Database   = $phpgw_domain[$SetupDomain]["db_name"];
     $db->User       = $phpgw_domain[$SetupDomain]["db_user"];
     $db->Password   = $phpgw_domain[$SetupDomain]["db_pass"];
-//  }
-//  loaddb();
+  }
+  loaddb();
 ?>
