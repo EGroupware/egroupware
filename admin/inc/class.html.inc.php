@@ -81,7 +81,7 @@
 
 			// First Get the layout arrays...
 			$layout = $head['#layout'];
-			if (gettype($layout) != 'array')
+			if (!is_array($layout))
 			{
 				$layout = $this->arr_keys($cols);
 			} 
@@ -209,7 +209,7 @@
 		{
 			$html = '';
 			$comma = ' ';
-			if (gettype($parmlist) != 'array')
+			if (!is_array($parmlist))
 			{
 				return '';
 			}
