@@ -63,7 +63,7 @@
   }
 
   $phpgw_setup->db->query("select app_name,app_title from phpgw_applications where app_enabled != '0' and "
-           . "app_name != 'admin'",__LINE__,__FILE__);
+           . "app_name != 'administration'",__LINE__,__FILE__);
   while ($phpgw_setup->db->next_record()) {
      $apps[$phpgw_setup->db->f("app_name")] = $phpgw_setup->db->f("app_title");
   }
@@ -84,27 +84,31 @@
             @reset($s_apps);
             while ($app = each($s_apps)) {
               $sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app[1]."' AND acl_location='run' AND acl_account="
-                   . $account[1]["account_id"]." AND acl_account_type='u'";
+                   . $account[1]["account_id"];
               $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
                    
-              $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
-                   . " values('".$app[1]."','run',".$account[1]["account_id"].",'u',1)";
+              $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+                   . " values('".$app[1]."','run',".$account[1]["account_id"].",1)";
               $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
             }
             $sql = "DELETE FROM phpgw_acl WHERE acl_appname='admin' AND acl_location='run' AND acl_account="
-                 . $account[1]["account_id"]." AND acl_account_type='u'";
+                 . $account[1]["account_id"];
             $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
-
-            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)"
-                 . " values('admin','run',".$account[1]["account_id"].",'u',1)";
-            $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+			
+			for ($a=0;$a<count($admins);$a++) {
+				if ($admins[$a] == $account[1]["account_id"]) {
+	    	        $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)"
+    	    	         . " values('admin','run',".$account[1]["account_id"].",1)";
+            		$phpgw_setup->db->query($sql ,__LINE__,__FILE__);
+				}
+			}
 
             $phpgw_setup->db->query("SELECT account_id FROM phpgw_accounts WHERE account_id=" . $account[1]["account_id"]
                  . " AND account_lid='" . $account[1]["account_lid"] . "'");
             if(!$phpgw_setup->db->num_rows() && $account[1]["account_lid"]) {
-              $phpgw_setup->db->query("insert into phpgw_accounts (account_id,account_lid,account_pwd,"
-                   . "account_groups,account_status,account_lastpwd_change) values (" . $account[1]["account_id"] . ",'"
-                   . $account[1]["account_lid"] . "','x',',1:0,','A',".time().")",__LINE__,__FILE__);
+              $phpgw_setup->db->query("insert into phpgw_accounts (account_id,account_lid,account_pwd,account_type,"
+                   . "account_status,account_lastpwd_change) values (" . $account[1]["account_id"] . ",'"
+                   . $account[1]["account_lid"] . "','x','u','A',".time().")",__LINE__,__FILE__);
             }
         }
         $setup_complete = True;
