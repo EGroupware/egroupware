@@ -621,19 +621,29 @@
     /* First include the ordered apps hook file */
     reset ($order);
     while (list (, $appname) = each ($order)){
-      $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-    	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
+       $f = PHPGW_SERVER_ROOT . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+    	if ($location != "") {
+    	   $f .= "_".$location.".inc.php";
+    	} else {
+    	   $f .= ".inc.php";
+    	}
   	  if (file_exists($f)) {include($f);}
       $completed_hooks[$appname] = True;
     }
     /* Then add the rest */
     reset ($phpgw_info["user"]["apps"]);
     while ($permission = each($phpgw_info["user"]["apps"])) {
-      if ($completed_hooks[$permission[0]] != True){
-        $appname = $permission[0];
-        $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-      	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
-    	  if (file_exists($f)) {include($f);}
+       if ($completed_hooks[$permission[0]] != True){
+          $appname = $permission[0];
+          $f = PHPGW_SERVER_ROOT . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+      	if ($location != "") {
+      	   $f .= "_".$location.".inc.php";
+      	} else {
+      	   $f .= ".inc.php";
+      	}
+    	  if (file_exists($f)) {
+    	     include($f);
+    	  }
       }
     }
   }
@@ -646,7 +656,7 @@
      }
      $s = $phpgw->common->filesystem_separator();
      /* First include the ordered apps hook file */
-     $f = $phpgw_info["server"]["server_root"] . $s . $appname . $s . "inc" . $s . "hook_".$appname;
+     $f = PHPGW_SERVER_ROOT . $s . $appname . $s . "inc" . $s . "hook_".$appname;
      if ($location != "") {
         $f .= "_".$location.".inc.php";
      } else {
@@ -665,7 +675,7 @@
     $count = 0;
     reset($phpgw_info["user"]["apps"]);
     while ($permission = each($phpgw_info["user"]["apps"])) {
-      $f = $phpgw_info["server"]["server_root"] . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+      $f = PHPGW_SERVER_ROOT . "/" . $permission[0] . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
     	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
   	  if (file_exists($f)) {++$count;}
     }
@@ -931,11 +941,9 @@
     // This will return a list of functions in the API
     function debug_list_core_functions()
     {
-       global $phpgw_info;
-
        echo "<br><b>core functions</b><br>";
        echo "<pre>";
-       chdir($phpgw_info["server"]["include_root"]."/phpgwapi");
+       chdir(PHPGW_INCLUDE_ROOT . "/phpgwapi");
        system("grep -r '^[ \t]*function' *");
        echo "</pre>";
     }    
