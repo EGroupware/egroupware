@@ -77,7 +77,7 @@
 		var $members        = array();
 		var $xmlrpc_methods = array();
 		// enables the session-cache
-		var $use_session_cache = False;
+		var $use_session_cache = True;
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -87,8 +87,7 @@
 		function accounts($account_id = '', $account_type='')
 		{
 			// enable the caching in the session onyl for ldap
-			#$this->user_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
-			#$this->use_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
+			$this->use_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
 
 			$this->db = $GLOBALS['phpgw']->db;
 
@@ -160,6 +159,7 @@
 
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
+			//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
 			$this->setup_cache();
 			$account_list = &$this->cache['account_list'];
 
@@ -187,10 +187,14 @@
 
 			if (isset($account_list[$serial]))
 			{
-				$this->total = count($account_list[$serial]);
-				return $account_list[$serial];
+				$this->total = $account_list[$serial]['total'];
 			}
-			return $account_list[$serial] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset);
+			else
+			{
+				$account_list[$serial]['data'] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset);
+				$account_list[$serial]['total'] = $this->total;
+			}
+			return $account_list[$serial]['data'];
 		}
 
 		function is_expired()
