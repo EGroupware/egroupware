@@ -439,6 +439,75 @@
 			);
 			$p->set_var($var);
 			return $p->fp('out','week_t');
+
+/*
+			$this->bo->read_holidays();
+			
+			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			{
+				$minical = $this->mini_calendar(
+					Array(
+						'day'	=> $this->bo->day,
+						'month'	=> $this->bo->month,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day'
+					)
+				);
+			}
+			else
+			{
+				$minical = '';
+			}
+			
+			if (!$this->bo->printer_friendly)
+			{
+				unset($GLOBALS['phpgw_info']['flags']['noheader']);
+				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+				$GLOBALS['phpgw']->common->phpgw_header();
+				$printer = '';
+				$param = '&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day).'&friendly=1';
+				$print = '<a href="'.$this->page('day'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+			}
+			else
+			{
+				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
+				$printer = '<body bgcolor="'.$this->theme['bg_color'].'">';
+				$print =	'';
+			}
+
+			$now	= $this->bo->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
+			$now['raw'] += $this->tz_offset;
+			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'day_t' => 'day.tpl'
+				)
+			);
+			$p->set_block('day_t','day','day');
+			$p->set_block('day_t','day_event','day_event');
+
+			$var = Array(
+				'printer_friendly'		=> $printer,
+				'bg_text'			=> $this->theme['bg_text'],
+				'daily_events'			=> $this->print_day(
+					Array(
+						'year'	=> $this->bo->year,
+						'month'	=> $this->bo->month,
+						'day'	=> $this->bo->day
+					)
+				),
+				'small_calendar'		=> $minical,
+				'date'				=> lang(date('F',$m)).' '.sprintf("%02d",$this->bo->day).', '.$this->bo->year,
+				'username'			=> $GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
+				'print'				=> $print
+			);
+
+			$p->set_var($var);
+			$p->parse('day_events','day_event');
+			$p->pparse('out','day');
+*/
 		}
 
 		function year()
@@ -1951,7 +2020,7 @@
 				if($event['priority'] == 3)
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','high.gif'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','high'),
 						'width'	=> 8,
 						'height'=> 17
 					);
@@ -1959,7 +2028,7 @@
 				if($event['recur_type'] == MCAL_RECUR_NONE)
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','circle.gif'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','circle'),
 						'width'	=> 5,
 						'height'=> 7
 					);
@@ -1967,7 +2036,7 @@
 				else
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','recur.gif'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','recur'),
 						'width'	=> 12,
 						'height'=> 12
 					);
@@ -1975,7 +2044,7 @@
 				if(count($event['participants']) > 1)
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','multi_3.gif'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','multi_3'),
 						'width'	=> 14,
 						'height'=> 14
 					);
@@ -1983,7 +2052,7 @@
 				if($event['public'] == 0)
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','private.gif'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','private'),
 						'width'	=> 13,
 						'height'=> 13
 					);
@@ -1993,7 +2062,7 @@
 					if($this->bo->alarm_today($event,$rawdate_offset,$starttime))
 					{
 						$picture[] = Array(
-							'pict'	=> $GLOBALS['phpgw']->common->image('calendar','alarm.gif'),
+							'pict'	=> $GLOBALS['phpgw']->common->image('calendar','alarm'),
 							'width'	=> 13,
 							'height'=> 13
 						);
@@ -2758,6 +2827,8 @@
 			}
 			if($daily[$date_to_eval]['appts'])
       	{
+      		$starttime = 0;
+      		$endtime = 0;
 				$events = $this->bo->cached_events[$date_to_eval];
 				$c_events = count($events);
 				if($this->debug)
@@ -2769,6 +2840,8 @@
 //					$event = $events[$i];
 					if($events[$i]['recur_type'] == MCAL_RECUR_NONE)
 					{
+						$ind = 0;
+						$interval_start = 0;
 						if($events[$i]['start']['mday'] < $params['day'])
 						{
 							if($events[$i]['end']['mday'] > $params['day'])
@@ -2799,20 +2872,51 @@
 						$interval_start = intval($events[$i]['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
 					}
 
-				      	if($ind < (int)$this->bo->prefs['calendar']['workdaystarts'] || $ind > (int)$this->bo->prefs['calendar']['workdayends'])
-		      			{
-				      		$ind = 99;
+					if(($ind < intval($this->bo->prefs['calendar']['workdaystarts'])) || ($ind > intval($this->bo->prefs['calendar']['workdayends'])))
+					{
+						$ind = 99;
 						$interval_start = 0;
-		      			}
+					}
+					if((($ind <> 99) && ($ind <> 0)) && (($starttime <> 0) && ($endtime <> 0)))
+					{
+						if($this->debug)
+						{
+							echo 'IND before = '.$ind."<br>\n";
+						}
+						if(($ind >= date('H',$starttime)) || ($ind <= date('H',$endtime)))
+						{
+							$ind = $last_ind;
+							$interval_start = $last_interval_start;
+						}
+						if($this->debug)
+						{
+							echo 'IND after = '.$ind."<br>\n";
+						}
+					}
 
 					$time[$ind][$interval_start] .= $this->link_to_entry($events[$i],$params['month'],$params['day'],$params['year']);
+
+					if($this->debug)
+					{
+						echo 'IND = '.$ind."<br>\n";
+						echo 'TIME = '.$time[$ind][$interval_start]."<br>\n";
+					}
 
 					$starttime = $this->bo->maketime($events[$i]['start']);
 					$endtime = $this->bo->maketime($events[$i]['end']);
 
 					if ($starttime <> $endtime)
 					{
-						$rowspan = intval(($endtime - $starttime) / (60 * intval($this->bo->prefs['calendar']['interval'])));
+						$rowspan = $rowspan_arr[$ind][$interval_start];
+						if($rowspan == 0)
+						{
+							$rowspan = intval(($endtime - $starttime) / (60 * intval($this->bo->prefs['calendar']['interval'])));
+						}
+						elseif($last_endtime < $endtime)
+						{
+							$rowspan = intval(($endtime - $last_starttime) / (60 * intval($this->bo->prefs['calendar']['interval'])));
+						}
+						
 						$mins = (int)((($endtime - $starttime) / 60) % 60);
 			
 						if(($mins <> 0 && $mins <= intval(60 / intval($this->bo->prefs['calendar']['interval']))) || ($mins == 0 && date('i',$endtime) > intval($this->bo->prefs['calendar']['interval'])))
@@ -2829,6 +2933,10 @@
 							$rowspan_arr[$ind][$interval_start] = $rowspan;
 						}
 					}
+					$last_ind = $ind;
+					$last_interval_start = $interval_start;
+					$last_starttime = $starttime;
+					$last_endtime = $endtime;
 					if($this->debug)
 					{
 						echo 'Time : '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $this->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $this->tz_offset).' : Start : '.$ind.' : Interval # : '.$interval_start."<br>\n";
