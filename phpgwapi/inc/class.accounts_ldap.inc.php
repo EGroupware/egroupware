@@ -125,7 +125,6 @@
 			global $phpgw, $phpgw_info;
 
 			$account_lid = $this->id2name($account_id);
-
 			$ds = $phpgw->common->ldapConnect();
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
@@ -235,17 +234,33 @@
 			$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id=".$account_id;
 			$this->db->query($sql,__LINE__,__FILE__);
 			if ($this->db->num_rows() == 1) {
-				return True;
+				$insql = True;
 			} else {
-				return False;
+				$insql = False;
 			}
+
+			$ds = $phpgw->common->ldapConnect();
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if ($allValues[0]["dn"]) {
+				$inldap = True;
+			} else {
+				$inldap = False;
+			}
+
+			$rtrn = $insql || $inldap;
+			return $rtrn;
 		}
 
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='')
 		{
 			global $phpgw_info, $phpgw;
 
-			if (!$account_id) { $account_id =  mt_rand (100, 65535); }
+			if (!$account_id) {
+				mt_srand((double)microtime()*1000000);
+				$account_id =  mt_rand (100, 65535);
+			}
 			// auto_increment/serial in the db won't necessarily work for ldap, nor would
 			// randomization.  Need to check for lastid in ldap, then create newid for sql and ldap
 
@@ -261,26 +276,29 @@
 				. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
 
 			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$account_id);
+			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
-			if (!$allValues[0]["uidnumber"][0]) {
-				$entry["uidnumber"]			= $account_id;
-				$entry["gidnumber"]			= $account_id;
-				$entry["uid"]				= $account_lid;
-				$entry["cn"] 				= sprintf("%s %s", $account_firstname, $account_lastname);
-				$entry["sn"]				= $account_lastname;
-				$entry["givenname"]			= $account_firstname;
-				$entry["userpassword"]		= $phpgw->common->encrypt_password($account_pwd);
-				$entry["objectclass"][0]	= 'person';
-				$entry["objectclass"][1]	= 'organizationalPerson';
-				$entry["objectclass"][2]	= 'account';
-				$entry["objectclass"][3]	= 'posixAccount';
-				$entry["objectclass"][4]	= 'shadowAccount';
 
-				$dn = 'uid=' .$account_lid . ',' . $phpgw_info["server"]["ldap_context"];
+			$entry["uidnumber"]			= $account_id;
+			$entry["gidnumber"]			= $account_id;
+			$entry["uid"]				= $account_lid;
+			$entry["cn"] 				= sprintf("%s %s", $account_firstname, $account_lastname);
+			$entry["sn"]				= $account_lastname;
+			$entry["givenname"]			= $account_firstname;
+			$entry["userpassword"]		= $phpgw->common->encrypt_password($account_pwd);
+			$entry["objectclass"][0]	= 'person';
+			$entry["objectclass"][1]	= 'organizationalPerson';
+			$entry["objectclass"][2]	= 'account';
+			$entry["objectclass"][3]	= 'posixAccount';
+			$entry["objectclass"][4]	= 'shadowAccount';
+
+			if ($allValues[0]["dn"]) {
+				ldap_modify($ds, $allValues[0]["dn"], $entry);
+			} else {
+				$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
 				ldap_add($ds, $dn, $entry);
-				//print ldap_error($ds);
 			}
+			//print ldap_error($ds);
 		}
 
 		function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
