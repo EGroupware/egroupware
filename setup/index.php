@@ -19,7 +19,10 @@
   include("./inc/functions.inc.php");
   /* processing and discovery phase */
   $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
-  if ( $phpgw_info["setup"]["stage"]["header"] == 10){
+  if ($phpgw_info["setup"]["stage"]["header"] != 10){
+    Header("Location: manageheader.php");
+    exit;
+  }else{
     if (!$phpgw_setup->auth("Config")){
       $phpgw_setup->show_header("Please login",True);
       $phpgw_setup->login_form();
@@ -29,9 +32,6 @@
       $phpgw_info["setup"]["stage"]["db"] = $phpgw_setup->check_db();
       $phpgw_info["setup"]["stage"]["config"] = $phpgw_setup->check_config();
     }
-  }else{
-    Header("Location: manageheader.php");
-    exit;
   }
 
   switch($action){
