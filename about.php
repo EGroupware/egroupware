@@ -15,17 +15,7 @@
   include("header.inc.php");
 
   if ($app) {
-     $sep = $phpgw->common->filesystem_separator();
-     $include = $phpgw_info["server"]["server_root"] . $sep . $app . $sep . "inc" . $sep . "about.inc.php";
-     if (is_file($include)) {
-        include($include);
-        $included = True;
-/*        if (is_file($phpgw_info["server"]["server_root"] . $sep . "inc" . $sep . "version.inc.php")) {
-           include($phpgw_info["server"]["server_root"] . "/inc/version.inc.php");
-        } */
-     } else {
-        $included = False;
-     }
+     $included = $phpgw->common->hook_single("about",$app);
   } else {
      $api_only = True;
   }
