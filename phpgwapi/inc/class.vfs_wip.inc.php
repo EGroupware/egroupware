@@ -76,6 +76,7 @@ class vfs
 	var $working_lid;
 	var $attributes;
 	var $override_acl;
+	var $linked_dirs;
 
 	/*!
 	@function vfs
@@ -94,7 +95,14 @@ class vfs
 		$this->override_acl = 0;
 
 		/* File/dir attributes, each corresponding to a database field.  Useful for use in loops */
-		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name");
+		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name", "link_directory", "link_name");
+
+		/* We store the linked directories in an array now, so we don't have to make the SQL call again */
+		$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''");
+		while ($phpgw->db->next_record ())
+		{
+			$this->linked_dirs[] = $phpgw->db->Record;
+		}
 	}
 
 	/*!
@@ -186,25 +194,26 @@ class vfs
 	@param $string full real or fake path
 	@param $relatives Relativity array
 	@param $object True returns an object instead of an array
+	@param $nolinks Don't check for links (made with make_link ()).  Used internally to prevent recursion
 	@result $rarray/$robject Array or object containing the fake and real component parts of the path
 	@discussion Returned values are:
 			mask
 			outside
 			fake_full_path
 			fake_leading_dirs
-			fake_extra_path
+			fake_extra_path		BROKEN
 			fake_name
 			real_full_path
 			real_leading_dirs
-			real_extra_path
+			real_extra_path		BROKEN
 			real_name
 			fake_full_path_clean
 			fake_leading_dirs_clean
-			fake_extra_path_clean
+			fake_extra_path_clean	BROKEN
 			fake_name_clean
 			real_full_path_clean
 			real_leading_dirs_clean
-			real_extra_path_clean
+			real_extra_path_clean	BROKEN
 			real_name_clean
 		"clean" values are run through vfs->db_clean () and
 		are safe for use in SQL queries that use key='value'
@@ -215,7 +224,7 @@ class vfs
 		outside is boolean, True if $relatives contains VFS_REAL
 	*/
 
-	function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True)
+	function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True, $nolinks = False)
 	{
 		global $phpgw, $phpgw_info;
 		$sep = SEP;
@@ -303,6 +312,26 @@ class vfs
 			{
 				$rarray["fake_leading_dirs"] = substr ($opp_base, 0, strlen ($opp_base) - 1);
 				$rarray["real_leading_dirs"] = substr ($base, 0, strlen ($base) - 1);
+			}
+		}
+
+		/* We check for linked dirs made with make_link ().  This could be better, but it works */
+		if (!$nolinks)
+		{
+			reset ($this->linked_dirs);
+			while (list ($num, $link_info) = each ($this->linked_dirs))
+			{
+				if (ereg ("^$link_info[directory]/$link_info[name]", $rarray["fake_full_path"]))
+				{
+					$rarray["real_full_path"] = ereg_replace ("^$this->basedir", "", $rarray["real_full_path"]);
+					$rarray["real_full_path"] = ereg_replace ("^$link_info[directory]" . SEP . "$link_info[name]", $link_info["link_directory"] . SEP . $link_info["link_name"], $rarray["real_full_path"]);
+
+					$p = $this->path_parts ($rarray["real_full_path"], array (RELATIVE_NONE|VFS_REAL), True, True);
+
+					$rarray["real_leading_dirs"] = $p->real_leading_dirs;
+					$rarray["real_extra_path"] = $p->real_extra_path;
+					$rarray["real_name"] = $p->real_name;
+				}
 			}
 		}
 
@@ -547,7 +576,10 @@ class vfs
 
 		if (!$group_id)
 		{
-			$group_id = $this->account_id;
+			if (!$group_id = $this->account_id)
+			{
+				$group_id = 0;
+			}
 		}
 
 		$acl = CreateObject ("phpgwapi.acl", $group_id);
@@ -1096,6 +1128,17 @@ class vfs
 				$this->rm ("$entry[directory]/$entry[name]", array ($p->mask));
 			}
 
+			/* If the directory is linked, we delete the placeholder directory */
+			$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name'");
+			$phpgw->db->next_record ();
+			$link_info = $phpgw->db->Record;
+
+			if ($link_info["link_directory"] && $link_info["link_name"])
+			{
+				$path = $this->path_parts ($link_info["directory"] . "/" . $link_info["name"], array ($p->mask), True, True);
+				rmdir ($path->real_full_path);
+			}
+
 			/* Last, we delete the directory itself */
 			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 			rmdir ($p->real_full_path);
@@ -1169,6 +1212,52 @@ class vfs
 	}
 
 	/*!
+	@function make_link
+	@abstract Make a link from virtual directory $vdir to real directory $rdir
+	@discussion Making a link from $vdir to $rdir will cause path_parts () to substitute $rdir for the real
+			path variables when presented with $rdir
+	@param $vdir Virtual dir to make link from
+	@param $rdir Real dir to make link to
+	@param $relatives Relativity array
+	@result Boolean True/False
+	*/
+
+	function make_link ($vdir, $rdir, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
+	{
+		global $phpgw;
+		global $phpgw_info;
+
+		$account_id = $phpgw_info["user"]["account_id"];
+		$currentapp = $phpgw_info["flags"]["currentapp"];
+
+		$vp = $this->path_parts ($vdir, array ($relatives[0]));
+		$rp = $this->path_parts ($rdir, array ($relatives[1]));
+
+		if (!$this->acl_check ($vp->fake_full_path, array ($vp->mask), PHPGW_ACL_ADD))
+		{
+			return False;
+		}
+
+		if ((!$this->file_exists ($rp->real_full_path, array ($rp->mask))) && !mkdir ($rp->real_full_path, 0770))
+		{
+			return False;
+		}
+
+		if (!$this->mkdir ($vp->fake_full_path, array ($vp->mask)))
+		{
+			return False;
+		}
+
+		$size = $this->get_size ($rp->real_full_path, array ($rp->mask));
+
+		$this->set_attributes ($vp->fake_full_path, array ($vp->mask), array ("link_directory" => $rp->real_leading_dirs, "link_name" => $rp->real_name, "size" => $size));
+
+		$this->correct_attributes ($vp->fake_full_path, array ($vp->mask));
+
+		return True;
+	}
+
+	/*!
 	@function set_attributes
 	@abstract Update database entry for $file with the attributes in $attributes
 	@param $file file/directory to update
@@ -1186,6 +1275,8 @@ class vfs
 			deleteable
 			comment
 			app
+			link_directory
+			link_name
 	*/
 
 	function set_attributes ($file, $relatives = array (RELATIVE_CURRENT), $attributes = array ())
@@ -1214,11 +1305,11 @@ class vfs
 		   depending on if the attribute was supplied in the $attributes array
 		*/
 		
-		$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, link_directory, link_name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 		$phpgw->db->next_record ();
 		$record = $phpgw->db->Record;
 
-		$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app");
+		$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "link_directory", "link_name");
 
 		while (list ($num, $attribute) = each ($attribute_names))
 		{
@@ -1234,7 +1325,7 @@ class vfs
 			$$attribute = $this->db_clean ($$attribute);
 		}
 
-		$query = $phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$owner_id', createdby_id='$createdby_id', modifiedby_id='$modifiedby_id', created='$created', modified='$modified', size='$size', mime_type='$mime_type', deleteable='$deleteable', comment='$comment', app='$app' WHERE file_id='$record[file_id]'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$owner_id', createdby_id='$createdby_id', modifiedby_id='$modifiedby_id', created='$created', modified='$modified', size='$size', mime_type='$mime_type', deleteable='$deleteable', comment='$comment', app='$app', link_directory='$link_directory', link_name='$link_name' WHERE file_id='$record[file_id]'", __LINE__, __FILE__);
 
 		if ($query) 
 		{
@@ -1358,6 +1449,17 @@ class vfs
 		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_READ, True))
 		{
 			return False;
+		}
+
+		/*
+		   WIP - this should run through all of the subfiles/directories in the directory and tally up
+		   their sizes.  Should modify ls () to be able to return a list for files outside the virtual root
+		*/
+		if ($p->outside)
+		{
+			$size = filesize ($p->real_full_path);
+
+			return $size;
 		}
 
 		$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), $checksubdirs, False, !$checksubdirs);
