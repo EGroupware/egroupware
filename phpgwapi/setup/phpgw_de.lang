@@ -152,6 +152,7 @@ name	common	de	Name
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugef&uuml;gt
 new main category	common	de	neue Hauptkategorie
 no	common	de	Nein
+no category	common	de	keine Kategorie
 no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
 none	common	de	Keine
@@ -160,6 +161,7 @@ note	common	de	Notiz
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
+only private	common	de	nur private
 only yours	common	de	nur eigene
 open notify window	common	de	Benachrichtigungsfenster &ouml;ffnen
 original	common	de	Original
