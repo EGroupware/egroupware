@@ -19,7 +19,7 @@ I would like to thank the many authors of phpGroupWare and it's applications for
 <sect1>
 <title>Notes</title>
 <para>
-This document is based upon the current CVS release, where possible I included notes relating to the current stable release (0.9.12).  This is a work in progress, please email any corrections to <email>bneill@yahoo.com</email>.
+This document is based upon the current CVS release, where possible I included notes relating to the current stable release (0.9.12).  This is a work in progress, please email any corrections to <email>phpgroupware-docteam@gnu.org</email>.
 </para>
 </sect1>
 </chapter>
