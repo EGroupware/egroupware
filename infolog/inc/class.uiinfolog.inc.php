@@ -640,9 +640,14 @@
 
 			$referer = $this->get_referer();
 
-			if ((!isset($info_id) || !$info_id) && !$action)
+			if ((!isset($info_id) || !$info_id) && !$action || $GLOBALS['HTTP_POST_VARS']['cancel'])
 			{
 				Header('Location: ' . $html->link($referer) );
+			}
+			if ($GLOBALS['HTTP_POST_VARS']['delete'])
+			{
+				Header('Location: ' . $html->link('/index.php',$this->menuaction('delete')+
+				       array('info_id' => $info_id, 'referer' => $referer)) );
 			}
 
 			// check wether to write dates or not
@@ -934,13 +939,11 @@
 
 			$t->set_var('edit_button',$html->submit_button('save','Save','this.form.full_fname.value=this.form.attachfile.value'));
 
-			$t->set_var('cancel_button',$html->form_1button('cancel','Cancel',0,$referer));
+			$t->set_var('cancel_button',$html->submit_button('cancel','Cancel'));
 
 			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
-				$t->set_var('delete_button',$html->form_1button('delete','Delete',
-					array('referer'=>$referer),'/index.php',
-					$this->menuaction('delete')+array('info_id'=>$info_id)));
+				$t->set_var('delete_button',$html->submit_button('delete','Delete'));
 			}
 			$t->set_var('edithandle','');
 			$t->set_var('addhandle','');
