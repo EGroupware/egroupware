@@ -43,6 +43,7 @@
 		/*!
 		@function read_repository
 		@abstract reads the whole repository for $this->appname, appname has to be set via the constructor
+		@returns the whole config-array for that app
 		*/
 		function read_repository()
 		{
@@ -61,7 +62,7 @@
 					$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
 				}
 			}
-			$this->read_data = $this->config_data;
+			return $this->read_data = $this->config_data;
 		}
 
 		/*!
