@@ -173,6 +173,7 @@
 	if ($submit || $showall)
 	{
 		$dlstring = '';
+		$term = '';
 
 		if (!$download)
 		{
@@ -190,14 +191,13 @@
 			$dlstring .= printout('sqlheader');
 
 			$db = $phpgw_setup->db;
-			$db->query("SHOW TABLES");
+			$db->query('SHOW TABLES');
 			while($db->next_record())
 			{
 				$table = $db->f(0);
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
 			}
-
 			$dlstring .= printout('sqlfooter');
 
 		}
@@ -214,10 +214,16 @@
 
 			//$tables = explode(',',$setup_info[$appname]['tables']);
 			$tables = $setup_info[$appname]['tables'];
+			$i = 1;
 			while(list($key,$table) = @each($tables))
 			{
+				if($i == count($tables))
+				{
+					$term = '';
+				}
 				parse_vars($table,$term);
 				$dlstring .= printout('sqlbody');
+				$i++;
 			}
 			$dlstring .= printout('sqlfooter');
 		}
