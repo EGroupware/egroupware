@@ -44,7 +44,7 @@
 		$str .= '<option value="0">Delete All Records</option>'."\n";
 		for($i=0;$i<$c_users;$i++)
 		{
-			$str .= '<option value="'.$users[$i]['account_id'].'">'.$phpgw->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname',$users[$i]['account_lastname']).'</option>'."\n";
+			$str .= '<option value="'.$users[$i]['account_id'].'">'.$phpgw->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname'],$users[$i]['account_lastname']).'</option>'."\n";
 		}
 		$str .= '</select>'."\n";
 		$phpgw->template->set_var('lang_new_owner',lang('Who would you like to transfer ALL records owned by the deleted user to?'));
