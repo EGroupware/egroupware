@@ -11,10 +11,10 @@
 	/* $Id$ */
 
 	// Delete all records for a user
-	$info = CreateObject('infolog.soinfolog');
+	$info =& CreateObject('infolog.soinfolog');
 
-	$info->change_delete_owner(intval($GLOBALS['HTTP_POST_VARS']['account_id']),
-		intval($GLOBALS['HTTP_POST_VARS']['new_owner']));
+	$info->change_delete_owner(intval($_POST['account_id']),
+		intval($_POST['new_owner']));
 
 	unset($info);
 ?>

@@ -12,53 +12,53 @@
 
   /* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp' => 'infolog',
 		'noheader'   => True,
 		'enable_contacts_class' => True,
 	);
 	include('../header.inc.php');
 
-	if (!isset($GLOBALS['phpgw_info']['user']['apps']['admin']) ||
-	    !$GLOBALS['phpgw_info']['user']['apps']['admin'])		// no admin
+	if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+	    !$GLOBALS['egw_info']['user']['apps']['admin'])		// no admin
 	{
-		$GLOBALS['phpgw']->redirect_link('/home.php');
+		$GLOBALS['egw']->redirect_link('/home.php');
 	}
 	if (isset($_FILES['csvfile']['tmp_name']))
 	{
-		$csvfile = tempnam($GLOBALS['phpgw_info']['server']['temp_dir'],$GLOBALS['phpgw_info']['flags']['currentapp']."_");
-		$GLOBALS['phpgw']->session->appsession('csvfile','',$csvfile);
+		$csvfile = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+		$GLOBALS['egw']->session->appsession('csvfile','',$csvfile);
 		$_POST['action'] = move_uploaded_file($_FILES['csvfile']['tmp_name'],$csvfile) ?
 			'download' : '';
 	}
 	else
 	{
-		$csvfile = $GLOBALS['phpgw']->session->appsession('csvfile');
+		$csvfile = $GLOBALS['egw']->session->appsession('csvfile');
 	}
 	if ($_POST['cancel'])
 	{
 		@unlink($csvfile);
-		$GLOBALS['phpgw']->redirect_link('/admin/index.php');
+		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
-	$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog - Import CSV-File');
-	$GLOBALS['phpgw']->common->phpgw_header();
+	$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog - Import CSV-File');
+	$GLOBALS['egw']->common->egw_header();
 
 	$boinfolog = createobject('infolog.boinfolog');
 
-	$GLOBALS['phpgw']->template->set_file(array('import_t' => 'csv_import.tpl'));
-	$GLOBALS['phpgw']->template->set_block('import_t','filename','filenamehandle');
-	$GLOBALS['phpgw']->template->set_block('import_t','fheader','fheaderhandle');
-	$GLOBALS['phpgw']->template->set_block('import_t','fields','fieldshandle');
-	$GLOBALS['phpgw']->template->set_block('import_t','ffooter','ffooterhandle');
-	$GLOBALS['phpgw']->template->set_block('import_t','imported','importedhandle');
-	$GLOBALS['phpgw']->template->set_block('import_t','import','importhandle');
+	$GLOBALS['egw']->template->set_file(array('import_t' => 'csv_import.tpl'));
+	$GLOBALS['egw']->template->set_block('import_t','filename','filenamehandle');
+	$GLOBALS['egw']->template->set_block('import_t','fheader','fheaderhandle');
+	$GLOBALS['egw']->template->set_block('import_t','fields','fieldshandle');
+	$GLOBALS['egw']->template->set_block('import_t','ffooter','ffooterhandle');
+	$GLOBALS['egw']->template->set_block('import_t','imported','importedhandle');
+	$GLOBALS['egw']->template->set_block('import_t','import','importhandle');
 
 
 	if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
 		$_POST['action'] = '';
 	}
-	$GLOBALS['phpgw']->template->set_var("action_url",$GLOBALS['phpgw']->link("/infolog/csv_import.php"));
+	$GLOBALS['egw']->template->set_var("action_url",$GLOBALS['egw']->link("/infolog/csv_import.php"));
 
 	$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in trans
 	$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -111,22 +111,22 @@ function cat_id($cats)
 		}
 		else
 		{
-			if (!is_object($GLOBALS['phpgw']->categories))
+			if (!is_object($GLOBALS['egw']->categories))
 			{
-				$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
+				$GLOBALS['egw']->categories = createobject('phpgwapi.categories');
 			}
-			if (is_numeric($cat) && $GLOBALS['phpgw']->categories->id2name($cat) != '--')
+			if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 			{
 				$cat2id[$cat] = $ids[$cat] = $cat;
 			}	
-			elseif ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
+			elseif ($id = $GLOBALS['egw']->categories->name2id( addslashes($cat) ))
 			{	// cat exists
 				$cat2id[$cat] = $ids[$cat] = $id;
 			}
 			else
 			{	// create new cat
-				$GLOBALS['phpgw']->categories->add( array('name' => $cat,'descr' => $cat ));
-				$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) );
+				$GLOBALS['egw']->categories->add( array('name' => $cat,'descr' => $cat ));
+				$cat2id[$cat] = $ids[$cat] = $GLOBALS['egw']->categories->name2id( addslashes($cat) );
 			}
 		}
 	}
@@ -139,45 +139,45 @@ function cat_id($cats)
 	return  $id_str;
 }
 
-	if (!is_object($GLOBALS['phpgw']->html))
+	if (!is_object($GLOBALS['egw']->html))
 	{
-		$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+		$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 	}
 
 	if ($_POST['next']) $_POST['action'] = 'next';
 	switch ($_POST['action'])
 	{
 	case '':	// Start, ask Filename
-		$GLOBALS['phpgw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
-		$GLOBALS['phpgw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
-		$GLOBALS['phpgw']->template->set_var('lang_charset',lang('Charset of file'));
-		$GLOBALS['phpgw']->template->set_var('select_charset',
-			$GLOBALS['phpgw']->html->select('charset','',
-			$GLOBALS['phpgw']->translation->get_installed_charsets()+
+		$GLOBALS['egw']->template->set_var('lang_csvfile',lang('CSV-Filename'));
+		$GLOBALS['egw']->template->set_var('lang_fieldsep',lang('Fieldseparator'));
+		$GLOBALS['egw']->template->set_var('lang_charset',lang('Charset of file'));
+		$GLOBALS['egw']->template->set_var('select_charset',
+			$GLOBALS['egw']->html->select('charset','',
+			$GLOBALS['egw']->translation->get_installed_charsets()+
 			array('utf-8' => 'utf-8 (Unicode)'),True));
-		$GLOBALS['phpgw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
-		$GLOBALS['phpgw']->template->set_var('submit',lang('Import'));
-		$GLOBALS['phpgw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
+		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
+		$GLOBALS['egw']->template->set_var('submit',lang('Import'));
+		$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 
-		$GLOBALS['phpgw']->template->parse('rows','filename');
+		$GLOBALS['egw']->template->parse('rows','filename');
 		break;
 
 	case 'continue':
 	case 'download':
-		$GLOBALS['phpgw']->preferences->read_repository();
-		$defaults = $GLOBALS['phpgw_info']['user']['preferences']['infolog']['cvs_import'];
+		$GLOBALS['egw']->preferences->read_repository();
+		$defaults = $GLOBALS['egw_info']['user']['preferences']['infolog']['cvs_import'];
 		if (!is_array($defaults))
 		{
 			$defaults = array();
 		}
-		$GLOBALS['phpgw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
-		$GLOBALS['phpgw']->template->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
-		$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
-		$GLOBALS['phpgw']->template->set_var('submit',
-			$GLOBALS['phpgw']->html->submit_button('convert','Import') . '&nbsp;'.
-			$GLOBALS['phpgw']->html->submit_button('cancel','Cancel'));
-		$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
-		$GLOBALS['phpgw']->template->parse('rows','fheader');
+		$GLOBALS['egw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
+		$GLOBALS['egw']->template->set_var('lang_info_fieldname',lang('InfoLog-Fieldname'));
+		$GLOBALS['egw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
+		$GLOBALS['egw']->template->set_var('submit',
+			$GLOBALS['egw']->html->submit_button('convert','Import') . '&nbsp;'.
+			$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+		$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
+		$GLOBALS['egw']->template->parse('rows','fheader');
 
 		$info_names = array(	
 			'type'        => 'Type: char(10) task,phone,note,confirm,reject,email,fax',
@@ -221,41 +221,41 @@ function cat_id($cats)
 		$info_name_options = "<option value=\"\">none\n";
 		foreach($info_names as $field => $name) 
 		{
-			$info_name_options .= "<option value=\"$field\">".$GLOBALS['phpgw']->strip_html($name)."\n";
+			$info_name_options .= "<option value=\"$field\">".$GLOBALS['egw']->strip_html($name)."\n";
 		}
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-		$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
+		$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
 		foreach($csv_fields as $csv_idx => $csv_field) 
 		{
-			$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
-			$GLOBALS['phpgw']->template->set_var('csv_idx',$csv_idx);
+			$GLOBALS['egw']->template->set_var('csv_field',$csv_field);
+			$GLOBALS['egw']->template->set_var('csv_idx',$csv_idx);
 			if ($def = $defaults[$csv_field]) 
 			{
 				list( $info,$trans ) = explode($PSep,$def,2);
-				$GLOBALS['phpgw']->template->set_var('trans',$trans);
-				$GLOBALS['phpgw']->template->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
+				$GLOBALS['egw']->template->set_var('trans',$trans);
+				$GLOBALS['egw']->template->set_var('info_fields',str_replace('="'.$info.'">','="'.$info.'" selected>',$info_name_options));
 			} 
 			else 
 			{
-				$GLOBALS['phpgw']->template->set_var('trans','');
-				$GLOBALS['phpgw']->template->set_var('info_fields',$info_name_options);
+				$GLOBALS['egw']->template->set_var('trans','');
+				$GLOBALS['egw']->template->set_var('info_fields',$info_name_options);
 			}
-			$GLOBALS['phpgw']->template->parse('rows','fields',True);
+			$GLOBALS['egw']->template->parse('rows','fields',True);
 		}
-		$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
-		$GLOBALS['phpgw']->template->set_var('start',get_var('start',array('POST'),1));
+		$GLOBALS['egw']->template->set_var('lang_start',lang('Startrecord'));
+		$GLOBALS['egw']->template->set_var('start',get_var('start',array('POST'),1));
 		$msg = ($safe_mode = ini_get('safe_mode') == 'On') ? lang('to many might exceed your execution-time-limit'):
 			lang('empty for all');
-		$GLOBALS['phpgw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
-		$GLOBALS['phpgw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
-		$GLOBALS['phpgw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
-		$GLOBALS['phpgw']->template->parse('rows','ffooter',True);
+		$GLOBALS['egw']->template->set_var('lang_max',lang('Number of records to read (%1)',$msg));
+		$GLOBALS['egw']->template->set_var('max',get_var('max',array('POST'),$safe_mode ? 200 : ''));
+		$GLOBALS['egw']->template->set_var('debug',get_var('debug',array('POST'),True)?' checked':'');
+		$GLOBALS['egw']->template->parse('rows','ffooter',True);
 		fclose($fp);
 
-		$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
+		$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
 			'action'  => 'import',
 			'fieldsep'=> $_POST['fieldsep'],
 			'charset' => $_POST['charset']
@@ -292,7 +292,7 @@ function cat_id($cats)
 			"will be automaticaly added.<p>".
 			"I hope that helped to understand the features, if not <a href='mailto:RalfBecker@outdoor-training.de'>ask</a>.";
 
-		$GLOBALS['phpgw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
+		$GLOBALS['egw']->template->set_var('help_on_trans',lang($help_on_trans));	// I don't think anyone will translate this
 		break;
 
 	case 'next':
@@ -300,7 +300,7 @@ function cat_id($cats)
 		$_POST['trans']       = unserialize(stripslashes($_POST['trans']));
 		// fall-through
 	case 'import':
-		$hiddenvars = $GLOBALS['phpgw']->html->input_hidden(array(
+		$hiddenvars = $GLOBALS['egw']->html->input_hidden(array(
 			'action'  => 'continue',
 			'fieldsep'=> $_POST['fieldsep'],
 			'charset' => $_POST['charset'],
@@ -313,7 +313,7 @@ function cat_id($cats)
 		@set_time_limit(0);
 		$fp=fopen($csvfile,'r');
 		$csv_fields = fgetcsv($fp,8000,$_POST['fieldsep']);
-		$csv_fields = $GLOBALS['phpgw']->translation->convert($csv_fields,$_POST['charset']);
+		$csv_fields = $GLOBALS['egw']->translation->convert($csv_fields,$_POST['charset']);
 		$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
 		$csv_fields[] = 'no CSV 2';
 		$csv_fields[] = 'no CSV 3';
@@ -330,9 +330,9 @@ function cat_id($cats)
 			}
 		}
 
-		$GLOBALS['phpgw']->preferences->read_repository();
-		$GLOBALS['phpgw']->preferences->add('infolog','cvs_import',$defaults);
-		$GLOBALS['phpgw']->preferences->save_repository(True);
+		$GLOBALS['egw']->preferences->read_repository();
+		$GLOBALS['egw']->preferences->add('infolog','cvs_import',$defaults);
+		$GLOBALS['egw']->preferences->save_repository(True);
 
 		$log = "<table border=1>\n\t<tr><td>#</td>\n";
 
@@ -377,7 +377,7 @@ function cat_id($cats)
 			{
 				break;	// EOF
 			}
-			$fields = $GLOBALS['phpgw']->translation->convert($fields,$_POST['charset']);
+			$fields = $GLOBALS['egw']->translation->convert($fields,$_POST['charset']);
 
 			$log .= "\t</tr><tr><td>".($start+$anz)."</td>\n";
 
@@ -445,7 +445,7 @@ function cat_id($cats)
 			{
 				if (isset($values[$user]) && !is_numeric($user))
 				{
-					$values[$user] = $GLOBALS['phpgw']->accounts->name2id($values[$user]);
+					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user]);
 				}
 			}
 			if (!in_array('access',$info_fields))
@@ -468,19 +468,19 @@ function cat_id($cats)
 		}
 		$log .= "\t</tr>\n</table>\n";
 
-		$GLOBALS['phpgw']->template->set_var('anz_imported',($_POST['debug'] ?
+		$GLOBALS['egw']->template->set_var('anz_imported',($_POST['debug'] ?
 			lang('%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)',
 			$anz,'','') :
 			lang('%1 records imported',$anz)). '&nbsp;'.
-			(!$_POST['debug'] && $fields ? $GLOBALS['phpgw']->html->submit_button('next','Import next set') . '&nbsp;':'').
-			$GLOBALS['phpgw']->html->submit_button('continue','Back') . '&nbsp;'.
-			$GLOBALS['phpgw']->html->submit_button('cancel','Cancel'));
-		$GLOBALS['phpgw']->template->set_var('log',$log);
-		$GLOBALS['phpgw']->template->parse('rows','imported');
+			(!$_POST['debug'] && $fields ? $GLOBALS['egw']->html->submit_button('next','Import next set') . '&nbsp;':'').
+			$GLOBALS['egw']->html->submit_button('continue','Back') . '&nbsp;'.
+			$GLOBALS['egw']->html->submit_button('cancel','Cancel'));
+		$GLOBALS['egw']->template->set_var('log',$log);
+		$GLOBALS['egw']->template->parse('rows','imported');
 		break;
 	}
-	$GLOBALS['phpgw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
-	$GLOBALS['phpgw']->template->pfp('phpgw_body','import');
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
+	$GLOBALS['egw']->template->pfp('phpgw_body','import');
+	$GLOBALS['egw']->common->egw_footer();
 
 ?>

@@ -12,7 +12,17 @@
 	\**************************************************************************/
 
 	/* $Id$ */
+	
+	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
+	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.bolink.inc.php');
 
+	/**
+	 * This class is the BO-layer of InfoLog, it also handles xmlrpc requests
+	 *
+	 * @package infolog
+	 * @author RalfBecker-At-outdoor-training.de
+	 * @copyright GPL - GNU General Public License
+	 */
 	class boinfolog 			// BO: buiseness objects: internal logic
 	{
 		var $enums;
@@ -88,10 +98,10 @@
 					'ongoing' => 'ongoing', 'done' => 'done'
 			));
 
-			$this->so = CreateObject('infolog.soinfolog');
-			$this->link = CreateObject('infolog.bolink');
+			$this->so =& new soinfolog();
+			$this->link =& new bolink();
 
-			$this->config = CreateObject('phpgwapi.config');
+			$this->config =& CreateObject('phpgwapi.config');
 			$this->config->read_repository();
 
 			$this->customfields = array();
@@ -127,7 +137,7 @@
 			 * @var int $tz_offset_s offset in secconds between user and server-time,
 			 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
 			 */
-			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+			$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			$this->tz_offset_s = 60*60*$this->tz_offset;
 			$this->user_time_now = time() + $this->tz_offset_s;
 
@@ -144,10 +154,12 @@
 			}
 		}
 
-		/*!
-		@function has_customfields
-		@abstract checks if there are customfields for typ $typ
-		*/
+		/**
+		 * checks if there are customfields for typ $typ
+		 *
+		 * @param string $typ
+		 * @return boolean True if there are customfields for $typ, else False
+		 */
 		function has_customfields($typ)
 		{
 			foreach($this->customfields as $name => $field)
@@ -160,19 +172,34 @@
 			return False;
 		}
 
-		/*
+		/**
 		 * check's if user has the requiered rights on entry $info_id
+		 *
+		 * @param int $info_id id of infolog entry to check
+		 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
+		 * @return boolean
 		 */
 		function check_access( $info_id,$required_rights )
 		{
 			return $this->so->check_access( $info_id,$required_rights );
 		}
 
+		/**
+		 * init internal data to be empty
+		 */
 		function init()
 		{
 			$this->so->init();
 		}
 
+		/**
+		 * convert a link_id value into an info_from text
+		 *
+		 * @param array &$info infolog entry, key info_from gets set by this function
+		 * @param string $not_app='' app to exclude
+		 * @param string $not_id='' id to exclude
+		 * @return boolean True if we have a linked item, False otherwise
+		 */
 		function link_id2from(&$info,$not_app='',$not_id='')
 		{
 			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
@@ -204,11 +231,20 @@
 			return False;
 		}
 
+		/**
+		 * Create a subject from a description: truncate it and add ' ...'
+		 */
 		function subject_from_des($des)
 		{
 			return substr($des,0,60).' ...';
 		}
 
+		/**
+		 * Read an infolog entry specified by $info_id
+		 *
+		 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
+		 * @return array/boolean infolog entry or False if not found or no permission to read it
+		 */
 		function &read($info_id)
 		{
 			if (is_array($info_id))
@@ -224,7 +260,7 @@
 				}
 				return False;
 			}
-			if (!$this->check_access($info_id,PHPGW_ACL_READ))	// check behind read, to prevent a double read
+			if (!$this->check_access($info_id,EGW_ACL_READ))	// check behind read, to prevent a double read
 			{
 				if ($this->xmlrpc)
 				{
@@ -252,6 +288,14 @@
 			return $data;
 		}
 
+		/**
+		 * Delete an infolog entry, evtl. incl. it's children / subs
+		 *
+		 * @param int/array $info_id int id or array with keys 'info_id', 'delete_children' and 'new_parent' setting all 3 params
+		 * @param boolean $delete_children should the children be deleted
+		 * @param int/boolean $new_parent parent to use for not deleted children if > 0
+		 * @return boolean True if delete was successful, False otherwise ($info_id does not exist or no rights)
+		 */
 		function delete($info_id,$delete_children=False,$new_parent=False)
 		{
 			if (is_array($info_id))
@@ -268,7 +312,7 @@
 				}
 				return False;
 			}
-			if (!$this->check_access($info_id,PHPGW_ACL_DELETE))
+			if (!$this->check_access($info_id,EGW_ACL_DELETE))
 			{
 				if ($this->xmlrpc)
 				{
@@ -283,7 +327,9 @@
 
 			$this->so->delete($info_id,$delete_children,$new_parent);
 			
-			$GLOBALS['phpgw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
+			
+			return True;
 		}
 
 		/**
@@ -316,10 +362,10 @@
 				}
 			}
 			$status_only = $values['info_id'] && $values['info_responsible'] == $this->user && 
-				!$this->check_access($values['info_id'],PHPGW_ACL_EDIT);	// responsible has implicit right to change status
+				!$this->check_access($values['info_id'],EGW_ACL_EDIT);	// responsible has implicit right to change status
 
-			if ($values['info_id'] && !$this->check_access($values['info_id'],PHPGW_ACL_EDIT) && !$status_only ||
-			    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],PHPGW_ACL_ADD))
+			if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
+			    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
 			{
 				if ($this->xmlrpc)
 				{
@@ -388,7 +434,7 @@
 				if($values['info_id'])
 				{
 					// update
-					$GLOBALS['phpgw']->contenthistory->updateTimeStamp(
+					$GLOBALS['egw']->contenthistory->updateTimeStamp(
 						'infolog_'.$values['info_type'], 
 						$infoID, 'modify', time()
 					);
@@ -396,7 +442,7 @@
 				else
 				{
 					// add
-					$GLOBALS['phpgw']->contenthistory->updateTimeStamp(
+					$GLOBALS['egw']->contenthistory->updateTimeStamp(
 						'infolog_'.$values['info_type'], 
 						$infoID, 'add', time()
 					);
@@ -406,25 +452,30 @@
 			return $infoID;
 		}
 
+		/**
+		 * Query the number of children / subs
+		 *
+		 * @param int $info_id id 
+		 * @return int number of subs
+		 */
 		function anzSubs( $info_id )
 		{
 			return $this->so->anzSubs( $info_id );
 		}
 
-		/*!
-		@function search
-		@abstract searches InfoLog for a certain pattern in $query
-		@syntax search( $query )
-		@param $query[order] column-name to sort after
-		@param $query[sort] sort-order DESC or ASC
-		@param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
-		@param $query[cat_id] category to use or 0 or unset
-		@param $query[search] pattern to search, search is done in info_from, info_subject and info_des
-		@param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
-		@param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
-		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
-		@returns array with id's as key of the matching log-entries
-		*/
+		/**
+		 * searches InfoLog for a certain pattern in $query
+		 *
+		 * @param $query[order] column-name to sort after
+		 * @param $query[sort] sort-order DESC or ASC
+		 * @param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+		 * @param $query[cat_id] category to use or 0 or unset
+		 * @param $query[search] pattern to search, search is done in info_from, info_subject and info_des
+		 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+		 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+		 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+		 * @return array with id's as key of the matching log-entries
+		 */
 		function &search(&$query)
 		{
 			//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
@@ -454,12 +505,14 @@
 			return $ret;
 		}
 
-		/*!
-		@function link_title
-		@syntax link_title(  $id  )
-		@author ralfbecker
-		@abstract get title for an infolog entry identified by $id
-		*/
+		/**
+		 * get title for an infolog entry identified by $info
+		 * 
+		 * Is called as hook to participate in the linking
+		 *
+		 * @param int/array $info int info_id or array with infolog entry
+		 * @param string the title
+		 */
 		function link_title( $info )
 		{
 			if (!is_array($info))
@@ -474,12 +527,14 @@
 				$this->subject_from_des($info['info_descr']);
 		}
 
-		/*!
-		@function link_query
-		@syntax link_query(  $pattern  )
-		@author ralfbecker
-		@abstract query infolog for entries matching $pattern
-		*/
+		/**
+		 * query infolog for entries matching $pattern
+		 *
+		 * Is called as hook to participate in the linking
+		 *
+		 * @param string $pattern pattern to search
+		 * @return array with info_id - title pairs of the matching entries
+		 */
 		function link_query( $pattern )
 		{
 			$query = array(
@@ -499,16 +554,14 @@
 			return $content;
 		}
 
-		/*!
-		@function cal_to_include
-		@syntax cal_to_include( $args )
-		@author ralfbecker
-		@abstract hook called be calendar to include events or todos in the cal-dayview
-		@param $args[year], $args[month], $args[day] date of the events
-		@param $args[owner] owner of the events
-		@param $args[location] calendar_include_{events|todos}
-		@returns array of events (array with keys starttime, endtime, title, view, icon, content)
-		*/
+		/**
+		 * hook called be calendar to include events or todos in the cal-dayview
+		 *
+		 * @param int $args[year], $args[month], $args[day] date of the events
+		 * @param int $args[owner] owner of the events
+		 * @param string $args[location] calendar_include_{events|todos}
+		 * @return array of events (array with keys starttime, endtime, title, view, icon, content)
+		 */
 		function cal_to_include($args)
 		{
 			//echo "<p>cal_to_include("; print_r($args); echo ")</p>\n";
@@ -517,11 +570,11 @@
 			{
 				return False;
 			}
-			if (!is_object($GLOBALS['phpgw']->html))
+			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 			}
-			$GLOBALS['phpgw']->translation->add_app('infolog');
+			$GLOBALS['egw']->translation->add_app('infolog');
 
 			$do_events = $args['location'] == 'calendar_include_events';
 			$to_include = array();
@@ -543,7 +596,7 @@
 					{
 						continue;
 					}
-					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
+					$title = ($do_events?$GLOBALS['egw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
 					$content=array();
@@ -552,10 +605,10 @@
 						$info['info_status'] => 'infolog'
 					) as $name => $app)
 					{
-						$content[] = $GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
+						$content[] = $GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
 					}
-					$content[] = $GLOBALS['phpgw']->html->a_href($title,$view);
-					$content = $GLOBALS['phpgw']->html->table(array(1 => $content));
+					$content[] = $GLOBALS['egw']->html->a_href($title,$view);
+					$content = $GLOBALS['egw']->html->table(array(1 => $content));
 
 					$to_include[] = array(
 						'starttime' => $info['info_startdate'],
@@ -575,14 +628,16 @@
 			return $to_include;
 		}
 
+		/**
+		 * handles introspection or discovery by the logged in client,
+		 *  in which case the input might be an array.  The server always calls
+		 *  this function to fill the server dispatch map using a string.
+		 *
+		 * @param string $_type='xmlrpc' xmlrpc or soap
+		 * @return array
+		 */
 		function list_methods($_type='xmlrpc')
 		{
-			/*
-			**  This handles introspection or discovery by the logged in client,
-			**  in which case the input might be an array.  The server always calls
-			**  this function to fill the server dispatch map using a string.
-			*/
-
 			if (is_array($_type))
 			{
 				$_type = $_type['type'] ? $_type['type'] : $_type[0];
@@ -634,6 +689,12 @@
 			}
 		}
 
+		/**
+		 * Convert an InfoLog entry into its xmlrpc representation, eg. convert timestamps to datetime.iso8601
+		 *
+		 * @param array $data infolog entry
+		 * @param array xmlrpc infolog entry
+		 */
 		function data2xmlrpc($data)
 		{
 			$data['rights'] = $this->so->grants[$data['info_owner']];
@@ -662,6 +723,12 @@
 			return $data;
 		}
 
+		/**
+		 * Convert an InfoLog xmlrpc representation into the internal one, eg. convert datetime.iso8601 to timestamps
+		 *
+		 * @param array $data infolog entry
+		 * @param array xmlrpc infolog entry
+		 */
 		function xmlrpc2data($data)
 		{
 			foreach($data as $name => $val)
@@ -689,7 +756,12 @@
 			return $data;
 		}
 
-		// return array with all infolog categories (for xmlrpc)
+		/**
+		 * return array with all infolog categories (for xmlrpc)
+		 *
+		 * @param boolean $complete true returns array with all data for each cat, else only the title is returned
+		 * @return array with cat_id / title or data pairs (see above)
+		 */
 		function categories($complete = False)
 		{
 			return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;

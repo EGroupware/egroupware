@@ -12,12 +12,15 @@
 
 	/* $Id$ */
 
-	/*!
-	@class customfields_widget
-	@author ralfbecker
-	@abstract generates a template based on an array with definitions
-	@discussion This widget has neither a render nor a post_process function as it only generates a template
-	*/
+	/**
+	 * generates a template based on an array with definitions
+	 *
+	 * This widget has neither a render nor a post_process function as it only generates a template
+	 *
+	 * @package infolog
+	 * @author RalfBecker-At-outdoor-training.de
+	 * @copyright GPL - GNU General Public License
+	 */
 	class customfields_widget
 	{
 		var $public_functions = array(
@@ -36,7 +39,7 @@
 				$cell['type'] = 'label';
 				return True;
 			}
-			$tpl = new etemplate;
+			$tpl =& new etemplate;
 			$tpl->init('*** generated custom fields for InfoLog','','',0,'',0,0);	// make an empty template
 
 			$typ = $value['###typ###'];

@@ -12,6 +12,13 @@
 
 	/* $Id$ */
 
+/**
+ * Class containing admin, preferences and sidebox-menus (used as hooks)
+ *
+ * @package infolog
+ * @author RalfBecker-At-outdoor-training.de
+ * @copyright GPL - GNU General Public License
+ */
 class admin_prefs_sidebox_hooks
 {
 	function all_hooks($args)
@@ -23,20 +30,20 @@ class admin_prefs_sidebox_hooks
 		if ($location == 'sidebox_menu')
 		{
 			$file = array(
-				'infolog list' => $GLOBALS['phpgw']->link('/index.php',array(
+				'infolog list' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.index' )),
-				'add' => $GLOBALS['phpgw']->link('/index.php',array(
+				'add' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.edit' ))
 			);
-			display_sidebox($appname,$GLOBALS['phpgw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
+			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
 
-		if ($GLOBALS['phpgw_info']['user']['apps']['preferences'] && $location != 'admin')
+		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
 		{
 			$file = array(
-				'Preferences'     => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname),
-				'Grant Access'    => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
+				'Preferences'     => $GLOBALS['egw']->link('/preferences/preferences.php','appname='.$appname),
+				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
 			if ($location == 'preferences')
 			{
@@ -48,18 +55,18 @@ class admin_prefs_sidebox_hooks
 			}
 		}
 
-		if ($GLOBALS['phpgw_info']['user']['apps']['admin'] && $location != 'preferences')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
 		{
 			$file = Array(
-				'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array(
+				'Site configuration' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.admin' )),
-				'Global Categories'  => $GLOBALS['phpgw']->link('/index.php',array(
+				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
-				'Custom fields, typ and status' => $GLOBALS['phpgw']->link('/index.php',array(
+				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'infolog.uicustomfields.edit')),
-				'CSV-Import'         => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
+				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
 			);
 			if ($location == 'admin')
 			{

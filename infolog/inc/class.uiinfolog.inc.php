@@ -13,7 +13,16 @@
 
 	/* $Id$ */
 
-	class uiinfolog 	// UI - User Interface - HTML 
+	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.boinfolog.inc.php');
+
+	/**
+	 * This class is the UI-layer (user interface) of InfoLog
+	 *
+	 * @package infolog
+	 * @author RalfBecker-At-outdoor-training.de
+	 * @copyright GPL - GNU General Public License
+	 */
+	class uiinfolog
 	{
 		var $public_functions = array
 		(
@@ -28,7 +37,7 @@
 
 		function uiinfolog( )
 		{
-			$this->bo = CreateObject('infolog.boinfolog');
+			$this->bo =& new boinfolog();
 
 			$this->icons = array(
 				'type' => array(
@@ -75,10 +84,10 @@
 			);
 			$this->link = &$this->bo->link;
 			
-			$this->tmpl = CreateObject('etemplate.etemplate');
+			$this->tmpl =& CreateObject('etemplate.etemplate');
 			$this->html = &$this->tmpl->html;
 
-			$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
 		function get_info($info,&$readonlys,$action='',$action_id='')
@@ -97,14 +106,14 @@
 			$info['info_anz_subs'] = $this->bo->anzSubs($id);
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
-			$readonlys["edit[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_EDIT);
-			$readonlys["edit_status[$id]"] = !($this->bo->check_access($id,PHPGW_ACL_EDIT) || $info['info_responsible'] == $this->user);
-			$readonlys["delete[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_DELETE);
-			$readonlys["sp[$id]"] = !$this->bo->check_access($id,PHPGW_ACL_ADD);
+			$readonlys["edit[$id]"] = !$this->bo->check_access($id,EGW_ACL_EDIT);
+			$readonlys["edit_status[$id]"] = !($this->bo->check_access($id,EGW_ACL_EDIT) || $info['info_responsible'] == $this->user);
+			$readonlys["delete[$id]"] = !$this->bo->check_access($id,EGW_ACL_DELETE);
+			$readonlys["sp[$id]"] = !$this->bo->check_access($id,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 			$readonlys['view[0]'] = True;	// no parent
 
-			$show_links = $GLOBALS['phpgw_info']['user']['preferences']['infolog']['show_links'];
+			$show_links = $GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'];
 
 			if ($show_links != 'none' && ($links = $this->link->get_links('infolog',$info['info_id'])))
 			{
@@ -128,7 +137,7 @@
 		{
 			$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
 			//echo "<p>$for: uiinfolog::save_sessiondata(".print_r($values,True).") called_by='$this->called_by'</p>\n";
-			$GLOBALS['phpgw']->session->appsession($for.'session_data','infolog',array(
+			$GLOBALS['egw']->session->appsession($for.'session_data','infolog',array(
 				'search' => $values['search'],
 				'start'  => $values['start'],
 				'filter' => $values['filter'],
@@ -142,7 +151,7 @@
 
 		function read_sessiondata()
 		{
-			$values = $GLOBALS['phpgw']->session->appsession(@$this->called_by.'session_data','infolog');
+			$values = $GLOBALS['egw']->session->appsession(@$this->called_by.'session_data','infolog');
 			if (!@$values['session_for'] && $this->called_by)
 			{
 				$values['session_for'] = $this->called_by;
@@ -275,7 +284,7 @@
 			{
 				if ($typ != 'defaults') $all_stati += $stati;
 			}
-			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
+			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
 
 			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 				'info_type'     => $this->bo->enums['type'],
@@ -290,7 +299,7 @@
 
 			if (is_array($values) || $info_id <= 0)
 			{
-				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,PHPGW_ACL_DELETE))
+				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,EGW_ACL_DELETE))
 				{
 					$this->bo->delete($info_id,$values['remove_subs'],$values['info_id_parent']);
 				}
@@ -307,24 +316,22 @@
 			$persist['referer'] = $referer;
 			$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
-			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
+			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
 
 			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
 		}
 
-		/*!
-		@function edit
-		@syntax edit( $content=0,$action='',$action_id=0,$type='',$referer='' )
-		@author ralfbecker
-		@abstract Edit/Create an InfoLog Entry
-		@param $content   Content from the eTemplate Exec call or info_id on inital call
-		@param $action    Name of an app of 'sp' for a infolog-sub
-		@param $action_id Id of app-entry to which a link is created
-		@param $type      Type of log-entry: note,todo,task
-		@param $referer   array with param/get-vars of the refering page
-		*/
-		function edit($content = 0,$action = '',$action_id=0,$type='',$referer='')
+		/**
+		 * Edit/Create an InfoLog Entry
+		 *
+		 * @param array $content=null Content from the eTemplate Exec call or info_id on inital call
+		 * @param string $action='' Name of an app of 'sp' for a infolog-sub
+		 * @param int $action_id=0 Id of app-entry to which a link is created
+		 * @param string $type='' Type of log-entry: note,todo,task
+		 * @param string $referer='' array with param/get-vars of the refering page
+		 */
+		function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 		{
 			if (is_array($content))
 			{
@@ -342,7 +349,7 @@
 				{
 					if ($content['save'] && $info_id)
 					{
-						if (!($edit_acl = $this->bo->check_access($info_id,PHPGW_ACL_EDIT)))
+						if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
 						{
 							$old = $this->bo->read($info_id);
 							$status_only = $old['info_responsible'] == $this->user;
@@ -402,7 +409,7 @@
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
 				$referer   = $referer !== '' ? $referer :
-					ereg_replace('^.*'.$GLOBALS['phpgw_info']['server']['webserver_url'],'',
+					ereg_replace('^.*'.$GLOBALS['egw_info']['server']['webserver_url'],'',
 					get_var('HTTP_REFERER',Array('SERVER')));
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
@@ -416,7 +423,7 @@
 
 				if (!$info_id && $action_id && $action == 'sp')    // new SubProject
 				{
-					if (!$this->bo->check_access($action_id,PHPGW_ACL_ADD))
+					if (!$this->bo->check_access($action_id,EGW_ACL_ADD))
 					{
 						return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
 					}
@@ -448,7 +455,7 @@
 				}
 				else
 				{
-					if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT))
+					if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT))
 					{
 						if ($content['info_responsible'] == $this->user)
 						{
@@ -519,9 +526,9 @@
 			{
 				$content['blur_title']   = $this->link->title($action,$action_id);
 			}
-			$readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,PHPGW_ACL_DELETE);
+			$readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE);
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
+			$GLOBALS['egw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
 
 			$this->tmpl->read('infolog.edit');
 			if ($this->bo->has_customfields($content['info_type']))
@@ -533,9 +540,9 @@
 			{
 				$this->tmpl->set_cell_attribute('description|links|delegation|customfields','name','description|links|delegation');
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 				($content['status_only'] ? lang('Edit Status') : lang('Edit'));
-			$GLOBALS['phpgw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
+			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
 
 			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
@@ -565,7 +572,7 @@
 			{
 				$icon = $this->icons[$cat][$id];
 			}
-			if ($icon && !is_readable($GLOBALS['phpgw']->common->get_image_dir() . '/' . $icon))
+			if ($icon && !is_readable($GLOBALS['egw']->common->get_image_dir() . '/' . $icon))
 			{
 				$icon = False;
 			}
@@ -583,7 +590,7 @@
 		{
 			if(get_var('cancel',Array('POST')))
 			{
-				$GLOBALS['phpgw']->redirect_link('/admin/index.php');
+				$GLOBALS['egw']->redirect_link('/admin/index.php');
 			}
 
 			if(get_var('save',Array('POST')))
@@ -608,15 +615,15 @@
 				$this->bo->config->save_repository(True);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['css'] = $this->html->theme2css();
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Configuration');
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw_info']['flags']['css'] = $this->html->theme2css();
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Configuration');
+			$GLOBALS['egw']->common->egw_header();
 
-			$GLOBALS['phpgw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
-			$GLOBALS['phpgw']->template->set_block('info_admin_t', 'admin_line');
-			$GLOBALS['phpgw']->template->set_block('info_admin_t', 'info_admin');
+			$GLOBALS['egw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
+			$GLOBALS['egw']->template->set_block('info_admin_t', 'admin_line');
+			$GLOBALS['egw']->template->set_block('info_admin_t', 'info_admin');
 
-			$GLOBALS['phpgw']->template->set_var(Array(
+			$GLOBALS['egw']->template->set_var(Array(
 				'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 				'action_url'  => $this->html->link('/index.php',$this->menuaction('admin')),
 				'save_button' => $this->html->submit_button('save','Save'),
@@ -633,33 +640,33 @@
 			$i = 0; @reset($this->bo->link_pathes);
 			do {
 				list($valid,$trans) = @each($this->bo->link_pathes);
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'tr_color'  => $i & 1 ? 'row_off' : 'row_on',
 					'num'       => $i+1,
 					'val_valid' => $this->html->input("valid[$i]",$valid),
 					'val_trans' => $this->html->input("trans[$i]",$trans),
 					'val_ip'    => $this->html->input("ip[$i]",$this->bo->send_file_ips[$valid])
 				));
-				$GLOBALS['phpgw']->template->parse('admin_lines','admin_line',True);
+				$GLOBALS['egw']->template->parse('admin_lines','admin_line',True);
 				++$i;
 			} while ($valid);
 
 			if (!$this->tmpl->xslt)
 			{
 				echo parse_navbar();
-				$GLOBALS['phpgw']->template->pfp('phpgw_body','info_admin');
+				$GLOBALS['egw']->template->pfp('phpgw_body','info_admin');
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->fp('phpgw_body','info_admin');
+				$GLOBALS['egw']->template->fp('phpgw_body','info_admin');
 			}
 		}
 		
-		/*!
-		@function writeLangFile
-		@abstract writes langfile with all templates and messages registered here
-		@discussion called via [write Langfile] in the etemplate-editor or as http://domain/egroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
-		*/
+		/**
+		 * writes langfile with all templates and messages registered here
+		 *
+		 * called via [write Langfile] in the etemplate-editor or as http://domain/egroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
+		 */
 		function writeLangFile()
 		{
 			$extra = $this->messages + $this->filters;
@@ -672,24 +679,23 @@
 			return $this->tmpl->writeLangFile('infolog','en',$extra);
 		}
 		
-		/*!
-		@function hook_view
-		@abstract shows infolog in other applications
-		@syntax hook_view($args)
-		@param $args['location'] location des hooks: {addressbook|projects|calendar}_view|infolog
-		@param $args['view']     menuaction to view, if location == 'infolog'
-		@param $args['app']      app-name, if location == 'infolog'
-		@param $args['view_id']  name of the id-var for location == 'infolog'
-		@param $args[$args['view_id']] id of the entry
-		@note this function can be called for any app, which should include infolog: \
-			$GLOBALS['phpgw']->hooks->process(array( \
-				'location' => 'infolog', \
-				'app'      => <your app>, \
-				'view_id'  => <id name>, \
-				<id name>  => <id value>, \
-				'view'     => <menuaction to view an entry in your app> \
-			));
-		*/
+		/**
+		 * shows infolog in other applications
+		 *
+		 * @param $args['location'] location des hooks: {addressbook|projects|calendar}_view|infolog
+		 * @param $args['view']     menuaction to view, if location == 'infolog'
+		 * @param $args['app']      app-name, if location == 'infolog'
+		 * @param $args['view_id']  name of the id-var for location == 'infolog'
+		 * @param $args[$args['view_id']] id of the entry
+		 * this function can be called for any app, which should include infolog: \
+		 * 	$GLOBALS['egw']->hooks->process(array( \
+		 * 		 * 'location' => 'infolog', \
+		 * 		 * 'app'      => <your app>, \
+		 * 		 * 'view_id'  => <id name>, \
+		 * 		 * <id name>  => <id value>, \
+		 * 		 * 'view'     => <menuaction to view an entry in your app> \
+		 * 	));
+		 */
 		function hook_view($args)
 		{
 			switch ($args['location'])
@@ -724,17 +730,17 @@
 			}
 			$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
 
-			$save_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
+			$save_app = $GLOBALS['egw_info']['flags']['currentapp'];
+			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
 
-			$GLOBALS['phpgw']->translation->add_app('infolog');
+			$GLOBALS['egw']->translation->add_app('infolog');
 
-			$GLOBALS['phpgw_info']['etemplate']['hooked'] = True;
+			$GLOBALS['egw_info']['etemplate']['hooked'] = True;
 			$this->index(0,$app,$args[$view_id],array(
 				'menuaction' => $view,
 				$view_id     => $args[$view_id]
 			),True);
-			$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
-			unset($GLOBALS['phpgw_info']['etemplate']['hooked']);
+			$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
+			unset($GLOBALS['egw_info']['etemplate']['hooked']);
 		} 
 	}

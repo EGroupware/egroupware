@@ -24,7 +24,7 @@
 	create_input_box('Max number of entries to display on the main screen','mainscreen_maxshow',
 					'Only up to this number of entries are displayed on the main screen.','10',3);
 
-	$ui = CreateObject('infolog.uiinfolog');	// need some labels from
+	$ui =& CreateObject('infolog.uiinfolog');	// need some labels from
 	foreach($ui->filters as $key => $label)
 	{
 		$filters[$key] = lang($label);

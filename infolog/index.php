@@ -13,16 +13,16 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp'	=> 'infolog', 
 		'noheader'		=> True,
 		'nonavbar'		=> True
 	);
 	include('../header.inc.php');
 
-	$GLOBALS['phpgw']->redirect_link('/index.php',array(
+	$GLOBALS['egw']->redirect_link('/index.php',array(
 		'menuaction' => 'infolog.uiinfolog.index',
-		'filter'     => $GLOBALS['phpgw_info']['user']['preferences']['infolog']['defaultFilter']
+		'filter'     => $GLOBALS['egw_info']['user']['preferences']['infolog']['defaultFilter']
 	));
-	$GLOBALS['phpgw']->common->phpgw_exit();
+	$GLOBALS['egw']->common->egw_exit();
 ?>

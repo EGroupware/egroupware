@@ -21,24 +21,23 @@
 
 		function uicustomfields( )
 		{
-			$this->bo = CreateObject('infolog.boinfolog');
-			$this->tmpl = CreateObject('etemplate.etemplate');
+			$this->bo =& CreateObject('infolog.boinfolog');
+			$this->tmpl =& CreateObject('etemplate.etemplate');
 			$this->types  = &$this->bo->enums['type'];
 			$this->status = &$this->bo->status;
 			$this->config = &$this->bo->config;
 			$this->fields = &$this->bo->customfields;
 		}
 
-		/*!
-		@function edit
-		@syntax edit( $content=0 )
-		@author ralfbecker
-		@abstract Edit/Create an InfoLog Custom fields, typ and status
-		@param $content Content from the eTemplate Exec
-		*/
+		/**
+		 * @author ralfbecker
+		 * Edit/Create an InfoLog Custom fields, typ and status
+		 *
+		 * @param $content Content from the eTemplate Exec
+		 */
 		function edit($content = 0)
 		{
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Custom fields, typ and status');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Custom fields, typ and status');
 			if (is_array($content))
 			{
 				//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
@@ -65,7 +64,7 @@
 							break;
 						}
 					case 'cancel':
-						$GLOBALS['phpgw']->redirect_link('/admin/');
+						$GLOBALS['egw']->redirect_link('/admin/');
 						exit;
 				}
 			}

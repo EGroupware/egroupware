@@ -10,18 +10,18 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	$showevents = intval($GLOBALS['phpgw_info']['user']['preferences']['infolog']['homeShowEvents']);
+	$showevents = intval($GLOBALS['egw_info']['user']['preferences']['infolog']['homeShowEvents']);
 	if($showevents > 0)
 	{
-		$save_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-		$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
+		$save_app = $GLOBALS['egw_info']['flags']['currentapp'];
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
 
-		$GLOBALS['phpgw']->translation->add_app('infolog');
+		$GLOBALS['egw']->translation->add_app('infolog');
 
-		$app_id = $GLOBALS['phpgw']->applications->name2id('infolog');
+		$app_id = $GLOBALS['egw']->applications->name2id('infolog');
 		$GLOBALS['portal_order'][] = $app_id;
 
-		$infolog = CreateObject('infolog.uiinfolog');
+		$infolog =& CreateObject('infolog.uiinfolog');
 		switch($showevents)
 		{
 			case 1:
@@ -37,14 +37,14 @@
 
 		if(!$xslt)	// .14/6
 		{
-			$portalbox = CreateObject('phpgwapi.listbox',array(
+			$portalbox =& CreateObject('phpgwapi.listbox',array(
 				'title'     => $title,
-				'primary'   => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'secondary' => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'tertiary'  => $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'primary'   => $GLOBALS['egw_info']['theme']['navbar_bg'],
+				'secondary' => $GLOBALS['egw_info']['theme']['navbar_bg'],
+				'tertiary'  => $GLOBALS['egw_info']['theme']['navbar_bg'],
 				'width'     => '100%',
 				'outerborderwidth' => '0',
-				'header_background_image' => $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
+				'header_background_image' => $GLOBALS['egw']->common->image('phpgwapi/templates/default','bg_filler')
 			));
 			foreach(array(
 				'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
@@ -63,14 +63,14 @@
 		}
 		else	// HEAD / XSLT
 		{
-			$GLOBALS['phpgw']->portalbox->set_params(array(
+			$GLOBALS['egw']->portalbox->set_params(array(
 				'app_id' => $app_id,
 				'title'  => $title
 			));
-			$GLOBALS['phpgw']->portalbox->draw($html);
+			$GLOBALS['egw']->portalbox->draw($html);
 		}
 		unset($html);
-		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
+		$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
 	}
 	unset($showevents);
 ?>

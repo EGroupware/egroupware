@@ -13,14 +13,18 @@
 
 	/* $Id$ */
 
-	/*!
-	@class soinfolog
-	@abstract storage object / db-layer for InfoLog
-	@author Ralf Becker
-	@copyright GPL - GNU General Public License
-	@note all values passed to this class are run either through intval or addslashes to prevent query-insertion
-		and for pgSql 7.3 compatibility
-	*/
+	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.solink.inc.php');
+
+	/**
+	 * storage object / db-layer for InfoLog
+	 *
+	 * all values passed to this class are run either through intval or addslashes to prevent query-insertion
+	 * and for pgSql 7.3 compatibility
+	 *
+	 * @package infolog
+	 * @author RalfBecker-At-outdoor-training.de
+	 * @copyright GPL - GNU General Public License
+	 */
 	class soinfolog 				// DB-Layer
 	{
 		var $db;
@@ -30,32 +34,30 @@
 		var $info_table = 'phpgw_infolog';
 		var $extra_table = 'phpgw_infolog_extra';
 
-		/*!
-		@function soinfolog
-		@abstract constructor
-		*/
+		/**
+		 * constructor
+		 */
 		function soinfolog( $info_id = 0)
 		{
-			$this->db     = clone($GLOBALS['phpgw']->db);
+			$this->db     = clone($GLOBALS['egw']->db);
 			$this->db->set_app('infolog');
-			$this->grants = $GLOBALS['phpgw']->acl->get_grants('infolog');
-			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog');
+			$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 
-			$this->links = CreateObject('infolog.solink');
+			$this->links =& new solink();
 
-			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+			$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 
 			$this->read( $info_id );
 		}
 
-		/*!
-		@function check_access
-		@abstract checks if user has the $required_rights to access $info_id (private access is handled too)
-		@syntax check_access( $info_id,$required_rights )
-		@param $info_id Id of InfoLog entry
-		@param $required_rights PHPGW_ACL_xyz anded together
-		@returns True if access is granted else False
-		*/
+		/**
+		 * checks if user has the $required_rights to access $info_id (private access is handled too)
+		 *
+		 * @param $info_id Id of InfoLog entry
+		 * @param $required_rights EGW_ACL_xyz anded together
+		 * @return boolean True if access is granted else False
+		 */
 		function check_access( $info_id,$required_rights )
 		{
 			if ($info_id != $this->data['info_id'])      	// already loaded?
@@ -79,21 +81,21 @@
 				// ACL only on public entrys || $owner granted _PRIVATE
 				(!!($this->grants[$owner] & $required_rights) ||
 				// implicite read-rights for responsible user !!!
-				$info['info_responsible'] == $this->user && $required_rights == PHPGW_ACL_READ) &&
+				$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
 				($info['info_access'] == 'public' ||
-				!!($this->grants[$owner] & PHPGW_ACL_PRIVATE));
+				!!($this->grants[$owner] & EGW_ACL_PRIVATE));
 
 			//echo "<p>check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied")."</p>\n";
 			return $access_ok;
 		}
 
-		/*!
-		@function aclFilter
-		@abstract generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
-		@param $filter: none|all - list all entrys user have rights to see<br>
-			private|own - list only his personal entrys (incl. those he is responsible for !!!) 
-		@returns the necesary sql
-		*/
+		/**
+		 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
+		 *
+		 * @param $filter: none|all - list all entrys user have rights to see<br>
+		 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!) 
+		 * @return string the necesary sql
+		 */
 		function aclFilter($filter = False)
 		{
 			preg_match('/(own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
@@ -109,11 +111,11 @@
 				foreach($this->grants as $user => $grant)
 				{
 					// echo "<p>grants: user=$user, grant=$grant</p>";
-					if ($grant & (PHPGW_ACL_READ|PHPGW_ACL_EDIT))
+					if ($grant & (EGW_ACL_READ|EGW_ACL_EDIT))
 					{
 						$public_user_list[] = $user;
 					}
-					if ($grant & PHPGW_ACL_PRIVATE)
+					if ($grant & EGW_ACL_PRIVATE)
 					{
 						$private_user_list[] = $user;
 					}
@@ -157,13 +159,12 @@
 			return $this->acl_filter[$filter.$user] = $filtermethod;  // cache the filter
 		}
 	
-		/*!
-		@function statusFilter
-		@abstract generate sql to filter based on the status of the log-entry
-		@syntax statusFilter($filter = '')
-		@param $filter done = done or billed, open = not ()done or billed), offer = offer
-		@returns the necesary sql
-		*/
+		/**
+		 * generate sql to filter based on the status of the log-entry
+		 *
+		 * @param $filter done = done or billed, open = not ()done or billed), offer = offer
+		 * @return string the necesary sql
+		 */
 		function statusFilter($filter = '')
 		{
 			preg_match('/(done|open|offer)/',$filter,$vars);
@@ -178,16 +179,15 @@
 			return '';
 		}
 
-		/*!
-		@function dateFilter
-		@abstract generate sql to filter based on the start- and enddate of the log-entry
-		@syntax dateFilter($filter = '')
-		@param $filter upcoming = startdate is in the future<br>
-			today startdate < tomorrow<br>
-			overdue enddate < tomorrow<br>
-			limitYYYY/MM/DD not older or open 
-		@returns the necesary sql
-		*/
+		/**
+		 * generate sql to filter based on the start- and enddate of the log-entry
+		 *
+		 * @param $filter upcoming = startdate is in the future<br>
+		 * 	today startdate < tomorrow<br>
+		 * 	overdue enddate < tomorrow<br>
+		 * 	limitYYYY/MM/DD not older or open 
+		 * @return string the necesary sql
+		 */
 		function dateFilter($filter = '')
 		{
 			preg_match('/(upcoming|today|overdue|date)([-\\/.0-9]*)/',$filter,$vars);
@@ -223,11 +223,11 @@
 			return '';
 		}
 
-		/*!
-		@function init
-		@abstract initialise the internal $this->data to be empty
-		@discussion only non-empty values got initialised
-		*/
+		/**
+		 * initialise the internal $this->data to be empty
+		 *
+		 * only non-empty values got initialised
+		 */
 		function init()
 		{
 			$this->data = array(
@@ -236,13 +236,13 @@
 			);
 		}
 
-		/*!
-		@function db2data
-		@abstract copy data after a query into $data
-		@syntax db2data(&$data)
-		@param $data array to copy the data
-		@description copy only non-numeric keys
-		*/
+		/**
+		 * copy data after a query into $data
+		 *
+		 * copy only non-numeric keys
+		 *
+		 * @param $data array to copy the data
+		 */
 		function db2data(&$data)
 		{
 			$data = array();
@@ -255,14 +255,14 @@
 			}
 		}
 
-		/*!
-		@function read
-		@abstract read InfoLog entry $info_id
-		@syntax read( $info_id )
-		@param $info_id id of log-entry
-		@description some cacheing is done to prevent multiple reads of the same entry
-		@returns the entry as array
-		*/
+		/**
+		 * read InfoLog entry $info_id
+		 *
+		 * some cacheing is done to prevent multiple reads of the same entry
+		 *
+		 * @param $info_id id of log-entry
+		 * @return array/boolean the entry as array or False on error (eg. entry not found)
+		 */
 		function read($info_id)		// did _not_ ensure ACL
 		{
 			$info_id = intval($info_id);
@@ -287,14 +287,13 @@
 			return $this->data;
 		}
 		
-		/*!
-		@function delete
-		@abstract delete InfoLog entry $info_id AND the links to it
-		@syntax delete( $info_id )
-		@param int $info_id id of log-entry
-		@param bool $delete_children delete the children, if not set there parent-id to $new_parent
-		@param int new_parent new parent-id to set for subs
-		*/
+		/**
+		 * delete InfoLog entry $info_id AND the links to it
+		 *
+		 * @param int $info_id id of log-entry
+		 * @param bool $delete_children delete the children, if not set there parent-id to $new_parent
+		 * @param int $new_parent new parent-id to set for subs
+		 */
 		function delete($info_id,$delete_children=True,$new_parent=0)  // did _not_ ensure ACL
 		{
 			//echo "<p>soinfolog::delete($info_id,'$delete_children',$new_parent)</p>\n";
@@ -327,13 +326,12 @@
 			$this->db->update($this->info_table,array('info_id_parent'=>$new_parent),array('info_id_parent'=>$info_id),__LINE__,__FILE__);
 		}
 
-		/*!
-		@function change_delete_owner
-		@abstract changes or deletes entries with a spezified owner (for hook_delete_account)
-		@syntax change_delete_owner( $owner,$new_owner=0 )
-		@param $owner old owner
-		@param $new_owner new owner or 0 if entries should be deleted
-		*/
+		/**
+		 * changes or deletes entries with a spezified owner (for hook_delete_account)
+		 *
+		 * @param $owner old owner
+		 * @param $new_owner new owner or 0 if entries should be deleted
+		 */
 		function change_delete_owner($owner,$new_owner=0)  // new_owner=0 means delete
 		{
 			if (!(int) $new_owner)
@@ -352,13 +350,12 @@
 			$this->db->update($this->info_table,array('info_responsible'=>$new_owner),array('info_responsible'=>$owner),__LINE__,__FILE__);
 		}
 
-		/*!
-		@function write
-		@abstract writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
-		@syntax write( $values )
-		@param $values array with the data of the log-entry
-		@return the info_id
-		*/
+		/**
+		 * writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
+		 *
+		 * @param array $values with the data of the log-entry
+		 * @return int the info_id
+		 */
 		function write($values)  // did _not_ ensure ACL
 		{
 			$info_id = (int) $values['info_id'];
@@ -406,13 +403,12 @@
 			return $this->data['info_id'];
 		}
 
-		/*!
-		@function anzSubs
-		@abstract count the sub-entries of $info_id
-		@syntax anzSubs( $info_id )
-		@param $info_id id of log-entry
-		@returns the number of sub-entries
-		*/
+		/**
+		 * count the sub-entries of $info_id
+		 *
+		 * @param $info_id id of log-entry
+		 * @return int the number of sub-entries
+		 */
 		function anzSubs( $info_id )
 		{
 			if (($info_id = intval($info_id)) <= 0)
@@ -429,21 +425,20 @@
 			return $this->db->f(0);
 		}
 
-		/*!
-		@function search
-		@abstract searches InfoLog for a certain pattern in $query
-		@syntax search( $query )
-		@param $query[order] column-name to sort after
-		@param $query[sort] sort-order DESC or ASC
-		@param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
-		@param $query[cat_id] category to use or 0 or unset
-		@param $query[search] pattern to search, search is done in info_from, info_subject and info_des
-		@param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
-		@param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
-		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
-		@param $query[subs] boolean return subs or not, if unset the user preference is used
-		@returns array with id's as key of the matching log-entries
-		*/
+		/**
+		 * searches InfoLog for a certain pattern in $query
+		 *
+		 * @param $query[order] column-name to sort after
+		 * @param $query[sort] sort-order DESC or ASC
+		 * @param $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+		 * @param $query[cat_id] category to use or 0 or unset
+		 * @param $query[search] pattern to search, search is done in info_from, info_subject and info_des
+		 * @param $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+		 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+		 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+		 * @param $query[subs] boolean return subs or not, if unset the user preference is used
+		 * @return array with id's as key of the matching log-entries
+		 */
 		function search(&$query)
 		{
 			//echo "<p>soinfolog.search(".print_r($query,True).")</p>\n";
@@ -503,11 +498,11 @@
 			if ((int)$query['cat_id'])
 			{
 				//$filtermethod .= ' AND info_cat='.intval($query['cat_id']).' ';
-				if (!is_object($GLOBALS['phpgw']->categories))
+				if (!is_object($GLOBALS['egw']->categories))
 				{
-					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+					$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
 				}
-				$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$query['cat_id']);
+				$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 				$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 			}
 			$join = '';
@@ -531,7 +526,7 @@
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
 
-			if (!$GLOBALS['phpgw_info']['user']['preferences']['infolog']['listNoSubs'] &&
+			if (!$GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] &&
 				 $action != 'sp' || isset($query['subs']) && $query['subs'])
 			{
 				$pid = '';
