@@ -26,6 +26,7 @@
 		var $holiday_color;
 		
 		var $debug = False;
+//		var $debug = True;
 
 		var $cat_id;
 
@@ -653,14 +654,14 @@
          $str = '';
 			for ($i=0; $i<24; $i++)
 			{
-				$str .= '<option value="'.$i.'"'.($this->bo->prefs['calendar']['workdaystarts']==$i?' selected':'').'>'.$phpgw->common->formattime($i,'00').'</option>'."\n";
+				$str .= '<option value="'.$i.'"'.($this->bo->prefs['calendar']['workdaystarts']==$i?' selected':'').'>'.$GLOBALS['phpgw']->common->formattime($i,'00').'</option>'."\n";
 			}
 			$this->display_item($p,lang('work day starts on'),'<select name="prefs[workdaystarts]">'."\n".$str.'</select>'."\n");
   
          $str = '';
 			for ($i=0; $i<24; $i++)
 			{
-				$str .= '<option value="'.$i.'"'.($this->bo->prefs['calendar']['workdayends']==$i?' selected':'').'>'.$phpgw->common->formattime($i,'00').'</option>';
+				$str .= '<option value="'.$i.'"'.($this->bo->prefs['calendar']['workdayends']==$i?' selected':'').'>'.$GLOBALS['phpgw']->common->formattime($i,'00').'</option>';
 			}
 			$this->display_item($p,lang('work day ends on'),'<select name="prefs[workdayends]">'."\n".$str.'</select>'."\n");
 
@@ -891,7 +892,16 @@
 			}
 			$last_cell = $intervals_per_day * $days - 1;
 
-			$this->bo->store_to_cache($this->bo->year,$this->bo->month,1,0,0,1);
+			$this->bo->store_to_cache(
+				Array(
+					'syear'	=> $this->bo->year,
+					'smonth'	=> $this->bo->month,
+					'sday'	=> 1,
+					'eyear'	=> 0,
+					'emonth'	=> 0,
+					'eday'	=> 1
+				)
+			);
 			$firstday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
 			$lastday = intval(date('Ymd',mktime(0,0,0,$this->bo->month + 1,0,$this->bo->year)));
 			
@@ -1934,7 +1944,13 @@
 		{
 			global $GLOBALS;
 
-			$this->bo->store_to_cache($year,$month,1);
+			$this->bo->store_to_cache(
+				Array(
+					'syear'	=> $year,
+					'smonth'	=> $month,
+					'sday'	=> 1
+				)
+			);
 
 			$monthstart = intval(date('Ymd',mktime(0,0,0,$month    ,1,$year)));
 			$monthend   = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
@@ -2028,7 +2044,13 @@
 			for($i=0;$i<$counter;$i++)
 			{
 				$this->so->owner = $owners_array[$i];
-				$this->bo->store_to_cache($year,$month,1);
+				$this->bo->store_to_cache(
+					Array(
+						'syear'	=> $year,
+						'smonth'	=> $month,
+						'sday'	=> 1
+					)
+				);
 				$p->set_var('day_events',$this->display_week($start,True,$cellcolor,$display_name,$owners_array[$i]));
 				$p->parse('row','event',True);
 			}
@@ -2265,7 +2287,17 @@
 			$month = $param['month'];
 			$day = $param['day'];
 
-			$this->bo->store_to_cache($year,$month,$day,$year,$month,$day + 7);
+			$this->bo->store_to_cache(
+				Array(
+					'syear'	=> $year,
+					'smomth'	=> $month,
+					'sday'	=> $day,
+					'eyear'	=> $year,
+					'emonth'	=> $month,
+//					'eday'	=> $day + 7
+					'eday'	=> $day
+				)
+			);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('keep');
@@ -2290,14 +2322,19 @@
 				$this->bo->prefs['calendar']['workdayends'] = 16;
 			}
 
+			if($this->debug)
+			{
+				echo "Interval set to : ".intval($this->bo->prefs['calendar']['interval'])."<br>\n";
+			}
+
 			$GLOBALS['phpgw']->browser->browser();
 			if($GLOBALS['phpgw']->browser->get_agent() == 'MOZILLA')
 			{
-				$time_width = ($this->bo->prefs['common']['time_format'] == '12'?12:8);
+				$time_width = (intval($this->bo->prefs['common']['time_format']) == 12?12:8);
 			}
 			else
 			{
-			   $time_width = ($this->bo->prefs['common']['time_format'] == '12'?10:7);
+			   $time_width = (intval($this->bo->prefs['common']['time_format']) == 12?10:7);
 			}
 			$var = Array(
 				'time_width'		=> $time_width,
@@ -2311,7 +2348,11 @@
 
 			for ($i=0;$i<24;$i++)
 			{
-				$rowspan_arr[$i] = 0;
+				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
+				{
+					$rowspan_arr[$i][$j] = 0;
+     				$time[$ind][$j] = '';
+				}
 			}
 
 			$date_to_eval = sprintf("%04d%02d%02d",$year,$month,$day);
@@ -2319,12 +2360,18 @@
 			$time = Array();
 
 			$daily = $this->bo->set_week_array($this->bo->datetime->get_weekday_start($year, $month, $day),$GLOBALS['phpgw_info']['theme']['row_on'],True);
-//echo "Date to Eval : ".$date_to_eval."<br>\n";
+			if($this->debug)
+			{
+				echo "Date to Eval : ".$date_to_eval."<br>\n";
+			}
 			if($daily[$date_to_eval]['appts'])
       	{
 				$events = $this->bo->cached_events[$date_to_eval];
 				$c_events = count($events);
-//echo "Date : ".$date_to_eval." Count : ".$c_events."<br>\n";
+				if($this->debug)
+				{
+					echo "Date : ".$date_to_eval." Count : ".$c_events."<br>\n";
+				}
 				for($i=0;$i<$c_events;$i++)
 				{
 //					$event = $events[$i];
@@ -2335,51 +2382,64 @@
 							if($events[$i]['end']['mday'] > $day)
 							{
 								$ind = 99;
+								$interval_start = 0;
 							}
 							elseif($events[$i]['end']['mday'] == $day)
 							{
 								$ind = 0;
+								$interval_start = 0;
 							}
 						}
 						elseif($events[$i]['start']['mday'] == $day)
 						{
 							$ind = intval($events[$i]['start']['hour']);
+							$interval_start = intval($events[$i]['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
+							if($this->debug)
+							{
+								echo 'Start Time Minutes : '.$events[$i]['start']['min']."<br>\n";
+								echo 'Interval : '.$interval_start."<br>\n";
+							}
 						}
 					}
 					else
 					{
 	      			$ind = intval($events[$i]['start']['hour']);
+						$interval_start = intval($events[$i]['start']['min'] / intval($this->bo->prefs['calendar']['interval']));
 	      		}
 
 		      	if($ind < (int)$this->bo->prefs['calendar']['workdaystarts'] || $ind > (int)$this->bo->prefs['calendar']['workdayends'])
       			{
 		      		$ind = 99;
+						$interval_start = 0;
       			}
 
-      			if(!@$time[$ind])
-		      	{
-      				$time[$ind] = '';
-		      	}
-
-					$time[$ind] .= $this->link_to_entry($events[$i],$month,$day,$year);
+					$time[$ind][$interval_start] .= $this->link_to_entry($events[$i],$month,$day,$year);
 
 					$starttime = $this->bo->maketime($events[$i]['start']);
 					$endtime = $this->bo->maketime($events[$i]['end']);
 
 					if ($starttime <> $endtime)
 					{
-						$rowspan = (int)(($endtime - $starttime) / 3600);
+						$rowspan = intval(($endtime - $starttime) / (60 * intval($this->bo->prefs['calendar']['interval'])));
 						$mins = (int)((($endtime - $starttime) / 60) % 60);
 			
-						if ($mins <> 0)
+						if ($mins <> 0 && $mins < intval(60 / intval($this->bo->prefs['calendar']['interval'])))
 						{
 							$rowspan += 1;
 						}
-			
-						if ($rowspan > $rowspan_arr[$ind] && $rowspan > 1)
+						if($this->debug)
 						{
-							$rowspan_arr[$ind] = $rowspan;
+							echo "Rowspan being set to : ".$rowspan."<br>\n";
 						}
+
+						if ($rowspan > $rowspan_arr[$ind][$interval_start] && $rowspan > 1)
+						{
+							$rowspan_arr[$ind][$interval_start] = $rowspan;
+						}
+					}
+					if($this->debug)
+					{
+						echo 'Time : '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $this->bo->datetime->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $this->bo->datetime->tz_offset).' : Start : '.$ind.' : Interval # : '.$interval_start."<br>\n";
 					}
 				}
 			}
@@ -2387,31 +2447,34 @@
 			// squish events that use the same cell into the same cell.
 			// For example, an event from 8:00-9:15 and another from 9:30-9:45 both
 			// want to show up in the 8:00-9:59 cell.
-			$rowspan = 0;
-			$last_row = -1;
-			for ($i=0;$i<24;$i++)
-			{
-				if ($rowspan > 1)
-				{
-					if (isset($time[$i]) && strlen($time[$i]) > 0)
-					{
-						$rowspan_arr[$last_row] += $rowspan_arr[$i];
-						if ($rowspan_arr[$i] <> 0)
-						{
-							$rowspan_arr[$last_row] -= 1;
-						}
-						$time[$last_row] .= $time[$i];
-						$time[$i] = '';
-						$rowspan_arr[$i] = 0;
-					}
-					$rowspan--;
-				}
-				elseif ($rowspan_arr[$i] > 1)
-				{
-					$rowspan = $rowspan_arr[$i];
-					$last_row = $i;
-				}
-			}
+//			$rowspan = 0;
+//			$last_row = -1;
+//			for ($i=0;$i<24;$i++)
+//			{
+//				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
+//				{
+//					if ($rowspan > 1)
+//					{
+//						if (isset($time[$i][$j]) && strlen($time[$i]) > 0)
+//						{
+//							$rowspan_arr[$last_row] += $rowspan_arr[$i];
+//							if ($rowspan_arr[$i] <> 0)
+//							{
+//								$rowspan_arr[$last_row] -= 1;
+//							}
+//							$time[$last_row] .= $time[$i];
+//							$time[$i] = '';
+//							$rowspan_arr[$i] = 0;
+//						}
+//						$rowspan--;
+//					}
+//					elseif ($rowspan_arr[$i] > 1)
+//					{
+//						$rowspan = $rowspan_arr[$i];
+//						$last_row = $i;
+//					}
+//				}
+//			}
 
 			$holiday_names = $daily[$date_to_eval]['holidays'];
 			if(!$holiday_names)
@@ -2423,14 +2486,15 @@
 				$bgcolor = $GLOBALS['phpgw_info']['theme']['bg04'];
 				while(list($index,$name) = each($holiday_names))
 				{
-					$time[99] = '<center>'.$name.'</center>'.$time[99];
+					$time[99][0] = '<center>'.$name.'</center>'.$time[99][0];
 				}
 			}
 
-			if (isset($time[99]) && strlen($time[99]) > 0)
+//			if (isset($time[99]) && strlen($time[99]) > 0)
+			if (isset($time[99][0]))
 			{
 				$var = Array(
-					'event'		=>	$time[99],
+					'event'		=>	$time[99][0],
 					'bgcolor'	=>	$bgcolor
 				);
 				$this->output_template_array($p,'item','day_event',$var);
@@ -2447,65 +2511,70 @@
 			$rowspan = 0;
 			for ($i=(int)$this->bo->prefs['calendar']['workdaystarts'];$i<=(int)$this->bo->prefs['calendar']['workdayends'];$i++)
 			{
-				$dtime = $this->bo->build_time_for_display($i * 10000);
-				$p->set_var('extras','');
-				$p->set_var('event','&nbsp');
-				if ($rowspan > 1)
+				for($j=0;$j<(60 / intval($this->bo->prefs['calendar']['interval']));$j++)
 				{
-					// this might mean there's an overlap, or it could mean one event
-					// ends at 11:15 and another starts at 11:30.
-					if (isset($time[$i]) && strlen($time[$i]))
+					$dtime = $this->bo->build_time_for_display(($i * 10000) + (($j *intval($this->bo->prefs['calendar']['interval'])) * 100));
+					$p->set_var('extras','');
+					$p->set_var('event','&nbsp');
+					if ($rowspan > 1)
 					{
-						$p->set_var('event',$time[$i]);
+						// this might mean there's an overlap, or it could mean one event
+						// ends at 11:15 and another starts at 11:30.
+//						if (isset($time[$i]) && strlen($time[$i]))
+						if (isset($time[$i][$j]))
+						{
+							$p->set_var('event',$time[$i][$j]);
+							$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
+							$p->parse('item','day_event',False);
+						}
+						$rowspan--;
+					}
+//					elseif (!isset($time[$i]) || !strlen($time[$i]))
+					elseif (!isset($time[$i][$j]))
+					{
+						$p->set_var('event','&nbsp;');
 						$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
 						$p->parse('item','day_event',False);
 					}
-					$rowspan--;
-				}
-				elseif (!isset($time[$i]) || !strlen($time[$i]))
-				{
-					$p->set_var('event','&nbsp;');
-					$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
-					$p->parse('item','day_event',False);
-				}
-				else
-				{
-					$rowspan = intval($rowspan_arr[$i]);
-					if ($rowspan > 1)
+					else
 					{
-						$p->set_var('extras',' rowspan="'.$rowspan.'"');
+						$rowspan = intval($rowspan_arr[$i][$j]);
+						if ($rowspan > 1)
+						{
+							$p->set_var('extras',' rowspan="'.$rowspan.'"');
+						}
+						$p->set_var('event',$time[$i][$j]);
+						$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
+						$p->parse('item','day_event',False);
 					}
-					$p->set_var('event',$time[$i]);
-					$p->set_var('bgcolor',$GLOBALS['phpgw']->nextmatchs->alternate_row_color());
-					$p->parse('item','day_event',False);
-				}
 			
-				$open_link = ' - ';
-				$close_link = '';
+					$open_link = ' - ';
+					$close_link = '';
 			
-				if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
-				{
-					$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
-					if ($this->bo->prefs['common']['timeformat'] == '12' && $i > 12)
+					if(!$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_ADD))
 					{
-						$new_hour += 12;
-					}
+						$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
+						if ($this->bo->prefs['common']['timeformat'] == '12' && $i > 12)
+						{
+							$new_hour += 12;
+						}
 				
-					$open_link .= '<a href="'.$this->page('add','&date='.$date_to_eval.'&hour='.$new_hour.'&minute='.substr($dtime,strpos($dtime,':')+1,2)).'">';
+						$open_link .= '<a href="'.$this->page('add','&date='.$date_to_eval.'&hour='.$new_hour.'&minute='.substr($dtime,strpos($dtime,':')+1,2)).'">';
 								
-					$close_link = '</a>';
-				}
+						$close_link = '</a>';
+					}
 
-				$var = Array(
-					'open_link'		=>	$open_link,
-					'time'			=>	(intval(substr($dtime,0,strpos($dtime,':')))<10?'0'.$dtime:$dtime),
-					'close_link'	=>	$close_link
-				);
+					$var = Array(
+						'open_link'		=>	$open_link,
+						'time'			=>	(intval(substr($dtime,0,strpos($dtime,':')))<10?'0'.$dtime:$dtime),
+						'close_link'	=>	$close_link
+					);
 	
-				$this->output_template_array($p,'item','day_time',$var);
-				$p->parse('row','day_row',True);
-				$p->set_var('event','');
-				$p->set_var('item','');
+					$this->output_template_array($p,'item','day_time',$var);
+					$p->parse('row','day_row',True);
+					$p->set_var('event','');
+					$p->set_var('item','');
+				}
 			}	// end for
 			return $p->fp('out','day');
 		}	// end function
@@ -2592,7 +2661,16 @@
 				$this->bo->cached_events = Array();
 				$this->bo->owner = $part;
 				$this->so->owner = $part;
-				$this->bo->store_to_cache($date['year'],$date['month'],$date['day'],0,0,$date['day'] + 1);
+				$this->bo->store_to_cache(
+					Array(
+						'syear'	=> $date['year'],
+						'smonth'	=> $date['month'],
+						'sday'	=> $date['day'],
+						'eyear'	=> 0,
+						'emonth'	=> 0,
+						'eday'	=> $date['day'] + 1
+					)
+				);
 
 				if(!$this->bo->cached_events[$date['full']])
 				{
@@ -2679,11 +2757,7 @@
 			{
 				$event = $param['event'];
 			}
-			if(isset($param['cd']))
-			{
-				$cd = $param['cd'];
-			}
-			
+
 			$hourformat = substr($this->bo->users_timeformat,0,1);
 			
 			$sb = CreateObject('phpgwapi.sbox');
@@ -2708,12 +2782,11 @@
 			$vars = Array(
 				'font'				=>	$GLOBALS['phpgw_info']['theme']['font'],
 				'bg_color'			=>	$GLOBALS['phpgw_info']['theme']['bg_text'],
-				'calendar_action'	=>	($event->id?lang('Calendar - Edit'):lang('Calendar - Add')),
-/*				'action_url'		=>	$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.bocalendar.'.($event['id']?'update':'add')), */
+				'calendar_action'	=>	($event['id']?lang('Calendar - Edit'):lang('Calendar - Add')),
 				'action_url'		=>	$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.bocalendar.update'),
 				'common_hidden'	=>	'<input type="hidden" name="cal[id]" value="'.$event['id'].'">'."\n"
          							. '<input type="hidden" name="cal[owner]" value="'.$this->bo->owner.'">'."\n",
-				'errormsg'			=>	($cd?$GLOBALS['phpgw']->common->check_code($cd):'')
+				'errormsg'			=>	($params['cd']?$GLOBALS['phpgw']->common->check_code($params['cd']):'')
 			);
 			$p->set_var($vars);
 

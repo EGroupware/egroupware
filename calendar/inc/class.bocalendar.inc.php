@@ -42,6 +42,14 @@
 					'int'
 				)
 			),
+			'delete_calendar' => Array(
+				'in' => Array(
+					'int'
+				),
+				'out' => Array(
+					'int'
+				)
+			),
 			'update' => Array(
 				'in' => Array(
 					'array',
@@ -56,12 +64,7 @@
 			),
 			'store_to_cache'	=> Array(
 				'in' => Array(
-					'int',
-					'int',
-					'int',
-					'int',
-					'int',
-					'int'
+					'struct'
 				),
 				'out' => Array(
 					'SOAPStruct'
@@ -515,11 +518,11 @@
 			{
 				$GLOBALS['phpgw']->preferences->read_repository();
 				$GLOBALS['phpgw']->preferences->add('calendar','weekdaystarts',$HTTP_POST_VARS['prefs']['weekdaystarts']);
-				$GLOBALS['phpgw']->preferences->add('calendar','workdaystarts',$HTTP_POST_VARS['prefs']['workdaystarts']);
-				$GLOBALS['phpgw']->preferences->add('calendar','workdayends',$HTTP_POST_VARS['prefs']['workdayends']);
+				$GLOBALS['phpgw']->preferences->add('calendar','workdaystarts',intval($HTTP_POST_VARS['prefs']['workdaystarts']));
+				$GLOBALS['phpgw']->preferences->add('calendar','workdayends',intval($HTTP_POST_VARS['prefs']['workdayends']));
 				$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar',$HTTP_POST_VARS['prefs']['defaultcalendar']);
 				$GLOBALS['phpgw']->preferences->add('calendar','defaultfilter',$HTTP_POST_VARS['prefs']['defaultfilter']);
-				$GLOBALS['phpgw']->preferences->add('calendar','interval',$HTTP_POST_VARS['prefs']['interval']);
+				$GLOBALS['phpgw']->preferences->add('calendar','interval',intval($HTTP_POST_VARS['prefs']['interval']));
 				if ($HTTP_POST_VARS['prefs']['mainscreen_showevents'] == True)
 				{
 					$GLOBALS['phpgw']->preferences->add('calendar','mainscreen_showevents',$HTTP_POST_VARS['prefs']['mainscreen_showevents']);
@@ -1133,8 +1136,20 @@
 			}	// end for loop
 		}	// end function
 
-		function store_to_cache($syear,$smonth,$sday,$eyear=0,$emonth=0,$eday=0)
+		function store_to_cache($params)
 		{
+			if(!is_array($params))
+			{
+				return False;
+			}
+
+			$syear = $params['syear'];
+			$smonth = $params['smonth'];
+			$sday = $params['sday'];
+			$eyear = (isset($params['eyear'])?$params['eyear']:0);
+			$emonth = (isset($params['emonth'])?$params['emonth']:0);
+			$eday = (isset($params['eday'])?$params['eday']:0);
+			
 			if(!$eyear && !$emonth && !$eday)
 			{
 				$edate = mktime(23,59,59,$smonth + 1,$sday + 1,$syear);
@@ -1235,7 +1250,12 @@
 					$this->check_repeating_events($date);
 				}
 			}
-			return $this->cached_events;
+			for($j=date('Ymd',mktime(0,0,0,$smonth,$sday,$syear)),$k=0;$j<=date('Ymd',mktime(0,0,0,$emonth,$eday,$eyear));$k++,$j=date('Ymd',mktime(0,0,0,$smonth,$sday + $k,$syear)))
+			{
+				$retval[$j] = $this->cached_events[$j];
+			}
+			return $retval;
+//			return $this->cached_events;
 		}
 
 		/* Begin Appsession Data */
