@@ -75,9 +75,12 @@
 		else
 		{
 			$GLOBALS['phpgw_info']['user']['passwd'] = $GLOBALS['phpgw']->auth->change_password($o_passwd, $n_passwd);
+			$GLOBALS['hook_values']['account_id'] = $GLOBALS['phpgw_info']['user']['account_id'];
+			$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
+			$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
+			$GLOBALS['phpgw']->hooks->process('changepassword');
 			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php','cd=18'));
 		}
-
 	}
 	else
 	{

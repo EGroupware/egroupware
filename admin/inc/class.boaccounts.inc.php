@@ -151,6 +151,9 @@
 				$GLOBALS['phpgw']->hooks->single('deleteaccount','preferences');
 				$GLOBALS['phpgw']->hooks->single('deleteaccount','admin');
 
+				$GLOBALS['hook_values']['account_id'] = $lid;
+				$GLOBALS['phpgw']->hooks->process('deleteaccount');
+
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
 
 				if (! @rmdir($basedir . $lid))
@@ -324,6 +327,9 @@
 				if (!$errors = $this->validate_user($userData))
 				{
 					$this->so->add_user($userData);
+					$GLOBALS['hook_values']['account_id'] = $account_id;
+					$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
+					$GLOBALS['phpgw']->hooks->process('addaccount');
 					ExecMethod('admin.uiaccounts.list_users');
 					return False;
 				}
@@ -734,6 +740,10 @@
 			{
 				$auth = CreateObject('phpgwapi.auth');
 				$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
+				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
+				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
+				$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
+				$GLOBALS['phpgw']->hooks->process('changepassword');
 			}
 
 			$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
