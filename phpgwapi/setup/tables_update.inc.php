@@ -1946,4 +1946,36 @@
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.13.005';
+	function phpgwapi_upgrade0_9_13_005()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$newtbldef = array(
+			'fd' => array(
+				'account_id' => array('type' => 'auto', 'nullable' => false),
+				'account_lid' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+				'account_pwd' => array('type' => 'varchar', 'precision' => 32, 'nullable' => false),
+				'account_firstname' => array('type' => 'varchar', 'precision' => 50),
+				'account_lastname' => array('type' => 'varchar', 'precision' => 50),
+				'account_permissions' => array('type' => 'text'),
+				'account_groups' => array('type' => 'varchar', 'precision' => 30),
+				'account_lastlogin' => array('type' => 'int', 'precision' => 4),
+				'account_lastloginfrom' => array('type' => 'varchar', 'precision' => 255),
+				'account_lastpwd_change' => array('type' => 'int', 'precision' => 4),
+				'account_status' => array('type' => 'char', 'precision' => 1, 'nullable' => false, 'default' => 'A'),
+				'account_expires' => array('type' => 'int', 'precision' => 4),
+				'account_type' => array('type' => 'char', 'precision' => 1, 'nullable' => true)
+			),
+			'pk' => array('account_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('account_lid')
+		);
+
+		$phpgw_setup->oProc->DropColumn('phpgw_accounts',$newtbldef,'account_file_space');
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.006';
+		return $setup_info['phpgwapi']['currentver'];
+	}
 ?>
