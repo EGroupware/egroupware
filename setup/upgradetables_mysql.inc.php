@@ -249,7 +249,7 @@
       for($i=0;$i<count($owner);$i++) {
         $db->query("select account_id From accounts where account_lid='".$owner[$i]."'");
 	$account_id[$i] = $db->f("account_id");
-	$db->query("update $table set $field=".$account_id[$i]. where $field='".$owner[$i]."'");
+	$db->query("update $table set $field=".$account_id[$i]." where $field='".$owner[$i]."'");
       }
     }
     $db->query("alter table $table change $field $field int(11) NOT NULL");
