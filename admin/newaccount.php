@@ -48,7 +48,7 @@
      if ($account_passwd != $account_passwd_2)
         $error[$totalerrors++] = lang("The two passwords are not the same");
 
-     if (!count($new_permissions) || !count($account_groups)) {
+     if (!count($account_permissions) || !count($account_groups)) {
         $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
      }
 
@@ -95,8 +95,8 @@
 			$apps->account_type = 'u';
 			$apps->account_id = $account_id;
 			$apps->account_apps = Array(Array());
-			@reset($new_permissions);
-			while ($app = each($new_permissions))
+			@reset($account_permissions);
+			while ($app = each($account_permissions))
 			{
 				if ($app[1])
 				{
@@ -231,9 +231,9 @@
       if (! $perm_display[$i][1]) break;
 
       $perms_html .= '<tr bgcolor="' . $phpgw_info["theme"]["row_on"] . '"><td>' . lang($perm_display[$i][1]) . '</td>'
-                  . '<td><input type="checkbox" name="new_permissions['
+                  . '<td><input type="checkbox" name="account_permissions['
 		          . $perm_display[$i][0] . ']" value="True"';
-      if ($new_permissions[$perm_display[$i][0]]) {
+      if ($account_permissions[$perm_display[$i][0]]) {
          $perms_html .= " checked";
       }
       $perms_html .= "></td>";
@@ -247,9 +247,9 @@
       if (! $perm_display[$i][1]) break;
  
       $perms_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
-                   . '<td><input type="checkbox" name="new_permissions['
+                   . '<td><input type="checkbox" name="account_permissions['
  		          . $perm_display[$i][0] . ']" value="True"';
-      if ($new_permissions[$perm_display[$i][0]]) {
+      if ($account_permissions[$perm_display[$i][0]]) {
          $perms_html .= " checked";
       }
  	 $perms_html .= "></td></tr>";
