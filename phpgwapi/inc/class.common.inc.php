@@ -730,7 +730,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@abstract get image dir of an application
 		@param $appname application name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_image_dir($appname = '')
+		function get_image_dir($appname = '',$layout = '')
 		{
 			if ($appname == '')
 			{
@@ -741,8 +741,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
 
-			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
-				. $GLOBALS['phpgw_info']['server']['template_set'] . '/images';
+			if ($layout)
+			{
+				$imagedir_layout = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
+				if (@is_dir ($imagedir_layout))
+				{
+					return $imagedir_layout;
+				}
+			}
+
+			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/images';
 			$imagedir_default    = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
 			$imagedir_olddefault = PHPGW_SERVER_ROOT . '/' . $appname . '/images';
 
@@ -769,7 +777,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@abstract get image path of an application
 		@param $appname appication name optional can be derived from $phpgw_info['flags']['currentapp'];
 		*/
-		function get_image_path($appname = '')
+		function get_image_path($appname = '',$layout = '')
 		{
 			if ($appname == '')
 			{
@@ -779,6 +787,15 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			if (empty($GLOBALS['phpgw_info']['server']['template_set']))
 			{
 				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
+			}
+
+			if ($layout)
+			{
+				$imagedir_layout = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
+				if (@is_dir ($imagedir_layout))
+				{
+					return $GLOBALS['phpgw_info']['server']['webserver_url'] . SEP . $appname . SEP . 'templates' . SEP . $layout . SEP . 'images';
+				}
 			}
 
 			$imagedir            = PHPGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
