@@ -1112,23 +1112,23 @@
 
 		while ($db1->next_record()) {
 			$fields['id']	  = $db1->f("ab_id");
-			$fields['owner']      = $db1->f("ab_owner");
-			$fields['n_given']    = $db1->f("ab_firstname");
-			$fields['n_family']   = $db1->f("ab_lastname");
-			$fields['d_email']    = $db1->f("ab_email");
-			$fields['b_tel']      = $db1->f("ab_hphone");
-			$fields['a_tel']      = $db1->f("ab_wphone");
-			$fields['c_tel']      = $db1->f("ab_fax");
-			$fields['fn']         = $db1->f("ab_firstname")." ".$db1->f("ab_lastname");
+			$fields['owner']      = addslashes($db1->f("ab_owner"));
+			$fields['n_given']    = addslashes($db1->f("ab_firstname"));
+			$fields['n_family']   = addslashes($db1->f("ab_lastname"));
+			$fields['d_email']    = addslashes($db1->f("ab_email"));
+			$fields['b_tel']      = addslashes($db1->f("ab_hphone"));
+			$fields['a_tel']      = addslashes($db1->f("ab_wphone"));
+			$fields['c_tel']      = addslashes($db1->f("ab_fax"));
+			$fields['fn']         = addslashes($db1->f("ab_firstname")." ".$db1->f("ab_lastname"));
 			$fields["a_tel_work"] = "y";
 			$fields["b_tel_home"] = "y";
 			$fields["c_tel_fax"]  = "y";
-			$fields['org_name']   = $db1->f("ab_company");
-			$fields['title']      = $db1->f("ab_title");
-			$fields['adr_street'] = $db1->f("ab_street");
-			$fields['adr_locality']       = $db1->f("ab_city");
-			$fields['adr_region']         = $db1->f("ab_state");
-			$fields['adr_postalcode']     = $db1->f("ab_zip");
+			$fields['org_name']   = addslashes($db1->f("ab_company"));
+			$fields['title']      = addslashes($db1->f("ab_title"));
+			$fields['adr_street'] = addslashes($db1->f("ab_street"));
+			$fields['adr_locality']       = addslashes($db1->f("ab_city"));
+			$fields['adr_region']         = addslashes($db1->f("ab_state"));
+			$fields['adr_postalcode']     = addslashes($db1->f("ab_zip"));
 
 			$extra['pager']       = $db1->f("ab_pager");
 			$extra['mphone']      = $db1->f("ab_mphone");
