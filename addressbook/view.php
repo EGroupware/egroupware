@@ -22,7 +22,8 @@
 
   include("../header.inc.php");
 
-  $t = new Template($phpgw_info["server"]["app_tpl"]);
+  #$t = new Template($phpgw_info["server"]["app_tpl"]);
+  $t = new Template($phpgw->common->get_tpl_dir("addressbook"));
   $t->set_file(array( "view"	=> "view.tpl"));
 
   $this = CreateObject("phpgwapi.contacts");

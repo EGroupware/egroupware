@@ -17,7 +17,8 @@
                                "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  $t = new Template($phpgw_info["server"]["app_tpl"]);
+  #$t = new Template($phpgw_info["server"]["app_tpl"]);
+  $t = new Template($phpgw->common->get_tpl_dir("addressbook"));
   $t->set_file(array( "addressbook_header"	=> "header.tpl",
 		      "column"			=> "column.tpl",
 		      "row"			=> "row.tpl",
@@ -48,7 +49,7 @@
   $offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
 
   if ($filter == "none") { $filter = ""; }
-  else                   { $filter = "access=$filter"; }
+  if ($filter != "" )    { $filter = "access=$filter"; }
 
   $entries = $this->read($start,$offset,$columns_to_display,$query,$filter,$sort,$order);
 
