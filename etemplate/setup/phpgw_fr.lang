@@ -1,0 +1,230 @@
+%d etemplates deleted	etemplate	fr	%d eTemplates effacé(s)
+%d etemplates found	etemplate	fr	%d eTemplates trouvé(s)
+%s disabled	etemplate	fr	%s désactivé
+%s needed	etemplate	fr	%s nécessaire
+%s notranslation	etemplate	fr	%s PasDeTraduction
+%s onchange	etemplate	fr	%s EnCoursDeModification
+%s readonly	etemplate	fr	%s LectureSeulement
+a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
+add a new column (after the existing ones)	etemplate	fr	Ajouter une nouvelle colonne (après celles existant déjà)
+add column	etemplate	fr	Ajouter une colonne
+add table	etemplate	fr	Ajouter une table
+align	etemplate	fr	Aligner
+alignment of label and input-field in table-cell	etemplate	fr	Alignement du label et du champ de saisie dans la cellule de la table
+alignment of the v/hbox containing table-cell	etemplate	fr	Alignement de la boite H/V contenant la cellule de table
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fr	Une colonne indexée accélère les requêtes qui utilisent cette colonne (coûte de l'espace disque !!!)
+application	etemplate	fr	Application
+application name needed to write a langfile or dump the etemplates !!!	etemplate	fr	L'application Nom a eu besoin d'écrire un fichier de langue ou de dumper les eTemplates !!!
+attach	etemplate	fr	Attacher
+attach file	etemplate	fr	Attacher fichier
+border	etemplate	fr	Bord
+border-line-thickness for the table-tag	etemplate	fr	Epaisseur de la ligne de bord pour le tag de la table eTemplate
+can have special sql-value null	etemplate	fr	Peut avoir la valeur SQL spéciale NULL
+cancel	etemplate	fr	Annuler
+category	etemplate	fr	Catégorie
+cellpadding for the table-tag	etemplate	fr	Remplissage de cellule pour le tag de la table
+cells	etemplate	fr	Cellules
+cellspacing for the table-tag	etemplate	fr	Espacement des cellules pour le tag de la table
+center	etemplate	fr	Centre
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fr	Vérifier si le contenu devrait être seulement affiché mais non modifié (le contenu n'est alors pas renvoyé!)
+check if field has to be filled by user	etemplate	fr	Vérifier si le champ doit êtr rempli par l'utilisateur
+checkbox	etemplate	fr	Boîte à cocher
+class	etemplate	fr	Classe
+class, valign	etemplate	fr	classe, alignV
+click here to attach the file	etemplate	fr	Cliquer ici pour attacher le fichier
+click here to create the link	etemplate	fr	Cliquer ici pour créer le lien
+click here to start the search	etemplate	fr	Cliquer ici pour démarrer la recherche
+click here to upload the file	etemplate	fr	Cliquer ici pour uploader le fichier
+columnname	etemplate	fr	NomDeColonne
+comment	etemplate	fr	Commentaire
+create a new table for the application	etemplate	fr	Créer une nouvelle table pour l'application
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fr	Crée un fichier de lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
+css class for the table-tag	etemplate	fr	Classe CSS pour le tag de la table
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fr	Nom de la classe CSS pour cette ligne, préréglé: 'nmh' = entête prochaine correspondance, 'nmr' = alterne la ligne prochaine correspondance, 'nmr0'+'nmr1' lignes prochaines correspondances
+css-styles	etemplate	fr	Styles CSS
+db ensures that every row has a unique value in that column	etemplate	fr	La base de données s'assure que chaque ligne a une valeur unique dans cette colonne
+db-tools	etemplate	fr	Outils base de données
+default	etemplate	fr	Défaut
+delete	etemplate	fr	Effacer
+delete all selected etemplates, without further inquiry	etemplate	fr	Effacer TOUS les eTemplates sélectionnés, sans plus demander de confirmation
+delete column	etemplate	fr	Effacer la colonne
+delete this etemplate	etemplate	fr	Effacer cet eTemplate
+delete whole column (can not be undone!!!)	etemplate	fr	Effacer la colonne entière (ne peut PAS être annulé!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	fr	Efface le eTemplate spécifié ci-dessus de la base de données, ne peut PAS être annulé
+deletes the etemplate spez. above	etemplate	fr	fface le eTemplate spécifié ci-dessus
+deletes this column	etemplate	fr	Efface cette colonne
+discard changes	etemplate	fr	Annuler les changements
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché devant l'entrée ou l'entrée est insérée pour un '%s' dans le label (label du bouton de soumission ou nom de fichier image)
+displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
+do you want to save the changes you made in table %s?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez apporté à la table %s ?
+drop a table - this can not be undone	etemplate	fr	Détruire une table - ceci ne peut PAS être annulé
+drop table	etemplate	fr	Effacer table
+dump4setup	etemplate	fr	DumpPourRéglage
+edit	etemplate	fr	Modifier
+edit the etemplate spez. above	etemplate	fr	Modifier l'eTemplate spécifié ci-dessus
+editable templates - db-tools	etemplate	fr	Templates modifiables - outils de bases de données
+editable templates - delete template	etemplate	fr	Templates modifiables - effacer le template
+editable templates - editor	etemplate	fr	Templates modifiables - éditeur
+editable templates - search	etemplate	fr	Templates modifiables - rechercher
+editable templates - show template	etemplate	fr	Templates modifiables - montrer le template
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
+enable javascript onchange submit	etemplate	fr	activer la soumission sur changement en JavaScript
+enter '' for an empty default, nothing mean no default	etemplate	fr	entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
+enter a search pattern	etemplate	fr	Entrez une chaîne de recherche
+enter filename to upload and attach, use [browse...] to search for it	etemplate	fr	Entrez un nom de fichier à uploader et attacher, utilisez [naviguer...] pour le rechercher
+enter the new version number here (has to be > old_version)	etemplate	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
+error: template not found !!!	etemplate	fr	Erreur: Template non trouvé !!!
+error: webserver is not allowed to write into '%s' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%s' !!!
+error: while saveing !!!	etemplate	fr	Erreur: pendant la sauvegarde !!!
+etemplate	common	fr	eTemplate
+etemplate '%s' imported, use save to put it in the database	etemplate	fr	eTemplate '%s' importé, utilisez Enregistrer pour le mettre dans la base de données
+etemplate '%s' written to '%s'	etemplate	fr	eTemplate '%s' écrit dans '%s'
+etemplate editor	etemplate	fr	Editeur d'eTemplate
+exchange this row with the one above	etemplate	fr	Echanger cette ligne avec celle du dessus
+exchange this two columns	etemplate	fr	Echanger ces deux colonnes
+export the loaded etemplate into a xml-file	etemplate	fr	exporter l'eTemplate chargé dans un fichier XML
+export xml	etemplate	fr	Exporter XML
+extensions loaded:	etemplate	fr	Extensions chargées:
+file	etemplate	fr	Fichier
+fileupload	etemplate	fr	UploadFichier
+first	etemplate	fr	Premier
+floating point	etemplate	fr	Virgule flottante
+foreign key	etemplate	fr	Clé étrangère
+go to the first entry	etemplate	fr	Aller à la première entrée
+go to the last entry	etemplate	fr	Aller à la dernière entrée
+go to the next page of entries	etemplate	fr	Aller à la page suivante d'entrées
+go to the previous page of entries	etemplate	fr	Aller à la page précédente d'entrées
+hbox	etemplate	fr	BoiteH
+height	etemplate	fr	Hauteur
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	fr	Hauteur de la ligne (en % ou pixels), désactiver la ligne: [! = pas]<valeur>[=<verifier>] p.e.: '!@donnees' désactive la ligne si le contenu de donnees est vide
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	fr	Hauteur de la table en % ou pixels pour le tag de la table et div (optionnel)
+height, disabled	etemplate	fr	Hauteur, désactivé
+help	etemplate	fr	Aide
+horizontal rule	etemplate	fr	Régle horizontale
+html	etemplate	fr	Html
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fr	Si le champ est désactivé une cellule de table vide est affiché, pour enlèvement (temporaire) d'un champ/cellule
+image	etemplate	fr	Image
+import	etemplate	fr	Importer
+import an etemplate from a xml-file	etemplate	fr	import an eTemplate from a xml-file
+import table-definitions from existing db-table	etemplate	fr	Importer les définitions de table depuis la table de base de données existante
+import xml	etemplate	fr	Importer XML
+index/name of returned content (name of the template, link / method for image)	etemplate	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
+indexed	etemplate	fr	Indexé
+insert new column behind this one	etemplate	fr	Insérer une nouvelle colonne derrière celle-ci
+insert new column in front of all	etemplate	fr	Insérer une nouvelle colonne devant toutes les autres
+insert new row after this one	etemplate	fr	Insérer une nouvelle ligne devant celle-ci
+insert new row in front of first line	etemplate	fr	Insérer une nouvelle ligne devant la première ligne
+integer	etemplate	fr	Nombre entier
+key	etemplate	fr	Clé
+label	etemplate	fr	Label
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	fr	Label:[gras][italique] Texte:[longueur][,max] Nombres:[min][,[max][,longueur]] T.aire:[lignes][,colonnes] Radiob.:valeur H.Règle:[largeur] Templ.:[IndexDansContenu] Sélect:[multiselection] Date:[valeurs: p.e. 'A-m-j']
+lang	etemplate	fr	Langue
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	fr	raccourci-langue (p.e. 'en' pour english) pour le template dépendant d'un langage ('' lit vos préférences pour le langage ou la valeur par défaut, utiliser 'default' pour lire le template par défaut '')
+last	etemplate	fr	Dernier
+left	etemplate	fr	Gauche
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	fr	Longueur pour char+varchar, précision d'entiers: 2, 4, 8 et flottants: 4, 8
+link	etemplate	fr	Lien
+linklist	etemplate	fr	Liste de liens
+linkto	etemplate	fr	LierVers
+load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
+name	etemplate	fr	Nom
+name of other table where column is a key from	etemplate	fr	Nom de l'autre table où la colonne est une clé de
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	fr	Nom de l'ensemble phpgw-template (p.e. verdilak): '' = défaut (va lire le template dans les préférences, utiliser 'default' pour lire le template par défaut '')
+name of table to add	etemplate	fr	Nom de la table à ajouter
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	fr	Nom de l'eTemplate, devrait être dans le formulaire application.function[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	fr	Doit être unique dans la table et pas un mot SQL réservé, le mieux est de préfixer tout avec une abréviation sur 2 caractères du nom de l'application, p.e. 'et_'
+new search	etemplate	fr	Nouvelle recherche
+newer version '%s' exists !!!	etemplate	fr	La nouvelle version '%s' existe !!!
+nextmatch	etemplate	fr	Occurrence trouvée suivante
+no	etemplate	fr	Non
+no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
+nothing found - try again !!!	etemplate	fr	Rien trouvé - essayez encore !!!
+nullable	etemplate	fr	Positionnable à zéro
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	fr	Nombre de colonnes sur lesquelles le champ/cellule devrait s'étendre ou 'tous' pour les colonnes qui restent, nom de la classe CSS (pour le tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	fr	Nombre de lignes/colonnes dans une boîte H/V, remplissage de cellule, espacement de cellule
+of	etemplate	fr	de
+only an other version found !!!	etemplate	fr	Une seule autre version trouvée !!!
+optional note about the link	etemplate	fr	Note optionnelle à propos du lien
+options	etemplate	fr	Options
+overflow	etemplate	fr	Débordement
+padding	etemplate	fr	Remplissage
+precision	etemplate	fr	Précision
+primary key	etemplate	fr	Clé primaire
+primary key for the table, gets automaticaly indexed	etemplate	fr	Clé primaire pour la table, est automatiquement indexée
+radiobutton	etemplate	fr	BoutonRadio
+read	etemplate	fr	Lire
+read etemplate from database (for the keys above)	etemplate	fr	Lire eTemplate depuis la base de données (pour les clés ci-dessus)
+remove row (can not be undone!!!)	etemplate	fr	Enlever la ligne (ne peut PAS être annulé!!!)
+remove this link (not the entry itself)	etemplate	fr	Enlever ce lien (pas l'entrée elle-même)
+returns savely, without deleting	etemplate	fr	Revient de manière sûre, sans effacer
+right	etemplate	fr	Droite
+save	etemplate	fr	Enregistrer
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fr	Enregistrer l'eTemplate sous les clés ci-dessus (nom, ...), changez-les pour un Sauvegarder-sous
+saves changes to tables_current.inc.php	etemplate	fr	Enregistrere les changements dans tables_current.inc.php
+scale	etemplate	fr	Balance
+scale for float	etemplate	fr	Balance pour les flottants
+search	etemplate	fr	Rechercher
+select a category	etemplate	fr	Choisissez une catégorie
+select a primary contact, to show in the list	etemplate	fr	Choisissez un contact primaire, à montrer dans la liste
+select access	etemplate	fr	Choisissez l'accès
+select account	etemplate	fr	Choisissez le compte
+select an app to search in	etemplate	fr	Choisissez une application dans laquelle rechercher
+select an application	etemplate	fr	Choisissez une application
+select an entry to link with	etemplate	fr	Choisissez une entrée à lier
+select an table of the application	etemplate	fr	Choisissez une table pour l'application
+select category	etemplate	fr	Choisissez une catégorie
+select country	etemplate	fr	Choisissez un pays
+select day	etemplate	fr	Choisissez un jour
+select if content of field should not be translated (label gets always translated)	etemplate	fr	Choisissez si le contenu du champ ne devrait pas être traduit (le label est toujours traduit)
+select month	etemplate	fr	Choisissez un mois
+select one ...	etemplate	fr	CHoisissez un ...
+select percentage	etemplate	fr	Choisissez un pourcentage
+select priority	etemplate	fr	Choisissez une priorité
+select state	etemplate	fr	Choisissez un état
+select this etemplate to delete it	etemplate	fr	Choisissez cet eTemplate pour l'effacer
+select year	etemplate	fr	Choisissez l'année
+selectbox	etemplate	fr	Boîte de sélection
+show	etemplate	fr	Montrer
+show values	etemplate	fr	Montrer les valeurs
+showing	etemplate	fr	montre
+shows / allows you to enter values into the etemplate for testing	etemplate	fr	vous montre / autorise à entrer des valeurs dans l'eTemplate pour tester
+shows/displays etemplate for testing, does not save it before	etemplate	fr	montre/affiche l'eTemplate pour tester, ne l'enregistre pas avant
+spacing	etemplate	fr	Espacement
+span, class	etemplate	fr	Envergure, Classe
+start a new search, cancel this link	etemplate	fr	Démarre une nouvelle recherche, annule ce lien
+start new search for the above pattern	etemplate	fr	Démarre une nouvelle recherche pour la chaîne de caractères ci-dessus
+submitbutton	etemplate	fr	BoutonSoumettre
+tablename	etemplate	fr	NomTable
+tabs	etemplate	fr	Tabs
+template	etemplate	fr	Template
+template deleted	etemplate	fr	Template effacé
+template saved	etemplate	fr	Template enregistré
+text	etemplate	fr	Texte
+textarea	etemplate	fr	ChampTexte
+to start the db-tools	etemplate	fr	Pour démarre les outils base de données
+to start the etemplate editor	etemplate	fr	Pour démarre l'éditeur d'eTemplate
+to start the search	etemplate	fr	Pour démarrer la recherche
+type	etemplate	fr	Type
+type of the column	etemplate	fr	Type de la colonne
+type of the field (select label if field should be empty)	etemplate	fr	Type du champ (choisissez le label si le champ devrait être vide)
+unique	etemplate	fr	Unique
+unlink	etemplate	fr	Délier
+update from version '%s' to	etemplate	fr	Mettre à jour depuis la version '%s' vers
+upload	etemplate	fr	Uploader
+value	etemplate	fr	Valeur
+vbox	etemplate	fr	BoîteV
+version	etemplate	fr	Version
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	fr	Numéro de version, devrait être de la forme: majeur.mineur.revision.nombre (p.e. 0.9.13.001 tous les nombres remplis avec des zéros)
+view this linked entry in its application	etemplate	fr	Voir cette entrée liée dans son application
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fr	ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
+width	etemplate	fr	Largeur
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	fr	Largeur de la colonne (en % ou pixels), désactiver col: [! = pas]<valeur>[=<verifier>] p.e.: '!@donnees' désactive la colonne  si le contenu de donnees est vide
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	fr	Largeur de la table en % ou pixels, pour le tag de la table et div (optionnel)
+width, disabled	etemplate	fr	Largeur, désactivé
+write <app>/setup/tables_current.inc.php	etemplate	fr	Ecrire <app>/setup/tables_current.inc.php
+write langfile	etemplate	fr	Ecrire le fichier de langage
+write tables	etemplate	fr	Ecrire les tables
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	fr	Ecrit un fichier 'etemplates.inc.php' (pour l'application dans le nom) dans le répertoire setup de l'application
+xml-file to import	etemplate	fr	Fichier XML à importer
+xslt template	etemplate	fr	Template XSLT
+yes	etemplate	fr	Oui
