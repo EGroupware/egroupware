@@ -77,7 +77,8 @@
   function form($format,$action,$title,$fields) { // used for add/edit
     global $phpgw, $phpgw_info;
      
-    $t = new Template($phpgw_info["server"]["app_tpl"]);
+    #$t = new Template($phpgw_info["server"]["app_tpl"]);
+    $t = new Template($phpgw->common->get_tpl_dir("addressbook"));
     $t->set_file(array( "form"	=> "form.tpl"));
 
     $email        = $fields["D_EMAIL"];
@@ -327,7 +328,7 @@
     $t->set_var("title",$title);
     $t->set_var("lang_email",lang("Email"));
     $t->set_var("email",$email);
-    $t->set_var("lang_email_type",lang("Email Type"));
+    $t->set_var("lang_email_type",lang("EMail Type"));
     $t->set_var("email_type",$email_type);
     $t->set_var("lang_url",lang("URL"));
     $t->set_var("url",$url);
