@@ -62,12 +62,12 @@
 		 * @param $onchange javascript to execute if the selection changes, eg. to reload the page
 		 * @param $select array/bool/string array with id's as keys or values. If the id is in the key and the value is a string,
 		 *	it gets appended to the user-name. Or false if the selectable values for the selectbox are determined by use.
-		 *  Or a string whith get added as first Option with value=0, eg. lang('all')
+		 *  Or a string which gets added as first Option with value=0, eg. lang('all')
 		 * @return the necessary html
 		 */
 		function selection($name,$element_id,$selected,$use='accounts',$lines=1,$not=False,$options='',$onchange='',$select=False)
 		{
-			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options')</p>\n";
+			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options','$onchange',".print_r($select,True).")</p>\n";
 			if (!is_array($selected))
 			{
 				$selected = $selected ? explode(',',$selected) : array();
@@ -109,7 +109,7 @@
 					{
 						foreach($members as $member)
 						{
-							if (!in_array($member['account_id'],$use))
+							if (!in_array($member['account_id'],$select))
 							{
 								$select[] = $member['account_id'];
 							}
