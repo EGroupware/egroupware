@@ -41,7 +41,8 @@
 	}
 	$phpgw_setup->loaddb();
 
-	/* Guessing default paths. */
+	/* Guessing default values. */
+	$GLOBALS['current_config']['hostname']  = $HTTP_HOST;
 	$GLOBALS['current_config']['files_dir'] = ereg_replace('/setup','/files',dirname($SCRIPT_FILENAME));
 	if (is_dir('/tmp'))
 	{
@@ -142,7 +143,89 @@
 
 	$setup_tpl->pparse('out','T_config_pre_script');
 
-	$phpgw_setup->execute_script('config',array('phpgwapi','admin','preferences')); /* ;,'preferences','email','nntp')); */
+	/* Now parse each of the templates we want to show here */
+	class phpgw
+	{
+		var $common;
+		var $accounts;
+		var $applications;
+		var $db;
+	}
+	$phpgw = new phpgw;
+	$phpgw->common = CreateObject('phpgwapi.common');
+
+	$cfg_apps = array('phpgwapi','admin','preferences');
+	while(list(,$cfg_app) = each($cfg_apps))
+	{
+		$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($cfg_app));
+
+		$t->set_unknowns('keep');
+		$t->set_file(array('config' => 'config.tpl'));
+		$t->set_block('config','body','body');
+		$t->set_var('th_bg',   '486591');
+		$t->set_var('th_text', 'FFFFFF');
+		$t->set_var('row_on',  'DDDDDD');
+		$t->set_var('row_off', 'EEEEEE');
+
+		$vars = $t->get_undefined('body');
+		$phpgw->common->hook_single('config',$cfg_app);
+
+		while (list($null,$value) = each($vars))
+		{
+			$valarray = explode('_',$value);
+			$type = $valarray[0];
+			$new = $newval = '';
+
+			while($chunk = next($valarray))
+			{
+				$new[] = $chunk;
+			}
+			$newval = implode(' ',$new);
+
+			switch ($type)
+			{
+				case 'lang':
+					$t->set_var($value,lang($newval));
+					break;
+				case 'value':
+					$newval = ereg_replace(' ','_',$newval);
+					$t->set_var($value,$current_config[$newval]);
+					break;
+				case 'selected':
+					$configs = array();
+					$config  = '';
+					$newvals = explode(' ',$newval);
+					$setting = end($newvals);
+					for ($i=0;$i<(count($newvals) - 1); $i++)
+					{
+						$configs[] = $newvals[$i];
+					}
+					$config = implode('_',$configs);
+					/* echo $config . '=' . $current_config[$config]; */
+					if ($current_config[$config] == $setting)
+					{
+						$t->set_var($value,' selected');
+					}
+					else
+					{
+						$t->set_var($value,'');
+					}
+					break;
+				case 'hook':
+					$newval = ereg_replace(' ','_',$newval);
+					$t->set_var($value,$newval($current_config));
+					break;
+				default:
+					$t->set_var($value,'');
+					break;
+			}
+		}
+
+		$t->pfp('out','body');
+		unset($t);
+	}
+
+	//$phpgw_setup->execute_script('config',array('phpgwapi','admin','preferences')); /* ;,'preferences','email','nntp')); */
 	$setup_tpl->set_var('more_configs',lang('Please login to phpgroupware and run the admin application for additional site configuration') . '.');
 
 	$setup_tpl->set_var('lang_submit',lang('submit'));

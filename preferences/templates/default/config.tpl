@@ -10,8 +10,8 @@
     <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr bgcolor="{row_off}">
-    <td colspan="2">&nbsp;<b>{lang_Preferences}</b></td>
+   <tr bgcolor="{th_bg}">
+    <td colspan="2"><font color="{th_text}"><b>{lang_Preferences}</b></font></td>
    </tr>
 
    <tr bgcolor="{row_on}">
@@ -99,7 +99,7 @@
    </tr>
 
    <tr bgcolor="{row_on}">
-    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array ?}:</td>
+    <td>{lang_Would_you_like_phpGroupWare_to_cache_the_phpgw_info_array_?}:</td>
     <td>
      <select name="newsettings[cache_phpgw_info]">
       <option value="">No</option>
@@ -109,7 +109,7 @@
    </tr>
 
    <tr bgcolor="{row_off}">
-    <td>{lang_Deny_all_users_access_to_grant_other_users_access_to_there_entrys ?}:</td>
+    <td>{lang_Deny_all_users_access_to_grant_other_users_access_to_their_entries_?}:</td>
     <td>
      <select name="newsettings[deny_user_grants_access]">
       <option value="">No</option>
