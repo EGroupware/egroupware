@@ -1204,8 +1204,13 @@
 //				}
 
 				$content = ExecMethod('calendar.boicalendar.export',$GLOBALS['HTTP_POST_VARS']['cal_id']);
-				$vfs->cd('/', True, array(RELATIVE_USER));
-				$vfs->write($output_file, array (RELATIVE_USER), $content);
+				$vfs->cd(array('string' => '/', 
+							'relatives' => array(RELATIVE_USER)
+							));
+				$vfs->write(array('string' => $output_file,
+				 			'relatives' => array (RELATIVE_USER), 
+				 			'content' => $content
+				 			));
 //				$vfs->write($output_file, array (RELATIVE_USER_APP), $content);
 				if($this->debug)
 				{
