@@ -430,7 +430,8 @@
 		*/
 		function phpgw_set_cookiedomain()
 		{
-			$this->cookie_domain = $_SERVER['HTTP_HOST'];
+			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
+			$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 
 			// remove port from HTTP_HOST
 			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
