@@ -196,15 +196,12 @@
 			// If you plan on using the cron apps, please remove the following lines.
 			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
 
-//			if (! isset($phpgw_info['server']['cron_apps']) || ! $phpgw_info['server']['cron_apps'])
-//			{
-				$phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
-									 . "' and session_flags !='A'",__LINE__,__FILE__);
+			$phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
+								 . "' and session_flags !='A'",__LINE__,__FILE__);
 
-				// This is set a little higher, we don't want to kill session data for anonymous sessions.
-				$phpgw->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
+			// This is set a little higher, we don't want to kill session data for anonymous sessions.
+			$phpgw->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
 									 . "'",__LINE__,__FILE__);
-//			}
 		}
 
 		function create($login,$passwd)
@@ -300,6 +297,8 @@
 			}
 
 			$user_ip  = $this->getuser_ip();
+
+			$phpgw->db->transaction_begin();
 			$phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
 								. "','".$login."','" . $user_ip . "','"
 								. $now . "','" . $now . "','".$info_string."','" . $session_flags
@@ -310,6 +309,7 @@
 
 			$this->appsession('account_previous_login','phpgwapi',$phpgw->auth->previous_login);
 			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);
+			$phpgw->db->transaction_commit();
 
 			return $this->sessionid;
 		}
@@ -332,6 +332,7 @@
 			$phpgw_info['user']['sessionid'] = $sessionid;
 			$phpgw_info['user']['kp3'] = $kp3;
 	 
+			$phpgw->db->transaction_begin();
 			$phpgw->db->query("delete from phpgw_sessions where session_id='"
 								. $phpgw_info['user']['sessionid'] . "'",__LINE__,__FILE__);
 			$phpgw->db->query("delete from phpgw_app_sessions where sessionid='"
@@ -348,6 +349,8 @@
 				}
 			}
 			$this->clean_sessions();
+			$phpgw->db->transaction_commit();
+
 			return True;
 		}
 
