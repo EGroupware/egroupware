@@ -47,6 +47,11 @@
   if(file_exists('../header.inc.php')) { include('../header.inc.php'); }
 
   include('./inc/phpgw_setup.inc.php');
-//  include('./inc/phpgw_schema_proc.inc.php');
+  include('./inc/phpgw_schema_proc.inc.php');
+  include('./inc/phpgw_schema_current.inc.php');
   $phpgw_setup = new phpgw_setup;
+  /*$phpgw_setup12 = new phpgw_schema_proc('mysql');
+  $phpgw_setup13 = new phpgw_schema_proc('pgsql');
+  $phpgw_setup12->GenerateScripts($phpgw_tables,true);
+  $phpgw_setup13->GenerateScripts($phpgw_tables,true);*/
 ?>

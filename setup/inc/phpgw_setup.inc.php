@@ -247,7 +247,13 @@
       $this->db->Halt_On_Error = "no";
       if ($phpgw_info["setup"]["stage"]["db"] != 10){return "";}
 
-      $this->db->query("select config_value from config where config_name='freshinstall'");
+      // Since 0.9.10pre6 config table is named as phpgw_config
+      $config_table="config";
+      $ver = explode(".",$phpgw_info["server"]["versions"]["phpgwapi"]);
+      if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs)) 
+        if(($regs[1] == "10") && ($regs[3] >= "6"))
+	  $config_table="phpgw_config";
+      $this->db->query("select config_value from $config_table where config_name='freshinstall'");
       $this->db->next_record();
       $configed = $this->db->f("config_value");
       if ($configed){

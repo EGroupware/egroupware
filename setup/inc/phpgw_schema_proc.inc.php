@@ -21,10 +21,10 @@ class phpgw_schema_proc
 	
 	function phpgw_schema_proc($dbms)
 	{
-		include("phpgw_schema_proc_" . $dbms . ".inc.php");
+		include("./inc/phpgw_schema_proc_" . $dbms . ".inc.php");
 		eval("\$this->m_oTranslator = new phpgw_schema_proc_$dbms;");
 		
-		include("phpgw_schema_proc_array.inc.php");
+		include("./inc/phpgw_schema_proc_array.inc.php");
 		$this->m_oDeltaProc = new phpgw_schema_proc_array;
 		$this->m_aTables = array();
 		$this->m_bDeltaOnly = false; // Default to false here in case it's just a CreateTable script
