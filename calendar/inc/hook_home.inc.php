@@ -29,9 +29,9 @@
     echo '<table border="0" width="70%" cellspacing="0" cellpadding="0"><tr><td align="center">'
 	    . lang(date("F",$phpgw->calendar->today["raw"])).' '.$phpgw->calendar->today["day"].', '.$phpgw->calendar->today["year"].'</tr></td>'
         . '<tr><td bgcolor="'.$phpgw_info["theme"]["bg_text"].'" valign="top">';
-    $phpgw->calendar->printer_friendly = True;
+//    $phpgw->calendar->printer_friendly = True;
     echo $phpgw->calendar->print_day_at_a_glance($now).'</td></tr></table>'."\n";
-    $phpgw->calendar->printer_friendly = False;
+//    $phpgw->calendar->printer_friendly = False;
     echo "\n".'<!-- Calendar info --></table></td></tr>'."\n";
     unset($phpgw->calendar);
   } 
