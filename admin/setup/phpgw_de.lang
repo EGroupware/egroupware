@@ -78,3 +78,4 @@ view sessions	admin	de	Sitzungen anzeigen
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Filetyp auswählen
+userdata	admin	de	Benutzerdaten

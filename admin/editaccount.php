@@ -23,7 +23,7 @@
 	// creates the html for the user data
 	function createPageBody($_account_id,$_userData='',$_errors='')
 	{
-		global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info, $t;
 
 		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_unknowns('remove');
@@ -39,6 +39,7 @@
 		$t->set_block('account','form','form');
 		$t->set_block('account','form_passwordinfo','form_passwordinfo');
 		$t->set_block('account','form_buttons_','form_buttons_');
+		$t->set_block('account','link_row','link_row');
 
 		print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
 		if (is_array($_userData))
@@ -230,6 +231,8 @@
 			'permissions_list'	=> $appRightsOutput
 		);
 		$t->set_var($var);
+		
+		$phpgw->common->hook('edit_account');
 
 		echo $t->fp('out','form');
 	}
@@ -368,6 +371,30 @@
 			return $error;
 		}
 	}
+
+        function display_section($appname,$title,$file)
+        {
+                global $phpgw, $phpgw_info, $account_id;
+                $i = 0;
+                $color[1] = $phpgw_info['theme']['row_off'];
+                $color[0] = $phpgw_info['theme']['row_on'];
+                while(list($text,$url) = each($file))
+                {
+                        $url = $phpgw->link($url,"account_id=$account_id");
+                        section_item($url,lang($text),$color[$i%2]);
+                        $i++;
+                }
+        }
+ 
+        function section_item($pref_link='',$pref_text='', $bgcolor)
+        {
+                global $phpgw, $phpgw_info, $t;
+ 
+                $t->set_var('pref_link',$pref_link);
+                $t->set_var('pref_text',$pref_text);
+                $t->set_var('tr_color',$bgcolor);
+                $t->parse('rows','link_row',True);
+        }
 
 	// todo
 	// not needed if i use the same file for new users too
