@@ -264,7 +264,7 @@
 					}
 				}
 
-				if($go)
+				if($go && $user['account_id'] != $phpgw_info['user']['account_id'])
 				{
 					$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 					display_row($tr_color,'u_',$user['account_id'],$phpgw->common->display_fullname($user['account_lid'],$user['account_firstname'],$user['account_lastname']));
