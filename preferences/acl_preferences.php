@@ -202,7 +202,7 @@
 		}
 	}
 
-	$p = CreateObject('phpgwapi.Template',$phpgw_info['server']['app_tpl']);
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array (
 		'preferences'	=> 'preference_acl.tpl',
 		'row_colspan'	=> 'preference_colspan.tpl',
