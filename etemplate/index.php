@@ -19,9 +19,6 @@
 	);
 	include('../header.inc.php');
 
-	$editor = CreateObject('etemplate.editor');
-
-	$editor->edit();
-
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.editor.edit'));
+	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
