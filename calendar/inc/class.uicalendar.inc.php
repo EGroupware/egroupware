@@ -56,8 +56,6 @@
 
 		function uicalendar()
 		{
-			global $GLOBALS;
-			
 			$GLOBALS['phpgw']->browser    = CreateObject('phpgwapi.browser');
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
 
@@ -92,8 +90,6 @@
 
 		function mini_calendar($params)
 		{
-			global $GLOBALS;
-
 			if(!is_array($params))
 			{
 				return;
@@ -242,16 +238,12 @@
 
 		function index($params='')
 		{
-			global $GLOBALS;
-			
 			Header('Location: '. $this->page('',$params));
 			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function month()
 		{
-			global $GLOBALS;
-			
 			$this->bo->read_holidays();
 
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
@@ -323,9 +315,6 @@
 
 		function week()
 		{
-
-			global $GLOBALS;
-
 			$this->bo->read_holidays();
 
 			$next = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
@@ -422,8 +411,6 @@
 
 		function year()
 		{
-			global $GLOBALS;
-
 			if(!$this->bo->printer_friendly)
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -490,7 +477,7 @@
 		
 		function view($vcal_id=0)
 		{
-			global $GLOBALS, $HTTP_GET_VARS;
+			global $HTTP_GET_VARS;
 			
   			unset($GLOBALS['phpgw_info']['flags']['noheader']);
    		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -653,7 +640,7 @@
 
 		function delete()
 		{
-			global $GLOBALS, $HTTP_GET_VARS;
+			global $HTTP_GET_VARS;
 
 			if(!isset($HTTP_GET_VARS['cal_id']))
 			{
@@ -680,8 +667,6 @@
 
 		function day()
 		{
-			global $GLOBALS;
-			
 			$this->bo->read_holidays();
 			
 			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
@@ -749,7 +734,7 @@
 
 		function edit_status()
 		{
-			global $GLOBALS, $HTTP_GET_VARS;
+			global $HTTP_GET_VARS;
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -805,8 +790,6 @@
 
 		function planner()
 		{
-			global $GLOBALS;
-
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -852,18 +835,18 @@
 					'syear'	=> $this->bo->year,
 					'smonth'	=> $this->bo->month,
 					'sday'	=> 1,
-					'eyear'	=> 0,
-					'emonth'	=> 0,
-					'eday'	=> 1
+					'eyear'	=> $this->bo->year,
+					'emonth'	=> $this->bo->month,
+					'eday'	=> $days
 				)
 			);
 			$firstday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,1,$this->bo->year)));
-			$lastday = intval(date('Ymd',mktime(0,0,0,$this->bo->month + 1,0,$this->bo->year)));
+			$lastday = intval(date('Ymd',mktime(0,0,0,$this->bo->month,$days,$this->bo->year)));
 			
 			$this->bo->remove_doubles_in_cache($firstday,$lastday);
 
 			$rows = array();
-			for($v=$firstday;$v<=$lastday;$v += 1)
+			for($v=$firstday;$v<=$lastday;$v++)
 			{
 				$daily = $this->bo->cached_events[$v];
 				@reset($daily);
@@ -987,8 +970,6 @@
 
 		function matrixselect()
 		{
-			global $GLOBALS;
-			
 			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
 
 			$sb = CreateObject('phpgwapi.sbox');
@@ -1106,7 +1087,7 @@
 
 		function viewmatrix()
 		{
-			global $GLOBALS, $HTTP_POST_VARS;
+			global $HTTP_POST_VARS;
 
 			$participants = $HTTP_POST_VARS['participants'];
 			$parts = Array();
@@ -1190,7 +1171,7 @@
 
 		function search()
 		{
-			global $GLOBALS, $HTTP_POST_VARS;
+			global $HTTP_POST_VARS;
 
 			if (!$HTTP_POST_VARS['keywords'])
 			{
@@ -1328,8 +1309,6 @@
 
 		function page($page='',$params='')
 		{
-			global $GLOBALS;
-
 			if($page == '')
 			{
 				$page_ = explode('.',$this->bo->prefs['calendar']['defaultcalendar']);
@@ -1354,7 +1333,7 @@
 
 		function header()
 		{
-			global $GLOBALS, $HTTP_POST_VARS, $HTTP_GET_VARS;
+			global $HTTP_POST_VARS, $HTTP_GET_VARS;
 
 			$cols = 8;
 			if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)
@@ -1373,8 +1352,6 @@
 
 		function footer()
 		{
-			global $GLOBALS;
-			
 			list(,,$method) = explode('.',$GLOBALS['menuaction']);
 		
 			if (@$this->bo->printer_friendly)
@@ -1475,8 +1452,6 @@
 
 		function no_edit()
 		{
-		   global $GLOBALS;
-		   
 		   if(!$isset($GLOBALS['phpgw_info']['flags']['noheader']))
 		   {
    			unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -1491,8 +1466,6 @@
 
 		function link_to_entry($event,$month,$day,$year)
 		{
-			global $GLOBALS;
-
 			$str = '';
 			$is_private = $this->bo->is_private($event,$this->bo->owner);
 			$editable = ((!$this->bo->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
@@ -1632,8 +1605,6 @@
 
 		function overlap($overlapping_events,$event)
 		{
-         global $GLOBALS;
-
          $month = $event['start']['month'];
          $mday = $event['start']['mday'];
          $year = $event['start']['year'];
@@ -1689,8 +1660,7 @@
 
 		function planner_participants($parts)
 		{
-			global $GLOBALS;
-			static $id2lid = array();
+			static $id2lid;
 			
 			$names = '';
 			while (list($id,$status) = each($parts))
@@ -1714,7 +1684,7 @@
 			
 		function planner_category($id)
 		{
-			static $cats = array();
+			static $cats;
 
 			if (!isset($cats[$id]))
 			{
@@ -1727,8 +1697,6 @@
 
 		function week_header($month,$year,$display_name = False)
 		{
-			global $GLOBALS;
-
 			$this->weekstarttime = $this->bo->datetime->get_weekday_start($year,$month,1);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1772,8 +1740,6 @@
 
 		function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0)
 		{
-			global $GLOBALS;
-
 			if($owner == 0) { $owner = $GLOBALS['phpgw_info']['user']['account_id']; }
 
 			$temp_owner = $this->bo->owner;
@@ -1892,8 +1858,6 @@
 		
 		function display_month($month,$year,$showyear,$owner=0)
 		{
-			global $GLOBALS;
-
 			$this->bo->store_to_cache(
 				Array(
 					'syear'	=> $year,
@@ -1940,8 +1904,6 @@
 
 		function display_weekly($params)
 		{
-			global $GLOBALS;
-
 			if(!is_array($params))
 			{
 				$this->index();
@@ -2020,8 +1982,6 @@
 
 		function view_event($event)
 		{
-			global $GLOBALS;
-
 			if(!$event['participants'][$this->bo->owner])
 			{
 				return '<center>'.lang('You do not have permission to read this record!').'</center>';
@@ -2226,8 +2186,6 @@
 
 		function print_day($params)
 		{
-			global $GLOBALS;
-
 			if(!is_array($params))
 			{
 				$this->index();
@@ -2533,8 +2491,6 @@
 
 		function timematrix($param)
 		{
-			global $GLOBALS;
-
 			if(!is_array($param))
 			{
 				$this->index();
@@ -2666,8 +2622,6 @@
 
 		function get_response($cal_id)
 		{
-			global $GLOBALS;
-
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(
 				Array(
@@ -2698,8 +2652,6 @@
 
 		function edit_form($param)
 		{
-			global $GLOBALS;
-
 			if(!is_array($param))
 			{
 				$this-index();
@@ -2952,7 +2904,6 @@
 
 		function build_part_list(&$users,$accounts,$owner)
 		{
-			global $GLOBALS;
 			if($accounts == False)
 			{
 				return;

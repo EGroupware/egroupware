@@ -26,30 +26,12 @@
 
 		function socalendar($param)
 		{
-			global $phpgw, $phpgw_info;
-
-			$this->db = $phpgw->db;
+			$this->db = $GLOBALS['phpgw']->db;
 			$this->datetime = CreateObject('phpgwapi.datetime');
 
-			if(!isset($param['owner']) || $param['owner'] == 0)
-			{
-				$this->owner = $phpgw_info['user']['account_id'];
-			}
-			else
-			{
-				$this->owner = $param['owner'];
-			}
-
-			if(isset($param['filter']) && $param['filter'] != '')
-			{
-				$this->filter = $param['filter'];
-			}
-
-			if(isset($param['category']) && $param['category'] != '')
-			{
-				$this->cat_id = $param['category'];
-			}
-			
+			$this->owner = (!isset($param['owner']) || $param['owner'] == 0?$GLOBALS['phpgw_info']['user']['account_id']:$param['owner']);
+			$this->filter = (isset($param['filter']) && $param['filter'] != ''?$param['filter']:$this->filter);
+			$this->cat_id = (isset($param['category']) && $param['category'] != ''?$param['category']:$this->cat_id);
 			if($this->debug)
 			{
 				echo 'SO Filter : '.$this->filter."<br>\n";
@@ -76,25 +58,15 @@
 		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0)
 		{
 			$this->makeobj();
-
 			$extra = '';
-			if(strpos($this->filter,'private'))
-			{
-				$extra .= 'AND phpgw_cal.is_public=0 ';
-			}
-
-			if($this->cat_id)
-			{
-				$extra .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
-			}
+			$extra .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
+			$extra .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
 			return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
 		}
 
 		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday)
 		{
-			global $phpgw, $phpgw_info;
-			
-			if($phpgw_info['server']['calendar_type'] != 'sql')
+			if($GLOBALS['phpgw_info']['server']['calendar_type'] != 'sql')
 			{
 				return Array();
 			}
@@ -109,15 +81,9 @@
 //				. 'AND (phpgw_cal.datetime <= '.$starttime.') '
 				. 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) ';
 
-			if(strpos($this->filter,'private'))
-			{
-				$sql .= 'AND phpgw_cal.is_public=0 ';
-			}
+			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
 
-			if($this->cat_id)
-			{
-				$sql .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
-			}
+			$sql .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
 
 			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
@@ -138,33 +104,15 @@
 			$words = split(' ',$keywords);
 			for ($i=0;$i<count($words);$i++)
 			{
-				if($i==0)
-				{
-					$sql .= ' AND (';
-				}
-				if($i>0)
-				{
-					$sql .= ' OR ';
-				}
+				$sql .= ($i==0?' AND (':'');
+				$sql .= ($i>0?' OR ':'');
 				$sql .= "(UPPER(phpgw_cal.title) LIKE UPPER('%".$words[$i]."%') OR "
 						. "UPPER(phpgw_cal.description) LIKE UPPER('%".$words[$i]."%'))";
-						
-				if($i==count($words) - 1)
-				{
-					$sql .= ') ';
-				}
+				$sql .= ($i==count($words) - 1?') ':'');
 			}
 
-			if(strpos($this->filter,'private'))
-			{
-				$sql .= 'AND phpgw_cal.is_public=0 ';
-			}
-
-			if($this->cat_id)
-			{
-				$sql .= 'AND phpgw_cal.category = '.$this->cat_id.' ';
-			}
-
+			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
+			$sql .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
 			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 			return $this->get_event_ids(False,$sql);
 		}
@@ -212,8 +160,7 @@
 
 		function change_owner($account_id,$new_owner)
 		{
-			global $phpgw_info;
-			if($phpgw_info['server']['calendar_type'] == 'sql')
+			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
 				$this->so->cal->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
 				$this->so->cal->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);

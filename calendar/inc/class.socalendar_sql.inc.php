@@ -30,8 +30,6 @@ class socalendar_ extends socalendar__
 
 	function open($calendar='',$user='',$passwd='',$options='')
 	{
-		global $GLOBALS;
-
 		if($user=='')
 		{
 			settype($user,'integer');
@@ -95,8 +93,6 @@ class socalendar_ extends socalendar__
 
 	function fetch_event($event_id,$options='')
 	{
-		global $GLOBALS;
-		
 		if(!isset($this->stream))
 		{
 			return False;
@@ -193,10 +189,7 @@ class socalendar_ extends socalendar__
 					{
 						$this->add_attribute('users_status',$this->stream->f('cal_status'));
 					}
-//					$this->event->participants[$this->stream->f('cal_login')] = $this->stream->f('cal_status');
 					$this->add_attribute('participants',$this->stream->f('cal_status'),intval($this->stream->f('cal_login')));
-//					$this->add_attribute('participants',array(intval($this->stream->f('cal_login'))=>$this->stream->f('cal_status')));
-//					$this->add_attribute('participants['.intval($this->stream->f('cal_login')).']',$this->stream->f('cal_status'));
 				}
 			}
 		}
@@ -360,8 +353,6 @@ class socalendar_ extends socalendar__
 
 	function save_event(&$event)
 	{
-		global $GLOBALS;
-
 		$locks = Array(
 			'phpgw_cal',
 			'phpgw_cal_user',
@@ -478,8 +469,6 @@ class socalendar_ extends socalendar__
 
 	function group_search($owner=0)
 	{
-		global $GLOBALS;
-      
 		$owner = ($owner==$GLOBALS['phpgw_info']['user']['account_id']?0:$owner);
 		$groups = substr($GLOBALS['phpgw']->common->sql_search('phpgw_cal.groups',intval($owner)),4);
 		if (!$groups)

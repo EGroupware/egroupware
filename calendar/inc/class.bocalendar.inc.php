@@ -73,6 +73,7 @@
 		);
 
 		var $debug = False;
+//		var $debug = True;
 
 		var $so;
 		var $cached_events;
@@ -105,8 +106,6 @@
 
 		function bocalendar($session=0)
 		{
-			global $GLOBALS;
-			
 			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
@@ -214,17 +213,13 @@
 		{
 			if ($this->use_session)
 			{
-				global $phpgw;
-				
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$phpgw->session->appsession('session_data','calendar',$data);
+				$GLOBALS['phpgw']->session->appsession('session_data','calendar',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			global $GLOBALS;
-			
 			$data = $GLOBALS['phpgw']->session->appsession('session_data','calendar');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
@@ -265,8 +260,6 @@
 
 		function delete_calendar($owner)
 		{
-			global $GLOBALS;
-			
 			if($GLOBALS['phpgw_info']['user']['apps']['admin'])
 			{
 				$this->so->delete_calendar($owner);
@@ -275,8 +268,6 @@
 
 		function change_owner($account_id,$new_owner)
 		{
-			global $GLOBALS;
-			
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
 				$this->so->change_owner($account_id,$new_owner);
@@ -287,7 +278,7 @@
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
 			{
-				reset($this->so->cal->delete_events);
+				reset($this->so->cal->deleted_events);
 				for($i=0;$i<count($this->so->cal->deleted_events);$i++)
 				{
 					$event_id = $this->so->cal->deleted_events[$i];
@@ -305,7 +296,7 @@
 
 		function update($p_cal=0,$p_participants=0,$p_start=0,$p_end=0,$p_recur_enddata=0)
 		{
-			global $GLOBALS, $HTTP_POST_VARS, $HTTP_GET_VARS;
+			global $HTTP_POST_VARS, $HTTP_GET_VARS;
 			
 			$l_cal = ($p_cal?$p_cal:$HTTP_POST_VARS['cal']);
 			$l_participants = ($p_participants?$p_participants:$HTTP_POST_VARS['participants']);
@@ -599,8 +590,6 @@
 
 		function overlap($starttime,$endtime,$participants,$owner=0,$id=0)
 		{
-			global $GLOBALS;
-
 			$retval = Array();
 			$ok = False;
 
@@ -692,8 +681,6 @@
 
 		function get_fullname($accountid)
 		{
-			global $GLOBALS;
-
 			$account_id = get_account_id($accountid);
 			if($GLOBALS['phpgw']->accounts->exists($account_id) == False)
 			{
@@ -753,8 +740,6 @@
 
 		function is_private($event,$owner)
 		{
-			global $GLOBALS;
-
 			if($owner == 0)
 			{
 				$owner = $this->owner;
@@ -1093,6 +1078,11 @@
 				if(!$emonth)
 				{
 					$emonth = $smonth + 1;
+					if($emonth > 12)
+					{
+						$emonth = 1;
+						$eyear++;
+					}
 				}
 				if(!$eday)
 				{
@@ -1143,20 +1133,20 @@
 						for($j=$startdate,$k=0;$j<=$enddate;$k++,$j=intval(date('Ymd',mktime(0,0,0,$start['month'],$start['mday'] + $k,$start['year']))))
 						{
 							$c_evt_day = count($this->cached_events[$j]) - 1;
-//							if($c_evt_day < 0)
-//							{
-//								$c_evt_day = 0;
-//							}
-							if($this->debug)
+							if($c_evt_day < 0)
 							{
-								echo "Date: ".$j." Count : ".$c_evt_day."<br>\n";
+								$c_evt_day = 0;
 							}
+//							if($this->debug)
+//							{
+//								echo "Date: ".$j." Count : ".$c_evt_day."<br>\n";
+//							}
 							if($this->cached_events[$j][$c_evt_day]['id'] != $event['id'])
 							{
-								if($this->debug)
-								{
-									echo "Adding Event for Date: ".$j."<br>\n";
-								}
+//								if($this->debug)
+//								{
+//									echo "Adding Event for Date: ".$j."<br>\n";
+//								}
 								$this->cached_events[$j][] = $event;
 							}
 						}
@@ -1177,6 +1167,7 @@
 					$this->check_repeating_events($date);
 				}
 			}
+			$retval = Array();
 			for($j=date('Ymd',mktime(0,0,0,$smonth,$sday,$syear)),$k=0;$j<=date('Ymd',mktime(0,0,0,$emonth,$eday,$eyear));$k++,$j=date('Ymd',mktime(0,0,0,$smonth,$sday + $k,$syear)))
 			{
 				$retval[$j] = $this->cached_events[$j];
@@ -1188,15 +1179,12 @@
 		/* Begin Appsession Data */
 		function store_to_appsession($event)
 		{
-			global $GLOBALS;
 			$GLOBALS['phpgw']->session->appsession('entry','calendar',$event);
 		}
 
 		function restore_from_appsession()
 		{
-			global $GLOBALS;
 			$this->event_init();
-//			$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($GLOBALS['phpgw']->session->appsession('entry','calendar'))));
 			$event = $GLOBALS['phpgw']->session->appsession('entry','calendar');
 			$this->so->cal->event = $event;
 			return $event;
@@ -1287,8 +1275,6 @@
 
 		function set_week_array($startdate,$cellcolor,$weekly)
 		{
-			global $GLOBALS, $phpgw, $phpgw_info;
-
 			for ($j=0,$datetime=$startdate - $this->datetime->tz_offset;$j<7;$j++,$datetime += 86400)
 			{
 				$date = date('Ymd',$datetime);
@@ -1385,7 +1371,6 @@
 
 		function prepare_matrix($interval,$increment,$part,$status,$fulldate)
 		{
-			global $GLOBALS;
 			for($h=0;$h<24;$h++)
 			{
 				for($m=0;$m<$interval;$m++)
@@ -1483,9 +1468,6 @@
 
 		function send_update($msg_type,$participants,$old_event=False,$new_event=False)
 		{
-
-			global $GLOBALS;
-
 			$db = $GLOBALS['phpgw']->db;
 			$db->query("SELECT app_version FROM phpgw_applications WHERE app_name='calendar'",__LINE__,__FILE__);
 			$db->next_record();
@@ -1710,42 +1692,64 @@
 
 		function remove_doubles_in_cache($firstday,$lastday)
 		{
-			for($v=$firstday;$v<=$lastday;$v += 1)
+			$already_moved = Array();
+			for($v=$firstday;$v<=$lastday;$v++)
 			{
-				$daily = $this->cached_events[$v];
-
-				if($this->debug)
-				{
-					echo "<p>count(day $v)=".count($daily)."</p>\n";
-				}
-				if (!is_array($daily))
+				if (!$this->cached_events[$v])
 				{
 					continue;
 				}
-
-            @reset($daily);
-				while (list($g,$event) = each($daily))
+				while (list($g,$event) = each($this->cached_events[$v]))
 				{
+					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 					if($this->debug)
 					{
 						echo "<p>Event:<br>"; print_r($event); echo "</p>";
-					}
-					$start = sprintf('%04d%02d%02d',$event['start']['year'],$event['start']['month'],$event['start']['mday']);
-
-					if($this->debug)
-					{
-						echo "<p>start='$start', v='$v'";
+						echo "<p>start='$start', v='$v' ";
 					}
 
+//					if ($start != $v && $event['recur_type'] == MCAL_RECUR_NONE)							// this is an enddate-entry --> remove it
 					if ($start != $v)							// this is an enddate-entry --> remove it
 					{
 						unset($this->cached_events[$v][$g]);
+						if($g != count($this->cached_events[$v]))
+						{
+							for($h=$g + 1;$h<$c_daily;$h++)
+							{
+								$this->cached_events[$v][$h - 1] = $this->cached_events[$v][$h];
+							}
+							unset($this->cached_events[$v][$h]);
+						}
+
+//						if ($start < $firstday && $event['recur_type'] == MCAL_RECUR_NONE)				// start before period --> move it to the beginning
 						if ($start < $firstday)				// start before period --> move it to the beginning
 						{
-							$this->cached_events[$firstday][] = $event;
-							if($this->debug)
+							if($already_moved[$event['id']] > 0)
 							{
-								echo "moved</p>\n";
+								continue;
+							}
+							$add_event = True;
+							$c_events = count($this->cached_events[$firstday]);
+							for($i=0;$i<$c_events;$i++)
+							{
+								$add_event = ($this->cached_events[$firstday][$i]['id'] == $event['id']?False:$add_event);
+							}
+							if($add_event)
+							{
+								$this->cached_events[$firstday][] = $event;
+								$already_moved[$event['id']] = 1;
+								if($this->debug)
+								{
+									echo "moved</p>\n";
+								}
+							}
+							else
+							{
+								$already_moved[$event['id']] = 2;
+								if($this->debug)
+								{
+									echo "removed (not moved)</p>\n";
+								}
 							}
        				}
 						elseif($this->debug)
@@ -1758,6 +1762,7 @@
 						echo "ok</p>\n";
 					}
 				}
+				flush();
 			}
 		}
 

@@ -21,7 +21,7 @@ if (@$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar__'])
 
 $GLOBALS['phpgw_info']['flags']['included_classes']['socalendar__'] = True;
 
-include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');
+/*	include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');	*/
 
 if(extension_loaded('mcal') == False)
 {

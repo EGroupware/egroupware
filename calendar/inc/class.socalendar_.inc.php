@@ -14,16 +14,16 @@
 
   /* $Id$ */
 
-	if(@$phpgw_info['server']['calendar_type'] == 'mcal' &&
+	if(@$GLOBALS['phpgw_info']['server']['calendar_type'] == 'mcal' &&
 		extension_loaded('mcal') == False)
 	{
-		$phpgw_info['server']['calendar_type'] = 'sql';
+		$GLOBALS['phpgw_info']['server']['calendar_type'] = 'sql';
 	}
 // This will be elminated when ical is fully implemented
 	else
 	{
-		$phpgw_info['server']['calendar_type'] = 'sql';
+		$GLOBALS['phpgw_info']['server']['calendar_type'] = 'sql';
 	}
 	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar__.inc.php');
-	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
+	include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.socalendar_'.$GLOBALS['phpgw_info']['server']['calendar_type'].'.inc.php');
 ?>
