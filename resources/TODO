@@ -1,3 +1,6 @@
+
+/* $Id: */
+
 TODO:
 - configuration dialog for admin section
 	don't use vfs
@@ -15,11 +18,9 @@ TODO:
 - list 
 	2 rows each entry
 	don't translate cats in header (eTemplate bug --> Ralf)
-	handle cats and general pics (waiting for cats picures in api)
 	handle select all button --> add actions for selected
 	
 -edit / add
-	handle cats and general pics (waiting for cats picures in api)
 	add accessories functionality
 	add prize functionality
 	add location functionality

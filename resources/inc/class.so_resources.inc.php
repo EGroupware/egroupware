@@ -10,6 +10,8 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	
+	/* $Id: */
+	
 class so_resources
 {
 	function so_resources()

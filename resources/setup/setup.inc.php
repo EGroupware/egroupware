@@ -11,6 +11,8 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 	
+	/* $Id: */
+	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'resources';
 	$setup_info['resources']['version']	= '0.0.1.015';
