@@ -187,8 +187,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 		The label can contain variables, as descript for name.
 		If the label starts with a '@' it is replaced by the value of the content-array at this
 		index (with the '@'-removed and after expanding the variables).<br>
-		<b>Note</b>: The label gets always translated, if its longer than 1 char! If this is not 
-		disired, use a label widget, place the not-to-translate label in the content-array 
+		<b>Note</b>: The label gets always translated, if its longer than 1 char! If this is not
+		disired, use a label widget, place the not-to-translate label in the content-array
 		<u>and</u> check NoTranslation or set the xml attribute no_lang.
 	</td>
 </tr>
@@ -378,8 +378,10 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a textual label</b><br>
 		The content is taken from the content-array but it can have an own label from
 		the label attribute too.<p>
-		<b>Options</b>: if it contains a 'i' and/or a 'b' the content (not the label) is rendered
-		in italic and/or bold.
+		<b>Options</b> has 2 comma-separated fields:<br>
+		<b>1.</b> if it contains a 'i' and/or a 'b' the content (not the label) is rendered
+		in italic and/or bold.<br>
+		<b>2.</b> if set to a menuaction, a link to that methode = app.class.method is put around the label
 	</td>
 </tr>
 <tr>
