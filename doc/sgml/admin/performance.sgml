@@ -1,0 +1,28 @@
+<!DOCTYPE chapter SYSTEM "performance.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<chapter>
+<title>Performance Tuning</Title>
+<sect1>
+<title>Linux</Title>
+</sect1>
+<sect1>
+<title>Apache</Title>
+</sect1>
+<sect1>
+<title>PHP</Title>
+</sect1>
+<sect1>
+<title>Database</title>
+<sect2>
+<title>When phpgroupware is used by 5+ users, the number of connections to the backend grows very fast toward it's limits.</title>
+<para>
+A patch is available for 0.9.12 to allow for non-persistent connections.  This patch adds to the header managing page to allow for non-persistent connections. It's only made for mysql, postgresql and oracle, but should be portable.
+</para>
+<para>
+The patch is available at [http://karlsbakk.net/dev/phpgw/persistent-connections- choice.patch]
+</para>
+</sect2>
+</sect1>
+<sect1>
+<title>phpGroupWare</Title>
+</sect1>
+</chapter>

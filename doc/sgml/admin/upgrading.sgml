@@ -1,0 +1,17 @@
+<!DOCTYPE chapter SYSTEM "upgrading.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<chapter id="upgrading">
+<title>Upgrading</title>
+<sect1>
+<title>Upgrading from CVS</title>
+<para>
+Follow these steps to upgrade a CVS install (please adjust to your servers config):
+</para>
+<blockquote><literallayout>
+<userinput># cd /home/httpd/html/phpgroupware</userinput>
+<userinput># cvs update -pD</userinput>
+</literallayout></blockquote>
+<para>
+After updating from CVS, be sure to return to the configuration page [/setup] and update any necessary tables
+</para>
+</sect1>
+</chapter>

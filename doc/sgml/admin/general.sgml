@@ -1,0 +1,21 @@
+<!DOCTYPE chapter SYSTEM "general.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+<chapter id="General">
+<title>General</Title>
+
+<para>
+Here will go an overview of categories and other overall topics.
+</para>
+
+<sect1>
+<title>Categories</Title>
+</sect1>
+<sect1>
+<title>Themes</Title>
+</sect1>
+<sect1>
+<title>Access Control Lists</Title>
+</sect1>
+<sect1>
+<title>Translations</title>
+</sect1>
+</chapter>
