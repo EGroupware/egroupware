@@ -76,7 +76,6 @@
 
 		function import_end_record($buffer)
 		{
-			global $phpgw_info;
 			$buffer[$this->id]='';
 			while ( list($name, $value) = each($this->currentrecord))
 			{
@@ -88,8 +87,6 @@
 
 		function import_end_file($buffer,$access='private',$cat_id=0)
 		{
-			global $phpgw,$phpgw_info;
-
 			$contacts = CreateObject('phpgwapi.contacts');
 			/* echo '<br>'; */
 			for ($i=1;$i<=count($buffer);$i++)
@@ -104,7 +101,7 @@
 				$entry[$i]['adr_one_type']    = 'intl';
 				$entry[$i]['adr_two_type']    = 'intl';
 				/* echo '<br>'; */
-				$contacts->add($phpgw_info['user']['account_id'],$entry[$i],$access,$cat_id);
+				$contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry[$i],$access,$cat_id);
 			}
 			$num = $i - 1;
 			return lang('Successfully imported x records into your addressbook.',$num);

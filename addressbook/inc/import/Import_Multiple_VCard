@@ -57,7 +57,6 @@
 
 		function import_end_record($buffer)
 		{
-			global $phpgw_info;
 			$buffer[$this->id]='';
 			while ( list($name, $value) = each($this->currentrecord))
 			{
@@ -70,8 +69,6 @@
 
 		function import_end_file($buffer,$access='private',$cat_id=0)
 		{
-			global $phpgw,$phpgw_info;
-
 			for ($i=1;$i<=count($buffer);$i++)
 			{
 				/*
@@ -81,7 +78,7 @@
 				*/
 				$entry = $this->vcard->in($buffer[$i]);
 				/* Now actually add the new entry */
-				$this->contacts->add($phpgw_info['user']['account_id'],$entry,$access,$cat_id);
+				$this->contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry,$access,$cat_id);
 			}
 			$num = $i - 1;
 			return lang('Successfully imported x records into your addressbook.',$num);
