@@ -19,6 +19,7 @@
 	class setup
 	{
 		var $db;
+		var $oProc;
 
 		var $detection = '';
 		var $process = '';

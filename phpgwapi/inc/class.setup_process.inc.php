@@ -25,7 +25,6 @@
 
 	class setup_process
 	{
-		var $oProc;
 		var $tables;
 		var $updateincluded = array();
 
@@ -40,14 +39,14 @@
 			$phpgw_domain = $GLOBALS['phpgw_domain'];
 			$phpgw_info   = $GLOBALS['phpgw_info'];
 
-			$this->oProc = CreateObject('phpgwapi.schema_proc',$phpgw_domain[$ConfigDomain]['db_type']);
-			$this->oProc->m_odb           = $GLOBALS['phpgw_setup']->db;
-			$this->oProc->m_odb->Host     = $phpgw_domain[$ConfigDomain]['db_host'];
-			$this->oProc->m_odb->Database = $phpgw_domain[$ConfigDomain]['db_name'];
-			$this->oProc->m_odb->User     = $phpgw_domain[$ConfigDomain]['db_user'];
-			$this->oProc->m_odb->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
-			$this->oProc->m_odb->Halt_On_Error = 'report';
-			$this->oProc->m_odb->connect();
+			$GLOBALS['phpgw_setup']->oProc = CreateObject('phpgwapi.schema_proc',$phpgw_domain[$ConfigDomain]['db_type']);
+			$GLOBALS['phpgw_setup']->oProc->m_odb           = $GLOBALS['phpgw_setup']->db;
+			$GLOBALS['phpgw_setup']->oProc->m_odb->Host     = $phpgw_domain[$ConfigDomain]['db_host'];
+			$GLOBALS['phpgw_setup']->oProc->m_odb->Database = $phpgw_domain[$ConfigDomain]['db_name'];
+			$GLOBALS['phpgw_setup']->oProc->m_odb->User     = $phpgw_domain[$ConfigDomain]['db_user'];
+			$GLOBALS['phpgw_setup']->oProc->m_odb->Password = $phpgw_domain[$ConfigDomain]['db_pass'];
+			$GLOBALS['phpgw_setup']->oProc->m_odb->Halt_On_Error = 'report';
+			$GLOBALS['phpgw_setup']->oProc->m_odb->connect();
 		}
 
 		/*!
@@ -182,11 +181,11 @@
 		*/
 		function droptables($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_bDeltaOnly = False;
+			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 
 			/* The following is built so below we won't try to drop a table that isn't there. */
 			$tablenames = $GLOBALS['phpgw_setup']->db->table_names();
@@ -206,7 +205,7 @@
 						if (in_array($table,$tables))
 						{
 							if ($DEBUG){ echo '<br>process->droptables(): Dropping :'. $setup_info[$key]['name'] . ' table: ' . $table; }
-							$this->oProc->DropTable($table);
+							$GLOBALS['phpgw_setup']->oProc->DropTable($table);
 							// Update the array values for return below
 							$setup_info[$key]['status'] = 'U';
 						}
@@ -226,11 +225,11 @@
 		*/
 		function current($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_bDeltaOnly = False;
+			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
@@ -308,12 +307,12 @@
 		*/
 		function default_records($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_bDeltaOnly = False;
-			$oProc = $this->oProc;
+			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
+			$oProc = $GLOBALS['phpgw_setup']->oProc;
 
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
@@ -327,9 +326,9 @@
 					{
 						echo '<br>process->default_records(): Including default records for ' . $appname . "\n";
 					}
-					$this->oProc->m_odb->transaction_begin();
+					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_begin();
 					include ($appdir.'default_records.inc.php');
-					$this->oProc->m_odb->transaction_commit();
+					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_commit();
 				}
 				/* $setup_info[$key]['status'] = 'C'; */
 			}
@@ -417,12 +416,12 @@
 		*/
 		function test_data($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_bDeltaOnly = False;
-			$oProc = $this->oProc;
+			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
+			$oProc = $GLOBALS['phpgw_setup']->oProc;
 
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
@@ -436,9 +435,9 @@
 					{
 						echo '<br>process->test_data(): Including baseline test data for ' . $appname . "\n";
 					}
-					$this->oProc->m_odb->transaction_begin();
+					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_begin();
 					include ($appdir.'test_data.inc.php');
-					$this->oProc->m_odb->transaction_commit();
+					$GLOBALS['phpgw_setup']->oProc->m_odb->transaction_commit();
 				}
 			}
 
@@ -453,7 +452,7 @@
 		*/
 		function baseline($setup_info,$DEBUG=False)
 		{
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
@@ -471,7 +470,7 @@
 						echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 					}
 					include ($appdir.'tables_baseline.inc.php');
-					$this->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
+					$GLOBALS['phpgw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG);
 					$this->post_process($phpgw_baseline,$DEBUG);
 
 					/* Update the array values for return below */
@@ -498,12 +497,12 @@
 		*/
 		function upgrade($setup_info,$DEBUG=False)
 		{
-			if (!@$this->oProc)
+			if (!@$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_odb->HaltOnError = 'no';
-			$this->oProc->m_bDeltaOnly = True;
+			$GLOBALS['phpgw_setup']->oProc->m_odb->HaltOnError = 'no';
+			$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
 
 			@reset($setup_info);
 			while (list($key,$null) = @each($setup_info))
@@ -533,14 +532,14 @@
 					$appdir     = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 					$test   = array();
-					$this->oProc->m_aTables = $phpgw_baseline = array();
+					$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline = array();
 /*
 					$phpgw_baseline = array();
 
 					$tmpapp = array();
 					$tmpapp[] = $setup_info[$key];
 					$this->baseline($tmpapp,$DEBUG);
-					$this->oProc->m_aTables = $phpgw_baseline;
+					$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline;
 					// So far, including the baseline file is not helping.
 					// Only AlterColumn/RenameColumn seem to be failing silently.
 					// This is because we are not keeping up with table changes, so a table in baseline
@@ -553,8 +552,8 @@
 							echo '<br>process->baseline(): Including baseline tables for ' . $appname . "\n";
 						}
 						include ($appdir.'tables_baseline.inc.php');
-						$this->oProc->m_aTables = $phpgw_baseline;
-						/* $this->oProc->GenerateScripts($phpgw_baseline, $DEBUG); */
+						$GLOBALS['phpgw_setup']->oProc->m_aTables = $phpgw_baseline;
+						/* $GLOBALS['phpgw_setup']->oProc->GenerateScripts($phpgw_baseline, $DEBUG); */
 					}
 					else
 					{
@@ -592,7 +591,7 @@
 
 							if ($value == $targetver)
 							{
-								$this->oProc->m_bDeltaOnly = False;
+								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 								/* Done upgrading */
 								if($DEBUG)
 								{
@@ -616,7 +615,7 @@
 							elseif (($value == $currentver) || !$currentver)
 							{
 								/* start upgrading db in addition to baseline */
-								$this->oProc->m_bDeltaOnly = False;
+								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = False;
 								if ($DEBUG) { echo '<br>process->upgrade(): running ' . $function; }
 								/* run upgrade function */
 								$success = $function();
@@ -667,7 +666,7 @@
 							elseif ($GLOBALS['phpgw_setup']->alessthanb($value,$currentver))
 							{
 								if ($DEBUG) { echo '<br>process->upgrade(): running baseline delta only: ' . $function . '...'; }
-								$this->oProc->m_bDeltaOnly = True;
+								$GLOBALS['phpgw_setup']->oProc->m_bDeltaOnly = True;
 								$success = $function();
 							}
 							else
@@ -741,10 +740,10 @@
 				return False;
 			}
 
-			$ret = $this->oProc->GenerateScripts($tables,$DEBUG);
+			$ret = $GLOBALS['phpgw_setup']->oProc->GenerateScripts($tables,$DEBUG);
 			if ($ret)
 			{
-				$oret = $this->oProc->ExecuteScripts($tables,$DEBUG);
+				$oret = $GLOBALS['phpgw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
 				if ($oret)
 				{
 					return True;
@@ -772,21 +771,21 @@
 				return False;
 			}
 
-			if (!$this->oProc)
+			if (!$GLOBALS['phpgw_setup']->oProc)
 			{
 				$this->init_process();
 			}
 
-			$this->oProc->m_oTranslator->_GetColumns($this->oProc, $tablename, $sColumns, $sColumnName);
+			$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc, $tablename, $sColumns, $sColumnName);
 
-			while (list($key,$tbldata) = each ($this->oProc->m_oTranslator->sCol))
+			while (list($key,$tbldata) = each ($GLOBALS['phpgw_setup']->oProc->m_oTranslator->sCol))
 			{
 				$arr .= $tbldata;
 			}
-			$pk = $this->oProc->m_oTranslator->pk;
-			$fk = $this->oProc->m_oTranslator->fk;
-			$ix = $this->oProc->m_oTranslator->ix;
-			$uc = $this->oProc->m_oTranslator->uc;
+			$pk = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->pk;
+			$fk = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->fk;
+			$ix = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->ix;
+			$uc = $GLOBALS['phpgw_setup']->oProc->m_oTranslator->uc;
 
 			return array($arr,$pk,$fk,$ix,$uc);
 		}
