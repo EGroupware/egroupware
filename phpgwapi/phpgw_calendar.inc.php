@@ -231,6 +231,8 @@
       $date["full"] = intval($phpgw->common->show_date($date["raw"],"Ymd"));
       $date["dm"] = intval($phpgw->common->show_date($date["raw"],"dm"));
       $date["dow"] = intval($phpgw->common->show_date($date["raw"],"w"));
+      $date["hour"] = intval($phpgw->common->show_date($date["raw"],"H"));
+      $date["minute"] = intval($phpgw->common->show_date($date["raw"],"i"));
       return $date;
     }
 
@@ -398,15 +400,9 @@
 	  }
 	  for($k=0;$k<$this->sorted_re;$k++) {
 	    $event = $events[$k];
-	    $eventend = $this->splittime($this->addduration($event->hour,$event->minute,$event->ampm,$event->duration));
-	    if($eventend["ampm"] == "pm") {
-	      $eventend["hour"] += 12;
-	    }
-	    if(!$eventend["hour"]) {
-	      $eventend["hour"] = 23;
-	      $eventend["minute"] = 59;
-	    }
-	    $start = ($event->hour * 10000) + ($event->minute * 100);
+	    $eventstart = $this->localdates($event->datetime);
+	    $eventend = $this->localdates($event->edatetime);
+	    $start = ($eventstart["hour"] * 10000) + ($eventstart["minute"] * 100);
 	    $starttemp = $this->splittime("$start");
 	    $subminute = 0;
 	    for($m=0;$m<$interval;$m++) {
@@ -439,7 +435,7 @@
 		  $startminute = ($starttemp["minute"] / $increment);
 		if($h == intval($endtemp["hour"]))
 		  $endminute = ($endtemp["minute"] / $increment);
-		for($m=$startminute;$m<$endminute;$m++) {
+		for($m=$startminute;$m<=$endminute;$m++) {
 	          $index = ($hour + (($m * $increment) * 100));
 	          $time_slice[$index]["marker"] = "-";
 	          $time_slice[$index]["color"] = $phpgw_info["theme"]["bg01"];
