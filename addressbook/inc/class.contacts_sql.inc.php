@@ -295,6 +295,16 @@
 
 			// turn filter's a=b,c=d OR a=b into an array
 			if ($filter) {
+				$extra_stock = array(
+					'id'     => 'id',
+					'tid'    => 'tid',
+					'lid'    => 'lid',
+					'owner'  => 'owner',
+					'access' => 'access',
+					'cat_id' => 'cat_id'
+				);
+				$check_stock = $this->stock_contact_fields + $extra_stock;
+
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
 				$filterarray = split(',',$filter);
 				if ($filterarray[1]) {
@@ -323,7 +333,6 @@
 					$isstd=0;
 					if ($name && empty($value)) {
 						if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is empty (NULL)"; }
-						$check_stock = $this->stock_contact_fields + array('id' => 'id', 'tid' => 'tid', 'lid' => 'lid', 'owner' => 'owner', 'cat_id' => 'cat_id');
 						while (list($fname,$fvalue)=each($check_stock)) {
 							if ($fvalue==$name) {
 								$filterlist .= $name.' is NULL,';
@@ -332,8 +341,8 @@
 							}
 						}
 					} elseif($name && $value) {
-						reset($stock_fields);
-						while (list($fname,$fvalue)=each($stock_fields)) {
+						reset($check_stock);
+						while (list($fname,$fvalue)=each($check_stock)) {
 							if ($fvalue==$name) {
 								if (gettype($value) == "integer") {
 									$filterlist .= $name."=".$value.",";

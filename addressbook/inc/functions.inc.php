@@ -170,7 +170,7 @@
 		}
 	}
 
-	function addressbook_add_entry($userid,$fields,$access,$cat_id) {
+	function addressbook_add_entry($userid,$fields,$access='',$cat_id='') {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_ADD) {
 			$this->add($userid,$fields,$access,$cat_id);
