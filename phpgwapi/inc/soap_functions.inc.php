@@ -1,6 +1,25 @@
 <?php
+	/**************************************************************************\
+	* phpGroupWare API - Accounts manager shared functions                     *
+	* This file written by dietrich@ganx4.com                                  *
+	* shared functions and vars for use with soap client/server                *
+	* -------------------------------------------------------------------------*
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-	$soapTypes = array(
+	/* $Id$ */
+
+	$GLOBALS['soapTypes'] = array(
 		'i4'           => 1,
 		'int'          => 1,
 		'boolean'      => 1,
@@ -18,18 +37,18 @@
 		'ur-type'      => 2
 	);
 
-	while(list($key,$val) = each($soapTypes))
+	while(list($key,$val) = each($GLOBALS['soapTypes']))
 	{
-		$soapKeys[] = $val;
+		$GLOBALS['soapKeys'][] = $val;
 	}
 
-	$typemap = array(
+	$GLOBALS['typemap'] = array(
 		'http://soapinterop.org/xsd'                => array('SOAPStruct'),
 		'http://schemas.xmlsoap.org/soap/encoding/' => array('base64'),
-		'http://www.w3.org/1999/XMLSchema'          => $soapKeys
+		'http://www.w3.org/1999/XMLSchema'          => $GLOBALS['soapKeys']
 	);
 
-	$namespaces = array(
+	$GLOBALS['namespaces'] = array(
 		'http://schemas.xmlsoap.org/soap/envelope/' => 'SOAP-ENV',
 		'http://www.w3.org/1999/XMLSchema-instance' => 'xsi',
 		'http://www.w3.org/1999/XMLSchema'          => 'xsd',
@@ -37,6 +56,7 @@
 		'http://soapinterop.org/xsd'                => 'si'
 	);
 
+	/*
 	$xmlEntities = array(
 		'quot' => '"',
 		'amp'  => '&',
@@ -44,6 +64,7 @@
 		'gt'   => '>',
 		'apos' => "'"
 	);
+	*/
 
-	$soap_defencoding = 'UTF-8';
+	$GLOBALS['soap_defencoding'] = 'UTF-8';
 ?>
