@@ -131,7 +131,7 @@
 			);
 			foreach(explode(',',$this->etemplate->size) as $n => $opt)
 			{
-				$content['options'][$opt] = $options[$n];
+				$content['options'][$this->options[$n]] = $opt;
 			}
 			$cols_spanned = array();
 			reset($this->etemplate->data);
@@ -1708,7 +1708,7 @@
 			$editor->exec('etemplate.editor.widget',$content,array(
 					'type'       => array_merge($this->etemplate->types,$this->extensions),
 					'align'      => $this->aligns,
-					'grid_row[valign]' => $this->valigns,
+					'valign'     => $this->valigns,
 					'edit_menu'  => $this->edit_menu,
 					'box_menu'   => $this->box_menu,
 					'row_menu'   => $this->row_menu,

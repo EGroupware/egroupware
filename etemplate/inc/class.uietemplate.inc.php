@@ -156,7 +156,40 @@
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
 			}
 
-			$id = $this->save_appsession($this->as_array(1) + array(
+			if ((int) $output_mode != 1)	// NOT returning html
+			{
+				if (!$this->xslt)
+				{
+					if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+					{
+						if((int) $output_mode != 2)
+						{
+							echo parse_navbar();
+						}
+						else
+						{
+							echo '<div id="divMain">'."\n";
+						}
+					}
+					echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;
+	
+					if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] &&
+					    (!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
+					{
+						if((int) $output_mode == 2)
+						{
+							echo "</div>\n";
+						}
+						$GLOBALS['phpgw']->common->phpgw_footer();
+					}
+				}
+				else
+				{
+					// need to add some logic here to support popups (output_mode==2) for xslt, but who cares ...
+					$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $html));
+				}
+			}
+			$this->save_appsession($this->as_array(2) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
 				'changes' => $changes,
@@ -175,36 +208,6 @@
 			if ((int) $output_mode == 1)	// return html
 			{
 					return $html;
-			}
-			if (!$this->xslt)
-			{
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
-				{
-					if((int) $output_mode != 2)
-					{
-						echo parse_navbar();
-					}
-					else
-					{
-						echo '<div id="divMain">'."\n";
-					}
-				}
-				echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;
-
-				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] &&
-				    (!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
-				{
-					if((int) $output_mode == 2)
-					{
-						echo "</div>\n";
-					}
-					$GLOBALS['phpgw']->common->phpgw_footer();
-				}
-			}
-			else
-			{
-				// need to add some logic here to support popups (output_mode==2) for xslt, but who cares ...
-				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $html));
 			}
 		}
 
@@ -870,6 +873,13 @@
 						echo "<p>Object in Name in tpl '$this->name': "; _debug_array($grid);
 					}
 					$obj_read = 'already loaded';
+					if (is_array($cell['obj']))
+					{
+						$obj =& new etemplate();
+						$obj->init($cell['obj']);
+						$cell['obj'] =& $obj;
+						unset($obj);
+					}
 					if (!is_object($cell['obj']))
 					{
 						if ($cell['name'][0] == '@')
@@ -954,16 +964,20 @@
 					{
 						$sels += $sel_options[$name];
 					}
-					elseif (count($name_parts))
+					else
 					{
-						$org_name = $name_parts[count($name_parts)-1];
-						if (isset($sel_options[$org_name]) && is_array($sel_options[$org_name]))
+						$name_parts = explode('[',str_replace(']','',$name));
+						if (count($name_parts))
 						{
-							$sels += $sel_options[$org_name];
-						}
-						elseif (isset($sel_options[$name_parts[0]]) && is_array($sel_options[$name_parts[0]]))
-						{
-							$sels += $sel_options[$name_parts[0]];
+							$org_name = $name_parts[count($name_parts)-1];
+							if (isset($sel_options[$org_name]) && is_array($sel_options[$org_name]))
+							{
+								$sels += $sel_options[$org_name];
+							}
+							elseif (isset($sel_options[$name_parts[0]]) && is_array($sel_options[$name_parts[0]]))
+							{
+								$sels += $sel_options[$name_parts[0]];
+							}
 						}
 					}
 					if (isset($content["options-$name"]))

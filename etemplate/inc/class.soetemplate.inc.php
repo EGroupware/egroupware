@@ -308,6 +308,8 @@
 				$this->lang = '';
 			}
 			$this->tpls_in_file = is_array($name) ? $name['tpls_in_file'] : 0;
+			
+			if (is_array($name) && $name['onclick_handler']) $this->onclick_handler = $name['onclick_handler'];
 
 			if (is_array($name)  && isset($name['data']))
 			{
@@ -652,9 +654,10 @@
 		 * Calls it self recursivly for arrays / the rows
 		 *
 		 * @param array $arr the array to compress
+		 * @param boolean $remove_all_objs if true unset all objs, on false use as_array to save only the data of objs
 		 * @return array
 		 */
-		function compress_array($arr)
+		function compress_array($arr,$remove_objs=false)
 		{
 			if (!is_array($arr))
 			{
@@ -664,7 +667,11 @@
 			{
 				if (is_array($val))
 				{
-					$arr[$key] = $this->compress_array($val);
+					$arr[$key] = $this->compress_array($val,$remove_objs);
+				}
+				elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array'))
+				{
+					$arr['obj'] = $val->as_array(2);
 				}
 				elseif ($val == '' || is_object($val))
 				{
@@ -705,7 +712,7 @@
 					if ($data_too > 0)
 					{
 						$arr[$db_keys ? $db_col : $col] = $data_too < 2 ? $this->children :
-							serialize($this->compress_array($this->children));
+							serialize($this->compress_array($this->children,$db_keys));
 					}
 				}
 				else
@@ -716,6 +723,10 @@
 			if ($data_too != -1 && $this->tpls_in_file && !$db_keys) 
 			{
 				$arr['tpls_in_file'] = $this->tpls_in_file;
+			}
+			if ($data_too != -1 && $this->onclick_handler && !$db_keys) 
+			{
+				$arr['onclick_handler'] = $this->onclick_handler;
 			}
 			return $arr;
 		}
