@@ -163,6 +163,7 @@
 					if($addclass)
 					{
 						reset($entry[0]['objectclass']);
+						unset($replace['objectclass']['count']);
 						$replace['objectclass'] = $entry[0]['objectclass'];
 						$replace['objectclass'][]       = 'phpgwAccount';
 						ldap_mod_replace($ldap,$thisdn,$replace);
