@@ -5,14 +5,14 @@
   <td align="left" valign="top" width="20%">
    {small_calendar_prev}
   </td>
-  <td align="left" valign="top" width="20%">
-   {prev_week_link}
+  <td align="center" valign="middle" width="20%">
+   <b>{prev_week_link}</b>
   </td>
   <td align="center" valign="top" width="20%">
    {small_calendar_this}
   </td>
-  <td align="right" valign="top" width="20%">
-   {next_week_link}
+  <td align="center" valign="middle" width="20%">
+   <b>{next_week_link}</b>
   </td>
   <td align="right" valign="top" width="20%">
    {small_calendar_next}

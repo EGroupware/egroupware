@@ -733,13 +733,13 @@
 				$printer = '';
 				$prev_week_link = '<a href="'.$this->page('week','&date='.$prev['full']).'">&lt;&lt;</a>';
 				$next_week_link = '<a href="'.$this->page('week','&date='.$next['full']).'">&gt;&gt;</a>';
-				$print = '<a href="'.$this->page('week','&friendly=1')."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+				$print = '<a href="'.$this->page('week','&friendly=1&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day))."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 			}
 			else
 			{
 				$printer = '<body bgcolor="'.$this->theme['bg_color'].'">';
-				$prev_week_link = '&lt;&lt;';
-				$next_week_link = '&gt;&gt;';
+				$prev_week_link = '';
+				$next_week_link = '';
 				$print =	'';
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
@@ -856,7 +856,7 @@
 				$left_link = '<a href="'.$this->page('year','&year='.($this->bo->year - 1)).'">&lt;&lt;</a>';
 				$right_link = '<a href="'.$this->page('year','&year='.($this->bo->year + 1)).'">&gt;&gt;</a>';
 				$link = 'day';
-				$printer = '<a href="'.$this->page('year','&friendly=1').'" target="cal_printer_friendly" onMouseOver="window.status = '."'".lang('Generate printer-friendly version')."'".'">['.lang('Printer Friendly').']</a>';
+				$printer = '<a href="'.$this->page('year','&friendly=1&year='.$this->bo->year).'" target="cal_printer_friendly" onMouseOver="window.status = '."'".lang('Generate printer-friendly version')."'".'">['.lang('Printer Friendly').']</a>';
 			}
 			else
 			{
@@ -2794,7 +2794,7 @@
 				$this->link_tpl->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
 				$this->link_tpl->set_var('lang_view',lang('View this entry'));
 				$this->link_tpl->parse('picture','link_open',True);
-			
+
 				if($event['priority'] == 3)
 				{
 					$picture[] = Array(
@@ -2883,10 +2883,6 @@
 					);
 					$this->output_template_array($this->link_tpl,'picture','pict',$var);
 				}
-			}
-			else
-			{
-				$text .= '<font size="-2" face="'.$this->theme['font'].'">'.nl2br($this->bo->get_short_field($event,$is_private,'description')).'</font>'.$GLOBALS['phpgw']->browser->br;
 			}
 			if ($text)
 			{
