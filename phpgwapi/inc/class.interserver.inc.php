@@ -131,6 +131,25 @@
 		{
 			preg_match('/^(.*?\/\/.*?)(\/.*)/',$url,$matches);
 			$hostpart = $matches[1];
+			$hostpart = ereg_replace('https://','',$hostpart);
+			$hostpart = ereg_replace('http://','',$hostpart);
+			switch($this->mode)
+			{
+				case 'soap':
+					if(!ereg('soap.php',$matches[2]))
+					{
+						$matches[2] .= $this->urlparts['soap'];
+					}
+					break;
+				case 'xmlrpc':
+					if(!ereg('xmlrpc.php',$matches[2]))
+					{
+						$matches[2] .= $this->urlparts['xmlrpc'];
+					}
+					break;
+				default:
+					break;
+			}
 			$uri = $matches[2];
 			return array($uri,$hostpart);
 		}
@@ -138,8 +157,6 @@
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
-			$hostpart = ereg_replace('https://','',$hostpart);
-			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -192,8 +209,6 @@
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
-			$hostpart = ereg_replace('https://','',$hostpart);
-			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -248,8 +263,6 @@
 		{
 			$method_name = str_replace('.','_',$method_name);
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
-			$hostpart = ereg_replace('https://','',$hostpart);
-			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
@@ -295,8 +308,6 @@
 		{
 		//	$method_name = str_replace('.','_',$method_name);
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
-			$hostpart = ereg_replace('https://','',$hostpart);
-			$hostpart = ereg_replace('http://','',$hostpart);
 			$this->build_request($args);
 			/*
 			if(gettype($args) != 'array')
@@ -612,6 +623,7 @@
 			return False;
 		}
 
+		/* TODO - Determine trust level here */
 		function auth($serverdata='')
 		{
 			if(!$serverdata || gettype($serverdata) != 'array')
