@@ -138,60 +138,90 @@
 		}
 	}
 
-	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid="") {
+	function addressbook_strip_html($dirty=array())
+	{
+		global $phpgw;
+		for($i=0;$i<count($dirty);$i++)
+		{
+			while (list($name,$value) = each($dirty[$i])) {
+				$cleaned[$i][$name] = $phpgw->strip_html($dirty[$i][$name]);
+			}
+		}
+		return $cleaned;
+	}
+
+	function addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid="")
+	{
 		global $this,$rights;
 		$readrights = $rights & PHPGW_ACL_READ;
 		$entries = $this->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
-		return $entries;
+		$cleaned = addressbook_strip_html($entries);
+		return $cleaned;
 	}
 
-	function addressbook_read_entry($id,$fields,$userid="") {
+	function addressbook_read_entry($id,$fields,$userid="")
+	{
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_READ) {
+		if ($rights & PHPGW_ACL_READ)
+		{
 			$entry = $this->read_single_entry($id,$fields);
-			return $entry;
-		} else {
+			$cleaned = addressbook_strip_html($entry);
+			return $cleaned;
+		}
+		else
+		{
 			$rtrn = array("No access" => "No access");
 			return $rtrn;
 		}
 	}
 
-	function addressbook_read_last_entry($fields) {
+	function addressbook_read_last_entry($fields)
+	{
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_READ) {
+		if ($rights & PHPGW_ACL_READ)
+		{
 			$entry = $this->read_last_entry($fields);
-			return $entry;
-		} else {
+			$cleaned = addressbook_strip_html($entry);
+			return $cleaned;
+		}
+		else
+		{
 			$rtrn = array("No access" => "No access");
 			return $rtrn;
 		}
 	}
 
-	function addressbook_add_entry($userid,$fields,$access='',$cat_id='',$tid='n') {
+	function addressbook_add_entry($userid,$fields,$access='',$cat_id='',$tid='n')
+	{
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_ADD) {
+		if ($rights & PHPGW_ACL_ADD)
+		{
 			$this->add($userid,$fields,$access,$cat_id,$tid);
 		}
 		return;
 	}
 
-	function addressbook_get_lastid() {
+	function addressbook_get_lastid()
+	{
 		global $this;
 	 	$entry = $this->read_last_entry();
 		$ab_id = $entry[0]["id"];
 		return $ab_id;
 	}
 
-	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id) {
+	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id)
+	{
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_EDIT) {
+		if ($rights & PHPGW_ACL_EDIT)
+		{
 			$this->update($id,$userid,$fields,$access,$cat_id);
 		}
 		return;
 	}
 
 	// Folowing used for add/edit
-	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="") {
+	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="")
+	{
 		global $phpgw, $phpgw_info;
      
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
@@ -527,7 +557,8 @@
 		$t->pparse("out","form");
 	} //end form function
 
-	function parsevcard($filename,$access='') {
+	function parsevcard($filename,$access='')
+	{
 		global $phpgw;
 		global $phpgw_info;
 
