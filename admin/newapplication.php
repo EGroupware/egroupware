@@ -44,6 +44,9 @@
 			$app_order = 0;
 		}
 
+		$n_app_name = chop($n_app_name);
+		$n_app_title = chop($n_app_title);
+
 		$phpgw->db->query("select count(*) from phpgw_applications where app_name='"
 			. addslashes($n_app_name) . "'",__LINE__,__FILE__);
 		$phpgw->db->next_record();

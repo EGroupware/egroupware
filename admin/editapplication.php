@@ -50,6 +50,9 @@
 
 		$totalerrors = 0;
 
+		$n_app_name = chop($n_app_name);
+		$n_app_title = chop($n_app_title);
+
 		if (! $n_app_name)
 		{
 			$error[$totalerrors++] = lang('You must enter an application name.');
