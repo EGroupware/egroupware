@@ -1,4 +1,5 @@
 %1 records imported	infolog	fr	%1 enregistrements importés
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous pourriez %2revenir%3 et désélectionner Test d'Importation)
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous devriez %2revenir%3 et décocher Tester l'import)
 - subprojects from	infolog	fr	- Sous-projets de
 0%	infolog	fr	0%
@@ -55,6 +56,7 @@ contact	infolog	fr	Contact
 create new links	infolog	fr	Créer de nouveaux liens
 creates a new field	infolog	fr	crée un nouveau champ
 creates a new status with the given values	infolog	fr	crée un nouveau statut avec la valeur spécifiée
+creates a new typ with the given name	infolog	fr	créée un nouveau type avec le nom spécifié
 creates a new type with the given name	infolog	fr	crée un nouveau type avec le nom spécifié
 csv-fieldname	infolog	fr	CSV-Nomdechamp
 csv-filename	infolog	fr	CSV-Nomdefichier
@@ -65,6 +67,8 @@ custom contact-information, leave emtpy to use information from most recent link
 custom fields	infolog	fr	Champs personnalisés
 custom fields, type and status	common	fr	Champs personnalisés, type et statut
 custom regarding	infolog	fr	Personnalisé concernant
+custom status for typ	infolog	fr	Status personnalisés pour le type
+customfields	infolog	fr	Champs personnalisés
 datecreated	infolog	fr	Date de création
 dates, status, access	infolog	fr	Dates, Statut, Accès
 days	infolog	fr	Jours
@@ -74,10 +78,9 @@ delegation	infolog	fr	Délégation
 delete	infolog	fr	Effacer
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	fr	Efface tous les sous (Sinon les sous vont être ceux de l´entrée parente ou n´auront pas de parent)
 delete one record by passing its id.	infolog	fr	Effacer un enregistrement en passant son id.
-delete the entry	infolog	fr	Effacer l'entrée
-delete this entry	infolog	fr	Effacer cette entrée
 delete the entry	infolog	fr	effacer l´entrée
 delete this entry	infolog	fr	effacer cette entrée
+deletes the selected typ	infolog	fr	efface le type sélectionné
 deletes the selected type	infolog	fr	efface le type sélectionné
 deletes this field	infolog	fr	efface ce champ
 deletes this status	infolog	fr	efface ce statut
@@ -128,8 +131,11 @@ invalid filename	infolog	fr	Nom de fichier invalide
 label<br>helptext	infolog	fr	Label<br>Texte d´aide
 last changed	infolog	fr	Dernier modifié
 last modified	infolog	fr	Dernière modification
+leave without saveing the entry	infolog	fr	quitter sans enregistrer l'entrée
 leave without saving the entry	infolog	fr	Quitter sans enregistrer l'entrée
+leaves without saveing	infolog	fr	quitter sans enregistrer
 leaves without saving	infolog	fr	Quitte sans sauvegarder
+length<br>rows	infolog	fr	Longueur<br>Lignes
 link	infolog	fr	Lien
 links	infolog	fr	Liens
 links of this entry	infolog	fr	Liens de cette entrée
@@ -152,6 +158,7 @@ normal	infolog	fr	Normal
 not	infolog	fr	pas
 not assigned	infolog	fr	Pas attribué
 note	infolog	fr	Note
+number of records to read (%1)	infolog	fr	Nombre d'enregistrements à lire (%1)
 number of records to read (<=200)	infolog	fr	Nombre d'enregistrements à lire (<=200)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fr	nombre de lignes pour un champ d´entrées multilignes ou pour une boîte de sélection multiple
 offer	infolog	fr	Offrir
@@ -161,6 +168,7 @@ only the links	infolog	fr	Seulement les liens
 only up to this number of entries are displayed on the main screen.	infolog	fr	Pas plus que ce nombre d´entrées sont affichées sur l´écran principal.
 open	infolog	fr	Ouvrir
 optional note to the link	infolog	fr	Note optionnelle vers le lien
+order	infolog	fr	Tri
 overdue	infolog	fr	Tardif
 own	infolog	fr	Propre
 own open	infolog	fr	Propre ouvert
@@ -179,14 +187,16 @@ priority	infolog	fr	Priorité
 private	infolog	fr	Privé
 project	infolog	fr	Projet
 re:	infolog	fr	Re:
-read one record by passing its id.	infolog	en	Lire un enregistrement en passant son id.
+read one record by passing its id.	infolog	fr	Lire un enregistrement en passant son id.
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192\.168\.1\.
 remark	infolog	fr	Remarque
 remove this link (not the entry itself)	infolog	fr	Enlever ce lien (pas l'entrée elle-même)
 responsible	infolog	fr	Responsable
 responsible user, priority, ...	infolog	fr	Utilisateur responsable, priorité, ...
-returns a list / search for records.	infolog	en	Retourne une liste / Recherche d´enregistrements.
+returns a list / search for records.	infolog	fr	Retourne une liste / Recherche d´enregistrements.
 save	infolog	fr	Enregistrer
+saves the changes made and leaves	infolog	fr	enregistre les modifications faites et quitte
 saves this entry	infolog	fr	Enregistre cette entrée
 search	infolog	fr	Rechercher
 search for:	infolog	fr	Rechercher:
@@ -194,6 +204,7 @@ select	infolog	fr	Choisir
 select a category for this entry	infolog	fr	Choisissez une catégorie pour cette entrée
 select a priority for this task	infolog	fr	Choisissez une priorité pour cette tâche
 select a responsible user: a person you want to delegate this task	infolog	fr	Choisissez un utilisateur responsable: une personne qui veut déléguer cette tâche
+select a typ to edit it's status-values or delete it	infolog	fr	sélectionnez un type dont la valeur est à éditer ou effacez-le
 select an app to search in	infolog	fr	Choisissez une app dans laquelle rechercher
 select an entry to link with	infolog	fr	Choisissez une entrée vers laquelle lier
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	fr	Est-ce que InfoLog doit afficher vos entrées ouvertes - tâches non terminées, appels ou notes - sur la page principale. Fonctionne uniquement si vous n'avez pas sélectionné une application par défaut pour la page principale (dans vos préférences).
@@ -203,7 +214,7 @@ should infolog use full names (surname and familyname) or just the loginnames.	i
 should this entry only be visible to you and people you grant privat access via the acl	infolog	fr	Cette entrée ne doit-elle être visible que par vous et les personnes à qui vous avez donné l'accès privé par l'ACL
 show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
 show in the infolog list	infolog	fr	Montrer dans la liste Infolog
-show list of upcoming entries	infolog	en	Affiche la liste des prochaines entrées
+show list of upcoming entries	infolog	fr	Affiche la liste des prochaines entrées
 show open entries: tasks/calls/notes on main screen	infolog	fr	Montrer les entrées ouvertes: Tâches/Appels/Notes sur l'écran principal
 small view	infolog	fr	vue réduite
 start a new search, cancel this link	infolog	fr	Démarre une nouvelle recherche, annule ce lien
@@ -216,6 +227,8 @@ sub	infolog	fr	Sous
 subject	infolog	fr	Sujet
 task	infolog	fr	Tâche
 test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'import (montrer les enregistrements importables <u>seulement</u> dans le navigateur)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 10 caractères), si vous le modifiez vous rendez les données indisponibles
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fr	le nom est utilisé en interne (<= 20 caractères), si vous le modifiez vous rendez les données indisponibles
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	fr	le nom utilisé en interne (<= 32 caractères), le changer rend les données existantes non disponibles
 the text displayed to the user	infolog	fr	le test affiché pour l´utilisateur
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fr	Ceci est le filtre qu'InfoLog utilise quand vous entrez dans l'application. Les filtres limitent les entrées à montrer dans la  vue actuelle. Il y a des filtres pour montrer seulement ceux temrminés, encore ouverts ou les futures entrées de vous-même ou de tous les utilisateurs.
@@ -226,8 +239,8 @@ todo	infolog	fr	A-faire
 translation	infolog	fr	Traduction
 typ	infolog	fr	Type
 typ '%1' already exists !!!	infolog	fr	Type '%1' existe déjà !!!
-type ...	infolog	en	Type ...
 type	infolog	fr	Type
+type ...	infolog	fr	Type ...
 type of the log-entry: note, phonecall or todo	infolog	fr	Type de l'entrée Log: note, appel téléphonique ou A-faire
 unlink	infolog	fr	Délier
 upcoming	infolog	fr	Arrivant
@@ -236,6 +249,8 @@ urgent	infolog	fr	Urgent
 use button to search for address	infolog	fr	Utiliser le bouton pour chercher une adresse
 use button to search for project	infolog	fr	Utiliser le bouton pour chercher un projet
 valid path on clientside<br>eg. \\server\share or e:\	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
+valid path on clientside<br>eg. servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \\Partage\Serveur ou e:\
 values for selectbox	infolog	fr	Valeues des boîtes de sélection
 view all subs of this entry	infolog	fr	Voir tous les sous de cette entrée
 view other subs	infolog	fr	Voir les autres sous
@@ -250,5 +265,6 @@ yes - delete	infolog	fr	Oui - Effacer
 you can't delete one of the stock types !!!	infolog	fr	Vous ne pouvez pas effacer un des types de stock !!!
 you have entered an invalid ending date	infolog	fr	Vous avez entré une date de fin invalide
 you have entered an invalid starting date	infolog	fr	Vous avez entré une date de début invalide
+you have to enter a name, to create a new typ!!!	infolog	fr	Vous devez entrer un nom pour créer un nouveau type!!!
 you have to enter a name, to create a new type!!!	infolog	fr	Vous devez entrer un nom pour créer un nouveau type!!!
 you must enter a subject or a description	infolog	fr	Vous devez entrer un sujet ou une description
