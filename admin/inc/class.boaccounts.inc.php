@@ -619,6 +619,7 @@
 		{
 			$totalerrors = 0;
 
+			/*
 			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && ! $allow_long_loginids)
 			{
 				if (strlen($_userData['account_lid']) > 8) 
@@ -627,6 +628,7 @@
 					$totalerrors++;
 				}
 			}
+			*/
 
 			if (!$_userData['account_lid'])
 			{
