@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
+  * phpGroupWare                                                             *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -9,13 +9,35 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id $ */
+  /* $Id$ */
 
-  /**************************************************************************\
-	* This file should never be changed!                                       *
-	* This is only to be used for the original table definitions.              *
-	* Any changes to the tables must be done thru the tables_update and then   *
-	* generate the tables_current                                              *
-  \**************************************************************************/
-  
+	$phpgw_baseline = array(
+		"addressbook" => array(
+			"fd" => array(
+				"ab_id" => array("type" => "auto", "nullable" => false),
+				"ab_owner" => array("type" => "varchar", "precision" => 25),
+				"ab_access" => array("type" => "varchar", "precision" => 10),
+				"ab_firstname" => array("type" => "varchar", "precision" => 255),
+				"ab_lastname" => array("type" => "varchar", "precision" => 255),
+				"ab_email" => array("type" => "varchar", "precision" => 255),
+				"ab_hphone" => array("type" => "varchar", "precision" => 255),
+				"ab_wphone" => array("type" => "varchar", "precision" => 255),
+				"ab_fax" => array("type" => "varchar", "precision" => 255),
+				"ab_pager" => array("type" => "varchar", "precision" => 255),
+				"ab_mphone" => array("type" => "varchar", "precision" => 255),
+				"ab_ophone" => array("type" => "varchar", "precision" => 255),
+				"ab_street" => array("type" => "varchar", "precision" => 255),
+				"ab_city" => array("type" => "varchar", "precision" => 255),
+				"ab_state" => array("type" => "varchar", "precision" => 255),
+				"ab_zip" => array("type" => "varchar", "precision" => 255),
+				"ab_bday" => array("type" => "varchar", "precision" => 255),
+				"ab_notes" => array("type" => "text"),
+				"ab_company" => array("type" => "varchar", "precision" => 255),
+			),
+			"pk" => array("ab_id"),
+			"fk" => array(),
+			"ix" => array(),
+			"uc" => array()
+		)
+	);
 ?>
