@@ -110,7 +110,7 @@
 			. "%$query%' OR firstname like '%$query%' OR email like '%$query%' OR "
 	            . "street like '%$query%' OR city like '%$query%' OR state "
 	            . "like '%$query%' OR zip like '%$query%' OR notes like "
-	            . "'%$query%') $ordermethod limit $limit");
+	            . "'%$query%' OR company like %$query%') $ordermethod limit $limit");
   } else {
      $phpgw->db->query("SELECT * FROM addressbook WHERE $filtermethod $ordermethod limit "
 			 . $limit);
