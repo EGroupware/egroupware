@@ -2,7 +2,7 @@
 %1 hours	preferences	pt-br	%1 horas
 12 hour	preferences	pt-br	12 horas
 24 hour	preferences	pt-br	24 horas
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	pt-br	Um modelo define o layout do eGroupWare e contém os ícones de cada aplicativo.
+a template defines the layout ofegroupware and it contains icons for each application.	preferences	pt-br	Um modelo define o layout do eGroupWare e contém os ícones de cada aplicativo.
 a theme defines the colors and fonts used by the template.	preferences	pt-br	Um tema define as cores e fontes utilizadas pelo modelo
 acl grants have been updated	preferences	pt-br	As permissões de acesso (ACL) foram atualizadas
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt-br	Todas as listas no eGroupWare utilizarão esta quantidade de linhas para a exibição por página. <br>Linhas demais podem deixar lenta a visualização, poucas linhas adificultam a visualização, teste várias possibilidades.
@@ -33,7 +33,7 @@ how do you like to display accounts	preferences	pt-br	Como você gostaria que as 
 how do you like to select accounts	preferences	pt-br	Como você gostaria de selecionar as contas
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pt-br	Quantas horas você está além ou aquém do fuso-horário do servidor.<br> Se você estiver no mesmo selecione 0, caso contrário, escolha o fuso-horário apropriado.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pt-br	Quantos ícones devem ser mostrados na barra de navegação no topo da página. Ícones adicionais serão colocados em um menu do tipo caixa suspensa, sendo acessado por um botão na extremidade direita da barra.
-how should phpgroupware display dates for you.	preferences	pt-br	Como o eGroupWare deve mostrar as datas para você
+how should egroupware display dates for you.	preferences	pt-br	Como o eGroupWare deve mostrar as datas para você
 icon	preferences	pt-br	Ícone
 icons and text	preferences	pt-br	Ícones e texto
 icons only	preferences	pt-br	Somente ícones

@@ -2,7 +2,7 @@
 %1 hours	preferences	ko	%1 시간
 12 hour	preferences	ko	12 시간
 24 hour	preferences	ko	24 시간
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	ko	템플릿의 정의는 eGroupWare 레이아웃 과 각 응용프로그램의 아이콘을 포함합니다.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	ko	템플릿의 정의는 eGroupWare 레이아웃 과 각 응용프로그램의 아이콘을 포함합니다.
 a theme defines the colors and fonts used by the template.	preferences	ko	테마는 템플릿에서 사용할 색과 글꼴을 정의합니다.
 acl grants have been updated	preferences	ko	ACL 허용이 업데이트 되었습니다.
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	eGroupWare에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
@@ -32,7 +32,7 @@ how do you like to display accounts	preferences	ko	어떻게 계정을 표시하겠습니까?
 how do you like to select accounts	preferences	ko	어떻게 계정을 선택하시겠습니까?
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	ko	서버의 시간대(timezone)보다 몇시간 앞서길 원하나요.<br>만약 서버와 같은 시간대에 있다면 0시간을 선택하거나 , 귀하의 현지 날짜와 시간을 선택하세요.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
-how should phpgroupware display dates for you.	preferences	ko	eGroupWare가 날짜를 어떻게 보여드릴까요?
+how should egroupware display dates for you.	preferences	ko	eGroupWare가 날짜를 어떻게 보여드릴까요?
 icon	preferences	ko	아이콘
 icons and text	preferences	ko	아이콘과 설명
 icons only	preferences	ko	오직 아이콘만

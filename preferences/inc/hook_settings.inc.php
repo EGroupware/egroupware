@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Preferences                                               *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Preferences                                                 *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -26,7 +26,7 @@
 	create_input_box('Max matches per page','maxmatchs',
 		'Any listing in phpGW will show you this number of entries or lines per page.<br>To many slow down the page display, to less will cost you the overview.','',3);
 	create_select_box('Interface/Template Selection','template_set',$_templates,
-		'A template defines the layout of phpGroupWare and it contains icons for each application.');
+		'A template defines the layout of eGroupWare and it contains icons for each application.');
 	create_select_box('Theme (colors/fonts) Selection','theme',$_themes,
 		'A theme defines the colors and fonts used by the template.');
 
@@ -72,7 +72,7 @@
 		'd-M-Y' => 'd-M-Y'
 	);
 	create_select_box('Date format','dateformat',$date_formats,
-		'How should phpGroupWare display dates for you.');
+		'How should eGroupWare display dates for you.');
 
 	$time_formats = array(
 		'12' => lang('12 hour'),
@@ -87,7 +87,7 @@
 	
 	$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
 	create_select_box('Language','lang',$langs,
-		'Select the language of texts and messages within phpGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.');
+		'Select the language of texts and messages within eGroupWare.<br>Some languages may not contain all messages, in that case you will see an english message.');
 
 	// preference.php handles this function
 	if (is_admin())
@@ -105,7 +105,7 @@
 		}
 	}
 	create_select_box('Default application','default_app',$user_apps,
-		"The default application will be started when you enter phpGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
+		"The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).");
 
 	create_input_box('Currency','currency',
 		'Which currency symbol or name should be used in eGroupWare.');

@@ -2,7 +2,7 @@
 %1 hours	preferences	fi	%1 tuntia
 12 hour	preferences	fi	12 tuntia
 24 hour	preferences	fi	24 tuntia
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	fi	Mallipohja m‰‰rittelee eGroupWaren ulkoasun ja se sis‰lt‰‰ sovellusten kuvakkeet.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	fi	Mallipohja m‰‰rittelee eGroupWaren ulkoasun ja se sis‰lt‰‰ sovellusten kuvakkeet.
 a theme defines the colors and fonts used by the template.	preferences	fi	Teema m‰‰rittelee mallipohjan v‰rit ja kirjasimet.
 acl grants have been updated	preferences	fi	ACL-oikeudet on p‰ivitetty
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fi	Kaikissa eGroupWaressa n‰ytett‰viss‰ listauksissa n‰ytet‰‰n t‰m‰n verran tietueita sivulla.<br>Jos arvo on liian suuri, sivun latautuminen hidastuu. Jos arvo on pieni, et n‰e kovin paljoa tietueita kerralla.
@@ -28,7 +28,7 @@ how do you like to display accounts	preferences	fi	Kuinka haluat n‰ytt‰‰ k‰ytt‰j
 how do you like to select accounts	preferences	fi	Kuinka haluat valita k‰ytt‰j‰tilit
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fi	Onko aikavyˆhykkeesi sama kuin palvelimen?<br>Jos olet samalla aikavyˆhykkeell‰, voit valita 0 tuntia, muuten valitse oikea aikavyˆhyke.
 How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fi	Kuinka monta kuvaketta n‰ytet‰‰n navigaatiopalkissa (sivun yl‰reunassa)? Loput kuvakkeet n‰ytet‰‰n oikeasta reunasta avautuvasta alasvetovalikosta.
-how should phpgroupware display dates for you.	preferences	fi	Kuinka p‰iv‰m‰‰r‰ n‰ytet‰‰n eGroupWaressa.
+how should egroupware display dates for you.	preferences	fi	Kuinka p‰iv‰m‰‰r‰ n‰ytet‰‰n eGroupWaressa.
 icons and text	preferences	fi	Kuvakkeet ja teksti
 icons only	preferences	fi	Vain kuvakkeet
 in which country are you. this is used to set certain defaults for you.	preferences	fi	Maa, jossa olet. T‰m‰n avulla m‰‰ritell‰‰n joitakin oletusasetuksia.

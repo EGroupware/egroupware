@@ -2,7 +2,7 @@
 %1 hours	preferences	nl	%1 uren
 12 hour	preferences	nl	12 uren
 24 hour	preferences	nl	24 uren
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	nl	Een template definieerd de grafische vormgeving van eGroupWare.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	nl	Een template definieerd de grafische vormgeving van eGroupWare.
 a theme defines the colors and fonts used by the template.	preferences	nl	Een thema definieerd de kleuren en lettertypes die worden gebruikt door een template
 acl grants have been updated	preferences	nl	ACL-toegang is bijgewerkt.
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	nl	Elk overzicht in eGroupWare zal dit aantal regels per pagina weergeven. <br/> Te veel kan het systeem traag maken, te weinig kan het onoverzichtelijk maken
@@ -29,7 +29,7 @@ how do you like to display accounts	preferences	nl	Hoe wil u accounts weergeven?
 how do you like to select accounts	preferences	nl	Hoe wil u accounts selecteren?
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	nl	Hoeveel uur bent voor of achter op de tijdzone van de server? <br/>Selecteer '0' als u zich in dezelfde tijdzone bevind.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	nl	Hoeveel icoontjes moeten worden weergegeven in de navigatiebalk bovenaan de pagina? De overige icoontjes van toepassingen staan in het uitklapmenu rechtsbovenaan de pagina. Dit uitklapmenu is standaard verborgen en kunt u uitklappen door op het blauwe pijltje naar beneden te klikken.
-how should phpgroupware display dates for you.	preferences	nl	Hoe moet eGroupWare een datum weergeven.
+how should egroupware display dates for you.	preferences	nl	Hoe moet eGroupWare een datum weergeven.
 icons and text	preferences	nl	Icoontjes en tekst
 icons only	preferences	nl	Alleen icoontjes
 in which country are you. this is used to set certain defaults for you.	preferences	nl	In welk land bevind u zich? Dit wordt gebruikt om bepaalde standaardinstellingen voor u te maken.

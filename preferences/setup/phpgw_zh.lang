@@ -2,7 +2,7 @@
 %1 hours	preferences	zh	%1小时
 12 hour	preferences	zh	12小时
 24 hour	preferences	zh	24小时
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	zh	模板定义了phpGroupWare的布局方式以及每个应用程序的图标.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	zh	模板定义了eGroupWare的布局方式以及每个应用程序的图标.
 a theme defines the colors and fonts used by the template.	preferences	zh	界面主题定义了模板使用的颜色和字体. 
 acl grants have been updated	preferences	zh	ACL授权已更新
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh	此处定义了eGroupWare每页显示的条目数或行数. <br>增大该数值可方便用户浏览(减少页面跳转次数), 但将使页面显示变慢. 
@@ -30,7 +30,7 @@ how do you like to display accounts	preferences	zh	以何种方式显示帐户
 how do you like to select accounts	preferences	zh	以何种方式选择帐户
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	zh	您与服务器所在时区的时差, <br>也可以是您所在地的日期和时间. 若在同一时区, 请输入0. 
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	zt	導覽列每次要顯示多少個圖示，其他圖示會顯示在一個下拉式選單中。
-how should phpgroupware display dates for you.	preferences	zh	以何种方式显示日期. 
+how should egroupware display dates for you.	preferences	zh	以何种方式显示日期. 
 icon	preferences	zt	圖示
 icons and text	preferences	zh	显示图标和文字
 icons only	preferences	zh	只显示图标

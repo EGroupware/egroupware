@@ -2,7 +2,7 @@
 %1 hours	preferences	uk	%1 годин
 12 hour	preferences	uk	12 годин
 24 hour	preferences	uk	24 години
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	uk	Зразок визначає вигляд eGroupWare і має іконки для кожного приложення.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	uk	Зразок визначає вигляд eGroupWare і має іконки для кожного приложення.
 a theme defines the colors and fonts used by the template.	preferences	uk	Тема визначає кольори та фонти, що використовуються зразком.
 acl grants have been updated	preferences	uk	ACL доступи змінено
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	uk	Кожен перелік в системі буде показувати вам цю кількість записів або рядків на сторінці.<br>Надто багато буде довго загружатись, надто мало буде заставляти Вас часто пролистувати.
@@ -28,7 +28,7 @@ how do you like to display accounts	preferences	uk	Як би ви хотіли �
 how do you like to select accounts	preferences	uk	Як би ви хотіли вибирати користувачів
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	uk	На скільки годин Ви далеко від часового поясу серверу. <br>Якщо Ви в тому самому поясі, що і сервер, виберіть 0 годин, інакше виберіть локальну дату та час.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	uk	Скільки іконок показувати в навігаційній панелі зверху сторінки. Додаткові іконки будуть в випадаючому меню, досупному через іконку в правій частині панелі.
-how should phpgroupware display dates for you.	preferences	uk	Яким чином повинен eGroupWare показувати Вам дати.
+how should egroupware display dates for you.	preferences	uk	Яким чином повинен eGroupWare показувати Вам дати.
 icons and text	preferences	uk	Іконки та текст
 icons only	preferences	uk	Тільки Іконки
 in which country are you. this is used to set certain defaults for you.	preferences	uk	В якій країні Ви знаходитесь. Це використовується для встановлення деяких замовчувань.

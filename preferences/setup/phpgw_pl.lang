@@ -2,7 +2,7 @@
 %1 hours	preferences	pl	%1 godzin
 12 hour	preferences	pl	12 godzinny
 24 hour	preferences	pl	24 godzinny
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	pl	Szablony okre¶laj± wygl±d eGroupWare i zawieraj± ikonki dla wszystkich aplikacji
+a template defines the layout of egroupware and it contains icons for each application.	preferences	pl	Szablony okre¶laj± wygl±d eGroupWare i zawieraj± ikonki dla wszystkich aplikacji
 a theme defines the colors and fonts used by the template.	preferences	pl	Tematy s³u¿± do okre¶lenia kolorów i czcionek w egroupware
 acl grants have been updated	preferences	pl	Uprawniena dostêpu (ACL) zosta³y odnowione
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w eGroupWare bêd± wy¶wietlaæ ci tutaj ustawion± liczbê wierszy na strone.<br>Za wiele spowolni do¶æ znacznie wy¶wietlanie stron, za ma³o spowoduje utrate przejrzysto¶ci informacji.
@@ -29,7 +29,7 @@ how do you like to display accounts	preferences	pl	Jak maj± byæ wy¶wietlane kont
 how do you like to select accounts	preferences	pl	Jak chcia³by¶ wybieraæ/zaznaczaæ konta u¿ytkowników
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	pl	Podaj o ile godzin twoja strefa czasowa ró¿ni sie od strefy lokalnej serwera eGroupWare.<br>Je¿eli znajdujesz siê w tej samej strefje czasowej co serwer, ustaw 0 godzin, w innym wypadku ustaw wed³ug twojego lokalnego czasu i daty.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	pl	Jaka ilo¶æ ikonek winna byæ wy¶wietlana w listwie nawigacji. Dalsze ikonki bed± czê¶ci± menu typu pulldown które mo¿na wywo³aæ przy pomocy klikniêcia ikonki za strza³k± z zupe³nie prawej strony listwy nawigacji
-how should phpgroupware display dates for you.	preferences	pl	W jaki spsób eGroupWare powinien wy¶wietlaæ datê
+how should egroupware display dates for you.	preferences	pl	W jaki spsób eGroupWare powinien wy¶wietlaæ datê
 icons and text	preferences	pl	Ikony i tekst
 icons only	preferences	pl	Tylko ikony
 in which country are you. this is used to set certain defaults for you.	preferences	pl	W którym znajdujesz siê panstwie. eGroupWare u¿yje tego ustawienia do wyboru pewnych konfiguracji domy¶lnych.

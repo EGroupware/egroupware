@@ -2,7 +2,7 @@
 %1 hours	preferences	it	%1 ore
 12 hour	preferences	it	12 ore
 24 hour	preferences	it	24 ore
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	it	Un Template definisce il layout di eGroupWare e contiene le icone per ogni applicazione.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	it	Un Template definisce il layout di eGroupWare e contiene le icone per ogni applicazione.
 a theme defines the colors and fonts used by the template.	preferences	it	Un Tema definisce i colori e i tipi di carattere usati dal template.
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in eGroupWare visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
@@ -31,7 +31,7 @@ how do you like to display accounts	preferences	it	Come vuoi visualizzare gli ac
 how do you like to select accounts	preferences	it	Come vuoi selezionare gli account
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	it	Quante ora è avanti o indietro il fuso orario del tuo server.<br>Se stai usando il fuso orario del server seleziona 0 altrimenti seleziona il tuo fuso orario locale.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	it	Quante icone devono essere visualizzare nella barra di navigazione in cima alla pagina. Le altre icone saranno nel menu a discesa richiamabile dall'icona all'estrema destra della barra di navigazione.
-how should phpgroupware display dates for you.	preferences	it	Come eGroupWare deve visualizzare le date.
+how should egroupware display dates for you.	preferences	it	Come eGroupWare deve visualizzare le date.
 icon	preferences	it	Icona
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone

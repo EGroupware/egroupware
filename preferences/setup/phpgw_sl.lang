@@ -2,7 +2,7 @@
 %1 hours	preferences	sl	%1 ur
 12 hour	preferences	sl	12 ur
 24 hour	preferences	sl	24 ur
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	sl	Predloga definira izgled eGroupWare-a in vsebuje ikone za vse aplikacije.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	sl	Predloga definira izgled eGroupWare-a in vsebuje ikone za vse aplikacije.
 a theme defines the colors and fonts used by the template.	preferences	sl	Tema definira barve in pisave, ki so uporabljene v predlogah.
 acl grants have been updated	preferences	sl	ACL pravice so bile spremenjene
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sl	Vsak seznam v eGW prika¾e to ¹tevilo vnosov oz. vrstic na stran.<br>Preveliko ¹tevilo upo&#269;asni vpogled strani, premajhno pa omeji vpogled na seznam.
@@ -27,7 +27,7 @@ hours	preferences	sl	ure
 how do you like to display accounts	preferences	sl	Kako ¾eli¹ prikazati raèune
 how do you like to select accounts	preferences	sl	Kako ¾eli¹ izbrati raèune
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sl	Kak¹na je razlika v &#269;asovnem pasu, v katerem se nahaja¹.<br>&#268;e se nahaja¹ v istem &#269;asovnem pasu kot stre¾nik, izberi 0.
-how should phpgroupware display dates for you.	preferences	sl	Kako naj ti eGroupWare poka¾e datume.
+how should egroupware display dates for you.	preferences	sl	Kako naj ti eGroupWare poka¾e datume.
 icons and text	preferences	sl	Ikone in besedilo
 icons only	preferences	sl	samo ikone
 in which country are you. this is used to set certain defaults for you.	preferences	sl	V kateri dr¾avi ste. To je uporabno za pravilen izbor privzetih vrednosti.

@@ -2,7 +2,7 @@
 %1 hours	preferences	es-es	%1 horas
 12 hour	preferences	es-es	12 horas
 24 hour	preferences	es-es	24 horas
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
 a theme defines the colors and fonts used by the template.	preferences	es-es	Un tema define los colores y los tipos de letra usados en la plantilla
 acl grants have been updated	preferences	es-es	Los permisos de la ACL se han actualizado
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
@@ -31,7 +31,7 @@ how do you like to display accounts	preferences	es-es	¿Cómo desea ver las cuenta
 how do you like to select accounts	preferences	es-es	¿Cómo desea seleccionar las cuentas?
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas, si no, seleccione su fecha y hora local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-es	Número de iconos a mostrar en la barra de navegación en la parte superior de la página. Los iconos adicionales van en un menú desplegable, en la parte derecha de la barra de navegación.
-how should phpgroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas
+how should egroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas
 icon	preferences	es-es	Icono
 icons and text	preferences	es-es	Iconos y texto
 icons only	preferences	es-es	Sólo iconos

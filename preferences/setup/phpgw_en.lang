@@ -2,7 +2,7 @@
 %1 hours	preferences	en	%1 hours
 12 hour	preferences	en	12 hour
 24 hour	preferences	en	24 hour
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	en	A template defines the layout of eGroupWare and it contains icons for each application.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	en	A template defines the layout of eGroupWare and it contains icons for each application.
 a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
 acl grants have been updated	preferences	en	ACL grants have been updated
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in eGroupWare will show you this number of entries or lines per page.<br>Too many slow down the page display, too less will cost you the overview.
@@ -31,7 +31,7 @@ how do you like to display accounts	preferences	en	How would you like to display
 how do you like to select accounts	preferences	en	How would you like to select accounts
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server.<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pulldown menu, callable by the icon on the far right side of the navbar.
-how should phpgroupware display dates for you.	preferences	en	How should eGroupWare display dates for you.
+how should egroupware display dates for you.	preferences	en	How should eGroupWare display dates for you.
 icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	icons only

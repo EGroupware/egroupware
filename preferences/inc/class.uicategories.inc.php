@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Preferences - categories                                  *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Preferences - categories                                    *
+	* http://www.egroupware.org                                                *
 	* Written by Bettina Gille [ceb@phpgroupware.org]                          *
 	* Simplified ;-) and icon & color added by RalfBecker@outdoor-training.de  *
 	* -----------------------------------------------                          *

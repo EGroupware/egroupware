@@ -2,7 +2,7 @@
 %1 hours	preferences	es-ca	%1 hores
 12 hour	preferences	es-ca	12 hores
 24 hour	preferences	es-ca	24 hores
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	es-ca	Una plantilla defineix l'aparença d'eGroupWare i conté icones per a cada aplicació.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	es-ca	Una plantilla defineix l'aparença d'eGroupWare i conté icones per a cada aplicació.
 a theme defines the colors and fonts used by the template.	preferences	es-ca	Un tema defineix els colors i les fonts tipogràfiques que fa servir la plantilla.
 acl grants have been updated	preferences	es-ca	Permissos de LCA actualitzats
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-ca	Qualsevol llistat en eGroupWare mostrarà aquest número d'entrades o línies per plana.<br>Una quantitat elevada ralentitza la plana, massa poques poden no ser prou informació.
@@ -29,7 +29,7 @@ how do you like to display accounts	preferences	es-ca	Cóm voleu veure els compte
 how do you like to select accounts	preferences	es-ca	Cóm voleu seleccionar els comptes
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-ca	Quàntes hores de diferència teniu respecte a la zona horària del servidor.<br>Si esteu a la mateixa zona horària, seleccioneu 0 hores; si no seleccioneu el valor respecte la vostra hora i data local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-ca	Quàntes icones es poden mostrar a la barra de navegació a la part superior de la plana. Les   icones restants es disposaràn en un menu emergent, que s'activa amb la darrera icona de la dreta de la barra de navegació.
-how should phpgroupware display dates for you.	preferences	es-ca	Cóm voleu que eGroupWare mostri les dates.
+how should egroupware display dates for you.	preferences	es-ca	Cóm voleu que eGroupWare mostri les dates.
 icons and text	preferences	es-ca	Icones i text
 icons only	preferences	es-ca	Només icones
 in which country are you. this is used to set certain defaults for you.	preferences	es-ca	En quin pais esteu. S'utilitza per establir alguns valors per defecte.

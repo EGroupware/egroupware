@@ -2,7 +2,7 @@
 %1 hours	preferences	fr	%1 heures
 12 hour	preferences	fr	12 heures
 24 hour	preferences	fr	24 heures
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition de phpGroupWare et contient les icônes pour chaque application.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition de eGroupWare et contient les icônes pour chaque application.
 a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et fontes utilisées par le modèle.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	N'importe quelle liste dans eGroupWare va vous montrer ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite vous en montre moins.
@@ -27,7 +27,7 @@ hours	preferences	fr	Heures
 how do you like to display accounts	preferences	fr	Comment vous préférez afficher les comptes
 how do you like to select accounts	preferences	fr	Comment vous préférez choisir les comptes
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fr	Combien d'heures en plus ou en moins vous séparent de la zone de temps du serveur.<br>Si vous êtes dans la même zone de temps que le serveur choisissez 0 heures, sinon choisissez votre date et heure locales.
-how should phpgroupware display dates for you.	preferences	fr	Comment phpGroupWare doit vous afficher les dates.
+how should egroupware display dates for you.	preferences	fr	Comment eGroupWare doit vous afficher les dates.
 icons and text	preferences	fr	Icones et texte
 icons only	preferences	fr	Icones seulement
 in which country are you. this is used to set certain defaults for you.	preferences	fr	Dans quel pays êtes-vous. Ceci est utilisé pour régler certaines valeurs par défaut pour vous.

@@ -2,7 +2,7 @@
 %1 hours	preferences	zt	%1 小時
 12 hour	preferences	zt	12 小時制
 24 hour	preferences	zt	24 小時制
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	zt	樣版定義了eGroupWare的版面配置與應用程式圖示
+a template defines the layout of egroupware and it contains icons for each application.	preferences	zt	樣版定義了eGroupWare的版面配置與應用程式圖示
 a theme defines the colors and fonts used by the template.	preferences	zt	佈景定義了樣板的顏色與字型
 acl grants have been updated	preferences	zt	ACL 授權已經更新
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zt	eGroupWare將會依據這個數字顯示大部份列表的資料筆數<br>數字太大可能會造成讀取速度緩慢
@@ -30,7 +30,7 @@ how do you like to display accounts	preferences	zt	您喜歡如何顯示帳號�
 how do you like to select accounts	preferences	zt	您喜歡如何選取帳號？
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	zt	您跟伺服器所在位置的時差<br>如果您跟伺服器在同一個時區請輸入0，或是輸入符合您需求的時區
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	zt	導覽列每次要顯示多少個圖示，其他圖示會顯示在一個下拉式選單中。
-how should phpgroupware display dates for you.	preferences	zt	您希望phpGroupWare如何顯示日期格式
+how should egroupware display dates for you.	preferences	zt	您希望eGroupWare如何顯示日期格式
 icon	preferences	zt	圖示
 icons and text	preferences	zt	圖示及文字
 icons only	preferences	zt	只有圖示

@@ -2,7 +2,7 @@
 %1 hours	preferences	da	%1 timer
 12 hour	preferences	da	12 timer
 24 hour	preferences	da	24 timer
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	da	En skabelon angiver opsætningen af eGroupWare og den indeholder ikonerne for hver applikation
+a template defines the layout ofegroupware and it contains icons for each application.	preferences	da	En skabelon angiver opsætningen af eGroupWare og den indeholder ikonerne for hver applikation
 a theme defines the colors and fonts used by the template.	preferences	da	Et tema, præcisere farverne og skrifttyperne brugt af skabelonen
 acl grants have been updated	preferences	da	ACL rettighederne er blevet opdateret
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	da	Enhver liste i eGroupWare vil vise det antal resultater eller linier valgt.<br>For mange vil sløve siden, for få vil koste dig overblikket.
@@ -28,7 +28,7 @@ how do you like to display accounts	preferences	da	Hvordan vil du have vist kont
 how do you like to select accounts	preferences	da	Hvordan vil du vælge kontoerne
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	da	Hvor mange timer er du før eller efter den tidszone som serveren befinder sig i.<br>Hvis du er i den samme tidszone som serveren vælg 0 timer, ellers vælg din lokale dato og tid.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	da	Hvor mange ikoner skal være vist i navigationsbjælken øverst på siden. Yderligere ikoner bliver placeret i en nedtræknings menu, via ikonet helt i højre side af navigations bjælken.
-how should phpgroupware display dates for you.	preferences	da	Hvordan skal eGrouWare fremvise datoer for dig.
+how should egroupware display dates for you.	preferences	da	Hvordan skal eGrouWare fremvise datoer for dig.
 icons and text	preferences	da	Ikoner og tekst
 icons only	preferences	da	kun ikoner
 in which country are you. this is used to set certain defaults for you.	preferences	da	I hvilket land er du. Denne indstilling er brugt til at sætte visse standarter for dig.

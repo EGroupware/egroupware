@@ -2,7 +2,7 @@
 %1 hours	preferences	hu	%1 órák
 12 hour	preferences	hu	12 óra
 24 hour	preferences	hu	24 óra
-a template defines the layout of phpgroupware and it contains icons for each application.	preferences	hu	Egy eGroupWare elrendezés minta definíció és az ikonokat tartalmaz minden program számára.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	hu	Egy eGroupWare elrendezés minta definíció és az ikonokat tartalmaz minden program számára.
 a theme defines the colors and fonts used by the template.	preferences	hu	Egy téma definiálja a színeket és betütipusokat amiket a minta használ.
 acl grants have been updated	preferences	hu	ACL engedélyek frissítve
 any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Valamelyik lista mutatja az eGruopWare-ben ennek a bejegyzésnek a számát vagy a sorok számát laponként. <br>Túl sok megjelenítés lassítani fogja a kirajzolás sebességét.
@@ -28,7 +28,7 @@ how do you like to display accounts	preferences	hu	Hogyan szeretnéd megjeleníten
 how do you like to select accounts	preferences	hu	Hogyan szeretnéd kiválasztani a hozzáféréseket
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	hu	Hány órával vagy elörébb vagy hátrébb a szerver idözónájánál.<br>Ha Te ugyanabban az idözónában vagy mint a szerver válassz 0 órát, egyébként válaszd a Te helyi dátumodat és idödet.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	hu	Mennyi ikont lehet megjeleníteni a navigációs panelen a lap tetején. További ikonok a lehulló menübe kerülnek, a navigációs panel jobb oldalán érhetök el.
-how should phpgroupware display dates for you.	preferences	hu	Az eGroupWare hogyan jelenítse meg a dátumokat Neked?
+how should egroupware display dates for you.	preferences	hu	Az eGroupWare hogyan jelenítse meg a dátumokat Neked?
 icons and text	preferences	hu	Ikonok és képek
 icons only	preferences	hu	ikonok csupán
 in which country are you. this is used to set certain defaults for you.	preferences	hu	Melyik megyében vagy. Ennek a használatával beállíthatsz különbözö alapértelmezéseket magadnak.
