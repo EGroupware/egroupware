@@ -18,7 +18,7 @@
     UNIQUE config_name (config_name)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE applications (
@@ -30,7 +30,7 @@
     UNIQUE app_name (app_name)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE accounts (
@@ -49,7 +49,7 @@
     UNIQUE account_lid (account_lid)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   create table groups (
@@ -59,7 +59,7 @@
     primary key(group_id)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE preferences (
@@ -69,7 +69,7 @@
      preference_appname varchar(50)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE sessions (
@@ -82,7 +82,7 @@
      UNIQUE sessionid (session_id)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE app_sessions (
@@ -92,7 +92,7 @@
      content	text
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   create table access_log (
@@ -103,7 +103,7 @@
      lo		int
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE profiles (
@@ -117,7 +117,7 @@
      PRIMARY KEY (con)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE addressbook (
@@ -143,7 +143,7 @@
      PRIMARY KEY (ab_id)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE todo (
@@ -158,7 +158,7 @@
      PRIMARY KEY (todo_id)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE webcal_entry (
@@ -178,7 +178,7 @@
      PRIMARY KEY (cal_id)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE webcal_entry_repeats (
@@ -189,7 +189,7 @@
      cal_days	char(7)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE webcal_entry_user (
@@ -199,7 +199,7 @@
      PRIMARY KEY (cal_id, cal_login)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   create table webcal_entry_groups (
@@ -207,7 +207,7 @@
     groups	varchar(255)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE newsgroups (
@@ -221,7 +221,7 @@
     UNIQUE name (name)
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE users_newsgroups (
@@ -229,7 +229,7 @@
     newsgroup	int(11) NOT NULL
   )";
   
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
   
   $sql = "
   CREATE TABLE lang (
@@ -239,5 +239,5 @@
     content text NOT NULL,
     PRIMARY KEY (message_id,app_name,lang)
   )";
-  $db->query('insert into config (config_name, config_value) values ('default_tplset', 'default')";
+  $db->query($sql)";
 ?>
