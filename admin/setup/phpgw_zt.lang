@@ -1,139 +1,360 @@
+%1 - %2 of %3 user accounts	admin	zt	%3 的使用者帳號 %1 - %2
+%1 not found or not executable !!!	admin	zt	無法找到%1或無法執行 !!!
+(stored password will not be shown here)	admin	zt	(此處不顯示保存過的密碼)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zt	(請使用<br><a href="setup/" target="setup">安裝程式</a>來安裝新的應用程式 [Manage Applications] !!!)
+accesslog and bruteforce defense	admin	zt	訪問日誌和字典攻擊防禦
 account active	admin	zt	啟用帳號
-account has been created	common	zt	成功新增帳號
-account has been deleted	common	zt	成功移除帳號
-account has been updated	common	zt	成功更新帳號
-account permissions	admin	zt	帳號權限
-account preferences	admin	zt	帳號喜好設定
-action	admin	zt	動作
-add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	zt	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
-add global category	admin	zt	新增全區分類
-add new account	admin	zt	新增帳號
-add new application	admin	zt	新增應用程式
+account has been created	common	zt	帳號建立成功
+account has been deleted	common	zt	帳號已被刪除
+account has been updated	common	zt	帳號已經更新
+account list	admin	zt	帳號列表
+account permissions	admin	zt	帳號許可權
+account preferences	admin	zt	帳號個性化配置
+acl manager	admin	zt	ACL管理器
+acl rights	admin	zt	ACL許可權
+action	admin	zt	操作
+add a category	admin	zt	增加類別
+add a group	admin	zt	增加群組
+add a new account.	admin	zt	增加新帳號
+add a subcategory	admin	zt	增加子類別
+add a user	admin	zt	增加用戶
+add account	admin	zt	增加帳號
+add application	admin	zt	增加應用程式
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	zt	新增自動建立的使用者到這個群組 (空白則使用預設值)
+add global category	admin	zt	增加全域類別
+add global category for %1	admin	zt	增加%1的全域類別
+add group	admin	zt	增加群組
+add new account	admin	zt	增加新帳號
+add new application	admin	zt	增加新的應用程式
+add peer server	admin	zt	增加對等伺服器
+add sub-category	admin	zt	增加子類別
+admin email	admin	zt	email管理
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zt	使用者帳號被封鎖後應該發送通知到哪些電子郵件位址 (逗號分隔)，空白則不發送通知
+admin name	admin	zt	名稱管理
+administration	admin	zt	系統管理
 admins	admin	zt	系統管理
-all records and account information will be lost!	admin	zt	所有的帳號資料及紀錄將會消失！
-all users	admin	zt	所有使用者
-allow anonymous access to this app	admin	zt	允許匿名使用者存取此應用程式
-anonymous user	admin	zt	匿名使用者
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zt	幾次登錄失敗後，帳號被封鎖(預設值3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zt	幾次登錄失敗後，IP位址被封鎖(預設值3)?
+all records and account information will be lost!	admin	zt	所有的記錄和帳號資訊都將消失！
+all users	admin	zt	所有用戶
+allow anonymous access to this app	admin	zt	允許匿名用戶訪問此應用程式
+anonymous user	admin	zt	匿名用戶
+anonymous user (not shown in list sessions)	admin	zt	匿名用戶(上線列表中不顯示)
+appearance	admin	zt	外觀
+application	admin	zt	應用程式
 application name	admin	zt	應用程式名稱
 application title	admin	zt	應用程式標題
 applications	admin	zt	應用程式
-are you sure you want to delete this account ?	admin	zt	您確定要移除此帳號嗎？
-are you sure you want to delete this application ?	admin	zt	您確定要移除此應用程式嗎？
-are you sure you want to delete this group ?	admin	zt	您確定要移除此群組嗎？
-are you sure you want to kill this session ?	admin	zt	您確定要結束此連線嗎？
-attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	zt	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
-authentication / accounts	admin	zt	認證／帳號
-auto create account records for authenticated users	admin	zt	自動建立所有授權使用者的帳號資料
-change main screen message	admin	zt	變更主畫面訊息
-check ip address of all sessions	admin	zt	檢查所有連線的網路位址
+applications list	admin	zt	應用程式列表
+apply	admin	zt	應用
+are you sure you want to delete the application %1 ?	admin	zt	確定要刪除應用程式%1嗎?
+are you sure you want to delete this account ?	admin	zt	確定要刪除該帳號嗎?
+are you sure you want to delete this application ?	admin	zt	確定要刪除該應用程式嗎?
+are you sure you want to delete this category ?	common	zt	確定要刪除該類別嗎?
+are you sure you want to delete this global category ?	admin	zt	確定要刪除該全域類別嗎?
+are you sure you want to delete this group ?	admin	zt	確定要刪除該群組嗎?
+are you sure you want to delete this server?	admin	zt	確定要刪除該伺服器嗎?
+are you sure you want to kill this session ?	admin	zt	確定要中止該作業程序嗎?
+async services last executed	admin	zt	非同步服務最近已執行過
+asynchronous timed services	admin	zt	非同步定時服務
+asyncservices not yet installed or other error (%1) !!!	admin	zt	非同步服務尚未安裝或其他錯誤(錯誤號：%1) !!!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zt	在FTP中嘗試使用正確的mimetype來替代預設的application/otect-stream
+authentication / accounts	admin	zt	身份驗證 / 帳號
+auto create account records for authenticated users	admin	zt	自動為通過身份驗證的帳號建立記錄
+back to the list	admin	zt	返回列表
+bi-dir passthrough	admin	zt	bi-dir passthrough
+bi-directional	admin	zt	bi-directional
+bottom	admin	zt	底部
+calculate next run	admin	zt	計劃下次運行
+can change password	admin	zt	允許修改密碼
+cancel testjob!	admin	zt	取消測試任務!
+categories list	admin	zt	類別列表
+category %1 has been saved !	admin	zt	類別%1已儲存!
+category list	admin	zt	類別列表
+change acl rights	admin	zt	修改 ACL 權限
+change config settings	admin	zt	修改配置
+change main screen message	admin	zt	修改主頁面資訊
+check ip address of all sessions	admin	zt	檢查所有會話的IP地址
+check items to <b>%1</b> to %2 for %3	admin	zt	檢查%3的項目 <b>%1</b> 到 %2
 country selection	admin	zt	選擇國家
-create group	admin	zt	新增群組
-default file system space per user	admin	zt	預設各使用者可使用的檔案空間
-default file system space per user/group ?	admin	zt	預設各使用者／群組可使用的檔案空間？
-deny all users access to grant other users access to their entries ?	admin	zt	不允許任何使用者將自己的資料開放給其它使用者存取？
+create group	admin	zt	建立群組
+crontab only (recomended)	admin	zt	僅crontab  (建議)
+data	admin	zt	資料
+day	admin	zt	星期
+day of week<br>(0-6, 0=sun)	admin	zt	星期<br>(0-6, 0=星期天)
+default	admin	zt	預設值
+default file system space per user	admin	zt	每個用戶的預設文件系統空間
+default file system space per user/group ?	admin	zt	每個用戶/群組的預設文件系統空間?
+deinstall crontab	admin	zt	卸載 crontab
+delete account	admin	zt	刪除帳號
+delete all records	admin	zt	刪除所有記錄
+delete application	admin	zt	刪除應用程式
+delete category	admin	zt	刪除類別
+delete group	admin	zt	刪除群組
+delete peer server	admin	zt	刪除對等伺服器
+delete the category	admin	zt	刪除該類別
+delete the group	admin	zt	刪除該群組
+delete this category	admin	zt	刪除這個類別
+delete this group	admin	zt	刪除這個群組
+delete this user	admin	zt	刪除這個用戶
+deny access to access log	admin	zt	禁止對存取紀錄的存取
+deny access to application registery	admin	zt	禁止存取應用程式註冊設定
+deny access to applications	admin	zt	禁止存取應用程式
+deny access to asynchronous timed services	admin	zt	禁止存取非同步定時服務
+deny access to current sessions	admin	zt	禁止存取目前作業程序
+deny access to error log	admin	zt	禁止存取錯誤紀錄
+deny access to global categories	admin	zt	禁止存取全域類別
+deny access to groups	admin	zt	禁止存取群組
+deny access to mainscreen message	admin	zt	禁止存取主頁面資訊
+deny access to peer servers	admin	zt	禁止存取對等伺服器
+deny access to phpinfo	admin	zt	禁止存取PHP資訊
+deny access to site configuration	admin	zt	禁止存取站點配置
+deny access to user accounts	admin	zt	禁止存取用戶帳號
+deny all users access to grant other users access to their entries ?	admin	zt	禁止所有使用者取得其他使用者的資料存取 ?
+description can not exceed 255 characters in length !	admin	zt	說明的長度不能超過255個字元!
+disable "auto completion" of the login form	admin	zt	停止登入頁面中的自動完成功能
+disabled (not recomended)	admin	zt	停止(不推薦)
 display	admin	zt	顯示
-do you also want to delete all global subcategories ?	admin	zt	您確定要移除所有的全區子分類嗎？
+do not delete the category and return back to the list	admin	zt	請勿刪除該類別，返回列表
+do you also want to delete all global subcategories ?	admin	zt	確定也要刪除所有的全域子類別嗎?
+do you want to delete all global subcategories ?	admin	zt	確定要刪除所有的全域子類別嗎?
+do you want to move all global subcategories one level down ?	admin	zt	確定要把所有的全域子類別向下移動一級嗎?
+edit account	admin	zt	編輯帳號
 edit application	admin	zt	編輯應用程式
-edit global category	admin	zt	編輯全區分類
+edit global category	admin	zt	編輯全域類別
+edit global category for %1	admin	zt	編輯全域類別%1
 edit group	admin	zt	編輯群組
-edit user account	admin	zt	編輯使用者帳號
-enabled - hidden from navbar	admin	zt	啟用，但不顯示在功能列中
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	zt	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br>
-enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	admin	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
-enter the full path for users and group files.<br>Examples: /files, E:\FILES	admin	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
-enter the hostname of the machine on which this server is running	admin	zt	輸入這個伺服器主機的主機名稱
-enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	admin	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
-enter the site password for peer servers	admin	zt	輸入對接伺服器的主機密碼
-enter the site username for peer servers	admin	zt	輸入對接伺服器的主機名稱
-enter the title for your site	admin	zt	輸入此網站的標題
-enter your default FTP server	admin	zt	輸入預設的檔案傳輸伺服器主機名稱
-enter your HTTP proxy server	admin	zt	輸入網頁代理伺服器主機名稱
-enter your HTTP proxy server port	admin	zt	輸入網頁代理伺服器主機埠
-force selectbox	admin	zt	固定勾選方塊
-global categories	admin	zt	全區分類
-group ?	admin	zt	群組？
-group has been added	common	zt	成功新增群組
-group has been deleted	common	zt	成功移除群組
-group has been updated	common	zt	成功更新群組
+edit login screen message	admin	zt	編輯登錄頁面資訊
+edit main screen message	admin	zt	編輯主頁面資訊
+edit peer server	admin	zt	編輯對等伺服器
+edit table format	admin	zt	編輯表單格式
+edit this category	admin	zt	編輯該類別
+edit this group	admin	zt	編輯該群組
+edit this user	admin	zt	編輯該用戶
+edit user	admin	zt	編輯用戶
+edit user account	admin	zt	編輯用戶帳號
+enable debug-messages	admin	zt	顯示偵錯訊息
+enabled - hidden from navbar	admin	zt	在導航欄中隱藏
+enter a description for the category	admin	zt	輸入類別說明
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	zt	請隨機輸入一些文本，用於<br>加密應用程式的會話(需要mcrypt)
+enter the background color for the login page	admin	zt	請輸入登入頁面的背景顏色
+enter the background color for the site title	admin	zt	請輸入站點名稱的背景顏色
+enter the file name of your logo	admin	zt	請輸入商標的檔案名稱
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zt	請輸入暫存檔案的完整路徑。<br>例如: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	zt	請輸入用戶和群組的完整路徑。<br>例如: /files, E:\FILES
+enter the hostname of the machine on which this server is running	admin	zt	請輸入伺服器所在主機的名稱
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zt	請輸入phpGroupWare的網址。<br>例如： http://www.domain.com/phpgroupware &nbsp; 或者 &nbsp; /phpgroupware<br><b>不能以/結尾</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	zt	請輸入要查找的字串。要顯示所有條目，此處空白並點擊提交按鈕
+enter the site password for peer servers	admin	zt	請輸入對等伺服器站點的密碼
+enter the site username for peer servers	admin	zt	請輸入對等伺服器站點的用戶名
+enter the title for your site	admin	zt	請輸入網站標題
+enter the title of your logo	admin	zt	請輸入商標名稱
+enter the url where your logo should link to	admin	zt	請輸入商標所鏈結的網址
+enter your default ftp server	admin	zt	請輸入預設的FTP伺服器
+enter your http proxy server	admin	zt	請輸入HTTP代理伺服器
+enter your http proxy server port	admin	zt	請輸入HTTP代理伺服器的埠號
+error canceling timer, maybe there's none set !!!	admin	zt	取消計時器時出錯，可能並沒有設置計時器!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	zt	設置計時器時出錯，語法不正確或計時器正在運行!!!
+error: %1 not found or other error !!!	admin	zt	錯誤: 無法找到%1或其他原因!!!
+expires	admin	zt	過期
+fallback (after each pageview)	admin	zt	在每個頁面請求後返回
+file space	admin	zt	文件空間
+file space must be an integer	admin	zt	文件空間必須是整數
+find and register all application hooks	admin	zt	尋找並註冊所有應用程式Hooks
+for the times above	admin	zt	次數上限
+for the times below (empty values count as '*', all empty = every minute)	admin	zt	次數下限 (空白視為 '*', 全部空白 = 每一分鐘)
+force selectbox	admin	zt	強制使用選取方塊
+global categories	admin	zt	全域類別
+group ?	admin	zt	群組?
+group has been added	common	zt	群組增加成功
+group has been deleted	common	zt	群組已被刪除
+group has been updated	common	zt	群組已經更新
+group list	admin	zt	群組列表
+group manager	admin	zt	群組管理
 group name	admin	zt	群組名稱
-hide php information	admin	zt	隱藏 PHP 資訊
-home directory	admin	zt	家目錄
-host information	admin	zt	Host information
-idle	admin	zt	閒置時間
-if no acl records for user or any group the user is a member of	admin	zt	If no ACL records for user or any group the user is a member of
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	If using LDAP, do you want to manage homedirectory and loginshell attributes?
-installed applications	common	zt	已安裝之應用程式
+hide php information	admin	zt	隱藏php資訊
+home directory	admin	zt	主目錄
+host information	admin	zt	主機資訊
+hour<br>(0-23)	admin	zt	小時<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zt	存取紀錄中的項目保留多久後刪除(預設值90天)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	zt	帳號和IP地址的封鎖時間(預設值30分鐘)
+idle	admin	zt	閒置
+if no acl records for user or any group the user is a member of	admin	zt	如果沒有使用者或任何群組的 ACL 紀錄，則該使用者屬於
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	如果使用LDAP，是否需要管理主目錄和登入介面的屬性?
+inbound	admin	zt	入站
+install crontab	admin	zt	安裝crontab
+installed applications	common	zt	已安裝的應用程式
+installed crontab	admin	zt	已安裝的crontab
 interface	admin	zt	介面
-ip	admin	zt	網路位址
-kill	admin	zt	終止
-last login	admin	zt	上次登入時間
-last login from	admin	zt	上次登入來源
-last time read	admin	zt	上次讀取時間
-last %1 logins	admin	zt	最後 %1 次登入
-ldap accounts context	admin	zt	LDAP 使用者帳號內容
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zt	LDAP 預設家目錄前置目錄﹝如：/home/username 的前置目錄為 /home﹞
-ldap default shell (e.g. /bin/bash)	admin	zt	LDAP 預設登入命令處理器﹝如：/bin/bash﹞
-ldap encryption type	admin	zt	LDAP 加密類型
-ldap groups context	admin	zt	LDAP 群組內容
-ldap host	admin	zt	LDAP 主機
-ldap root password	admin	zt	LDAP 管理者密碼
-ldap rootdn	admin	zt	LDAP 主要端點﹝rootdn﹞
-list of current users	admin	zt	線上使用者列表
-login screen	admin	zt	登入畫面
-login shell	admin	zt	登入命令處理器
+ip	admin	zt	IP位址
+jobs	admin	zt	任務
+kill	admin	zt	中止
+kill session	admin	zt	中止會話
+last %1 logins	admin	zt	最近%1次登錄
+last %1 logins for %2	admin	zt	%2的最近 %1 次登入
+last login	admin	zt	最近一次登錄
+last login from	admin	zt	最近一次登錄來自
+last time read	admin	zt	最近一次讀取時間
+ldap accounts context	admin	zt	LDAP帳號上下文關係
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zt	LDAP預設值主目錄的字首(例如 /home 是 /home/username的字首)
+ldap default shell (e.g. /bin/bash)	admin	zt	LDAP預設值Shell (例如 /bin/bash)
+ldap encryption type	admin	zt	LDAP加密類型
+ldap groups context	admin	zt	LDAP群組上下文關係
+ldap host	admin	zt	LDAP主機名
+ldap root password	admin	zt	LDAP系統管理員密碼
+ldap rootdn	admin	zt	LDAP rootdn
+leave the category untouched and return back to the list	admin	zt	不更改類別，返回列表
+leave the group untouched and return back to the list	admin	zt	不更改群組，返回列表
+list config settings	admin	zt	列出配置
+list current sessions	admin	zt	列舉當前會話
+list of current users	admin	zt	列舉當前用戶
+login history	admin	zt	登入歷史記錄
+login message	admin	zt	登入資訊
+login screen	admin	zt	登入頁面
+login shell	admin	zt	登入shell
 login time	admin	zt	登入時間
-loginid	admin	zt	登入代碼
-main screen message	admin	zt	主畫面訊息
-manager	admin	zt	管理者
-maximum account id (e.g. 65535 or 1000000)	admin	zt	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
-minimum account id (e.g. 500 or 100, etc.)	admin	zt	使用者帳號編碼最小值﹝如：500 或 100﹞
-new group name	admin	zt	新的群組名稱
-new password [ leave blank for no change ]	admin	zt	新的密碼（空白時不更動）
-no matches found	admin	zt	沒有找到符合的資料
-path information	admin	zt	Path information
-peer servers	admin	zt	對接伺服器
-percent of users that logged out	admin	zt	使用者登出比例
-permissions	admin	zt	權限
-permissions this group has	admin	zt	群組權限
-phpinfo	admin	zt	PHP 資訊
-preferences	admin	zt	喜好設定
-re-enter password	admin	zt	再次輸入密碼
-remove all users from this group	admin	zt	移除此群組中所有的使用者
-select permissions this group will have	admin	zt	選擇此群組的權限
-select users for inclusion	admin	zt	選擇屬於此群組的使用者
-select where you want to store/retrieve filesystem information	admin	zt	選擇您欲儲存／取得檔案系統資訊的位置
-select where you want to store/retrieve user accounts	admin	zt	選擇您欲儲存／取得檔案使用者帳號訊的位置
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zt	此應用程式於功能列中之位置（數字較小者列於左方，較大者列於右方）
-selectbox	admin	zt	勾選方塊
-show 'powered by' logo on	admin	zt	顯示「powered by」圖示位置
-site	admin	zt	網站
-site configuration	admin	zt	網站設定
-sorry, that group name has already been taking.	admin	zt	很抱歉，該群組名稱已被使用了
-sorry, the follow users are still a member of the group %1	admin	zt	很抱歉，下列使用者仍然屬於群組 %1
-submit changes	admin	zt	送出更新資料
-template selection	admin	zt	選擇畫面配置
-text entry	admin	zt	文字資料
-that loginid has already been taken	admin	zt	該使用者代碼已被使用了
-the login and password can not be the same	admin	zt	使用者密碼不可和使用者代碼相同
-the two passwords are not the same	admin	zt	請確認兩次都輸入同樣的密碼
-they must be removed before you can continue	admin	zt	您必須將其他資料移除後才能繼續
-this category is currently being used by applications as a parent category	admin	zt	此分類正被其他的應用程式使用中
-total records	admin	zt	所有紀錄
-use cookies to pass sessionid	admin	zt	使用 COOKIE 傳遞連線代碼
-use pure html compliant code (not fully working yet)	admin	zt	使用標準 HTML 原始碼（尚未完全支援）
-use theme	admin	zt	使用布景主題
-user accounts	admin	zt	使用者管理
-user groups	admin	zt	使用者群組管理
+loginid	admin	zt	登入ID
+main screen message	admin	zt	主頁面資訊
+manager	admin	zt	管理
+maximum account id (e.g. 65535 or 1000000)	admin	zt	帳號id的最大值 (例如 65535或1000000)
+maximum entries in click path history	admin	zt	點選紀錄的最大項目數
+message has been updated	admin	zt	資訊已經更新
+method	admin	zt	方法
+minimum account id (e.g. 500 or 100, etc.)	admin	zt	帳號id數最小值 (例如 500或100)
+minute	admin	zt	分鐘
+mode	admin	zt	模式
+month	admin	zt	月
+new group name	admin	zt	新建群組的名稱
+new password [ leave blank for no change ]	admin	zt	新密碼 [空白則仍使用舊密碼]
+next run	admin	zt	下次運行
+no algorithms available	admin	zt	無可用演算法
+no jobs in the database !!!	admin	zt	資料庫中沒有任務!!!
+no login history exists for this user	admin	zt	該用戶沒有登錄歷史記錄
+no matches found	admin	zt	沒有找到符合的結果
+no modes available	admin	zt	無可用模式
+no permission to add groups	admin	zt	無權增加群組
+no permission to add users	admin	zt	無權增加用戶
+no permission to create groups	admin	zt	無權建立群組
+note: ssl available only if php is compiled with curl support	admin	zt	注意：僅當使用curl支援編譯php時，SSL加密有效
+outbound	admin	zt	登出
+passthrough	admin	zt	通過
+path information	admin	zt	路徑資訊
+peer server list	admin	zt	對等伺服器列表
+peer servers	admin	zt	對等伺服器
+percent of users that logged out	admin	zt	已登出使用者的比例
+percent this user has logged out	admin	zt	這個使用者登出的比例
+permissions	admin	zt	許可權
+permissions this group has	admin	zt	該群組許可權
+phpinfo	admin	zt	PHP資訊
+please enter a name	admin	zt	請輸入名稱
+please enter a name for that server !	admin	zt	請輸入那台伺服器的名稱!
+please run setup to become current	admin	zt	請執行安裝來符合現在的環境
+please select	admin	zt	請選擇
+preferences	admin	zt	個性化配置
+primary group	admin	zt	主要群組
+re-enter password	admin	zt	重新輸入密碼
+read this list of methods.	admin	zt	讀取該方法列表.
+register application hooks	admin	zt	註冊應用程式Hooks
+remove all users from this group	admin	zt	刪除該群組所有用戶
+remove all users from this group ?	admin	zt	刪除該群組所有用戶?
+return to admin mainscreen	admin	zt	返回系統管理主頁面
+return to view account	admin	zt	返回至查看帳號
+run asynchronous services	admin	zt	運行非同步服務
+save the category	admin	zt	保存類別
+save the category and return back to the list	admin	zt	保存類別並返回列表
+search accounts	admin	zt	查找帳號
+search categories	admin	zt	查找類別
+search groups	admin	zt	查找群組
+search peer servers	admin	zt	查找對等伺服器
+security	admin	zt	安全
+select group managers	admin	zt	指定群組管理器
+select permissions this group will have	admin	zt	指定該群組許可權
+select the parent category. if this is a main category select no category	admin	zt	指定父類別。若這個項目就是主類別，則應指定無類別。
+select users for inclusion	admin	zt	選擇要包括的用戶
+select where you want to store/retrieve filesystem information	admin	zt	指定用於存取文件系統資訊的位置
+select where you want to store/retrieve user accounts	admin	zt	指定用於存取用戶帳號的位置
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zt	指定該應用程式在導航欄上的位置，從低(左)到高(右)
+selectbox	admin	zt	下拉選單
+server %1 has been updated	admin	zt	伺服器%1已經更新
+server list	admin	zt	伺服器列表
+server password	admin	zt	伺服器密碼
+server type(mode)	admin	zt	伺服器類型(模式)
+server url	admin	zt	伺服器網址
+server username	admin	zt	伺服器用戶名
+set preference values.	admin	zt	設置個性化配置值
+show 'powered by' logo on	admin	zt	顯示設計者標示
+show access log	admin	zt	顯示訪問日誌
+show current action	admin	zt	顯示當前操作
+show error log	admin	zt	顯示錯誤日誌
+show phpinfo()	admin	zt	顯示phpinfo()
+show session ip address	admin	zt	顯示處理程序IP位址
+site	admin	zt	站點
+site configuration	admin	zt	站點設置
+soap	admin	zt	SOAP
+sorry, that group name has already been taken.	admin	zt	抱歉，該群組名已被佔用.
+sorry, the above users are still a member of the group %1	admin	zt	抱歉，以上用戶也是%1群組的成員
+sorry, the follow users are still a member of the group %1	admin	zt	抱歉，以下用戶也是%1群組的成員
+sort the entries	admin	zt	按序排列條目
+ssl	admin	zt	SSL
+standard	admin	zt	標準
+start testjob!	admin	zt	啟動測試任務!
+submit changes	admin	zt	送出修改
+submit the search string	admin	zt	送出搜尋字串
+template selection	admin	zt	模版選擇
+text entry	admin	zt	文本條目
+that application name already exists.	admin	zt	應用程式名稱已存在.
+that application order must be a number.	admin	zt	應用程式的次序必須?數位.
+that loginid has already been taken	admin	zt	該loginid已被佔用
+that name has been used already	admin	zt	該名稱已被佔用
+that server name has been used already !	admin	zt	該伺服器名稱已被佔用!
+the api is current	admin	zt	API不需要升級
+the api requires an upgrade	admin	zt	API需要升級
+the login and password can not be the same	admin	zt	登錄名不能與密碼一樣
+the loginid can not be more then 8 characters	admin	zt	loginid長度不能大於8個字元
+the testjob sends you a mail everytime it is called.	admin	zt	測試任務將在每次啟動時向您發送電子郵件
+the two passwords are not the same	admin	zt	兩次輸入的密碼不同
+the users bellow are still members of group %1	admin	zt	以下用戶也是%1群組的成員
+they must be removed before you can continue	admin	zt	繼續之前必須刪除它們
+this application is current	admin	zt	應用程式不需要升級
+this application requires an upgrade	admin	zt	該應用程式需要升級
+this category is currently being used by applications as a parent category	admin	zt	應用程式正以該類別作為父類別使用
+timeout for application session data in seconds (default 86400 = 1 day)	admin	zt	應用程式會話資料超時時限，單位：秒(預設值86400秒，即一天)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	zt	會話超時時限，單位：秒(預設值14400秒，即4小時)
+times	admin	zt	次數
+top	admin	zt	頂部
+total records	admin	zt	記錄總數
+trust level	admin	zt	信任級別
+trust relationship	admin	zt	信任關係
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	zt	在Windows系統下，當前只能使用後退模式。這意味著只在每個pageview之後檢查任務!!!
+use cookies to pass sessionid	admin	zt	使用cookie傳遞會話ID
+use pure html compliant code (not fully working yet)	admin	zt	使用純HTML適應代碼(目前仍未完全可用)
+use theme	admin	zt	使用主題
+user accounts	admin	zt	使用者帳號
+user data	admin	zt	使用者資料
+user groups	admin	zt	使用者群組
 userdata	admin	zt	使用者資料
 users choice	admin	zt	使用者的選擇
-view access log	admin	zt	列出存取記錄
-view error log	admin	zt	列出錯誤記錄
-view sessions	admin	zt	列出連線
-would you like phpgroupWare to cache the phpgw info array ?	admin	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
-would you like phpgroupWare to check for a new version<br>when admins login ?	admin	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
-would you like to show each application's upgrade status ?	admin	zt	您希望顯示每一個應用程式升級的資訊嗎？
-you must add at least 1 permission or group to this account	admin	zt	您必須至少授權此帳號一項權限或將此帳號歸於一個群組下。
-you must enter an application name and title.	admin	zt	您必須輸入應用程式名稱及標頭。
-you must select a file type	admin	zt	您必須選擇一種檔案型態。
-you will need to remove the subcategories before you can delete the parent category	admin	zt	您需要將所有子分類移除後才可以移除上一層之分類！
-
+view access log	admin	zt	查看存取紀錄
+view account	admin	zt	查看帳號
+view category	admin	zt	查看類別
+view error log	admin	zt	查看錯誤日誌
+view sessions	admin	zt	查看會話
+view this user	admin	zt	查看該使用者
+view user account	admin	zt	查看使用者帳號
+who would you like to transfer all records owned by the deleted user to?	admin	zt	需要把被刪除用戶的所有記錄轉移給誰?
+would you like phpgroupware to cache the phpgw info array ?	admin	zt	需要phpGroupWare暫存phpgw資訊陣列嗎?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	zt	管理員登錄時，是否檢查phpGroupWare的最新版本?
+would you like phpgroupware to check for new application versions when admins login ?	admin	zt	管理員登錄時，是否檢查應用程式的最新版本?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	zt	登錄時是否自動載入新的語言文件?
+would you like to show each application's upgrade status ?	admin	zt	是否顯示每個應用程式的升級狀況?
+xml-rpc	admin	zt	XML-RPC
+you have entered an invalid expiration date	admin	zt	輸入的截止日期無效
+you must add at least 1 permission or group to this account	admin	zt	必須至少為此帳號增加一個許可權或群組
+you must enter a group name.	admin	zt	必須輸入群組名.
+you must enter a lastname	admin	zt	必須輸入姓
+you must enter a loginid	admin	zt	必須輸入登錄ID
+you must enter an application name and title.	admin	zt	必須為應用程式指定名稱和標題.
+you must enter an application name.	admin	zt	必須為應用程式指定名稱.
+you must enter an application title.	admin	zt	必須為應用程式指定標題.
+you must select a file type	admin	zt	必須選擇文件類型
+you will need to remove the subcategories before you can delete this category	admin	zt	在刪除該類別前，必須刪除它的所有子類別!
