@@ -187,9 +187,6 @@ delete	common	ja	削除
 delete	email	ja	削除
 delete	filemanager	ja	削除
 department	addressbook	ja	部署
-description	admin	ja	詳細
-description	bookkeeping	ja	詳細
-description	calendar	ja	詳細
 description	common	ja	詳細
 detail	tts	ja	明細
 disabled	admin	ja	不可
