@@ -28,8 +28,12 @@
 		$var['img_root'] = PHPGW_IMAGES_DIR;
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
-		$find_double = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'//');
 		$find_single = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'/');
+		$find_double = strpos(strrev($GLOBALS['phpgw_info']['server']['webserver_url'].' '),'//');
+		if($find_double)
+		{
+			$find_double = strlen($GLOBALS['phpgw_info']['server']['webserver_url']) - $find_double - 1;
+		}
 		if($find_double)
 		{
 			if($find_single == $find_double + 1)
@@ -43,7 +47,7 @@
 		}
 		else
 		{
-			$strip_portion = '';
+			$strip_portion = $GLOBALS['phpgw_info']['server']['webserver_url'].'/';
 		}
 
 		#  echo '<pre>'; print_r($GLOBALS['phpgw_info']['navbar']); echo '</pre>';
