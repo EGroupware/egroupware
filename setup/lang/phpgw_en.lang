@@ -1,3 +1,6 @@
+00 (disable)	setup	en	00 (disable)
+13 (ntp)	setup	en	13 (ntp)
+80 (http)	setup	en	80 (http)
 (account deletion in SQL Only)	setup	en	(account deletion in SQL Only)
 <br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
 actions	setup	en	Actions
@@ -60,6 +63,7 @@ create your header.inc.php	setup	en	Create your header.inc.php
 creating tables	setup	en	Creating Tables
 current version	setup	en	Current Version
 currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
+datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)	setup	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 db host	setup	en	DB Host
 db name	setup	en	DB Name
 db password	setup	en	DB Password
@@ -137,6 +141,7 @@ ldap Default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
 ldap account import/export	setup	en	LDAP account import/export
 ldap accounts configuration	setup	en	LDAP Accounts Configuration
 ldap accounts context	setup	en	LDAP accounts context
+ldap config	setup	en	LDAP Config
 ldap encryption type	setup	en	LDAP encryption type
 ldap export users	setup	en	LDAP export users
 ldap groups context	setup	en	LDAP groups context

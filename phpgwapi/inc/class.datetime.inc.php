@@ -53,76 +53,109 @@
 		function datetime()
 		{
 			$this->tz_offset = 3600 * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']);
-//			echo '<!-- datetime::datetime::gmtnow = '.$this->gmtnow.' -->'."\n";
+			print_debug('datetime::datetime::gmtnow',$this->gmtnow);
 
 			$error_occured = True;
 			// If we already have a GMT time, no need to do this again.
-			if(!$this->gmtnow && !@isset($GLOBALS['phpgw_info']['server']['tz_offset']))
+			if(!$this->gmtnow)
 			{
-//				echo '<!-- datetime::datetime::debug: Inside network time -->'."\n";		
-				$error_occured = False;
-				if(!@is_object($GLOBALS['phpgw']->network))
+				if(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
 				{
-					$GLOBALS['phpgw']->network = createobject('phpgwapi.network');
+					$this->gmtnow = time() - (intval($GLOBALS['phpgw_info']['server']['tz_offset']) * 3600);
 				}
-				$server_time = time();
-				if($GLOBALS['phpgw']->network->open_port('129.6.15.28',13,15))
+				else
 				{
-					$line = $GLOBALS['phpgw']->network->bs_read_port(64);
-					// Value returned is 52384 02-04-20 13:55:29 50 0 0   9.2 UTC(NIST) *
-					$GLOBALS['phpgw']->network->close_port();
-				
-					$array = explode(' ',$line);
-					
-					if ($array[5] == 4)
-					{
-						$error_occured = True;
-					}
-					else
-					{
-						$date = explode('-',$array[1]);
-						$time = explode(':',$array[2]);
-						$this->gmtnow = mktime(intval($time[0]),intval($time[1]),intval($time[2]),intval($date[1]),intval($date[2]),intval($date[0]) + 2000);
-					}
+					$this->gmtnow = $this->getbestguess();
 				}
 			}
-			elseif(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
+			$this->users_localtime = $this->gmtnow + $this->tz_offset;
+		}
+		
+		function getntpoffset()
+		{
+			$error_occured = False;
+			if(!@is_object($GLOBALS['phpgw']->network))
 			{
-//				echo '<!-- datetime::datetime::debug: Inside server already set -->'."\n";		
-				$error_occured = False;
-				$this->gmtnow = time() - (intval($GLOBALS['phpgw_info']['server']['tz_offset']) * 3600);
+				$GLOBALS['phpgw']->network = createobject('phpgwapi.network');
+			}
+			$server_time = time();
+
+			if($GLOBALS['phpgw']->network->open_port('129.6.15.28',13,5))
+			{
+				$line = $GLOBALS['phpgw']->network->bs_read_port(64);
+				$GLOBALS['phpgw']->network->close_port();
+
+				$array = explode(' ',$line);
+				// host: 129.6.15.28
+				// Value returned is 52384 02-04-20 13:55:29 50 0 0   9.2 UTC(NIST) *
+				print_debug('Server datetime',time());
+				print_debug('Temporary NTP datetime',$line);
+				if ($array[5] == 4)
+				{
+					$error_occured = True;
+				}
+				else
+				{
+					$date = explode('-',$array[1]);
+					$time = explode(':',$array[2]);
+					$this->gmtnow = mktime(intval($time[0]),intval($time[1]),intval($time[2]),intval($date[1]),intval($date[2]),intval($date[0]) + 2000);
+					print_debug('Temporary RFC epoch',$this->gmtnow);
+					print_debug('GMT',date('Ymd H:i:s',$this->gmtnow));
+				}
 			}
 			else
 			{
 				$error_occured = True;
 			}
-
-			if($error_occured)
+			
+			if($error_occured == True)
 			{
-//				echo '<!-- datetime::datetime::debug: Inside getting from local server -->'."\n";		
-				$server_time = time();
-				// Calculate GMT time...
-				// If DST, add 1 hour...
-				//  - (date('I') == 1?3600:0)
-				$this->gmtnow = $this->convert_rfc_to_epoch(gmdate('D, d M Y H:i:s',$server_time).' GMT');
+				return $this->getbestguess();
 			}
-
-			if(!@isset($GLOBALS['phpgw_info']['server']['tz_offset']))
+			else
 			{
-				$GLOBALS['phpgw_info']['server']['tz_offset'] = (($server_time - $this->gmtnow) / 3600);
-				if(@isset($GLOBALS['phpgw_info']['server']['cache_phpgw_info']))
-				{
-					$cache_query = "DELETE FROM phpgw_app_sessions WHERE sessionid='0' and loginid='0' and app='phpgwapi' and location='config'";
-					$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);				
-					$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
-						. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
-					$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
-				}
+				return intval(($server_time - $this->gmtnow) / 3600);
 			}
-			$this->users_localtime = $this->gmtnow - $this->tz_offset;
-//			echo '<!-- datetime::datetime::tz_offset = '.$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'].' -->'."\n";
-//			echo '<!-- datetime::datetime::server:tz_offset = '.$GLOBALS['phpgw_info']['server']['tz_offset'].' -->'."\n";
-//			echo '<!-- datetime::datetime::gmtnow = '.$this->gmtnow.' -->'."\n";
+		}
+
+		function gethttpoffset()
+		{
+			$error_occured = False;
+			if(!@is_object($GLOBALS['phpgw']->network))
+			{
+				$GLOBALS['phpgw']->network = createobject('phpgwapi.network');
+			}
+			$server_time = time();
+
+			$filename = 'http://132.163.4.213/timezone.cgi?GMT';
+			$file = $GLOBALS['phpgw']->network->gethttpsocketfile($filename);
+			if(!$file)
+			{
+				return $this->getbestguess();
+			}
+			$time = strip_tags($file[55]);
+			$date = strip_tags($file[56]);
+
+			print_debug('GMT DateTime',$date.' '.$time);
+			$dt_array = explode(' ',$date);
+			$temp_datetime = $dt_array[0].' '.substr($dt_array[2],0,-1).' '.substr($dt_array[1],0,3).' '.$dt_array[3].' '.$time.' GMT';
+			print_debug('Reformulated GMT DateTime',$temp_datetime);
+			$this->gmtnow = $this->convert_rfc_to_epoch($temp_datetime);
+			print_debug('this->gmtnow',$this->gmtnow);
+			print_debug('server time',$server_time);
+			print_debug('server DateTime',date('D, d M Y H:i:s',$server_time));
+			return intval(($server_time - $this->gmtnow) / 3600);
+		}
+
+		function getbestguess()
+		{
+			print_debug('datetime::datetime::debug: Inside getting from local server');
+			$server_time = time();
+			// Calculate GMT time...
+			// If DST, add 1 hour...
+			//  - (date('I') == 1?3600:0)
+			$this->gmtnow = $this->convert_rfc_to_epoch(gmdate('D, d M Y H:i:s',$server_time).' GMT');
+			return intval(($server_time - $this->gmtnow) / 3600);
 		}
 
 		function convert_rfc_to_epoch($date_str)

@@ -77,6 +77,23 @@
 	$newsettings = get_var('newsettings',Array('POST'));
 	if(@get_var('submit',Array('POST')) && @$newsettings)
 	{
+		$datetime = CreateObject('phpgwapi.datetime');
+		switch (intval($newsettings['daytime_port']))
+		{
+			case 13:
+				$newsettings['tz_offset'] = $datetime->getntpoffset();
+				break;
+			case 80:
+				$newsettings['tz_offset'] = $datetime->gethttpoffset();
+				break;
+			default:
+				$newsettings['tz_offset'] = $datetime->getbestguess();
+				break;
+		}
+		unset($datetime);
+
+		print_debug('TZ_OFFSET',$newsettings['tz_offset']);
+
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		/* This is only temp: */
 		$GLOBALS['phpgw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='useframes'");

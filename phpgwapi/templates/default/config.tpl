@@ -76,6 +76,17 @@
    </tr>
 
    <tr bgcolor="{row_off}">
+    <td>{lang_Datetime_port.<br>If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br>(Port:_13_/_Host:_129.6.15.28)}</td>
+    <td>
+      <select name="newsettings[daytime_port]">
+       <option value="00"{selected_daytime_port_00}>{lang_00_(disable)}</option>
+       <option value="13"{selected_daytime_port_13}>{lang_13_(ntp)}</option>
+       <option value="80"{selected_daytime_port_80}>{lang_80_(http)}</option>
+      </select>
+    </td>
+   </tr>
+
+   <tr bgcolor="{row_off}">
     <td>{lang_Enter_your_HTTP_proxy_server}:</td>
     <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}"></td>
    </tr>
