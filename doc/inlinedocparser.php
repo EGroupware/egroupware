@@ -14,13 +14,18 @@
 
     $types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 
+		if(!$app)
+		{
+				$app = 'phpgwapi';
+		}
+		
     if ($fn)
     {
         $files[] = $fn;
     }
     else
     {
-        $d = dir('../phpgwapi/inc/');
+        $d = dir('../'.$app.'/inc/');
         while ($x = $d->read())
         {
             if (ereg('class',$x) && !ereg('#',$x) && ereg('php',$x))
@@ -36,7 +41,7 @@
     {
         $matches = $elements = $data = array();
         $string = $t = $out = $class = $xkey = $new = '';
-        $file = '../phpgwapi/inc/' . $fn;
+        $file = '../'.$app.'/inc/' . $fn;
         echo '<br>Looking at: ' . $file . "\n";
 
         $f = fopen($file,'r');

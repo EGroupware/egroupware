@@ -54,8 +54,8 @@
 		@discussion Author: Seek3r <br>
 		Sets the ID for $acl->account_id. Can be used to change a current instances id as well. <br>
 		Some functions are specific to this account, and others are generic. <br>
-		Syntax: int acl(int account_id) <br>
-		Example1: acl->acl(5); // 5 is the user id  <br>
+		@syntax int acl(int account_id) <br>
+		@example1 acl->acl(5); // 5 is the user id  <br>
 		@param account_id int-the user id
 		*/
 		function acl($account_id = '')
