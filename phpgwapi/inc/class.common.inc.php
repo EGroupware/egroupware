@@ -1013,7 +1013,7 @@
 						$row = 1;
 					}
 
-					$GLOBALS['phpgw']->template->set_var('msgbox_text',$key);
+					$GLOBALS['phpgw']->template->set_var('msgbox_text',lang($key));
 					if ($value == True)
 					{
 						$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
@@ -1030,7 +1030,7 @@
 			else
 			{
 				$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
-				$GLOBALS['phpgw']->template->set_var('msgbox_text',$text);
+				$GLOBALS['phpgw']->template->set_var('msgbox_text',lang($text));
 				if ($type == True)
 				{
 					$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_good'));
