@@ -190,7 +190,7 @@
 		unset($sslattributes);
 	}
 
-	if (isset($_POST['passwd_type']) || $submit_x || $submit_y)
+	if (isset($_POST['passwd_type']) || $_POST['submit_x'] || $_POST['submit_y'] || $submit)
 //		 isset($_POST['passwd']) && $_POST['passwd']) // enable konqueror to login via Return
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST'
