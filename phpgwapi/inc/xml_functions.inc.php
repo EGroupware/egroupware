@@ -627,11 +627,12 @@
 		}
 		return $r;
 	}
-
+/*
 	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcString, xmlrpcString));
 	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
-	function _xmlrpcs_listApps()
+	function _xmlrpcs_listApps($server,$m)
 	{
+		$m->getParam(0);
 		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
 		if($GLOBALS['phpgw']->db->num_rows())
 		{
@@ -646,14 +647,31 @@
 					'status' => $status
 				);
 			}
-			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
 		}
-		return $r;
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
 	}
 
+	$GLOBALS['_xmlrpcs_listUsers_sig'] = array(array(xmlrpcString, xmlrpcString));
+	$GLOBALS['_xmlrpcs_listUsers_doc'] = 'Returns a list of phpgw users';
+	function _xmlrpcs_listUsers($server,$m)
+	{
+		$m->getParam(0);
+		$accounts = $GLOBALS['phpgw']->accounts->get_list('accounts');
+		while(list($key,$acct) = @each($accounts))
+		{
+			$r = CreateObject('phpgwapi.xmlrpcval','account_lid','string');
+			$s = CreateObject('phpgwapi.xmlrpcval',$acct['account_lid'],'string');
+			$acct_data[] = $r;
+			$acct_data[] = $s;
+			
+		}
+
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$acct_data, 'struct'));
+	}
+*/
 	$GLOBALS['_xmlrpcs_auth_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_auth_doc'] = 'Server authentication';
-	function _xmlrpcs_auth($server,$m)
+	$GLOBALS['_xmlrpcs_auth_doc'] = 'phpGroupWare client or server login via XML-RPC';
+	function _xmlrpcs_login($server,$m)
 	{
 		$server_name = $m->getParam(0);
 		$username    = $m->getParam(1);
@@ -662,7 +680,15 @@
 		$serverdata['username']    = $username->scalarval();
 		$serverdata['password']    = $password->scalarval();
 
-		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
+		if($serverdata['server_name'])
+		{
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
+		}
+		else
+		{
+			// Milosch - jengo, how do we do this?
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create($serverdata['username'],$serverdata['password']);
+		}
 
 		if($sessionid && $kp3)
 		{
@@ -676,38 +702,10 @@
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
 		}
-		$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
-		return $r;
+		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
 
-	$GLOBALS['_xmlrpcs_auth_verify_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_auth_verify_doc'] = 'Verify Server authentication';
-	function _xmlrpcs_auth_verify($server,$m)
-	{
-		$xserver_name = $m->getParam(0);
-		$xsessionid   = $m->getParam(1);
-		$xkp3         = $m->getParam(2);
-
-		$server_name  = $xserver_name->scalarval();
-		$sessionid    = $xsessionid->scalarval();
-		$kp3          = $xkp3->scalarval();
-
-		$verified = $GLOBALS['phpgw']->session->verify_server($sessionid,$kp3);
-
-		if($verified)
-		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','HELO','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
-		}
-		else
-		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
-		}
-		$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
-		return $r;
-	}
-
+	/*
 	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
@@ -729,15 +727,39 @@
 			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
 		),
-		'system.auth'   => array(
-			'function'  => '_xmlrpcs_auth',
-			'signature' => $GLOBALS['_xmlrpcs_auth_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_auth_doc']
+		'system.listUsers' => array(
+			'function'  => '_xmlrpcs_listUsers',
+			'signature' => $GLOBALS['_xmlrpcs_listUsers_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_listUsers_doc']
 		),
-		'system.auth_verify' => array(
-			'function'  => '_xmlrpcs_auth_verify',
-			'signature' => $GLOBALS['_xmlrpcs_auth_verify_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_auth_verify_doc']
+		'system.login'  => array(
+			'function'  => '_xmlrpcs_login',
+			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
+		)
+	);
+	*/
+
+	$GLOBALS['_xmlrpcs_dmap'] = array(
+		'system.listMethods' => array(
+			'function'  => '_xmlrpcs_listMethods',
+			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_listMethods_doc']
+		),
+		'system.methodHelp' => array(
+			'function'  => '_xmlrpcs_methodHelp',
+			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
+		),
+		'system.methodSignature' => array(
+			'function'  => '_xmlrpcs_methodSignature',
+			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
+		),
+		'system.login'  => array(
+			'function'  => '_xmlrpcs_login',
+			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
 		)
 	);
 

@@ -36,6 +36,8 @@
 		var $security = '';
 		var $mode = '';
 		var $authed = False;
+		var $sessionid = '';
+		var $kp3 = '';
 		var $urlparts = array(
 			'xmlrpc' => '/phpgroupware/xmlrpc.php',
 			'soap'   => '/phpgroupware/soap.php'
@@ -152,6 +154,8 @@
 			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
+			$c->username = $this->sessionid;
+			$c->password = $this->kp3;
 			$c->setDebug(0);
 			$r = $c->send($f,0,True);
 			if (!$r)
@@ -191,6 +195,8 @@
 			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
+			$c->username = $this->sessionid;
+			$c->password = $this->kp3;
 			$c->setDebug(0);
 			$r = $c->send($f);
 			if (!$r)
@@ -224,6 +230,8 @@
 			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
 			/* print_r($soap_message);exit; */
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
+			$soap->username = $this->sessionid;
+			$soap->password = $this->kp3;
 			/* _debug_array($soap);exit; */
 			if($r = $soap->send($soap_message,$method_name))
 			{
@@ -251,6 +259,8 @@
 			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
 			/* print_r($soap_message);exit; */
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
+			$soap->username = $this->sessionid;
+			$soap->password = $this->kp3;
 			/* _debug_array($soap);exit; */
 			if($r = $soap->send($soap_message,$method_name))
 			{
