@@ -1,4 +1,4 @@
-﻿%1 - %2 of %3 user accounts	admin	zh	%3个user accounts中的%1—%2
+﻿%1 - %2 of %3 user accounts	admin	zh	%3个用户帐户中的%1—%2
 %1 not found or not executable !!!	admin	zh	%1找不到或无法执行!!!
 (stored password will not be shown here)	admin	zh	(此处不显示保存过的密码)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<br><a href="setup/" target="setup">安装程序</a>来安装新的应用程序 [Manage Applications] !!!)
@@ -27,7 +27,6 @@ add group	admin	zh	添加组
 add new account	admin	zh	添加新帐户
 add new application	admin	zh	添加新的应用程序
 add peer server	admin	zh	添加对等服务器
-add sub	admin	zh	添加子类别
 add sub-category	admin	zh	添加子类别
 admin email	admin	zh	Email管理
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	向这些Email地址发送通告封禁 (以逗号分隔)，留空则不发送通告
@@ -252,6 +251,7 @@ please enter a name for that server !	admin	zh	请输入那台服务器的名称
 please run setup to become current	admin	zh	请运行安装程序以成为当前
 please select	admin	zh	请选择
 preferences	admin	zh	个性化配置
+primary Group	admin	zh	首选组
 re-enter password	admin	zh	重新输入密码
 read this list of methods.	admin	zh	读取方法列表.
 register application hooks	admin	zh	注册应用程序Hooks
@@ -358,4 +358,3 @@ you must enter an application name.	admin	zh	必须为应用程序指定名称.
 you must enter an application title.	admin	zh	必须为应用程序指定标题.
 you must select a file type	admin	zh	必须选择文件类型
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别!
-primary Group	admin	zh	首选组

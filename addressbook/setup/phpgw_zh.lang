@@ -1,8 +1,10 @@
 ﻿%1 records imported	addressbook	zh	已导入%1条记录
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	已读取%1条记录(但尚未导入，您可以进入%2，返回%3，并且不检查测试导入)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	已读取%1条记录(但尚未导入，您可以进入%2，返回%3，并且清除"测试导入"复选框)
+(e.g. 1969)	addressbook	zh	(例如:1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>缺少转换类型&lt;none&gt;</b>请从列表中选择一个转换类型
 @-eval() is only availible to admins!!!	addressbook	zh	只有管理员可调用@-eval()!!!
-add a single entry by passing the fields.	addressbook	zh	Add a single entry by passing the fields.
+actions	addressbook	zh	操作
+add a single entry by passing the fields.	addressbook	zh	通过传递字段来添加条目.
 add custom field	addressbook	zh	添加自定义字段
 address book	common	zh	通讯录
 address book - vcard in	addressbook	zh	通讯录——导入vCard
@@ -37,6 +39,7 @@ charset of file	addressbook	zh	文件字符集
 city	common	zh	城市
 company	common	zh	公司
 company name	common	zh	公司名称
+configuration	common	zh	设置
 contact	common	zh	联系人
 contact application	admin	zh	联系人应用程序
 contact settings	admin	zh	联系人配置
@@ -48,7 +51,7 @@ custom	addressbook	zh	自定义
 custom fields	addressbook	zh	自定义字段
 debug output in browser	addressbook	zh	显示调试信息
 default filter	addressbook	zh	默认筛选
-delete a single entry by passing the id.	addressbook	zh	Delete a single entry by passing the id.
+delete a single entry by passing the id.	addressbook	zh	通过传递ID来删除单个条目.
 department	common	zh	部门
 domestic	addressbook	zh	国内
 download	addressbook	zh	下载
@@ -132,7 +135,7 @@ to many might exceed your execution-time-limit	addressbook	zh	to many might exce
 today is %1's birthday!	common	zh	今天是%1的生日!
 tomorrow is %1's birthday.	common	zh	明天是%1的生日。
 translation	addressbook	zh	翻译
-update a single entry by passing the fields.	addressbook	zh	Update a single entry by passing the fields.
+update a single entry by passing the fields.	addressbook	zh	通过传递字段来更新单个条目.
 use country list	addressbook	zh	使用“国家/地区”列表
 vcard	common	zh	vCard
 vcards require a first name entry.	addressbook	zh	vCards必须包含“名字”条目.
