@@ -54,6 +54,12 @@
 			return $rows;
 		}
 		
+		function get_no_errors()
+		{
+			$rows = $this->so->get_no_errors();
+			return $rows;
+		}
+		
 		function get_error_e($values='')
 		{
 			$rows = $this->so->get_error_e($values);
@@ -63,14 +69,14 @@
 			while(list($rno,$r)=each($rows))
 			{
 				unset($r['acount_pwd']);	// remove the accounts_pwd
-				$r['log_date_e']               = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_date']));
-				$r['log_msg_date_e']           = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_msg_date']));
-				$r['log_full_name']            = $r['account_lastname'] . ', ' .$r['account_firstname'];
-				$r['account_lastlogin_e']      = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['account_lastlogin']));
-				$r['account_lastpwd_change_e'] = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['account_lastpwd_change']));
-				$r['account_lastloginfrom_e']  = 'www.nowhere.com'; 
+				$r['log_date_e']['value']               = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_date']));
+				$r['log_msg_date_e']['value']           = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['log_msg_date']));
+				$r['log_full_name']['value']            = $r['account_lastname']['value'] . ', ' .$r['account_firstname']['value'];
+				$r['account_lastlogin_e']['value']      = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['account_lastlogin']));
+				$r['account_lastpwd_change_e']['value'] = $GLOBALS['phpgw']->common->show_date($GLOBALS['phpgw']->db->from_timestamp($r['account_lastpwd_change']));
+				$r['account_lastloginfrom_e']['value']  = 'www.nowhere.com'; 
 
-				$r['log_msg_text'] = lang($r['log_msg_msg'],explode('|',$r['log_msg_parms']));
+				$r['log_msg_text']['value'] = lang($r['log_msg_msg']['value'],explode('|',$r['log_msg_parms']['value']));
 
 				$rows[$rno]=$r;
 			}
