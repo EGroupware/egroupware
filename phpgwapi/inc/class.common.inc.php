@@ -776,7 +776,7 @@
 
 		function find_image($appname,$image)
 		{
-			if (!is_array($this->found_files[$appname]))
+			if (!@is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
 				$imagedir_default    = '/'.$appname.'/templates/default/images';
