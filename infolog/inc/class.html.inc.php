@@ -123,7 +123,12 @@ class html
 		if ($opts) $html .= " $opts";
 		return $html . '>';
 	}
+
 	function a_href( $content,$url,$vars='') {
 		return '<a href="'.$this->link($url,$vars).'">'.$content.'</a>';
+	}
+	
+	function bold($content) {
+		return '<b>'.$content.'</b>';
 	}
 }

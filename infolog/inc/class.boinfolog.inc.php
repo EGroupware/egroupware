@@ -1,0 +1,172 @@
+<?php
+	/**************************************************************************\
+	* phpGroupWare - InfoLog                                                   *
+	* http://www.phpgroupware.org                                              *
+	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+
+	/* $Id$ */
+
+	class boinfolog 			// BO: buiseness objects: internal logic
+	{
+		var $public_functions = array
+		(
+			'init'		=>	True,		// in class soinfolog
+			'read'		=> True,
+			'write'		=>	True,
+			'delete'		=>	True,
+			'check_access'	=> True,
+			'aclFilter'	=>	True,
+			'readProj'	=> True,
+			'readAddr'	=>	True,
+			'accountInfo'	=> True,	// in class boinfolog (this class)
+			'addr2name'	=>	True
+		);
+		var $enums;
+		var $so;
+		var $data;
+		var $grants;
+
+		function boinfolog( $info_id = 0) {
+			global $phpgw;
+			$this->enums = array( 
+				'priority' => array (
+					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
+					'low' => 'low' ),
+				'status'   => array(
+					'offer' => 'offer','ongoing' => 'ongoing','call' => 'call',
+					'will-call' => 'will-call','done' => 'done',
+					'billed' => 'billed' ),
+				'confirm'   => array(
+					'not' => 'not','accept' => 'accept','finish' => 'finish',
+					'both' => 'both' ),
+				'type'      => array(
+					'task' => 'task','phone' => 'phone','note' => 'note',
+					'confirm' => 'confirm','reject' => 'reject','email' => 'email',
+					'fax' => 'fax' )
+			);
+			$this->longnames = 0;   // should go into preferences
+			$this->listChilds = 1;
+
+			$this->so = CreateObject('infolog.soinfolog');
+			$this->data = &$this->so->data;
+			$this->grants = &$this->so->grants;
+
+			$this->read( $info_id);
+		}
+				
+		function accountInfo($id,$account_data=0,$longname=0) {
+			global $phpgw;
+			
+			if (!$id) return '&nbsp;';
+			
+			if (!is_array($account_data)) {
+				$accounts = createobject('phpgwapi.accounts',$id);
+				$accounts->db = $phpgw->db;
+				$accounts->read_repository();
+				$account_data = $accounts->data;
+			}
+			if ($longnames)
+				return $account_data['firstname'].' '.$account_data['lastname'];
+				
+			return $account_data['account_lid'];   
+		}      
+
+		function addr2name( $addr ) {
+			global $phpgw;
+			$name = $addr['n_family'];
+			if ($addr['n_given'])
+				$name .= ', '.$addr['n_given'];
+			else 
+				if ($addr['n_prefix'])
+					$name .= ', '.$addr['n_prefix'];
+			if ($addr['org_name'])
+				$name = $addr['org_name'].': '.$name;
+			return $phpgw->strip_html($name);         
+		}
+
+		function readProj($proj_id) {
+			if ($proj_id) {
+				if (!is_object($this->projects)) {
+					$this->projects = createobject('projects.projects');
+				}            
+				if (list( $proj ) = $this->projects->read_single_project( $proj_id ))
+					return $proj;
+			}
+			return False;         
+		}               
+
+		function readAddr($addr_id) {
+			if ($addr_id) {
+				if (!is_object($this->contacts)) {
+					$this->contacts = createobject('phpgwapi.contacts');
+				}            
+				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
+					return $addr;
+			}
+			return False;                  
+		}      
+					
+		/*
+		 * check's if user has the requiered rights on entry $info_id
+		 */
+		function check_access( $info_id,$required_rights ) {
+			return $this->so->check_access( $info_id,$required_rights );
+		}
+		
+		/*
+		 * returns sql to be AND into query to ensure ACL is respected (incl.
+		 * _PRIVATE), $filter: none - list all entry user have rights to see
+		 *                     private - list only personal entry (incl. those
+		 *                               he is responsible for
+		 */
+		function aclFilter($filter = 'none') {
+			return $this->so->aclFilter($filter);
+		}      
+	
+		function init() {
+			$this->so->init();
+		}      
+
+		function read($info_id) {
+			$this->so->read($info_id);
+				
+			if ($this->data['info_subject'] == (substr($this->data['info_des'],0,60).' ...')) {
+				$this->data['info_subject'] = '';
+			}
+			if ($this->data['info_addr_id'] && $this->data['info_from'] == $this->addr2name( $this->readAddr( $this->data['info_addr_id'] ))) {
+				$this->data['info_from'] = '';
+			}            
+			return $this->data;
+		}
+
+		function delete($info_id) {
+			$this->so->delete($info_id);            
+		}
+
+		function write($values) {
+			global $phpgw_info;
+			if ($values['responsible'] && $values['status'] == 'offer') {
+				$values['status'] = 'ongoing';   // have to match if not finished
+			}
+			if (!$values['info_id'] && !$values['owner']) {
+				// echo "write(value[info_id]==0,values[owner]==0) --> owner set to user";
+				$values['owner'] = $phpgw_info['user']['account_id'];
+			}
+			if (!$values['info_id'] && !$values['datecreated'])
+				$values['datecreated'] = time();               // set creation time
+				
+			if (!$values['subject']) $values['subject'] = substr($values['des'],0,60).' ...';
+			
+			if ($values['addr_id'] && !$values['from']) 
+				$values['from'] = $this->addr2name( $this->readAddr( $values['addr_id'] ));
+
+			$this->so->write($values);
+		}
+	}
