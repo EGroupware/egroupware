@@ -1,6 +1,8 @@
 #
 # Table structure for table 'phpgw_acl2'
 #
+#
+
 
 CREATE TABLE `phpgw_acl2` (
   `acl_host` int(11) NOT NULL default '0',
