@@ -344,13 +344,14 @@
 
 	// retrieve logo from login template set 
 	// FIXME $GLOBALS['phpgw']->common->image must get extra argument: force to look in this template set thirst
-	$template_logo_file=$GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
+	$template_logo_file = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
+	$template_logo_real = PHPGW_SERVER_ROOT . '/phpgwapi/templates/'.$GLOBALS['phpgw_info']['login_template_set'].'/images/logo.png';
 
 	if($GLOBALS['phpgw_info']['server']['login_logo_file'])
 	{
 		$tmpl->set_var('logo_file',$GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['phpgw_info']['server']['login_logo_file']));
 	}
-	elseif(getimagesize($template_logo_file))
+	elseif(getimagesize($template_logo_real))
 	{
 		$tmpl->set_var('logo_file',$template_logo_file);
 	}
