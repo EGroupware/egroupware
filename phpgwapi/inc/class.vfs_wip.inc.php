@@ -55,6 +55,14 @@
 		var $real_leading_dirs;
 		var $real_extra_path;
 		var $real_name;
+		var $fake_full_path_clean;
+		var $fake_leading_dirs_clean;
+		var $fake_extra_path_clean;
+		var $fake_name_clean;
+		var $real_full_path_clean;
+		var $real_leading_dirs_clean;
+		var $real_extra_path_clean;
+		var $real_name_clean;
 	}
 
 
@@ -185,6 +193,18 @@ class vfs
 			real_leading_dirs
 			real_extra_path
 			real_name
+			fake_full_path_clean
+			fake_leading_dirs_clean
+			fake_extra_path_clean
+			fake_name_clean
+			real_full_path_clean
+			real_leading_dirs_clean
+			real_extra_path_clean
+			real_name_clean
+		"clean" values are run through vfs->db_clean () and
+		are safe for use in SQL queries that use key='value'
+		They should be used ONLY for SQL queries, so are used
+		mostly internally
 	*/
 
 	function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True)
@@ -268,14 +288,12 @@ class vfs
 		   We have to count it before because new keys will be added,
 		   which would create an endless loop
 		*/
-/*
 		$count = count ($rarray);
 		reset ($array);
 		for ($i = 0; (list ($key, $value) = each ($rarray)) && $i != $count; $i++)
 		{
 			$rarray[$key . "_clean"] = $this->db_clean ($value);
 		}
-*/
 
 		if ($object)
 		{
@@ -582,7 +600,7 @@ class vfs
 		}
 		else
 		{
-			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs', '$p->fake_name')", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs_clean', '$p->fake_name_clean')", __LINE__, __FILE__);
 
 			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
 			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
@@ -629,13 +647,13 @@ class vfs
 			{
 				$size = filesize ($t->real_full_path);
 
-				$query = $phpgw->db->query ("SELECT size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'", __LINE__, __FILE__);
+				$query = $phpgw->db->query ("SELECT size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
 				$phpgw->db->next_record ();
 				$record = $phpgw->db->Record;
 
 				if ($this->file_exists ($to, array ($relatives[1])))
 				{
-					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs', name='$t->fake_name' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs' AND name='$t->fake_name'", __LINE__, __FILE__);
+					$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'", __LINE__, __FILE__);
 
 					$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
 				}
@@ -725,7 +743,7 @@ class vfs
 			$ls = $this->ls ($f->fake_full_path, array (RELATIVE_NONE));
 
 			$this->delete ($t->fake_full_path, array (RELATIVE_NONE));
-			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name', directory='$t->fake_leading_dirs' WHERE directory='$f->fake_leading_dirs' AND name='$f->fake_name'", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
 
 			$this->set_attributes ($t->fake_full_path, array (RELATIVE_NONE), array ("modifiedby_id" => $account_id, modified => $this->now));
 			$this->correct_attributes ($t->fake_full_path, array (RELATIVE_NONE));
@@ -743,7 +761,9 @@ class vfs
 			while (list ($num, $entry) = each ($ls))
 			{
 				$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry["directory"]);
-				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir' WHERE file_id='$entry[file_id]'", __LINE__, __FILE__);
+				$newdir_clean = $this->db_clean ($newdir);
+
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir_clean' WHERE file_id='$entry[file_id]'", __LINE__, __FILE__);
 				$this->correct_attributes ("$newdir/$entry[name]", array (RELATIVE_NONE));
 			}
 		}
@@ -793,7 +813,7 @@ class vfs
 
 		if ($this->file_type ($string, array ($relatives[0])) != "Directory")
 		{
-			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 			$rr = unlink ($p->real_full_path);
 
 			if ($query || $rr)
@@ -834,7 +854,7 @@ class vfs
 			}
 
 			/* Last, we delete the directory itself */
-			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 			rmdir ($p->real_full_path);
 
 			return True;
@@ -885,7 +905,7 @@ class vfs
 		{
 			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array (RELATIVE_NONE)))
 			{
-				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, name='$p->fake_name', directory='$p->fake_leading_dirs')", __LINE__, __FILE__);
+				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, name='$p->fake_name_clean', directory='$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
 
 				$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
 
@@ -937,7 +957,7 @@ class vfs
 		   depending on if the attribute was supplied in the $attributes array
 		*/
 		
-		$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 		$phpgw->db->next_record ();
 		$record = $phpgw->db->Record;
 
@@ -1018,7 +1038,7 @@ class vfs
 
 		$p = $this->path_parts ($file, array ($relatives[0]));
 
-		$query = $phpgw->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 		$phpgw->db->next_record ();
 		$mime_type = $phpgw->db->Record["mime_type"];
 
@@ -1039,7 +1059,7 @@ class vfs
 
 		$p = $this->path_parts ($string, array ($relatives[0]));
 
-		$query = $phpgw->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+		$query = $phpgw->db->query ("SELECT name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 
 		if ($phpgw->db->next_record ())
 		{
@@ -1117,7 +1137,7 @@ class vfs
 		{
 			$p = $this->path_parts ($dir, array (RELATIVE_NONE));
 
-			$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs' AND name='$p->fake_name'", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 
 			$phpgw->db->next_record ();
 			$record = $phpgw->db->Record;
@@ -1127,7 +1147,8 @@ class vfs
 			return $rarray;
 		}
 
-		$sql = "SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory LIKE '$dir%'";
+		$dir_clean = $this->db_clean ($dir);
+		$sql = "SELECT file_id, owner_id, createdby_id, modifiedby_id, created, modified, size, mime_type, deleteable, comment, app, directory, name FROM phpgw_vfs WHERE directory LIKE '$dir_clean%'";
 		if ($mime_type)
 		{
 			$sql .= " AND mime_type='$mime_type'";
