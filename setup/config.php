@@ -14,7 +14,7 @@
 	$phpgw_info['flags'] = array(
 		'noheader' => True,
 		'nonavbar' => True,
-		'currentapp' => "home",
+		'currentapp' => 'home',
 		'noapi' => True
 	);
 	include('./inc/functions.inc.php');
@@ -42,14 +42,14 @@
 	$phpgw_setup->loaddb();
 
 	/* Guessing default paths. */
-	$current_config['files_dir'] = ereg_replace("/setup","/files",dirname($SCRIPT_FILENAME));
+	$GLOBALS['current_config']['files_dir'] = ereg_replace('/setup','/files',dirname($SCRIPT_FILENAME));
 	if (is_dir('/tmp'))
 	{
-		$current_config['temp_dir'] = '/tmp';
+		$GLOBALS['current_config']['temp_dir'] = '/tmp';
 	}
 	else
 	{
-		$current_config['temp_dir'] = '/path/to/temp/dir';
+		$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
 	}
 
 	if ($HTTP_POST_VARS['cancel'])
@@ -124,12 +124,12 @@
 	@$phpgw_setup->db->query("SELECT * FROM $configtbl");
 	while (@$phpgw_setup->db->next_record())
 	{
-		$current_config[$phpgw_setup->db->f('config_name')] = $phpgw_setup->db->f('config_value');
+		$GLOBALS['current_config'][$phpgw_setup->db->f('config_name')] = $phpgw_setup->db->f('config_value');
 	}
 
-	if ($current_config['files_dir'] == '/path/to/dir/phpgroupware/files')
+	if ($GLOBALS['current_config']['files_dir'] == '/path/to/dir/phpgroupware/files')
 	{
-		$current_config['files_dir'] = $phpgw_info['server']['server_root'] . '/files';
+		$GLOBALS['current_config']['files_dir'] = $phpgw_info['server']['server_root'] . '/files';
 	}
 
 	if ($error == 'badldapconnection')
