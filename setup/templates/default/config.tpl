@@ -362,6 +362,7 @@
      <select name="newsettings[file_repository]">
       <option value="sql"{selected_file_repository_sql}>SQL</option>
       <option value="dav"{selected_file_repository_dav}>WebDAV</option>
+      <option value="sql2"{selected_file_repository_sql2}>SQL version 2 (Required for FilesCenter)</option>
      </select>
     </td>
    </tr>
