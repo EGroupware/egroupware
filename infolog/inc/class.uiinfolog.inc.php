@@ -457,6 +457,11 @@
 							{
 								$readonlys[$name] = $name != 'info_status';
 							}
+							// need to set all customfields extra, as they are not set if empty
+							foreach($this->bo->customfields as $name => $value)
+							{
+								$readonlys['#'.$name] = true;
+							}
 						}
 						else
 						{
