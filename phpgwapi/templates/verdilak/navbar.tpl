@@ -7,7 +7,7 @@
 <td align="center" valign="bottom" width="100%"><font color="FFFFFF" size="-1">{user_info}</font></td>
 <td align="right" valign="bottom" rowspan="2" nowrap><a href="{home_link}"><img src="{welcome_img}" border="0" alt="Welcome"></a><a href="{preferences_link}"><img src="{preferences_img}" border="0" alt="Preferences"></a><a href="{logout_link}"><img src="{logout_img}" border="0" alt="Logout"></a><a href="{help_link}"><img src="{img_root}/help.gif" border="0" alt="Help"></a></td></tr>
 <tr background="{img_root}/bg_filler.gif">
-<td align="center" width="100%" valign="bottom" colspan="2"><img src="{img_root}/greybar.gif" height="6"  width="100%" alt="bar"></td></tr>
+<td align="center" width="100%" valign="bottom" colspan="2"><img src="{img_root}/greybar.jpg" height="6"  width="100%" alt="bar"></td></tr>
 </table>
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
