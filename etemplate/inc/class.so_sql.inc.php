@@ -380,25 +380,33 @@ class so_sql
 	@function search
 	@abstract searches db for rows matching searchcriteria
 	@discussion '*' and '?' are replaced with sql-wildcards '%' and '_'
-	@param $criteria array of key and data cols
+	@param $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	@param $only_keys True returns only keys, False returns all cols
 	@param $order_by fieldnames + {ASC|DESC} separated by colons ','
+	@param $extra_cols string to be added to the SELECT, eg. (count(*) as num)
 	@param $wildcard string appended befor and after each criteria
 	@param $empty False=empty criteria are ignored in query, True=empty have to be empty in row
+	@param $op defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	@result array of matching rows (the row is an array of the cols) or False
 	*/
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False)
+	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND')
 	{
-		$criteria = $this->data2db($criteria);
-
-		foreach($this->db_cols as $db_col => $col)
-		{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
-			if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
-			{
-				$query .= ($query ? ' AND ' : ' WHERE ') . $db_col .
-					($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
-					" LIKE '$wildcard".strtr(str_replace('_','\\_',addslashes($criteria[$col])),'*?','%_')."$wildcard'" :
-					"='".addslashes($criteria[$col])."'");
+		if (!is_array($criteria))
+		{
+			$query = ' WHERE '.$criteria;
+		}
+		else
+		{
+			$criteria = $this->data2db($criteria);
+			foreach($this->db_cols as $db_col => $col)
+			{	//echo "testing col='$col', criteria[$col]='".$criteria[$col]."'<br>";
+				if (isset($criteria[$col]) && ($empty || $criteria[$col] != ''))
+				{
+					$query .= ($query ? " $op " : ' WHERE ') . $db_col .
+						($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') ?
+						" LIKE '$wildcard".strtr(str_replace('_','\\_',addslashes($criteria[$col])),'*?','%_')."$wildcard'" :
+						"='".addslashes($criteria[$col])."'");
+				}
 			}
 		}
 		$this->db->query($sql = 'SELECT '.($only_keys ? implode(',',$this->db_key_cols) : '*').
