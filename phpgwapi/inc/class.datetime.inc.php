@@ -65,7 +65,7 @@
 				}
 				else
 				{
-					$this->gmtnow = $this->getbestguess();
+					$this->gmtnow = time() - ($this->getbestguess() * 3600);
 				}
 			}
 			$this->users_localtime = $this->gmtnow + $this->tz_offset;
