@@ -3,7 +3,7 @@
 <!--
 this can used only, when it's sure that Opera does not have problems with selectboxes
 
-<html xmlns="http://www.w3.org/TR/1999/REC-html-in-xml" xml:lang="en" lang="en" >
+<html xmlns="http://www.w3.org/TR/1999/REC-html-in-xml" xml:lang="{lang_code}" lang="{lang_code}" >
 -->
 <html>
 
