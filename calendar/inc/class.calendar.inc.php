@@ -153,9 +153,11 @@ class calendar extends calendar_
 		{
 			$db->next_record();
 			$fullname = $db->f('account_lid');
-			if($db->f('account_lastname') && $db->f('account_firstname'))
+			$lname = $db->f('account_lastname');
+			$fname = $db->f('account_firstname');
+			if($lname && $fname)
 			{
-				$fullname = $db->f('account_lastname').', '.$db->f('account_firstname');
+				$fullname = $lname.', '.$fname;
 			}
 			return $fullname;
 		}
