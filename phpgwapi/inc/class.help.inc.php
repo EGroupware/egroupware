@@ -28,15 +28,16 @@
 	{
 		var $lang;
 		var $app_name;
+		var $app_version;
 		var $app_id;
 		var $up;
 		var $down;
-		var $close;
-		var $question;
-		var $edit;
+		var $intro;
+		var $app_intro;
+		var $note;
 
 		var $extrabox;
-		var $xextrabox;
+		var $xhelp;
 		var $listbox;
 
 		var $output;
@@ -51,16 +52,17 @@
 			$this->lang			= $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			$this->title		= '';
 			$this->app_name		= '';
+			$this->app_version	= '';
 			$this->app_id		= 0;
 
 			$this->up			= '';
 			$this->down			= '';
-			$this->close		= '';
-			$this->question		= '';
-			$this->edit			= '';
+			$this->intro		= '';
+			$this->app_intro	= '';
+			$this->note			= '';
 
 			$this->extrabox		= '';
-			$this->xextrabox	= '';
+			$this->xhelp		= '';
 			$this->listbox		= '';
 			$this->data			= array();
 
@@ -68,7 +70,7 @@
 			{
 				$this->output = array();
 			}
-			$GLOBALS['phpgw']->xslttpl->add_file('help');
+			$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'help');
 		}
 
 		/*
@@ -100,21 +102,28 @@
 			return $this->$var;
 		}
 
-		function start_template($extra = '')
+		function start_template()
 		{
-			if ($extra && $this->app_name)
+			if ($this->app_name)
 			{
-				$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrahelp');
+				$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'help_data');
 			}
 		}
 
-		function set_controls($control='',$control_param='')
+		function set_controls($type = 'app', $control='', $control_url='')
 		{
-			//echo '<br>Control: ' . $control . ', control_param="' . $control_param . '"';
-
-			if($control != '' && is_array($control_param))
+			switch($type)
 			{
-				$this->setvar($control,$GLOBALS['phpgw']->link($control_param['url'],'app='.$control_param['app'].'&control='.$control));
+				case 'app':
+					if($control != '' && $control_url != '')
+					{
+						$this->setvar($control,$GLOBALS['phpgw']->link($this->check_help_file($control_url)));
+					}
+					break;
+				default:
+					$this->setvar('intro',$GLOBALS['phpgw']->link('/help.php'));
+					$this->setvar('note',$GLOBALS['phpgw']->link('/help.php','note=True'));
+					break;
 			}
 		}
 
@@ -130,52 +139,59 @@
 		{
 			if($extra_data !='')
 			{
-				$this->xextrabox = $extra_data;
+				$this->xhelp = $extra_data;
 			}
 		}
 
 		function draw_box()
 		{
-			if($this->up || $this->down || $this->close || $this->question || $this->edit)
+			$control_array = array
+			(
+				'intro'		=> True,
+				'note'		=> True
+			);
+
+			if($this->up)
 			{
-				$control_array = array
-				(
-					'up',
-					'down',
-					'question',
-					'close',
-					'edit'
-				);
-				@reset($control_array);
-				while(list($key,$param) = each($control_array))
-				{
-					if(isset($this->$param) && $this->$param)
-					{
-						$image_width = 15;
-						if($param == 'edit')
-						{
-							$image_width = 30;
-						}
-
-						$control_link[] = array
-						(
-							'param_url' 			=> $this->$param,
-							'link_img'				=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button'),
-							'img_width'				=> $image_width,
-							'lang_param_statustext'	=> lang($param)
-						);
-					}
-				}
-
-				$this->output['help_data'][] = array
-				(
-					'title'			=> $this->title,
-					'control_link' 	=> $control_link,
-					'listbox'		=> $this->listbox,
-					'extrabox'		=> $this->extrabox,
-					'xextrabox'		=> $this->xextrabox
-				);
+				$control_array['up'] = True;
 			}
+			if($this->down)
+			{
+				$control_array['down'] = True;
+			}
+			if($this->app_intro)
+			{
+				$control_array['app_intro'] = True;
+			}
+
+			@reset($control_array);
+			while(list($param,$value) = each($control_array))
+			{
+				if(isset($this->$param) && $this->$param)
+				{
+					$image_width = 15;
+
+					$control_link[] = array
+					(
+						'param_url' 			=> $this->$param,
+						'link_img'				=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'_help'),
+						'img_width'				=> $image_width,
+						'lang_param_statustext'	=> lang($param)
+					);
+				}
+			}
+
+			$this->output['help_values'][] = array
+			(
+				'img'			=> $GLOBALS['phpgw']->common->image($this->app_name,'navbar','',True),
+				'title'			=> $this->title,
+				'lang_version'	=> lang('version'),
+				'version'		=> $this->app_version,
+				'control_link' 	=> $control_link,
+				'listbox'		=> $this->listbox,
+				'extrabox'		=> $this->extrabox,
+				'xhelp'			=> $this->xhelp
+			);
 		}
 
 		function check_file($file)

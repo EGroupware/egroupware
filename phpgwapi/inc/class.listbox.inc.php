@@ -107,7 +107,7 @@
 		{
 			if ($extra_data)
 			{
-				$this->start_template(True);
+				$this->start_template();
 			}
 
 			if(is_array($this->data) && !empty($this->data))

@@ -47,23 +47,13 @@
 			}
 			$this->title = $param['title'];
 
-			if($param['app_id'])
+			if(is_array($param['controls']))
 			{
-				$app_id = $this->getvar('app_id');
-
-				$var = Array
-				(
-					'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
-					'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
-					'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
-					'question' => Array('url' => '/set_box.php', 'app' => $app_id),
-					'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
-				);
-
-				while(list($key,$value) = each($var))
+				while(list($key,$value) = each($param['controls']))
 				{
-					$this->set_controls($key,$value);
+					$this->set_controls('app',$key,$value);
 				}
+				$this->set_controls();
 			}
 		}
 
@@ -90,7 +80,7 @@
 		{
 			if ($extra_data)
 			{
-				$this->start_template(True);
+				$this->start_template();
 			}
 
 			if(is_array($this->data) && !empty($this->data))

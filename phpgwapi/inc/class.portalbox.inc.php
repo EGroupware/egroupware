@@ -99,9 +99,9 @@
 			return $this->$var;
 		}
 
-		function start_template($extra = '')
+		function start_template()
 		{
-			if ($extra && $this->app_name)
+			if ($this->app_name)
 			{
 				$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrabox');
 			}
