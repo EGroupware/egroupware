@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-	$d1 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+	$d1 = strtolower(substr(PHPGW_APP_INC,0,3));
 	if($d1 == 'htt' || $d1 == 'ftp' )
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
@@ -22,12 +22,12 @@
 	}
 	unset($d1);
 
-	$tmp_app_inc = $phpgw_info['server']['app_inc'];
-	$phpgw_info['server']['app_inc'] = $phpgw->common->get_inc_dir('calendar');
+	$tmp_app_inc = PHPGW_APP_INC;
+	define('PHPGW_APP_INC',$phpgw->common->get_inc_dir('calendar'));
 
 	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
-		include($phpgw_info['server']['app_inc'].'/functions.inc.php');
+		include(PHPGW_APP_INC . '/functions.inc.php');
 		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- Calendar info -->'."\n";
 		echo $phpgw->calendar->mini_calendar($phpgw->calendar->today["day"],$phpgw->calendar->today["month"],$phpgw->calendar->today["year"],"day.php").'</td><td align="center">';
 		echo '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
@@ -42,6 +42,5 @@
 		unset($phpgw->calendar);
 	} 
 
-
-	$phpgw_info['server']['app_inc'] = $tmp_app_inc;
+	define('PHPGW_APP_INC',$tmp_app_inc);
 ?>
