@@ -25,10 +25,13 @@
 		exit;
 	}
 
-	$phpgw_info["flags"] = array(
-		"noheader" => True, "nonavbar" => True, "currentapp" => "home",
-		"enable_network_class" => True, "enable_todo_class" => True,
-		"enable_contacts_class" => True, "enable_nextmatchs_class" => True
+	$phpgw_info['flags'] = array(
+		'noheader'                => True,
+		'nonavbar'                => True,
+		'currentapp'              => 'home',
+		'enable_network_class'    => True,
+		'enable_contacts_class'   => True,
+		'enable_nextmatchs_class' => True
 	);
 	include("header.inc.php");
 	// Note: I need to add checks to make sure these apps are installed.
