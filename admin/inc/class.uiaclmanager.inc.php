@@ -54,39 +54,45 @@
 			$this->template->set_block('app_list','link_row');
 			$this->template->set_block('app_list','spacer_row');
 
-			while (is_array($GLOBALS['acl_manager']) && list($app,$locations) = each($GLOBALS['acl_manager']))
+			if (is_array($GLOBALS['acl_manager']))
 			{
-				$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.gif',$app.'.gif'));
-				$this->template->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-				$this->template->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-				$this->template->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$app]['title']);
-				$this->template->set_var('a_name',$appname);
-				$this->template->set_var('app_icon',$icon);
-
-				if ($icon)
+				foreach($GLOBALS['acl_manager'] as $app => $locations)
 				{
-					$this->template->fp('rows','app_row',True);
+					$icon = $GLOBALS['phpgw']->common->image($app,array('navbar.gif',$app.'.gif'));
+					$this->template->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
+					$this->template->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
+					$this->template->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$app]['title']);
+					$this->template->set_var('a_name',$appname);
+					$this->template->set_var('app_icon',$icon);
+	
+					if ($icon)
+					{
+						$this->template->fp('rows','app_row',True);
+					}
+					else
+					{
+						$this->template->fp('rows','app_row_noicon',True);
+					}
+	
+					if (is_array($locations))
+					{
+						foreach($locations as $loc => $value)
+						{
+							$link_values = array(
+								'menuaction' => 'admin.uiaclmanager.access_form',
+								'location'   => $loc,
+								'acl_app'    => $app,
+								'account_id' => $this->account_id
+							);
+		
+							$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
+							$this->template->set_var('lang_location',lang($value['name']));
+							$this->template->fp('rows','link_row',True);
+						}
+					}
+	
+					$this->template->parse('rows','spacer_row',True);
 				}
-				else
-				{
-					$this->template->fp('rows','app_row_noicon',True);
-				}
-
-				while (is_array($locations) && list($loc,$value) = each($locations))
-				{
-					$link_values = array(
-						'menuaction' => 'admin.uiaclmanager.access_form',
-						'location'   => urlencode($loc),
-						'acl_app'    => $app,
-						'account_id' => $this->account_id
-					);
-
-					$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
-					$this->template->set_var('lang_location',lang($value['name']));
-					$this->template->fp('rows','link_row',True);
-				}
-
-				$this->template->parse('rows','spacer_row',True);
 			}
 			$this->template->set_var(array(
 				'cancel_action' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
@@ -104,9 +110,12 @@
 				if ($_POST['submit'])
 				{
 					$total_rights = 0;
-					while (is_array($_POST['acl_rights']) && list(,$rights) = each($_POST['acl_rights']))
+					if (is_array($_POST['acl_rights']))
 					{
-						$total_rights += $rights;
+						foreach($_POST['acl_rights'] as $rights)
+						{
+							$total_rights += $rights;
+						}
 					}
 					if ($total_rights)
 					{
@@ -145,7 +154,7 @@
 			$this->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php',$link_values));
 
 			$total = 0;
-			while (list($name,$value) = each($acl_manager['rights']))
+			foreach($acl_manager['rights'] as $name => $value)
 			{
 				$cb .= '<input type="checkbox" name="acl_rights[]" value="'.$value.'"'.($grants & $value ? ' checked' : '').'>&nbsp;'.lang($name)."<br>\n";
 			}
