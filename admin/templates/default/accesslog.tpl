@@ -1,7 +1,7 @@
 <!-- BEGIN list -->
   <p>
   {link_return_to_view_account}
-  <table border="0" align="center" width="75%">
+  <table border="0" align="center" width="95%">
    <tr>
     <td align="left">
       {lang_last_x_logins}
@@ -46,8 +46,8 @@
     <td>{row_loginid}</td>
     <td>{row_ip}</td>
     <td>{row_li}</td>
-    <td>{row_lo}</td>
-    <td>{row_total}</td>
+    <td>{row_lo}&nbsp;</td>
+    <td>{row_total}&nbsp;</td>
    </tr>
 <!-- END row -->
 
