@@ -1220,6 +1220,8 @@
 					}
 				}
 			}
+			// in case some stupid old code expects the array-pointer to be at the start of the array
+			reset($var);
 		}
 	}
 		
@@ -1239,7 +1241,6 @@
 		if (is_array($GLOBALS[$where]))
 		{
 			_check_script_tag($GLOBALS[$where],$where);
-			reset($GLOBALS[$where]);	// in case some stupid old code expects the array-pointer to be at the start of the array
 		}
 	}
 ?>
