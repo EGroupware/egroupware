@@ -16,7 +16,7 @@ The following are for use with openldap 1.X:
 	phpgw.at.conf	defines our special attributes
 
 They should be copied to /etc/openldap and added to
-/etc/openldap/slapd.conf:
+/etc/openldap/slapd.conf AFTER other similar include lines:
 
 include		/etc/openldap/phpgw.oc.conf
 include		/etc/openldap/phpgw.at.conf
@@ -31,7 +31,7 @@ The following are for use with openldap 2.X:
 	phpgwcontact.schema		defines the phpgwContact objectclass and our attributes
 
 These should be copied to /etc/openldap/schema and added to
-/etc/openldap/slapd.conf:
+/etc/openldap/slapd.conf AFTER other similar include lines:
 
 include		/etc/openldap/schema/phpgwaccount.schema
 include		/etc/openldap/schema/phpgwcontact.schema
