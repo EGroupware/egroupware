@@ -58,8 +58,8 @@
 	    if ($n_passwd) {
         $phpgw->db->query("update accounts set account_pwd='" . md5($n_passwd) . "', "
 		              . "account_lastpwd_change='" . time() . "' where account_lid='" . "$lid'");
-        $phpgw->db->query("update sessions set passwd='" . addslashes($n_passwd)
-                        . "' where loginid='$lid'");
+        $phpgw->db->query("update sessions set session_pwd='" . addslashes($n_passwd)
+                        . "' where session_lid='$lid'");
       }
       while ($permission = each($new_permissions)) {
         if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
@@ -171,7 +171,7 @@
                 $perm_display[$i][1] = $permission[1]["title"];
                 $i++;
               }
-	          }
+	       }
 
             for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
               if (! $perm_display[$i][1]) break;
@@ -193,20 +193,6 @@
 	 	          echo "></td></tr>";
               $i++;
             }
-
-/*
-          echo "<tr><td>" . lang("Anonymous user") . "</td><td><input type=\""
-	     . "checkbox\" name=\"new_permissions[anonymous]\" value=\"True\"";
-	     if ($db_perms["anonymous"] || $new_permissions[anonymous])
-		    echo " checked";
-	      echo "></td>";
-
-          echo "<td>" . lang("Manager") . "</td><td><input type=\""
-	     . "checkbox\" name=\"new_permissions[manager]\" value=\"True\"";
-	     if ($db_perms["manager"] || $new_permissions[manager])
-		    echo " checked";
-	     echo "></td></tr>";
-*/
 ?>
           <tr>
            <td><?php echo lang("Account active"); ?></td>
