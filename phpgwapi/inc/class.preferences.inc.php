@@ -308,18 +308,43 @@
 		@param $app_name name of the app
 		@param $var name of preference to be stored
 		@param $value value of the preference
-		@note the function works on user and data, to be able to save the pref and to have imediate effect
+		@param $type of preference to set: forced, default, user
+		@note the effective prefs ($this->data) are updated to reflect the change
+		@returns the new effective prefs (even when forced or default prefs are set !)
 		*/
-		function add($app_name,$var,$value = '')
+		function add($app_name,$var,$value = '##undef##',$type='user')
 		{
 			//echo "<p>add('$app_name','$var','$value')</p>\n";
-			if ($value == '')
+			if ($value == '##undef##')
 			{
 				global $$var;
 				$value = $$var;
 			}
  
-			$this->user[$app_name][$var] = $this->data[$app_name][$var] = $value;
+			switch ($type)
+			{
+				case 'forced':
+					$this->data[$app_name][$var] = $this->forced[$app_name][$var] = $value;
+					break;
+
+				case 'default':
+					$this->default[$app_name][$var] = $value;
+					if ((!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '') &&
+					    (!isset($this->user[$app_name][$var]) || $this->user[$app_name][$var] === ''))
+					{
+						$this->data[$app_name][$var] = $value;
+					}
+					break;
+
+				case user:
+				default:
+					$this->user[$app_name][$var] = $value;
+					if (!isset($this->forced[$app_name][$var]) || $this->forced[$app_name][$var] === '')
+					{
+						$this->data[$app_name][$var] = $value;
+					}
+					break;
+			}
 			reset($this->data);
 			return $this->data;
 		}
@@ -330,21 +355,52 @@
 		@discussion
 		@param $app_name name of app
 		@param $var variable to be deleted
-		@note the function works on user and data, to be able to save the pref and to have imediate effect
+		@param $type of preference to set: forced, default, user
+		@note the effektive prefs ($this->data) are updated to reflect the change
+		@returns the new effective prefs (even when forced or default prefs are deleted!)
 		*/
-		function delete($app_name, $var = '')
+		function delete($app_name, $var = False,$type = 'user')
 		{
 			//echo "<p>delete('$app_name','$var')</p>\n";
-			if (is_string($var) && $var == '')
+			$set_via = array(
+				'forced'  => array('user','default'),
+				'default' => array('forced','user'),
+				'user'    => array('forced','default')
+			);
+			if (!isset($set_via[$type]))
 			{
-//				$this->data[$app_name] = array();
+				$type = 'user';
+			}
+			if ($all = (is_string($var) && $var == ''))
+			{
+				unset($this->$type[$app_name]);
 				unset($this->data[$app_name]);
-				unset($this->user[$app_name]);
 			}
 			else
 			{
+				unset($this->$type[$app_name][$var]);
 				unset($this->data[$app_name][$var]);
-				unset($this->user[$app_name][$var]);
+			}
+			// set the effectiv pref again if needed
+			//
+			foreach ($set_via[$type] as $set_from)
+			{
+				if ($all)
+				{
+					if (isset($this->$set_from[$app_name]))
+					{
+						$this->data[$app_name] = $this->$set_from[$app_name];
+						break;
+					}
+				}
+				else
+				{
+					if (isset($this->$set_from[$app_name][$var]) && $this->$set_from[$app_name][$var] !== '')
+					{
+						$this->data[$app_name][$var] = $this->$set_from[$app_name][$var];
+						break;
+					}
+				}
 			}
 			reset ($this->data);
 			return $this->data;
