@@ -632,8 +632,11 @@
 				$referer = get_var('HTTP_REFERER',Array('GLOBAL'));
 			}
 
-			$url = parse_url(str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],'',$referer));
-
+			//	make the referer relative to the phpgw-install
+			$url = parse_url($referer);
+			$server = parse_url($GLOBALS['phpgw_info']['server']['webserver_url']);
+			$url['path'] = str_replace($server['path'],'',$url['path']);
+			
 			if (!strstr($url['query'],'menuaction=infolog') || !is_array($vars))
 			{
 				return $url['path'].($url['query'] ? '?'.$url['query'] : '');
