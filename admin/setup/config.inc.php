@@ -44,7 +44,7 @@
    <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
-    <td>If using LDAP, do you want to store homedirectory and loginshell attributes for new accounts?:</td>
+    <td>If using LDAP, do you want to be able to manage homedirectory and loginshell attributes?:</td>
     <td><input type="checkbox" name="newsettings[ldap_extra_attributes]" value="True"<?php echo ($current_config["ldap_extra_attributes"]?" checked":""); ?>></td>
    </tr>
    <tr bgcolor="e6e6e6">
