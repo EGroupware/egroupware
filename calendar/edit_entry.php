@@ -20,6 +20,12 @@
 
   $cal_info = new calendar_item;
 
+  if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
+    $hourformat .= "h";
+  } else {
+    $hourformat .= "H";
+  }
+
   if ($id > 0) {
     $cal = $phpgw->calendar->getevent(intval($id));
     $cal_info = $cal[0];
@@ -135,7 +141,7 @@
 	$amsel = "checked"; $pmsel = "";
       }
     }
-    $str = "<input name=\"hour\" size=\"2\" VALUE=\"".$phpgw->common->show_date($cal_info->datetime,"H")."\" maxlength=\"2\">:<input name=\"minute\" size=\"2\" value=\"".$phpgw->common->show_date($cal_info->datetime,"i")."\" maxlength=\"2\">";
+    $str = "<input name=\"hour\" size=\"2\" VALUE=\"".$phpgw->common->show_date($cal_info->datetime,$hourformat)."\" maxlength=\"2\">:<input name=\"minute\" size=\"2\" value=\"".$phpgw->common->show_date($cal_info->datetime,"i")."\" maxlength=\"2\">";
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       $str .= "<input type=\"radio\" name=\"ampm\" value=\"am\" $amsel>am";
       $str .= "<input type=\"radio\" name=\"ampm\" value=\"pm\" $pmsel>pm";
@@ -179,7 +185,7 @@
 	$amsel = "checked"; $pmsel = "";
       }
     }
-    $str = "<input name=\"end_hour\" size=\"2\" VALUE=\"".$phpgw->common->show_date($cal_info->edatetime,"H")."\" maxlength=\"2\">:<input name=\"end_minute\" size=\"2\" value=\"".$phpgw->common->show_date($cal_info->edatetime,"i")."\" maxlength=\"2\">";
+    $str = "<input name=\"end_hour\" size=\"2\" VALUE=\"".$phpgw->common->show_date($cal_info->edatetime,$hourformat)."\" maxlength=\"2\">:<input name=\"end_minute\" size=\"2\" value=\"".$phpgw->common->show_date($cal_info->edatetime,"i")."\" maxlength=\"2\">";
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       $str .= "<input type=\"radio\" name=\"end_ampm\" value=\"am\" $amsel>am";
       $str .= "<input type=\"radio\" name=\"end_ampm\" value=\"pm\" $pmsel>pm";
