@@ -160,7 +160,7 @@
                     d_emailtype 	enum('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX') NOT NULL, 
                     d_email 		varchar(64),
                     d_email_work 	char(1) DEFAULT 'n' NOT NULL,
-                    d_email_home 	char(1) DEFAULT 'n' NOT NULL
+                    d_email_home 	char(1) DEFAULT 'n' NOT NULL,
                     UNIQUE (id)
 		    )";
   $phpgw_setup->db->query($sql);
