@@ -11,11 +11,9 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "disable_message_class" => True,
+  						 "disable_send_class" => True, "currentapp" => "admin");
 
-  $phpgw_info["flags"]["disable_message_class"] = True;
-  $phpgw_info["flags"]["disable_send_class"] = True;
-  $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   if ($submit) {
      $totalerrors = 0;
@@ -92,98 +90,88 @@
         exit;
      }
   }
+  
+  $t = new Template($phpgw_info["server"]["template_dir"]);
+  $t->set_file(array("form"	=> "account_form.tpl"));
 
-     $phpgw->common->phpgw_header();
-     $phpgw->common->navbar();
-     
-     echo "<p><b>" . lang("Add new account") . "</b><hr><br>";
+  $phpgw->common->phpgw_header();
+  $phpgw->common->navbar();
 
-     if ($totalerrors) {
-        echo "<center>" . $phpgw->common->error_list($error) . "</center>";
+  $t->set_var("lang_action",lang("Add new account"));
+
+  if ($totalerrors) {
+     $t->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
+  } else {
+     $t->set_var("error_messages","");
+  }
+  
+  $t->set_var("form_action",$phpgw->link("newaccount.php"));
+  $t->set_var("lang_loginid",lang("LoginID"));
+  $t->set_var("n_loginid_value",$n_loginid);
+
+  $t->set_var("lang_password",lang("Password"));
+  $t->set_var("n_passwd_value",$n_passwd);
+  
+  $t->set_var("lang_reenter_password",lang("Re-Enter Password"));
+  $t->set_var("n_passwd_2_value",$n_passwd_2);
+
+  $t->set_var("lang_firstname",lang("First Name"));
+  $t->set_var("n_firstname_value",$firstname_value);
+
+  $t->set_var("lang_lastname",lang("Last Name"));
+  $t->set_var("n_lastname_value",$lastname_value);
+
+  $t->set_var("lang_groups",lang("Groups"));
+  $group_select = '<select name="n_groups[]" multiple>';
+  $phpgw->db->query("select * from groups");
+  while ($phpgw->db->next_record()) {
+    $group_select .= "<option value=\"" . $phpgw->db->f("group_id") . "\"";
+    if ($n_groups[$phpgw->db->f("group_id")]) {
+       $group_select .= " selected";
+    }
+    $group_select .= ">" . $phpgw->db->f("group_name") . "</option>";
+  }
+  $group_select .= "</select>";
+  $t->set_var("groups_select",$group_select);
+
+  $t->set_var("","");
+  $i = 0;
+  while ($permission = each($phpgw_info["apps"])) {
+    if ($permission[1]["enabled"]) {
+       $perm_display[$i][0] = $permission[0];
+       $perm_display[$i][1] = $permission[1]["title"];
+       $i++;
+    }
+  }
+
+  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
+      if (! $perm_display[$i][1]) break;
+
+      $perms_html .= '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
+                  . '<td><input type="checkbox" name="new_permissions['
+		          . $perm_display[$i][0] . ']" value="True"';
+      if ($new_permissions[$perm_display[$i][0]]) {
+         $perms_html .= " checked";
+      }
+      $perms_html .= "></td>";
+
+      $i++;
+
+     if (! $perm_display[$i][1]) break;
+
+     $perms_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
+                  . '<td><input type="checkbox" name="new_permissions['
+		          . $perm_display[$i][0] . ']" value="True"';
+     if ($new_permissions[$perm_display[$i][0]]) {
+        $perms_html .= " checked";
      }
+	 $perms_html .= "></td></tr>";
 
-     ?>     
-       <form method="POST" action="<?php echo $phpgw->link("newaccount.php"); ?>">
-        <center>
-         <table border=0 width=65%>
-           <tr>
-             <td><?php echo lang("LoginID"); ?></td>
-             <td><input name="n_loginid" value="<?php echo $n_loginid; ?>"></td>
-           </tr>
-           <tr>
-             <td><?php echo lang("Password"); ?></td>
-             <td><input type="password" name="n_passwd" value="<?php echo $n_passwd; ?>"></td>
-           </tr>
-           <tr>
-             <td><?php echo lang("Re-Enter Password"); ?></td>
-             <td><input type="password" name="n_passwd_2" value="<?php echo $n_passwd_2; ?>"></td>
-           </tr>
-           <tr>
-             <td><?php echo lang("First Name"); ?></td>
-             <td><input name="n_firstname" value="<?php echo $n_firstname; ?>"></td>
-           </tr>
-           <tr>
-             <td><?php echo lang("Last Name"); ?></td>
-             <td><input name="n_lastname" value="<?php echo $n_lastname; ?>"></td>
-           </tr>
-           <tr>
-             <td><?php echo lang("Groups"); ?></td>
-             <td><select name="n_groups[]" multiple><?php
-                   $phpgw->db->query("select * from groups");
-                   while ($phpgw->db->next_record()) {
-                     echo "<option value=\"" . $phpgw->db->f("group_id") . "\"";
-                     if ($n_groups[$phpgw->db->f("group_id")]) {
-                        echo " selected";
-                     }
-			 echo ">" . $phpgw->db->f("group_name") . "</option>";
-                   }
-                 ?>
-                 </select></td>
-           </tr>
-           <?php
-             $i = 0;
-             while ($permission = each($phpgw_info["apps"])) {
-               if ($permission[1]["enabled"]) {
-                  $perm_display[$i][0] = $permission[0];
-                  $perm_display[$i][1] = $permission[1]["title"];
-                  $i++;
-               }
-	     }
+     $i++;
+  }
+  $t->set_var("permissions_list",$perms_html);
 
-             for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
-                if (! $perm_display[$i][1]) break;
-
-                echo '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
-                   . '<td><input type="checkbox" name="new_permissions['
-		   . $perm_display[$i][0] . ']" value="True"';
-                if ($new_permissions[$perm_display[$i][0]]) {
-                   echo " checked";
-                }
-                echo "></td>";
-
-                $i++;
-
-                if (! $perm_display[$i][1]) break;
-
-                echo '<td>' . lang($perm_display[$i][1]) . '</td>'
-                   . '<td><input type="checkbox" name="new_permissions['
-		   . $perm_display[$i][0] . ']" value="True"';
-                if ($new_permissions[$perm_display[$i][0]]) {
-                   echo " checked";
-                }
-	 	echo "></td></tr>";
-
-                $i++;
-             }
-           ?>
-           <tr>
-             <td colspan=2>
-              <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
-             </td>
-           </tr>
-         </table>
-        </center>
-       </form>
-     <?php
-        $phpgw->common->phpgw_footer();
-     ?>
+  $t->set_var("lang_button",Lang("Add"));
+  $t->pparse("out","form");
+  $phpgw->common->phpgw_footer();
+?>
