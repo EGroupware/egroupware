@@ -68,18 +68,21 @@
 		*/
 		function draw($extra_data='')
 		{
-			$this->p->parse('row','portal_listbox_header',True);
-
-			for ($x = 0; $x < count($this->data); $x++)
+			if(count($this->data))
 			{
-				$var = Array(
-					'text'	=> $this->data[$x]['text'],
-					'link'	=> $this->data[$x]['link']
-				);
-				$this->p->set_var($var);
-				$this->p->parse('row','portal_listbox_link',True);
+				$this->p->parse('row','portal_listbox_header',True);
+
+				for ($x = 0; $x < count($this->data); $x++)
+				{
+					$var = Array(
+						'text'	=> $this->data[$x]['text'],
+						'link'	=> $this->data[$x]['link']
+					);
+					$this->p->set_var($var);
+					$this->p->parse('row','portal_listbox_link',True);
+				}
+				$this->p->parse('row','portal_listbox_footer',True);
 			}
-			$this->p->parse('row','portal_listbox_footer',True);
 			$this->set_internal($extra_data);
 			return $this->draw_box();
 		}
