@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupware http://www.phpgroupware.org">
+<META name="AUTHOR" content="eGroupware http://www.egroupware.org">
 <META NAME="description" CONTENT="eGroupware login screen">
 <META NAME="keywords" CONTENT="eGroupware login screen">
 <link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">	

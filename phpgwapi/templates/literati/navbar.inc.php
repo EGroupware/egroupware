@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare                                                               *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -203,7 +203,7 @@
 		);
 		$GLOBALS['phpgw']->hooks->process('navbar_end');
 
-		$var['powered_by'] = lang('Powered by phpGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+		$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 		$GLOBALS['idots_tpl']->set_var($var);
 		$GLOBALS['idots_tpl']->pfp('out','footer');
 	}

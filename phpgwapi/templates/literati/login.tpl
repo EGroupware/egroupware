@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="eGroupware http://www.phpgroupware.org">
+<META name="AUTHOR" content="eGroupware http://www.egroupware.org">
 <META NAME="description" CONTENT="eGroupware login screen">
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 <META NAME="keywords" CONTENT="eGroupware login screen">
