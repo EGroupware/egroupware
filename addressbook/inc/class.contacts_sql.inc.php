@@ -50,53 +50,53 @@
 
         $this->account_id = $phpgw_info["user"]["account_id"];
         // rework the following to be a simple sed style creation
-        $this->stock_contact_fields = array("FN"              => "FN",        //'firstname lastname'
-                                            "SOUND"           => "SOUND",
-                                            "ORG_Name"        => "ORG_Name",  //company
-                                            "ORG_Unit"        => "ORG_Unit",  //division
-                                            "TITLE"           => "TITLE",
-                                            "N_Given"         => "N_Given",   //firstname
-                                            "N_Family"        => "N_Family",  //lastname
-                                            "N_Middle"        => "N_Middle",
-                                            "N_Prefix"        => "N_Prefix",
-                                            "N_Suffix"        => "N_Suffix",
-                                            "LABEL"           => "LABEL",
-                                            "ADR_Street"      => "ADR_Street",
-                                            "ADR_Locality"    => "ADR_Locality",   //city
-                                            "ADR_Region"      => "ADR_Region",     //state
-                                            "ADR_PostalCode"  => "ADR_PostalCode", //zip
-                                            "ADR_CountryName" => "ADR_CountryName",
-                                            "ADR_Work"        => "ADR_Work",   //yn
-                                            "ADR_Home"        => "ADR_Home",   //yn
-                                            "ADR_Parcel"      => "ADR_Parcel", //yn
-                                            "ADR_Postal"      => "ADR_Postal", //yn
-                                            "TZ"              => "TZ",
-                                            "GEO"             => "GEO",
-                                            "A_TEL"           => "A_TEL",
-                                            "A_TEL_Work"      => "A_TEL_Work",   //yn
-                                            "A_TEL_Home"      => "A_TEL_Home",   //yn
-                                            "A_TEL_Voice"     => "A_TEL_Voice",  //yn
-                                            "A_TEL_Msg"       => "A_TEL_Msg",    //yn
-                                            "A_TEL_Fax"       => "A_TEL_Fax",    //yn
-                                            "A_TEL_Prefer"    => "A_TEL_Prefer", //yn
-                                            "B_TEL"           => "B_TEL",
-                                            "B_TEL_Work"      => "B_TEL_Work",   //yn
-                                            "B_TEL_Home"      => "B_TEL_Home",   //yn
-                                            "B_TEL_Voice"     => "B_TEL_Voice",  //yn
-                                            "B_TEL_Msg"       => "B_TEL_Msg",    //yn
-                                            "B_TEL_Fax"       => "B_TEL_Fax",    //yn
-                                            "B_TEL_Prefer"    => "B_TEL_Prefer", //yn
-                                            "C_TEL"           => "C_TEL",
-                                            "C_TEL_Work"      => "C_TEL_Work",   //yn
-                                            "C_TEL_Home"      => "C_TEL_Home",   //yn
-                                            "C_TEL_Voice"     => "C_TEL_Voice",  //yn
-                                            "C_TEL_Msg"       => "C_TEL_Msg",    //yn
-                                            "C_TEL_Fax"       => "C_TEL_Fax",    //yn
-                                            "C_TEL_Prefer"    => "C_TEL_Prefer", //yn
-                                            "D_EMAIL"         => "D_EMAIL",
-                                            "D_EMAILTYPE"     => "D_EMAILTYPE",   //'INTERNET','CompuServe',etc...
-                                            "D_EMAIL_Work"    => "D_EMAIL_Work",  //yn
-                                            "D_EMAIL_Home"    => "D_EMAIL_Home",  //yn
+        $this->stock_contact_fields = array("fn"              => "fn",        //'firstname lastname'
+                                            "sound"           => "sound",
+                                            "org_name"        => "org_name",  //company
+                                            "org_unit"        => "org_unit",  //division
+                                            "title"           => "title",
+                                            "n_given"         => "n_given",   //firstname
+                                            "n_family"        => "n_family",  //lastname
+                                            "n_middle"        => "n_middle",
+                                            "n_prefix"        => "n_prefix",
+                                            "n_suffix"        => "n_suffix",
+                                            "label"           => "label",
+                                            "adr_street"      => "adr_street",
+                                            "adr_locality"    => "adr_locality",   //city
+                                            "adr_region"      => "adr_region",     //state
+                                            "adr_postalcode"  => "adr_postalcode", //zip
+                                            "adr_countryname" => "adr_countryname",
+                                            "adr_work"        => "adr_work",   //yn
+                                            "adr_home"        => "adr_home",   //yn
+                                            "adr_parcel"      => "adr_parcel", //yn
+                                            "adr_postal"      => "adr_postal", //yn
+                                            "tz"              => "tz",
+                                            "geo"             => "geo",
+                                            "a_tel"           => "a_tel",
+                                            "a_tel_work"      => "a_tel_work",   //yn
+                                            "a_tel_home"      => "a_tel_home",   //yn
+                                            "a_tel_voice"     => "a_tel_voice",  //yn
+                                            "a_tel_msg"       => "a_tel_msg",    //yn
+                                            "a_tel_fax"       => "a_tel_fax",    //yn
+                                            "a_tel_prefer"    => "a_tel_prefer", //yn
+                                            "b_tel"           => "b_tel",
+                                            "b_tel_work"      => "b_tel_work",   //yn
+                                            "b_tel_home"      => "b_tel_home",   //yn
+                                            "b_tel_voice"     => "b_tel_voice",  //yn
+                                            "b_tel_msg"       => "b_tel_msg",    //yn
+                                            "b_tel_fax"       => "b_tel_fax",    //yn
+                                            "b_tel_prefer"    => "b_tel_prefer", //yn
+                                            "c_tel"           => "c_tel",
+                                            "c_tel_Work"      => "c_tel_work",   //yn
+                                            "c_tel_Home"      => "c_tel_home",   //yn
+                                            "c_tel_Voice"     => "c_tel_voice",  //yn
+                                            "c_tel_Msg"       => "c_tel_msg",    //yn
+                                            "c_tel_Fax"       => "c_tel_fax",    //yn
+                                            "c_tel_Prefer"    => "c_tel_prefer", //yn
+                                            "d_email"         => "d_email",
+                                            "d_emailtype"     => "d_emailtype",   //'INTERNET','CompuServe',etc...
+                                            "d_email_work"    => "d_email_work",  //yn
+                                            "d_email_home"    => "d_email_home",  //yn
                                             );
 
         $this->email_types = array("INTERNET"   => "INTERNET",
@@ -207,23 +207,23 @@
         if ($order) {
            $ordermethod = "order by $order $sort ";
         }  else {
-           $ordermethod = "order by N_Family,N_Given,D_EMAIL $sort";
+           $ordermethod = "order by n_family,n_given,d_email $sort";
         }
 
         $this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
         if ($query) {
-            $this->db3->query("SELECT * from addressbook WHERE (N_Family like '"
-                     . "%$query%' OR N_Given like '%$query%' OR D_EMAIL like '%$query%' OR "
-                     . "ADR_Street like '%$query%' OR ADR_Locality like '%$query%' OR ADR_Region "
-                     . "like '%$query%' OR ADR_PostalCode like '%$query%' OR ORG_Unit like "
-                     . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod,__LINE__,__FILE__);
+            $this->db3->query("SELECT * from addressbook WHERE (n_family like '"
+                     . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
+                     . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
+                     . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
+                     . "'%$query%' OR org_name like '%$query%') " . $ordermethod,__LINE__,__FILE__);
             $this->total_records = $this->db3->num_rows();
 
-            $this->db->query("SELECT * from addressbook WHERE (N_Family like '"
-                     . "%$query%' OR N_Given like '%$query%' OR D_EMAIL like '%$query%' OR "
-                     . "ADR_Street like '%$query%' OR ADR_Locality like '%$query%' OR ADR_Region "
-                     . "like '%$query%' OR ADR_PostalCode like '%$query%' OR ORG_Unit like "
+            $this->db->query("SELECT * from addressbook WHERE (n_family like '"
+                     . "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
+                     . "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
+                     . "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
                      . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod . " "
 		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }  else  {
