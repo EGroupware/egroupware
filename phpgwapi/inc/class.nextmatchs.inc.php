@@ -65,7 +65,7 @@
 				$this->maxmatches = 15;
 			}
 
-			$this->action = $_GET['menuaction'] ? $_GET['menuaction'];
+			$this->action = $_GET['menuaction'] ? $_GET['menuaction'] : '';
 		}
 
 		/*!
