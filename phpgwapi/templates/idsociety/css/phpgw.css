@@ -34,6 +34,11 @@ table.portal
 	width: 100%;
 }
 
+table.about
+{
+	width: 70%;
+}
+
 table.login
 {
 	margin-top: 130px;

@@ -13,7 +13,7 @@ a:hover
 	color: #cc0000;
 }
 
-.login,.portal
+.login,.portal,.about
 {
 	background-color: #80BBFF;
 	border-color: #000000;
@@ -24,27 +24,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.whitetext
-{
-	color: #FFFFFF;
-}
-
-.headertext
-{
-	color: #FFFFFF;
-}
-
-.inputtext
-{
-	background-color: #FFFFFF;
-}
-
-.button_text,.linktext,.cal_dayview
-{
-	background-color: #c0c0c0;
-}
-
-.row_on,.th_bright
+.row_on,.th_bright,.app_header
 {
 	background-color: #CCEEFF;
 }
@@ -59,10 +39,9 @@ a:hover
 	background-color: #80BBFF;
 }
 
-
-.app_header
+.cal_dayview
 {
-	background-color: #CCEEFF;
+	background-color: #c0c0c0;
 }
 
 .cal_today

@@ -23,7 +23,7 @@ a:hover
 	background-color: #80BBFF;
 }
 
-.login,.portal
+.login,.portal,.about
 {
 	background-color: #80BBFF;
 	border-color: #000000;
@@ -34,32 +34,7 @@ a:hover
 	color: #FFFFFF;
 }
 
-.bodytext
-{
-	color: #000000;
-}
-
-.whitetext
-{
-	color: #FFFFFF;
-}
-
-.headertext
-{
-	color: #FFFFFF;
-}
-
-.inputtext
-{
-	background-color: #FFFFFF;
-}
-
-.buttontext,.link_text,.cal_dayview
-{
-	background-color: #C0C0C0;
-}
-
-.row_on,.th_bright
+.row_on,.th_bright,.app_header
 {
 	background-color: #CCEEFF;
 }
@@ -69,14 +44,14 @@ a:hover
 	background-color: #DDF0FF;
 }
 
-.app_header
-{
-	background-color: #CCEEFF;
-}
-
 .cal_today
 {
 	background-color: #FFFFCC;
+}
+
+.cal_dayview
+{
+	background-color: #C0C0C0;
 }
 
 .email_folder

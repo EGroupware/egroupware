@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 
 	<xsl:template match="about">
-		<table cellpadding="2" cellspacing="2" width="70%" align="center" class="portal">
+		<table cellpadding="2" cellspacing="2" align="center" class="about">
 			<xsl:variable name="phpgw_logo"><xsl:value-of select="phpgw_logo"/></xsl:variable>
 			<xsl:variable name="lang_url_statustext"><xsl:value-of select="lang_url_statustext"/></xsl:variable>
 			<tr>

@@ -13,32 +13,7 @@ a:hover
 	color: #cc0000;
 }
 
-.bodytext
-{
-	color: #000000;
-}
-
-.whitetext
-{
-	color: #FFFFFF;
-}
-
-.headertext
-{
-	color: #FFFFFF;
-}
-
-.inputtext
-{
-	background-color: #FFFFFF;
-}
-
-.buttontext,.linktext,.cal_dayview
-{
-	background-color: #C0C0C0;
-}
-
-.login,.portal
+.login
 {
 	background-color: #486591;
 	border-color: #000000;
@@ -46,15 +21,16 @@ a:hover
 
 .portal_text
 {
-	color: #FFFFFF;
+	color: #fefefe;
+	background-color: #486591;
 }
 
-.row_on,.th_bright
+.row_on,.th_bright,.app_header
 {
 	background-color: #fefefe;
 }
 
-.row_off
+.row_off,.portal,.about
 {
 	background-color: #e6e6e6;
 }
@@ -64,14 +40,9 @@ a:hover
 	background-color: #486591;
 }
 
-.th_text,.app_header_text
+.cal_dayview
 {
-	color: #000000;
-}
-
-.app_header
-{
-	background-color: #fefefe;
+	background-color: #C0C0C0;
 }
 
 .cal_today
