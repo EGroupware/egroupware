@@ -187,7 +187,7 @@
 			}
 			if ($this->name && $this->name == $this->debug)
 			{
-				echo "$this->name ".($check_col ? 'col' : 'row')."-check: c=$c, r=$r, idx='$org_idx' ==> ".($Ok?'True':'False')."<p>\n";
+				echo "$this->name ".($check_col ? 'col' : 'row')."-check: c=$c, r=$r, idx='$org_idx'='$idx' idx_cname='$idx_cname' ==> ".($Ok?'True':'False')."<p>\n";
 			}
 			return $Ok;
 		}
@@ -583,16 +583,23 @@
 		@function isset_array
 		@syntax isset_array( $arr,$idx )
 		@author ralfbecker
-		@abstract checks if idx, which may contain ONE subindex is set in array
+		@abstract checks if idx, which may contain multiple subindex (eg.'x[y][z]'), is set in array
 		@author ralfbecker
 		*/
 		function isset_array($arr,$idx)
 		{
-			if (ereg('^([^[]*)\\[(.*)\\]$',$idx,$regs))
+			$idxs = explode('[',str_replace(']','',$idx));
+			$last_idx = array_pop($idxs);
+			$pos = &$arr;
+			foreach($idxs as $idx)
 			{
-				return $regs[2] && isset($arr[$regs[1]][$regs[2]]);
+				if (!is_array($pos))
+				{
+					return False;
+				}
+				$pos = &$pos[$idx];
 			}
-			return isset($arr[$idx]);
+			return isset($pos[$last_idx]);
 		}
 
 		/*!
@@ -611,7 +618,7 @@
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
 			$pos = &$arr;
-			while (list($n,$idx) = each($idxs))
+			foreach($idxs as $idx)
 			{
 				$pos = &$pos[$idx];
 			}
@@ -635,7 +642,7 @@
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
 			$pos = &$arr;
-			while (list($n,$idx) = each($idxs))
+			foreach($idxs as $idx)
 			{
 				if (!is_array($pos))
 				{
@@ -662,12 +669,13 @@
 				die('set_array() $arr is no array');
 			}
 			$idxs = explode('[',str_replace(']','',$idx));
+			$last_idx = array_pop($idxs);
 			$pos = &$arr;
-			while ((list($n,$idx) = each($idxs)) && $n < count($idxs)-1)
+			foreach($idxs as $idx)
 			{
 				$pos = &$pos[$idx];
 			}
-			unset($pos[$idx]);
+			unset($pos[$last_idx]);
 		}
 
 		/*!
