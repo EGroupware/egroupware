@@ -190,7 +190,7 @@
 			$values['info_datemodified'] = time();
 			$values['info_modifier'] = $this->so->user;
 
-			$this->so->write($values);
+			return $this->so->write($values);
 		}
 
 		function anzSubs( $info_id )
