@@ -80,7 +80,7 @@ startdate	infolog	de	Startdatum
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
 sub	infolog	de	Teil-<br>projekte
-subject	infolog	de	Beschreibung
+subject	infolog	de	Titel
 task	infolog	de	Auftrag
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
 today	infolog	de	Heute
