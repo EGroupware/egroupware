@@ -260,8 +260,8 @@
 			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
-				$phpgw->log->message('W-LoginFailure, account loginid %1 is expired',$this->account_lid);
-				$phpgw->log->commit();
+				$GLOBALS['phpgw']->log->message('W-LoginFailure, account loginid %1 is expired',$this->account_lid);
+				$GLOBALS['phpgw']->log->commit();
 
 				return False;
 			}
