@@ -19,15 +19,19 @@
 		'currentapp' => 'notifywindow'
 	);
 	include('header.inc.php');
+	$charSet = $GLOBALS['phpgw']->translation->charset();
 ?>
 <html>
 <head>
 	<meta http-equiv="Refresh" content="300">
+<?php
+	print "<meta http-equiv=\"content-type\" content=\"text/html; charset=$charSet\" />";
+?>
 	<title>Notify Window</title>
 </head>
 <body bgcolor="<?php echo $GLOBALS['phpgw_info']['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
 <table>
-	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>">Check Now</a></td></tr>
+	<tr><td><a href="<?php echo $GLOBALS['phpgw']->link('/notify.php'); ?>"><?php print lang('Check Now'); ?></a></td></tr>
 <?php
 	$GLOBALS['phpgw']->hooks->process('notifywindow');
 ?>
