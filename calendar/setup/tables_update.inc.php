@@ -48,7 +48,84 @@
 		calendar_v0_9_2to0_9_3update_owner('webcal_entry','cal_create_by');
 		calendar_v0_9_2to0_9_3update_owner('webcal_entry_user','cal_login');
 		$setup_info['calendar']['currentver'] = '0.9.3pre2';
-		return True;
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre2";
+	function calendar_upgrade0_9_3pre2()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre3';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre3";
+	function calendar_upgrade0_9_3pre3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre4';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre4";
+	function calendar_upgrade0_9_3pre4()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre5';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre5";
+	function calendar_upgrade0_9_3pre5()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre6';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre6";
+	function calendar_upgrade0_9_3pre6()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre7';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre7";
+	function calendar_upgrade0_9_3pre7()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre8';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre8";
+	function calendar_upgrade0_9_3pre8()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre9';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre9";
+	function calendar_upgrade0_9_3pre9()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3pre10';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3pre10";
+	function calendar_upgrade0_9_3pre10()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.3';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.3";
+	function calendar_upgrade0_9_3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.4pre1';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.4pre1";
+	function calendar_upgrade0_9_4pre1()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.4pre2';
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.4pre2';
@@ -59,7 +136,64 @@
 		$phpgw_setup->oProc->RenameColumn('webcal_entry', 'cal_create_by', 'cal_owner');
 		$phpgw_setup->oProc->AlterColumn('webcal_entry', 'cal_owner', array('type' => 'int', 'precision' => 4, 'nullable' => false));
 		$setup_info['calendar']['currentver'] = '0.9.4pre3';
-		return True;
+		return $setup_info['calendar']['currentver'];
+	}
+
+	$test[] = "0.9.4pre3";
+	function calendar_upgrade0_9_4pre3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.4pre4';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.4pre4";
+	function calendar_upgrade0_9_4pre4()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.4pre5';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.4pre5";
+	function calendar_upgrade0_9_4pre5()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.4';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.4";
+	function calendar_upgrade0_9_4()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.5pre1';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.5pre1";
+	function calendar_upgrade0_9_5pre1()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.5pre2';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.5pre2";
+	function calendar_upgrade0_9_5pre2()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.5pre3';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.5";
+	function calendar_upgrade0_9_5()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.6';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.6";
+	function calendar_upgrade0_9_6()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.7pre1';
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.7pre1';
@@ -198,7 +332,7 @@
 		$phpgw_setup->oProc->query("UPDATE $appstable SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
 	
 		$setup_info['calendar']['currentver'] = '0.9.7pre2';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = "0.9.7pre2";
@@ -226,15 +360,274 @@
 		}
 	
 		$setup_info['calendar']['currentver'] = '0.9.7pre3';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
+	$test[] = "0.9.7pre3";
+	function calendar_upgrade0_9_7pre3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.7';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.7";
+	function calendar_upgrade0_9_7()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.8pre1';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.8pre1";
+	function calendar_upgrade0_9_8pre1()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.8pre2';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.8pre2";
+	function calendar_upgrade0_9_8pre2()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.8pre3';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.8pre3";
+	function calendar_upgrade0_9_8pre3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.8pre4';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.8pre4";
+	function calendar_upgrade0_9_8pre4()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.8pre5';
+		return $setup_info['calendar']['currentver'];
+	}
 	$test[] = '0.9.8pre5';
 	function calendar_upgrade0_9_8pre5()
 	{
 		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.9pre1';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.9pre1";
+	function calendar_upgrade0_9_9pre1()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.9';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.9";
+	function calendar_upgrade0_9_9()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre1';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre1";
+	function calendar_upgrade0_9_10pre1()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre2';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre2";
+	function calendar_upgrade0_9_10pre2()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre3';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre3";
+	function calendar_upgrade0_9_10pre3()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre4';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre4";
+	function calendar_upgrade0_9_10pre4()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre5';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre5";
+	function calendar_upgrade0_9_10pre5()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre6';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre6";
+	function calendar_upgrade0_9_10pre6()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre7';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre7";
+	function calendar_upgrade0_9_10pre7()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre8';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = "0.9.10pre8";
+	function calendar_upgrade0_9_10pre8()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre9';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre9';
+	function calendar_upgrade0_9_10pre9()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre10';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre10';
+	function calendar_upgrade0_9_10pre10()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre11';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre11';
+	function calendar_upgrade0_9_10pre11()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre12';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre12';
+	function calendar_upgrade0_9_10pre12()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre13';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre13';
+	function calendar_upgrade0_9_10pre13()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre14';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre14';
+	function calendar_upgrade0_9_10pre14()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre15';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre15';
+	function calendar_upgrade0_9_10pre15()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre16';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre16';
+	function calendar_upgrade0_9_10pre16()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre17';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre17';
+	function calendar_upgrade0_9_10pre17()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre18';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre18';
+	function calendar_upgrade0_9_10pre18()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre19';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre19';
+	function calendar_upgrade0_9_10pre19()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre20';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre20';
+	function calendar_upgrade0_9_10pre20()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre21';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre21';
+	function calendar_upgrade0_9_10pre21()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre22';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre22';
+	function calendar_upgrade0_9_10pre22()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre23';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre23';
+	function calendar_upgrade0_9_10pre23()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre24';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre24';
+	function calendar_upgrade0_9_10pre24()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre25';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre25';
+	function calendar_upgrade0_9_10pre25()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre26';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre26';
+	function calendar_upgrade0_9_10pre26()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre27';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre27';
+	function calendar_upgrade0_9_10pre27()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10pre28';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10pre28';
+	function calendar_upgrade0_9_10pre28()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.10';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.10';
+	function calendar_upgrade0_9_10()
+	{
+		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.001';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.001';
@@ -377,7 +770,7 @@
 		$phpgw_setup->oProc->RenameTable('calendar_entry_user','phpgw_cal_user');
 
 		$setup_info['calendar']['currentver'] = '0.9.11.002';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.002';
@@ -385,7 +778,7 @@
 	{
 		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.003';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.003';
@@ -408,7 +801,7 @@
 		);
 
 		$setup_info['calendar']['currentver'] = '0.9.11.004';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.004';
@@ -416,7 +809,7 @@
 	{
 		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.005';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.005';
@@ -424,7 +817,7 @@
 	{
 		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.006';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.006';
@@ -447,7 +840,7 @@
 		));
 
 		$setup_info['calendar']['currentver'] = '0.9.11.007';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.007';
@@ -462,7 +855,7 @@
 		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','dow',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 
 		$setup_info['calendar']['currentver'] = '0.9.11.008';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.008';
@@ -470,7 +863,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 		$setup_info['calendar']['currentver'] = '0.9.11.009';
-		return True;
+		return $setup_info['calendar']['currentver'];
 	}
 
 	$test[] = '0.9.11.009';
@@ -482,6 +875,28 @@
 		$phpgw_setup->oProc->AddColumn('phpgw_cal_holidays','observance_rule',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 
 		$setup_info['calendar']['currentver'] = '0.9.11.010';
-		return True;
+		return $setup_info['calendar']['currentver'];
+	}
+
+	$test[] = '0.9.11.010';
+	function calendar_upgrade0_9_11_010()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.11.011';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.11.011';
+	function calendar_upgrade0_9_11_011()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.13.001';
+		return $setup_info['calendar']['currentver'];
+	}
+	$test[] = '0.9.13.001';
+	function calendar_upgrade0_9_13_001()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.13.002';
+		return $setup_info['calendar']['currentver'];
 	}
 ?>
