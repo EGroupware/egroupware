@@ -82,7 +82,7 @@ home country	addressbook	de	Land privat
 home email	addressbook	de	E-Mail privat
 home email type	addressbook	de	Typ der privaten E-Mail
 home phone	addressbook	de	Tel. privat
-home state	addressbook	de	Land privat
+home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straﬂe privat
 home zip code	addressbook	de	PLZ privat
 import	addressbook	de	Import
@@ -138,7 +138,7 @@ select the type of conversion:	addressbook	de
 select where you want to store	admin	de	Ausw‰hlen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 startrecord	addressbook	de	Startdatensatz
-state	common	de	Land
+state	common	de	Bundesland
 street	common	de	Straﬂe
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
