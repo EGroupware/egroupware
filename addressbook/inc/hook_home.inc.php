@@ -38,26 +38,28 @@
 		$phpgw->common->show_date(time(),"m"),
 		$phpgw->common->show_date(time(),"d"),
 		$phpgw->common->show_date(time(),"Y")),"n/d" );
+		//echo $today."\n";
 
-		$bdays = $c->read(0,15,'',$today,'access=public,tid=n','','',$phpgw_info["user"]["account_id"]);
+		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$phpgw_info["user"]["account_id"]);
 
-		for($i=0;$i<count($bdays);$i++)
+		while(list($key,$val) = @each($bdays))
 		{
-			echo "<tr><td>" . lang("Today is x's birthday!", $bdays[$i]["n_given"] . " "
-				. $bdays[$i]["n_family"]) . "</td></tr>\n";
+			$tmp = $val["n_given"] . " " . $val["n_family"];
+			echo "<tr><td>" . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
 		}
 
 		$tomorrow = $phpgw->common->show_date(mktime(0,0,0,
 		$phpgw->common->show_date(time(),"m"),
 		$phpgw->common->show_date(time(),"d")+1,
 		$phpgw->common->show_date(time(),"Y")),"n/d" );
+		//echo $tomorrow."\n";
 
-		$bdays = $c->read(0,15,'',$tomorrow,'access=public,tid=n','','',$phpgw_info["user"]["account_id"]);
+		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$phpgw_info["user"]["account_id"]);
 
-		for($i=0;$i<count($bdays);$i++)
+		while(list($key,$val) = @each($bdays))
 		{
-			echo "<tr><td>" . lang("Tomorrow is x's birthday.", $bdays[$i]["n_given"] . " "
-				. $bdays[$i]["n_family"]) . "</td></tr>\n";
+			$tmp = $val["n_given"] . " " . $val["n_family"];
+			echo "<tr><td>" . lang("Tomorrow is x's birthday.", $tmp) . "</td></tr>\n";
 		}
 		echo "\n<!-- Birthday info -->\n";
 	}
