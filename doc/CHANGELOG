@@ -6,6 +6,7 @@
 		- Fix for adding new users.
 		- Fixed a bug that was casuing people to have problems logining in when using cookie support.
 		- Fixed calendar display of 12 hour formats.
+		- Fixed a few problems with admin -> editaccount not changing the directory name properly.
 
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
