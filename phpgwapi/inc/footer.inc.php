@@ -34,7 +34,7 @@
 	/**************************************************************************\
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
-	if ((file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS'])) &&
+	if ((file_exists (PHPGW_APP_INC . '/footer.inc.php') || isset($GLOBALS['HTTP_GET_VARS']['menuaction'])) &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
 		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
