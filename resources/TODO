@@ -18,6 +18,7 @@ TODO:
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	if only one cat is present --> chose it (eTemplate patch sent!)
 	make some returnmessages js dialogs
+	accessories get inserted a second time on page-refresh
 	
 
 ----
