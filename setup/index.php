@@ -179,6 +179,10 @@
 			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to x',$setup_info['phpgwapi']['version']));
 			$setup_tpl->set_var('backupwarn',lang('backupwarn'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
+			$setup_tpl->set_var('goto',lang('Go to'));
+			$setup_tpl->set_var('configuration',lang('configuration'));
+			$setup_tpl->set_var('applications',lang('Manage Applications'));
+			$setup_tpl->set_var('language_management',lang('Manage Languages'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
 			$setup_tpl->set_var('dont_touch_my_data',lang('Dont touch my data'));
 			$setup_tpl->set_var('dropwarn',lang('Your tables may be altered and you may lose data'));

@@ -83,10 +83,19 @@
 		<input type="hidden" name="action" value="Uninstall all applications">
 		<input type="submit" name="label" value="{uninstall_all_applications}"><br>({dropwarn})
 		</form>
-
+		<hr>
+{dont_touch_my_data}.&nbsp;&nbsp;{goto}:
 		<form method="POST" action="config.php">
         <input type="hidden" name="action" value="Dont touch my data">
-		<input type="submit" name="label" value="{dont_touch_my_data}">
+		<input type="submit" name="label" value="{configuration}">
+        </form>
+		<form method="POST" action="lang.php">
+        <input type="hidden" name="action" value="Dont touch my data">
+		<input type="submit" name="label" value="{language_management}">
+        </form>
+		<form method="POST" action="applications.php">
+        <input type="hidden" name="action" value="Dont touch my data">
+		<input type="submit" name="label" value="{applications}">
 		</form>
 	</td>
 </tr>
