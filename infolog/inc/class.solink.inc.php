@@ -98,7 +98,7 @@
 		@abstract returns array of links to $app,$id
 		@param $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 		@param $order defaults to newest links first
-		@result array of links or empty array if no matching links found
+		@result array of links (only_app: ids) or empty array if no matching links found
 		*/
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 		{
@@ -123,7 +123,7 @@
 			{
 				$row = $this->db->Record;
 
-            if ($row['link_app1'] == $app AND $row['link_id1'] == $id)
+				if ($row['link_app1'] == $app AND $row['link_id1'] == $id)
 				{
 					$link = array(
 						'app'  => $row['link_app2'],
@@ -147,7 +147,7 @@
 				$link['lastmod'] = $row['link_lastmod'];
 				$link['link_id'] = $row['link_id'];
 
-				$links[] = $link;
+				$links[] = $only_app && !$not_only ? $link['id'] : $link;
 			}
 			return $links;
 		}
