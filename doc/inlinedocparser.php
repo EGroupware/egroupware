@@ -29,7 +29,7 @@
 		
     if ($fn)
     {
-				if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$fn))
+				if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$fn) || preg_match("/^functions\.inc\.php+$/",$fn))
 				{
 						$files[] = $fn;
 				}
@@ -44,7 +44,7 @@
         $d = dir('../'.$app.'/inc/');
         while ($x = $d->read())
         {
-            if (ereg('class',$x) && !ereg('#',$x) && ereg('php',$x))
+  					if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$x) || preg_match("/^functions\.inc\.php+$/",$x))
             {
                 $files[] = $x;
             }
@@ -52,17 +52,7 @@
         $d->close;
 
 				reset($files);
-
-				while(list($key, $value) = each($files))
-				{
-						if (!preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$value))
-						{
-								unset($files[$key]);
-						}
-				}
- 
-				reset($files);
-    }
+		}
 
     while (list($p,$fn) = each($files))
     {
@@ -84,38 +74,41 @@
         {
             preg_match_all("#@(.*)$#sUi",$val[1],$data);
             $new = explode("@",$data[1][0]);
-
-            while (list($x,$y) = each($new))
+						while (list($x,$y) = each($new))
             {
-                $t = trim($new[0]);
-                if(!$key)
-                {
-                    $class = $t;
-                }
-                $t = trim(ereg_replace('function','',$t));
+								if (!isset($object) || trim($new[0]) == $object)
+								//if (trim($new[0]) == $object)
+								{
+										$t = trim($new[0]);
+		                if(!$key)
+				            {
+						            $class = $t;
+								    }
+										$t = trim(ereg_replace('function','',$t));
 
-                reset($types);
-                while(list($z,$type) = each($types))
-                {
-                    if(ereg($type,$y))
-                    {
-                        $xkey = $type;
-                        $out = $y;
-                        $out = ereg_replace($type,'',$out);
-                        break;
-                    }
-                    else
-                    {
-                        $xkey = 'unknown';
-                        $out = $y;
-                    }
-                }
+		                reset($types);
+				            while(list($z,$type) = each($types))
+						        {
+								        if(ereg($type,$y))
+										    {
+												    $xkey = $type;
+														$out = $y;
+		                        $out = ereg_replace($type,'',$out);
+				                    break;
+						            }
+								        else
+										    {
+												    $xkey = 'unknown';
+														$out = $y;
+		                    }
+				            }
 
-                if($out != $new[0])
-                {
-                    $elements[$class][$t][$xkey][] = $out;
-                }
-            }
+										if($out != $new[0])
+		                {
+				                $elements[$class][$t][$xkey][] = $out;
+						        }
+								}
+						}
         }
         echo '<br><pre>';
         print_r($elements);
