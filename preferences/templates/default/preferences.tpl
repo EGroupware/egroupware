@@ -33,7 +33,7 @@
 <!-- END list -->
 
 <!-- BEGIN row -->
- <tr>
+ <tr class={tr_color}>
   <td>{row_name}</td>
   <td>{row_value}</td>
  </tr>
