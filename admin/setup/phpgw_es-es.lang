@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, use <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
 (to install new applications use<br><a href="setup/"?sessionid=69211c0c32aa5581c5d69abdbcac4d64 target="setup">setup</a> [manage applications] !!!)	admin	es-es	P
 (to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	PAra
 (to install new applications use<br><a href="setup/"?sessionid=7fe5595a67d8747e64c2b92411ceaf31&sessionid=7fe5595a67d8747e64c2b92411ceaf31 target="setup">setup</a> [manage applications] !!!)	admin	es-es	
@@ -375,6 +376,8 @@ view system informations	admin	es-es	Ver Informacion del Sistema
 view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	ver cuenta de usuario
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
+would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión<br>cuando inicien la sesión los administradores?
+would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe si hay una nueva versión de las aplicaciones cuando inicien la sesión los administradores?
 would you like phpgroupware to cache the phpgw info array ?	admin	es-es	¿Desea que phpGroupWare almacene en memoria el array phpgw info?
 would you like phpgroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que phpGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like phpgroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que phpGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
