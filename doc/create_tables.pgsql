@@ -138,25 +138,25 @@ CREATE TABLE profiles (
 );
 
 create table addressbook (
-  ab_id 		serial,
-  ab_owner	varchar(25),
-  ab_access	varchar(10),
-  ab_firstname	varchar(255),
-  ab_lastname	varchar(255),
-  ab_email	varchar(255),
-  ab_hphone	varchar(255),
-  ab_wphone	varchar(255),
-  ab_fax		varchar(255),
-  ab_pager	varchar(255),
-  ab_mphone	varchar(255),
-  ab_ophone	varchar(255),
-  ab_street	varchar(255),
-  ab_city		varchar(255),
-  ab_state	varchar(255),
-  ab_zip		varchar(255),
-  ab_bday		varchar(255),
-  ab_notes	TEXT,
-  company	varchar(255)
+  ab_id         serial,
+  ab_owner      varchar(25),
+  ab_access     varchar(10),
+  ab_firstname  varchar(255),
+  ab_lastname   varchar(255),
+  ab_email      varchar(255),
+  ab_hphone     varchar(255),
+  ab_wphone     varchar(255),
+  ab_fax        varchar(255),
+  ab_pager      varchar(255),
+  ab_mphone     varchar(255),
+  ab_ophone     varchar(255),
+  ab_street     varchar(255),
+  ab_city       varchar(255),
+  ab_state      varchar(255),
+  ab_zip        varchar(255),
+  ab_bday       varchar(255),
+  ab_notes      TEXT,
+  ab_company    varchar(255)
 );
 
 create table todo (
