@@ -89,6 +89,10 @@
 			foreach($fields as $field => $value)
 			{
 				/* Depending on how the array was built, this is needed. */
+				if (is_int($field))
+				{
+					$field = $value;
+				}
 				if(@is_int($value))
 				{
 					$value = $field;
