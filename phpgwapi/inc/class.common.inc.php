@@ -344,7 +344,18 @@
 				$a[] = $firstname;
 			}
 
-			return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
+			switch(count($a))
+			{
+				case 0:
+					return $lid;
+					break;
+				case 1:
+					return '&lt;' . $lid . '&gt; ' . $a[0];
+					break;
+				case 2:
+					return '&lt;' . $lid . '&gt; ' . implode(', ',$a);
+					break;
+			}
 		}
 
 		/*!
