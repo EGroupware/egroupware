@@ -18,7 +18,7 @@
 	$file = Array(
 		// 'Preferences'	=> $phpgw->link('/infolog/preferences.php'),
 		'Grant Access'	=> $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
-		'Edit Categories'	=> $phpgw->link('/preferences/categories.php','cats_app='.$appname),
+		'Edit Categories'	=> $phpgw->link('/preferences/categories.php','cats_app='.$appname)
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
