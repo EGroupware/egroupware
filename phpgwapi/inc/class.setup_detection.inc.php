@@ -155,7 +155,12 @@
                                         
 						foreach($depvalue['versions'] as $depskey => $depsvalue)
 						{
-							$major = $GLOBALS['phpgw_setup']->get_major($setup_info[$depvalue['appname']]['currentver']);
+							$currentver = $setup_info[$depvalue['appname']]['currentver'];
+							if ($depvalue['appname'] == 'phpgwapi' && substr($currentver,0,6) == '0.9.99')
+							{
+								$currentver = '0.9.14.508';
+							}
+							$major = $GLOBALS['phpgw_setup']->get_major($currentver);
 							if ($major == $depsvalue)
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
@@ -164,7 +169,7 @@
 							{
 								$major_depsvalue = $GLOBALS['phpgw_setup']->get_major($depsvalue);
 								list(,,,$minor_depsvalue) = explode('.',$depsvalue);
-								list(,,,$minor) = explode('.',$setup_info[$depsvalue['appname']]['currentver']);
+								list(,,,$minor) = explode('.',$currentver);
 								if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 								{
 									$setup_info['depends'][$depkey]['status'] = True;

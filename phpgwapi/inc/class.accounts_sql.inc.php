@@ -95,6 +95,8 @@
 			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
 			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires']           = $this->db->f('account_expires');
+			$this->data['person_id']         = $this->db->f('person_id');
+			$this->data['account_primary_group'] = $this->db->f('account_primary_group');
 
 			return $this->data;
 		}
@@ -105,11 +107,15 @@
 		*/
 		function save_repository()
 		{
-			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
-				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
-				. $this->data['status'] . "', account_expires=" . $this->data['expires']
-				. ($this->data['account_lid']?", account_lid='".$this->data['account_lid']."'":'')
-				. ' WHERE account_id=' . intval($this->account_id),__LINE__,__FILE__);
+			$this->db->query('UPDATE phpgw_accounts SET'.
+				" account_firstname='" . $this->db->db_addslashes($this->data['firstname']).
+				"', account_lastname='" . $this->db->db_addslashes($this->data['lastname']).
+				"', account_status='". $this->db->db_addslashes($this->data['status']).
+				"', account_expires=" . intval($this->data['expires']).
+				($this->data['account_lid']?", account_lid='".$this->db->db_addslashes($this->data['account_lid'])."'":'').
+				', person_id='.intval($this->data['person_id']).
+				', account_primary_group='.intval($this->data['account_primary_group']).
+				' WHERE account_id=' . intval($this->account_id),__LINE__,__FILE__);
 		}
 
 		function delete($accountid = '')
@@ -172,7 +178,7 @@
 				{
 					$whereclause = ' WHERE ( ';
 				}
-
+				$query = $this->db->db_addslashes($query);
 				$whereclause .= " account_firstname LIKE '%$query%' OR account_lastname LIKE "
 					. "'%$query%' OR account_lid LIKE '%$query%' )";
 			}
@@ -200,7 +206,9 @@
 					'account_firstname' => $this->db->f('account_firstname'),
 					'account_lastname'  => $this->db->f('account_lastname'),
 					'account_status'    => $this->db->f('account_status'),
-					'account_expires'   => $this->db->f('account_expires')
+					'account_expires'   => $this->db->f('account_expires'),
+					'person_id'         => $this->db->f('person_id'),
+					'account_primary_group' => $this->db->f('account_primary_group')
 				);
 			}
 			$this->db->query("SELECT count(*) FROM phpgw_accounts $whereclause");
@@ -224,7 +232,7 @@
 				return $name_list[$account_lid];
 			}
 
-			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$this->db->db_addslashes($account_lid)."'",__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -302,7 +310,7 @@
 			static $by_id, $by_lid;
 
 			$sql = 'SELECT count(account_id) FROM phpgw_accounts WHERE ';
-			if(is_integer($account_lid))
+			if(is_numeric($account_lid))
 			{
 				if(@isset($by_id[$account_lid]) && $by_id[$account_lid] != '')
 				{
@@ -316,13 +324,13 @@
 				{
 					return $by_lid[$account_lid];
 				}
-				$sql .= "account_lid = '".$account_lid."'";
+				$sql .= "account_lid = '".$this->db->db_addslashes($account_lid)."'";
 			}
 
 			$this->db->query($sql,__LINE__,__FILE__);
 			$this->db->next_record();
 			$ret_val = $this->db->f(0) > 0;
-			if(gettype($account_lid) == 'integer')
+			if(is_numeric($account_lid))
 			{
 				$by_id[$account_lid] = $ret_val;
 				$by_lid[$this->id2name($account_lid)] = $ret_val;
@@ -337,18 +345,26 @@
 
 		function create($account_info,$default_prefs=True)
 		{
-			$this->db->query('insert into phpgw_accounts (account_lid, account_type, account_pwd, '
-				. "account_firstname, account_lastname, account_status, account_expires) values ('"
-				. $account_info['account_lid'] . "','" . $account_info['account_type'] . "','"
-				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
-				. "'," . $account_info['account_expires'] . ')',__LINE__,__FILE__);
+			$this->db->query('INSERT INTO phpgw_accounts (account_lid,account_type,account_pwd,'
+				. 'account_firstname,account_lastname,account_status,account_expires,person_id,'
+				. "account_primary_group) VALUES ('".$this->db->db_addslashes($account_info['account_lid'])
+				. "','" . $this->db->db_addslashes($account_info['account_type'])
+				. "','" . md5($account_info['account_passwd'])
+				. "', '" . $this->db->db_addslashes($account_info['account_firstname'])
+				. "','" . $this->db->db_addslashes($account_info['account_lastname'])
+				. "','" . $this->db->db_addslashes($account_info['account_status'])
+				. "'," . intval($account_info['account_expires'])
+				. ',' . intval($account_info['person_id'])
+				. ',' . intval($account_info['account_primary_group']) . ')',__LINE__,__FILE__);
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
+
+/* default prefs dont need to be set anymore
 			if($accountid && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
 			}
+*/
 			return $accountid;
 		}
 
@@ -411,7 +427,7 @@
 					// This generally doesn't / shouldn't happen, but will (jengo)
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', " . $accountid . ', 1)',__LINE__,__FILE__);
 
-					$apps = Array(
+					foreach(Array(
 						'addressbook',
 						'calendar',
 						'email',
@@ -419,10 +435,7 @@
 						'todo',
 						'phpwebhosting',
 						'manual'
-					);
-
-					@reset($apps);
-					while(list($key,$app) = each($apps))
+					) as $app)
 					{
 						$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('" . $app . "', 'run', " . $accountid . ', 1)',__LINE__,__FILE__);
 					}
@@ -445,7 +458,7 @@
 				return;
 			}
 			$db = $GLOBALS['phpgw']->db;
-			$db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id=' . $account_id,__LINE__,__FILE__);
+			$db->query('SELECT account_lid,account_firstname,account_lastname FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
 			$db->next_record();
 			$account_name[$account_id]['lid']   = $db->f('account_lid');
 			$account_name[$account_id]['fname'] = $db->f('account_firstname');

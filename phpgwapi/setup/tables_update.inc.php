@@ -743,4 +743,134 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '0.9.14.508';
+	function phpgwapi_upgrade0_9_14_508()
+	{
+		// update to 0.9.10pre3 droped the columns account_permissions and account_groups
+		// unfortunally they are still in the tables_current of 0.9.14.508
+		// so it depends on having a new or an updated install, if one have them or not
+		// we now check if they are there and drop them if thats the case
+//echo "<pre>"; print_r(debug_backtrace()); echo "</pre>\n";
+//echo "<pre>"; print_r($GLOBALS['phpgw_setup']->oProc); echo "</pre>\n";
+		$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc,'phpgw_accounts',$columns);
+		$columns = explode(',',$columns);
+		if (in_array('account_permissions',$columns))
+		{
+			$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_accounts',array(
+				'fd' => array(
+					'account_id' => array('type' => 'auto','nullable' => False),
+					'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
+					'account_pwd' => array('type' => 'varchar','precision' => '32','nullable' => False),
+					'account_firstname' => array('type' => 'varchar','precision' => '50'),
+					'account_lastname' => array('type' => 'varchar','precision' => '50'),
+					'account_groups' => array('type' => 'varchar','precision' => '30'),
+					'account_lastlogin' => array('type' => 'int','precision' => '4'),
+					'account_lastloginfrom' => array('type' => 'varchar','precision' => '255'),
+					'account_lastpwd_change' => array('type' => 'int','precision' => '4'),
+					'account_status' => array('type' => 'char','precision' => '1','nullable' => False,'default' => 'A'),
+					'account_expires' => array('type' => 'int','precision' => '4'),
+					'account_type' => array('type' => 'char','precision' => '1','nullable' => True)
+				),
+				'pk' => array('account_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('account_lid')
+			),'account_permissions');
+		}
+		if (in_array('account_groups',$columns))
+		{
+			$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_accounts',array(
+				'fd' => array(
+					'account_id' => array('type' => 'auto','nullable' => False),
+					'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
+					'account_pwd' => array('type' => 'varchar','precision' => '32','nullable' => False),
+					'account_firstname' => array('type' => 'varchar','precision' => '50'),
+					'account_lastname' => array('type' => 'varchar','precision' => '50'),
+					'account_lastlogin' => array('type' => 'int','precision' => '4'),
+					'account_lastloginfrom' => array('type' => 'varchar','precision' => '255'),
+					'account_lastpwd_change' => array('type' => 'int','precision' => '4'),
+					'account_status' => array('type' => 'char','precision' => '1','nullable' => False,'default' => 'A'),
+					'account_expires' => array('type' => 'int','precision' => '4'),
+					'account_type' => array('type' => 'char','precision' => '1','nullable' => True)
+				),
+				'pk' => array('account_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array('account_lid')
+			),'account_groups');
+		}
+
+		// we add the person_id from the .16RC1, if its not already there
+		if (!in_array('person_id',$columns))
+		{
+			$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_accounts','person_id',array(
+				'type' => 'int',
+				'precision' => '4',
+				'nullable' => True
+			));
+		}
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_accounts','account_primary_group',array(
+			'type' => 'int',
+			'precision' => '4',
+			'nullable' => False,
+			'default' => '0'
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.002';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	/*
+	 * Updates from phpGroupWare .16 branch
+	 */
+
+	$test[] = '0.9.14.509';
+	function phpgwapi_upgrade0_9_14_509()
+	{
+		// this is the phpGW .16RC1 with the new contacts tables
+		// we need to drop them here to not run into problems later on, if we install them
+		foreach(array(
+			'phpgw_contact',
+			'phpgw_contact_person',
+			'phpgw_contact_org',
+			'phpgw_contact_org_person',
+			'phpgw_contact_addr',
+			'phpgw_contact_note',
+			'phpgw_contact_others',
+			'phpgw_contact_comm',
+			'phpgw_contact_comm_descr',
+			'phpgw_contact_comm_type',
+			'phpgw_contact_types',
+			'phpgw_contact_addr_type',
+			'phpgw_contact_note_type'
+		) as $table)
+		{
+			$GLOBALS['phpgw_setup']->oProc->DropTable($table);
+		}
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	/*
+	 * Updates / downgrades from phpGroupWare HEAD branch
+	 */
+
+	$test[] = '0.9.15.013';
+	function phpgwapi_upgrade0_9_15_013()
+	{
+		// is db-compatible to 0.9.14.507
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.507';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.15.014';
+	function phpgwapi_upgrade0_9_15_014()
+	{
+		// is db-compatible to 0.9.14.508
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.508';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 ?>
