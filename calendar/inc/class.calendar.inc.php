@@ -38,7 +38,7 @@ class calendar extends calendar_
 	var $image_dir;
 
 	var $filter;
-	var $repeating_events;
+	var $repeating_events = Array();
 	var $repeated_events = Array();
 	var $repeating_event_matches = 0;
 	var $sorted_events_matching = 0;
@@ -426,11 +426,16 @@ class calendar extends calendar_
 		}
 		else
 		{
+			$repetitive_events = Array();
 			$this->repeated_events = $events;
 			$c_events = count($events);
-			for($i=0;$i<$c_events;$i++)
+			if($c_events > 0)
 			{
-				$this->repeating_events[] = $this->fetch_event($events[$i]);
+				for($i=0;$i<$c_events;$i++)
+				{
+					$repititive_events[] = $this->fetch_event($events[$i]);
+				}
+				$this->repeating_events = $repititive_events;
 			}
 		}
 	}
@@ -453,6 +458,7 @@ class calendar extends calendar_
 		$search_date_day = date('d',$datetime);
 		$search_date_dow = date('w',$datetime);
 		$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year);
+		@reset($this->repeated_events);
 		$r_events = count($this->repeated_events);
 		for ($i=0;$i<$r_events;$i++)
 		{
@@ -586,7 +592,7 @@ class calendar extends calendar_
 		$this->sorted_events_matching = 0;
 		$this->set_filter();
 		$owner = !$owner?$phpgw_info['user']['account_id']:$owner;
-		$repeating_events_matched = $this->check_repeating_entries($datetime - $this->tz_offset);
+		$repeating_events_matched = $this->check_repeating_entries($datetime - $this->datetime->tz_offset);
 		$eod = $datetime + 86399;
 		$sql = "AND (phpgw_cal.cal_type != 'M') "
 				. 'AND ((phpgw_cal.datetime >= '.$datetime.' AND phpgw_cal.datetime <= '.$eod.') '
@@ -602,6 +608,8 @@ class calendar extends calendar_
 		
 		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
+		$event = Array();
+
 		$event = $this->get_event_ids(False,$sql);
 
 		if($this->repeating_event_matches == False && $event == False)
@@ -609,12 +617,15 @@ class calendar extends calendar_
 			return False;
 		}
 
-		if($this->repeating_event_matches != False)
+		if($this->repeating_event_matches != 0)
 		{
 			reset($repeating_events_matched);
-			while(list($key,$value) = each($repeating_events_matched))
+			if(count($repeating_events_matched))
 			{
-				$event[] = $value;
+				while(list($key,$value) = each($repeating_events_matched))
+				{
+					$event[] = intval($value);
+				}
 			}
 		}
 
@@ -628,7 +639,7 @@ class calendar extends calendar_
 		{
 			for($i=0;$i<$this->sorted_events_matching;$i++)
 			{
-				$events[] = $this->fetch_event($event[$i]);
+				$events[] = $this->fetch_event(intval($event[$i]));
 			}
 
 			if($this->sorted_events_matching == 1)
@@ -1104,7 +1115,9 @@ class calendar extends calendar_
 						'events'		=>	''
 					);
 					$p->set_var($var);
-					for ($k=0;$k<$this->sorted_events_matching;$k++)
+					$c_rep_events = count($rep_events);
+					for ($k=0;$k<$c_rep_events;$k++)
+//					for ($k=0;$k<$this->sorted_events_matching;$k++)
 					{
 						$lr_events = $rep_events[$k];
 						

@@ -32,7 +32,6 @@ class calendar_ extends calendar__
 	{
 		global $phpgw, $phpgw_info;
 
-		$this->stream = $phpgw->db;
 		if($user=='')
 		{
 			settype($user,'integer');
@@ -47,6 +46,7 @@ class calendar_ extends calendar__
 			$this->user = $phpgw->accounts->name2id($user);
 		}
 
+		$this->stream = $phpgw->db;
 		return $this->stream;
 	}
 

@@ -19,7 +19,7 @@ class calendar_holiday
 	var $tz_offset;
 	var $holidays = Array();
 	var $index = Array();
-	var $users;
+	var $users = Array();
 	var $datetime;
 
 	function calendar_holiday($owner='')
@@ -28,13 +28,19 @@ class calendar_holiday
 
 		$this->datetime = CreateObject('phpgwapi.datetime');
 		$this->db = $phpgw->db;
-		$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
+		if(isset($phpgw_info['user']['preferences']['calendar']['locale']) && $phpgw_info['user']['preferences']['calendar']['locale'])
+		{
+			$this->users['user'] = $phpgw_info['user']['preferences']['calendar']['locale'];
+		}
 		$owner_id = get_account_id($owner);
 		if($owner_id != $phpgw_info['user']['account_id'])
 		{
 			$owner_pref = CreateObject('phpgwapi.preferences',$owner_id);
 			$owner_prefs = $owner_pref->read_repository();
-			$this->users['owner'] = $owner_prefs['calendar']['locale'];			
+			if(isset($owner_prefs['calendar']['locale']) && $owner_prefs['calendar']['locale'])
+			{
+				$this->users['owner'] = $owner_prefs['calendar']['locale'];
+			}
 		}
 		if($phpgw_info['server']['auto_load_holidays'] == True)
 		{
@@ -101,7 +107,7 @@ class calendar_holiday
 		else
 		{
 			$pos = strpos(' '.$phpgw_info['server']['webserver_url'],$HTTP_HOST);
-			if($pos === False)
+			if($pos == False)
 			{
 				switch($SERVER_PORT)
 				{
@@ -209,6 +215,9 @@ class calendar_holiday
 		$this->year = intval($phpgw->calendar->tempyear);
 		
 		$sql = $this->build_holiday_query();
+		if($sql == False)
+		{	return False;
+		}
 		$this->holidays = Null;
 		$this->db->query($sql,__LINE__,__FILE__);
 
@@ -272,6 +281,10 @@ class calendar_holiday
 
 	function build_holiday_query()
 	{
+		if(!isset($this->users) || count($this->users) == 0)
+		{
+			return False;
+		}
 		$sql = 'SELECT * FROM phpgw_cal_holidays WHERE locale in (';
 		$find_it = '';
 		reset($this->users);

@@ -15,7 +15,7 @@
 	/* $Id$ */
 
 	$phpgw_flags = array(
-  		'currentapp'		=> 'calendar',
+  		'currentapp'		=> 'calendar'
 	);
 	$phpgw_info['flags'] = $phpgw_flags;
   
@@ -36,11 +36,11 @@
 	}
 
 	$phpgw->calendar->open('INBOX',$owner,'');
-	$event = $phpgw->calendar->fetch_event($id);
+	$event = $phpgw->calendar->fetch_event(intval($id));
 
 	echo '<center>';
-	
-	if($event != False)
+
+	if(isset($event->id))
 	{
 		echo $phpgw->calendar->view_event($event);
 
