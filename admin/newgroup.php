@@ -79,7 +79,7 @@
   $t->set_var("lang_group_name",lang("New group name"));
   $t->set_var("group_name_value","");
 
-  $phpgw->db->query("select count(*) from accounts where status !='L'");
+  $phpgw->db->query("select count(*) from accounts where account_status !='L'");
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) < 5) {
@@ -122,3 +122,4 @@
   $t->pparse("out","form");
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?>
