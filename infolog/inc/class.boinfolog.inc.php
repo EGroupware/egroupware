@@ -254,13 +254,12 @@
 				$data['info_subject'] = '';
 			}
 			$this->link_id2from($data);
-echo "<p>boinfolog::read($info_id) start=$data[info_startdate]=".date('Y-m-d H:i:s',$data['info_startdate']).", modified=$data[info_datemodified]=".date('Y-m-d H:i:s',$data['info_datemodified'])."</p>\n";
+
 			// convert system- to user-time
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
 			{
 				if ($data[$time]) $data[$time] += $this->tz_offset_s;
 			}
-echo "<p>boinfolog::read($info_id) start=$data[info_startdate]=".date('Y-m-d H:i:s',$data['info_startdate']).", modified=$data[info_datemodified]=".date('Y-m-d H:i:s',$data['info_datemodified'])."</p>\n";
 			if ($this->xmlrpc)
 			{
 				$data = $this->data2xmlrpc($data);
