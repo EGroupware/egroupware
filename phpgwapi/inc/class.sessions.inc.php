@@ -54,7 +54,7 @@
         var $login;
         
         /**
-        * @var sting current user password
+        * @var string current user password
         */
 		var $passwd;
         
