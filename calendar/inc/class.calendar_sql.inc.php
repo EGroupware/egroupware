@@ -22,8 +22,6 @@ class calendar_
 
 	var $cal_event;
 	var $today = Array('raw','day','month','year','full','dow','dm','bd');
-	//this will be deleted once I delete the alternative mini-calendars
-	var $daysinweek = 7;
 
 	function open($calendar='',$user='',$passwd='',$options='')
 	{
@@ -1255,7 +1253,7 @@ class calendar_
 
 		$str .= '</font></td></tr><tr>';
 		
-		for($i=0;$i<$daysinweek;$i++)
+		for($i=0;$i<7;$i++)
 		{
 			$str .= '<td>'.lang($days[$i]).'</td>';
 		}
@@ -1265,7 +1263,7 @@ class calendar_
 		for($i=$weekstarttime;date('Ymd',$i)<=$monthend['full'];$i+=604800)
 		{
 			$str .= '<tr>';
-			for($j=0;$j<$daysinweek;$j++)
+			for($j=0;$j<7;$j++)
 			{
 				$date = $this->localdates($i + ($j * 86400));
 				
