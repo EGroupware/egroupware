@@ -152,7 +152,7 @@
 			$GLOBALS['idots_tpl']->set_var($var);
 			$GLOBALS['idots_tpl']->pfp('out','extra_blocks_header');
 			
-			while(list($text,$url) = each($file))
+			foreach($file as $text => $url)
 			{
 				sidebox_menu_item($url,$text);
 			}
