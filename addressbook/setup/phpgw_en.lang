@@ -55,6 +55,7 @@ delete a single entry by passing the id.	addressbook	en	Delete a single entry by
 department	common	en	Department
 domestic	addressbook	en	Domestic
 download	addressbook	en	Download
+download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 empty for all	addressbook	en	empty for all
@@ -120,6 +121,7 @@ read a single entry by passing the id and fieldlist.	addressbook	en	Read a singl
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 retrieve contacts	admin	en	retrieve contacts
+select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store	admin	en	Select where you want to store
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 startrecord	addressbook	en	Startrecord

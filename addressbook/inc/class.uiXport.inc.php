@@ -255,7 +255,7 @@
 				echo parse_navbar();
 
 				set_time_limit(0);
-				
+
 				$this->template->set_file(array('export' => 'export.tpl'));
 
 				$dir_handle = opendir(PHPGW_APP_INC. SEP . 'export');
@@ -278,6 +278,8 @@
 
 				$this->template->set_var('lang_cancel',lang('Cancel'));
 				$this->template->set_var('lang_cat',lang('Select Category'));
+				$this->template->set_var('lang_export_instructions',lang('Download export file (Uncheck to debug output in browser)'));
+				$this->template->set_var('lang_select',lang('Select the type of conversion:'));
 				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,False,False));
 				$this->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/addressbook/index.php'));
 				$this->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
