@@ -182,10 +182,10 @@
 				{
 					$values['info_subject'] = substr($values['info_des'],0,60).' ...';
 				}
-				if ($values['info_link_id'] && empty($values['info_from']))
-				{
-					$this->link_id2from($values);
-				}
+			}
+			if ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))
+			{
+				$values['info_from'] = $this->link_id2from($values);
 			}
 			$values['info_datemodified'] = time();
 			$values['info_modifier'] = $this->so->user;
