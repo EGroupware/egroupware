@@ -62,7 +62,6 @@
 
 	class accounts_
 	{
-		var $db;
 		var $account_id;
 		var $acct_type = '';
 		var $data;
@@ -70,7 +69,6 @@
 		function accounts_()
 		{
 			global $phpgw;
-			$this->db = $phpgw->db;
 		}
 
 		function read_repository()
@@ -306,9 +304,9 @@
 				return ($i!=count($haystack)); 
 		}
 
-		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
+		function add($account_info)
 		{
-			$this->create($account_name, $account_type, $first_name, $last_name, $passwd);
+			$this->create($account_info);
 		}
 
 		function delete($accountid = '')
@@ -335,12 +333,6 @@
 					$del = ldap_delete($ds, $allValues[0]['dn']);
 				}
 			}
-
-			// Do this last since we are depending upon this record to get the account_lid above
-			$tables_array = Array('phpgw_accounts');
-			$this->db->lock($tables_array);
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
-			$this->db->unlock();
 		}
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
@@ -372,46 +364,35 @@
 
 			$ds = $phpgw->common->ldapConnect();
 
-			switch($_type)
+			if ($_type == 'both' || $_type == 'accounts')
 			{
-				case 'accounts':
-					$whereclause = "where account_type = 'u'";
-					break;
-				case 'groups':
-					$whereclause = "where account_type = 'g'";
-					break;
-				default:
-					$whereclause = "";
-			}
-
-			$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
-			$this->db->query($sql,__LINE__,__FILE__);
-			while ($this->db->next_record()) {
-				// get user information from ldap only, if it's a user, not a group
-				if ($this->db->f("account_type") == 'u')
+				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], '|((uidnumber=*)(phpgwaccounttype=u))');
+				$allValues = ldap_get_entries($ds, $sri);
+				while ($allVals = @each($allValues))
 				{
-					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->db->f("account_id"));
-					$allValues = ldap_get_entries($ds, $sri);
 					$accounts[] = Array(
-						"account_id" => $allValues[0]["uidnumber"][0],
-						"account_lid" => $allValues[0]["uid"][0],
-						"account_type" => $this->db->f("account_type"),
-						"account_firstname" => $allValues[0]["givenname"][0],
-						"account_lastname" => $allValues[0]["sn"][0],
-						"account_status" => $this->db->f("account_status")
+						'account_id'        => $allVals['uidnumber'][0],
+						'account_lid'       => $allVals['uid'][0],
+						'account_type'      => $allVals['phpgwaccounttype'],
+						'account_firstname' => $allVals['givenname'][0],
+						'account_lastname'  => $allVals['sn'][0],
+						'account_status'    => $allVals['phpgwaccountstatus'][0]
 					);
 				}
-				else
+			}
+			elseif ($_type == 'both' || $_type == 'groups')
+			{
+				$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], '|((gidnumber=*)(phpgwaccounttype=g))');
+				$allValues = ldap_get_entries($ds, $sri);
+				while ($allVals = @each($allValues))
 				{
-					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "gidnumber=".$this->db->f("account_id"));
-					$allValues = ldap_get_entries($ds, $sri);
 					$accounts[] = Array(
-						"account_id" => $allValues[0]["gidnumber"][0],
-						"account_lid" => $allValues[0]["cn"][0],
-						"account_type" => $this->db->f("account_type"),
-						"account_firstname" => $this->db->f("account_firstname"),
-						"account_lastname" => $this->db->f("account_lastname"),
-						"account_status" => $this->db->f("account_status")
+						'account_id'        => $allVals['gidnumber'][0],
+						'account_lid'       => $allVals['uid'][0],
+						'account_type'      => $allVals['phpgwaccounttype'],
+						'account_firstname' => $allVals['givenname'][0],
+						'account_lastname'  => $allVals['sn'][0],
+						'account_status'    => $allVals['phpgwaccountstatus'][0]
 					);
 				}
 			}
@@ -424,6 +405,7 @@
 			global $phpgw, $phpgw_info;
 
 			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
@@ -485,31 +467,9 @@
 				$account_id = $this->name2id($account_lid);
 			}
 
-			if($searchlid)
-			{
-				//echo '<br>searching SQL for lid: '.$account_lid;
-				$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-			}
-			else
-			{
-				//echo '<br>searching SQL for id: '.$account_id;
-				$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_id=".$account_id,__LINE__,__FILE__);
-			}
-			$this->db->next_record();
-			if ($this->db->f(0))
-			{
-				$insql = True;
-				//echo ' - found in SQL';
-			}
-			else
-			{
-				$insql = False;
-				//echo ' - not found in SQL';
-			}
-
 			$ds = $phpgw->common->ldapConnect();
 			$acct_type = $this->acct_type;
-			
+
 			if ($acct_type == 'g' && $phpgw_info["server"]["ldap_group_context"])
 			{
 				if($searchlid)
@@ -540,17 +500,12 @@
 
 			if ($allValues[0]["dn"])
 			{
-				$inldap = True;
-				//echo ' - found in LDAP';
+				return True;
 			}
 			else
 			{
-				$inldap = False;
-				//echo ' - not found in LDAP';
+				return False;
 			}
-
-			$rtrn = $insql || $inldap;
-			return $rtrn;
 		}
 
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='',$account_home='',$account_shell='')
