@@ -22,11 +22,11 @@
 	}
 	unset($d1);
 
-	if ($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'])
+	if ($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
 		global $date;
-		$time = time() - ((60*60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-		$date = $phpgw->common->show_date($time,'Ymd');
+		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
+		$date = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
 		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
 			. $cal->mini_calendar(
@@ -37,8 +37,8 @@
 					'link'	=> 'day'
 				)
 			).'</td><td align="center"><table border="0" width="100%" cellspacing="0" cellpadding="0">'
-			. '<tr><td align="center">'.lang($phpgw->common->show_date($time,'F')).' '.$cal->bo->day.', '
-			.$cal->bo->year.'</tr></td><tr><td bgcolor="'.$phpgw_info['theme']['bg_text']
+			. '<tr><td align="center">'.lang($GLOBALS['phpgw']->common->show_date($time,'F')).' '.$cal->bo->day.', '
+			.$cal->bo->year.'</tr></td><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
 			.'" valign="top">'.$cal->print_day(
 				Array(
 					'year'	=> $cal->bo->year,
