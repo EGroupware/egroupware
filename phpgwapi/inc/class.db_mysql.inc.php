@@ -494,5 +494,40 @@
 			$this->connect();
 			/*return $return; */
 		}
+
+		//some empty functions, so that adodb can be in the normal db-class
+		function transaction_begin()
+		{
+			return True;
+		}
+
+		/**
+		* Complete the transaction
+		*
+		* @return bool True if sucessful, False if fails
+		*/
+		function transaction_commit()
+		{
+			return True;
+		}
+
+		/**
+		* Rollback the current transaction
+		*
+		* @return bool True if sucessful, False if fails
+		*/
+		function transaction_abort()
+		{
+			return True;
+		}
+
+		function db_addslashes($str)
+		{
+			if (!isset($str) || $str == '')
+			{
+				return '';
+			}
+			return addslashes($str);
+		}
 	}
 ?>
