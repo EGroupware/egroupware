@@ -51,14 +51,12 @@
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))
 		{
 			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && !ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
-//			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && $app[1]['title'] != 'About' && $app[1]['title'] != 'Logout')
 			{
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
 					. lang($app[1]['title']) . '" border="0" name="' . str_replace('-','_',$app[0]) . '">';
 				$img_src_over = $app[1]['icon_hover'];
 				$img_src_out = $app[1]['icon'];
 
-				// onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
 				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
 				if (isset($GLOBALS['phpgw_info']['flags']['navbar_target']))
 				{
@@ -176,8 +174,6 @@
 		$var['user_info_date'] =
 				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
 				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
-//				. lang($GLOBALS['phpgw']->common->show_date($now,'F')) . ' '
-//				. $GLOBALS['phpgw']->common->show_date($now,'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';

@@ -1,5 +1,4 @@
 <?php
-/*	$GLOBALS['debugme'] = "on"; */
 	 /**************************************************************************\
 	 * phpGroupWare API - phpgwapi loader                                       *
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
@@ -44,6 +43,45 @@
 	 @abstract Direct functions, which are not part of the API class because they are require to be availble at the lowest level.
 	*/
 
+	/*!
+	 @function print_debug
+	 @abstract print debug data only when debugging mode is turned on.
+	 @author seek3r
+	 @discussion This function is used to debugging data. 
+	 @syntax print_debug('message', $somevar);
+	 @example print_debug('this is some debugging data',$somevar);
+	*/
+	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
+	{
+		if (($part == 'app' && DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
+		{
+			if ($level >= DEBUG_LEVEL)
+			{
+				if (!is_array($var))
+				{
+					if ($var != 'messageonly')
+					{
+						echo "$message is a ".gettype($var)."<br>\n";
+					}
+					else
+					{
+						echo "$message<br>\n";
+					}
+				}
+				else
+				{
+					echo "<pre>\n$message\n";
+					print_r($var);
+					while(list($key, $value) = each($var))
+					{
+						echo 'Array['.$key.'] is a '.gettype($var[$key])."\n";
+					}
+					echo "\n<pre>\n";
+				}
+			}
+		}
+	}
+	
 	/*!
 	 @function sanitize
 	 @abstract Validate data.
@@ -466,30 +504,10 @@
 		}
 	}
 
+	/* Just a wrapper to my new print_r() function I added to the php3 support file.  Seek3r */
 	function _debug_array($array)
 	{
-		if(floor(phpversion()) == 4)
-		{
-			ob_start(); 
-			echo '<pre>'; print_r($array); echo '</pre>';
-			$contents = ob_get_contents(); 
-			ob_end_clean();
-			echo $contents;
-//			return $contents;
-		}
-		else
-		{
-			echo '<pre>'; var_dump($array); echo '</pre>';
-		}
-	}
-
-	function print_debug($text='')
-	{
-		if (isset($GLOBALS['debugme']) &&
-			$GLOBALS['debugme'] == 'on')
-		{
-			echo 'debug: '.$text.'<br>';
-		}
+		print_r($array);
 	}
 
 	/*!

@@ -21,9 +21,9 @@
 
 	define('PHPGW_SERVER_ROOT','{SERVER_ROOT}');
 	define('PHPGW_INCLUDE_ROOT','{INCLUDE_ROOT}');
-	$phpgw_info['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
+	$GLOBALS['phpgw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
 
-	$phpgw_domain['default'] = array (
+	$GLOBALS['phpgw_domain']['default'] = array (
 		'db_host' => '{DB_HOST}', 
 		'db_name' => '{DB_NAME}', 
 		'db_user' => '{DB_USER}', 
@@ -34,7 +34,7 @@
 		'config_passwd' => '{CONFIG_PASS}'
 	);
 
-	$phpgw_info['server']['db_persistent'] = {DB_PERSISTENT};
+	$GLOBALS['phpgw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
 	/*
 	** phpGroupWare can handle session management using the database, but if
@@ -50,15 +50,15 @@
 	** Note: This is only for virtual domian support, default domain users can login only using
 	** there loginid.
 	*/
-	$phpgw_info['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
+	$GLOBALS['phpgw_info']['server']['show_domain_selectbox'] = {DOMAIN_SELECTBOX};
 
 	/* Select which login template set you want, most people will use default */
-	$phpgw_info['login_template_set'] = 'default';
+	$GLOBALS['phpgw_info']['login_template_set'] = 'default';
 
 	/* This is used to control mcrypt's use */
-	$phpgw_info['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
+	$GLOBALS['phpgw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 	/* Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use. */
-	$phpgw_info['server']['versions']['mcrypt'] = '{MCRYPT_VERSION}';
+	$GLOBALS['phpgw_info']['server']['versions']['mcrypt'] = '{MCRYPT_VERSION}';
 
 	/*
 	** This is a random string used as the initilazation vector for mcrypt
@@ -66,12 +66,12 @@
 	** but you must not change it after that point!
 	** It should be around 30 bytes in length.
    */
-	$phpgw_info['server']['mcrypt_iv'] = '{MCRYPT_IV}';
+	$GLOBALS['phpgw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 
 	/* Uncomment this out and use this for supporting different domains using this single install */
 	/* (ignore if you are only supporting a single domain)*/
 /*
-	$phpgw_domain['domain2.com'] = array (
+	$GLOBALS['phpgw_domain']['domain2.com'] = array (
 		'db_host'       => 'localhost', 
 		'db_name'       => 'phpgw_domain2', 
 		'db_user'       => 'phpgroupware', 
@@ -83,23 +83,28 @@
 
 	/* If you want phpGroupWare to be cached by proxy servers, uncomment the following */
 	/* This is NOT recommended, but phpGroupWare should still work fine. */
-	if (!isset($phpgw_info['flags']['nocachecontrol']) || !$phpgw_info['flags']['nocachecontrol'] == True)
+	if (!isset($GLOBALS['phpgw_info']['flags']['nocachecontrol']) || !$GLOBALS['phpgw_info']['flags']['nocachecontrol'] == True)
 	{
 		header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
 		header('Pragma: no-cache');                          // HTTP/1.0
 	}
+
+	/* debugging settings */
+	define('DEBUG_APP',  False);
+	define('DEBUG_API',  False);
+	define('DEBUG_LEVEL',  3);
 
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
 	\**************************************************************************/
 	define('PHPGW_API_INC',PHPGW_INCLUDE_ROOT.'/phpgwapi/inc');
 	include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php');
-	$phpgw_info["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
-	$phpgw_info['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
+	$GLOBALS['phpgw_info']["server"]["versions"]["phpgwapi"] = $setup_info['phpgwapi']['version'];
+	$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	unset($setup_info);
-	$phpgw_info['server']['versions']['header'] = '1.19';
+	$GLOBALS['phpgw_info']['server']['versions']['header'] = '1.20';
 	/* This is a fix for NT */
-	if (!isset($phpgw_info['flags']['noapi']) || !$phpgw_info['flags']['noapi'] == True)
+	if (!isset($GLOBALS['phpgw_info']['flags']['noapi']) || !$GLOBALS['phpgw_info']['flags']['noapi'] == True)
 	{
 		include(PHPGW_API_INC . '/functions.inc.php');
 		include(PHPGW_API_INC . '/xml_functions.inc.php');
