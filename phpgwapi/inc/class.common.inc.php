@@ -919,6 +919,7 @@
 			global $phpgw, $phpgw_info;
 			if ($order == '')
 			{
+				settype($order,'array');
 				$order[] = $phpgw_info['flags']['currentapp'];
 			}
 
