@@ -284,6 +284,40 @@
 			return $nextid;
 		}
 
+		/**
+		* returns an array of users and groups seperated, including all members of groups, which i.e. have acl access for an application
+		*
+		* @param $app_users (array, default to 0)
+		*/
+		function return_members($app_users = 0)
+		{
+			for ($i = 0;$i<count($app_users);$i++)
+			{
+				$type = $GLOBALS['phpgw']->accounts->get_type($app_users[$i]);
+				if($type == 'g')
+				{
+					$add_users['groups'][] = $app_users[$i];
+					$members[] = $GLOBALS['phpgw']->acl->get_ids_for_location($app_users[$i],1,'phpgw_group');
+				}
+				else
+				{
+					$add_users['users'][] = $app_users[$i];
+				}
+			}
+
+			$i = count($add_users['users']);
+
+			while(is_array($members) && list(,$mem) = each($members))
+			{
+				for($j=0;$j<count($mem);$j++)
+				{
+					$add_users['users'][$i] = $mem[$j];
+					$i++;
+				}
+			}
+			return $add_users;
+		}
+
 		function name2id($account_lid)
 		{
 			static $name_list;
