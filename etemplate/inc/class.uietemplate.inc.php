@@ -1062,9 +1062,17 @@
 				switch ($type)
 				{
 					case 'ext':
-						if (!$this->extensionPostProcess($sub,$form_name,$this->get_array($content,$form_name,True),$value))
+						$_cont = &$this->get_array($content,$form_name,True);
+						if (!$this->extensionPostProcess($sub,$form_name,$_cont,$value))
 						{
 							$this->unset_array($content,$form_name);
+						}
+						// this else should NOT be unnecessary as $_cont is a reference to the index 
+						// $form_name of $content, but under some circumstances a set/changed $_cont
+						// does not result in a change in $content -- RalfBecker 2004/09/18
+						elseif ($_cont && !$this->isset_array($content,$form_name))
+						{
+							$this->set_array($content,$form_name,$_cont);
 						}
 						break;
 					case 'htmlarea':
