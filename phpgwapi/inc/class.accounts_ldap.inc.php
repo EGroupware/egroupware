@@ -500,7 +500,7 @@
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
 
 			$allValues = array();
-			$sri = ldap_search($ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
+			$sri = ldap_search($ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
@@ -510,7 +510,7 @@
 			}
 
 			$allValues = array();
-			$sri = ldap_search($ds, $this->user_context, "(&(uidnumber=$account_id)(phpgwaccounttype=u))");
+			$sri = ldap_search($ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['phpgwaccounttype'][0])
