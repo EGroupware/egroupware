@@ -1,10 +1,10 @@
  marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" rightmargin="0" leftmargin="0" border="0" 
  onLoad="MM_preloadImages('{app_images}',
-'{img_root_roll}/log_out_over2.gif',
-'{img_root_roll}/preferences_over2.gif',
-'{img_root_roll}/question_mark_over2.gif',
-'{img_root_roll}/welcome_over2.gif');"
- background="{img_root}/content_spacer_middle.gif">
+'{logout_img_hover}',
+'{preferences_img_hover}',
+'{about_img_hover}',
+'{welcome_img_hover}');"
+ background="{content_spacer_middle_img}">
   <!-- the above is the continuation and finishing if the < body > element started in head.tpl
   the margin items could be merged into head, as head already supplies some
   the variables for onLoad are set in navbar -->
@@ -13,10 +13,10 @@
 <tr>
 	<!-- top row back images are 58px high, but the row may be smaller than that -->
 	<!-- row 2 images are 15 px high, so this table with these 2 rows is 58 plus 15 equals 73px high  -->
-	<td width="154" height="58" align="left" valign="top" background="{img_root}/em.gif">
-		<img src="{img_root}/logo2.gif">
+	<td width="154" height="58" align="left" valign="top" background="{em_img}">
+		<img src="{logo_img}">
 	</td>
-	<td width="100%" align="right" background="{img_root}/em.gif">
+	<td width="100%" align="right" background="{em_img}">
 		<table width="100%" height="28" cellpadding="0" cellspacing="0" border="0" valign="top">
 		<tr>
 			<!-- <td width="100%" align="right" valign="top"><font size="{powered_by_size}" color="{powered_by_color}">{powered_by}&nbsp;{current_users}</font></td> -->
@@ -43,14 +43,14 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="2" width="100%" height="15" align="right" valign="top" background="{img_root}/top_spacer_middle2.gif">
+	<td colspan="2" width="100%" height="15" align="right" valign="top" background="{top_spacer_middle_img}">
 		<!-- row 2 right nav buttons -->
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{home_link}" onMouseOver="nine.src='{img_root}/rollover/welcome_over2.gif'" onMouseOut="nine.src='{img_root}/welcome2.gif'"><img src="{img_root}/welcome2.gif" border="0" name="nine"></a></td>
-			<td><a href="{preferences_link}" onMouseOver="ten.src='{img_root}/rollover/preferences_over2.gif'" onMouseOut="ten.src='{img_root}/preferences2.gif'"><img src="{img_root}/preferences2.gif" border="0" name="ten"></a></td>
-			<td><a href="{logout_link}" onMouseOver="eleven.src='{img_root}/rollover/log_out_over2.gif'" onMouseOut="eleven.src='{img_root}/log_out2.gif'"><img src="{img_root}/log_out2.gif" border="0" name="eleven"></a></td>
-			<td><a href="{help_link}" onMouseOver="help.src='{img_root}/rollover/question_mark_over2.gif'" onMouseOut="help.src='{img_root}/question_mark2.gif'"><img src="{img_root}/question_mark2.gif" border="0" name="help"></a></td>
+			<td><a href="{home_link}" onMouseOver="nine.src='{welcome_img_hover}'" onMouseOut="nine.src='{welcome_img}'"><img src="{welcome_img}" border="0" name="nine"></a></td>
+			<td><a href="{preferences_link}" onMouseOver="ten.src='{preferences_img_hover}'" onMouseOut="ten.src='{preferences_img}'"><img src="{preferences_img}" border="0" name="ten"></a></td>
+			<td><a href="{logout_link}" onMouseOver="eleven.src='{logout_img_hover}'" onMouseOut="eleven.src='{logout_img}'"><img src="{logout_img}" border="0" name="eleven"></a></td>
+			<td><a href="{help_link}" onMouseOver="help.src='{about_img_hover}'" onMouseOut="help.src='{about_img}'"><img src="{about_img}" border="0" name="help"></a></td>
 		</tr>
 		</table>
 	</td>
@@ -58,13 +58,13 @@
 </table>
 <table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 <tr>
-	<td width="154" align="left" valign="top" background="{img_root}/nav_bar_left_spacer.gif">
+	<td width="154" align="left" valign="top" background="{nav_bar_left_spacer_img}">
 		<!-- left nav table -->
 		<table border="0" cellpadding="0" cellspacing="0">
 		<!-- applications supplies their own tr's and td's -->
 		{applications}
 		<tr>
-			<td><img src="{img_root}/nav_bar_left_top_bg.gif"></td>
+			<td><img src="{nav_bar_left_top_bg_img}"></td>
 		</tr>
 		</table>
 	</td>

@@ -26,7 +26,6 @@
 		//$tpl->set_block('navbar','B_num_users','V_num_users');
 
 		$var['img_root'] = PHPGW_IMAGES_DIR;
-		$var['img_root_roll'] = PHPGW_IMAGES_DIR . '/rollover';
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		$find_double = strrpos($GLOBALS['phpgw_info']['server']['webserver_url'],'//');
@@ -78,7 +77,7 @@
 			}
 			else
 			{
-				$img_src_over = $GLOBALS['phpgw']->common->image($app[0],'navbar-over.gif');
+				$img_src_over = $GLOBALS['phpgw']->common->image_on($app[0],'navbar','-over');
 			}
 			if($img_src_over)
 			{
@@ -100,24 +99,48 @@
 		$var['logout_link'] = $GLOBALS['phpgw_info']['navbar']['logout']['url'];
 		$var['help_link'] = $GLOBALS['phpgw_info']['navbar']['about']['url'];
 
-		if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
+		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 		{
-			$var['welcome_img'] = PHPGW_IMAGES_DIR . '/welcome-red.gif';
+			$var['welcome_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
+			$var['welcome_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
 		}
 		else
 		{
-			$var['welcome_img'] = PHPGW_IMAGES_DIR . '/welcome-grey.gif';
+			$var['welcome_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
+			$var['welcome_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
 		}
 
-		if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
+		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
 		{
-			$var['preferences_img'] = PHPGW_IMAGES_DIR . '/preferences-red.gif';
+			$var['preferences_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences');
+			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences','_over');
 		}
 		else
 		{
-			$var['preferences_img'] = PHPGW_IMAGES_DIR . '/preferences-grey.gif';
+			$var['preferences_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences','_over');
+			$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences');
 		}
-		$var['logout_img'] = PHPGW_IMAGES_DIR . '/logout-grey.gif';
+
+		$var['logout_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','log_out2');
+		$var['logout_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','log_out2','_over');
+
+		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
+		{
+			$var['about_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
+			$var['about_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','question_mark2','_over');
+		}
+		else
+		{
+			$var['about_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','question_mark2','_over');
+			$var['about_img_hover'] = $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
+		}
+
+		$var['content_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','content_spacer_middle');
+		$var['em_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','em');
+		$var['logo_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','logo2');
+		$var['top_spacer_middle_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
+		$var['nav_bar_left_spacer_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_spacer');
+		$var['nav_bar_left_top_bg_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','nav_bar_left_top_bg');
 
 		// "powered_by_color" and "_size" are is also used by number of current users thing
 		$var['powered_by_size'] = '2';
