@@ -147,14 +147,15 @@
 				$selected = array_keys($selected);
 			}
 			// add necessary popup trigers
-			$popup = "window.open('".$GLOBALS['phpgw']->link('/index.php',array(
+			$link = $GLOBALS['phpgw']->link('/index.php',array(
 				'menuaction' => 'phpgwapi.uiaccountsel.popup',
 				'app' => $GLOBALS['phpgw_info']['flags']['currentapp'],
 				'element_id'  => $element_id,
-			))."','Search','width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes')";
+			));
 			if (!$lines)
 			{
-				$options .= ' onchange="if (this.value=\'popup\') '.$popup.';'.($onchange?" else {$onchange}":'').'"';
+				$options .= ' onchange="if (this.value=\'popup\') '."window.open('$link','uiaccountsel','width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes')".';'.
+					($onchange ? " else {$onchange}" : '' ).'"';
 				$select['popup'] = lang('Search').' ...';
 			}
 			elseif ($onchange)
@@ -166,12 +167,13 @@
 
 			if ($lines > 1 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
 			{
-				$html .= $GLOBALS['phpgw']->html->image('calendar','multi_3',lang('click to select or search accounts'),' onclick="'.$popup.';" style="cursor: pointer; cursor: hand;"');
+				$html .= '<a href="'.$link.'" target="uiaccountsel" onclick="'."window.open(this,this.target,'width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes'); return false;".'">'.
+					$GLOBALS['phpgw']->html->image('calendar','multi_3',lang('click to select or search accounts')).'</a>';
 			}
 
 			if(!$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'])
 			{
-				$html .= '<script LANGUAGE="JavaScript">
+				$html .= '<script language="JavaScript">
 	function addOption(id,label,value)
 	{
 './*		alert(\'opener.addOption(\'+id+\',\'+label+\',\'+value+\')\');
@@ -187,10 +189,10 @@
 
 		function popup($app='')
 		{
-			if (!$app) $app = $_GET['app'];
+			if (!$app) $app = get_var('app',array('POST','GET'));
 
-			$group_id = get_var('group_id',array('GET','POST'));
-			$element_id = get_var('element_id',array('GET','POST'));
+			$group_id = get_var('group_id',array('POST','GET'));
+			$element_id = get_var('element_id',array('POST','GET'));
 
 			if(isset($_POST['query']))
 			{
@@ -198,9 +200,10 @@
 			}
 
 			$start = (int) get_var('start',array('POST'),0);
-			$order = get_var('order',array('GET'),'account_lid');
-			$sort = get_var('sort',array('GET'),'ASC');
+			$order = get_var('order',array('POST','GET'),'account_lid');
+			$sort = get_var('sort',array('POST','GET'),'ASC');
 
+			echo "<p>uiaccountsel::popup(): app='$app', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
 			$GLOBALS['phpgw']->template->set_root($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
@@ -349,6 +352,7 @@
 						}
 					}
 				}
+				$link_data['group_id'] = $group_id;		// reset it
 			}
 
 			if (!$GLOBALS['query'])
@@ -427,12 +431,11 @@
 
 // --------------------------------- nextmatch ---------------------------
 
-			$left = $this->nextmatchs->left('/index.php',$start,$total,$link_data);
-			$right = $this->nextmatchs->right('/index.php',$start,$total,$link_data);
-			$GLOBALS['phpgw']->template->set_var('left',$left);
-			$GLOBALS['phpgw']->template->set_var('right',$right);
-
-			$GLOBALS['phpgw']->template->set_var('lang_showing',$this->nextmatchs->show_hits($total,$start));
+			$GLOBALS['phpgw']->template->set_var(array(
+				'left'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
+				'right' => $this->nextmatchs->right('/index.php',$start,$total,$link_data),
+				'lang_showing' => $this->nextmatchs->show_hits($total,$start),
+			));
 
 // -------------------------- end nextmatch ------------------------------------
 
