@@ -66,7 +66,7 @@
 		
 		$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
-		$events = $phpgw->calendar->get_event_ids(True,$sql);
+		$events = $phpgw->calendar->get_event_ids(False,$sql);
 
 		if($events == False)
 		{
@@ -79,11 +79,11 @@
 			{
 				$event = $phpgw->calendar->fetch_event($cal_stream,$events[$i]);
 				
-				$datetime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+				$datetime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->tz_offset;
 				
 				$ids[strval($event->id)]++;
-				$info[strval($event->id)] = $event->name.' ('
-					. $phpgw->common->show_date($datetime).')';
+				$info[strval($event->id)] = $phpgw->common->show_date($datetime).$phpgw->calendar->link_to_entry($event,$event->start->month,$event->start->mday,$event->start->year);
+
 			}
 			$matches = count($events);
 		}
@@ -112,11 +112,14 @@
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 	$templates = Array(
-		'search'		=>	'search.tpl',
-		'search_list'	=>	'search_list.tpl',
+		'search_form'		=>	'search.tpl'
 	);
 	$p->set_file($templates);
-
+	$p->set_block('search_form','search','search');
+	$p->set_block('search_form','search_list_header','search_list_header');
+	$p->set_block('search_form','search_list','search_list');
+	$p->set_block('search_form','search_list_footer','search_list_footer');
+	
 	$var = Array(
 		'color'		=>	$phpgw_info['theme']['bg_text'],
 		'search_text'	=>	lang('Search Results'),
@@ -125,15 +128,23 @@
 
 	$p->set_var($var);
 
+	if($matches > 0)
+	{
+		$p->parse('rows','search_list_header',True);
+	}
 	// now sort by number of hits
 	arsort($ids);
 	for(reset($ids);$key=key($ids);next($ids))
 	{
-		$p->set_var('url_result',$phpgw->link('/calendar/view.php','id='.$key.'&owner='.$owner));
 		$p->set_var('result_desc',$info[$key]);
-		$p->parse('output','search_list',True);
+		$p->parse('rows','search_list',True);
 	}
 	
+	if($matches > 0)
+	{
+		$p->parse('rows','search_list_footer',True);
+	}
+
 	$p->pparse('out','search');
 
 	$phpgw->common->phpgw_footer();
