@@ -232,7 +232,7 @@
 			return $this->cal->event;
 		}
 		
-		function add_attribute($var,$value,$element='False')
+		function add_attribute($var,$value,$element='**(**')
 		{
 			$this->cal->add_attribute($var,$value,$element);
 		}

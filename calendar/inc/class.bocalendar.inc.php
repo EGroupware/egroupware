@@ -1686,7 +1686,7 @@
 			return $this->so->get_cached_event();
 		}
 		
-		function add_attribute($var,$value,$index='False')
+		function add_attribute($var,$value,$index='**(**')
 		{
 			$this->so->add_attribute($var,$value,$index);
 		}
