@@ -2563,7 +2563,7 @@
 				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100% '.$this->theme['font'].'; vertical-align: middle }'."\n"
-				. '  .time { background: '.$this->theme['th'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: center; }'."\n"
+				. '  .time { background: '.$this->theme['th_bg'].'; color: '.$this->theme['bg_text'].'; font: bold 100% '.$this->theme['font'].'; width: '.$time_width.'%; vertical-align: middle; text-align: right; }'."\n"
 				. '  .tablecell { width: 80px; height: 80px }'."\n"
 				. '  .planner-cell { cursor:pointer; cursor:hand; border: thin solid black; }';
 		}
