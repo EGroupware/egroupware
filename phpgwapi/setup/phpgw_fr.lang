@@ -121,6 +121,8 @@ cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
 colombia	common	fr	COLOMBIE
 comoros	common	fr	COMORRES
 company	common	fr	Société
+config password	common	fr	Mot de passe Configuration
+config username	common	fr	Utilisateur Configuration
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
 cook islands	common	fr	ILES COOK
@@ -253,6 +255,9 @@ guinea	common	fr	GUINEE
 guinea-bissau	common	fr	GUINEE-BISSAU
 guyana	common	fr	GUYANE
 haiti	common	fr	HAITI
+header admin login	common	fr	Connexion Administrateur Entete
+header password	common	fr	Mot de passe Entete
+header username	common	fr	Utilisateur Entete
 heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	fr	Aide
 help using editor	htmlarea	fr	Aide en utilisant l'éditeur
@@ -504,6 +509,7 @@ server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été tuée
 setup	common	fr	Setup
 setup main menu	common	fr	Menu principal du Seup
+setup/config admin login	common	fr	Connexion Administrateur Installation/Configuration
 seychelles	common	fr	SEYCHELLES
 show all	common	fr	Tous les éléments
 show all categorys	common	fr	Voir toutes les catégories
