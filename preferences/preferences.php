@@ -38,7 +38,7 @@
 	$t->set_block('preferences','help_row','help_rowhandle');
 	$t->set_var(array('rowhandle' => '','help_rowhandle' => '','messages' => ''));
 	
-	if ($_GET['appname'] != 'preverences')
+	if ($_GET['appname'] != 'preferences')
 	{
 		$GLOBALS['phpgw']->translation->add_app('preferences');	// we need the prefs translations too
 	}
