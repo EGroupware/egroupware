@@ -122,6 +122,7 @@ show birthday reminders on main screen	addressbook	en	Show birthday reminders on
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
+successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your addressbook.
 suffix	addressbook	en	Suffix
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
 that field name has been used already !	addressbook	en	That field name has been used already !
