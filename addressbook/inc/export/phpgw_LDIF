@@ -137,7 +137,7 @@
 				$context = $GLOBALS['phpgw_info']['server']['ldap_contact_context'];
 			}
 			$time = gettimeofday();
-			$cn = ereg_replace(',','',$buffer[$this->id]['cn']);
+			$cn = str_replace(',','',$buffer[$this->id]['cn']);
 			$buffer[$this->id]['dn']  = 'uid='.time().$time['usec'].':'.$cn.','.$context;
 			$buffer[$this->id]['uid'] = time().$time['usec'];
 			if ($buffer[$this->id]['cn'])
@@ -160,7 +160,7 @@
 				{
 					if (($value != 'dn') && !empty($buffer[$i][$value]))
 					{
-						$tmp = ereg_replace(',','',$buffer[$i][$value]);
+						$tmp = str_replace(',','',$buffer[$i][$value]);
 						$entries .= $value . ': ' . $tmp . "\n";
 					}
 				}

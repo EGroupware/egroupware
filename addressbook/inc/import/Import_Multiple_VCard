@@ -51,7 +51,7 @@
 		function import_new_attrib($buffer,$name,$value)
 		{
 			$value = trim($value);
-			$value = ereg_replace('=0D=0A',"\n",$value);
+			$value = str_replace('=0D=0A',"\n",$value);
 			/* echo '<br>'.$this->id.': '.$name.' => '.$value; */
 			$this->currentrecord += array($name => $value);
 
