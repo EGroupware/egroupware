@@ -35,7 +35,7 @@ echo "Start Time : ".$phpgw->common->show_date()."<br>\n";
 
 //	echo "function_exists = ".function_exists("\$vcalendar->read()")."<br>\n";
 
-	$vcalendar = ExecObject('calendar.vCalendar.read',$contents,2,'');
+	$vcalendar = ExecMethod('calendar.vCalendar.read',$contents);
 	
 	echo "Product ID = ".$vcalendar->prodid->value."<br>\n";
 	echo "Method = ".$vcalendar->method->value."<br>\n";
