@@ -3583,6 +3583,8 @@
 						break;
 			case 'db2':	
 						break;
+			case 'sapdb':
+						break;
 			default:
 				$drivername = 'generic';
 				break;
