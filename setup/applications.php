@@ -506,6 +506,11 @@
 			}
 		}
 
+		$setup_tpl->set_var('check','check.gif');
+		$setup_tpl->set_var('install_all',lang('Install All'));
+		$setup_tpl->set_var('upgrade_all',lang('Upgrade All'));
+		$setup_tpl->set_var('remove_all',lang('Remove All'));
+
 		$setup_tpl->set_var('submit',lang('Submit'));
 		$setup_tpl->set_var('cancel',lang('Cancel'));
 		$setup_tpl->pparse('out','app_footer');

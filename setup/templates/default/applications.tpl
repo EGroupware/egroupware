@@ -1,4 +1,24 @@
 <!-- BEGIN header -->
+<script>
+function check_all(which)
+{
+  for (i=0; i<document.apps.elements.length; i++)
+  {
+    if (document.apps.elements[i].type == "checkbox" && document.apps.elements[i].name.substring(0,which.length) == which)
+    {
+      if (document.apps.elements[i].checked)
+      {
+        document.apps.elements[i].checked = false;
+      }
+      else
+      {
+        document.apps.elements[i].checked = true;
+      }
+    } 
+  }
+}
+</script>
+
 <br>
 <div align="center">
 <table border="0" width="70%" cellspacing="0" cellpadding="2">
@@ -10,7 +30,7 @@
 <!-- END header -->
 
 <!-- BEGIN app_header -->
-<form method="POST" action="{action_url}">
+<form name="apps" method="POST" action="{action_url}">
   <tr>
     <td colspan="5" bgcolor="#486591"><center><font color="#fefefe">{appdata}</font></center></td>
     <td colspan="4" bgcolor="#486591"><center><font color="#fefefe">{actions}</font></center></td>
@@ -76,12 +96,25 @@
 <!-- END submit -->
 
 <!-- BEGIN app_footer -->
+  <tr>
+    <td bgcolor="{bg_color}" colspan="5">&nbsp;</td>
+    <td bgcolor="{bg_color}" align="center">
+     <a href="javascript:check_all('install')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{install_all}"></a>
+    </td>
+    <td bgcolor="{bg_color}" align="center">
+     <a href="javascript:check_all('upgrade')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{upgrade_all}"></a>
+    </td>
+    <td bgcolor="{bg_color}">&nbsp;</td>
+    <td bgcolor="{bg_color}" align="center">
+      <a href="javascript:check_all('remove')"><img src="templates/default/images/{check}" border="0" height="16" width="21" alt="{remove_all}"></a>
+    </td>
+  </tr>
 </table>
 <table border="0" width="70%" cellspacing="0" cellpadding="2">
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" name="submit" value="{submit}">
-      <input type="submit" name="cancel" value="{cancel}">
+     <input type="submit" name="submit" value="{submit}">
+     <input type="submit" name="cancel" value="{cancel}">
     </td>
   </tr>
 </table>
