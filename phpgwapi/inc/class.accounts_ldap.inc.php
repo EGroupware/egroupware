@@ -422,12 +422,13 @@
 					}
 				}
 
-				if ($account_type == "g")
-				{
-					$tmpentry["objectclass"][0] = 'top';
-					$tmpentry["objectclass"][1] = 'posixGroup';
-				}
-				else
+//				if ($account_type == "g")
+//				{
+//					$tmpentry["objectclass"][0] = 'top';
+//					$tmpentry["objectclass"][1] = 'posixGroup';
+//				}
+//				else
+				if ($account_type == "u")
 				{
 					$tmpentry["objectclass"][0] = 'top';
 					$tmpentry["objectclass"][1] = 'person';
@@ -440,15 +441,15 @@
 
 				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 			} else {
-				$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
-
-				if ($account_type == "g")
+//				if ($account_type == "g")
+//				{
+//					$entry["objectclass"][0] = 'top';
+//					$entry["objectclass"][1] = 'posixGroup';
+//				}
+//				else
+				if ($account_type == "u")
 				{
-					$entry["objectclass"][0] = 'top';
-					$entry["objectclass"][1] = 'posixGroup';
-				}
-				else
-				{
+					$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'person';
 					$entry["objectclass"][2] = 'organizationalPerson';
@@ -456,9 +457,10 @@
 					$entry["objectclass"][4] = 'account';
 					$entry["objectclass"][5] = 'posixAccount';
 					$entry["objectclass"][6] = 'shadowAccount';
-				}
 
-				ldap_add($ds, $dn, $entry);
+					ldap_add($ds, $dn, $entry);
+				}
+				//ldap_add($ds, $dn, $entry);
 			}
 			//print ldap_error($ds);
 		}
