@@ -95,7 +95,14 @@
 			$this->qfields = $this->stock_contact_fields;# + $extrafields;# + $customfields;
 		}
 
-		$buffer = $this->export_start_file($buffer,$cat_id);
+		if (!empty($cat_id))
+		{
+			$buffer = $this->export_start_file($buffer,$cat_id);
+		}
+		else
+		{
+			$buffer = $this->export_start_file($buffer);
+		}
 		
 		for ($i=0;$i<count($this->ids);$i++) {
 			$buffer = $this->export_start_record($buffer);
