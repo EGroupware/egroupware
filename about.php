@@ -100,8 +100,11 @@ function about_app()
 		'phpgw_about_unknown' => 'about_unknown.tpl'
 	));
 
-	$tpl->set_var('webserver_url',$GLOBALS['phpgw']->common->get_image_path('phpgwapi'));
-	$tpl->set_var('phpgw_version','phpGroupWare API version ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+	$tpl->set_var('phpgw_logo',$GLOBALS['phpgw']->common->image('phpgwapi','logo.gif'));
+	$tpl->set_var('phpgw_version',lang('phpGroupWare API version %1',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']));
+	$tpl->set_var('phpgw_message',lang('%1phpGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.',
+		'<a href="http://www.phpGroupWare.org" target="_blank">','</a>','<a href="http://www.php.net" target="_blank">','</a>'));
+
 	if ($included)
 	{
 		$tpl->set_var('phpgw_app_about',about_app('',''));
