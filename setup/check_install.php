@@ -14,6 +14,7 @@
 	$run_by_webserver = !!$_SERVER['PHP_SELF'];
 	$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
+
 	if ($run_by_webserver)
 	{
 		$phpgw_info = array();
