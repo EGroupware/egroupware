@@ -2620,9 +2620,9 @@
 			{
 				$userid = (int)$userid;
 
-				if ($statusid == 'R')
+				if ($statusid == 'R' || $GLOBALS['phpgw']->accounts->get_type($userid) == 'g')
 				{
-					continue;	// dont notify rejected participants
+					continue;	// dont notify rejected participants or groups
 				}
 				if($userid != $GLOBALS['phpgw_info']['user']['account_id'] ||  $msg_type == MSG_ALARM)
 				{
