@@ -81,6 +81,8 @@
 	$GLOBALS['xmlrpcstr']['curl_fail']          = 'CURL error';
 	$GLOBALS['xmlrpcerr']['no_access']          = 9;
 	$GLOBALS['xmlrpcstr']['no_access']          = 'Access denied';
+	$GLOBALS['xmlrpcerr']['not_existent']       = 10;
+	$GLOBALS['xmlrpcstr']['not_existent']       = 'Entry does not (longer) exist!';
 
 	$GLOBALS['xmlrpc_defencoding'] = 'UTF-8';
 
