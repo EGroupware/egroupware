@@ -164,6 +164,14 @@
 			return @pg_close($this->Link_ID);
 		}
 
+		function db_addslashes($str)
+		{
+			if (!IsSet($str) || $str == '')
+				return '';
+
+			return addslashes($str);
+		}
+
 		/* I added the line and file section so we can have better error reporting. (jengo) */
 		function query($Query_String, $line = '', $file = '')
 		{

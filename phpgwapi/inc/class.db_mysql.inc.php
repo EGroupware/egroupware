@@ -125,6 +125,14 @@
 			}
 		}
 
+		function db_addslashes($str)
+		{
+			if (!IsSet($str) || $str == '')
+				return '';
+
+			return addslashes($str);
+		}
+
 		function to_timestamp($epoch)
 		{
 			return date('Y-m-d H:i:s',$epoch);
