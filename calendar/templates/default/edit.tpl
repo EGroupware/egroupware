@@ -96,7 +96,7 @@ function validate_and_submit() {
 <!-- BEGIN edit_entry_end -->
 </table>
 <input type="button" value="{submit_button}" onClick="validate_and_submit();">
-<!-- <noscript><input type="button" value="{submit_button}"></noscript> -->
+<noscript><input type="submit" value="{submit_button}"></noscript>
 </form>
 
 {delete_button}

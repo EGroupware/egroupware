@@ -7,6 +7,7 @@
 	- Fixed repeating entries Month select box.
 	- Fixed calendar week selector starting on Monday on footer.
 	- Fixed buggy calendar saving when no groups are selected with group access.
+	- Fixed submitting of calendar entry when javascript turned off.
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
