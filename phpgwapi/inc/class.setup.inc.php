@@ -89,7 +89,8 @@
 				6. None of the above
 			*/
 
-			$expire = time() + 1200; /* Expire login in 20 minutes. */
+			// $expire = time() + 1200; /* Expire login in 20 minutes. */
+			$expire = '';
 
 			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
