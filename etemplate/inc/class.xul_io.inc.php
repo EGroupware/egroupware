@@ -158,7 +158,8 @@
 			switch ($parent)
 			{
 			case 'nextmatch':
-				$embeded = new etemplate($cell['size'],$etempl->as_array());
+				list($tpl) = explode(',',$cell['size']);
+				$embeded = new etemplate($tpl,$etempl->as_array());
 				if ($embeded_too)
 				{
 					$this->etempl2grid($embeded,&$root,$embeded_too);
