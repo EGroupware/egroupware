@@ -23,7 +23,11 @@
 
 	include('../header.inc.php');
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$datetime = mktime(0,0,0,$thismonth,$thisday,$thisyear) - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+
+	$sb = CreateObject('phpgwapi.sbox');
+	
+	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 
 	$templates = Array(
 		'matrix_query_begin'	=>	'matrix_query.tpl',
@@ -36,34 +40,16 @@
 
 	$var = Array(
 		'matrix_action'			=>	lang('Daily Matrix View'),
-		'action_url'				=> $phpgw->link('viewmatrix.php')
+		'action_url'				=> $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/viewmatrix.php')
 	);
 
 	$p->set_var($var);
 	$p->parse('out','matrix_query_begin');
 
 // Date
-	$day_html = '<select name="day">';
-	for($i=1;$i<=31;$i++)
-	{
-		$day_html .= '<option value="'.$i.'"'.($i==$thisday?' selected':'').'>'.$i.'</option>'."\n";
-	}
-	$day_html .= '</select>';
-
-	$month_html = '<select name="month">';
-	for($i=1;$i<=12;$i++)
-	{
-		$m = lang(date('F', mktime(0,0,0,$i,1,$thisyear)));
-		$month_html .= '<option value="'.$i.'"'.($i==$thismonth?' selected':'').'>'.$m.'</option>'."\n";
-	}
-	$month_html .= '</select>';
-
-	$year_html = '<select name="year">';
-	for($i=($thisyear - 1);$i<($thisyear + 5);$i++)
-	{
-		$year_html .= '<option value="'.$i.'"'.($i==$thisyear?' selected':'').'>'.$i.'</option>'."\n";
-	}
-	$year_html .= '</select>';
+	$day_html = $sb->getDays('day',intval($phpgw->common->show_date($datetime,'d')));
+	$month_html = $sb->getMonthText('month',intval($phpgw->common->show_date($datetime,'n')));
+	$year_html = $sb->getYears('year',intval($phpgw->common->show_date($datetime,'Y')),intval($phpgw->common->show_date($datetime,'Y')));
 
 	$var = Array(
 		'field'	=>	lang('Date'),

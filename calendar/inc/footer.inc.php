@@ -63,7 +63,7 @@
 	}
 
 	$var = Array(
-		'action_url'		=>	$phpgw->link('month.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/month.php','owner='.$owner),
 		'form_name'			=>	'SelectMonth',
 		'label'				=>	lang('Month'),
 		'form_label'		=>	'date',
@@ -117,7 +117,7 @@
 	}
  
 	$var = Array(
-		'action_url'		=>	$phpgw->link('week.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','owner='.$owner),
 		'form_name'			=>	'SelectWeek',
 		'label'				=>	lang('Week'),
 		'form_label'		=>	'date',
@@ -150,7 +150,7 @@
 	}
   
 	$var = Array(
-		'action_url'		=>	$phpgw->link('year.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php','owner='.$owner),
 		'form_name'			=>	'SelectYear',
 		'label'				=>	lang('Year'),
 		'form_label'		=>	'year',

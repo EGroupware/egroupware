@@ -26,31 +26,31 @@
    &nbsp;
   </td>
   <td width="2%">
-   <a href="<?php echo $phpgw->link('day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/today.gif" alt="<?php echo lang('Today'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/week.gif" alt="<?php echo lang('This week'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/month.gif" alt="<?php echo lang('This month'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/year.gif" alt="<?php echo lang('This year'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/view.gif" alt="<?php echo lang('Daily Matrix View'); ?>" border="0">
    </a>
   </td>
-  <form action="<?php echo $phpgw->link('','owner='.$owner); ?>" method="POST" name="filtermethod">
+  <form action="<?php echo $phpgw->link($PHP_SELF,'owner='.$owner); ?>" method="POST" name="filtermethod">
    <td width="45%" align="center" valign="center">
     <b><?php echo lang('Filter'); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
@@ -89,7 +89,7 @@
     if(count($grants) > 0)
     {
 ?>
-  <form action="<?php echo $phpgw->link(); ?>" method="POST" name="setowner">
+  <form action="<?php echo $phpgw->link($PHP_SELF); ?>" method="POST" name="setowner">
    <td width="20%" align="center" valign="center">
     <b><?php echo lang('User'); ?>:</b>
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
@@ -121,7 +121,7 @@
 <?php
     }
 ?>
-  <form action="<?php echo $phpgw->link('search.php','owner='.$owner); ?>" method="POST">
+  <form action="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/search.php','owner='.$owner); ?>" method="POST">
    <td align="right" valign="center">
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
     <?php if(isset($date) && $date) { ?>

@@ -61,7 +61,7 @@
 	}
 	$week_id .= $last['day'].', '.$last['year'];
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 	$templates = Array(
 		'week_t' => 'week.tpl'
 	);
@@ -71,10 +71,10 @@
 	if ($friendly == 0)
 	{
 		$printer = '';
-		$prev_week_link = '<a href="'.$phpgw->link('week.php','year='.$prev['year'].'&month='.$prev['month'].'&day='.$prev['day']).'">&lt;&lt;</a>';
-		$next_week_link = '<a href="'.$phpgw->link('week.php','year='.$next['year'].'&month='.$next['month'].'&day='.$next['day']).'">&gt;&gt;</a>';
+		$prev_week_link = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','year='.$prev['year'].'&month='.$prev['month'].'&day='.$prev['day']).'">&lt;&lt;</a>';
+		$next_week_link = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','year='.$next['year'].'&month='.$next['month'].'&day='.$next['day']).'">&gt;&gt;</a>';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&friendly=1&filter='.$filter.'&owner='.$owner;
-		$print = '<a href="'.$phpgw->link('',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+		$print = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 	}
 	else
 	{

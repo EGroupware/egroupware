@@ -39,9 +39,9 @@
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
-	$view = "month";
+	$view = 'month';
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 
 	$templates = Array(
 		'index_t'	=>	'index.tpl'
@@ -55,7 +55,7 @@
 	{
 		$printer = '';
 		$param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
-		$print = '<a href="'.$phpgw->link('',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+		$print = '<a href="'.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/month.php',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
 	}
 	else
 	{

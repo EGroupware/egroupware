@@ -12,23 +12,29 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info["flags"]["currentapp"] = "calendar";
-  $phpgw_info["flags"]["noheader"] = True;
-  $phpgw_info["flags"]["nonavbar"] = True;
-  $phpgw_info["flags"]["noappheader"] = True;
-  $phpgw_info["flags"]["noappfooter"] = True;
-  $phpgw_info["flags"]["nofooter"] = True;
-  include("../header.inc.php");
+	$phpgw_flags = Array(
+		'currentapp'	=>	'calendar',
+		'noheader'	=>	True,
+		'nonavbar'	=>	True,
+		'noappheader	=>	True,
+		'noappfooter'	=>	True,
+		'nofooter'	=>	True
+	);
 
-  $newpage = $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"];
-  if ($newpage=="index.php" || ($newpage!="day.php" && $newpage!="week.php" && $newpage!="month.php" && $newpage!="year.php")) {
-    $newpage = "month.php";
-    $phpgw->preferences->change("calendar","defaultcalendar","month.php");
-    $phpgw->preferences->commit();
-  }
+	$phpgw_info['flags'] = $phpgw_flags;
+	
+	include('../header.inc.php');
 
-  Header("Location: ".$newpage."?".$QUERY_STRING);
-  $phpgw->common->phpgw_exit();
+	$newpage = $phpgw_info['user']['preferences']['calendar']['defaultcalendar'];
+	if ($newpage=='index.php' || ($newpage != 'day.php' && $newpage != 'week.php' && $newpage != 'month.php' && $newpage != 'year.php'))
+	{
+		$newpage = 'month.php';
+		$phpgw->preferences->add('calendar','defaultcalendar','month.php');
+		$phpgw->preferences->save_repository();
+	}
+
+	Header('Location: '.$newpage.'?'.$QUERY_STRING);
+	$phpgw->common->phpgw_exit();
 ?>

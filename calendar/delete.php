@@ -27,10 +27,11 @@
 	{
 		$thisyear = $event->start->year;
 		$thismonth = $event->start->month;
+		$thisday = $event->start->mday;
 
 		$phpgw->calendar->delete_event($cal_stream,intval($id));
 		$phpgw->calendar->expunge($cal_stream);
 	}
 
-	Header('Location: ' . $phpgw->link('index.php','year='.$thisyear.'&month='.$thismonth.'&owner='.$owner));
+	Header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/index.php','year='.$thisyear.'&month='.$thismonth.'&day='.$thisday.'&owner='.$owner));
 ?>

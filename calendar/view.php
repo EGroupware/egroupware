@@ -65,13 +65,13 @@
 	$unapproved = FALSE;
 
 	$cal_stream = $phpgw->calendar->open('INBOX',$owner,'');
-	$cal_info = $phpgw->calendar->fetch_event($cal_stream,$id);
+	$event = $phpgw->calendar->fetch_event($cal_stream,$id);
 
-	reset($cal_info->participants);
+	reset($event->participants);
 	$participating = False;
-	for($j=0;$j<count($cal_info->participants);$j++)
+	for($j=0;$j<count($event->participants);$j++)
 	{
-		if($cal_info->participants[$j] == $owner)
+		if($event->participants[$j] == $owner)
 		{
 			$participating = True;
 		}
@@ -83,7 +83,7 @@
 		$phpgw->common->phpgw_exit();
 	}
   
-	$description = nl2br($description);
+//	$description = nl2br($event->description);
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 
@@ -97,72 +97,76 @@
 
 	$var = Array(
 		'bg_text'	=>	$phpgw_info['theme']['bg_text'],
-		'name'	=>	$cal_info->name
+		'name'	=>	$event->name
 	);
 	$p->set_var($var);
 	$p->parse('out','view_begin');
 
 	// Some browser add a \n when its entered in the database. Not a big deal
 	// this will be printed even though its not needed.
-	if (nl2br($cal_info->description))
+	if (nl2br($event->description))
 	{
-		display_item(lang("Description"),nl2br($cal_info->description));
+		display_item(lang('Description'),nl2br($event->description));
 	}
 
-	display_item(lang('Start Date/Time'),$phpgw->common->show_date($cal_info->datetime));
+	$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+
+	$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
+	display_item(lang('Start Date/Time'),$phpgw->common->show_date($start));
 
 	// save date so the trailer links are for the same time period
 	$thisyear	= $cal_info->start->year;
 	$thismonth	= $cal_info->start->month;
 	$thisday 	= $cal_info->start->mday;
 
-	display_item(lang('End Date/Time'),$phpgw->common->show_date($cal_info->edatetime));
+	$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
+	display_item(lang('End Date/Time'),$phpgw->common->show_date($end));
 
-	display_item(lang('Priority'),$pri[$cal_info->priority]);
+	display_item(lang('Priority'),$pri[$event->priority]);
 
 	$participate = False;
-	for($i=0;$i<count($cal_info->participants);$i++)
+	for($i=0;$i<count($event->participants);$i++)
 	{
-		if($cal_info->participants[$i] == $phpgw_info['user']['account_id'])
+		if($event->participants[$i] == $phpgw_info['user']['account_id'])
 		{
 			$participate = True;
 		}
 	}
-	if($cal_info->owner == $phpgw_info['user']['account_id'] && $participate)
+	if($event->owner == $phpgw_info['user']['account_id'] && $participate)
 	{
 		display_item(lang('Created by'),'<a href="'
-			.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/viewmatrix.php','participants='.$cal_info->owner.'&date='.$cal_info->year.$cal_info->month.$cal_info->day.'&matrixtype=free/busy&owner='.$owner)
-			.'">'.$phpgw->common->grab_owner_name($cal_info->owner).'</a>');
+			.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/viewmatrix.php','participants='.$event->owner.'&month='.$event->start->month.'&day='.$event->start->mday.'&year='.$event->start->year.'&matrixtype=free/busy&owner='.$owner)
+			.'">'.$phpgw->common->grab_owner_name($event->owner).'</a>');
 	}
 	else
 	{
-		display_item(lang('Created by'),$phpgw->common->grab_owner_name($cal_info->owner));
+		display_item(lang('Created by'),$phpgw->common->grab_owner_name($event->owner));
 	}
 
-	display_item(lang('Updated'),$phpgw->common->show_date($cal_info->mdatetime));
+	display_item(lang('Updated'),$phpgw->common->show_date($event->mdatetime));
 
-	if($cal_info->groups[0])
+	if($event->groups[0])
 	{
 		$cal_grps = '';
-		for($i=0;$i<count($cal_info->groups);$i++)
+		for($i=0;$i<count($event->groups);$i++)
 		{
 			if($i>0)
 			{
 				$cal_grps .= '<br>';
 			}
-			$cal_grps .= $phpgw->accounts->id2name($cal_info->groups[$i]);
+			$cal_grps .= $phpgw->accounts->id2name($event->groups[$i]);
 		}
 		display_item(lang('Groups'),$cal_grps);
 	}
 
 	$str = '';
-	for($i=0;$i<count($cal_info->participants);$i++)
+	for($i=0;$i<count($event->participants);$i++)
 	{
 		if($i)
 		{
 			$str .= '<br>';
 		}
-		switch ($cal_info->status[$i])
+		switch ($event->status[$i])
 		{
 			case 'A':
 				$status = 'Accepted';
@@ -177,63 +181,63 @@
 				$status = 'No Repsonse';
 				break;
 		}
-		$str .= $phpgw->common->grab_owner_name($cal_info->participants[$i]).' ('.$status.')';
+		$str .= $phpgw->common->grab_owner_name($event->participants[$i]).' ('.$status.')';
 	}
 	display_item(lang('Participants'),$str);
 
 // Repeated Events
-	$str = $cal_info->rpt_type;
-	if($str <> 'none' || $cal_info->rpt_use_end)
+	$str = $event->rpt_type;
+	if($event->recur_type <> RECUR_NONE || ($event->recur_enddate->mday != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->year != 0))
 	{
 		$str .= ' (';
-		$recur_end = mktime(0,0,0,$cal_info->recur_enddate->month,$cal_info->recur_enddate->mday,$cal_info->recur_enddate->year);
+		$recur_end = mktime(0,0,0,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year);
 		if($recur_end != 0)
 		{
 			$str .= lang('ends').': '.$phpgw->common->show_date($recur_end,'l, F d, Y').' ';
 		}
-		if($cal_info->recur_type == RECUR_WEEKLY || $cal_info->recur_type == RECUR_DAILY)
+		if($event->recur_type == RECUR_WEEKLY || $event->recur_type == RECUR_DAILY)
 		{
 			$repeat_days = '';
-			if ($cal_info->recur_data & M_SUNDAY)
+			if ($event->recur_data & M_SUNDAY)
 			{
 				add_day($repeat_days,lang('Sunday '));
 			}
-			if ($cal_info->recur_data & M_MONDAY)
+			if ($event->recur_data & M_MONDAY)
 			{
 				add_day($repeat_days,lang('Monday '));
 			}
-			if ($cal_info->recur_data & M_TUESDAY)
+			if ($event->recur_data & M_TUESDAY)
 			{
 				add_day($repeat_days,lang('Tuesay '));
 			}
-			if ($cal_info->recur_data & M_WEDNESDAY)
+			if ($event->recur_data & M_WEDNESDAY)
 			{
 				add_day($repeat_days,lang('Wednesday '));
 			}
-			if ($cal_info->recur_data & M_THURSDAY)
+			if ($event->recur_data & M_THURSDAY)
 			{
 				add_day($repeat_days,lang('Thursday '));
 			}
-			if ($cal_info->recur_data & M_FRIDAY)
+			if ($event->recur_data & M_FRIDAY)
 			{
 				add_day($repeat_days,lang('Friday '));
 			}
-			if ($cal_info->recur_data & M_SATURDAY)
+			if ($event->recur_data & M_SATURDAY)
 			{
 				add_day($repeat_days,lang('Saturday '));
 			}
 			$str .= lang('days repeated').': '.$repeat_days;
 		}
-		if($cal_info->recur_interval)
+		if($event->recur_interval)
 		{
-			$str .= lang('frequency').' '.$cal_info->recur_interval;
+			$str .= lang('frequency').' '.$event->recur_interval;
 		}
 		$str .= ')';
 
 		display_item(lang('Repetition'),$str);
 	}
 
-	if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_EDIT))
+	if (($event->owner == $owner) && ($rights & PHPGW_ACL_EDIT))
 	{
 		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button','  '.lang('Edit').'  ');
@@ -245,7 +249,7 @@
 		$p->set_var('edit_button','');
 	}
 
-	if (($cal_info->owner == $owner) && ($rights & PHPGW_ACL_DELETE))
+	if (($event->owner == $owner) && ($rights & PHPGW_ACL_DELETE))
 	{
 		$p->set_var('action_url_button',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/delete.php','id='.$id.'&owner='.$owner));
 		$p->set_var('action_text_button',lang('Delete'));

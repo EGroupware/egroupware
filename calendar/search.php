@@ -12,114 +12,125 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
+	$phpgw_flags = Array(
+		'currentapp'		=>	'calendar',
+		'enable_nextmatchs_class'	=>	True
+	);
+	
+	$phpgw_info['flags'] = $phpgw_flags;
 
-  if (! $keywords) {
-     // If we reach this, it is because they didn't search for anything,
-     // attempt to send them back to where they where.
-     Header("Location: " . $phpgw->link($from,"date=$datemonth=$month&day=$day&year=$year"));
-  }
+	if (! $keywords)
+	{
+		// If we reach this, it is because they didn't search for anything,
+		// attempt to send them back to where they where.
+		Header('Location: ' . $phpgw->link($from,'month='.$month.'&day='.$day.'&year='.$year));
+	}
 
-  include("../header.inc.php");
+	include('../header.inc.php');
 
-  $error = "";
+	$error = '';
 
-  if (strlen($keywords) == 0) {
-    echo "<b>".lang("Error").":</b>";
-    echo lang("You must enter one or more search keywords.");
-    $phpgw->common->phpgw_footer();
-    $phpgw->common->phpgw_exit();
-  }
-  $matches = 0;
+	if (strlen($keywords) == 0)
+	{
+		echo '<b>'.lang('Error').':</b>';
+		echo lang('You must enter one or more search keywords.');
+		$phpgw->common->phpgw_footer();
+		$phpgw->common->phpgw_exit();
+	}
+	
+	$matches = 0;
 
-  $phpgw->calendar->set_filter();
+	$phpgw->calendar->set_filter();
 
-  // There is currently a problem searching in with repeated events.
-  // It spits back out the date it was entered.  I would like to to say that
-  // it is a repeated event.
-  $ids = array();
-  $words = split(" ", $keywords);
-  for ($i = 0; $i < count($words); $i++) {
-    $sql = "SELECT DISTINCT calendar_entry.cal_id, calendar_entry.cal_name, "
-         . "calendar_entry.cal_datetime "
-         . "FROM calendar_entry, calendar_entry_user "
-	 . "WHERE "
-	 . "(UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
-	 . " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) AND "
-	 . "calendar_entry_user.cal_id=calendar_entry.cal_id AND ";
+	// There is currently a problem searching in with repeated events.
+	// It spits back out the date it was entered.  I would like to to say that
+	// it is a repeated event.
+	$ids = array();
+	$words = split(' ',$keywords);
+	for ($i=0;$i<count($words);$i++)
+	{
+		$sql = "AND (UPPER(calendar_entry.cal_name) LIKE UPPER('%".$words[$i]."%') OR "
+				. " UPPER(calendar_entry.cal_description) LIKE UPPER('%".$words[$i]."%')) ";
 
-    $sqlfilter = "";
 // Private
-    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"private")) {
-      $sqlfilter .= "(calendar_entry_user.cal_login = ".$phpgw_info["user"]["account_id"]." AND calendar_entry.cal_access='private') ";
-    }
+		if(strpos($phpgw->calendar->filter,'private'))
+		{
+			$sql .= "AND calendar_entry.cal_access='private' ";
+		}
+		
+		$sql .= 'ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
 
-// Group Public
-    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"group")) {
-      if($sqlfilter)
-	$sqlfilter .= "OR ";
-      $sqlfilter .= $phpgw->calendar->group_search($phpgw_info["user"]["account_id"])." ";
-    }
+		$events = $phpgw->calendar->get_event_ids(True,$sql);
 
-// Global Public
-    if($phpgw->calendar->filter==" all " || strpos($phpgw->calendar->filter,"public")) {
-      if($sqlfilter)
-	$sqlfilter .= "OR ";
-      $sqlfilter .= "calendar_entry.cal_access='public' ";
-    }
-    $orderby = " ORDER BY calendar_entry.cal_datetime ASC";
+		if($events == False)
+		{
+			$matches = 0;
+		}
+		else
+		{
+			$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
+			for($i=0;$i<count($events);$i++)
+			{
+				$event = $phpgw->calendar->fetch_event($cal_stream,$events[$i]);
+				
+				$datetime = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+				
+				$ids[strval($event->id)]++;
+				$info[strval($event->id)] = $event->name.' ('
+					. $phpgw->common->show_date($datetime).')';
+			}
+			$matches = count($events);
+		}
+	}
 
-    if($sqlfilter) $sql .= "(".$sqlfilter.") ";
-    $sql .= $orderby;
+	if ($matches > 0)
+	{
+		$matches = count($ids);
+	}
 
-    $phpgw->db->query($sql,__LINE__,__FILE__);
-    while ($phpgw->db->next_record()) {
-      $matches++;
-      $ids[strval( $phpgw->db->f(0) )]++;
-      $info[strval( $phpgw->db->f(0) )] = $phpgw->db->f(1) . " ("
-                                        . $phpgw->common->show_date($phpgw->db->f(2)) . ")";
-    }
-  }
+	if ($matches == 1)
+	{
+		$quantity = '1 match found.';
+	}
+	elseif ($matches > 0)
+	{
+		$quantity = lang('x matches found',$matches).'.';
+	}
+	else
+	{
+		echo '<b>'.lang('Error').':</b>';
+		echo lang('no matches found.');
+		$phpgw->common->phpgw_footer();
+		$phpgw->common->phpgw_exit();
+	}
 
-  if ($matches > 0)
-    $matches = count($ids);
+	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
+	$templates = Array(
+		'search'		=>	'search.tpl',
+		'search_list'	=>	'search_list.tpl',
+	);
+	$p->set_file($templates);
 
-  if ($matches == 1)
-    $quantity = "1 match found.";
-  else if ($matches > 0)
-    $quantity = lang("x matches found",$matches).".";
-  else
-    $error = lang("no matches found.");
+	$var = Array(
+		'color'		=>	$phpgw_info['theme']['bg_text'],
+		'search_text'	=>	lang('Search Results'),
+		'quantity'	=>	$quantity
+	);
 
-  if($error) {
-    echo "<b>".lang("Error").":</b>";
-    echo $error;
-    $phpgw->common->phpgw_footer();
-    $phpgw->common->phpgw_exit();
-  }
+	$p->set_var($var);
 
-  $phpgw->template->set_file(array("search_t"	 => "search.tpl",
-				   "search_list" => "search_list.tpl"));
+	// now sort by number of hits
+	arsort($ids);
+	for(reset($ids);$key=key($ids);next($ids))
+	{
+		$p->set_var('url_result',$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$key.'&owner='.$owner));
+		$p->set_var('result_desc',$info[$key]);
+		$p->parse('output','search_list',True);
+	}
+	
+	$p->pparse('out','search');
 
-  $phpgw->template->set_block("search_t","search_list");
-
-  $phpgw->template->set_var("color",$phpgw_info["theme"]["bg_text"]);
-  $phpgw->template->set_var("search_text",lang("Search Results"));
-  $phpgw->template->set_var("quantity",$quantity);
-
-// now sort by number of hits
-  if (! strlen($error)) {
-    arsort ($ids);
-    for (reset($ids); $key = key($ids); next($ids)) {
-      $phpgw->template->set_var("url_result",$phpgw->link("view.php","id=$key"));
-      $phpgw->template->set_var("result_desc",$info[$key]);
-      $phpgw->template->parse("output","search_list",True);
-    }
-  }
-
-  $phpgw->template->pparse("out","search_t");
-
-  $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>

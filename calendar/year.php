@@ -37,7 +37,7 @@
  <tr>
   <?php
     if (!$friendly)
-       echo "<td align=\"left\"><A HREF=\"" . $phpgw->link("year.php","year=" . ($year - 1)) . "\">&lt;&lt;</A>";
+       echo "<td align=\"left\"><A HREF=\"" . $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php',"year=" . ($year - 1)) . "\">&lt;&lt;</A>";
   ?>
   </td>
   </td>
@@ -46,7 +46,7 @@
   </td>
   <?php
     if (! $friendly)
-       echo "<td align=\"right\"><A HREF=\"" . $phpgw->link("year.php","year=" . ($year + 1)) . "\">&gt;&gt;</A>";
+       echo "<td align=\"right\"><A HREF=\"" . $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php',"year=" . ($year + 1)) . "\">&gt;&gt;</A>";
   ?>
   </td>
  </tr>

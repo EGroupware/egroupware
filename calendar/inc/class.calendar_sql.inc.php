@@ -16,6 +16,8 @@
 
 class calendar_ extends calendar__
 {
+	var $deleted_events = Array();
+	
 	var $cal_event;
 	var $today = Array('raw','day','month','year','full','dow','dm','bd');
 
@@ -406,11 +408,7 @@ class calendar_ extends calendar__
 
 	function delete_event($mcal_stream,$event_id)
 	{
-		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
-		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
-		$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
-		$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
-		$this->stream->unlock();
+		$this->deleted_events[] = $event_id;
 	}
 
 	function snooze($mcal_stream,$event_id)
@@ -723,6 +721,25 @@ class calendar_ extends calendar__
 
 	function expunge($stream)
 	{
+		if(count($this->deleted_events) <= 0)
+		{
+			return 1;
+		}
+		$this_event = $this->event;
+		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		for($i=0;$i<count($this->deleted_events);$i++)
+		{
+			$event_id = $this->deleted_events[$i];
+
+			$event = $this->fetch_event($event_id);
+			$this->send_update(MSG_DELETED,$event->participants,$event);
+
+			$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
+		}
+		$this->stream->unlock();
+		$this->event = $this_event;
 		return 1;
 	}
 	

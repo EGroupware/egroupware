@@ -39,6 +39,15 @@
 		{
 			$phpgw->preferences->delete('calendar','mainscreen_showevents');
 		}
+		if ($send_updates)
+		{
+			$phpgw->preferences->add('calendar','send_updates');
+		}
+		else
+		{
+			$phpgw->preferences->delete('calendar','send_updates');
+		}
+		
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
@@ -146,6 +155,10 @@
 		. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
 		. '</select>';
 	display_item(lang('default calendar filter'),$str);
+
+	$str = '<input type="checkbox" name="send_updates" value="Y"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y'?' checked':'').'>';
+	display_item(lang('send updates via email'),$str);
+
 
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();
