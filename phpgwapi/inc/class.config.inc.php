@@ -44,7 +44,15 @@
 			$this->db->query("select * from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
-				$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
+				$test = @unserialize($this->db->f('config_value'));
+				if($test)
+				{
+					$this->config_data[$this->db->f('config_name')] = $test;
+				}
+				else
+				{
+					$this->config_data[$this->db->f('config_name')] = $this->db->f('config_value');
+				}
 			}
 		}
 
@@ -62,6 +70,10 @@
 				}
 				while (list($name,$value) = each($config_data))
 				{
+					if(is_array($value))
+					{
+						$value = serialize($value);
+					}
 					$name  = addslashes($name);
 					$value = addslashes($value);
 					$this->db->query("delete from phpgw_config where config_name='" . $name . "'",__LINE__,__FILE__);

@@ -2,13 +2,15 @@
   /**************************************************************************\
   * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
-  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
+  * Written by Joseph Engo <jengo@phpgroupware.org> and                      *
+  * Miles Lott <miloschphpgroupware.org>                                     *
   * -----------------------------------------------                          *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
+
   /* $Id$ */
 
 	class uifields
@@ -24,6 +26,7 @@
 		{
 			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->config = CreateObject('phpgwapi.config','addressbook');
 		}
 
 		function index()
@@ -33,7 +36,6 @@
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_footer();
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
@@ -44,11 +46,9 @@
 			$GLOBALS['phpgw']->template->set_block('field_list_t','field_list','list');
 
 			$field  = $GLOBALS['HTTP_POST_VARS']['field'];
-			$start  = $GLOBALS['HTTP_POST_VARS']['start'];
-			$query  = $GLOBALS['HTTP_POST_VARS']['query'];
-			$sort   = $GLOBALS['HTTP_POST_VARS']['sort'];
-			$order  = $GLOBALS['HTTP_POST_VARS']['order'];
-			$filter = $GLOBALS['HTTP_POST_VARS']['filter'];
+			$start  = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
+			$query  = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
+			$sort   = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
 
 			$common_hidden_vars =
 				'<input type="hidden" name="sort"   value="' . $sort   . '">' . "\n"
@@ -76,7 +76,7 @@
 				$sort = 'ASC';
 			}
 
-			$fields = $this->read_custom_fields($start,$limit,$query,$sort,$order);
+			$fields = $this->read_custom_fields($start,$limit,$query,$sort);
 			$total_records = count($fields);
 
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -98,8 +98,9 @@
 				$GLOBALS['phpgw']->template->set_var(tr_color,$tr_color);
 
 				$field = $fields[$i]['name'];
+				$title = $fields[$i]['title'];
 
-				$GLOBALS['phpgw']->template->set_var('cfield',$field);
+				$GLOBALS['phpgw']->template->set_var('cfield',$title);
 
 				$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.edit&field=$field&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
 				$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
@@ -111,8 +112,6 @@
 
 			$GLOBALS['phpgw']->template->parse('out','field_list_t',True);
 			$GLOBALS['phpgw']->template->p('out');
-
-			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 
 		function add()
@@ -122,7 +121,6 @@
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_footer();
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
@@ -131,12 +129,13 @@
 			$start      = $GLOBALS['HTTP_POST_VARS']['start'];
 			$query      = $GLOBALS['HTTP_POST_VARS']['query'];
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort'];
+			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
 
 			$GLOBALS['phpgw']->template->set_file(array('form' => 'field_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
 			$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
 
-			if($GLOBALS['HTTP_POST_VARS']['submit'])
+			if($submit)
 			{
 				$errorcount = 0;
 
@@ -169,7 +168,7 @@
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been added !', $field_name));
 			}
-			if((! $submit) && (! $error) && (! $errorcount))
+			if((!$submit) && (! $error) && (! $errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
@@ -200,7 +199,6 @@
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo parse_navbar();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_footer();
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
@@ -211,7 +209,7 @@
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
 			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
 
-			if(!$field)
+			if (!$field)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&sort=$sort&query=$query&start=$start"));
 			}
@@ -248,11 +246,11 @@
 			{
 				$GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error));
 			}
-			if(($submit) && (! $error) && (! $errorcount))
+			if(($submit) && (! $error) && (!$errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been updated !', $field_name));
 			}
-			if((!$submit) && (! $error) && (! $errorcount))
+			if((!$submit) && (!$error) && (!$errorcount))
 			{
 				$GLOBALS['phpgw']->template->set_var('message','');
 			}
@@ -264,12 +262,13 @@
 			else
 			{
 				$fields = $this->read_custom_fields($start,$limit,$field);
-				$field  = $GLOBALS['phpgw']->strip_html($fields[0]['name']);
+				$field  = $GLOBALS['phpgw']->strip_html($fields[0]['title']);
+				$fn = $fields[0]['name'];
 			}
 
 			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Edit Custom Field'));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.edit'));
-			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$field&start=$start&query=$query&sort=$sort"));
+			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$fn&start=$start&query=$query&sort=$sort"));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
 
 			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
@@ -290,6 +289,14 @@
 
 		function delete()
 		{
+			if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
+			{
+				$GLOBALS['phpgw']->common->phpgw_header();
+				echo parse_navbar();
+				echo lang('access not permitted');
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+
 			$field    = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];
 			$field_id = $GLOBALS['HTTP_POST_VARS']['field_id'] ? $GLOBALS['HTTP_POST_VARS']['field_id'] : $GLOBALS['HTTP_GET_VARS']['field_id'];
 			$start    = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
@@ -340,48 +347,76 @@
 			}
 		}
 
-		function read_custom_fields()
+		function read_custom_fields($start=0,$limit=5,$query='')
 		{
-			$i = 0; $j = 0;
+			$i = 0;
 			$fields = array();
-			@reset($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
-			while(list($col,$descr) = @each($GLOBALS['phpgw_info']['user']['preferences']['addressbook']))
-			{
-				if(substr($col,0,6) == 'extra_')
-				{
-					$fields[$j]['name'] = ereg_replace('extra_','',$col);
-					$fields[$j]['name'] = ereg_replace(' ','_',$fields[$j]['name']);
-					$fields[$j]['id'] = $i;
 
-					if($query && ($fields[$j]['name'] != $query))
-					{
-						unset($fields[$j]['name']);
-						unset($fields[$j]['id']);
-					}
-					else
-					{
-						/* echo "<br>".$j.": '".$fields[$j]['name']."'"; */
-						$j++;
-					}
+			$this->config->read_repository();
+
+			while(list($name,$descr) = @each($this->config->config_data['custom_fields']))
+			{
+				/*
+				if($start < $i)
+				{
+					continue;
 				}
-				$i++;
+				*/
+
+				$test = @strtolower($name);
+				//if($query && !strstr($test,strtolower($query)))
+				if($query && ($query != $test))
+				{
+				}
+				else
+				{
+					$fields[$i]['name'] = $name;
+					$fields[$i]['title'] = $descr;
+					$fields[$i]['id'] = $i;
+
+					/*
+					if($i >= $limit)
+					{
+						break;
+					}
+					*/
+					$i++;
+				}
+			}
+			switch($sort)
+			{
+				case 'DESC';
+					krsort($fields);
+					break;
+				case 'ASC':
+				default:
+					ksort($fields);
 			}
 			@reset($fields);
+
 			return $fields;
 		}
 
 		function save_custom_field($old='',$new='')
 		{
-			$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
+			$this->config->read_repository();
+
+			if(!is_array($this->config->config_data['custom_fields']))
+			{
+				$this->config->config_data['custom_fields'] = array();
+			}
+
 			if($old)
 			{
-				$GLOBALS['phpgw']->preferences->delete("addressbook","extra_".$old);
+				unset($this->config->config_data['custom_fields'][$old]);
 			}
 			if($new)
 			{
-				$GLOBALS['phpgw']->preferences->add("addressbook","extra_".$new);
+				$tmp = strtolower(ereg_replace(' ','_',$new));
+				$this->config->config_data['custom_fields'][$tmp] = $new;
 			}
-			$GLOBALS['phpgw']->preferences->save_repository(1);
+
+			$this->config->save_repository();
 		}
 	}
 ?>

@@ -56,6 +56,7 @@
 			$GLOBALS['phpgw']->country    = CreateObject('phpgwapi.country');
 			$GLOBALS['phpgw']->browser    = CreateObject('phpgwapi.browser');
 			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->fields = CreateObject('addressbook.uifields');
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
 			$this->template = $GLOBALS['phpgw']->template;
@@ -135,38 +136,6 @@
 			$select .= '<noscript><input type="submit" name="' . $name . '_select" value="True"></noscript>' . "\n";
 
 			return $select;
-		}
-
-		function read_custom_fields()
-		{
-			$fields = array();
-			@reset($this->prefs);
-			while(list($col,$descr) = @each($this->prefs))
-			{
-				$tmp = '';
-				if(substr($col,0,6) == 'extra_')
-				{
-					$tmp = ereg_replace('extra_','',$col);
-					$tmp = ereg_replace(' ','_',$tmp);
-					$fields[$tmp] = $tmp;
-				}
-			}
-			@reset($fields);
-			return $fields;
-		}
-
-		function save_custom_field($old='',$new='')
-		{
-			$GLOBALS['phpgw']->preferences->read_repository($GLOBALS['phpgw_info']['user']['account_id']);
-			if($old)
-			{
-				$GLOBALS['phpgw']->preferences->delete('addressbook','extra_' . $old);
-			}
-			if($new)
-			{
-				$GLOBALS['phpgw']->preferences->add('addressbook','extra_' . $new);
-			}
-			$GLOBALS['phpgw']->preferences->save_repository(1);
 		}
 
 		/* Return a select form element with the categories option dialog in it */
@@ -299,7 +268,13 @@
 			$this->template->set_block('addressbook_list_t','remsearch','remsearch');
 			$this->template->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
 
-			$customfields = $this->read_custom_fields();
+			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['name'];
+				$namedfields[$y['name']] = $y['title'];
+			}
 
 			if(!isset($this->cat_id))
 			{
@@ -343,7 +318,7 @@
 					/* This must be a custom field */
 					if(!$showcol)
 					{
-						$showcol = $column[1];
+						$showcol = $namedfields[$column[1]];
 					}
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
@@ -363,7 +338,7 @@
 					'n_family' => 'n_family',
 					'org_name' => 'org_name'
 				);
-				$columns_to_display = $columns_to_display + $customfields;
+//				$columns_to_display = $columns_to_display + $customfields;
 				/* No prefs,. so cols above may have been set to '' or a bunch of <td></td> */
 				$cols='';
 				while($column = each($columns_to_display))
@@ -704,7 +679,13 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
-			$this->addressbook_form('','menuaction=addressbook.uiaddressbook.add','Add','',$customfields,$this->cat_id,True);
+			$custom = $this->fields->read_custom_fields();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['title'];
+			}
+
+			$this->addressbook_form('','menuaction=addressbook.uiaddressbook.add','Add','',$customfields,$this->cat_id);
 
 			$this->template->set_var('lang_ok',lang('ok'));
 			$this->template->set_var('lang_clear',lang('clear'));
@@ -758,7 +739,11 @@
 			echo parse_navbar();
 
 			/* Read in user custom fields, if any */
-			$customfields = $this->read_custom_fields();
+			$custom = $this->fields->read_custom_fields();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['title'];
+			}
 
 			/* merge in extra fields */
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
@@ -867,7 +852,12 @@
 			$this->template->set_block('view_t','view_footer','view_footer');
 			$this->template->set_block('view_t','view_buttons','view_buttons');
 
-			$customfields = $this->read_custom_fields();
+			$custom = $this->fields->read_custom_fields();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['title'];
+			}
+
 			/* _debug_array($this->prefs); */
 			while(list($column,$x) = each($this->contacts->stock_contact_fields))
 			{
@@ -1095,7 +1085,11 @@
 			$fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'];
 
 			/* _debug_array($this->prefs); */
-			$customfields = $this->read_custom_fields();
+			$custom = $this->fields->read_custom_fields();
+			while(list($x,$y) = @each($custom))
+			{
+				$customfields[$y['name']] = $y['name'];
+			}
 
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
 
