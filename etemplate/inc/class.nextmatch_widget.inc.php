@@ -40,6 +40,11 @@
 			if ($do_get_rows)
 			{
 				$value['rows'] = ExecMethod($value['get_rows'],$value);
+				if ($value['start'] > $value['rows'][0])
+				{
+					$value['start'] = 0;
+					$value['rows'] = ExecMethod($value['get_rows'],$value);
+				}
 				$GLOBALS['phpgw_info']['etemplate']['extension_data']['nextmatch_widget'][$cell['name']]['total'] = $value['rows'][0];
 			}
 			if ($cell['size'])
