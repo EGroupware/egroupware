@@ -303,13 +303,17 @@
                         . "$cat_data', cat_parent='$cat_parent', cat_access='$cat_access' where cat_appname='"
                         . $this->app_name . "' and cat_id='$cat_id'",__LINE__,__FILE__);
 		}
-		/*!
-		@function return_name
-		@abstract return category name given $cat_id
-		@param $cat_id
-		@result cat_name category name
-		*/
-		function return_name($cat_id)
+
+		function name2id($cat_name)
+		{
+			$this->db->query("select cat_id from phpgw_categories where cat_name='"
+                        . "$cat_name'",__LINE__,__FILE__);
+			$this->db->next_record();
+
+			return $this->db->f('cat_id');
+		}
+
+		function id2name($cat_id)
 		{
 			$this->db->query("select cat_name from phpgw_categories where cat_id='"
                         . "$cat_id'",__LINE__,__FILE__);
@@ -322,8 +326,21 @@
 			else
 			{
 				return '--';
-			}
+			}		
 		}
+
+		/*!
+		@function return_name
+		@abstract return category name given $cat_id
+		@param $cat_id
+		@result cat_name category name
+		*/
+		// NOTE: This is only a temp wrapper, use id2name() to keep things matching across the board. (jengo)
+		function return_name($cat_id)
+		{
+			return $this->id2name($cat_id);
+		}
+
 		/*!
 		@function exists
 		@abstract used for checking if a category name exists
