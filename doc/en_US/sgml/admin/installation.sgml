@@ -127,7 +127,7 @@ Installing from a CVS is fairly easy. The files should be checked out in the web
 You may have to get required permissions to install from CVS. Contact your system administrator if you dont have the permission to write to your webserver directory. 
 </para>
 <para>
-To see a list of applications currently available via CVS, go to [http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/phpgroupware/]
+To see a list of applications currently available via CVS, go to [http://savannah.gnu.org/cgi-bin/viewcvs/phpgroupware/]
 </para>
 <sect3>
 <title>Development Branch in CVS</Title>
@@ -151,31 +151,22 @@ or if you prefer using CVSROOT:
 <sect3>
 <title>Stable Branch in CVS</Title>
 <para>
-Follow these steps (please adjust to your server's config):
+Follow these steps (please adjust to your server's config and the up-to-date stable Version - 0.9.14 at the moment):
 </para>
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html</userinput>
-<userinput># cvs -z3 -d:pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware co -r Version-0_9_12-branch phpgroupware</userinput>
+<userinput># cvs -z3 -d:pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware co -r Version-0_9_14-branch phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
-<userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
+<userinput># cvs co -r Version-0_9_14-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
 </literallayout></blockquote>
 <para>
 or if you prefer using CVSROOT:
 </para>
 <blockquote><literallayout>
 <userinput># export CVSROOT=':pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware'</userinput>
-<userinput># cvs co -r Version-0_9_12-branch phpgroupware</userinput>
+<userinput># cvs co -r Version-0_9_14-branch phpgroupware</userinput>
 <userinput># cd phpgroupware</userinput>
-<userinput># cvs co -r Version-0_9_12-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
-</literallayout></blockquote>
-</sect3>
-<sect3>
-<title>Patched Branches in CVS</Title>
-<para>
-Recently the phpGroupWare developers started a branch for patches to released versions. This is to facilitate bugs being fixed in a released version without having to wait for the next offical release. There is a developer who has been assigned the responsibility for maintaining that branch and applying patches and fixes. To check out this version of the code using 0.9.12 as an example you would do the following:
-</para>
-<blockquote><literallayout>
-<userinput># cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware -r Version-0_9_12-patches phpgroupware</userinput>
+<userinput># cvs co -r Version-0_9_14-branch admin addressbook calendar email phpgwapi preferences setup todo notes infolog</userinput>
 </literallayout></blockquote>
 </sect3>
 </sect2>
@@ -476,14 +467,14 @@ You install the new application within the phpGroupWare install tree by copying 
 
 
 <para>
-For example, this is the process to install the Headlines application: (see [http://www.sourceforge.net/projects/phpgwapps] for more applications)
+For example, this is the process to install the Headlines application: (see [http://apps.phpgroupware.org] for more applications)
 </para>
 
 <para>
 Download the .tar.gz file for the application, or check out the source with cvs with
 </para>
 <blockquote><literallayout>
-<userinput># export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</userinput>
+<userinput># export CVSROOT=':pserver:anonymous@subversions.gnu.org:/cvsroot/phpgroupware'</userinput>
 <userinput># cvs login</userinput> (just hit enter if prompted for a password)
 <userinput># cvs co headlines</userinput>
 </literallayout></blockquote>
