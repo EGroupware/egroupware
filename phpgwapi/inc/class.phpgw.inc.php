@@ -134,28 +134,22 @@
     function link($url = "", $extravars = "")
     {
       global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
-      if (! $kp3)
-         $kp3 = $phpgw_info["user"]["kp3"];
-
-      // PHP won't allow you to set a var to a var
-      // or function for default values
+      if ($url == $PHP_SELF){ $url = ""; } //fix problems when PHP_SELF if used as the param
+      if (! $kp3) { $kp3 = $phpgw_info["user"]["kp3"]; }
       if (! $url) {
         $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
-        $url = $url_root[0]."//".$url_root[2].$PHP_SELF;
         /* Some hosting providers have their paths screwy.
            If the value from $PHP_SELF is not what you expect, you can use this to patch it
            It will need to be adjusted to your specific problem tho.
         */
         //$patched_php_self = str_replace("/php4/php/phpgroupware", "/phpgroupware", $PHP_SELF);
         $patched_php_self = $PHP_SELF;
-        $url = $url_root[0]."//".$url_root[2].$patched_php_self;
+        $url = (strlen($url_root[0])? $url_root[0].'/':'') . $url_root[2] . $patched_php_self;
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&
 	      $phpgw_info["server"]["usecookies"]) {
-        if ($extravars) {
-          $url .= "?$extravars";
-        }
+        if ($extravars) { $url .= "?$extravars"; }
       } else {
         $url .= "?sessionid=" . $phpgw_info["user"]["sessionid"];
         $url .= "&kp3=" . $kp3;
@@ -164,13 +158,8 @@
       	// Its up to the app to pass this value. (jengo)
         // Putting it into the app requires a massive number of updates in email app. 
         // Until that happens this needs to stay here (seek3r)
-        if ($phpgw_info["flags"]["newsmode"]) {
-          $url .= "&newsmode=on";
-        }
-
-        if ($extravars) {
-          $url .= "&$extravars";
-        }
+        if ($phpgw_info["flags"]["newsmode"]) { $url .= "&newsmode=on"; }
+        if ($extravars) { $url .= "&$extravars"; }
       }
 
       $url = str_replace("/?", "/index.php?", $url);
