@@ -71,6 +71,8 @@ error: while saveing !!!	etemplate	en	Error: while saveing !!!
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
+export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
+export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
 familyname	etemplate	en	Familyname
 fax	etemplate	en	Fax

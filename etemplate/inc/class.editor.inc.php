@@ -351,12 +351,62 @@
 				}
 				$msg = $this->etemplate->writeLangFile($content['name'],'en',$additional);
 			}
+			elseif ($content['export_xml'])
+			{
+				$msg = $this->export_xml();
+			}
 			elseif ($content['db_tools'])
 			{
 				ExecMethod('etemplate.db_tools.edit');
 				return;
 			}
 			$this->edit($msg);
+		}
+
+		function export_xml()
+		{
+			$name = $this->etemplate->name;
+			$template = $this->etemplate->template != '' ? $this->etemplate->template : 'default';
+
+			list($app) = explode('.',$name);
+
+			$dir = PHPGW_SERVER_ROOT . "/$app/templates/$template";
+			if ($create_it = !is_dir($dir))
+			{
+				$dir = PHPGW_SERVER_ROOT . "/$app/templates";
+			}
+			if (!is_writeable($dir))
+			{
+				return "Error: webserver is not allowed to write into '$dir' !!!";
+			}
+			if ($create)
+			{
+				mkdir($dir .= "/$template");
+			}
+			$file = "$dir/$name";
+			if ($this->etemplate->lang)
+			{
+				$file .= '.' . $this->etemplate->lang;
+			}
+			$old_file = $file . '.old.xul';
+			$file .= '.xul';
+			if (file_exists($file))
+			{
+				rename($file,$old_file);
+			}
+
+			if (!($f = fopen($file,'w')))
+			{
+				return 0;
+			}
+			$xul_io = CreateObject('etemplate.xul_io');
+			$xul = $xul_io->export(&$this->etemplate);
+
+			fwrite($f,$xul);
+			fclose($f);
+
+			return $xul_io->import(&$this->etemplate,$xul);
+			return "eTemplate '$name' written to '$file'";
 		}
 
 		function delete($post_vars='',$back = 'edit')
@@ -508,7 +558,8 @@
 				'show' => True,
 				'dump' => True,
 				'langfile' => True,
-				'size' => True
+				'size' => True,
+				'export_xml' => True
 			);
 			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{

@@ -545,7 +545,7 @@
 				default:
 					if (!isset($this->extension[$cell['type']]))
 					{
-						$html .= '<i>unknown type</i>';
+						$html .= "<i>unknown type '$cell[type]'</i>";
 					}
 					else
 					{
