@@ -21,12 +21,13 @@
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
 	$setup_info['infolog']['hooks'][] = 'admin';
+	$setup_info['infolog']['hooks'][] = 'about';
 	$setup_info['infolog']['hooks'][] = 'addressbook_view';
 	$setup_info['infolog']['hooks'][] = 'projects_view';
 
 	/* Dependacies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.10', '0.9.11' , '0.9.12', '0.9.13')
+		 'versions' => Array('0.9.13')
 	);
 ?>
