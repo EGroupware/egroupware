@@ -17,6 +17,7 @@
   /* $Id$ */
 
 	/* echo "<BR>This is using the MSSQL class<BR>"; */
+	// ^^ really ?! :)
 
 	class db
 	{
@@ -82,6 +83,17 @@
 				$this->halt("Invalid SQL: " . $Query_String, $line, $file);
 			}
 			return $this->Query_ID;
+		}
+
+		// I don't have access to M$-SQL, can someone finish these 2 functions ?  (jengo)
+		function to_timestamp($epoch)
+		{
+			return False;
+		}
+
+		function from_timestamp($timestamp)
+		{
+			return False;
 		}
 
 		// public: perform a query with limited result set
