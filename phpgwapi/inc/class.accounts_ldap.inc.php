@@ -64,7 +64,15 @@
 		'qmailp'   => True,
 		'qmailq'   => True,
 		'qmailr'   => True,
-		'qmails'   => True
+		'qmails'   => True,
+		'rpc'      => True,
+		'rpcuser'  => True,
+		'amanda'   => True,
+		'apache'   => True,
+		'pvm'      => True,
+		'squid'    => True,
+		'ident'    => True,
+		'mailnull' => True
 	);
 
 	class accounts_
