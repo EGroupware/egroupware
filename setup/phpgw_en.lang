@@ -524,6 +524,7 @@ show sender's email address with name	email	en	Show sender's email address with 
 show text on navigation icons	preferences	en	Show text on navigation icons
 site	admin	en	Site
 size	email	en	Size
+small	notes	en	Small
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
 sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
@@ -626,7 +627,7 @@ vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 verdana notes	en	Verdana
 very large	notes	en	Very Large
-very small	notes	en	Small
+very small	notes	en	Very Small
 video phone	addressbook	en	Video Phone
 view access log	admin	en	View Access Log
 view all tickets	tts	en	View all tickets
