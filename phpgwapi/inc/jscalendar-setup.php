@@ -25,6 +25,7 @@ $GLOBALS['phpgw_info']['flags'] = Array(
 );
 
 include('../../header.inc.php');
+header('Content-type: text/javascript; charset='.$GLOBALS['phpgw']->translation->charset());
 $GLOBALS['phpgw']->translation->add_app('jscalendar');
 
 $dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
