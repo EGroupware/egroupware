@@ -53,8 +53,6 @@
 <!-- END imported -->
 
 <!-- BEGIN import -->
-{info_css}<p class=action>{lang_info_action}<br>
-<hr noshade width="98%" align="center" size="1">
 <center>
 		<FORM {enctype} action="{action_url}" method="post">
 		<TABLE>
