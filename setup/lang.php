@@ -102,10 +102,11 @@
 		foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
 		{
 			$_f_buffer = split("/", $badline["appfile"]);
-			$langfile  = $_f_buffer[count($_f_buffer)-1] . " " . lang("in") . " " . $_f_buffer[count($_f_buffer)-3] . " " . lang("module");
+			$langfile  = "<font color='green'>" . $_f_buffer[count($_f_buffer)-1] . "</font> " . lang("in") . " ";
+		    $langfile .= "<font color='green'>" . $_f_buffer[count($_f_buffer)-3] . "</font> " . lang("module");
 		
 			$str .= lang("File") . " : " . $langfile . "<br>";
-			$str .= lang("Line") . " : " . $badline["line"] . "<br>";
+			$str .= "&nbsp; &nbsp; &nbsp; " . lang("Line") . " : " . $badline["line"] . "<br>";
 		}
 		$setup_tpl->set_var('V_alert_word', lang("Rejected lines"));
 		$setup_tpl->set_var('V_alert_msg', $str);
