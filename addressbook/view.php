@@ -138,13 +138,28 @@
 
 	if (($this->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $phpgw_info['user']['account_id']))
 	{
-		$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php").'">');
+		if ($referer)
+		{
+			$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php",'referer='.urlencode($referer)).'">');
+		}
+		else
+		{
+			$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php").'">');
+		}
 		$t->set_var('edit_button','<input type="submit" name="edit" value="' . lang('Edit') . '">');
 	}
 
 	$copylink  = '<form method="POST" action="' . $phpgw->link("/addressbook/add.php").'">';
 	$vcardlink = '<form method="POST" action="' . $phpgw->link("/addressbook/vcardout.php").'">';
-	$donelink  = '<form method="POST" action="' . $phpgw->link("/addressbook/index.php").'">';
+	if ($referer)
+	{
+		$referer = ereg_replace('/phpgroupware','',$referer);
+		$donelink  = '<form method="POST" action="' . $phpgw->link($referer).'">';
+	}
+	else
+	{
+		$donelink  = '<form method="POST" action="' . $phpgw->link("/addressbook/index.php").'">';
+	}
 
 	$t->set_var("access_link",$access_link);
 	$t->set_var("ab_id",$ab_id);

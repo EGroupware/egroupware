@@ -1,16 +1,16 @@
 <?php
-/**************************************************************************\
-* phpGroupWare - addressbook                                               *
-* http://www.phpgroupware.org                                              *
-* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+  /**************************************************************************\
+  * phpGroupWare - addressbook                                               *
+  * http://www.phpgroupware.org                                              *
+  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
 
-/* $Id$ */
+  /* $Id$ */
 
 	if ($submit || $AddVcard) {
 		$phpgw_info["flags"] = array(
@@ -42,7 +42,7 @@
 	if ($AddVcard){
 		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
 	} else if ($add_email) {
-		list($fields["firstname"],$fields["lastname"]) = explode(" ", $name);
+		list($fields["n_given"],$fields["n_family"]) = explode(" ", $name);
 		$fields["email"] = $add_email;
 		addressbook_form("","add.php","Add",$fields,'',$cat_id);
 	} else if (! $submit && ! $add_email) {
@@ -164,9 +164,9 @@
 
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields,$fields["access"],$fields["cat_id"]);
 		$ab_id = addressbook_get_lastid();
-
+		$referer = urlencode($referer);
 		Header("Location: "
-			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&cat_id=$cat_id"));
+			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&cat_id=$cat_id&referer=$referer"));
 		$phpgw->common->phpgw_exit();
 	}
 

@@ -177,9 +177,9 @@
 		}
 
 		addressbook_update_entry($ab_id,$userid,$fields,$fields['access'],$fields["cat_id"]);
-
+		$referer = urlencode($referer);
 		Header("Location: "
-			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+			. $phpgw->link("/addressbook/view.php","ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id&referer=$referer"));
 		$phpgw->common->phpgw_exit();
 	}
 

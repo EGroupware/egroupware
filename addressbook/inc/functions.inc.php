@@ -222,7 +222,7 @@
 	// Folowing used for add/edit
 	function addressbook_form($format,$action,$title="",$fields="",$customfields="",$cat_id="")
 	{
-		global $phpgw, $phpgw_info;
+		global $phpgw, $phpgw_info,$referer;
      
 		$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 		$t->set_file(array( "form"	=> "form.tpl"));
@@ -429,7 +429,7 @@
 		}
 
 		if ($action) {
-			echo "<FORM action=\"".$phpgw->link('/addressbook/' . $action)."\" method=\"post\">\n";
+			echo "<FORM action=\"".$phpgw->link('/addressbook/' . $action.'?referer='.urlencode($referer))."\" method=\"post\">\n";
 		}
 
 		if (! ereg("^http://",$url)) {
