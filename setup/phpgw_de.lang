@@ -146,6 +146,7 @@ e-mail	common	de	E-Mail
 e-mail preferences	common	de	E-Mail Einstellungen
 edit	common	de	Editieren
 edit application	admin	de	Anwendung editieren
+edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 edit group	admin	de	Gruppe editieren
 edit note for	notes	de	Notiz bearbeiten für
 edit user account	admin	de	Benutzerkonto editieren
@@ -198,7 +199,9 @@ global public	common	de	Global Public
 global public and group public	common	de	öffentliche und Gruppen
 global public only	common	de	nur öffentliche
 go!	calendar	de	Go!
+grant addressbook access	common	de	Berechtigungen für Adressbuchzugriffe
 grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
+grant todo access	common	de	Berechtigungen für Aufgabenlisten-Zugriffe
 group	common	de	Gruppe
 group access 	common	de	Gruppenzugriff
 group has been added	common	de	Gruppe hinzugefügt
@@ -215,6 +218,7 @@ headline sites	admin	de	Sites für Schlagzeilen
 headlines	common	de	Schlagzeilen
 help	common	de	Hilfe
 helvetica	notes	de	Helvetica
+hide php information	admin	de	PHP Informationen ausblenden
 high	common	de	Hoch
 home	common	de	Home
 home city	addressbook	de	Stadt (priv)
@@ -318,6 +322,7 @@ next page	common	de	nächste Seite
 nntp	common	de	NNTP
 no	common	de	Nein
 no matches found.	calendar	de	Keine Treffer gefunden.
+no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
 no tickets found	tts	de	Keine Tickets gefunden
 no_file_name	filemanager	de	Es wurde kein Dateiname angegeben
@@ -352,6 +357,7 @@ permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
 personal	addressbook	de	Persönlich
 personalized notes for	notes	de	Persönliche Notizen für
+php information	admin	de	PHP Informationen
 phpgroupware login	login	de	phpGroupWare Login
 phrase in english	transy	de	Phrase in English
 phrase in new language	transy	de	Phrase in der neuen Sprache
@@ -484,6 +490,7 @@ today	calendar	de	Heute
 today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
 todo	todo	de	Beschreibung
 todo list	common	de	Aufgabenliste
+todo	preferences	de	Aufgabenliste
 todo list - add	todo	de	Aufgabenliste - hinzufügen
 todo list - add sub-project	todo	de	ToDo-List: Teilprojekt hinzufügen
 todo list - edit	todo	de	Aufgabenliste - editieren
