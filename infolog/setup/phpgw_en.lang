@@ -39,6 +39,7 @@ finish	infolog	en	finish
 from	infolog	en	From
 import	infolog	en	Import
 infolog	common	en	InfoLog
+info log	common	en	InfoLog
 infolog - delete	infolog	en	Info Log - Delete
 infolog - edit	infolog	en	InfoLog - Edit
 infolog - import CSV-File	infolog	en	InfoLog - Import CSV-File
