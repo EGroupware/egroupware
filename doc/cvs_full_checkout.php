@@ -20,7 +20,7 @@
 	// Temp paths that can be read and written to
 	$tmp_dir       = '/tmp';
 	// Path of where you want the phpgroupware directory to go.  NO trailing /
-	$co_dir        = '/var/www/html';
+	$co_dir        = '/var/www/phpgroupware';
 	// If you do not have developer access to cvs, change to True
 	$cvs_anonymous = True;
 	// Only needed if you have developers cvs access
@@ -31,10 +31,8 @@
 	// Modules you want to checkout, do NOT add the phpgroupware module
 	$co_modules[] = 'addressbook';
 	$co_modules[] = 'admin';
-	$co_modules[] = 'backup';
 	$co_modules[] = 'bookkeeping';
 	$co_modules[] = 'bookmarks';
-	$co_modules[] = 'brewer';
 	$co_modules[] = 'calendar';
 	$co_modules[] = 'cart';
 	$co_modules[] = 'ccs';
@@ -43,7 +41,6 @@
 	$co_modules[] = 'chora';
 	$co_modules[] = 'comic';
 	$co_modules[] = 'cron';
-	$co_modules[] = 'developer_tools';
 	$co_modules[] = 'dj';
 	$co_modules[] = 'eldaptir';
 	$co_modules[] = 'email';
@@ -56,10 +53,7 @@
 	$co_modules[] = 'inv';
 	$co_modules[] = 'manual';
 	$co_modules[] = 'mediadb';
-	$co_modules[] = 'meerkat';
-	$co_modules[] = 'messenger';
 	$co_modules[] = 'napster';
-	$co_modules[] = 'netsaint';
 	$co_modules[] = 'news_admin';
 	$co_modules[] = 'nntp';
 	$co_modules[] = 'notes';
@@ -67,16 +61,12 @@
 	$co_modules[] = 'phpGWShell_Win32_VB';
 	$co_modules[] = 'phpgwapi';
 	$co_modules[] = 'phpgwnetsaint';
-	$co_modules[] = 'phpsysinfo';
 	$co_modules[] = 'phpwebhosting';
 	$co_modules[] = 'polls';
 	$co_modules[] = 'preferences';
 	$co_modules[] = 'projects';
-	$co_modules[] = 'qmailldap';
 	$co_modules[] = 'rbs';
 	$co_modules[] = 'setup';
-	$co_modules[] = 'skel';
-	$co_modules[] = 'soap';
 	$co_modules[] = 'squirrelmail';
 	$co_modules[] = 'stocks';
 	$co_modules[] = 'syncml-server';
@@ -85,9 +75,7 @@
 	$co_modules[] = 'transy';
 	$co_modules[] = 'tts';
 	$co_modules[] = 'wap';
-	$co_modules[] = 'wcm';
 	$co_modules[] = 'weather';
-	$co_modules[] = 'xmlrpc';
 
    // -- End config section
 
@@ -131,23 +119,23 @@
 	chdir($co_dir);
 	if ($cvs_anonymous)
 	{
-		docvscommand('cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware login',True);
-		docvscommand('cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co phpgroupware',True);
+		docvscommand('cvs -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware login',True);
+		docvscommand('cvs -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware co phpgroupware',True);
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co phpgroupware');
+		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co phpgroupware');
 	}
 
 	chdir($co_dir . '/phpgroupware');
 
 	if ($cvs_anonymous)
 	{
-		docvscommand('cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
+		docvscommand('cvs -z3 -d:pserver:anonymous@subversions.gnu.org:443/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
 	}
 	else
 	{
-		docvscommand('cvs -d' . $cvs_login . '@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
+		docvscommand('cvs -d' . $cvs_login . '@subversions.gnu.org:443/cvsroot/phpgroupware co ' . implode(' ',$co_modules));
 	}
 
 	docvscommand('cvs update -dP');
