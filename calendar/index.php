@@ -50,21 +50,8 @@
     }
   }
 
-  if(!isset($owner)) { $owner = 0; } 
-  unset($owner);
-
-  if(!isset($owner) || !$owner) {
-    $id = $phpgw_info["user"]["userid"];
-    $fn = $phpgw_info["user"]["firstname"];
-    $ln = $phpgw_info["user"]["lastname"];
-    $owner = 0;
- } else {
-    $phpgw->db->query("SELECT account_lid,account_firstname,account_lastname FROM accounts WHERE account_id=$owner");
-    $phpgw->db->next_record();
-    $id = $phpgw->db->f("account_lid");
-    $fn = $phpgw->db->f("account_firstname");
-    $ln = $phpgw->db->f("account_lastname");
-  }
+  if(!isset($owner)) { $owner = $phpgw_info["user"]["account_id"]; } 
+//  unset($owner);
 
   $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
 
@@ -88,7 +75,7 @@
 
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
   $phpgw->template->set_var("month_identifier",lang(strftime("%B",$m)) . " " . $thisyear);
-  $phpgw->template->set_var("username",$phpgw->common->display_fullname($id,$fn,$ln));
+  $phpgw->template->set_var("username",$phpgw->common->grab_owner_name($owner));
   $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"day.php"));
   $phpgw->template->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
