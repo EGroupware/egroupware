@@ -142,15 +142,17 @@
 			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
-				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$ele[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 			}
 			else
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 				}
 			}
+			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+
 			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
@@ -183,15 +185,17 @@
 			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
-				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
+				$ele[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 			}
 			else
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 				}
 			}
+			$arr[] = CreateObject('phpgwapi.xmlrpcval',$ele,'struct');
+
 			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);

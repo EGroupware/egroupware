@@ -669,61 +669,70 @@
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$acct_data, 'struct'));
 	}
 */
-	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
+
+	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
 	function _xmlrpcs_login($server,$m)
 	{
-		$server_name = $m->getParam(0);
-		$username    = $m->getParam(1);
-		$password    = $m->getParam(2);
-		$serverdata['server_name'] = $server_name->scalarval();
-		$serverdata['username']    = $username->scalarval();
-		$serverdata['password']    = $password->scalarval();
+		$rdata = $m->getParam(0);
+		$data = $rdata->scalarval();
 
-		if($serverdata['server_name'])
+		$server_name = $data['server_name']->scalarval();
+		$username    = $data['username']->scalarval();
+		$password    = $data['password']->scalarval();
+
+		$sparts = explode('.',$server_name);
+		if($sparts[1])
 		{
-			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
+			/* we were passed an FQDN */
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password);
 		}
 		else
 		{
-			// Milosch - jengo, how do we do this?
-			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create($serverdata['username'],$serverdata['password']);
+			/* possible phpgw domain */
+			if($server_name)
+			{
+				$user = $username.'@'.$server_name;
+			}
+			else
+			{
+				$user = $username;
+			}
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create($user,$password);
 		}
 
 		if($sessionid && $kp3)
 		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','sessionid','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','kp3','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$kp3,'string');
+			$rtrn['sessionid'] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
+			$rtrn['kp3'] = CreateObject('phpgwapi.xmlrpcval',$kp3,'string');
 		}
 		else
 		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+			$rtrn['GOAWAY'] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
 		}
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
 
-	$GLOBALS['_xmlrpcs_logout_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_logout_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_logout_doc'] = 'phpGroupWare client or server logout via XML-RPC';
 	function _xmlrpcs_logout($server,$m)
 	{
-		$xsessionid = $m->getParam(0);
-		$xkp3       = $m->getParam(1);
+		$rdata = $m->getParam(0);
+		$data = $rdata->scalarval();
 
-		$sessionid = $xsessionid->scalarval();
-		$kp3       = $xkp3->scalarval();
+		$sessionid = $data['sessionid']->scalarval();
+		$kp3       = $data['kp3']->scalarval();
+
 		$later = $GLOBALS['phpgw']->session->destroy();
 
 		if($later)
 		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOODBYE','string');
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+			$rtrn['GOODBYE'] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
 		}
 		else
 		{
-			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','WHAT?','string');
+			/* This never happens, yet */
+			$rtrn['OOPS'] = CreateObject('phpgwapi.xmlrpcval','WHAT?','string');
 		}
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}

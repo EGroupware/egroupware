@@ -117,7 +117,7 @@
 					}
 				}
 			}
-			return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
+			return array(0, "Wanted $wanted, got $got at param $pno)");
 		}
 
 		function parseRequest($data='')
@@ -183,17 +183,13 @@
 				}
 				if(!isset($dmap[$methName]['function']))
 				{
-					/* these params are xmlrcpvals, need extract */
-					$params = $GLOBALS['_xh'][$parser]['params'];
-					$code = "\$obj = ExecMethod('" . $methName . "',\$params);";
-					/* echo $code; */
-					/* _debug_array($params); */
-					eval($code);
-					if(is_object($obj))
-					{
-						/* This works */
-						$dmap = $obj->xml_functions;
-					}
+					/* phpgw mod - fetch the (bo) class methods to create the dmap */
+					$method = $methName;
+					$tmp = explode('.',$methName);
+					$methName = $tmp[2];
+					$listmeth = $tmp[0] . '.' . $tmp[1] . '.' . 'list_methods';
+					$dmap = ExecMethod($listmeth,'xmlrpc');
+					$this->dmap = $dmap;
 				}
 				if (isset($dmap[$methName]['function']))
 				{
@@ -217,25 +213,53 @@
 							{
 								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
 								$code = ereg_replace(',,',",'',",$code);
+								eval($code);
 							}
 							else
 							{
-								$params = $GLOBALS['_xh'][$parser]['params'];
-								$code = '$r =' . "ExecMethod('" . $dmap[$methName]['function'] . "'" . ',$params);';
+								/* phpgw mod - finally, execute the function call and return the values */
+								$params = $GLOBALS['_xh'][$parser]['params'][0];
+								$code = '$p = '  . $params . ';';
+								eval($code);
+								$params = $p->getval();
+								$res = ExecMethod($method,$params);
+								while(list($key,$val) = @each($res))
+								{
+									if(gettype($val) == 'array')
+									{
+										while(list($x,$y) = @each($val))
+										{
+											$ele[$x] = CreateObject('phpgwapi.xmlrpcval',$y,'string');
+										}
+									}
+									else
+									{
+										$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
+									}
+								}
+								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$ele,'struct'));
 							}
-							eval($code);
 						}
 					}
 					else
 					{
-						$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$GLOBALS['xmlrpcerr']['incorrect_params'],$GLOBALS['xmlrpcstr']['incorrect_params'].': ' . $sr[1]
+						$r = CreateObject(
+							'phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval'),
+							$GLOBALS['xmlrpcerr']['incorrect_params'],
+							$GLOBALS['xmlrpcstr']['incorrect_params'] . ': ' . $sr[1]
 						);
 					}
 				}
 				else
 				{
 					// else prepare error response
-					$r= CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval'),$GLOBALS['xmlrpcerr']['unknown_method'],$GLOBALS['xmlrpcstr']['unknown_method']);
+					$r = CreateObject(
+						'phpgwapi.xmlrpcresp',
+						CreateObject('phpgwapi.xmlrpcval'),
+						$GLOBALS['xmlrpcerr']['unknown_method'],
+						$GLOBALS['xmlrpcstr']['unknown_method']
+					);
 				}
 			}
 			return $r;
