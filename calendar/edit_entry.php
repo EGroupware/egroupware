@@ -37,7 +37,7 @@ if ($id > 0) {
     $day = $phpgw->db->f(1) % 100;
     $time = $phpgw->db->f(2);
     if ($time > 0) {
-       $hour = $time / 10000;
+       $hour = intval($time / 10000);
        $minute = ($time / 100) % 100;
     }
     $duration	 = $phpgw->db->f(5);
