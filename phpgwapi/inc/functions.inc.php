@@ -56,9 +56,10 @@
 			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
-		if ($p1 == '_UNDEF_')
+		if ($p1 == '_UNDEF_' && $p1 != 1)
 		{
-			eval('$obj = new '.$classname.';');
+			$code = '$obj = new '.$classname.';';
+			eval($code);
 		}
 		else
 		{
@@ -67,7 +68,7 @@
 			$code = '$obj = new '.$classname.'(';
 			while (list($x,$test) = each($input))
 			{
-				if ($test == '_UNDEF_' || $i == 17)
+				if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
 				{
 					break;
 				}
@@ -99,90 +100,90 @@
 	*/
 	function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
-	/* Need to make sure this is working against a single dimensional object */
-	$partscount = substr_count($object, '.');
-	if ($partscount == 2)
-	{
-		list($appname,$classname,$functionname) = explode(".", $object);
-		if (!is_object($GLOBALS[$classname]))
+		/* Need to make sure this is working against a single dimensional object */
+		$partscount = substr_count($object, '.');
+		if ($partscount == 2)
 		{
-			if ($classparams != '_UNDEF_')
+			list($appname,$classname,$functionname) = explode(".", $object);
+			if (!is_object($GLOBALS[$classname]))
 			{
-				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
+				if ($classparams != '_UNDEF_')
+				{
+					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
+				}
+				else
+				{
+					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
+				}
+			}
+
+			if ($functionparams != '_UNDEF_')
+			{
+				return $GLOBALS[$classname]->$functionname($functionparams);
 			}
 			else
 			{
-				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
+				return $GLOBALS[$classname]->$functionname();
 			}
 		}
-
-		if ($functionparams != '_UNDEF_')
+		/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
+		elseif ($partscount >= 3)
 		{
-			return $GLOBALS[$classname]->$functionname($functionparams);
+			$classpart = explode(".", $object);
+			$classpartnum = $partscount - 1;
+
+			$classpart = explode (".", $classname);
+			$appname = $classpart[0];		
+			$classname = $classpart[$classpartnum];
+			$functionname = $classpart[$partscount];
+			/* Now I clear these out of the array so that I can do a proper */
+			/* loop and build the $parentobject */
+			unset ($classpart[0]);
+			unset ($classpart[$classpartnum]);
+			unset ($classpart[$partscount]);
+			reset ($classpart);
+			$firstparent = 'True';
+			while(list($key, $val) = each($classpart))
+			{ 
+				if ($firstparent == 'True')
+				{
+					$parentobject = '$GLOBALS["'.$val.'"]';
+					$firstparent = False;
+				}
+				else
+				{
+					$parentobject .= '->'.$val;
+				}
+			}
+			eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
+			if (!$isobject)
+			{
+				if ($classparams != '_UNDEF_')
+				{
+					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
+				}
+				else
+				{
+					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
+				}
+			}
+
+			if ($functionparams != '_UNDEF_')
+			{
+				eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
+				return $returnval;
+			}
+			else
+			{
+				eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
+				return $returnval;
+			}		
 		}
 		else
 		{
-			return $GLOBALS[$classname]->$functionname();
+			return 'error in parts';
 		}
 	}
-	/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
-	elseif ($partscount >= 3)
-	{
-		$classpart = explode(".", $object);
-		$classpartnum = $partscount - 1;
-
-		$classpart = explode (".", $classname);
-		$appname = $classpart[0];		
-		$classname = $classpart[$classpartnum];
-		$functionname = $classpart[$partscount];
-		/* Now I clear these out of the array so that I can do a proper */
-		/* loop and build the $parentobject */
-		unset ($classpart[0]);
-		unset ($classpart[$classpartnum]);
-		unset ($classpart[$partscount]);
-		reset ($classpart);
-		$firstparent = 'True';
-		while(list($key, $val) = each($classpart))
-		{ 
-			if ($firstparent == 'True')
-			{
-				$parentobject = '$GLOBALS["'.$val.'"]';
-				$firstparent = False;
-			}
-			else
-			{
-				$parentobject .= '->'.$val;
-			}
-		}
-		eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
-		if (!$isobject)
-		{
-			if ($classparams != '_UNDEF_')
-			{
-				eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
-			}
-			else
-			{
-				eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
-			}
-		}
-
-		if ($functionparams != '_UNDEF_')
-		{
-			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
-			return $returnval;
-		}
-		else
-		{
-			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
-			return $returnval;
-		}		
-	}
-	else
-	{
-		return 'error in parts';
-	}
-}
 
 	/*!
 	@function lang
