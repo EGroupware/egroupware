@@ -20,12 +20,12 @@
 
 	$contacts = CreateObject('phpgwapi.contacts');
 
-	if($new_owner==0)
+	if(intval($new_owner)==0)
 	{
-		$contacts->delete_all($account_id);
+		$contacts->delete_all(intval($account_id));
 	}
 	else
 	{
-		$contacts->change_owner($account_id,$new_owner);
+		$contacts->change_owner(intval($account_id),intval($new_owner));
 	}
 ?>

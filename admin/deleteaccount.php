@@ -41,10 +41,10 @@
 		$str = '<select name="new_owner" size="5">'."\n";
 		$users = $phpgw->accounts->get_list('accounts');
 		$c_users = count($users);
-		$str .= '<option value="0">'.lang('Delete All Records').'</option>'."\n";
+		$str .= '<option value=0>'.lang('Delete All Records').'</option>'."\n";
 		for($i=0;$i<$c_users;$i++)
 		{
-			$str .= '<option value="'.$users[$i]['account_id'].'">'.$phpgw->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname'],$users[$i]['account_lastname']).'</option>'."\n";
+			$str .= '<option value='.$users[$i]['account_id'].'>'.$phpgw->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname'],$users[$i]['account_lastname']).'</option>'."\n";
 		}
 		$str .= '</select>'."\n";
 		$phpgw->template->set_var('lang_new_owner',lang('Who would you like to transfer ALL records owned by the deleted user to?'));
@@ -61,12 +61,14 @@
 		settype($account_id,'integer');
 		$account_id = get_account_id($accountid);
 		$lid = $phpgw->accounts->id2name($account_id);
-		$phpgw->db->query('SELECT app_name FROM phpgw_applications WHERE app_enabled=1',__LINE__,__FILE__);
-		if($phpgw->db->num_rows())
+		$db = $phpgw->db;
+		$db->query('SELECT app_name,app_order FROM phpgw_applications WHERE app_enabled!=0 ORDER BY app_order',__LINE__,__FILE__);
+		if($db->num_rows())
 		{
-			while($phpgw->db->next_record())
+			while($db->next_record())
 			{
-				$appname = $phpgw->db->f('app_name');
+				$appname = $db->f('app_name');
+
 				if($appname <> 'admin')
 				{
 					$phpgw->common->hook_single('deleteaccount', $appname);
