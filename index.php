@@ -11,7 +11,7 @@
 
 	/* $Id$ */
 
-	$GLOBALS['sessionid'] = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? @$GLOBALS['HTTP_GET_VARS']['sessionid'] : @$GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
 	if (! $GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
