@@ -24,40 +24,27 @@
 
   /* $Id$ */
   
-  class accounts
+  class accounts_
   {
-    var $groups;
-    var $group_names;
-    var $apps;
-
     var $db;
     var $account_id;
     var $data;
-
-    function accounts($account_id = "")
+    var $memberships;
+    var $members;
+    
+    function read_repository()
     {
-       global $phpgw_info, $phpgw;
- 
-       if (! $account_id) {
-          $this->account_id = $phpgw_info["user"]["account_id"];
-       }
-       $this->db = $phpgw->db;
-       //$this->read();
-    }
-
-    function read()
-    {
-       global $phpgw_info, $phpgw;
+       global $phpgw;
 
        // get a ldap connection handle
        $ds = $phpgw->common->ldapConnect();
+
        // search the dn for the given uid
        $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$this->account_id);
        $allValues = ldap_get_entries($ds, $sri);
 
        /* Now dump it into the array; take first entry found */
-       $this->data["userid"]		= $allValues[0]["uidnumber"][0];
-       $this->data["account_id"]		= $allValues[0]["uidnumber"][0];
+       $this->data["account_id"]	= $allValues[0]["uidnumber"][0];
        $this->data["account_lid"] 	= $allValues[0]["uid"][0];
        $this->data["account_dn"]  	= $allValues[0]["dn"];
        $this->data["firstname"]   	= $allValues[0]["givenname"][0];
@@ -71,20 +58,20 @@
        $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
        $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
        $this->data["status"]            = $this->db->f("account_status");
-    }
 
-    function read_repository()
-    {
        return $this->data;
     }
 
+    function update_data($data)
+    {
+    }
+    
     function save_repository()
     {
        global $phpgw_info, $phpgw;
-       $db = $phpgw->db;
 
        /* ********This sets the server variables from the database******** */
-       $db->query("select * from config",__LINE__,__FILE__);
+/*       $db->query("select * from config",__LINE__,__FILE__);
        while ($db->next_record()) {
           $phpgw_info["server"][$db->f("config_name")] = $db->f("config_value");
        }
@@ -103,106 +90,61 @@
        }
        $db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
                 . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
+*/        
     }
-
-    function read_groups($id)
+    
+    function function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
     {
-      global $phpgw_info, $phpgw;
-
-      if (gettype($id) == "string") { $id = $this->name2id($id); }
-      $groups = Array();
-      $group_memberships = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, intval($id));
-      if (!$group_memberships) { return False; }
-      for ($idx=0; $idx<count($group_memberships); $idx++){
-        $groups[$group_memberships[$idx]] = 1;
+    }
+    
+    function delete($account_id) 
+    {
+    }
+    
+    function get_list()
+    {
+    	global $phpgw, $phpgw_info;
+      
+      	$sql = "select * from phpgw_accounts";
+      	$this->db->query($sql,__LINE__,__FILE__);
+      	while ($this->db->next_record()) 
+      	{
+      		$accounts[] = Array("account_id" => $this->db->f("account_id"),
+      				"account_lid" => $this->db->f("account_lid"),
+      				"account_type" => $this->db->f("account_type"),
+      				"account_firstname" => $this->db->f("account_firstname"),
+      				"account_lastname" => $this->db->f("account_lastname"),
+      				"account_status" => $this->db->f("account_status")
+      				);
       }
-      return $groups;
+
+       // get a ldap connection handle
+       $ds = $phpgw->common->ldapConnect();
+
+       // search the dn for the given uid
+       $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$this->account_id);
+       $allValues = ldap_get_entries($ds, $sri);
+
+       /* Now dump it into the array; take first entry found */
+       $this->data["account_id"]	= $allValues[0]["uidnumber"][0];
+       $this->data["account_lid"] 	= $allValues[0]["uid"][0];
+       $this->data["account_dn"]  	= $allValues[0]["dn"];
+       $this->data["firstname"]   	= $allValues[0]["givenname"][0];
+       $this->data["lastname"]    	= $allValues[0]["sn"][0];
+       $this->data["fullname"]    	= $allValues[0]["cn"][0];
+      
+       $this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+       $this->db->next_record();
+      
+       $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
+       $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+       $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+       $this->data["status"]            = $this->db->f("account_status");
+
+       return $this->data;
+      return $accounts;
     }
-
-    function read_group_names($lid = "")
-    {
-	return $this->security_equals($lid);
-    }
-
-    function security_equals($lid = "")
-    {
-       global $phpgw, $phpgw_info;
-
-       if (! $lid) {
-          $lid = $phpgw_info["user"]["userid"];
-       }
-       $groups = $this->read_groups($lid);
-
-       $i = 0;
-       while ($groups && $group = each($groups)) {
-          $this->db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
-          $this->db->next_record();
-          $group_names[$i][0]   = $group[0];
-          $group_names[$i][1]   = $this->db->f("group_name");
-          $group_names[$i++][2] = $group[1];
-       }
-
-       if (! $lid) {
-          $this->group_names = $group_names;
-       }
-
-       return $group_names;
-    }
-
-
-    // This is used to convert a raw group string (,5,6,7,) into a string of
-    // there names.
-    // Example: accounting, billing, developers
-    function convert_string_to_names($gs)
-    {
-      global $phpgw;
-
-      $groups = explode(",",$gs);
-
-      $s = "";
-      for ($i=1;$i<count($groups)-1; $i++) {
-	      $group_number = explode(",",$groups[$i]);
-        //$phpgw->db->query("select group_name from groups where group_id=".$groups[$i]);
-        $phpgw->db->query("select group_name from groups where group_id=".$group_number[0],__LINE__,__FILE__);
-        $phpgw->db->next_record();
-        $s .= $phpgw->db->f("group_name");
-        if (count($groups) != 0 && $i != count($groups)-2)
-           $s .= ",";
-        }
-      return $s;
-    }    
-
-
-    function listusers($group="")
-    {
-       global $phpgw;
-print "todo listusers<br>";
-       if ($group) {
-          $users = $phpgw->acl->get_ids_for_location($group, 1, "phpgw_group", "u");
-          reset ($users);
-          $sql = "select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id in (";
-          for ($idx=0; $idx<count($num); ++$idx){
-            if ($idx == 1){
-              $sql .= $users[$idx];
-            }else{
-              $sql .= ",".$users[$idx];
-            }
-          }
-          $sql .= ")";
-          $this->db->query($sql,__LINE__,__FILE__);
-       } else {
-          $this->db->query("select account_lid,account_firstname,account_lastname from phpgw_accounts",__LINE__,__FILE__);
-       }
-       $i = 0;
-       while ($this->db->next_record()) {
-          $accounts["account_lid"][$i]       = $this->db->f("account_lid");
-          $accounts["account_firstname"][$i] = $this->db->f("account_firstname");
-          $accounts["account_lastname"][$i]  = $this->db->f("account_lastname");
-    	  $i++;
-       }
-       return $accounts;
-    }
-
+    
     function name2id($account_name)
     {
       global $phpgw, $phpgw_info;
@@ -242,7 +184,7 @@ print "todo listusers<br>";
     	return True;
     }
 
-    function auto_generate($accountname, $passwd, $defaultprefs ="")
+    function auto_add($account_name, $passwd, $default_prefs=False, $default_acls= False)
     {
        print "not done until now auto_generate class.accounts_ldap.inc.php<br>";
        exit();
