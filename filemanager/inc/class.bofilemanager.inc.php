@@ -666,7 +666,7 @@
 		function f_newfile()
 		{
 			$result = Array();
-			echo "newfile: ".$this->newfile ." createfile: ".$this->createfile;
+			//echo "newfile: ".$this->newfile ." createfile: ".$this->createfile;
 			//die();
 			if ($this->newfile && $this->createfile)
 			{
@@ -717,7 +717,7 @@
 		
 				$ls_array = $this->vfs->ls (array (
 						'string'	=> $this->upload_file['name'][$i],
-						'relatives'	=> array (RELATIVE_ALL,
+						'relatives'	=> array (RELATIVE_ALL),
 						'checksubdirs'	=> False,
 						'nofiles'	=> True
 					)

@@ -88,6 +88,8 @@
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			unset($GLOBALS['phpgw_info']['flags']['noappheader']);
 			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
+			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
+			unset($GLOBALS['phpgw_info']['flags']['headonly']);
 			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
 		}
 		function no_header()
@@ -171,7 +173,7 @@
 					'relatives' => Array(RELATIVE_NONE)
 					)))
 				{
-					echo lang('failed to create directory') . ' :'. $this->bo->homedir . "\n";
+//TODO: xsltise					echo lang('failed to create directory') . ' :'. $this->bo->homedir . "\n";
 				}
 				$this->bo->vfs->override_acl = 0;
 			}
@@ -188,7 +190,7 @@
 						'relatives' => Array(RELATIVE_NONE)
 						)))
 					{
-						echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
+//TODO: xsltise				echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
 					}
 					//$this->bo->vfs->override_acl = 0;
 
@@ -318,14 +320,14 @@
 					//If the action is provided by this class, this'l do it
 					if (in_array($function, $local_functions))
 					{
-						echo " uifunction $function "; 
+						//echo " uifunction $function "; 
 						//Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));
 						$this->$function();
 						exit();
 					} //For actions provided by the back-end, with no gui
 					elseif (in_array($function, $bo_functions))
 					{
-						echo " bofunction $function ";
+						//echo " bofunction $function ";
 						$f_function = 'f_'.$function;
 						$errors = implode("\n", $this->bo->$f_function());
 						$var = Array(
@@ -374,8 +376,8 @@
 				$help_array[1] = preg_replace("/\[(.*)\|(.*)\]/Ue","\$this->build_help('\\1','\\2')",$help_array[1]);
 				$help_array[1] = preg_replace("/\[(.*)\]/Ue","\$this->build_help('\\1','\\1')",$help_array[1]);
 
-				echo '<font size="+4">'."\n".ucwords(str_replace('_',' ',$help_array[0]))."\n".'</font></br>'."\n";
-				echo '<font size="+2">'."\n".$help_array[1].'</font>';
+//				echo '<font size="+4">'."\n".ucwords(str_replace('_',' ',$help_array[0]))."\n".'</font></br>'."\n";
+//				echo '<font size="+2">'."\n".$help_array[1].'</font>';
 			}
 			exit();
 		}
