@@ -28,7 +28,7 @@
 		include('./header.inc.php');
 		if(function_exists('CreateObject'))
 		{
-			$GLOBALS['phpgw']->session = CreateObject('phpgwapi.sessions');
+			$GLOBALS['phpgw']->session = CreateObject('phpgwapi.sessions',array_keys($GLOBALS['phpgw_domain']));
 		}
 		else
 		{
@@ -43,7 +43,8 @@
 	}
 
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
-	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+    $tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+	
 
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
 	$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['phpgw_info']['login_template_set'];
@@ -65,7 +66,7 @@
 		exit;
 	}
 	$tmpl->set_file(array('login_form' => 'login.tpl'));
-
+	
 	// !! NOTE !!
 	// Do NOT and I repeat, do NOT touch ANYTHING to do with lang in this file.
 	// If there is a problem, tell me and I will fix it. (jengo)
@@ -202,14 +203,30 @@
 		{
 			$login = $_POST['login'];
 		}
-		
-		if(strstr($login,'@') === False && isset($_POST['logindomain']))
+	
+		//conference - for strings like vinicius@thyamad.com@default , allows
+		//that user have a login that is his e-mail. (viniciuscb)
+		$login_parts = explode('@',$login);
+		$got_login = false;
+		if (count($login_parts) > 1)
 		{
-			$login .= '@' . $_POST['logindomain'];
+			//Last part of login string, when separated by @, is a domain name
+			if (array_key_exists(array_pop($login_parts),$GLOBALS['phpgw_domain']))
+			{
+				$got_login = true;
+			}
 		}
-		elseif(!isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
+
+		if (!$got_login)
 		{
-			$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
+			if(isset($_POST['logindomain']))
+			{
+				$login .= '@' . $_POST['logindomain'];
+			}
+			elseif(!isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
+			{
+				$login .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
+			}
 		}
 		$GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($login,$passwd,$passwd_type,'u');
 
