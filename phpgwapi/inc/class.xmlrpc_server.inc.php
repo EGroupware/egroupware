@@ -42,6 +42,7 @@
 		var $resp_struct = array();
 		var $debug = False;
 		var $method_requested;
+		var $log = False; //'/tmp/xmlrpc.log';
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
@@ -79,9 +80,31 @@
 			global $HTTP_RAW_POST_DATA;
 
 			$r = $this->parseRequest();
-			$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
-			Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
-			print $payload;
+			if (!$r)
+			{
+				header('WWW-Authenticate: Basic realm="eGroupWare xmlrpc"');
+				header('HTTP/1.0 401 Unauthorized');
+				// for the log:
+				$payload = "WWW-Authenticate: Basic realm=\"eGroupWare xmlrpc\"\nHTTP/1.0 401 Unauthorized\n";
+			}
+			else
+			{
+				$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
+				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
+				print $payload;
+			}
+
+			if ($this->log)
+			{
+				$fp = fopen($this->log,'a+');
+				fwrite($fp,"\n\n".date('Y-m-d H:i:s')." authorized=".
+					($this->authed?$GLOBALS['phpgw_info']['user']['account_lid']:'False').
+					", method='$this->last_method'\n");
+				fwrite($fp,"==== GOT ============================\n".$HTTP_RAW_POST_DATA.
+					"\n==== RETURNED =======================\n");
+				fputs($fp,$payload);
+				fclose($fp);
+			}
 
 			if ($this->debug)
 			{
@@ -288,6 +311,7 @@
 				// now to deal with the method
 				$methName  = $GLOBALS['_xh'][$parser]['method'];
 				$_methName = $GLOBALS['_xh'][$parser]['method'];
+				$this->last_method = $methName;
 
 				if (ereg("^system\.", $methName))
 				{
@@ -423,12 +447,13 @@
 					// else prepare error response
 					if(!$this->authed)
 					{
-						$r = CreateObject('phpgwapi.xmlrpcresp',
+						$r = False;	// send 401 header to force authorization
+							/*CreateObject('phpgwapi.xmlrpcresp',
 							CreateObject('phpgwapi.xmlrpcval',
 								'UNAUTHORIZED',
 								'string'
 							)
-						);
+						);*/
 					}
 					else
 					{
