@@ -198,7 +198,16 @@ class socalendar_ extends socalendar__
 				}
 			}
 
-			$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id='.$event_id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
+			if($this->event['reference'])
+			{
+				$alarm_cal_id = $event_id.','.$this->event['reference'];
+			}
+			else
+			{
+				$alarm_cal_id = $event_id;
+			}
+
+			$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id in ('.$alarm_cal_id.') AND cal_owner='.$this->user,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				while($this->stream->next_record())
