@@ -2,7 +2,7 @@ TODO:
 - configuration dialog for admin section
 	don't use vfs
 	picture size
-	thumbnail size
+	thumbnail size (problem with general thumbs / icons)
 - sideboxmenu with add resource ..., and admin section
 - advanced search dialog, accessable via sideboxmenu
 - delete dialog --> also delete pictures from vfs
@@ -12,7 +12,7 @@ TODO:
 - sitemgr module
 
 - list 
-	handle select all button --> add actions for selected
+	handle select all button --> add actions for selected: move to other cat,...
 	
 -edit / add
 	add accessories functionality
@@ -21,7 +21,6 @@ TODO:
 	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
 	use eTemplates input validation
 	if only one cat is present --> chose it
-	bug: lang() returnmessages to often
 	make some returnmessages js dialogs
 	
 
