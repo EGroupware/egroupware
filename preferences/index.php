@@ -37,18 +37,7 @@
     echo "</TD></TR></TABLE>\n\n";
   }
 
-  // The account stuff that should be at the top of the list
-  $appname = "preferences";
-  $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/preferences.inc.php";
-  if (file_exists($f)) {
-    include($f);
-  }
-  while (list(,$appname) = each($phpgw_info["user"]["app_perms"])) {
-	$f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/preferences.inc.php";
-	if (file_exists($f)) {
-		echo "<p>\n";
-		include($f);
-	}
-  }
+  $phpgw->common->hook();
+
   $phpgw->common->phpgw_footer();
 ?>

@@ -1,5 +1,6 @@
 <?php
 {
+  echo "<p>\n";
   $img = "/" . $appname . "/images/" . $appname .".gif";
   if (file_exists($phpgw_info["server"]["server_root"].$img)) {
     $img = $phpgw_info["server"]["webserver_url"].$img;
@@ -15,7 +16,7 @@
 
 
   // Actual content
-  echo "<br><a href=\"" . $phpgw->link("changepassword.php") . "\">"
+  echo "<a href=\"" . $phpgw->link("changepassword.php") . "\">"
      . lang("change your password") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("changetheme.php") . "\">"
      . lang("select different theme") . "</a>";
