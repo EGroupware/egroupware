@@ -1,0 +1,387 @@
+eGroupWare is a web based groupware application framework (API), for writing applications. Integrated applications such as email, calendar, todo list, address book, and file manager are included.
+
+== Overview of application writing ==
+
+We have attempted to make writing application for eGroupWare as painless as possible. We hope any pain and suffering is cause by making your application work, but not dealing with eGroupWare itself.
+
+== What does the eGroupWare API provide? ==
+
+The eGroupWare API handles session management, user/group management, has support for multiple databases, using the PHPLIB database abstraction method, we support templates using the PHPLIB Templates class, a file system interface, and even a network i/o interface.
+
+On top of these standard functions, eGroupWare provides several functions to give you the information you need about the users environment, and to properly plug into eGroupWare.
+
+= Guidelines =
+== Requirements ==
+
+These guidelines must be followed for any application that wants considered for inclusion into eGroupWare deluxe:
+
+    * It must run on PHP4.1.0
+    * SQL statements must be compatible with both MySQL, PostgreSQL, M$ SQL Server and MaxDB
+    * It must use our default header.inc.php include.
+    * It must use our $GLOBALS['phpgw']->link($url) for all links (this is for session support).
+    * It must use "POST" for form submit methods.
+    * It must respect eGW group rights and eGW user permissions.
+    * It must use our directory structure, template support and lang (multi-language) support.
+    * Where possible it should run on both Unix and NT platforms.
+    * For applications that do not meet these requirements, they can be available to users via the eGroupWare "3rd Party Apps" listing on our website. If you need help converting your application to templates and our lang support, we will try to connect you with someone to help.
+
+== Writing/porting your application ==
+
+=== Include files ===
+
+Each PHP page you write will need to include the header.inc.php along with a few variables.
+This is done by putting this at the top of each PHP page.
+
+<code>
+<?php
+$GLOBALS['phpgw_info']['flags']['currentapp'] = 'appname';
+include('../header.inc.php');
+?>
+</code>
+
+
+Of course change application name to fit.
+This include will provide the following things:
+
+    * The phpgwAPI - The eGroupWare API will be loaded.
+    * The eGW navbar will be loaded (by default, but can be disabled until a later point.
+    * The eGW footer will be loaded, which closes several connections.
+
+Additionally, to provide compatibility with stock applications, these files will be included: 
+    * appname/inc/functions.inc.php - This file is loaded just after the phpgwAPI and before any HTML code is generated. This file should include all your application specific functions.. Stock applications include any additional files needed from within this file.
+    * appname/inc/header.inc.php - This file is loaded just after the system header/navbar, and allows developers to use it for whatever they need to load.
+    * appname/inc/footer.inc.php - This file is loaded just before the system footer, allowing developers to close connections and whatever else they need.
+
+      Note: The above 3 files are depricated and not used for OOP (/index.php?menuaction=app.obj.method) calls.
+
+= Installing your application =
+== Overview ==
+
+It is fairly simple to add and delete applications to/from eGroupWare.
+
+== Adding files, directories and icons. ==
+
+You will need to create the following directories for your code
+(replace 'appname' with your application name)
+
+<code>
+--appname
+
+  +--inc
+
+  |   |--functions.inc.php
+
+  |   |--header.inc.php
+
+  |   |--hook_preferences.inc.php
+
+  |   |--hook_admin.inc.php
+
+  |   +--footer.inc.php
+
+  +--js
+
+  |   |--base
+
+  |   +--js_package_name
+
+  +--setup
+
+  |   |--default_records.inc.php
+
+  |   |--setup.inc.php
+
+  |   +--tables_current.inc.php
+
+  +--templates
+
+      +--default
+</code>
+
+== Making eGroupWare aware of your application ==
+
+To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a SQL script. The script below should only be used during initial development. You should use the eGroupWare setup system for install and updating the final version of your application.
+
+<code>
+INSERT INTO phpgw_applications (app_name, app_title, app_enabled)
+        VALUES('appname', 'The App name', 1);
+</code>
+
+== Hooking into Administration page ==
+
+When a user goes to the Administration page, it starts {{appname/inc/hook_admin.inc.php}} for each application that is enabled, in alphabetical order of application title. If the file exists, it is include()d in the hopes it will display a selection of links to configure that application.
+
+Simple Example:
+
+<code>
+<?php
+// Old linear script style
+$file['Site Configuration'] = $GLOBALS['phpgw']->link('myapp/myAdminPage.php');
+// OR - OOP Style
+$file['Site Configuration'] = $GLOBALS['phpgw']->link('/index.php',
+                                        array(menuaction => 'myapp.uiobj.admin_method');
+display_section('myapp',$file);
+?>
+</code>
+
+Look at {{headlines/inc/hook_admin.inc.php}} and {{admin/inc/hook_admin.inc.php}} for more examples. Things to note:
+
+    * Links are relative to the {{admin/index.php}} file, not your application's base directory. (so use "appname" in your link() calls)
+    * The file is brought in with include() so be careful to not pollute the name-space too much
+
+The standard $GLOBALS['phpgw'] and $GLOBALS['phpgw_info'] variables are in-scope, as is $appname which corresponds to the application name in the path.
+
+== Hooking into Preferences page ==
+
+The mechanism to hook into the preferences page is identical to the one used to hook into the administration page, however it looks for appname/inc/hook_preferences.inc.php instead of appname/inc/hook_admin.inc.php. The same functions and variables are defined.
+
+= Infrastructure =
+== Overview ==
+
+eGroupWare attempts to provide developers with a sound directory structure to work from.  The directory layout may seem complex at first, but after some use, you will see that it is designed to accommodate a large number of applications and functions.
+
+== Directory treeS ==
+
+<code>
+--eGroupWare
+  |
+  +--admin
+  |
+  +--docs (installation docs)
+  |
+  +--files (Note: must be out of webserver document root!)
+  |   |
+  |   +--groups
+  |   |
+  |   +--homes
+  |   |
+  |   +--users
+  |
+  +--phpgwapi
+  |   |
+  |   +--cron (eGroupWare's optional daemons)
+  |   |
+  |   +--doc (developers docs)
+  |   |
+  |   +--inc
+  |   |   |
+  |   |   +--class.phpgw.inc.php
+  |   |   |
+  |   |   +--phpgw_info.inc.php
+  |   |   |
+  |   |   +--class.common.inc.php
+  |   |   |
+  |   |   +--etc..
+  |   |
+  |   +--js (javascript)
+  |   |   |
+  |   |   +--base
+  |   |   |
+  |   |   +--js_package_name
+  |   |
+  |   +--manual
+  |   |
+  |   +--setup
+  |   |   |
+  |   |   +--baseline.inc.php
+  |   |   |
+  |   |   +--default_records.inc.php
+  |   |   |
+  |   |   +--tables_current.inc.php
+  |   |   |
+  |   |   +--tables_update.inc.php
+  |   |
+  |   +--templates
+  |   |   |
+  |   |   +--default
+  |   |   |   |
+  |   |   |   +--images
+  |   |   |
+  |   |   +--verilak
+  |   |       |
+  |   |       +--images
+  |   |
+  |   +--themes
+  |       |
+  |       +--default.theme
+  |
+  +--preferences
+  |
+  +--setup
+</code>
+
+== Translations ==
+
+The translations are now being done thru the database, and may be configurable to use other mechanisms in future releases.
+
+You can use the developer_tools translations application for creating the "lang files", which will be installed through the setup application. Alternatively you can edit the files manually. The file naming convention for the lang files is phpgw_<langcode>.lang. The files are stored in the app/setup directory. The format of the files is as follows:
+
+<code>
+english phrase in lower case    appname **      Translated phrase in desired case.
+</code>
+
+Notes:
+
+    * replace ** with the desired language code, as used in the filename
+    * tabs are used to deliniate "columns"
+
+5  The API
+5.1  Introduction
+
+eGroupWare attempts to provide developers with a useful API to handle common tasks.
+
+To do this we have created a multi-dimensional class $GLOBALS['phpgw']->.
+
+This allows for terrific code organization, and help developers easily identify the file that the function is in. All the files that are part of this class are in the inc/core directory and are named to match the sub-class.
+
+Example: $phpgw->send->msg() is in the inc/phpgwapi/class.send.inc.php file.
+5.2  Basic functions
+$GLOBALS['phpgw']->link
+
+$GLOBALS['phpgw']->link($url, $args)
+Add support for session management. ALL links must use this, that includes href's form actions and header location's.
+
+If you are just doing a form action back to the same page, you can use it without any parameters.
+
+This function is right at the core of the class because it is used so often, we wanted to save developers a few keystrokes. Example:
+
+<form name=copy method=post action="<?php echo $GLOBALS['phpgw']->link();?>">
+/* If session management is done via passing url parameters */
+/* The the result would be */
+/* <form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"> */
+
+5.3  Application Functions
+$GLOBALS['phpgw']->common->phpgw_header
+
+$GLOBALS['phpgw']->phpgw_header()
+Print out the start of the HTML page, including the navigation bar and includes appname/inc/header.php, if using deprecated linear scripts style.
+$GLOBALS['phpgw']->common->phpgw_footer
+
+$GLOBALS['phpgw']->phpgw_footer()
+Prints the system footer, and includes appname/inc/footer.php
+$GLOBALS['phpgw']->common->appsession
+
+$GLOBALS['phpgw']->common->appsession($data)
+Store important information session information that your application needs.
+$GLOBALS['phpgw']->appsession will return the value of your session data is you leave the parameter empty [i.e. $GLOBALS['phpgw']->appsession()], otherwise it will store whatever data you send to it.
+You can also store a comma delimited string and use explode() to turn it back into an array when you receive the value back.
+
+Example:
+
+$GLOBALS['phpgw']->common->appsession("/path/to/something");
+echo "Dir: " . $GLOBALS['phpgw']->common->appsession();
+
+5.4  File functions
+
+See Virtual File System (VFS) Developers Guide for more info.
+5.5  Email/NNTP Functions
+$phpgw->send->msg
+
+$phpgw->msg->send($service, $to, $subject, $body, $msgtype, $cc, $bcc)
+Send a message via email or NNTP and returns any error codes.
+Example:
+
+$to = 'someuser@domain.com';
+$subject = 'Hello buddy';
+$body = "Give me a call\n Been wondering what your up to.";
+$errors = $GLOBALS['phpgw']->msg->send('email', $to, $subject, $body);
+
+
+
+6  Configuration Variables
+6.1  Introduction
+
+eGroupWare attempts to provide developers with as much information about the user, group, server, and application configuration as possible.
+
+To do this we provide a multi-dimensional array called "$GLOBALS['phpgw_info']", which includes all the information about your environment.
+
+Due to the multi-dimensional array approach. getting these values is easy.
+
+Here are some examples:
+
+<?php
+// To do a hello username
+echo "Hello " . $GLOBALS['phpgw_info']['user']['fullname'];
+//If username first name is John and last name is Doe, prints: 'Hello John Doe'
+?>
+<?php
+// To find out the location of the imap server
+echo 'IMAP Server is named: ' . $GLOBALS['phpgw_info']['server']['imap_server']; 
+//If imap is running on localhost, prints: 'IMAP Server is named: localhost'
+?>
+
+
+
+6.2  User information
+$GLOBALS['phpgw_info']['user']['userid'] = The user ID.
+$GLOBALS['phpgw_info']['user']['sessionid'] = The session ID
+$GLOBALS['phpgw_info']['user']['theme'] = Selected theme
+$GLOBALS['phpgw_info']['user']['private_dir'] = Users private dir. Use eGroupWare core functions for access to the files.
+$GLOBALS['phpgw_info']['user']['firstname'] = Users first name
+$GLOBALS['phpgw_info']['user']['lastname'] = Users last name
+$GLOBALS['phpgw_info']['user']['fullname'] = Users Full Name
+$GLOBALS['phpgw_info']['user']['groups'] = Groups the user is a member of
+$GLOBALS['phpgw_info']['user']['app_perms'] = If the user has access to the current application
+$GLOBALS['phpgw_info']['user']['lastlogin'] = Last time the user logged in.
+$GLOBALS['phpgw_info']['user']['lastloginfrom'] = Where they logged in from the last time.
+$GLOBALS['phpgw_info']['user']['lastpasswd_change'] = Last time they changed their password.
+$GLOBALS['phpgw_info']['user']['passwd'] = Hashed password.
+$GLOBALS['phpgw_info']['user']['status'] = If the user is enabled.
+$GLOBALS['phpgw_info']['user']['logintime'] = Time they logged into their current session.
+$GLOBALS['phpgw_info']['user']['session_dla'] = Last time they did anything in their current session
+$GLOBALS['phpgw_info']['user']['session_ip'] = Current IP address
+6.3  Group information
+$GLOBALS['phpgw_info']['group']['group_names'] = List of groups.
+6.4  Server information
+$phpgw_info[``server''][``server_root''] = Main installation directory $phpgw_info[``server''][``include_root''] = Location of the 'inc' directory. $phpgw_info[``server''][``temp_dir''] = Directory that can be used for temporarily storing files $phpgw_info[``server''][``files_dir''] = Directory er and group files are stored $phpgw_info[``server''][``common_include_dir''] = Location of the core/shared include files. $phpgw_info[``server''][``template_dir''] = Active template files directory. This is defaulted by the server, and changeable by the user. $phpgw_info[``server''][``dir_separator''] = Allows compatibility with WindowsNT directory format $phpgw_info[``server''][``encrpytkey''] = Key used for encryption functions $phpgw_info[``server''][``site_title''] = Site Title will show in the title bar of each webpage. $phpgw_info[``server''][``webserver_url''] = URL to eGroupWare installation. $phpgw_info[``server''][``hostname''] = Name of the server eGroupWare is installed upon. $phpgw_info[``server''][``charset''] = default charset, default:iso-8859-1 $phpgw_info[``server''][``version''] = eGroupWare version.
+6.5  Database information
+
+It is unlikely you will need these, because $GLOBALS['phpgw']->db will already be loaded as a database for you to use.
+$phpgw_info[``server''][``db_host''] = Address of the database server. Usually this is set to localhost. $phpgw_info[``server''][``db_name''] = Database name. $phpgw_info[``server''][``db_user''] = User name. $phpgw_info[``server''][``db_pass''] = Password $phpgw_info[``server''][``db_type''] = Type of database. Currently MySQL and PostgreSQL are supported.
+6.6  Mail information
+
+It is unlikely you will need these, because most email needs are services thru core eGroupWare functions.
+
+$phpgw_info[``server''][``mail_server''] = Address of the IMAP server. Usually this is set to localhost.
+
+$phpgw_info[``server''][``mail_server_type''] = IMAP or POP3
+
+$phpgw_info[``server''][``imap_server_type''] = Cyrus or Uwash
+
+$phpgw_info[``server''][``imap_port''] = This is usually 143, and should only be changed if there is a good reason.
+
+$phpgw_info[``server''][``mail_suffix] = This is the domain name, used to add to email address
+
+$phpgw_info[``server''][``mail_login_type''] = This adds support for VMailMgr. Generally this should be set to 'standard'.
+
+$phpgw_info[``server''][``smtp_server''] = Address of the SMTP server. Usually this is set to localhost.
+
+$phpgw_info[``server''][``smtp_port''] = This is usually 25, and should only be changed if there is a good reason
+6.7  NNTP information
+
+$phpgw_info[``server''][``nntp_server''] = Address of the NNTP server.
+
+$phpgw_info[``server''][``nntp_port''] = This is usually XX, and should only be changed if there is a good reason.
+
+$phpgw_info[``server''][``nntp_sender''] = Unknown
+
+$phpgw_info[``server''][``nntp_organization''] = Unknown
+
+$phpgw_info[``server''][``nntp_admin''] = Unknown
+6.8  Application information
+
+Each application has the following information available.
+
+$phpgw_info[``apps''][``appname''][``title''] = The title of the application.
+
+$phpgw_info[``apps''][``appname''][``enabled''] = If the application is enabled. True or False.
+
+$phpgw_info[``server''][``app_include_dir''] = Location of the current application include files.
+
+$phpgw_info[``server''][``app_template_dir''] = Location of the current application tpl files.
+
+$phpgw_info[``server''][``app_lang_dir''] = Location of the current lang directory.
+
+$phpgw_info[``server''][``app_auth''] = If the server and current user have access to current application
+
+$phpgw_info[``server''][``app_current''] = name of the current application.
