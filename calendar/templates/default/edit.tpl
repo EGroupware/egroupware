@@ -9,34 +9,73 @@ function validate_and_submit() {
     document.addform.name.focus();
     return false;
   }
-  h = parseInt(document.addform.hour.value);
-  m = parseInt(document.addform.minute.value);
-  if (h < 0 || h > 23) {
+  sh = parseInt(document.addform.hour.value);
+  sm = parseInt(document.addform.minute.value);
+  if (sh < 0 || sh > 23) {
     alert ("{time_error}");
     document.addform.hour.select();
     document.addform.hour.focus();
     return false;
   }
-  if (m < 0 || m > 59) {
+  if (sm < 0 || sm > 59) {
     alert ("{time_error}");
     document.addform.minute.select();
     document.addform.minute.focus();
     return false;
   }
-  h = parseInt(document.addform.end_hour.value);
-  m = parseInt(document.addform.end_minute.value);
-  if (h < 0 || h > 23) {
+  eh = parseInt(document.addform.end_hour.value);
+  em = parseInt(document.addform.end_minute.value);
+  if (eh < 0 || eh > 23) {
     alert ("{time_error}");
     document.addform.end_hour.select();
     document.addform.end_hour.focus();
     return false;
   }
-  if (m < 0 || m > 59) {
+  if (em < 0 || em > 59) {
     alert ("{time_error}");
     document.addform.end_minute.select();
     document.addform.end_minute.focus();
     return false;
   }
+//  so = parseInt(document.addform.month.value);
+//  sd = parseInt(document.addform.day.value);
+//  sy = parseInt(document.addform.year.value);
+//  eo = parseInt(document.addform.end_month.value);
+//  ed = parseInt(document.addform.end_day.value);
+//  ey = parseInt(document.addform.end_year.value);
+//  if (sy == ey && so == eo && sd == ed) {
+//    if (sh > eh) {
+//      alert ("{time_error}");
+//      document.addform.end_hour.select();
+//      document.addform.end_hour.focus();
+//      return false;
+//    }
+//    if (sh == eh && sm > em) {
+//      alert ("{time_error}");
+//      document.addform.end_hour.select();
+//      document.addform.end_hour.focus();
+//      return false;
+//    }
+//  }
+//  if (sy == ey && so == eo && sd > ed) {
+//      alert ("{date_error}");
+//      document.addform.end_day.select();
+//      document.addform.end_day.focus();
+//      return false;
+//  }
+//  if (sy == ey && so > eo) {
+//      alert ("{date_error}");
+//      document.addform.end_month.select();
+//      document.addform.end_month.focus();
+//      return false;
+//  }
+//  if (sy > ey) {
+//      alert ("{date_error}");
+//      document.addform.end_year.select();
+//      document.addform.end_year.focus();
+//      return false;
+//  }
+
   // would be nice to also check date to not allow Feb 31, etc...
   document.addform.submit();
 //  return true;
@@ -56,8 +95,8 @@ function validate_and_submit() {
 
 <!-- BEGIN edit_entry_end -->
 </table>
-<!-- <input type="hidden" name="participant_list" value=""> -->
-<input type="button" value="{submit_button}" onClick="validate_and_submit()">
+<input type="button" value="{submit_button}" onClick="validate_and_submit();">
+<!-- <noscript><input type="button" value="{submit_button}"></noscript> -->
 </form>
 
 {delete_button}

@@ -41,7 +41,7 @@
     $cal_info = $phpgw->common->appsession();
     $can_edit = true;
   } else {
-//    $cal_info->owner = $phpgw_info["user"]["account_id"];
+    $cal_info->owner = $phpgw_info["user"]["account_id"];
     $can_edit = true;
 
     if (!isset($day) || !$day)
