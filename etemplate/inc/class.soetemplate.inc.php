@@ -201,18 +201,18 @@
 			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
 
-			$sql = "SELECT * FROM $this->db_name WHERE et_name='$this->name' AND ";
+			$sql = "SELECT * FROM $this->db_name WHERE et_name='".$this->db->db_addslashes($this->name)."' AND ";
 			if (is_array($name))
 			{
 				$template = $name['template'];
 			}
 			if ($template == 'default')
 			{
-				$sql .= "(et_template='$pref_templ' OR et_template='')";
+				$sql .= "(et_template='".$this->db->db_addslashes($pref_templ)."' OR et_template='')";
 			}
 			else
 			{
-				$sql .= "et_template='$this->template'";
+				$sql .= "et_template='".$this->db->db_addslashes($this->template)."'";
 			}
 			$sql .= ' AND ';
 			if (is_array($name))
@@ -221,15 +221,15 @@
 			}
 			if ($lang == 'default' || $name['lang'] == 'default')
 			{
-				$sql .= "(et_lang='$pref_lang' OR et_lang='')";
+				$sql .= "(et_lang='".$this->db->db_addslashes($pref_lang)."' OR et_lang='')";
 			}
 			else
 			{
-				$sql .= "et_lang='$this->lang'";
+				$sql .= "et_lang='".$this->db->db_addslashes($this->lang)."'";
 			}
 			if ($this->version != '')
 			{
-				$sql .= "AND et_version='$this->version'";
+				$sql .= "AND et_version='".$this->db->db_addslashes($this->version)."'";
 			}
 			$sql .= " ORDER BY et_lang DESC,et_template DESC,et_version DESC";
 
@@ -352,19 +352,19 @@
 				$version = $name['version'];
 				$name = $name['name'];
 			}
-			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->db_name WHERE et_name LIKE '$name%'";
+			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->db_name WHERE et_name LIKE '".$this->db->db_addslashes($name)."%'";
 
 			if ($template != '' && $template != 'default')
 			{
-				$sql .= " AND et_template LIKE '$template%'";
+				$sql .= " AND et_template LIKE '".$this->db->db_addslashes($template)."%'";
 			}
 			if ($lang != '' && $lang != 'default')
 			{
-				$sql .= " AND et_lang LIKE '$lang%'";
+				$sql .= " AND et_lang LIKE '".$this->db->db_addslashes($lang)."%'";
 			}
 			if ($this->version != '')
 			{
-				$sql .= " AND et_version LIKE '$version%'";
+				$sql .= " AND et_version LIKE '".$this->db->db_addslashes($version)."%'";
 			}
 			$sql .= " ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC";
 
@@ -557,10 +557,10 @@
 			$data['data'] = serialize($this->compress_array($data['data']));
 
 			$sql = "INSERT INTO $this->db_name (";
-			for (reset($this->db_cols); list($db_col,$col) = each($this->db_cols); )
+			foreach ($this->db_cols as $db_col => $col)
 			{
 				$sql .= $db_col . ',';
-				$vals .= "'" . addslashes($data[$col]) . "',";
+				$vals .= $db_col == 'et_group' ? intval($data[$col]).',' : "'" . addslashes($data[$col]) . "',";
 			}
 			$sql[strlen($sql)-1] = ')';
 			$sql .= " VALUES ($vals";
@@ -579,9 +579,9 @@
 		*/
 		function delete()
 		{
-			for (reset($this->db_key_cols); list($db_col,$col) = each($this->db_key_cols); )
+			foreach ($this->db_key_cols as $db_col => $col)
 			{
-				$vals .= ($vals ? ' AND ' : '') . $db_col . "='" . $this->$col . "'";
+				$vals .= ($vals ? ' AND ' : '') . $db_col . '=' . ($db_col == 'et_group' ? intval($this->$col) : "'".$this->$col."'");
 			}
 			$this->db->query("DELETE FROM $this->db_name WHERE $vals",__LINE__,__FILE__);
 
