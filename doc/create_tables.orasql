@@ -252,15 +252,15 @@ end;
 ----------
 
 CREATE TABLE todo (
-  con		number NOT NULL,
-  owner	varchar2(25),
+  todo_id	number NOT NULL,
+  todo_owner	varchar2(25),
   todo_access	varchar2(10),
-  des		varchar2(4000),        
-  pri		number(11),
-  status	number(11),
-  datecreated	number(11),
-  datedue	number(11),
-  PRIMARY KEY (con)
+  todo_des	varchar2(4000),        
+  todo_pri	number(11),
+  todo_status	number(11),
+  todo_datecreated	number(11),
+  todo_datedue	number(11),
+  PRIMARY KEY (todo_id)
 );
 
 create sequence todo_seq

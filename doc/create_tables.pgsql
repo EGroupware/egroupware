@@ -116,14 +116,14 @@ create table addressbook (
 );
 
 create table todo (
-  con 		serial,
-  owner		varchar(25),
-  access	varchar(10),
-  des		text,
-  pri		int,
-  status	int,
-  datecreated	int,
-  datedue	int
+  todo_id	     serial,
+  todo_owner	varchar(25),
+  todo_access	varchar(10),
+  todo_des	text,
+  todo_pri	int,
+  todo_status	int,
+  todo_datecreated	int,
+  todo_datedue	int
 );
 
 CREATE TABLE webcal_entry (
