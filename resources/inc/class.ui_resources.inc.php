@@ -27,7 +27,7 @@ class ui_resources
 	*/
 	function ui_resources()
 	{
-// 		print_r($GLOBALS['phpgw']); die();
+// 		print_r($GLOBALS['phpgw_info']); die();
 		$this->tmpl	= CreateObject('etemplate.etemplate','resources.show');
 		$this->bo	= CreateObject('resources.bo_resources');
 		

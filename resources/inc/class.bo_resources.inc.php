@@ -22,6 +22,7 @@ class bo_resources
 	var $vfs_basedir = '/resources/';
 	var $pictures_dir = '/resources/pictures/';
 	var $thumbs_dir = '/resources/pictures/thumbs/';
+	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	
 	function bo_resources()
 	{
@@ -29,10 +30,6 @@ class bo_resources
 		$this->acl = CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
 		$this->vfs = CreateObject('phpgwapi.vfs');
-		
-// 		print_r($this->cats->return_single(33)); die(); 
-		list($cat) = $this->cats->return_single(33);
-		$cat['data'] = unserialize($cat['data']);
 	}
 
 	/*!
@@ -255,10 +252,14 @@ class bo_resources
 				$picture = false /*$this->config->use_vfs*/ ? 'vfs:' : $GLOBALS['phpgw_info']['server']['webserver_url'];
 				$picture .= $size ? $this->pictures_dir.$id.'.jpg' : $this->thumbs_dir.$id.'.jpg';
 				break;
-			case 'gen_src':
 			case 'cat_src':
+				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$id));
+				$picture = unserialize($picture['data']);
+				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
+				break;
+			case 'gen_src':
 			default :
-				$picture = 'generic.png';
+				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->resource_icons.'generic.png';
 		}
 		return $picture;
 	}
