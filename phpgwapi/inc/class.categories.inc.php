@@ -65,13 +65,13 @@
 			switch($for)
 			{
 				case 'app':         $w = " WHERE cat_appname='" . $this->app_name . "'"; break;
-				case 'appandmains': $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'";
-				case 'appandsubs':  $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'";
+				case 'appandmains': $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
+				case 'appandsubs':  $w = " WHERE cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
 				case 'subs':        $w = " WHERE cat_parent != '0'"; break;
 				case 'mains':       $w = " WHERE cat_parent = '0'"; break;
 				default:            return False;
-			
 			}
+
 			$this->db->query("SELECT COUNT(cat_id) FROM phpgw_categories $w",__LINE__,__FILE__);
 			$this->db->next_record();
 
@@ -124,7 +124,7 @@
 			}
 			else
 			{
-				$grant_cats = " (cat_owner='" . $this->account_id . "') ";
+				$grant_cats = " cat_owner='" . $this->account_id . "' ";
 			}
 
 			if ($parent_id)
