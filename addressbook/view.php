@@ -46,12 +46,11 @@
 	}
 
 	$t = new Template(PHPGW_APP_TPL);
-	$t->set_file(array(
-		'view'	      => 'view.tpl',
-		'view_header' => 'view_header.tpl',
-		'view_row'    => 'view_row.tpl',
-		'view_footer' => 'view_footer.tpl'
-	));
+	$t->set_file(array('view_t' => 'view.tpl'));
+	$t->set_block('view_t','view_header','view_header');
+	$t->set_block('view_t','view_row','view_row');
+	$t->set_block('view_t','view_footer','view_footer');
+	$t->set_block('view_t','view_buttons','view_buttons');
 
 	$customfields = array();
 	while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
@@ -266,9 +265,6 @@
 	$t->set_var('start',$start);
 	$t->set_var('cat_id',$cat_id);
 
-	$t->parse('header','view_header');
-	$t->parse('footer','view_footer');
-	
 	$t->set_var('lang_ok',lang('ok'));
 	$t->set_var('lang_done',lang('done'));
 	$t->set_var('lang_copy',lang('copy'));
@@ -279,7 +275,7 @@
 	$t->set_var('copy_link',$copylink);
 	$t->set_var('vcard_link',$vcardlink);
 
-	$t->pfp('out','view');
+	$t->pfp('out','view_t');
 
 	$phpgw->common->phpgw_footer();
 ?>
