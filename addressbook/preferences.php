@@ -139,12 +139,12 @@
     <tr bgcolor="<?php echo $tr_color; ?>">
      <td colspan="2"><?php echo lang("show birthday reminders on main screen"); ?></td>
      <td><input type="checkbox" name="mainscreen_showbirthdays" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
-    </tr><?
+    </tr><?php
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
     <tr bgcolor="<?php echo $tr_color; ?>">
      <td colspan="2"><?php echo lang("Autosave default category"); ?></td>
      <td><input type="checkbox" name="autosave_category" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) echo " checked"; ?>></td>
-    </tr><?
+    </tr><?php
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
     <tr bgcolor="<?php echo $tr_color; ?>">
      <td colspan="2"><?php echo lang("Default Category"); ?></td>
