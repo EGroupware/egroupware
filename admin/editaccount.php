@@ -89,7 +89,7 @@
        // The following sets any default preferences needed for new applications..
        // This is smart enough to know if previous preferences were selected, use them.
        
-       $pref = new preferences($account_id);
+       $pref = new preferences(intval($account_id));
        $t = $pref->get_preferences();
          
        $docommit = False;
