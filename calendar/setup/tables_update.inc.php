@@ -24,8 +24,10 @@
 	$test[] = '0.9.4pre2';
 	function calendar_upgrade0_9_4pre2()
 	{
-		global $setup_info, $oProc;
-	
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
+
 		$oProc->RenameColumn('webcal_entry', 'cal_create_by', 'cal_owner');
 		$oProc->AlterColumn('webcal_entry', 'cal_owner', array('type' => 'int', 'precision' => 4, 'nullable' => false));
 		$setup_info['calendar']['currentver'] = '0.9.4pre3';
@@ -35,9 +37,11 @@
 	$test[] = '0.9.7pre1';
 	function calendar_upgrade0_9_7pre1()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$db2 = $oProc->m_odb;
-	
+
 		$oProc->CreateTable('calendar_entry', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'auto', 'nullable' => false),
@@ -165,6 +169,8 @@
 	function calendar_upgrade0_9_7pre2()
 	{
 		global $oldversion, $setup_info, $phpgw_setup, $oProc, $oDelta;
+
+		$oProc = $phpgw_setup->oProc;
 		$db2 = $oProc->m_odb;
 	
 		$oProc->RenameColumn('calendar_entry', 'cal_duration', 'cal_edatetime');
@@ -188,11 +194,20 @@
 		return True;
 	}
 
-	$test[] = '0.9.11.001';
-	function upgrade0_9_11_001()
+	$test[] = '0.9.8pre5';
+	function calendar_upgrade0_9_8pre5()
 	{
-		global $setup_info, $oProc;
-		
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.11.001';
+		return True;
+	}
+
+	$test[] = '0.9.11.001';
+	function calendar_upgrade0_9_11_001()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$db2 = $oProc->m_odb;
 
 		if(extension_loaded('mcal') == False)
@@ -214,7 +229,7 @@
 		}
 
 // calendar_entry => phpgw_cal
-		$oProc->CreateTable('phpgw_cal' => array(
+		$oProc->CreateTable('phpgw_cal', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'auto', 'nullable' => False),
 				'owner' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
@@ -268,7 +283,7 @@
 		$oProc->DropTable('calendar_entry');
 
 // calendar_entry_repeats => phpgw_cal_repeats
-		$oProc->CreateTable('phpgw_cal_repeats' => array(
+		$oProc->CreateTable('phpgw_cal_repeats', array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int', 'precision' => 8,'nullable' => False),
 				'recur_type' => array('type' => 'int', 'precision' => 8,'nullable' => False),
@@ -330,11 +345,12 @@
 	}
 
 	$test[] = '0.9.11.003';
-	function upgrade0_9_11_003()
+	function calendar_upgrade0_9_11_003()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
-		$oProc->CreateTable('phpgw_cal_holidays' => array(
+		$oProc = $phpgw_setup->oProc;
+		$oProc->CreateTable('phpgw_cal_holidays', array(
 			'fd' => array(
 				'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
 				'name' => array('type' => 'varchar', 'precision' => 50,'nullable' => False),
@@ -351,12 +367,13 @@
 	}
 
 	$test[] = '0.9.11.006';
-	function upgrade0_9_11_006()
+	function calendar_upgrade0_9_11_006()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
+		$oProc = $phpgw_setup->oProc;
 		$oProc->DropTable('phpgw_cal_holidays');
-		$oProc->CreateTable('phpgw_cal_holidays' => array(
+		$oProc->CreateTable('phpgw_cal_holidays', array(
 			'fd' => array(
 				'hol_id' => array('type' => 'auto','nullable' => False),
 				'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
@@ -374,10 +391,11 @@
 	}
 
 	$test[] = '0.9.11.007';
-	function upgrade0_9_11_007()
+	function calendar_upgrade0_9_11_007()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
 
+		$oProc = $phpgw_setup->oProc;
 		$oProc->query('DELETE FROM phpgw_cal_holidays');
 		$oProc->AddColumn('phpgw_cal_holidays','mday',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 		$oProc->AddColumn('phpgw_cal_holidays','month_num',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
@@ -388,11 +406,20 @@
 		return True;
 	}
 
-	$test[] = '0.9.11.009';
-	function upgrade0_9_11_009()
+	$test[] = '0.9.11.008';
+	function calendar_upgrade0_9_11_008()
 	{
-		global $setup_info, $oProc;
+		global $setup_info, $phpgw_setup;
+		$setup_info['calendar']['currentver'] = '0.9.11.009';
+		return True;
+	}
 
+	$test[] = '0.9.11.009';
+	function calendar_upgrade0_9_11_009()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$oProc = $phpgw_setup->oProc;
 		$oProc->query('DELETE FROM phpgw_cal_holidays');
 		$oProc->AddColumn('phpgw_cal_holidays','observance_rule',array('type' => 'int', 'precision' => 8,'nullable' => False, 'default' => '0'));
 
