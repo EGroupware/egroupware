@@ -70,7 +70,9 @@
 
 		function out()
 		{
-			global $ab_id,$nolname,$nofname;
+			$ab_id   = get_var('ab_id',array('GET','POST'));
+			$nolname = get_var('nolname',array('GET','POST'));
+			$nofname = get_var('nofname',array('GET','POST'));
 
 			if($nolname || $nofname)
 			{
@@ -84,7 +86,12 @@
 			}
 
 			// First, make sure they have permission to this entry
-			$check = $this->bo->read_entry(array('id' => $ab_id, 'fields' => array('owner' => 'owner')));
+			$check = $this->bo->read_entry(array(
+				'id' => $ab_id,
+				'fields' => array(
+					'owner' => 'owner'
+				)
+			));
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
 			if((!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))

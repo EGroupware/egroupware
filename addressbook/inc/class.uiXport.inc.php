@@ -14,7 +14,7 @@
 
 	class uiXport
 	{
-		var $template;
+		var $output = '';
 		var $public_functions = array(
 			'import' => True,
 			'export' => True
@@ -32,7 +32,6 @@
 
 		function uiXport()
 		{
-			$this->template = $GLOBALS['phpgw']->template;
 			$this->cat      = CreateObject('phpgwapi.categories');
 			$this->bo       = CreateObject('addressbook.boXport',True);
 			$this->browser  = CreateObject('phpgwapi.browser');
@@ -44,6 +43,15 @@
 			$this->order    = $this->bo->order;
 			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
+		}
+
+		function totpl()
+		{
+			if(@isset($this->output) && !empty($this->output))
+			{
+				$GLOBALS['phpgw']->template->set_var('phpgw_body', $this->output,True);
+				unset($this->output);
+			}
 		}
 
 		/* Return a select form element with the categories option dialog in it */
@@ -108,9 +116,9 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 
-				set_time_limit(0)
+				set_time_limit(0);
 
-				$this->template->set_file(array('import' => 'import.tpl'));
+				$GLOBALS['phpgw']->template->set_file(array('import' => 'import.tpl'));
 
 				$dir_handle = opendir(PHPGW_APP_INC . SEP . 'import');
 				$i=0; $myfilearray = '';
@@ -130,35 +138,36 @@
 					$conv .= '<OPTION VALUE="' . $myfilearray[$i].'">' . $fname . '</OPTION>';
 				}
 
-				$this->template->set_var('lang_cancel',lang('Cancel'));
-				$this->template->set_var('lang_cat',lang('Select Category'));
-				$this->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
-				$this->template->set_var('conversion',lang('Select the type of conversion'));
-				$this->template->set_var('export_path',lang('Enter the path to the export file here'));
-				$this->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
-				$this->template->set_var('navbar_text',$GLOBALS['phpgw_info']['theme']['navbar_text']);
-				$this->template->set_var('mark_private',lang('Mark records as private'));
-				$this->template->set_var('help_import',lang('In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from'));
-				$this->template->set_var('help_import2',lang('the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>'));
-				$this->template->set_var('none',lang('none'));
-				$this->template->set_var('debug_browser',lang('Debug output in browser'));
-				$this->template->set_var('import_text',lang('Import from LDIF, CSV, or VCard'));
-				$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import'));
-				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,True,False));
-				$this->template->set_var('tsvfilename','');
-				$this->template->set_var('conv',$conv);
-				$this->template->set_var('debug',lang('Debug output in browser'));
-				$this->template->set_var('filetype',lang('LDIF'));
-				$this->template->set_var('download',lang('Submit'));
-				$this->template->set_var('start',$this->start);
-				$this->template->set_var('sort',$this->sort);
-				$this->template->set_var('order',$this->order);
-				$this->template->set_var('filter',$this->filter);
-				$this->template->set_var('query',$this->query);
-				$this->template->set_var('cat_id',$this->cat_id);
-				$this->template->pparse('out','import');
+				$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
+				$GLOBALS['phpgw']->template->set_var('lang_cat',lang('Select Category'));
+				$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
+				$GLOBALS['phpgw']->template->set_var('conversion',lang('Select the type of conversion'));
+				$GLOBALS['phpgw']->template->set_var('export_path',lang('Enter the path to the export file here'));
+				$GLOBALS['phpgw']->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
+				$GLOBALS['phpgw']->template->set_var('navbar_text',$GLOBALS['phpgw_info']['theme']['navbar_text']);
+				$GLOBALS['phpgw']->template->set_var('mark_private',lang('Mark records as private'));
+				$GLOBALS['phpgw']->template->set_var('help_import',lang('In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from'));
+				$GLOBALS['phpgw']->template->set_var('help_import2',lang('the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>'));
+				$GLOBALS['phpgw']->template->set_var('none',lang('none'));
+				$GLOBALS['phpgw']->template->set_var('debug_browser',lang('Debug output in browser'));
+				$GLOBALS['phpgw']->template->set_var('import_text',lang('Import from LDIF, CSV, or VCard'));
+				$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import'));
+				$GLOBALS['phpgw']->template->set_var('cat_link',$this->cat_option($this->cat_id,True,False));
+				$GLOBALS['phpgw']->template->set_var('tsvfilename','');
+				$GLOBALS['phpgw']->template->set_var('conv',$conv);
+				$GLOBALS['phpgw']->template->set_var('debug',lang('Debug output in browser'));
+				$GLOBALS['phpgw']->template->set_var('filetype',lang('LDIF'));
+				$GLOBALS['phpgw']->template->set_var('download',lang('Submit'));
+				$GLOBALS['phpgw']->template->set_var('start',$this->start);
+				$GLOBALS['phpgw']->template->set_var('sort',$this->sort);
+				$GLOBALS['phpgw']->template->set_var('order',$this->order);
+				$GLOBALS['phpgw']->template->set_var('filter',$this->filter);
+				$GLOBALS['phpgw']->template->set_var('query',$this->query);
+				$GLOBALS['phpgw']->template->set_var('cat_id',$this->cat_id);
+
+				$this->output = $GLOBALS['phpgw']->template->fp('out','import');
+				$this->totpl();
 			}
-			$GLOBALS['phpgw']->common->phpgw_footer();
 		}
 
 		function export()
@@ -201,9 +210,9 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 
-				set_time_limit(0)
+				set_time_limit(0);
 
-				$this->template->set_file(array('export' => 'export.tpl'));
+				$GLOBALS['phpgw']->template->set_file(array('export' => 'export.tpl'));
 
 				$dir_handle = opendir(PHPGW_APP_INC. SEP . 'export');
 				$i=0; $myfilearray = '';
@@ -223,30 +232,30 @@
 					$conv .= '        <option value="'.$myfilearray[$i].'">'.$fname.'</option>'."\n";
 				}
 
-				$this->template->set_var('lang_cancel',lang('Cancel'));
-				$this->template->set_var('lang_cat',lang('Select Category'));
-				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,False,False));
-				$this->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/addressbook/index.php'));
-				$this->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
-				$this->template->set_var('navbar_text',$GLOBALS['phpgw_info']['theme']['navbar_text']);
-				$this->template->set_var('export_text',lang('Export from Addressbook'));
-				$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export'));
-				$this->template->set_var('filename',lang('Export file name'));
-				$this->template->set_var('conversion',lang('Select the type of conversion'));
-				$this->template->set_var('conv',$conv);
-				$this->template->set_var('debug',lang(''));
-				$this->template->set_var('download',lang('Submit'));
-				$this->template->set_var('download_export',lang('Download export file (Uncheck to debug output in browser)'));
-				$this->template->set_var('none',lang('none'));
-				$this->template->set_var('start',$this->start);
-				$this->template->set_var('sort',$this->sort);
-				$this->template->set_var('order',$this->order);
-				$this->template->set_var('filter',$this->filter);
-				$this->template->set_var('query',$this->query);
-				$this->template->set_var('cat_id',$this->cat_id);
-				$this->template->pparse('out','export');
+				$GLOBALS['phpgw']->template->set_var('lang_cancel',lang('Cancel'));
+				$GLOBALS['phpgw']->template->set_var('lang_cat',lang('Select Category'));
+				$GLOBALS['phpgw']->template->set_var('cat_link',$this->cat_option($this->cat_id,False,False));
+				$GLOBALS['phpgw']->template->set_var('cancel_url',$GLOBALS['phpgw']->link('/addressbook/index.php'));
+				$GLOBALS['phpgw']->template->set_var('navbar_bg',$GLOBALS['phpgw_info']['theme']['navbar_bg']);
+				$GLOBALS['phpgw']->template->set_var('navbar_text',$GLOBALS['phpgw_info']['theme']['navbar_text']);
+				$GLOBALS['phpgw']->template->set_var('export_text',lang('Export from Addressbook'));
+				$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export'));
+				$GLOBALS['phpgw']->template->set_var('filename',lang('Export file name'));
+				$GLOBALS['phpgw']->template->set_var('conversion',lang('Select the type of conversion'));
+				$GLOBALS['phpgw']->template->set_var('conv',$conv);
+				$GLOBALS['phpgw']->template->set_var('debug',lang(''));
+				$GLOBALS['phpgw']->template->set_var('download',lang('Submit'));
+				$GLOBALS['phpgw']->template->set_var('download_export',lang('Download export file (Uncheck to debug output in browser)'));
+				$GLOBALS['phpgw']->template->set_var('none',lang('none'));
+				$GLOBALS['phpgw']->template->set_var('start',$this->start);
+				$GLOBALS['phpgw']->template->set_var('sort',$this->sort);
+				$GLOBALS['phpgw']->template->set_var('order',$this->order);
+				$GLOBALS['phpgw']->template->set_var('filter',$this->filter);
+				$GLOBALS['phpgw']->template->set_var('query',$this->query);
+				$GLOBALS['phpgw']->template->set_var('cat_id',$this->cat_id);
 
-				$GLOBALS['phpgw']->common->phpgw_footer();
+				$this->output = $GLOBALS['phpgw']->template->fp('out','export');
+				$this->totpl();
 			}
 		}
 	}

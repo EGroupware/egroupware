@@ -41,15 +41,25 @@
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			global $start,$limit,$query,$sort,$order,$filter,$cat_id;
 
-			if($start || $start == 0)  { $this->start = $start; }
-			if($limit)  { $this->limit  = $limit;  }
-			if($query)  { $this->query  = $query;  }
-			if($sort)   { $this->sort   = $sort;   }
-			if($order)  { $this->order  = $order;  }
-			if($filter) { $this->filter = $filter; }
-			$this->cat_id = $cat_id;
+			$start  = intval(get_var('start',   array('POST','GET')));
+			$query  = get_var('query',   array('POST','GET'));
+			$limit  = get_var('limit',   array('POST','GET'));
+			$sort   = get_var('sort',    array('POST','GET'));
+			$order  = get_var('order',   array('POST','GET'));
+			$filter = get_var('filter',  array('POST','GET'));
+			$cat_id = get_var('fcat_id', array('POST'));
+
+			$this->start  = (!empty($start) || ($start == '0')) ? $start : $this->start;
+			$this->limit  = (!empty($limit) || ($limit == '0')) ? $limit : $this->limit;
+			$this->query  = (empty($query) && !empty($this->query)) || !empty($query) ? $query : $this->query;
+			$this->cquery = (empty($cquery) && !empty($this->cquery)) || !empty($cquery) ? $cquery : $this->cquery;
+			$this->sort   = (!empty($sort)) ? $sort : $this->sort;
+			$this->order  = (!empty($order)) ? $order : $this->order;
+			$this->filter = (!empty($filter) || ($filter == '0')) ? $filter : $this->filter;
+
+			$this->cat_id = (isset($cat_id) && !empty($cat_id)) ? $cat_id : $this->cat_id;
+			$this->cat_id = ($cat_id == '0' || $cat_id == 0 || $cat_id == '') ? $cat_id : $this->cat_id;
 		}
 
 		function save_sessiondata()

@@ -17,14 +17,11 @@
 	$GLOBALS['phpgw_info'] = array();
 
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp' => 'addressbook',
-		'noheader'   => True,
-		'nonavbar'   => True
+		'currentapp' => 'addressbook'
 	);
 	include('../header.inc.php');
 
 	$obj = CreateObject('addressbook.uiaddressbook');
 	$obj->index();
-
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
