@@ -38,7 +38,7 @@
      }
   
      $phpgw->db->query("select count(*) from applications where app_name='"
-     				. addslashes($n_app_name) . "'",__LINE__,__FILE__);
+               . addslashes($n_app_name) . "'",__LINE__,__FILE__);
      $phpgw->db->next_record();
      
      if ($phpgw->db->f(0) != 0) {
@@ -57,32 +57,32 @@
      
      if (! $totalerrors) {
         $phpgw->db->query("insert into applications (app_name,app_title,app_enabled,app_order) values('"
-			            . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
-			            . "$n_app_status','$app_order')",__LINE__,__FILE__);
+                     . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
+                     . "$n_app_status','$app_order')",__LINE__,__FILE__);
 
         $phpgw->db->query("SELECT preference_owner, preference_value FROM preferences");
-	if($phpgw->db->num_rows()) {
-	  while($phpgw->db->next_record()) {
-	    if($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"]) {
-	      $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
-	      if(!$phpgw_newuser["user"]["preferences"][$n_app_name]) {
-		$phpgw->common->hook_single("add_def_pref", $n_app_name);
-		$phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
-	      }
-	    } elseif(!$phpgw_info["user"]["preferences"][$n_app_name]) {
-	      $phpgw->common->hook_single("add_def_pref", $n_app_name);
-	      $phpgw_info["user"]["preferences"][$n_app_name] = $phpgw_newuser["user"]["preferences"][$n_app_name];
-	      unset($phpgw_newuser);
-	      $phpgw->preferences->commit();
-	    }
-	  }
-	}
+        if ($phpgw->db->num_rows()) {
+           while ($phpgw->db->next_record()) {
+              if ($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"]) {
+                 $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
+                 if (!$phpgw_newuser["user"]["preferences"][$n_app_name]) {
+                    $phpgw->common->hook_single("add_def_pref", $n_app_name);
+                    $phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
+                 }
+              } elseif(!$phpgw_info["user"]["preferences"][$n_app_name]) {
+                 $phpgw->common->hook_single("add_def_pref", $n_app_name);
+                 $phpgw_info["user"]["preferences"][$n_app_name] = $phpgw_newuser["user"]["preferences"][$n_app_name];
+                 unset($phpgw_newuser);
+                 $phpgw->preferences->commit();
+              }
+          }
+        }
         Header("Location: " . $phpgw->link("applications.php"));
         $phpgw->common->phpgw_exit();
      } else {
         $phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
      }
-  } else {		// else submit
+  } else {     // else submit
      $phpgw->template->set_var("error","");
   }
   $phpgw->common->phpgw_header();
@@ -103,6 +103,13 @@
                . '<option value="1"' . $selected[1] . '>' . lang("Enabled")  . '</option>'
                . '<option value="2"' . $selected[2] . '>' . lang("Enabled - Hidden from navbar")  . '</option>';
   display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
+
+  if (! $app_order) {
+     $phpgw->db->query("select (max(app_order)+1) as max from applications");
+     $phpgw->db->next_record();
+     $app_order = $phpgw->db->f("max");
+  }
+
   display_row(lang("Select which location this app should appear on the navbar, lowest (left) to highest (right)"),'<input name="app_order" value="' . $app_order . '">');
 
   $phpgw->template->set_var("lang_submit_button",lang("add"));
