@@ -46,7 +46,9 @@
 			$this->template->set_block('_nextmatchs','icon');
 			$this->template->set_block('_nextmatchs','link');
 			$this->template->set_block('_nextmatchs','search');
+			$this->template->set_block('_nextmatchs','cats');
 			$this->template->set_block('_nextmatchs','search_filter');
+			$this->template->set_block('_nextmatchs','cats_search_filter');
 
 			if(isset($phpgw_info['user']['preferences']['common']['maxmatchs']) &&
 				intval($phpgw_info['user']['preferences']['common']['maxmatchs']) > 0)
@@ -192,17 +194,23 @@
 		@param $filter_obj ?
 		@param $showsearch ?
 		*/
-		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0)
+		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
 		{
 			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
 			$start = $localstart;
 
-			$extravars = Array();
+			$cats	= CreateObject('phpgwapi.categories');
 
+			$extravars = Array();
 			$extravars = $this->split_extras($extravars,$extra);
 
 			$var = array(
 				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'lang_category'=> lang('Category'),
+				'lang_all'	=> lang('All'),
+				'lang_select'	=> lang('Select'),
+				'cat_field'	=> $cat_field,
+				'categories'	=> $cats->formated_list('select','all',$cat_id,'True'),
 				'filter_value'	=> $filter,
 				'qfield'	=> $qfield,
 				'start_value'	=> $start,
@@ -217,7 +225,8 @@
 				'right'	=> $this->right($sn,$start,$total,$extra)
 			);
 			$this->template->set_var($var);
-			$this->template->parse('search_filter_data','search_filter');
+			$this->template->parse('cats','cats');			
+			$this->template->parse('cats_search_filter_data','cats_search_filter');
 			return $this->template->fp('out','nextmatchs');
 		}
 
@@ -389,6 +398,39 @@
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','search_filter');
+		}
+		
+		/*!
+		@function cats_search_filter
+		@abstract ?
+		@param $search_obj default 0
+		*/
+		function cats_search_filter($search_obj=0,$filter_obj=1,$yours=0,$cat_id=0,$cat_field='fcat_id',$link='',$extra='')
+		{
+			global $filter, $qfield, $start, $order, $sort, $query, $phpgw, $phpgw_info;
+			$start = $localstart;
+
+			$cats	= CreateObject('phpgwapi.categories');
+
+			$var = array(
+				'form_action'	=> ($this->action?$this->page($extra):$phpgw->link($sn, $extra)),
+				'lang_category'=> lang('Category'),
+				'lang_all'	=> lang('All'),
+				'lang_select'	=> lang('Select'),
+				'cat_field'	=> $cat_field,
+				'categories'	=> $cats->formated_list('select','all',$cat_id,'True'),
+				'filter_value'	=> $filter,
+				'qfield'	=> $qfield,
+				'start_value'	=> $start,
+				'order_value'	=> $order,
+				'sort_value'	=> $sort,
+				'query_value'	=> urlencode(stripslashes($query)),
+				'th_bg'	=> $phpgw_info['theme']['th_bg'],
+				'search'	=> $this->search($search_obj),
+				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):''),
+			);
+			$this->template->set_var($var);
+			return $this->template->fp('out','cats_search_filter');
 		}
 		
 		/*!

@@ -5,7 +5,7 @@
   </tr>
   <tr>
    <td align="center" valign="top" colspan="5">
-    {search_filter_data}
+    {cats_search_filter_data}
    </td>
   </tr>
  </table>
@@ -65,6 +65,16 @@
        </td>
 <!-- END search -->
 
+<!-- BEGIN cats -->
+       <td>
+        {lang_category}&nbsp;&nbsp;<select name="{cat_field}" onChange="this.form.submit();">
+         <option value="0">{lang_all}</option>
+         {categories}
+        </select>
+        <noscript><input type="submit" name="cats" value="{lang_select}"></noscript>
+       </td>
+<!-- END cats -->
+
 <!-- BEGIN search_filter -->
     <form method="POST" action="{form_action}" name="filter">
      <input type="hidden" name="filter" value="{filter_value}">
@@ -79,4 +89,19 @@
      </table>
     </form>
 <!-- END search_filter -->
+
+<!-- BEGIN cats_search_filter -->
+    <form method="POST" action="{form_action}" name="filter">
+     <input type="hidden" name="filter" value="{filter_value}">
+     <input type="hidden" name="qfield" value="{qfield_value}">
+     <input type="hidden" name="start" value="{start_value}">
+     <input type="hidden" name="order" value="{order_value}">
+     <input type="hidden" name="sort" value="{sort_value}">
+     <input type="hidden" name="query" value="{query_value}">
+     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+      <tr>{cats}<td>&nbsp;</td>{search}<td>&nbsp;&nbsp;</td>{filter}
+      </tr>
+     </table>
+    </form>
+<!-- END cats_search_filter -->
 
