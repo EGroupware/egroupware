@@ -131,7 +131,7 @@
 			echo parse_navbar();
 
 			$t->set_var('title',lang('Site Configuration'));
-			$t->set_var('action_url',$GLOBALS['phpgw']->link('/admin/config.php','appname=' . $appname));
+			$t->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
 			$t->set_var('th_bg',     $GLOBALS['phpgw_info']['theme']['th_bg']);
 			$t->set_var('th_text',   $GLOBALS['phpgw_info']['theme']['th_text']);
 			$t->set_var('row_on',    $GLOBALS['phpgw_info']['theme']['row_on']);
