@@ -337,7 +337,7 @@
 		/* load required tpl files */
 		$GLOBALS['phpgw']->template->set_file('common', 'common.tpl');
 		$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
-		$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
+		//$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
 		
 		/* These default values will be overridden and appended to as needed by template sets */
 		$GLOBALS['phpgw']->template->set_var('phpgw_top_table_height','0');
