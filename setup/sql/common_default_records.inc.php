@@ -47,6 +47,7 @@
     $db->query("insert into config (config_name, config_value) values ('httpproxy_port', '')");
     $db->query("insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom')");
     $db->query("insert into config (config_name, config_value) values ('checkfornewversion', 'False')");
+    $db->query("insert into config (config_name, config_value) values ('freshinstall', 'True')");
   }
 
   if ($useglobalconfigsettings == "on"){

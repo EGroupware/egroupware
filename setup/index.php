@@ -47,8 +47,17 @@
           $db->free();
           if (isset($oldversion)){
             if ($oldversion == $phpgw_info["server"]["version"]){
-              $stage = 2.6;
-              $header_msg = "Stage 2 (Tables are Current)";
+              $db->query("select config_value from config where config_name='freshinstall'");
+              $db->next_record();
+              $configed = $db->f("config_value");
+              $db->free();
+              if ($configed){
+                $stage = 3.1;
+                $header_msg = "Stage 3 (Needs Configuration)";
+              }else{
+                $stage = 3.2;
+                $header_msg = "Stage 3 (Configuration OK)";
+              }
             }else{
               $stage = 2.4;
               $header_msg = "Stage 2 (Tables need upgrading)";

@@ -237,20 +237,32 @@
       echo "<br><input type=\"submit\" value=\"Re-Check My Installation\">\n";
       echo '</form>';
       echo '</td></tr>';
-    }elseif ($stage == 2.6) {
+    }elseif ($stage >= 2.6) {
       echo '<tr><td align="center">X</td><td>Your tables are current.';
       echo "<form method=\"POST\" action=\"tables.php\">\n";
       echo "<input type=\"hidden\" name=\"oldversion\" value=\"new\">\n";
-      echo "<br>Insanity: <input type=\"submit\" name=\"action\" value=\"Delete all my tables and data\">, then re-create the tables.\n";
+      echo "<br>Insanity: <input type=\"submit\" name=\"action\" value=\"Delete all my tables and data\">\n";
       echo '</form>';
       echo '</td></tr>';
     }
-    echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+    echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 3 - Configuration</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
     if ($stage < 3.1) {
       echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
     }elseif ($stage == 3.1) {
-      echo '<tr><td align="center">O</td><td>stage 3.1.<br></td></tr>';
+      echo '<tr><td align="center">O</td><td>Please phpGroupWare for your environment.';
+      echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Configure Now\"></form>";
+      echo '</td></tr>';
     }elseif ($stage == 3.2) {
+      echo '<tr><td align="center">X</td><td>Configuration completed.';
+      echo "<form method=\"POST\" action=\"config.php\"><input type=\"submit\" value=\"Edit Current Configuration\"></form>";
+      echo '</td></tr>';
+    }
+    echo '  <tr><td align="left" bgcolor="486591"><font color="fefefe">Step 4 - language management</td><td align="right" bgcolor="486591">&nbsp;</td></tr>';
+    if ($stage < 4.1) {
+      echo '<tr><td align="center">O</td><td>Not ready for this stage yet.</td></tr>';
+    }elseif ($stage == 4.1) {
+      echo '<tr><td align="center">O</td><td>stage 3.1.<br></td></tr>';
+    }elseif ($stage == 4.2) {
       echo '<tr><td align="center">O</td><td>stage 3.2.<br></td></tr>';
     }
     echo '</table>';

@@ -22,32 +22,35 @@
     exit;
   }
   loaddb();
-  if ($newsettings["auth_type"] != "ldap") {
-     setup_header();
-  }
 
   if ($submit) {
-     @$db->query("delete from config");
-     while ($newsetting = each($newsettings)) {
-   	if ($newsetting[0] == "nntp_server") {
- 	     $db->query("select config_value FROM config WHERE config_name='nntp_server'");
+    @$db->query("delete from config");
+    while ($newsetting = each($newsettings)) {
+   	  if ($newsetting[0] == "nntp_server") {
+ 	      $db->query("select config_value FROM config WHERE config_name='nntp_server'");
 	      if ($db->num_rows()) {
-	         $db->next_record();
-  	       if ($db->f("config_value") <> $newsetting[1]) {
-	            $db->query("DELETE FROM newsgroups");
-   	         $db->query("DELETE FROM users_newsgroups");
+	        $db->next_record();
+  	      if ($db->f("config_value") <> $newsetting[1]) {
+	          $db->query("DELETE FROM newsgroups");
+   	        $db->query("DELETE FROM users_newsgroups");
    	      }
 	      }
-   	}
-       $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
-    	  	  . "','" . addslashes($newsetting[1]) . "')");
-     }
-     if ($newsettings["auth_type"] == "ldap") {
-        Header("Location: ldap.php");
-        exit;
-     } else {
-        echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
-     }
+   	  }
+      $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
+        . "','" . addslashes($newsetting[1]) . "')");
+    }
+    if ($newsettings["auth_type"] == "ldap") {
+      Header("Location: ldap.php");
+      exit;
+    } else {
+      //echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
+      Header("Location: index.php");
+      exit;
+    }
+  }
+
+  if ($newsettings["auth_type"] != "ldap") {
+    show_header("Configuration");
   }
 
   @$db->query("select * from config");
