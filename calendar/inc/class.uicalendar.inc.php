@@ -1782,6 +1782,31 @@
 			}
 			return $hdr;
 		}
+		
+		/**
+		 * tooltip for all calendar views
+		 *
+		 * displays title, time, description, location and participants, should be composed via a template in the next version
+		 *
+		 * @param $event array containing the event
+		 * @return the onmouseover attribute (incl. onmouseover=) to be included in an html-element, eg. div or table-cell
+		 */
+		function event_tooltip($event,$always_show_time=False)
+		{
+			$start = $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset);
+			$end = $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset);	
+			$multiday = substr($start,0,10) != substr($end,0,10);	// start and end on same day?
+
+			return $this->html->tooltip(
+					($always_show_time || $multiday ? '<p style="margin: 0px;"><b>'.$start.(!$multiday ? substr($end,10) : ' -- '.$end).'</b></p>' : '').
+					'<p style="margin: 0px;">'.$event['description'].'</p>'.
+					($event['location']?'<p style="background: silver; margin: 0px; padding: 1px;">'.$event['location'].'</p>':'').
+					(count($event['participants']) > 1 || !isset($event['participants'][$this->bo->owner]) ? '<p style="margin: 0px;">'.$this->planner_participants($event['participants']).'</p>':''),
+					False,array(
+						'TITLE' => $event['title'],
+						'WIDTH' => 250,
+					));
+		}
 
 		/**
 		 * planner_update_row - update a row of the planner view
@@ -1886,49 +1911,37 @@
 			{
 				$opt .= ' bgcolor="'.$bgcolor.'"';
 			}
+
 			if (!$is_private)
 			{
-				$opt .= ' title="'.lang('Title').": ".$event['title'];
-				if ($event['description'])
-				{
-					$opt .= "\n".lang('Description').": ".$event['description'];
-				}
+				$opt .= $this->event_tooltip($event,True);
 			}
 			else
 			{
-				$opt .= ' title="'.lang('You do not have permission to read this record!');
-			}
-
-			$start = $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset);
-			$end = $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset);
-			$opt .= "\n".lang('Start Date/Time').": ".$start."\n".lang('End Date/Time').": ".$end;
-
-			if ($event['location'] && !$is_private)
-			{
-				$opt .= " \n".lang('Location').": ".$event['location'];
+				$opt .= ' title="'.lang('You do not have permission to read this record!').'"';
 			}
 
 			if (!$is_private)
 			{
-				$opt .= '" onClick="location=\''.$view.'\'"';
+				$opt .= ' onClick="location=\''.$view.'\'"';
 				$cel = '<a href="'.$view.'">';
 			}
 			else
 			{
-				$opt .= '"';
+				$opt .= '';
 				$cel = '';
 			}
 			$opt .= ' class="planner-cell"';
 
 			if ($event['priority'] == 3)
 			{
-				$cel .= $this->html->image('calendar','mini-calendar-bar.gif','','border="0"');
+				$cel .= $this->html->image('calendar','high.gif','','border="0"');
 			}
 			if ($event['recur_type'])
 			{
 				$cel .= $this->html->image('calendar','recur.gif','','border="0"');
 			}
-			$cel .= $this->html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif',$this->planner_participants($event['participants']),'border="0"');
+			$cel .= $this->html->image('calendar',count($event['participants'])>1?'multi_3.gif':'single.gif','','border="0"');
 			$cel .= '</a>';
 
 			if (isset($event['print_title']) && $event['print_title'] == 'yes')
@@ -2864,8 +2877,8 @@
 				$date = sprintf('%04d%02d%02d',$year,$month,$day);
 				$this->link_tpl->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
 				$this->link_tpl->set_var('lang_view',lang('View this entry'));
-				$this->link_tpl->set_var('desc', $textdesc);
-				$this->link_tpl->set_var('location', $textlocation);
+				$this->link_tpl->set_var('tooltip',$this->event_tooltip($event));
+				// quoting title, describtion and location for wz_tooltips
 				$this->link_tpl->parse('picture','link_open',True);
 			}
 			if (!$is_private)
