@@ -338,8 +338,11 @@
 								/* phpgw mod - finally, execute the function call and return the values */
 								$params = $GLOBALS['_xh'][$parser]['params'][0];
 								$code = '$p = '  . $params . ';';
-								eval($code);
-								$params = $p->getval();
+								if (count($params) != 0)
+								{
+									eval($code);
+									$params = $p->getval();
+								}
 
 								// _debug_array($params);
 								$this->reqtoarray($params);
