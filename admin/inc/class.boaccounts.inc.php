@@ -78,6 +78,24 @@
 			}
 		}
 
+		function check_rights($action, $access = 'group_access')
+		{
+			switch($action)
+			{
+				case 'view':	$right = '8'; break;
+				case 'add':		$right = '4'; break;
+				case 'edit':	$right = '16'; break;
+				case 'delete':	$right = '32'; break;
+				case 'search':	$right = '2'; break;
+			}
+
+			if (!$GLOBALS['phpgw']->acl->check($access,$right,'admin'))
+			{
+				return True;
+			}
+			return False;
+		}
+
 		function delete_group($account_id)
 		{
 			if ($GLOBALS['phpgw']->acl->check('group_access',32,'admin'))

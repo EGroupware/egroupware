@@ -65,6 +65,8 @@
 										$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'search_field',
 										$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'nextmatchs'));
 
+/* what should this be for??? this is the same call for both cases! can this be removed? [ceb] */
+
 			if ($GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
 			{
 				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
@@ -91,38 +93,18 @@
 				'lang_sort_statustext'	=> lang('sort the entries')
 			);
 
-			if (! $GLOBALS['phpgw']->acl->check('group_access',8,'admin'))
-			{
-				$can_view = True;
-			}
-
-			if (! $GLOBALS['phpgw']->acl->check('group_access',16,'admin'))
-			{
-				$can_edit = True;
-			}
-
-			if (! $GLOBALS['phpgw']->acl->check('group_access',32,'admin'))
-			{
-				$can_delete = True;
-			}
-
 			while (list($null,$account) = each($account_info))
 			{
 				$group_data[] = Array
 				(
-					'edit_url'					=> ($can_edit?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_group&account_id=' . $account['account_id']):''),
-					'lang_edit'					=> ($can_edit?lang('edit'):''),
-					'lang_edit_statustext'		=> ($can_edit?lang('edit this group'):''),
+					'edit_url'					=> ($this->bo->check_rights('edit')?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_group&account_id=' . $account['account_id']):''),
+					'lang_edit'					=> ($this->bo->check_rights('edit')?lang('edit'):''),
+					'lang_edit_statustext'		=> ($this->bo->check_rights('edit')?lang('edit this group'):''),
 					'group_name'				=> (!$account['account_lid']?'':$account['account_lid']),
-					'delete_url'				=> ($can_delete?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_group&account_id=' . $account['account_id']):''),
-					'lang_delete_statustext'	=> ($can_delete?lang('delete this group'):''),
-					'lang_delete'				=> ($can_delete?lang('delete'):'')
+					'delete_url'				=> ($this->bo->check_rights('delete')?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_group&account_id=' . $account['account_id']):''),
+					'lang_delete_statustext'	=> ($this->bo->check_rights('delete')?lang('delete this group'):''),
+					'lang_delete'				=> ($this->bo->check_rights('delete')?lang('delete'):'')
 				);
-			}
-
-			if (! $GLOBALS['phpgw']->acl->check('group_access',4,'admin'))
-			{
-				$add_access = 'yes';
 			}
 
 			$group_add = array
@@ -133,13 +115,8 @@
 				'lang_done'				=> lang('done'),
 				'lang_done_statustext'	=> lang('return to admin mainscreen'),
 				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'),
-				'add_access'			=> $add_access,
+				'add_access'			=> ($this->bo->check_rights('add')?'yes':''),
 			);
-
-			if (! $GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
-			{
-				$search_access = 'yes';
-			}
 
 			$data = array
 			(
@@ -154,11 +131,10 @@
 				'lang_searchbutton_statustext'	=> lang('Submit the search string'),
 				'query'							=> $query,
 				'lang_search'					=> lang('search'),
-				'lang_groups'					=> lang('user groups'),
 				'group_header'					=> $group_header,
 				'group_data'					=> $group_data,
 				'group_add'						=> $group_add,
-				'search_access'					=> $search_access
+				'search_access'					=> ($this->bo->check_rights('search')?'yes':'')
 			);
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('group_list' => $data));
 		}
@@ -195,21 +171,14 @@
 			{
 				$sort = 'ASC';
 			}
-			
-			unset($GLOBALS['phpgw_info']['flags']['noheader']);
-			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			$GLOBALS['phpgw']->common->phpgw_header();
 
-			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('administration') . ': ' . lang('list users');
 
-			$p->set_file(
-				Array(
-					'accounts' => 'accounts.tpl'
-				)
-			);
-			$p->set_block('accounts','list','list');
-			$p->set_block('accounts','row','row');
-			$p->set_block('accounts','row_empty','row_empty');
+			$GLOBALS['phpgw']->xslttpl->add_file(array('app_data','users',
+										$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'search_field',
+										$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'nextmatchs'));
+
+/* the same like in groups... we really should remove this... :) [ceb] */
 
 			if ($GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
@@ -222,101 +191,87 @@
 				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 
-			$url = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
-
-			$var = Array(
-				'bg_color' => $GLOBALS['phpgw_info']['theme']['bg_color'],
-				'th_bg'    => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'left_next_matchs'   => $this->nextmatchs->left($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
-				'lang_user_accounts' => lang('user accounts'),
-				'right_next_matchs'  => $this->nextmatchs->right($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
-				'lang_loginid'       => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,$url,lang('LoginID')),
-				'lang_lastname'      => $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,$url,lang('last name')),
-				'lang_firstname'     => $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,$url,lang('first name')),
-				'lang_edit'    => lang('edit'),
-				'lang_delete'  => lang('delete'),
-				'lang_view'    => lang('view'),
-				'actionurl'    => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'),
-				'accounts_url' => $url,
-				'lang_search'  => lang('search'),
-				'lang_done'    => lang('Done'),
-				'doneurl'      => $GLOBALS['phpgw']->link('/admin/index.php')
+			$user_header = array
+			(
+				'sort_lid'				=> $this->nextmatchs->show_sort_order(array
+											(
+												'sort'	=> $sort,
+												'var'	=> 'account_lid',
+												'order'	=> $order,
+												'extra'	=> 'menuaction=admin.uiaccounts.list_users'
+											)),
+				'lang_lid'				=> lang('loginid'),
+				'sort_lastname'			=> $this->nextmatchs->show_sort_order(array
+											(
+												'sort'	=> $sort,
+												'var'	=> 'account_lastname',
+												'order'	=> $order,
+												'extra'	=> 'menuaction=admin.uiaccounts.list_users'
+											)),
+				'lang_lastname'				=> lang('Lastname'),
+				'sort_firstname'			=> $this->nextmatchs->show_sort_order(array
+											(
+												'sort'	=> $sort,
+												'var'	=> 'account_firstname',
+												'order'	=> $order,
+												'extra'	=> 'menuaction=admin.uiaccounts.list_users'
+											)),
+				'lang_firstname'			=> lang('firstname'),
+				'lang_view'				=> lang('view'),
+				'lang_edit'				=> lang('edit'),
+				'lang_delete'			=> lang('delete'),
+				'lang_sort_statustext'	=> lang('sort the entries')
 			);
-			$p->set_var($var);
 
-			if (! $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
+			while (list($null,$account) = each($account_info))
 			{
-				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
+				$user_data[] = Array
+				(
+					'view_url'					=> ($this->bo->check_rights('view','account_access')?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.view_user&account_id=' . $account['account_id']):''),
+					'lang_view'					=> ($this->bo->check_rights('view','account_access')?lang('view'):''),
+					'lang_view_statustext'		=> ($this->bo->check_rights('view','account_access')?lang('view this user'):''),
+					'edit_url'					=> ($this->bo->check_rights('edit','account_access')?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_user&account_id=' . $account['account_id']):''),
+					'lang_edit'					=> ($this->bo->check_rights('edit','account_access')?lang('edit'):''),
+					'lang_edit_statustext'		=> ($this->bo->check_rights('edit','account_access')?lang('edit this user'):''),
+					'lid'						=> (!$account['account_lid']?'':$account['account_lid']),
+					'firstname'					=> (!$account['account_firstname']?'':$account['account_firstname']),
+					'lastname'					=> (!$account['account_lastname']?'':$account['account_lastname']),
+					'delete_url'				=> ($this->bo->check_rights('delete','account_access')?$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.delete_user&account_id=' . $account['account_id']):''),
+					'lang_delete_statustext'	=> ($this->bo->check_rights('delete','account_access')?lang('delete this user'):''),
+					'lang_delete'				=> ($this->bo->check_rights('delete','account_access')?lang('delete'):'')
+				);
 			}
 
-			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
-			{
-				$p->set_var('input_search',lang('Search') . '&nbsp;<input type="text" name="query">');
-			}
+			$user_add = array
+			(
+				'lang_add'				=> lang('add'),
+				'lang_add_statustext'	=> lang('add a user'),
+				'add_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.edit_user'),
+				'lang_done'				=> lang('done'),
+				'lang_done_statustext'	=> lang('return to admin mainscreen'),
+				'done_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.mainscreen'),
+				'add_access'			=> ($this->bo->check_rights('add','account_access')?'yes':''),
+			);
 
-			if (!count($account_info) || !$total)
-			{
-				$p->set_var('message',lang('No matches found'));
-				$p->parse('rows','row_empty',True);
-			}
-			else
-			{
-				if (! $GLOBALS['phpgw']->acl->check('account_access',8,'admin'))
-				{
-					$can_view = True;
-				}
-
-				if (! $GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
-				{
-					$can_edit = True;
-				}
-
-				if (! $GLOBALS['phpgw']->acl->check('account_access',32,'admin'))
-				{
-					$can_delete = True;
-				}
-
-				while (list($null,$account) = each($account_info))
-				{
-					$this->nextmatchs->template_alternate_row_color($p);
-
-					$var = array(
-						'row_loginid'   => $account['account_lid'],
-						'row_firstname' => (!$account['account_firstname']?'&nbsp':$account['account_firstname']),
-						'row_lastname'  => (!$account['account_lastname']?'&nbsp':$account['account_lastname'])
-					);
-					$p->set_var($var);
-
-					if ($can_edit)
-					{
-						$p->set_var('row_edit',$this->row_action('edit','user',$account['account_id']));
-					}
-					else
-					{
-						$p->set_var('row_edit','&nbsp;');
-					}
-
-					if ($can_delete)
-					{
-						$p->set_var('row_delete',($GLOBALS['phpgw_info']['user']['userid'] != $account['account_lid']?$this->row_action('delete','user',$account['account_id']):'&nbsp'));
-					}
-					else
-					{
-						$p->set_var('row_delete','&nbsp;');
-					}
-
-					if ($can_view)
-					{
-						$p->set_var('row_view',$this->row_action('view','user',$account['account_id']));
-					}
-					else
-					{
-						$p->set_var('row_view','&nbsp;');
-					}
-					$p->parse('rows','row',True);
-				}
-			}		// End else
-			$p->pfp('out','list');
+			$data = array
+			(
+				'start_record'					=> $start,
+ 				'record_limit'					=> $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'],
+ 				'num_records'					=> count($account_info),
+ 				'all_records'					=> $total,
+				'nextmatchs_url'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
+				'nextmatchs_img_path'			=> $GLOBALS['phpgw']->common->get_image_path('phpgwapi','default'),
+				'select_url'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users'),
+				'lang_searchfield_statustext'	=> lang('Enter the search string. To show all entries, empty this field and press the SUBMIT button again'),
+				'lang_searchbutton_statustext'	=> lang('Submit the search string'),
+				'query'							=> $query,
+				'lang_search'					=> lang('search'),
+				'user_header'					=> $user_header,
+				'user_data'						=> $user_data,
+				'user_add'						=> $user_add,
+				'search_access'					=> ($this->bo->check_rights('search','account_access')?'yes':'')
+			);
+			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('account_list' => $data));
 		}
 
 		function add_user()
