@@ -4,7 +4,7 @@
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
 	 * and Joseph Engo <jengo@phpgroupware.org>                                 *
 	 * Has a few functions, but primary role is to load the phpgwapi            *
-	 * Copyright (C) 2000, 2001, 2002 Dan Kuykendall                                  *
+	 * Copyright (C) 2000, 2001, 2002 Dan Kuykendall                            *
 	 * -------------------------------------------------------------------------*
 	 * This library is part of the phpGroupWare API                             *
 	 * http://www.phpgroupware.org/api                                          * 
@@ -221,7 +221,7 @@
 			if($server_info_cache)
 			{
 				$cache_query = "DELETE FROM phpgw_app_sessions WHERE sessionid='0' and loginid='0' and app='phpgwapi' and location='config'";
-				$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);				
+				$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
 			}
 			$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
 				. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
@@ -387,10 +387,10 @@
 			define('PHPGW_FRAME_PART','start');
 		}
 //$GLOBALS['phpgw_info']['server']['useframes'] = 'always';
-		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&	
+		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] && 
 			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') || 
-			$GLOBALS['phpgw_info']['server']['useframes'] == 'always') &&	
+			$GLOBALS['phpgw_info']['server']['useframes'] == 'always') &&
 			PHPGW_FRAME_PART != 'unsupported')
 		{
 			define('PHPGW_USE_FRAMES',True);
@@ -446,7 +446,6 @@
 		}
 		unset($enable_class);
 		reset($GLOBALS['phpgw_info']['flags']);
-
 
 		/***************************************************************************\
 		* These lines load up the themes data and put them into the templates class *

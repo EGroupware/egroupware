@@ -353,7 +353,6 @@
 		$cnt = count($method);
 		for($i=0;$i<$cnt;$i++)
 		{
-
 			switch(strtoupper($method[$i]))
 			{
 				case 'DEFAULT':
@@ -402,7 +401,7 @@
 		{
 			$value = $default_value;
 		}
-	
+
 		if (@!is_array($value))
 		{
 			if ($value == '')
