@@ -636,7 +636,7 @@
 				$data = array ();
 			}
 
-			$string = ereg_replace ("'", "\'", $data['string']);
+			$string = $GLOBALS['phpgw']->db->db_addslashes ($data['string']);
 
 			return $string;
 		}
