@@ -47,7 +47,7 @@
 			//print_r($this->found_hooks);
 			//echo '</pre>';
 		}
-		
+
 		/*!
 		@function process
 		@abstract loads up all the hooks the user has rights to
@@ -170,13 +170,12 @@
 			{
 				if (isset($this->found_hooks[$permission[0]][$location]))
 				{
-						++$count;
+					++$count;
 				}
 			}
 			return $count;
 		}
-		
-		
+
 		/*! 
 		@function read()
 		@abstract currently not being used
