@@ -814,16 +814,14 @@
 				),False,True);	// called for every app now, not only enabled ones)
 			}
 
-			$apps = CreateObject('phpgwapi.applications',array((int)$_userData['account_id'],'u'));
-
-			$apps->account_id = $_userData['account_id'];
+			$apps = CreateObject('phpgwapi.applications',(int)$_userData['account_id']);
 			if ($_userData['account_permissions'])
 			{
-				while($app = each($_userData['account_permissions'])) 
+				foreach($_userData['account_permissions'] as $app => $enabled) 
 				{
-					if($app[1]) 
+					if($enabled) 
 					{
-						$apps->add($app[0]);
+						$apps->add($app);
 					}
 				}
 			}
