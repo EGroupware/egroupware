@@ -15,21 +15,6 @@
 
 	class boinfolog 			// BO: buiseness objects: internal logic
 	{
-		var $public_functions = array
-		(
-			'init'           => True,	// in class soinfolog
-			'read'           => True,
-			'write'          => True,
-			'delete'         => True,
-			'check_access'   => True,
-			'anzSubs'        => True,
-			'search'         => True,
-			'get_rows'       => True,
-			'link_title'     => True,
-			'link_query'     => True,
-			'link_id2from'   => True,
-			'cal_to_include' => True
-		);
 		var $enums;
 		var $so;
 		var $vfs;
@@ -123,7 +108,7 @@
 						{
 							$this->status[$key] = array();
 						}
-						$this->status[$key] += $this->config->config_data['status'][$key];
+						$this->status[$key] = array_merge($this->status[$key],$this->config->config_data['status'][$key]);
 					}
 				}
 				if (isset($this->config->config_data['types']) && is_array($this->config->config_data['types']))

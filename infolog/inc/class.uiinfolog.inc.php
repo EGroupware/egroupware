@@ -431,7 +431,8 @@
 						$content['info_responsible'] = $parent['info_owner'];
 					}
 					*/
-					$content['info_status'] = 'ongoing';
+					$content['info_type'] = $parent['info_type'];
+					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 					$content['info_confirm'] = 'not';
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
@@ -500,6 +501,7 @@
 						{
 							$content['info_type'] = $type;
 						}
+						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 						break;
 				}
 				$content['link_to']['primary'] = (int)$content['info_link_id'];
