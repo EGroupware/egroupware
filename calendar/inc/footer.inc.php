@@ -19,6 +19,11 @@
 		$phpgw->common->phpgw_exit();
 	}
 
+	if(floor($PHP_VERSION) == 4)
+	{
+		global $phpgw_info, $thisday, $thismonth, $thisyear;
+	}
+
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 	
 	$templates = Array(
@@ -63,7 +68,7 @@
 	}
 
 	$var = Array(
-		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/month.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/calendar/month.php','owner='.$owner),
 		'form_name'			=>	'SelectMonth',
 		'label'				=>	lang('Month'),
 		'form_label'		=>	'date',
@@ -77,29 +82,55 @@
 	$p->parse('output','footer_column',True);
 
 	$str = '';
-	
-	if ($phpgw->calendar->tempyear && $phpgw->calendar->tempmonth)
+
+	if ($phpgw->calendar->tempyear)
 	{
-		$m = $phpgw->calendar->tempmonth;
 		$y = $phpgw->calendar->tempyear;
 	}
 	else
 	{
-		$m = date('m');
 		$y = date('Y');
 	}
-	
-	if ($thisday)
+	if ($phpgw->calendar->tempmonth)
 	{
-		$d = $thisday;
+		$m = $phpgw->calendar->tempmonth;
 	}
 	else
 	{
-		$d = date ('d');
+		$m = date('m');
 	}
+	if ($phpgw->calendar->tempday)
+	{
+		$d = $phpgw->calendar->tempday;
+	}
+	else
+	{
+		$d = date('d');
+	}
+
+//	if ($phpgw->calendar->tempyear && $phpgw->calendar->tempmonth)
+//	{
+//		$m = $phpgw->calendar->tempmonth;
+//		$y = $phpgw->calendar->tempyear;
+//	}
+//	else
+//	{
+//		$m = date('m');
+//		$y = date('Y');
+//	}
+//	
+//	if ($thisday)
+//	{
+//		$d = $thisday;
+//	}
+//	else
+//	{
+//		$d = date ('d');
+//	}
+	unset($thisdate);
+	
 	$thisdate = $phpgw->calendar->makegmttime(0,0,0,$m,$d,$y);
-	$sun = $phpgw->calendar->get_weekday_start($y,$m,$d) -
-		((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
+	$sun = $phpgw->calendar->get_weekday_start($y,$m,$d) - $phpgw->calendar->tz_offset - 7200;
 
 	$str = '';
 	
@@ -117,7 +148,7 @@
 	}
  
 	$var = Array(
-		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/calendar/week.php','owner='.$owner),
 		'form_name'			=>	'SelectWeek',
 		'label'				=>	lang('Week'),
 		'form_label'		=>	'date',
@@ -150,7 +181,7 @@
 	}
   
 	$var = Array(
-		'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php','owner='.$owner),
+		'action_url'		=>	$phpgw->link('/calendar/year.php','owner='.$owner),
 		'form_name'			=>	'SelectYear',
 		'label'				=>	lang('Year'),
 		'form_label'		=>	'year',

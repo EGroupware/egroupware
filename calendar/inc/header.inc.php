@@ -32,27 +32,27 @@
    &nbsp;
   </td>
   <td width="2%">
-   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/calendar/day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/today.gif" alt="<?php echo lang('Today'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/calendar/week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/week.gif" alt="<?php echo lang('This week'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/calendar/month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/month.gif" alt="<?php echo lang('This month'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/calendar/year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/year.gif" alt="<?php echo lang('This year'); ?>" border="0">
    </a>
   </td>
   <td width="2%" align="left">
-   <a href="<?php echo $phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
+   <a href="<?php echo $phpgw->link('/calendar/matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner); ?>">
     <img src="<?php echo $phpgw_info['server']['app_images']; ?>/view.gif" alt="<?php echo lang('Daily Matrix View'); ?>" border="0">
    </a>
   </td>

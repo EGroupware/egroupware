@@ -844,6 +844,8 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info, $grants;
 
+		$startdate -= 7200;
+
 		if($owner == 0) { $owner= $phpgw_info['user']['account_id']; }
 
 		$str = '';
@@ -927,7 +929,7 @@ class calendar extends calendar_
 				
 				$p->parse('column_data','month_day',True);
 
-				$rep_events = $this->get_sorted_by_date($date['raw'] - 7200,$owner);
+				$rep_events = $this->get_sorted_by_date($date['raw'],$owner);
 
 				if ($this->sorted_events_matching)
 				{
