@@ -3452,14 +3452,17 @@
 
 			$vars['title']['tr_color'] = $this->theme['th_bg'];
 
-			foreach($vars['participants']['data'] as $user => $str)
+			if (isset($vars['participants']['data']) && is_array($vars['participants']['data']))
 			{
-				if ($this->bo->check_perms(PHPGW_ACL_EDIT,0,$user) && ereg('^(.*) \((.*)\)$',$str,$parts))
+				foreach($vars['participants']['data'] as $user => $str)
 				{
-					$vars['participants']['data'][$user] = $parts[1].' (<a href="'.$this->page('edit_status','&cal_id='.$event['id'].'&owner='.$user).'">'.$parts[2].'</a>)';
+					if ($this->bo->check_perms(PHPGW_ACL_EDIT,0,$user) && ereg('^(.*) \((.*)\)$',$str,$parts))
+					{
+						$vars['participants']['data'][$user] = $parts[1].' (<a href="'.$this->page('edit_status','&cal_id='.$event['id'].'&owner='.$user).'">'.$parts[2].'</a>)';
+					}
 				}
+				$vars['participants']['data'] = implode("<br>\n",$vars['participants']['data']);
 			}
-			$vars['participants']['data'] = implode("<br>\n",$vars['participants']['data']);
 
 			foreach($vars as $var)
 			{
