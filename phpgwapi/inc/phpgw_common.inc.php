@@ -328,6 +328,8 @@
              if ($appname == "logout") {
                 $target = ' target="_top"';
              }
+          }elseif ($appname == "about") {
+           $target = ' target="AboutWindow"';
           } else {
          	 $target = "";
           }
@@ -350,15 +352,18 @@
         	$output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
        	} elseif ($appname == "about") {
      	    $output_text = "<A href=\"" . $phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php");
+// This might be fixable so that the size of the popup window can be limited. I havent been able to get it to work at this point -Seek3r
+//     	    $output_text = "<SCRIPT> function launchabout() {window.open(\"".$phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php")."\", \"phpGroupWare About Window\", \"width=400,height=300,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes\");}</SCRIPT>";
+//     	    $output_text .= '<a href="javascript:launchabout()';
         } elseif ($appname == "print") {
           $output_text = "<A href=\"javascript:window.print();\"";
 // Changed by Skeeter 03 Dec 00 2000 GMT
 // This is to allow for the calendar app to have a default page view.
    	    } elseif ($appname == "calendar") {
 	       if(isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]))
-		  $view = $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"];
+		      $view = $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"];
 	       else
-		  $view = "index.php";
+		      $view = "index.php";
    	       $output_text = "<A href=\"" . $phpgw->link($urlbasename."/$appname/".$view);
 // end change
    	    } else {
@@ -483,7 +488,7 @@
     
           $this->show_icon(&$tpl,$td_width,"preferences","Preferences");
        	  if (file_exists($phpgw_info["server"]["app_root"]."/about.php")) {
-            $this->show_icon(&$tpl,$td_width,"about","About");
+            $this->show_icon(&$tpl,$td_width,"about","About ".$phpgw_info["flags"]["currentapp"]);
           }
 
           $this->show_icon(&$tpl,$td_width,"logout","Logout");
@@ -681,7 +686,6 @@
   	  if (file_exists($f)) {include($f);}
       $completed_hooks[$appname] = True;
     }
-
     /* Then add the rest */
     reset ($phpgw_info["user"]["app_perms"]);
     while (list (, $appname) = each ($phpgw_info["user"]["app_perms"])){
@@ -691,6 +695,15 @@
     	  if (file_exists($f)) {include($f);}
       }
     }
+  }
+
+  function hook_single($location = "", $appname = ""){
+    global $phpgw, $phpgw_info;
+    if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
+    /* First include the ordered apps hook file */
+    $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
+  	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
+	  if (file_exists($f)) {include($f);}
   }
 
   function hook_count($location = ""){
