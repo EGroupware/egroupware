@@ -83,7 +83,7 @@
 		'phpgw_sessions' => array(
 			'fd' => array(
 				'session_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
-				'session_lid' => array('type' => 'varchar', 'precision' => 20),
+				'session_lid' => array('type' => 'varchar', 'precision' => 255),
 				'session_ip' => array('type' => 'varchar', 'precision' => 255),
 				'session_logintime' => array('type' => 'int', 'precision' => 4),
 				'session_dla' => array('type' => 'int', 'precision' => 4),
