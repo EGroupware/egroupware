@@ -4,6 +4,8 @@
 	      - You can now use decimals in the inventory program.
 	      - Added missing tables for tts and fixed problems with postgresql.
 	      - Fixed changing of password not getting set in session table
+	      - email now displays "Could not open mailbox" if mailbox could
+	        not be opened (formerly displayed just "mailbox empty")
 	      - Fixed displaying of repeated events by owner
 
 [09072000] - Added print icon that allows you to print out a page without having
