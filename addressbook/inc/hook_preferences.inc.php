@@ -33,7 +33,7 @@
 	section_item($phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname),
 		lang('Grant Access'));
 
-	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname),
+	section_item($phpgw->link('/preferences/categories.php','cats_app='.$appname . '&cats_level=True&global_cats=True'),
 		lang('Edit Categories'));
 
 	section_item($phpgw->link('/addressbook/fields.php'),
