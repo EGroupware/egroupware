@@ -178,8 +178,8 @@
 		{
 			if (NotifyWindow.closed)
 			{
-				NotifyWindow.stop();
-				NotifyWindow.close();
+				NotifyWindow.stop;
+				NotifyWindow.close;
 			}
 		}
 		NotifyWindow = window.open("<?php echo $GLOBALS['phpgw']->link('/notify.php')?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
