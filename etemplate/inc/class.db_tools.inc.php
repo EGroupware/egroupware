@@ -485,7 +485,7 @@
 			{
 				$header = "<?php\n\n";
 			}
-			if (!is_writeable($file) || !($f = fopen($file,'w')))
+			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
 				return False;
 			}
