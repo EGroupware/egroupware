@@ -745,22 +745,9 @@
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
-				$GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location] = '';
-				session_register('phpgw_session');
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
-
 				// I added these into seperate steps for easier debugging
 				$data = $GLOBALS['phpgw_session']['phpgw_app_sessions'][$appname][$location]['content'];
 
-				session_register('phpgw_session');
-				$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
-				// Changed by Skeeter 2001 Mar 04 0400Z
-				// This was not properly decoding structures saved into session data properly
-//				$data = $GLOBALS['phpgw']->common->decrypt($data);
-//				return stripslashes($data);
-				// Changed by milosch 2001 Dec 20
-				// do not stripslashes here unless this proves to be a problem.
-				// Changed by milosch 2001 Dec 25
 				/* do not decrypt and return if no data (decrypt returning garbage) */
 				if($data)
 				{
