@@ -90,4 +90,26 @@
 		$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
 		return $r;
 	}
+
+	function _soap_auth_verify($m1,$m2,$m3)
+	{
+		$server_name = $m1;
+		$sessionid   = $m2;
+		$kp3         = $m3;
+
+		$verified = $GLOBALS['phpgw']->session->verify_server($sessionid,$kp3);
+
+		if($verified)
+		{
+			$rtrn = array(
+				CreateObject('phpgwapi.xmlrpcval','HELO','string',$sessionid)
+			);
+		}
+		else
+		{
+			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO'));
+		}
+		$r = CreateObject('phpgwapi.soapmsg','system_auth_verifyResponse',$rtrn);
+		return $r;
+	}
 ?>

@@ -118,4 +118,16 @@
 	{
 		return $timeInstant;
 	}
+
+	$server->add_to_map(
+		'system_auth',
+		array('string','string','string'),
+		array('array')
+	);
+
+	$server->add_to_map(
+		'system_auth_verify',
+		array('string','string','string'),
+		array('array')
+	);
 ?>
