@@ -215,6 +215,8 @@
   $t->set_var("th_text",$phpgw_info["theme"]["th_text"]);
   $t->set_var("lang_add",lang("Add"));
   $t->set_var("lang_addvcard",lang("AddVCard"));
+  $t->set_var("lang_import",lang("Import File"));
+  $t->set_var("import_url",$phpgw->link("import.php"));
   $t->set_var("lang_view",lang("View"));
   $t->set_var("lang_vcard",lang("VCard"));
   $t->set_var("lang_edit",lang("Edit"));

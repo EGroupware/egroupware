@@ -13,15 +13,21 @@
               <TD align="left"> 
                 <INPUT type="reset" name="reset" value="{lang_clear}">
               </TD>
-              <TD align="left"> 
-                {cancel_link}<INPUT type="submit" name="cancel" value="{lang_cancel}"></a>
-              </TD>
             </TR>
+	    </FORM>
+            <tr>
+              <td width="8%">
+              <form action="{cancel_url}" method="post">
+              <input type="submit" name="Cancel" value="{lang_cancel}">
+              </form>
+              </td>
+              <td width="64%">&nbsp;</td>
+              <td width="32">&nbsp;</td>
+            </tr>
             </TBODY> 
           </TABLE>
         </TD>
       </TR>
       </TBODY> 
 </TABLE>
-</FORM>
 <!-- END add -->

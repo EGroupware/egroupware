@@ -106,7 +106,7 @@
   $t->set_var("lang_ok",lang("ok"));
   $t->set_var("lang_clear",lang("clear"));
   $t->set_var("lang_cancel",lang("cancel"));
-  $t->set_var("cancel_link",'<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . '">');
+  $t->set_var("cancel_url",$phpgw->link("index.php"));
   $t->parse("out","add");
   $t->pparse("out","add");
 
