@@ -2024,12 +2024,24 @@
 	}
 
 
-	$test[] = '0.9.13.007';  // version number?
+	$test[] = '0.9.13.007';  
 	function phpgwapi_upgrade0_9_13_007()
 	{
 		global $setup_info, $phpgw_setup;
 
 		$phpgw_setup->oProc->AlterColumn('phpgw_log_msg','log_msg_log_id',array('type' => 'int', 'precision' => 4, 'nullable'=> False));
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.008';
+		return $setup_info['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.13.008';  
+	function phpgwapi_upgrade0_9_13_008()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->AddColumn('phpgw_log_msg','log_msg_file',array('type' => 'varchar', 'precision' => 255, 'nullable'=> False));
+		$phpgw_setup->oProc->AddColumn('phpgw_log_msg','log_msg_line',array('type' => 'int', 'precision' => 4, 'nullable'=> False));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.008';
 		return $setup_info['phpgwapi']['currentver'];

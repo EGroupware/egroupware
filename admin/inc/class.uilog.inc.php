@@ -39,6 +39,7 @@
 
 
 
+
 			// Handle the Edit Table Button
 			if (isset($editable))	
 			{
@@ -114,8 +115,11 @@
 													'log_msg_date_e',
 													'log_msg_severity',
 													'log_msg_code',
-													'log_msg_text'
+													'log_msg_text',
+													'log_msg_file',
+													'log_msg_line'
 													);
+													
 						// Store defaults in session data...
 						$phpgw->session->appsession ('session_data',
 													'log',
@@ -138,17 +142,51 @@
 		function list_log()
 		{
 			global $phpgw, $phpgw_info;
-/*
-$phpgw->log->write(array('text'=>'I-TestWrite, write: %1','p1'=>'This message should appear in log'));
-$phpgw->log->message(array('text'=>'I-TestMsg, msg: %1','p1'=>'This message should appear in log'));
-$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should not be in log'));
-$phpgw->log->clearstack();
-$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log'));
-$phpgw->log->error(array('text'=>'W-TestWarn, warn: %1','p1'=>'This is a test Warning'));
-$phpgw->log->error(array('text'=>'E-TestError, err: %1','p1'=>'This is a test Error'));
-$phpgw->log->error(array('text'=>'F-Abend, abort: %1','p1'=>'Force abnormal termination'));
-$phpgw->log->commit();  // commit error stack to log...
-*/
+
+			if (false) // add some errors to the log...
+			{
+				// Test 1: single Error line immedeately to errorlog 
+				// (could be type Debug, Info, Warning, or Error)
+				$phpgw->log->write(array('text'=>'I-TestWrite, write: %1','p1'=>'This message should appear in log','file'=>__FILE__,'line'=>__LINE__));
+
+
+				// Test 2: A message should appear in log even if clearstack is called
+				$phpgw->log->message(array('text'=>'I-TestMsg, msg: %1','p1'=>'This message should appear in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should not be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->clearstack();
+				$phpgw->log->commit();  // commit error stack to log...
+
+				// Test 3: one debug message
+				$phpgw->log->error(array('text'=>'D-Debug, dbg: %1','p1'=>'This debug statment should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->commit();  // commit error stack to log...
+
+				// Test 3: debug and one informational
+				$phpgw->log->error(array('text'=>'D-Debug, dbg: %1','p1'=>'This debug statment should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->commit();  // commit error stack to log...
+
+				// Test 4: an informational and a Warning
+				$phpgw->log->error(array('text'=>'D-Debug, dbg: %1','p1'=>'This debug statment should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'W-TestWarn, warn: %1','p1'=>'This is a test Warning','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->commit();  // commit error stack to log...
+
+				// Test 5: and an error
+				$phpgw->log->error(array('text'=>'D-Debug, dbg: %1','p1'=>'This debug statment should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'W-TestWarn, warn: %1','p1'=>'This is a test Warning','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'E-TestError, err: %1','p1'=>'This is a test Error','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->commit();  // commit error stack to log...
+
+
+				// Test 6: and finally a fatal...
+				$phpgw->log->error(array('text'=>'D-Debug, dbg: %1','p1'=>'This debug statment should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'I-TestInfo, info: %1','p1'=>'This Informational should be in log','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'W-TestWarn, warn: %1','p1'=>'This is a test Warning','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'E-TestError, err: %1','p1'=>'This is a test Error','file'=>__FILE__,'line'=>__LINE__));
+				$phpgw->log->error(array('text'=>'F-Abend, abort: %1','p1'=>'Force abnormal termination','file'=>__FILE__,'line'=>__LINE__));
+
+			};
 			$this->t->set_file(array('log_list_t' => 'log.tpl'));
 /*
 // --------------------------------- nextmatch ---------------------------
@@ -227,6 +265,7 @@ $phpgw->log->commit();  // commit error stack to log...
 			switch($row[$this->column['log_severity']]['value'])
 			{
 				
+				case 'D': $row[$this->column['log_severity']]['bgcolor'] = 'D3DCFF'; break;
 				case 'I': $row[$this->column['log_severity']]['bgcolor'] = 'C0FFC0'; break;
 				case 'W': $row[$this->column['log_severity']]['bgcolor'] = 'FFFFC0'; break;
 				case 'E': $row[$this->column['log_severity']]['bgcolor'] = 'FFC0C0'; break;
@@ -235,6 +274,7 @@ $phpgw->log->commit();  // commit error stack to log...
 
 			switch($row[$this->column['log_msg_severity']]['value'])
 			{
+				case 'D': $color = 'D3DCFF'; break;
 				case 'I': $color = 'C0FFC0'; break;
 				case 'W': $color = 'FFFFC0'; break;
 				case 'E': $color = 'FFC0C0'; break;

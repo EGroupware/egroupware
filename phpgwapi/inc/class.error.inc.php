@@ -23,24 +23,30 @@
 		var $parms = array();
 		var $ismsg = 0;
 		var $timestamp;
+		var $fname;
+		var $line;
+		var $app;
 		
 		var $public_functions = array();
 
-		/*******************************************\
-		* Constructor                               *
-		* to be accessed as new error()             *
-		\*******************************************/
 		// Translate Message into Language
 		function langmsg()
 		{
 			return lang($this->msg,$this->parms);		
 		}		
 
-
-		function error($etext, $parms, $ismsg)
+		function error($parms)
 		{
 			global $phpgw;
-			if (eregi('([IWEF])-(.*)[\,](.*)',$etext,$match))
+			if ($parms == '')
+			{
+				return;
+			};
+			$etext =$parms['text'];
+			$parray = array($parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9'],$parms['p10']);
+			$fname = $parms['file'];
+			$line  = $parms['line'];
+			if (eregi('([DIWEF])-(.*)[\,](.*)',$etext,$match))
 			{
 				$this->severity = strtoupper($match[1]);
 				$this->code     = $match[2];
@@ -51,14 +57,25 @@
 				$this->msg = trim($etext);
 			}
 			$this->timestamp = time();
-			$this->parms     = $parms;
-			$this->ismsg     = $ismsg;
-
+			$this->parms     = $parray;
+			$this->ismsg     = $parms['ismsg'];
+			$this->fname     = $fname;
+			$this->line		 = $line;
+			$this->app 		 = $phpgw_info['flags']['currentapp'];
+			
+ 			if (!$this->fname or !$this->line)
+			{
+				$phpgw->log->error(array('text'=>'W-PGMERR, Programmer failed to pass __FILE__ and/or __LINE__ in next log message',
+										'file'=>__FILE__,'line'=>__LINE__
+										)
+								  );
+			}
+ 
 			$phpgw->log->errorstack[] = $this;
 			if ($this->severity == 'F')
 			{
 				// This is it...  Don't return
-				// do rollback...
+				// do rollback!
 				// Hmmm this only works if UI!!!!
 				// What Do we do if it's a SOAP/XML?
 				echo "<Center>";

@@ -27,33 +27,37 @@
 									'astable',
 									);
 		
-		
 		function message($parms)
 		{
-			$etext =$parms['text'];
-			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
-			CreateObject('phpgwapi.error',$etext,$parms,1);
+			$parms['ismsg']=1;
+			CreateObject('phpgwapi.error',$parms);
+			return true;
 		}
 		
 		
 		function error($parms)
 		{
-			$etext =$parms['text'];
-			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
-			CreateObject('phpgwapi.error',$etext,$parms,'');
+			$parms['ismsg']=0;
+			CreateObject('phpgwapi.error',$parms);
+			return true;
 		}
 
 
 		function write($parms)
 		{
-			$etext =$parms['text'];
-			$parms = array($parms['p0'],$parms['p1'],$parms['p2'],$parms['p3'],$parms['p4'],$parms['p5'],$parms['p6'],$parms['p7'],$parms['p8'],$parms['p9']);
+			$parms['ismsg']=0;
 			$save = $this->errorstack;
 			$this->$errorstack = array();
-			CreateObject('phpgwapi.error',$etext,$parms,1);
+			CreateObject('phpgwapi.error',$parms);
 			$this->commit();
 			$this->errorstack = $save;
+			return true;
 		}
+		
+ 
+		
+		
+		
 		
 		function iserror($parms)
 		{
@@ -73,7 +77,7 @@
 		
 		function severity()
 		{
-			$max = 'I';
+			$max = 'D';
 			$errorstack = $this->errorstack;
 			reset($errorstack);
 			while(list(,$err)=each($errorstack))
@@ -82,11 +86,15 @@
 				{
 					case 'F': return 'F'; break;
 					case 'E': $max = 'E'; break;
-					case 'W': if ($max == 'I') 
+					case 'W': if ($max != 'E') 
 					          { 
 							  	$max = 'W';
 							  }
 							  break;
+					case 'I': if ($max == 'D')
+							  {
+							  	$max = 'I';
+							  }
 				}
 			}
 			return $max;
@@ -97,7 +105,7 @@
 		
 			global $phpgw, $phpgw_info;
 			$db = $phpgw->db;
-			$db->lock('phpgw_log');
+//			$db->lock('phpgw_log');
 			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
 						."('". $phpgw->db->to_timestamp(time()
 )
@@ -107,18 +115,19 @@
 						.")"
 						,__LINE__,__FILE__);
 
-			$db->query('select max(log_id)  as lid from phpgw_log');
-			$db->next_record();
-			$log_id = $db->f('lid');
-			$db->unlock();
+			$log_id = $db->get_last_insert_id('phpgw_log','log_id');
+//			$db->query('select max(log_id)  as lid from phpgw_log');
+//			$db->next_record();
+//			$log_id = $db->f('lid');
+//			$db->unlock();
 
 			$errorstack = $this->errorstack;
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
 				$err = $errorstack[$i];
 				$db->query	("insert into phpgw_log_msg "
-							."(Log_msg_log_id, log_msg_seq_no, log_msg_date, "
-							."log_msg_severity, log_msg_code, log_msg_msg, log_msg_parms) values "
+							."(Log_msg_log_id, log_msg_seq_no, log_msg_date, log_msg_severity, "
+							."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
 							."(" . $log_id
 							."," . $i
 							.", '" . $phpgw->db->to_timestamp($err->timestamp
@@ -127,12 +136,15 @@
 							.", '". $err->code     . "'"
 							.", '". $err->msg      . "'"
 							.", '". addslashes(implode('|',$err->parms)). "'"
+							.", '". $err->fname      . "'"
+							.", ". $err->line      
 							.")" 
 							,__LINE__,__FILE__);
 			};
 			unset ($errorstack);
 			unset ($this->errorstack);
 			$this->errorstack = array();
+			return true;
 		}
 
 
@@ -150,6 +162,7 @@
 			}
 			unset ($this->errorstack);
 			$this->errorstack = $new;
+			return true;
 		}		
 
 		function astable()
@@ -165,6 +178,8 @@
 			$html .= "\t\t<td align=\"center\", width=\"2%\">S</td>\n";
 			$html .= "\t\t<td width=\"10%\">Error Code</td>\n";
 			$html .= "\t\t<td >Msg</td>\n";
+			$html .= "\t\t<td >File</td>\n";
+			$html .= "\t\t<td >Line</td>\n";
 			$html .= "\t</tr>\n";
 			
 			$errorstack = $this->errorstack;
@@ -173,6 +188,7 @@
 				$err = $errorstack[$i];
 				switch ($err->severity)
 				{
+					case 'D': $color = 'D3DCFF'; break;
 					case 'I': $color = 'C0FFC0'; break;
 					case 'W': $color = 'FFFFC0'; break;
 					case 'E': $color = 'FFC0C0'; break;
@@ -182,10 +198,12 @@
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
 				$html .= "\t\t<td>".$phpgw->common->show_date($err->timestamp)."</td>\n";
-				$html .= "\t\t<td>".$phpgw_info['flags']['currentapp']."&nbsp </td>\n";
+				$html .= "\t\t<td>".$err->app."&nbsp </td>\n";
 				$html .= "\t\t<td align=center>".$err->severity."</td>\n";
 				$html .= "\t\t<td>".$err->code."</td>\n";
 				$html .= "\t\t<td>".$err->langmsg()."</td>\n";
+				$html .= "\t\t<td>".$err->fname."</td>\n";
+				$html .= "\t\t<td>".$err->line."</td>\n";
 				$html .= "\t</tr>\n";
 			};			
 			$html .= "</table>\n";
