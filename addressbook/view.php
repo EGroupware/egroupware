@@ -24,9 +24,9 @@
 
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
 	$t->set_file(array( "view"	=> "view.tpl"));
-	
+
 	$this = CreateObject("phpgwapi.contacts");
-	
+
 	if (! $ab_id) {
 		Header("Location: " . $phpgw->link("index.php"));
 	}
@@ -52,31 +52,34 @@
 	$fields  = $this->read_single_entry($ab_id,$qfields);
 	
 	$owner  = $fields[0]["owner"];
+
+	$rights = $phpgw->acl->get_rights('u_'.$owner,$phpgw_info["flags"]["currentapp"]);
+	if ( ($rights & PHPGW_ACL_READ) || ($owner == $account_id) ) {
+
+		$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
+		$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
 	
-	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
-	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
-	
-	while ($column = each($columns_to_display)) { // each entry column
-		$columns_html .= "<tr><td><b>" . lang(display_name($colname[$column[0]])) . "</b>:</td>";
-		$ref=$data="";
-		$coldata = $fields[0][$column[0]];
-		// Some fields require special formatting.       
-		if ($column[0] == "url") {
-			$ref='<a href="'.$coldata.'" target="_new">';
-			$data=$coldata.'</a>';
-		} elseif ($column[0] == "email") {
-			if ($phpgw_info["user"]["apps"]["email"]) {
-			$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
-			. "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
-			} else {
-				$ref='<a href="mailto:'.$coldata.'">';
+		while ($column = each($columns_to_display)) { // each entry column
+			$columns_html .= "<tr><td><b>" . lang(display_name($colname[$column[0]])) . "</b>:</td>";
+			$ref=$data="";
+			$coldata = $fields[0][$column[0]];
+			// Some fields require special formatting.       
+			if ($column[0] == "url") {
+				$ref='<a href="'.$coldata.'" target="_new">';
+				$data=$coldata.'</a>';
+			} elseif ($column[0] == "email") {
+				if ($phpgw_info["user"]["apps"]["email"]) {
+				$ref='<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]
+				. "/email/compose.php","to=" . urlencode($coldata)).'" target="_new">';
+				} else {
+					$ref='<a href="mailto:'.$coldata.'">';
+				}
+				$data=$coldata."</a>";
+			} else { // But these do not
+				$ref=""; $data=$coldata;
 			}
-			$data=$coldata."</a>";
-		} else { // But these do not
-			$ref=""; $data=$coldata;
+			$columns_html .= "<td>" . $ref . $data . "</td>";
 		}
-		$columns_html .= "<td>" . $ref . $data . "</td>";
-	}
 
 /*
 	if ($access == "private") {
@@ -87,34 +90,38 @@
 		$access_link ="";
 	}
 */
-	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
-	. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
-	. $phpgw->common->grab_owner_name($owner) . '</td><td><b>' 
-	. $access_link . '</b></td><td></table>';
+		$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
+		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
+		. $phpgw->common->grab_owner_name($owner) . '</td><td><b>' 
+		. $access_link . '</b></td><td></table>';
+	
+		$editlink  = $phpgw->common->check_owner($owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
+		$vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+		$donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+		
+		$t->set_var("access_link",$access_link);
+		$t->set_var("ab_id",$ab_id);
+		$t->set_var("sort",$sort);
+		$t->set_var("order",$order);
+		$t->set_var("filter",$filter);
+		$t->set_var("start",$start);
+		$t->set_var("view_header",$view_header);
+		$t->set_var("cols",$columns_html);
+		$t->set_var("lang_ok",lang("ok"));
+		$t->set_var("lang_done",lang("done"));
+		$t->set_var("lang_edit",lang("edit"));
+		$t->set_var("lang_submit",lang("submit"));
+		$t->set_var("lang_vcard",lang("vcard"));
+		$t->set_var("done_link",$donelink);
+		$t->set_var("edit_link",$editlink);
+		$t->set_var("vcard_link",$vcardlink);
 
-	$editlink  = $phpgw->common->check_owner($owner,"edit.php",lang("edit"),"ab_id=" . $ab_id . "&start=".$start."&sort=".$sort."&order=".$order);
-	$vcardlink = '<form action="'.$phpgw->link("vcardout.php","ab_id=$ab_id&order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
-	$donelink  = '<form action="'.$phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort").'">';
+		$t->parse("out","view");
+		$t->pparse("out","view");
 	
-	$t->set_var("access_link",$access_link);
-	$t->set_var("ab_id",$ab_id);
-	$t->set_var("sort",$sort);
-	$t->set_var("order",$order);
-	$t->set_var("filter",$filter);
-	$t->set_var("start",$start);
-	$t->set_var("view_header",$view_header);
-	$t->set_var("cols",$columns_html);
-	$t->set_var("lang_ok",lang("ok"));
-	$t->set_var("lang_done",lang("done"));
-	$t->set_var("lang_edit",lang("edit"));
-	$t->set_var("lang_submit",lang("submit"));
-	$t->set_var("lang_vcard",lang("vcard"));
-	$t->set_var("done_link",$donelink);
-	$t->set_var("edit_link",$editlink);
-	$t->set_var("vcard_link",$vcardlink);
-	
-	$t->parse("out","view");
-	$t->pparse("out","view");
-	
-	$phpgw->common->phpgw_footer();
+		$phpgw->common->phpgw_footer();
+	} else {
+		$phpgw->redirect($phpgw->session->link($phpgw_info["server"]["webserver_url"]. "/addressbook/","cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		$phpgw->common->phpgw_exit();
+	}
 ?>
