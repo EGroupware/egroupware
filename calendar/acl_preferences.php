@@ -74,7 +74,8 @@
 	}
 
 	$acct = CreateObject('phpgwapi.accounts',$owner);
-	$groups = $acct->memberships($owner);
+	$groups = $acct->get_list('groups');
+	$users = $acct->get_list('accounts');
 	unset($acct);
 	$acl = CreateObject('phpgwapi.acl',intval($owner));
 	$acl->read_repository();
@@ -155,11 +156,11 @@
 
 	if(!isset($totalentries))
 	{
-		$totalentries = count($groups);
-		$db = $phpgw->db;
-		$db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u'");
-		$db->next_record();
-		$totalentries += intval($db->f(0));
+		$totalentries = count($groups) + count($users);
+		if($totalentries < $maxm)
+		{
+			$maxm = $totalentries;
+		}
 	}
 
 	$p = CreateObject('phpgwapi.Template',$phpgw_info['server']['app_tpl']);
@@ -236,7 +237,7 @@
 			
 			if($query)
 			{
-				if(!strpos(' '.$group['account_id'].' ',$query))
+				if(!strpos(' '.$group['account_lid'].' ',$query))
 				{
 					$go = False;
 				}
@@ -245,7 +246,7 @@
 			if($go)
 			{
 				$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-				display_row($tr_color,'g_',$group['account_id'],$group['account_name']);
+				display_row($tr_color,'g_',$group['account_id'],$group['account_lid']);
 				$s_groups++;
 				$processed[] = $group['account_id'];
 				$total++;
@@ -259,44 +260,34 @@
 
 	if($total <> $maxm)
 	{
-		if(!is_object($db))
+		if($users)
 		{
-			$db = $phpgw->db;
-		}
-  
-		$db->query("select account_id, account_firstname, account_lastname, account_lid FROM phpgw_accounts WHERE account_type='u' ORDER BY account_lastname, account_firstname, account_lid ".$db->limit(intval($s_users),$maxm),__LINE__,__FILE__);
-		$users = $db->num_rows();
-		if($total <> $maxm)
-		{
-			if($users)
+			$p->set_var('string',ucfirst(lang('Users')));
+			$p->parse('row','row_colspan',True);
+			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+			for($k=$s_users;$k<$total || $k==count($users);$k++)
 			{
-				$p->set_var('string',ucfirst(lang('Users')));
-				$p->parse('row','row_colspan',True);
-				$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-				while($db->next_record())
+				$user = $users[$k];
+				$go = True;
+				if($query)
 				{
-					$go = True;
-					if($query)
+					$name = ' '.$user['account_firstname'].' '.$user['account_lastname'].' '.$user['account_lid'].' ';
+					if(!strpos($name,$query))
 					{
-						$name = ' '.$db->f('account_firstname').' '.$db->f('account_lastname').' '.$db->f('account_lid').' ';
-						if(!strpos($name,$query))
-						{
-							$go = False;
-						}
+						$go = False;
 					}
-					
-					if($go)
+				}
+
+				if($go)
+				{
+					$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+					display_row($tr_color,'u_',$user['account_id'],$phpgw->common->display_fullname($user['account_lid'],$user['account_firstname'],$user['account_lastname']));
+					$s_users++;
+					$processed[] = $user['account_id'];
+					$total++;
+					if($total == $maxm)
 					{
-						$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-						$id = $db->f('account_id');
-						display_row($tr_color,'u_',$id,$phpgw->common->grab_owner_name($id));
-						$s_users++;
-						$processed[] = $id;
-						$total++;
-						if($total == $maxm)
-						{
-							break;
-						}
+						break;
 					}
 				}
 			}
