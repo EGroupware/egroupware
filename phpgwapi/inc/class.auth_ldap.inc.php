@@ -78,6 +78,7 @@
 			{
 				return false;
 			}
+			$phpgw->session->appsession('password','phpgwapi',$new_passwd);
 	
 			return $encrypted_passwd;
 		}
