@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_addressbook_class" => True, "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
+  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
 
   if(isset($submit) && $submit) {
     $phpgw_info["flags"]["noheader"] = True;
@@ -22,26 +22,65 @@
 
   function display_row($bg_color,$label,$id,$name) {
     global $p;
+    global $phpgw;
+    global $phpgw_info;
     
     $p->set_var('row_color',$bg_color);
     $p->set_var('user',$name);
-    $p->set_var('read',$label.'addressbook['.$id.'][read]');
-    $p->set_var('add',$label.'[ddressbook'.$id.'][add]');
-    $p->set_var('edit',$label.'addressbook['.$id.'][edit]');
-    $p->set_var('delete',$label.'addressbook['.$id.'][delete]');
+    $rights = $phpgw->acl->get_rights($label.$id,$phpgw_info["flags"]["currentapp"]);
+    $p->set_var('read',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_READ.']');
+    if ($rights & PHPGW_ACL_READ) {
+      $p->set_var('read_selected',' checked');
+    } else {
+      $p->set_var('read_selected','');
+    }
+    $p->set_var('add',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_ADD.']');
+    if ($rights & PHPGW_ACL_ADD) {
+      $p->set_var('add_selected',' checked');
+    } else {
+      $p->set_var('add_selected','');
+    }
+    $p->set_var('edit',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_EDIT.']');
+    if ($rights & PHPGW_ACL_EDIT) {
+      $p->set_var('edit_selected',' checked');
+    } else {
+      $p->set_var('edit_selected','');
+    }
+    $p->set_var('delete',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_DELETE.']');
+    if ($rights & PHPGW_ACL_DELETE) {
+      $p->set_var('delete_selected',' checked');
+    } else {
+      $p->set_var('delete_selected','');
+    }
     $p->parse('row','acl_row',True);
   }
 
   if ($submit) {
-//     $phpgw->db->query("DELETE FROM phpgw_acl WHERE acl_appname='addressbook' AND ");
-//     $phpgw->preferences->change("addressbook","defaultaddressbook");
-//     $phpgw->preferences->change("addressbook","defaultfilter");
-//     if ($mainscreen_showevents) {
-//        $phpgw->preferences->change("addressbook","mainscreen_showevents");
-//     } else {
-//        $phpgw->preferences->delete("addressbook","mainscreen_showevents");
-//     }
-//     $phpgw->preferences->commit();
+
+    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"u");
+    $phpgw->acl->remove_granted_rights($phpgw_info["flags"]["currentapp"],"g");
+  
+// Group records
+    $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
+    
+    while(list($group_id,$acllist) = each($$group_variable)) {
+      $totalacl = 0;
+      while(list($acl,$permission) = each($acllist)) {
+        $totalacl += $acl;
+      }
+      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
+    }
+
+// User records
+    $user_variable = 'u_'.$phpgw_info["flags"]["currentapp"];
+    
+    while(list($user_id,$acllist) = each($$user_variable)) {
+      $totalacl = 0;
+      while(list($acl,$permission) = each($acllist)) {
+        $totalacl += $acl;
+      }
+      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
+    }
      
      header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"]."/preferences/index.php"));
      $phpgw->common->phpgw_exit();
@@ -53,7 +92,7 @@
                      'acl_row' => 'preference_acl_row.tpl'));
 
   $p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
-  $p->set_var('title','<p><b>'.lang("Addressbook preferences").' - '.lang("acl").':</b><hr><p>');
+  $p->set_var('title','<p><b>'.lang($phpgw_info["flags"]["currentapp"]." preferences").' - '.lang("acl").':</b><hr><p>');
 
   $p->set_var('action_url',$phpgw->link(''));
   $p->set_var('bg_color',$phpgw_info["theme"]["th_bg"]);
