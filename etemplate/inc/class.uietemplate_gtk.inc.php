@@ -170,12 +170,14 @@
 		}
 
 		/*
-		* Called when the window is being destroyed. Simply quit the main loop.
+		* Called when the window is being destroyed: destroy the session and let phpgw_exit close the db-connection
 		*/
 		function destroy()
 		{
 			Gtk::main_quit();
-			exit();
+			$GLOBALS['phpgw']->session->destroy($GLOBALS['phpgw_info']['user']['sessionid'],$GLOBALS['phpgw_info']['user']['kp3']);
+			$GLOBALS['phpgw']->common->phpgw_exit();
+         exit();
 		}
 
 		function button_clicked(&$var,$form_name)
