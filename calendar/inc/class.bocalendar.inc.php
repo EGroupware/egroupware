@@ -436,13 +436,20 @@
 			print_debug('calendar::bocalendar::set_owner_to_group:owner',$owner);
 			$this->owner = intval($owner);
 			$this->is_group = True;
-			settype($this->g_owner,'array');
 			$this->g_owner = Array();
-			$group_owners = $GLOBALS['phpgw']->accounts->member($owner);
-			while($group_owners && list($index,$group_info) = each($group_owners))
+			$members = $GLOBALS['phpgw']->accounts->member($owner);
+			if (is_array($members))
 			{
-				$this->g_owner[] = $group_info['account_id'];
+				foreach($members as $user)
+				{
+					// use only members which gave the user a read-grant
+					if ($this->check_perms(PHPGW_ACL_READ,0,$user['account_id']))
+					{
+						$this->g_owner[] = $user['account_id'];
+					}
+				}
 			}
+			//echo "<p>".function_backtrace().": set_owner_to_group($owner) = ".print_r($this->g_owner,True)."</p>\n";
 		}
 
 		function member_of_group($owner=0)
@@ -1303,6 +1310,7 @@
 		*/
 		function check_perms($needed,$event=0,$other=0)
 		{
+			$event_in = $event;
 			if (is_int($event) && $event == 0)
 			{
 				$owner = $other > 0 ? $other : $this->owner;
@@ -1345,7 +1353,7 @@
 			{
 				$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
 			}
-			//echo "<p>rb_check_perms for user $user and needed_acl $needed: event=$event[title]: owner=$owner, privat=$private, grants=$grants ==> access=$access</p>\n";
+			//echo "<p>".function_backtrace()." check_perms($needed,$event_id,$other) for user $user and needed_acl $needed: event='$event[title]': owner=$owner, privat=$private, grants=$grants ==> access=$access</p>\n";
 
 			return $access;
 		}
@@ -1834,7 +1842,7 @@
 				$owner_id = $this->g_owner;
 				if($this->debug)
 				{
-					echo '<!-- owner_id in ('.implode($owner_id,',').') -->'."\n";
+					echo '<!-- owner_id in ('.implode(',',$owner_id).') -->'."\n";
 				}
 			}
 			
@@ -1894,7 +1902,7 @@
 			}
 
 			$this->cached_events = Array();
-			
+
 			if($c_cached_ids == 0 && $c_cached_ids_repeating == 0)
 			{
 				return;
