@@ -13,9 +13,9 @@
 
   $phpgw_info = array();
   $phpgw_info["flags"] = array("noheader" => True, 
-			       "nonavbar" => True, 
-			       "currentapp" => "admin",
-			       "parent_page" => "accounts.php");
+                "nonavbar" => True, 
+                "currentapp" => "admin",
+                "parent_page" => "accounts.php");
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
@@ -54,61 +54,68 @@
      }
      
      if (! $totalerrors) {
-	$phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_id = ".$account_id);
-	$phpgw->db->next_record();
-	$apps_before = $phpgw->db->f("account_permissions");
+        $phpgw->db->query("SELECT account_permissions FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
+        $phpgw->db->next_record();
+        $apps_before = $phpgw->db->f("account_permissions");
+     
+        while ($permission = each($new_permissions)) {
+          if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+            $phpgw->accounts->add_app($permission[0]);
+          }
+        }
+        $apps_after = $phpgw->accounts->add_app("",True);
+        if($apps_before <> $apps_after) {
+          $after_apps = explode(":",$apps_after);
+          for ($i=1;$i<=count($after_apps);$i++) {
+            if (!strpos(" ".$apps_before." ",$after_apps)) {
+              $new_apps[] = $after_apps;
+            }
+          }
+        }
 
-	while ($permission = each($new_permissions)) {
-	  if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-	    $phpgw->accounts->add_app($permission[0]);
-	  }
-	}
-	$apps_after = $phpgw->accounts->add_app("",True);
-	if($apps_before <> $apps_after) {
-	  $after_apps = explode(":",$apps_after);
-	  for ($i=1;$i<=count($after_apps);$i++) {
-	    if (!strpos(" ".$apps_before." ",$after_apps)) {
-	      $new_apps[] = $after_apps;
-	    }
-	  }
-	}
+        $cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
+                                 "firstname" => $n_firstname,   "lastname"       => $n_lastname,
+                                 "passwd"    => $n_passwd,      "account_status" => $n_account_status,
+                                 "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
+                                 "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
 
-	$cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
-                            "firstname" => $n_firstname,   "lastname"       => $n_lastname,
-                            "passwd"    => $n_passwd,      "account_status" => $n_account_status,
-                            "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
-                            "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+       // If the user is logged in, it will force a refresh of the session_info
+       $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
 // The following sets any default preferences needed for new applications..
 // This is smart enough to know if previous preferences were selected, use them.
-	if (count($new_apps)) {
- 	  if ($account_id <> $phpgw_info["user"]["account_id"]) {
-  	    $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$account_id,__FILE__,__LINE__);
-  	    $phpgw->db->next_record();
-  	    $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
- 	  } else {
-  	    $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
- 	  }
- 	  $docommit = False;
- 	  for ($j=0;$j<count($new_apps);$j++) {
-  	    if (! @$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
- 	        $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
- 	        $docommit = True;
-  	    }
- 	  }
- 	  if ($docommit) {
-  	    if ($account_id <> $phpgw_info["user"]["account_id"]) {
- 	        $phpgw->preferences->commit_user($account_id);
-  	    } else {
- 	        $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
- 	        unset($phpgw_newuser);
- 	        $phpgw->preferences->commit();
-  	    }
- 	  }
-	}
+   if (count($new_apps)) {
+      $phpgw->db->query("select account_id from accounts where account_lid='$new_loginid'",__LINE__,__FILE__);
+      $phpgw->db->next_record();
+      $users_account_id = $phpgw->db->f("account_id");
+ 
+      if ($account_id <> $phpgw_info["user"]["account_id"]) {
+         $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner='$users_account_id'",__FILE__,__LINE__);
+         $phpgw->db->next_record();
+         $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
+      } else {
+         $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
+      }
+      $docommit = False;
+      for ($j=0;$j<count($new_apps);$j++) {
+         if (! @$phpgw_newuser["user"]["preferences"][$new_apps[$j]]) {
+            $phpgw->common->hook_single("add_def_pref", $new_apps[$j]);
+            $docommit = True;
+         }
+      }
+      if ($docommit) {
+         if ($account_id <> $phpgw_info["user"]["account_id"]) {
+            $phpgw->preferences->commit_user($users_account_id);
+         } else {
+            $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
+            unset($phpgw_newuser);
+            $phpgw->preferences->commit();
+         }
+      }
+   }
 
-	Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
-	$phpgw->common->phpgw_exit();
+   Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
+   $phpgw->common->phpgw_exit();
      }
 
   }                    // if $submit
@@ -134,9 +141,9 @@
   }
 
   if ($phpgw_info["server"]["account_repository"] == "ldap") {
-      $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
+     $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
   } else {
-      $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
+     $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
   }
 
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
@@ -149,10 +156,11 @@
   $phpgw->template->set_var("n_loginid_value",$n_loginid);
 
   $phpgw->template->set_var("lang_account_active",lang("Account active"));
-  if ($userData["status"]) 
-    $phpgw->template->set_var("account_checked","checked");
-  else
-    $phpgw->template->set_var("account_checked","");
+  if ($userData["status"]) {
+     $phpgw->template->set_var("account_checked","checked");
+  } else {
+     $phpgw->template->set_var("account_checked","");
+  }
 
   $phpgw->template->set_var("lang_password",lang("Password"));
   $phpgw->template->set_var("n_passwd_value",$n_passwd);

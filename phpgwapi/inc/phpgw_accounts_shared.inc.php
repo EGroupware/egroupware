@@ -264,11 +264,10 @@
      
        $db = $phpgw->db;
        $db->lock(array("preferences"));
-       $db->query("SELECT * FROM preferences WHERE preference_owner=".$id);
+       $db->query("SELECT * FROM preferences WHERE preference_owner='$id'",__LINE__,__FILE__);
        if($db->num_rows()) {
-	 $db->query("UPDATE preferences SET preference_value = '"
-		. serialize($phpgw_newuser["user"]["preferences"])
-		. "' WHERE preference_owner=".$id,__LINE__,__FILE__);
+	 $db->query("UPDATE preferences SET preference_value = '". serialize($phpgw_newuser["user"]["preferences"])
+             . "' WHERE preference_owner=".$id,__LINE__,__FILE__);
        } else {
 	 $db->query("insert into preferences (preference_owner,preference_value) values ("
 		. $id.",'".serialize($phpgw_newuser["user"]["preferences"])."')",__LINE__,__FILE__);

@@ -180,7 +180,6 @@
         if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
-    
         $this->auth          = new auth;
         $this->session       = new sessions;
       }else{
@@ -199,9 +198,9 @@
         include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
         $this->auth          = new auth;
      }
+      $this->accounts      = new accounts;
       $this->translation   = new translation;
       $this->common        = new common;
-      $this->accounts      = new accounts;
       $this->preferences   = new preferences;
       $this->acl           = new acl;
       $this->hooks         = new hooks;
@@ -300,7 +299,6 @@
       return $phpgw->translation->translate($key);
     }
 
-
   }
   /**************************************************************************\
   * Our API class ends here                                                  *
@@ -309,7 +307,7 @@
   * Direct functions, which are not part of the API class                    *
   * for whatever reason.                                                     *
   \**************************************************************************/
-  
+
   function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
   {
     global $phpgw;

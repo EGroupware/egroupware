@@ -143,16 +143,16 @@
      // Much of this is going to be guess work for now, until we get things planned out.
      $entry["uid"]              = $account_info["loginid"];
      $entry["uidNumber"]        = $account_info["account_id"];
-     $entry["gidNumber"]                = $account_info["account_id"];
-     $entry["userpassword"]      = $account_info["passwd"];
-     $entry["loginShell"]          = "/bin/bash";
+     $entry["gidNumber"]        = $account_info["account_id"];
+     $entry["userpassword"]     = $account_info["passwd"];
+     $entry["loginShell"]       = "/bin/bash";
      $entry["homeDirectory"]    = "/home/" . $account_info["loginid"];
-     $entry["cn"]                          = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
-     $entry["sn"]                          = $account_info["lastname"];
-     $entry["givenname"]                = $account_info["firstname"];
+     $entry["cn"]               = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
+     $entry["sn"]               = $account_info["lastname"];
+     $entry["givenname"]        = $account_info["firstname"];
      //$entry["company"]                  = $company;
      //$entry["title"]             = $title;
-     $entry["mail"]                      = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+     $entry["mail"]             = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
      //$entry["telephonenumber"]  = $telephonenumber;
      //$entry["homephone"]              = $homephone;
      //$entry["pagerphone"]        = $pagerphone;
@@ -197,14 +197,14 @@
           . addslashes($account_info["lastname"]) . "','" . $phpgw->accounts->add_app("",True)
           . "','" . $account_info["groups"] . "','A',0)";
 
-     $phpgw->db->query($sql);
+     $phpgw->db->query($sql,__LINE__,__FILE__);
      $phpgw->db->unlock();
 
      $sep = $phpgw->common->filesystem_separator();
 
      $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-     if (! mkdir($basedir . $account_info["loginid"], 0707)) {
+     if (! @mkdir($basedir . $account_info["loginid"], 0707)) {
         $cd = 36;
      } else {
         $cd = 28;
@@ -215,7 +215,7 @@
     
   function account_edit($account_info)
   {
-     global $phpgw, $phpgw_info, $ldap;
+     global $phpgw, $phpgw_info, $ldap, $new_loginid;
 
      
      // This is just until the API fully handles reading the LDAP account info.
@@ -226,10 +226,10 @@
 
         $entry["uid"]            = $account_info["loginid"];
         $entry["homeDirectory"]  = "/home/" . $account_info["loginid"];
-        $entry["mail"]		 = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+        $entry["mail"]           = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
 
         $phpgw->db->query("update accounts set account_lid='" . $account_info["loginid"] . "' "
-                        . "where account_lid='" . $account_info["old_loginid"] . "'");
+                        . "where account_lid='" . $account_info["old_loginid"] . "'",__LINE__,__FILE__);
      }
      
      if ($account_info["passwd"]) {
@@ -237,7 +237,7 @@
 
         // Update the sessions table. (The user might be logged in)
         $phpgw->db->query("update sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd) . "' "
-        		        . "where session_lid='$lid'");
+                        . "where session_lid='$lid'",__LINE__,__FILE__);
      }
      
      while ($permission = each($account_info["permissions"])) {
@@ -256,15 +256,16 @@
      $dn = $account_info["account_id"];
      @ldap_modify($ldap, $dn, $entry);
 
-     $phpgw->db->query("update accounts set account_firstname='". $account_info["firstname"] ."',
-			 account_lastname='". $account_info["lastname"] ."', 
-			 account_permissions='". $phpgw->accounts->add_app("",True) . "', 
-			 account_status='". $account_info["account_status"] . "', 
-		       	 account_groups='". $account_info["groups"] . "' 
-			 where account_lid='" . $account_info["loginid"]. "'");
+     $phpgw->db->query("update accounts set account_firstname='". $account_info["firstname"] ."',"
+                     . "account_lastname='". $account_info["lastname"] ."',"
+                     . "account_permissions='". $phpgw->accounts->add_app("",True) . "', "
+                     . "account_status='". $account_info["account_status"] . "', "
+                     . "account_groups='". $account_info["groups"] . "'"
+                     . "where account_lid='" . $account_info["loginid"]. "'",__LINE__,__FILE__);
 
 
      $cd = 27;
+     $new_loginid = $account_info["loginid"];
      if ($account_info["old_loginid"] != $account_info["loginid"]) {
         $sep = $phpgw->common->filesystem_separator();
 	
@@ -302,7 +303,7 @@
     // set $account_id to uidnumber for sql
     $account_id = $allValues[0]["uidnumber"][0];    
 
-    $phpgw->db->query("select account_lid from accounts where account_id=$account_id");
+    $phpgw->db->query("select account_lid from accounts where account_id=$account_id",__LINE__,__FILE__);
     $phpgw->db->next_record();
     $lid = $phpgw->db->f(0);
 
@@ -312,10 +313,10 @@
 
     $phpgw->db->lock($table_locks);
 
-    $phpgw->db->query("delete from todo where todo_owner='".$account_id."'");
-    $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'");
-    $phpgw->db->query("delete from accounts where account_id='".$account_id."'");
-    $phpgw->db->query("delete from preferences where preference_owner='".$account_id."'");
+    $phpgw->db->query("delete from todo where todo_owner='".$account_id."'",__LINE__,__FILE__);
+    $phpgw->db->query("delete from addressbook where ab_owner='".$account_id."'",__LINE__,__FILE__);
+    $phpgw->db->query("delete from accounts where account_id='".$account_id."'",__LINE__,__FILE__);
+    $phpgw->db->query("delete from preferences where preference_owner='".$account_id."'",__LINE__,__FILE__);
 
     $phpgw->db->unlock();
 
