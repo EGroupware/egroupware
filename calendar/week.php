@@ -13,12 +13,13 @@
   \**************************************************************************/
 
   /* $Id$ */
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
+     $phpgw_info["flags"]["nonavbar"] = True;
   } else {
      $friendly = 0;
   }
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
   if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
@@ -56,75 +57,53 @@
   }
   $first = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + $start);
   $last = $phpgw->calendar->splitdate($first["raw"] + 518400);
+  $phpgw->template->set_file(array("week" => "week.tpl"));
+
+  $phpgw->template->set_block("week");
 
   if ($friendly) {
-     echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
-     $view = "week";
+    $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
+  } else {
+    $phpgw->template->set_var("printer_friendly","");
   }
-?>
 
-<head>
-<style type="text/css">
-  .tablecell {
-    width: 80px;
-    height: 80px;
+  $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
+
+  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->pretty_small_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php"));
+  if (!$friendly) {
+    $phpgw->template->set_var("prev_week_link","<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">&lt;&lt;</a>");
+  } else {
+    $phpgw->template->set_var("prev_week_link","&lt;&lt;");
   }
-</style>
-</head>
-<table border=0 width=100%>
-<tr>
-<?php
-  echo "<td align=\"left\" valign=\"top\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php");
-  echo "</td>";
-  echo "<td align=\"left\">";
-  if (!$friendly)
-    echo "<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">";
-  echo "&lt;&lt;";
-  if(!friendly) echo "</a>";
-  echo "</td>";
-  echo "<td align=\"center\" valign=\"top\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$thismonth,$thisyear,"day.php");
-?>
-<font size="+2" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>"><b>
-<?php
-  echo lang(strftime("%B",$first["raw"]))." ".$first["day"];
-  if($first["month"] <> $last["month"] && $first["year"] <> $last["year"]) echo ", ".$first["year"];
-  echo " - ";
-  if($first["month"] <> $last["month"])  echo lang(strftime("%B",$last["raw"]))." ";
-  echo $last["day"].", ".$last["year"];
-?>
-</b></font>
-<font size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
-<br>
-<?php
-  echo $phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]);
-?>
-</font></td>
-<?php
-  echo "<td align=\"right\">";
-  if (!$friendly)
-    echo "<a href=\"".$phpgw->link("week.php","year=".$next["year"]."&month=".$next["month"]."&day=".$next["day"])."\">";
-  echo "&gt;&gt;";
-  if(!friendly) echo "</a>";
-  echo "</td>";
-  echo "<td align=\"right\" valign=\"top\">";
-  echo $phpgw->calendar->pretty_small_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php");
-  echo "</td>";
-?>
-</tr>
-</table>
-<?php 
-  echo $phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true);
+  $phpgw->template->set_var("small_calendar_this",$phpgw->calendar->pretty_small_calendar($thisday,$thismonth,$thisyear,"day.php"));
+
+  $week_id = lang(strftime("%B",$first["raw"]))." ".$first["day"];
+  if($first["month"] <> $last["month"] && $first["year"] <> $last["year"]) $week_id .= ", ".$first["year"];
+  $week_id .= " - ";
+  if($first["month"] <> $last["month"]) $week_id .= lang(strftime("%B",$last["raw"]))." ";
+  $week_id .= $last["day"].", ".$last["year"];
+
+  $phpgw->template->set_var("week_identifier",$week_id);
+  $phpgw->template->set_var("username",$phpgw->common->display_fullname($phpgw_info["user"]["userid"],$phpgw_info["user"]["firstname"],$phpgw_info["user"]["lastname"]));
 
   if (!$friendly) {
-     $param = "";
-     if ($thisyear)
-        $param .= "year=$thisyear&month=$thismonth&";
+    $phpgw->template->set_var("next_week_link","<a href=\"".$phpgw->link("week.php","year=".$next["year"]."&month=".$next["month"]."&day=".$next["day"])."\">&gt;&gt;</a>");
+  } else {
+    $phpgw->template->set_var("next_week_link","&gt;&gt;");
+  }
+  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->pretty_small_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php"));
+  $phpgw->template->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true));
 
-     $param .= "friendly=1";
-     echo "<a href=\"".$phpgw->link($PHP_SELF,$param)."\" target=\"cal_printer_friendly\" onMouseOver=\"window.status='"
-	  .lang("Generate printer-friendly version")."'\">[" . lang("Printer Friendly") . "]</a>";
-     $phpgw->common->phpgw_footer();
+  if (!$friendly) {
+    $param = "year=".$now["year"]."&month=".$now["month"]."&friendly=1\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+	   . "status = '" . lang("Generate printer-friendly version"). "'";
+    $phpgw->template->set_var("print","<a href=\"".$phpgw->link($PHP_SELF,$param)."\">[". lang("Printer Friendly") . "]</A>");
+    $phpgw->template->parse("out","week");
+    $phpgw->template->pparse("out","week");
+    $phpgw->common->phpgw_footer();
+  } else {
+    $phpgw->template->set_var("print","");
+    $phpgw->template->parse("out","week");
+    $phpgw->template->pparse("out","week");
   }
 ?>

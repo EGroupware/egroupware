@@ -14,7 +14,9 @@
 
   /* $Id$ */
 
-  if (isset($friendly) && $friendly==1){
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "enable_template_class" => True);
+
+  if (isset($friendly) && (int)$friendly==1){
      $phpgw_info["flags"]["noheader"] = True;
      $phpgw_info["flags"]["nonavbar"] = True;
      $phpgw_info["flags"]["nocalendarheader"] = True;
@@ -22,7 +24,6 @@
      $friendly = 0;
   }
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "enable_template_class" => True);
   include("../header.inc.php");
 
   $view = "day";

@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <!-- BEGIN day -->
 {printer_friendly}
 <table border="0" width="100%">
