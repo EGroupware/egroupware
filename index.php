@@ -31,13 +31,12 @@
 
 
   if ($phpgw_info["user"]["permissions"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
-     $fp = fsockopen("phpgroupware.org",80,&$errono,&$errstr,30);
-     fputs($fp,"GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");
-     if ($fp) {
-        while ($line = fgets($fp,4096)) {
-           $lines[] = $line;
-        }
-        fclose($fp);
+     $phpgw->network->set_addcrlf(False);
+     if ($phpgw->network->open_port("phpgroupware.org",80,30)) {
+	 $phpgw->network->write_port("GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");
+	 while ($line = $phpgw->network->read_port())
+	     $lines[] = $line;
+	 $phpgw->network->close_port();
      }
 
      for ($i=0; $i<count($lines); $i++) {
