@@ -22,6 +22,7 @@
 		- NNTP fixed to use the new account table layout.
 		- NNTP Header problem fixed.
 		- Applied Patch #101934 - Updated Swedish lang translation.  Thanks Kjell Claesson <keyson@users.sourceforge.net>
+		- Fixed a problem with setup/index.php return a number of errors on fresh PostgreSQL databases.
 
 
 [0.9.1] - Fixed a few missing variables with templates.
