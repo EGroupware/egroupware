@@ -93,7 +93,7 @@
 					$buffer = $o->import_end_record($buffer,$private);
 				}
 			}
-		} else {
+		} elseif ($o->type == 'ldif') {
 			while ($data = fgets($fp,8000)) {
 				list($name,$value,$url) = split(':', $data);
 				if (substr($name,0,2) == 'dn') {
@@ -117,15 +117,25 @@
 					$buffer = $o->import_end_record($buffer,$private);
 				}
 			}
+		} else {
+			$buffer = $o->import_start_record($buffer);
+			while ($data = fgets($fp,8000)) {
+				list($name,$value) = split(':', $data);
+				if ($o->import[$name] != "" && $value != "") {
+					$buffer = $o->import_new_attrib($buffer, $o->import[$name],$value);
+				}
+			}
+			$buffer = $o->import_end_record($buffer,$private);
 		}
 
 		fclose($fp);
-
 		$buffer = $o->import_end_file($buffer);
+
 		if ($download == "") {
 			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" ) {
 				header("Content-disposition: attachment; filename=\"conversion.txt\"");
 				header("Content-type: application/octetstream");
+				header("Content-length: ".strlen($buffer));
 				header("Pragma: no-cache");
 				header("Expires: 0");
 				echo $buffer;

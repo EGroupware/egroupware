@@ -25,7 +25,7 @@
 
 	class import_conv
 	{
-		var $type = '';
+		var $type = 'csv';
 		var $currentrecord; //used for buffering to allow uid lines to go first
 
 		var $import = array(

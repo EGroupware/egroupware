@@ -83,17 +83,13 @@
 			global $phpgw,$phpgw_info;
 
 			$contacts = CreateObject("phpgwapi.contacts");
-			//echo '<br>'; 
+			echo '<br>'; 
 			for ($i=1;$i<=count($buffer);$i++) {
 				while ( list($name,$value) = @each($buffer[$i]) ) {
 					echo '<br>'.$i.': '.$name.' => '.$value;
 					$entry[$i][$name] = $value;
 				}
-				$entry[$i]['email_type']      = 'INTERNET';
-				$entry[$i]['email_home_type'] = 'INTERNET';
-				$entry[$i]['adr_one_type']    = 'intl';
-				$entry[$i]['adr_two_type']    = 'intl';
-				//echo '<br>';
+				echo '<br>';
 				//$contacts->add($phpgw_info["user"]["account_id"],$entry[$i]);
 			}
 			$num = $i - 1;
