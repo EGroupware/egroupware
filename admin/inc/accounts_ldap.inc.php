@@ -237,7 +237,7 @@
         $entry["userpassword"] = $phpgw->common->encrypt_password($account_info["passwd"]);
 
 		if ($account_info["account_id"] == $phpgw_info["user"]["account_id"]) {
-		  $phpgw_info["user"]["passwd"] = $phpgw->common->encrypt($account_info["passwd"];
+		  $phpgw_info["user"]["passwd"] = $phpgw->common->encrypt($account_info["passwd"]);
 		}
 
         // Update the sessions table. (The user might be logged in)
