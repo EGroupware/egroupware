@@ -58,7 +58,8 @@
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
 		$t->set_var("import_text",lang("Import from LDIF, CSV, or VCard"));
-		$t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
+		$t->set_var("action_url",$phpgw->link("/addressbook/import.php",
+			"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 		$t->set_var("cat_id",cat_option($cat_id,True));
 		$t->set_var("tsvfilename","");
 		$t->set_var("conv",$conv);
@@ -169,12 +170,16 @@
 				echo $buffer;
 			} else {
 				echo "<pre>$buffer</pre>";
-				echo '<a href="'.$phpgw->link("/addressbook/index.php").'">'.lang("OK").'</a>';
+				echo '<a href="'.$phpgw->link("/addressbook/index.php",
+					"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+					. '">'.lang("OK").'</a>';
 				$phpgw->common->phpgw_footer();
 			}
 		} else {
 			echo "<pre>$buffer</pre>";
-			echo '<a href="'.$phpgw->link("/addressbook/index.php").'">'.lang("OK").'</a>';
+			echo '<a href="'.$phpgw->link("/addressbook/index.php",
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+				. '">'.lang("OK").'</a>';
 			$phpgw->common->phpgw_footer();
 		}
 	}
