@@ -23,34 +23,36 @@
 
   /* $Id$ */
   
-	/*!!
-	* @Type: class
-	* @Name: acl
-	* @Author: Seek3r
-	* @Title: Access Control List security system
-	* @Description: This class provides an ACL security scheme. 
-	* This can manage rights to 'run' applications, and limit certain features within an application.
-	* It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
-	* It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
-	* @Syntax: CreateObject('phpgwapi.acl',int account_id);
-	* @Example1: $acl = CreateObject('phpgwapi.acl',5);  // 5 is the user id
+	/*!
+	 @class acl
+	 @abstract Acces Control List Security System
+	 @discussion Author: Seek3r <br>
+	 This class provides an ACL security scheme. <br>
+	 This can manage rights to 'run' applications, and limit certain features within an application.<br>
+	 It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.<br>
+	 It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.<br>
+	 Syntax: CreateObject('phpgwapi.acl',int account_id); <br>
+	 Example1: $acl = CreateObject('phpgwapi.acl',5);  // 5 is the user id
 	*/
   class acl
-  {
+  {			/*! @var $account_id */
     var $account_id;
+    			/*! @var $account_type */
     var $account_type;
+    			/*! @var $data  */
     var $data = Array();
+    			/*! @var $db */
     var $db;
 
-		/*!!
-		* @Type: function
-		* @Name: acl
-		* @Author: Seek3r
-		* @Title: ACL constructor for setting account id. 
-		* @Description: Sets the ID for $acl->account_id. Can be used to change a current instances id as well.
-		* Some functions are specific to this account, and others are generic.
-		* @Syntax: int acl(int account_id)
-		* @Example1: acl->acl(5); // 5 is the user id
+		/*!
+		@function acl
+		@abstract ACL constructor for setting account id
+		@discussion Author: Seek3r <br>
+		Sets the ID for $acl->account_id. Can be used to change a current instances id as well. <br>
+		Some functions are specific to this account, and others are generic. <br>
+		Syntax: int acl(int account_id) <br>
+		Example1: acl->acl(5); // 5 is the user id  <br>
+		@param account_id int-the user id
 		*/
     function acl($account_id = False)
     {
@@ -63,14 +65,13 @@
     * These are the standard $this->account_id specific functions              *
     \**************************************************************************/
 
-		/*!!
-		* @Type: function
-		* @Name: read_repository
-		* @Author: Seek3r
-		* @Title: Read acl records from repository. 
-		* @Description: Reads ACL records for $acl->account_id and returns array along with storing it in $acl->data.
-		* @Syntax: array read_repository()
-		* @Example1: acl->read_repository();
+		/*!
+		@function read_repository
+		@abstract Read acl records from reposity
+		@discussion Author: Seek3r <br>
+		Reads ACL records for $acl->account_id and returns array along with storing it in $acl->data.  <br>
+		Syntax: array read_repository() <br>
+		Example1: acl->read_repository();
 		*/
     function read_repository()
     {
@@ -100,14 +101,13 @@
       return $this->data;
     }
 
-		/*!!
-		* @Type: function
-		* @Name: read
-		* @Author: Seek3r
-		* @Title: Read acl records from $acl->data. 
-		* @Description: Returns ACL records from $acl->data.
-		* @Syntax: array read()
-		* @Example1: acl->read();
+		/*!
+		@function read
+		@abstract Read acl records from $acl->data
+		@discussion Author: Seek3r <br>
+		Returns ACL records from $acl->data. <br>
+		Syntax: array read() <br>
+		Example1: acl->read();
 		*/
     function read()
     {
@@ -116,14 +116,12 @@
       return $this->data;
     }
 
-		/*!!
-		* @Type: function
-		* @Name: add
-		* @Author: Seek3r
-		* @Title: Adds ACL record to $acl->data. 
-		* @Description: Adds ACL record to $acl->data.
-		* @Syntax: array read()
-		* @Example1: acl->read();
+		/*!
+		@function add
+		@abstract Adds ACL record to $acl->data
+		@discussion Adds ACL record to $acl->data. <br>
+		Syntax: array add() <br>
+		Example1: acl->add();
 		*/
     function add($appname = False, $location, $rights)
     {
@@ -135,6 +133,14 @@
       return $this->data;
     }
     
+    	/*!
+    	@function delete
+    	@abstract Delete ACL record
+    	@discussion 
+    	Syntax <br>
+    	Example: <br>
+    	@param $location
+    	*/
     function delete($appname = False, $location)
     {
       if ($appname == False){
@@ -151,6 +157,14 @@
       return $this->data;
     }
 
+		/*!
+		@function save_repostiory
+		@abstract save repository
+		@discussion save the repository <br>
+		Syntax: save_repository() <br>
+		example: acl->save_repository()
+		*/
+		
     function save_repository(){
       global $phpgw, $phpgw_info;
       reset($this->data);
@@ -174,7 +188,12 @@
     /**************************************************************************\
     * These are the non-standard $this->account_id specific functions          *
     \**************************************************************************/
-
+		/*!
+		@function get_rights
+		@abstract get rights from the repository
+		@discussion 
+		@param $location 
+		*/
     function get_rights($location,$appname = False){
       global $phpgw, $phpgw_info;
       if (count($this->data) == 0){ $this->read_repository(); }
