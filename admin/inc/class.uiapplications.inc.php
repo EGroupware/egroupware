@@ -91,8 +91,6 @@
 			}
 
 			$GLOBALS['phpgw']->template->set_var('lang_installed',lang('Installed applications'));
-			$GLOBALS['phpgw']->template->set_var('bg_color',$GLOBALS['phpgw_info']['theme']['bg_color']);
-			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
 			$GLOBALS['phpgw']->template->set_var('sort_title',$this->nextmatchs->show_sort_order($sort,'title','title','/index.php',lang('Title'),'&menuaction=admin.uiapplications.get_list'));
 			$GLOBALS['phpgw']->template->set_var('lang_showing',$this->nextmatchs->show_hits($total,$start));
@@ -207,7 +205,6 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$GLOBALS['phpgw']->template->set_var('lang_header',lang('Add new application'));
-			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 
 			$GLOBALS['phpgw']->template->set_var('hidden_vars','');
 			$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.add'));
@@ -258,11 +255,6 @@
 					$error[$totalerrors++] = lang('You must enter an application name.');
 				}
 
-				if (! $n_app_title)
-				{
-					$error[$totalerrors++] = lang('You must enter an application title.');
-				}
-
 				if ($old_app_name != $n_app_name)
 				{
 					if ($this->bo->exists($n_app_name))
@@ -300,7 +292,6 @@
 
 			$GLOBALS['phpgw']->template->set_var('lang_header',lang('Edit application'));
 			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="old_app_name" value="' . $old_app_name . '">');
-			$GLOBALS['phpgw']->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			$GLOBALS['phpgw']->template->set_var('form_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.edit'));
 
 			$this->display_row(lang('application name'),'<input name="n_app_name" value="' . $n_app_name . '">');
