@@ -110,11 +110,18 @@
 			{
 				$changes = array();
 			}
-			$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-			
-			if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+			if ($this->stable)
 			{
-				$GLOBALS['phpgw']->common->phpgw_header();
+				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+				{
+					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+			}
+			else
+			{
+				$hooked = $GLOBALS['phpgw']->xslttpl->get_var('phpgw');
+				$hooked = $hooked['body_data'];
 			}
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
@@ -159,8 +166,7 @@
 			}
 			else
 			{
-				$html = str_replace('${','$&#x7b;',$html);	// else {} eg.'${test}' -> '$' got removed by template-class
-				$GLOBALS['phpgw']->template->set_var('phpgw_body',$html,True);
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $html));
 			}
 		}
 
@@ -200,7 +206,14 @@
 			{
 				if ($session_data['hooked'] != '')	// set previous phpgw_body if we are called as hook
 				{
-					$GLOBALS['phpgw']->template->set_var('phpgw_body',$session_data['hooked']);
+					if ($this->stable)
+					{
+						$GLOBALS['phpgw']->template->set_var('phpgw_body',$session_data['hooked']);
+					}
+					else
+					{
+						$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('body_data' => $session_data['hooked']));
+					}
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
