@@ -256,9 +256,10 @@ class html
 	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
 	 * @param int $multiple number of lines for a multiselect, default 3
+	 * @param boolean $selected_first show the selected items before the not selected ones, default true
 	 * @return string to set for a template or to echo into html page
 	 */
-	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3)
+	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true)
 	{
 		if (!is_array($arr))
 		{
@@ -279,6 +280,23 @@ class html
 		}
 		$html = '';
 		$options_no_id = preg_replace('/id="[^"]+"/i','',$options);
+		
+		if ($selected_first)
+		{
+			$selected = $not_selected = array();
+			foreach($arr as $val => $label)
+			{
+				if (in_array($val,$key))
+				{
+					$selected[$val] = $label;
+				}
+				else
+				{
+					$not_selected[$val] = $label;
+				}
+			}
+			$arr = $selected + $not_selected;
+		}
 		foreach($arr as $val => $label)
 		{
 			if ($label && !$no_lang) $label = lang($label);
@@ -288,7 +306,7 @@ class html
 			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.' id="'.$base_name.'['.$val.']'.'" ').
 				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
 		}
-		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+0.6*$max_len).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
+		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+0.65*$max_len).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
 		
 		return $this->div($html,$options,'',$style);
 	}
