@@ -149,9 +149,9 @@
 				$control_array = Array(
 					'up',
 					'down',
-					'question',
+					/*'question',
 					'close',
-					'edit'
+					'edit'*/
 				);
 				@reset($control_array);
 				while(list($key,$param) = each($control_array))

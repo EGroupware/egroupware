@@ -1,8 +1,9 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare                                                             *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare                                                               *
+	* http://www.egroupware.org                                                *
 	* The file written by Joseph Engo <jengo@phpgroupware.org>                 *
+	* This file modified by Greg Haygood <shrykedude@bellsouth.net>            *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -19,7 +20,7 @@
 		exit;
 	}
 
-	$GLOBALS['sessionid'] = @$GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
+	$GLOBALS['sessionid'] = @$_GET['sessionid'] ? $_GET['sessionid'] : $_COOKIE['sessionid'];
 	if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
 	{
 		Header('Location: login.php');
@@ -58,7 +59,7 @@
 		$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
 		($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 		{
-			if ($GLOBALS['HTTP_GET_VARS']['cd'] == 'yes')
+			if ($_GET['cd'] == 'yes')
 			{
 				if (! $navbarframe && ! $framebody)
 				{
@@ -99,7 +100,7 @@
 				}
 			}
 		}
-		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
+		elseif ($_GET['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
 			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
@@ -132,7 +133,7 @@
 			}
 			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
-				echo '<p>There is a new version of phpGroupWare available. <a href="'
+				echo '<p>There is a new version of eGroupWare available. <a href="'
 					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
 			}
 
@@ -231,16 +232,124 @@
 	else
 	{
 		$sorted_apps = Array(
-			'email',
 			'calendar',
-			'news_admin',
-			'addressbook',
-			'squirrelmail'
+			'email',
+			'infolog',
+			'news_admin'
 		);
 	}
+	//_debug_array($sorted_apps);
 	@reset($sorted_apps);
-	$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
+	//$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
+	
+	function migrate_pref($appname,$var_old,$var_new,$type='user')
+	{
+		if(empty($appname) || empty($var_old) || empty($var_new))
+		{
+			return false;
+		}
+		$allowedtypes = array('user','default','forced');
+		if($type=='all')
+		{
+			$types = $allowedtypes;
+		}
+		elseif(in_array($type,$allowedtypes)) 
+		{
+			$types[] = $type;
+		}
+		else
+		{
+			return false;
+		}
+		$result = false;
+		foreach($types as $_type)
+		{
+			if(isset($GLOBALS['phpgw']->preferences->$_type[$appname][$var_old]))
+			{
+				$GLOBALS['phpgw']->preferences->$_type[$appname][$var_new] =
+								$GLOBALS['phpgw']->preferences->$_type[$appname][$var_old];
+				$result = true;
+				$GLOBALS['phpgw_info']['user']['preferences'] =
+								$GLOBALS['phpgw']->preferences->save_repository(false,$_type);
+			}
+		}
+		return $result;
+	}
+	$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest');
+	$check_oldvarnames = true;
+	if($check_oldvarnames)
+	{
+		$_apps = $GLOBALS['phpgw_info']['user']['apps'];
+		foreach($_apps as $_appname)
+		{
+			foreach($portal_oldvarnames as $varname)
+			{
+				migrate_pref($appname,$varname,'homepage_display','all');
+			}
+		}
+	}
 
+	$displayapps = $sorted_apps;
+	$_myapps = $GLOBALS['phpgw_info']['user']['apps'];
+	foreach($_myapps as $app)
+	{
+		$displayapps[] = $app['name'];
+	}
+	$shown = array();
+	// Display elements, within appropriate table cells
+	print '<table border="0" cellpadding="5" cellspacing="0" width="100%">';
+	$tropen=0;
+	$tdopen=0;
+	$lastd = 0;
+	$numcols = 2;
+	$curcol = 1;
+	foreach($displayapps as $appname)
+	{
+		if(intval($shown[$appname])==1)
+		{
+			continue;
+		}
+		$varnames = $portal_oldvarnames;
+		$varnames[] = 'homepage_display';
+		$thisd = 0;
+		foreach($varnames as $varcheck)
+		{
+		 	$_thisd = intval($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]);
+		 	if($_thisd>0)
+			{
+				$thisd = $_thisd;
+				break;
+			}
+		}
+		if($thisd>0)
+		{
+			if((($curcol++>$numcols) || ($thisd+$lastd==3)) && $tropen==1)
+			{
+				print '</tr>';
+				$tropen = 0;
+			}
+			if(!$tropen)
+			{
+				print '<tr>';
+				$tropen=1;
+			}
+			$tdwidth = ($thisd==2)?'50':'100';
+			$colspan = ($thisd==2)?'1':'2';
+			print '<td valign="top" colspan="'.$colspan.'" width="'.$tdwidth.'%">';
+			$result = $GLOBALS['phpgw']->hooks->single('home',$appname);
+			$shown[$appname] = 1;
+			print '</td>';
+			if(($thisd!=2 || ($thisd==2&&$lastd==2)) && $tropen)
+			{
+				print '</tr>';
+				$curcol = 1;
+			}
+			$lastd = $thisd;
+		}
+	}
+	print '</table>';
+
+	// Update stored value of order
 	if($GLOBALS['portal_order'])
 	{
 		$GLOBALS['phpgw']->preferences->delete('portal_order');
