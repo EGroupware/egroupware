@@ -989,7 +989,7 @@
 			$preserv['old_keys'] = $this->etemplate->as_array(-1);	// in case we do a save as
 
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Show Template');
-			$editor->exec('etemplate.editor.edit',$new_content,array(),'',$preserv,'');
+			$editor->exec('etemplate.editor.edit',$new_content,array(),'',$preserv,0,'/^cont/');
 		}
 
 		/**
@@ -1230,7 +1230,7 @@
 						}
 						else	// template itself
 						{
-							if (count($this->etemplate->children) <= 1)	// cat delete last child
+							if (count($this->etemplate->children) <= 1)	// cant delete last child
 							{
 								$this->etemplate->children[0] = soetemplate::empty_cell();
 							}
@@ -1297,9 +1297,14 @@
 					}
 					if ($child_id == $num)	// if on last cell, swap with the one before
 					{
+						$this->swap($parent[$child_id],$parent[$child_id-1]);
 						--$child_id;
 					}
-					$this->swap($parent[1+$child_id],$parent[$child_id]);
+					else
+					{
+						$this->swap($parent[$child_id],$parent[$child_id+1]);
+						++$child_id;
+					}
 					break;
 			}
 			$action = 'apply-no-merge';

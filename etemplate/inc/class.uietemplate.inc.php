@@ -95,10 +95,11 @@
 		 * 		(eg. to implement ACL grants on field-level or to remove buttons not applicable)
 		 * @param array $preserv with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
 		 * @param int $output_mode 0 = echo incl. navbar, 1 = return html, 2 = echo without navbar (eg. for popups)
+		 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
 		 * @param array $changes change made in the last call if looping, only used internaly by process_exec
 		 * @return string html for $output_mode == 1, else nothing
 		 */
-		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$changes='')
+		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
 		{
 			//echo "<br>globals[java_script] = '".$GLOBALS['phpgw_info']['etemplate']['java_script']."', this->java_script() = '".$this->java_script()."'\n";
 			if (!$sel_options)
@@ -203,12 +204,39 @@
 				'app_header' => $GLOBALS['phpgw_info']['flags']['app_header'],
 				'output_mode' => $output_mode,
 				'session_used' => 0,
+				'ignore_validation' => $ignore_validation,
 			),$id);
 
 			if ((int) $output_mode == 1)	// return html
 			{
 					return $html;
 			}
+		}
+
+		/**
+		 * Check if we have not ignored validation errors
+		 *
+		 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
+		 * @param string $cname name-prefix, which need to be ignored
+		 * @return boolean true if there are not ignored validation errors, false otherwise
+		 */
+		function validation_errors($ignore_validation,$cname='exec')
+		{
+			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array($GLOBALS['phpgw_info']['etemplate']['validation_errors']);
+			if (!$ignore_validation) return count($GLOBALS['phpgw_info']['etemplate']['validation_errors']) > 0;
+
+			foreach($GLOBALS['phpgw_info']['etemplate']['validation_errors'] as $name => $error)
+			{
+				if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
+
+				if (!preg_match($ignore_validation,$name))
+				{
+					//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
+					return true;
+				}
+				//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
+			}
+			return false;
 		}
 
 		/**
@@ -255,7 +283,7 @@
 			$this->process_show($content,$session_data['to_process'],'exec');
 
 			$GLOBALS['phpgw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
-				count($GLOBALS['phpgw_info']['etemplate']['validation_errors']) > 0;	// set by process_show
+				$this->validation_errors($session_data['ignore_validation']);	// set by process_show
 
 			//echo "process_exec($this->name) process_show(content) ="; _debug_array($content);
 			//echo "process_exec($this->name) session_data[changes] ="; _debug_array($session_data['changes']);
@@ -282,7 +310,8 @@
 				}
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				$this->exec($_GET['menuaction'],$session_data['content'],$session_data['sel_options'],
-					$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],$content);
+					$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],
+					$session_data['ignore_validation'],$content);
 			}
 			else
 			{
@@ -836,9 +865,9 @@
 							$options .= ' title="'.$title.'"';
 						}
 						if ($cell['onchange'] && $cell['onchange'] != 1)
-						{echo "onclick='$onclick'";
+						{
 							$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').$cell['onchange'];
-				echo "onclick='$onclick'";		}
+						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$onclick,
 							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
 							$this->html->image($app,$ro_img);
@@ -993,9 +1022,9 @@
 					{
 						if ($multiple)
 						{
-							foreach($value as $val)
+							foreach($multiple ? $value : array($value) as $val)
 							{
-								$html .= ($html?', ':'').$this->html->htmlspecialchars($cell['no_lang'] ? $sels[$val] : lang($sels[$val]));
+								$html .= ($html?"<br>\n":'').$this->html->htmlspecialchars($cell['no_lang'] ? $sels[$val] : lang($sels[$val]));
 							}
 						}
 						else
@@ -1030,11 +1059,14 @@
 					$extra_label = False;
 					break;
 				case 'file':
-					$html .= $this->html->input_hidden($path = str_replace($name,$name.'_path',$form_name),'.');
-					$html .= $this->html->input($form_name,'','file',$options);
-					$GLOBALS['phpgw_info']['etemplate']['form_options'] =
-						"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path','$form_name')\"";
-					$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					if (!$readonly)
+					{
+						$html .= $this->html->input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
+						$html .= $this->html->input($form_name,'','file',$options);
+						$GLOBALS['phpgw_info']['etemplate']['form_options'] =
+							"enctype=\"multipart/form-data\" onSubmit=\"set_element2(this,'$path_name','$form_name')\"";
+						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+					}
 					break;
 				case 'vbox':
 				case 'hbox':
@@ -1152,8 +1184,14 @@
 			// extension-processing need to be after all other and only with diff. name
 			if ($ext_type && !$readonly && $this->haveExtension($ext_type,'post_process'))	
 			{	// unset it first, if it is already set, to be after the other widgets of the ext.
+				$to_process = 'ext-'.$ext_type;
+				if (is_array($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
+				{
+					$to_process = $GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name];
+					$to_process['type'] = 'ext-'.$ext_type;
+				}
 				unset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]);
-				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = 'ext-'.$ext_type;
+				$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $to_process;
 			}
 			// save blur-value to strip it in process_exec
 			if (!empty($blur) && isset($GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name]))
@@ -1310,6 +1348,10 @@
 						elseif ($_cont && !$this->isset_array($content,$form_name))
 						{
 							$this->set_array($content,$form_name,$_cont);
+						}
+						if ($_cont === '' && $attr['needed'])
+						{
+							$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
 						}
 						break;
 					case 'htmlarea':
