@@ -12,7 +12,7 @@
   /* $Id$ */
 
 	$phpgw_info = array();
-	if (!$included)
+	if (!@$included)
 	{
 		$GLOBALS['phpgw_info']['flags'] = array(
 			'noheader' => True,
@@ -47,10 +47,10 @@
 		define('MAX_MESSAGE_ID_LENGTH',230);
 	}
 
-	if (@$GLOBALS['HTTP_POST_VARS']['submit'])
+	if (@$_POST['submit'])
 	{
-		$lang_selected = @$GLOBALS['HTTP_POST_VARS']['lang_selected'];
-		$upgrademethod = @$GLOBALS['HTTP_POST_VARS']['upgrademethod'];
+		$lang_selected = @$_POST['lang_selected'];
+		$upgrademethod = @$_POST['upgrademethod'];
 		
 		if (!isset($GLOBALS['phpgw_info']['server']) && $upgrademethod != 'dumpold')
 		{
@@ -96,9 +96,9 @@
 					// Visit each app/setup dir, look for a phpgw_lang file
 					while (list($key,$app) = each($setup_info))
 					{
-						$appfile = PHPGW_SERVER_ROOT . SEP . $app['name'] . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
+						$appfile = PHPGW_SERVER_ROOT . SEP . @$app['name'] . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
 						//echo '<br>Checking in: ' . $app['name'];
-						if($GLOBALS['phpgw_setup']->app_registered($app['name']) && file_exists($appfile))
+						if($GLOBALS['phpgw_setup']->app_registered(@$app['name']) && file_exists($appfile))
 						{
 							//echo '<br>Including: ' . $appfile;
 							$lines = file($appfile);
@@ -133,7 +133,7 @@
 								}
 							}
 
-							if ($addit || $newinstall || $upgrademethod == 'addonlynew' || $upgrademethod == 'dumpold')
+							if ($addit || @$newinstall || $upgrademethod == 'addonlynew' || $upgrademethod == 'dumpold')
 							{
 								if($message_id && $content)
 								{
@@ -155,7 +155,7 @@
 			$GLOBALS['phpgw_setup']->db->query($query="INSERT INTO phpgw_config(config_app,config_name,config_value) VALUES ('phpgwapi','lang_ctimes','".
 				addslashes(serialize($GLOBALS['phpgw_info']['server']['lang_ctimes']))."')",__LINE__,__FILE__);
 		}
-		if(!$included)
+		if(!@$included)
 		{
 			Header('Location: index.php');
 			exit;
@@ -163,13 +163,13 @@
 	}
 	else
 	{
-		if ($GLOBALS['HTTP_POST_VARS']['cancel'])
+		if (@$_POST['cancel'])
 		{
 			Header('Location: index.php');
 			exit;
 		}
 
-		if (!$included)
+		if (!@$included)
 		{
 			$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 			$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -184,12 +184,12 @@
 
 			$stage_title = lang('Multi-Language support setup');
 			$stage_desc  = lang('This program will help you upgrade or install different languages for phpGroupWare');
-			$tbl_width   = $newinstall ? '60%' : '80%';
-			$td_colspan  = $newinstall ? '1' : '2';
-			$td_align    = $newinstall ? ' align="center"' : '';
-			$hidden_var1 = $newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
+			$tbl_width   = @$newinstall ? '60%' : '80%';
+			$td_colspan  = @$newinstall ? '1' : '2';
+			$td_align    = @$newinstall ? ' align="center"' : '';
+			$hidden_var1 = @$newinstall ? '<input type="hidden" name="newinstall" value="True">' : '';
 
-			if (!$newinstall && !isset($GLOBALS['phpgw_info']['setup']['installed_langs']))
+			if (!@$newinstall && !isset($GLOBALS['phpgw_info']['setup']['installed_langs']))
 			{
 				$GLOBALS['phpgw_setup']->detection->check_lang(false);	// get installed langs
 			}
@@ -200,14 +200,14 @@
 			{
 				$id = $GLOBALS['phpgw_setup']->db->f('lang_id');
 				$select_box_langs = 
-					$select_box_langs 
+					@$select_box_langs 
 					.'<option value="' . $id . '"'
-					.($GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED':'').'>'
+					.(@$GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED':'').'>'
 					. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>'
 					."\n";
 			}
 
-			if (! $newinstall)
+			if (!@$newinstall)
 			{
 				$meth_desc = lang('Select which method of upgrade you would like to do');
 				$blurb_addonlynew = lang('Only add languages that are not in the database already');
@@ -237,7 +237,7 @@
 			$setup_tpl->set_var('lang_install',lang('install'));
 			$setup_tpl->set_var('lang_cancel',lang('cancel'));
 
-			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $GLOBALS['HTTP_POST_VARS']['ConfigDomain'];
+			$ConfigDomain = $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] ? $GLOBALS['HTTP_COOKIE_VARS']['ConfigDomain'] : $_POST['ConfigDomain'];
 			$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 			$setup_tpl->pparse('out','T_lang_main');
 			$GLOBALS['phpgw_setup']->html->show_footer();
