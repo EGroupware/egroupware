@@ -25,6 +25,14 @@
   }
 */
 
+/* This is not working yet because I need to figure out a way to clear the $cd =1
+  if(isset($PHP_AUTH_USER) && $cd == "1") { 
+    Header("HTTP/1.0 401 Unauthorized"); 
+    Header("WWW-Authenticate: Basic realm=\"phpGroupWare\""); 
+    echo "You have to re-authentificate yourself \n"; 
+    exit; 
+  } 
+*/
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
 
   if (! $deny_login && ! $phpgw_info["server"]["show_domain_selectbox"]) {
@@ -84,7 +92,6 @@
      deny_login();
   }
   
-
   if (isset($PHP_AUTH_USER)) {
     $submit = True;
     $login = $PHP_AUTH_USER;
