@@ -2,7 +2,18 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
  <tr bgcolor="{navbar_color}">
   <td align="left">&nbsp;</td>
-  {applications}  
+ </tr>
+ <tr>
+  <td>
+   <table width="100%" border="0" cellspacing="0" cellpadding="3" bgcolor="white">
+    <tr >
+	   {applications}  
+    </tr>
+   </table>
+  </td>
+ </tr>  
+ <tr bgcolor="{navbar_color}">
+  <td align="left">&nbsp;</td>
  </tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

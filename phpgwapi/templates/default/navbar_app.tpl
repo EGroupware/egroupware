@@ -1,1 +1,1 @@
-<td align="{align}" width="{width}">{value}</td>
+<td align="{align}" valign="top" width="{width}">{value}</td>
