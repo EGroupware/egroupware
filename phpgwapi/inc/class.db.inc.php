@@ -652,11 +652,20 @@
 			$i = 0;
 			foreach($columns as $column)
 			{
-				$metadata[$i] = $column;
+				$metadata[$i] = array(
+					'table' => $table,
+					'name'  => $column->name,
+					'type'  => $column->type,
+					'len'   => $column->max_len,
+					'flags' => False,			// the following values are not used in eGW atm
+					'not_null' => $column->not_null,
+					'has_default' => $column->has_default,
+					'default'  => $column->default_value,
+				);
 				$metadata[$i]['table'] = $table;
 				if ($full)
 				{
-					$metadata['meta'][$column['name']] = $i;
+					$metadata['meta'][$column->name] = $i;
 				}
 				++$i;
 			}
