@@ -12,7 +12,6 @@
   /* $Id$ */
 
   /* Load calendar class */
-  $phpgw->calendar  = CreateObject('calendar.calendar');
   $printer_friendly = ((isset($friendly) && ($friendly==1))?True:False);
-  $phpgw->calendar->calendar_($printer_friendly);
+  $phpgw->calendar  = CreateObject('calendar.calendar',$printer_friendly);
 ?>
