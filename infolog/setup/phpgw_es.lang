@@ -1,3 +1,4 @@
+		es	
 %1 records imported	infolog	es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	es	%1 registros leidos (aun no importados, puede %2volver%3 y desmarcar Testear Importacion)
 - subprojects from	infolog	es	- Subproyecto de
@@ -238,4 +239,3 @@ you have entered an invalid ending date	infolog	es	Usted ha ingresado una fecha 
 you have entered an invalid starting date	infolog	es	Usted ha ingresado una fecha de comienzo invalida
 you have to enter a name, to create a new typ!!!	infolog	es	¡Usted debe introducir un nombre para crear un tipo nuevo!
 you must enter a subject or a description	infolog	es	Usted debe ingresar un asunto o descripcion
-
