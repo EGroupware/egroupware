@@ -48,7 +48,6 @@
 
 		function serializeDebug()
 		{
-//			global $_xmlrpc_debuginfo;
 			if ($GLOBALS['_xmlrpc_debuginfo'] != '')
 			{
 				return "<!-- DEBUG INFO:\n\n" . $GLOBALS['_xmlrpc_debuginfo'] . "\n-->\n";
@@ -121,10 +120,26 @@
 			return array(0, "Wanted $wanted, got $got at param $pno)");
 		}
 
+		function build_array($res)
+		{
+			@reset($res);
+			while(list($key,$val) = @each($res))
+			{
+				if(is_array($val))
+				{
+					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$this->build_array($val),'struct');
+				}
+				else
+				{
+					$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
+				}
+			}
+			return $ele;
+		}
+
 		function parseRequest($data='')
 		{
 			global $HTTP_RAW_POST_DATA;
-//			global $_xh, $xmlrpcerr, $xmlrpcstr, $xmlrpcerrxml, $xmlrpc_defencoding, $_xmlrpcs_dmap;
 	
 			if ($data == '')
 			{
@@ -262,24 +277,8 @@
 								/* _debug_array($params); */
 								$res = ExecMethod($method,$params);
 								/* _debug_array($res);exit; */
-								@reset($res);
-								while(list($key,$val) = @each($res))
-								{
-									if(gettype($val) == 'array')
-									{
-										@reset($val);
-										while(list($x,$y) = @each($val))
-										{
-											$aa[$x] = CreateObject('phpgwapi.xmlrpcval',$y,'string');
-										}
-										$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$aa,'struct');
-									}
-									else
-									{
-										$ele[$key] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
-									}
-								}
-								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$ele,'struct'));
+								
+								$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$this->build_array($res),'struct'));
 								/* _debug_array($r);exit; */
 							}
 						}
