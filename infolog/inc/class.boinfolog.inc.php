@@ -453,7 +453,7 @@
 		{
 			if (!is_array($info))
 			{
-				$info = $this->read( $info ))
+				$info = $this->read( $info );
 			}
 			return $info['info_subject'];
 		}
@@ -465,7 +465,7 @@
 		function link_title( $pattern )
 		{
 			$start = $total = 0;
-			$ids = $this->readIdArray('','','','',$pattern,'','','',&$start,&$total)
+			$ids = $this->readIdArray('','','','',$pattern,'','','',&$start,&$total);
 			$content = array();
 			while (is_array($ids) && list( $id,$parent ) = each( $ids ))
 			{
