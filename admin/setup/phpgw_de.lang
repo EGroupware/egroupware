@@ -156,7 +156,7 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf nochmal
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
-enter the title for your site	admin	de	Titel der phpGroupWare-Installation
+enter the title for your site	admin	de	Titel der eGroupWare-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll

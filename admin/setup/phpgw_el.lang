@@ -342,9 +342,9 @@ view sessions	admin	el	Εμφάνηση περιόδων
 view this user	admin	el	εμφάνηση αυτού του χρήστη
 view user account	admin	el	Εμφάνηση λογαριασμού χρήστη
 who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
-would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η phpGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η phpGroupWare να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like egroupware to cache the phpgw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της phpgw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
+would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
+would you like egroupware to cache the phpgw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της egw ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής) ?
 would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
 xml-rpc	admin	el	XML-RPC
