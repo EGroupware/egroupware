@@ -56,7 +56,14 @@
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
 			$attributes	= array( "uid", "dn" );
-			$filter 	= "(&(uid=$username)(phpgwaccountstatus=A))";
+			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap')
+			{
+				$filter = "(&(uid=$username)(phpgwaccountstatus=A))";
+			}
+			else
+			{
+				$filter = "(uid=$username)";
+			}
 			$sri = ldap_search($ldap, $GLOBALS['phpgw_info']['server']['ldap_context'], $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
 			if ($allValues['count'] > 0)
@@ -74,6 +81,12 @@
 				/* try to bind as the user with user suplied password */
 				if (@ldap_bind($ldap, $userDN, $passwd))
 				{
+					if ($GLOBALS['phpgw_info']['server']['account_repository'] != 'ldap')
+					{
+						$account = CreateObject('phpgwapi.accounts',$username,'u');
+						$data = $account->read_repository();
+						return $data['status'] == 'A';
+					}
 					return True;
 				}
 			}
