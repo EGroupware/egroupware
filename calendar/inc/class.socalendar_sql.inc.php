@@ -563,6 +563,15 @@
 			return $retval;
 		}
 
+		function generate_uid($event)
+		{
+			if (!$event['id']) return False;	// we need the id !!!
+
+			$suffix = $GLOBALS['phpgw_info']['server']['hostname'] ? $GLOBALS['phpgw_info']['server']['hostname'] : 'local';
+			$prefix = 'cal-'.$event['id'].'-'.$GLOBALS['phpgw_info']['server']['install_id'];
+			return $prefix . '@' . $suffix;
+		}
+
 		function save_event(&$event)
 		{
 			$locks = Array(
@@ -575,38 +584,12 @@
 			$this->stream->lock($locks);
 			if($event['id'] == 0)
 			{
-				if(!$event['uid'])
-				{
-					if ($GLOBALS['phpgw_info']['server']['hostname'] != '')
-					{
-						$id_suffix = $GLOBALS['phpgw_info']['server']['hostname'];
-					}
-					else
-					{
-						$id_suffix = $GLOBALS['phpgw']->common->randomstring(3).'local';
-					}
-					$parts = Array(
-						0 => 'title',
-						1 => 'description'
-					);
-					@reset($parts);
-					while(list($key,$field) = each($parts))
-					{
-						$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
-						if(!$GLOBALS['phpgw']->crypto->enabled)
-						{
-							$part[$key] = bin2hex(unserialize($part[$key]));
-						}
-					}
-					$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
-				}
-				$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
-					. "values('".$event['uid']."','".$this->stream->db_addslashes($event['title'])
+				$this->stream->query('INSERT INTO phpgw_cal(title,owner,priority,is_public,category) '
+					. "values('".$this->stream->db_addslashes($event['title'])
 					. "',".(int)$event['owner'].','.(int)$event['priority'].','.(int)$event['public'].",'"
 					. $event['category']."')",__LINE__,__FILE__);
 				$event['id'] = $this->stream->get_last_insert_id('phpgw_cal','cal_id');
 			}
-
 			$date = $this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$enddate = $this->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$today = time() - $GLOBALS['phpgw']->datetime->tz_offset;
@@ -620,7 +603,13 @@
 				$type = 'E';
 			}
 
+			// new event or new created referencing event
+			if (!$event['uid'] || $event['reference'] && strstr($event['uid'],'cal-'.$event['reference'].'-'))
+			{
+				$event['uid'] = $this->generate_uid($event);
+			}
 			$sql = 'UPDATE phpgw_cal SET '
+					. 'uid='.$this->stream->quote($event['uid']).','
 					. 'owner='.(int)$event['owner'].', '
 					. 'datetime='.(int)$date.', '
 					. 'mdatetime='.(int)$today.', '

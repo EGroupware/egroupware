@@ -1030,4 +1030,24 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.005';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	$test[] = '0.9.16.005';
+	function calendar_upgrade0_9_16_005()
+	{
+		// creates uid's for all entries which do not have unique ones, they are '-@domain.com'
+		$GLOBALS['phpgw_setup']->oProc->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name IN ('install_id','mail_suffix') AND config_app='phpgwapi'",__LINE__,__FILE__);
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			$config[$GLOBALS['phpgw_setup']->oProc->f(0)] = $GLOBALS['phpgw_setup']->oProc->f(1);
+		}
+		$GLOBALS['phpgw_setup']->oProc->query('UPDATE phpgw_cal SET uid='.
+			$GLOBALS['phpgw_setup']->db->concat($GLOBALS['phpgw_setup']->db->quote('cal-'),'cal_id',
+				$GLOBALS['phpgw_setup']->db->quote('-'.$config['install_id'].'@'.
+				($config['mail_suffix'] ? $config['mail_suffix'] : 'local'))).
+			" WHERE uid LIKE '-@%'");
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.006';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>

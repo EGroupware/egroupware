@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['calendar']['name']    = 'calendar';
-	$setup_info['calendar']['version'] = '0.9.16.005';
+	$setup_info['calendar']['version'] = '0.9.16.006';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -21,7 +21,7 @@
 	$setup_info['calendar']['description'] =
 		'Powerful calendar with meeting request system and ACL security.';
 	$setup_info['calendar']['note'] =
-		'Bassed on Webcalendar by <a href="http://www.radix.net/~cknudsen" target="_blank">Craig Knudsen</a>.<p>
+		'Originaly based on Webcalendar by <a href="http://www.radix.net/~cknudsen" target="_blank">Craig Knudsen</a>.<p>
 		';
 	$setup_info['calendar']['maintainer'] = array(
 		'name'  => 'Ralf Becker',
