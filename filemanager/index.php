@@ -611,6 +611,7 @@ if ($messages)
 if (!is_array ($GLOBALS['settings']))
 {
 	$pref = CreateObject ('phpgwapi.preferences', $GLOBALS['userinfo']['username']);
+	$pref->read_repository (); 
 	$GLOBALS['phpgw']->hooks->single ('add_def_pref', $GLOBALS['appname']);
 	$pref->save_repository (True);
 	$pref_array = $pref->read_repository ();
