@@ -177,6 +177,19 @@ a.textSidebox
 	z-index:51;
 }
 
+#extraIcons
+{
+	position:absolute;
+	z-index:13;
+	right:10px;
+	top:113px;
+	visibility:hidden;
+	background-image:url(../images/alpha-white.png);
+	border-width:1px;
+	border-color:#7e7e7e;
+	border-style:solid;
+}
+
 #divAppIconBar
 {
 	background-color:white;

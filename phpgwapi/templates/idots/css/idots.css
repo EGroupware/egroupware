@@ -62,6 +62,12 @@ input[type=submit],input[type=button],button
 	cursor: hand;
 }
 
+input[type=image]
+{
+	cursor: pointer; 
+	cursor: hand;
+	border: 0px #bbbbbb none;
+}
 select 
 {
 	font-size: 11px; 
@@ -140,6 +146,19 @@ a.textSidebox
 	border-top-width:1px;
 	border-top-style:solid;
 	height:1px;
+}
+
+#extraIcons
+{
+	position:absolute;
+	z-index:13;
+	right:10px;
+	top:113px;
+	visibility:hidden;
+	background-image:url(../images/alpha-white.png);
+	border-width:1px;
+	border-color:#7e7e7e;
+	border-style:solid;
 }
 
 #divMain

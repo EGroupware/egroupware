@@ -32,38 +32,84 @@
 		$var['table_bg_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
 		$applications = '';
-	//	== 'icons_and_text')
+	
+		//	== 'icons_and_text')
+		
+		$max_icons=7; // must be detected with javascript or must be a preference
+		
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
 			if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
-				
-				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title
-					. '" title="'. $title . '" border="0" />';
+				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
 
-				$app_icons .= '<td height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
-				if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
-					$GLOBALS['phpgw_info']['flags']['navbar_target'])
+				if($i<=$max_icons)
 				{
-					$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
-				}
-				$app_icons .= '>' . $icon . '</a></td>';
+					$app_icons .= '<td height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
+					
+					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					{
+						$app_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					}
 
-				$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$app_data['url'] . '"';
-				if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) &&
-					$GLOBALS['phpgw_info']['flags']['navbar_target'])
-				{
-					$app_titles .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					$app_icons .= '>' . $icon . '</a></td>';
+
+					$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$app_data['url'] . '"';
+
+					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					{
+						$app_titles .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					}
+
+					$app_titles .= '>' . $title . '</a></td>';
+
+
 				}
-				$app_titles .= '>' . $title . '</a></td>';
+				else // generate extra icon layer | always shows icons and text
+				{
+					$app_extra_icons .= '<tr><td><a href="' . $app_data['url'] . '"';
+					
+					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					{
+						$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					}
+
+					$app_extra_icons .= '>' . $icon . '</a></td>';
+
+					$app_extra_icons .= '<td align=left  class="extraIconsRow"><a href="'.$app_data['url'] . '"';
+
+					if(isset($GLOBALS['phpgw_info']['flags']['navbar_target']) && $GLOBALS['phpgw_info']['flags']['navbar_target'])
+					{
+						$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
+					}
+
+					$app_extra_icons .= '>' . $title . '</a></td></tr>';
+				}
 
 				unset($icon);
 				unset($title);
+				$i++;
 			}
 		}
 
 		$var['app_icons']  = $app_icons;
+
+		if($i>$max_icons)
+		{
+			$app_extra_icons_div='
+				<div id="extraIcons">
+					<table>'.$app_extra_icons.'
+						<tr><td>&nbsp;</td><td nowrap=nowrap align="right"><a href="javascript:void(0);" onClick="HideL(\'extraIcons\');" title="'.lang('close').'"><img border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
+					</table>
+				</div>';
+			
+			$var['app_extra_icons_div']= $app_extra_icons_div;
+			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+		
+		}
+
+		
 		if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='icons')
 		{
 			$var['app_titles'] = $app_titles;

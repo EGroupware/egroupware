@@ -1,6 +1,8 @@
 <!-- BEGIN navbar_header -->
 <div id="divLogo"><a href="http://{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="eGroupWare"/></a></div>
 
+{app_extra_icons_div}
+
 <div id="divMain">
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -17,6 +19,9 @@
 					</table>
 
 				</td>
+
+				{app_extra_icons_icon}
+	
 				<td width="1" valign="top" align="right"><img src="{img_root}/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
 			</tr>
 		</table>
