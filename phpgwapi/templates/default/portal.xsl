@@ -24,9 +24,6 @@
 										</td>
 									</tr>
 								</xsl:when>
-							</xsl:choose>
-
-							<xsl:choose>
 								<xsl:when test="extrabox">
 									<tr>
 										<td>
