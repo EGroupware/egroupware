@@ -62,7 +62,8 @@
   } elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
       && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
      $phpgw->redirect($phpgw->link($phpgw_info["server"]["webserver_url"] . "/"
-		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"));
+		  . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/"
+		  . ($phpgw_info["user"]["preferences"]["common"]["default_app"]=="calendar"?$phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]:"index.php")));
      $phpgw->common->phpgw_exit();
   } else {
      $phpgw->common->phpgw_header();

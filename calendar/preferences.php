@@ -18,7 +18,7 @@
      $phpgw->preferences->change("calendar","weekdaystarts");
      $phpgw->preferences->change("calendar","workdaystarts");
      $phpgw->preferences->change("calendar","workdayends");
-     $phpgw->preferences->change("common","defaultcalendar");
+     $phpgw->preferences->change("calendar","defaultcalendar");
      $phpgw->preferences->change("calendar","defaultfilter");
      if ($mainscreen_showevents) {
         $phpgw->preferences->change("calendar","mainscreen_showevents");
@@ -109,8 +109,8 @@
     <select name="defaultcalendar">
      <?php
        $selected = array();
-       $selected[$phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]] = " selected";
-       if (! isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"] == "index.php") {
+       $selected[$phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]] = " selected";
+       if (! isset($phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"]) || $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"] == "index.php") {
           $selected["index.php"] = " selected";
        }
      ?>

@@ -372,8 +372,8 @@
 // Changed by Skeeter 03 Dec 00 2000 GMT
 // This is to allow for the calendar app to have a default page view.
    	    } elseif ($appname == "calendar") {
-	          if (isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"])) {
-                $view = $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"];
+	          if (isset($phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"])) {
+                $view = $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"];
 	          } else {
                 $view = "index.php";
              }
