@@ -26,6 +26,9 @@
 	- Applied patch to fix set_time_limit() warnings in safe_mode
 	  Thanks count
 	- Fixed warning messages in EMail with/without CC header info.
+	- Fixed errors for TTS mailings. 
+	  (This was actually a problem with email, users not having a 
+	   Sent folder.  Sent Folders automatically created if not exist.)
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
