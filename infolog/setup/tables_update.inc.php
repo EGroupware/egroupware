@@ -337,4 +337,37 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '1.0.0';
+	function infolog_upgrade1_0_0()
+	{
+		// longer columns to cope with multibyte charsets
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_type',array(
+			'type' => 'varchar',
+			'precision' => '40',
+			'nullable' => False,
+			'default' => 'task'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_from',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_addr',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_subject',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_infolog','info_status',array(
+			'type' => 'varchar',
+			'precision' => '40',
+			'default' => 'done'
+		));
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0.001';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>
