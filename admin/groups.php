@@ -61,7 +61,7 @@
 	{
 		while (list($null,$account) = each($account_info))
 		{
-			$account_id = $account['account_id'];
+			$group_id   = $account['account_id'];
 			$group_name = $account['account_lid'];
 
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
