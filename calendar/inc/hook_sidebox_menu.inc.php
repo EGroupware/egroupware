@@ -40,7 +40,6 @@
 	if (is_object($GLOBALS['phpgw']->bocalendar) && $GLOBALS['phpgw']->bocalendar->owner != $GLOBALS['phpgw_info']['user']['acount_id'] &&
 		!$GLOBALS['phpgw']->bocalendar->check_perms(PHPGW_ACL_ADD))
 	{
-		echo "<p>owner=".$GLOBALS['phpgw']->bocalendar->owner."=".$GLOBALS['phpgw']->accounts->id2name($GLOBALS['phpgw']->bocalendar->owner)."</p>\n";
 		unset($file['New Entry']);	// dont display add icon
 		unset($file[0]);
 	}	
