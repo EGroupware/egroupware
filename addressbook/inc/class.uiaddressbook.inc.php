@@ -340,7 +340,7 @@
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
 				}
-				$noprefs=lang('Please set your preferences for this app');
+				$noprefs=lang('Please set your preferences for this application');
 			}
 
 			if (!$this->start)
