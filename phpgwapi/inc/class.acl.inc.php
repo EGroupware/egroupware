@@ -644,7 +644,10 @@
 					{
 						$grants[$grantor] = 0;
 					}
-					$grants[$grantor] |= $rights;
+					if(!!($rights & PHPGW_ACL_READ))
+					{
+						$grants[$grantor] = PHPGW_ACL_READ;
+					}
 				}
 				while(list($nul,$grantors) = each($accounts[$grantor]))
 				{
