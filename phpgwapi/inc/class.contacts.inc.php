@@ -1,7 +1,8 @@
 <?php
-	if (!$phpgw_info['server']['contacts_application'])
+	if (!$phpgw_info['server']['contact_repository'])
 	{
-		$phpgw_info['server']['contacts_application'] = 'addressbook';
+		$phpgw_info['server']['contact_repository'] = 'sql';
 	}
-	include(PHPGW_INCLUDE_ROOT.'/'.$phpgw_info['server']['contacts_application'].'/inc/class.contacts.inc.php');
+	include(PHPGW_API_INC . '/class.contacts_'.$phpgw_info['server']['contact_repository'] . '.inc.php');
+	include(PHPGW_API_INC . '/class.contacts_shared.inc.php');
 ?>
