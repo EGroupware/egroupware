@@ -44,6 +44,21 @@
 		}
 	}
 
+	function array_keys ($arr, $term="")
+	{
+		$t = array();
+		while (list($k,$v) = each($arr))
+		{
+			if ($term && $v != $term)
+			{
+				continue;
+				$t[] = $k;
+			}
+			return $t;
+		}
+	}
+
+
 /*
 	function array_reverse ($array, $preserve_keys = FALSE)
 	{
