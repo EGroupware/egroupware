@@ -1098,32 +1098,21 @@
 			$fields['cat_id'] = is_array($this->cat_id) ? implode(',',$this->cat_id) : $this->cat_id;
 
 			$cats = explode(',',$fields[0]['cat_id']);
-			if($cats[1])
+			$catnames = array();
+			foreach($cats as $cat)
 			{
-//				while(list($key,$contactscat) = each($cats))
-				foreach($cats as $key => $contactscat)
+				if ($cat)
 				{
-					if($contactscat)
-					{
-						$catinfo = $this->cat->return_single((int)$contactscat);
-						$catname .= $catinfo[0]['name'] . '; ';
-					}
-				}
-				if(!$this->cat_id)
-				{
-					$this->cat_id = $cats[0];
+					$cat = $this->cat->return_single((int)$cat);
+					$catnames[] = stripslashes($cat[0]['name']);
 				}
 			}
-			else
+			$catname = implode('; ',$catnames);
+			if (!$this->cat_id)
 			{
-				$fields[0]['cat_id'] = str_replace(',','',$fields[0]['cat_id']);
-				$catinfo = $this->cat->return_single((int)$fields[0]['cat_id']);
-				$catname = $catinfo[0]['name'];
-				if(!$this->cat_id)
-				{
-					$this->cat_id = $fields[0]['cat_id'];
-				}
+				$this->cat_id = count($cats) > 1 ? $cats[1] : $cats[0];
 			}
+
 			$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 			$GLOBALS['phpgw']->template->set_var(array(
 				'ref_data' => $GLOBALS['phpgw']->common->grab_owner_name($record_owner),
@@ -1489,11 +1478,11 @@
 
 			if(is_array($fcat_id))
 			{
-				$fields['cat_id'] = count($fcat_id) > 1 ? ','.implode(',',$fcat_id).',' : $fcat_id[0];
+				$fields['cat_id'] = count($fcat_id) > 1 ? ','.implode(',',$fcat_id).',' : (int)$fcat_id[0];
 			}
 			else
 			{
-				$fields['cat_id'] = $fcat_id;
+				$fields['cat_id'] = (int)$fcat_id;
 			}
 
 			$fields['ab_id']   = $entry['ab_id'];
