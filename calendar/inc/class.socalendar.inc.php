@@ -46,19 +46,8 @@
 			return mktime($time['hour'],$time['min'],$time['sec'],$time['month'],$time['mday'],$time['year']);
 		}
 
-		function makeobj()
-		{
-			if (!is_object($this->cal))
-			{
-				$this->cal = CreateObject('calendar.socalendar_');
-				$this->cal->open('INBOX',intval($this->owner));
-			}
-			return;
-		}
-
 		function read_entry($id)
 		{
-			$this->makeobj();
 			return $this->cal->fetch_event($id);
 		}
 
