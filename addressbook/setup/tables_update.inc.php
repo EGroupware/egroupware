@@ -57,17 +57,31 @@
 		$oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
 	}
 
+	$test[] = '0.9.2';
+	function addressbook_upgrade0_9_2()
+	{
+		global $setup_info;
+		$setup_info['addressbook']['currentver'] = '0.9.3pre1';
+		return $setup_info['addressbook']['currentver'];
+	}
+
 	$test[] = '0.9.3pre1';
 	function addressbook_upgrade0_9_3pre1()
 	{
 		global $setup_info;
 
-		if(addressbook_v0_9_2to0_9_3update_owner('addressbook','ab_owner'))
-		{
-			$setup_info['addressbook']['currentver'] = '0.9.3pre2';
-			return $setup_info['addressbook']['currentver'];
-		//return True;
-		}
+		addressbook_v0_9_2to0_9_3update_owner('addressbook','ab_owner');
+		$setup_info['addressbook']['currentver'] = '0.9.3pre2';
+		return $setup_info['addressbook']['currentver'];
+	}
+
+	$test[] = '0.9.3pre2';
+	function addressbook_upgrade0_9_3pre2()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.3pre6';
+		return $setup_info['addressbook']['currentver'];
 	}
 
 	$test[] = '0.9.3pre6';
@@ -81,6 +95,15 @@
 		$setup_info['addressbook']['currentver'] = '0.9.3pre7';
 		return $setup_info['addressbook']['currentver'];
 		//return True;
+	}
+
+	$test[] = '0.9.3pre7';
+	function addressbook_upgrade0_9_3pre7()
+	{
+		global $setup_info;
+
+		$setup_info['addressbook']['currentver'] = '0.9.8pre5';
+		return $setup_info['addressbook']['currentver'];
 	}
 
 	$test[] = "0.9.8pre5";
@@ -283,10 +306,10 @@
 
 		$db1->query("SELECT * FROM addressbook");
 
-		$fields = $extra = array();
-
 		while ($db1->next_record())
 		{
+			$fields = $extra = array();
+
 			$fields['id']         = $db1->f('ab_id');
 			$fields['owner']      = addslashes($db1->f('ab_owner'));
 			$fields['n_given']    = addslashes($db1->f('ab_firstname'));
@@ -358,7 +381,7 @@
 		{
 			$cid   = $phpgw_setup->db->f('contact_id');
 			$cvalu = $phpgw_setup->db->f('contact_value');
-			if ($cvalu)
+			if ($cid && $cvalu)
 			{
 				$update = "UPDATE phpgw_addressbook set url='" . $cvalu . "' WHERE id=" . $cid;
 				$oProc->m_odb->query($update);
@@ -374,7 +397,7 @@
 		{
 			$cid   = $phpgw_setup->db->f('contact_id');
 			$cvalu = $phpgw_setup->db->f('contact_value');
-			if ($cvalu)
+			if ($cid && $cvalu)
 			{
 				$update = "UPDATE phpgw_addressbook set bday='" . $cvalu . "' WHERE id=" . $cid;
 				$oProc->m_odb->query($update);
