@@ -34,9 +34,7 @@
 
 		function boinfolog( $info_id = 0)
 		{
-			global $phpgw;
-
-			$this->enums = array( 
+			$this->enums = array(
 				'priority' => array (
 					'urgent' => 'urgent','high' => 'high','normal' => 'normal',
 					'low' => 'low' ),
@@ -64,36 +62,30 @@
 				'note' => array(
 					'ongoing' => 'ongoing', 'done' => 'done'
 			));
-					
+
 			$this->so = CreateObject('infolog.soinfolog');
 
 			$this->read( $info_id);
 		}
-				
+
 		function accountInfo($id,$account_data=0)
 		{
-			global $phpgw,$phpgw_info;
-			
 			if (!$id) return '&nbsp;';
-			
+
 			if (!is_array($account_data))
 			{
-				$accounts = createobject('phpgwapi.accounts',$id);
-				$accounts->db = $phpgw->db;
-				$accounts->read_repository();
-				$account_data = $accounts->data;
+				$GLOBALS['phpgw']->accounts->read_repository();
+				$account_data = $GLOBALS['phpgw']->accounts->data;
 			}
-			if ($phpgw_info['user']['preferences']['infolog']['longNames'])
+			if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['longNames'])
 			{
 				return $account_data['firstname'].' '.$account_data['lastname'];
 			}
-			return $account_data['account_lid'];   
-		}      
+			return $account_data['account_lid'];
+		}
 
 		function addr2name( $addr )
 		{
-			global $phpgw;
-
 			$name = $addr['n_family'];
 			if ($addr['n_given'])
 			{
@@ -110,7 +102,7 @@
 			{
 				$name = $addr['org_name'].': '.$name;
 			}
-			return $phpgw->strip_html($name);         
+			return $GLOBALS['phpgw']->strip_html($name);
 		}
 
 		function readProj($proj_id)
@@ -120,7 +112,7 @@
 				if (!is_object($this->projects))
 				{
 					$this->projects = createobject('projects.projects');
-				}            
+				}
 				if (list( $proj ) = $this->projects->read_single_project( $proj_id))
 				{
 					return $proj;
@@ -182,15 +174,13 @@
 
 		function write($values)
 		{
-			global $phpgw_info;
-
 			if ($values['responsible'] && $values['status'] == 'offer')
 			{
 				$values['status'] = 'ongoing';   // have to match if not finished
 			}
 			if (!$values['info_id'] && !$values['owner'])
 			{
-				$values['owner'] = $phpgw_info['user']['account_id'];
+				$values['owner'] = $this->so->user;
 			}
 			$values['datecreated'] = time(); // is now MODIFICATION-date
 				
@@ -200,8 +190,7 @@
 			}	
 			if ($values['addr_id'] && !$values['from'])
 			{
-				$values['from'] = $this->addr2name( $this->readAddr(
-																			$values['addr_id'] ));
+				$values['from'] = $this->addr2name( $this->readAddr( $values['addr_id'] ));
 			}
 			$this->so->write($values);
 		}
