@@ -59,14 +59,7 @@
 
 			$sort = $sort ? $sort : 'ASC';
 
-			if($sort == 'ASC')
-			{
-				ksort($apps);
-			}
-			else
-			{
-				krsort($apps);
-			}
+			uasort($apps,create_function('$a,$b','return strcasecmp($a[\'title\'],$b[\'title\'])'.($sort != 'ASC' ? '* -1' : '').';'));
 
 			if ($start && $offset)
 			{
