@@ -64,7 +64,7 @@
              $phpgw->permissions->add($permission[0]);
           }
         }
-        $phpgw->permissions->add("hr");
+        //$phpgw->permissions->add("hr");
 
         if ($new_permissions["anonymous"] && ! $new_permissions["admin"])
 	   $phpgw->permissions->add("anonymous");
