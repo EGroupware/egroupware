@@ -27,7 +27,7 @@
 
 \layout Title
 \added_space_top vfill \added_space_bottom vfill 
-phpGroupWare Setup
+eGroupWare Setup
 \layout Date
 
 June 18, 2001 
@@ -39,7 +39,7 @@ June 18, 2001
 \layout Abstract
 
 A developer introduction to using the next generation setup application
- for phpgroupware.
+ for egroupware.
 \layout Section
 
 Introduction
@@ -51,7 +51,7 @@ Welcome
 
 \series medium 
 Thanks for taking the time to look over this document.
- If you are a developer who is new to phpgroupware, this document will be
+ If you are a developer who is new to egroupware, this document will be
  invaluable to your success during the life of your application.
  This is in addition to the other fine documentation available in the phpgwapi/d
 oc directory in your install.
@@ -93,7 +93,7 @@ Setup3 adds multi-language support for the setup application, a long missed
 \series medium 
 Setup3 gives each application developer control over their application install
  and upgrade processes, while giving them access to work within a realm
- formerly owned by only the former core phpgroupware applications.
+ formerly owned by only the former core egroupware applications.
  Yes, this is extra work for the developer.
  But it is hoped that setup3 is also viewed as a tool that can truly enhance
  the development process
@@ -155,7 +155,7 @@ $setup_info['addressbook']['enable'] = 1;
 
 
 \series medium 
-'name' is used throughout phpgroupware, typically in $phpgw_info flags such
+'name' is used throughout egroupware, typically in $phpgw_info flags such
  as 'currentapp' or as the 'app_name' almost everywhere else.
 \layout Standard
 
@@ -187,7 +187,7 @@ The 'version' string defines the version of the application and table code.
 
 
 \series medium 
-The 'enable' string is used by the phpgroupware API to determine whether
+The 'enable' string is used by the egroupware API to determine whether
  an application is disabled, enabled, or enabled but hidden from the navbar.
  Most applications will want this set to a value of 1 (enabled).
  The notifywindow app sets this to 2, which keeps it off the navbar.
@@ -334,7 +334,7 @@ $setup_info['addressbook']['depends'][] = array(
 
 
 \series medium 
-This is the standard dependency array for all phpgroupware applications.
+This is the standard dependency array for all egroupware applications.
  It states that this application requires the phpgwapi, and lists the versions
  with which versions this app is compatible.
  This list would need to be appended upon each new API release, assuming
@@ -515,7 +515,7 @@ Any application which requires an upgrade to a previous version's tables
 This file will be the most complex of all setup-oriented files with which
  you will be working.
  It will contain all upgrade functions capable of upgrading any possible
- version of your phpgroupware app.
+ version of your egroupware app.
  These upgrade routines roughly match the old setup program's upgrade functions,
  but the use of objects and the methods have changed dramatically.
  The simplest version upgrade routine would look like:

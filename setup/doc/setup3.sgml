@@ -8,7 +8,7 @@
   See http://www.lyx.org/ for more information -->
   <artheader>
    <title>
-   phpGroupWare Setup
+   eGroupWare Setup
   </title>
   <date>
    June 18, 2001 
@@ -18,7 +18,7 @@
   </author>
   <abstract>
   <para>
-   A developer introduction to using the next generation setup application for phpgroupware.
+   A developer introduction to using the next generation setup application for egroupware.
   </para>
   </abstract>
   </artheader>
@@ -31,7 +31,7 @@
     Welcome
    </title>
    <para>
-    Thanks for taking the time to look over this document. If you are a developer who is new to phpgroupware, this document will be invaluable to your success during the life of your application. This is in addition to the other fine documentation available in the phpgwapi/doc directory in your install. Even long-time phpgw developers should benefit this document. Herein, I will attempt to outline the critical steps required in order to get along with setup3, setup-TNG, or whatever we end up calling it (Hey, how about 'setup'?)
+    Thanks for taking the time to look over this document. If you are a developer who is new to egroupware, this document will be invaluable to your success during the life of your application. This is in addition to the other fine documentation available in the phpgwapi/doc directory in your install. Even long-time phpgw developers should benefit this document. Herein, I will attempt to outline the critical steps required in order to get along with setup3, setup-TNG, or whatever we end up calling it (Hey, how about 'setup'?)
    </para>
    </sect2>
    <sect2>
@@ -48,7 +48,7 @@
     Setup3 adds multi-language support for the setup application, a long missed feature, I would imagine.
    </para>
    <para>
-    Setup3 gives each application developer control over their application install and upgrade processes, while giving them access to work within a realm formerly owned by only the former core phpgroupware applications. Yes, this is extra work for the developer. But it is hoped that setup3 is also viewed as a tool that can truly enhance the development process.
+    Setup3 gives each application developer control over their application install and upgrade processes, while giving them access to work within a realm formerly owned by only the former core egroupware applications. Yes, this is extra work for the developer. But it is hoped that setup3 is also viewed as a tool that can truly enhance the development process.
    </para>
    <para>
     OK. Let's dive right in...
@@ -84,7 +84,7 @@
 ]]><![ CDATA [$setup_info['addressbook']['enable'] = 1;
 ]]>    </programlisting>
     <para>
-     'name' is used throughout phpgroupware, typically in &dollar;phpgw_info flags such as 'currentapp' or as the 'app_name' almost everywhere else.
+     'name' is used throughout egroupware, typically in &dollar;phpgw_info flags such as 'currentapp' or as the 'app_name' almost everywhere else.
     </para>
     <para>
      'title' would be used in the navbar, admin, preferences, as well as in the application itself.
@@ -96,7 +96,7 @@
      'app_order' determines the order of applications in the navbar. If the number you set here is the same as is set for another app, the app whose 'name' is first in the English alphabet would appear first. Smaller numbers show closer to the top or left end of the navbar, depending upon the layout.
     </para>
     <para>
-     The 'enable' string is used by the phpgroupware API to determine whether an application is disabled, enabled, or enabled but hidden from the navbar. Most applications will want this set to a value of 1 (enabled). The notifywindow app sets this to 2, which keeps it off the navbar. An enable of 0 would disable the app by default. There is one other special case, 3, which is used primarily by the API itself. From the perspective of setup3, the API is an application just like any other application. By setting the 'enable' flag to 3, the API is still enabled, but will not be assignable to a user as a real application. It will thereby be hidden from the admin for application and user/group editing.
+     The 'enable' string is used by the egroupware API to determine whether an application is disabled, enabled, or enabled but hidden from the navbar. Most applications will want this set to a value of 1 (enabled). The notifywindow app sets this to 2, which keeps it off the navbar. An enable of 0 would disable the app by default. There is one other special case, 3, which is used primarily by the API itself. From the perspective of setup3, the API is an application just like any other application. By setting the 'enable' flag to 3, the API is still enabled, but will not be assignable to a user as a real application. It will thereby be hidden from the admin for application and user/group editing.
     </para>
     </sect3>
     <sect3>
@@ -164,7 +164,7 @@
 ]]><![ CDATA [);
 ]]>     </programlisting>
      <para>
-      This is the standard dependency array for all phpgroupware applications. It states that this application requires the phpgwapi, and lists the versions with which versions this app is compatible. This list would need to be appended upon each new API release, assuming your application is compatible with this new API version. You may list other applications here, e.g. your app might depend upon 'email' in order to work properly.
+      This is the standard dependency array for all egroupware applications. It states that this application requires the phpgwapi, and lists the versions with which versions this app is compatible. This list would need to be appended upon each new API release, assuming your application is compatible with this new API version. You may list other applications here, e.g. your app might depend upon 'email' in order to work properly.
      </para>
      <para>
       Do NOT list applications here without considering this: If you do list an application here, and your app does not really require it, your application will not install unless that other application is already installed. This is handled normally within the install/upgrade process loops, which will install only applications whose dependencies are satisfied. Using a multipass function, the applications are installed in the correct order to ensure that dependencies are resolved. In all cases, the API would be installed first in every new install or upgrade, since all applications depend on the API.
@@ -231,7 +231,7 @@
      Any application which requires an upgrade to a previous version's tables will need this file.
     </title>
     <para>
-     This file will be the most complex of all setup-oriented files with which you will be working. It will contain all upgrade functions capable of upgrading any possible version of your phpgroupware app. These upgrade routines roughly match the old setup program's upgrade functions, but the use of objects and the methods have changed dramatically. The simplest version upgrade routine would look like:
+     This file will be the most complex of all setup-oriented files with which you will be working. It will contain all upgrade functions capable of upgrading any possible version of your egroupware app. These upgrade routines roughly match the old setup program's upgrade functions, but the use of objects and the methods have changed dramatically. The simplest version upgrade routine would look like:
     </para>
     <programlisting>
 <![ CDATA [$test[] = "0.9.3pre10";

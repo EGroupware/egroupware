@@ -1,4 +1,4 @@
-phpGroupWare setup		March 2002 revised (5-2001)
+eGroupWare setup		March 2002 revised (5-2001)
 
 Note: All setup classes are now located in the phpgwapi module.  Since setup
       cannot work without the api anyway, these classes were moved.

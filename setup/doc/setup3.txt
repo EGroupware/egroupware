@@ -1,6 +1,6 @@
 
 
-phpGroupWare Setup
+eGroupWare Setup
 
 June 18, 2001 
 Updated May 9, 2003
@@ -9,14 +9,14 @@ Updated May 9, 2003
 Abstract
 
 A developer introduction to using the next generation setup
-application for phpgroupware.
+application for egroupware.
 
 1 Introduction
 
 1.1 Welcome
 
 Thanks for taking the time to look over this document. If
-you are a developer who is new to phpgroupware, this document
+you are a developer who is new to egroupware, this document
 will be invaluable to your success during the life of your
 application. This is in addition to the other fine documentation
 available in the phpgwapi/doc directory in your install.
@@ -46,7 +46,7 @@ a long missed feature, I would imagine.
 Setup3 gives each application developer control over their
 application install and upgrade processes, while giving
 them access to work within a realm formerly owned by only
-the former core phpgroupware applications. Yes, this is
+the former core egroupware applications. Yes, this is
 extra work for the developer. But it is hoped that setup3
 is also viewed as a tool that can truly enhance the development
 process.
@@ -79,7 +79,7 @@ $setup_info['addressbook']['app_order'] = 4;
 
 $setup_info['addressbook']['enable'] = 1;
 
-'name' is used throughout phpgroupware, typically in $phpgw_info
+'name' is used throughout egroupware, typically in $phpgw_info
 flags such as 'currentapp' or as the 'app_name' almost everywhere
 else.
 
@@ -101,7 +101,7 @@ app, the app whose 'name' is first in the English alphabet
 would appear first. Smaller numbers show closer to the top
 or left end of the navbar, depending upon the layout.
 
-The 'enable' string is used by the phpgroupware API to determine
+The 'enable' string is used by the egroupware API to determine
 whether an application is disabled, enabled, or enabled
 but hidden from the navbar. Most applications will want
 this set to a value of 1 (enabled). The notifywindow app
@@ -180,7 +180,7 @@ $setup_info['addressbook']['depends'][] = array(
 
 );
 
-This is the standard dependency array for all phpgroupware
+This is the standard dependency array for all egroupware
 applications. It states that this application requires the
 phpgwapi, and lists the versions with which versions this
 app is compatible. This list would need to be appended upon
@@ -290,7 +290,7 @@ then recreate the current file to match the new table definitions.
 This file will be the most complex of all setup-oriented
 files with which you will be working. It will contain all
 upgrade functions capable of upgrading any possible version
-of your phpgroupware app. These upgrade routines roughly
+of your egroupware app. These upgrade routines roughly
 match the old setup program's upgrade functions, but the
 use of objects and the methods have changed dramatically.
 The simplest version upgrade routine would look like:
