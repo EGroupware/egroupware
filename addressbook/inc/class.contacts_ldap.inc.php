@@ -709,8 +709,8 @@
 			}
 		}
 
-		// This is for testing, not intended for release
-		function delete_all()
+		// This is for the admin script deleteaccount.php
+		function delete_all($owner=0)
 		{
 			global $phpgw_info;
 
@@ -718,12 +718,16 @@
 				return False;
 			}
 
-			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=*");
-			$ldap_fields = ldap_get_entries($this->ldap, $sri);
+			if ($owner) {
+				$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=".$owner);
+				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			$entry = "";
-			while (list($null,$entry) =  each($ldap_fields)) {
-				$err = ldap_delete($this->ldap,$entry['dn']);
+				$entry = "";
+				while (list($null,$entry) =  each($ldap_fields)) {
+					$err = ldap_delete($this->ldap,$entry['dn']);
+				}
+
+				$this->db->query("DELETE FROM $this->ext_table WHERE owner=$owner",__LINE__,__FILE__);
 			}
 			return;
 		}

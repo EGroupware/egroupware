@@ -285,8 +285,7 @@
 		}
 
 		// send this the range, query, sort, order and whatever fields you want to see
-		// 'rights' and 'access' are unused at this time
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="",$access="")
+		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -587,11 +586,14 @@
 			. $this->account_id . "'",__LINE__,__FILE__);
 		}
 
-		// This is for testing, not intended for release
-		function delete_all()
+		// This is for the admin script deleteaccount.php
+		function delete_all($owner=0)
 		{
-			$this->db->query("delete from $this->std_table",__LINE__,__FILE__);
-			$this->db->query("delete from $this->ext_table",__LINE__,__FILE__);
+			if ($owner)
+			{
+				$this->db->query("DELETE FROM $this->std_table WHERE owner=$owner",__LINE__,__FILE__);
+				$this->db->query("DELETE FROM $this->ext_table WHERE owner=$owner",__LINE__,__FILE__);
+			}
 			return;
 		}
 	}
