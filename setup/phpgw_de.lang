@@ -1,0 +1,405 @@
+
+
+	common	de	
+(for weekly)	calendar	de	(f&uuml;r w&ouml;chentlich)
+1 match found	calendar	de	1 Treffer gefunden
+1 message has been deleted	email	de	1 Nachricht wurde gel&ouml;scht
+a	calendar	de	
+access	common	de	Zugriff
+access type	common	de	Zugriffstyp
+access type	todo	de	Zugriffstyp
+account active	admin	de	Konto aktiv
+account has been created	common	de	Account wurde erstellt
+account has been deleted	common	de	Account wurde gel&ouml;scht
+account has been updated	common	de	Account wurde aktualisiert
+active	admin	de	Aktiv
+add	common	de	Hinzuf&uuml;gen
+add new application	admin	de	Neue Anwendung hinzuf&uuml;gen
+add to addressbook	email	de	Zum Addressbuch hinzuf&uuml;gen
+address book	addressbook	de	Addressbuch
+address book	common	de	Addressbuch
+addressbook	common	de	Addressbuch
+admin	common	de	Admin
+administration	common	de	Administration
+all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Account Informationen sind dann verloren!
+anonymous user	admin	de	Anonymer User
+application name	admin	de	Name der Anwendung
+application title	admin	de	Titel der Anwendung
+applications	admin	de	Anwendungen
+april	common	de	April
+are you sure you want to delete this account ?	admin	de	Sind Sie sicher, da&szlig; Sie diesen Account l&ouml;schen wollen ?
+are you sure you want to delete this application ?	admin	de	Sind Sie sicher, da&szlig; Sie diese Anwendung l&ouml;schen wollen ?
+are you sure you want to delete this entry	todo	de	Sind Sie sicher, da&szlig; Sie diesen Eintrag l&ouml;schen wollen?
+are you sure you want to delete this group ?	admin	de	Sind Sie sicher, da&szlig; Sie diese Gruppe l&ouml;schen wollen ?
+are you sure you want to delete this news site ?	admin	de	Sind Sie sicher, diese News Site l&ouml;schen zu wollen ?
+are you sure you want to kill this session ?	admin	de	Sind Sie sicher, da&szlig; Sie diese Session killen wollen ?
+are you sure\nyou want to\ndelete this entry ?	calendar	de	Sind Sie sicher,\nda&szlig; Sie diesen\nEintrag l&ouml;schen wollen ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	de	Sind Sie sicher, da&szlig; Sie diesen Eintrag l&ouml;schen wollen ?\n\nDies l&ouml;scht diesen Eintrag f&uuml;r alle Benutzer..
+august	common	de	August
+author	nntp	de	Autor
+available groups	nntp	de	verf&uuml;gbare Gruppen
+bad login or password	login	de	Bad login or password
+base url	admin	de	Basis URL
+birthday	addressbook	de	Geburtstag
+book marks	common	de	Bookmarks
+bookmarks	common	de	Lesezeichen
+brief description	calendar	de	Kurzbeschreibung
+calendar	common	de	Kalender
+calendar - add	calendar	de	Kalender - Add
+calendar - edit	calendar	de	Kalender - Edit
+cancel	filemanager	de	Abbrechen
+cancel	common	de	Abbrechen
+cannot display the requested article from the requested newsgroup	nntp	de	Der gew&uuml;nschte Artikel kann leider nicht angezeigt werden
+cc	email	de	Kopie
+change	common	de	&Auml;ndern
+change your password	preferences	de	Passwort &auml;ndern
+change your profile	preferences	de	Profil &auml;ndern
+change your settings	preferences	de	Einstellungen &auml;ndern
+charset	common	de	iso-8859-1
+chat	common	de	Chat
+city	addressbook	de	Stadt
+clear	common	de	Clear
+clear form	common	de	Eingaben l&ouml;schen
+clear form	todo	de	Eingabe l&ouml;schen
+clipboard_contents	filemanager	de	Clipboard Inhalt
+company name	addressbook	de	Firma
+completed	todo	de	fertig
+compose	email	de	Verfassen
+copy	filemanager	de	Kopieren
+copy	common	de	Kopieren
+copy_as	filemanager	de	Kopieren nach
+create	filemanager	de	Erstellen
+create	common	de	Erstellen
+create group	admin	de	Erstelle Gruppe
+created by	common	de	Erstellt von
+created by	todo	de	Erstellt von
+current users	common	de	Gegenw&auml;rtige Userzahl
+current_file	filemanager	de	Aktuelle Datei
+daily	calendar	de	T&auml;glich
+date	nntp	de	Datum
+date	email	de	Datum
+date	common	de	Datum
+date due	todo	de	f&auml;llig am
+date format	preferences	de	Datumsformat
+days repeated	calendar	de	wiederholte Tage
+december	common	de	Dezember
+default application	preferences	de	Standard-Anwendung
+default sorting order	preferences	de	Standard-Sortierung
+delete	filemanager	de	L&ouml;schen
+delete	email	de	L&ouml;schen
+delete	common	de	L&ouml;schen
+description	calendar	de	Beschreibung
+disabled	admin	de	Deaktiviert
+display	admin	de	Bezeichnung
+done	common	de	Done
+download	filemanager	de	Download
+do_delete	filemanager	de	L&ouml;sche
+duration	calendar	de	Dauer
+e-mail	addressbook	de	E-Mail
+e-mail	common	de	E-Mail
+edit	filemanager	de	Editieren
+edit	common	de	Editieren
+edit application	admin	de	Anwendung editieren
+edit group	admin	de	Gruppe editieren
+email	common	de	E-Mail
+email signature	preferences	de	E-Mail Signatur
+enabled	admin	de	Verf&uuml;gbar
+enter your new password	preferences	de	Neues Passwort eingeben
+entry has been deleted sucessfully	common	de	Eintrag erfolgreich gel&ouml;scht
+entry updated sucessfully	common	de	Eintrag erfolgreich aktualisiert
+error	common	de	Fehler
+error creating x x directory	common	de	 
+error deleting x x directory	common	de	%1%2"
+error renaming x x directory	common	de	%1%2"
+err_saving_file	filemanager	de	Fehler beim Schreiben der Datei
+exit	filemanager	de	Exit
+exit	common	de	Exit
+fax	addressbook	de	Fax
+february	common	de	Februar
+file manager	common	de	Filemanager
+files	filemanager	de	Dateien
+files	email	de	Dateien
+file_upload	filemanager	de	Datei Upload
+filter	common	de	Filter
+first name	addressbook	de	Vorname
+first name	common	de	Vorname
+first page	common	de	erste Seite
+folder	email	de	Ordner
+forum	common	de	Forum
+forward	email	de	Weiterleiten
+fr	calendar	de	Fr
+frequency	calendar	de	H&auml;ufigkeit
+fri	calendar	de	Fr
+friday	common	de	Freitag
+from	email	de	Von
+ftp	common	de	FTP
+full description	calendar	de	vollst&auml;ndige Beschreibung
+generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
+global public	common	de	Global Public
+go!	calendar	de	Go!
+group access	common	de	Gruppenzugriff
+group has been added	common	de	Gruppe hinzugef&uuml;gt
+group has been deleted	common	de	Gruppe gel&ouml;scht
+group has been updated	common	de	Gruppe aktualisiert
+group name	admin	de	Gruppenname
+group public	common	de	Group Public
+groups	common	de	Gruppen
+groupsfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, m&uuml;ssen Sie die zugriffsrechte zum files/groups Verzeichnis korrekt setzen.<BR> Bei *nix Systemen geben Sie dazu ein: chmod 707
+group_files	filemanager	de	Gruppen Dateien
+headline sites	admin	de	Sites f&uuml;r Schlagzeilen
+headlines	common	de	Headlines
+help	common	de	Hilfe
+high	common	de	Hoch
+home	common	de	Home
+home phone	addressbook	de	Tel privat
+idle	admin	de	idle
+image	email	de	Grafik
+installed applications	admin	de	Installierte Anwendungen
+inventory	common	de	Inventar
+ip	admin	de	IP
+it has been more then x days since you changed your password	common	de	Sie haben Ihr Passwort seit mehr als %1 Tagen nicht ge&auml;ndert
+january	common	de	Januar
+july	common	de	Juli
+june	common	de	Juni
+kill	admin	de	Kill
+language	preferences	de	Sprache
+last name	addressbook	de	Name
+last name	common	de	Name
+last page	common	de	letzte Seite
+last time read	admin	de	Zuletzt gelesen
+last updated	todo	de	Zuletzt ge&auml;ndert
+last x logins	admin	de	Letze %1 Logins
+list of current users	admin	de	Liste der gegenw&auml;rtigen User
+listings displayed	admin	de	Zeilen maximal
+login	login	de	Login
+login	common	de	Login
+login time	admin	de	Login Zeit
+loginid	admin	de	LoginID
+logout	common	de	Logout
+low	common	de	Niedrig
+manager	admin	de	Manager
+march	common	de	M&auml;rz
+max matchs per page	preferences	de	Maximale Treffer pro Seite
+may	common	de	Mai
+medium	common	de	Mittel
+message	email	de	Nachricht
+message x	nntp	de	Nachricht %1
+messages	email	de	Nachrichten
+minutes	calendar	de	Minuten
+minutes between reloads	admin	de	Minuten zwischen Reloads
+mo	calendar	de	Mo
+mobile	addressbook	de	Mobil
+mon	calendar	de	Mo
+monday	common	de	Montag
+monitor	nntp	de	&Uuml;berwachen
+monitor	email	de	Monitor
+monitor newsgroups	preferences	de	Newsgroups &uuml;berwachen
+month	calendar	de	Monat
+monthly (by date)	calendar	de	Monatlich (nach Datum)
+monthly (by day)	calendar	de	Monatlich (nach Wochentag)
+move selected messages into	email	de	Verschiebe ausgew&auml;hlte Nachrichten in
+name	common	de	Name
+network news	admin	de	Network News
+new entry	calendar	de	Neuer Eintrag
+new entry added sucessfully	common	de	Neuer Eintrag erfolgreich hinzugef&uuml;gt
+new group name	admin	de	Neuer Gruppenname
+new message	email	de	Neue Nachricht
+new password [ leave blank for no change ]	admin	de	Neues Passwort [ Lassen Sie das Feld leer, wenn es nicht ge&auml;ndert werden soll ]
+news file	admin	de	News File
+news headlines	common	de	News headlines
+news reader	common	de	News Reader
+news type	admin	de	Nachrichtentyp
+newsgroups	nntp	de	Newsgroups
+new_file	filemanager	de	Neue Datei
+next	nntp	de	N&auml;chste
+next	email	de	N&auml;chste
+next page	common	de	n&auml;chste Seite
+nntp	common	de	NNTP
+no	filemanager	de	Nein
+no	common	de	Nein
+no matches found.	calendar	de	Keine Treffer gefunden.
+no subject	email	de	Kein Betreff
+none	calendar	de	Keiner
+normal	common	de	Normal
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Anmerkung: Ihr EMail Passwort wird durch diese Funktion *NICHT* angepasst. Dies m&uuml;ssen Sie manuell tun.
+notes	addressbook	de	Notizen
+november	common	de	November
+no_file_name	filemanager	de	Es wurde kein Dateiname angegeben
+october	common	de	Oktober
+ok	common	de	OK
+on *nix systems please type: x	common	de	Auf *nix Systemen geben Sie bitte ein: %1
+only yours	common	de	nur eigene
+other number	addressbook	de	andere Nr.
+pager	addressbook	de	Pager
+participants	calendar	de	Teilnehmer
+password	login	de	Password
+password	common	de	Passwort
+password has been updated	common	de	Passwort wurde aktualisiert
+percent of users that logged out	admin	de	Prozent der User, die sich korrekt ausgelogged haben
+permissions	admin	de	Zugriffsrechte
+permissions this group has	admin	de	Zugriffsrechte f&uuml;r diese Gruppe
+permissions to the files/users directory	common	de	Zugriffsrechte f&uuml;r die Dateien/Benutzer-Verzeichnisse
+please select a message first	email	de	Bitte w&auml;hlen Sie zuerst eine Nachricht
+please x by hand	common	de	Bitte manuell %1
+please, select a new theme	preferences	de	W&auml;hlen Sie bitte ein neues Schema
+powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+preferences	common	de	Einstellungen
+previous	email	de	Vorige
+previous page	common	de	vorige Seite
+print	common	de	Drucken
+printer friendly	calendar	de	Drucker-freundlich
+priority	common	de	Priorit&auml;t
+private	common	de	Privat
+private_files	filemanager	de	private Dateien
+re-enter password	admin	de	Passwort wiederholen
+re-enter your password	preferences	de	Neues Passwort wiederholen
+remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
+rename	filemanager	de	Umbenennen
+rename	common	de	Umbenennen
+rename_to	filemanager	de	Umbenennen in
+repeat day	calendar	de	Wiederholungstag
+repeat end date	calendar	de	Enddatum
+repeat type	calendar	de	Wiederholungstyp
+repetition	calendar	de	Repetition
+reply	email	de	Antworten
+reply all	email	de	Allen antworten
+sa	calendar	de	Sa
+sat	calendar	de	Sa
+saturday	common	de	Samstag
+save	filemanager	de	Speichern
+save	common	de	Speichern
+search	common	de	Suchen
+search results	calendar	de	Suchergebnisse
+section	email	de	Sektion
+select different theme	preferences	de	anderes Schema w&auml;hlen
+select headline news sites	preferences	de	Sites f&uuml;r Schlagzeilen ausw&auml;hlen
+select permissions this group will have	admin	de	W&auml;hlen Sie die Zugriffsrechte f&uuml;r diese Gruppe.
+select users for inclusion	admin	de	W&auml;hlen Sie Benutzer f&uuml;r diese Gruppe aus
+send	email	de	Senden
+september	common	de	September
+session has been killed	common	de	Session wurde gel&ouml;scht
+show all	common	de	alle anzeigen
+show all groups	nntp	de	alle Gruppen anzeigen
+show birthday reminders on main screen	preferences	de	Nach dem Login Geburtstags-Mahner anzeigen
+show current users on navigation bar	preferences	de	Anzahl gegenw&auml;rtiger User in der Navigationsleiste anzeigen
+show groups containing	nntp	de	Zeige Gruppen folgenden Inhalts
+show high priority events on main screen	preferences	de	Nach dem Login Ereignisse mit hoher Priorit&auml;t anzeigen
+show new messages on main screen	preferences	de	Nach dem Login neue Nachrichten anzeigen
+show text on navigation icons	preferences	de	Text zu Icons in der Navigations-Leiste anzeigen
+showing x	common	de	%1 Eintr&auml;ge
+showing x - x of x	common	de	%1 Eintr&auml;ge - %2 von %3
+site	admin	de	Site
+size	email	de	Gr&ouml;&szlig;e
+sorry, that group name has already been taking.	admin	de	Dieser Gruppenname ist bereits vergeben.
+sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
+sorry, there was a problem processing your request.	common	de	Sorry, es gab ein Problem bei der Bearbeitung Ihrer Anfrage.
+sorry, your login has expired	login	de	Sorry, Ihr Login ist abgelaufen
+specify_file_name	filemanager	de	Sie m&uuml;ssen einen Namen f&uuml;r die zu erstellende Datei angeben
+state	addressbook	de	Land
+status	todo	de	Status
+street	addressbook	de	Stra&szlig;e
+su	calendar	de	Su
+subject	nntp	de	Betreff
+subject	email	de	Betreff
+submit	common	de	Absenden
+submit changes	admin	de	&Auml;nderungen Speichern
+sun	calendar	de	So
+sunday	common	de	Sonntag
+switch current folder to	email	de	Wechseln zum Ordner
+th	calendar	de	Do
+that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
+that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
+the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Es gibt folgende &Uuml;berschneidungen mit dem angegebenen Termin:<ul>%1</ul>
+the login and password can not be the same	admin	de	Login und Passwort d&uuml;rfen nicht identisch sein
+the two passwords are not the same	preferences	de	Die Eingaben stimmen nicht &uuml;berein
+the two passwords are not the same	admin	de	Die Passworte stimmen nicht &uuml;berein
+they must be removed before you can continue	admin	de	Sie m&uuml;ssen zuvor aus dieser entfernt werden
+this folder is empty	email	de	Dieser Ordner ist leer
+this month	calendar	de	Dieser Monat
+this server is located in the x timezone	preferences	de	"
+this week	calendar	de	Diese Woche
+threads	nntp	de	Threads
+thu	calendar	de	Do
+thursday	common	de	Donnerstag
+time	common	de	Zeit
+time format	preferences	de	Zeitformat
+time zone offset	preferences	de	Zeitzonen Differenz
+title	admin	de	Titel
+to	email	de	An
+to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler f&uuml;r die Zukunft zu beheben, achten Sie auf die korrekte Einstellung von
+today	calendar	de	Heute
+today is x's birthday!	common	de	Heute ist der Geburtstag von %1!
+todo	todo	de	Beschreibung
+todo list	common	de	Aufgabenliste
+todo list	todo	de	Aufgabenliste
+todo list - add	todo	de	Aufgabenliste - hinzuf&uuml;gen
+todo list - edit	todo	de	Aufgabenliste - editieren
+tommorow is x's birthday.	common	de	Morgen ist der Geburtstag von %1.
+total	common	de	Total
+total records	admin	de	Anzahl Datens&auml;tze insgesamt
+trouble ticket system	common	de	Trouble Ticket System
+tu	calendar	de	Di
+tue	calendar	de	Di
+tuesday	common	de	Dienstag
+undisclosed recipients	email	de	Verborgene Empf&auml;nger
+undisclosed sender	email	de	Verborgener Absender
+update	nntp	de	Aktualisieren
+updated	common	de	Updated
+upload	filemanager	de	Upload
+urgency	todo	de	Dringlichkeit
+use cookies	login	de	Cookies benutzen
+use end date	calendar	de	Enddatum benutzen
+user accounts	admin	de	Benutzerkonten
+user groups	admin	de	Benutzergruppen
+username	login	de	Username
+users	common	de	Benutzer
+usersfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, m&uuml;ssen Sie die zugriffsrechte zum files/users Verzeichnis korrekt setzen.<BR> Bei *nix Systemen geben Sie dazu ein: chmod 707
+view	common	de	Anzeigen
+view access log	admin	de	Access Log anzeigen
+view sessions	admin	de	Sitzungen anzeigen
+view this entry	calendar	de	Diesen Eintrag anzeigen
+we	calendar	de	Mi
+wed	calendar	de	Mi
+wednesday	common	de	Mittwoch
+week	calendar	de	Woche
+weekday starts on	preferences	de	Arbeitswoche beginnt am
+weekly	calendar	de	W&ouml;chentlich
+which groups	common	de	Welche Gruppen
+which groups	todo	de	Welche Gruppen
+work day ends on	preferences	de	Arbeitstag endet um
+work day starts on	preferences	de	Arbeitstag beginnt um
+work phone	addressbook	de	Tel dienstl.
+x matches found	calendar	de	%1 Treffer gefunden
+x messages have been deleted	email	de	%1 Nachrichten wurden gel&ouml;scht
+year	calendar	de	Jahr
+yearly	calendar	de	J&auml;hrlich
+yes	filemanager	de	Ja
+yes	common	de	Ja
+you are required to change your password durring your first login	common	de	Sie m&uuml;ssen Ihr Passwort bei Ihrem ersten Login &auml;ndern
+you have 1 high priority event on your calendar today.	common	de	Sie haben einen Eintrag mit hoher Priorit&auml;l f&uuml;r heute in Ihrem Kalender.
+you have 1 new message!	common	de	Sie haben eine neue Nachricht!
+you have been successfully logged out	login	de	Sie wurden erfolgreich ausgelogged
+you have entered an invailed date	todo	de	Sie haben ein ung&uuml;ltiges Datum angegeben
+you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
+you have not entered a\nvalid time of day.	calendar	de	Sie haben keine a\ng&uuml;ltige Tageszeit eingegeben.
+you have x high priority events on your calendar today.	common	de	Sie haben %1 Eintr&auml;ge mit hoher Priorit&auml;l f&uuml;r heute in Ihrem Kalender.
+you have x new messages!	common	de	Sie haben %1 neue Nachrichten!
+you must add at least 1 permission to this account	admin	de	Sie m&uuml;ssen diesem Konto mindestens eine Berechtigung zuteilen
+you must enter a base url	admin	de	Sie m&uuml;ssen eine Basis URL angeben
+you must enter a display	admin	de	Sie m&uuml;ssen einen Namen f&uuml;r die Site eingeben
+you must enter a news url	admin	de	Sie m&uuml;ssen eine News URL angeben
+you must enter a password	preferences	de	Sie m&uuml;ssen ein Passwort angeben
+you must enter a password	admin	de	Sie m&uuml;ssen ein Passwort eingeben
+you must enter an application name and title.	admin	de	Sie m&uuml;ssen der Anwendung einen Namen und einen Titel geben.
+you must enter one or more search keywords	calendar	de	Sie m&uuml;ssen einen oder mehrere Suchbegriffe angeben
+you must enter the number of listings display	admin	de	Sie m&uuml;ssen die Anzahl der anzuzeigenden Zeilen angeben
+you must enter the number of minutes between reload	admin	de	Sie m&uuml;ssen eine Anzahl von Minuten zwischen Reloads angeben
+you must select a file type	admin	de	Sie m&uuml;ssen einen Filetyp ausw&auml;hlen
+your current theme is: x	preferences	de	</b>
+your message has been sent	common	de	Ihre Nachricht wurde versandt
+your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
+your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
+your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
+your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	de	Der angegebene Zeitraum von <B> %1 - %2 </B> steht in Konflikt mit bestehenden Terminen:
+zip code	addressbook	de	PLZ

@@ -434,3 +434,4 @@ your session could not be verified.	login	en	Your session could not be verified.
 your settings have been updated	common	en	Your settings have been Updated
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
 zip code	addressbook	en	ZIP Code
+phpgroupeare login    login    en    phpGroupWare login
