@@ -23,45 +23,43 @@
 
   /* $Id$ */
 
-
 	/*
 	THIS NEEDS WORK!!!!!!!!! - Milosch
-	But it is a lot closer now...
 	*/
-	$phpgw_info['server']['global_denied_users'] = array(
-		'root'     => True, 'bin'      => True, 'daemon'   => True,
-		'adm'      => True, 'lp'       => True, 'sync'     => True,
-		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
-		'mail'     => True, 'news'     => True, 'uucp'     => True,
-		'operator' => True, 'games'    => True, 'gopher'   => True,
-		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
-		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
-		'ftp'      => True, 'gdm'      => True, 'named'    => True,
-		'alias'    => True, 'web'      => True, 'sweep'    => True,
-		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
-		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
-		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
-		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
-		'pvm'      => True, 'squid'    => True, 'ident'    => True,
-		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True,
+	$GLOBALS['phpgw_info']['server']['global_denied_users'] = array(
+		'root'     => True, 'bin'      => True, 'daemon' => True,
+		'adm'      => True, 'lp'       => True, 'sync'   => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'   => True,
+		'mail'     => True, 'news'     => True, 'uucp'   => True,
+		'operator' => True, 'games'    => True, 'gopher' => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'  => True,
+		'mysql'    => True, 'postgres' => True, 'oracle' => True,
+		'ftp'      => True, 'gdm'      => True, 'named'  => True,
+		'alias'    => True, 'web'      => True, 'sweep'  => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill' => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq' => True,
+		'qmailr'   => True, 'qmails'   => True, 'rpc'    => True,
+		'rpcuser'  => True, 'amanda'   => True, 'apache' => True,
+		'pvm'      => True, 'squid'    => True, 'ident'  => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'  => True,
 		'backup'   => True
 	);
 
-	$phpgw_info['server']['global_denied_groups'] = array(
-		'root'      => True, 'bin'       => True, 'daemon'    => True,
-		'sys'       => True, 'adm'       => True, 'tty'       => True,
-		'disk'      => True, 'lp'        => True, 'mem'       => True,
-		'kmem'      => True, 'wheel'     => True, 'mail'      => True,
-		'uucp'      => True, 'man'       => True, 'games'     => True,
-		'dip'       => True, 'ftp'       => True, 'nobody'    => True,
-		'floppy'    => True, 'xfs'       => True, 'console'   => True,
-		'utmp'      => True, 'pppusers'  => True, 'popusers'  => True,
-		'slipusers' => True, 'slocate'   => True, 'mysql'     => True,
-		'dnstools'  => True, 'web'       => True, 'named'     => True,
-		'dba'       => True, 'oinstall'  => True, 'oracle'    => True,
-		'gdm'       => True, 'sweep'     => True, 'cvs'       => True,
-		'postgres'  => True, 'qmail'     => True, 'nofiles'   => True,
-		'ldap'      => True, 'backup'  	 => True
+	$GLOBALS['phpgw_info']['server']['global_denied_groups'] = array(
+		'root'      => True, 'bin'      => True, 'daemon'   => True,
+		'sys'       => True, 'adm'      => True, 'tty'      => True,
+		'disk'      => True, 'lp'       => True, 'mem'      => True,
+		'kmem'      => True, 'wheel'    => True, 'mail'     => True,
+		'uucp'      => True, 'man'      => True, 'games'    => True,
+		'dip'       => True, 'ftp'      => True, 'nobody'   => True,
+		'floppy'    => True, 'xfs'      => True, 'console'  => True,
+		'utmp'      => True, 'pppusers' => True, 'popusers' => True,
+		'slipusers' => True, 'slocate'  => True, 'mysql'    => True,
+		'dnstools'  => True, 'web'      => True, 'named'    => True,
+		'dba'       => True, 'oinstall' => True, 'oracle'   => True,
+		'gdm'       => True, 'sweep'    => True, 'cvs'      => True,
+		'postgres'  => True, 'qmail'    => True, 'nofiles'  => True,
+		'ldap'      => True, 'backup'   => True
 	);
 
 	class accounts_
@@ -84,8 +82,7 @@
 
 		function accounts_()
 		{
-			global $phpgw;
-			$this->db       = $phpgw->db;
+			$this->db       = $GLOBALS['phpgw']->db;
 			$this->contacts = CreateObject('phpgwapi.contacts',0);
 		}
 
@@ -105,12 +102,12 @@
 
 			/* Now dump it into the array */
 			$this->data['userid']            = $allValues[0]['lid'];
-			$this->data['account_id']	     = $allValues[0]['id'];
-			$this->data['account_lid'] 	     = $allValues[0]['lid'];
+			$this->data['account_id']        = $allValues[0]['id'];
+			$this->data['account_lid']       = $allValues[0]['lid'];
 			$this->data['account_type']      = $allValues[0]['tid'];
-			$this->data['firstname']   	     = $allValues[0]['n_given'];
-			$this->data['lastname']    	     = $allValues[0]['n_family'];
-			$this->data['fullname']    	     = $allValues[0]['fn'];
+			$this->data['firstname']         = $allValues[0]['n_given'];
+			$this->data['lastname']          = $allValues[0]['n_family'];
+			$this->data['fullname']          = $allValues[0]['fn'];
 			$this->data['lastlogin']         = $allValues[0]['account_lastlogin'];
 			$this->data['lastloginfrom']     = $allValues[0]['account_lastloginfrom'];
 			$this->data['lastpasswd_change'] = $allValues[0]['account_lastpwd_change'];
@@ -147,7 +144,6 @@
 
 		function delete($accountid = '')
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 
 			if($this->debug) { echo '<br>Deleting entry:<br>' . $account_id; }
@@ -157,7 +153,6 @@
 
 		function get_list($_type='both')
 		{
-			global $phpgw;
 			$this->makeobj();
 
 			switch($_type)
@@ -209,7 +204,6 @@
 
 		function id2name($account_id)
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 
 			$allValues = $this->contacts->read_single_entry($account_id);
@@ -227,7 +221,6 @@
 
 		function get_type($accountid = '')
 		{
-			global $phpgw, $phpgw_info;
 			$this->makeobj();
 			$account_id = get_account_id($accountid);
 
@@ -267,14 +260,13 @@
 
 		function create($account_info)
 		{
-			global $phpgw_info, $phpgw;
 			$this->makeobj();
 
 			if (!$$account_info['account_id'])
 			{
 				$account_info['account_id'] = $this->get_nextid();
 			}
-			$owner = $phpgw_info['user']['account_id'];
+			$owner = $GLOBALS['phpgw_info']['user']['account_id'];
 			$entry['id']       = $account_info['account_id'];
 			$entry['lid']      = $account_info['account_lid'];
 			$entry['n_given']  = $account_info['account_firstname'];
@@ -291,12 +283,30 @@
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
 		{
-			global $phpgw, $phpgw_info;
-
-			if (! $expiredate)
+			if ($expiredate)
 			{
-				// expire in 30 days by default
-				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+				$expires = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+			}
+			else
+			{
+				if($GLOBALS['phpgw_info']['server']['auto_create_expire'])
+				{
+					if($GLOBALS['phpgw_info']['server']['auto_create_expire'] == 'never')
+					{
+						$expires = -1;
+					}
+					else
+					{
+						$expiredate = time() + $GLOBALS['phpgw_info']['server']['auto_create_expire'];
+						$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+					}
+				}
+				else
+				{
+					/* expire in 30 days by default */
+					$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
+					$expires   = mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate));
+				}
 			}
 
 			$acct_info = array(
@@ -306,7 +316,7 @@
 				'account_firstname' => '',
 				'account_lastname'  => '',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
+				'account_expires'   => $expires
 			);
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
