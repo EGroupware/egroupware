@@ -241,7 +241,6 @@ modifications have been completed!	setup	zt	修改已經完成！
 modify	setup	zt	修改
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	zt	修改一個已經存在的LDAP帳號讓eGroupWare使用(全新安裝且使用LDAP帳號)
 multi-language support setup	setup	zt	多國語言設定
-mysqlinstr	setup	zt	在 MySQL 中建立資料庫的方法：<br>登入 MySQL 系統 -<br><i>[user@server user]# mysql -u root -p</i><br>建立空的資料庫並授權使用者使用 -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 name of database	setup	zt	資料庫名稱
 name of db user egroupware uses to connect	setup	zt	eGroupWare用來與資料庫連結的帳號
 never	setup	zt	從未

@@ -125,7 +125,6 @@ mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcry
 Minimum account id (e.g. 500 or 100, etc.)	setup	pt	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	pt	Modificar uma base de dados LDAP existente para usar com eGroupWare (para uma nova instalação usando contas LDAP)
 multi-language support setup	setup	pt	Configuração de suporte a idiomas
-mysqlinstr	setup	pt	Instruções para criar a base de dados no MySQL:<br>Conecte no mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Crie a base de dados vazia e defina as permissões de acesso -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 never	setup	pt	nunca
 no algorithms available	setup	pt	Nenhum algoritmo disponível
 no modes available	setup	pt	nenhum modo disponível

@@ -117,7 +117,6 @@ mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
 minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID &nbsp; (例： 500 や 100 など)
 multi-language support setup	setup	ja	言語環境設定
-mysqlinstr	setup	ja	 MySQLでデータベースを作成するには:<br>mysql にログイン -<br><i>[user@server user]# mysql -u root -p</i><br>空のデータベースを作成し、アカウントに権限を付与する -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 never	setup	ja	無期限
 no	setup	ja	いいえ
 not complete	setup	ja	完了していません。

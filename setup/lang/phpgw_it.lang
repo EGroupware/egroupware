@@ -160,7 +160,6 @@ minimum account id (e.g. 500 or 100, etc.)	setup	it	Minimo ID account (es. 500 o
 modifications have been completed!	setup	it	Le modifiche sono state completate
 modify	setup	it	Modifica
 multi-language support setup	setup	it	Configurazione del supporto multi-lingua
-mysqlinstr	setup	it	Istruzioni per creare il database usando MySQL:<br>Entra in mysql -<br><i>[utente@server utente]# mysql -u root -p</i><br>Crea il database vuoto e assegna i permessi all'utente -<br><i>mysql> create database egroupware;</i><br><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 name of database	setup	it	Nome del database
 never	setup	it	mai
 new	setup	it	Nuovo
