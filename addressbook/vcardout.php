@@ -84,7 +84,7 @@
 	$astate       = $fields["adr_one_region"];
 	$azip         = $fields["adr_one_postalcode"];
 	$acountry     = $fields["adr_one_countryname"];
-	$atype        = $fields["adr_one_type"]; if (!empty($atype)) { $atype = ';'.$atype; }
+	$atype        = strtoupper($fields["adr_one_type"]); if (!empty($atype)) { $atype = ';'.$atype; }
 	$label        = $fields["label"];
 
 	$bstreet      = $fields["adr_two_street"];
@@ -92,7 +92,7 @@
 	$bstate       = $fields["adr_two_region"];
 	$bzip         = $fields["adr_two_postalcode"];
 	$bcountry     = $fields["adr_two_countryname"];
-	$btype        = $fields["adr_two_type"]; if (!empty($btype)) { $btype = ';'.$btype; }
+	$btype        = strtoupper($fields["adr_two_type"]); if (!empty($btype)) { $btype = ';'.$btype; }
 
 	$company      = $fields["org_name"];
 	$dept         = $fields["org_unit"];
