@@ -32,7 +32,7 @@ class html
 		}
 		while (list($name,$value) = each($vars))
 		{
-			if ($value != '')               // dont need to send all the empty vars
+			if ($value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 			{
 				$html .= "<input type=hidden name=\"$name\" value=\"$value\">\n";
 			}
@@ -57,7 +57,7 @@ class html
 			$v = array( );
 			while(list($name,$value) = each($vars))
 			{
-				if ($value != '')            // dont need to send all the empty vars
+				if ($value && !($name == 'filter' && $value == 'none'))	// dont need to send all the empty vars
 				{
 					$v[] = "$name=$value";
 				}
