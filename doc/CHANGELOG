@@ -1,4 +1,5 @@
 [0.9.5] - Fixed NNTP preferences.
+		- Fixed NNTP read_message - missed converting call for VFS.
 
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
