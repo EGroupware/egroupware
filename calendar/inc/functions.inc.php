@@ -48,7 +48,7 @@
        $link = "edit_entry.php";
 
     echo "<TABLE BORDER=0 bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
-    $sun = get_sunday_before($thisyear, $thismonth, 1);
+    $sun = get_sunday_before($thisyear, $thismonth, 1) + 7200;
 
     $monthstart = mktime(2,0,0,$thismonth,1,$thisyear);
     $monthend = mktime(2,0,0,$thismonth + 1,0,$thisyear);
@@ -75,13 +75,12 @@
        . "<td>" . lang("Sa") . "</td>"
        . "</tr>";
 
-    for ($i = $sun; date("Ymd",$i) <= date ("Ymd",$monthend);
-	$i += (24 * 3600 * 7) ) {
+    for ($i = $sun; date("Ymd",$i) <= date("Ymd",$monthend); $i += (24 * 3600 * 7) ) {
 	echo "<TR>";
 
 	for ($j = 0; $j < 7; $j++) {
 	    $date = $i + ($j * 24 * 3600);
-	    if (date("Ymd",$date) >= date ("Ymd",$monthstart) && date("Ymd",$date) <= date ("Ymd",$monthend)) {
+	    if (date("Ymd",$date) >= date("Ymd",$monthstart) && date("Ymd",$date) <= date("Ymd",$monthend) ) {
 	       echo "<TD align=right>";
 	       if (! $friendly)
    		     echo "<a href=\"".$phpgw->link($link,"year=".date("Y",$date)."&month=".date("m",$date)
@@ -269,9 +268,7 @@ function month_name ( $m ) {
       if (date("d", $date) == date("d", $start)) {
          $ret[$n++] = $repeated_events[$i];
       }
-    }
-
-    else if ($repeated_events[$i][cal_type] == 'yearly') {
+    } else if ($repeated_events[$i][cal_type] == 'yearly') {
       $yrS = date("Y", $start);
       $yr  = date("Y", $date);
 
@@ -421,7 +418,6 @@ function month_name ( $m ) {
     }
     return $repeated_events;
   }
-
 
   function get_sunday_before($year,$month,$day)
   {
