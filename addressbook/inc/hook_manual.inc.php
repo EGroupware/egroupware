@@ -16,6 +16,10 @@
 		global $phpgw, $phpgw_info, $treemenu;
 	}
 
-	$treemenu .= '..<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">'.ucwords($appname).'|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php')."\n";
+	$font = $phpgw_info['theme']['font'];
+	$navbar = $phpgw_info['user']['preferences']['common']['navbar_format'];
+
+	$treemenu[] = '..'.($navbar != 'text'?'<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">':'').($navbar != 'icons'?'<font face="'.$font.'">'.ucwords($appname).'</font>':'').'|'.$phpgw->link('/'.$appname.'/help/index.php');
+	$treemenu[] = '...<font face="'.$font.'">Overview</font>|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php');
 // Modify the $treemenu variables from here down.....
 ?>

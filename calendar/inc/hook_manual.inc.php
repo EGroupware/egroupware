@@ -16,9 +16,13 @@
 		global $phpgw, $phpgw_info, $treemenu;
 	}
 
-	$treemenu .= '..<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">'.ucwords($appname).'|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php')."\n";
+	$font = $phpgw_info['theme']['font'];
+	$navbar = $phpgw_info['user']['preferences']['common']['navbar_format'];
+
+	$treemenu[] = '..'.($navbar != 'text'?'<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">':'').($navbar != 'icons'?'<font face="'.$font.'">'.ucwords($appname).'</font>':'').'|'.$phpgw->link('/'.$appname.'/help/index.php');
+	$treemenu[] = '...<font face="'.$font.'">Overview</font>|'.$phpgw->link('/'.$appname.'/help/'.$appname.'.php');
 // Modify the $treemenu variables from here down.....
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Viewing</font>|'.$phpgw->link('/'.$appname.'/help/view.php')."\n";
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Adding</font>|'.$phpgw->link('/'.$appname.'/help/add.php')."\n";
-	$treemenu .= '...<font face="'.$phpgw_info['theme']['font'].'">Edit/Deleting</font>|'.$phpgw->link('/'.$appname.'/help/edit_delete.php')."\n";
+	$treemenu[] = '...<font face="'.$font.'">Viewing</font>|'.$phpgw->link('/'.$appname.'/help/view.php');
+	$treemenu[] = '...<font face="'.$font.'">Adding</font>|'.$phpgw->link('/'.$appname.'/help/add.php');
+	$treemenu[] = '...<font face="'.$font.'">Edit/Deleting</font>|'.$phpgw->link('/'.$appname.'/help/edit_delete.php');
 ?>
