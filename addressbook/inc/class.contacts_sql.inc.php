@@ -39,7 +39,7 @@
      var $db;
      var $account_id;
      var $stock_contact_fields;         // This is an array of all the fields in the addressbook table
-     var $email_types;
+     var $email_types;                  // VCard email type array
      var $total_records;                // This will contain numrows for data retrieved
 
      function contacts_()
@@ -99,23 +99,23 @@
                                             "D_EMAIL_Home"    => "D.EMAIL.Home",  //yn
                                             );
 
-        $this->email_types = array("INTERNET" => "INTERNET",
+        $this->email_types = array("INTERNET"   => "INTERNET",
                                    "CompuServe" => "CompuServe",
-                                   "AOL" => "AOL",
-                                   "Prodigy" => "Prodigy",
-                                   "eWorld" => "eWorld",
-                                   "AppleLink" => "AppleLink",
-                                   "AppleTalk" => "AppleTalk",
+                                   "AOL"        => "AOL",
+                                   "Prodigy"    => "Prodigy",
+                                   "eWorld"     => "eWorld",
+                                   "AppleLink"  => "AppleLink",
+                                   "AppleTalk"  => "AppleTalk",
                                    "PowerShare" => "PowerShare",
-                                   "IBMMail" => "IBMMail",
-                                   "ATTMail" => "ATTMail",
-                                   "MCIMail" => "MCIMail",
-                                   "X.400" => "X.400",
-                                   "TLX" => "TLX"
+                                   "IBMMail"    => "IBMMail",
+                                   "ATTMail"    => "ATTMail",
+                                   "MCIMail"    => "MCIMail",
+                                   "X.400"      => "X.400",
+                                   "TLX"        => "TLX"
                                    );
      }
 
-     function read_single_entry($id,$fields)
+     function read_single_entry($id,$fields) // send this the id and whatever fields you want to see
      {
         list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
         if (count($ab_fieldnames)) {
@@ -130,10 +130,10 @@
         $this->db->query("select id,lid,tid,owner $t_fields from addressbook WHERE id='$id'");
         $this->db->next_record();
        
-        $return_fields[0]["id"]     = $this->db->f("id");
-	$return_fields[0]["lid"]    = $this->db->f("lid");
-	$return_fields[0]["tid"]    = $this->db->f("tid");
-        $return_fields[0]["owner"]  = $this->db->f("owner");
+        $return_fields[0]["id"]     = $this->db->f("id"); // unique id
+	$return_fields[0]["lid"]    = $this->db->f("lid"); // lid for group/account records
+	$return_fields[0]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
+        $return_fields[0]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
         if (gettype($ab_fieldnames) == "array") {
           while (list($f_name) = each($ab_fieldnames)) {
             $return_fields[0][$f_name] = $this->db->f($f_name);
@@ -152,7 +152,8 @@
         return $return_fields;
      }
 
-     function read($start,$offset,$fields,$query="",$sort="",$order="")
+     function read($start,$offset,$fields,$query="",$sort="",$order="") // send this the range,query,sort,order
+                                                                        // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
 
@@ -189,7 +190,7 @@
                      . "'%$query%' OR ORG_Name like '%$query%') " . $ordermethod . " "
 		     . $this->db->limit($start,$offset),__LINE__,__FILE__);
         }  else  {
-           $this->db3->query("select id,lid,owner $t_fields from addressbook "
+           $this->db3->query("select id,lid,tid,owner $t_fields from addressbook "
                        . $filtermethod,__LINE__,__FILE__);
            $this->total_records = $this->db3->num_rows();
 	
@@ -199,10 +200,10 @@
 
         $i=0;
         while ($this->db->next_record()) {
-           $return_fields[$i]["id"]     = $this->db->f("id");
-	   $return_fields[$i]["lid"]    = $this->db->f("lid");
-	   $return_fields[$i]["tid"]    = $this->db->f("tid");
-           $return_fields[$i]["owner"]  = $this->db->f("owner");
+           $return_fields[$i]["id"]     = $this->db->f("id"); // unique id 
+	   $return_fields[$i]["lid"]    = $this->db->f("lid"); // lid for group/account records
+	   $return_fields[$i]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
+           $return_fields[$i]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
            if (gettype($ab_fieldnames) == "array") {
               while (list($f_name) = each($ab_fieldnames)) {
                  $return_fields[$i][$f_name] = $this->db->f($f_name);
