@@ -340,8 +340,6 @@
              if ($appname == "logout") {
                 $target = ' target="_top"';
              }
-          }elseif ($appname == "about") {
-           $target = ' target="AboutWindow"';
           } else {
          	 $target = "";
           }
@@ -359,24 +357,28 @@
        	$urlbasename = $phpgw_info["server"]["webserver_url"];
 
        	if ($appname == "home") {
-        	$output_text = "<A href=\"" . $phpgw->link($urlbasename."/index.php");
+             $output_text = "<A href=\"" . $phpgw->link($urlbasename."/index.php");
        	} elseif ($appname == "logout") {
-        	$output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
+             $output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
        	} elseif ($appname == "about") {
-     	    $output_text = "<A href=\"" . $phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php");
+       	   if ($phpgw_info["flags"]["currentapp"] != "home" && $phpgw_info["flags"]["currentapp"] != "preferences") {
+       	      $about_app = "app=" . $phpgw_info["flags"]["currentapp"];
+       	   }
+             $output_text = "<A href=\"" . $phpgw->link($urlbasename."/about.php",$about_app);
 // This might be fixable so that the size of the popup window can be limited. I havent been able to get it to work at this point -Seek3r
 //     	    $output_text = "<SCRIPT> function launchabout() {window.open(\"".$phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php")."\", \"phpGroupWare About Window\", \"width=400,height=300,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes\");}</SCRIPT>";
 //     	    $output_text .= '<a href="javascript:launchabout()';
-        } elseif ($appname == "print") {
-          $output_text = "<A href=\"javascript:window.print();\"";
+          } elseif ($appname == "print") {
+             $output_text = "<A href=\"javascript:window.print();\"";
 // Changed by Skeeter 03 Dec 00 2000 GMT
 // This is to allow for the calendar app to have a default page view.
    	    } elseif ($appname == "calendar") {
-	       if(isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"]))
-		      $view = $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"];
-	       else
-		      $view = "index.php";
-   	       $output_text = "<A href=\"" . $phpgw->link($urlbasename."/$appname/".$view);
+	          if (isset($phpgw_info["user"]["preferences"]["common"]["defaultcalendar"])) {
+                $view = $phpgw_info["user"]["preferences"]["common"]["defaultcalendar"];
+	          } else {
+                $view = "index.php";
+             }
+             $output_text = "<A href=\"" . $phpgw->link($urlbasename."/$appname/".$view);
 // end change
    	    } else {
    	       $output_text = "<A href=\"" . $phpgw->link($urlbasename."/$appname/index.php");
@@ -499,10 +501,12 @@
           }
     
           $this->show_icon(&$tpl,$td_width,"preferences","Preferences");
-       	  if (file_exists($phpgw_info["server"]["app_root"]."/about.php")) {
-            $this->show_icon(&$tpl,$td_width,"about","About ".$phpgw_info["flags"]["currentapp"]);
+          if ($phpgw_info["flags"]["currentapp"] == "home" || $phpgw_info["flags"]["currentapp"] == "preferences") {
+             $app = "phpGroupWare";
+          } else {
+             $app = $phpgw_info["flags"]["currentapp"];
           }
-
+          $this->show_icon(&$tpl,$td_width,"about","About $app");
           $this->show_icon(&$tpl,$td_width,"logout","Logout");
    
        } // end else
@@ -624,8 +628,8 @@
  
        // Clean up mcrypt
        if (is_object($this->crypto)) {
-	$this->crypto->cleanup();
-	unset($this->crypto);
+          $this->crypto->cleanup();
+          unset($this->crypto);
        }
     }
 
@@ -709,13 +713,26 @@
     }
   }
 
-  function hook_single($location = "", $appname = ""){
-    global $phpgw, $phpgw_info;
-    if ($appname == ""){$appname = $phpgw_info["flags"]["currentapp"];}
-    /* First include the ordered apps hook file */
-    $f = $phpgw_info["server"]["server_root"] . "/" . $appname . "/inc/hook_".$phpgw_info["flags"]["currentapp"];
-  	if ($location != ""){$f .= "_".$location.".inc.php";}else{$f .= ".inc.php"; }
-	  if (file_exists($f)) {include($f);}
+  function hook_single($location = "", $appname = "")
+  {
+     global $phpgw, $phpgw_info;
+     if (! $appname) {
+        $appname = $phpgw_info["flags"]["currentapp"];
+     }
+     $s = $phpgw->common->filesystem_separator();
+     /* First include the ordered apps hook file */
+     $f = $phpgw_info["server"]["server_root"] . $s . $appname . $s . "inc" . $s . "hook_".$appname;
+     if ($location != "") {
+        $f .= "_".$location.".inc.php";
+     } else {
+        $f .= ".inc.php";
+     }
+     if (file_exists($f)) {
+        include($f);
+        return True;
+     } else {
+        return False;
+     }
   }
 
   function hook_count($location = ""){
@@ -764,77 +781,7 @@
         return $data;
       }
     }
-        
-    // This function will add preferences for the specified app to the phpgw_info[] array
-    // i(knecke) had moved this function phpgw_accounts_* class preferences
-/*
-    function read_preferences($app_name)
-    {
-      global $phpgw, $phpgw_info;
-      $sql = "select preference_name,preference_value, preference_appname from preferences where "
-                . "preference_owner='".$phpgw_info["user"]["account_id"]."' AND preference_appname='$app_name'";
 
-      $phpgw->db->query($sql,__LINE__,__FILE__);
-      while($phpgw->db->next_record()) {
-        $phpgw_info["user"]["preferences"][$phpgw->db->f("preference_appname")][$phpgw->db->f("preference_name")] = $phpgw->db->f("preference_value");
-      }
-    }
-
-    // Add a new preference.
-    // i(knecke) had moved this function phpgw_accounts_* class preferences
-    function preferences_add($account_id,$var,$app_name,$value = "")
-    {
-      if ($value) {
-         global $phpgw;
-         $phpgw->db->query("insert into preferences (preference_owner,preference_name,"
-         				. "preference_value,preference_appname) values ('$account_id','$var','$value','"
-         				. "$app_name')",__LINE__,__FILE__);
-      } else {
-        global $$var, $phpgw;
-        $phpgw->db->query("insert into preferences (preference_owner,preference_name,"
-        				. "preference_value,preference_appname) values ('$account_id','$var','". $$var
-        				. "','$app_name')",__LINE__,__FILE__);
-      }
-      
-    }
-    
-    // i(knecke) had moved this function phpgw_accounts_* class preferences
-    function preferences_delete($method,$account_id,$var = "", $var2 = "")
-    {
-      global $phpgw;
-      
-      switch ($method)
-      {
-         case "all":          $phpgw->db->query("delete from preferences where preference_owner='"
-                                              . "$account_id'",__LINE__,__FILE__); break;
-         // I may take this one out in the future.  If you need it, let me know. (jengo)
-         case "notheme":      $phpgw->db->query("delete from preferences where preference_owner='"
-                                              . "$account_id' and preference_name != 'theme'",__LINE__,__FILE__); break;
-         case "onlyvar":      $phpgw->db->query("delete from preferences where preference_owner='"
-                                              . "$account_id' and preference_name='$var'",__LINE__,__FILE__); break;
-         case "byapp":        $phpgw->db->query("delete from preferences where preference_owner='"
-                                              . "$account_id' and preference_appname='$var'",__LINE__,__FILE__); break;
-         case "byappnotheme": $phpgw->db->query("delete from preferences where preference_owner='"
-                                              . "$account_id' and preference_appname='$var' and preference_name !='theme'",__LINE__,__FILE__); break;
-         case "byappvar":     $phpgw->db->query("delete from preferences where preference_owner='"
-                                               . "$account_id' and preference_appname='".substr($var,0,strpos($var,"|"))."' "
-                                               . "and preference_name='".substr($var,strpos($var,"|")+1)."'",__LINE__,__FILE__); break;
-         case "byappvar_single": $phpgw->db->query("delete from preferences where preference_owner='"
-                                                 . "$account_id' and preference_appname='$var' "
-                                                 . "and preference_name='$var2'",__LINE__,__FILE__); break;
-
-	    default: return;
-      }
-    }
-    
-    // i(knecke) had moved this function phpgw_accounts_* class preferences
-    function preferences_update($account_id,$var,$app_name)
-    {
-      $this->preferences_delete("onlyvar",$account_id,$var);
-      $this->preferences_add($account_id,$var,$app_name);
-    }
-*/
-    
     function show_date($t = "", $format = "")
     {
       global $phpgw_info;
