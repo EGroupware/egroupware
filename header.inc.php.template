@@ -92,6 +92,7 @@
 	/* debugging settings */
 	define('DEBUG_APP',  False);
 	define('DEBUG_API',  False);
+	define('DEBUG_DATATYPES',  True);
 	define('DEBUG_LEVEL',  3);
 
 	/**************************************************************************\
