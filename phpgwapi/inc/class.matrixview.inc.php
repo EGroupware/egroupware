@@ -26,7 +26,6 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	class matrixview
@@ -41,8 +40,8 @@
 		var $items_count = 0;
 	
 		var $arr_second_dim = 0;
-		var $image1pix = 'images/pix.gif';
-	
+		var $image1pix = '';
+
 		var $color_headerfield = '#FFFF33';
 		var $color_emptyfield = '#CCCCCC';
 
@@ -69,7 +68,7 @@
 
 			$this->month = $month_int;
 			$this->year = $year_int;
-			$this->set1PixelGif($GLOBALS['phpgw']->common->get_image_path('todo').'/pix.gif');
+			$this->set1PixelGif($GLOBALS['phpgw']->common->image('todo','pix'));
 		}
 
 		/**
