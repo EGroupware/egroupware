@@ -232,7 +232,7 @@ class ProcessMonitor extends Base {
   function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars='') {
     if($find) {
       $findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (`properties` like $findesc)";
+      $mid=" where (`wf_properties` like $findesc)";
     } else {
       $mid="";
     }
