@@ -143,6 +143,8 @@ last	calendar	en	last
 lastname of person to notify	calendar	en	Lastname of person to notify
 length shown<br>(emtpy for full length)	calendar	en	Length shown<br>(emtpy for full length)
 length<br>(<= 255)	calendar	en	Length<br>(<= 255)
+link	calendar	en	Link
+link to view the event	calendar	en	Link to view the event
 list all categories.	calendar	en	List all categories.
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location

@@ -150,6 +150,8 @@ last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length shown<br>(emtpy for full length)	calendar	de	angezeigte Länge<br>(leer für volle Länge)
 length<br>(<= 255)	calendar	de	Länge<br>(<= 255)
+link	calendar	de	Verweis
+link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 list all categories.	calendar	de	Alle Kategorien auflisten.
 load [iv]cal	calendar	de	[iv]Cal Laden
 location	calendar	de	Ort

@@ -83,7 +83,8 @@
 		'participants'=> lang('Participants'),
 		'owner'       => lang('Owner'),
 		'repetition'  => lang('Repetitiondetails (or empty)'),
-		'action'      => lang('Action that caused the notify: Added, Canceled, Accepted, Rejected, ...')
+		'action'      => lang('Action that caused the notify: Added, Canceled, Accepted, Rejected, ...'),
+		'link'        => lang('Link to view the event'),
 	);
 	create_notify('Notification messages for added events ','notifyAdded',5,50,
 		'This message is sent to every participant of events you own, who has requested notifcations about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.',

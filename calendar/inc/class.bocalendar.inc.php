@@ -2595,6 +2595,15 @@
 			}
 			$details['participants'] = implode("\n",$details['participants']);
 
+			$details['link'] = $GLOBALS['phpgw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uicalendar.view&cal_id='.$event['id'];
+			// if url is only a path, try guessing the rest ;-)
+			if ($GLOBALS['phpgw_info']['server']['webserver_url'][0] == '/')
+			{
+				$details['link'] = ($GLOBALS['phpgw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+					($GLOBALS['phpgw_info']['server']['hostname'] ? $GLOBALS['phpgw_info']['server']['hostname'] : 'localhost').
+					$details['link'];
+			}
+
 			if(!is_object($GLOBALS['phpgw']->send))
 			{
 				$GLOBALS['phpgw']->send = CreateObject('phpgwapi.send');
