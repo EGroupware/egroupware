@@ -35,7 +35,7 @@
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			$this->db      = $GLOBALS['phpgw']->db;
+			$this->db      = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->appname = $appname;
 		}
 
