@@ -348,7 +348,7 @@ class uiviews extends uical
 		for ($t = 0; $t < 24*60; $t += $inc)
 		{
 			$inc = $granularity_m;
-			if (!$t)
+			if (!$t && $this->wd_start)
 			{
 				$inc = $this->wd_start;
 			}
