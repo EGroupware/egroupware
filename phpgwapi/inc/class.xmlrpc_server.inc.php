@@ -80,7 +80,7 @@
 			global $HTTP_RAW_POST_DATA;
 
 			$r = $this->parseRequest();
-			if (!$r)
+			if ($r == False)
 			{
 				header('WWW-Authenticate: Basic realm="eGroupWare xmlrpc"');
 				header('HTTP/1.0 401 Unauthorized');
@@ -91,7 +91,7 @@
 			{
 				$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
-				print $payload;
+				echo $GLOBALS['phpgw']->translation->convert($payload,$GLOBALS['phpgw']->translation->charset(),'utf-8');
 			}
 
 			if ($this->log)
@@ -245,17 +245,19 @@
 		function parseRequest($data='')
 		{
 			global $HTTP_RAW_POST_DATA;
-	
+
+			$r = False;
+
 			if ($data == '')
 			{
 				$data = $HTTP_RAW_POST_DATA;
 			}
 			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
-	
+
 			$GLOBALS['_xh'][$parser] = array();
 			$GLOBALS['_xh'][$parser]['st']     = '';
 			$GLOBALS['_xh'][$parser]['cm']     = 0;
-			$GLOBALS['_xh'][$parser]['isf']    = 0; 
+			$GLOBALS['_xh'][$parser]['isf']    = 0;
 			$GLOBALS['_xh'][$parser]['params'] = array();
 			$GLOBALS['_xh'][$parser]['method'] = '';
 
@@ -395,6 +397,8 @@
 
 								// _debug_array($params);
 								$this->reqtoarray($params);
+								// decode from utf-8 to our charset
+								$this->req_array = $GLOBALS['phpgw']->translation->convert($this->req_array,'utf-8');
 								//_debug_array($this->req_array);
 								if (ereg('^service',$method))
 								{
