@@ -555,7 +555,7 @@
 				if($type == 'g')
 				{
 					$accounts['groups'][$id] = $id;
-					foreach($GLOBALS['phpgw']->acl->get_ids_for_location($id,1,'phpgw_group') as $id)
+					foreach((array)$GLOBALS['phpgw']->acl->get_ids_for_location($id,1,'phpgw_group') as $id)
 					{
 						$accounts['accounts'][$id] = $id;
 					}
