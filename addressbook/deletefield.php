@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Admin                                                     *
+  * phpGroupWare - Addressbook                                               *
   * (http://www.phpgroupware.org)                                            *
   * Written by Bettina Gille [ceb@phpgroupware.org]                          *    
   * -----------------------------------------------                          *
