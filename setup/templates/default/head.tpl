@@ -39,7 +39,7 @@
 		<td valign="top"> 
 			<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff" border="0">
 				<tbody><tr> 
-						<td width="185" rowspan="2" align="center" valign="top" class="toppannel"><a href="http://http//www.eGroupWare.org" target="_blank"><img src="templates/default/images/setup-anim.gif" alt="logo" border="0" title="www.eGroupWare.org"></a></td>
+						<td width="185" rowspan="2" align="center" valign="top" class="toppannel"><a href="http://www.eGroupWare.org" target="_blank"><img src="templates/default/images/setup-anim.gif" alt="logo" border="0" title="www.eGroupWare.org"></a></td>
 						<td colspan="2" valign="top" style="background-image:url(templates/default/images/panel.png);background-repeat: repeat-x;"> 
 							<table width="100%" border="0" cellpadding="0" cellspacing="0"  bgcolor="#ffffff" style="background-image:url(templates/default/images/panel.png);background-repeat: repeat-x;">
 								<tbody><tr valign="middle"> 
