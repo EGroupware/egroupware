@@ -31,6 +31,10 @@
 		var $account_id;
 		var $data = Array();
 		var $db;
+		var $public_functions = array(
+			'list_methods' => True,
+			'read'         => True
+		);
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -45,6 +49,43 @@
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->account_id = get_account_id($account_id);
+		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+			if (is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'read' => array(
+							'function'  => 'read',
+							'signature' => array(array(xmlrpcStruct)),
+							'docstring' => lang('Returns struct of users application access')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
 		}
 
 		/**************************************************************************\
