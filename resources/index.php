@@ -3,7 +3,7 @@
 	* eGroupWare - resources - Resource Management System                      *
 	* http://www.egroupware.org                                                *
 	* Written by Lukas Weiss [ichLukas@gmx.net] and                            *
-	*            Cornelius Weiss [nelius@gmx.net]                              *
+	*            Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
 	* -----------------------------------------------                          *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -20,5 +20,4 @@
 	include('../header.inc.php');
 
 	$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=resources.ui_resources.index');
-// 	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-// 	exit;
+	
