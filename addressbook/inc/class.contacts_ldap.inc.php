@@ -491,7 +491,7 @@
 			$ldap_fields['phpgwtypeid']    = $tid;
 			$ldap_fields['phpgwowner']     = $owner;
 			$ldap_fields['phpgwaccess']    = $access;
-			$ldap_fields["cat_id"]         = $cat_id;
+			$ldap_fields["phpgwcatid"]     = $cat_id;
 			$ldap_fields['uidnumber']      = $this->nextid;
 			$ldap_fields['objectclass'][0] = 'person';
 			$ldap_fields['objectclass'][1] = 'organizationalPerson';

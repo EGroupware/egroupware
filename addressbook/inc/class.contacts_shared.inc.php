@@ -135,13 +135,17 @@
 		* case of a user array this is the username; with the group array it is the group name.
 		* asortby
 		*/
-		function asortbyindex ($sortarray, $index) {
+		function asortbyindex ($sortarray, $index)
+		{
 			$lastindex = count($sortarray) - 2;
-			for ($subindex = 0; $subindex < $lastindex; $subindex++) {
+			for ($subindex = 0; $subindex < $lastindex; $subindex++)
+			{
 				$lastiteration = $lastindex - $subindex;
-				for ($iteration = 0; $iteration < $lastiteration; $iteration++) {
+				for ($iteration = 0; $iteration < $lastiteration; $iteration++)
+				{
 					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index])) {
+					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index]))
+					{
 						$temp = $sortarray[$iteration];
 						$sortarray[$iteration] = $sortarray[$iteration + 1];
 						$sortarray[$iteration + 1] = $temp;
@@ -151,13 +155,17 @@
 			return ($sortarray);
 		}
 
-		function arsortbyindex ($sortarray, $index) {
+		function arsortbyindex ($sortarray, $index)
+		{
 			$lastindex = count($sortarray) - 1;
-			for ($subindex = $lastindex; $subindex > 0; $subindex--) {
+			for ($subindex = $lastindex; $subindex > 0; $subindex--)
+			{
 				$lastiteration = $lastindex - $subindex;
-				for ($iteration = $lastiteration; $iteration > 0; $iteration--) {
+				for ($iteration = $lastiteration; $iteration > 0; $iteration--)
+				{
 					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index])) {
+					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index]))
+					{
 						$temp = $sortarray[$iteration];
 						$sortarray[$iteration] = $sortarray[$iteration - 1];
 						$sortarray[$iteration - 1] = $temp;
@@ -167,27 +175,52 @@
 			return ($sortarray);
 		}
 
-		function filter_ldap ($ldap_fields,$filterfields,$DEBUG=0) {
+		function filter_ldap ($ldap_fields,$filterfields,$DEBUG=0)
+		{
 			$match = 0;
-			reset($filterfields);
+			if($DEBUG) { echo "<br>"; }
 			for($i=0;$i<count($ldap_fields);$i++) {
-				while (list($col,$filt) = each($filterfields)) {
-					if($DEBUG) { echo '<br>Testing "'.$col.'" for "'.$filt.'"'."\n"; }
-					if ($ldap_fields[$i][$col][0] == $filt) {
-						if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched!'."\n"; }
-						$matched[$col][$i] = True;
+				$matched = "";
+				$allmatched = False;
+				reset($filterfields);
+
+				while (list($col,$filt) = each($filterfields))
+				{
+					if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
+					if ($ldap_fields[$i][$col][0] == $filt)
+					{
+						if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+						$matched[$col] = True;
 						$match++;
-					} else {
-						$matched[$col][$i] = False;
-						if($DEBUG)  { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' did not match!'."\n"; }
+					}
+					else
+					{
+						$matched[$col] = False;
+						if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
 						$match--;
 					}
-					if ($matched[$col][$i]) { $allmatched[$i] = True; }
+
+					while (list($colmatch) = each($matched))
+					{
+						if ($matched[$col])
+						{
+							$allmatched = True;
+						}
+						else
+						{
+							$allmatched = False;
+						}
+					}
 				}
-				reset($filterfields);
-				if ($allmatched[$i]) {
-					if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched!'."\n"; }
+
+				if ($allmatched)
+				{
+					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
 					$new_ldap[$i] = $ldap_fields[$i];
+				}
+				else
+				{
+					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' did not match all.'."<br>"; }
 				}
 			}
 			if ($match) { if($DEBUG) { echo '<br'.$match.' total matches.'."\n"; } }
