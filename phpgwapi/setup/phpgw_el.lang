@@ -434,7 +434,7 @@ please wait...	common	el	Παρακαλώ περιμένετε
 poland	common	el	ΠΟΛΩΝΙΑ
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
 postal	common	el	Ταχυδρομικός
-powered by phpgroupware version %1	common	el	Powered by <a href="http://www.phpgroupware.org">phpGroupWare</a> έκδοση %1
+powered by phpgroupware version %1	common	el	Powered by <a href="http://www.egroupware.org">phpGroupWare</a> έκδοση %1
 preferences	common	el	Επιλογές
 preferences for the idots template set	common	el	Επιλογές συνόλων προτύπων για τα idots
 prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
@@ -605,7 +605,7 @@ yemen	common	el	ΥΕΜΕΝΗ
 yes	common	el	Ναι
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	el	Βρίσκεστε σε ΤEXT MODE. Χρησιμοποιήστε το κουμπί [<>] για να επιστρέψετε σε WYSIWIG
 you are required to change your password during your first login	common	el	Απαιτείται η αλλαγή του κωδικού σας κατά την πρώτη είσοδο
-you are running a newer version of phpgroupware than your database is setup for	common	el	Εκτελείτε μια νεότερη έκδοση του phpGroupWare από αυτή που έχει ρυθμιστεί η βάση δεδομένων σας
+you are running a newer version of phpgroupware than your database is setup for	common	el	Εκτελείτε μια νεότερη έκδοση του eGroupWare από αυτή που έχει ρυθμιστεί η βάση δεδομένων σας
 you have been successfully logged out	login	el	Επιτυχής έξοδος
 you have not entered a title	common	el	Δεν έχετε εισάγει τίτλο
 you have not entered a valid date	common	el	Δεν έχετε εισάγει έγκυρη ημερομηνία

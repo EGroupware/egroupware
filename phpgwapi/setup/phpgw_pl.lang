@@ -437,7 +437,7 @@ please wait...	common	pl	Proszê czekac...
 poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
-powered by phpgroupware version %1	common	pl	Dzia³a na <a href="http://www.phpgroupware.org">phpGroupWare</a> wersja %1
+powered by phpgroupware version %1	common	pl	Dzia³a na <a href="http://www.egroupware.org">eGroupWare</a> wersja %1
 preferences	common	pl	Ustawienia
 preferences for the idots template set	common	pl	Preferencje dla template-u idots
 prev. month (hold for menu)	jscalendar	pl	Poprz. miesi¹c (zatrzymaj aby pokazaæ menu)
@@ -608,7 +608,7 @@ yemen	common	pl	JEMEN
 yes	common	pl	Tak
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	pl	Jestes w trybie tekstowym. Kliknij na przycisk [<>] aby przej¶æ do trybu WYSIWIG.
 you are required to change your password during your first login	common	pl	Po pierwszym zalogowaniu siê musisz zmieniæ swoje has³o
-you are running a newer version of phpgroupware than your database is setup for	common	pl	Uruchomi³e¶ nowsz± wersjê phpGroupWare ni¿ zainstalowana baza danych
+you are running a newer version of phpgroupware than your database is setup for	common	pl	Uruchomi³e¶ nowsz± wersjê eGroupWare ni¿ zainstalowana baza danych
 you have been successfully logged out	login	pl	Zosta³e¶ pomy¶lnie wylogowany
 you have not entered a title	common	pl	Nie wprowadzi³e¶ tytu³u
 you have not entered a valid date	common	pl	Nie wprowadzi³e¶ w³a¶ciwej daty

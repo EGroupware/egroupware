@@ -433,7 +433,7 @@ personal	common	zh	个人
 peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
-phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWare：'%1'帳號鎖定了, IP %2
+phpgroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zh	皮特凯恩
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称!
@@ -445,7 +445,7 @@ please wait...	common	zh	请稍候...
 poland	common	zh	波兰
 portugal	common	zh	葡萄牙
 postal	common	zh	邮政
-powered by phpgroupware version %1	common	zh	以<a href="http://www.phpgroupware.org">phpGroupWare</a>%1版本为基础设计
+powered by phpgroupware version %1	common	zh	以<a href="http://www.egroupware.org">eGroupWare</a>%1版本为基础设计
 preferences	common	zh	个性化配置
 preferences for the idots template set	common	zh	Preferences for the idots template set
 prev. month (hold for menu)	common	zh	上个月(hold for menu)
@@ -617,7 +617,7 @@ yemen	common	zh	也门
 yes	common	zh	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zh	You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
-you are running a newer version of phpgroupware than your database is setup for	common	zh	您所使用的phpGroupWare软件版本比数据库新.
+you are running a newer version of phpgroupware than your database is setup for	common	zh	您所使用的eGroupWare软件版本比数据库新.
 you have been successfully logged out	login	zh	注销成功
 you have not entered a title	common	zh	必须输入标题
 you have not entered a valid date	common	zh	输入的日期无效

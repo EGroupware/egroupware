@@ -308,7 +308,7 @@ please set your preferences for this application	common	bg	Моля задайте настройк
 please wait...	common	bg	Моля изчакайте...
 poland	common	bg	Полша
 portugal	common	bg	Португалия
-powered by phpgroupware version %1	common	bg	Задвижвано от <a href="http://www.phpgroupware.org">phpGroupWare</a> версия %1
+powered by phpgroupware version %1	common	bg	Задвижвано от <a href="http://www.egroupware.org">eGroupWare</a> версия %1
 preferences	common	bg	Настройки
 prev. month (hold for menu)	jscalendar	bg	Предишен месец (задръжте за списък)
 prev. year (hold for menu)	jscalendar	bg	Предишна година (задръжте за списък)
@@ -425,7 +425,7 @@ year	common	bg	Година
 yemen	common	bg	Йемен
 yes	common	bg	Да
 you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
-you are running a newer version of phpgroupware than your database is setup for	common	bg	Използвате по-нова версия на phpGroupWare от тази, за която е настроена базата ви данни.
+you are running a newer version of phpgroupware than your database is setup for	common	bg	Използвате по-нова версия на eGroupWare от тази, за която е настроена базата ви данни.
 you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно
 you have not entered a title	common	bg	Не сте въвели заглавие
 you have not entered a valid date	common	bg	Не сте въвели валидна дата

@@ -433,7 +433,7 @@ personal	common	zt	個人
 peru	common	zt	PERU
 philippines	common	zt	PHILIPPINES
 phone number	common	zt	電話
-phpgroupware: login blocked for user '%1', ip %2	common	zt	phpGroupWare：'%1'帳號鎖定了, IP %2
+phpgroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
 pitcairn	common	zt	PITCAIRN
 please %1 by hand	common	zt	請手動 %1
 please enter a name	common	zt	請輸入名稱！
@@ -445,7 +445,7 @@ please wait...	common	zt	請等待...
 poland	common	zt	POLAND
 portugal	common	zt	PORTUGAL
 postal	common	zt	郵遞區號
-powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.phpgroupware.org">phpGroupWare</a> %1 版。
+powered by phpgroupware version %1	common	zt	此軟體為 <a href="http://www.egroupware.org">eGroupWare</a> %1 版。
 preferences	common	zt	喜好設定
 preferences for the idots template set	common	zt	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zt	上一個月(在選單中)
@@ -617,7 +617,7 @@ yemen	common	zt	YEMEN
 yes	common	zt	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zt	您目前在文字模式，使用[<>]按鈕來切換所見即所得編輯器。
 you are required to change your password during your first login	common	zt	您必須在第一次登入時修改您的密碼
-you are running a newer version of phpgroupware than your database is setup for	common	zt	您現在所使用的 phpGroupWare 版本比您的資料庫設定的版本還新。
+you are running a newer version of phpgroupware than your database is setup for	common	zt	您現在所使用的 eGroupWare 版本比您的資料庫設定的版本還新。
 you have been successfully logged out	login	zt	您已經成功登出。
 you have not entered a title	common	zt	您尚未輸入標題
 you have not entered a valid date	common	zt	您尚未輸入正確的日期
