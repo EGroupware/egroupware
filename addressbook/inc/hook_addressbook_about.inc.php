@@ -5,17 +5,17 @@
 		global $phpgw, $phpgw_info;
 		$appname = 'addressbook';
 
-		$imgfile = $phpgw->common->get_image_dir($appname) . '/' . $appname . '.gif';
+		$imgfile = $phpgw->common->get_image_dir($appname) . SEP . $appname . '.gif';
 		if (file_exists($imgfile))
 		{
-			$imgpath = $phpgw->common->get_image_path($appname) . '/' . $appname . '.gif';
+			$imgpath = $phpgw->common->get_image_path($appname) . SEP . $appname . '.gif';
 		}
 		else
 		{
-			$imgfile = $phpgw->common->get_image_dir($appname) . '/navbar.gif';
+			$imgfile = $phpgw->common->get_image_dir($appname) . SEP . 'navbar.gif';
 			if (file_exists($imgfile))
 			{
-				$imgpath = $phpgw->common->get_image_path($appname) . '/navbar.gif';
+				$imgpath = $phpgw->common->get_image_path($appname) . SEP . 'navbar.gif';
 			}
 			else
 			{
