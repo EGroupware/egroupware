@@ -97,10 +97,11 @@ class so_sql
 	 *
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
+	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 */
-	function so_sql($app='',$table='')
+	function so_sql($app='',$table='',$db=null)
 	{
-		$this->db = clone($GLOBALS['phpgw']->db);
+		$this->db = is_object($db) ? clone($db) : clone($GLOBALS['egw']->db);
 		$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
 		if ($app)
@@ -127,6 +128,10 @@ class so_sql
 	{
 		$this->table_name = $table;
 		$table_def = $this->db->get_table_definitions($app,$table);
+		if (!$table_def || !is_array($table_def['fd']))
+		{
+			echo "<p>so_sql::setup_table('$app','$table'): No table definitions found !!!<br>\n".function_backtrace()."</p>\n";
+		}
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
 		foreach($table_def['fd'] as $name => $def)
