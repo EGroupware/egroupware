@@ -264,8 +264,12 @@
 		}
 
 		// Echo content headers for file downloads
-		function content_header($fn='',$mime='application/octet-stream',$length='',$nocache=True)
+		function content_header($fn='',$mime='',$length='',$nocache=True)
 		{
+			if (!$mime)
+			{
+				$mime='application/octet-stream';
+			}
 			if ($fn)
 			{
 				if ($this->get_agent() == 'IE') // && browser_get_version() == "5.5")
