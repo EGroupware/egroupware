@@ -297,5 +297,227 @@
 				unset($preferences_update);
 			}
 		}
+
+		/*!
+		@function get_mailsvr_port
+		@abstract get_mailsvr_port
+		@discussion This will generate the appropriate port number to access a
+			mail server of type pop3, pop3s, imap, imaps users value from
+			$phpgw_info['user']['preferences']['email']['mail_port'].
+			if that value is not set, it generates a default port for the given
+			$server_type
+		@param $prefs - any user preferences
+		*/	
+		function get_mailsvr_port($prefs)
+		{
+			/*// UNCOMMENT WHEN mail_port IS A REAL, USER SET OPTION
+			// first we try the port number supplied in preferences
+			if ( (isset($prefs['email']['mail_port']))
+			&& ($prefs['email']['mail_port'] != '') )
+			{
+				$port_number = $prefs['email']['mail_port'];
+			}
+			// preferences does not have a port number, generate a default value
+			else
+			{
+			*/
+				switch($prefs['email']['mail_server_type'])
+				{
+					case 'imaps':		// IMAP over SSL
+						$port_number = 993;
+						break;
+					case 'pop3s':		// POP3 over SSL
+						$port_number = 995;
+						break;
+					case 'pop3':		// POP3 normal connection, No SSL
+								// ( same string as normal imap above)
+						$port_number = 110;
+						break;
+					case 'nntp':		// NNTP news server port
+						$port_number = 119;
+						break;
+					case 'imap':		// IMAP normal connection, No SSL 
+					default:		// UNKNOWN SERVER in Preferences, return a
+								// default value that is likely to work
+								// probably should raise some kind of error here
+						$port_number = 143;
+						break;
+				}
+				// set the preference string, since it was not set and that's why we are here
+				//$prefs['email']['mail_port'] = $port_number;
+			// UNCOMMENT WHEN mail_port IS A REAL, USER SET OPTION
+			//}
+			return $port_number;
+		}
+
+		/*!
+		@function create_email_preferences
+		@abstract create email preferences
+		@discussion This fills the global $phpgw_info array with the required email preferences for this user
+		@param $account_id -optional defaults to : phpgw_info['user']['account_id']
+		*/	
+		function create_email_preferences($accountid='')
+		{
+
+			$default_trash_folder = 'Trash';
+			$default_sent_folder = 'Sent';
+
+
+			$account_id = get_account_id($accountid);
+			// If the current user is not the request user, grab the preferences
+			// and reset back to current user.
+			if($account_id != $this->account_id)
+			{
+				// Temporarily store the values to a temp, so when the
+				// read_repository() is called, it doesn't destory the
+				// current users settings.
+				$temp_account_id = $this->account_id;
+				$temp_data = $this->data;
+				
+				// Grab the new users settings, only if they are not the
+				// current users settings.
+				$this->account_id = $account_id;
+				$prefs = $this->read_repository();
+				
+				// Reset the data to what it was prior to this call
+				$this->account_id = $temp_account_id;
+				$this->data = $temp_data;
+			}
+			else
+			{
+				$prefs = $this->data;
+			}
+
+			// Add default preferences info
+			if (!isset($prefs['email']['userid']))
+			{
+				if ($GLOBALS['phpgw_info']['server']['mail_login_type'] == 'vmailmgr')
+				{
+					$prefs['email']['userid'] = $GLOBALS['phpgw']->accounts->id2name($account_id)
+						. '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+				}
+				else
+				{
+					$prefs['email']['userid'] = $GLOBALS['phpgw']->accounts->id2name($account_id);
+				}
+			}
+			// Set Server Mail Type if not defined
+			if (empty($GLOBALS['phpgw_info']['server']['mail_server_type']))
+			{
+				$GLOBALS['phpgw_info']['server']['mail_server_type'] = 'imap';
+			}
+			if (!isset($prefs['email']['address']))
+			{
+				$prefs['email']['address'] = $GLOBALS['phpgw']->accounts->id2name($account_id)
+					. '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+			}
+			if (!isset($prefs['email']['mail_server']))
+			{
+				$prefs['email']['mail_server'] = $GLOBALS['phpgw_info']['server']['mail_server'];
+			}
+			if (!isset($prefs['email']['mail_server_type']))
+			{
+				$prefs['email']['mail_server_type'] = $GLOBALS['phpgw_info']['server']['mail_server_type'];
+			}
+			if (!isset($prefs['email']['imap_server_type']))
+			{
+				$prefs['email']['imap_server_type'] = $GLOBALS['phpgw_info']['server']['imap_server_type'];
+			}
+		
+			// ====  UWash Mail Folder Location used to be "mail", now it's changeable, but keep the
+			// ====  default to "mail" so upgrades happen transparently
+			// ---  TEMP MAKE DEFAULT UWASH MAIL FOLDER ~/mail (a.k.a. $HOME/mail)
+			$GLOBALS['phpgw_info']['server']['mail_folder'] = 'mail';
+			// ---  DELETE THE ABOVE WHEN THIS OPTION GETS INTO THE SYSTEM SETUP
+			// pick up custom "mail_folder" if it exists (used for UWash and UWash Maildor servers)
+			// else use the system default (which we temporarily hard coded to "mail" just above here)
+		
+			// because of the way this option works, an empty string IS ACTUALLY a valid value
+			// which represents the $HOME/* as the UWash mail files location
+			// THERFOR we must check the "Use_custom_setting" option to help us figure out what to do
+			if (!isset($prefs['email']['use_custom_settings']))
+			{
+				// we are NOT using custom settings so this MUST be the server default
+				$prefs['email']['mail_folder'] = $GLOBALS['phpgw_info']['server']['mail_folder'];
+			}
+			else
+			{
+				// we ARE using custom settings AND a BLANK STRING is a valid option, so...
+				if ((isset($prefs['email']['mail_folder']))
+				&& ($prefs['email']['mail_folder'] != ''))
+				{
+					// using custom AND an string exists, so "mail_folder" is that string stored in the custom prefs by the user
+					// DO NOTING - VALID OPTION VALUE for $prefs['email']['mail_folder']
+				}
+				else
+				{
+					// using Custom Prefs BUT this text box was left empty by the user on submit, so no value stored
+					// BUT since we are using custom prefs, "mail_folder" MUST BE AN EMPTY STRING
+					// which is an acceptable, valid preference, overriding any value which may have been set in ["server"]["mail_folder"]
+					$prefs['email']['mail_folder'] = '';
+				}
+			}
+
+			// This is going to be used to switch to the nntp class
+			if ((isset($GLOBALS['phpgw_info']['flags']['newsmode'])
+			&& $GLOBALS['phpgw_info']['flags']['newsmode']))
+			{
+				$prefs['email']['mail_server_type'] = 'nntp';
+			}
+
+			// These sets the mail_port server variable
+			$prefs['email']['mail_port'] = $this->get_mailsvr_port($prefs);
+
+			// if the option to use the Trash folder is ON, make sure a proper name is specified
+			if (isset($prefs['email']['use_trash_folder']))
+			{
+				if ((!isset($prefs['email']['trash_folder_name']))
+				|| ($prefs['email']['trash_folder_name'] == ''))
+				{
+					$prefs['email']['trash_folder_name'] = $default_trash_folder;
+				}
+			}
+
+			// if the option to use the sent folder is ON, make sure a proper name is specified
+			if (isset($prefs['email']['use_sent_folder']))
+			{
+				if ((!isset($prefs['email']['sent_folder_name']))
+				|| ($prefs['email']['sent_folder_name'] == ''))
+				{
+					$prefs['email']['sent_folder_name'] = $default_sent_folder;
+				}
+			}	
+
+			// SANITY CHECK - is it possible to use Trash and Sent folders - i.e. using IMAP server
+			// if not - force settings to false
+			if  (($prefs['email']['mail_server_type'] != 'imap')
+			&& ($prefs['email']['mail_server_type'] != 'imaps'))
+			{
+				if (isset($prefs['email']['use_sent_folder']))
+				{
+					unset($prefs['email']['use_sent_folder']);
+				}
+	
+				if (isset($prefs['email']['use_trash_folder']))
+				{
+					unset($prefs['email']['use_trash_folder']);
+				}
+			}
+
+			// Layout Template Preference
+			// layout 1 = default ; others are prefs
+			if (!isset($prefs['email']['layout']))
+			{
+				$prefs['email']['layout'] = 1;
+			}
+			// force seeting here to test stuff
+			//$prefs['email']['layout'] = 1;
+			//$prefs['email']['layout'] = 2;
+
+			// DEBUG
+			//echo "<br>prefs['email']: <br>"
+			//	.'<pre>'.serialize($prefs['email']) .'</pre><br>';
+			return $prefs;
+		}
 	} /* end of preferences class */
 ?>
