@@ -1,5 +1,267 @@
 <!DOCTYPE chapter SYSTEM "todo.sgml" PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
 <chapter id="Todo">
 <title>Todo</title>
+<para>
+A ToDo list application featuring the ability to add project categories and sub-categories, add ToDo projects and sub-projects, and a gannt chart type matrix view for pending projects.
+</para>
+<sect1>
+<title>Viewing</title>
+<para>
+To view your ToDo List, click on the To Do list icon in the menu.  This will bring you to the To Do list main page. From this page you can do the following:
+</para>
+<variablelist>
+<varlistentry>
+<term>Category</term>
+<listitem>
+<para>
+Choose a category to view.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Show</term>
+<listitem>
+<para>
+Choose to view all jobs, your jobs, or your private jobs.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Search</term>
+<listitem>
+<para>
+Search jobs in the ToDo list.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Status</term>
+<listitem>
+<para>
+This is the first column in the table of results. By clicking the "Status" link you can sort the ToDo list results by their completion status (ascending order). Clicking this link again will reverse the sort (descending order).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Urgency</term>
+<listitem>
+<para>
+This is the second column in the table of results. By clicking the "Urgency" link you can sort the ToDo list results by their Urgency (ascending order). Clicking this link again will reverse the sort (descending order).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Title</term>
+<listitem>
+<para>
+This is the third column in the table of results. By clicking the "Title" link you can sort the ToDo list results by their title (ascending order). Clicking this link again will reverse the sort (descending order).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Start Date</term>
+<listitem>
+<para>
+This is the fourth column in the table of results. By clicking the "Start date" link you can sort the ToDo list results by their start date (ascending order). Clicking this link again will reverse the sort (descending order).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>End Date</term>
+<listitem>
+<para>
+This is the fifth column in the table of results. By clicking the "End date" link you can sort the ToDo list results by their ending date (ascending order). Clicking this link again will reverse the sort (descending order). Dates for overdue tasks will be displayed in red.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Created By</term>
+<listitem>
+<para>
+This is the sixth column in the table of results. By clicking the "Created By" link you can sort the ToDo list results by task author (ascending order). Clicking this link again will reverse the sort (descending order).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Add sub</term>
+<listitem>
+<para>
+This is the seventh column in the table of results. By clicking the "Add sub" link on a task or sub-task in the table of results, you can add a sub-task to that particular item.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>View</term>
+<listitem>
+<para>
+This is the eighth column in the table of results. By clicking the "View" link on a task or sub-task in the table of results, you can view the details of the task.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Edit</term>
+<listitem>
+<para>
+This is the ninth column in the table of results. By clicking the "Edit" link on a task or sub-task in the table of results, you can edit the details of the task.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Delete</term>
+<listitem>
+<para>
+This is the tenth column in the table of results. By clicking the "Delete" link on a task or sub-task in the table of results, you can delete the task.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Add</term>
+<listitem>
+<para>
+Clicking the "Add" button will allow you to add a task to the ToDo list.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term> View matrix of actual month</term>
+<listitem>
+<para>
+Clicking the "View matrix of actual month" link will display a gannt chart type matrix view of the current month's ToDo list entries.
+</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+<sect1>
+<title>Adding</title>
+<para>
+After clicking the "Add" button on the task results page, you will be presented with the following options on the "Add Main Project" page:
+</para>
+<variablelist>
+<varlistentry>
+<term>Title</term>
+<listitem>
+<para>
+Enter a title for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Description</term>
+<listitem>
+<para>
+Enter a description for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Parent Project</term>
+<listitem>
+<para>
+Choose a parent project for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Start Date</term>
+<listitem>
+<para>
+Choose a starting date for the task to be added. If the starting date will be today, simply check the "select for today" checkbox.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>End Date</term>
+<listitem>
+<para>
+Choose a Ending Date for the task to be added. Another option is to input the number of days from the task start date in the "days from startdate" input box.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Completed</term>
+<listitem>
+<para>
+Use the drop-down completed box to mark the approximate completion status for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term>Urgency</term>
+<listitem>
+<para>
+Use the drop-down Urgency box to choose between low, normal, and high urgency settings for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Private</term>
+<listitem>
+<para>
+Check the "Private" checkbox to make this task viewable only by you.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Category</term>
+<listitem>
+<para>
+Choose a category for the task to be added.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Submit</term>
+<listitem>
+<para>
+Click the "Submit" button to add this task to the ToDo list.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Clear Form</term>
+<listitem>
+<para>
+Click the "Clear Form" button to reset the form to its default (empty) state. 
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</sect1>
+
+<sect1>
+<title>Add sub</title>
+<para>
+After clicking the "Add sub" link on the task results page, you will be presented with the following options on the "Add sub project" page:
+</para>
+</sect1>
+
 </chapter>
 
