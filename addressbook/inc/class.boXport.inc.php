@@ -165,8 +165,9 @@
 			{
 				while($data = fgets($fp,8000))
 				{
-					$url = "";
+					$url = '';
 					list($name,$value,$extra) = split(':', $data);
+					$name = strtolower($name);
 					if(substr($name,0,2) == 'dn')
 					{
 						$buffer = $contacts->import_start_record($buffer);
