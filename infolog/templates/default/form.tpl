@@ -140,12 +140,14 @@
         
         <!-- BEGIN edit -->
          
-         <table width="75%" border="0" cellspacing="0" cellpadding="0">
-         <tr valign="bottom">
-          <td height="62">{edit_button} &nbsp; </form></td>
-          <td height="62">{delete_button}</td>
+         <table width="90%" border="0">
+         <tr valing=bottom height=100>
+          <td>{edit_button}</td>
+          <td>{cancel_button}</td>
+          <td width="80%" align=right>{delete_button}</td>
          </tr>
          </table>
-   </center>
+    </form>
+	</center>
    </html>
         <!-- END edit -->
