@@ -168,17 +168,9 @@ if (! $error) {
 
   
   while ($participant = each($participants)) {
-//  for ($i = 0; $i < count($participants); $i++) {
-      // Rewrite
-      $sql = "INSERT INTO webcal_entry_user (cal_id,cal_login,cal_status ) "
-	      . "VALUES ($id, '" . $participant[1] . "', 'A')";
-      $phpgw->db->query($sql);
+      $phpgw->db->query("INSERT INTO webcal_entry_user (cal_id,cal_login,cal_status ) "
+	                  . "VALUES ($id, '" . $participant[1] . "', 'A')");
   }
-
-//  if (count($participants) == 0)
-//     $phpgw->db->query("insert into webcal_entry_user (cal_id,cal_login,cal_status"
-//		           . ") values ($id,'" . $phpgw_info["user"]["userid"] . "','A' )");
-//  }
   
   if (strlen($rpt_type) || ! strcmp($rpt_type,'none') == 0) {
      // clearly, we want to delete the old repeats, before inserting new...
