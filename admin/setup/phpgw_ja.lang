@@ -81,7 +81,7 @@ global categories	common	ja	グローバルカテゴリ
 group list	admin	ja	ユーザグループ項目全体
 group name	admin	ja	グループ名
 hide php information	admin	ja	PHPインフォメーションを閉じる
-home directory	admin	ja	home directory	
+home directory	admin	ja	home directory
 id	admin	ja	ID
 idle	admin	ja	アイドル
 inbound	admin	ja	内向き
