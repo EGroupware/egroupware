@@ -52,7 +52,7 @@
 	function section_item($pref_link='',$pref_text='')
 	{
 		$GLOBALS['admin_tpl']->set_var('pref_link',$pref_link);
-		$GLOBALS['admin_tpl']->set_var('pref_text',$pref_text);		
+		$GLOBALS['admin_tpl']->set_var('pref_text',$pref_text);
 		$GLOBALS['admin_tpl']->parse('rows','link_row',True);
 	} 
 
