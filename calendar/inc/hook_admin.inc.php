@@ -21,6 +21,6 @@
 			'Global categories'				=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True')
 		);
 //Do not modify below this line
-		display_section($appname,$file);
+		$GLOBALS['phpgw']->common->display_mainscreen($appname,$file);
 	}
 ?>
