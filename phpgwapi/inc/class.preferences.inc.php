@@ -141,7 +141,7 @@
 			$GLOBALS['phpgw']->accounts->get_account_name($this->account_id,$lid,$fname,$lname);
 
 			$this->values = array(	// standard notify replacements
-				'username'  => $fname.' '.$lname,
+				'fullname'  => $GLOBALS['phpgw']->common->display_fullname('',$fname,$lname),
 				'firstname' => $fname,
 				'lastname'  => $lname,
 				'domain'    => $GLOBALS['phpgw_info']['server']['mail_suffix'],
@@ -153,7 +153,7 @@
 			$this->values['email'] = $this->parse_notify($this->values['email']);
 
 			$this->vars = array(	// langs have to be in common !!!
-				'username'  => lang('name of the user, eg. "%1"',$this->values['username']),
+				'fullname'  => lang('name of the user, eg. "%1"',$this->values['fullname']),
 				'firstname' => lang('first name of the user, eg. "%1"',$this->values['firstname']),
 				'lastname'  => lang('last name of the user, eg. "%1"',$this->values['lastname']),
 				'domain'    => lang('domain name for mail-address, eg. "%1"',$this->values['domain']),
