@@ -370,13 +370,13 @@ echo "Owner = ".$users[$owner]."<br>\n";
 
 	display_item($p,lang('Repeat End Date'),$str);
 
-	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="'.MCAL_SUNDAY.'"'.(($event->recur_data & MCAL_SUNDAY) ?' checked':'').'> '.lang('Sunday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="'.MCAL_MONDAY.'"'.(($event->recur_data & MCAL_MONDAY) ?' checked':'').'> '.lang('Monday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_tue]" value="'.MCAL_TUESDAY.'"'.(($event->recur_data & MCAL_TUESDAY) ?' checked':'').'> '.lang('Tuesday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="'.MCAL_WEDNESDAY.'"'.(($event->recur_data & MCAL_WEDNESDAY) ?' checked':'').'> '.lang('Wednesday').' <br>';
-	$str .= '<input type="checkbox" name="cal[rpt_thu]" value="'.MCAL_THURSDAY.'"'.(($event->recur_data & MCAL_THURSDAY) ?' checked':'').'> '.lang('Thursday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="'.MCAL_FRIDAY.'"'.(($event->recur_data & MCAL_FRIDAY) ?' checked':'').'> '.lang('Friday').' ';
-	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="'.MCAL_SATURDAY.'"'.(($event->recur_data & MCAL_SATURDAY) ?' checked':'').'> '.lang('Saturday').' ';
+	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="'.MCAL_M_SUNDAY.'"'.(($event->recur_data & MCAL_M_SUNDAY) ?' checked':'').'> '.lang('Sunday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="'.MCAL_M_MONDAY.'"'.(($event->recur_data & MCAL_M_MONDAY) ?' checked':'').'> '.lang('Monday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_tue]" value="'.MCAL_M_TUESDAY.'"'.(($event->recur_data & MCAL_M_TUESDAY) ?' checked':'').'> '.lang('Tuesday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_wed]" value="'.MCAL_M_WEDNESDAY.'"'.(($event->recur_data & MCAL_M_WEDNESDAY) ?' checked':'').'> '.lang('Wednesday').' <br>';
+	$str .= '<input type="checkbox" name="cal[rpt_thu]" value="'.MCAL_M_THURSDAY.'"'.(($event->recur_data & MCAL_M_THURSDAY) ?' checked':'').'> '.lang('Thursday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="'.MCAL_M_FRIDAY.'"'.(($event->recur_data & MCAL_M_FRIDAY) ?' checked':'').'> '.lang('Friday').' ';
+	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="'.MCAL_M_SATURDAY.'"'.(($event->recur_data & MCAL_M_SATURDAY) ?' checked':'').'> '.lang('Saturday').' ';
 
 	display_item($p,lang('Repeat Day').'<br>'.lang('(for weekly)'),$str);
 

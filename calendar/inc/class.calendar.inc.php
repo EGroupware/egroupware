@@ -520,25 +520,25 @@ class calendar extends calendar_
 						switch($search_date_dow)
 						{
 							case 0:
-								$check = MCAL_SUNDAY;
+								$check = MCAL_M_SUNDAY;
 								break;
 							case 1:
-								$check = MCAL_MONDAY;
+								$check = MCAL_M_MONDAY;
 								break;
 							case 2:
-								$check = MCAL_TUESDAY;
+								$check = MCAL_M_TUESDAY;
 								break;
 							case 3:
-								$check = MCAL_WEDNESDAY;
+								$check = MCAL_M_WEDNESDAY;
 								break;
 							case 4:
-								$check = MCAL_THURSDAY;
+								$check = MCAL_M_THURSDAY;
 								break;
 							case 5:
-								$check = MCAL_FRIDAY;
+								$check = MCAL_M_FRIDAY;
 								break;
 							case 6:
-								$check = MCAL_SATURDAY;
+								$check = MCAL_M_SATURDAY;
 								break;
 						}
 						if ($rep_events->recur_data & $check)
@@ -1767,38 +1767,38 @@ class calendar extends calendar_
 				$repeat_days = '';
 				if($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Sunday')
 				{
-					if (!!($event->recur_data & MCAL_SUNDAY) == True)
+					if (!!($event->recur_data & MCAL_M_SUNDAY) == True)
 					{
 						$this->view_add_day(lang('Sunday'),$repeat_days);
 					}
 				}
-				if (!!($event->recur_data & MCAL_MONDAY) == True)
+				if (!!($event->recur_data & MCAL_M_MONDAY) == True)
 				{
 					$this->view_add_day(lang('Monday'),$repeat_days);
 				}
-				if (!!($event->recur_data & MCAL_TUESDAY) == True)
+				if (!!($event->recur_data & MCAL_M_TUESDAY) == True)
 				{
 					$this->view_add_day(lang('Tuesday'),$repeat_days);
 				}
-				if (!!($event->recur_data & MCAL_WEDNESDAY) == True)
+				if (!!($event->recur_data & MCAL_M_WEDNESDAY) == True)
 				{
 					$this->view_add_day(lang('Wednesday'),$repeat_days);
 				}
-				if (!!($event->recur_data & MCAL_THURSDAY) == True)
+				if (!!($event->recur_data & MCAL_M_THURSDAY) == True)
 				{
 					$this->view_add_day(lang('Thursday'),$repeat_days);
 				}
-				if (!!($event->recur_data & MCAL_FRIDAY) == True)
+				if (!!($event->recur_data & MCAL_M_FRIDAY) == True)
 				{
 					$this->view_add_day(lang('Friday'),$repeat_days);
 				}
-				if (!!($event->recur_data & MCAL_SATURDAY) == True)
+				if (!!($event->recur_data & MCAL_M_SATURDAY) == True)
 				{
 					$this->view_add_day(lang('Saturday'),$repeat_days);
 				}
 				if($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
 				{
-					if (!!($event->recur_data & MCAL_SUNDAY) == True)
+					if (!!($event->recur_data & MCAL_M_SUNDAY) == True)
 					{
 						$this->view_add_day(lang('Sunday'),$repeat_days);
 					}

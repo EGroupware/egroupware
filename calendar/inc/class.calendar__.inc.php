@@ -25,17 +25,17 @@ if(extension_loaded('mcal') == False)
 	define('MCAL_RECUR_MONTHLY_WDAY',4);
 	define('MCAL_RECUR_YEARLY',5);
 	
-	define('MCAL_SUNDAY',1);
-	define('MCAL_MONDAY',2);
-	define('MCAL_TUESDAY',4);
-	define('MCAL_WEDNESDAY',8);
-	define('MCAL_THURSDAY',16);
-	define('MCAL_FRIDAY',32);
-	define('MCAL_SATURDAY',64);
+	define('MCAL_M_SUNDAY',1);
+	define('MCAL_M_MONDAY',2);
+	define('MCAL_M_TUESDAY',4);
+	define('MCAL_M_WEDNESDAY',8);
+	define('MCAL_M_THURSDAY',16);
+	define('MCAL_M_FRIDAY',32);
+	define('MCAL_M_SATURDAY',64);
 	
-	define('MCAL_WEEKDAYS',63);
-	define('MCAL_WEEKEND',65);
-	define('MCAL_ALLDAYS',127);
+	define('MCAL_M_WEEKDAYS',63);
+	define('MCAL_M_WEEKEND',65);
+	define('MCAL_M_ALLDAYS',127);
 }
 
 define('MSG_DELETED',0);
