@@ -557,6 +557,12 @@
 			. $this->account_id . "'",__LINE__,__FILE__);
 		}
 
+		// This is for testing, not intended for release
+		function delete_all()
+		{
+			$this->db->query("delete from $this->std_table",__LINE__,__FILE__);
+			$this->db->query("delete from $this->ext_table",__LINE__,__FILE__);
+			return;
+		}
 	}
-
 ?>
