@@ -23,6 +23,18 @@
 
   /* $Id$ */
   
+	/*!!
+	* @Type: class
+	* @Name: acl
+	* @Author: Seek3r
+	* @Title: Access Control List security system
+	* @Description: This class provides an ACL security scheme. 
+	* This can manage rights to 'run' applications, and limit certain features within an application.
+	* It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
+	* It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
+	* @Syntax: CreateObject('phpgwapi.acl',int account_id);
+	* @Example1: $acl = CreateObject('phpgwapi.acl',5);  // 5 is the user id
+	*/
   class acl
   {
     var $account_id;
@@ -30,10 +42,16 @@
     var $data = Array();
     var $db;
 
-    /**************************************************************************\
-    * Standard constructor for setting $this->account_id                       *
-    \**************************************************************************/
-
+		/*!!
+		* @Type: function
+		* @Name: acl
+		* @Author: Seek3r
+		* @Title: ACL constructor for setting account id. 
+		* @Description: Sets the ID for $acl->account_id. Can be used to change a current instances id as well.
+		* Some functions are specific to this account, and others are generic.
+		* @Syntax: int acl(int account_id)
+		* @Example1: acl->acl(5); // 5 is the user id
+		*/
     function acl($account_id = False)
     {
       global $phpgw, $phpgw_info;
@@ -45,6 +63,15 @@
     * These are the standard $this->account_id specific functions              *
     \**************************************************************************/
 
+		/*!!
+		* @Type: function
+		* @Name: read_repository
+		* @Author: Seek3r
+		* @Title: Read acl records from repository. 
+		* @Description: Reads ACL records for $acl->account_id and returns array along with storing it in $acl->data.
+		* @Syntax: array read_repository()
+		* @Example1: acl->read_repository();
+		*/
     function read_repository()
     {
       global $phpgw, $phpgw_info;
@@ -73,6 +100,15 @@
       return $this->data;
     }
 
+		/*!!
+		* @Type: function
+		* @Name: read
+		* @Author: Seek3r
+		* @Title: Read acl records from $acl->data. 
+		* @Description: Returns ACL records from $acl->data.
+		* @Syntax: array read()
+		* @Example1: acl->read();
+		*/
     function read()
     {
       if (count($this->data) == 0){ $this->read_repository(); }
@@ -80,6 +116,15 @@
       return $this->data;
     }
 
+		/*!!
+		* @Type: function
+		* @Name: add
+		* @Author: Seek3r
+		* @Title: Adds ACL record to $acl->data. 
+		* @Description: Adds ACL record to $acl->data.
+		* @Syntax: array read()
+		* @Example1: acl->read();
+		*/
     function add($appname = False, $location, $rights)
     {
       if ($appname == False){

@@ -24,9 +24,15 @@
 
 	/* $Id$ */
 	
-	/****************************************************************************\
-	* Our API class starts here                                                  *
-	\****************************************************************************/
+	/*!!
+	* @Type: class
+	* @Name: phpgw
+	* @Author: Seek3r
+	* @Title: Main class.
+	* @Description: Main class. Has a few functions but is more importantly used as a parent class for everything else.
+	* @Syntax: CreateObject('phpgwapi.phpgw');
+	* @Example1: $phpgw = CreateObject('phpgwapi.acl');
+	*/
 	class phpgw
 	{
 		var $accounts;
@@ -53,58 +59,52 @@
 		var $addressbook;
 		var $todo;
 
-		/************************************************************************\
-		* Load up the main instance of the db class.                             *
-		\************************************************************************/
-		function phpgw() {
-			global $phpgw_info;
-			$this->db           = CreateObject("phpgwapi.db");
-			$this->db->Host     = $phpgw_info["server"]["db_host"];
-			$this->db->Type     = $phpgw_info["server"]["db_type"];
-			$this->db->Database = $phpgw_info["server"]["db_name"];
-			$this->db->User     = $phpgw_info["server"]["db_user"];
-			$this->db->Password = $phpgw_info["server"]["db_pass"];
-			if ($this->debug) {
-				 $this->db->Debug = 1;
-			}
-		}
-
-		function load_core_objects()
-		{
-			/************************************************************************\
-			* Required classes                                                       *
-			\************************************************************************/
-			$this->common       = CreateObject("phpgwapi.common");
-			$this->hooks        = CreateObject("phpgwapi.hooks");
-			$this->auth         = createobject("phpgwapi.auth");
-			$this->acl          = CreateObject("phpgwapi.acl");
-			$this->accounts     = createobject("phpgwapi.accounts");
-			$this->session      = CreateObject("phpgwapi.sessions");
-			$this->preferences  = CreateObject("phpgwapi.preferences");
-			$this->applications = CreateObject("phpgwapi.applications");
-			$this->translation  = CreateObject("phpgwapi.translation");
-		} 
-
 		/**************************************************************************\
 		* Core functions                                                           *
 		\**************************************************************************/
 
+		/*!!
+		* @Type: function
+		* @Name: strip_html
+		* @Author: Seek3r
+		* @Title: Strips out html chars. 
+		* @Description: Used as a shortcut for stripping out html special chars.
+		* @Syntax: string strip_html(string as string)
+		* @Example1: $reg_string = strip_html($urlencode_string);
+		*/
     function strip_html($s)
     {
        return htmlspecialchars(stripslashes($s));
     }
 
-		/* Wrapper to the session->link() */
+		/*!!
+		* @Type: function
+		* @Name: link
+		* @Author: Seek3r
+		* @Title: Wrapper to session->link() 
+		* @Description: Used for backward compatibility and as a shortcut.
+		* If no url is passed, it will use PHP_SELF
+		* @Syntax: string link(url as string, extra_vars as string)
+		* @Example1: <a href="<?php echo $phpgw->link('otherpage.php');?>">click here</a>
+		*/
 		function link($url = "", $extravars = "")
 		{
 			global $phpgw, $phpgw_info, $usercookie, $kp3, $PHP_SELF;
 			return $this->session->link($url, $extravars);
 		}
 
+		/*!!
+		* @Type: function
+		* @Name: link
+		* @Author: Seek3r
+		* @Title: Handles redirects under iis and apache
+		* @Description: This function handles redirects under iis and apache
+		* it assumes that $phpgw->link() has already been called
+		* @Syntax: string redirect(url as string)
+		* @Example1: None yet
+		*/
 		function redirect($url = "")
 		{
-			// This function handles redirects under iis and apache
-			// it assumes that $phpgw->link() has already been called
 
 			global $HTTP_ENV_VARS;
 
@@ -127,10 +127,20 @@
 			}
 		}
 
+		/*!!
+		* @Type: function
+		* @Name: lang
+		* @Author: Jengo
+		* @Title: Shortcut to translation class
+		* @Description: This function is a basic wrapper to translation->translate()
+		* @Syntax: string redirect(key as string)
+		* @Example1: None yet
+		*/
 		function lang($key, $m1 = "", $m2 = "", $m3 = "", $m4 = "") 
 		{
 			global $phpgw;
 			return $this->translation->translate($key);
 		}
-	}	//end phpgw class
+	/* end of class */
+	}
 ?>

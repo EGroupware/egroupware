@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -9,11 +9,13 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+  /* $Id $ */
 
-  /*
-    This is a completely redundant file, but Im keeping it here because
-    I have some irrational feeling that I should. Seek3r
-  */
-//  $phpgw_info['server']['versions']['phpgwapi'] = $phpgw_info['server']['versions']['phpgwapi'];
+  /**************************************************************************\
+	* This file should never be changed!                                       *
+	* This is only to be used for the original table definitions.              *
+	* Any changes to the tables must be done thru the tables_update and then   *
+	* generate the tables_current                                              *
+  \**************************************************************************/
+  
 ?>

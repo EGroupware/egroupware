@@ -322,23 +322,23 @@
     function app_status($appname = ""){
       global $phpgw_info;
       $this->get_versions();
-      reset ($phpgw_info["server"]["versions"]);
+      reset ($phpgw_info['server']['versions']);
 
       $this->db->query("select * from phpgw_applications");
       while ($this->db->next_record()){
-        $phpgw_info["server"]["current_versions"][$this->db->f("app_name")] = $this->db->f("app_version");
+        $phpgw_info['server']['current_versions'][$this->db->f('app_name')] = $this->db->f('app_version');
       }
-      while (list($key, $value) = each ($phpgw_info["server"]["versions"])){
-        if ($key != "header" && $key != "current_header" && $key != "" && $key != "mcrypt"){
-          if (!isset($phpgw_info["server"]["current_versions"][$key])){
-            $phpgw_info["server"]["current_versions"][$key] = "new";
-            $phpgw_info["setup"][$key]["status"] = "new";
-          }elseif ($value != $phpgw_info["server"]["current_versions"][$key]){
-              $phpgw_info["setup"][$key]["status"] = "upgrade";
+      while (list($key, $value) = each ($phpgw_info['server']['versions'])){
+        if ($key != 'header' && $key != 'current_header' && $key != '' && $key != 'mcrypt'){
+          if (!isset($phpgw_info['server']['current_versions'][$key])){
+            $phpgw_info['server']['current_versions'][$key] = 'new';
+            $phpgw_info['setup'][$key]['status'] = 'new';
+          }elseif ($value != $phpgw_info['server']['current_versions'][$key]){
+              $phpgw_info['setup'][$key]['status'] = 'upgrade';
           }else{
-              $phpgw_info["setup"][$key]["status"] = "current";
+              $phpgw_info['setup'][$key]['status'] = 'current';
           }
-          echo "phpgw_info[setup][$key][status]: ".$phpgw_info["setup"][$key]["status"]."<br>";
+          echo 'phpgw_info[setup][$key][status]: '.$phpgw_info['setup'][$key]['status'].'<br>';
         }
       }
 

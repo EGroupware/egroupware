@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare                                                             *
+  * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -9,11 +9,9 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  /* $Id$ */
+  /* $Id $ */
+  /**************************************************************************\
+  * This file should be generated for you. It should never be edited by hand *
+  \**************************************************************************/
 
-  /*
-    This is a completely redundant file, but Im keeping it here because
-    I have some irrational feeling that I should. Seek3r
-  */
-//  $phpgw_info['server']['versions']['phpgwapi'] = $phpgw_info['server']['versions']['phpgwapi'];
 ?>

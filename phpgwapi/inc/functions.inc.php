@@ -29,6 +29,16 @@
 	* Direct functions, which are not part of the API class                      *
 	* because they are require to be availble at the lowest level.               *
 	\****************************************************************************/
+	/*!!
+	* @Type: function
+	* @Name: CreateObject
+	* @Author: mdean
+	* @Title: Load a class and include the class file if not done so already.
+	* @Description: This function is used to create an instance of a class, 
+	* and if the class file has not been included it will do so.
+	* @Syntax: CreateObject('app.class', 'constructor_params');
+	* @Example1: $phpgw->acl = CreateObject('phpgwapi.acl');
+	*/
 	function CreateObject($classname, $constructor_param = "")
 	{
 		global $phpgw, $phpgw_info, $phpgw_domain;
@@ -85,7 +95,7 @@
 	\****************************************************************************/
 	error_reporting(7);
 	/* Make sure the header.inc.php is current. */
-	if ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"]){
+	if ($phpgw_info["server"]["versions"]["header"] < $phpgw_info["server"]["versions"]["current_header"]){
 		echo "<center><b>You need to port your settings to the new header.inc.php version.</b></center>";
 		exit;
 	}
@@ -157,34 +167,47 @@
 	// This is where it belongs (jengo)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
 	$phpgw_info["server"]["global_denied_users"] = array('root'     => True,
-																												'bin'      => True,
-																												'daemon'   => True,
-																												'adm'      => True,
-																												'lp'       => True,
-																												'sync'     => True,
-																												'shutdown' => True,
-																												'halt'     => True,
-																												'mail'     => True,
-																												'news'     => True,
-																												'uucp'     => True,
-																												'operator' => True,
-																												'games'    => True,
-																												'gopher'   => True,
-																												'nobody'   => True,
-																												'xfs'      => True,
-																												'pgsql'    => True,
-																												'mysql'    => True,
-																												'postgres' => True,
-																												'ftp'      => True,
-																												'gdm'      => True,
-																												'named'    => True
-																											);
+		'bin'      => True,
+		'daemon'   => True,
+		'adm'      => True,
+		'lp'       => True,
+		'sync'     => True,
+		'shutdown' => True,
+		'halt'     => True,
+		'mail'     => True,
+		'news'     => True,
+		'uucp'     => True,
+		'operator' => True,
+		'games'    => True,
+		'gopher'   => True,
+		'nobody'   => True,
+		'xfs'      => True,
+		'pgsql'    => True,
+		'mysql'    => True,
+		'postgres' => True,
+		'ftp'      => True,
+		'gdm'      => True,
+		'named'    => True
+	);
 
 	/****************************************************************************\
 	* These lines load up the API, fill up the $phpgw_info array, etc            *
 	\****************************************************************************/
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
+	/************************************************************************\
+	* Load up the main instance of the db class.                             *
+	\************************************************************************/
+	$phpgw->db           = CreateObject("phpgwapi.db");
+	$phpgw->db->Host     = $phpgw_info["server"]["db_host"];
+	$phpgw->db->Type     = $phpgw_info["server"]["db_type"];
+	$phpgw->db->Database = $phpgw_info["server"]["db_name"];
+	$phpgw->db->User     = $phpgw_info["server"]["db_user"];
+	$phpgw->db->Password = $phpgw_info["server"]["db_pass"];
+	if ($this->debug) {
+		 $phpgw->db->Debug = 1;
+	}
+
 	$phpgw->db->Halt_On_Error = "no";
 	@$phpgw->db->query("select count(*) from phpgw_config");
 	if (! @$phpgw->db->next_record()) {
@@ -201,7 +224,18 @@
 		$phpgw_info["server"][$phpgw->db->f("config_name")] = stripslashes($phpgw->db->f("config_value"));
 	}
 	
-	$phpgw->load_core_objects();	
+	/************************************************************************\
+	* Required classes                                                       *
+	\************************************************************************/
+	$phpgw->common       = CreateObject("phpgwapi.common");
+	$phpgw->hooks        = CreateObject("phpgwapi.hooks");
+	$phpgw->auth         = createobject("phpgwapi.auth");
+	$phpgw->acl          = CreateObject("phpgwapi.acl");
+	$phpgw->accounts     = createobject("phpgwapi.accounts");
+	$phpgw->session      = CreateObject("phpgwapi.sessions");
+	$phpgw->preferences  = CreateObject("phpgwapi.preferences");
+	$phpgw->applications = CreateObject("phpgwapi.applications");
+	$phpgw->translation  = CreateObject("phpgwapi.translation");
 	print_debug('main class loaded');
 
 	/****************************************************************************\
