@@ -44,7 +44,7 @@
 		$str = '<select name="new_owner" size="5">'."\n";
 		$users = $phpgw->accounts->get_list('accounts');
 		$c_users = count($users);
-		$str .= '<option value=0>'.lang('Delete All Records').'</option>'."\n";
+		$str .= '<option value=0 selected>'.lang('Delete All Records').'</option>'."\n";
 		for($i=0;$i<$c_users;$i++)
 		{
 			$str .= '<option value='.$users[$i]['account_id'].'>'.$phpgw->common->display_fullname($users[$i]['account_lid'],$users[$i]['account_firstname'],$users[$i]['account_lastname']).'</option>'."\n";
