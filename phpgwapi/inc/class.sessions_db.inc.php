@@ -47,7 +47,9 @@
 		var $db2;
 		var $public_functions = array(
 			'list_methods' => True,
-			'update_dla'   => True
+			'update_dla'   => True,
+			'list'         => True,
+			'total'        => True
 		);
 
 		var $cookie_domain;
@@ -1038,6 +1040,39 @@
 			}
 			/* if no extravars then we return the cleaned up url/scriptname */
 			return $url;
+		}
+
+		function list_sessions($start,$order,$sort)
+		{
+			$values = array();
+			
+			$ordermethod = 'order by session_dla asc';
+			$this->db->limit_query("select * from phpgw_sessions where session_flags != 'A' order by $sort $order",$start,__LINE__,__FILE__);
+
+			while ($this->db->next_record())
+			{
+				$values[] = array(
+					'session_id'        => $this->db->f('session_id'),
+					'session_lid'       => $this->db->f('session_lid'),
+					'session_ip'        => $this->db->f('session_ip'),
+					'session_logintime' => $this->db->f('session_logintime'),
+					'session_action'    => $this->db->f('session_action'),
+					'session_dla'       => $this->db->f('session_dla')
+				);
+			}
+			return $values;
+		}
+		
+		/*!
+		@function total
+		@abstract get number of normal / non-anonymous sessions
+		*/
+		function total()
+		{
+			$this->db->query("select count(*) from phpgw_sessions where session_flags != 'A'",__LINE__,__FILE__);
+			$this->db->next_record();
+
+			return $this->db->f(0);
 		}
 	}
 ?>

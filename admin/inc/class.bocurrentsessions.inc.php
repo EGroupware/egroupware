@@ -20,19 +20,14 @@
 			'kill' => True
 		);
 
-		function bocurrentsessions()
-		{
-			$this->so       = CreateObject('admin.socurrentsessions');
-		}
-
 		function total()
 		{
-			return $this->so->total();
+			return $GLOBALS['phpgw']->session->total();
 		}
 
 		function list_sessions($start,$order,$sort)
 		{
-			$values = $this->so->list_sessions($start,$sort,$order);
+			$values = $GLOBALS['phpgw']->session->list_sessions($start,$sort,$order);
 
 			while (list(,$value) = @each($values))
 			{

@@ -1233,9 +1233,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 
 			if (isset($GLOBALS['phpgw_ifo']['navbar']['admin']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['show_currentusers']))
 			{
-				$GLOBALS['phpgw']->db->query('select count(session_id) from phpgw_sessions');
-				$GLOBALS['phpgw']->db->next_record();
-				$var['current_users']		= lang('Current users') . ': ' . $GLOBALS['phpgw']->db->f(0);
+				$var['current_users']		= lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total();
 				$var['url_current_users']	= $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 			}
 

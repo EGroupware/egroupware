@@ -45,7 +45,9 @@
 		var $data;
 		var $public_functions = array(
 			'list_methods' => True,
-			'update_dla'   => True
+			'update_dla'   => True,
+			'list'         => True,
+			'total'        => True
 		);
 
 		var $cookie_domain;
@@ -59,6 +61,7 @@
 			$this->kp3       = get_var('kp3',Array('COOKIE','GET'));
 			/* Create the crypto object */
 			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
+			$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 			$this->phpgw_set_cookiedomain();
 		}
 
@@ -291,23 +294,23 @@
 			$parts = explode('.',$dom);
 			if (count($parts) > 2)
 			{
-        if (!ereg('[0-9]+',$parts[1]))
-        {
-          for($i=1;$i<count($parts);$i++)
-          {
-            $this->cookie_domain .= '.'.$parts[$i];
-          }
-        }
-        else
-        {
-          $this->cookie_domain = '';
-        }
+				if (!ereg('[0-9]+',$parts[1]))
+				{
+				for($i=1;$i<count($parts);$i++)
+				{
+					$this->cookie_domain .= '.'.$parts[$i];
+				}
+				}
+				else
+				{
+					$this->cookie_domain = '';
+				}
 			}
 			else
 			{
 				$this->cookie_domain = '';
 			}
-      print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
+			print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
 			session_set_cookie_params(0,'/',$this->cookie_domain);
 		}
 
@@ -442,8 +445,8 @@
 			session_register('phpgw_session');
 			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
-			//$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
-			//	." VALUES ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
+				." VALUES ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
@@ -655,8 +658,8 @@
 			session_register('phpgw_session');
 			$GLOBALS['HTTP_SESSION_VARS']['phpgw_session'] = $GLOBALS['phpgw_session'];
 
-			//$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
-			//	. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
+				. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
@@ -693,18 +696,28 @@
 				return False;
 			}
 
-			session_unset();
-			session_destroy();
- 			$this->phpgw_setcookie(session_name());
-			//$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo='" . time() . "' WHERE sessionid='"
-			//	. $sessionid . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo='" . $GLOBALS['phpgw']->datetime->gmtnow . "' WHERE sessionid='"
+				. $sessionid . "'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->transaction_commit();
 
 			// Only do the following, if where working with the current user
 			if ($sessionid == $GLOBALS['phpgw_info']['user']['sessionid'])
 			{
 				$this->clean_sessions();
+				session_unset();
+				session_destroy();
+				$this->phpgw_setcookie(session_name());
 			}
-			$GLOBALS['phpgw']->db->transaction_commit();
+			else
+			{
+				$sessions = $this->list_sessions(0,'','',True);
+				
+				if (isset($sessions[$sessionid]))
+				{
+					//echo "<p>session_php4::destroy($session_id): unlink('".$sessions[$sessionid]['php_session_file'].")</p>\n";
+					unlink($sessions[$sessionid]['php_session_file']);
+				}
+			}
 
 			return True;
 		}
@@ -995,5 +1008,86 @@
 			}
 			/* if no extravars then we return the cleaned up url/scriptname */
 			return $url;
+		}
+		
+		function session_sort($a,$b)
+		{
+			$sign = strcasecmp($GLOBALS['phpgw']->session->sort_order,'ASC') ? 1 : -1;
+
+			return strcasecmp($a[$GLOBALS['phpgw']->session->sort_by],
+			                  $b[$GLOBALS['phpgw']->session->sort_by]) * $sign;
+		}
+		
+		/*!
+		@function list_sessions
+		@abstract get list of normal / non-anonymous sessions
+		@author ralfbecker
+		*/
+		function list_sessions($start,$order,$sort,$all_no_sort = False)
+		{
+			//echo "<p>session_php4::list_sessions($start,'$order','$sort',$all)</p>\n";
+			$values = array();
+			$maxmatchs = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+			$dir = opendir($path = ini_get('session.save_path'));
+			while ($file = readdir($dir))
+			{
+				if (substr($file,0,5) != 'sess_')
+				{
+					continue;
+				}
+				list($session) = file($path . '/' . $file);
+
+				if (substr($session,0,14) != 'phpgw_session|')
+				{
+					continue;
+				}
+				$session = unserialize(substr($session,14));
+				list(,$domain) = explode('@',$session['session_lid']);
+				if (empty($domain))
+				{
+					$domain = $GLOBALS['phpgw_info']['server']['default_domain'];
+				}
+				if ($session['session_flags'] == 'A' || $domain != $this->account_domain || !$session['session_id'])
+				{
+					continue;	// no anonymous sessions or other domains
+				}
+				unset($session['phpgw_app_sessions']);	// not needed, saves memory
+				//echo "file='$file'=<pre>"; print_r($session); echo "</pre>"; 
+				
+				$session['php_session_file'] = $path . '/' . $file;
+				$values[$session['session_id']] = $session;
+			}
+			closedir($dir);
+			
+			if (!$all_no_sort)
+			{
+				$GLOBALS['phpgw']->session->sort_by = $sort;
+				$GLOBALS['phpgw']->session->sort_order = $order;
+			
+				uasort($values,array('sessions','session_sort'));
+				
+				$i = 0;
+				$start = intval($start);
+				foreach($values as $id => $data)
+				{
+					if ($i < $start || $i > $start+$maxmatchs)
+					{
+						unset($values[$id]);
+					}
+					++$i;
+				}
+				reset($values);
+			}
+			return $values;
+		}
+		
+		/*!
+		@function total
+		@abstract get number of normal / non-anonymous sessions
+		@author ralfbecker
+		*/
+		function total()
+		{
+			return count($this->list_sessions(0,'','',True));
 		}
 	}
