@@ -85,12 +85,22 @@
        
        $db2 = $phpgw->db;
        
-       if ($phpgw_info["user"]["userid"] != $lid) {
-          $db2->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
-          $db2->next_record();
-          $gl = explode(",",$db2->f("account_groups"));
-       } else {
+       if (gettype($lid) == "integer") {
+         if ($phpgw_info["user"]["account_id"] != $lid) {
+           $db2->query("select account_groups from accounts where account_id=$lid",__LINE__,__FILE__);
+           $db2->next_record();
+           $gl = explode(",",$db2->f("account_groups"));
+         } else {
           $gl = $phpgw_info["user"]["groups"];
+         }
+       } else {
+         if ($phpgw_info["user"]["userid"] != $lid) {
+           $db2->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
+           $db2->next_record();
+           $gl = explode(",",$db2->f("account_groups"));
+         } else {
+          $gl = $phpgw_info["user"]["groups"];
+         }
        }
 
        for ($i=1; $i<(count($gl)-1); $i++) {
