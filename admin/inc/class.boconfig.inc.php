@@ -14,8 +14,7 @@
 
 	class boconfig
 	{
-		var $public_functions = array(
-		);
+		var $public_functions = array();
 
 		var $xml_functions = array();
 
@@ -63,10 +62,12 @@
 			}
 		}
 
-	  // xmlrpc functions
+		// xmlrpc functions
 
 		function rpc_values($data)
 		{
+			exit;
+
 			$newsettings = $data['newsettings'];
 			if (!$data['appname'])
 			{
@@ -93,6 +94,5 @@
 			$conf->save_repository();
 			return True;
 		}
-
 	}
 ?>
