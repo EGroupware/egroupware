@@ -27,9 +27,8 @@
 		exit;
 	}
 	// Does not return unless user is authorized
-	include( PHPGW_INCLUDE_ROOT . "/phpgwapi/inc/class.common.inc.php");
 
-	$common = new common;
+	$common       = CreateObject("phpgwapi.common");
 	$phpgw_setup->loaddb();
 
 	$phpgw_info["server"]["auth_type"] = "ldap";
