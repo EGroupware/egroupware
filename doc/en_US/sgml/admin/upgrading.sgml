@@ -4,14 +4,14 @@
 <sect1>
 <title>Upgrading from CVS</title>
 <para>
-Follow these steps to upgrade a CVS install (please adjust to your servers config):
+Follow these steps to upgrade a CVS install (please adjust to your server's config):
 </para>
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html/phpgroupware</userinput>
 <userinput># cvs update -Pd</userinput>
 </literallayout></blockquote>
 <para>
-After updating from CVS, be sure to return to the configuration page [/setup] and update any necessary tables
+After updating from CVS, be sure to return to the configuration page [/setup] and update any necessary tables.
 </para>
 </sect1>
 </chapter>

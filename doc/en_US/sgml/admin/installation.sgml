@@ -103,7 +103,7 @@ We have reports of it working on Windows NT and OS/2, and using Oracle as the da
 <para>
 Installing from a TarBall is very easy. The files should
 be installed in the webserver directory. Example steps (please
-adjust to your servers config):
+adjust to your server's config):
 </para>
 <blockquote><literallayout>
 <userinput># cp phpgroupware-version.tar.gz /home/httpd/html</userinput>
@@ -131,7 +131,7 @@ To see a list of applications currently available via CVS, go to [http://cvs.sou
 </para>
 <sect3>
 <title>Development Branch in CVS</Title>
-Follow these steps (please adjust to your servers config):
+Follow these steps (please adjust to your server's config):
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html</userinput>
 <userinput># cvs -z3 -d:pserver:anoncvs@subversions.gnu.org:/cvsroot/phpgroupware co phpgroupware</userinput>
@@ -151,7 +151,7 @@ or if you prefer using CVSROOT:
 <sect3>
 <title>Stable Branch in CVS</Title>
 <para>
-Follow these steps (please adjust to your servers config):
+Follow these steps (please adjust to your server's config):
 </para>
 <blockquote><literallayout>
 <userinput># cd /home/httpd/html</userinput>
@@ -182,7 +182,7 @@ Recently the phpGroupWare developers started a branch for patches to released ve
 <sect2>
 <title>Setting File Permissions</Title>
 <para>
-There are a few directories which will need special fie permissions set for phpGroupWare to work properly.
+There are a few directories which will need special file permissions set for phpGroupWare to work properly.
 </para>
 
 <para>
@@ -190,7 +190,7 @@ Temp Directory (Required) - This can be /tmp for simplicity, but it is required 
 </para>
 
 <para>
-Files Directory (Required) - This can be should be the files dir under the phpgroupware dir. You will need to give the webserver account owndership of this directory.
+Files Directory (Required) - This can be the files dir under the phpgroupware dir. You will need to give the webserver account owndership of this directory.
 </para>
 <blockquote><literallayout>
 (from phpgroupware root)
@@ -357,7 +357,7 @@ SQL/SSL  use encrypted SQL access
 LDAP  use LDAP server
 mail  use mail server (IMAP/POP3)
 HTTP  use HTTP authentication (.htaccess)
-PAM   use PAM authentication (note currently working)
+PAM   use PAM authentication (not currently working)
 </literallayout>
 </entry>
 </row>
@@ -449,7 +449,7 @@ Click <guibutton>Install Languages</guibutton> to add at least one language to t
 There shouldn't be anything to do under <guibutton>Manage Applications</guibutton> at this time, this is where you will return after an upgrade to update and table differences.
 </para>
 <para>
-after your done, click on logout to complete the install and end the session.
+after you're done, click on logout to complete the install and end the session.
 </para>
 </sect2>
 <sect2>
@@ -500,11 +500,11 @@ In the first section, choose the Applications link.
 </para>
 
 <para>
-Click on add, and fill in the form.
+Click on add and fill in the form.
 </para>
 
 <para>
-Application name should be identical to the name of the directory you moved into the phpGroupWare install, in this case use headlines
+Application name should be identical to the name of the directory you moved into the phpGroupWare install. In this case, use headlines.
 </para>
 
 <para>
@@ -512,7 +512,7 @@ Application title is shown in the navigation bar and other places to refer to th
 </para>
 
 <para>
-Enabled can be used to disable an application for all users temporially. You should normal check the box to enable the application.
+Enabled can be used to disable an application for all users temporarily. You should normally check the box to enable the application.
 </para>
 
 <para>

@@ -33,7 +33,7 @@ Its phpGroupWare, not any of the others. Only the G and the W should be in caps,
 <qandaentry>
 <question><para>I didn't find my question here, where can I ask?</para></question>
 <answer><para>
-Many of the developers are on the openprojects irc network (irc.openproject.net) in the #phpgroupware channel.  You can also check the mailing lists and archives at <ulink url="http://savannah.gnu.org/mail/?group_idj=509"><citetitle>phpGroupware - Mailing Lists</citetitle></ulink>
+Many of the developers are on the openprojects irc network (irc.openprojects.net) in the #phpgroupware channel.  You can also check the mailing lists and archives at <ulink url="http://savannah.gnu.org/mail/?group_id=509"><citetitle>phpGroupware - Mailing Lists</citetitle></ulink>
 </para></answer>
 </qandaentry>
 <qandaentry>
@@ -77,7 +77,7 @@ phpGroupware is being developed with version 7.x.  I tried installing it on 6.x 
 
 <qandadiv> <title>Administration</title>
 <qandaentry>
-<question><para>Deselecting an application for a user doesn't seem to restrict thier access to that application</para></question>
+<question><para>Deselecting an application for a user doesn't seem to restrict their access to that application</para></question>
 <answer>
 <para>
 A user gains access to an application one of two ways, being given access directly, or by belonging to a group that has access.  In order to deny a user access to an application, it must be removed from both the users account, and all the users groups.
