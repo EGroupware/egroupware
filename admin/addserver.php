@@ -61,9 +61,12 @@
 			$server_info = array(
 				'server_name' => addslashes($server_name),
 				'server_url'  => addslashes($server_url),
+				'trust_level' => intval($trust_level),
+				'trust_rel'   => intval($trust_rel),
+				'username'    => addslashes($server_username),
+				'password'    => $server_password ? $server_password : $server['password'],
 				'server_mode' => addslashes($server_mode),
 				'server_security' => addslashes($server_security),
-				'trust_level' => intval($trust_level),
 				'admin_name'  => addslashes($admin_name),
 				'admin_email' => addslashes($admin_email)
 			);
@@ -105,17 +108,17 @@
 	$phpgw->template->set_var('lang_reset',lang('Clear Form'));
 	$phpgw->template->set_var('lang_done',lang('Done'));
 
-	$phpgw->template->set_var('server_name',$server_name);
-	$phpgw->template->set_var('server_url',$server_url);
+	$phpgw->template->set_var('server_name',$server['server_name']);
+	$phpgw->template->set_var('server_url',$server['server_url']);
 	$phpgw->template->set_var('server_username',$server['username']);
 	$phpgw->template->set_var('server_mode',formatted_list('server_mode',$is->server_modes,$server['server_mode']));
 	$phpgw->template->set_var('server_security',formatted_list('server_security',$is->security_types,$server['server_security']));
 	$phpgw->template->set_var('ssl_note',lang('Note: SSL available only if PHP is compiled with curl support'));
 	$phpgw->template->set_var('pass_note',lang('(Stored password will not be shown here)'));
-	$phpgw->template->set_var('trust_level',formatted_list('trust_level',$is->trust_levels,$trust_level));
-	$phpgw->template->set_var('trust_relationship',formatted_list('trust_relationship',$is->trust_relationships,$server['trust_relationship'],True));
-	$phpgw->template->set_var('admin_name',$phpgw->strip_html($admin_name));
-	$phpgw->template->set_var('admin_email',$phpgw->strip_html($admin_email));
+	$phpgw->template->set_var('trust_level',formatted_list('trust_level',$is->trust_levels,$server['trust_level']));
+	$phpgw->template->set_var('trust_relationship',formatted_list('trust_rel',$is->trust_relationships,$server['trust_rel'],True));
+	$phpgw->template->set_var('admin_name',$phpgw->strip_html($server['admin_name']));
+	$phpgw->template->set_var('admin_email',$phpgw->strip_html($server['admin_email']));
 
 	$phpgw->template->set_var('edithandle','');
 	$phpgw->template->set_var('addhandle','');
