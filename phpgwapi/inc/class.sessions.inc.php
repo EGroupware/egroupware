@@ -124,7 +124,7 @@
 
 			$phpgw_info['user']['account_id'] = $this->account_id;
 			
-			$this->read_repositories();
+			$this->read_repositories($phpgw_info['server']['cache_phpgw_info']);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
 				return False;
@@ -245,7 +245,7 @@
 				unset ($phpgw_info['server']['default_domain']);                 // we kill this for security reasons
 			}
 
-			$this->read_repositories();
+			$this->read_repositories(False);
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
 				return False;
@@ -325,20 +325,43 @@
 		/*************************************************************************\
 		* Functions for appsession data and session cache                         *
 		\*************************************************************************/
-		function read_repositories()
+		function read_repositories($cached='')
 		{
 			global $phpgw, $phpgw_info;
 			$phpgw->acl->acl($this->account_id);
 			$phpgw->accounts->accounts($this->account_id);
 			$phpgw->preferences->preferences($this->account_id);
 			$phpgw->applications->applications($this->account_id);
-	
+			
+			if(@$cached)
+			{
+				$this->user = $this->appsession('phpgw_info_cache','phpgwapi');
+				if(!empty($this->user))
+				{
+					$phpgw->preferences->data = $this->user['preferences'];
+				}
+				else
+				{
+					$this->setup_cache();
+				}
+			}
+			else
+			{
+				$this->setup_cache();
+			}
+			$this->hooks               = $phpgw->hooks->read();
+		}
+
+		function setup_cache()
+		{
+			global $phpgw, $phpgw_info;
+			
 			$this->user                = $phpgw->accounts->read_repository();
 			$this->user['acl']         = $phpgw->acl->read_repository();
 			$this->user['preferences'] = $phpgw->preferences->read_repository();
 			$this->user['apps']        = $phpgw->applications->read_repository();
 			//@reset($this->data['user']['apps']);
-	
+
 			$this->user['domain']      = $this->account_domain;
 			$this->user['sessionid']   = $this->sessionid;
 			$this->user['kp3']         = $this->kp3;
@@ -348,7 +371,10 @@
 			$this->user['account_lid'] = $this->account_lid;
 			$this->user['userid']      = $this->account_lid;
 			$this->user['passwd']      = @$this->passwd;
-			$this->hooks               = $phpgw->hooks->read();
+			if(@$phpgw_info['server']['cache_phpgw_info'])
+			{
+				$this->appsession('phpgw_info_cache','phpgwapi',$this->user);
+			}
 		}
 	
 		function save_repositories()

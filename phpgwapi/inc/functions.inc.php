@@ -271,12 +271,54 @@
 	$phpgw->db->Halt_On_Error = 'yes';
 
 	/* Fill phpgw_info["server"] array */
-	$phpgw->db->query("select * from phpgw_config WHERE config_app='phpgwapi'",__LINE__,__FILE__);
-	while ($phpgw->db->next_record())
+// An Attempt to speed things up using cache premise
+	$phpgw->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
+	if ($phpgw->db->num_rows())
 	{
-		$phpgw_info['server'][$phpgw->db->f('config_name')] = stripslashes($phpgw->db->f('config_value'));
+		$phpgw_info['server']['cache_phpgw_info'] = stripslashes($phpgw->db->f('config_value'));
 	}
 
+	$cache_query = "select content from phpgw_app_sessions where"
+		." sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
+		
+	$phpgw->db->query($cache_query,__LINE__,__FILE__);
+	$server_info_cache = $phpgw->db->num_rows();
+	
+	if(@$phpgw_info['server']['cache_phpgw_info'] && $server_info_cache)
+	{
+		$cache_query = "select content from phpgw_app_sessions where"
+			." sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
+
+		$phpgw->db->query($cache_query,__LINE__,__FILE__);
+		$phpgw->db->next_record();
+
+		$phpgw_info['server'] = unserialize(stripslashes($phpgw->db->f('content')));
+	}
+	else
+	{	
+		$phpgw->db->query("select * from phpgw_config WHERE config_app='phpgwapi'",__LINE__,__FILE__);
+		while ($phpgw->db->next_record())
+		{
+			$phpgw_info['server'][$phpgw->db->f('config_name')] = stripslashes($phpgw->db->f('config_value'));
+		}
+
+		if($phpgw_info['server']['cache_phpgw_info'])
+		{
+			if($server_info_cache)
+			{
+				$cache_query = "UPDATE phpgw_app_sessions set content='".addslashes(serialize($phpgw_info['server']))."'"
+					." WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
+			}
+			else
+			{
+				$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
+					. "'0','0','phpgwapi','config','".addslashes(serialize($phpgw_info['server']))."')";
+			}
+		}
+		$phpgw->db->query($cache_query,__LINE__,__FILE__);
+	}
+	unset($cache_query);
+	unset($server_info_cache);
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
