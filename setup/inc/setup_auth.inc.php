@@ -15,54 +15,58 @@
   // password in ../header.inc.php to protect all of the setup
   // pages from unauthorized use.
   
-  function setup_header()
+  function setup_header($title = "")
   {
      global $phpgw_info;
 
-     echo '<title>phpGroupWare - setup</title><BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" '
+     echo '<title>phpGroupWare setup ' . $title . '</title><BODY BGCOLOR="FFFFFF" margintop="0" marginleft="0" '
         . 'marginright="0" marginbottom="0"><table border="0" width="100%"><tr>'
         . '<td align="left" bgcolor="486591">&nbsp;<font color="fefefe">phpGroupWare version '
         . $phpgw_info["server"]["version"] . ' setup</font></td></tr></table>';
   }
 
-function loginForm($err="") {
-	global $PHP_SELF;
-        echo "<html><head><title>phpGroupWare Setup - please Login</title></head>\n";
-        echo "<body bgcolor='#ffffff'>\n";
-        echo "<table border=\"0\" align=\"center\">\n";
-        echo "  <tr bgcolor=\"486591\">\n";
-        echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup Login</b></font></td>\n";
-        echo "  </tr>\n";
-        if ($err != "") {
-          echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$err."</font></td></tr>\n";
-        }
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
-        echo "      <input type='password' name='FormPW' value=''>\n";
-        echo "      <input type='submit' name='Login' value='Login'>\n";
-        echo "    </form></td>\n";
-        echo "  </tr>\n";
-        echo "</table>\n";
-	echo "</body></html>\n";
-}
+  function loginForm($err="")
+  {
+ 	global $PHP_SELF;
+ 	
+ 	setup_header("Please login");
 
-if (isset($FormPW) ) {
-  if ($FormPW != $phpgw_info["server"]["config_passwd"]) {
-    loginForm("Invalid password.");
-    exit;
-  } 
-  // Valid login, fall through and set the cookie 
-  $SetupCookie = $FormPW;
-} else if (isset($SetupCookie)) {
-  if ($SetupCookie != $phpgw_info["server"]["config_passwd"]) {
-    setcookie("SetupCookie","");  // scrub the old one
-    loginForm("Invalid session cookie (cookies must be enabled)");
-    exit;
+     echo "<p><body bgcolor='#ffffff'>\n";
+     echo "<table border=\"0\" align=\"center\">\n";
+     echo "  <tr bgcolor=\"486591\">\n";
+     echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup Login</b></font></td>\n";
+     echo "  </tr>\n";
+     if ($err != "") {
+        echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$err."</font></td></tr>\n";
+     }
+     echo "  <tr bgcolor=\"e6e6e6\">\n";
+     echo "    <td><form action='".$PHP_SELF."' method='POST'>\n";
+     echo "      <input type='password' name='FormPW' value=''>\n";
+     echo "      <input type='submit' name='Login' value='Login'>\n";
+     echo "    </form></td>\n";
+     echo "  </tr>\n";
+     echo "</table>\n";
+ 	echo "</body></html>\n";
   }
-} else {
-  loginForm();
-  exit;
-}
-// Auth ok.
-setcookie("SetupCookie","$SetupCookie");
+
+  if (isset($FormPW)) {
+     if ($FormPW != $phpgw_info["server"]["config_passwd"]) {
+        loginForm("Invalid password.");
+        exit;
+     } 
+     // Valid login, fall through and set the cookie 
+     $SetupCookie = $FormPW;
+  } else if (isset($SetupCookie)) {
+     if ($SetupCookie != $phpgw_info["server"]["config_passwd"]) {
+        setcookie("SetupCookie","");  // scrub the old one
+        loginForm("Invalid session cookie (cookies must be enabled)");
+        exit;
+     }
+  } else {
+     loginForm();
+     exit;
+  }
+
+  // Auth ok.
+  setcookie("SetupCookie","$SetupCookie");
 ?>

@@ -62,20 +62,23 @@
    * for applications to inteact with the user, this is how it is.      *
    *                                                                    *
   \**********************************************************************/
+  setup_header();
+  echo "<br>";
+
   $ok = true;
   $baseDir = $phpgw_info["server"]["server_root"];
   include("./inc/core_setup.inc.php");
   if (!$ok) {
     exit;
   } else {
-    echo "<table border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='0'>\n";
+    echo "<table width=\"70%\" border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='0'>\n";
     echo "<tr bgcolor='#486591'>";
-    echo "<th><font color='#fefefe'>phpGroupWare Core Staus</font></th>";
+    echo "<th align=\"center\"><font color='#fefefe'>phpGroupWare Core Staus</font></th>";
     echo "</tr>\n";
     $db->query("select app_version from applications where app_name='admin'");
     $db->next_record();
     $curversion  = $db->f("app_version");
-    echo "<tr><td>Core version $curversion. No updates needed.</td></tr>\n";
+    echo "<tr><td align=\"center\">Core version $curversion. No updates needed.</td></tr>\n";
     echo "</table>\n\n";
   }
   // Remove the appName from all users and groupws on the system
@@ -204,11 +207,6 @@
     }
   }
 
-
-  // Initial HTML output
-  echo "<html><head><title>Setup phpGroupWare</title></head>\n";
-  echo "<body bgcolor='#ffffff'>\n";
-
   // Loop through all the directories looking for possible 3rd party apps
   $baseDir = $phpgw_info["server"]["server_root"];
   $setupFile = "/inc/setup.inc.php"; // File to look for to identify apps 
@@ -287,16 +285,16 @@
 
   echo "<form action='".$PHP_SELF."' method='POST'>\n";
 
-  echo "<table border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='1'>\n";
-  echo "<tr bgcolor='#486591'><th colspan='7'><font size='+1' color='#fefefe'>Application Setup</font></th></tr>\n";
+  echo "<table border='0' align='center' bgcolor='#e6e6e6' cellpadding='3' cellspacing='1' width=\"70%\">\n";
+  echo "<tr bgcolor='#486591'><th colspan='7'><font color='#fefefe'>Application Setup</font></th></tr>\n";
   echo "<tr bgcolor='#486591'>";
-  echo "<th><font color='#fefefe'>Application</font></th>";
-  echo "<th><font color='#fefefe'>Installed Version</font></th>";
-  echo "<th><font color='#fefefe'>Detected Version</font></th>";
-  echo "<th><font color='#fefefe'>Install</font></th>";
-  echo "<th><font color='#fefefe'>Upgrade</font></th>";
-  echo "<th><font color='#fefefe'>Remove</font></th>";
-  echo "<th><font color='#fefefe'>Do Nothing</font></th>";
+  echo "<td align=\"center\"><font color='#fefefe'>Application</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Installed Version</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Detected Version</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Install</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Upgrade</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Remove</font></td>";
+  echo "<td align=\"center\"><font color='#fefefe'>Do Nothing</font></td>";
   echo "</tr>\n";
 
   $numApps = 0;
