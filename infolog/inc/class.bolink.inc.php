@@ -814,8 +814,10 @@
 			{
 				return 'not an event !!!';
 			}
-			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
-			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
+			$format = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'] . ' '.
+				($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12' ? 'h:i a' : 'H:i');
+			
+			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset,$format);
 			$name .= ': ' . $event['title'];
 
 			return $name;
