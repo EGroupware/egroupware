@@ -9,7 +9,7 @@ admin last name	setup	fr	Nom de l'admin
 admin password	setup	fr	Mot de passe du compte admin
 Admins	setup	fr	Admins
 admin username	setup	fr	Login de l'admin
-all applications	setup	fr	Toutes les applications
+all core tables and the admin and preferences applications	setup	fr	Toutes les tables de base et les applications admin et preferences
 All Users	setup	fr	Tous les utilisateurs
 app details	setup	fr	Détails de l'app
 app install/remove/upgrade	setup	fr	App install/enlève/maj
@@ -21,7 +21,7 @@ application title	setup	fr	Titre de l'application
 are you sure?	setup	fr	ETES-VOUS SUR?
 Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	fr	Tentative d'utiliser le type MIME correct pour le FTP à la place de celui par défaut : 'application/octet-stream'
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fr	Sur votre demande, ce script va tenter de créer la base de données et de lui assigner les droits d'utilisateur
-at your request, this script is going to attempt to install all the applications for you	setup	fr	Sur votre demande, ce script va tenter d'installer toutes les applications pour vous
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	fr	A votre demande, ce script va tenter d'installer les tables de base et les applications admin et preferences pour vous
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fr	Sur votre demande, ce script va tenter de mettre à jour vos vieilles applications vers les versions actuelles
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fr	Sur votre demande, ce script va tenter de mettre à jour vos vieilles tables vers le nouveau format
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fr	Sur votre demande, ce script va (sans hésiter !) supprimer vos tables existantes et les recréer dans le nouveau format

@@ -1,16 +1,15 @@
 %1 records imported	infolog	fr	%1 enregistrements importés
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	fr	%1 enregistrements lus (pas encore importés, vous devriez %2revenir%3 et décocher Tester l'import)
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	fr	<b>Attachements de fichiers via des liens symboliques</b> à la place des uploads et récupération via fichier:/chemin pour les clients avec accès réseau direct
-Add a file	infolog	fr	Ajouter un fichier
-Invalid filename	infolog	fr	Nom de fichier invalide
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	fr	<b>Attachements de fichiers via des liens symboliques</b> à la place des uploads et récupération via fichier:/chemin pour les clients avec accès réseau direct
 accept	infolog	fr	Accepte
 action	infolog	fr	Action
 add	infolog	fr	Ajouter
+add a file	infolog	fr	Ajouter un fichier
 add sub	infolog	fr	Ajouter sous
 all	infolog	fr	Tous
 are you sure you want to delete this entry	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
 attach file	infolog	fr	Attacher un fichier
-back to Projectlist	infolog	fr	Revenir vers la liste des projets
+back to projectlist	infolog	fr	Retour vers la liste des projets
 billed	infolog	fr	Facturé
 both	infolog	fr	Les deux
 call	infolog	fr	Appel
@@ -24,7 +23,7 @@ csv-filename	infolog	fr	CSV-Nomdefichier
 csv-import	common	fr	CSV-Importer
 datecreated	infolog	fr	Date de création
 days	infolog	fr	Jours
-default Filter for InfoLog	infolog	fr	Filtre par défaut pour InfoLog
+default filter for infolog	infolog	fr	Filtre par défaut pour InfoLog
 description	infolog	fr	Description
 description can not exceed 8000 characters in length	infolog	fr	La description ne peut pas dépasser 8000 caractères de long
 done	infolog	fr	Fait
@@ -37,23 +36,27 @@ fax	infolog	fr	Fax
 fieldseparator	infolog	fr	Séparateur de champ
 finish	infolog	fr	Terminer
 from	infolog	fr	De
+high	infolog	fr	Haut
 import	infolog	fr	Importer
-infolog	common	fr	InfoLog
 info log	common	fr	InfoLog
+infolog	common	fr	InfoLog
 infolog - delete	infolog	fr	Info Log - Effacer
 infolog - edit	infolog	fr	InfoLog - Modifier
-infolog - import CSV-File	infolog	fr	InfoLog - Importer CSV-Fichier
+infolog - import csv-file	infolog	fr	InfoLog - Importer fichier CSV
 infolog - new	infolog	fr	InfoLog - Nouveau
 infolog - new subproject	infolog	fr	InfoLog - Nouveau sous-projet
 infolog - subprojects from	infolog	fr	InfoLog - Sous-projets de
 infolog preferences	common	fr	Préférences InfoLog
 infolog-fieldname	infolog	fr	Info Log-Nomdechamp
+invalid filename	infolog	fr	Nom de fichier invalide
 last changed	infolog	fr	Dernier modifié
-list no Subs/Childs	infolog	fr	Lister aucun sous/enfants
+list no subs/childs	infolog	fr	Ne pas lister les Sous/Enfants
+low	infolog	fr	Bas
 no - cancel	infolog	fr	Non - Abandonner
 no entries found, try again ...	infolog	fr	Aucune occurrence trouvée, essayez à nouveau ...
 no filter	infolog	fr	Aucun filtre
 none	infolog	fr	Aucun
+normal	infolog	fr	Normal
 not	infolog	fr	pas
 not assigned	infolog	fr	Pas attribué
 note	infolog	fr	Note
@@ -67,7 +70,7 @@ own open	infolog	fr	Propre ouvert
 own overdue	infolog	fr	Propre tardif
 own upcoming	infolog	fr	Propre arrivant
 owner	infolog	fr	Propriétaire
-path on (web-)serverside<br>eg. /var/samba/Share	infolog	fr	chemin sur côté serveur (web)<br>pe. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin sur (web-)côté serveur<br>p.e. /var/samba/Share
 pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
 pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
 phone	infolog	fr	Appel téléphonique
@@ -77,32 +80,29 @@ priority	infolog	fr	Priorité
 private	infolog	fr	Privé
 project	infolog	fr	Projet
 re:	infolog	fr	Re:
-reg. expr. for local IP's<br>eg. ^192.168.1.	infolog	fr	expr. rég. pour les IPs locales <br>pe. ^192.168.1.
-reject	infolog	fr	Rejette
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	fr	Expr. reg. pour les IPs locales<br>p.e. ^192.168.1.
 responsible	infolog	fr	Responsable
 search for:	infolog	fr	Rechercher:
 select	infolog	fr	Choisir
 show full usernames	infolog	fr	Montrer les noms complets d'utilisateurs
-show open Events: Tasks/Calls/Notes on main screen	infolog	fr	Montrer les évènements ouverts: Tâches/Appels/Notes sur l'écran principal
+show open events: tasks/calls/notes on main screen	infolog	fr	Show open Events: Tasks/Calls/Notes on main screen
 showing x	infolog	fr	Montre %1
 showing x - x of x	infolog	fr	éléments %1 - %2 de %3
 startdate	infolog	fr	Date de départ
 startrecord	infolog	fr	Enregistrement de départ
-status	infolog	fr	Statut
 sub	infolog	fr	Sous
 subject	infolog	fr	Sujet
 task	infolog	fr	Tâche
-test Import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'import (Montrer les enregistrements importables <u>seulement</u> dans le navigateur)
+test import (show importable records <u>only</u> in browser)	infolog	fr	Tester l'import (montrer les enregistrements importables <u>seulement</u> dans le navigateur)
 today	infolog	fr	Aujourd'hui
 translation	infolog	fr	Traduction
 type	infolog	fr	Type
 upcoming	infolog	fr	Arrivant
 urgency	infolog	fr	Priorité
 urgent	infolog	fr	Urgent
-use Button to search for Address	infolog	fr	Utiliser le bouton pour rechercher une adresse
-use Button to search for Project	infolog	fr	Utiliser le bouton pour rechercher un projet
-valid path on clientside<br>eg. \ServerShare or e:	infolog	fr	Chemin valide côté client<br>p.e. \PartageServeur ou e:
-view other subs	infolog	fr	Voir les autres sous
+use button to search for address	infolog	fr	Utiliser le bouton pour chercher une adresse
+use button to search for project	infolog	fr	Utiliser le bouton pour chercher un projet
+valid path on clientside<br>eg. \servershare or e:	infolog	fr	Chemin valide côté client<br>p.e. \PartageServeur ou e:voir les autres sous
 view subs	infolog	fr	Voir les sous
 will-call	infolog	fr	Va appeler
 yes - delete	infolog	fr	Oui - Effacer

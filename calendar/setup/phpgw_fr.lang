@@ -25,6 +25,7 @@ days repeated	calendar	fr	Jours répétés
 default calendar filter	calendar	fr	Filtre de calendrier par défaut
 default calendar view	calendar	fr	Vue du calendrier par défaut
 deleted	calendar	fr	Effacé
+description	calendar	fr	Description
 do you wish to autoload calendar holidays files dynamically?	admin	fr	Voulez-vous auto-charger les fichiers de vacances calendrier dynamiquement?
 display interval in day view	calendar	fr	Afficher l'intervalle dans la vue journalière
 display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
@@ -34,6 +35,7 @@ edit series	calendar	fr	Modifier toutes les occurrences
 edit single	calendar	fr	Modifier cette occurrence
 end date/time	calendar	fr	Date/Heure de fin
 ends	calendar	fr	Finit
+event details follow	calendar	fr	Les détails de l'évènement suivent
 export	calendar	fr	Export
 (for weekly)	calendar	fr	(Pour hebdomadaire)
 fr	calendar	fr	F
@@ -67,11 +69,15 @@ monthly	calendar	fr	Mensuel
 new entry	calendar	fr	Nouvelle entrée
 no matches found.	calendar	fr	Aucune occurrence trouvée.
 no response	calendar	fr	Pas de réponse
-number of intervals per day in planner view	calendar	fr	Nombre d'intervalles par jour dans la vue planning
+number of intervals per day in planner view	calendar	fr	Nombre d'intervalles par jour dans la vue planificateur
+number of months	calendar	fr	Nombre de mois
+on %1 %2 %3 your meeting request for %4	calendar	fr	Le %1 %2 %3 votre demande de réunion pour %4
 participant	calendar	fr	Participant
 participants	calendar	fr	Participants
 participates	calendar	fr	Participe
 planner	calendar	fr	Planificateur
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	fr	SVP confirmez, acceptez, rejetez ou examinez les modifications dans l'entrée correspondante de votre calendrier
+preselected group for entering the planner	calendar	fr	Groupe présélectionné pour entrer le planificateur
 print calendars in black & white	calendar	fr	Imprimer les calendriers en noir & blanc
 printer friendly	calendar	fr	Imprimable
 private and global public	calendar	fr	Public privé et global
@@ -80,7 +86,6 @@ private only	calendar	fr	Privé seulement
 re-edit event	calendar	fr	Remodifier l'événement
 receive extra information in event mails	calendar	fr	Recevoir des informations supplémentaires dans les EMails d'évènements
 refresh	calendar	fr	Rafraîchir
-reject	calendar	fr	Rejette
 rejected	calendar	fr	Rejeté
 repeat day	calendar	fr	Jour de répétition
 repeat end date	calendar	fr	Date de fin de répétition
@@ -96,7 +101,9 @@ send updates via email	common	fr	Envoyer les mises à jour par EMail
 show default view on main screen	calendar	fr	Montrer la vue par défaut sur l'écran principal
 show high priority events on main screen	calendar	fr	Montrer les événements prioritaires sur la page principale
 sorry, the owner has just deleted this event	calendar	fr	Désolé, le propriétaire vient juste d'effacer cet événement
+sort by	calendar	fr	Sort by
 start date/time	calendar	fr	Date/heure de début
+start- and enddates	calendar	fr	Dates de début et de fin
 su	calendar	fr	Di
 sun	calendar	fr	Dim
 tentative	calendar	fr	Tentative
@@ -107,6 +114,7 @@ this month	calendar	fr	Ce mois
 this week	calendar	fr	Cette semaine
 this year	calendar	fr	Cette année
 thu	calendar	fr	Jeu
+title	calendar	fr	Titre
 today	calendar	fr	Aujourd'hui
 tu	calendar	fr	M
 tue	calendar	fr	Mar
@@ -121,7 +129,6 @@ when creating new events default set to private	calendar	fr	A la création de nou
 work day ends on	calendar	fr	Jour de travail finit à
 work day starts on	calendar	fr	Jour de travail démarre à
 x matches found	calendar	fr	%1 occurrences trouvées
-year	calendar	fr	Année
 yearly	calendar	fr	Annuel
 you have 1 high priority event on your calendar today.	common	fr	Vous avez 1 événement de haute priorité dans votre calendrier aujourd'hui.
 you have x high priority events on your calendar today.	common	fr	Vous avez %1 événements de haute priorité dans votre calendrier aujourd'hui.

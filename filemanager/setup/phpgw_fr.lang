@@ -1,0 +1,93 @@
+application	phpwebhosting	fr	Application
+back to file manager	phpwebhosting	fr	Retourner au gestionnaire de fichiers
+cannot create directory because it begins or ends in a space	phpwebhosting	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
+cannot replace x because it is a directory	phpwebhosting	fr	Ne peut remplacer %1 parce-que c'est un répertoire
+command sucessfully run	phpwebhosting	fr	Commande exécutée avec succès
+comment	phpwebhosting	fr	Commentaire
+comments cannot contain "x"	phpwebhosting	fr	Les commentaires ne peuvent pas contenir "%1"
+copied x to x	phpwebhosting	fr	Copié %1 vers %2
+copy to	phpwebhosting	fr	Copier vers
+copy to:	phpwebhosting	fr	Copier vers:
+could not copy x to x	phpwebhosting	fr	N'a pas pu copier %1 vers %2
+could not create directory x	phpwebhosting	fr	N'a pas pu créér le répertoire %1
+could not create x	phpwebhosting	fr	N'a pas pu créér %1
+could not delete x	phpwebhosting	fr	N'a pas pu effacer %1
+could not move x to x	phpwebhosting	fr	N'a pas pu déplacer %1 to %2
+could not rename x to x	phpwebhosting	fr	N'a pas pu renommer %1 to %2
+could not save x	phpwebhosting	fr	N'a pas pu enregistrer %1
+create file	phpwebhosting	fr	Créér fichier
+create folder	phpwebhosting	fr	Créér dossier
+created	phpwebhosting	fr	Créé
+created by	phpwebhosting	fr	Créé par
+created directory x	phpwebhosting	fr	Répertoire %1 créé
+created x	phpwebhosting	fr	%1 créé
+date	phpwebhosting	fr	Date
+default number of upload fields to show	phpwebhosting	fr	Nombre de champs d'upload par défaut à montrer
+delete	phpwebhosting	fr	Effacer
+deleted x	phpwebhosting	fr	%1 effacé
+directory	phpwebhosting	fr	Répertoire
+directory names cannot contain "x"	phpwebhosting	fr	Les noms de répertoire ne peuvent pas contenir "%1"
+directory x already exists	phpwebhosting	fr	Le répertoire %1 existe déjà
+directory x does not exist	phpwebhosting	fr	Le répertoire %1 n'existe pas
+display attributes	phpwebhosting	fr	Afficher les attributs
+download	phpwebhosting	fr	Downloader
+edit	phpwebhosting	fr	Modifier
+edit comments	phpwebhosting	fr	Modifier les commentaires
+error running command	phpwebhosting	fr	Erreur à l'exécution de la commande
+execute	phpwebhosting	fr	Exécuter
+failed to create directory	phpwebhosting	fr	Echec de création du répertoire
+file	phpwebhosting	fr	Fichier
+file name	phpwebhosting	fr	Nom du fichier
+file names cannot contain "x"	phpwebhosting	fr	Les noms de fichier ne peuvent contenir "%1"
+file names cannot contain \ or /	phpwebhosting	fr	Les noms de fichier ne peuvent contenir \ ou /
+file x already exists. please edit it or delete it first.	phpwebhosting	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
+file x could not be created.	phpwebhosting	fr	Le fichier %1 n'a pas pu être créé.
+files	phpwebhosting	fr	Fichiers
+folder	phpwebhosting	fr	Dossier
+go to	phpwebhosting	fr	Aller dans
+go to x	phpwebhosting	fr	Aller dans %1
+go to your home directory	phpwebhosting	fr	Aller dans votre répertoire "home" (maison)
+go to:	phpwebhosting	fr	Aller dans:
+home	phpwebhosting	fr	Maison
+locked	phpwebhosting	fr	Verouillé
+mime type	phpwebhosting	fr	Type MIME
+modified	phpwebhosting	fr	Modifié
+modified by	phpwebhosting	fr	Modifié par
+move to	phpwebhosting	fr	Déplacer dans
+move to:	phpwebhosting	fr	Déplacer dans:
+moved x to x	phpwebhosting	fr	Déplacé %1 dans %2
+no version history for this file/directory	phpwebhosting	fr	pas d'historique de versions pour ce fichier/répertoire
+operation	phpwebhosting	fr	Opération
+owner	phpwebhosting	fr	Propriétaire
+phpwebhosting preferences	phpwebhosting	fr	Préférences PHPWebHosting
+preview of x	phpwebhosting	fr	Prévisualisation de %1
+preview x	phpwebhosting	fr	Prévisualisation %1
+rename	phpwebhosting	fr	Renommer
+renamed x to x	phpwebhosting	fr	Renommé %1 en %2
+replaced x	phpwebhosting	fr	Remplacé %1
+save all	phpwebhosting	fr	Enregistrer tout
+save x	phpwebhosting	fr	Enregistrer %1
+saved x	phpwebhosting	fr	%1 enregistré
+show	phpwebhosting	fr	Montrer
+show ..	phpwebhosting	fr	Montrer ..
+show .files	phpwebhosting	fr	Montrer .fichiers
+show command line (experimental. dangerous.)	phpwebhosting	fr	Montrer la ligne de commande (EXPERIMENTAL. DANGEREUX.)
+show help	phpwebhosting	fr	Montrer l'aide
+size	phpwebhosting	fr	Taille
+sort by:	phpwebhosting	fr	Trié par:
+total files	phpwebhosting	fr	Total de fichiers
+unknown mime-type defaults to text/plain when viewing	phpwebhosting	fr	text/plain utilisé par défaut si type MIME inconnu
+unused space	phpwebhosting	fr	Espace inutilisé
+up	phpwebhosting	fr	Haut
+update	phpwebhosting	fr	Mettre à jour
+updated comment for x	phpwebhosting	fr	Commentaire pour %1 mis à jour
+upload fields	phpwebhosting	fr	Champs d'upload
+upload files	phpwebhosting	fr	Fichiers d'upload
+used space	phpwebhosting	fr	Espace utilisé
+users	phpwebhosting	fr	Utilisateurs
+version	phpwebhosting	fr	Version
+view documents in new window	phpwebhosting	fr	Voir les documents dans une nouvelle fenêtre
+view documents on server (if available)	phpwebhosting	fr	Voir les documents sur le serveur (si disponible)
+who	phpwebhosting	fr	Qui
+x already exists as a file	phpwebhosting	fr	%1 existe déjà en tant que fichier
+you do not have access to x	phpwebhosting	fr	Vous n'avez pas accès à %1
