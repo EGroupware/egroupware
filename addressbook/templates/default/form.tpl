@@ -208,6 +208,14 @@
   </tr>
   <tr>
     <td></td>
+    <td><font size="-1">{lang_label}:</font></td>
+    <td colspan="3">
+      <font size="-1">
+      {label}
+    </font></td>
+  </tr>
+  <tr>
+    <td></td>
     <td><font size="-1">{lang_pubkey}:</font></td>
     <td colspan="3">
       <font size="-1">

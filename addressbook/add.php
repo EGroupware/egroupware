@@ -139,6 +139,7 @@
 		$fields["url"]					= $url;
 		$fields["pubkey"]				= $pubkey;
 		$fields["note"]					= $notes;
+		$fields["label"]                = $label;
 
 		addressbook_add_entry($phpgw_info["user"]["account_id"],$fields);
 		$ab_id = addressbook_get_lastid();

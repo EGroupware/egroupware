@@ -138,6 +138,7 @@
 		$fields["url"]					= $url;
 		$fields["pubkey"]				= $pubkey;
 		$fields["note"]					= $notes;
+		$fields["label"]                = $label;
 
 		$userid = $phpgw_info["user"]["account_id"];
 

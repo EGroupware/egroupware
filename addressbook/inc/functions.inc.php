@@ -197,6 +197,7 @@
 		$timezone     = $fields["tz"];
 		$bday         = $fields["bday"];
 		$notes        = stripslashes($fields["note"]);
+		$label        = stripslashes($fields["label"]);
 		$company      = $fields["org_name"];
 		$department   = $fields["org_unit"];
 		$url          = $fields["url"];
@@ -328,6 +329,7 @@
 			}
 
 			$notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
+			$label   = '<TEXTAREA cols="60" name="notes" rows="6">' . $label . '</TEXTAREA>';
 			$pubkey  = '<TEXTAREA cols="60" name="notes" rows="6">' . $pubkey . '</TEXTAREA>';
 		} else {
 			$notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
@@ -443,6 +445,8 @@
 		$t->set_var("create",$create);
 		$t->set_var("lang_notes",lang("notes"));
 		$t->set_var("notes",$notes);
+		$t->set_var("lang_label",lang("label"));
+		$t->set_var("label",$label);
 		$t->set_var("lang_pubkey",lang("Public Key"));
 		$t->set_var("pubkey",$pubkey);
 
