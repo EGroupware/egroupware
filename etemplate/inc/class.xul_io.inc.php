@@ -44,7 +44,7 @@
 				'textarea' => array(
 					'.name' => 'textbox',
 					'.set' => 'multiline=true',
-					'size' => 'cols,rows'
+					'size' => 'rows,cols'
 				),
 				'integer' => array(
 					'.name' => 'textbox',
@@ -439,7 +439,7 @@
 						if ($attr['multiline'])
 						{
 							$attr['type'] = 'textarea';
-							$attr['size'] = $attr['cols'] . ($attr['rows'] ? ','.$attr['rows'] : '');
+							$attr['size'] = $attr['rows'] . ($attr['cols'] ? ','.$attr['cols'] : '');
 							unset($attr['cols']);
 							unset($attr['rows']);
 						}
