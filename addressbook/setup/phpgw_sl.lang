@@ -12,7 +12,7 @@ address book - view	addressbook	sl	Telefonski imenik - pogled
 address line 2	addressbook	sl	Naslov - 2. vrstica
 address line 3	addressbook	sl	Naslov - 3. vrstica
 address type	addressbook	sl	Tip naslova
-addressbook	common	sl	Imenik
+addressbook	common	sl	Adresar
 addressbook preferences	addressbook	sl	Lastnosti imenika
 addressbook-fieldname	addressbook	sl	Imenik-Ime polja
 addvcard	addressbook	sl	Dodaj VCard
@@ -103,6 +103,8 @@ ldap root dn for contacts	admin	sl	LDAP root dn za kontakte
 ldap root pw for contacts	admin	sl	LDAP root pw za povezave
 ldif	addressbook	sl	LDIF
 line 2	addressbook	sl	Vrstica 2
+list all categories	addressbook	sl	Izpis vseh kategorij
+list all customfields	addressbook	sl	Izpis vseh lastnih polj
 load vcard	addressbook	sl	Naloži VCard
 mark records as private	addressbook	sl	Označi zapise kot zasebne
 message phone	addressbook	sl	Sporočilni telefon
@@ -125,6 +127,7 @@ postal	common	sl	Poštni
 pref	addressbook	sl	privzeta
 prefix	addressbook	sl	Predpona
 public key	addressbook	sl	Javni ključ
+read a list / search for entries.	addressbook	sl	Preberi seznam / iskanje vnosov
 read a list of entries.	addressbook	sl	Preberi seznam vnosov.
 read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi vnos s podano ID številko in seznamom polj.
 record access	addressbook	sl	Dostop do zapisa
@@ -134,6 +137,7 @@ select all	addressbook	sl	Izberi vse
 select the type of conversion	addressbook	sl	Izberite tip pretvorbe
 select the type of conversion:	addressbook	sl	Izberite tip pretvorbe:
 select where you want to store	admin	sl	Izberite kam želite shraniti
+show	addressbook	sl	Prikaži
 show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
 startrecord	addressbook	sl	Začetni zapis
 state	common	sl	Država
@@ -157,6 +161,7 @@ video phone	addressbook	sl	Videotelefon
 voice phone	addressbook	sl	Glasovni telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate kontaktov za skladiščenje računov!
 work phone	addressbook	sl	Telefon
+write (update or add) a single entry by passing the fields.	addressbook	sl	Zapiši (posodobi ali dodaj) zapis s podanimi polji.
 you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate VCard. (*.vcf)
 you must select at least 1 column to display	addressbook	sl	Izbrati morate najmanj 1 stolpec za prikaz
 zip code	common	sl	Poštna številka
