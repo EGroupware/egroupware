@@ -49,7 +49,7 @@
     {
       set_time_limit(0);
       include($phpgw_info["server"]["include_root"]
-		. "../nntp/inc/functions.inc.php");
+		. "/../nntp/inc/functions.inc.php");
       $nntp = new NNTP;
       $nntp->load_table();
       $tg = get_tg();
