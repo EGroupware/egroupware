@@ -11,20 +11,21 @@
 
   /* $Id$ */
 
-	function add_col($str)
+	function add_col(&$tpl,$str)
 	{
-		global $tpl;
 		$tpl->set_var('str',$str);
 		$tpl->parse('header_column','head_col',True);
 	}
 
 	function add_image_ahref($link,$image,$alt)
 	{
-		return '<a href="'.$link.'"><img src="'.PHPGW_IMAGES.'/'.$image.'" alt="'.$alt.'" border="0"></a>';
+		global $phpgw;
+		return '<a href="'.$link.'"><img src="'.$phpgw->common->image('calendar',$image).'" alt="'.$alt.'" border="0"></a>';
 	}
 
-	$tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
-	$tpl->set_unknowns('remove');
+	$refer = explode('.',$menuaction);
+	$referrer = $refer[2];
+
 	$templates = Array(
 		'head_tpl'	=> 'head.tpl',
 		'form_button_dropdown'	=> 'form_button_dropdown.tpl',
@@ -36,42 +37,43 @@
 	$tpl->set_block('form_button_script','form_button');
 	$tpl->set_var('cols',$cols);
 
+	$today = date('Ymd',time());
+
 	$str = '  <td width="2%">&nbsp;</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$link = $phpgw->link('/calendar/day.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
+	$link = $this->page('day','&date='.$today);
 	$str = '  <td width="2%">'.add_image_ahref($link,'today.gif',lang('Today')).'</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$link = $phpgw->link('/calendar/week.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
+	$link = $this->page('week','&date='.$today);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'week.gif',lang('This week')).'</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$link = $phpgw->link('/calendar/month.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
+	$link = $this->page('month','&date='.$today);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'month.gif',lang('This month')).'</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$link = $phpgw->link('/calendar/year.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
+	$link = $this->page('year','&date='.$today);
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'year.gif',lang('This Year')).'</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$link = $phpgw->link('/calendar/matrixselect.php','day='.$phpgw->calendar->today['day'].'&month='.$phpgw->calendar->today['month'].'&year='.$phpgw->calendar->today['year'].'&owner='.$owner);
+	$link = $this->page('matrixselect');
 	$str = '  <td width="2%" align="left">'.add_image_ahref($link,'view.gif',lang('Daily Matrix View')).'</td>';
-	add_col($str);
+	add_col($tpl,$str);
 
-	$base_url = '/calendar/'.basename($SCRIPT_FILENAME);
 	$remainder = 65;
-	if($phpgw->calendar->check_perms(PHPGW_ACL_PRIVATE) == True)
+	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 	{
 		$remainder -= 30;
-		$hidden_vars = '<input type="hidden" name="from" value="'.$base_url.'">'."\n";
+		$hidden_vars = '<input type="hidden" name="from" value="'.$menuaction.'">'."\n";
 		if(isset($date) && $date)
 		{
 			$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
 		}
-		$hidden_vars .= '    <input type="hidden" name="month" value="'.$thismonth.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="day" value="'.$thisday.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="year" value="'.$thisyear.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 		if(isset($keywords) && $keywords)
 		{
 			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
@@ -87,12 +89,13 @@
 				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$participants[$i].'">'."\n";
 			}
 		}
-		$form_options = '<option value="all"'.($filter=='all'?' selected':'').'>'.lang('All').'</option>'."\n";
-		$form_options .= '     <option value="private"'.((!isset($filter) || !$filter) || $filter=='private'?' selected':'').'>'.lang('Private Only').'</option>'."\n";
+		if($this->debug) { echo 'Filter = ('.$this->bo->filter.")<br>\n"; }
+		$form_options = '<option value=" all "'.($this->bo->filter==' all '?' selected':'').'>'.lang('All').'</option>'."\n";
+		$form_options .= '     <option value=" private "'.((!isset($this->bo->filter) || !$this->bo->filter) || $this->bo->filter==' private '?' selected':'').'>'.lang('Private Only').'</option>'."\n";
 		
 		$var = Array(
 			'form_width' => '30',
-			'form_link'	=> $phpgw->link($base_url,'owner='.$owner),
+			'form_link'	=> $this->page($referrer),
 			'form_name'	=> 'filter',
 			'title'	=> lang('Filter'),
 			'hidden_vars'	=> $hidden_vars,
@@ -104,35 +107,35 @@
 		$tpl->parse('header_column','head_col',True);
 	}
 
-	if(count($grants) > 0)
+	if(count($this->bo->grants) > 0)
 	{
-		$hidden_vars = '    <input type="hidden" name="from" value="'.$base_url.'">'."\n";
+		$hidden_vars = '    <input type="hidden" name="from" value="'.$menuaction.'">'."\n";
 		if(isset($date) && $date)
 		{
 			$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
 		}
-		$hidden_vars .= '    <input type="hidden" name="month" value="'.$thismonth.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="day" value="'.$thisday.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="year" value="'.$thisyear.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 		if(isset($keywords) && $keywords)
 		{
 			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
 		}
-		if(isset($id) && $id != 0)
+		if(isset($cal_id) && $cal_id != 0)
 		{
-			$hidden_vars .= '    <input type="hidden" name="id" value="'.$id.'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$cal_id.'">'."\n";
 		}
 		$form_options = '';
-		reset($grants);
-		while(list($grantor,$temp_rights) = each($grants))
+		reset($this->bo->grants);
+		while(list($grantor,$temp_rights) = each($this->bo->grants))
 		{
-			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$owner?' selected':'').'>'.$phpgw->common->grab_owner_name($grantor).'</option>'."\n";
+			$form_options .= '    <option value="'.$grantor.'"'.($grantor==$this->bo->owner?' selected':'').'>'.$phpgw->common->grab_owner_name($grantor).'</option>'."\n";
       }
-		reset($grants);
+		reset($this->bo->grants);
 		
 		$var = Array(
 			'form_width' => $remainder,
-			'form_link'	=> $phpgw->link($base_url),
+			'form_link'	=> $this->page($referrer),
 			'form_name'	=> 'owner',
 			'title'	=> lang('User'),
 			'hidden_vars'	=> $hidden_vars,
@@ -144,26 +147,26 @@
 		$tpl->parse('header_column','head_col',True);
 	}
 
-	$hidden_vars = '    <input type="hidden" name="from" value="'.$base_url.'">'."\n";
+	$hidden_vars = '    <input type="hidden" name="from" value="'.$menuaction.'">'."\n";
 	if(isset($date) && $date)
 	{
 		$hidden_vars .= '    <input type="hidden" name="date" value="'.$date.'">'."\n";
 	}
-	$hidden_vars .= '    <input type="hidden" name="month" value="'.$thismonth.'">'."\n";
-	$hidden_vars .= '    <input type="hidden" name="day" value="'.$thisday.'">'."\n";
-	$hidden_vars .= '    <input type="hidden" name="year" value="'.$thisyear.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->so->month.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->so->day.'">'."\n";
+	$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->so->year.'">'."\n";
 	if(isset($keywords) && $keywords)
 	{
 		$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$keywords.'">'."\n";
 	}
-	if(isset($filter) && $filter)
+	if(isset($this->bo->filter) && $this->bo->filter)
 	{
-		$hidden_vars .= '    <input type="hidden" name="filter" value="'.$filter.'">'."\n";
+		$hidden_vars .= '    <input type="hidden" name="filter" value="'.$this->bo->filter.'">'."\n";
 	}
 	$extra_field = $hidden_vars.'    <input name="keywords"'.($keywords?' value="'.$keywords.'"':'').'>';
 
 	$var = Array(
-		'action_url_button'	=> $phpgw->link('/calendar/search.php','owner='.$owner),
+		'action_url_button'	=> $this->page('search'),
 		'action_text_button'	=> lang('Search'),
 		'action_confirm_button'	=> '',
 		'action_extra_field'	=> $extra_field

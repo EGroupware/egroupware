@@ -33,7 +33,7 @@
   <td align="right" colspan=3>{prevmonth}&nbsp;&nbsp;{nextmonth}</td>
  </tr>
  <tr>
-  <td align="center" colspan=7><img src="{cal_img_root}/mini-calendar-bar.gif" width="90%" height="5"></td>
+  <td align="center" colspan=7><img src="{cal_img_root}" width="90%" height="5"></td>
  </tr>
  <tr valign="top">
   <td colspan="7">
