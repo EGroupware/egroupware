@@ -28,7 +28,7 @@
 	<!-- Activate Cloaking Device
 	function CheckEmail()
 	{
-		window.opener.document.location.href="<?php echo $phpgw->link('/email/index.php'); ?>";
+		window.opener.document.location.href="<?php echo $phpgw->link('/index.php','menuaction=email.uiindex.index'); ?>";
 	}
 	//-->
 	</script>
