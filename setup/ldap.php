@@ -19,9 +19,8 @@
   // Authorize the user to use setup app and load the database
   // include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-  $phpgw_info["server"]["api_inc"] = 
-	$phpgw_info["server"]["include_root"]."/phpgwapi";
-  include($phpgw_info["server"]["api_inc"] . "/phpgw_common.inc.php");
+//  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
+  include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/phpgw_common.inc.php");
 
   $common = new common;
   loaddb(); 
