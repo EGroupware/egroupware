@@ -82,28 +82,28 @@
 
 	function addressbook_read_entry($id,$fields,$userid="") {
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_READ) {
+		//if ($rights & PHPGW_ACL_READ) {
 			$entry = $this->read_single_entry($id,$fields);
 			return $entry;
-		} else {
-			return "No access";
-		}
+		//} else {
+		//	return "No access";
+		//}
 	}
 
 	function addressbook_add_entry($userid,$fields) {
 		global $this,$rights;
-		if ($rights & PHPGW_ACL_ADD) {
+		//if ($rights & PHPGW_ACL_ADD) {
 			$this->add($userid,$fields);
-		}
+		//}
 		return;
 	}
 
 	function addressbook_update_entry($id,$userid,$fields) {
 		global $this,$rights;
 		//$rights = $phpgw->acl->get_rights($owner,$phpgw_info["flags"]["currentapp"]);
-		if ($rights & PHPGW_ACL_EDIT) {
+		//if ($rights & PHPGW_ACL_EDIT) {
 			$this->update($id,$userid,$fields);
-		}
+		//}
 		return;
 	}
 
