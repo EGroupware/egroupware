@@ -517,7 +517,9 @@
 			$this->bo->repeating_events[0] = $event;
 			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
 			$this->bo->check_repeating_events($datetime);
-			if($this->bo->cached_events[$GLOBALS['phpgw']->common->show_date($datetime,'Ymd')][0] == $event)
+			$check_date = $GLOBALS['phpgw']->common->show_date($datetime,'Ymd');
+			if(is_array($this->bo->cached_events[$check_date][0]) &&
+				$this->bo->cached_events[$check_date][0]['id'] == $event['id'])
 			{
 				$starttime = $this->bo->maketime($event['start']);
 				$endtime = $this->bo->maketime($event['end']);
@@ -614,6 +616,12 @@
 			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
 			{
 			   $this->no_edit();
+			}
+
+			if(isset($GLOBALS['HTTP_GET_VARS']['readsess']))
+			{
+				$params['readsess'] = $GLOBALS['HTTP_GET_VARS']['readsess'];
+				$params['cd'] = 0;
 			}
 
 			if($params != '' && @isset($params['readsess']))
