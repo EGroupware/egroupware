@@ -25,6 +25,13 @@
 
 	$GLOBALS['phpgw']->help->data[] = array
 	(
+		'text'					=> lang('list'),
+		'link'					=> $GLOBALS['phpgw']->help->check_help_file('list.php'),
+		'lang_link_statustext'	=> lang('list')
+	);
+
+	$GLOBALS['phpgw']->help->data[] = array
+	(
 		'text'					=> lang('add'),
 		'link'					=> $GLOBALS['phpgw']->help->check_help_file('add.php'),
 		'lang_link_statustext'	=> lang('add')

@@ -20,8 +20,7 @@
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 	$GLOBALS['phpgw']->help->set_params(array('app_name'	=> 'addressbook',
 												'title'		=> lang('add'),
-												'controls'	=> array('app_intro'	=> 'overview.php',
-																			'up'	=> 'overview.php')));
+												'controls'	=> array('up' => 'list.php')));
 
 	$values['add'] = array
 	(
@@ -37,7 +36,7 @@
 		'lang_state'			=> 'State',
 		'lang_zip'				=> 'ZIP code',
 		'lang_access'			=> 'Access',
-		'lang_group_settings'	=> 'Group settings',
+		'lang_groupsettings'	=> 'Group settings',
 		'lang_notes'			=> 'Notes',
 		'lang_company'			=> 'Company name',
 		'lang_fax'				=> 'Fax',

@@ -122,6 +122,7 @@
 					break;
 				default:
 					$this->setvar('intro',$GLOBALS['phpgw']->link('/help.php'));
+					$this->setvar('app_intro',$GLOBALS['phpgw']->link('/help.php','app=' . $this->app_name));
 					$this->setvar('note',$GLOBALS['phpgw']->link('/help.php','note=True'));
 					break;
 			}

@@ -14,16 +14,30 @@
 
 	$GLOBALS['phpgw_info'] = array();
 
+	$app = $HTTP_GET_VARS['app'];
+
+	if (!$app)
+	{
+		$app = 'help';
+	}
+
 	$GLOBALS['phpgw_info']['flags'] = array
 	(
 		'headonly'		=> True,
-		'currentapp'	=> 'help'
+		'currentapp'	=> $app
 	);
 	include('header.inc.php');
 
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 
-	$GLOBALS['phpgw']->hooks->process('help',array('manual'));
+	if ($app == 'help')
+	{
+		$GLOBALS['phpgw']->hooks->process('help',array('manual'));
+	}
+	else
+	{
+		$GLOBALS['phpgw']->hooks->single('help',$app);
+	}
 
 	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->help->output);
 ?>
