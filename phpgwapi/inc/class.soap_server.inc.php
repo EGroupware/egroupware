@@ -115,7 +115,7 @@
 			// get/set methodname
 			$this->methodname = $parser->root_struct_name;
 			$this->debug("method name: $this->methodname");
-	
+
 			// does method exist?
 			if(function_exists($this->methodname))
 			{
@@ -181,7 +181,7 @@
 							}
 							$this->debug("request data: $request_data");
 						}
-	
+
 						/* if there are return values */
 						if($this->return_type = $this->get_return_type())
 						{

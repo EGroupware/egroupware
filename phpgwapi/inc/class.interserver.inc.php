@@ -152,7 +152,7 @@
 			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
 			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
-			$c->setDebug(1);
+			$c->setDebug(0);
 			$r = $c->send($f,0,True);
 			if (!$r)
 			{
@@ -213,88 +213,55 @@
 
 		function _send_soap_ssl($method_name, $args, $url, $debug=True)
 		{
-			/* Not working */
-			return;
-			preg_match('/^(.*?\/\/.*?)(\/.*)/',$url,$matches);
-			$hostpart = $matches[1];
-			$uri = $matches[2];
-
-			$this->debug("opening curl to $url", $debug);
-
-			if(gettype($args) != 'array')
+			$method_name = str_replace('.','_',$method_name);
+			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
+			$hostpart = ereg_replace('https://','',$hostpart);
+			$hostpart = ereg_replace('http://','',$hostpart);
+			while(list($key,$val) = @each($args))
 			{
-				$args[] = $args;
+				$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
+			}
+			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
+			/* print_r($soap_message);exit; */
+			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
+			/* _debug_array($soap);exit; */
+			if($r = $soap->send($soap_message,$method_name))
+			{
+				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
+				/* _debug_array($soap); */
+				/* echo $soap->debug_str; */
+				return $r;
 			}
 			else
 			{
-				while(list($key,$val) = @each($args))
-				{
-					$arr[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
-				}
+				$this->debug('Fault Code: ' . $r->ernno . ' Reason "' . $r->errstring . '"<br>',$debug);
 			}
-			$f = CreateObject('phpgwapi.xmlrpcmsg',$method_name,array($arr));
-			$content_len = strlen($f->serialize());
-
-			$cliversion = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
-			$http_request = 'POST ' . $uri . ' HTTP/1.0' . "\r\n"
-				. 'User-Agent: phpGroupware/' . $cliversion . '(PHP) ' . "\r\n"
-				. 'X-PHPGW-Server: ' . $method_name . ' ' . "\r\n"
-				. 'Content-Type: text/xml' . "\r\n"
-				. 'Content-Length: ' . $content_len . "\r\n" . "\r\n"
-				. $f->serialize();
-
-			$this->debug("sending http request:</h3><xmp>\n" . $http_request . "\n</xmp>", $debug);
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,$hostpart);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_request);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			$response_buf = curl_exec($ch);
-			curl_close($ch);
-
-			$this->debug("got response:</h3>.<xmp>\n$response_buf\n</xmp>\n", $debug);
-
-			$retval = '';
-			if (strlen($response_buf))
-			{
-				$xml_begin = substr($response_buf, strpos($response_buf, "<?xml"));
-				if (strlen($xml_begin))
-				{
-					$retval = xmlrpc_decode($xml_begin);
-				}
-				else
-				{
-					$this->debug('Error: no xml start found from'.$hostpart.'!');
-				}
-			}
-			else
-			{
-				$this->debug('Error: no response from '.$hostpart.'!');
-			}
-
-			return $retval;
 		}
 
 		function _send_soap_($method_name, $args, $url, $debug=True)
 		{
-			/* Not working */
-			return;
+			$method_name = str_replace('.','_',$method_name);
+			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['soap']);
+			$hostpart = ereg_replace('https://','',$hostpart);
+			$hostpart = ereg_replace('http://','',$hostpart);
 			while(list($key,$val) = @each($args))
 			{
-				$arr[$key] = CreateObject('phpgwapi.soapval',$val, 'string');
+				$arr[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
 			}
-			$soap_message = CreateObject('phpgwapi.soapmsg',
-				$method,
-				$method_params[$method],
-				$server['methodNamespace']
-			);
+			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$arr,'http://soapinterop.org');
 			/* print_r($soap_message);exit; */
-			$soap = CreateObject('phpgwapi.soap_client',$server['endpoint']);
-			/* print_r($soap);exit; */
-			if($return = $soap->send($soap_message,$server['soapaction']))
+			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
+			/* _debug_array($soap);exit; */
+			if($r = $soap->send($soap_message,$method_name))
 			{
-				return $return;
+				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
+				/* _debug_array($soap); */
+				/* echo $soap->debug_str; */
+				return $r;
+			}
+			else
+			{
+				$this->debug('Fault Code: ' . $r->ernno . ' Reason "' . $r->errstring . '"<br>',$debug);
 			}
 		}
 

@@ -67,4 +67,27 @@
 	*/
 
 	$GLOBALS['soap_defencoding'] = 'UTF-8';
+
+	function system_auth($m1,$m2,$m3)
+	{
+		$serverdata['server_name'] = $m1;
+		$serverdata['username']    = $m2;
+		$serverdata['password']    = $m3;
+
+		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
+
+		if($sessionid && $kp3)
+		{
+			$rtrn = array(
+				CreateObject('phpgwapi.soapval','sessionid', 'string',$sessionid),
+				CreateObject('phpgwapi.soapval','kp3','string',$kp3)
+			);
+		}
+		else
+		{
+			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO'));
+		}
+		$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
+		return $r;
+	}
 ?>
