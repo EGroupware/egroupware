@@ -173,6 +173,12 @@
 		function export_end_file($buffer) {
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++) {
+				$work     = "";
+				$workaddr = "";
+				$workattr = "";
+				$home     = "";
+				$homeaddr = "";
+				$homeattr = "";
 				$entries .= "BEGIN:VCARD\r\n";
 				$entries .= "VERSION:2.1\r\n";
 				$entries .= "X-PHPGROUPWARE-FILE-AS:phpGroupWare.org\r\n";
@@ -187,13 +193,30 @@
 							switch ($mult[0]) {
 								case "ADR":
 									switch ($mult[1]) {
+										case "TYPE":
+											$types = explode(";",$buffer[$i][$value]);
+											if ($types[1]) {
+												while ($type = strtoupper(each($types))) {
+													$typei[$i][$type] .= ";".$type;
+												}
+												//echo "PREF1";
+											} elseif ($types[0]) {
+												$typei[$i][strtoupper($types[0])] = ";".$types[0];
+												//echo "PREF=".strtoupper($prefer[0]);
+											} elseif ($buffer[$i][$value]) {
+												$typei[$i][$buffer[$i][$value]] = ";".$value;
+												//echo "PREF3";
+											}
+											break;
 										case "WORK":
-											$value = "A.".$value;
-											switch ($mult[2]) {
-											}	
+											$workaddr .= $buffer[$i][$value].";";
+											$workattr = $mult[0].";".$mult[1].$prefi[$i][$mult[1]];
+											//$entries .= "A.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										case "HOME":
-											$value = "B.".$value;
+											$homeaddr .= $buffer[$i][$value].";";
+											$homeattr = $mult[0].";".$mult[1].$prefi[$i][$mult[1]];
+											//$entries .= "B.".$mult[0].";".$mult[1].$prefi[$i][$mult[1]].":".$buffer[$i][$value]."\r\n";
 											break;
 										default:
 											break;
@@ -254,7 +277,11 @@
 						$entries .= "FN".$buffer[$i]['N.GIVEN']." ".$buffer[$i]['N.FAMILY']."\r\n";
 					}
 				}
-				$entries .= "END:VCARD\r\n";
+				$workattr = ereg_replace("ADR;","",$workattr);
+				$homeattr = ereg_replace("ADR;","",$homeattr);
+				if ($workaddr) {$work = "A.ADR;".$workattr.":".substr($workaddr,0,-1)."\r\n"; }
+				if ($homeaddr) {$home = "B.ADR;".$homeattr.":".substr($homeaddr,0,-1)."\r\n"; }
+				$entries .= $work.$home."END:VCARD\r\n";
 				$entries .= "\r\n";
 			}
 			$buffer = $entries;
