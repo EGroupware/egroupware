@@ -96,7 +96,7 @@
 		else
 		{
 			$phpgw_info['user']['passwd'] = $phpgw->auth->change_password($o_passwd, $n_passwd);
-			$phpgw->accounts->sync();
+			//$phpgw->accounts->sync();
 			Header('Location: ' . $phpgw->link('/preferences/index.php','cd=18'));
 		}
 	}
