@@ -1016,11 +1016,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_break (2);
 			html_form_input ("text", "command_line", NULL, NULL, 50);
 			html_help_link ("command_line");
-		}
 
-		html_break (1);
-		html_form_input ("submit", "execute", "Execute");
-		html_help_link ("execute");
+			html_break (1);
+			html_form_input ("submit", "execute", "Execute");
+			html_help_link ("execute");
+		}
 
 		html_form_end ();
 
