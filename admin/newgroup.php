@@ -82,10 +82,15 @@
       echo "<tr><td>" . lang_admin("Select users for inclusion") . "</td> <td>"
         .  "<select name=\"n_users[]\" multiple size=$size>\n";
 
+      for ($i=0; $i<count($n_users); $i++) {
+         $selected_users[$n_users[$i]] = " selected";
+      }
+
       $phpgw->db->query("SELECT con,firstname,lastname, loginid FROM accounts where "
 			  . "status != 'L' ORDER BY lastname,firstname,loginid asc");
       while ($phpgw->db->next_record()) {
-         echo "<option value=\"" . $phpgw->db->f("con") . "\">"
+         echo "<option value=\"" . $phpgw->db->f("con") . "\""
+	    . $selected_users[$phpgw->db->f("con")] . ">"
 	    . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
 									   $phpgw->db->f("firstname"),
 									   $phpgw->db->f("lastname")) . "</option>";
