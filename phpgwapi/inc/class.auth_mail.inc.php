@@ -23,42 +23,49 @@
 
   /* $Id$ */
 
-  class auth
-  {
+	class auth
+	{
+		function authenticate($username, $passwd)
+		{
+			global $phpgw_info, $phpgw;
+			error_reporting(error_reporting() - 2);
 
-    function authenticate($username, $passwd) {
-      global $phpgw_info, $phpgw;
-      error_reporting(error_reporting() - 2);
+			if ($phpgw_info['server']['mail_login_type'] == 'vmailmgr')
+			{
+				$username = $username . '@' . $phpgw_info['server']['mail_suffix'];
+			}
+			if ($phpgw_info['server']['mail_server_type']=='imap')
+			{
+				$phpgw_info['server']['mail_port'] = '143';
+			}
+			elseif ($phpgw_info['server']['mail_server_type']=='pop3')
+			{
+				$phpgw_info['server']['mail_port'] = '110';
+			}
 
+			if( $phpgw_info['server']['mail_server_type']=='pop3')
+			{
+				$mailauth = imap_open('{'.$phpgw_info['server']['mail_server'].'/pop3'
+					.':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
+			}
+			else
+			{ //assume imap 
+				$mailauth = imap_open('{'.$phpgw_info['server']['mail_server']
+					.':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
+			}
 
-      if ($phpgw_info['server']['mail_login_type'] == 'vmailmgr') {
-        $username = $username . '@' . $phpgw_info['server']['mail_suffix'];
-      }
-      if ($phpgw_info['server']['mail_server_type']=='imap') {
-         $phpgw_info['server']['mail_port'] = '143';
-      } elseif ($phpgw_info['server']['mail_server_type']=='pop3') {
-         $phpgw_info['server']['mail_port'] = '110';
-      }
+			error_reporting(error_reporting() + 2);
+			if ($mailauth == False) {
+				return False;
+			} else {
+				imap_close($mailauth);
+				return True;
+			}
+		}
 
-      if( $phpgw_info['server']['mail_server_type']=='pop3') {
-         $mailauth = imap_open('{'.$phpgw_info['server']['mail_server'].'/pop3'
-                                .':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
-      } else { //assume imap 
-          $mailauth = imap_open('{'.$phpgw_info['server']['mail_server']
-                                .':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
-      }
-
-      error_reporting(error_reporting() + 2);
-      if ($mailauth == False) {
-        return False;
-      } else {
-        imap_close($mailauth);
-        return True;
-      }
-    }
-    function change_password($old_passwd, $new_passwd) {
-      global $phpgw_info, $phpgw;
-      return False;
-    }
-  }
+		function change_password($old_passwd, $new_passwd) {
+			global $phpgw_info, $phpgw;
+			return False;
+		}
+	}
 ?>

@@ -24,21 +24,22 @@
 
   /* $Id$ */
 
-  class auth
-  {
+	class auth
+	{
+		function authenticate($username, $passwd)
+		{
+			global $phpgw_info, $phpgw, $PHP_AUTH_USER;
 
-    function authenticate($username, $passwd) {
-      global $phpgw_info, $phpgw, $PHP_AUTH_USER;
-      
-      if (isset($PHP_AUTH_USER)) {
-        return True;
-      } else {
-        return False;
-      }
-    }
-    function change_password($old_passwd, $new_passwd) {
-      global $phpgw_info, $phpgw;
-      return False;
-    }
-  }
+			if (isset($PHP_AUTH_USER)) {
+				return True;
+			} else {
+				return False;
+			}
+		}
+
+		function change_password($old_passwd, $new_passwd) {
+			global $phpgw_info, $phpgw;
+			return False;
+		}
+	}
 ?>

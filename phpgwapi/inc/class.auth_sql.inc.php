@@ -24,47 +24,48 @@
 
   /* $Id$ */
 
-  class auth
-  {
+	class auth
+	{
+		function authenticate($username, $passwd)
+		{
+			global $phpgw_info, $phpgw;
+			$db = $phpgw->db;
 
-    function authenticate($username, $passwd)
-    {
-       global $phpgw_info, $phpgw;
-       $db = $phpgw->db;
- 
-       $db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
-                . "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
-       $db->next_record();
+			$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
+				. "account_pwd='" . md5($passwd) . "' AND account_status ='A'",__LINE__,__FILE__);
+			$db->next_record();
 
-       if ($db->f('account_lid')) {
-          return True;
-       } else {
-          return False;
-       }
-    }
+			if ($db->f('account_lid')) {
+				return True;
+			} else {
+				return False;
+			}
+		}
 
-    function change_password($old_passwd, $new_passwd, $_accountid="")
-    {
-       global $phpgw_info, $phpgw;
+		function change_password($old_passwd, $new_passwd, $_accountid="")
+		{
+			global $phpgw_info, $phpgw;
 
-       $encrypted_passwd = md5($new_passwd);
-       $_account_id = get_account_id($_accountid);
+			$encrypted_passwd = md5($new_passwd);
+			$_account_id = get_account_id($_accountid);
 
-       $phpgw->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "' "
- 	                  . "where account_id='" . $_account_id . "'",__LINE__,__FILE__);
-       $phpgw->db->query("update phpgw_accounts set account_lastpwd_change='" . time() . "' where account_id='"
-    			    	. $_account_id . "'",__LINE__,__FILE__);
- 
-       return $encrypted_passwd;
-    }
+			$phpgw->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "' "
+				. "where account_id='" . $_account_id . "'",__LINE__,__FILE__);
+			$phpgw->db->query("update phpgw_accounts set account_lastpwd_change='" . time() . "' where account_id='"
+				. $_account_id . "'",__LINE__,__FILE__);
 
-    function update_lastlogin($account_id, $ip)
-    {
-       global $phpgw;
+			return $encrypted_passwd;
+		}
 
-       $phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
-   	                . "$ip', account_lastlogin='" . time()
-                       . "' where account_id='$account_id'",__LINE__,__FILE__);
-    }
-  }
+		function update_lastlogin($account_id, $ip)
+		{
+			global $phpgw;
+
+			$account_id = get_account_id($account_id);
+
+			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+				. "$ip', account_lastlogin='" . time()
+				. "' where account_id='$account_id'",__LINE__,__FILE__);
+		}
+	}
 ?>

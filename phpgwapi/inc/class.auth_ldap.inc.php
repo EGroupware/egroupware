@@ -24,39 +24,38 @@
 
   /* $Id$ */
   
-  class auth
-  {
+	class auth
+	{
+		function authenticate($username, $passwd) {
+			global $phpgw_info, $phpgw;
+			//  error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
+			//  these are just "warnings" and can be ignored.....
+			error_reporting(0); 
 
-    function authenticate($username, $passwd) {
-      global $phpgw_info, $phpgw;
-      //  error_reporting MUST be set to zero, otherwise you'll get nasty LDAP errors with a bad login/pass...
-      //  these are just "warnings" and can be ignored.....
-      error_reporting(0); 
-      
-      $ldap = ldap_connect($phpgw_info['server']['ldap_host']);
-      
-      // find the dn for this uid, the uid is not always in the dn
-      $sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
-      $allValues = ldap_get_entries($ldap, $sri);
-      if($allValues['count'] > 0)
-      {
-      	// we only care about the first dn
-      	$userDN = $allValues[0]['dn'];
+			$ldap = ldap_connect($phpgw_info['server']['ldap_host']);
 
-      	// generate a bogus password to pass if the user doesn't give us one 
-	// this gets around systems that are anonymous search enabled 
-        if (empty($passwd)) $passwd = crypt(microtime()); 
-      	// try to bind as the user with user suplied password
-      	if (ldap_bind($ldap,$userDN, $passwd)) return True;
-      }
+			// find the dn for this uid, the uid is not always in the dn
+			$sri = ldap_search($ldap, $phpgw_info['server']['ldap_context'], 'uid='.$username);
+			$allValues = ldap_get_entries($ldap, $sri);
+			if($allValues['count'] > 0)
+			{
+				// we only care about the first dn
+				$userDN = $allValues[0]['dn'];
 
-      // Turn error reporting back to normal
-      error_reporting(7);
+				// generate a bogus password to pass if the user doesn't give us one 
+				// this gets around systems that are anonymous search enabled 
+				if (empty($passwd)) $passwd = crypt(microtime()); 
+					// try to bind as the user with user suplied password
+					if (ldap_bind($ldap,$userDN, $passwd)) return True;
+				}
 
-      // dn not found or password wrong
-      return False;
-    } 
-    
+				// Turn error reporting back to normal
+				error_reporting(7);
+
+				// dn not found or password wrong
+				return False;
+	}
+
 	function change_password($old_passwd, $new_passwd, $_account_id="") 
 	{
 		global $phpgw_info, $phpgw;
@@ -65,32 +64,33 @@
 		{
 			$_account_id = $phpgw_info['user']['account_id'];
 		}
-		
+
 		$ds = $phpgw->common->ldapConnect();
 		$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
 		$allValues = ldap_get_entries($ds, $sri);
-	
+
 
 		$entry['userpassword'] = $phpgw->common->encrypt_password($new_passwd);
 		$dn = $allValues[0]["dn"];
-	
+
 		if (!@ldap_modify($ds, $dn, $entry)) 
 		{
 			return false;
 		}
-	
+
 		return $encrypted_passwd;
 	}
-	
-	function update_lastlogin($account_lid, $ip)
+
+	function update_lastlogin($account_id, $ip)
 	{
 		global $phpgw;
-		
+
+		$account_id = get_account_id($account_id);
 		$now = time();
-		
+
 		$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
 			. "$ip', account_lastlogin='" . $now
-			. "' where account_lid='$account_lid'",__LINE__,__FILE__);
+			. "' where account_id='$account_id'",__LINE__,__FILE__);
 	}
 }
 ?>
