@@ -23,8 +23,10 @@
 	class boetemplate extends soetemplate
 	{
 		var $types = array(
-			'label'	=> 'Label',	// Label $cell['label'] is (to be translated) textual content
-			'text'	=> 'Text',	// Textfield 1 Line (size = [length][,maxlength])
+			'label'	=> 'Label',			// Label $cell['label'] is (to be translated) textual content
+			'text'	=> 'Text',			// Textfield 1 Line (size = [length][,maxlength])
+			'int'		=> 'Integer',		// like text, but only numbers (size = [min][,max])
+			'float'	=> 'Floating Point', // --------------- " --------------------------
 			'textarea' => 'Textarea',	// Multiline Text Input (size = [rows][,cols])
 			'checkbox'=> 'Checkbox',
 			'radio'	=> 'Radiobutton',	// Radiobutton (size = value if checked)
@@ -34,7 +36,7 @@
 			'image' => 'Image',			// label = url, name=link or method, help=alt or title
 			'date'	=> 'Date', 			// Datefield, size='' timestamp or size=format like 'm/d/Y'
 			'select'	=>	'Selectbox',	// Selectbox ($sel_options[$name] or $content[options-$name] is array with options)
-			// if size > 1 then multiple selections, size lines showed
+												// if size > 1 then multiple selections, size lines showed
 			'select-percent' => 'Select Percentage',
 			'select-priority' => 'Select Priority',
 			'select-access' => 'Select Access',
@@ -42,12 +44,12 @@
 			'select-state' => 'Select State',	// US-states
 			'select-cat' => 'Select Cathegory', // Cathegory-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
 			'select-account' => 'Select Account',	// label=accounts(default),groups,both
-			// size: -1=Single+not assigned, 0=Single, >0=Multiple
+																// size: -1=Single+not assigned, 0=Single, >0=Multiple
 			'raw'		=> 'Raw',	// Raw html in $content[$cell['name']]
 		);
 		var $aligns = array(
-			''       => 'Left',
-			'right'  => 'Right',
+			'' => 'Left',
+			'right' => 'Right',
 			'center' => 'Center'
 		);
 
@@ -62,7 +64,7 @@
 		}
 
 		/*!
-		@function expand_name($name,$c,$row,$c_='',$row_='',$cont=array())
+		@function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		@abstract allows a few variables (eg. row-number) to be used in field-names
 		@discussion This is mainly used for autorepeat, but other use is possible.
 		@discussion You need to be aware of the rules PHP uses to expand vars in strings, a name
@@ -87,7 +89,7 @@
 		*/
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
-			if(!$cont)
+			if (!$cont)
 			{
 				$cont = array();
 			}
@@ -145,7 +147,7 @@
 				if ($check_col)
 				{
 					$Ok = $pat[0] == 'c' && !(substr($pat,0,4) == 'cont' ||
-					substr($pat,0,2) == 'c_' || substr($pat,0,4) == 'col_');
+							substr($pat,0,2) == 'c_' || substr($pat,0,4) == 'col_');
 				}
 				else
 				{
@@ -156,7 +158,6 @@
 			{
 				echo "$this->name ".($check_col ? 'col' : 'row')."-check: c=$c, r=$r, idx='$org_idx' ==> ".($Ok?'True':'False')."<p>\n";
 			}
-
 			return $Ok;
 		}
-	}
+	};

@@ -30,7 +30,7 @@
 	class etemplate extends boetemplate
 	{
 		var $debug;//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
-		// 3=calls to show_cell and process_show_cell, or template-name or cell-type
+						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
 
 		/*!
@@ -41,10 +41,10 @@
 		function etemplate($name='',$template='default',$lang='default',$group=0,$version='',$rows=2,$cols=2)
 		{
 			$this->public_functions += array(
-				'exec'         => True,
-				'process_exec' => True,
-				'show'         => True,
-				'process_show' => True,
+				'exec'			=> True,
+				'process_exec'	=> True,
+				'show'			=> True,
+				'process_show'	=> True,
 			);
 			$this->boetemplate();
 			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
@@ -80,15 +80,15 @@
 		*/
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$cname='cont')
 		{
-			if(!$sel_options)
+			if (!$sel_options)
 			{
 				$sel_options = array();
 			}
-			if(!$readonlys)
+			if (!$readonlys)
 			{
 				$readonlys = array();
 			}
-			if(!$preserv)
+			if (!$preserv)
 			{
 				$preserv = array();
 			}
@@ -96,15 +96,15 @@
 			echo parse_navbar();
 
 			echo $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
-			$this->html->form($this->show($content,$sel_options,$readonlys,$cname),array(
-				'etemplate_exec[name]' => $this->name,
-				'etemplate_exec[template]' => $this->template,
-				'etemplate_exec[lang]' => $this->lang,
-				'etemplate_exec[group]' => $this->group,
-				'etemplate_exec[readonlys]' => $readonlys,
-				'etemplate_exec[cname]' => $cname,
-				'etemplate_exec[method]' => $method
-			)+$preserv,'/index.php?menuaction=etemplate.etemplate.process_exec');
+				$this->html->form($this->show($content,$sel_options,$readonlys,$cname),array(
+					'etemplate_exec[name]' => $this->name,
+					'etemplate_exec[template]' => $this->template,
+					'etemplate_exec[lang]' => $this->lang,
+					'etemplate_exec[group]' => $this->group,
+					'etemplate_exec[readonlys]' => $readonlys,
+					'etemplate_exec[cname]' => $cname,
+					'etemplate_exec[method]' => $method
+				)+$preserv,'/index.php?menuaction=etemplate.etemplate.process_exec');
 		}
 
 		/*!
@@ -143,7 +143,6 @@
 			{
 				return $regs[2] && isset($arr[$regs[1]][$regs[2]]);
 			}
-
 			return isset($arr[$idx]);
 		}
 
@@ -164,13 +163,14 @@
 		@param $show_xxx row,col name/index for name expansion
 		@returns the generated HTML
 		*/
-		function show($content,$sel_options='',$readonlys='',$cname='cont',$show_c=0,$show_row=0)
+		function show($content,$sel_options='',$readonlys='',$cname='cont',
+						$show_c=0,$show_row=0)
 		{
-			if(!$sel_options)
+			if (!$sel_options)
 			{
 				$sel_options = array();
 			}
-			if(!$readonlys)
+			if (!$readonlys)
 			{
 				$readonlys = array();
 			}
@@ -182,13 +182,12 @@
 			{
 				$content = array();	// happens if incl. template has no content
 			}
-			$content += array(
-				'.c'   => $show_c,
+			$content += array(	// for var-expansion in names in show_cell
+				'.c' => $show_c,
 				'.col' => $this->num2chrs($show_c-1),
-				'.row' => $show_row	// for var-expansion in names in show_cell
+				'.row' => $show_row
 			);
-
-			reset($this->data);
+         			reset($this->data);
 			if (isset($this->data[0]))
 			{
 				list($nul,$width) = each($this->data);
@@ -205,10 +204,10 @@
 					$cols = $old_cols; $class = $old_class; $height = $old_height;
 					list($nul,$cell) = each($cols); reset($cols);
 					if (!($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) &&
-					!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
-					!$this->isset_array($idx,$content))
+						!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
+						!$this->isset_array($idx,$content))
 					{
-						break; // no auto-row-repeat
+						break;                     	// no auto-row-repeat
 					}
 				}
 				else
@@ -220,19 +219,18 @@
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
 				{
 					$old_cell = $cell;
-					if (!(list($nul,$cell) = each($cols)))
+					if (!(list($nul,$cell) = each($cols)))		// no further cols
 					{
-						// no further cols
 						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
-						!$this->isset_array($idx,$content))
+							!$this->isset_array($idx,$content))
 						{
 							break;	// no auto-col-repeat
 						}
 					}
 					$col = $this->num2chrs($c);
 					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,
-					$c,$r,$span);
+						$c,$r,$span);
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
@@ -272,8 +270,8 @@
 				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
 			}
 			return "\n\n<!-- BEGIN $this->name -->\n$style\n".
-			$this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS')).
-			"<!-- END $this->name -->\n\n";
+				$this->html->table($rows,$this->html->formatOptions($this->size,'WIDTH,HEIGHT,BORDER,CLASS')).
+				"<!-- END $this->name -->\n\n";
 		}
 
 		/*!
@@ -310,16 +308,13 @@
 			{
 				$form_name = $cname.'['.$name.']';
 			}
-
 			if ($readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'])
 			{
 				$options .= ' READONLY';
 			}
-
 			if ($cell['disabled'] || $cell['type'] == 'button' && $readonly)
 			{
-				if ($this->rows == 1)
-				{
+				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
 				}
 				$cell = $this->empty_cell(); // show nothing
@@ -343,19 +338,21 @@
 			{
 				case 'label':		//  size: [[b]old][[i]talic]
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
-					if ($value != '' && strstr($cell['size'],'b'))
-					{
-						$value = $this->html->bold($value);
-					}
-					if ($value != '' && strstr($cell['size'],'i'))
-					{
-						$value = $this->html->italic($value);
-					}
+					if ($value != '' && strstr($cell['size'],'b')) $value = $this->html->bold($value);
+					if ($value != '' && strstr($cell['size'],'i')) $value = $this->html->italic($value);
 					$html .= $value;
 					break;
 				case 'raw':
 					$html .= $value;
 					break;
+				case 'int':		// size: [min][,[max][,len]]
+				case 'float':
+					list($min,$max,$cell['size']) = explode(',',$cell['size']);
+					if ($cell['size'] == '')
+					{
+						$cell['size'] = $cell['type'] == 'int' ? 5 : 8;
+					}
+					// fall-through
 				case 'text':		// size: [length][,maxLength]
 					if ($readonly)
 					{
@@ -364,12 +361,12 @@
 					else
 					{
 						$html .= $this->html->input($form_name,$value,'',
-						$options.$this->html->formatOptions($cell['size'],'SIZE,MAXLENGTH'));
+							$options.$this->html->formatOptions($cell['size'],'SIZE,MAXLENGTH'));
 					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					$html .= $this->html->textarea($form_name,$value,
-					$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
+						$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
 					break;
 				case 'date':
 					if ($cell['size'] != '')
@@ -415,7 +412,7 @@
 					break;
 				case 'button':
 					$html .= $this->html->submit_button($form_name,$cell['label'],'',
-					strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
+						strlen($cell['label']) <= 1 || $cell['no_lang'],$options);
 					break;
 				case 'hrule':
 					$html .= $this->html->hr($cell['size']);
@@ -424,8 +421,7 @@
 					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell['size'] != '')
 					{
 						if ($span == '' && isset($content[$idx]['span']))
-						{
-							// this allows a colspan in autorepeated cells like the editor
+						{	// this allows a colspan in autorepeated cells like the editor
 							$span = explode(',',$content[$idx]['span']); $span = $span[0];
 							if ($span == 'all')
 							{
@@ -438,7 +434,6 @@
 						{
 							$cname .= $cname == '' ? $idx_cname : "[$idx_cname]";
 						}
-
 						//echo "<p>show_cell-autorepeat($name,$show_c,$show_row,cname='$cname',idx='$idx',idx_cname='$idx_cname',span='$span'): readonlys[$idx] ="; _debug_array($readonlys);
 					}
 					if ($readonly)
@@ -456,13 +451,12 @@
 					elseif (isset($sel_options[$org_name]))
 					{
 						$sel_options = $sel_options[$org_name];
-					}
-					elseif (isset($content["options-$name"]))
+					} elseif (isset($content["options-$name"]))
 					{
 						$sel_options = $content["options-$name"];
 					}
 					$html .= $this->sbox->getArrayItem($form_name.'[]',$value,$sel_options,$cell['no_lang'],
-					$options,$cell['size']);
+						$options,$cell['size']);
 					break;
 				case 'select-percent':
 					$html .= $this->sbox->getPercentage($form_name,$value,$options);
@@ -493,7 +487,7 @@
 					break;
 				case 'image':
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
-					$cell['label'],lang($cell['help']),'BORDER=0');
+						$cell['label'],lang($cell['help']),'BORDER=0');
 					$html .= $name == '' ? $image : $this->html->a_href($image,$name);
 					break;
 				default:
@@ -502,11 +496,10 @@
 			}
 			if ($cell['type'] != 'button' && $cell['type'] != 'image' && (($label = $cell['label']) != '' || $html == ''))
 			{
-				if (!$cell['no_lang'] && strlen($label) > 1)
+				if (strlen($label) > 1)
 				{
 					$label = lang($label);
 				}
-
 				$html_label = $html != '' && $label != '';
 
 				if (strstr($label,'%s'))
@@ -517,7 +510,6 @@
 				{
 					$html = '&nbsp;';
 				}
-
 				if ($html_label)
 				{
 					$html = $this->html->label($html);
@@ -538,15 +530,14 @@
 		*/
 		function process_show(&$content,$readonlys='')
 		{
-			if(!$readonlys)
+			if (!$readonlys)
 			{
-				$readonlys=array();
+				$readonlys = array();
 			}
 			if (!isset($content) || !is_array($content))
 			{
 				return;
 			}
-
 			if ($this->debug >= 1 || $this->debug == $this->name && $this->name)
 			{
 				echo "<p>process_show($this->name) start: content ="; _debug_array($content);
@@ -575,9 +566,8 @@
 				for ($c = 0; True /*list($col,$cell) = each($cols)*/; ++$c)
 				{
 					$old_cell = $cell;
-					if (!(list($nul,$cell) = each($cols)))
+					if (!(list($nul,$cell) = each($cols)))	// no further cols
 					{
-						// no further cols
 						$cell = $old_cell;
 						if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
 							$idx_cname == '' || !$this->isset_array($idx,$content))
@@ -593,14 +583,13 @@
 
 					$name = $this->expand_name($cell['name'],$c,$r);
 					$readonly = $cell['readonly'] || $readonlys[$name] || $readonlys['__ALL__'] ||
-					$cell['type'] == 'label' || $cell['type'] == 'image' || $cell['type'] == 'raw' ||
-					$cell['type'] == 'hrule';
+						$cell['type'] == 'label' || $cell['type'] == 'image' || $cell['type'] == 'raw' ||
+						$cell['type'] == 'hrule';
 
 					if ($idx_cname == '' && $cell['type'] == 'template')	// only templates
 					{
-						if ($readonly)
+						if ($readonly)			// can't unset whole content!!!
 						{
-							// can't unset whole content!!!
 							$readonlys['__ALL__'] = True;
 						}
 						$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
@@ -619,7 +608,7 @@
 						$parent_isset = isset($content[$regs[1]]);
 
 						if ($readonly || !$this->process_show_cell($cell,$name,$c,$r,
-							$readonlys[$regs[1]][$regs[2]],$content[$regs[1]][$regs[2]]))
+								$readonlys[$regs[1]][$regs[2]],$content[$regs[1]][$regs[2]]))
 						{
 							if (!$parent_isset)
 							{
@@ -634,7 +623,7 @@
 					else
 					{
 						if ($readonly || !$this->process_show_cell($cell,$name,$c,$r,
-							$readonlys[$idx_cname],$content[$idx_cname]))
+								$readonlys[$idx_cname],$content[$idx_cname]))
 						{
 							unset($content[$idx_cname]);
 						}
@@ -665,7 +654,6 @@
 			{
 				$cell['type'] = $cell['type'][0];
 			}
-
 			if ($this->debug >= 3 || $this->debug == $this->name || $this->debug == $cell['type'])
 			{
 				echo "<p>process_show_cell(c=$c, r=$r, name='$name',type='${cell['type']}) start: isset(value)=".(0+isset($value)).", value=";
@@ -680,6 +668,13 @@
 			}
 			switch ($cell['type'])
 			{
+				case 'int':
+				case 'float':
+					list($min,$max) = explode(',',$cell['size']);
+					/*
+					* TO DO: number- and range-check, if not enshured by java-script
+					*/
+					break;
 				case 'text':
 				case 'textarea':
 					if (isset($value))
@@ -724,9 +719,8 @@
 					}
 					break;
 				case 'checkbox':
-					if (!isset($value))
+					if (!isset($value))	// checkbox was not checked
 					{
-						// checkbox was not checked
 						$value = 0;			// need to be reported too
 					}
 					break;
@@ -758,4 +752,4 @@
 			}
 			return isset($value);
 		}
-	}
+	};

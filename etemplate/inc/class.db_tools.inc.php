@@ -34,7 +34,8 @@
 			'writen' => 'File writen',
 			'error_writing' => 'Error: writing file !!!',
 			'give_table_name' => 'Please enter table-name first !!!',
-			'new_table' => 'New table created'
+			'new_table' => 'New table created',
+			'select_app' => 'Select an app first !!!'
 		);
 		var $types = array(
 			'auto'		=> 'auto',
@@ -54,7 +55,7 @@
 		@function db_tools()
 		@abstract constructor of class
 		*/
-		function db_tools()
+		function db_tools($lang_on_messages=True)
 		{
 			$this->editor = CreateObject('etemplate.etemplate','etemplate.db-tools.edit');
 			$this->data = array();
@@ -69,6 +70,12 @@
 			{
 				$this->apps[$name] = $data['title'];
 			}
+			if ($lang_on_messages)
+			{
+				reset($this->messages);
+				while(list($key,$msg) = each($this->messages))
+					$this->messages[$key] = lang($msg);
+			}
 		}
 
 		/*!
@@ -81,7 +88,6 @@
 			{
 				$this->app = $GLOBALS['HTTP_GET_VARS']['app'];
 			}
-
 			if (isset($GLOBALS['HTTP_POST_VARS']['cont']))
 			{
 				$content = $GLOBALS['HTTP_POST_VARS']['cont'];
@@ -135,7 +141,7 @@
 				list($col) = each($content['delete']);
 
 				reset($this->data[$posted_table]['fd']);
-				while ($col-- > 0 && list($key,$data) = each($this->data[$posted_table]['fd']));
+				while ($col-- > 0 && list($key,$data) = each($this->data[$posted_table]['fd'])) ;
 
 				unset($this->data[$posted_table]['fd'][$key]);
 			}
@@ -143,17 +149,41 @@
 			{
 				$this->data[$posted_table]['fd'][''] = array();
 			}
-			elseif (isset($content['add_table']))
+			elseif ($content['add_table'] || $content['import'])
 			{
-				if (!$content['new_table_name'])
+				if (!$this->app)
+				{
+					$msg .= $this->messages['select_app'];
+				}
+				elseif (!$content['new_table_name'])
 				{
 					$msg .= $this->messages['give_table_name'];
 				}
-				else
+				elseif ($content['add_table'])
 				{
 					$this->table = $content['new_table_name'];
 					$this->data[$this->table] = array('fd' => array(),'pk' =>array(),'ix' => array(),'uc' => array(),'fk' => array());
 					$msg .= $this->messages['new_table'];
+				}
+				else // import
+				{
+					$oProc = CreateObject('setup.schema_proc','mysql');
+					$oProc->m_odb = $GLOBALS['phpgw']->db;
+					$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
+
+					while (list($key,$tbldata) = each ($oProc->m_oTranslator->sCol))
+					{
+						$cols .= $tbldata;
+					}
+					eval('$cols = array('. $cols . ');');
+
+					$this->data[$this->table = $content['new_table_name']] = array(
+						'fd' => $cols,
+						'pk' => $oProc->m_oTranslator->pk,
+						'fk' => $oProc->m_oTranslator->fk,
+						'ix' => $oProc->m_oTranslator->ix,
+						'uc' => $oProc->m_oTranslator->uc
+					);
 				}
 			}
 			elseif ($content['editor'])
@@ -171,8 +201,7 @@
 			{
 				$table_names[$this->table] = $this->table;
 			}
-
-			$sel_options = array(
+   $sel_options = array(
 				'table_name' => $table_names,
 				'type' => $this->types,
 				'app' => array('' => lang($this->messages['select_one'])) + $this->apps
@@ -182,12 +211,15 @@
 				$content += $this->table2content($this->data[$this->table]);
 			}
 			$no_button = array( );
-
+			if (!$this->app || !$this->table)
+			{
+				$no_button += array('write_tables' => True);
+			}
 			if ($this->debug)
 			{
 				echo 'editor.edit: content ='; _debug_array($content);
 			}
-			$this->editor->exec('etemplate.db_tools.edit',$content,$sel_options,$no_buttons,
+			$this->editor->exec('etemplate.db_tools.edit',$content,$sel_options,$no_button,
 				array('posted_table' => $this->table,'posted_app' => $this->app));
 		}
 
@@ -232,7 +264,7 @@
 
 			$this->app = $posted_app;
 			$this->data = array();
-         $this->read($posted_app,$this->data);
+			$this->read($posted_app,$this->data);
 
 			if (isset($this->data[$posted_table]) &&
 				 $this->tables_identical($this->data[$posted_table],$edited_table))
@@ -303,7 +335,7 @@
 			$table['fk'] = array();
 			$table['ix'] = array();
 			$table['uc'] = array();
-         for (reset($content),$n = 1; isset($content["Row$n"]); ++$n)
+			for (reset($content),$n = 1; isset($content["Row$n"]); ++$n)
 			{
 				$col = $content["Row$n"];
 				if (($name = $col['name']) != '')		// ignoring lines without column-name
@@ -315,6 +347,7 @@
 							case 'default':
 							case 'type':	// selectbox ensures type is not empty
 							case 'precision':
+							case 'scale':
 							case 'nullable':
 								if ($val != '' || $prop == 'nullable')
 								{
@@ -367,7 +400,6 @@
 			{
 				return False;
 			}
-
 			if ($this->debug >= 5)
 			{
 				echo "<p>read($app): file='$file', phpgw_baseline =";
@@ -404,7 +436,6 @@
 				{
 					$def .= "'$key' => ";
 				}
-
 				if (is_array($val))
 				{
 					$def .= $this->write_array($val,$parent == 'fd' ? 0 : $depth,$key,$only_vals);
@@ -457,13 +488,11 @@
 			if (!$header)
 			{
 				$header = "<?php\n\n";
-				}
-
+			}
 			if (!($f = fopen($file,'w')))
 			{
 				return False;
 			}
-
 			$def .= "\t\$phpgw_baseline = ";
 			$def .= $this->write_array($phpgw_baseline,1);
 			$def .= ";\n";
@@ -489,6 +518,7 @@
 				$table['fd'][$col] = array(
 					'type' => ''.$props['type'],
 					'precision' => 0+$props['precision'],
+					'scale' => 0+$props['scale'],
 					'nullable' => !!$props['nullable'],
 					'default' => ''.$props['default']
 				);
@@ -525,6 +555,10 @@
 		*/
 		function writeLangFile()
 		{
-			$this->tmpl->writeLangFile('etemplate','en',$this->messages);
+			$m = new db_tools(False);	// no lang on messages
+			$this->tmpl->writeLangFile('etemplate','en',$m->messages);
 		}
-	}
+	};
+
+
+

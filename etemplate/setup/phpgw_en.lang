@@ -1,157 +1,166 @@
-%s Disabled	etemplate	en	%s Disabled
-%s No Transl.	etemplate	en	%s No Transl.
-%s NoTranslation	etemplate	en	%s NoTranslation
-%s Readonly	etemplate	en	%s Readonly
-%s onChange	etemplate	en	%s onChange
+%s disabled	etemplate	en	%s disabled
+%s needed	etemplate	en	%s needed
+%s no transl.	etemplate	en	%s No Transl.
+%s notranslation	etemplate	en	%s noTranslation
+%s onchange	etemplate	en	%s onChange
+%s readonly	etemplate	en	%s readonly
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
-Add Column	etemplate	en	Add Column
-Add Table	etemplate	en	Add Table
-Align	etemplate	en	Align
-CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
-CSS-styles	etemplate	en	CSS-styles
-Center	etemplate	en	Center
-Checkbox	etemplate	en	Checkbox
-ColumnName	etemplate	en	ColumnName
-Create a new table for the application	etemplate	en	Create a new table for the application
-DB ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
-DB-Tools	etemplate	en	DB-Tools
-Date	etemplate	en	Date
-Date Timestamp	etemplate	en	Date Timestamp
-Date m/d/Y	etemplate	en	Date m/d/Y
-Default	etemplate	en	Default
-Delete	etemplate	en	Delete
-Delete Column	etemplate	en	Delete Column
-Delete Template	etemplate	en	Delete Template
-Disabled	etemplate	en	Disabled
-Do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
-Drop Table	etemplate	en	Drop Table
-Drop a table - this can NOT be undone	etemplate	en	Drop a table - this can NOT be undone
-Dump4Setup	etemplate	en	Dump4Setup
-Edit	etemplate	en	Edit
-Editable Templates - DB-Tools	etemplate	en	Editable Templates - DB-Tools
-Editable Templates - Delete Template	etemplate	en	Editable Templates - Delete Template
-Editable Templates - Editor	etemplate	en	Editable Templates - Editor
-Editable Templates - Show Template	etemplate	en	Editable Templates - Show Template
-Error: Template not found !!!	etemplate	en	Error: Template not found !!!
-Error: while saveing !!!	etemplate	en	Error: while saveing !!!
-Foreign Key	etemplate	en	Foreign Key
-Group/-User	etemplate	en	Group/-User
-Height	etemplate	en	Height
-Help	etemplate	en	Help
-Horizontal Rule	etemplate	en	Horizontal Rule
-Image	etemplate	en	Image
-Indexed	etemplate	en	Indexed
-Key	etemplate	en	Key
-L. after	etemplate	en	L. after
-Label	etemplate	en	Label
-Label:[b[old]][i[tylic]] Text:[len][,max] Textarea:[rows][,cols] Radiobutton:value H.Rule:[width] Template:[IndexInContent] Select:[multiselectLines] Date:[values: eg. 'Y-m-d']	etemplate	en	Label:[b[old]][i[tylic]] Text:[len][,max] Textarea:[rows][,cols] Radiobutton:value H.Rule:[width] Template:[IndexInContent] Select:[multiselectLines] Date:[values: eg. 'Y-m-d']
-Label:[b[old]][i[tylic]] Text:[length][,maxLength] Textarea:[rows][,cols] Radiobutton:valueIfChecked HorizontalRule:[width] Template:[IndexInContent] Select:[multiselectLinesDisplayed]	etemplate	en	Label:[b[old]][i[tylic]] Text:[length][,maxLength] Textarea:[rows][,cols] Radiobutton:valueIfChecked HorizontalRule:[width] Template:[IndexInContent] Select:[multiselectLinesDisplayed]
-Lang	etemplate	en	Lang
-Language	etemplate	en	Language
-Left	etemplate	en	Left
-Name	etemplate	en	Name
-Name of table to add	etemplate	en	Name of table to add
-No	etemplate	en	No
-Nullable	etemplate	en	Nullable
-Precision	etemplate	en	Precision
-Primary Key	etemplate	en	Primary Key
-Primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
-Radiobutton	etemplate	en	Radiobutton
-Raw	etemplate	en	Raw
-Read	etemplate	en	Read
-Readonly	etemplate	en	Readonly
-Right	etemplate	en	Right
-Save	etemplate	en	Save
-Select Access	etemplate	en	Select Access
-Select Account	etemplate	en	Select Account
-Select Cathegory	etemplate	en	Select Cathegory
-Select Country	etemplate	en	Select Country
-Select Percentage	etemplate	en	Select Percentage
-Select Priority	etemplate	en	Select Priority
-Select State	etemplate	en	Select State
-Select an application	etemplate	en	Select an application
-Select an table of the application	etemplate	en	Select an table of the application
-Selectbox	etemplate	en	Selectbox
-Show (no save)	etemplate	en	Show (no save)
-Show Values	etemplate	en	Show Values
-Size	etemplate	en	Size
-Span	etemplate	en	Span
-Span, Class	etemplate	en	Span, Class
-Submitbutton	etemplate	en	Submitbutton
-Template	etemplate	en	Template
-Template deleted	etemplate	en	Template deleted
-Template saved	etemplate	en	Template saved
-Text	etemplate	en	Text
-Textarea	etemplate	en	Textarea
-Type	etemplate	en	Type
-Unique	etemplate	en	Unique
-Value	etemplate	en	Value
-Version	etemplate	en	Version
-Width	etemplate	en	Width
-Width, Height, Border	etemplate	en	Width, Height, Border
-Width, Height, Border, class	etemplate	en	Width, Height, Border, class
-Write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
-Write Langfile	etemplate	en	Write Langfile
-Write Tables	etemplate	en	Write Tables
-Yes	etemplate	en	Yes
+>|<	etemplate	en	>|<
+add column	etemplate	en	Add Column
+add table	etemplate	en	Add Table
+align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
-can have sepecial SQL-value NULL	etemplate	en	can have sepecial SQL-value NULL
+application	etemplate	en	Application
+can have special sql-value null	etemplate	en	can have special SQL-value NULL
+center	etemplate	en	Center
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
+check if field has to be filled by user	etemplate	en	check if field has to be filled by user
+checkbox	etemplate	en	Checkbox
 class	etemplate	en	class
-creates an english ('en') langfile from label and helptexts (for application in Name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
-delete whole column (can NOT be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
-deletes the above spez. eTemplate from the database, can NOT be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
-deletes the eTemplate	etemplate	en	deletes the eTemplate
-deletes the eTemplate spez. above	etemplate	en	deletes the eTemplate spez. above
+columnname	etemplate	en	ColumnName
+create a new table for the application	etemplate	en	Create a new table for the application
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-styles	etemplate	en	CSS-styles
+date	etemplate	en	Date
+db ensures that every row has a unique value in that column	etemplate	en	DB ensures that every row has a unique value in that column
+db-tools	etemplate	en	DB-Tools
+default	etemplate	en	Default
+delete	etemplate	en	Delete
+delete column	etemplate	en	Delete Column
+delete template	etemplate	en	Delete Template
+delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
+deletes the etemplate	etemplate	en	deletes the eTemplate
+deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
+disabled	etemplate	en	Disabled
 discard changes	etemplate	en	discard changes
-displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
-displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
-eTemplate Editor	etemplate	en	eTemplate Editor
-edit the eTemplate spez. above	etemplate	en	edit the eTemplate spez. above
-embeded CSS styles, eg. '.red { background red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
-embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
-enable JavaScript onChange submit	etemplate	en	enable JavaScript onChange submit
+do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
+drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
+drop table	etemplate	en	Drop Table
+dump4setup	etemplate	en	Dump4Setup
+edit	etemplate	en	Edit
+edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
+editable templates - db-tools	etemplate	en	Editable Templates - DB-Tools
+editable templates - delete template	etemplate	en	Editable Templates - Delete Template
+editable templates - editor	etemplate	en	Editable Templates - Editor
+editable templates - show template	etemplate	en	Editable Templates - Show Template
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
+enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
+error: template not found !!!	etemplate	en	Error: Template not found !!!
+error: while saveing !!!	etemplate	en	Error: while saveing !!!
+etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
+floating point	etemplate	en	Floating Point
+foreign key	etemplate	en	Foreign Key
+group/-user	etemplate	en	Group/-User
+height	etemplate	en	Height
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
+help	etemplate	en	Help
+horizontal rule	etemplate	en	Horizontal Rule
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
-index/name of returned content (name of the Template)	etemplate	en	index/name of returned content (name of the Template)
-index/name of returned content (name of the Template, Link / Method for Image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
+image	etemplate	en	Image
+import	etemplate	en	Import
+import table-definitions from existing db-table	etemplate	en	Import table-definitions from existing db-table
+index/name of returned content (name of the template, link / method for image)	etemplate	en	index/name of returned content (name of the Template, Link / Method for Image)
+indexed	etemplate	en	Indexed
 insert new column behind this one	etemplate	en	insert new column behind this one
 insert new column in front of all	etemplate	en	insert new column in front of all
 insert new row after this one	etemplate	en	insert new row after this one
-insert new row in front of first Line	etemplate	en	insert new row in front of first Line
+insert new row in front of first line	etemplate	en	insert new row in front of first Line
+integer	etemplate	en	Integer
+key	etemplate	en	Key
+l. after	etemplate	en	L. after
+label	etemplate	en	Label
+label:[b[old]][i[tylic]] text:[len][,max] textarea:[rows][,cols] radiobutton:value h.rule:[width] template:[indexincontent] select:[multiselectlines] date:[values: eg. 'y-m-d']	etemplate	en	Label:[b[old]][i[tylic]] Text:[len][,max] Textarea:[rows][,cols] Radiobutton:value H.Rule:[width] Template:[IndexInContent] Select:[multiselectLines] Date:[values: eg. 'Y-m-d']
+label:[b[old]][i[tylic]] text:[length][,maxlength] textarea:[rows][,cols] radiobutton:valueifchecked horizontalrule:[width] template:[indexincontent] select:[multiselectlinesdisplayed]	etemplate	en	Label:[b[old]][i[tylic]] Text:[length][,maxLength] Textarea:[rows][,cols] Radiobutton:valueIfChecked HorizontalRule:[width] Template:[IndexInContent] Select:[multiselectLinesDisplayed]
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	en	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
+lang	etemplate	en	Lang
+language	etemplate	en	Language
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
+left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
-name of the eTemplate, should be in form application.function[.subTemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
-need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+name of table to add	etemplate	en	Name of table to add
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+no	etemplate	en	No
+nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
-number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
-read eTemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+only an other version found !!!	etemplate	en	only an other Version found !!!
+precision	etemplate	en	Precision
+primary key	etemplate	en	Primary Key
+primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
+radiobutton	etemplate	en	Radiobutton
+raw	etemplate	en	Raw
+read	etemplate	en	Read
+read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
 read template from database (for the keys above)	etemplate	en	read template from database (for the keys above)
-remove Row (can NOT be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
-returns savely, WITHOUT deleting	etemplate	en	returns savely, WITHOUT deleting
-save the eTemplate under the above keys (name, ...), change them for a SaveAs	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
-save the template under the above keys (name, ...), change them for a SaveAs	etemplate	en	save the template under the above keys (name, ...), change them for a SaveAs
+readonly	etemplate	en	Readonly
+remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
+returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
+right	etemplate	en	Right
+save	etemplate	en	Save
+save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
+save the template under the above keys (name, ...), change them for a saveas	etemplate	en	save the template under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
+scale	etemplate	en	Scale
+scale for float	etemplate	en	scale for float
+select access	etemplate	en	Select Access
+select account	etemplate	en	Select Account
+select an application	etemplate	en	Select an application
+select an table of the application	etemplate	en	Select an table of the application
+select cathegory	etemplate	en	Select Cathegory
+select country	etemplate	en	Select Country
+select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	select if content should only be displayed but not altered (the content is not send back then!)
 select if label and other content (depending on fieldtype) should not be translated	etemplate	en	select if label and other content (depending on fieldtype) should not be translated
-shows / allows you to enter values into the eTemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
-shows/displays eTemplate for testing, does NOT save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
-shows/displays the template for testing, does NOT save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
+select percentage	etemplate	en	Select Percentage
+select priority	etemplate	en	Select Priority
+select state	etemplate	en	Select State
+selectbox	etemplate	en	Selectbox
+show (no save)	etemplate	en	Show (no save)
+show values	etemplate	en	Show Values
+shows / allows you to enter values into the etemplate for testing	etemplate	en	shows / allows you to enter values into the eTemplate for testing
+shows/displays etemplate for testing, does not save it before	etemplate	en	shows/displays eTemplate for testing, does NOT save it before
+shows/displays the template for testing, does not save it before	etemplate	en	shows/displays the template for testing, does NOT save it before
+size	etemplate	en	Size
+span	etemplate	en	Span
+span, class	etemplate	en	Span, Class
+submitbutton	etemplate	en	Submitbutton
+tablename	etemplate	en	TableName
+template	etemplate	en	Template
+template deleted	etemplate	en	Template deleted
+template saved	etemplate	en	Template saved
 test.gif	etemplate	en	test.gif
-to start the DB-Tools	etemplate	en	to start the DB-Tools
-to start the eTemplate editor	etemplate	en	to start the eTemplate editor
+text	etemplate	en	Text
+textarea	etemplate	en	Textarea
+to start the db-tools	etemplate	en	to start the DB-Tools
+to start the etemplate editor	etemplate	en	to start the eTemplate editor
+type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
-type of the field (select Label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
-value is key for an other table	etemplate	en	value is key for an other table
+type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
+unique	etemplate	en	Unique
+value	etemplate	en	Value
+version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
+width	etemplate	en	Width
 width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
 width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
-width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
-writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
+width, height, border	etemplate	en	Width, Height, Border
+width, height, border, class	etemplate	en	Width, Height, Border, class
+width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
+write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
+write langfile	etemplate	en	Write Langfile
+write tables	etemplate	en	Write Tables
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
+yes	etemplate	en	Yes

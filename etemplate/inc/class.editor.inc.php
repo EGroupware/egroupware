@@ -21,7 +21,8 @@
 			'not_found' => 'Error: Template not found !!!',
 			'deleted'   => 'Template deleted',
 			'saved'     => 'Template saved',
-			'error_writing' => 'Error: while saveing !!!'
+			'error_writing' => 'Error: while saveing !!!',
+			'other_version' => 'only an other Version found !!!'
 		);
 
 		var $public_functions = array
@@ -34,12 +35,19 @@
 			//'preferences' => True
 		);
 
-		function editor()
+		function editor($lang_on_messages=True)
 		{
 			$this->etemplate = CreateObject('etemplate.etemplate');
 			//echo '$HTTP_POST_VARS='; _debug_array($HTTP_POST_VARS);
 
 			$this->editor = new etemplate('etemplate.editor');
+
+			if ($lang_on_messages)
+			{
+				reset($this->messages);
+				while (list($key,$msg) = each($this->messages))
+					$this->messages[$key] = lang($msg);
+			}
 		}
 
 		function edit($msg = '')
@@ -49,14 +57,16 @@
 			{
 				$msg .= $this->messages['not_found'];
 			}
-
 			$content = $this->etemplate->as_array() + array(
 				'cols' => $this->etemplate->cols,
 				'msg' => $msg
 			);
 			$cols_spanned = array();
 			reset($this->etemplate->data);
-			if (isset($this->etemplate->data[0])) each($this->etemplate->data);
+			if (isset($this->etemplate->data[0]))
+			{
+				each($this->etemplate->data);
+			}
 			$no_button = array('values' => True,'edit' => True);
 			while (list($row,$cols) = each($this->etemplate->data))
 			{
@@ -113,11 +123,10 @@
 			}
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
-					'type'  => $this->etemplate->types,
+					'type' => $this->etemplate->types,
 					'align' => $this->etemplate->aligns
 				),
-				$no_button,$cols_spanned
-			);
+				$no_button,$cols_spanned);
 		}
 
 		function swap(&$a,&$b)
@@ -149,8 +158,7 @@
 						$cols = $col;
 					}
 					$this->etemplate->data[$row] = $row_data;
-					++$row; $col = 0;
-					$row_data = array();
+					++$row; $col = 0; $row_data = array();
 				}
 			}
 			$this->etemplate->rows = $row - 1;
@@ -265,7 +273,12 @@
 			{
 				if (!$this->etemplate->read($content))
 				{
-					$msg = $this->messages['not_found'];
+					$content['version'] = '';	// trying it without version
+					$msg = $this->messages['other_version'];
+					if (!$this->etemplate->read($content))
+					{
+						$msg = $this->messages['not_found'];
+					}
 				}
 			}
 			elseif ($content['delete'])
@@ -292,9 +305,9 @@
 				$additional = array();
 				if (substr($content['name'],0,9) == 'etemplate')
 				{
-					$additional = $this->messages + $this->etemplate->types + $this->etemplate->aligns;
+					$m = new editor(False);
+					$additional = $m->messages + $this->etemplate->types + $this->etemplate->aligns;
 				}
-
 				$msg = $this->etemplate->writeLangFile($content['name'],'en',$additional);
 			}
 			elseif ($content['db_tools'])
@@ -311,7 +324,6 @@
 			{
 				$read_ok = $this->etemplate->read($GLOBALS['HTTP_POST_VARS']);
 			}
-
 			if (isset($GLOBALS['HTTP_POST_VARS']['yes']))	// Delete
 			{
 				if ($read_ok)
@@ -351,7 +363,6 @@
 			{
 				$msg = $this->messages['not_found'];
 			}
-
 			if (!$msg && isset($post_vars['delete']))
 			{
 				$this->delete('show');
@@ -392,4 +403,7 @@
 			}
 			$show->exec('etemplate.editor.show',$content,array(),$no_buttons,array('olds' => $vals),'');
 		}
-	}
+	};
+
+
+
