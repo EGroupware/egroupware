@@ -1,0 +1,4 @@
+
+pictures are stored in vfs.
+Thus eTemplate can't read pictures from vfs yet, u need to create a symlink into your resources directory!
+ln -s {outside-doc-root-path}/resources/pictures {egroupware-base-dir}/resources
