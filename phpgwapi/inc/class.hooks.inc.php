@@ -30,9 +30,17 @@
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
   } unset($d1);unset($d2);unset($d3);
-
+		/*!
+		@class hooks
+		@abstract class which gives ability for applications to set and use hooks to communicate with each other
+		@discussion Author: Seek3r
+		*/
   class hooks
   {
+  		/*! 
+  		@function read()
+  		@abstract currenlty not being used
+  		*/
      function read()
      {
         global $phpgw;
@@ -46,7 +54,14 @@
         }
         return $return_array;
      }
-   
+		/*!
+		@function proccess
+		@abstract process the hooks
+		@discussion not currently being used
+		@param $type 
+		@param $where
+		*/
+		
      function proccess($type,$where = "")
      {
         global $phpgw_info, $phpgw;
