@@ -60,7 +60,7 @@
 
 		function import_start_record($buffer)
 		{
-			$top=array();
+			$top = array();
 			++$this->id;
 			$this->currentrecord = $top;
 			return $buffer;
@@ -79,8 +79,8 @@
 
 		function import_end_record($buffer)
 		{
-			$buffer[$this->id]='';
-			while ( list($name, $value) = each($this->currentrecord))
+			$buffer[$this->id] = '';
+			while(list($name, $value) = each($this->currentrecord))
 			{
 				$buffer[$this->id][$name] = $value;
 				/* echo '<br>'.$this->id.': '.$name.' => '.$value; */
@@ -92,9 +92,9 @@
 		{
 			$contacts = CreateObject('phpgwapi.contacts');
 			/* echo '<br>'; */
-			for ($i=1;$i<=count($buffer);$i++)
+			for($i=1;$i<=count($buffer);$i++)
 			{
-				while ( list($name,$value) = @each($buffer[$i]) )
+				while(list($name,$value) = @each($buffer[$i]))
 				{
 					/* echo '<br>'.$i.': '.$name.' => '.$value; */
 					$entry[$i][$name] = $value;
