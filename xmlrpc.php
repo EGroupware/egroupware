@@ -28,34 +28,6 @@
 	/* uncomment here if you want to show all of the testing functions for compatibility */
 //	include(PHPGW_API_INC . '/xmlrpc.interop.php');
 
-	// If XML-RPC isn't enabled in PHP, return an XML-RPC response stating so
-	if(!function_exists('xmlrpc_server_create'))
-	{
-		echo "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n";
-		echo "<methodResponse>\n";
-		echo "<fault>\n";
-		echo " <value>\n";
-		echo "  <struct>\n";
-		echo "   <member>\n";
-		echo "    <name>faultString</name>\n";
-		echo "    <value>\n";
-		echo "     <string>XML-RPC support NOT enabled in PHP installation</string>\n";
-		echo "    </value>\n";
-		echo "   </member>\n";
-		echo "   <member>\n";
-		echo "    <name>faultCode</name>\n";
-		echo "    <value>\n";
-		echo "     <int>1005</int>\n";
-		echo "    </value>\n";
-		echo "   </member>\n";
-		echo "  </struct>\n";
-		echo " </value>\n";
-		echo "</fault>\n";
-		echo "</methodResponse>\n";
-
-		exit;
-	}
-
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
 
