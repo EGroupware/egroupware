@@ -124,6 +124,8 @@
 		$ref = $data = "";
 		if ($fields[0][$column])
 		{
+			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+			$t->set_var('th_bg',$tr_color);
 			$coldata = $fields[0][$column];
 			// Some fields require special formatting.       
 			if ( ($column == "note" || $column == "label" || $column == "pubkey") && $coldata )
@@ -135,7 +137,7 @@
 					{
 						if ($key)
 						{
-							$data .= "</td></tr><tr><td width=\"30%\">&nbsp;</td><td width=\"70%\">" .$info;
+							$data .= '</td></tr><tr bgcolor="'.$tr_color.'"><td width="30%">&nbsp;</td><td width="70%">' .$info;
 						}
 						else
 						{	// First row, don't close td/tr
