@@ -35,7 +35,6 @@
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_nextid';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_addressbook';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_addressbook_extra';
-	$setup_info['phpgwapi']['tables'][]  = 'phpgw_history_log';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_log';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_log_msg';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_interserv';
