@@ -1,6 +1,8 @@
 {info_css}
 <table width=98%><tr><td>
 	<span class=action>{lang_info_action}</span>
+</td><td align=center>
+	{total_matchs}
 </td><td align=right>
 	<span class=action>{add_icons}</span>
 </td></tr></table>
@@ -27,23 +29,6 @@
           </tr>
       </table><p>
 <!-- END projdetails -->
-
-<!-- BEGIN cat_selection -->
-<table><tr valign="middle">
-<td>
-   <form method="POST" name="cat" action="{cat_form}">
-      {lang_category}
-       <select name="cat_filter" onChange="this.form.submit();">
-           <option value="0">{lang_all}</option>
-           {categories}
-       </select>
-       <noscript><input type="submit" name="cats" value="{lang_select}"></noscript>
-   </form>
-</td><td>
-   {total_matchs}
-</td>
-</tr></table>
-<!-- END cat_selection -->
 
 {next_matchs}
 

@@ -310,7 +310,7 @@
 					$action_vars += array( 'id_project' => $proj_id,
 												  'proj_id' => $proj_id);
 					$proj = $this->bo->readProj($proj_id);
-					$t->set_var(lang_info_action,lang('InfoLog').' - '. 
+					$t->set_var(lang_info_action,lang('InfoLog').' - '.
 									$proj['title']);
 					break;
 			  case 'addr':
@@ -336,13 +336,6 @@
 							$hidden_vars+$action_vars+array('referer'=>$referer),
 							'/index.php',$this->menuaction('edit')));
 			}
-			$t->set_var('cat_form',$html->link('/index.php',
-							ereg_replace('&*cat_id=[0-9]*','',$QUERY_STRING)));
-			$t->set_var('lang_category',lang('Category'));
-			$t->set_var('lang_all',lang('All'));
-			$t->set_var('lang_select',lang('Select'));
-			$t->set_var('categories',$this->categories->formated_list('select',
-																			'all',$cat_id,'True'));
 			$add_icons = lang('Add').':';
 
 			$icons = array( 'task'	=> True,
@@ -403,14 +396,9 @@
 					break;
 			}
 
-			// catergory selection
-			$t->set_block('info_list_t','cat_selection','cat_selectionhandle');
-
 			if (!$for_include || $total > $maxmatchs ||
 				 $query || $cat_id)
 			{
-				$t->parse('cat_selectionhandle','cat_selection',True);
-
 			// ===========================================
 			// nextmatch variable template-declarations
 			// ===========================================
@@ -428,7 +416,7 @@
 				}
 				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
 							$total,'&'.$q_string,'95%',$phpgw_info['theme']['th_bg'],
-							0,$filters);
+							0,$filters,1,0,$cat_id,'cat_id');
 
 				$t->set_var('next_matchs',$next_matchs);
 
