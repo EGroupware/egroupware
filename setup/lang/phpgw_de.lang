@@ -123,7 +123,7 @@ delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
 deleting tables	setup	de	Lösche Tabellen
 demo server setup	setup	de	Demo Server Setup
-deny access	setup	de	Zugrif verweigern
+deny access	setup	de	Zugriff verweigern
 deny all users access to grant other users access to their entries ?	setup	de	Allen Benutzern verbieten anderen Benutzern Zugriff auf ihre Daten zu gewähren ?
 dependency failure	setup	de	Abhängigkeit Fehler
 deregistered	setup	de	nicht registriert
