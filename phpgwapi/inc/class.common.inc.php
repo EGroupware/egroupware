@@ -225,6 +225,19 @@
 			return $retValue;
 		}
 
+		/*!
+		@function ldap_addslashes
+		@abstract escapes a string for use in searchfilters meant for ldap_search.
+		Escaped Characters are: '*', '(', ')', ' ', '\', NUL
+		It's actually a PHP-Bug, that we have to escape space.
+		For all other Characters, refer to RFC2254.
+		@param $string string to be escaped
+		*/
+		function ldap_addslashes($string='')
+		{
+			return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
+		}
+
 		// connect to the ldap server and return a handle
 		/*!
 		@function ldapConnect
