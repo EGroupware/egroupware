@@ -366,11 +366,14 @@
 
 		function _GetIndices($oProc,$sTableName,&$aPk,&$aIx,&$aUc,&$aFk)
 		{
+			/* Try not to die on errors with the query */
+			$tmp = $oProc->Halt_On_Error;
+			$oProc->Halt_On_Error = 'no';
 			$aIx = array();
 			/* This select excludes any indexes that are just base indexes for constraints. */
 			$sql = "SELECT pg_catalog.pg_get_indexdef(i.indexrelid) as pg_get_indexdef FROM pg_catalog.pg_class c, pg_catalog.pg_class c2, pg_catalog.pg_index i WHERE c.relname = '$sTableName' AND pg_catalog.pg_table_is_visible(c.oid) AND c.oid = i.indrelid AND i.indexrelid = c2.oid AND NOT EXISTS ( SELECT 1 FROM pg_catalog.pg_depend d JOIN pg_catalog.pg_constraint c ON (d.refclassid = c.tableoid AND d.refobjid = c.oid) WHERE d.classid = c2.tableoid AND d.objid = c2.oid AND d.deptype = 'i' AND c.contype IN ('u', 'p') ) ORDER BY c2.relname";
 
-			$oProc->m_odb->query($sql);
+			@$oProc->m_odb->query($sql);
 			while($oProc->m_odb->next_record())
 			{
 				$indexfields = ereg_replace("^CREATE.+\(",'',$oProc->m_odb->f(0));
@@ -383,6 +386,8 @@
 					$i++;
 				}
 			}
+			/* Restore original value */
+			$oProc->Halt_On_Error = $tmp;
 			//echo "Indices from $sTableName<pre>pk=".print_r($aPk,True)."\nix=".print_r($aIx,True)."\nuc=".print_r($aUc,True)."</pre>\n";
 		}
 
