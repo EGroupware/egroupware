@@ -18,10 +18,11 @@
   if (! $con)
      Header("Location: accounts.php?sessionid=" . $phpgw->session->id);
 
+  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
+
   $phpgw->db->query("select * from accounts where con='$con'");
   $phpgw->db->next_record();
 
-  $db_perms = $phpgw->permissions->read_other($phpgw->db->f("loginid"));
 
   ?>
    <center>
@@ -71,7 +72,7 @@
     <tr bgcolor="<?php echo $phpgw_info["theme"]["row_off"]; ?>">
       <td>Groups: </td>
       <td><?php
-            $user_groups = $phpgw->groups->read_names($phpgw->db->f("loginid"));
+            $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("loginid"));
 	     
 	     for ($i=0;$i<count($user_groups); $i++) {
                 echo $user_groups[$i][1];
