@@ -30,13 +30,22 @@
 	{
 		define('MAX_MESSAGE_ID_LENGTH',230);
 	}
+	// some constanst for pre php4.3
+	if (!defined('PHP_SHLIB_SUFFIX'))
+	{
+		define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
+	}
+	if (!defined('PHP_SHLIB_PREFIX'))
+	{
+		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
 
 	class translation
 	{
 		var $userlang = 'en';
 		var $loaded_apps = array();
 
-		function translation()
+		function translation($warnings = False)
 		{
 			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			if (!isset($GLOBALS['phpgw_setup']))
@@ -51,24 +60,40 @@
 					$this->system_charset = $this->db->f(0);
 				}
 			}
+			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
+			if ($this->system_charset && substr($this->system_charset,0,3) != 'iso')
+			{
+				if ($this->mbstring = extension_loaded('mbstring') || dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
+				{
+					ini_set('mbstring.internal_encoding',$this->system_charset);
+					if (ini_get('mbstring.func_overload') < 4)
+					{
+						if ($warnings) echo "<p>Warning: Please set <b>mbstring.func_overload = 4</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+					}
+				}
+				else
+				{
+					if ($warnings) echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+				}
+			}
 		}
 
 		/*
 		@function charset
-		@abstract returns the charset to use
-		@note this is the system_charset if set and no lang given or the charset of the language
+		@abstract returns the charset to use (!$lang) or the charset of the lang-files or $lang
 		*/
 		function charset($lang=False)
 		{
-			if (!$lang && $this->system_charset)
-			{
-				return $this->system_charset;
-			}
 			if ($lang)
 			{
-				$this->add_app('common',$lang);
+				if (!isset($this->charsets[$lang]))
+				{
+					$this->db->query("SELECT content FROM phpgw_lang WHERE lang='$lang' AND message_id='charset' AND app_name='common'",__LINE__,__FILE__);
+					$this->charsets[$lang] = $this->db->next_record() ? $this->db->f(0) : 'iso-8859-1';
+				}
+				return $this->charsets[$lang];
 			}
-			return $this->translate('charset');
+			return $this->system_charset ? $this->system_charset : $this->translate('charset');
 		}
 
 		function init()
@@ -198,18 +223,27 @@
 		/*!
 		@function convert
 		@abstract converts a string $data from charset $from to charset $to
+		@
 		*/
-		function convert($data,$from='iso-8859-1',$to='utf8')
+		function convert($data,$from='iso-8859-1',$to='utf-8')
 		{
-			if ($from == 'iso-8859-1' && $to == 'utf8')
+			if ($from == $to)
+			{
+				return $data;
+			}
+			if ($from == 'iso-8859-1' && $to == 'utf-8')
 			{
 				return utf8_encode($data);
 			}
-			if ($to == 'iso-8859-1' && $from == 'utf8')
+			if ($to == 'iso-8859-1' && $from == 'utf-8')
 			{
 				return utf8_decode($data);
 			}
-			die("can't convert from '$from' to '$to' !!!");
+			if ($this->mbstring)
+			{
+				return mb_convert_encoding($data,$to,$from);
+			}
+			die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
 		}
 
 		/*!

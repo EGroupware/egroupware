@@ -12,6 +12,8 @@
 
   /* $Id$ */
 
+	$diagnostics = 1;	// can be set to 0=non, 1=some (default for now), 2=all
+
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader' => True,
@@ -29,7 +31,9 @@
 	}
 	$GLOBALS['phpgw_setup']->loaddb();
 
+	$GLOBALS['phpgw_setup']->translation->setup_translation_sql();
 	$translation = &$GLOBALS['phpgw_setup']->translation->sql;
+	$translation->translation(True);	// to get the mbstring warnings
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -41,45 +45,35 @@
 
 	$stage_title = lang('Change system-charset');
 	$stage_desc  = lang('This program will convert your database to a new system-charset.');
-	$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 
+	if ($diagnostics || !@$_POST['convert'])
+	{
+		$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
+	}
 	if (@$_POST['convert'])
 	{
 		if (empty($_POST['current_charset']))
 		{
 			$errors[] = lang('You need to select your current charset!');
+			$GLOBALS['phpgw_setup']->html->show_header($stage_title,False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		}
 		else
 		{
-			$debug=1;
-			convert_db($_POST['current_charset'],$_POST['new_charset'],$debug);
+			convert_db($_POST['current_charset'],$_POST['new_charset'],$diagnostics);
 
-			if (!$debug)
+			if (!$diagnostics)
 			{
 				Header('Location: index.php');
 			}
 			echo "<h3>Database successfully converted from '$_POST[current_charset]' to '$_POST[new_charset]'</h3>\n";
-			echo "<p>Click <a href=\"index.php\">here</a> to return to setup</p>\n";
+			echo "<p>Click <b><a href=\"index.php\">here</a></b> to return to setup</p>\n";
 			exit;
 		}
 	}
 
-	function key_data_implode($glue,$array,$only=False,$use_key=True)
+	function convert_db($from,$to,$diagnostics=1)
 	{
-		$pairs = array();
-		foreach($array as $key => $data)
-		{
-			if (!$only || in_array($key,$only))
-			{
-				$values[] = ($use_key ? $key.'=' : '')."'".addslashes($data)."'";
-			}
-		}
-		return implode($glue,$values);
-	}
-
-	function convert_db($from,$to,$debug=1)
-	{
-		if ($debug) echo "<h3>Converting database from '$from' to '$to'</h3>\n";
+		if ($diagnostics) echo "<h3>Converting database from '$from' to '$to'</h3>\n";
 
 		@set_time_limit(0);		// this might take a while
 
@@ -90,26 +84,24 @@
 
 		foreach($setup_info as $app => $data)
 		{
-			$tables_current = PHPGW_SERVER_ROOT . "/$app/setup/tables_current.inc.php";
-
-			if ($debug) echo "<p><b>$app</b>: ";
+			if ($diagnostics) echo "<p><b>$app</b>: ";
 
 			if (!isset($data['tables']) || !count($data['tables']) ||
-			    $GLOBALS['phpgw_setup']->app_registered($app) && !file_exists($tables_current))
+			    $GLOBALS['phpgw_setup']->app_registered($app) &&
+				!($table_definitions = $db2->get_table_definitions($app)))
 			{
-				if ($debug) echo "skipping (no tables or not installed)</p>\n";
+				if ($diagnostics) echo "skipping (no tables or not installed)</p>\n";
 				continue;
 			}
-			include($tables_current);
-
-			foreach($phpgw_baseline as $table => $definition)
+			foreach($table_definitions as $table => $definition)
 			{
-				if ($debug) { echo "<br>start converting table '$table' ... "; flush(); }
+				if ($diagnostics) { echo "<br>start converting table '$table' ... "; flush(); }
+				$db2->set_column_definitions($definitions['fd']);
 				$updates = 0;
 				$GLOBALS['phpgw_setup']->db->query("SELECT * FROM $table",__LINE__,__FILE__);
-				while($GLOBALS['phpgw_setup']->db->next_record())
+				while($columns = $GLOBALS['phpgw_setup']->db->row(True))
 				{
-					$columns = $GLOBALS['phpgw_setup']->db->Record;
+					//$columns = $GLOBALS['phpgw_setup']->db->Record;
 					$update = array();
 					foreach($columns as $name => $data)
 					{
@@ -136,19 +128,20 @@
 					{
 						if (count($definition['pk']))
 						{
-							$db2->query($query="UPDATE $table SET ".key_data_implode(',',$update)." WHERE ".key_data_implode(' AND ',$columns,$definition['pk']),__LINE__,__FILE__);
+							$db2->query($query="UPDATE $table SET ".$db2->column_data_implode(',',$update)." WHERE ".$db2->column_data_implode(' AND ',$columns,True,$definition['pk']),__LINE__,__FILE__);
 						}
 						else
 						{
-							$db2->query($query="DELETE FROM $table  WHERE ".key_data_implode(' AND ',$columns),__LINE__,__FILE__);
-							if ($debug > 1) echo " &nbsp; $query<br>\n";
-							$db2->query($query="INSERT INTO $table (".implode(',',array_keys($columns)).") VALUES (".key_data_implode(',',array_merge($columns,$update),False,True).")",__LINE__,__FILE__);
+							// if we have no primary key, we need to delete and re-write the row
+							$db2->query($query="DELETE FROM $table  WHERE ".$db2->column_data_implode(' AND ',$columns),__LINE__,__FILE__);
+							if ($diagnostics > 1) echo " &nbsp; $query<br>\n";
+							$db2->query($query="INSERT INTO $table (".implode(',',array_keys($columns)).") VALUES (".$db2->column_data_implode(',',array_merge($columns,$update),False).")",__LINE__,__FILE__);
 						}
-						if ($debug > 1) echo " &nbsp; $query<p>\n";
+						if ($diagnostics > 1) echo " &nbsp; $query<p>\n";
 						++$updates;
 					}
 				}
-				if ($debug)
+				if ($diagnostics)
 				{
 					$GLOBALS['phpgw_setup']->db->query("SELECT count(*) FROM $table",__LINE__,__FILE__);
 					$GLOBALS['phpgw_setup']->db->next_record();
@@ -169,7 +162,7 @@
 	$setup_tpl->set_var('lang_cancel',lang('Cancel'));
 	$setup_tpl->set_var('lang_current',lang('Current system-charset'));
 	$setup_tpl->set_var('lang_convert_to',lang('Charset to convert to'));
-	$setup_tpl->set_var('lang_warning',lang('<b>Warning</b>: Hopefully you know what you do ;-)'));
+	$setup_tpl->set_var('lang_warning',lang('<b>Warning</b>: This feature is still experimental. <b>DO NOT USE IT ON A PRODUCTION SYSTEM.</b> Hopefully you know what you do ;-)'));
 
 	$installed_charsets = $translation->get_installed_charsets();
 	if ($translation->system_charset || count($installed_charsets) == 1)
@@ -192,21 +185,21 @@
 		}
 		$setup_tpl->set_var('current_charset',"<select name=\"current_charset\">\n$options</select>\n");
 	}
-	if ($translation->system_charset == 'utf8' || count($installed_charsets) == 1)
+	if ($translation->system_charset == 'utf-8' || count($installed_charsets) == 1)
 	{
 		reset($installed_charsets);
 		list($other_charset) = each($installed_charsets);
 		if (!$translation->system_charset || $other_charset == $translation->system_charset)
 		{
-			$other_charset = 'utf8';
+			$other_charset = 'utf-8';
 		}
 		$setup_tpl->set_var('new_charset',"<b>$other_charset</b><input type=\"hidden\" name=\"new_charset\" value=\"$other_charset\">\n");
 	}
 	else
 	{
-		if ($translation->system_charset != 'utf8')
+		if ($translation->system_charset != 'utf-8')
 		{
-			$options = '<option value="utf8">'.lang('UTF8 (Unicode)')."</option>\n";
+			$options = '<option value="utf-8">'.lang('utf-8 (Unicode)')."</option>\n";
 		}
 		foreach($installed_charsets as $charset => $description)
 		{
