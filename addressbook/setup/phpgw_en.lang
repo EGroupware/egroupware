@@ -69,6 +69,7 @@ middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
+no vcard	addressbook	en	No VCard
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
 pager	common	en	Pager

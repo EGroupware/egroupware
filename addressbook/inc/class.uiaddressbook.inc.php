@@ -822,7 +822,7 @@
 				{
 					$colname[$column[0]] = $column[1];
 				}
-				$noprefs = ' - ' . lang('Please set your preferences for this app');
+				$noprefs = ' - ' . lang('Please set your preferences for this application');
 			}
 
 			/* merge in extra fields */
