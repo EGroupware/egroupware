@@ -744,7 +744,6 @@
     global $currentver, $oldversion, $phpgw_info, $db;
 
     if ($currentver == "0.9.7" || ereg ("^0\.9\.8pre", $currentver)){
-/*
       if ($currentver == "0.9.7") {
         // upgrade code starts here
 
@@ -752,7 +751,6 @@
         $currentver = "0.9.8pre1";
         update_version_table();
       }
-*/
 /*
       if ($currentver == "0.9.8pre1") {
         // upgrade code starts here
