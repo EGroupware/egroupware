@@ -176,7 +176,7 @@
 				}
 			}
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'");
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='". intval($id) . "'");
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -214,7 +214,7 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . intval($this->db->f('id')) . "'",__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				if ($extra_fields[$this->db->f('contact_name')])
