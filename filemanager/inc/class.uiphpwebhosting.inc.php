@@ -195,17 +195,17 @@
 						'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 						'path'	=> urlencode($this->bo->path)
 					);
-					if(is_array($errors))
-					{
-						$var['errors'] = urlencode(base64_encode(serialize($errors)));
-					}
-					elseif($function == 'newfile')
+					if($function == 'newfile')
 					{
 						$var = Array(
 							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.edit',
 							'path'	=> urlencode($this->bo->path),
 							'file'	=> urlencode($this->bo->createfile)
 						);
+					}
+					elseif(is_array($errors))
+					{
+						$var['errors'] = urlencode(base64_encode(serialize($errors)));
 					}
 					Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$var));
 				}
@@ -646,7 +646,7 @@
 				
 				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
 				$var = Array(
-					'error'	=> (isset($this->bo->errors) && !empty($this->bo->errors)?$GLOBALS['phpgw']->common->error_list(unserialize(base64_decode($this->bo->errors)),'Results'):''),
+					'error'	=> (isset($this->bo->errors) && is_array(unserialize(base64_decode($this->bo->errors)))?$GLOBALS['phpgw']->common->error_list(unserialize(base64_decode($this->bo->errors)),'Results'):''),
 					'tr_extras'	=> ' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"',
 					'form_action'	=> $GLOBALS['phpgw']->link('/index.php',
 							Array(
