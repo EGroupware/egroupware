@@ -32,7 +32,7 @@
        . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("group_id"))
        . "\"> " . lang_common("Delete") . " </a></td>";
   }
-  echo "<form method=POST action=\"creategroup.php\">"
+  echo "<form method=POST action=\"newgroup.php\">"
      . $phpgw->session->hidden_var()
      . "<tr><td colspan=5><input type=\"submit\" value=\"" . lang_common("Add") . "\"></td></tr>"
      . "</form></table></center>";
