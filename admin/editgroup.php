@@ -49,11 +49,15 @@
         $apps = CreateObject('phpgwapi.applications',intval($group_id));
         $apps_before = $apps->read_account_specific();
         $apps->update_data(Array());
-        while($app = each($n_group_permissions)) {
-          if($app[1]) {
-            $apps->add($app[0]);
-            if(!$apps_before[$app[0]]) {
-              $new_apps[] = $app[0];
+        $new_apps = Array();
+        if(isset($n_group_permissions)) {
+          reset($n_group_permissions);
+          while($app = each($n_group_permissions)) {
+            if($app[1]) {
+              $apps->add($app[0]);
+              if(!$apps_before[$app[0]]) {
+                $new_apps[] = $app[0];
+              }
             }
           }
         }
@@ -75,24 +79,26 @@
           $acl->add_repository('phpgw_group',$group_id,$n_users[$i],1);
 
           // If the user is logged in, it will force a refresh of the session_info
-          $phpgw->db->query("update phpgw_sessions set session_info='' "
+          $phpgw->db->query("update phpgw_sessions set session_action='' "
                             ."where session_lid='" . $phpgw->accounts->id2name(intval($n_users[$i])) . "@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
           // The following sets any default preferences needed for new applications..
           // This is smart enough to know if previous preferences were selected, use them.
-          $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
-          $t = $pref->read_repository();
-
           $docommit = False;
-          for ($j=1;$j<count($new_apps) - 1;$j++) {
-            if($new_apps[$j]=='admin') {
-              $check = 'common';
-            } else {
-              $check = $new_apps[$j];
-            }
-            if (!$t[$check]) {
-              $phpgw->common->hook_single('add_def_pref', $new_apps[$j]);
-              $docommit = True;
+          if($new_apps) {
+            $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
+            $t = $pref->read_repository();
+
+            for ($j=1;$j<count($new_apps) - 1;$j++) {
+              if($new_apps[$j]=='admin') {
+                $check = 'common';
+              } else {
+                $check = $new_apps[$j];
+              }
+              if (!$t[$check]) {
+                $phpgw->common->hook_single('add_def_pref', $new_apps[$j]);
+                $docommit = True;
+              }
             }
           }
           if ($docommit) {
