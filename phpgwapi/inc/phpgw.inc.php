@@ -216,9 +216,12 @@
       if (! $kp3)
          $kp3 = $phpgw_info["user"]["kp3"];
 
-      if (! $url) {                 // PHP won't allow you to set a var to a var
-        $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
-        $url = $url_root[0]."//".$url_root[2].$PHP_SELF;          // or function for default values
+      // PHP won't allow you to set a var to a var
+      // or function for default values
+      if (! $url) {
+        #$url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+        #$url = $url_root[0]."//".$url_root[2].$PHP_SELF;
+	$url = $PHP_SELF;
       }
 
       if (isset($phpgw_info["server"]["usecookies"]) &&
