@@ -108,6 +108,8 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 
+				set_time_limit(0)
+
 				$this->template->set_file(array('import' => 'import.tpl'));
 
 				$dir_handle = opendir(PHPGW_APP_INC . SEP . 'import');
@@ -198,6 +200,8 @@
 			else
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
+
+				set_time_limit(0)
 
 				$this->template->set_file(array('export' => 'export.tpl'));
 
