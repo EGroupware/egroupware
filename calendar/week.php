@@ -1,4 +1,4 @@
-<?php php_track_vars?>
+<?php_track_vars?>
 <?php
   /**************************************************************************\
   * phpGroupWare - Calendar                                                  *

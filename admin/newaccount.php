@@ -72,9 +72,9 @@
 
      if (! $error) {
         $cd = account_add(array("loginid"   => $n_loginid,   "permissions" => $new_permissions,
-        				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
-        				        "passwd"    => $n_passwd,
-        				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
+            				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
+            				        "passwd"    => $n_passwd,
+            				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
         
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
         exit;

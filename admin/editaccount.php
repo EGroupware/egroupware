@@ -51,9 +51,9 @@
      }
      
      if (! $totalerrors) {
-        $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
-                                 "firstname" => $n_firstname, "lastname"       => $n_lastname,
-                        	     "passwd"    => $n_passwd,    "account_status" => $n_account_status,
+        $cd = account_edit(array("loginid"   => $n_loginid,     "permissions"    => $new_permissions,
+                                 "firstname" => $n_firstname,   "lastname"       => $n_lastname,
+                                 "passwd"    => $n_passwd,      "account_status" => $n_account_status,
                                  "old_loginid" => $old_loginid, "account_id"     => rawurldecode($account_id),
                                  "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
      }
@@ -126,7 +126,7 @@
      }
   }
 
-  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
+  for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
      if (! $perm_display[$i][1]) break;
      $perm_html .= '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
@@ -157,14 +157,14 @@
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
       <input type="hidden" name="account_id" value="<? 
-	if ($phpgw_info["server"]["account_repository"] == "ldap")
-	{
-		echo rawurlencode($userData["account_dn"]);
-	}
-	else
-	{
-		echo $userData["account_id"]; 
-	}?>">
+   if ($phpgw_info["server"]["account_repository"] == "ldap")
+   {
+      echo rawurlencode($userData["account_dn"]);
+   }
+   else
+   {
+      echo $userData["account_id"]; 
+   }?>">
       <input type="hidden" name="old_loginid" value="<? echo $userData["account_lid"]; ?>">
 <?php
   if ($error) {
@@ -195,11 +195,11 @@
             while ($phpgw->db->next_record()) {
               echo "<option value=\"" . $phpgw->db->f("group_id") . "\"";
               for ($i=0; $i<count($user_groups); $i++) {
-		if ($user_groups[$i][0] == $phpgw->db->f("group_id")) {
+      if ($user_groups[$i][0] == $phpgw->db->f("group_id")) {
                   echo " selected";
                 }
-	      }
-	      echo ">" . $phpgw->db->f("group_name") . "</option>\n";
+         }
+         echo ">" . $phpgw->db->f("group_name") . "</option>\n";
             }
 ?>
             </select>
@@ -212,13 +212,13 @@
                 $perm_display[$i][1] = $permission[1]["title"];
                 $i++;
               }
-	       }
+          }
 
-            for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
+            for ($i=0;$i<200;) {    // The $i<200 is only used for a brake
               if (! $perm_display[$i][1]) break;
               echo '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
                 . '<td><input type="checkbox" name="new_permissions['
-		            . $perm_display[$i][0] . ']" value="True"';
+                  . $perm_display[$i][0] . ']" value="True"';
               if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
                  echo " checked";
               }
@@ -227,20 +227,20 @@
               if (! $perm_display[$i][1]) break;
               echo '<td>' . lang($perm_display[$i][1]) . '</td>'
                 . '<td><input type="checkbox" name="new_permissions['
-		            . $perm_display[$i][0] . ']" value="True"';
+                  . $perm_display[$i][0] . ']" value="True"';
               if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
                 echo " checked";
               }
-	 	          echo "></td></tr>";
+                echo "></td></tr>";
               $i++;
             }
 ?>
           <tr>
            <td><?php echo lang("Account active"); ?></td>
            <td>
-           	<input type="checkbox" name="n_account_status" value="A"
-           		<?php if ($userData["status"] == "A") { echo " checked"; } ?> 
-           	>
+            <input type="checkbox" name="n_account_status" value="A"
+               <?php if ($userData["status"] == "A") { echo " checked"; } ?> 
+            >
           </td>
           </tr>
           <tr>
