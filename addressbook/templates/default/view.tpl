@@ -7,6 +7,7 @@
 <!-- END view columns -->
 {footer}
 <!-- BEGIN view -->
+<center>
  <TABLE border="0" cellpadding="1" cellspacing="1">
   <TR> 
    <TD align="left">
@@ -46,4 +47,5 @@
    </TD>
   </TR>
  </TABLE>
+</center>
 <!-- END view -->
