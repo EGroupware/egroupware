@@ -1,46 +1,89 @@
-### Core Developers ###
+#######################
+### core developers ###
+#######################
 
-* Joseph Engo (aka Jengo) <jengo@phpgroupware.org>
-- The man who started it all.
-- Provides project direction, documentation.
-- Works on core services session management, permissions, groups class, etc...
-- Wrote the following applications
---- Addressbook (original work)
---- ToDolist (original work)
---- Inventory (original work)
---- Contacts class (original work)
+* Joseph Engo (aka jengo) <jengo@phpgroupware.org>
+- project leader/administrator
+- works on core services session management, permissions, groups class, etc...
+- wrote the following applications:
+--- initial development of Addressbook, ToDolist, Inventory
+--- Developer Tools, Voting Both, News Admin
+--- Contacts class
 --- Email (Adapted from Aeromail, which was written by Mark Cushman <mark@cushman.net> http://the.cushman.net/)
 --- Calendar (Adapted from WebCalendar, which was written by Craig Knudsen <cknudsen@radix.net> http://www.radix.net/~cknudsen)
-- Continues development and project direction. 
 
 * Dan Kuykendall (aka Seek3r) <dan@kuykendall.org>
-- Project Administrator/Supervisor.
-- Provides project direction, documentation.
-- Works on core services such as the $phpgw[] array for application developers.
-- Hosts website, and offers commercial support thru Clear River Technologies (http://www.clearrivertech.com)
-- Wrote the following applications
---- File Manager (Based on filemanager, which was written by Lacey Pevey <lpevey@mailhost.tcs.tulane.edu> http://px.sklar.com/code.html?code_id=258)
+- project leader/administrator
+- works on core services such as the $phpgw[] array for application developers.
+- hosts website, and offers commercial support thru Clear River Technologies (http://www.clearrivertech.com)
+- wrote the following applications:
+--- former Filemanager (Based on filemanager, which was written by Lacey Pevey <lpevey@mailhost.tcs.tulane.edu> http://px.sklar.com/code.html?code_id=258)
 --- Chat (original work)
-- Continues development and project direction. 
 
 * Mark A Peters (aka skeeter) <mpeters@satx.rr.com>
-- Maintains Calendar application
-- Works on core API
-- Developed/Maintains Headlines application
-- Developed/Maintains NNTP application
-- Helps with almost all other applications as well
+- project leader/administrator
+- maintains calendar application
+- works on core API
+- developes/maintains the headlines and nntp application
+- helps with almost all other applications as well
 
-* Bettina Gille (aka ceb) <ceb@phpgroupware.org>
-- Developed/Maintains the categories class
-- Works on core API
-- Develops/Maintains the projects, inventory, stocks, notes and netsaint <http://www.netsaint.org/> applications
+* Bettina Gille [ceb] [ceb@phpgroupware.org]
+- project leader/administrator
+- developes/maintains the xml/xslt based framework
+- developes/maintains the categories class
+- developes/maintains the funkwerk layout and the application/framework images 
+- developes/maintains the categories class
+- works on core API
+- developes/maintains the projects, inventory, stocks, notes, backup, todo, cart, img and netsaint <http://www.netsaint.org/> applications
+
+#######################
+### more developers ###
+#######################
+
+* Ralf Becker (ralfbecker) <ralfbecker@outdoor-training.de>
+- developes/maintains the etemplates and infolog application
 
 * Lars Kneschke (aka knecke) <lars@kneschke.de>
-- Works on LDAP support for accounts and authentication
+- works on LDAP support for accounts and authentication
 - former project leader of the old phpGroupWare Apps project.
-- Works on core API
-- Ported Squirrelmail <http://www.squirrelmail.org/> to phpgroupware
-- Devlops/Maintains the qmailldap application
+- works on core API
+- ported Squirrelmail <http://www.squirrelmail.org/> to phpgroupware
+- devlopes/maintains the qmailldap application
+
+* Dave Hall (aka skwashd) <dave.hall@mbox.com.au>
+- Project Manager of the release branches
+
+##############################
+### application developers ###
+##############################
+
+* Michael Dean (aka mdean) <mdean@kcnet.com>
+- Influences the object-oriented design of phpgroupware
+- Wrote schema_proc used in the new setup application
+- Works on improving DBMS support
+- Ported his application, DCL, to phpgroupware
+
+* Tony Puglisi (aka Angles) <devel@aminvestments.com>
+- developes Anglemail
+- maintained the EMail application
+- rewrote mail classes for better standards compliance
+- worked in the past on the idsociety template to make it work in older browsers
+
+* Jason Wies (aka Zone) <jason@xc.net>
+- Rewrote vfs class in the API
+- Wrote phpwebhosting application as proof of concept for the vfs
+
+###################
+### Translators ###
+###################
+
+* Yoshihiro Kamimura (aka itheart) <your@itheart.com>
+- works on Japanese-ization of phpgroupware, which helps
+- ensure we are all using the lang() function properly
+
+#########################
+### Former developers ###
+#########################
 
 * Miles Lott (aka Milosch) <milosch@phpgroupware.org>
 - Rewrote/maintains Addressbook to use a new contacts class
@@ -56,58 +99,37 @@
 - Project Release Manager
 - Creates testplans and assigns testcases to volunteers
 
-### Application Developers ###
-* Michael Dean (aka mdean) <mdean@kcnet.com>
-- Influences the object-oriented design of phpgroupware
-- Wrote schema_proc used in the new setup application
-- Works on improving DBMS support
-- Ported his application, DCL, to phpgroupware
-
-* Tony Puglisi (aka Angles) <devel@aminvestments.com>
-- Maintains EMail application
-- Rewrote mail classes for better standards compliance
-- Works on the idsociety template to make it work in older browsers
-
-* Jason Wies (aka Zone) <jason@xc.net>
-- Rewrote vfs class in the API
-- Wrote phpwebhosting application as proof of concept for the vfs
-
-* Michael Weber <weber@rising-systems.de>
-- Develops/Maintains Trouble Ticket System
-
-* Vincent Larchet	(aka vinz) <vinz@users.sourceforge.net>
-- He hops from application to application helping out everywhere
-- Keeps phpGW working on NT servers
-
-* Scott Moser (aka smoser) <smoser@brickies.net>
--Developed/Maintains the FTP application
-
 * Itzchak Rehberg (aka izzy) <izzysoft@qumran.org>
 - has been working on replacement for mail() function
 - Developed/Maintains POP-3 class
 - Built/Maintains the german language files
 - He hops from application to application helping out everywhere
 
-* Stephan Beal (aka wander) <stephan@wanderinghorse.net>
-- Initial quick-n-dirty rbs port from the MRBS system
-- Minor bug fixes.
-- Conned Hakon into doing the Norwegian translations ;)
-
-... and SO many others ...
-
-### Translators ###
-Yoshihiro Kamimura (aka itheart) <your@itheart.com>
-- Works on Japanese-ization of phpgroupware, which helps
--  ensure we are all using the lang() function properly
-
-### Former developers ###
 * Marc Logemann (aka Loge) <loge@mail.com>
 - Developed/Maintained todo application
 - Developed utility classes for phpgwapi
 - mental support for Palm Sync issue :)
 - Now working on another groupware project
 
+* Michael Weber <weber@rising-systems.de>
+- Develops/Maintains Trouble Ticket System
+
+* Vincent Larchet (aka vinz) <vinz@users.sourceforge.net>
+- He hops from application to application helping out everywhere
+- Keeps phpGW working on NT servers
+
+* Scott Moser (aka smoser) <smoser@brickies.net>
+- Developed/Maintains the FTP application
+
+* Stephan Beal (aka wander) <stephan@wanderinghorse.net>
+- Initial quick-n-dirty rbs port from the MRBS system
+- Minor bug fixes.
+- Conned Hakon into doing the Norwegian translations ;)
+
+##########################
 ### Patch Contributors ### (in alphabetical order)	Let us know if we forgot anyone :)
+##########################
+
 * Wolfgang Lunz          <wlunz@infomatec.de>
 * bachroxx               <bachroxx@users.sourceforge.net>
 * brandonne              <brandonne@users.sourceforge.net>

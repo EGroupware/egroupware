@@ -1,0 +1,60 @@
+-------------------------------
+- Suggested PHP Configuration -
+-------------------------------
+
+This is a suggested php.ini config for running phpGroupWare 0.9.14 on php4.  It 
+is roughly in the order of the paramters in you php.ini file.  These recommendations
+are based on feedback from users and developers.
+
+RESOURCES
+max_execution_time = 90
+This allows for encoding/decoding large file attachments on slower machines and
+other complex functions.
+
+memory_limit = 20M  
+At least this value should help with more complex operations.
+
+ERRORS
+error_reporting = E_ALL  ~E_NOTICE
+Having this set to E_ALL, will cause all types of problems if left to
+display on the screen.  E_NOTICE are no-fatal errors such as undefined
+variable etc.  Having this set to E_ALL only will dramatically increase
+the size of your log files if you log erros.
+
+display_errors = Off
+This can cause header output problems if left on.  They are better stored in you
+log file and that way you have a record of any problems.
+
+log_errors = On
+See above.
+
+DATABASES
+[dbms].allow_persistent = On
+This must be set to on if you want to use persistent databse
+connections.  Change [dbms] to what ever db you want to use ie mysql or
+pgsql
+
+FILE UPLOADING
+file_uploads = On
+If you want to use email,phpwebhosting, infolog or any apps that upload files 
+this must be set to on.
+
+upload_max_filesize = 5M
+At least this.  This will allow for larger email attachments and
+phpwebhosting files.  Use filesize * 4 = memory_limit to allow for
+base64 encodes.
+
+PHP4 SESSIONS
+session.save_path = /tmp
+Your httpd must be able to read and write to this directory, if you
+intend to use php4 sessions.
+
+session.gc_maxlifetime = 1440
+Set this to what you want to be your session time out limit.  It is in
+second so set it to 3660 if you want it to one hour ... the default is
+24mins, which is generally too short.
+
+REGISTER GLOBALS
+register_globals = On
+Until release 0.9.14 phpGroupWare will not work, if the value is set to Off.
+All further releases will support the Off setting.
