@@ -13,9 +13,10 @@
 	/* $Id$ */
 
 	/*!
-	@class datefield_widget
+	@class date_widget
 	@author ralfbecker
-	@abstract widget that reads a date
+	@abstract widget that reads a date 
+	@param Options/$cell['size'] = $format[,$year_no_select], $format: ''=timestamp or eg. 'Y-m-d' for 2002-12-31
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class date_widget
@@ -82,14 +83,23 @@
 			$tpl = new etemplate;
 			$tpl->init('*** generated fields for date','','',0,'',0,0);	// make an empty template
 
-			$fields = array('Y' => 'year', 'm' => 'month', 'd' => 'day');
+			$fields = array(
+				'Y' => ($options ? 'int' : 'select-year'),	// if options set, show an int-field
+				'm' => 'select-month',
+				'd' => 'select-day'
+			);
+			$help = array(
+				'Y' => 'Year',
+				'm' => 'Month',
+				'd' => 'Day'
+			);
 			$row = array();
 			for ($n=0; $n < 3; ++$n)
 			{
 				$dcell = $tpl->empty_cell();
-				$dcell['type'] = 'select-'.$fields[$format[$n]];
+				$dcell['type'] = $fields[$format[$n]];
 				$dcell['name'] = $format[$n];
-				$dcell['help'] = lang($fields[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+				$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
 				$dcell['no_lang'] = True;
 				$row[$tpl->num2chrs($n)] = &$dcell;
 				unset($dcell);
