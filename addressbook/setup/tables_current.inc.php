@@ -14,8 +14,7 @@
   * This file should be generated for you. It should never be edited by hand *
   \**************************************************************************/
 
-	$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10';
-
+	// This is for reference only
 	$phpgw_baseline = array(
 		'phpgw_addressbook' => array(
 			'fd' => array(
