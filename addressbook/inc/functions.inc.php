@@ -33,11 +33,16 @@
 		}
 	}
 
-	// Return a select form element with the categories options in it
-	function cat_option($cat_id='',$name='cat_id',$notall=False) {
+	// Return a select form element with the categories option dialog in it
+	function cat_option($cat_id='',$name='cat_id',$notall=False,$java=True) {
 		global $phpgw_info;
+		if ($java) {
+			$jselect = " onChange=\"this.form.submit();\"";
+			//$jsubopen  = "<noscript>";
+			//$jsubclose = "</noscript>";
+		}
 		// Setup all and none first
-		$cats_link  = "<select name=\"".$name."\">";
+		$cats_link  = "<select name=\"".$name."\"$jselect>";
 		if (!$notall) {
 			$cats_link .= "<option value =\"all\"";
 			if ($cat_id=="all") {
