@@ -1,0 +1,218 @@
+<HTML
+><HEAD
+><TITLE
+>Email application</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.72
+"><LINK
+REL="HOME"
+TITLE="phpGroupWare FAQ"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Administration"
+HREF="x16.html"><LINK
+REL="NEXT"
+TITLE="File Manager"
+HREF="x44.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare FAQ</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x16.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x44.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN21"
+>3. Email application</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN23"
+>3.1. The mail preferences are not updated from the interface "mail preferences"</A
+></H2
+><P
+>If you are referring to setting the password when using custom email preferences, this is actually a security feature. We do not send the password back to the user as it would still be sent back in plain text. Even though it is displayed with asterisks, it would be in plain text if you view the source html for the page. What we do is check to see if the user entered a value in that field. If so, we take the new password the user enters and encrypt it and save it into the database. This provides for maximum security of user passwords.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN26"
+>3.2. I'm composing mail, what do I put in the "To" and/or "CC" boxes</A
+></H2
+><P
+> The easiest was is to follow these examples, pay close attention to the spaces, do not add spaces you do not see here: johndoe@example.com johndoe@example.com,jane@example.com,tarzan@example.com "John Doe" <FONT
+COLOR="RED"
+>example.com&#62; "John Doe" <FONT
+COLOR="RED"
+>example.com&#62;,"Jane" <FONT
+COLOR="RED"
+>example.com&#62; johndoe@example.com,"Jane" <FONT
+COLOR="RED"
+>example.com&#62;,tarzan@example.com</FONT
+></FONT
+></FONT
+></FONT
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN33"
+>3.3. My IMAP server logs show many login attempts with garbage usernames, why?</A
+></H2
+><P
+>At this time we know this happens when you enter "localhost" for your POP/IMAP mail server hostname or IP address.  For now the solution would be to try the actual IP or the machine name (resolvable via DNS, hosts, or other means) for your IMAP email server.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN36"
+>3.4. Error message when adding large signature files</A
+></H2
+><P
+>The max number of characters for a sig file is 8140.  Extremely large sig files are not recommnded anyway,  Usenet recommends sig files of 1-5 lines in length, 3 being preferred.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN39"
+>3.5. I can not attach files to an email, I get errors about "unlink"</A
+></H2
+><P
+>There are two possible causes for this problem, the first and least likely is the web server temp directory, check your webserver configuration for this.  The second is the temp directory which phpGroupWare uses.  To check this, follow these steps:</P
+><A
+NAME="AEN42"
+></A
+><BLOCKQUOTE
+CLASS="BLOCKQUOTE"
+><P
+CLASS="LITERALLAYOUT"
+>-&nbsp;go&nbsp;to&nbsp;http://your.server/phpgroupware/setup&nbsp;&nbsp;(the&nbsp;phpgroupware&nbsp;initial&nbsp;setup&nbsp;page)<br>
+-&nbsp;login&nbsp;to&nbsp;"Setup/Config&nbsp;Admin&nbsp;Log"<br>
+-&nbsp;in&nbsp;"Step&nbsp;2&nbsp;-&nbsp;Configuration"&nbsp;click&nbsp;"Edit&nbsp;Current&nbsp;Configuration"<br>
+-&nbsp;under&nbsp;"Path&nbsp;Information"&nbsp;see&nbsp;the&nbsp;box&nbsp;labeled&nbsp;"Enter&nbsp;full&nbsp;path&nbsp;for&nbsp;temporary&nbsp;files:&nbsp;Examples:&nbsp;/tmp,&nbsp;C:\TEMP"<br>
+-&nbsp;Make&nbsp;sure&nbsp;that&nbsp;directory&nbsp;listed&nbsp;has&nbsp;permissions&nbsp;thar&nbsp;are&nbsp;at&nbsp;least&nbsp;0700&nbsp;and&nbsp;the&nbsp;owner&nbsp;is&nbsp;nobody.nobody&nbsp;(note:&nbsp;this&nbsp;assumes&nbsp;your&nbsp;webserver&nbsp;runs&nbsp;as&nbsp;user&nbsp;nobody,&nbsp;adjust&nbsp;for&nbsp;your&nbsp;installation)&nbsp;<br>
+-&nbsp;The&nbsp;other&nbsp;directory&nbsp;to&nbsp;check&nbsp;is&nbsp;the&nbsp;temporary&nbsp;directory&nbsp;that&nbsp;your&nbsp;web&nbsp;server&nbsp;typically&nbsp;uses,&nbsp;but&nbsp;the&nbsp;information&nbsp;listed&nbsp;above&nbsp;is&nbsp;by&nbsp;far&nbsp;the&nbsp;most&nbsp;common&nbsp;config&nbsp;issue&nbsp;with&nbsp;email&nbsp;attachments.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x16.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x44.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Administration</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>File Manager</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
