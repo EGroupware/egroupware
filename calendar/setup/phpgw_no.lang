@@ -222,6 +222,7 @@ planner	calendar	no	Planlegger
 planner by category	calendar	no	Planlegger for kategorier
 planner by user	calendar	no	Planlegger for bruker
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	no	Vennligst bekreft, godta, avslå eller etterse endringer i den korresponderende oppføringen i din kalender
+please enter a filename !!!	calendar	no	Vennligst angi et filnavn !!!
 preselected group for entering the planner	calendar	no	Forhåndsvelg gruppe når du starter planlegger
 print calendars in black & white	calendar	no	Skriv ut kalendere i svart/hvit
 print the mini calendars	calendar	no	Skriv ut de små kalenderne
