@@ -31,6 +31,38 @@
 			Header('Location: ' . $html->link('/infolog/index.php',$hidden_vars));
 	}
 
+	// check wether to write dates or not
+	if ($selfortoday) {
+		$startdate = time();      // startdate is today (checkbox is clicked)
+	} else {
+		if ($sday) {
+			if ($sday && !$smonth) $smonth = date('m',time());
+			if ($sday && !$syear)  $syear  = date('Y',time());
+			if (! checkdate($smonth,$sday,$syear)) {
+				$error[] = lang('You have entered an invalid starting date');
+			} else {
+				$startdate = mktime(12,0,0,$smonth, $sday, $syear);
+			}
+		} else {
+			$startdate = 0;
+		}         
+	}
+
+	// Check ending date
+	if ($dur_days > 0)   {
+		$enddate = mktime(12,0,0,date('m',$startdate), date('d',$startdate)+$dur_days, date('Y',$startdate));
+	} else
+		if ($eday) {
+			if ($eday && !$emonth) $emonth = date('m',time());
+			if ($eday && !$eyear)  $eyear  = date('Y',time());
+			if (!checkdate($emonth,$eday,$eyear)) {
+				$error[] = lang('You have entered an invalid ending date');
+			} else {
+				$enddate = mktime(12,0,0,$emonth,$eday,$eyear);
+			}
+		} else {
+			$enddate = 0;
+		}
 
 	if ($save || $add) {
 		if (strlen($des) >= 8000) {
@@ -39,39 +71,6 @@
 		if (!$subject && !$des) {
 			$error[] = lang('You must enter a subject or a description');
 		}
-
-		// check wether to write dates or not
-		if ($selfortoday) {
-			$startdate = time();      // startdate is today (checkbox is clicked)
-		} else {
-			if ($sday) {
-				if ($sday && !$smonth) $smonth = date('m',time());
-				if ($sday && !$syear)  $syear  = date('Y',time());
-				if (! checkdate($smonth,$sday,$syear)) {
-					$error[] = lang('You have entered an invalid starting date');
-				} else {
-					$startdate = mktime(12,0,0,$smonth, $sday, $syear);
-				}
-			} else {
-				$startdate = 0;
-			}         
-		}
-
-		// Check ending date
-		if ($dur_days > 0)   {
-			$enddate = mktime(12,0,0,date('m',$startdate), date('d',$startdate)+$dur_days, date('Y',$startdate));
-		} else
-			if ($eday) {
-				if ($eday && !$emonth) $emonth = date('m',time());
-				if ($eday && !$eyear)  $eyear  = date('Y',time());
-				if (!checkdate($emonth,$eday,$eyear)) {
-					$error[] = lang('You have entered an invalid ending date');
-				} else {
-					$enddate = mktime(12,0,0,$emonth,$eday,$eyear);
-				}
-			} else {
-				$enddate = 0;
-			}
 
 		if ($enddate < $startdate && $enddate && $startdate) {
 			$error[] = lang('Ending date can not be before start date');
@@ -88,8 +87,8 @@
 				'type'      => $type,
 				'from'      => $from,
 				'addr'      => $addr,
-				'addr_id'   =>   $id_addr,
-				'proj_id'   =>   $id_project,
+				'addr_id'   =>	$id_addr,
+				'proj_id'   =>	$id_project,
 				'subject'   => $subject,
 				'des'       => $des,
 				'pri'       => $pri,
@@ -172,7 +171,8 @@
 	$t->set_var($phpgw->infolog->setStyleSheet( ));
 	$t->set_var('lang_category',lang('Category'));
 	$t->set_var('lang_none',lang('None'));
-	$t->set_var('cat_list',$phpgw->categories->formated_list('select','all',$phpgw->infolog->data['info_cat'],'True'));
+	if (!isset($info_cat)) $info_cat = $phpgw->infolog->data['info_cat'];
+	$t->set_var('cat_list',$phpgw->categories->formated_list('select','all',$info_cat,'True'));
 
 	$t->set_var('actionurl',$phpgw->link('/infolog/edit.php'));
 	$t->set_var('common_hidden_vars',$common_hidden_vars);
@@ -182,26 +182,40 @@
 
 	$t->set_var('lang_owner',lang('Owner'));
 	$t->set_var('owner_info',$sb->accountInfo($phpgw->infolog->data['info_owner']));
+
 	$t->set_var('lang_type',lang('Type'));
-	$t->set_var('type_list',$sb->getArrayItem('type',$phpgw->infolog->data['info_type'],$phpgw->infolog->enums['type']));
+	if (!isset($type)) $type = $phpgw->infolog->data['info_type'];
+	$t->set_var('type_list',$sb->getArrayItem('type',$type,$phpgw->infolog->enums['type']));
 
 	$t->set_var('lang_prfrom', lang('From'));
-	$t->set_var('fromval', $phpgw->strip_html($phpgw->infolog->data['info_from']));
-	$t->set_var('lang_praddr', lang('Phone/Email'));
-	$t->set_var('addrval', $phpgw->strip_html($phpgw->infolog->data['info_addr']));
+	if (!isset($from)) $from = $phpgw->strip_html($phpgw->infolog->data['info_from']);
+	$t->set_var('fromval', $from);
 
-	$t->set_var($sb->getProject('project',$phpgw->infolog->data['info_proj_id'],$query_project));
-	$t->set_var($sb->getAddress('addr',$phpgw->infolog->data['info_addr_id'],$query_addr));
+	$t->set_var('lang_praddr', lang('Phone/Email'));
+	if (!isset($addr)) $addr = $phpgw->strip_html($phpgw->infolog->data['info_addr']);
+	$t->set_var('addrval', $addr);
+
+	if (!isset($id_project)) $id_project = $phpgw->infolog->data['info_proj_id'];
+	$t->set_var($sb->getProject('project',$id_project,$query_project));
+
+	if (!isset($id_addr)) $id_addr = $phpgw->infolog->data['info_addr_id'];
+	$t->set_var($sb->getAddress('addr',$id_addr,$query_addr));
 			
 	$t->set_var('lang_prsubject', lang('Subject'));
-	$t->set_var('subjectval', $phpgw->strip_html($phpgw->infolog->data['info_subject']));
+	if (!isset($subject)) $subject = $phpgw->strip_html($phpgw->infolog->data['info_subject']);
+	$t->set_var('subjectval', $subject);
+
 	$t->set_var('lang_prdesc', lang('Description'));
-	$t->set_var('descval', $phpgw->strip_html($phpgw->infolog->data['info_des']));
+	if (!isset($des)) $des = $phpgw->strip_html($phpgw->infolog->data['info_des']);
+	$t->set_var('descval', $des);
 
 	$t->set_var('lang_start_date',lang('Start Date'));
-	$t->set_var('start_select_date',$sb->getDate('syear','smonth','sday',$phpgw->infolog->data['info_startdate']));
+	if (!isset($startdate) || !$startdate) $startdate = $phpgw->infolog->data['info_startdate'];
+	$t->set_var('start_select_date',$sb->getDate('syear','smonth','sday',$startdate));
+
 	$t->set_var('lang_end_date',lang('End Date'));
-	$t->set_var('end_select_date',$sb->getDate('eyear','emonth','eday',$phpgw->infolog->data['info_enddate']));
+	if (!isset($enddate) || !$enddate) $enddate = $phpgw->infolog->data['info_enddate'];
+	$t->set_var('end_select_date',$sb->getDate('eyear','emonth','eday',$enddate));
 
 	$t->set_var('lang_selfortoday',lang('Today'));
 	$t->set_var('selfortoday',$html->checkbox('selfortoday',0));
@@ -209,19 +223,24 @@
 	$t->set_var('days',lang('days'));
 
 	$t->set_var('lang_status',lang('Status'));
-	$t->set_var('status_list',$sb->getArrayItem('status',$phpgw->infolog->data['info_status'],$phpgw->infolog->enums['status']));
+	if (!isset($status)) $status = $phpgw->infolog->data['info_status'];
+	$t->set_var('status_list',$sb->getArrayItem('status',$status,$phpgw->infolog->enums['status']));
 
 	$t->set_var('lang_priority',lang('Priority'));
-	$t->set_var('priority_list',$sb->getArrayItem('pri',$phpgw->infolog->data['info_pri'],$phpgw->infolog->enums['priority']));
+	if (!isset($pri)) $pri = $phpgw->infolog->data['info_pri'];
+	$t->set_var('priority_list',$sb->getArrayItem('pri',$pri,$phpgw->infolog->enums['priority']));
 
 	$t->set_var('lang_confirm',lang('Confirm'));
-	$t->set_var('confirm_list',$sb->getArrayItem('confirm',$phpgw->infolog->data['info_confirm'],$phpgw->infolog->enums['confirm']));
+	if (!isset($confirm)) $confirm = $phpgw->infolog->data['info_confirm'];
+	$t->set_var('confirm_list',$sb->getArrayItem('confirm',$confirm,$phpgw->infolog->enums['confirm']));
 
 	$t->set_var('lang_responsible',lang('Responsible'));
-	$t->set_var('responsible_list',$sb->getAccount('responsible',$phpgw->infolog->data['info_responsible']));
+	if (!isset($responsible)) $responsible = $phpgw->infolog->data['info_responsible'];
+	$t->set_var('responsible_list',$sb->getAccount('responsible',$responsible));
 
 	$t->set_var('lang_access_type',lang('Private'));
-	$t->set_var('access_list',$html->checkbox('access',$phpgw->infolog->data['info_access'] == 'private'));
+	if (!isset($access)) $access = $phpgw->infolog->data['info_access'] == 'private';
+	$t->set_var('access_list',$html->checkbox('access',$access));
 	  
 	$t->set_var('edit_button',$html->submit_button('save','Save'));
 	 
