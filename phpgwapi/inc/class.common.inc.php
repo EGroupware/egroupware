@@ -776,7 +776,7 @@
 
 		function find_image($appname,$image)
 		{
-			switch($GLOBALS['phpgw_info']['server']['imgtype_preference'])
+			switch(PHPGW_IMGTYPE_PREF)
 			{
 				case 1:
 					$imgpref = Array('gif','jpg','png');
