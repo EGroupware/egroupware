@@ -322,6 +322,10 @@
 
 		function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='')
 		{
+			if ($this->debug)
+			{
+				echo "<p>bolink::unlink('$link_id','$app','$id','$owner','$app2','$id2')</p>\n";
+			}
 			if ($link_id < 0)	// vfs-link?
 			{
 				return $this->delete_attached(-$link_id);
@@ -336,6 +340,10 @@
 			}
 			if (!is_array($id))
 			{
+				if (!$app2 && !$id2)
+				{
+					$this->delete_attached($app,$id);	// deleting all attachments
+				}
 				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
 			}
 			if (isset($id[$link_id]))
@@ -654,14 +662,22 @@
 				return False;	// dont delete more than all attachments of an entry
 			}
 			$vfs_data = $this->vfs_path($app,$id,$fname,RELATIVE_ROOT);
+			
+			$Ok = false;
 			if ($this->vfs->file_exists($vfs_data))
 			{
 				$this->vfs->override_acl = 1;
 				$Ok = $this->vfs->delete($vfs_data);
 				$this->vfs->override_acl = 0;
-				return $Ok;
 			}
-			return False;
+			// if filename given (and now deleted) check if dir is empty and remove it in that case
+			if ($fname && !count($this->vfs->ls($vfs_data=$this->vfs_path($app,$id,'',RELATIVE_ROOT))))
+			{
+				$this->vfs->override_acl = 1;
+				$this->vfs->delete($vfs_data);
+				$this->vfs->override_acl = 0;
+			}
+			return $Ok;
 		}
 
 		/*!
