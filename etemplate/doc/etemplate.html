@@ -8,6 +8,7 @@
 pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-width: thin; border-style: solid; border-color: black; white-space: pre; }
 span { color: darkblue; font-family: sans-serife; }
 li { margin-top: 5px; }
+body { background-color: white; color: black; }
 -->
 </STYLE>
 </head>
@@ -358,14 +359,18 @@ We are only lacking some way to show if we get more than one match on a search, 
 
 <p>This function is called by edit with the matches of a search:</p>
 <ol>
-	<li>We build an array with all the matches, the index in that array is the row-number starting with 1 (!).<br>
-		$entry = array('empty') + $found; would do the same.
+	<li>We build an array with all the matches, the index in that array is the row-number starting with 1 (!)
+		($entry = array('empty') + $found; would do the same).<br>
+		The names in the data-row (last row) of 'et_media.show.rows' are like '${row}[name]'. Variable expansion is performed on each
+		name and expands that for the first row to '1[name]' which addresses the name in the first match.
 	<li>$content contains again 'msg' which we set to the number of entris found and the above array with the data of all rows under
 		the key 'entry', as we put that in Size for the field loading the sub-template 'et_media.show.rows'. It not necessary to
 		put something in Size-field / use a sub-array for a sub-template, but it can be very helpful to organize a complex content-array.
 		(As an exercice you can remove 'entry' from the Size-field and change the function arrcordingly).
 	<li>we now explizitly read the template 'et_media.show' (the constructor reed 'et_media.edit') and execute it again with
 		the edit function as callback (because of that, show does NOT need to be listed in public_functions)
+	<li>as 'et_media.show.rows' contains only one data-row, but fieldnames with variables to expand, that row is autorepeated
+		for as many data we put into the content array (or the sub-array if we used the Size-field).
 </ol>
 
 <p>To call the show function, we need to make some changes to the edit-function too:</p>
