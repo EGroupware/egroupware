@@ -50,7 +50,7 @@
      }
      if ($navbarframe) {
         $phpgw->common->phpgw_header();
-        $phpgw->common->navbar();
+        $phpgw->common->navbar(True);
      }
   } else {
      $phpgw->common->phpgw_header();

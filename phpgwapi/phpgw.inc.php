@@ -383,7 +383,7 @@
      \**************************************************************************/
      if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
         || ($phpgw_info["server"]["useframes"] == "always")) {
-        $phpgw_info["flags"]["navbar_target"] = "phpgw_body";  
+        $phpgw_info["flags"]["navbar_target"] = "phpgw_body";
      }
 
      /**************************************************************************\

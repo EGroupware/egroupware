@@ -294,9 +294,17 @@
        }
     }
 
-    function navbar()
+    function navbar($force = False)
     {
        global $cd,$phpgw,$phpgw_info,$colspan,$PHP_SELF;
+
+       if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
+          || ($phpgw_info["server"]["useframes"] == "always")) {
+          if (! $force) {
+             return False;          
+          }
+       }
+
        $tpl = new Template($phpgw_info["server"]["template_dir"]);
        $tpl->set_file(array("navbar"        => "navbar.tpl",
                             "navbar_row"    => "navbar_row.tpl",

@@ -72,7 +72,7 @@
 
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
-  
+
   $userData = $phpgw->accounts->read_userData($account_id);
 
   $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
