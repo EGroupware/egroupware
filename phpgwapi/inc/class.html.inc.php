@@ -51,12 +51,11 @@ class html
 	 */
 	function inputColor($name,$value='',$title='')
 	{
-		$GLOBALS['phpgw_info']['flags']['java_script_thirst'] =
-			'<script language=JavaScript src="'.$this->phpgwapi_js_url.'/picker/picker.js"></script><script>TCP.url=\''.$this->phpgwapi_js_url."/picker/';</script>\n";
-
-		return '<input type="text" name="'.$name.'" value="'.$this->htmlspecialchars($value).'" /> '.
-			'<a href="javascript:TCP.popup(document.getElementsByName(\'cat_data[color]\')[0])">'.
-			'<img src="'.$this->phpgwapi_js_url.'/picker/img/sel.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
+		$id = str_replace(array('[',']'),array('_',''),$name).'_colorpicker';
+		$onclick = "if (this != '') { window.open(this+'&color='+encodeURIComponent(document.getElementById('$id').value),this.target,'width=240,height=187,scrollbars=no,resizable=no'); return false; } else { return true; }";
+		return '<input type="text" name="'.$name.'" id="'.$id.'" value="'.$this->htmlspecialchars($value).'" /> '.
+			'<a href="'.$this->phpgwapi_js_url.'/colorpicker/select_color.html?id='.urlencode($id).'" target="_blank" onclick="'.$onclick.'">'.
+			'<img src="'.$this->phpgwapi_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
 	}
 
 	/**
