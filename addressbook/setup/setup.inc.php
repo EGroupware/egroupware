@@ -49,7 +49,6 @@
 		'add_def_pref',
 		'config_validate',
 		'home',
-		'manual',
 		'deleteaccount',
 		'notifywindow',
 		'preferences',

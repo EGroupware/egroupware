@@ -17,16 +17,17 @@
 	);
 
 	include('../../../header.inc.php');
-
+	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 	$GLOBALS['phpgw']->help->set_params(array('app_name'	=> 'addressbook',
 												'title'		=> lang('add'),
-												'params'	=> array('app_intro' => 'overview.php')));
+												'controls'	=> array('app_intro'	=> 'overview.php',
+																			'up'	=> 'overview.php')));
 
 	$values['add'] = array
 	(
 		'intro'	=> 'Click on the add button, a form page will be presented with the following fields:',
 		'lang_lastname'			=> 'Last name',
-		'lang_firstname'		=> 'First name'
+		'lang_firstname'		=> 'First name',
 		'lang_email'			=> 'E-mail',
 		'lang_homephone'		=> 'Home phone',
 		'lang_workphone'		=> 'Work phone',
@@ -39,10 +40,10 @@
 		'lang_group_settings'	=> 'Group settings',
 		'lang_notes'			=> 'Notes',
 		'lang_company'			=> 'Company name',
-		'lang_fax'				=> 'Fax'
-		'lang_pager'			=> 'Pager'
-		'lang_othernumber'		=> 'Other number'
-		'lang_birthday'			=> 'Birthday'
+		'lang_fax'				=> 'Fax',
+		'lang_pager'			=> 'Pager',
+		'lang_othernumber'		=> 'Other number',
+		'lang_birthday'			=> 'Birthday',
 		'end'					=> 'Simply fill in the fields, and click OK.',
 		'access_descr'			=> 'Access can be restricted to private, overriding acl preferences settings.
 									From preferences, you can grant access to users to the be able to view, 
@@ -50,4 +51,5 @@
 	);
 
 	$GLOBALS['phpgw']->help->xdraw($values);
+	$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$GLOBALS['phpgw']->help->output);
 ?>

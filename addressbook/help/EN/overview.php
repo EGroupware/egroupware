@@ -21,12 +21,12 @@
 	$GLOBALS['phpgw']->help = CreateObject('phpgwapi.help_helper');
 	$GLOBALS['phpgw']->help->set_params(array('app_name'	=> 'addressbook',
 												'title'		=> lang('addressbook overview'),
-												'params'	=> array('app_intro' => 'overview.php')));
-
+												'controls'	=> array('app_intro'	=> 'overview.php',
+																		'down'		=> 'add.php')));
 
 	$values['overview']	= array
 	(
-		'intro'	=> 'A searchable address book for keeping contact information of business associates or friends and family.'
+		'intro'	=> 'A searchable address book for keeping contact information of business associates or friends and family. A quick and detailed address book, to keep various levels of contact information and a search function to find people you need quickly.'
 	);
 
 	$GLOBALS['phpgw']->help->xdraw($values);
