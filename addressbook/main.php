@@ -14,15 +14,35 @@
 
 	/* $Id$ */
 
+	if ($menuaction)
+	{
+		list($app,$class,$method) = explode('.',$menuaction);
+		if (! $app || ! $class || ! $method)
+		{
+			$invalid_data = True;
+		}
+	}
+	else
+	{
+		$app = 'home';
+		$invalid_data = True;
+	}
+
 	$phpgw_info['flags'] = array(
-		'currentapp' => 'addressbook',
 		'noheader'   => True,
-		'enable_contacts_class' => True,
-		'enable_nextmatchs_class' => True,
-		'nonavbar'   => True
+		'nonavbar'   => True,
+		'currentapp' => $app
 	);
 	include('../header.inc.php');
 
-	$obj = CreateObject('addressbook.uiaddressbook');
-	$obj->get_list();
+	$obj = CreateObject(sprintf('%s.%s',$app,$class));
+	if ((is_array($obj->public_functions) && $obj->public_functions[$method]) && ! $invalid_data)
+	{
+		eval("\$obj->$method();");
+	}
+	else
+	{
+		$_obj = CreateObject('addressbook.uiaddressbook');
+		$_obj->get_list();
+	}
 ?>
