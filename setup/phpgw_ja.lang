@@ -1,79 +1,85 @@
-
+(for weekly)	calendar	ja	(毎週時)
 1 match found	calendar	ja	１件見つかりました。
 1 message has been deleted	email	ja	1 件削除しました。
 a	calendar	ja	
+ab	common	ja	ab
+accept	calendar	ja	承諾
+accepted	common	ja	承諾済み
 access	common	ja	アクセス
 access not permitted	common	ja	アクセス権がありません
 access type	common	ja	アクセス権
-access type	todo	ja	アクセス権
 account active	admin	ja	アカウントアクティブ
 account has been created	common	ja	アカウントを作成しました
 account has been deleted	common	ja	アカウントを削除しました
 account has been updated	common	ja	アカウントを更新しました
-Account must belong to at least 1 group	common	ja	所属グループを指定してください。
+account must belong to at least 1 group	common	ja	所属グループを指定してください。
 account permissions	admin	ja	利用可能アプリケーション
 account preferences	common	ja	アカウントユーザ設定
-acl	common	ja	ACL
+acl	common	ja	許可設定
 action	admin	ja	アクション
 active	admin	ja	アクティブ
-add addressbook category for	common	ja	アドレス帳カテゴリ追加
-add a note for	notes	ja	ノート追加
-add a single phrase	transy	ja	Add a single phrase
 add	bookkeeping	ja	追加
-add category	common	ja	カテゴリ追加
 add	common	ja	追加
-add_expense	bookkeeping	ja	支出追加
+add a field	addressbook	ja	項目追加
+add a note for	notes	ja	ノート追加
+add a single pharse	transy	ja	Add a single pharse
+add a single phrase	transy	ja	Add a single pharse
+add addressbook category for	common	ja	アドレス帳カテゴリ追加
+add category	common	ja	カテゴリ追加
 add global category	admin	ja	グローバルカテゴリ追加
-add_income	bookkeeping	ja	収入追加
 add new account	admin	ja	アカウント追加
 add new application	admin	ja	アプリケーション追加
 add new entry	notes	ja	新規作成
-add new phrase	transy	ja	Add new phrase
+add new pharse	transy	ja	Add new pharse
+add new phrase	transy	ja	Add new pharse
 add new ticket	tts	ja	追加
 add note	notes	ja	追加
+add notes category for	common	ja	ノートカテゴリ追加
+add sub	todo	ja	サブ追加
+add ticket	tts	ja	追加
+add todo category for	common	ja	プロジェクトカテゴリ追加
+add to addressbook	email	ja	アドレス帳へ追加
+add_expense	bookkeeping	ja	支出追加
+add_income	bookkeeping	ja	収入追加
+address book	addressbook	ja	アドレス帳
 address book	common	ja	アドレス帳
-addressbook	common	ja	アドレス帳
-addressbook preferences	common	ja	アドレス帳ユーザ設定
 address book - view	addressbook	ja	アドレス帳 - 表示
 address line 2	addressbook	ja	町域２
 address line 3	addressbook	ja	町域３
 address type	addressbook	ja	アドレスタイプ
-add sub	todo	ja	サブ追加
+addressbook	common	ja	アドレス帳
+addressbook preferences	common	ja	アドレス帳ユーザ設定
 addsub	todo	ja	サブ追加
-add ticket	tts	ja	追加
-add to addressbook	email	ja	アドレス帳へ追加
 addvcard	common	ja	VCard追加
 admin	bookkeeping	ja	環境設定
 admin	common	ja	環境設定
 administration	common	ja	環境設定
-all	calendar	ja	全て
 all	common	ja	全て
 all day	calendar	ja	全ての日
-allow anonymous access to this app	admin	ja	匿名ユーザへの許可
 all records and account information will be lost!	admin	ja	すべてのレコードとアカウント情報が失われます。
-all	transy	ja	全て
+allow anonymous access to this app	admin	ja	匿名ユーザへの許可
 am	calendar	ja	午前
 amount	bookkeeping	ja	金額
 anonymous user	admin	ja	匿名ユーザ
 any	transy	ja	any
-application name	admin	ja	アプリケーション名
-applications	admin	ja	アプリケーション
-application title	admin	ja	アプリケーションタイトル
 application	transy	ja	アプリケーション
+application name	admin	ja	アプリケーション名
+application title	admin	ja	アプリケーションタイトル
+applications	admin	ja	アプリケーション
 april	common	ja	４月
-are you sure\nyou want to\ndelete this entry ?	calendar	ja	この項目を\n削除してもよろしいですか。
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	削除してもよろしいですか。\n（全てのユーザに影響します。）
 are you sure you want to delete this account ?	admin	ja	このアカウントを削除してもよろしいですか。
 are you sure you want to delete this application ?	admin	ja	このアプリケーションを削除してもよろしいですか。
-are you sure you want to delete this category ?	admin	ja	このカテゴリを削除してもよろしいですか。
 are you sure you want to delete this category ?	common	ja	このカテゴリを削除してもよろしいですか。
-are you sure you want to delete this entry ?	common	ja	この項目を削除してもよろしいですか。
 are you sure you want to delete this entry	todo	ja	この項目を削除してもよろしいですか。
+are you sure you want to delete this entry ?	common	ja	この項目を削除してもよろしいですか。
 are you sure you want to delete this group ?	admin	ja	このグループを削除してもよろしいですか。
 are you sure you want to delete this news site ?	admin	ja	このニュースサイトを削除してもよろしいですか。
-are you sure you want to delete this note ?	notes	ja	このノートを削除してもよろしいですか。
 are you sure you want to delete this note	notes	ja	このノートを削除してもよろしいですか。
+are you sure you want to delete this note ?	notes	ja	このノートを削除してもよろしいですか。
 are you sure you want to kill this session ?	admin	ja	このセッションを切断してもよろしいですか。
+
+are you sure\nyou want to\ndelete this entry ?	calendar	ja	この項目を\n削除してもよろしいですか。
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	ja	削除してもよろしいですか。\n（全てのユーザに影響します。）
 arial	notes	ja	Arial
 attach file	email	ja	添付ファイル
 attach signature	email	ja	署名追加
@@ -83,19 +89,18 @@ autosave default category	common	ja	デフォルトカテゴリを自動保存
 available groups	nntp	ja	利用可能グループ
 back	notes	ja	戻る
 back to projectlist	todo	ja	プロジェクトリストへ
-bad login or password	common	ja	パスワードが誤っています
 bad login or password	login	ja	パスワードが誤っています
 base url	admin	ja	Base URL
 bbs phone	addressbook	ja	BBS電話
 birthday	addressbook	ja	誕生日
-bookkeeping admins	common	ja	経理環境設定
-bookkeeping	common	ja	経理
 book marks	common	ja	ブックマーク
+bookkeeping	common	ja	経理
+bookkeeping admins	common	ja	経理環境設定
 bookmarks	common	ja	ブックマーク
 brief description	calendar	ja	件名
+business	common	ja	ビジネス
 business address type	addressbook	ja	アドレスタイプ
 business city	common	ja	市区町村
-business	common	ja	ビジネス
 business country	common	ja	国
 business email	common	ja	電子メール
 business email type	common	ja	電子メールタイプ
@@ -104,8 +109,8 @@ business phone	common	ja	電話
 business state	common	ja	都道府県
 business street	common	ja	町域
 business zip code	common	ja	郵便番号
-calendar - add	calendar	ja	カレンダー - 追加
 calendar	common	ja	カレンダー
+calendar - add	calendar	ja	カレンダー - 追加
 calendar - edit	calendar	ja	カレンダー - 編集
 calendar preferences	common	ja	カレンダーユーザ設定
 cancel	common	ja	取消
@@ -113,10 +118,10 @@ cancel	filemanager	ja	取消
 cannot display the requested article from the requested newsgroup	nntp	ja	Article を表示できません
 car phone	addressbook	ja	自動車電話
 categories	common	ja	カテゴリ
-categories for	common	ja	カテゴリ
-categories name	admin	ja	カテゴリ名
 category	common	ja	カテゴリ
 category description	admin	ja	カテゴリ詳細
+categories for	common	ja	カテゴリ
+category name	admin	ja	カテゴリ名
 category x has been added !	common	ja	カテゴリ %1 を追加しました。
 category x has been updated !	common	ja	カテゴリ %1 を訂正しました。
 cc	email	ja	CC
@@ -124,6 +129,7 @@ cell phone	addressbook	ja	cell 電話
 center	weather	ja	中央
 change	common	ja	変更
 change main screen message	admin	ja	メイン画面メッセージ変更
+change password	preferences	ja	パスワード変更
 change your password	preferences	ja	パスワード変更
 change your profile	preferences	ja	プロフィール変更
 change your settings	preferences	ja	設定変更
@@ -132,6 +138,7 @@ chat	common	ja	チャット
 choose a font	notes	ja	フォント
 choose font size	notes	ja	フォントサイズ
 choose the font size	notes	ja	フォントサイズ
+choose the category	notes	ja	カテゴリ選択
 city	addressbook	ja	市区町村
 city	admin	ja	市区町村
 city	weather	ja	市区町村
@@ -146,138 +153,137 @@ company name	addressbook	ja	会社名
 completed	todo	ja	達成率
 compose	email	ja	新規作成
 contact	common	ja	連絡先
-copy_as	filemanager	ja	コピー先
 copy	common	ja	コピー
-copy	filemanager	ja	コピー
+copy_as	filemanager	ja	コピー先
 country	addressbook	ja	国
 country	weather	ja	国
 courier new	notes	ja	Courier New
 create	common	ja	作成
-created by	common	ja	作成者
-created by	todo	ja	作成者
 create	filemanager	ja	作成
 create group	admin	ja	グループ作成
 create lang.sql file	transy	ja	lang.sql ファイル作成
-create new language set	transy	ja	Create new language set
+create new langague set	transy	ja	Create new langague set
+create new language set	transy	ja	Create new langague set
+created by	common	ja	作成者
+cron	common	ja	Cron
 currency	common	ja	通貨
 currency	preferences	ja	通貨
-current_file	filemanager	ja	現在のファイル
 current users	common	ja	現在のユーザ
+current_file	filemanager	ja	現在のファイル
 custom	common	ja	カスタム
 custom email settings	email	ja	カスタム設定
 custom fields	addressbook	ja	カスタム項目
-daily	calendar	ja	日
+daily	calendar	ja	毎日
 daily matrix view	calendar	ja	日表示
 date	bookkeeping	ja	日
 date	common	ja	日
-date due	todo	ja	その日
 date	email	ja	送信日付
-date format	preferences	ja	日付書式
 date	nntp	ja	日
+date due	todo	ja	その日
+date format	preferences	ja	日付書式
 days datedue	todo	ja	days datedue
-days repeated	calendar	ja	days repeated
+days repeated	calendar	ja	曜日
 december	common	ja	１２月
 default application	preferences	ja	アプリケーション（既定）
 default calendar filter	calendar	ja	カレンダーの初期選択
 default calendar view	calendar	ja	カレンダーの初期表示
 default category	admin	ja	既定のカテゴリ
+default category	common	ja	既定のカテゴリ
 default sorting order	email	ja	ソート順（既定）
-delete	bookkeeping	ja	削除
 delete	common	ja	削除
-delete	email	ja	削除
-delete	filemanager	ja	削除
+delete all records	admin	ja	削除する
 department	addressbook	ja	部署
 description	common	ja	詳細
 detail	tts	ja	明細
 disabled	admin	ja	不可
 display	admin	ja	表示
-displaying subprojects of following project	todo	ja	サブプロジェクト一覧
+display missing pharases in lang set	transy	ja	Display missing pharases in lang set
 display missing phrases in lang set	transy	ja	Display missing pharases in lang set
 display note for	notes	ja	ノート表示
 display status of events	calendar	ja	イベント状況表示
+displaying subprojects of following project	todo	ja	サブプロジェクト一覧
 do_delete	filemanager	ja	を削除しますか
+do you also want to delete all subcategories ?	admin	ja	サブカテゴリも同時に削除しますか。
 domestic	common	ja	国内
-done	addressbook	ja	終了
 done	common	ja	終了
 download	filemanager	ja	ダウンロード
-do you also want to delete all subcategories ?	admin	ja	サブカテゴリも同時に削除しますか。
 duration	calendar	ja	継続時間
+e-mail	addressbook	ja	電子メール
+e-mail	common	ja	電子メール
+e-mail preferences	common	ja	電子メールユーザ設定
+edit	common	ja	訂正
 edit addressbook category for	common	ja	アドレス帳カテゴリ訂正
 edit application	admin	ja	アプリケーション訂正
-edit	bookkeeping	ja	訂正
 edit categories	common	ja	カテゴリ訂正
 edit category	common	ja	カテゴリ訂正
-edit	common	ja	訂正
 edit custom fields	preferences	ja	カスタム項目訂正
-edit_expense	bookkeeping	ja	支出訂正
-edit	filemanager	ja	訂正
 edit global category	admin	ja	グローバルカテゴリ訂正
 edit group	admin	ja	グループ訂正
-edit_income	bookkeeping	ja	収入訂正
 edit login screen message	admin	ja	ログイン画面メッセージ訂正
 edit main screen message	admin	ja	メイン画面メッセージ訂正
 edit note for	notes	ja	ノート訂正
+edit notes category for	common	ja	ノートカテゴリ訂正
+edit todo category for	common	ja	プロジェクトカテゴリ訂正
 edit user account	admin	ja	アカウント訂正
-email account name	email	ja	電子メールアカウント名
-e-mail	addressbook	ja	電子メール
-email address	email	ja	電子メールアドレス
-e-mail	common	ja	電子メール
+edit_expense	bookkeeping	ja	支出訂正
+edit_income	bookkeeping	ja	収入訂正
 email	common	ja	電子メール
-email	email	ja	電子メール
+email account name	email	ja	電子メールアカウント名
+email address	email	ja	電子メールアドレス
 email password	email	ja	電子メールパスワード
-e-mail preferences	common	ja	電子メールユーザ設定
 email signature	email	ja	署名
 email type	common	ja	電子メールタイプ
 enabled	admin	ja	可能
-enabled - hidden from navbar	admin	ja	可能 - ナビゲーション非表示
 enabled	weather	ja	可能
+enabled - hidden from navbar	admin	ja	可能 - ナビゲーション非表示
 end date	common	ja	終了日
 end date/time	calendar	ja	終了日時
-end date	todo	ja	終了日
 end time	common	ja	終了時間
+ends	calendar	ja	終了日
 enter your new password	preferences	ja	新しいパスワードを入力して下さい。
 entries	bookkeeping	ja	経理登録
 entry has been deleted sucessfully	common	ja	削除しました。
 entry updated sucessfully	common	ja	訂正しました。
+err_saving_file	filemanager	ja	エラー：ディスクに保存できません。
 error	common	ja	エラー
 error creating x x directory	common	ja	エラー：ディレクトリ %1%2 が作成できません。
 error deleting x x directory	common	ja	エラー：ディレクトリ %1%2 が削除できません。
 error renaming x x directory	common	ja	エラー：ディレクトリ %1%2 の名前を変更できません。
-err_saving_file	filemanager	ja	エラー：ディスクに保存できません。
 exit	common	ja	閉じる
 exit	filemanager	ja	閉じる
 expense	bookkeeping	ja	支出
 expenses	bookkeeping	ja	支出
 export contacts	addressbook	ja	エクスポート
+export file name	addressbook	ja	エクスポートファイル名
+export from addressbook	addressbook	ja	エクスポート（アドレス帳）
 extra	common	ja	追加
 failed to find your station	weather	ja	failed to find your station	
 fax	addressbook	ja	Fax
 february	common	ja	２月
+field list	addressbook	ja	項目一覧
 fields	common	ja	項目
 fields to show in address list	addressbook	ja	アドレスリストに表示する項目
 file manager	common	ja	ファイルマネージャ
+file upload	filemanager	ja	ファイルアップロード
+file_upload	filemanager	ja	アップロード
 files	common	ja	ファイル
 files	email	ja	ファイル
 files	filemanager	ja	ファイル
-file_upload	filemanager	ja	アップロード
-file upload	filemanager	ja	ファイルアップロード
 filter	common	ja	選択
-first name	addressbook	ja	姓
-firstname	bookkeeping	ja	姓
 first name	common	ja	姓
-firstname	email	ja	姓
 first page	common	ja	先頭ページ
+firstname	bookkeeping	ja	姓
+firstname	email	ja	姓
 folder	email	ja	フォルダ
 forecast	admin	ja	天気予報
-forecasts	weather	ja	天気予報
 forecast	weather	ja	天気予報
 forecast zone	admin	ja	天気予報
+forecasts	weather	ja	天気予報
 forum	common	ja	フォーラム
 forward	email	ja	転送
-(for weekly)	calendar	ja	(週間)
 fr	calendar	ja	金
 free/busy	calendar	ja	時間表
-frequency	calendar	ja	頻度
+frequency	calendar	ja	間隔
 fri	calendar	ja	金
 friday	common	ja	金曜日
 from	email	ja	差出人
@@ -289,38 +295,38 @@ fzone	weather	ja	fzone
 generate new lang.sql file	transy	ja	新しい lang.sql ファイルを作成します。
 generate printer-friendly version	calendar	ja	印刷用
 geo	addressbook	ja	Geo
-georgia	notes	ja	ジョージア
-global categories	admin	ja	グローバルカテゴリ
+georgia	notes	ja	Georgia
 global	common	ja	グローバル
-global public and group public	calendar	ja	パブリックと所属グループ
-global public	common	ja	パブリック
-global public only	calendar	ja	パブリック
 global	weather	ja	グローバル
+global categories	admin	ja	グローバルカテゴリ
+global public	common	ja	パブリック
+global public and group public	calendar	ja	パブリックと所属グループ
+global public only	calendar	ja	パブリック
 go!	calendar	ja	Go!
 grant addressbook access	common	ja	アドレス帳利用許可
 grant calendar access	common	ja	カレンダー利用許可
 grant todo access	common	ja	プロジェクト利用許可
-group access	common	ja	グループ
 group	common	ja	グループ
-group_files	filemanager	ja	グループファイル
+group access	common	ja	グループ
 group has been added	common	ja	グループを追加しました。
 group has been deleted	common	ja	グループを削除しました。
 group has been updated	common	ja	グループを訂正しました。
 group name	admin	ja	グループ名
 group public	common	ja	所属グループ
 group public only	calendar	ja	所属グループ
+group_files	filemanager	ja	グループファイル
 groups	common	ja	グループ
 groupsfile_perm_error	filemanager	ja	To correct this error you will need to properly set the permissions to the files/groups directory.<BR> On *nix systems please type: chmod 707
 headline preferences	common	ja	ヘッドライン
-headlines	common	ja	ヘッドライン
 headline sites	admin	ja	ヘッドラインサイト
+headlines	common	ja	ヘッドライン
 help	common	ja	ヘルプ
 helvetica	notes	ja	Helvetica
 hide php information	admin	ja	PHPインフォメーションを閉じる
 high	common	ja	高
+home	common	ja	ホーム
 home address type	addressbook	ja	住所
 home city	addressbook	ja	市区町村
-home	common	ja	ホーム
 home country	addressbook	ja	国
 home directory	admin	ja	home directory	
 home email	addressbook	ja	電子メール
@@ -330,26 +336,29 @@ home state	addressbook	ja	都道府県
 home street	addressbook	ja	町域
 home zip code	addressbook	ja	郵便番号
 human resources	common	ja	人材
+i participate	calendar	ja	自分も参加者
 icons and text	preferences	ja	アイコンとテキスト
 icons only	preferences	ja	アイコンのみ
 id	admin	ja	ID
-idle	admin	ja	アイドル
 id	weather	ja	ID
+idle	admin	ja	アイドル
 if applicable	email	ja	適用時
 ignore conflict	calendar	ja	Ignore Conflict
 image	email	ja	Image
+images	common	ja	Images
 imap server type	email	ja	IMAP サーバタイプ
 import contacts	addressbook	ja	インポート
 import file	addressbook	ja	インポート
+import from ldif, csv, or vcard	addressbook	ja	インポート（LDIF, CSV, VCard）
 import from outlook	addressbook	ja	インポート（Outlook）
 import lang set	transy	ja	Import lang set
+inc	common	ja	Inc
 income	bookkeeping	ja	収入
 installed applications	admin	ja	アプリケーション一覧
 interface/template selection	preferences	ja	テンプレート選択
-international	common	ja	国際的
+international	common	ja	国際
 inventory	common	ja	在庫管理
 ip	admin	ja	IP
-i participate	calendar	ja	自分も参加者
 isdn phone	addressbook	ja	ISDN
 it has been more then x days since you changed your password	common	ja	It has been more then %1 days since you changed your password
 january	common	ja	１月
@@ -360,35 +369,32 @@ label	addressbook	ja	ラベル
 language	admin	ja	言語
 language	preferences	ja	言語
 large	common	ja	大
-large	notes	ja	大
 last login	admin	ja	最終ログイン
 last login from	admin	ja	最終ログインIP
-last name	addressbook	ja	名
-lastname	bookkeeping	ja	名
 last name	common	ja	名
-lastname	email	ja	名
 last page	common	ja	last page
 last time read	admin	ja	Last Time Read
 last updated	todo	ja	Last Updated
 last x logins	admin	ja	過去 %1 のログイン
+lastname	bookkeeping	ja	名
+lastname	email	ja	名
 line 2	addressbook	ja	町域（２行目）
 links	weather	ja	リンク
-listings displayed	admin	ja	一覧表示
 list of current users	admin	ja	ログイン中ユーザ一覧
+listings displayed	admin	ja	一覧表示
 logging	bookkeeping	ja	履歴
 login	common	ja	ログイン
-loginid	admin	ja	ログインID
-loginid	bookkeeping	ja	ログインID
 login	login	ja	ログイン
 login screen	admin	ja	ログイン画面
 login shell	admin	ja	ログインシェル
 login time	admin	ja	ログイン時間
+loginid	admin	ja	ログインID
+loginid	bookkeeping	ja	ログインID
 logout	common	ja	ログアウト
 low	common	ja	低
-Mail folder(uw-maildir)	email	ja	メールフォルダ（UW-Maildir時）
+mail folder(uw-maildir)	email	ja	メールフォルダ（UW-MailDir）
 mail server	email	ja	メールサーバ
 mail server type	email	ja	メールサーバタイプ
-main screen	admin	ja	メイン画面
 main screen	common	ja	メイン画面
 main screen message	admin	ja	メイン画面メッセージ
 manager	admin	ja	管理者
@@ -398,163 +404,162 @@ max matchs per page	preferences	ja	１ページ最大行数
 may	common	ja	５月
 medium	common	ja	中
 message	common	ja	メッセージ
-message	email	ja	メッセージ
 message has been updated	admin	ja	メッセージを変更しました。
 message phone	addressbook	ja	メッセージ
-messages	email	ja	メッセージ
-message	transy	ja	メッセージ
 message x	nntp	ja	%1 つのメッセージ
+messages	email	ja	メッセージ
 metar	admin	ja	M
 metar	weather	ja	M
 middle name	addressbook	ja	ミドルネーム
-minutes between reloads	admin	ja	更新時間
 minutes	calendar	ja	分
-mobile	addressbook	ja	携帯電話
-mobile phone	addressbook	ja	携帯電話
-mobile phone	common	ja	携帯電話
+minutes between reloads	admin	ja	更新時間
 mo	calendar	ja	月
+mobile	addressbook	ja	携帯電話
+mobile phone	common	ja	携帯電話
 modem phone	common	ja	モデム
 mon	calendar	ja	月
 monday	common	ja	月曜日
-monitor	common	ja	Monitor
-monitor	email	ja	Monitor
-monitor newsgroups	preferences	ja	Monitor Newsgroups
-monitor	nntp	ja	Monitor
+monitor	common	ja	監視
+monitor newsgroups	preferences	ja	ネットニュースの監視
 month	calendar	ja	月
-monthly (by date)	calendar	ja	月間(by date)
-monthly (by day)	calendar	ja	月間(by day)
-monthly	calendar	ja	月間
 month	todo	ja	月
+monthly	calendar	ja	月間
+monthly (by date)	calendar	ja	毎月(日)
+monthly (by day)	calendar	ja	毎月(曜日)
+monthlybydate	calendar	ja	毎月(日)
+monthlybyday	calendar	ja	毎月(曜日)
 move selected messages into	email	ja	選択メッセージを移動
 name	common	ja	名前
-network news	admin	ja	ネットワークニュース
+network news	admin	ja	ネットワーク設定
 never	admin	ja	未
-new entry added sucessfully	common	ja	新しい項目を追加しました。
 new entry	calendar	ja	項目追加
+new entry added sucessfully	common	ja	新しい項目を追加しました。
 new file	filemanager	ja	新規ファイル
-new_file	filemanager	ja	新しいファイル
 new group name	admin	ja	新グループ名
 new message	email	ja	新着メッセージ
 new password [ leave blank for no change ]	admin	ja	新パスワード [ Leave blank for no change ]
-new phrase has been added	common	ja	新しいフレーズを追加しました。
+new pharse has been added	common	ja	新しいフレーズを追加しました。
+new phrase has been added	transy	ja	新しいフレーズを追加しました。
+new ticket	tts	ja	新しいチケット
+new_file	filemanager	ja	新しいファイル
 news file	admin	ja	ニュースファイル
-newsgroups	nntp	ja	ニュースグループ
 news headlines	common	ja	ニュースヘッドライン
 news reader	common	ja	ニュースリーダー
 news type	admin	ja	ニュースタイプ
-new ticket	tts	ja	新しいチケット
+newsgroups	common	ja	ニュースグループ
 next	common	ja	次
-next	email	ja	次
-next	nntp	ja	次
 next page	common	ja	次ページ
 nntp	common	ja	ネットニュース
 no	common	ja	いいえ
-no	filemanager	ja	いいえ
-no_file_name	filemanager	ja	ファイル名を入力して下さい。
 no matches found.	calendar	ja	見つかりません。
 no matchs found	admin	ja	見つかりません。
-none	common	ja	なし
-non-standard	email	ja	既定値を使用しない
-normal	common	ja	標準
+no response	calendar	ja	返答なし
 no subject	email	ja	No Subject
+no tickets found	tts	ja	見つかりません。
+no_file_name	filemanager	ja	ファイル名を入力して下さい。
+non-standard	email	ja	既定値を使用しない
+none	common	ja	なし
+normal	common	ja	標準
 not applicable	weather	ja	適用できません。
-note has been added for	notes	ja	ノートを追加しました。
+note has been added for x notes	notes	ja	%1 のノートを追加しました。
 note has been deleted	notes	ja	ノートを削除しました。
-note has been updated for	notes	ja	ノートを訂正しました。
-notes	addressbook	ja	備考
-notes	admin	ja	ノート
+note has been updated for x notes	notes	ja	%1 のノートを訂正しました。
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	※注意：電子メールのパスワードは変更しません。電子メールのパスワードは、手動で変更してください。
 notes	common	ja	ノート
+notes categories	preferences	ja	カテゴリ訂正
 notes list	notes	ja	ノート一覧
 notes preferences	common	ja	ノートユーザ設定
-notes	preferences	ja	ノート
-notes preferences	notes	ja	ノートユーザ設定
-notes preferences	preferences	ja	ノートユーザ設定
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	※注意：電子メールのパスワードは変更しません。電子メールのパスワードは、手動で変更してください。
-no tickets found	tts	ja	見つかりません。
 november	common	ja	１１月
 observations	weather	ja	観測
 october	common	ja	１０月
 ok	common	ja	OK
-only yours	common	ja	個人
 on *nix systems please type: x	common	ja	On *nix systems please type: %1
+only yours	common	ja	個人
 or: days from startdate:	todo	ja	または、開始日からの日数
-original	transy	ja	オリジナル
 or: select for today:	todo	ja	または、今日を設定
+original	transy	ja	オリジナル
 other	common	ja	その他
 other number	addressbook	ja	その他番号
-other phone	addressbook	ja	その他番号
 other phone	common	ja	その他番号
 owner	common	ja	所有者
 pager	addressbook	ja	ページャー
-parcel	addressbook	ja	包む
-parent category	common	ja	親カテゴリ
+parcel	addressbook	ja	区画
 parent project	todo	ja	親プロジェクト
-Parent Project:	todo	ja	親プロジェクト名:
+parent project:	todo	ja	親プロジェクト名:
+parent category	common	ja	親カテゴリ
 participant	calendar	ja	参加者
+participates	calendar	ja	も参加
 participants	calendar	ja	参加者
 password	common	ja	パスワード
-password has been updated	common	ja	パスワードを変更しました。
 password	login	ja	パスワード
+password has been updated	common	ja	パスワードを変更しました。
 percent of users that logged out	admin	ja	ユーザのログアウト率
 permissions	admin	ja	パーミッション
 permissions this group has	admin	ja	利用可能アプリケーション
 permissions to the files/users directory	common	ja	permissions to the files/users directory
 personal	common	ja	個人
 personalized notes for	notes	ja	電子ノート
+pharse in english	transy	ja	フレーズ（英語）
+pharse in new langague	transy	ja	フレーズ（新言語）
 phone numbers	addressbook	ja	電話番号
-phpgroupware login	login	ja	phpGroupWare login
 php information	admin	ja	PHPインフォメーション
+phpgroupware login	login	ja	phpGroupWare login
 phrase in english	transy	ja	フレーズ（英語）
 phrase in new language	transy	ja	フレーズ（新言語）
-please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
 please enter a name for that category !	admin	ja	カテゴリ名を入力して下さい。
 please select a message first	email	ja	メッセージを選択してください。
-please, select a new theme	preferences	ja	Please, select a new theme
 please set your preferences for this app	common	ja	このアプリケーションのユーザ設定を行って下さい。
 please x by hand	common	ja	Please %1 by hand
+please, check your username and password, or contact your admin.	common	ja	ユーザとパスワードをチェックするか、管理者に問い合わせてください。
+please, select a new theme	preferences	ja	Please, select a new theme
 pm	calendar	ja	午後
 postal	addressbook	ja	郵便
 powered by phpgroupware version x	common	ja	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-pref	common	ja	好み
+pref	common	ja	優先
 prefer	common	ja	好み
 preferences	common	ja	ユーザ設定
-prefix	addressbook	ja	敬称
+prefix	addressbook	ja	プレフィックス
 previous	email	ja	前
 previous page	common	ja	前ページ
 print	common	ja	印刷
 printer friendly	calendar	ja	印刷用へ
 priority	common	ja	優先順位
+private	common	ja	個人
 private and global public	calendar	ja	個人とパブリック
 private and group public	calendar	ja	個人と所属グループ
-private	common	ja	個人
-private_files	filemanager	ja	個人ファイル
 private only	calendar	ja	個人
+private_files	filemanager	ja	個人ファイル
 proceed	bookkeeping	ja	続行
 project description	todo	ja	プロジェクト説明
 project name	todo	ja	プロジェクト名
+public	common	ja	共有
+public key	addressbook	ja	パブリックキー
+re-edit event	calendar	ja	Re-Edit Event
+re-enter password	admin	ja	パスワード再入力
+re-enter your password	preferences	ja	パスワードを再入力して下さい。
 read	common	ja	表示
 recent	weather	ja	最近
 record access	addressbook	ja	アクセス権
 record owner	addressbook	ja	所有者
-re-edit event	calendar	ja	Re-Edit Event
-re-enter password	admin	ja	パスワード再入力
-re-enter your password	preferences	ja	パスワードを再入力して下さい。
 refresh	calendar	ja	再表示
 region	admin	ja	地域
+region	weather	ja	地域
 regions	admin	ja	地域
 regions	weather	ja	地域
-region	weather	ja	地域
+reject	calendar	ja	拒否
 remove all users from this group	admin	ja	このグループの全てのユーザを削除します。
 rename	common	ja	名前の変更
 rename	filemanager	ja	名前の変更
 rename_to	filemanager	ja	名前変更
 repeat day	calendar	ja	曜日の繰返し
 repeat end date	calendar	ja	繰返しの終了日
-repeating event information	calendar	ja	繰返しイベント
 repeat type	calendar	ja	タイプ
+repeating event information	calendar	ja	繰返しイベント
 repetition	calendar	ja	繰返し
-reply all	email	ja	全員に返信
+repitition	calendar	ja	繰返し
 reply	email	ja	返信
+reply all	email	ja	全員に返信
+reply to	email	ja	リプライ
 reports	bookkeeping	ja	レポート
 sa	calendar	ja	土
 sat	calendar	ja	土
@@ -566,24 +571,26 @@ search	common	ja	検索
 search results	calendar	ja	検索結果
 section	admin	ja	表示場所
 section	email	ja	Section
+select	todo	ja	選択
 select application	transy	ja	アプリケーション
 select category	common	ja	カテゴリ選択
 select different theme	preferences	ja	異なるテーマを選択してください。
 select email address	email	ja	電子メールアドレス
 select headline news sites	common	ja	ヘッドラインニュースサイトの選択
-select headline news sites	preferences	ja	ヘッドラインニュースサイトの選択
-select home email address	email	ja	電子メール（個人）
+select langague to generate for	transy	ja	作成する言語
 select language to generate for	transy	ja	作成する言語
 select parent category	common	ja	親カテゴリ選択
 select permissions this group will have	admin	ja	利用可能アプリケーション
-select	todo	ja	選択
 select users for inclusion	admin	ja	所属するユーザ
+select which application for this pharse	transy	ja	フレーズを使用するアプリケーション
 select which application for this phrase	transy	ja	フレーズを使用するアプリケーション
+select which langauge for this pharse	transy	ja	フレーズの言語を選択
 select which language for this phrase	transy	ja	フレーズの言語を選択
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	ja	ナビゲーションバーの位置（数が小さいと左に配置）
+select home email address	email	ja	電子メール（個人）
 select work email address	email	ja	電子メール（仕事）
-send deleted messages to the trash	email	ja	削除メッセージをゴミ箱へ
 send	email	ja	送信
+send deleted messages to the trash	email	ja	削除メッセージをゴミ箱へ
 send updates via email	common	ja	更新情報を電子メールで受取る
 september	common	ja	９月
 session has been killed	common	ja	セッションを削除しました。
@@ -594,12 +601,13 @@ show current users on navigation bar	preferences	ja	現在のユーザ数を表示する。
 show day view on main screen	calendar	ja	今日の予定をメイン画面に表示
 show groups containing	nntp	ja	グループ表示
 show high priority events on main screen	calendar	ja	優先度が高いイベントをメイン画面に表示
-showing x	common	ja	表示数 %1
-showing # x of x	weather	ja	表示数 %1 of %2
-showing x - x of x	common	ja	表示数 %1 - %2 of %3
 show navigation bar as	preferences	ja	ナビゲーション
 show new messages on main screen	email	ja	新着メッセージをメイン画面に表示
+show sender's email address with name	email	ja	送信者名の表示方法
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
+showing # x of x	weather	ja	表示数 %1 of %2
+showing x	common	ja	表示数 %1
+showing x - x of x	common	ja	表示数 %1 - %2 of %3
 site	admin	ja	Site
 size	email	ja	サイズ
 small	common	ja	小
@@ -609,30 +617,27 @@ sorry, there was a problem processing your request.	common	ja	Sorry, there was a
 sorry, your login has expired	login	ja	ログイン有効期限が切れました
 source language	transy	ja	元となる言語
 specify_file_name	filemanager	ja	ファイル名を入力して下さい。
+squirrelmail	common	ja	Squirrelmail
 start date	common	ja	開始日
 start date/time	calendar	ja	開始日時
-start date	todo	ja	開始日
 start time	common	ja	開始時間
 state	addressbook	ja	都道府県
 state	weather	ja	都道府県
 station	admin	ja	位置
+station	weather	ja	位置
 stations	admin	ja	位置
 stations	weather	ja	位置
-station	weather	ja	位置
 statistics	bookkeeping	ja	統計
 status	admin	ja	状態
 status	common	ja	状態
 status	todo	ja	達成率
 street	addressbook	ja	町域
-subject	common	ja	件名
-subject	email	ja	件名
-subject	nntp	ja	件名
-submit	addressbook	ja	実行
-submit changes	admin	ja	変更
-submit	common	ja	実行
-subproject description	todo	ja	サブプロジェクト説明
-sub	todo	ja	サブ
 su	calendar	ja	日
+sub	todo	ja	サブ
+subject	common	ja	件名
+submit	common	ja	実行
+submit changes	admin	ja	変更
+subproject description	todo	ja	サブプロジェクト説明
 suffix	addressbook	ja	敬称
 sun	calendar	ja	日
 sunday	common	ja	日曜日
@@ -641,22 +646,21 @@ switch to	bookkeeping	ja	入替
 table	admin	ja	テーブル
 tables	weather	ja	テーブル
 target language	transy	ja	対象言語
+tentative	calendar	ja	仮承諾
 text only	preferences	ja	テキストのみ
-that category name has been used already !	admin	ja	カテゴリ名は既に存在しています。
+th	calendar	ja	木
 that category name has been used already !	common	ja	カテゴリ名は既に存在しています。
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
 that phrase already exists	common	ja	フレーズは既に存在しています。
 that site has already been entered	admin	ja	サイトは既に存在しています。
-th	calendar	ja	木
 the following conflicts with the suggested time:<ul>x</ul>	calendar	ja	The following conflicts with the suggested time:<ul>%1</ul>
 the login and password can not be the same	admin	ja	ログインIDとパスワードが同じです。
-theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
-there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	ja	メールサーバに接続できませんでした。<BR>電子メールのユーザ名とパスワードを確認してください。
-there was an error trying to connect to your mail server.	common	ja	メールサーバに接続できませんでした。
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	nntp	ja	ニュースサーバに接続できませんでした。<BR>管理者にニュースサーバ名、ユーザ名、パスワードを確認してください。
-the two passwords are not the same	admin	ja	２つのパスワードが等しくありません
 the two passwords are not the same	common	ja	２つのパスワードが等しくありません
-the two passwords are not the same	preferences	ja	２つのパスワードが等しくありません
+theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
+themes	common	ja	Themes
+there was an error trying to connect to your mail server.	common	ja	メールサーバに接続できませんでした。
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	ja	メールサーバに接続できませんでした。<BR>電子メールのユーザ名とパスワードを確認してください。
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	nntp	ja	ニュースサーバに接続できませんでした。<BR>管理者にニュースサーバ名、ユーザ名、パスワードを確認してください。
 they must be removed before you can continue	admin	ja	削除できません。
 this folder is empty	email	ja	メッセージはありません。
 this month	calendar	ja	今月
@@ -670,30 +674,28 @@ thursday	common	ja	木曜日
 time	common	ja	時間
 time created	notes	ja	作成時間
 time format	preferences	ja	時間書式
-times new roman	notes	ja	Times New Roman	
 time zone	common	ja	時差
 time zone offset	common	ja	時差
-time zone offset	preferences	ja	時差
-title	addressbook	ja	タイトル
-title	admin	ja	タイトル
+times new roman	notes	ja	Times New Roman	
 title	common	ja	タイトル
+to	email	ja	宛先
 to correct this error for the future you will need to properly set the	common	ja	To correct this error for the future you will need to properly set the
 today	calendar	ja	今日
 today is x's birthday!	common	ja	今日は %1 さんの誕生日です。
-Todo	admin	ja	プロジェクト
-todo list - add Sub-Project	todo	ja	プロジェクトリスト - サブプロジェクト追加
-todo list - add	todo	ja	プロジェクトリスト - 追加
+todo	common	ja	プロジェクト
+todo categories	preferences	ja	カテゴリ訂正
 todo list	common	ja	プロジェクトリスト
-todo list - edit	todo	ja	プロジェクトリスト - 編集
 todo list	todo	ja	プロジェクトリスト
-todo	todo	ja	プロジェクト
-to	email	ja	宛先
+todo list - add	todo	ja	プロジェクトリスト - 追加
+todo list - add sub-project	todo	ja	プロジェクトリスト - サブプロジェクト追加
+todo list - edit	todo	ja	プロジェクトリスト - 編集
+todo preferences	common	ja	プロジェクト環境設定
 tommorow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
 tomorrow is x's birthday.	common	ja	明日は %1 さんの誕生日です。
 total	common	ja	合計
 total records	admin	ja	合計
-translation management	common	ja	言語環境
 translation	transy	ja	言語環境
+translation management	common	ja	言語環境
 trouble ticket system	common	ja	チケットシステム
 tu	calendar	ja	火
 tue	calendar	ja	火
@@ -701,18 +703,17 @@ tuesday	common	ja	火曜日
 undisclosed recipients	email	ja	受信者未公開
 undisclosed sender	email	ja	送信者未公開
 update	admin	ja	更新
-updated	common	ja	更新日時
 update	nntp	ja	更新
+updated	common	ja	更新日時
 upload	filemanager	ja	アップロード
 urgency	todo	ja	優先度
 url	addressbook	ja	URL
 use cookies	login	ja	Cookie を使用
 use custom settings	email	ja	カスタム設定を使用
 use end date	calendar	ja	終了日指定
-user accounts	admin	ja	ユーザアカウント
 user	calendar	ja	ユーザ
+user accounts	admin	ja	ユーザアカウント
 user groups	admin	ja	ユーザグループ
-username	common	ja	ユーザ名
 username	login	ja	ユーザ名
 users	common	ja	ユーザ
 usersfile_perm_error	filemanager	ja	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
@@ -722,43 +723,44 @@ verdana	notes	ja	Verdana
 very large	notes	ja	極大
 very small	notes	ja	極小
 video phone	addressbook	ja	ビデオ電話
-view access log	admin	ja	アクセスログ参照
-view all tickets	tts	ja	チケット表示
 view	bookkeeping	ja	表示
 view	common	ja	表示
-view/edit/delete all phrases	transy	ja	表示/訂正/削除　全てのフェーズ
-view_expense	bookkeeping	ja	支出表示
-view_income	bookkeeping	ja	収入表示
+view access log	admin	ja	アクセスログ参照
+view all tickets	tts	ja	チケット表示
 view matrix of actual month	todo	ja	月表表示
 view notes	notes	ja	ノート表示
 view only open tickets	tts	ja	オープンチケット表示
 view sessions	admin	ja	セッション参照
-viewsub	todo	ja	サブ表示
 view this entry	calendar	ja	項目表示
-View user account	admin	ja	ユーザアカウント表示
+view/edit/delete all pharses	transy	ja	表示/訂正/削除　全てのフレーズ
+view/edit/delete all phrases	transy	ja	表示/訂正/削除　全てのフレーズ
+view_expense	bookkeeping	ja	支出表示
+view_income	bookkeeping	ja	収入表示
+viewsub	todo	ja	サブ表示
 voice phone	addressbook	ja	電話
-weather center	admin	ja	お天気センター
-weather center	preferences	ja	お天気センター
+we	calendar	ja	水
 weather	common	ja	お天気
 weather	preferences	ja	お天気ユーザ設定
 weather	weather	ja	お天気
-we	calendar	ja	水
+weather center	admin	ja	お天気センター
+weather center	preferences	ja	お天気センター
 wed	calendar	ja	水
 wednesday	common	ja	水曜日
 week	calendar	ja	週
 weekday starts on	calendar	ja	週の初め
-weekly	calendar	ja	週間
+weekly	calendar	ja	毎週
 when creating new events default set to private	calendar	ja	個人用とする（新規作成時）
 which groups	common	ja	グループ選択
 which groups	todo	ja	グループ選択
+who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
 work day ends on	calendar	ja	就業時間（終了）
 work day starts on	calendar	ja	就業時間（開始）
 work phone	addressbook	ja	勤務先TEL
 x matches found	calendar	ja	%1 件見つかりました。
 x messages have been deleted	email	ja	%1 件削除しました。
 year	calendar	ja	年
-yearly	calendar	ja	年間
 year	todo	ja	年
+yearly	calendar	ja	毎年
 yes	common	ja	はい
 yes	filemanager	ja	はい
 you are required to change your password during your first login	common	ja	初回ログイン時にパスワード変更
@@ -770,24 +772,21 @@ you have entered an invailed date	todo	ja	日付が誤っています。
 you have messages!	common	ja	メッセージがあります。
 you have no new messages	common	ja	新着メールはありません。
 you have not entered a\nbrief description	calendar	ja	概要を入力してください。
+you have not entered a brief description	calendar	ja	概要を入力してください。
 you have not entered a\nvalid time of day.	calendar	ja	時刻が誤っています。
 you have x high priority events on your calendar today.	common	ja	優先度の高い予定が %1 つあります。
 you have x new messages!	common	ja	新着メールが %1 通あります。
 you must add at least 1 permission or group to this account	admin	ja	少なくとも１つの権限かグループを指定してください。
 you must add at least 1 permission to this account	admin	ja	利用可能アプリケーションを指定してください。
 you must enter a base url	admin	ja	base URL を入力して下さい。 
+you must enter a description	todo	ja	説明を入力して下さい。
 you must enter a display	admin	ja	表示項目を入力して下さい。
 you must enter a group name.	admin	ja	グループ名を入力して下さい。
-You must enter a loginid	admin	ja	ログインIDを入力して下さい。
+you must enter a news url	admin	ja	新しい URL を入力して下さい。
+you must enter a password	common	ja	パスワードを入力して下さい。
 You must enter an application name.	admin	ja	アプリケーション名を入力して下さい。
-You must enter an application name	admin	ja	アプリケーション名を指定してください。
 you must enter an application name and title.	admin	ja	アプリケーション名とタイトルを入力して下さい。
 You must enter an application title.	admin	ja	アプリケーションタイトルを入力して下さい。
-You must enter an application title	admin	ja	アプリケーションタイトルを指定してください。
-you must enter a news url	admin	ja	新しい URL を入力して下さい。
-you must enter a password	admin	ja	パスワードを入力して下さい。
-you must enter a password	common	ja	パスワードを入力して下さい。
-you must enter a password	preferences	ja	パスワードを入力して下さい。
 you must enter one or more search keywords	calendar	ja	検索キーワードを入力して下さい。
 you must enter the number of listings display	admin	ja	表示数を入力して下さい。
 you must enter the number of minutes between reload	admin	ja	更新間隔を入力して下さい。
@@ -795,6 +794,7 @@ you must select a file type	admin	ja	ファイルタイプを選択してください。
 you must select at least 1 column to display	addressbook	ja	表示する項目を選択してください。
 your current theme is: x	preferences	ja	</b>
 your message has been sent	common	ja	メッセージを送信しました。
+your search has returned no matchs !	common	ja	見つかりません。
 your search returned 1 match	common	ja	１件見つかりました。
 your search returned x matchs	common	ja	%1 件見つかりました。
 your session could not be verified.	login	ja	Your session could not be verified.
