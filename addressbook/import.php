@@ -85,7 +85,11 @@
 				$row++;
 				if ($row == 1)
 				{
-					$header = $data;
+					// Changed here to ignore the header, set to our array
+					while(list($lhs,$rhs) = each($this->import))
+					{
+						$header[] = $lhs;
+					}
 				}
 				else
 				{
