@@ -1274,6 +1274,7 @@
 		*/
 		function create_emailpreferences($prefs='',$accountid='')
 		{
+			return $GLOBALS['phpgw']->preferences->create_email_preferences($accountid);
 			// ----  Create the email Message Class  if needed  -----
 			if (is_object($GLOBALS['phpgw']->msg))
 			{
