@@ -134,12 +134,12 @@
   }
 
   $userData = $phpgw->accounts->read_userData($account_id);
-  $db_perms = $phpgw->accounts->read_apps($userData["account_lid"]);
 
   if (! $submit) {
      $n_loginid   = $userData["account_lid"];
      $n_firstname = $userData["firstname"];
      $n_lastname  = $userData["lastname"];
+     $apps = CreateObject('phpgwapi.applications',intval($userData["account_id"]));
   }
 
   if ($phpgw_info["server"]["account_repository"] == "ldap") {
@@ -210,7 +210,7 @@
      $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+     if ($new_permissions[$perm_display[$i][0]] || $apps->user_apps[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td>";
@@ -224,7 +224,7 @@
      $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+     if ($new_permissions[$perm_display[$i][0]] || $apps->user_apps[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td></tr>\n";

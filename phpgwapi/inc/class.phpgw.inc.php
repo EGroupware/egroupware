@@ -37,6 +37,7 @@
   class phpgw
   {
     var $accounts;
+    var $applications;
     var $acl;
     var $auth;
     var $db;
@@ -112,10 +113,12 @@
       if (empty($phpgw_info["server"]["account_repository"])){$phpgw_info["server"]["account_repository"] = $phpgw_info["server"]["auth_type"];}
       $this->accounts = CreateObject("phpgwapi.accounts");
       $this->preferences = CreateObject("phpgwapi.preferences");
+      $this->applications = CreateObject("phpgwapi.applications");
       $this->session = CreateObject("phpgwapi.sessions");
       if ($phpgw_info["flags"]["currentapp"] == "login") {
         $log = explode("@",$login);
         $this->preferences = CreateObject("phpgwapi.preferences", $log[0]);
+        $this->applications = CreateObject("phpgwapi.applications", $log[0]);
       }else{
         if (! $this->session->verify()) {
           $this->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
@@ -124,6 +127,7 @@
           exit;
         }
         $this->preferences = CreateObject("phpgwapi.preferences", intval($phpgw_info["user"]["account_id"]));
+        $this->applications = CreateObject("phpgwapi.applications", intval($phpgw_info["user"]["account_id"]));
      }
 
       $this->translation = CreateObject("phpgwapi.translation");

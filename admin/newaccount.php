@@ -61,16 +61,17 @@
      if (! $error) {
         $cd = account_add(array("loginid"   => $n_loginid,   "permissions" => $new_permissions,
             				        "firstname" => $n_firstname, "lastname"    => $n_lastname,
-            				        "passwd"    => $n_passwd,
-            				        "groups"    => $phpgw->accounts->groups_array_to_string($n_groups)));
-        $phpgw->db->query("SELECT account_permissions, account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
+            				        "passwd"    => $n_passwd, "groups"    => $n_groups));
+            				        
+        $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='$n_loginid'",__LINE__,__FILE__);
         $phpgw->db->next_record();
-        $apps = explode(":",$phpgw->db->f("account_permissions"));
         $pref = CreateObject('phpgwapi.preferences',intval($phpgw->db->f("account_id")));
+        $apps_object = CreateObject('phpgwapi.applications',intval($phpgw->db->f("account_id")));
+        $apps_array = $apps_object->apps_enabled();
         $phpgw->common->hook_single("add_def_pref", "admin");
-        for ($i=1;$i<sizeof($apps) - 1;$i++) {
-          if($apps[$i]<>"admin")
-            $phpgw->common->hook_single("add_def_pref", $apps[$i]);
+        while($apps = each($apps_array)) {
+          if($apps[0]<>"admin")
+            $phpgw->common->hook_single("add_def_pref", $apps[0]);
         }
         $pref->commit();
 

@@ -29,6 +29,8 @@
     var $status = Array();
     var $user_apps = Array();
     var $group_apps = Array(Array());
+    var $app_perms = Array(Array());
+    var $apps_loaded = False;
 
     function applications($lid=0)
     {
@@ -36,24 +38,33 @@
       global $phpgw_info;
 
       $db2 = $phpgw->db;
-      $db2->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
-      $apps_enabled = False;
-      while ($db2->next_record()) {
-        if($apps_enabled) $apps_enabled = True;
-        $name   = $db2->f("app_name");
-        $title  = $db2->f("app_title");
-        $status = $db2->f("app_enabled");
-        $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
- 
-        $this->set_var("enabled",1,$name);
-        $this->set_var("status",$db2->f("app_status"),$name);
+//      $db3 = $phpgw->db;
+      if(($this->is_type($lid,"integer") && $lid == $phpgw_info["user"]["account_id"]) ||
+         ($this->is_type($lid,"string") && $lid == $phpgw_info["user"]["user_id"])) {
+         $load_info = True;
+      }
+      if(!$this->apps_loaded) {
+        $this->apps_loaded = True;
+        $db2->query("select * from applications where app_enabled != '0'",__LINE__,__FILE__);
+        $apps_enabled = False;
+        while ($db2->next_record()) {
+          if(!$apps_enabled) $apps_enabled = True;
+          $name   = $db2->f("app_name");
+          if($load_info) {
+            $title  = $db2->f("app_title");
+            $status = $db2->f("app_enabled");
+            $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
+          }
+          $this->enabled[$name] = 1;
+          $this->status[$name] = $db2->f("app_status");
+        }
       }
       if($apps_enabled && $lid) {
         $owner_found = False;
         if($this->is_type($lid,"integer")) {
           $owner_id = $lid;
           $owner_found = True;
-        } else {
+        } elseif($this->is_type($lid,"string")) {
           $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$lid."'",__LINE__,__FILE__);
           if($db2->num_rows()) {
             $db2->next_record();
@@ -62,9 +73,9 @@
           }
         }
         if($owner_found) {
-          $this->set_var("account_id",$lid);
-          $this->read_user_apps($this->get_var("account_id"));
-          $this->read_group_apps($this->get_var("account_id"));
+          $this->account_id = $owner_id;
+          $this->read_user_group_apps($this->account_id);
+          $this->read_user_apps($this->account_id);
         }
       }
     }
@@ -84,10 +95,8 @@
         if($this->$var) {
           return $this->$var;
         }
-      } else {
-        if($this->$var[$index]) {
-          return $this->$var[$index];
-        }
+      } elseif($this->$var[$index]) {
+        return $this->$var[$index];
       }
       return False;
     }
@@ -102,14 +111,14 @@
        return $return_apps;  
     }
 
-    function is_type($lid,$type)
+    function is_type($variable,$type)
     {
-      return (strtoupper(gettype($lid)) == strtoupper($type));
+      return (strtoupper(gettype($variable)) == strtoupper($type));
     }
 
     function read_user_apps($lid)
     {
-      global $phpgw;
+      global $phpgw, $phpgw_info;
 
       $db2 = $phpgw->db;
      
@@ -118,88 +127,136 @@
       } else {
         $db2->query("select account_permissions from accounts where account_lid='$lid'",__LINE__,__FILE__);
       }
-      $db2->next_record();
-
-      $apps = explode(":",$db2->f("account_permissions"));
-      for ($i=0; $i<count($apps); $i++) {
-        if ($this->get_var("enabled",$apps[$i]) == 1) {
-          $this->set_var("user_apps[]",$apps[$i]);
-          $this->set_var("enabled",2,$apps[$i]);
+      if($db2->num_rows()) {
+        $db2->next_record();
+        $apps = explode(":",$db2->f("account_permissions"));
+if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Account Permissions - ".$db2->f("aaccount_permissions")." -->\n";
+        for ($i=1; $i<count($apps)-1; $i++) {
+if($lid <> $phpgw_info["user"]["account_id"]) echo "<!-- applications: Reading user app - ".$apps[$i]." -->\n";
+          if ($this->enabled[$apps[$i]] == 1) {
+            $this->user_apps[$apps[$i]] = $apps[$i];
+            $this->enabled[$apps[$i]] = 2;
+            $this->app_perms[] = $apps[$i];
+          }
         }
       }
     }
 
-    function read_group_apps($lid)
+    function read_user_group_apps($lid)
     {
       global $phpgw;
 
       $groups = $phpgw->accounts->read_groups($lid);
 
-      for ($i=1; $i<(count($groups)-1); $i++) {
-        $ga = explode(":",$groups[$i]);
-        $group_array[$ga[0]] = $ga[1];
+      if($groups) {
+        while ($group = each($groups)) {
+          $this->read_group_apps($group[0]);
+        }
       }
+    }
 
-      while ($group = each($group_array)) {
-        $db2->query("select group_apps from groups where group_id=".$group[0],__LINE__,__FILE__);
-        $db2->next_record();
+    function read_group_apps($group_id)
+    {
+      global $phpgw;
 
-        $apps = explode(":",$db2->f("group_apps"));
-        for ($i=0;$i<count($apps);$i++) {
-          if ($this->get_var("enabled",$apps[$i]) == 1) {
-            $this->set_var("group_apps[".$group[0]."][]",$apps[$i]);
-            $this->set_var("enabled",2,$apps[$i]);
-          }
+      $db2 = $phpgw->db;
+
+      $db2->query("select group_apps from groups where group_id=".$group_id,__LINE__,__FILE__);
+      $db2->next_record();
+
+      $apps = explode(":",$db2->f("group_apps"));
+      for ($i=1;$i<count($apps) - 1;$i++) {
+        if ($this->enabled[$apps[$i]] == 1) {
+          $this->group_apps[$group_id][$apps[$i]] = $apps[$i];
+          $this->enabled[$apps[$i]] = 2;
+          $this->app_perms[] = $apps[$i];
         }
       }
     }
 
     function is_system_enabled($appname)
     {
-      return $this->get_var("enabled",$appname) >= 1;
+      return $this->enabled[$appname] >= 1;
     }
 
     function is_user_enabled($appname)
     {
-      return $this->get_var("enabled",$appname) == 2;
+      return $this->enabled[$appname] == 2;
+    }
+
+    function get_group_array($group_id)
+    {
+      return $this->group_apps[$group_id];
     }
     
     function group_app_string($group_id)
     {
-      return ":".implode(":",$this->get_var("group_apps",$group_id)).":";
+      reset($this->group_apps[$group_id]);
+      while($app = each($this->group_apps[$group_id])) {
+        $group_apps[] = $app[1];
+      }
+      return ":".implode(":",$group_apps).":";
     }
 
     function user_app_string()
     {
-      return ":".implode(":",$this->get_var("user_apps")).":";
+      reset($this->user_apps);
+      while($app = each($this->user_apps)) {
+        $user_apps[] = $app[1];
+      }
+      return ":".implode(":",$user_apps).":";
     }
 
     function is_group($group_id,$appname)
     {
-      return $this->get_var("group_apps[".$group_id."]",$appname) == $appname;
+      return $this->group_apps[$group_id][$appname];
     }
 
     function is_user($appname)
     {
-      return $this->get_var("user_apps",$appname) == $appname;
+      return $this->user_apps[$appname];
     }
 
     function add_group($group_id,$appname)
     {
-      if ($this->get_var("enabled",$appname) && !$this->is_group($group_id,$appname)) {
-        $this->set_var("group_apps[".$group_id."][]",$appname);
-        $this->set_var("enabled",2,$appname);
+      if($this->is_type($appname,"array")) {
+        while($app = each($appname)) {
+          $this->add_group_app($group_id,$app[0]);
+        }
+        return $this->group_app_string($group_id);
+      } elseif($this->is_type($appname,"string")) {
+        $this->add_group_app($group_id,$appname);
+        return $this->group_app_string($group_id);
       }
-      return $this->group_app_string($group_id);
+    }
+
+    function add_group_app($group_id,$appname)
+    {
+      if ($this->enabled[$appname] && !$this->is_group($group_id,$appname)) {
+        $this->group_apps[$group_id][] = $appname;
+        $this->enabled[$appname] = 2;
+      }
     }
 
     function add_user($appname)
     {
-      if ($this->get_var("enabled",$appname) && !$this->is_user($appname)) {
-        $this->set_var("user_apps[]",$appname);
-        $this->set_var("enabled",2,$appname);
+      if($this->is_type($appname,"array")) {
+        while($app = each($appname)) {
+          $this->add_user_app($app[0]);
+        }
+        return $this->user_app_string($group_id);
+      } elseif($this->is_type($appname,"string")) {
+        $this->add_user_app($group_id,$appname);
+        return $this->user_app_string($group_id);
       }
-      return $this->user_app_string();
+    }
+
+    function add_user_app($appname)
+    {
+      if ($this->enabled[$appname] && !$this->is_user($appname)) {
+        $this->user_apps[] =$appname;
+        $this->enabled[$appname] = 2;
+      }
     }
 
     function delete_group($group_id,$appname)
@@ -230,9 +287,9 @@
     {
       global $phpgw;
 
-      if($this->get_var("account_id")) {
+      if($this->account_id) {
         $db2 = $phpgw->db;
-        $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->get_var("account_id"),__LINE__,__FILE__);
+        $db2->query("UPDATE account SET account_permissions = '".$this->user_app_string()."' WHERE account_id=".$this->account_id,__LINE__,__FILE__);
       }
     }
   }

@@ -35,11 +35,11 @@
      if (! $error) {
         $phpgw->db->lock(array("accounts","groups"));
 
-        $phpgw->accounts->add_app($n_group_permissions);
-        $apps = $phpgw->accounts->add_app("",True);
-        $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
-				. "('$n_group','"
-				. $apps . "')");
+        $apps = CreateObject('phpgwapi.applications');
+        $app_string = $apps->add_group($group_id,$n_group_permissions);
+        $apps->save_group($group_id);
+
+        $phpgw->db->query("INSERT INTO groups (group_name) VALUES ('$n_group')");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
         $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
@@ -129,19 +129,48 @@
   }
   $phpgw->template->set_var("user_list",$user_list);
 
-  $phpgw->template->set_var("lang_permissions",lang("Select permissions this group will have"));
-  for ($i=0; $i<count($n_group_permissions); $i++) {
-     $selected_permissions[$n_group_permissions[$i]] = " selected";
-  }
+  $phpgw->template->set_var("lang_permissions",lang("Permissions this group has"));
 
+  $i = 0;
+  $sorted_apps = $phpgw_info["apps"];
+  @asort($sorted_apps);
+  @reset($sorted_apps);
   while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
-        $permissions_list .= "<option value=\"" . $permission[0] . "\""
-	   			   . $selected_permissions[$permission[0]] . ">"
-	   			   . $permission[1]["title"] . "</option>";
+        $perm_display[$i][0] = $permission[0];
+        $perm_display[$i][1] = $permission[1]["title"];
+        $i++;
      }
   }
-  $phpgw->template->set_var("permissions_list",$permissions_list);
+
+  $perm_html = "";
+  for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="n_group_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td>";
+     $i++;
+
+     if ($i == count($perm_display) && is_odd(count($perm_display))) {
+        $perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+     }
+
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="n_group_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td></tr>\n";
+     $i++;
+  }
+
+  $phpgw->template->set_var("permissions_list",$perm_html);	
   $phpgw->template->set_var("lang_submit_button",lang("Create Group"));
 
   $phpgw->template->pparse("out","form");

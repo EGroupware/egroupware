@@ -37,13 +37,14 @@
 
      if (! $error) {
 //        $phpgw->db->lock(array("accounts","groups","preferences","config","applications","phpgw_hooks","phpgw_sessions"));
+        $apps = CreateObject('phpgwapi.applications');
+        $app_string = $apps->add_group($group_id,$n_group_permissions);
+        $apps->save_group($group_id);
+        $apps_after = explode(":",$app_string);
 
-        $phpgw->accounts->add_app($n_group_permissions);
-        $apps = $phpgw->accounts->add_app("",True);
-        $apps_after = explode(":",$apps);
-
-        $phpgw->db->query("update groups set group_name='$n_group', group_apps='" . $apps
-			 . "' where group_id=$group_id");
+        if($old_group_name <> $n_group) {
+          $phpgw->db->query("update groups set group_name='$n_group' where group_id=$group_id");
+        }
 
         for ($i=0; $i<count($n_users);$i++) {
           $phpgw->db->query("SELECT account_groups, account_lid FROM accounts WHERE account_id=".$n_users[$i]);
@@ -116,10 +117,6 @@
      for ($i=0; $i<count($n_users); $i++) {
         $selected_users[$n_user[$i]] = " selected";
      }
-
-     for ($i=0; $i<count($n_group_permissions); $i++) {
-        $selected_permissions[$n_group_permissions[$i]] = " selected";
-     }
   } else {
      $phpgw->db->query("select group_name from groups where group_id=$group_id");
      $phpgw->db->next_record();
@@ -132,11 +129,9 @@
         $selected_users[$phpgw->db->f("account_id")] = " selected";
      }
 
-     $gp = $phpgw->accounts->read_group_apps($group_id);
-
-     for ($i=0; $i<count($gp); $i++) {
-        $selected_permissions[$gp[$i]] = " selected";
-     }
+     $apps = CreateObject('phpgwapi.applications');
+     $apps->read_group_apps($group_id);
+     $db_perms = $apps->get_group_array($group_id);
   }
 
   $phpgw->db->query("select * from groups where group_id=$group_id");
@@ -170,14 +165,48 @@
   $phpgw->template->set_var("user_list",$user_list);
 
   $phpgw->template->set_var("lang_permissions",lang("Permissions this group has"));
+
+  $i = 0;
+  $sorted_apps = $phpgw_info["apps"];
+  @asort($sorted_apps);
+  @reset($sorted_apps);
   while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
-        $permissions_list .= "<option value=\"" . $permission[0] . "\""
-	   			   . $selected_permissions[$permission[0]] . ">"
-	   			   . $permission[1]["title"] . "</option>";
+        $perm_display[$i][0] = $permission[0];
+        $perm_display[$i][1] = $permission[1]["title"];
+        $i++;
      }
   }
-  $phpgw->template->set_var("permissions_list",$permissions_list);
+
+  $perm_html = "";
+  for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="n_group_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td>";
+     $i++;
+
+     if ($i == count($perm_display) && is_odd(count($perm_display))) {
+        $perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+     }
+
+     if (! $perm_display[$i][1]) break;
+     $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
+                 . '<td><input type="checkbox" name="n_group_permissions['
+                 . $perm_display[$i][0] . ']" value="True"';
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
+        $perm_html .= " checked";
+     }
+     $perm_html .= "></td></tr>\n";
+     $i++;
+  }
+
+  $phpgw->template->set_var("permissions_list",$perm_html);	
+  
   $phpgw->template->set_var("lang_submit_button",lang("submit changes"));
 
   $phpgw->template->pparse("out","form");

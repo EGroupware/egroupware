@@ -17,10 +17,9 @@
 
     <tr>
      <td>{lang_permissions}</td>
-     <td><select name="n_group_permissions[]" multiple size="5">
-          {permissions_list}
-         </select>
-     </td>
+     <td><table width="100%" border="0" cols="4">
+      {permissions_list}
+     </table></td>
     </tr>
 
     <tr>

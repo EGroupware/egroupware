@@ -184,21 +184,20 @@
      
      $phpgw->db->lock(array("accounts"));
 
-     while ($permission = each($account_info["permissions"])) {
-       if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-          $phpgw->accounts->add_app($permission[0]);
-       }
-     }
-
      $sql = "insert into accounts (account_id,account_lid,account_pwd,account_firstname,"
-          . "account_lastname,account_permissions,account_groups,account_status,"
-          . "account_lastpwd_change) values ('" . $account_info["account_id"] . "','"
-          . $account_info["loginid"] . "','x','". addslashes($account_info["firstname"]) . "','"
-          . addslashes($account_info["lastname"]) . "','" . $phpgw->accounts->add_app("",True)
-          . "','" . $account_info["groups"] . "','A',0)";
+          . "account_lastname,account_groups,account_status,account_lastpwd_change) "
+          . "values ('" . $account_info["account_id"] . "','" . $account_info["loginid"]
+          . "','x','". addslashes($account_info["firstname"]) . "','"
+          . addslashes($account_info["lastname"]) . "',"
+          . "'" . $phpgw->accounts->groups_array_to_string($account_info["groups"]) . "','A',0)";
 
      $phpgw->db->query($sql,__LINE__,__FILE__);
      $phpgw->db->unlock();
+
+     $apps = CreateObject('phpgwapi.applications',$account_info["account_id"]);
+     $apps->add_user($account_info["permissions"]);
+     $apps->save_user();
+
 
      $sep = $phpgw->common->filesystem_separator();
 

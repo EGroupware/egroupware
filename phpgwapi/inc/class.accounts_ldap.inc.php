@@ -73,7 +73,8 @@
       $db->next_record();
       
       $phpgw_info["user"]["groups"]            = explode (",",$db->f("account_groups"));
-      $phpgw_info["user"]["app_perms"]         = explode (":",$db->f("account_permissions"));
+      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
+      $phpgw_info["user"]["app_perms"]         = $apps->app_perms;
       $phpgw_info["user"]["lastlogin"]         = $db->f("account_lastlogin");
       $phpgw_info["user"]["lastloginfrom"]     = $db->f("account_lastloginfrom");
       $phpgw_info["user"]["lastpasswd_change"] = $db->f("account_lastpwd_change");
@@ -123,7 +124,8 @@
       $db->next_record();
       
       $userData["groups"]            = explode (",",$db->f("account_groups"));
-      $userData["app_perms"]         = explode (":",$db->f("account_permissions"));
+      $apps = CreateObject('phpgwapi.applications',intval($userData["account_lid"]));
+      $userData["app_perms"]         = $apps->app_perms;
       $userData["lastlogin"]         = $db->f("account_lastlogin");
       $userData["lastloginfrom"]     = $db->f("account_lastloginfrom");
       $userData["lastpasswd_change"] = $db->f("account_lastpwd_change");
@@ -138,7 +140,7 @@
        $db2 = $phpgw->db;
        
        if (gettype($lid) == "integer") {
-         if ($phpgw_info["user"]["account_id"] != $lid) {
+         if ($phpgw_info["user"]["account_id"] != $lid || !$phpgw_info["user"]["groups"]) {
            $db2->query("select account_groups from accounts where account_id=$lid",__LINE__,__FILE__);
            $db2->next_record();
            $gl = explode(",",$db2->f("account_groups"));
@@ -146,7 +148,7 @@
           $gl = $phpgw_info["user"]["groups"];
          }
        } else {
-         if ($phpgw_info["user"]["userid"] != $lid) {
+         if ($phpgw_info["user"]["userid"] != $lid || !$phpgw_info["user"]["groups"]) {
            $db2->query("select account_groups from accounts where account_lid='$lid'",__LINE__,__FILE__);
            $db2->next_record();
            $gl = explode(",",$db2->f("account_groups"));
