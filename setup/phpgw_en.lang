@@ -64,6 +64,7 @@ are you sure you want to delete this news site ?	admin	en	Are you sure you want 
 are you sure you want to delete this note ?	notes	en	Are you sure you want to delete this note ?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 arial	notes	en	Arial
+assign to	tts	en	Assign to
 august	common	en	August
 author	nntp	en	Author
 autosave default category	common	en	Autosave Default Category
@@ -390,7 +391,7 @@ no matchs found	admin	en	No matchs found
 none	calendar	en	None
 non-standard	email	en	Non-Standard
 normal	common	en	Normal
-no subject	email	en	No Subject
+no subject	common	en	No Subject
 not applicable	weather	en	Not Applicable
 notes	common	en	Notes
 notes list	notes	en	Notes list
@@ -564,6 +565,8 @@ this week	calendar	en	This week
 threads	nntp	en	Threads
 thu	calendar	en	Thu
 thursday	common	en	Thursday
+tickets open x	tts	en	Tickets open %1
+tickets total x	tts	en	Tickets total %1
 time	common	en	Time
 time created	notes	en	Time created
 time format	preferences	en	Time format
