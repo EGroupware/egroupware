@@ -1,0 +1,192 @@
+%1 records imported	addressbook	sv	%1 poster importerade
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sv	%1 poster lästa (backa %2tillbaks%3 och avmarkera Provimport för att importera)
+(e.g. 1969)	addressbook	sv	(dag - mån - år, ex. 6 - mars - 70)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sv	<b>Konvertering av typ &lt;Ingen&gt; kunde inte hittas.</b> Var god och välj typ från lista.
+@-eval() is only availible to admins!!!	addressbook	sv	@-eval() är endast tillgänglig för administratörer
+acl	addressbook	sv	ACL
+actions	addressbook	sv	Åtgärder
+add a single entry by passing the fields.	addressbook	sv	Fyll i fälten för att lägga till post
+add custom field	addressbook	sv	Skapa anpassat fält
+address book	common	sv	Adressbok
+address book - vcard in	addressbook	sv	Adressbok - VCard
+address book - view	addressbook	sv	Adressbok - Översikt
+address line 2	addressbook	sv	Adress rad 2
+address line 3	addressbook	sv	Adress rad 3
+address type	addressbook	sv	Adress typ
+addressbook	common	sv	Adressbok
+addressbook preferences	addressbook	sv	Adressbok Alternativ
+addressbook-fieldname	addressbook	sv	Adressbok Fältnamn
+addvcard	addressbook	sv	Lägg till VCard
+all	addressbook	sv	Alla
+alt. csv import	addressbook	sv	Alt. CSV import
+are you sure you want to delete this field?	addressbook	sv	Vill du verkligen radera fältet?
+bbs phone	addressbook	sv	BBS telefon
+birthday	common	sv	Födelsedag
+birthdays	common	sv	Födelsedagar
+blank	addressbook	sv	Tom
+business	common	sv	Företag
+business address type	addressbook	sv	Arbete adress typ
+business city	addressbook	sv	Arbete stad
+business country	addressbook	sv	Arbete land
+business email	addressbook	sv	Arbete e-post
+business email type	addressbook	sv	Arbete e-post typ
+business fax	addressbook	sv	Arbete fax
+business phone	addressbook	sv	Arbete telefon
+business state	addressbook	sv	Arbete stat
+business street	addressbook	sv	Arbete gata
+business zip code	addressbook	sv	Arbete postnummer
+car phone	addressbook	sv	Bostad mobil
+categories for	addressbook	sv	kategorier för
+category	addressbook	sv	Kategori
+cell phone	addressbook	sv	Arbete mobil
+charset of file	addressbook	sv	Filens teckenuppsättning
+city	common	sv	Stad
+company	common	sv	Företag
+company name	common	sv	Företagsnamn
+configuration	common	sv	Alternativ
+contact	common	sv	Kontakt
+contact application	admin	sv	Kontakt applikation
+contact settings	admin	sv	Kontakt Alternativ
+copied by %1, from record #%2.	addressbook	sv	Kopierad med %1 från post #%2
+country	common	sv	Land
+csv-fieldname	addressbook	sv	CSV fältnamn
+csv-filename	addressbook	sv	CSV filnamn
+custom	addressbook	sv	Anpassa
+custom fields	addressbook	sv	Anpassade fält
+debug output in browser	addressbook	sv	Debug utskrift till skärm
+default filter	addressbook	sv	Standard filter
+delete a single entry by passing the id.	addressbook	sv	Radera enskild post med ID
+department	common	sv	Avdelning
+description	addressbook	sv	Beskrivning
+domestic	addressbook	sv	Inrikes
+download	addressbook	sv	Ladda ner
+download export file (uncheck to debug output in browser)	addressbook	sv	Ladda ner export fil (avmarkera för utskrift till skärm)
+e-mail	addressbook	sv	E-post
+edit categories	addressbook	sv	Redigera kategorier
+edit custom field	addressbook	sv	Redigera anpassat fält
+edit custom fields	admin	sv	Redigera anpassade fält
+empty for all	addressbook	sv	tom för alla
+enter the path to the exported file here	addressbook	sv	Sökväg till importfil
+export contacts	addressbook	sv	Exportera kontakter
+export file name	addressbook	sv	Export filnamn
+export from addressbook	addressbook	sv	Exportera från adressbok
+extra	addressbook	sv	Extra
+fax	addressbook	sv	Fax
+fax number	common	sv	Faxnummer
+field %1 has been added !	addressbook	sv	Fält %1 tillagd
+field %1 has been updated !	addressbook	sv	Fält %1 uppdaterad
+field name	addressbook	sv	Fältnamn
+fields	addressbook	sv	fält
+fields to show in address list	addressbook	sv	Visa fält i adressboken
+fieldseparator	addressbook	sv	Fältavskiljare
+first name	addressbook	sv	Förnamn
+full name	addressbook	sv	Fullständigt namn
+general menu	addressbook	sv	Allmän Meny
+geo	addressbook	sv	GEO
+global categories	addressbook	sv	Globala kategorier
+grant access	addressbook	sv	Reglera åtkomst
+grant addressbook access	common	sv	Reglera åtkomst
+home address type	addressbook	sv	Bostad adress typ
+home city	addressbook	sv	Bostad stad
+home country	addressbook	sv	Bostad land
+home email	addressbook	sv	Bostad e-post
+home email type	addressbook	sv	Bostad e-post typ
+home phone	addressbook	sv	Bostad telefon
+home state	addressbook	sv	Bostad stat
+home street	addressbook	sv	Bostad gata
+home zip code	addressbook	sv	Bostad postnummer
+import	addressbook	sv	Import
+import contacts	addressbook	sv	Importera kontakter
+import csv-file into addressbook	addressbook	sv	Importera CSV-fil till adressbok
+import file	addressbook	sv	Importera fil
+import from	addressbook	sv	Importera från
+import from ldif, csv, or vcard	addressbook	sv	Import från LDIF, CSV eller VCard
+import from outlook	addressbook	sv	Import från Outlook
+import multiple vcard	addressbook	sv	Importera flera VCard
+import next set	addressbook	sv	Importera nästa
+import_instructions	addressbook	sv	I Netscape, öppna adressboken och välj <b>Export</b> från <b>Arkiv</b> menyn. Filen exporteras i LDIF format.<p>I Outlook, välj Kontakt mappen, välj <b> Import och export </b> från <b> Arkiv </b>menyn och välj att exportera som komma sepparerad text (CSV) fil.<p> I Palm Desktop 4.0 eller högre, öppna din adressbok och välj <b>Export </b> från <b> Arkiv </b> menyn. Filen exporteras i VCard format.
+international	addressbook	sv	Internationell
+isdn phone	addressbook	sv	ISDN telefon
+label	addressbook	sv	Anteckningar
+last name	addressbook	sv	Efternamn
+ldap context for contacts	admin	sv	LDAP kontakt kontext
+ldap host for contacts	admin	sv	LDAP host för kontakter
+ldap root dn for contacts	admin	sv	LDAP root dn för kontakter
+ldap root pw for contacts	admin	sv	LDAP root pw för kontakter
+ldif	addressbook	sv	LDIF
+line 2	addressbook	sv	Rad 2
+list all categories	addressbook	sv	Lista alla kategorier
+list all customfields	addressbook	sv	Lista alla anpassade fält
+load vcard	addressbook	sv	Ladda VCard
+mark records as private	addressbook	sv	Markera poster som privata
+menu	addressbook	sv	Meny
+message phone	addressbook	sv	Meddelande telefon
+middle name	addressbook	sv	Mellannamn
+mobile	addressbook	sv	Bostad mobil
+mobile phone	addressbook	sv	Arbete mobil
+modem phone	addressbook	sv	Modem
+multiple vcard	addressbook	sv	Fler VCard
+no vcard	addressbook	sv	Inget VCard
+notes	addressbook	sv	Not
+number of records to read (%1)	addressbook	sv	Antal poster att läsa (%1)
+other	addressbook	sv	Övriga
+other number	addressbook	sv	Övriga nummer
+other phone	addressbook	sv	Annan telefon
+pager	common	sv	Personsökare
+parcel	addressbook	sv	Leverans
+personal	addressbook	sv	Person
+phone number	common	sv	Telefon nummer
+phone numbers	common	sv	Telefon nummer
+please enter a name for that field !	addressbook	sv	Ange namn för fältet
+postal	common	sv	Post
+pref	addressbook	sv	Pref
+preferences	addressbook	sv	Alternativ
+prefix	addressbook	sv	Titel
+public key	addressbook	sv	Publik nyckel
+read	addressbook	sv	Läs
+read a list / search for entries.	addressbook	sv	Läs lista/sök poster
+read a list of entries.	addressbook	sv	Läs lista av poster
+read a single entry by passing the id and fieldlist.	addressbook	sv	Ange ID och fältlista för att läsa post.
+record access	addressbook	sv	Uppgifts åtkomst
+record owner	addressbook	sv	Uppgifts ägare
+retrieve contacts	admin	sv	Hämta kontakter
+select addressbook columns to display	addressbook	sv	Välj kolumner som skall visas i adressboken
+select all	addressbook	sv	Välj alla
+select category	addressbook	sv	Välj kategori
+select the type of conversion	addressbook	sv	Typ av konvertering
+select the type of conversion:	addressbook	sv	Typ av konvertering:
+select where you want to store	admin	sv	Ange var du vill lagra
+select_category	addressbook	sv	Välj kategori
+show	addressbook	sv	Visa
+show birthday reminders on main screen	addressbook	sv	Visa födelsedags påminnelse på Startsidan
+startrecord	addressbook	sv	Startpost
+state	common	sv	Stat
+street	common	sv	Gata
+successfully imported %1 records into your addressbook.	addressbook	sv	Importerade %1 post(er) till adressbok
+suffix	addressbook	sv	Suffix
+test import (show importable records <u>only</u> in browser)	addressbook	sv	Provimport (visa <u>importerbara</u> poster)
+that field name has been used already !	addressbook	sv	Fältnamnet används redan
+this person's first name was not in the address book.	addressbook	sv	Personens förnamn finns inte i adressboken
+this person's last name was not in the address book.	addressbook	sv	Personens efternamn finns inte i adressboken
+time zone	addressbook	sv	Tidzon
+time zone offset	addressbook	sv	Tidzon förskjutning
+title	addressbook	sv	Titel
+to many might exceed your execution-time-limit	addressbook	sv	För många kan gå över exekverings tidgräns
+today is %1's birthday!	common	sv	I dag har %1 födelsedag!
+tomorrow is %1's birthday.	common	sv	I morgon är det %1's födelsedag!
+translation	addressbook	sv	Översättning
+update a single entry by passing the fields.	addressbook	sv	Fyll i fälten för att uppdatera en post
+url	addressbook	sv	URL
+use country list	addressbook	sv	Använd lands lista
+vcard	common	sv	VCard
+vcards require a first name entry.	addressbook	sv	VCard måste innehålla förnamn
+vcards require a last name entry.	addressbook	sv	VCard måste innehålla efternamn
+video phone	addressbook	sv	Video telefon
+voice phone	addressbook	sv	Röst telefon
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sv	Varning! LDAP är endast giltigt om du INTE använder kontakter för kontohantering.
+work phone	addressbook	sv	Arbetstelefon
+write (update or add) a single entry by passing the fields.	addressbook	sv	Fyll i fälten för att uppdatera eller lägg till post
+you must select a vcard. (*.vcf)	addressbook	sv	Du måste välja ett VCard (*.vcf)
+you must select at least 1 column to display	addressbook	sv	Du måste välja minst 1 kolumn att visa
+zip code	common	sv	Postnummer
+zip_note	addressbook	sv	<p><b>Notera:</b> Filen kan innehålla en komprimerad samling av .csv, .vcf eller .ldif filer. Men blanda inte filtyper i samma import.
