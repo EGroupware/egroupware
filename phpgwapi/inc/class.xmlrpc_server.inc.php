@@ -230,7 +230,7 @@
 			}
 			$_type = (is_integer($_res) ? 'int' : gettype($_res));
 
-			if ($_type == string && ereg('^[0-9]{8}T[0-9]{4}$',$_res))
+			if ($_type == string && ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res))
 			{
 				$_type = 'dateTime.iso8601';
 			}
