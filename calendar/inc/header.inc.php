@@ -105,7 +105,7 @@
   <form action="<?php echo $phpgw->link('/calendar/'.basename($SCRIPT_FILENAME)); ?>" method="POST" name="setowner">
    <td width="<?php echo $remainder; ?>%" align="center" valign="center">
     <b><?php echo lang('User'); ?>:</b>
-    <input type="hidden" name="from" value="<?php echo '/calendar/'.basename($SCRIPT_FILENAME)); ?>">
+    <input type="hidden" name="from" value="<?php echo '/calendar/'.basename($SCRIPT_FILENAME); ?>">
 <?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
 <?php } ?>
