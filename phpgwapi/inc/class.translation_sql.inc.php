@@ -40,7 +40,7 @@
           $userlang = "en";
         }
         $sql = "select message_id,content from lang where lang like '".$userlang."' ".
-               "and (app_name like '".$phpgw_info["flags"]["currentapp"]."' or app_name like 'common')";
+               "and (app_name like '".$phpgw_info["flags"]["currentapp"]."' or app_name like 'common' or app_name like 'all')";
                
         if (strcasecmp ($phpgw_info["flags"]["currentapp"], "common")>0){
           $sql .= " order by app_name asc";
