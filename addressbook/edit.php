@@ -81,6 +81,7 @@
 		$t->set_var('query',$query);
 		$t->set_var('start',$start);
 		$t->set_var('cat_id',$cat_id);
+		$t->set_var('tid',$tid);
 		$t->set_var('lang_ok',lang('ok'));
 		$t->set_var('lang_clear',lang('clear'));
 		$t->set_var('lang_cancel',lang('cancel'));
@@ -212,7 +213,7 @@
 			$userid = $phpgw_info['user']['account_id'];
 		}
 
-		addressbook_update_entry($ab_id,$userid,$fields,$fields['access'],$fields['cat_id']);
+		addressbook_update_entry($ab_id,$userid,$fields,$fields['access'],$fields['cat_id'],$tid);
 		$referer = urlencode($referer);
 		Header("Location: "
 			. $phpgw->link('/addressbook/view.php',"ab_id=$ab_id&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id&referer=$referer"));

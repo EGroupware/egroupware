@@ -276,12 +276,12 @@
 		return $ab_id;
 	}
 
-	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id)
+	function addressbook_update_entry($id,$userid,$fields,$access,$cat_id,$tid)
 	{
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_EDIT)
 		{
-			$this->update($id,$userid,$fields,$access,$cat_id);
+			$this->update($id,$userid,$fields,$access,$cat_id,$tid);
 		}
 		return;
 	}
