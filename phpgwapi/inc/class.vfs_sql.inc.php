@@ -418,7 +418,7 @@ class vfs
 			}
 
 			$sql .= "$attribute";
-			$sql2 .= "'$value'";
+			$sql2 .= "'" . $this->db_clean ($value) . "'";
 		}
 
 		$sql .= ")";
@@ -475,6 +475,10 @@ class vfs
 		/* This is the SQL query we made for THIS request, remember that one? */
 		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
+		/*
+		   If we were to add an option of whether to keep journal entries for deleted files
+		   or not, it would go in the if here
+		*/
 		if ($operation == VFS_OPERATION_DELETED)
 		{
 			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean' AND mime_type='journal'");
@@ -871,7 +875,7 @@ class vfs
 
 	/*!
 	@function acl_check
-	@abstract Check ACL access to $file for $this->account_id
+	@abstract Check ACL access to $file for $phpgw_info["user"]["account_id"];
 	@param $file File to check access of
 	@param $relatives Standard relativity array
 	@param $operation Operation to check access to.  In the form of a PHPGW_ACL defines bitmask.  Default is read
@@ -1277,7 +1281,7 @@ class vfs
 
 			if ($this->file_exists ($to, array ($relatives[1])))
 			{
-				$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 
 				$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
 
@@ -1612,7 +1616,7 @@ class vfs
 		{
 			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
 
-			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 4096, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
 
 			$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 
@@ -1998,7 +2002,7 @@ class vfs
 		/* If they pass us a file or $nofiles is set, return the info for $dir only */
 		if (((($type = $this->file_type ($dir, array ($p->mask))) != "Directory") || ($nofiles)) && !$p->outside)
 		{
-			/* SELECT all, the, attributes FROM phpgw_vfs WHERE file=$dir */
+			/* SELECT all, the, attributes */
 			$sql = "SELECT ";
 
 			reset ($this->attributes);
