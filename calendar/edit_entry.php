@@ -276,8 +276,8 @@
 	{
 		$userid = intval($user[0]);
 		echo '<!-- USERID = '.$userid.' -->'."\n";
-//		if($userid != $owner && $phpgw->accounts->exists($userid) == True)
-		if($userid != $owner)
+		if($userid != $owner && $phpgw->accounts->exists($userid) == True)
+//		if($userid != $owner)
 		{
 			$str .= '    <option value="' . $userid . '"'.$parts[$userid].'>('.$phpgw->accounts->get_type($userid).') '.$user[1].'</option>'."\n";
 		}
