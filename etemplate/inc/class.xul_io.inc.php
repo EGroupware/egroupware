@@ -483,6 +483,7 @@
 						if (is_array($menulist_attr))
 						{
 							$attr['help'] = $attr['statustext']; unset($attr['statustext']);
+							unset($menulist_attr['type']);
 							$menulist_attr += $attr;
 						}
 						break;
