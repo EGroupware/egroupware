@@ -21,7 +21,7 @@ body
 	background-image:url(../images/body-background.png);
 	font-size: 11px; 
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	padding:14px;
+	padding:3px;
 }
 
 img
@@ -221,7 +221,7 @@ a.textSidebox
 {
 	position:absolute;
 	left:20px;
-	top:14px;
+	top:5px;
 	z-index:51;
 }
 

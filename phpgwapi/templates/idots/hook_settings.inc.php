@@ -12,6 +12,18 @@
 	/* $Id$ */
 	create_section('Preferences for the idots template set');
 
+	$start_and_logout_icons = array(
+		'yes'       => lang('yes'),
+		'no' => lang('no')
+	);
+
+	create_select_box(
+		'Show home and logout button in main application bar?',
+		'start_and_logout_icons',
+		$start_and_logout_icons,
+		'When you say yes the home and logout buttons are presented as applications in the main top applcation bar.'
+	);
+
 	create_input_box(
 		'Max number of icons in navbar',
 		'max_icons',

@@ -63,8 +63,18 @@
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
 
 // 020204 ndee
-				if($app == 'home') $title = "Home";
+				if($app == 'home') $title = lang('Home');
 
+				if($app=='home')
+				{
+					if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']=='no')
+					{
+						continue;
+					}
+				}
+
+
+				
 				if($i<$max_icons)
 				{
 					$app_icons .= '<td height="66" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
@@ -132,9 +142,12 @@
 				}
 			}
 
-			$app_icons .= '<td height="32" valign="bottom" align="center"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'"></a></td>';
-			$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
+			if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
+			{
+				$app_icons .= '<td height="32" valign="bottom" align="center"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['phpgw_info']['navbar']['logout']['icon'].'"></a></td>';
+				$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$GLOBALS['phpgw_info']['navbar']['logout']['url'].'">'.$GLOBALS['phpgw_info']['navbar']['logout']['title'].'</a></td>';
 
+			}
 //			$var['app_icons'] = $app_icons;
 		if($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format']!='text')
 		{
