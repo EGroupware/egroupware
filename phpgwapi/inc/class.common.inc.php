@@ -776,6 +776,16 @@
 
 		function find_image($appname,$image)
 		{
+
+			if (!isset($GLOBALS['phpgw_info']['server']['imgtype_preference_order']))
+			{
+				$imgpref = Array('gif','jpg','png');
+			}
+			else
+			{
+				$imgpref = $GLOBALS['phpgw_info']['server']['imgtype_preference_order'];
+			}
+				
 			if (!@is_array($this->found_files[$appname]))
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
@@ -822,33 +832,33 @@
 				}
 			}
 
-			if(isset($this->found_files[$appname][$image.'.png']))
+			if(isset($this->found_files[$appname][$image.'.'.$imgpref[0]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.png'].'/'.$image.'.png';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[0]].'/'.$image.'.'.$imgpref[0];
 			}
-			elseif(isset($this->found_files[$appname][$image.'.jpg']))
+			elseif(isset($this->found_files[$appname][$image.'.'.$imgpref[1]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.jpg'].'/'.$image.'.jpg';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[1]].'/'.$image.'.'.$imgpref[1];
 			}
-			elseif(isset($this->found_files[$appname][$image.'.gif']))
+			elseif(isset($this->found_files[$appname][$image.'.'.$imgpref[2]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.gif'].'/'.$image.'.gif';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.'.'.$imgpref[2]].'/'.$image.'.'.$imgpref[2];
 			}
 			elseif(isset($this->found_files[$appname][$image]))
 			{
 				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image].'/'.$image;
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.png']))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[0]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.png'].'/'.$image.'.png';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[0]].'/'.$image.'.'.$imgpref[0];
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.jpg']))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[1]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.jpg'].'/'.$image.'.jpg';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[1]].'/'.$image.'.'.$imgpref[1];
 			}
-			elseif(isset($this->found_files['phpgwapi'][$image.'.gif']))
+			elseif(isset($this->found_files['phpgwapi'][$image.'.'.$imgpref[2]]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.gif'].'/'.$image.'.gif';
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files['phpgwapi'][$image.'.'.$imgpref[2]].'/'.$image.'.'.$imgpref[2];
 			}
 			elseif(isset($this->found_files['phpgwapi'][$image]))
 			{
