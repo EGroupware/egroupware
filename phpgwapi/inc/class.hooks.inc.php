@@ -63,7 +63,7 @@
 		@note $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		@returns array with results of each hook call (with appname as key): \
 			False if no hook exists, True if old hook exists \
-			and whatever the new methode-hook returns (can be True or False too!).
+			and whatever the new method-hook returns (can be True or False too!).
 		*/
 		function process($args, $order = '', $no_permission_check = False)
 		{
@@ -79,7 +79,7 @@
 			{
 				$results[$appname] = $this->single($args,$appname,$no_permission_check);
 
-				if (!isset($results[$appname]))	// happens if the methode hook has no return-value
+				if (!isset($results[$appname]))	// happens if the method hook has no return-value
 				{
 					$results[$appname] = False;
 				}
@@ -142,7 +142,7 @@
 				
 				if (count($parts) != 3 || ($parts[1] == 'inc' && $parts[2] == 'php'))
 				{
-					if ($try_unregistered && empty($methode))
+					if ($try_unregistered && empty($method))
 					{
 						$method = 'hook_'.$location.'.inc.php';
 					}
@@ -222,7 +222,7 @@
 			//echo "<p>ADDING hooks for: $appname</p>";
 			foreach($hooks as $key => $hook)
 			{
-				if (!is_numeric($key))	// new methode-hook
+				if (!is_numeric($key))	// new method-hook
 				{
 					$location = $key;
 					$filename = $hook;
