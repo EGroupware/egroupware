@@ -44,6 +44,13 @@
 
 	$adddomain = get_var('adddomain',Array('POST'));
 
+	$db_fullnames = array(
+		'pgsql'  => 'PostgreSQL',
+		'mysql'  => 'MySQL',
+		'mssql'  => 'MS SQL Server',
+		'oracle' => 'Oracle'
+	);
+
 	$default_db_ports = array(
 		'pgsql'  => 5432,
 		'mysql'  => 3306,
@@ -247,7 +254,6 @@
 			{
 				$detected .= lang('You appear to have MySQL support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mysql';
-				$default_db_ports['mysql'] = '3306';
 			}
 			else
 			{
@@ -349,27 +355,19 @@
 					$setup_tpl->set_var('lang_delete',lang('Delete'));
 					$setup_tpl->set_var('db_domain','default');
 					$setup_tpl->set_var('db_host','localhost');
-					$setup_tpl->set_var('db_port','3306');
 					$setup_tpl->set_var('db_name','egroupware');
 					$setup_tpl->set_var('db_user','egroupware');
-					$setup_tpl->set_var('db_pass','your_password');
-					$setup_tpl->set_var('db_type','mysql');
+					$setup_tpl->set_var('db_pass','');
 					$setup_tpl->set_var('config_user','changeme');
-					$setup_tpl->set_var('config_pass','changeme');
+					$setup_tpl->set_var('config_pass','');
 					while(list($k,$v) = @each($supported_db))
 					{
-						if($v == $GLOBALS['phpgw_domain'][$key]['db_type'])
-						{
-							$selected = ' selected ';
-							$found_dbtype = true;
-						}
-						else
-						{
-							$selected = '';
-						}
-						$dbtype_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "\n";
+						$dbtype_options .= '<option value="' . $v . '">' . $db_fullnames[$v] . "\n";
+						if (!isset($default_port))
+							$default_port = $default_db_ports[$v];
 					}
 					$setup_tpl->set_var('dbtype_options',$dbtype_options);
+					$setup_tpl->set_var('db_port',$default_port);
 					$setup_tpl->parse('domains','domain',True);
 				}
 				else
@@ -433,7 +431,7 @@
 							{
 								$selected = '';
 							}
-							$dbtype_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "\n";
+							$dbtype_options .= '<option ' . $selected . 'value="' . $v . '">' . $db_fullnames[$v] . "\n";
 						}
 						$setup_tpl->set_var('dbtype_options',$dbtype_options);
 
@@ -468,17 +466,19 @@
 				$setup_tpl->set_var('lang_delete',lang('Delete'));
 				$setup_tpl->set_var('db_domain','default');
 				$setup_tpl->set_var('db_host','localhost');
-				$setup_tpl->set_var('db_port','');
 				$setup_tpl->set_var('db_name','egroupware');
 				$setup_tpl->set_var('db_user','egroupware');
-				$setup_tpl->set_var('db_pass','your_password');
-				$setup_tpl->set_var('db_type','mysql');
-				$setup_tpl->set_var('config_pass','changeme');
+				$setup_tpl->set_var('db_pass','');
+				$setup_tpl->set_var('config_user','changeme');
+				$setup_tpl->set_var('config_pass','');
 
 				while(list($k,$v) = each($supported_db))
 				{
-					$dbtype_options .= '<option value="' . $v . '">' . $v . "\n";
+					$dbtype_options .= '<option value="' . $v . '">' . $db_fullnames[$v] . "\n";
+					if (!isset($default_port))
+						$default_port = $default_db_ports[$v];
 				}
+				$setup_tpl->set_var('db_port',$default_port);
 				$setup_tpl->set_var('dbtype_options',$dbtype_options);
 
 				$setup_tpl->parse('domains','domain',True);
