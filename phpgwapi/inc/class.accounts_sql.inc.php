@@ -258,7 +258,7 @@
 				return $id_list[$account_id];
 			}
 
-			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . $account_id,__LINE__,__FILE__);
+			$this->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
