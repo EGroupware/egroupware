@@ -1353,13 +1353,7 @@
 			{
 				$cat_id = $fields['cat_id'];
 			}
-			/* allow multiple categories on sql */
-			$cats_link = $this->cat_option(
-				$cat_id,
-				True,
-				False,
-				!$GLOBALS['phpgw_info']['server']['contact_repository'] || $GLOBALS['phpgw_info']['server']['contact_repository'] == 'sql'
-			);
+			$cats_link = $this->cat_option($cat_id,True,False,True);
 
 			if ($access == 'private')
 			{
