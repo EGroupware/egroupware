@@ -557,6 +557,7 @@
 					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
 					'account_passwd_2'      => $_POST['account_passwd_2'],
 					'account_groups'        => $_POST['account_groups'],
+					'account_primary_group'	=> $_POST['account_primary_group'],
 					'anonymous'             => $_POST['anonymous'],
 					'changepassword'        => $_POST['changepassword'],
 					'account_permissions'   => $_POST['account_permissions'],

@@ -58,7 +58,7 @@
 				'min'   => lang('Minute')
 			);
 
-			if ($_POST['send'] || $_POST['test'] || $_POST['cancel'] || $_POST['install'] || $_POST['deinstall'] || $_POST['update'] || isset($_POST['asyncservice']))
+			if ($_POST['send'] || $_POST['test'] || $_POST['cancel'] || $_POST['install'] || $_POST['update'] || isset($_POST['asyncservice']))
 			{
 				$times = array();
 				foreach($units as $u => $ulabel)
@@ -85,13 +85,12 @@
 						echo '<p><b>'.lang("Error canceling timer, maybe there's none set !!!")."</b></p>\n";
 					}
 				}
-				if ($_POST['install'] || $_POST['deinstall'])
+				if ($_POST['install'])
 				{
-					if (!($install = $async->install($_POST['install'] ? $times : False)))
+					if (!($install = $async->install($times)))
 					{
 						echo '<p><b>'.lang('Error: %1 not found or other error !!!',$async->crontab)."</b></p>\n";
 					}
-					$_POST['asyncservice'] = $_POST['deinstall'] ? 'fallback' : 'crontab';
 				}
 			}
 			else
@@ -130,13 +129,7 @@
 				$selected = $key == $GLOBALS['phpgw_info']['server']['asyncservice'] ? ' selected' : ''; 
 				echo "<option value=\"$key\"$selected>$label</option>\n";
 			}
-			echo "</select>\n";
-
-			if (is_array($installed) && isset($installed['cronline']))
-			{
-				echo ' &nbsp; <input type="submit" name="deinstall" value="'.lang('Deinstall crontab')."\">\n";
-			}
-			echo "</p>\n";
+			echo "</select></p>\n";
 
 			if ($async->only_fallback)
 			{

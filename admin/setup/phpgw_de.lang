@@ -14,11 +14,7 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 acl manager	admin	de	ACL Manager
 acl rights	admin	de	ACL Rechte
 action	admin	de	Aktion
-add a category	admin	de	Eine Kategorie hinzufügen
-add a group	admin	de	Eine Gruppe hinzufügen
 add a new account.	admin	de	Neues Benutzerkonto anlegen
-add a subcategory	admin	de	Ein Unterkategorie hizufügen
-add a user	admin	de	Einen Benutzer hinzufügen
 add account	admin	de	Benutzerkonto anlegen
 add application	admin	de	Anwendung anlegen
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	de	Automatisch erzeuge Benutzer in diese Gruppe aufnehmen ('Default' wird versucht wenn sie hier nichts eintragen.)
@@ -47,12 +43,9 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
-apply	admin	de	hinzufügen
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen ?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen ?
-are you sure you want to delete this application ?	admin	de	Sind Sie sicher das Sie diese Applikation löschen möchten ?
 are you sure you want to delete this category ?	common	de	Sind Sie sicher, dass Sie diese Kategorie löschen wollen ?
-are you sure you want to delete this global category ?	admin	de	Sind Sie sicher das Sie diese globale Kategorie löschen möchten?
 are you sure you want to delete this group ?	admin	de	Sind Sie sicher, dass Sie diese Gruppe löschen wollen ?
 are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie diesen Server löschen wollen ?
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden wollen ?
@@ -62,7 +55,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Die
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem default 'application/octet-stream'
 authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
 auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen
-back to the list	admin	de	Zurück zur Liste
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 bottom	admin	de	unten
@@ -70,7 +62,6 @@ calculate next run	admin	de	nächste Ausführung berechnen
 can change password	admin	de	Darf Passwort ändern
 cancel testjob!	admin	de	TestJob abbrechen!
 categories list	admin	de	Liste der Kategorien
-category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
 category list	admin	de	Kategorieliste
 change acl rights	admin	de	ACL Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
@@ -86,18 +77,12 @@ day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
-deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
 delete group	admin	de	Gruppe löschen
 delete peer server	admin	de	Server von Serververbund löschen
-delete the category	admin	de	Kategorie löschen
-delete the group	admin	de	Gruppe löschen
-delete this category	admin	de	Kategorie löschen
-delete this group	admin	de	Gruppe löschen
-delete this user	admin	de	Benutzer löschen
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten
@@ -116,10 +101,7 @@ description can not exceed 255 characters in length !	admin	de	Die Beschreibung 
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
 display	admin	de	Anzeigen
-do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
-do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen ?
-do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
@@ -129,14 +111,9 @@ edit login screen message	admin	de	Nachricht der Login Seite bearbeiten
 edit main screen message	admin	de	Nachricht der Startseite bearbeiten
 edit peer server	admin	de	Server in Serververbund bearbeiten
 edit table format	admin	de	Tabellenformat bearbeiten
-edit this category	admin	de	Diese Kategorie bearbeiten
-edit this group	admin	de	Diese Gruppe bearbeiten
-edit this user	admin	de	Diesen Benutzer bearbeiten
-edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
-enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Title der phpGroupWare installation
@@ -145,7 +122,6 @@ enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vol
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	de	URL zur phpGroupWare Installation.<br>Beispiel: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>keinen nachfolgenden Slash /</b>
-enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen Knopf nochmals
 enter the site password for peer servers	admin	de	Site Passwort für Peer Server
 enter the site username for peer servers	admin	de	Site Benutzername für Peer Server
 enter the title for your site	admin	de	Titel der phpGroupWare Installation
@@ -205,8 +181,6 @@ ldap groups context	admin	de	LDAP Kontext für Gruppen
 ldap host	admin	de	LDAP Host
 ldap root password	admin	de	LDAP Root Passwort
 ldap rootdn	admin	de	LDAP rootdn
-leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
-leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
@@ -236,9 +210,6 @@ no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank !!!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no modes available	admin	de	Kein Modus verfügbar
-no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine Gruppe hinzuzufügen
-no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufügen
-no permission to create groups	admin	de	Sie haben keine aureichenden Rechte um eine Gruppe zu erstellen
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung erzeugt wurde
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
@@ -259,12 +230,8 @@ re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "hooks" der Anwendungen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
-remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe
-return to admin mainscreen	admin	de	zum Adminstrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
-save the category	admin	de	Kategorie speichern
-save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
@@ -273,7 +240,6 @@ section	admin	de	Abschnitt
 security	admin	de	Sicherheit
 select group managers	admin	de	Gruppenmanager auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
-select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn das eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select where you want to store/retrieve filesystem information	admin	de	Wo wollen Sie Datei Informationen ablegen / lesen
 select where you want to store/retrieve user accounts	admin	de	Wo wollen Sie die Benutzerkonten speichern
@@ -298,12 +264,10 @@ soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
 sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
 sorry, the follow users are still a member of the group %1	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
-sort the entries	admin	de	Einträge sortieren
 ssl	admin	de	verschlüsselt (SSL)
 standard	admin	de	standard
 start testjob!	admin	de	TestJob starten!
 submit changes	admin	de	Änderungen speichern
-submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
 that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
@@ -317,7 +281,6 @@ the login and password can not be the same	admin	de	Benutzername und Passwort dü
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich länger als 8 Zeichen sein
 the testjob sends you a mail everytime it is called.	admin	de	Der TestJob sendet Ihnen jedesmal eine Mail wenn er aufgerufen wird.
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
-the users bellow are still members of group %1	admin	de	Der unten angezeigten Benutzer sind Mitglied der Gruppe %1
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwednung benötigt ein Upgrade
@@ -343,11 +306,9 @@ view account	admin	de	Benutzerkonto anzeigen
 view category	admin	de	Kategorie anzeigen
 view error log	admin	de	Fehler-Protokoll anzeigen
 view sessions	admin	de	Sitzungen anzeigen
-view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich der Administrator einlogt ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
@@ -356,10 +317,10 @@ you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ab
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
 you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
-you must enter a lastname	admin	de	Sie müssen einen Nachname angeben
 you must enter a loginid	admin	de	Sie müssen einen Benutzername angeben
 you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must enter an application name.	admin	de	Sie müssen der Anwendung einen Namen geben.
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können !
+primary Group	admin	de	primäre Gruppe

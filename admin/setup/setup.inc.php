@@ -44,8 +44,7 @@
 		'config',
 		'deleteaccount',
 		'manual',
-		'view_user',
-		'sidebox_menu'
+		'view_user'
 	);
 
 	/* Dependencies for this app to work */

@@ -1012,6 +1012,7 @@
 				'lang_reenter_password' => lang('Re-Enter Password'),
 				'lang_lastname'  => lang('Last Name'),
 				'lang_groups'    => lang('Groups'),
+				'lang_primary_group'    => lang('primary Group'),
 				'lang_expires'   => lang('Expires'),
 				'lang_firstname' => lang('First Name'),
 				'lang_anonymous' => lang('Anonymous User (not shown in list sessions)'),
@@ -1096,10 +1097,8 @@
 			$t->set_var($var);
 			$t->parse('password_fields','form_passwordinfo',True);
 
-//			$allAccounts;
-//			$userGroups;
-
-			$groups_select = '';
+			$groups_select		= '';
+			$primary_group_select	= '';
 			reset($allGroups);
 			while (list($key,$value) = each($allGroups)) 
 			{
@@ -1113,6 +1112,19 @@
 					}
 				}
 				$groups_select .= '>' . $value['account_lid'] . '</option>'."\n";
+			}
+
+			foreach($allGroups as $key => $value)
+			{
+#				print "<br>$key =>";
+#				_debug_array($userGroups);
+				$primary_group_select .= '<option value="' . $value['account_id'] . '"';
+				#print $value['account_id'].''.$value['account_primary_group']
+				if ($value['account_id'] == $userData['account_primary_group']) 
+				{
+					$primary_group_select .= ' selected';
+				}
+				$primary_group_select .= '>' . $value['account_lid'] . '</option>'."\n";
 			}
 
 			/* create list of available apps */
@@ -1161,8 +1173,12 @@
 			}
 
 			$var = Array(
-				'groups_select'    => '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
-				'permissions_list' => $appRightsOutput
+				'groups_select'	
+					=> '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
+				'primary_group_select'    
+					=> '<select name="account_primary_group">'."\n".$primary_group_select.'</select>'."\n",
+				'permissions_list' 
+					=> $appRightsOutput
 			);
 			$t->set_var($var);
 

@@ -45,8 +45,8 @@ application	admin	en	Application
 application name	admin	en	Application name
 application title	admin	en	Application title
 applications	admin	en	Applications
-applications list	admin	en	Applications list
 apply	admin	en	apply
+applications list	admin	en	Applications list
 are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
@@ -65,11 +65,11 @@ back to the list	admin	en	back to the list
 bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 bottom	admin	en	bottom
+category %1 has been saved !	admin	en	Category %1 has been saved !
 calculate next run	admin	en	Calculate next run
 can change password	admin	en	Can change password
 cancel testjob!	admin	en	Cancel TestJob!
 categories list	admin	en	Categories list
-category %1 has been saved !	admin	en	Category %1 has been saved !
 category list	admin	en	Category list
 change acl rights	admin	en	change ACL Rights
 change config settings	admin	en	Change config settings
@@ -85,18 +85,17 @@ day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
 default	admin	en	Default
 default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group ?
-deinstall crontab	admin	en	Deinstall crontab
 delete account	admin	en	Delete account
 delete all records	admin	en	Delete All Records
-delete application	admin	en	Delete application
-delete category	admin	en	Delete category
-delete group	admin	en	Delete group
-delete peer server	admin	en	Delete peer server
 delete the category	admin	en	delete the category
 delete the group	admin	en	delete the group
 delete this category	admin	en	delete this category
 delete this group	admin	en	delete this group
 delete this user	admin	en	delete this user
+delete application	admin	en	Delete application
+delete category	admin	en	Delete category
+delete group	admin	en	Delete group
+delete peer server	admin	en	Delete peer server
 deny access to access log	admin	en	Deny access to access log
 deny access to application registery	admin	en	Deny access to application registery
 deny access to applications	admin	en	Deny access to applications
@@ -258,9 +257,9 @@ remove all users from this group	admin	en	Remove all users from this group
 remove all users from this group ?	admin	en	Remove all users from this group ?
 return to admin mainscreen	admin	en	return to admin mainscreen
 return to view account	admin	en	Return to view account
-run asynchronous services	admin	en	Run Asynchronous services
 save the category	admin	en	save the category
 save the category and return back to the list	admin	en	save the category and return back to the list
+run asynchronous services	admin	en	Run Asynchronous services
 search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
@@ -291,7 +290,6 @@ site	admin	en	Site
 site configuration	admin	en	Site configuration
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
-sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1
 sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1
 sort the entries	admin	en	sort the entries
 ssl	admin	en	ssl
@@ -342,7 +340,6 @@ view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
 would you like phpgroupware to check for new application versions when admins login ?	admin	en	Would you like phpGroupWare to check for new application versions when admins login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automaticaly load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
@@ -350,10 +347,10 @@ xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
 you must enter a group name.	admin	en	You must enter a group name.
-you must enter a lastname	admin	en	You must enter a lastname
 you must enter a loginid	admin	en	You must enter a loginid
 you must enter an application name and title.	admin	en	You must enter an application name and title.
 you must enter an application name.	admin	en	You must enter an application name.
 you must enter an application title.	admin	en	You must enter an application title.
 you must select a file type	admin	en	You must select a file type
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
+primary Group	admin	de	primary Group
