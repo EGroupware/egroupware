@@ -10,24 +10,24 @@
 
     <tr bgcolor="{tr_color1}">
      <td>{lang_loginid}</td>
-     <td><input name="account_lid" value="{n_loginid_value}"></td>
+     <td><input name="account_lid" value="{account_lid}"></td>
      <td colspan="2" align="center">
-       {lang_account_active}:&nbsp;<input type="checkbox" name="status" value="A"{account_status}>
+       {lang_account_active}:&nbsp;<input type="checkbox" name="account_status" value="A"{account_status}>
      </td>
     </tr>
 
     <tr bgcolor="{tr_color2}">
      <td>{lang_firstname}</td>
-     <td><input name="firstname" value="{n_firstname_value}"></td>
+     <td><input name="account_firstname" value="{account_firstname}"></td>
      <td>{lang_lastname}</td>
-     <td><input name="lastname" value="{n_lastname_value}"></td>
+     <td><input name="account_lastname" value="{account_lastname}"></td>
     </tr>
 
     <tr bgcolor="{tr_color1}">
      <td>{lang_password}</td>
-     <td><input type="password" name="n_passwd" value="{n_passwd_value}"></td>
+     <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
      <td>{lang_reenter_password}</td>
-     <td><input type="password" name="n_passwd_2" value="{n_passwd_2_value}"></td>
+     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
     </tr>
 
  

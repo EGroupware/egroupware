@@ -39,16 +39,16 @@
      if (! $account_lid)
         $error[$totalerrors++] = lang("You must enter a loginid");
 
-     if (! $n_passwd)
+     if (! $account_passwd)
         $error[$totalerrors++] = lang("You must enter a password");
 
-     if ($n_passwd == $account_lid)
+     if ($account_passwd == $account_lid)
         $error[$totalerrors++] = lang("The login and password can not be the same");
 
-     if ($n_passwd != $n_passwd_2)
+     if ($account_passwd != $account_passwd_2)
         $error[$totalerrors++] = lang("The two passwords are not the same");
 
-     if (!count($new_permissions) || !count($n_groups)) {
+     if (!count($new_permissions) || !count($account_groups)) {
         $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
      }
 
@@ -65,7 +65,7 @@
 				'phpgw_acl',
 				'phpgw_applications'
 			));
-			$phpgw->accounts->create('u', $account_lid, $n_passwd, $n_firstname, $n_lastname, $n_account_status);
+			$phpgw->accounts->create('u', $account_lid, $account_passwd, $account_firstname, $account_lastname, $account_status);
        
 			$account_id = $phpgw->accounts->name2id($account_lid);
 
@@ -73,11 +73,11 @@
 			$apps->read_installed_apps();
 
 			// Read Group Apps
-			if ($n_groups)
+			if ($account_groups)
 			{
 				$apps->account_type = 'g';
-				reset($n_groups);
-				while($groups = each($n_groups))
+				reset($account_groups);
+				while($groups = each($account_groups))
 				{
 					$apps->account_id = $groups[0];
 					$old_app_groups = $apps->read_account_specific();
@@ -110,9 +110,9 @@
 			$apps->save_repository();
 
 			// Assign user to groups
-			for ($i=0;$i<count($n_groups);$i++)
+			for ($i=0;$i<count($account_groups);$i++)
 			{
-				$phpgw->acl->add_repository('phpgw_group',$n_groups[$i],$account_id,1);
+				$phpgw->acl->add_repository('phpgw_group',$account_groups[$i],$account_id,1);
 			}
 
 			$pref = CreateObject('phpgwapi.preferences',$account_id);
@@ -143,7 +143,7 @@
 	}
 	else
 	{
-		$status = 'A';
+		$account_status = 'A';
 	}
 
 	$phpgw->template->set_file(array('form'	=> 'account_form.tpl'));
@@ -167,38 +167,47 @@
   $phpgw->template->set_var("form_action",$phpgw->link("newaccount.php"));
   $phpgw->template->set_var("lang_loginid",lang("LoginID"));
 
-	if ($status)
+	if ($account_status)
 	{
 		$phpgw->template->set_var('account_status',' checked');
 	}
 
-  $phpgw->template->set_var("n_loginid_value",$account_lid);
+  $phpgw->template->set_var("account_lid",$account_lid);
 
   $phpgw->template->set_var("lang_account_active",lang("Account active"));
 
   $phpgw->template->set_var("lang_password",lang("Password"));
-  $phpgw->template->set_var("n_passwd_value",$n_passwd);
+  $phpgw->template->set_var("account_passwd",$account_passwd);
   
   $phpgw->template->set_var("lang_reenter_password",lang("Re-Enter Password"));
-  $phpgw->template->set_var("n_passwd_2_value",$n_passwd_2);
+  $phpgw->template->set_var("account_passwd_2",$account_passwd_2);
 
   $phpgw->template->set_var("lang_firstname",lang("First Name"));
-  $phpgw->template->set_var("n_firstname_value",$n_firstname);
+  $phpgw->template->set_var("account_firstname",$account_firstname);
 
   $phpgw->template->set_var("lang_lastname",lang("Last Name"));
-  $phpgw->template->set_var("n_lastname_value",$n_lastname);
+  $phpgw->template->set_var("account_lastname",$account_lastname);
 
   $phpgw->template->set_var("lang_groups",lang("Groups"));
 
 
 	// groups list
-	$groups_select = '<select name="n_groups[]" multiple>';
+	$groups_select = '<select name="account_groups[]" multiple>';
 
 	$groups =  $phpgw->accounts->get_list('groups');
 
 	while (list(,$group) = each($groups))
 	{
 		$groups_select .= '<option value="' . $group['account_id'] . '"';
+		while (list(,$ags) = @each($account_groups))
+		{
+			if ($group['account_id'] == $ags)
+			{
+				$groups_select .= ' selected';
+			}
+		}
+		@reset($account_groups);
+
 		$groups_select .= ">" . $group["account_lid"] . "</option>\n";
 	}
 	$groups_select .= '</select>';
