@@ -16,7 +16,7 @@
 
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "enable_template_class" => True);
 
-  if (isset($friendly) && (int)$friendly==1){
+  if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
      $phpgw_info["flags"]["nonavbar"] = True;
      $phpgw_info["flags"]["nocalendarheader"] = True;
@@ -27,25 +27,6 @@
   include("../header.inc.php");
 
   $view = "day";
-
-  if (isset($date) && strlen($date) > 0) {
-     $thisyear  = substr($date, 0, 4);
-     $thismonth = substr($date, 4, 2);
-     $thisday   = substr($date, 6, 2);
-  } else {
-     if (!isset($day) || !$day)
-        $thisday = $phpgw->calendar->today["day"];
-     else
-        $thisday = $day;
-     if (!isset($month) || !$month)
-        $thismonth = $phpgw->calendar->today["month"];
-     else
-        $thismonth = $month;
-     if (!isset($year) || !$year)
-        $thisyear = $phpgw->calendar->today["year"];
-     else
-        $thisyear = $year;
-  }
 
   $now	= $phpgw->calendar->splitdate(mktime (2, 0, 0, $thismonth, $thisday, $thisyear));
 

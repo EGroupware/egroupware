@@ -9,7 +9,6 @@
   }
 </style>
 </head>
-
 <table border="0" width="100%">
  <tr>
   <td align="left" valign="top">
@@ -17,7 +16,7 @@
   </td>
   <td align="middle">
    <font size="+2" color="#000000"><b>{month_identifier}</b></font>
-   <font color="#000000" size="+1" color="{bg_text}"><br>{username}</font>
+   <font size="+1" color="#000000"><br>{username}</font>
   </td>
   <td align="right" valign="top">
    {small_calendar_next}

@@ -19,12 +19,8 @@
   </td>
   <td align="center" valign="top">
    {small_calendar_this}
-   <font size="+2" color="{bg_text"}">
-    <b>{week_identifier}</b>
-   </font>
-   <font size="+1" color="{bg_text}"><br>
-    {username}
-   </font>
+   <font size="+2" color="#000000"><b>{week_identifier}</b></font>
+   <font size="+2" color="#000000"><br>{username}</font>
   </td>
   <td align="right">
    {next_week_link}
