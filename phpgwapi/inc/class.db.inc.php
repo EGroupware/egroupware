@@ -550,6 +550,8 @@
 		/**
 		* Get the id for the next sequence - not implemented!
 		*
+		* This seems not to be used anywhere in eGroupWhere !!!
+		*
 		* @param string $seq_name name of the sequence
 		* @return int sequence id
 		*/
@@ -646,6 +648,7 @@
 		*/
 		function table_names()
 		{
+			$this->connect();
 			$result = array();
 			$tables = $this->Link_ID->MetaTables('TABLES');
 			if (is_array($tables))
