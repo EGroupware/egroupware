@@ -7,7 +7,6 @@
 - or shift-click to decrease it	jscalendar	da	- eller Shift-klik for at forminske den
 - use the %1, %2 buttons to select month	jscalendar	da	- Brug %1, %2 knapperne for at vælge måned
 - use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
-
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
 80 (http)	admin	da	80 (http)
@@ -22,13 +21,11 @@ account has been created	common	da	Kontoen er oprettet
 account has been deleted	common	da	Kontoen er slettet
 account has been updated	common	da	Kontoen er opdateret
 account is expired	common	da	Kontoen er udløbet
-
 account preferences	common	da	Konto preferencer
 acl	common	da	ACL
 action	common	da	Handling
 active	common	da	Aktiv
 add	common	da	Tilføj
-
 add %1 category for	common	da	Tilføj kategorien %1 for
 add category	common	da	Tilføj kategori
 add sub	common	da	Tilføj underkategori
@@ -81,7 +78,6 @@ benin	common	da	Benin
 bermuda	common	da	Bermuda
 bhutan	common	da	Bhutan
 blocked, too many attempts	common	da	Afvist, for mange forsøg
-
 bold	htmlarea	da	Fed
 bolivia	common	da	Bolivia
 border	htmlarea-TableOperations	da	Kant
@@ -101,7 +97,6 @@ cambodia	common	da	Cambodia
 cameroon	common	da	Cameroon
 canada	common	da	Canada
 cancel	common	da	Annullér
-
 cape verde	common	da	Cape Verde
 caption	htmlarea-TableOperations	da	Titel
 categories	common	da	Kategorier
@@ -124,7 +119,6 @@ china	common	da	Kina
 choose the category	common	da	Vælg kategorien
 choose the parent category	common	da	Vælg ovenstående kategori
 christmas island	common	da	Juleøen
-
 clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
@@ -142,7 +136,6 @@ congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
-
 copy selection	htmlarea	da	Kopiér udvalgte
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
@@ -180,9 +173,7 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
 disabled	common	da	Slået fra
 display monday first	jscalendar	da	Vis mandag først
-
 display sunday first	jscalendar	da	Vis søndag først
-
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
 domain	common	da	Domæne
@@ -191,13 +182,11 @@ domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
-
 drag to move	jscalendar	da	Træk for at flytte
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
 ecuador	common	da	Ecuador
 edit	common	da	Redigér
-
 edit %1 category for	common	da	Redigér kategorien %1 for
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
@@ -267,7 +256,6 @@ grenada	common	da	Grenada
 group	common	da	Gruppe
 group access	common	da	Gruppeadgang
 group has been added	common	da	Gruppe er tilføjet
-
 group has been deleted	common	da	Gruppe er slettet
 group has been updated	common	da	Gruppe er opdateret
 group name	common	da	gruppe navn
@@ -287,7 +275,6 @@ height	htmlarea-TableOperations	da	HÃ¸jde
 help	common	da	Hjælp
 help using editor	htmlarea	da	Hjælp til editoren
 high	common	da	Høj
-
 highest	common	da	Højeste
 holy see (vatican city state)	common	da	Vatikanet
 home	common	da	Startside
@@ -341,7 +328,6 @@ justify center	htmlarea	da	Justify Centrer
 justify full	htmlarea	da	Justify Fuld
 justify left	htmlarea	da	Justify Venstre
 justify right	htmlarea	da	Justify Højre
-
 kazakstan	common	da	Kazakstan
 kenya	common	da	Kenia
 keywords	common	da	Stikord
@@ -422,10 +408,8 @@ netherlands antilles	common	da	Hollandsk Antilles
 never	common	da	Aldrig
 new caledonia	common	da	Ny Caledonien
 new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
-
 new main category	common	da	Ny hovedkategori
 new phrase has been added	common	da	Ny sætning er tilføjet
-
 new value	common	da	Ny Værdi
 new zealand	common	da	New Zealand
 next	common	da	Næste
@@ -528,12 +512,10 @@ puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 re-check	htmlarea-SpellChecker	da	Tjek igen
 read	common	da	Læs
-
 read this list of methods.	common	da	Læs denne liste over metoder
 redoes your last action	htmlarea	da	Fortryder din sidste handling
 reject	common	da	Afvis
 rename	common	da	Omdøb
-
 replace	htmlarea-SpellChecker	da	Erstat
 replace all	htmlarea-SpellChecker	da	Erstat alle
 replace with	htmlarea-SpellChecker	da	Erstat med
@@ -562,7 +544,6 @@ saturday	common	da	Lørdag
 saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
 search	common	da	Søg
-
 section	common	da	Sektion
 select	common	da	Vælg
 select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
@@ -577,7 +558,6 @@ send	common	da	Send
 senegal	common	da	Senegal
 september	common	da	September
 server %1 has been added	common	da	Server %1 er tilføjet
-
 server name	common	da	Servernavn
 session has been killed	common	da	Sessionen er afsluttet
 setup	common	da	Setup
@@ -599,7 +579,6 @@ solomon islands	common	da	Solomon Øerne
 somalia	common	da	Somalia
 sorry, there was a problem processing your request.	common	da	Desværre opstod der et problem med at behandle Dit ønske.
 sorry, your login has expired	login	da	Desværre, Din session er udløbet
-
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spacing	htmlarea-TableOperations	da	Afstand
@@ -685,7 +664,6 @@ united arab emirates	common	da	Forenede Arabiske Emirater
 united kingdom	common	da	England
 united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
-
 unknown	common	da	Ukendt
 unset color	htmlarea-TableOperations	da	Farve ikke valgt
 update	common	da	Opdatering
