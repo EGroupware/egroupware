@@ -6,21 +6,10 @@
 %s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s Readonly
+-1	etemplate	en	-1
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
-<	etemplate	en	<
 <<	etemplate	en	<<
->	etemplate	en	>
 >>	etemplate	en	>>
-@cat1_help	etemplate	en	@cat1_help
-@cat1_label	etemplate	en	@cat1_label
-@cat2_help	etemplate	en	@cat2_help
-@cat2_label	etemplate	en	@cat2_label
-@filter2_help	etemplate	en	@filter2_help
-@filter2_label	etemplate	en	@filter2_label
-@filter_help	etemplate	en	@filter_help
-@filter_label	etemplate	en	@filter_label
-@help	etemplate	en	@help
-@label	etemplate	en	@label
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 access	etemplate	en	Access
 add column	etemplate	en	Add Column
@@ -29,6 +18,8 @@ align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
+application name needed to write a langfile !!!	etemplate	en	Application name needed to write a langfile !!!
+array	etemplate	en	Array
 birtday	etemplate	en	Birtday
 birthday	etemplate	en	Birthday
 border	etemplate	en	Border
@@ -154,8 +145,10 @@ name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
+nextmatch	etemplate	en	Nextmatch
 no	etemplate	en	No
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
+not started	etemplate	en	Not started
 note	etemplate	en	Note
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
@@ -167,6 +160,7 @@ options:	etemplate	en	Options:
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
 padding for the table-tag	etemplate	en	Padding for the table-tag
+percentage	etemplate	en	Percentage
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
@@ -192,6 +186,7 @@ saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_cur
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
+select	etemplate	en	Select
 select a category	etemplate	en	select a Category
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
@@ -200,12 +195,15 @@ select an table of the application	etemplate	en	Select an table of the applicati
 select category	etemplate	en	Select Category
 select cathegory	etemplate	en	Select Cathegory
 select country	etemplate	en	Select Country
+select day	etemplate	en	Select Day
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	select if content should only be displayed but not altered (the content is not send back then!)
 select if label and other content (depending on fieldtype) should not be translated	etemplate	en	select if label and other content (depending on fieldtype) should not be translated
+select month	etemplate	en	Select Month
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
+select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
 show (no save)	etemplate	en	Show (no save)
 show values	etemplate	en	Show Values
@@ -223,6 +221,7 @@ street	etemplate	en	Street
 submitbutton	etemplate	en	Submitbutton
 surname	etemplate	en	Surname
 tablename	etemplate	en	TableName
+tabs	etemplate	en	Tabs
 telefon	etemplate	en	Telefon
 telefonnumber	etemplate	en	Telefonnumber
 template	etemplate	en	Template
@@ -233,6 +232,7 @@ text	etemplate	en	Text
 textarea	etemplate	en	Textarea
 textfeld:	etemplate	en	Textfeld:
 this is a datefield	etemplate	en	This is a DateField
+this is a help message	etemplate	en	This is a help message
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
@@ -266,6 +266,7 @@ write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
 xml-file to import	etemplate	en	xml-file to import
+xslt template	etemplate	en	XSLT Template
 year	etemplate	en	Year
 yes	etemplate	en	Yes
 you can enter some free text here.	etemplate	en	You can enter some free text here.
