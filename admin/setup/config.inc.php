@@ -29,6 +29,7 @@
      <select name="newsettings[account_repository]">
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
       <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
+      <option value="contacts"<?php echo $selected["contacts"]; ?>>Contacts - EXPERIMENTAL</option>
      </select>
     </td>
    </tr>
