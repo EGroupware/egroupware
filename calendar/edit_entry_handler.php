@@ -16,7 +16,7 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "noheader" => True, "nonavbar" => True, "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
   include("../header.inc.php");
 
-  $cal_info = new calendar_item;
+  $cal_info = CreateObject('calendar.calendar_item');
 
   function validate($cal_info) {
     $error = 0;

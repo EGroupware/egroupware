@@ -11,60 +11,6 @@
 
   /* $Id$ */
 
-  class calendar_item {
-    var $owner;
-    var $id = 0;
-    var $name = "Unnamed Event";
-    var $description = "Unnamed Event";
-    var $datetime = 0;
-    var $day = 0;
-    var $month = 0;
-    var $year = 0;
-    var $hour = 0;
-    var $minute = 0;
-    var $ampm = "";
-    var $mdatetime = 0;
-    var $mod_day = 0;
-    var $mod_month = 0;
-    var $mod_year = 0;
-    var $mod_hour = 0;
-    var $mod_minute = 0;
-    var $mod_second = 0;
-    var $mod_ampm = "";
-    var $edatetime = 0;
-    var $end_day = 0;
-    var $end_month = 0;
-    var $end_year = 0;
-    var $end_hour = 0;
-    var $end_minute = 0;
-    var $end_second = 0;
-    var $end_ampm = "";
-    var $priority = 0;
-    var $access = "private";
-    var $groups = array();
-    var $participants = array();
-    var $status = array();
-    var $rpt_type = "none";
-    var $rpt_end_use = 0;
-    var $rpt_end = 0;
-    var $rpt_end_day = 0;
-    var $rpt_end_month = 0;
-    var $rpt_end_year = 0;
-    var $rpt_days = "nnnnnnn";
-    var $rpt_sun = 0;
-    var $rpt_mon = 0;
-    var $rpt_tue = 0;
-    var $rpt_wed = 0;
-    var $rpt_thu = 0;
-    var $rpt_fri = 0;
-    var $rpt_sat = 0;
-    var $rpt_freq = 0;
-
-    function set($var,$val="") {
-      $this->$var = $val;
-    }
-  }
-
   class calendar
   {
     var $today = array("full","month","day","year");
@@ -83,6 +29,9 @@
     var $weekstarttime;
     var $daysinweek;
     var $filter;
+    var $tempyear;
+    var $tempmonth;
+    var $tempday;
 
     function calendar_($p_friendly=False) {
       global $phpgw;
@@ -682,11 +631,11 @@
 	}
 	$events = $this->getevent($rep_events);
       } else
-	$events = Array(new calendar_item);
+	$events = Array(CreateObject('calendar.calendar_item'));
 
       if(!$this->checked_re && !$this->sorted_re) return False;
 
-      $e = new calendar_item;
+      $e = CreateObject('calendar.calendar_item');
       for ($j=0;$j<$this->checked_re;$j++) {
 	$e = $this->repeated_events[$rep_event[$j]];
 	$events[$this->sorted_re++] = $e;
@@ -738,8 +687,8 @@
       global $phpgw_info;
 
       $str = "";
-      $gr_events = new calendar_item;
-      $lr_events = new calendar_item;
+      $gr_events = CreateObject('calendar.calendar_item');
+      $lr_events = CreateObject('calendar.calendar_item');
       if($display_name) {
 	$str .= "<td valign=\"top\" width=\"75\" height=\"75\">".$phpgw->common->grab_owner_name($owner)."</td>";
       }
@@ -766,7 +715,7 @@
 	  $rep_events = $this->get_sorted_by_date($date["raw"],$owner);
 
 	  if ($this->sorted_re) {
-	    $lr_events = new calendar_item;
+	    $lr_events = CreateObject('calendar.calendar_item');
  	    for ($k=0;$k<$this->sorted_re;$k++) {
   	      $lr_events = $rep_events[$k];
 	      $str .= "<nobr>";
@@ -1203,13 +1152,13 @@
       $this->first_hour = (int)$phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"] + 1;
       $this->last_hour  = (int)$phpgw_info["user"]["preferences"]["calendar"]["workdayends"] + 1;
 
-      $events = array(new calendar_item);
+      $events = array(CreateObject('calendar.calendar_item'));
 
       $events = $this->get_sorted_by_date($date["raw"]);
 
       if(!$events) {
       } else {
-       $event = new calendar_item;
+       $event = CreateObject('calendar.calendar_item');
        for($i=0;$i<count($events);$i++) {
          $event = $events[$i];
          if($event) $this->html_for_event_day_at_a_glance($event);
@@ -1493,7 +1442,7 @@
 
       $phpgw->db->lock(array("calendar_entry","calendar_entry_user","calendar_entry_repeats"));
 
-      $calendar = new calendar_item;
+      $calendar = CreateObject('calendar.calendar_item');
 
       for($i=0;$i<count($cal_id);$i++) {
 

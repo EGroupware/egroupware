@@ -19,7 +19,7 @@
   
   $sb = CreateObject("phpgwapi.sbox");
 
-  $cal_info = new calendar_item;
+  $cal_info = CreateObject('calendar.calendar_item');
 
   function display_item($field,$data) {
     global $phpgw;

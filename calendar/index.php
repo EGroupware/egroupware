@@ -32,9 +32,9 @@
       $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
 
     if (isset($date) && strlen($date) > 0) {
-       $thisyear  = substr($date, 0, 4);
-       $thismonth = substr($date, 4, 2);
-       $thisday   = substr($date, 6, 2);
+       $thisyear  = intval(substr($date, 0, 4));
+       $thismonth = intval(substr($date, 4, 2));
+       $thisday   = intval(substr($date, 6, 2));
     } else {
        if (!isset($day) || !$day)
           $thisday = $phpgw->calendar->today["day"];

@@ -17,10 +17,7 @@
      $phpgw->common->phpgw_footer();
      $phpgw->common->phpgw_exit();
   }
-
-  if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||
-      !$phpgw_info["flags"]["nocalendarheader"]) {
-     ?>
+?>
        <BR CLEAR="all">
        <HR CLEAR="all">
        <FONT SIZE="-1">
@@ -32,9 +29,9 @@
           <B><?php echo lang("Month"); ?>:</B>
           <SELECT NAME="date" ONCHANGE="document.SelectMonth.submit()">
            <?php
-             if ($thisyear && $thismonth) {
-                $m = $thismonth;
-                $y = $thisyear;
+             if ($phpgw->calendar->tempyear && $phpgw->calendar->tempmonth) {
+                $m = $phpgw->calendar->tempmonth;
+                $y = $phpgw->calendar->tempyear;
              } else {
                 $m = date("m");
                 $y = date("Y");
@@ -49,7 +46,7 @@
                     $y++;
                  }
                  $d = mktime(0,0,0,$m,1,$y);
-                 echo "<OPTION VALUE=\"" . date("Ymd", $d) . "\"";
+                 echo'"<option value="' . date("Ymd", $d) . '"';
                  if (date("Ymd", $d) == $thisdate)
                     echo " SELECTED";
                  echo ">" . lang(date("F", $d)) . strftime(" %Y", $d) . "</option>\n";
@@ -64,9 +61,9 @@
 
       <SELECT NAME="date" ONCHANGE="document.SelectWeek.submit()">
        <?php
-         if ($thisyear && $thismonth) {
-            $m = $thismonth;
-            $y = $thisyear;
+         if ($phpgw->calendar->tempyear && $phpgw->calendar->tempmonth) {
+            $m = $phpgw->calendar->tempmonth;
+            $y = $phpgw->calendar->tempyear;
          } else {
             $m = date("m");
             $y = date("Y");
@@ -107,8 +104,8 @@
 
 <SELECT NAME="year" ONCHANGE="document.SelectYear.submit()">
 <?php
-  if ($thisyear) {
-    $y = $thisyear;
+  if ($phpgw->calendar->tempyear) {
+    $y = $phpgw->calendar->tempyear;
   } else {
     $y = date("Y");
   }
@@ -127,7 +124,3 @@
 
 </TR>
 </TABLE>
-
-<?php
-  }
-?>

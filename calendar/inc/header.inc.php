@@ -12,9 +12,9 @@
   if(!isset($filter) || !$filter) 
     $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
   if (isset($date) && strlen($date) > 0) {
-     $thisyear  = substr($date, 0, 4);
-     $thismonth = substr($date, 4, 2);
-     $thisday   = substr($date, 6, 2);
+     $thisyear  = intval(substr($date, 0, 4));
+     $thismonth = intval(substr($date, 4, 2));
+     $thisday   = intval(substr($date, 6, 2));
   } else {
      if (!isset($day) || !$day)
         $thisday = $phpgw->calendar->today["day"];
@@ -30,8 +30,9 @@
         $thisyear = $year;
   }
 
-  if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||
-      !$phpgw_info["flags"]["nocalendarheader"]) {
+  $phpgw->calendar->tempyear = $thisyear;
+  $phpgw->calendar->tempmonth = $thismonth;
+  $phpgw->calendar->tempday = $thisday;
 ?>
 
 <table border="0" width="100%" cols="8" cellpadding="0" cellspacing="0">
@@ -118,5 +119,4 @@
 </table>
 <?php
     flush();
-    }
 ?>
