@@ -2161,7 +2161,13 @@
 			);
 
 // Participants
+			if (!is_object($GLOBALS['phpgw']->uiaccountsel))
+			{
+				$GLOBALS['phpgw']->uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
+			}
+
 			$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
+
 			$users = Array();
 			for($i=0;$i<count($accounts);$i++)
 			{
@@ -2200,19 +2206,18 @@
 			{
 				$size = $num_users;
 			}
-			$str = '';
-			@asort($users);
-			@reset($users);
-			while ($user = each($users))
+			$select=array();
+			@uasort($users,'strcasecmp');
+			foreach($users as $id => $name)
 			{
-				if(($GLOBALS['phpgw']->accounts->exists($user[0]) && $this->bo->check_perms(PHPGW_ACL_READ,0,$user[0])) || $GLOBALS['phpgw']->accounts->get_type($user[0]) == 'g')
+				if(!($GLOBALS['phpgw']->accounts->exists($id) && $this->bo->check_perms(PHPGW_ACL_READ,0,$id) || $GLOBALS['phpgw']->accounts->get_type($id) == 'g'))
 				{
-					$str .= '    <option value="'.$user[0].'">('.$GLOBALS['phpgw']->accounts->get_type($user[0]).') '.$user[1].'</option>'."\n";
+					unset($users[$id]);
 				}
 			}
 			$var[] = Array(
 				'field'	=>	lang('Participants'),
-				'data'	=>	"\n".'   <select name="participants[]" multiple size="'.$size.'">'."\n".$str.'   </select>'."\n"
+				'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_matrix_users',array(),'calendar+',$size,False,'','',$users)
 			);
 
 			for($i=0;$i<count($var);$i++)
