@@ -35,7 +35,7 @@
      }
   
      $phpgw->db->query("select account_id,account_firstname,account_lastname,account_lid "
-     				. "from accounts $querymethod $ordermethod " . $phpgw->db->limit($start));
+     				. "from phpgw_accounts $querymethod $ordermethod " . $phpgw->db->limit($start));
 
      $i = 0;
      while ($phpgw->db->next_record()) {
@@ -53,7 +53,7 @@
   {
     global $phpgw_info, $phpgw;
 
-    $phpgw->db->query("select account_id,account_firstname,account_lastname from accounts where "
+    $phpgw->db->query("select account_id,account_firstname,account_lastname from phpgw_accounts where "
     				. "account_lid='$loginid'");
     $phpgw->db->next_record();
         
@@ -179,7 +179,7 @@
   {
      global $phpgw;
   
-     $phpgw->db->query("select count(*) from accounts where account_lid='$loginid'");
+     $phpgw->db->query("select count(*) from phpgw_accounts where account_lid='$loginid'");
      $phpgw->db->next_record();
      if ($phpgw->db->f(0) != 0) {
         return True;
@@ -197,7 +197,7 @@
         			 . "'%$query%' OR account_lid like '%$query%' ";
      }
      
-     $phpgw->db->query("select count(*) from accounts $querymethod");
+     $phpgw->db->query("select count(*) from phpgw_accounts $querymethod");
      $phpgw->db->next_record();
 
      return $phpgw->db->f(0);
