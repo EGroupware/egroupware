@@ -1297,8 +1297,9 @@
 		/*!
 		@function next_id
 		@abstract return the next higher value for an integer, and increment it in the db.
+		The selection of max is a hack, since PHP thinks 0 > 0
 		*/
-	function next_id($appname)
+	function next_id($appname,$min=0,$max=999999999)
 	{
 		global $phpgw;
 
@@ -1314,7 +1315,11 @@
 		if (empty($id) || !$id) {
 			$id = 1;
 			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+		} elseif($id<$min) {
+			$id = $min;
 			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
+		} elseif ($id>$max) {
+			return False;
 		} else {
 			$id = $id + 1;
 			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
@@ -1328,8 +1333,9 @@
 		/*!
 		@function last_id
 		@abstract return the current id in the next_id table for a particular app/class.
+		The selection of max is a hack, since PHP thinks 0 > 0
 		*/
-	function last_id($appname)
+	function last_id($appname,$min=0,$max=999999999)
 	{
 		global $phpgw;
 
@@ -1343,7 +1349,14 @@
 		}
 
 		if (empty($id) || !$id) {
-			return 1;
+			if($min) { $id = $min; }
+			else     { $id = 1; }
+			$phpgw->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+		} elseif($id<$min) {
+			$id = $min;
+			$phpgw->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
+		} elseif ($id>$max) {
+			return False;
 		} else {
 			return intval($id);
 		}
