@@ -1,0 +1,112 @@
+%1 does not exist !!!	setup	bg	%1 не съществува!
+actions	setup	bg	Действия
+additional settings	setup	bg	Допълнителни настройки
+admin first name	setup	bg	Име на администратора
+admin last name	setup	bg	Фамилия на администратора
+admin password	setup	bg	Парола на администратора
+admin username	setup	bg	Потребителско име на администратора
+admins	setup	bg	Администратори
+all applications	setup	bg	всички приложения
+all users	setup	bg	Всички потребители
+application data	setup	bg	Данни на приложенията
+application list	setup	bg	Списък на приложенията
+application management	setup	bg	Управление на приложенията
+application name and status	setup	bg	Имена и състояния на приложенията
+application title	setup	bg	Заглавия на приложенията
+are you sure you want to delete your existing tables and data?	setup	bg	Наистина ли искте да изтриете съществуващите таблици и данни?
+are you sure?	setup	bg	СИГУРНИ ЛИ СТЕ?
+available version	setup	bg	Налични версии
+back to the previous screen	setup	bg	Предишен екран
+back to user login	setup	bg	Потребителския вход
+because an application it depends upon was upgraded	setup	bg	защото приложение, от което зависи, е обновено
+because it depends upon	setup	bg	защото зависи от
+because it was manually disabled	setup	bg	защото е ръчно отменено
+because of a failed upgrade or install	setup	bg	заради провалено обновяване или инсталация
+bottom	setup	bg	отдолу
+cancel	setup	bg	Отказ
+check installation	setup	bg	Проверка на инсталацията
+checking for gd support...	setup	bg	Проверка за поддръжка на GD
+checking php.ini	setup	bg	Проверка на php.ini
+checking the egroupware installation	setup	bg	Проверка на инсталацията на eGroupWare
+click here	setup	bg	Натиснете тук
+completed	setup	bg	Готово
+configuration	setup	bg	Настройка
+configuration completed	setup	bg	Настройката привърши
+continue	setup	bg	Продължаване
+could not open header.inc.php for writing!	setup	bg	Не можах да отворя header.inc.php за запис!
+country selection	setup	bg	Избор на държава
+create	setup	bg	Създаване
+create admin account	setup	bg	Създаване на администраторски акаунт
+create database	setup	bg	Създаване на база данни
+create demo accounts	setup	bg	Създаване на примерни потребители
+creating tables	setup	bg	Създаване на таблиците
+current version	setup	bg	Текуща версия
+delete	setup	bg	Изтриване
+deleting tables	setup	bg	Изтриване на таблици
+details for admin account	setup	bg	Подробности за администраторския акаунт
+download	setup	bg	Изтегляне
+go back	setup	bg	Назад
+import has been completed!	setup	bg	Внасянето привърши!
+install	setup	bg	Инсталиране
+install all	setup	bg	Инсталиране на всички
+install applications	setup	bg	Инсталиране на приложения
+install language	setup	bg	Инсталиране на език
+installed	setup	bg	инсталирано
+invalid ip address	setup	bg	Невалиден IP адрес
+invalid password	setup	bg	Грешна парола
+login to mysql -	setup	bg	Свързване към MySQL -
+logout	setup	bg	Изход
+manage applications	setup	bg	Управление на приложенията
+manage languages	setup	bg	Управление на езиците
+may be broken	setup	bg	може да е повредено
+modify	setup	bg	Промяна
+name of database	setup	bg	Име на базата данни
+never	setup	bg	никога
+new	setup	bg	Нов
+no	setup	bg	Не
+not set	setup	bg	не е зададено
+one month	setup	bg	един месец
+one week	setup	bg	една седмица
+or	setup	bg	или
+please wait...	setup	bg	Моля изчакайте...
+possible reasons	setup	bg	Възможни причини
+possible solutions	setup	bg	Възможни решения
+re-check my database	setup	bg	Проверка отново на базата данни
+re-check my installation	setup	bg	Проверка отново на инсталацията
+re-enter password	setup	bg	Въведете отново паролата
+registered	setup	bg	регистрирано
+remove	setup	bg	Премахване
+remove all	setup	bg	Премахване на всички
+requires upgrade	setup	bg	Има нужда от обновяване
+save	setup	bg	Запис
+select one...	setup	bg	изберете едно...
+setup main menu	setup	bg	Главно меню
+some or all of its tables are missing	setup	bg	Някои или всички таблици липсват
+status	setup	bg	Състояние
+step %1 - admin account	setup	bg	Стъпка %1 - Администраторски акаунт
+step %1 - advanced application management	setup	bg	Стъпка %1 - Подробно управление на приложенията
+step %1 - configuration	setup	bg	Стъпка %1 - Настройка
+step %1 - language management	setup	bg	Стъпка %1 - Управление на езиците
+step %1 - simple application management	setup	bg	Стъпка %1 - Просто управление на приложенията
+tables dropped	setup	bg	таблиците са изтрити
+tables upgraded	setup	bg	таблиците са обновени
+top	setup	bg	отгоре
+two weeks	setup	bg	две седмици
+uninstalled	setup	bg	деинсталирано
+upgrade	setup	bg	Обновяване
+upgrade all	setup	bg	Обновяване на всички
+upgraded	setup	bg	обновено
+upgrading tables	setup	bg	Обновяване на таблиците
+users choice	setup	bg	По избор на потребителя
+utf-8 (unicode)	setup	bg	utf-8 (Уникод)
+version	setup	bg	версия
+version mismatch	setup	bg	Разминаване във версиите
+view	setup	bg	Преглед
+warning!	setup	bg	Внимание
+welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на eGroupWare
+writable by the webserver	setup	bg	с права за запис от уеб-сървъра
+write config	setup	bg	Запис на настройката
+yes	setup	bg	Да
+you're using an old header.inc.php version...	setup	bg	Използвате стара версия на header.inc.php...
+your database does not exist	setup	bg	Базата ви данни не съществува
+your database is not working!	setup	bg	Базата ви данни не работи!
