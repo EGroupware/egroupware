@@ -31,12 +31,6 @@ class accounts_{
 * These are the standard $this->account_id specific functions              *
 \**************************************************************************/
 
-  function update_data($data) {
-    /**************************************************************************\
-    * Set $this->data with the $data param that was sent                       *
-    \**************************************************************************/
-  }
-  
   function save_repository(){
     /**************************************************************************\
     * Store the values in $this->data to the repository                        *
