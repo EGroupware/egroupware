@@ -52,13 +52,13 @@
 	if(!$GLOBALS['phpgw_info']['user']['preferences']['common']['disable_slider_effects'])
 	{
 		$slider_effects_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
-		$slider_effects = '<script src="'.$slider_effects_src.'" type=text/javascript>
+		$slider_effects = '<script src="'.$slider_effects_src.'" type="text/javascript">
 		</script>';
 	}
 	else
 	{
 		$simple_show_hide_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
-		$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type=text/javascript>
+		$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type="text/javascript">
 		</script>';
 	}
 
