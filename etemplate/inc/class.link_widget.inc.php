@@ -85,11 +85,12 @@
 				$extension_data = $value;
 
 				$links = $this->link->get_links($app,$id);
-			/*	if (!count($links))
+				if (!count($links))
 				{
 					$cell = $tmpl->empty_cell();
-					return False;
-				} */
+					$value = '';
+					return True;
+				}
 				$tpl = new etemplate('etemplate.link_widget.list');
 				$tpl->data[0]['A'] = $tmpl->data[0]['A'];	// set width of first col like the tmpl. calling us
 				for($row=$tpl->rows-1; list(,$link) = each($links); ++$row)
