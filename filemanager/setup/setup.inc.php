@@ -15,18 +15,9 @@
 	$setup_info['phpwebhosting']['title']   = 'PHPWebHosting';
 	$setup_info['phpwebhosting']['version'] = '0.9.13.005';
 	$setup_info['phpwebhosting']['app_order'] = 10;
-	$setup_info['phpwebhosting']['tables']    = array('phpgw_vfs');
 	$setup_info['phpwebhosting']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['phpwebhosting']['hooks'][] = 'preferences';
-
-	/* The tables this app creates */
-	$setup_info['phpwebhosting']['tables']    = array(
-		'phpgw_vfs'
-	);
-
-	/* Hooks this app uses */
 	$setup_info['phpwebhosting']['hooks'] = array ('preferences', 'admin');
 
 	/* Dependencies for this app to work */
@@ -34,5 +25,4 @@
 		 'appname' => 'phpgwapi',
 		 'versions' => array('0.9.10', '0.9.11' , '0.9.12', '0.9.13')
 	);
-
 ?>
