@@ -33,7 +33,9 @@
 			'select-cat'      => 'Select Category',// Category-Selection, size: -1=Single+All, 0=Single, >0=Multiple with size lines
 			'select-account'  => 'Select Account',	// label=accounts(default),groups,both
 																// size: -1=Single+not assigned, 0=Single, >0=Multiple
-			'select-month'    => 'Select Month'
+			'select-year'     => 'Select Year',
+			'select-month'    => 'Select Month',
+			'select-day'      => 'Select Day'
 		);
 		var $monthnames = array(
 			0  => '',
@@ -295,7 +297,7 @@
 		);
 
 		var $states = array(
-			//''		=> lang('Select one'),
+			''		=> '',
 			'--'	=> 'non US',
 			'AL'	=>	'Alabama',
 			'AK'	=>	'Alaska',
@@ -356,20 +358,18 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
-			// save values in persistent extension_data to be able use it in post_process
-			//$extension_data = $value;
-
-			list($rows,$type) = explode(',',$cell['size']);
+			list($rows,$type,$type2) = explode(',',$cell['size']);
 
 			switch ($cell['type'])
 			{
-				case 'select-percent':
-					for ($i=0; $i <= 100; $i+=10)
+				case 'select-percent':	// options: #row,decrement(default=10)
+					$decr = $type > 0 ? $type : 10;
+					for ($i=0; $i <= 100; $i += $decr)
 					{
-						$cell['sel_options'][$i] = "$i%";
+						$cell['sel_options'][intval($i)] = intval($i).'%';
 					}
-					$value = intval(($value+5) / 10) * 10;
+					$cell['sel_options'][100] = '100%';
+					$value = intval(($value+($decr/2)) / $decr) * $decr;
 					$cell['no_lang'] = True;
 					break;
 
@@ -395,19 +395,13 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-cat':
+				case 'select-cat':	// !$type == globals cats too
 					if (!is_object($GLOBALS['phpgw']->categories))
 					{
 						$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
 					}
-					if ($type != 'all')
-					{
-						$cats = $GLOBALS['phpgw']->categories->return_array($type,0);
-					}
-					else
-					{
-						$cats = $GLOBALS['phpgw']->categories->return_sorted_array(0);
-					}
+					$cats = $GLOBALS['phpgw']->categories->return_sorted_array(0,False,'','','',!$type);
+
 					while (list(,$cat) = @each($cats))
 					{
 						for ($j=0,$s=''; $j < $cat['level']; $j++)
@@ -428,12 +422,34 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-account':
+				case 'select-account':	// options: #rows,{accounts(default)|both|groups},{0(=lid)|1(default=name)|2(=lid+name))}
 					$accs = $GLOBALS['phpgw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
-
 					while (list(,$acc) = each($accs))
 					{
-						$cell['sel_options'][$acc['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
+						if ($acc['account_type'] == 'g')
+							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
+					}
+					reset($accs);
+					while (list(,$acc) = each($accs))
+					{
+						if ($acc['account_type'] == 'u')
+							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
+					}
+					$cell['no_lang'] = True;
+					break;
+
+				case 'select-year':	// options: #rows,#before(default=3),#after(default=2)
+					$cell['sel_options'][''] = '';
+					if ($type <= 0)  $type  = 3;
+					if ($type2 <= 0) $type2 = 2;
+					if ($type > 100 && $type2 > 100 && $type > $type) { $y = $type; $type=$type2; $type2=$y; }
+					$y = date('Y')-$type;
+					if ($value && $value-$type < $y || $type > 100) $y = $type > 100 ? $type : $value-$type;
+					$to = date('Y')+$type2;
+					if ($value && $value+$type2 > $to || $type2 > 100) $to = $type2 > 100 ? $type2 : $value+$type2;
+					for ($n = 0; $y <= $to && $n < 200; ++$n)
+					{
+						$cell['sel_options'][$y] = $y++;
 					}
 					$cell['no_lang'] = True;
 					break;
@@ -441,31 +457,50 @@
 				case 'select-month':
 					$cell['sel_options'] = $this->monthnames;
 					break;
+
+				case 'select-day':
+					$cell['sel_options'][''] = '';
+					for ($d=1; $d <= 31; ++$d)
+					{
+						$cell['sel_options'][$d] = $d;
+					}
+					$cell['no_lang'] = True;
+					break;
+			}
+			if ($rows > 1)
+			{
+				unset($cell['sel_options']['']);
 			}
 			return True;	// extra Label Ok
 		}
 
-		function accountInfo($id,$account_data=0,$longnames=0,$show_type=0)
+		function accountInfo($id,$acc=0,$longnames=0,$show_type=0)
 		{
 			if (!$id)
 			{
 				return '&nbsp;';
 			}
 
-			if (!is_array($account_data))
+			if (!is_array($acc))
 			{
-				$accounts = createobject('phpgwapi.accounts',$id);
-				$accounts->db = $GLOBALS['phpgw']->db;
-				$accounts->read_repository();
-				$account_data = $accounts->data;
+				$GLOBALS['phpgw']->accounts->read_repository();
+				$acc = $GLOBALS['phpgw']->accounts->data;
 			}
-			$info = $show_type ? '('.$account_data['account_type'].') ' : '';
+			$info = $show_type ? '('.$acc['account_type'].') ' : '';
 
 			switch ($longnames)
 			{
-				case 2: $info .= '&lt;'.$account_data['account_lid'].'&gt; '; // fall-through
-				case 1: $info .= $account_data['account_firstname'].' '.$account_data['account_lastname']; break;
-				default: $info .= $account_data['account_lid']; break;
+				case 2:
+					$info .= '&lt;'.$acc['account_lid'].'&gt; ';
+					// fall-through
+				default:
+				case 1:
+					$info .= $acc['account_type'] == 'g' ? lang('group').' '.$acc['account_lid'] :
+						$acc['account_firstname'].' '.$acc['account_lastname'];
+					break;
+				case '0':
+					$info .= $acc['account_lid'];
+					break;
 			}
 			return $info;
 		}
