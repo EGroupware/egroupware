@@ -135,7 +135,7 @@ ical / rfc2445	calendar	nl	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	nl	wanneer deze optie is geactiveerd zullen feestdagen die vallen in het weekend, genomen worden op de maandag daarna.
 ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
-import csv-file	common	nl	CSV-bestand importen
+import csv-file	common	nl	CSV-bstand importeren
 interval	calendar	nl	Herhaling
 intervals in day view	calendar	nl	Intervallen in dagelijke weergave
 intervals per day in planner view	calendar	nl	Intervallen per dag in planner weergave
