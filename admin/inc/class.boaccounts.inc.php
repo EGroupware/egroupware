@@ -165,7 +165,7 @@
 				}
 
 				$ui = createobject('admin.uiaccounts');
-			  $ui->list_users();
+				$ui->list_users();
 				return False;
 			}
 		}
