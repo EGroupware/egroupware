@@ -82,7 +82,7 @@
      </td>
     <td valign="top" width="5%">
      <font face="'.$phpgw_info["theme"]["font"].'" size="2">
-      '.$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id=".$myid."&start=".$start."&sort=".$sort."&order=".$order).'
+      '.$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id=".$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort).'
      </font>
     </td>
    </tr>
