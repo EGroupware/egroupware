@@ -52,19 +52,19 @@ create table groups (
 insert into groups (group_name) values ('Default');
 
 CREATE TABLE preferences (
-   owner	varchar(20),
-   name		varchar(50),
-   value	varchar(50)
+   preference_owner   varchar(20),
+   preference_name    varchar(50),
+   preference_value   varchar(50),
+   preference_appname varchar(50)
 );
 
-insert into preferences values ('demo','maxmatchs','10');
-insert into preferences values ('demo','mainscreen_showbirthdays','True');
-insert into preferences values ('demo','mainscreen_showevents','True');
-insert into preferences values ('demo','timeformat','12');
-insert into preferences values ('demo','dateformat','m/d/Y');
-insert into preferences values ('demo','theme','default');
-insert into preferences values ('demo','tz_offset','0');
-
+insert into preferences values ('demo','maxmatchs','10','');
+insert into preferences values ('demo','mainscreen_showbirthdays','True','');
+insert into preferences values ('demo','mainscreen_showevents','True','');
+insert into preferences values ('demo','timeformat','12','');
+insert into preferences values ('demo','dateformat','m/d/Y','');
+insert into preferences values ('demo','theme','default','');
+insert into preferences values ('demo','tz_offset','0','');
 
 CREATE TABLE sessions (
    sessionid	varchar(255) NOT NULL,

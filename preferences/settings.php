@@ -254,8 +254,7 @@
 
  <?php
   } else {
-     $phpgw->db->query("delete from preferences where owner='" . $phpgw_info["user"]["userid"]
-		           . "' AND name != 'theme'");
+     $phpgw->common->preferences_delete("notheme",$phpgw_info["user"]["userid"]);
 
      // If they don't have permissions to the headlines,
      // we don't need to lock the table.
