@@ -19,7 +19,7 @@
   * to fit your site, and you should be up and running.                      *
   \**************************************************************************/
 
-  $phpgw_info["server"]["include_root"]	= "/path/to/phpGroupWare/inc";
+  $phpgw_info["server"]["include_root"]	= "/path/to/phpgroupware/inc";
   /* This is the basic include needed on each page for phpGroupWare application compliance */
   $phpgw_flags["htmlcompliant"] = True;
 
