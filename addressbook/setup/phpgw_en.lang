@@ -1,11 +1,17 @@
+%1 records imported	addressbook	en	%1 records imported
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
+add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
-addressbook	common	en	Addressbook
 address book	common	en	Address Book
-addressbook preferences	addressbook	en	Addressbook preferences
+address book - vcard in	addressbook	en	Address book - VCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
+addressbook	common	en	Addressbook
+addressbook preferences	addressbook	en	Addressbook preferences
+addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 alphabet	addressbook	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt. csv import	addressbook	en	Alt. CSV Import
@@ -14,10 +20,9 @@ bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
+business	common	en	Business
 business address type	addressbook	en	Business Address Type
 business city	addressbook	en	Business City
-business	common	en	Business
 business country	addressbook	en	Business Country
 business email	addressbook	en	Business EMail
 business email type	addressbook	en	Business EMail Type
@@ -31,31 +36,38 @@ cell phone	addressbook	en	cell phone
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
-contact application	admin	en	Contact application
 contact	common	en	Contact
+contact application	admin	en	Contact application
 contact settings	admin	en	Contact Settings
 country	common	en	Country
+csv-fieldname	addressbook	en	CSV-Fieldname
+csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
+delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 department	common	en	Department
 domestic	addressbook	en	Domestic
+download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
-enable remote search	admin	en	Enable remote search
-enter the path to the export file here	addressbook	en	Enter the path to the exported file here
+enter the path to the export file here	addressbook	en	Enter the path to the export file here
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
+export from addressbook	addressbook	en	Export from Addressbook
 extra	addressbook	en	Extra
-fax	addresbook	en	Fax
+fax	addressbook	en	Fax
 fax number	common	en	Fax Number
+field %1 has been added !	addressbook	en	Field %1 has been added !
+field %1 has been updated !	addressbook	en	Field %1 has been updated !
 field name	addressbook	en	Field Name
-field x has been added !	addressbook	en	Field x has been added !
 fields to show in address list	addressbook	en	Fields to show in address list
+fieldseparator	addressbook	en	Fieldseparator
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
+go	addressbook	en	Go
 grant addressbook access	common	en	Grant Addressbook Access
 home address type	addressbook	en	Home Address Type
 home city	addressbook	en	Home City
@@ -66,18 +78,21 @@ home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
 home zip code	addressbook	en	Home ZIP Code
+import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts
+import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
 import file	addressbook	en	Import File
+import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
 import from outlook	addressbook	en	Import from Outlook
 In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from 
 international	addressbook	en	International
-the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	en	the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
 ldap context for contacts	admin	en	LDAP context for contacts
 ldap host for contacts	admin	en	LDAP host for contacts
 ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
+ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
 mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
@@ -86,33 +101,48 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 no vcard	addressbook	en	No VCard
-none	addressbook	en	none
+number of records to read (<=200)	addressbook	en	Number of records to read (<=200)
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
+owerview	addressbook	en	owerview
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
 phone number	common	en	Phone Number
 phone numbers	common	en	Phone Numbers
+please enter a name for that field !	addressbook	en	Please enter a name for that field !
 postal	common	en	Postal
+pref	addressbook	en	pref
 prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
+read a list of entries.	addressbook	en	Read a list of entries.
+read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and fieldlist.
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
+remote search	addressbook	en	Remote Search
 retrieve contacts	admin	en	retrieve contacts
 select the type of conversion	addressbook	en	Select the type of conversion
 select where you want to store	admin	en	Select where you want to store
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
+show contact	addressbook	en	show contact
+startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
-successfully imported x records into your addressbook.	addressbook	en	Successfully imported %1 records into your addressbook.
 suffix	addressbook	en	Suffix
+test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
+that field name has been used already !	addressbook	en	That field name has been used already !
+the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	en	the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
-today is x's birthday!	common	en	Today is %1's birthday!
-tomorrow is x's birthday.	common	en	Tomorrow is %1's birthday.
+this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
+today is %1's birthday!	common	en	Today is %1's birthday!
+tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
+update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
+vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
 video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 work phone	addressbook	en	Work Phone
+you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 zip code	common	en	ZIP Code

@@ -45,7 +45,7 @@
 			{
 				$GLOBALS['phpgw']->portalbox->data[] = array
 				(
-					'text'					=> lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
+					'text'					=> lang("Today is %1's birthday!", $val['n_given'] . ' ' . $val['n_family']),
 					'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']),
 					'lang_link_statustext'	=> lang('show contact')
 				);
@@ -62,7 +62,7 @@
 			{
 				$GLOBALS['phpgw']->portalbox->data[] = array
 				(
-					'text'					=> lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
+					'text'					=> lang("Tomorrow is %1's birthday.", $val['n_given'] . ' ' . $val['n_family']),
 					'link'					=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id']),
 					'lang_link_statustext'	=> lang('show contact')
 				);

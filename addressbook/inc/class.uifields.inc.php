@@ -173,7 +173,7 @@
 			}
 			if(($submit) && (! $error) && (! $errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been added !', $field_name));
+				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been added !', $field_name));
 			}
 			if((!$submit) && (! $error) && (! $errorcount))
 			{
@@ -235,7 +235,7 @@
 				$errorcount = 0;
 				if(!$field_name)
 				{
-					$error[$errorcount++] = lang('Please enter a name for that field!');
+					$error[$errorcount++] = lang('Please enter a name for that field !');
 				}
 
 				if(!$error)
@@ -252,7 +252,7 @@
 			}
 			if(($submit) && (! $error) && (!$errorcount))
 			{
-				$GLOBALS['phpgw']->template->set_var('message',lang('Field x has been updated !', $field_name));
+				$GLOBALS['phpgw']->template->set_var('message',lang('Field %1 has been updated !', $field_name));
 			}
 			if((!$submit) && (!$error) && (!$errorcount))
 			{

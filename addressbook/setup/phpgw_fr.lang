@@ -1,22 +1,28 @@
+%1 records imported	addressbook	fr	%1 enregistrements importés
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (pas encore importés, vous pouvez revenir %2en arrière%3 et décocher Tester l'import)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion &lt;aucun&gt; n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
+add a single entry by passing the fields.	addressbook	fr	Ajouter une seule entrée en passant les champs.
 add custom field	addressbook	fr	Ajouter champ personnalisé
-addressbook	common	fr	Carnet d'adresses
 address book	common	fr	Carnet d'adresses
-addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
+address book - vcard in	addressbook	fr	Carnet d'adresses - Entrée VCard
 address book - view	addressbook	fr	Carnet d'adresses - Voir
 address line 2	addressbook	fr	Adresse ligne 2
 address line 3	addressbook	fr	Adresse ligne 3
 address type	addressbook	fr	Type d'adresse
+addressbook	common	fr	Carnet d'adresses
+addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
+addressbook-fieldname	addressbook	fr	Carnet d'adresses-nomdechamp
 addvcard	addressbook	fr	Ajouter VCard
 alphabet	addressbook	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alt. csv import	addressbook	fr	Import Alt. CSV
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ?
 bbs phone	addressbook	fr	Téléphone BBS
 birthday	common	fr	Anniversaire
+birthdays	common	fr	Anniversaires
 blank	addressbook	fr	Blanc
-<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fr	<b>Aucun  type de conversion &lt;none&gt; n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
+business	common	fr	Bureau
 business address type	addressbook	fr	Type d'adresse (bureau)
 business city	addressbook	fr	Ville (bureau)
-business	common	fr	Bureau
 business country	addressbook	fr	Pays (bureau)
 business email	addressbook	fr	EMail (bureau)
 business email type	addressbook	fr	Type d'EMail (bureau)
@@ -30,31 +36,38 @@ cell phone	addressbook	fr	Téléphone portable
 city	common	fr	Ville
 company	common	fr	Société
 company name	common	fr	Nom de la société
-contact application	admin	fr	Application contact
 contact	common	fr	Contact
+contact application	admin	fr	Application contact
 contact settings	admin	fr	Paramètres du contact
 country	common	fr	Pays
+csv-fieldname	addressbook	fr	CSV-Nomdechamp
+csv-filename	addressbook	fr	CSV-Nomdefichier
 custom	addressbook	fr	Personnalisé
 custom fields	addressbook	fr	Champs personnalisés
-debug output in browser	addressbook	fr	Debogage des informations dans le navigateur
+debug output in browser	addressbook	fr	Deboguer la sortie dans le navigateur
 default filter	addressbook	fr	Filtre par défaut
+delete a single entry by passing the id.	addressbook	fr	Effacer une seule entrée en passant l'ID.
 department	common	fr	Département
 domestic	addressbook	fr	Domestique
-download export file (uncheck to debug output in browser)	addressbook	fr	Downloader le fichier d'export (décocher pour deboguer les informations dans le navigateur)
+download	addressbook	fr	Downloader
+download export file (uncheck to debug output in browser)	addressbook	fr	Downloader le fichier d'export (Décocher pour débogger la sortie dans le navigateur)
 edit custom field	addressbook	fr	Editer le champ personnalisé
 edit custom fields	admin	fr	Editer les champs personnalisés
-enable remote search	admin	fr	Activer la recherche à distance
-enter the path to the export file here	addressbook	fr	Entrez le chemin vers le fichier exporté ici
+enter the path to the export file here	addressbook	fr	Entrez le chemin vers le fichier d'export ici
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
+export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
 extra	addressbook	fr	Extra
-fax	addresbook	fr	Fax
+fax	addressbook	fr	Fax
 fax number	common	fr	Numéro de Fax
+field %1 has been added !	addressbook	fr	Le champ %1 a été ajouté !
+field %1 has been updated !	addressbook	fr	Le champ %1 a été mis à jour !
 field name	addressbook	fr	Nom du champ
-field x has been added !	addressbook	fr	Le champ x a été ajouté !
 fields to show in address list	addressbook	fr	Champs à montrer dans la liste des adresses
+fieldseparator	addressbook	fr	Séparateur de champ
 full name	addressbook	fr	Nom complet
 geo	addressbook	fr	GEO
+go	addressbook	fr	Allez
 grant addressbook access	common	fr	Régler les droits d'accès au carnet d'adresses
 home address type	addressbook	fr	Type d'adresse (domicile)
 home city	addressbook	fr	Ville (domicile)
@@ -65,18 +78,21 @@ home phone	addressbook	fr	Téléphone (domicile)
 home state	addressbook	fr	Région (domicile)
 home street	addressbook	fr	Rue (domicile)
 home zip code	addressbook	fr	Code postal (domicile)
+import	addressbook	fr	Importer
 import contacts	addressbook	fr	Importer les contacts
+import csv-file into addressbook	addressbook	fr	Importer le fichier CSV dans le carnet d'adresses
 import file	addressbook	fr	Importer le fichier
+import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou VCard
 import from outlook	addressbook	fr	Importer depuis Outlook
-In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	fr	Dans Netscape, ouvrez le carnet d'adresses et choisissez <b>Exporter</b> dans le menu <b>Fichier</b>.<br>Le fichier exporté sera dans le format LDIF.<P>Ou, dans Outlook, choisissez votre dossier de contacts, choisissez <b>Importer et Exporter...</b> dans
+In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from	addressbook	fr	Dans Netscape, ouvrez le carnet d'adresses et choisissez <b>Exporter</b> dans le menu <b>Fichier</b>.<br>Le fichier exporté sera dans le format LDIF.<P>Ou, dans Outlook, choisissez votre dossier Contacts, choisissez <b>Importer et Exporter...</b> depuis
 international	addressbook	fr	International
-the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	fr	le menu <b>Fichier</b> et exportez vos contacts dans un fichier dont les champs sont séparés par une virgule (CSV). <P>Ou, dans Palm Desktop 4.0 ou plus, allez dans votre carnet d'adresses et choisissez <b>Exporter</b> dans le menu <b>Fichier</b>. Le fihcier exporté sera dans le format VCard.<P>
 isdn phone	addressbook	fr	Téléphone RNIS
 label	addressbook	fr	Label
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
 ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
 ldap root dn for contacts	admin	fr	Racine LDAP dn pour les contacts
 ldap root pw for contacts	admin	fr	Racine LDAP pw pour les contacts
+ldif	addressbook	fr	LDIF
 line 2	addressbook	fr	Ligne 2
 mark records as private	addressbook	fr	Marquer les enregistrements comme privés
 message phone	addressbook	fr	Téléphone de message
@@ -85,33 +101,48 @@ mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
 no vcard	addressbook	fr	Pas de VCard
-none	addressbook	fr	Aucun
+number of records to read (<=200)	addressbook	fr	Nombre d'enregistrements à lire (<=200)
 other number	addressbook	fr	Autre numéro
 other phone	addressbook	fr	Autre téléphone
+owerview	addressbook	fr	Vue globale
 pager	common	fr	Pager
 parcel	addressbook	fr	Paquet
 phone number	common	fr	Numéro de téléphone
 phone numbers	common	fr	Numéros de téléphone
+please enter a name for that field !	addressbook	fr	SVP entrez un nom pour ce champ !
 postal	common	fr	Postal
+pref	addressbook	fr	pref
 prefix	addressbook	fr	Préfixe
 public key	addressbook	fr	Clé publique
+read a list of entries.	addressbook	fr	Lire une liste d'entrées.
+read a single entry by passing the id and fieldlist.	addressbook	fr	Lire une seule entrée en passant l'ID et la liste des champs.
 record access	addressbook	fr	Enregistrer l'accès
 record owner	addressbook	fr	Enregistrer le propriétaire
+remote search	addressbook	fr	Recherche à distance
 retrieve contacts	admin	fr	Récupérer les contacts
 select the type of conversion	addressbook	fr	Choisissez le type de conversion
 select where you want to store	admin	fr	Choisissez où vous voulez stocker
 show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
+show contact	addressbook	fr	Montrer le contact
+startrecord	addressbook	fr	Enregistrement de départ
 state	common	fr	Région
 street	common	fr	Rue
-successfully imported x records into your addressbook.	addressbook	fr	Importé avec succès %1 enregistrements dans votre carnet d'adresses.
 suffix	addressbook	fr	Suffixe
-this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses
-today is x's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1!
-tomorrow is x's birthday.	common	fr	Demain c'est l'anniversaire de %1.
+test import (show importable records <u>only</u> in browser)	addressbook	fr	Tester l'import (montrer <u>seulement</u> les enregistrements importables dans le navigateur)
+that field name has been used already !	addressbook	fr	Ce nom de champ a déjà été utilisé !
+the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	fr	le menu <b>Fichier</b> et exportez vos contacts dans un fichier aux champs séparés par des virgules (CSV).       <P>Ou, dans Palm Desktop 4.0 ou plus, allez dans votre carnet d'adresses et choisissez <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera dans le format VCard.<P>
+this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
+this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
+today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
+tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
+update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
 vcard	common	fr	VCard
 vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée Prénom.
+vcards require a last name entry.	addressbook	fr	Les Vcards nécessitent une entrée nom de famille.
 video phone	addressbook	fr	Téléphone vidéo
 voice phone	addressbook	fr	Téléphone vocal
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	Attention!! LDAP est valide seulement si vous n'utilisez pas les contacts pour le stockage des comptes!
 work phone	addressbook	fr	Téléphone (bureau)
+you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*.vcf)
+you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
 zip code	common	fr	Code postal

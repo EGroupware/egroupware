@@ -45,7 +45,7 @@
 			$tmp = '<a href="'
 				. $GLOBALS['phpgw']->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
-			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
+			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . "</td></tr>\n";
 		}
 
 		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
@@ -58,7 +58,7 @@
 			$tmp = '<a href="'
 				. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
-			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . "</td></tr>\n";
+			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . "</td></tr>\n";
 		}
 		echo "\n<!-- Birthday info -->\n";
 	}
