@@ -36,6 +36,7 @@
 		/* Return a type suitable for DDL */
 		function TranslateType($sType, $iPrecision = 0, $iScale = 0)
 		{
+			$sTranslated = $sType;
 			switch($sType)
 			{
 				case 'auto':
@@ -81,12 +82,6 @@
 					{
 						$sTranslated =  'text';
 					}
-					break;
-				case 'date':
-				case 'text':
-				case 'timestamp':
-				case 'bool':
-					$sTranslated = $sType;
 					break;
 			}
 			return $sTranslated;
@@ -601,25 +596,16 @@
 				if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Altering column default for: ' . $sField; }
 				$oProc->m_odb->query("ALTER TABLE $sOldTableName ALTER $sField SET DEFAULT nextval('seq_" . $sNewTableName . "')",__LINE__,__FILE__);
 			}
-
-			$indexes = array();
-			$indexnames = $oProc->m_odb->index_names();
-			while(list($key,$val) = @each($indexnames))
+			// renameing existing indexes and primary keys
+			$indexes = $oProc->m_odb->Link_ID->MetaIndexes($sOldTableName,True);
+			if($GLOBALS['DEBUG']) { echo '<br>RenameTable(): Fetching indexes: '.print_r($indexes,True); }
+			foreach($indexes as $name => $data)
 			{
-				$indexes[] = $val['index_name'];
+				$new_name = str_replace($sOldTableName,$sNewTableName,$name);
+				$sql = "ALTER TABLE $name RENAME TO $new_name";
+				if($GLOBALS['DEBUG']) { echo "<br>RenameTable(): Renaming the index '$name': $sql"; }
+				$oProc->m_odb->query($sql);
 			}
-			$pkeys = $oProc->m_odb->pkey_columns($sOldTableName);
-			if(!in_array($sOldTableName . '_pkey',$indexes) && !isset($pkeys[0]))	// no idea how this can happen
-			{
-				// this happens if the table has no primary key --> nothing to do
-				// trying to drop the (not existing) constrain results in an error
-				//$oProc->m_odb->query("ALTER TABLE " . $sOldTableName . " DROP CONSTRAINT " . $sOldTableName . "_pkey",__LINE__,__FILE__);
-			}
-			else	// rename the index
-			{
-				$oProc->m_odb->query('ALTER TABLE '.$sOldTableName.'_pkey RENAME TO '.$sNewTableName.'_pkey');
-			}
-
 			return !!($oProc->m_odb->query("ALTER TABLE $sOldTableName RENAME TO $sNewTableName"));
 		}
 
