@@ -159,10 +159,12 @@
 			{
 				if ($proj) $subject .= '<br>';
 				$addr = $this->bo->addr2name( $addr );
-				$subject .= $this->html->bold($this->html->a_href($addr,
-									'/index.php',$this->menuaction() +
-									array( 'filter' => $filter,'action' => 'addr',
-											 'addr_id' => $addr_id )));
+				$subject .= $this->html->bold($this->html->a_href($addr,'/index.php',
+									array( 'menuaction' => 'addressbook.uiaddressbook.view',
+											 'ab_id' => $addr_id)
+									/* $this->menuaction() + array( 'filter' => $filter,'action' => 'addr',
+																			  'addr_id' => $addr_id )*/
+								));
 			}
 			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from)))
 			{
