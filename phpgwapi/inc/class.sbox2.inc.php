@@ -350,6 +350,16 @@
 		function getProject( $name,$id_name,$query_name,$title='' )
 		{
 			// echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
+
+			// fallback if projects is not installed or not enabled for user
+			if (!file_exists(PHPGW_SERVER_ROOT.'/projects') || !$GLOBALS['phpgw_info']['user']['apps']['projects']['enabled'])
+			{
+				return array(
+					$name => "<input type=\"hidden\" name=\"id_$name\" value=\"$id_name\">\n",
+					$name.'_no_js' => '',
+					$name.'_title' => ''
+				);
+			}
 			if ($id_name || $query_name)
 			{
 				$projects = createobject('projects.boprojects');
@@ -363,13 +373,12 @@
 					$content = array();
 					while ($projs && list( $key,$proj ) = each( $projs ))
 					{
-						$content[$proj['id']] = $proj['title'];
+						$content[$proj['project_id']] = $proj['title'];
 					}
 				}
 				else
 				{
-					list( $proj ) = $projects->read_single_project( $id_name );
-					if (count($proj))
+					if ($proj = $projects->read_single_project( $id_name ))
 					{
 						$content = $proj['title'];
 						// $customer_id = $proj['customer'];
@@ -580,7 +589,7 @@
 			}
 
 			/* Get global and app-specific category listings */
-			$cats_link .= $this->cat->formated_list('select','all',$cat_id,True);
+			$cats_link .= $this->cat->formatted_list('select','all',$cat_id,True);
 			$cats_link .= '</select>'."\n";
 
 			return $cats_link;
