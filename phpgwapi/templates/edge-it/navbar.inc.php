@@ -58,7 +58,6 @@
 
 		foreach($GLOBALS['phpgw_info']['navbar'] as $app => $app_data)
 		{
-			//if($app != 'home' && $app != 'preferences' && $app != 'about' && $app != 'logout')
 			if($app != 'preferences' && $app != 'about' && $app != 'logout')
 			{
 				$title = $GLOBALS['phpgw_info']['apps'][$app]['title'];
@@ -67,11 +66,8 @@
 
 				if($app=='home')
 				{
+					$title = lang('home');
 					$icon = '<img src="' . $app_data['icon'] . '" alt="' . lang('home') . '" title="' . lang('home') . '" border="0" />';
-					if($GLOBALS['phpgw_info']['user']['preferences']['common']['start_and_logout_icons']=='no')
-					{
-						continue;
-					}
 				}
 
 				if($i<$max_icons)
