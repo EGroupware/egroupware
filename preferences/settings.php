@@ -202,7 +202,6 @@
      $phpgw->common->phpgw_footer();
   } else {
 
-     $phpgw->preferences->reset("common");
      while ($setting = each($settings)) {
         $phpgw->preferences->change("common",$setting[0],$setting[1]);
      }
