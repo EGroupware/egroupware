@@ -78,18 +78,13 @@
 
 		function update_entry($fields)
 		{
-			$ab_id  = $fields['ab_id'];
+			$ab_id  = isset($fields['ab_id']) ? $fields['ab_id'] : $fields['id'];
 			$owner  = $fields['owner'];
-			$access = $fields['access'];
-			$cat_id = $fields['cat_id'];
-			$tid = $fields['tid'];
 			unset($fields['owner']);
-			unset($fields['access']);
-			unset($fields['cat_id']);
 			unset($fields['ab_id']);
-			unset($fields['tid']);
+			unset($fields['id']);
 
-			return $this->contacts->update($ab_id,$owner,$fields,$access,$cat_id,$tid);
+			return $this->contacts->update($ab_id,$owner,$fields);
 		}
 
 		function delete_entry($id)

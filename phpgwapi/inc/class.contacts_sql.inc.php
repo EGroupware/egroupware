@@ -637,7 +637,7 @@
 				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
+		function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
 			/* First make sure that id number exists */
 			$this->db->query("SELECT COUNT(*) FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
@@ -647,6 +647,13 @@
 				return False;
 			}
 
+			foreach(array('access','cat_id','tid') as $extra)
+			{
+				if (!is_null($$extra))
+				{
+					$fields[$extra] = $$extra;
+				}
+			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 			if (count($stock_fields))
 			{
@@ -654,13 +661,13 @@
 				{
 					$ta[] = $stock_fieldname . "='" . $this->db->db_addslashes($stock_fields[$stock_fieldname]) . "'";
 				}
-				$ta[] = 'last_mod=' . $GLOBALS['phpgw']->datetime->gmtnow; 
-				$fields_s = ',' . implode(',',$ta);
+				$ta[] = 'last_mod=' . $GLOBALS['phpgw']->datetime->gmtnow;
+				$fields_s = implode(',',$ta);
 				if ($field_s == ',')
 				{
 					unset($field_s);
 				}
-				$this->db->query("UPDATE $this->std_table SET access='$access',cat_id='$cat_id', tid='$tid' $fields_s WHERE "
+				$this->db->query("UPDATE $this->std_table SET $fields_s WHERE "
 					. "id='$id'",__LINE__,__FILE__);
 			}
 

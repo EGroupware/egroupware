@@ -384,7 +384,21 @@
 
 		function delete_entry($addr)
 		{
-			$id = !is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
+			if (!is_array($addr))
+			{
+				$id = intval($addr);
+			}
+			else
+			{
+				if (is_numeric($addr[0]))	// xmlrpc liefert array($id)
+				{
+					$id = intval($addr[0]);
+				}
+				else
+				{
+					$id = isset($addr['id']) ? $addr['id'] : $addr['ab_id'];
+				}
+			}
 
 			if ($this->check_perms($id,PHPGW_ACL_DELETE))
 			{
@@ -415,7 +429,7 @@
 				$owner = $addr['owner'];
 			}
 			//echo "<p>boaddressbook::check_perms(id='$id',rights=$rights): grant[owner='$owner']='".$this->grants[$owner]."' => ".(($this->grants[$owner] & 4) ? 'True':'False')."</p>\n";
-			return !!($this->grants[$owner] & $rights);
+			return $owner && !!($this->grants[$owner] & $rights);
 		}
 
 		function save_preferences($prefs,$other,$qfields,$fcat_id)
