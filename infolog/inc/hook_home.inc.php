@@ -22,20 +22,20 @@
 		$GLOBALS['portal_order'][] = $app_id;
 
 		$infolog = CreateObject('infolog.uiinfolog');
-		if($showevents==1)
+		switch($showevents)
 		{
-			$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
-		}
-		elseif($showevents==2)
-		{
-			#$html = $infolog->index(array('nm' => array('filter' => 'own-upcoming')),'','',0,False,True);
-			$html = ExecMethod('calendar.uicalendar.get_todos', array('', false));
+			case 1:
+				$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
+				break;
+			case 2:
+				$html = ExecMethod('calendar.uicalendar.get_todos', array('', false));
+				break;
 		}
 		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
-		$stable = $infolog->tmpl->stable;
+		$xslt = $infolog->tmpl->xslt;
 		unset($infolog);
 
-		if($stable)	// .14/6
+		if(!$xslt)	// .14/6
 		{
 			$portalbox = CreateObject('phpgwapi.listbox',array(
 				'title'     => $title,
