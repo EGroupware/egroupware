@@ -1047,6 +1047,15 @@
 				}
 			}
 			$this->db->transaction_commit();
+			
+			$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
+			$GLOBALS['hook_values']['account_id']	= $accountid;
+			$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
+			$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
+			$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
+				'location' => 'addaccount'
+			),False,True);  // called for every app now, not only enabled ones
+			
 			return $accountid;
 		}
 
