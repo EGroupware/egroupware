@@ -540,7 +540,7 @@
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='',$cat_id='',$tid='')
+		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
 		{
 			// First make sure that id number exists
 			$this->db->query("select count(*) from $this->std_table where id='$id'",__LINE__,__FILE__);
