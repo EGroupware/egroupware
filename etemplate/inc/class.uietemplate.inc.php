@@ -537,6 +537,7 @@
 						break;
 					list($style,$extra_link) = explode(',',$cell['size']);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
+					$value = nl2br(htmlentities($value));
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
@@ -556,7 +557,7 @@
 				case 'text':		// size: [length][,maxLength]
 					if ($readonly)
 					{
-						$html .= $this->html->bold($value);
+						$html .= $this->html->bold(htmlentities($value));
 					}
 					else
 					{
