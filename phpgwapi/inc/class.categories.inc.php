@@ -272,7 +272,8 @@
 					. $querymethod;
 
 			$this->db2->query($sql . $parent_select,__LINE__,__FILE__);
-			$total_mains = $this->db2->num_rows();
+			//$total_mains = $this->db2->num_rows();
+			$this->total_records = $this->db2->num_rows();
 
 			if ($limit)
 			{
@@ -290,10 +291,10 @@
 			{
 				$sub_select = " AND cat_parent='" . $cats[$i]['cat_id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
 
-				$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
+				/*$this->db2->query($sql . $sub_select,__LINE__,__FILE__);
 				$total_subs += $this->db2->num_rows();
 
-				/*if ($limit)
+				if ($limit)
 				{
 					$this->db->limit_query($sql . $sub_select . $ordermethod,$start,__LINE__,__FILE__);
 				}
@@ -325,7 +326,7 @@
 				}
 			}
 			//$this->total_records = count($cats);
-			$this->total_records = $total_mains + $total_subs;
+			//$this->total_records = $total_mains + $total_subs;
 			return $cats;
 		}
 
@@ -452,11 +453,10 @@
 		{
 			if(is_array($data))
 			{
-				$format		= (isset($data['format'])?$data['format']:'select');
-				$type		= (isset($data['type'])?$data['type']:'all');
-				$selected	= (isset($data['selected'])?$data['selected']:'');
-				$globals	= (isset($data['globals'])?$data['globals']:False);
-				$site_link	= (isset($data['site_link'])?$data['site_link']:'site');
+				$format			= (isset($data['format'])?$data['format']:'filter');
+				$type			= (isset($data['type'])?$data['type']:'all');
+				$selected		= (isset($data['selected'])?$data['selected']:'');
+				$globals		= (isset($data['globals'])?$data['globals']:False);
 			}
 
 			if (!is_array($selected))
@@ -473,49 +473,56 @@
 				$cats = $this->return_sorted_array($start,False,$query,$sort,$order,$globals);
 			}
 
-			if ($format == 'select')
+			switch($format)
 			{
-				while (is_array($cats) && list(,$cat) = each($cats))
-				{
-					$sel_cat = '';
-					if (in_array($cat['cat_id'],$selected))
-					{
-						$sel_cat = 'selected';
-					}
-
-					$name = '';
-					for ($i=0;$i<$cat['level'];$i++)
-					{
-						$name .= '&nbsp;.&nbsp;';
-					}
-					$name .= $GLOBALS['phpgw']->strip_html($cat['name']);
-
-					if ($cat['app_name'] == 'phpgw')
-					{
-						$name .= ' <' . lang('Global') . '>';
-					}
-					if ($cat['owner'] == '-1')
-					{
-						$name .= ' <' . lang('Global') . ' ' . lang($this->app_name) . '>';
-					}
-
-					$cat_list[] = array
-					(
-						'cat_id'	=> $cat['cat_id'],
-						'name'		=> $name,
-						'selected'	=> $sel_cat
-					);
-				}
-
-				for ($i=0;$i<count($cat_list);$i++)
-				{
-					if ($cat_list[$i]['selected'] != 'selected')
-					{
-						unset($cat_list[$i]['selected']);
-					}
-				}
-				return $cat_list;
+				case 'select':
+					$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'cat_select');
+					break;
+				case 'filter':
+					$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'cat_filter');
+					break;
 			}
+
+			while (is_array($cats) && list(,$cat) = each($cats))
+			{
+				$sel_cat = '';
+				if (in_array($cat['cat_id'],$selected))
+				{
+					$sel_cat = 'selected';
+				}
+
+				$name = '';
+				for ($i=0;$i<$cat['level'];$i++)
+				{
+					$name .= '&nbsp;.&nbsp;';
+				}
+				$name .= $GLOBALS['phpgw']->strip_html($cat['name']);
+
+				if ($cat['app_name'] == 'phpgw')
+				{
+					$name .= ' <' . lang('Global') . '>';
+				}
+				if ($cat['owner'] == '-1')
+				{
+					$name .= ' <' . lang('Global') . ' ' . lang($this->app_name) . '>';
+				}
+
+				$cat_list[] = array
+				(
+					'cat_id'	=> $cat['cat_id'],
+					'name'		=> $name,
+					'selected'	=> $sel_cat
+				);
+			}
+
+			for ($i=0;$i<count($cat_list);$i++)
+			{
+				if ($cat_list[$i]['selected'] != 'selected')
+				{
+					unset($cat_list[$i]['selected']);
+				}
+			}
+			return $cat_list;
 		}
 
 		/*!
