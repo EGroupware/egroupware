@@ -45,7 +45,10 @@
 
 		function ifadd($add, $me)
 		{
-			if('' != $add) return ' ' . $me . $add;
+			if('' != $add)
+			{
+				return ' ' . $me . $add;
+			}
 		}
 
 		/* public: constructor */
@@ -166,7 +169,9 @@
 		function db_addslashes($str)
 		{
 			if (!IsSet($str) || $str == '')
+			{
 				return '';
+			}
 
 			return addslashes($str);
 		}
@@ -285,20 +290,28 @@
 			 * conditional code to the apps.
 			 */
 			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+			{
 				return -1;
+			}
 
 			$oid = pg_getlastoid($this->Query_ID);
 			if ($oid == -1)
+			{
 				return -1;
+			}
 
 			$result = @pg_Exec($this->Link_ID, "select $field from $table where oid=$oid");
 			if (!$result)
+			{
 				return -1;
+			}
 
 			$Record = @pg_fetch_array($result, 0);
 			@pg_freeresult($result);
 			if (!is_array($Record)) /* OID not found? */
+			{
 				return -1;
+			}
 
 			return $Record[0];
 		}
@@ -486,6 +499,20 @@
 			while ($this->next_record())
 			{
 				$return[$i]['table_name']= $this->f(0);
+				$return[$i]['tablespace_name']=$this->Database;
+				$return[$i]['database']=$this->Database;
+				$i++;
+			}
+			return $return;
+		}
+
+		function index_names()
+		{
+			$this->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relkind ='i' ORDER BY relname");
+			$i=0;
+			while ($this->next_record())
+			{
+				$return[$i]['index_name']= $this->f(0);
 				$return[$i]['tablespace_name']=$this->Database;
 				$return[$i]['database']=$this->Database;
 				$i++;

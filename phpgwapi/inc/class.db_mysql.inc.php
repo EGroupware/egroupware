@@ -305,7 +305,9 @@
 			 */
 
 			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+			{
 				return -1;
+			}
 
 			return @mysql_insert_id($this->Link_ID);
 		}
@@ -587,6 +589,12 @@
 				$return[$i]['database'] = $this->Database;
 				$i++;
 			}
+			return $return;
+		}
+
+		function index_names()
+		{
+			$return = array();
 			return $return;
 		}
 
