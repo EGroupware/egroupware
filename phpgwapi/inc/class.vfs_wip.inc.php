@@ -41,6 +41,15 @@
 
 	/* These are used in calls to extra_sql () */
 	define (VFS_SQL_SELECT, 1);
+	define (VFS_SQL_DELETE, 2);
+
+	/* These are used in calls to add_journal (), and allow journal messages to be more standard */
+	define (VFS_OPERATION_CREATED, 1);
+	define (VFS_OPERATION_EDITED, 2);
+	define (VFS_OPERATION_EDITED_COMMENT, 4);
+	define (VFS_OPERATION_COPIED, 8);
+	define (VFS_OPERATION_MOVED, 16);
+	define (VFS_OPERATION_DELETED, 32);
 
 	/*!
 	@class path_class
@@ -98,17 +107,24 @@ class vfs
 		$this->now = date ("Y-m-d");
 		$this->override_acl = 0;
 
-		/* File/dir attributes, each corresponding to a database field.  Useful for use in loops */
-		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name", "link_directory", "link_name");
+		/*
+		   File/dir attributes, each corresponding to a database field.  Useful for use in loops
+		   If an attribute was added to the table, add it here and possibly add it to
+		   set_attributes ()
+		*/
+
+		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name", "link_directory", "link_name", "version");
 
 		/*
 		   These are stored in the MIME-type field and should normally be ignored.
 		   Adding a type here will ensure it is normally ignored, but you will have to
 		   explicitly add it to acl_check (), and to any other SELECT's in this file
 		*/
-		$this->meta_types = array ("journal");
+
+		$this->meta_types = array ("journal", "journal-deleted");
 
 		/* We store the linked directories in an array now, so we don't have to make the SQL call again */
+
 		$query = $phpgw->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE link_directory != '' AND link_name != ''" . $this->extra_sql (VFS_SQL_SELECT));
 
 		$this->linked_dirs = array ();
@@ -212,20 +228,189 @@ class vfs
 	{
 		global $phpgw, $phpgw_info;
 
-		$sql = " AND (mime_type != ";
-
-		reset ($this->meta_types);
-		while (list ($num, $type) = each ($this->meta_types))
+		if ($query_type == VFS_SQL_SELECT || $query_type == VFS_SQL_DELETE)
 		{
-			if ($num)
-				$sql .= ", ";
+			$sql = " AND ((";
 
-			$sql .= "'$type'";
+			reset ($this->meta_types);
+			while (list ($num, $type) = each ($this->meta_types))
+			{
+				if ($num)
+					$sql .= " AND ";
+
+				$sql .= "mime_type != '$type'";
+			}
+
+			$sql .= ") OR mime_type IS NULL)";
 		}
 
-		$sql .= "OR mime_type IS NULL)";
-
 		return ($sql);
+	}
+
+	/*!
+	@function add_journal
+	@abstract Add a journal entry after completing an operation, and increment the version number
+		  This function should be used internally only
+	@discussion Note that $state_one and $state_two are optional, and are only used for some
+		    VFS_OPERATION's and not for any "custom" operation
+	@param $string File or directory to add entry for
+	@param $relatives Relativity array
+	@param $operation The operation that was performed.  Either a VFS_OPERATION define or
+			  a non-integer descriptive text string
+	@param $state_one The first "state" of the file or directory.  Can be a file name, size,
+			  location, whatever is appropriate for the specific operation
+	@param $state_two The second "state" of the file or directory
+	@param $incversion Boolean True/False.  Increment the version for the file?  Note that this is
+			   handled automatically for the VFS_OPERATION defines.
+			   i.e. VFS_OPERATION_EDITED would increment the version, VFS_OPERATION_COPIED
+			   would not
+	@result Boolean True/False
+	*/
+
+	function add_journal ($string, $relatives = array (RELATIVE_CURRENT), $operation, $state_one, $state_two, $incversion = True)
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		/* We check that they have some sort of access to the file other than read */
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_WRITE) && !$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_EDIT) && !$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_DELETE))
+		{
+			return False;
+		}
+
+		if (!$this->file_exists ($p->fake_full_path, array ($p->mask)))
+		{
+			return False;
+		}
+
+		$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), False, False, True);
+		$file_array = $ls_array[0];
+
+		$sql = "INSERT INTO phpgw_vfs (";
+		$sql2 .= " VALUES (";
+
+		for ($i = 0; list ($attribute, $value) = each ($file_array); $i++)
+		{
+			if ($attribute == "file_id")
+			{
+				continue;
+			}
+
+			if ($i > 1)
+			{
+				$sql .= ", ";
+				$sql2 .= ", ";
+			}
+
+			if ($attribute == "mime_type")
+			{
+				$value = "journal";
+			}
+
+			if ($attribute == "comment")
+			{
+				switch ($operation)
+				{
+					case VFS_OPERATION_CREATED:
+						$value = "Created";
+						$incversion = True;
+						break;
+					case VFS_OPERATION_EDITED:
+						$value = "Edited";
+						$incversion = True;
+						break;
+					case VFS_OPERATION_EDITED_COMMENT:
+						$value = "Edited comment";
+						$incversion = False;
+						break;
+					case VFS_OPERATION_COPIED:
+						if (!$state_one)
+							$state_one = $p->fake_full_path;
+						$value = "Copied $state_one to $state_two";
+						$incversion = False;
+						break;
+					case VFS_OPERATION_MOVED:
+						if (!$state_one)
+							$state_one = $p->fake_full_path;
+						$value = "Moved $state_one to $state_two";
+						$incversion = False;
+						break;
+					case VFS_OPERATION_DELETED:
+						$value = "Deleted";
+						$incversion = False;
+						break;
+					default:
+						$value = $operation;
+						break;
+				}
+			}
+
+			/*
+			   Let's increment the version for the file itself.  We keep the current
+			   version when making the journal entry, because that was the version that
+			   was operated on.  The maximum numbers for each part in the version string:
+			   none.99.9.9
+			*/
+			if ($attribute == "version" && $incversion)
+			{
+				$version_parts = split ("\.", $value);
+				$newnumofparts = $numofparts = count ($version_parts);
+
+				if ($version_parts[3] >= 9)
+				{
+					$version_parts[3] = 0;
+					$version_parts[2]++;
+					$version_parts_3_update = 1;
+				}
+				elseif (isset ($version_parts[3]))
+				{
+					$version_parts[3]++;
+				}
+
+				if ($version_parts[2] >= 9 && $version_parts[3] == 0 && $version_parts_3_update)
+				{
+					$version_parts[2] = 0;
+					$version_parts[1]++;
+				}
+
+				if ($version_parts[1] > 99)
+				{
+					$version_parts[1] = 0;
+					$version_parts[0]++;
+				}
+
+				for ($i = 0; $i < $newnumofparts; $i++)
+				{
+					if (!isset ($version_parts[$i]))
+						break;
+
+					if ($i)
+						$newversion .= ".";
+
+					$newversion .= $version_parts[$i];
+				}
+
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("version" => $newversion));
+			}
+
+			$sql .= "$attribute";
+			$sql2 .= "'$value'";
+		}
+
+		$sql .= ")";
+		$sql2 .= ")";
+
+		$sql .= $sql2;
+
+		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
+
+		if ($operation == VFS_OPERATION_DELETED)
+		{
+			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean' AND mime_type='journal'");
+		}
+
+		return True;
 	}
 
 	/*!
@@ -361,7 +546,7 @@ class vfs
 			reset ($this->linked_dirs);
 			while (list ($num, $link_info) = each ($this->linked_dirs))
 			{
-				if (ereg ("^$link_info[directory]/$link_info[name]", $rarray["fake_full_path"]))
+				if (ereg ("^$link_info[directory]/$link_info[name](/|$)", $rarray["fake_full_path"]))
 				{
 					$rarray["real_full_path"] = ereg_replace ("^$this->basedir", "", $rarray["real_full_path"]);
 					$rarray["real_full_path"] = ereg_replace ("^$link_info[directory]" . SEP . "$link_info[name]", $link_info["link_directory"] . SEP . $link_info["link_name"], $rarray["real_full_path"]);
@@ -789,6 +974,7 @@ class vfs
 			fclose ($fp);
 
 			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("size" => filesize ($p->real_full_path)));
+
 			return True;
 		}
 		else
@@ -848,6 +1034,8 @@ class vfs
 
 			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
 			$this->correct_attributes ($p->fake_full_path, array ($p->mask));
+
+			$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_CREATED);
 		}
 
 		if ($rr || $vr || $query)
@@ -924,6 +1112,8 @@ class vfs
 				$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'", __LINE__, __FILE__);
 
 				$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
+
+				$this->add_journal ($t->fake_full_path, array ($t->mask), VFS_OPERATION_EDITED);
 			}
 			else
 			{
@@ -933,8 +1123,6 @@ class vfs
 			}
 
 			$this->correct_attributes ($t->fake_full_path, array ($t->mask));
-
-			return True;
 		}
 		else	/* It's a directory */
 		{
@@ -963,9 +1151,14 @@ class vfs
 				$newdir = ereg_replace ("^$f->fake_full_path", "$t->fake_full_path", $entry["directory"]);
 				$this->cp ("$entry[directory]/$entry[name]", "$newdir/$entry[name]", array ($f->mask, $t->mask));
 			}
-
-			return True;
 		}
+
+		if (!$f->outside)
+		{
+			$this->add_journal ($f->fake_full_path, array ($f->mask), VFS_OPERATION_COPIED, NULL, $t->fake_full_path);
+		}
+
+		return True;
 	}
 
 	function copy ($from, $to, $relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
@@ -1030,6 +1223,15 @@ class vfs
 			$this->rm ($t->fake_full_path, array ($t->mask));
 
 			/*
+			   We add the journal entry now, before we delete.  This way the mime_type
+			   field will be updated to 'journal-old' when the file is actually deleted
+			*/
+			if (!$f->outside)
+			{
+				$this->add_journal ($f->fake_full_path, array ($f->mask), VFS_OPERATION_MOVED, $f->fake_full_path, $t->fake_full_path);
+			}
+
+			/*
 			   If the from file is outside, it won't have a database entry,
 			   so we have to touch it and find the size
 			*/
@@ -1037,7 +1239,7 @@ class vfs
 			{
 				$size = filesize ($f->real_full_path);
 
-				$this->touch ($t->fake_full_path, $t->mask);
+				$this->touch ($t->fake_full_path, array ($t->mask));
 				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'");
 			}
 			elseif (!$t->outside)
@@ -1076,6 +1278,8 @@ class vfs
 				$this->correct_attributes ("$newdir/$entry[name]", array ($t->mask));
 			}
 		}
+
+		$this->add_journal ($t->fake_full_path, array ($t->mask), VFS_OPERATION_MOVED, $f->fake_full_path, $t->fake_full_path);
 
 		return True;
 	}
@@ -1127,7 +1331,9 @@ class vfs
 
 		if ($this->file_type ($string, array ($relatives[0])) != "Directory")
 		{
-			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+			$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_DELETED);
+
+			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_DELETE), __LINE__, __FILE__);
 			$rr = unlink ($p->real_full_path);
 
 			if ($query || $rr)
@@ -1178,7 +1384,10 @@ class vfs
 			}
 
 			/* Last, we delete the directory itself */
-			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
+			$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_DELETED);
+
+			$query = $phpgw->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (VFS_SQL_DELETE), __LINE__, __FILE__);
+
 			rmdir ($p->real_full_path);
 
 			return True;
@@ -1228,7 +1437,6 @@ class vfs
 
 		if (!mkdir ($p->real_full_path, 0770))
 		{
-			echo "$p->real_full_path<br>";
 			return False;
 		}
 
@@ -1239,6 +1447,8 @@ class vfs
 			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
 
 			$this->correct_attributes ($p->fake_full_path, array ($p->mask));
+
+			$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_CREATED);
 		}
 		else
 		{
@@ -1314,6 +1524,7 @@ class vfs
 			app
 			link_directory
 			link_name
+			version
 	*/
 
 	function set_attributes ($file, $relatives = array (RELATIVE_CURRENT), $attributes = array ())
@@ -1345,13 +1556,18 @@ class vfs
 		$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), False, False, True);
 		$record = $ls_array[0];
 
-		$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "link_directory", "link_name");
+		$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "link_directory", "link_name", "version");
 
 		while (list ($num, $attribute) = each ($attribute_names))
 		{
 			if (isset ($attributes[$attribute]))
 			{
 				$$attribute = $attributes[$attribute];
+
+				if ($attribute == "comment")
+				{
+					$edited_comment = 1;
+				}
 			}
 			else
 			{
@@ -1378,6 +1594,11 @@ class vfs
 
 		if ($query) 
 		{
+			if ($edited_comment)
+			{
+				$this->add_journal ($p->fake_full_path, array ($p->mask), VFS_OPERATION_EDITED_COMMENT);
+			}
+
 			return True;
 		}
 		else
