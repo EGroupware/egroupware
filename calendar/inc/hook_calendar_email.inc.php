@@ -31,9 +31,6 @@
 
 	$str = '';
 
-//	$msg_type = explode(';',$msgtype);
-//	$id_array = explode('=',$msg_type[2]);
-//	$id = intval(substr($id_array[1],1,strlen($id_array[1])-2));
 	$id = $calendar_id;
 
 	echo 'Event ID: '.$id."<br>\n";
