@@ -154,7 +154,7 @@ function string_encode ($string, $return)
 
 function string_decode ($string, $return)
 {
-	$rstring = urldecode ($string);
+	$rstring = rawurldecode ($string);
 
 	return (eor ($rstring, $return));
 }
