@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	class html
+	class html_tables
 	{
 		function hash_table($rows,$head='',$obj, $frtn)
 		{

@@ -31,15 +31,15 @@
 				$GLOBALS['phpgw']->redirect_link('/index.php');
 			}
 			
-			$_cols    = $GLOBALS['HTTP_POST_VARS']['_cols'];
-			$nocols   = $GLOBALS['HTTP_POST_VARS']['nocols'];
-			$_delcol  = $GLOBALS['HTTP_POST_VARS']['_delcol'];
-			$layout   = $GLOBALS['HTTP_POST_VARS']['layout'];
-			$editable = $GLOBALS['HTTP_GET_VARS']['editable'];
-			$modifytable = $GLOBALS['HTTP_GET_VARS']['modifytable'] ? $GLOBALS['HTTP_GET_VARS']['modifytable'] : $GLOBALS['HTTP_POST_VARS']['modifytable'];
+			$_cols    = $_POST['_cols'];
+			$nocols   = $_POST['nocols'];
+			$_delcol  = $_POST['_delcol'];
+			$layout   = $_POST['layout'];
+			$editable = $_GET['editable'];
+			$modifytable = $_GET['modifytable'] ? $_GET['modifytable'] : $_POST['modifytable'];
 
 			$this->bolog    = CreateObject('admin.bolog',True);
-			$this->html     = createobject('admin.html');
+			$this->html     = createobject('admin.html_tables');
 			$this->t        = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
 			$this->lastid   = '';
 			$this->editmode = False;
