@@ -1,6 +1,6 @@
 <?php
 /*
- V4.22 15 Apr 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+ V4.20 22 Feb 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -791,15 +791,14 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 	function _initrs()
 	{
 	global $ADODB_COUNTRECS;
-		$qid = $this->_queryID;
-		$this->_numOfRows = ($ADODB_COUNTRECS)? @pg_numrows($qid):-1;
-		$this->_numOfFields = @pg_numfields($qid);
+		$this->_numOfRows = ($ADODB_COUNTRECS)? @pg_numrows($this->_queryID):-1;
+		$this->_numOfFields = @pg_numfields($this->_queryID);
 		
 		// cache types for blob decode check
 		for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) {  
-			if (pg_fieldtype($qid,$i) == 'bytea') {
-				$this->_blobArr[$i] = pg_fieldname($qid,$off);
-			}
+			$f1 = $this->FetchField($i);
+			//print_r($f1);
+			if ($f1->type == 'bytea') $this->_blobArr[$i] = $f1->name;
 		}		
 	}
 
@@ -826,6 +825,8 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 		$o->name = @pg_fieldname($this->_queryID,$off);
 		$o->type = @pg_fieldtype($this->_queryID,$off);
 		$o->max_length = @pg_fieldsize($this->_queryID,$off);
+		//print_r($o);		
+		//print "off=$off name=$o->name type=$o->type len=$o->max_length<br>";
 		return $o;	
 	}
 
