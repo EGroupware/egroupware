@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - vCalendar Parser                                          *
+  * phpGroupWare - iCalendar Parser                                          *
   * http://www.phpgroupware.org                                              *
   * Written by Mark Peters <skeeter@phpgroupware.org>                        *
   * --------------------------------------------                             *
@@ -77,9 +77,9 @@ define('_BASE64',1);
 
 define('OTHER',99);
 
-class vCalendar
+class boicalendar
 {
-	var $vcal;
+	var $ical;
 	var $line = 0;
 	var $event = Array();
 	var $todo = Array();
@@ -89,13 +89,13 @@ class vCalendar
 	var $property = Array();
 	var $parameter = Array();
 	var $debug_str = False;
-	var $phpgwapi = True;
+	var $api = True;
 	
 	/*
 	 * Base Functions
 	 */
 
-	function vCalendar()
+	function boicalendar()
 	{
 		$this->property = Array(
 			'action'		=> Array(
@@ -449,7 +449,7 @@ class vCalendar
 			'method'			=> Array(
 				'type'		=> 'text',
 				'to_text'	=> True,
-				'vcal'	=> Array(
+				'ical'	=> Array(
 					'state'		=> 'required',
 					'multiples'	=> False
 				)
@@ -497,7 +497,7 @@ class vCalendar
 			'prodid'			=> Array(
 				'type'		=> 'text',
 				'to_text'	=> True,
-				'vcal'	=> Array(
+				'ical'	=> Array(
 					'state'		=> 'required',
 					'multiples'	=> False
 				)
@@ -777,7 +777,7 @@ class vCalendar
 			'version'			=> Array(
 				'type'		=> 'text',
 				'to_text'	=> True,
-				'vcal'	=> Array(
+				'ical'	=> Array(
 					'state'		=> 'required',
 					'multiples'	=> False
 				)
@@ -1249,15 +1249,15 @@ class vCalendar
 		}
 	}
 
-	function read_line_unfold($vcal_text)
+	function read_line_unfold($ical_text)
 	{
-		if($this->line < count($vcal_text))
+		if($this->line < count($ical_text))
 		{
-			$str = str_replace("\r\n",'',$vcal_text[$this->line]);
+			$str = str_replace("\r\n",'',$ical_text[$this->line]);
 			$this->line = $this->line + 1;
-			while(ereg("^[[:space:]]",$vcal_text[$this->line]))
+			while(ereg("^[[:space:]]",$ical_text[$this->line]))
 			{
-				$str .= substr(str_replace("\r\n",'',$vcal_text[$this->line]),1);
+				$str .= substr(str_replace("\r\n",'',$ical_text[$this->line]),1);
 				$this->line = $this->line + 1;
 			}
 			$this->debug("LINE : ".$str);
@@ -1355,7 +1355,7 @@ class vCalendar
 		return $prop;
 	}
 
-	function new_vcal()
+	function new_ical()
 	{
 		return Array();
 	}
@@ -1501,7 +1501,7 @@ class vCalendar
 		}				
 	}
 
-	function parse(&$event,$majortype,$value,$mode)
+	function parse_value(&$event,$majortype,$value,$mode)
 	{
 		$var = Array();
 		$this->debug('Mode : '.$mode.' Majortype : '.$majortype);
@@ -1513,8 +1513,11 @@ class vCalendar
 		}
 		else
 		{
+	$this->debug('Majortype : '.$majortype);
+	$this->debug('Property : '.$this->property[$majortype]['type']);
 			if($this->property[$majortype]['type'] == 'date-time')
 			{
+	$this->debug('Got a DATE-TIME type!');
 				$t_var = $var[$majortype];
 				unset($var[$majortype]);
 				reset($t_var);
@@ -1522,6 +1525,7 @@ class vCalendar
 				{
 					$var[$key] = $val;
 				}
+				$this->debug($majortype.' : '._debug_array($var));
 			}
 			$this->set_var($event,$majortype,$var);
 		}
@@ -1943,6 +1947,7 @@ class vCalendar
 
 	function switch_date($var)
 	{
+	$this->debug('SWITCH_DATE: gettype = '.gettype($var));
 		if(is_string($var))
 		{
 			$dtime = Array();
@@ -1963,7 +1968,7 @@ class vCalendar
 				{
 					if(substr($var,14,1) != 'Z')
 					{
-						if($this->phpgwapi)
+						if($this->api)
 						{
 							$dtime['hour'] -= $GLOBALS['phpgw_info']['users']['common']['tz_offset'];
 							if($dtime['hour'] < 0)
@@ -1982,11 +1987,11 @@ class vCalendar
 				else
 				{
 					/*
-					 * The time provided by the vCal is considered local time.
+					 * The time provided by the iCal is considered local time.
 					 *
 					 * The implementor will need to consider how to convert that time to UTC.
 					 */
-//					if($this->phpgwapi)
+//					if($this->api)
 //					{
 //						$dtime['hour'] -= $GLOBALS['phpgw_info']['users']['common']['tz_offset'];
 //						if($dtime['hour'] < 0)
@@ -2007,11 +2012,12 @@ class vCalendar
 				$this->set_var($dtime,'hour',0);
 				$this->set_var($dtime,'min',0);
 				$this->set_var($dtime,'sec',0);
-				if($this->phpgwapi)
+				if($this->api)
 				{
 					$dtime['hour'] -= $GLOBALS['phpgw_info']['users']['common']['tz_offset'];
 				}
 			}
+			$this->debug('DATETIME : '._debug_array($dtime));
 			return $dtime;
 		}
 		elseif(is_array($var))
@@ -2491,7 +2497,7 @@ class vCalendar
 	 * The brunt of the class
 	 */	
 
-	function read($vcal_text)
+	function parse($ical_text)
 	{
 
 		$begin_regexp = '^';
@@ -2503,10 +2509,10 @@ class vCalendar
 		$param_regexp = $begin_regexp.$catch_all_regexp.':'.$catch_all_regexp.$end_regexp;
 
 		$mode = 'none';
-		$text = $this->read_line_unfold($vcal_text);
+		$text = $this->read_line_unfold($ical_text);
 		while($text)
 		{
-//			if(strlen($vcal_text[$i]) > 75)
+//			if(strlen($ical_text[$i]) > 75)
 //			{
 //				continue;
 //			}
@@ -2517,6 +2523,7 @@ class vCalendar
 
 			if($mode != 'none' && ($majortype != 'begin' && $majortype != 'end'))
 			{
+				$this->debug('PARSE:MAJORTYPE : '.$majortype);
 				if(isset($this->property[$majortype]))
 				{
 					$state = @$this->property[$majortype]["$mode"]['state'];
@@ -2566,7 +2573,7 @@ class vCalendar
 						}
 						break;
 					case 'vcalendar':
-						$vcal = $this->new_vcal();
+						$ical = $this->new_ical();
 						break;
 					case 'vevent':
 					case 'vfreebusy':
@@ -2634,18 +2641,18 @@ class vCalendar
 						unset($event);
 						break;
 					case 'vcalendar':
-						$this->vcal = $vcal;
-						$this->vcal['event'] = $this->event;
-						$this->vcal['freebusy'] = $this->freebusy;
-						$this->vcal['journal'] = $this->journal;
-						$this->vcal['timezone'] = $this->timezone;
-						$this->vcal['todo'] = $this->todo;
+						$this->ical = $ical;
+						$this->ical['event'] = $this->event;
+						$this->ical['freebusy'] = $this->freebusy;
+						$this->ical['journal'] = $this->journal;
+						$this->ical['timezone'] = $this->timezone;
+						$this->ical['todo'] = $this->todo;
 						break 2;
 				}
 			}
 			elseif($majortype == 'prodid' || $majortype == 'version' || $majortype == 'method' || $majortype == 'calscale')
 			{
-				$this->parse_parameters($vcal,$majortype,$this->from_text($value));
+				$this->parse_parameters($ical,$majortype,$this->from_text($value));
 			}
 			elseif($state == 'optional' || $state == 'required')
 			{
@@ -2662,7 +2669,7 @@ class vCalendar
 					case 'recur':
 					case 'date-time':
 					case 'cal-address':
-						$this->parse($event,$majortype,$value,$mode);
+						$this->parse_value($event,$majortype,$value,$mode);
 						break;
 					case 'integer':
 						if($multiples)
@@ -2707,12 +2714,12 @@ class vCalendar
 						break;
 				}
 			}
-			$text = $this->read_line_unfold($vcal_text);
+			$text = $this->read_line_unfold($ical_text);
 		}
-		return $this->vcal;
+		return $this->ical;
 	}
 
-	function build_vcal($vcal)
+	function build_ical($ical)
 	{
 		$var = Array(
 			'timezone',
@@ -2723,17 +2730,17 @@ class vCalendar
 		);
 
 		$str = 'BEGIN:VCALENDAR'."\r\n";
-		$str .= $this->fold('PRODID'.$this->build_text($vcal['prodid'],'prodid'));
-		$str .= $this->fold('VERSION'.$this->build_text($vcal['version'],'version'));
-		$str .= $this->fold('METHOD'.$this->build_text($vcal['method'],'method'));
+		$str .= $this->fold('PRODID'.$this->build_text($ical['prodid'],'prodid'));
+		$str .= $this->fold('VERSION'.$this->build_text($ical['version'],'version'));
+		$str .= $this->fold('METHOD'.$this->build_text($ical['method'],'method'));
 		while(list($key,$vtype) = each($var))
 		{
-			if($vcal[$vtype])
+			if($ical[$vtype])
 			{
-				for($i=0;$i<count($vcal[$vtype]);$i++)
+				for($i=0;$i<count($ical[$vtype]);$i++)
 				{
 					$str .= 'BEGIN:V'.strtoupper($vtype)."\r\n";
-					$str .= $this->build_card_internals('v'.$vtype,$vcal[$vtype][$i]);
+					$str .= $this->build_card_internals('v'.$vtype,$ical[$vtype][$i]);
 					$str .= 'END:V'.strtoupper($vtype)."\r\n";
 				}
 			}
