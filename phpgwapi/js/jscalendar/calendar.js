@@ -284,7 +284,6 @@ Calendar.showMonthsCombo = function () {
 		s.left = (cd.offsetLeft + cd.offsetWidth - mcw) + "px";
 	}
 	s.top = (cd.offsetTop + cd.offsetHeight) + "px";
-alert('showMonthCombo()'+s.left+','+s.top);
 };
 
 Calendar.showYearsCombo = function (fwd) {
