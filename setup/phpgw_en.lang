@@ -28,6 +28,7 @@ address book	common	en	Address Book
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address line 3	addressbook	en	Address Line 3
+address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
 addsub	todo	en	AddSub
@@ -132,6 +133,7 @@ display	admin	en	Display
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
 display note for      notes     en       Display note for
 do_delete	filemanager	en	Delete
+domestic	common	en	Domestic
 done	common	en	Done
 download	filemanager	en	Download
 duration	calendar	en	Duration
@@ -230,6 +232,8 @@ import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
 installed applications	admin	en	Installed applications
+intl	common	en	International
+international	common	en	International
 inventory	common	en	Inventory
 ip	admin	en	IP
 isdn phone	addressbook	en	ISDN Phone
@@ -328,6 +332,7 @@ other number	addressbook	en	Other Number
 other phone	common	en	Other phone
 owner	addressbook	en	Owner
 pager	addressbook	en	Pager
+parcel	addressbook	en	Parcel
 participants	calendar	en	Participants
 password	common	en	Password
 password has been updated	common	en	Password has been updated
@@ -343,6 +348,7 @@ please select a message first	email	en	Please select a message first
 please set your preferences for this app	common	en	Please set your preferences for this application
 please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
+postal	addressbook	en	Postal
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 prefer	common	en	Prefer
 preferences	common	en	Preferences
