@@ -160,4 +160,39 @@
 			}
 			return $Ok;
 		}
+
+		/*!
+		@function save_appsession()
+		@abstract saves content,readonlys,template-keys, ... via the appsession function
+		@discussion As a user may open several windows with the same content/template wie generate a location-id from microtime
+		@discussion which is used as location for appsession to descriminate between the different windows. This location-id
+		@discussion is then saved as a hidden-var in the form. The above mentions session-id has nothing to do / is different
+		@discussion from the session-id which is constant for all windows opened in one session.
+		@returns the location-id
+		*/
+		function save_appsession($data)
+		{
+			list($msec,$sec) = explode(' ',microtime());
+			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] . (intval(1000000 * $msec) + 1000000 * ($sec % 100000));
+			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
+
+			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
+
+			return $id;
+		}
+
+		/*!
+		@function get_appsession()
+		@abstract gets content,readonlys,template-keys, ... back from the appsession function
+		@param $id the location-id
+		@returns the session-data
+		*/
+		function get_appsession($id)
+		{
+			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
+
+			//echo "<p>get_appsession('$id') data="; _debug_array($data);
+
+			return $data;
+		}
 	};

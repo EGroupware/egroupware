@@ -75,10 +75,9 @@
 		@param $readonlys Array with field-names as keys for fields with should be readonly
 		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
 		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
-		@param $cname Basename for the submitted content in $HTTP_POST_VARS (default = 'cont')
 		@returns nothing
 		*/
-		function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$cname='cont')
+		function exec($method,$content,$sel_options='',$readonlys='',$preserv='')
 		{
 			if (!$sel_options)
 			{
@@ -95,16 +94,21 @@
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
+			$id = $this->save_appsession(array(
+				'name' => $this->name,
+				'template' => $this->template,
+				'lang' => $this->lang,
+				'group' => $this->group,
+				'readonlys' => $readonlys,
+				'content' => $content,
+				'sel_options' => $sel_options,
+				'preserv' => $preserv,
+				'method' => $method
+			));
+
 			echo $this->html->nextMatchStyles($this->style)."\n\n". // so they get included once
-				$this->html->form($this->show($content,$sel_options,$readonlys,$cname),array(
-					'etemplate_exec[name]' => $this->name,
-					'etemplate_exec[template]' => $this->template,
-					'etemplate_exec[lang]' => $this->lang,
-					'etemplate_exec[group]' => $this->group,
-					'etemplate_exec[readonlys]' => $readonlys,
-					'etemplate_exec[cname]' => $cname,
-					'etemplate_exec[method]' => $method
-				)+$preserv,'/index.php?menuaction=etemplate.etemplate.process_exec');
+				$this->html->form($this->show($content,$sel_options,$readonlys,'exec'),
+					array('etemplate_exec_id' => $id),'/index.php?menuaction=etemplate.etemplate.process_exec');
 		}
 
 		/*!
@@ -114,23 +118,25 @@
 		@discussion All eTemplates / forms executed with exec are submited to this function
 		@discussion (via the global index.php and menuaction). It then calls process_show
 		@discussion for the eTemplate (to adjust the content of the HTTP_POST_VARS) and
-		@discussion ExecMethod's the given callback from the app.
+		@discussion ExecMethod's the given callback from the app with the content of the form as first argument.
 		*/
 		function process_exec()
 		{
-			$exec = $GLOBALS['HTTP_POST_VARS']['etemplate_exec'];
-			//echo "<p>uietemplate.process_exec('${exec['name']}'): exec = "; _debug_array($exec);
+			$session_data = $this->get_appsession($GLOBALS['HTTP_POST_VARS']['etemplate_exec_id']);
 
-			$this->read($exec);
-			$readonlys = unserialize(stripslashes($exec['readonlys']));
-			//echo "<p>uietemplate.process_exec: process_show(cname=${exec['cname']}): readonlys ="; _debug_array($readonlys);
-			$this->process_show($GLOBALS['HTTP_POST_VARS'][$exec['cname']],$readonlys);
+			$content = $GLOBALS['HTTP_POST_VARS']['exec'];
+			if (!is_array($content))
+			{
+				$content = array();
+			}
+			$this->read($session_data);
+			$this->process_show($content,$session_data['readonlys']);
 
 			// set application name so that lang, etc. works
-			list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$exec['method']);
+			list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$session_data['method']);
 
 			//echo "<p>uietemplate.process_exec: ExecMethod('${exec['method']}')</p>\n";
-			ExecMethod($exec['method']);
+			ExecMethod($session_data['method'],array_merge($content,$session_data['preserv']));
 		}
 
 		/*!
@@ -588,11 +594,16 @@
 
 					if ($idx_cname == '' && $cell['type'] == 'template')	// only templates
 					{
-						if ($readonly)			// can't unset whole content!!!
+						if ($readonly && !isset($readonlys['__ALL__']))		// can't unset whole content!!!
 						{
 							$readonlys['__ALL__'] = True;
+							$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
+							unset($readonlys['__ALL__']);		// unset it after or everything gets set readonly
 						}
-						$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
+						else
+						{
+							$this->process_show_cell($cell,$name,$c,$r,$readonlys,$content);
+						}
 					}
 					elseif (ereg('^([^[]*)\\[(.*)\\]$',$idx_cname,$regs))	// name contains array-index
 					{

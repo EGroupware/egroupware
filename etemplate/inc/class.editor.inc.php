@@ -93,7 +93,7 @@
 					{
 						while(list($k,$v) = each($cell))		// so spanned (not shown) cells got
 						{                                   // reported back like regular one
-							$cols_spanned["cont[$col$row][$k]"] = $v;
+							$cols_spanned[$col.$row][$k] = $v;
 						}
 					}
 					else
@@ -134,9 +134,9 @@
 			$t = $a; $a = $b; $b = $t;
 		}
 
-		function process_edit()
+		function process_edit($content)
 		{
-			$content = $GLOBALS['HTTP_POST_VARS']['cont'];
+			//$content = $GLOBALS['HTTP_POST_VARS']['cont'];
 
 			if ($this->debug)
 			{
@@ -318,13 +318,17 @@
 			$this->edit($msg);
 		}
 
-		function delete($back = 'edit')
+		function delete($post_vars='',$back = 'edit')
 		{
-			if (isset($GLOBALS['HTTP_POST_VARS']['name']))
+			if (!$post_vars)
 			{
-				$read_ok = $this->etemplate->read($GLOBALS['HTTP_POST_VARS']);
+				$post_vars = array();
 			}
-			if (isset($GLOBALS['HTTP_POST_VARS']['yes']))	// Delete
+			if (isset($post_vars['name']))
+			{
+				$read_ok = $this->etemplate->read($post_vars);
+			}
+			if (isset($post_vars['yes']))	// Delete
 			{
 				if ($read_ok)
 				{
@@ -333,9 +337,9 @@
 				$this->edit($this->messages[$read_ok ? 'deleted' : 'not_found']);
 				return;
 			}
-			if (isset($GLOBALS['HTTP_POST_VARS']['no']))	// Back to ...
+			if (isset($post_vars['no']))	// Back to ...
 			{
-				if (($back = $GLOBALS['HTTP_POST_VARS']['back']) != 'show')
+				if (($back = $post_vars['back']) != 'show')
 				{
 					$back = 'edit';
 				}
@@ -354,10 +358,12 @@
 			$delete->exec('etemplate.editor.delete',$content,array(),array(),$content,'');
 		}
 
-		function show()
+		function show($post_vars='')
 		{
-			$post_vars = $GLOBALS['HTTP_POST_VARS'];
-
+			if (!$post_vars)
+			{
+				$post_vars = array();
+			}
 			if (isset($GLOBALS['HTTP_GET_VARS']['name']) && !$this->etemplate->read($GLOBALS['HTTP_GET_VARS']) ||
 			    isset($post_vars['name']) && !$this->etemplate->read($post_vars))
 			{
@@ -365,7 +371,7 @@
 			}
 			if (!$msg && isset($post_vars['delete']))
 			{
-				$this->delete('show');
+				$this->delete(array(),'show');
 				return;
 			}
 			if (isset($post_vars['edit']))
@@ -376,12 +382,17 @@
 			$content = $this->etemplate->as_array() + array('msg' => $msg);
 
 			$show = new etemplate('etemplate.editor.show');
-			$no_buttons = array('save' => True,'show' => True,'dump' => True,'langfile' => True,'size' => True);
-
-			if (!$msg && isset($post_vars['values']) && !isset($GLOBALS['HTTP_POST_VARS']['vals']))
+			$no_buttons = array(
+				'save' => True,
+				'show' => True,
+				'dump' => True,
+				'langfile' => True,
+				'size' => True
+			);
+			if (!$msg && isset($post_vars['values']) && !isset($post_vars['vals']))
 			{
-				$cont = $this->etemplate->process_show($GLOBALS['HTTP_POST_VARS']);
-				for ($r = 1; list($key,$val) = each($cont); ++$r)
+				$cont = $this->etemplate->process_show($post_vars);
+				for ($r = 1; list($key,$val) = @each($cont); ++$r)
 				{
 					$vals["A$r"] = $key;
 					$vals["B$r"] = $val;
@@ -393,8 +404,8 @@
 			else
 			{
 				$show->data[$show->rows]['A']['name'] = $this->etemplate;
-				$vals = $GLOBALS['HTTP_POST_VARS']['vals'];
-				$olds = unserialize(stripslashes($GLOBALS['HTTP_POST_VARS']['olds']));
+				$vals = $post_vars['vals'];
+				$olds = unserialize(stripslashes($post_vars['olds']));
 
 				for ($r = 1; isset($vals["B$r"]); ++$r)
 				{

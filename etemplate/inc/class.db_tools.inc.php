@@ -32,7 +32,7 @@
 			'not_found' => 'Not found !!!',
 			'select_one' => 'Select one ...',
 			'writen' => 'File writen',
-			'error_writing' => 'Error: writing file !!!',
+			'error_writing' => 'Error: writing file (no write-permission for the webserver) !!!',
 			'give_table_name' => 'Please enter table-name first !!!',
 			'new_table' => 'New table created',
 			'select_app' => 'Select an app first !!!'
@@ -79,31 +79,30 @@
 		}
 
 		/*!
-		@function edit()
+		@function edit($content='',$msg='')
 		@abstract this is the table editor (and the callback/submit-method too)
 		*/
-		function edit($msg = '')
+		function edit($content='',$msg = '')
 		{
 			if (isset($GLOBALS['HTTP_GET_VARS']['app']))
 			{
 				$this->app = $GLOBALS['HTTP_GET_VARS']['app'];
 			}
-			if (isset($GLOBALS['HTTP_POST_VARS']['cont']))
+			if (is_array($content))
 			{
-				$content = $GLOBALS['HTTP_POST_VARS']['cont'];
 				if ($this->debug)
 				{
-					echo "HTTP_POST_VARS ="; _debug_array($GLOBALS['HTTP_POST_VARS']);
+					echo "content ="; _debug_array($content);
 				}
 				$this->app = $content['app'];	// this is what the user selected
 				$this->table = $content['table_name'];
-				$posted_app = $GLOBALS['HTTP_POST_VARS']['posted_app'];	// this is the old selection
-				$posted_table = $GLOBALS['HTTP_POST_VARS']['posted_table'];
+				$posted_app = $content['posted_app'];	// this is the old selection
+				$posted_table = $content['posted_table'];
 			}
 			if ($posted_app && $posted_table &&		// user changed app or table
 				 ($posted_app != $this->app || $posted_table != $this->table))
 			{
-				if ($this->needs_save($posted_app,$posted_table,$this->content2table($content)))
+				if ($this->needs_save('',$posted_app,$posted_table,$this->content2table($content)))
 				{
 					return;
 				}
@@ -201,10 +200,10 @@
 			{
 				$table_names[$this->table] = $this->table;
 			}
-   $sel_options = array(
+			$sel_options = array(
 				'table_name' => $table_names,
 				'type' => $this->types,
-				'app' => array('' => lang($this->messages['select_one'])) + $this->apps
+				'app' => array('' => $this->messages['select_one']) + $this->apps
 			);
 			if ($this->table != '' && isset($this->data[$this->table]))
 			{
@@ -224,39 +223,35 @@
 		}
 
 		/*!
-		@function needs_save($posted_app,$posted_table,$edited_table)
+		@function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
 		@abstract checks if table was changed and if so offers user to save changes
+		@param $cont the content of the form (if called by process_exec)
 		@param $posted_app the app the table is from
 		@param $posted_table the table-name
 		@param $edited_table the edited table-definitions
 		@returns only if no changes
 		*/
-		function needs_save($posted_app='',$posted_table='',$edited_table='')
+		function needs_save($cont='',$posted_app='',$posted_table='',$edited_table='')
 		{
-			if (!$posted_app && isset($GLOBALS['HTTP_POST_VARS']['cont']))
+			if (!$posted_app && is_array($cont))
 			{
-				$cont = $GLOBALS['HTTP_POST_VARS']['cont'];
-				$preserv = unserialize(stripslashes($GLOBALS['HTTP_POST_VARS']['preserv']));
-
 				if (isset($cont['yes']))
 				{
-					$this->app   = $preserv['app'];
-					$this->table = $preserv['table'];
+					$this->app   = $cont['app'];
+					$this->table = $cont['table'];
 					$this->read($this->app,$this->data);
-					$this->data[$this->table] = $preserv['edited_table'];
+					$this->data[$this->table] = $cont['edited_table'];
 					$this->write($this->app,$this->data);
 					$msg .= $this->messages[$this->write($this->app,$this->data) ?
 						'writen' : 'error_writing'];
 				}
 				// return to edit with everything set, so the user gets the table he asked for
-				$GLOBALS['HTTP_POST_VARS'] = array(
-					'cont' => array(
-						'app' => $preserv['new_app'],
-						'table_name' => $preserv['app']==$preserv['new_app'] ? $preserv['new_table']:''
-					),
-					'posted_app' => $preserv['new_app'],
-				);
-				$this->edit($msg);
+				$this->edit(array(
+					'app' => $cont['new_app'],
+					'table_name' => $cont['app']==$cont['new_app'] ? $cont['new_table'] : '',
+					'posted_app' => $cont['new_app']
+				),$msg);
+
 				return True;
 			}
 			$new_app   = $this->app;	// these are the ones, the users whiches to change too
@@ -284,8 +279,7 @@
 			);
 			$tmpl = new etemplate('etemplate.db-tools.ask_save');
 
-			$tmpl->exec('etemplate.db_tools.needs_save',$content,array(),array(),
-				array('preserv' => $preserv));
+			$tmpl->exec('etemplate.db_tools.needs_save',$content,array(),array(),$preserv);
 
 			return True;	// dont continue in edit
 		}
@@ -478,8 +472,10 @@
 				$header = substr($header,0,strpos($header,'$phpgw_baseline'));
 				fclose($f);
 
-				rename($file,PHPGW_SERVER_ROOT."/$app/setup/tables_current.old.inc.php");
-
+				if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+				{
+					rename($file,PHPGW_SERVER_ROOT."/$app/setup/tables_current.old.inc.php");
+				}
 				while ($header[strlen($header)-1] == "\t")
 				{
 					$header = substr($header,0,strlen($header)-1);
@@ -489,7 +485,7 @@
 			{
 				$header = "<?php\n\n";
 			}
-			if (!($f = fopen($file,'w')))
+			if (!is_writeable($file) || !($f = fopen($file,'w')))
 			{
 				return False;
 			}
@@ -556,7 +552,7 @@
 		function writeLangFile()
 		{
 			$m = new db_tools(False);	// no lang on messages
-			$this->tmpl->writeLangFile('etemplate','en',$m->messages);
+			$this->editor->writeLangFile('etemplate','en',$m->messages);
 		}
 	};
 
