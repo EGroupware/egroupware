@@ -12,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 add a single entry by passing the fields.	calendar	es-es	Añadir una entrada simple pasando los campos:
 add alarm	calendar	es-es	Añadir alarma
 add contact	calendar	es-es	Añadir contacto
+add or update a single entry by passing the fields.	calendar	es-es	Añadir o actualizar una simple entrada pasando los campos
 added	calendar	es-es	Añadido
 address book	calendar	es-es	Libreta de direcciones
 alarm	calendar	es-es	Alarma
@@ -104,6 +105,7 @@ firstname of person to notify	calendar	es-es	Nombre de pila de la persona a noti
 format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 fr	calendar	es-es	V
 free/busy	calendar	es-es	Libre/Ocupado
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	libre-ocupado: Usuario desconocido "%1", contraseña incorrecta o no está disponible
 frequency	calendar	es-es	Frecuencia
 fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
@@ -126,6 +128,7 @@ hours	calendar	es-es	horas
 i participate	calendar	es-es	Participo
 ical / rfc2445	calendar	es-es	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	es-es	Si los festivos marcados caen en fin de semana, se toman el lunes siguiente.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	es-es	Si no indica una contraseña aquí, ¡la información está disponible para todos los que conozcan la URL!
 ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
 import csv-file	common	es-es	Importar fichero CSV
@@ -138,9 +141,11 @@ last	calendar	es-es	último
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length shown<br>(emtpy for full length)	calendar	es-es	Longitud mostrada<br>(vació para longitud completa)
 length<br>(<= 255)	calendar	es-es	Longitud<br>(<=255)
+list all categories.	calendar	es-es	Listar todas las categorías
 load [iv]cal	calendar	es-es	Cargar [iv]Cal
 location	calendar	es-es	Lugar
 location to autoload from	admin	es-es	Lugar desde donde cargar automáticamente
+make freebusy information availible to not loged in persons?	calendar	es-es	¿Hacer la información libre-ocupado disponible para personas que no inicien sesión?
 matrixview	calendar	es-es	Vista matricial
 minutes	calendar	es-es	minutos
 mo	calendar	es-es	L
@@ -183,6 +188,7 @@ overlap holiday	calendar	es-es	solapar festivo
 participant	calendar	es-es	Participante
 participants	calendar	es-es	Participantes
 participates	calendar	es-es	Participa
+password for not loged in users to your freebusy information?	calendar	es-es	¿Contraseña para los usuarios sin sesión para la información libre-ocupado?
 people holiday	calendar	es-es	festivo para la gente
 permission denied	calendar	es-es	Permiso denegado
 planner	calendar	es-es	Planificador
@@ -227,6 +233,7 @@ set a year only for one-time / non-regular holidays.	calendar	es-es	Establecer u
 set new events to private	calendar	es-es	Poner los eventos nuevos como privados
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-es	¿Mostrar las invitaciones rechazadas por usted en el calendario?<br>Puede aceptarlas después (por ejemplo, cuando elimine el conflicto de calendario), si todavía se ven en su calendario.
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	es-es	¿Mostrar o imprimir los minicalendarios en la versión de impresión?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	es-es	¿Mostrar la versión de impresión en blanco y negro o en color, como en la vista normal?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?

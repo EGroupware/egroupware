@@ -11,10 +11,12 @@ copied %1 to %2	filemanager	es-es	Copiado %1 a %2
 copy to	filemanager	es-es	Copiar A
 copy to:	filemanager	es-es	Copiar a:
 could not copy %1 to %2	filemanager	es-es	No se pudo copiar %1 a %2
+could not copy file because no destination directory is given	filemanager	es-es	No se pudo copiar el fichero porque no se indicó el directorio de destino
 could not create %1	filemanager	es-es	No se pudo crear %1
 could not create directory %1	filemanager	es-es	No se pudo crear el directorio %1
 could not delete %1	filemanager	es-es	No se pudo borrar %1
 could not move %1 to %2	filemanager	es-es	No se pudo mover %1 a %2
+could not move file because no destination directory is given	filemanager	es-es	No se puedo mover el fichero porque no se indicó el directorio de destino
 could not rename %1 to %2	filemanager	es-es	No se pudo renombre %1 a %2
 could not save %1	filemanager	es-es	No se pudo guardar %1
 create file	filemanager	es-es	Crear fichero
@@ -39,6 +41,7 @@ edit comments	filemanager	es-es	Editar comentarios
 error running command	filemanager	es-es	Error al ejecutar el comando
 execute	filemanager	es-es	Ejecutar
 failed to create directory	filemanager	es-es	fallo al crear el directorio
+fake base dir did not exist, egroupware created a new one.	filemanager	es-es	El directorio base ficticio no existía, y eGroupWare ha creado una nueva
 file	filemanager	es-es	Fichero
 file %1 already exists. please edit it or delete it first.	filemanager	es-es	El fichero %1 ya existe. Por favor, edítelo o bórrelo antes.
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1.
@@ -112,3 +115,4 @@ view documents in new window	filemanager	es-es	Ver documentos en una ventana nue
 view documents on server (if available)	filemanager	es-es	Ver documentos en el servidor (si está disponible)
 who	filemanager	es-es	Quién
 you do not have access to %1	filemanager	es-es	No tiene acceso a %1
+your home dir did not exist, egroupware created a new one.	filemanager	es-es	Su directorio inicial no existía, y eGroupWare ha creado uno nuevo.

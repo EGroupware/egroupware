@@ -135,6 +135,7 @@ edit cvs repository list	admin	es-es	Editar Lista de Sitios CVS
 edit global category	admin	es-es	Editar categoria global
 edit global category for %1	admin	es-es	Editar categoría global para %1
 edit group	admin	es-es	Editar Grupo
+edit group acl's	admin	es-es	Editar ACL de grupo
 edit job status id table	admin	es-es	Editar Tabla de ID de Estados de Trabajos
 edit location table	admin	es-es	Editar Tabla de Ubicaciones
 edit login screen message	admin	es-es	Editar mensaje de la pantalla de ingreso
@@ -156,7 +157,9 @@ enter the background color for the login page	admin	es-es	Introduzca el color de
 enter the background color for the site title	admin	es-es	Introduzca el color de fondo para el título del sitio
 enter the file name of your logo	admin	es-es	Introduzca el nombre del fichero del logo
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta complets para los archivos temporales.<br> Ejemplos: /files , E:FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-es	
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files , E:FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	es-es	
 enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre completo de la máquina sobre la cual corre este servidor
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la dirección URL de phpGroupWare.<br>Ejemplo: http://www.dominio.com/phpgroupware o /phpgroupware.<br><b>Sin barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse el botón ENVIAR otra vez.
@@ -164,6 +167,7 @@ enter the site password for peer servers	admin	es-es	Introduzca la clave del sit
 enter the site username for peer servers	admin	es-es	Introduzca el usuario del sitio para servidores pares
 enter the title for your site	admin	es-es	Introduzca el titulo para su sitio
 enter the title of your logo	admin	es-es	Introduzca el título del logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	es-es	Introduzca la URL o fichero (en phpgwapi/templates/default/images) de su logo
 enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
 enter your default ftp server	admin	es-es	Introduzca su servidor FTP por defecto
 enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
@@ -308,6 +312,7 @@ server url	admin	es-es	Dirección URL
 server username	admin	es-es	Usuario del servidor
 set preference values.	admin	es-es	Establecer valores para las preferencias
 set preferences value	admin	es-es	Establecer valores de las preferencias
+should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
 show 'powered by' logo on	admin	es-es	Mostrar logo de 'potenciado por' en
 show access log	admin	es-es	Mostrar registro de acceso
 show current action	admin	es-es	Mostrar acción actual
