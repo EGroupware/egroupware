@@ -119,9 +119,12 @@
 			}
 		} else {
 			while ($data = fgets($fp,8000)) {
-				list($name,$value) = split(':', $data);
+				list($name,$value,$extra) = split(':', $data);
 				if (strtolower(substr($name,0,5)) == 'begin') {
 					$buffer = $this->import_start_record($buffer);
+				}
+				if (substr($value,0,5) == "http") {
+					$value = $value . ":".$extra;
 				}
 				if ($name && $value) {
 					reset($this->import);
