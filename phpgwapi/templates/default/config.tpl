@@ -37,6 +37,16 @@
     </td>
    </tr>
 
+   <tr bgcolor="{row_off}">
+    <td>{lang_read_translations_from}:</td>
+    <td>
+     <select name="newsettings[translation_system]">
+      <option value="sql"{selected_translation_system_sql}>SQL</option>
+      <option value="file"{selected_translation_system_file}>{lang_file}</option>
+     </select>
+    </td>
+   </tr>
+
    <tr bgcolor="{row_on}">
     <td colspan="2">&nbsp;</td>
    </tr>
