@@ -92,7 +92,7 @@
 		 	);
 		 	$p->set_var($var);
 
-			if (!$total)
+			if (!count($account_info) || !$total)
 			{
 				$p->set_var('message',lang('No matchs found'));
 				$p->parse('rows','row_empty',True);
@@ -235,7 +235,7 @@
 				$p->set_var('input_search',lang('Search') . '&nbsp;<input type="text" name="query">');
 			}
 
-			if (!$total)
+			if (!count($account_info) || !$total)
 			{
 				$p->set_var('message',lang('No matchs found'));
 				$p->parse('rows','row_empty',True);
