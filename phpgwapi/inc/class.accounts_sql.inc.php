@@ -307,7 +307,7 @@
 				'account_pwd'			=> $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd'],True),
 				'account_firstname'		=> $account_info['account_firstname'],
 				'account_lastname'		=> $account_info['account_lastname'],
-				'account_status'		=> $account_info['status'],
+				'account_status'		=> $account_info['account_status'],
 				'account_expires'		=> $account_info['account_expires'],
 				'account_type'			=> $account_info['account_type'],
 				'person_id'				=> $account_info['person_id'],
