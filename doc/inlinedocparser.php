@@ -282,8 +282,15 @@
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				$doc_array['file '.$fn][0]['files'][] = $fn;
-				$doc_array['file '.$fn][0]['files'] = array_unique($doc_array['file '.$fn][0]['files']);
+				if (!is_array($doc_array['file '.$fn][0]['files']))
+				{
+					$doc_array['file '.$fn][0]['files'] = Array();
+				}
+
+				if (!in_array($fn,$doc_array['file '.$fn][0]['files']))
+				{
+					$doc_array['file '.$fn][0]['files'][] = $fn;
+				}
 				$doc_array['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
 			else
@@ -293,15 +300,27 @@
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
 					if ($returndoc != False)
 					{
-						$returndoc['value']['files'][] = $fn;
-						$returndoc['value']['files'] = array_unique($returndoc['value']['files']);
+						if (!is_array($returndoc['value']['files']))
+						{
+							$returndoc['value']['files'] = Array();
+						}
+						if (!in_array($fn, $returndoc['value']['files']))
+						{
+							$returndoc['value']['files'][] = $fn;
+						}
 					}
 					$doc_array[$startstop[$key]][0] = $returndoc['value'];
 				}
 				else
 				{
-					$doc_array[$startstop[$key]][0]['files'][] = $fn;
-					$doc_array[$startstop[$key]][0]['files'] = array_unique($doc_array[$startstop[$key]][0]['files']);
+					if (!is_array($doc_array[$startstop[$key]][0]['files']))
+					{
+						$doc_array[$startstop[$key]][0]['files'] = Array();
+					}
+					if (!in_array($fn, $doc_array[$startstop[$key]][0]['files']))
+					{
+						$doc_array[$startstop[$key]][0]['files'][] = $fn;
+					}
 				}
 				$doc_array[$startstop[$key]][$returndata['name']] = $returndata['value'];
 			}
@@ -341,17 +360,22 @@
 			{
 				while(list($docline_key, $docline_value) = each($object_value))
 				{
+					
 					$GLOBALS['template']->set_var('generic_name',$docline_key);
 					$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
 					$GLOBALS['template']->fp('object_contents','generic',True);
 				}
+				$GLOBALS['template']->set_var('generic_name',$docline_key);
+				$GLOBALS['template']->set_var('generic_value',$docline_value[0]);
 				$GLOBALS['template']->fp('group_contents','object',True);
+				$GLOBALS['template']->set_var('object_contents','');
 			}
 		}
 		$GLOBALS['template']->fp('doc','group',True);
+		$GLOBALS['template']->set_var('group_contents','');
 	}
 	$GLOBALS['template']->fp('doc','border_bottom',True);
 	$GLOBALS['template']->pfp('out', 'doc');
-	
+	echo '<a name="array">';
 	array_print($doc_array);
 ?>
