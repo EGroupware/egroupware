@@ -298,11 +298,11 @@
 			if (($start != 0) && ($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
-				$ret_str .= $this->set_link('left','first.gif',$scriptname,'First page',$extravars);
+				$ret_str .= $this->set_link('left','first.gif',$scriptname,lang('First page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','first-grey.gif','First page');
+				$ret_str .= $this->set_icon('left','first-grey.gif',lang('First page'));
 			}
 
 			if ($start != 0)
@@ -317,11 +317,11 @@
 					$extravars['start'] = ($start - $this->maxmatches);
 				}
 
-				$ret_str .= $this->set_link('left','left.gif',$scriptname,'Previous page',$extravars);
+				$ret_str .= $this->set_link('left','left.gif',$scriptname,lang('Previous page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('left','left-grey.gif','Previous page');
+				$ret_str .= $this->set_icon('left','left-grey.gif',lang('Previous page'));
 			}
 
 			return $ret_str;
@@ -354,21 +354,21 @@
 			if (($total > $this->maxmatches) && ($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
-				$ret_str .= $this->set_link('right','right.gif',$scriptname,'Next page',$extravars);
+				$ret_str .= $this->set_link('right','right.gif',$scriptname,lang('Next page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','right-grey.gif','Next page');
+				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
 			}
 
 			if (($start != $total - $this->maxmatches) && (($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
-				$ret_str .= $this->set_link('right','last.gif',$scriptname,'Last page',$extravars);
+				$ret_str .= $this->set_link('right','last.gif',$scriptname,lang('Last page'),$extravars);
 			}
 			else
 			{
-				$ret_str .= $this->set_icon('right','last-grey.gif','Last page');
+				$ret_str .= $this->set_icon('right','last-grey.gif',lang('Last page'));
 			}
 
 			return $ret_str;
