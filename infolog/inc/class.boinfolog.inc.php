@@ -527,14 +527,14 @@
 			{
 				foreach($infos as $info)
 				{
-					$time = intval(date('Hi',$info['info_startdate']));
-					$date = date('Y/m/d',$info['info_startdate']);
+					$time = (int) adodb_date('Hi',$info['info_startdate']);
+					$date = adodb_date('Y/m/d',$info['info_startdate']);
 					if ($do_events && !$time ||
 					    !$do_events && $time && $date == $date_wanted)
 					{
 						continue;
 					}
-					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']),date('i',$info['info_startdate'])).' ':'').
+					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
 					$content=array();
