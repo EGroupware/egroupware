@@ -118,21 +118,9 @@
 
 		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
-		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
-		{
-			$attachment = "";
-		}
-		else
-		{
-			$attachment = " attachment;";
-		}
-
 		if ( ($download == "on") || ($o->type == 'pdb') ) {
-			header("Content-disposition:".$attachment." filename=\"".$tsvfilename."\"");
-			header("Content-type: application/octetstream");
-			header("Content-length: ".strlen($buffer));
-			header("Pragma: no-cache");
-			header("Expires: 0");
+			// filename, default application/octet-stream, length of file, default nocache True
+			$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
 			echo $buffer;
 		} else {
 			echo "<pre>\n";

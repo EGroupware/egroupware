@@ -93,19 +93,12 @@
 				$buffer[$myexport[$name]] = $value;
 			}
 		}
-		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
-		{
-			$attachment = "";
-		}
-		else
-		{
-			$attachment = " attachment;";
-		}
+
 		// create a vcard from this translated array
 	    $entry = $vcard->out($buffer);
-		// print it
-		header("Content-type: text/x-vcard");
-		header("Content-Disposition:$attachment filename=$filename");
+		// print it using browser class for headers
+		// filename, mimetype, no length, default nocache True
+		$phpgw->browser->content_header($filename,'text/x-vcard');
 		echo $entry;
 		$phpgw->common->exit;
 	} /* !nolname && !nofname */

@@ -164,22 +164,10 @@
 		fclose($fp);
 		$buffer = $this->import_end_file($buffer,$private,$cat_id);
 
-		if ($phpgw->browser->get_agent() == "IE") // && browser_get_version() == "5.5")
-		{
-			$attachment = "";
-		}
-		else
-		{
-			$attachment = " attachment;";
-		}
-
 		if ($download == "") {
 			if($conv_type=="Debug LDAP" || $conv_type=="Debug SQL" ) {
-				header("Content-disposition:".$attachment." filename=\"conversion.txt\"");
-				header("Content-type: application/octetstream");
-				header("Content-length: ".strlen($buffer));
-				header("Pragma: no-cache");
-				header("Expires: 0");
+				// filename, default application/octet-stream, length of file, default nocache True
+				$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
 				echo $buffer;
 			} else {
 				echo "<pre>$buffer</pre>";
