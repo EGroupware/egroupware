@@ -46,8 +46,8 @@
 		$rights = $acl->get_rights($id,$phpgw_info['flags']['currentapp']);
 
 		check_acl($label,$id,'read',$rights,PHPGW_ACL_READ);
-    	check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
-    	check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
+		check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
+		check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
 		check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE);
 		check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
     
@@ -159,29 +159,28 @@
 
 	$p = CreateObject('phpgwapi.Template',$phpgw_info['server']['app_tpl']);
 	$templates = Array (
-		'preferences'	=>	'preference_acl.tpl',
-		'row_colspan'	=>	'preference_colspan.tpl',
-		'acl_row'		=> 'preference_acl_row.tpl'
+		'preferences'	=> 'preference_acl.tpl',
+		'row_colspan'	=> 'preference_colspan.tpl',
+		'acl_row'	=> 'preference_acl_row.tpl'
 	);
 
 	$p->set_file($templates);
-//	$p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
 
 	$common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
-							. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
-							. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
-							. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
-							. '     <input type="hidden" name="start" value="'.$start.'">'."\n"
-							. '     <input type="hidden" name="query" value="'.$query.'">'."\n"
-							. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
+		. '     <input type="hidden" name="s_users" value="'.$s_users.'">'."\n"
+		. '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
+		. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
+		. '     <input type="hidden" name="start" value="'.$start.'">'."\n"
+		. '     <input type="hidden" name="query" value="'.$query.'">'."\n"
+		. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
 
 	$var = Array(
-						'errors'							=>	'',
-						'title'							=>	'<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
-						'action_url'					=>	$phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
-						'bg_color'						=>	$phpgw_info['theme']['th_bg'],
-						'submit_lang'					=> lang('submit'),
-						'common_hidden_vars_form'	=>	$common_hidden_vars
+		'errors'			=> '',
+		'title'				=> '<p><b>'.lang($phpgw_info['flags']['currentapp'].' preferences').' - '.lang('acl').':</b><hr><p>',
+		'action_url'			=> $phpgw->link('/preferences/acl_preferences.php','acl_app=' . $acl_app),
+		'bg_color'			=> $phpgw_info['theme']['th_bg'],
+		'submit_lang'			=> lang('submit'),
+		'common_hidden_vars_form'	=> $common_hidden_vars
 	);
 	
 	$p->set_var($var);
@@ -194,10 +193,10 @@
 	$p->set_var('common_hidden_vars',$common_hidden_vars);
 
 	$var = Array(
-						'read_lang'		=>	lang('Read'),
-						'add_lang'		=>	lang('Add'),
-						'edit_lang'		=>	lang('Edit'),
-						'delete_lang'	=>	lang('Delete')
+		'read_lang'	=> lang('Read'),
+		'add_lang'	=> lang('Add'),
+		'edit_lang'	=> lang('Edit'),
+		'delete_lang'	=> lang('Delete')
 	);
 	
 	$p->set_var($var);
@@ -276,11 +275,11 @@
 	$extra_parms = '&s_users='.$s_users.'&s_groups='.$s_groups.'&maxm='.$maxm.'&totalentries='.$totalentries.'&total='.($start + $total).'&owner='.$owner;
 
 	$var = Array(
-						'nml'				=>	$phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms),
-						'nmr'				=>	$phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms),
-						'search_value'	=>	(isset($query) && $query?$query:''),
-						'search'			=>	lang('search'),
-						'processed'		=>	urlencode(serialize($processed))
+		'nml'		=> $phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms),
+		'nmr'		=> $phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms),
+		'search_value'	=> (isset($query) && $query?$query:''),
+		'search'	=> lang('search'),
+		'processed'	=> urlencode(serialize($processed))
 	);
 	
 	$p->set_var($var);
