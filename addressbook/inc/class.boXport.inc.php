@@ -90,9 +90,9 @@
 			$this->cat_id = $data['cat_id'];
 		}
 
-		function import()
+		function import($tsvfile,$conv_type,$private)
 		{
-			global $tsvfile,$private;
+			global $phpgw;
 
 			include (PHPGW_APP_INC . '/import/' . $conv_type);
 
@@ -222,32 +222,7 @@
 
 			fclose($fp);
 			$buffer = $contacts->import_end_file($buffer,$private,$cat_id);
-
-			if ($download == '')
-			{
-				if($conv_type == 'Debug LDAP' || $conv_type == 'Debug SQL' )
-				{
-					// filename, default application/octet-stream, length of file, default nocache True
-					$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
-					echo $buffer;
-				}
-				else
-				{
-					$phpgw->common->phpgw_header();
-					echo parse_navbar();
-					echo "<pre>$buffer</pre>";
-					echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list') . '">'.lang("OK").'</a>';
-					$phpgw->common->phpgw_footer();
-				}
-			}
-			else
-			{
-				$phpgw->common->phpgw_header();
-				echo parse_navbar();
-				echo "<pre>$buffer</pre>";
-				echo '<a href="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'). '">'.lang("OK").'</a>';
-				$phpgw->common->phpgw_footer();
-			}
+			return $buffer;
 		}
 
 		function export($cat_id='')

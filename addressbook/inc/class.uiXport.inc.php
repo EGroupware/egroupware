@@ -75,12 +75,11 @@
 
 		function import()
 		{
-			global $phpgw,$convert,$download,$tsvfilename;
+			global $phpgw,$convert,$download,$tsvfile,$private,$conv_type;
 
 			if ($convert)
 			{
-				$buffer = $this->bo->import();
-				print_r($buffer);
+				$buffer = $this->bo->import($tsvfile,$conv_type,$private);
 
 				if ($download == '')
 				{
@@ -141,7 +140,7 @@
 				$this->template->set_var('navbar_bg',$phpgw_info['theme']['navbar_bg']);
 				$this->template->set_var('navbar_text',$phpgw_info['theme']['navbar_text']);
 				$this->template->set_var('import_text',lang('Import from LDIF, CSV, or VCard'));
-				$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.boXport.import'));
+				$this->template->set_var('action_url',$phpgw->link('/index.php','menuaction=addressbook.uiXport.import'));
 				$this->template->set_var('cat_link',$this->cat_option($this->cat_id,True,False));
 				$this->template->set_var('tsvfilename','');
 				$this->template->set_var('conv',$conv);
