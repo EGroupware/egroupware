@@ -21,18 +21,27 @@
   	include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
   	
   	// creates the html for the user data
-  	function createPageBody($_account_id)
+  	function createPageBody($_account_id,$_userData='',$_errors='')
   	{
-			global $phpgw,$phpgw_info;
+  		global $phpgw,$phpgw_info;
   		
 		$t = new Template($phpgw->common->get_tpl_dir("admin"));
-		$t->set_unknowns('remove');
-		$t->set_file(array("form" => "account_form.tpl"));
+  		$t->set_file(array("form" => "account_form.tpl"));
 
 		$account = CreateObject('phpgwapi.accounts',$_account_id);
 		$userData = $account->read_repository();
 
-		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=$_account_id"));
+		$t->set_var("form_action",$phpgw->link("editaccount.php",
+			"account_id=$_account_id&old_loginid=".rawurlencode($userData['account_lid'])));
+		
+		if ($_errors) 
+		{
+			$t->set_var("error_messages","<center>" . $phpgw->common->error_list($_errors) . "</center>");
+		} 
+		else 
+		{
+			$t->set_var("error_messages","");
+		}
 				
 		$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 		$t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
@@ -46,7 +55,7 @@
 		$t->set_var("lang_lastname",lang("Last Name"));
 		$t->set_var("lang_groups",lang("Groups"));
 		$t->set_var("lang_firstname",lang("First Name"));
-		$t->set_var("lang_button",lang('Save'));
+  		$t->set_var("lang_button",lang('Save'));
 
 		$t->set_var("n_loginid_value",$userData["account_lid"]);
 		$t->set_var("n_passwd_value",$n_passwd);
@@ -128,7 +137,7 @@
 	
 		$t->set_var("permissions_list",$appRightsOutput);
 
-		echo $t->finish($t->parse('out','form'));
+		$t->pparse('out','form');
 	}
 
 	// stores the userdata
@@ -164,12 +173,58 @@
 			}
 		}
 		$apps->save_repository();
-  	}
+	}
   	
-  	// checks if the userdata are valid
-  	function userDataValid($_userData)
-  	{
-  		return TRUE;
+	// checks if the userdata are valid
+	// returns FALSE if the data are correct
+	// otherwise the error array
+	function userDataInvalid($_userData)
+	{
+		global $phpgw_info;
+		
+		$totalerrors = 0;
+		
+		if ($phpgw_info["server"]["account_repository"] == "ldap" && ! $allow_long_loginids) 
+		{
+			if (strlen($_userData['account_lid']) > 8) 
+			{
+				$error[$totalerrors] = lang("The loginid can not be more then 8 characters");
+				$totalerrors++;
+			}
+		}
+		
+		if ($_userData['old_loginid'] != $_userData['account_lid']) 
+		{
+			if (account_exsists($_userData['n_loginid'])) 
+			{
+				$error[$totalerrors] = lang("That loginid has already been taken");
+				$totalerrors++;
+			}
+		}
+		
+		if ($_userData['n_passwd'] || $_userData['n_passwd_2']) 
+		{
+			if ($_userData['n_passwd'] != $_userData['n_passwd_2']) 
+			{
+				$error[$totalerrors] = lang("The two passwords are not the same");
+				$totalerrors++;
+			}
+		}
+		
+		if (!count($new_permissions) || !count($n_groups)) 
+		{
+			#$error[$totalerrors] = "<br>" . lang("You must add at least 1 permission or group to this account");
+			#$totalerrors++;
+		}
+		
+		if ($totalerrors == 0)
+		{
+  			return FALSE;
+  		}
+  		else
+  		{
+  			return $error;
+  		}
   	}
   	
   	// todo
@@ -183,16 +238,27 @@
 	{
 		$userData = array(
 			'account_lid'    => $account_lid,     	'firstname'   => $firstname,
-			'lastname'       => $lastname,       	'passwd'      => $n_passwd,
-			'status' 	 => $status, 		'old_loginid' => $old_loginid,
-			'account_id'     => $account_id
+			'lastname'       => $lastname,       	'n_passwd'    => $n_passwd,
+			'status' 	 => $status, 		'old_loginid' => rawurldecode($old_loginid),
+			'account_id'     => $account_id,	'n_passwd_2'  => $n_passwd_2
 		);
 		
-		if (userDataValid($userData)) 
+		if (!$errors = userDataInvalid($userData)) 
 		{ 
 			saveUserData($userData);
 			Header('Location: ' . $phpgw->link('accounts.php', 'cd='.$cd));
 			$phpgw->common->phpgw_exit();
+		}
+		else
+		{
+			$phpgw->common->phpgw_header();
+			echo parse_navbar();
+			
+			createPageBody($userData['account_id'],$userData,$errors);
+			
+  			account_close();
+  			$phpgw->common->phpgw_footer();
+			
 		}
 	}
 	else
@@ -207,7 +273,12 @@
   	}
   	
   	return;
-  	
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//
+//			the old code
+//
+/////////////////////////////////////////////////////////////////////////////////////////  	
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
   }
@@ -519,8 +590,8 @@
   }       
   if (!$includedSomething) $t->set_var('gui_hooks','');
 
-	$t->set_var('lang_button',lang('Save'));
-	echo $t->finish($t->parse('out','form'));
+  $t->set_var("lang_button",lang('Save'));
+  $t->pparse('out','form');
 
   account_close();
   $phpgw->common->phpgw_footer();
