@@ -96,7 +96,13 @@
 
 	$company      = $fields["org_name"];
 	$dept         = $fields["org_unit"];
+	
 	$bday         = $fields["bday"];
+	$tmp = split("/",$bday); # 12/31/1969 -> 1969-12-31
+	if ($tmp[0]) {
+		$bday = $tmp[2]."-".$tmp[0]."/".$tmp[1];
+	}
+
 	$notes        = ereg_replace("\r\n","=0A",$fields["note"]);
 	$access       = $fields["access"];
 	$url          = $fields["url"];
@@ -153,10 +159,11 @@
 				$astreet,$acity,$astate,$azip,$acountry);
 		}
 		if ($label) {
-			printf("LABEL;WORK;QUOTED-PRINTABLE:%s\r\n",$label);
+			$label = ereg_replace("\n","=0D=0A",$label);
+			printf("LABEL;WORK;QUOTED-PRINTABLE:%s\n",$label);
 		} else {
 			if ($address2 && $astreet && $acity && $astate && $azip && $acountry) {
-				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0A%s=0A%s,%s  %s=0A%s\r\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
+				printf("LABEL;WORK;QUOTED-PRINTABLE:%s=0D=0A%s=0D=0A%s,%s  %s=0D=0A%s\n",$address2,$astreet,$acity,$astate,$azip,$acountry);
 			}
 		}
 		// end 'A' grouping
@@ -175,7 +182,7 @@
 				$bcity,$bstate,$bzip,$bcountry);
 		}
 		if ($bstreet && $bcity && $bstate && $bzip && $bcountry) {
-			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0A%s,%s  %s=0A%s\r\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
+			printf("LABEL;HOME;QUOTED-PRINTABLE:%s=0D=0A%s,%s  %s=0D=0A%s\n",$bstreet,$bcity,$bstate,$bzip,$bcountry);
 		}
 
 		if ($url) {
