@@ -2637,7 +2637,7 @@
 		{
 			$str = '';
 			$is_private = !$event['public'] && !$this->bo->check_perms(PHPGW_ACL_READ,$event);
-			$editable = !$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_READ,$event);
+			$viewable = !$this->bo->printer_friendly && $this->bo->check_perms(PHPGW_ACL_READ,$event);
 
 			$starttime = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$endtime = $this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
@@ -2678,26 +2678,30 @@
 				$time = '';
 			}
 			$text = '';
+
 			if(!$is_private)
 			{
 				$text .= $this->bo->display_status($event['users_status']);
 			}
-			$text = '<nobr>&nbsp;'.$time.'&nbsp;</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.': <I>'.$this->bo->get_short_field($event,$is_private,'description').'</I>'.$GLOBALS['phpgw']->browser->br;
+			$text = '<nobr>&nbsp;'.$time.'&nbsp;</nobr> '.$this->bo->get_short_field($event,$is_private,'title').$text.
+				(!$is_private && $event['description'] ? ': <I>'.$this->bo->get_short_field($event,$is_private,'description').'</I>':'').
+				$GLOBALS['phpgw']->browser->br;
 
-			if ($editable)
+			if ($viewable)
 			{
 				$date = sprintf('%04d%02d%02d',$year,$month,$day);
 				$this->link_tpl->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
 				$this->link_tpl->set_var('lang_view',lang('View this entry'));
 				$this->link_tpl->parse('picture','link_open',True);
-
+			}
+			if (!$is_private)
+			{
 				if($event['priority'] == 3)
 				{
 					$picture[] = Array(
 						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','high'),
 						'width'	=> 8,
 						'height'=> 17,
-						'alt' => lang('high priority'),
 						'title' => lang('high priority')
 					);
 				}
@@ -2707,7 +2711,6 @@
 						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','circle'),
 						'width'	=> 5,
 						'height'=> 7,
-						'alt' => lang('single event'),
 						'title' => lang('single event')
 					);
 				}
@@ -2717,71 +2720,64 @@
 						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','recur'),
 						'width'	=> 12,
 						'height'=> 12,
-						'alt' => lang('recurring event'),
 						'title' => lang('recurring event')
 					);
 				}
-
-				$participants = $this->planner_participants($event['participants']);
-				if(count($event['participants']) > 1)
+			}
+			$participants = $this->planner_participants($event['participants']);
+			if(count($event['participants']) > 1)
+			{
+				$picture[] = Array(
+					'pict'	=> $GLOBALS['phpgw']->common->image('calendar','multi_3'),
+					'width'	=> 14,
+					'height'=> 14,
+					'title' => $participants
+				);
+			}
+			else
+			{
+				$picture[] = Array(
+					'pict'	=>  $GLOBALS['phpgw']->common->image('calendar','single'),
+					'width'	=> 14,
+					'height'=> 14,
+					'title' => $participants
+				);
+			}
+			if($event['public'] == 0)
+			{
+				$picture[] = Array(
+					'pict'	=> $GLOBALS['phpgw']->common->image('calendar','private'),
+					'width'	=> 13,
+					'height'=> 13,
+					'title' => lang('private')
+				);
+			}
+			if(@isset($event['alarm']) && count($event['alarm']) >= 1 && !$is_private)
+			{
+				// if the alarm is to go off the day before the event
+				// the icon does not show up because of 'alarm_today'
+				// - TOM
+				if($this->bo->alarm_today($event,$rawdate_offset,$starttime))
 				{
 					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','multi_3'),
-						'width'	=> 14,
-						'height'=> 14,
-						'alt' => $participants,
-						'title' => $participants
-					);
-				}
-				else
-				{
-					$picture[] = Array(
-						'pict'	=>  $GLOBALS['phpgw']->common->image('calendar','single'),
-						'width'	=> 14,
-						'height'=> 14,
-						'alt' => $participants,
-						'title' => $participants
-					);
-				}
-				if($event['public'] == 0)
-				{
-					$picture[] = Array(
-						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','private'),
+						'pict'	=> $GLOBALS['phpgw']->common->image('calendar','alarm'),
 						'width'	=> 13,
 						'height'=> 13,
-						'alt' => lang('private'),
-						'title' => lang('private')
+						'title' => lang('alarm')
 					);
 				}
-				if(@isset($event['alarm']) && count($event['alarm']) >= 1)
-				{
-					// if the alarm is to go off the day before the event
-					// the icon does not show up because of 'alarm_today'
-					// - TOM
-					if($this->bo->alarm_today($event,$rawdate_offset,$starttime))
-					{
-						$picture[] = Array(
-							'pict'	=> $GLOBALS['phpgw']->common->image('calendar','alarm'),
-							'width'	=> 13,
-							'height'=> 13,
-							'alt' => lang('alarm'),
-							'title' => lang('alarm')
-						);
-					}
-				}
+			}
 
-				$description = $this->bo->get_short_field($event,$is_private,'description');
-				for($i=0;$i<count($picture);$i++)
-				{
-					$var = Array(
-						'pic_image'  => $picture[$i]['pict'],
-						'width'	     => $picture[$i]['width'],
-						'height'     => $picture[$i]['height'],
-						'alt'        => $picture[$i]['alt'],
-						'title'      => $picture[$i]['title']
-					);
-					$this->output_template_array($this->link_tpl,'picture','pict',$var);
-				}
+			$description = $this->bo->get_short_field($event,$is_private,'description');
+			for($i=0;$i<count($picture);$i++)
+			{
+				$var = Array(
+					'pic_image'  => $picture[$i]['pict'],
+					'width'	     => $picture[$i]['width'],
+					'height'     => $picture[$i]['height'],
+					'title'      => $picture[$i]['title']
+				);
+				$this->output_template_array($this->link_tpl,'picture','pict',$var);
 			}
 			if ($text)
 			{
@@ -2791,7 +2787,7 @@
 				$this->output_template_array($this->link_tpl,'picture','link_text',$var);
 			}
 
-			if ($editable)
+			if ($viewable)
 			{
 				$this->link_tpl->parse('picture','link_close',True);
 			}
@@ -3026,7 +3022,7 @@
 					if ($day_params['new_event'])
 					{
 						$new_event_link = ' <a href="'.$this->page('add','&date='.$date).'">'
-							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new').'" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">'
+							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new').'" width="10" height="10" title="'.lang('New Entry').'" border="0" align="center">'
 							. '</a>';
 						$day_number = '<a href="'.$this->page('day','&date='.$date).'">'.$day.'</a>';
 					}
