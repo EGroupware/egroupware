@@ -151,11 +151,12 @@
 				'menuaction' => 'phpgwapi.uiaccountsel.popup',
 				'app' => $GLOBALS['phpgw_info']['flags']['currentapp'],
 				'element_id'  => $element_id,
+				'single'      => !$lines,	// single selection, closes after the first selection
 			));
 			if (!$lines)
 			{
-				$options .= ' onchange="if (this.value=\'popup\') '."window.open('$link','uiaccountsel','width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes')".';'.
-					($onchange ? " else {$onchange}" : '' ).'"';
+				$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes')".';'.
+					($onchange ? " else { $onchange }" : '' ).'"';
 				$select['popup'] = lang('Search').' ...';
 			}
 			elseif ($onchange)
@@ -176,10 +177,20 @@
 				$html .= '<script language="JavaScript">
 	function addOption(id,label,value)
 	{
-'./*		alert(\'opener.addOption(\'+id+\',\'+label+\',\'+value+\')\');
-*/'		selectBox = document.getElementById(id);
-'./*		if (selectBox == null) alert(\'selectBox \'+id+\' not found !!!\');
-*/'		selectBox.options[selectBox.length] = new Option(label,value,false,true);
+'.//		alert(\'opener.addOption(\'+id+\',\'+label+\',\'+value+\')\');
+'		selectBox = document.getElementById(id);
+'.//		if (selectBox == null) alert(\'selectBox \'+id+\' not found !!!\');
+'		for (i=0; i < selectBox.length; i++) {
+'.			// check existing entries if its already there and only select it in that case
+'			if (selectBox.options[i].value == value) {
+				selectBox.options[i].selected = true;
+				break;
+			}
+		}
+		if (i >= selectBox.length) {
+			selectBox.options[selectBox.length] = new Option(label,value,false,true);
+		}
+		if (selectBox.onchange) selectBox.onchange();
 	}
 </script>';
 				$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'] = True;
@@ -193,6 +204,7 @@
 
 			$group_id = get_var('group_id',array('POST','GET'));
 			$element_id = get_var('element_id',array('POST','GET'));
+			$single = get_var('single',array('POST','GET'));
 
 			if(isset($_POST['query']))
 			{
@@ -260,6 +272,7 @@
 				'app'        => $app,
 				'group_id'   => $group_id,
 				'element_id' => $element_id,
+				'single'     => $single,
 			);
 
 			$app_groups = array();
@@ -326,7 +339,8 @@
 					$link_data['group_id'] = $group['account_id'];
 
 					$GLOBALS['phpgw']->template->set_var('onclick',"opener.addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]')");
+						$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]')".
+						($single ? '; window.close()' : ''));
 
 					if (in_array($group['account_id'],$app_groups))
 					{
@@ -464,7 +478,8 @@
 					'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 					'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
 					'onclick'	=> "opener.addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]')",
+						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]')".
+						($single ? '; window.close()' : ''),
 				));
 
 				$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
