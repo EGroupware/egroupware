@@ -1,4 +1,4 @@
-﻿(account deletion in sql only)	setup	zh	(仅在SQL数据库中删除帐户)
+(account deletion in sql only)	setup	zh	(仅在SQL数据库中删除帐户)
 00 (disable)	setup	zh	00 (禁用)
 13 (ntp)	setup	zh	13 (ntp)
 80 (http)	setup	zh	80 (http)
@@ -61,7 +61,7 @@ checking the egroupware installation	setup	zh	检查eGroupWare安装
 click <a href="index.php">here</a> to return to setup.	setup	zh	点击<a href="index.php">此处</a>返回安装.
 click here	setup	zh	点击此处
 completed	setup	zh	已完成
-configuration	setup	zh	设置
+configuration	setup	zh	配置
 configuration completed	setup	zh	设置完成
 configuration password	setup	zh	设置密码
 configure now	setup	zh	立刻设置
@@ -111,7 +111,7 @@ domain	setup	zh	域
 domain select box on login	setup	zh	登陆时显示域选择框
 dont touch my data	setup	zh	请勿更改我的数据
 download	setup	zh	下载
-edit current configuration	setup	zh	编辑当前设置
+edit current configuration	setup	zh	编辑当前配置
 edit your existing header.inc.php	setup	zh	编辑你已现有的 header.inc.php
 edit your header.inc.php	setup	zh	编辑你的header.inc.php
 enable for extra debug-messages	setup	zh	显示额外的调试信息
@@ -170,7 +170,7 @@ install applications	setup	zh	安装应用程序
 install language	setup	zh	安装语言
 installed	setup	zh	已经安装
 instructions for creating the database in %1:	setup	zh	创建数据库的命令在%1:
-invalid ip address	setup	zh	无效IP地址
+invalid ip address	setup	zh	IP地址无效
 invalid password	setup	zh	密码错误
 is broken	setup	zh	被中断
 is disabled	setup	zh	被禁用
@@ -208,7 +208,7 @@ modify an existing ldap account store for use with phpgroupware (for a new insta
 multi-language support setup	setup	zh	多语言安装支持
 name of database	setup	zh	数据库名
 name of db user phpgroupware uses to connect	setup	zh	phpGroupWare 连接的数据库用户名
-never	setup	zh	决不
+never	setup	zh	绝不
 new	setup	zh	新建
 no	setup	zh	否
 no algorithms available	setup	zh	无可用算法
@@ -347,7 +347,7 @@ upgrade all	setup	zh	升级全部
 upgraded	setup	zh	升级
 upgrading tables	setup	zh	正在升级表格
 use cookies to pass sessionid	setup	zh	使用cookies来传递会话id
-use pure html compliant code (not fully working yet)	setup	zh	使用纯HTML兼容编码(目前无法完全工作)
+use pure html compliant code (not fully working yet)	setup	zh	使用纯HTML兼容编码(目前尚未完全可用)
 users choice	setup	zh	用户选择
 utf-8 (unicode)	setup	zh	utf-8 (Unicode)
 version mismatch	setup	zh	版本不符

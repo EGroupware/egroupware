@@ -1,4 +1,4 @@
-﻿%1 records imported	addressbook	zh	已导入%1条记录
+%1 records imported	addressbook	zh	已导入%1条记录
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	已读取%1条记录(但尚未导入，您可以进入%2，返回%3，并且清除"测试导入"复选框)
 (e.g. 1969)	addressbook	zh	(例如:1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>缺少转换类型&lt;none&gt;</b>请从列表中选择一个转换类型
@@ -35,11 +35,11 @@ business street	addressbook	zh	街道
 business zip code	addressbook	zh	邮政编码
 car phone	addressbook	zh	车载电话
 cell phone	addressbook	zh	手机
-charset of file	addressbook	zh	文件字符集
+charset of file	addressbook	zh	文件编码
 city	common	zh	城市
 company	common	zh	公司
 company name	common	zh	公司名称
-configuration	common	zh	设置
+configuration	common	zh	配置
 contact	common	zh	联系人
 contact application	admin	zh	联系人应用程序
 contact settings	admin	zh	联系人配置
@@ -69,9 +69,10 @@ field %1 has been updated !	addressbook	zh	字段%1已更新!
 field name	addressbook	zh	字段名
 fields to show in address list	addressbook	zh	将在地址列表中显示的字段
 fieldseparator	addressbook	zh	字段分隔符
-full name	addressbook	zh	全名
+full name	addressbook	zh	姓名
 geo	addressbook	zh	GEO
 grant addressbook access	common	zh	授权通讯录访问
+home	addressbook	zh	家庭
 home address type	addressbook	zh	地址类型
 home city	addressbook	zh	城市
 home country	addressbook	zh	国家/地区
@@ -104,7 +105,7 @@ mobile phone	addressbook	zh	移动电话
 modem phone	addressbook	zh	Modem电话
 no vcard	addressbook	zh	无vCard
 number of records to read (<=200)	addressbook	zh	待读取记录数 (<=200)
-other number	addressbook	zh	其他数字
+other number	addressbook	zh	其他电话
 other phone	addressbook	zh	其他电话
 pager	common	zh	寻呼
 parcel	addressbook	zh	包裹
@@ -112,7 +113,7 @@ phone number	common	zh	电话号码
 phone numbers	common	zh	电话号码
 please enter a name for that field !	addressbook	zh	请输入该字段名!
 postal	common	zh	邮政
-pref	addressbook	zh	首选
+pref	addressbook	zh	设为首选
 prefix	addressbook	zh	称谓
 public key	addressbook	zh	公钥
 read a list of entries.	addressbook	zh	读取一个条目.

@@ -1,9 +1,11 @@
-﻿about %1	common	zh	关于%1
+%1 email addresses inserted	common	zh	已插入%1个EMail地址
+about %1	common	zh	关于%1
 access	common	zh	访问
 access not permitted	common	zh	禁止访问
 account has been created	common	zh	账户创建成功
 account has been deleted	common	zh	账户已删除
 account has been updated	common	zh	账户已更新
+account is expired	common	zh	帐户已过有效期
 acl	common	zh	ACL
 action	common	zh	操作
 active	common	zh	启用
@@ -42,6 +44,7 @@ bahamas	common	zh	巴哈马群岛
 bahrain	common	zh	巴林群岛
 bangladesh	common	zh	孟加拉国
 barbados	common	zh	巴巴多斯岛
+bcc	common	zh	暗送
 belarus	common	zh	白俄罗斯
 belgium	common	zh	比利时
 belize	common	zh	伯利兹城
@@ -70,6 +73,7 @@ category	common	zh	类别
 category %1 has been added !	common	zh	类别%1已添加!
 category %1 has been updated !	common	zh	类别%1已更新!
 cayman islands	common	zh	开曼群岛
+cc	common	zh	抄送
 central african republic	common	zh	中非共和国
 chad	common	zh	乍得湖
 change	common	zh	更改
@@ -85,6 +89,7 @@ close	common	zh	关闭
 cocos (keeling) islands	common	zh	科科斯(基灵)群岛
 colombia	common	zh	哥伦比亚
 comoros	common	zh	科摩罗
+company	common	zh	公司
 congo	common	zh	刚果
 congo, the democratic republic of the	common	zh	刚果民主共和国
 cook islands	common	zh	库克群岛
@@ -128,6 +133,7 @@ edit	common	zh	编辑
 edit %1 category for	common	zh	编辑类别%1为
 edit categories	common	zh	编辑类别
 edit category	common	zh	编辑类别
+egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare:用户'%1', IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
 email	common	zh	E-Mail
@@ -204,12 +210,14 @@ high	common	zh	高
 highest	common	zh	最高
 holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
 home	common	zh	主页面
+home email	common	zh	家庭EMail地址
 honduras	common	zh	洪都拉斯
 hong kong	common	zh	香港
 hungary	common	zh	匈牙利
 iceland	common	zh	冰岛
 india	common	zh	印度
 indonesia	common	zh	印度尼西亚
+insert all %1 addresses of the %2 contacts in %3	common	zh	将%2个联系人的全部%1个地址插入%3
 international	common	zh	国际
 invalid ip address	common	zh	IP地址无效
 invalid password	common	zh	密码无效
@@ -296,7 +304,7 @@ nauru	common	zh	瑙鲁岛
 nepal	common	zh	尼泊尔
 netherlands	common	zh	荷兰
 netherlands antilles	common	zh	荷兰属安的列斯群岛
-never	common	zh	从不
+never	common	zh	永不过期
 new caledonia	common	zh	新克里多尼亚
 new entry added sucessfully	common	zh	新条目添加成功
 new main category	common	zh	新建主类别
@@ -321,7 +329,7 @@ northern mariana islands	common	zh	北马里亚纳群岛
 norway	common	zh	挪威
 not assigned	common	zh	未指定
 note	common	zh	备注
-notes	common	zh	备注
+notes	common	zh	附注
 notify window	common	zh	提示窗口
 november	common	zh	十一月
 october	common	zh	十月
@@ -350,7 +358,7 @@ password could not be changed	common	zh	无法更改密码
 password has been updated	common	zh	密码已更新
 pattern for search in addressbook	common	zh	在通讯录中查找的模式
 pattern for search in calendar	common	zh	在日历中查找的模式
-pattern for search in projects	common	zh	在工程中查找的模式
+pattern for search in projects	common	zh	在项目中查找的模式
 permissions to the files/users directory	common	zh	文件/用户目录的权限
 personal	common	zh	个人
 peru	common	zh	秘鲁
@@ -375,7 +383,7 @@ previous page	common	zh	前一页
 print	common	zh	打印
 priority	common	zh	优先级
 private	common	zh	私人
-project	common	zh	工程
+project	common	zh	项目
 public	common	zh	公共
 puerto rico	common	zh	波多黎各
 qatar	common	zh	卡塔尔
@@ -407,8 +415,10 @@ select	common	zh	选择
 select category	common	zh	选择类别
 select date	common	zh	选择日期
 select group	common	zh	选择组
+select home email address	common	zh	选择家庭EMail地址
 select one	common	zh	选择一个
 select user	common	zh	选择用户
+select work email address	common	zh	选择工作EMail地址
 send	common	zh	发送
 senegal	common	zh	塞内加尔
 september	common	zh	九月
@@ -418,6 +428,7 @@ session has been killed	common	zh	会话已中止
 setup	common	zh	安装程序
 seychelles	common	zh	塞舌尔
 show all	common	zh	全部显示
+show all categorys	common	zh	显示所有类别
 showing %1	common	zh	显示%1项
 showing %1 - %2 of %3	common	zh	显示%3项中的%1—%2
 sierra leone	common	zh	塞拉利昂
@@ -456,19 +467,22 @@ the mail server returned	common	zh	退回邮件
 this application is current	common	zh	该应用程序当前在用
 this application requires an upgrade	common	zh	该应用程序需要升级
 this name has been used already	common	zh	该名称已被占用!
+This PHP has no IMAP support compiled in!!	common	zh	当前使用的PHP版本不支持IMAP!!
 thursday	common	zh	星期四
 time	common	zh	时间
 time zone	common	zh	时区
 time zone offset	common	zh	时差
 title	common	zh	头衔
+to	common	zh	收件人
 to correct this error for the future you will need to properly set the	common	zh	今后要更正该错误，您需要正确设置
 to go back to the msg list, click <a href= %1 >here</a>	common	zh	点击<a href="%1">此处</a>返回邮件列表
-today	common	zh	今日
-todays date, eg. "%1"	common	zh	今日日期，例如:"%1"
+today	common	zh	今天
+todays date, eg. "%1"	common	zh	当前日期，例如:"%1"
 toggle first day of week	common	zh	更改一周起始日
 togo	common	zh	多哥
 tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多:用户"%2"%1次，IP地址"%4"%3次
 total	common	zh	总计
 trinidad and tobago	common	zh	特立尼达和多巴哥
 tuesday	common	zh	星期二
@@ -490,7 +504,7 @@ uruguay	common	zh	乌拉圭
 use button to search for	common	zh	使用按钮查找
 use button to search for address	common	zh	使用按钮查找地址
 use button to search for calendarevent	common	zh	使用按钮查找日记
-use button to search for project	common	zh	使用按钮查找工程
+use button to search for project	common	zh	使用按钮查找项目
 user	common	zh	用户
 user accounts	common	zh	用户帐户
 user groups	common	zh	用户组
@@ -511,6 +525,7 @@ welcome	common	zh	欢迎
 western sahara	common	zh	西撒哈拉
 which groups	common	zh	哪一个组
 wk	common	zh	星期
+work email	common	zh	工作EMail地址
 written by:	common	zh	作者:
 year	common	zh	年
 yemen	common	zh	也门

@@ -1,10 +1,10 @@
-﻿%1 %2 in %3	calendar	zh	%1 %2 in %3
+%1 %2 in %3	calendar	zh	%1 %2 in %3
 %1 matches found	calendar	zh	找到%1个符合条件的记录
-1 match found	calendar	zh	找到1个符合条件的记录
 %1 records imported	calendar	zh	已导入%1个记录
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	zh	已读取%1个记录(尚未导入, 您可以返回并取消导入测试)
 (for weekly)	calendar	zh	(每周)
 (i/v)cal	calendar	zh	(i/v)日程表
+1 match found	calendar	zh	找到1个符合条件的记录
 a	calendar	zh	一
 accept	calendar	zh	接受
 accepted	calendar	zh	已接受
@@ -41,10 +41,12 @@ calendar-fieldname	calendar	zh	日程表—字段名
 canceled	calendar	zh	已取消
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	zh	$params['old_owner']安排的全部事项，更改为由$params['new_owner']安排。
 change status	calendar	zh	更改状态
+charset of file	calendar	zh	文件编码
 click %1here%2 to return to the calendar.	calendar	zh	点击%1此处%2返回日程表。
 configuration	calendar	zh	配置
 countries	calendar	zh	国家
 country	calendar	zh	国家/地区
+created by	calendar	zh	创建者
 csv-fieldname	calendar	zh	CSV-字段名
 csv-filename	calendar	zh	CSV-文件名
 custom fields	calendar	zh	自定义字段
@@ -81,6 +83,7 @@ edit series	calendar	zh	连续编辑
 edit single	calendar	zh	单独编辑
 email notification	calendar	zh	Email通知
 email notification for %1	calendar	zh	%1的Email通知
+empty for all	calendar	zh	全部清空
 enable	calendar	zh	启用
 enabled	calendar	zh	已启用
 end date/time	calendar	zh	终止日期/时刻
@@ -105,7 +108,6 @@ fri	calendar	zh	五
 full description	calendar	zh	完整说明
 fullname of person to notify	calendar	zh	被通知者的全名
 generate printer-friendly version	calendar	zh	生成便于打印的版本
-global categories	calendar	zh	全局类别
 global public and group public	calendar	zh	全局公有与组公有
 global public only	calendar	zh	仅全局公有
 go!	calendar	zh	开始
@@ -200,7 +202,6 @@ receive summary of appointments	calendar	zh	接收预约统计
 recurring event	calendar	zh	循环事项
 refresh	calendar	zh	刷新
 reinstate	calendar	zh	复原
-reject	calendar	zh	拒绝
 rejected	calendar	zh	已拒绝
 repeat day	calendar	zh	重复日期
 repeat end date	calendar	zh	重复终止日期
@@ -228,6 +229,7 @@ show day view on main screen	calendar	zh	在主页面显示每日安排
 show default view on main screen	calendar	zh	在主页面显示默认视图
 show high priority events on main screen	calendar	zh	在首页显示优先的事项
 show invitations you rejected	calendar	zh	显示已拒绝的邀请
+show list of upcoming events	calendar	zh	显示临近的事项
 single event	calendar	zh	单一事项
 sorry, the owner has just deleted this event	calendar	zh	抱歉，该事项已被安排者取消
 sorry, this event does not exist	calendar	zh	抱歉，该事项不存在
@@ -265,10 +267,11 @@ thu	calendar	zh	四
 title	calendar	zh	标题
 title of the event	calendar	zh	事项标题
 title-row	calendar	zh	标题—行
+to many might exceed your execution-time-limit	calendar	en	to many might exceed your execution-time-limit
 to-firstname	calendar	zh	发送给—名字
 to-fullname	calendar	zh	发送给—姓名
 to-lastname	calendar	zh	发送给—姓氏
-today	calendar	zh	今日
+today	calendar	zh	今天
 translation	calendar	zh	翻译
 tu	calendar	zh	二
 tue	calendar	zh	二
