@@ -39,7 +39,8 @@
 	*/
 	function print_debug_subarray($array)
 	{
-		while(list($key, $value) = each($array))
+//		while(list($key, $value) = each($array))
+		foreach($array as $key => $value)
 		{
 			if (is_array($value))
 			{
@@ -124,7 +125,8 @@
 					print_r($var);
 					if (DEBUG_DATATYPES)
 					{
-						while(list($key, $value) = each($var))
+//						while(list($key, $value) = each($var))
+						foreach($var as $key => $value)
 						{
 							if (is_array($value))
 							{
@@ -665,17 +667,19 @@
 	{
 		global $phpgw_info, $phpgw;
 
-		if (is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+		/*
+		if(is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
 		{
-			//$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
+			$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
 		}
+		*/
 
 		/* error_reporting(0); */
 		list($appname,$classname) = explode('.', $class);
 		$filename = PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php';
 		$included_files = get_included_files();
 
-		if (!isset($included_files[$filename]))
+		if(!isset($included_files[$filename]))
 		{
 			if(@file_exists($filename))
 			{
@@ -691,10 +695,10 @@
 		{
 			$is_included = True;
 		}
-		
+
 		if($is_included)
 		{
-			if ($p1 == '_UNDEF_' && $p1 != 1)
+			if($p1 == '_UNDEF_' && $p1 != 1)
 			{
 				$obj = @new $classname;
 			}
@@ -703,9 +707,9 @@
 				$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
 				$i = 1;
 				$code = '$obj = new ' . $classname . '(';
-				while (list($x,$test) = each($input))
+				foreach($input as $test)
 				{
-					if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
+					if(($test == '_UNDEF_' && $test != 1 ) || $i == 17)
 					{
 						break;
 					}
@@ -776,14 +780,15 @@
 			$appname = $GLOBALS['methodparts'][0];
 			$classname = $GLOBALS['methodparts'][$classpartnum];
 			$functionname = $GLOBALS['methodparts'][$partscount];
-			/* Now I clear these out of the array so that I can do a proper */
+			/* Now we clear these out of the array so that we can do a proper */
 			/* loop and build the $parentobject */
 			unset ($GLOBALS['methodparts'][0]);
 			unset ($GLOBALS['methodparts'][$classpartnum]);
 			unset ($GLOBALS['methodparts'][$partscount]);
 			reset ($GLOBALS['methodparts']);
 			$firstparent = 'True';
-			while (list ($key, $val) = each ($GLOBALS['methodparts']))
+//			while (list ($key, $val) = each ($GLOBALS['methodparts']))
+			foreach($GLOBALS['methodparts'] as $val)
 			{
 				if ($firstparent == 'True')
 				{
@@ -915,7 +920,6 @@
 		}
 	}
 
-	/* Just a wrapper to my new print_r() function I added to the php3 support file.  Seek3r */
 	function _debug_array($array,$print=True)
 	{
 		$four = False;
@@ -958,8 +962,7 @@
 
 		if ($DEBUG)
 		{
-			echo'<br>Input values: '
-				. 'A="'.$a.'", B="'.$b.'"';
+			echo'<br>Input values: ' . 'A="'.$a.'", B="'.$b.'"';
 		}
 		$newa = str_replace('pre','.',$a);
 		$newb = str_replace('pre','.',$b);
@@ -1047,8 +1050,7 @@
 
 		if ($DEBUG)
 		{
-			echo'<br>Input values: '
-				. 'A="'.$a.'", B="'.$b.'"';
+			echo'<br>Input values: ' . 'A="'.$a.'", B="'.$b.'"';
 		}
 		$newa = str_replace('pre','.',$a);
 		$newb = str_replace('pre','.',$b);
@@ -1123,7 +1125,6 @@
 	 @param	$tables	and array of tables to have the prefix prepended to
 	 @return array of table names with the prefix prepended
 	*/
-
 	function prepend_tables_prefix($prefix,$tables)
 	{
 		foreach($tables as $key => $value)
@@ -1132,7 +1133,6 @@
 		}
 		return $tables;
 	}
-
 
 	/*!
 	 @function function_backtrace
