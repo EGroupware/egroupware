@@ -508,6 +508,10 @@
 						$value = $GLOBALS[$meth][$varname];
 						$i = $cnt+1;
 					}
+					if(get_magic_quotes_gpc())
+					{
+						$value = stripslashes($value);
+					}
 					break;
 				case 'FILES':
 					if(phpversion() >= '4.1.0')
