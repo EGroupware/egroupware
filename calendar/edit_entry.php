@@ -32,13 +32,11 @@
 
 	$cal_info = CreateObject('calendar.calendar_item');
 
-	function display_item($field,$data)
+	function display_item(&$p,$field,$data)
 	{
-		global $p;
-		
 		$p->set_var('field',$field);
 		$p->set_var('data',$data);
-		$p->parse('output','list',True);
+		$p->parse('row','list',True);
 	}
 
 	if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
@@ -146,13 +144,13 @@
 
 	$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 	$templates = Array(
-		'edit_entry_begin'=>	'edit.tpl',
-		'list'				=>	'list.tpl',
-		'hr'					=> 'hr.tpl',
-		'edit_entry_end'	=> 'edit.tpl',
+		'edit'	=>	'edit.tpl',
 		'form_button'		=>	'form_button_script.tpl'
 	);
 	$p->set_file($templates);
+	$p->set_block('edit','edit_entry','edit_entry');
+	$p->set_block('edit','list','list');
+	$p->set_block('edit','hr','hr');
 
 	if($id > 0)
 	{
@@ -184,22 +182,21 @@
 	);
 	
 	$p->set_var($vars);
-	$p->parse('out','edit_entry_begin');
 
 // Brief Description
-	display_item(lang('Title'),'<input name="title" size="25" maxlength="80" value="'.$event->title.'">');
+	display_item($p,lang('Title'),'<input name="title" size="25" maxlength="80" value="'.$event->title.'">');
 
 // Full Description
-	display_item(lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>');
+	display_item($p,lang('Full Description'),'<textarea name="description" rows="5" cols="40" wrap="virtual" maxlength="2048">'.$event->description.'</textarea>');
 
 // Display Categories
-	display_item(lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','all',$event->category,True).'</select>');
+	display_item($p,lang('Category'),'<select name="category"><option value="">'.lang('Choose the category').'</option>'.$phpgw->categories->formated_list('select','all',$event->category,True).'</select>');
 
 // Date
 	$day_html = $sb->getDays('start[mday]',intval($phpgw->common->show_date($start,'d')));
 	$month_html = $sb->getMonthText('start[month]',intval($phpgw->common->show_date($start,'n')));
 	$year_html = $sb->getYears('start[year]',intval($phpgw->common->show_date($start,'Y')),intval($phpgw->common->show_date($start,'Y')));
-	display_item(lang('Start Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
+	display_item($p,lang('Start Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
 
 // Time
 	$amsel = ' checked'; $pmsel = '';
@@ -217,13 +214,13 @@
 		$str .= '<input type="radio" name="start[ampm]" value="pm"'.$pmsel.'>pm';
 	}
 
-	display_item(lang('Start Time'),$str);
+	display_item($p,lang('Start Time'),$str);
 
 // End Date
 	$day_html = $sb->getDays('end[mday]',intval($phpgw->common->show_date($end,'d')));
 	$month_html = $sb->getMonthText('end[month]',intval($phpgw->common->show_date($end,'n')));
 	$year_html = $sb->getYears('end[year]',intval($phpgw->common->show_date($end,'Y')),intval($phpgw->common->show_date($end,'Y')));
-	display_item(lang('End Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
+	display_item($p,lang('End Date'),$phpgw->common->dateformatorder($year_html,$month_html,$day_html));
 
 // End Time
 	$amsel = ' checked'; $pmsel = '';
@@ -242,10 +239,10 @@
 		$str .= '<input type="radio" name="end[ampm]" value="pm"'.$pmsel.'>pm';
 	}
 
-    display_item(lang("End Time"),$str);
+    display_item($p,lang("End Time"),$str);
 
 // Priority
-	display_item(lang('Priority'),$sb->getPriority('priority',$event->priority));
+	display_item($p,lang('Priority'),$sb->getPriority('priority',$event->priority));
 
 // Access
 	$str = '<input type="checkbox" name="private" value="private"';
@@ -254,7 +251,7 @@
 		$str .= ' checked';
 	}
 	$str .= '>';
-	display_item(lang('Private'),$str);
+	display_item($p,lang('Private'),$str);
 
 // Participants
 	$accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
@@ -299,7 +296,7 @@
 		}
 	}
 	$str .= '   </select>';
-	display_item(lang('Participants'),$str);
+	display_item($p,lang('Participants'),$str);
 
 // I Participate
 	$participate = False;
@@ -319,13 +316,13 @@
 		$str .= ' checked';
 	}
 	$str .= '>';
-	display_item($phpgw->common->grab_owner_name($owner).' '.lang('Participates'),$str);
+	display_item($p,$phpgw->common->grab_owner_name($owner).' '.lang('Participates'),$str);
 
 // Repeat Type
 	$p->set_var('hr_text','<hr>');
-	$p->parse('output','hr',True);
+	$p->parse('row','hr',True);
 	$p->set_var('hr_text','<center><b>'.lang('Repeating Event Information').'</b></center><br>');
-	$p->parse('output','hr',True);
+	$p->parse('row','hr',True);
 	$str = '<select name="recur_type">';
 	$rpt_type = Array(
 		RECUR_NONE,
@@ -353,9 +350,8 @@
 		$str .= '>'.lang($rpt_type_out[$rpt_type[$l]]).'</option>';
 	}
 	$str .= '</select>';
-	display_item(lang('Repeat Type'),$str);
+	display_item($p,lang('Repeat Type'),$str);
 
-	$p->set_var('field',lang('Repeat End Date'));
 	$str = '<input type="checkbox" name="rpt_use_end" value="y"';
 
 	if($event->recur_enddate->year != 0 && $event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0)
@@ -377,7 +373,7 @@
 	$year_html = $sb->getYears('recur_enddate[year]',intval($phpgw->common->show_date($recur_end,'Y')),intval($phpgw->common->show_date($recur_end,'Y')));
 	$str .= $phpgw->common->dateformatorder($year_html,$month_html,$day_html);
 
-	display_item(lang('Repeat End Date'),$str);
+	display_item($p,lang('Repeat End Date'),$str);
 
 	$str  = '<input type="checkbox" name="cal[rpt_sun]" value="'.M_SUNDAY.'"'.(($event->recur_data & M_SUNDAY) ?' checked':'').'> '.lang('Sunday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_mon]" value="'.M_MONDAY.'"'.(($event->recur_data & M_MONDAY) ?' checked':'').'> '.lang('Monday').' ';
@@ -387,9 +383,9 @@
 	$str .= '<input type="checkbox" name="cal[rpt_fri]" value="'.M_FRIDAY.'"'.(($event->recur_data & M_FRIDAY) ?' checked':'').'> '.lang('Friday').' ';
 	$str .= '<input type="checkbox" name="cal[rpt_sat]" value="'.M_SATURDAY.'"'.(($event->recur_data & M_SATURDAY) ?' checked':'').'> '.lang('Saturday').' ';
 
-	display_item(lang('Repeat Day').'<br>'.lang('(for weekly)'),$str);
+	display_item($p,lang('Repeat Day').'<br>'.lang('(for weekly)'),$str);
 
-	display_item(lang('Frequency'),'<input name="recur_interval" size="4" maxlength="4" value="'.$event->recur_interval.'">');
+	display_item($p,lang('Frequency'),'<input name="recur_interval" size="4" maxlength="4" value="'.$event->recur_interval.'">');
 
 	$p->set_var('submit_button',lang('Submit'));
 
@@ -406,12 +402,11 @@
 		);
 		$p->set_var($var);
 		$p->parse('delete_button','form_button');
-		$p->pparse('out','edit_entry_end');
 	}
 	else
 	{
 		$p->set_var('delete_button','');
-		$p->pparse('out','edit_entry_end');
 	}
+	$p->pparse('out','edit_entry');
 	$phpgw->common->phpgw_footer();
 ?>
