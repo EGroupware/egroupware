@@ -72,7 +72,15 @@
 
 ?>
     <form method="POST" action="<?php echo $phpgw->link("editaccount.php"); ?>">
-      <input type="hidden" name="account_id" value="<? echo rawurlencode($userData["account_id"]); ?>">
+      <input type="hidden" name="account_id" value="<? 
+	if ($phpgw_info["server"]["auth_type"] == "ldap")
+	{
+		echo rawurlencode($userData["account_dn"]);
+	}
+	else
+	{
+		echo $userData["account_id"]; 
+	}?>">
       <input type="hidden" name="old_loginid" value="<? echo $userData["account_lid"]; ?>">
 <?php
   if ($error) {
