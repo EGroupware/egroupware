@@ -61,7 +61,7 @@ define ('HTML_TABLE_FILES_COLUMN_HEADER_TEXT_COLOR', 'maroon');
 define ('HTML_TABLE_FILES_BG_COLOR', '');
 define ('HTML_TABLE_FILES_TEXT_COLOR', 'maroon');
 define ('HTML_TEXT_ERROR_COLOR', 'red');
-define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', 'Back to file manager');
+define ('HTML_TEXT_NAVIGATION_BACK_TO_USER', lang('Back to file manager'));
 
 ###
 # Need to include this here so they recognize the settings
@@ -75,18 +75,18 @@ require (PHPGW_APP_INC . '/html.inc.php');
 ###
 
 $file_attributes = Array(
-	'name' => 'Filename',
-	'mime_type' => 'MIME Type',
-	'size' => 'Size',
-	'created' => 'Created',
-	'modified' => 'Modified',
-	'owner' => 'Owner',
-	'createdby_id' => 'Created by',
-	'modifiedby_id' => 'Created by',
-	'modifiedby_id' => 'Modified by',
-	'app' => 'Application',
-	'comment' => 'Comment',
-	'version' => 'Version'
+	'name' => lang('File Name'),
+	'mime_type' => lang('MIME Type'),
+	'size' => lang('Size'),
+	'created' => lang('Created'),
+	'modified' => lang('Modified'),
+	'owner' => lang('Owner'),
+	'createdby_id' => lang('Created by'),
+	'modifiedby_id' => lang('Created by'),
+	'modifiedby_id' => lang('Modified by'),
+	'app' => lang('Application'),
+	'comment' => lang('Comment'),
+	'version' => lang('Version')
 );
 
 ###

@@ -24,13 +24,13 @@
 	/*
 	   To add an on/off preference, just add it here.  Key is internal name, value is displayed name
 	*/
-	$other_checkboxes = array ("viewinnewwin" => "View documents in new window", "viewonserver" => "View documents on server (if available)", "viewtextplain" => "Unknown MIME-type defaults to text/plain when viewing", "dotdot" => "Show ..", "dotfiles" => "Show .files", "show_help" => "Show help", "show_command_line" => "Show command line (EXPERIMENTAL. DANGEROUS.)");
+	$other_checkboxes = array ("viewinnewwin" => lang("View documents in new window"), "viewonserver" => lang("View documents on server (if available)"), "viewtextplain" => lang("Unknown MIME-type defaults to text/plain when viewing"), "dotdot" => lang("Show .."), "dotfiles" => lang("Show .files"), "show_help" => lang("Show help"), "show_command_line" => lang("Show command line (EXPERIMENTAL. DANGEROUS.)"));
 
 	/*
 	   To add a dropdown preferences, add it here.  Key is internal name, value key is
 	   displayed name, value values are choices in the dropdown
 	*/
-	$other_dropdown = array ("show_upload_boxes" => array ("Default number of upload fields to show", "5", "10", "20", "30"));
+	$other_dropdown = array ("show_upload_boxes" => array (lang("Default number of upload fields to show"), "5", "10", "20", "30"));
 
 	if ($submit)
 	{
@@ -124,7 +124,7 @@
 		}
 
 		$str = html_form_input ("checkbox", $internal, NULL, NULL, NULL, $checked, NULL, 1);
-		display_item (lang ($displayed), $str);
+		display_item ($displayed, $str);
 	}
 
 	reset ($other_dropdown);
