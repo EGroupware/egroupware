@@ -41,6 +41,8 @@
 			'view' => True,
 			'edit' => True,
 			'export'	=> True,
+			'reinstate_list'	=> True,
+			'reinstate'	=> True,
 			'add'  => True,
 			'delete' => True,
 			'preferences' => True,
@@ -249,7 +251,7 @@
 
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
-			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
 				$minical_prev = $this->mini_calendar(
 					Array(
@@ -551,6 +553,7 @@
 
 				if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
 				{
+					echo '</center>'."\n";
 					$GLOBALS['phpgw']->common->phpgw_exit(True);
 				}
 
@@ -615,7 +618,7 @@
 							$var = Array(
 								'action_url_button'	=> $this->page('delete','&cal_id='.$cal_id),
 								'action_text_button'	=> lang('Delete Single'),
-								'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
+								'action_confirm_button'	=> "onClick=\"return confirm('".lang("Are you sure\\nyou want to\\ndelete this single occurence ?\\n\\nThis will delete\\nthis entry for all users.")."')\"",
 								'action_extra_field'	=> '<input type="hidden" name="delete_type" value="single">'
 							);
 							$p->set_var($var);
@@ -629,6 +632,18 @@
 							);
 							$p->set_var($var);
 							echo $p->fp('out','form_button');
+
+							if($event['recur_exception'])
+							{
+								$var = Array(
+									'action_url_button'	=> $this->page('reinstate_list','&cal_id='.$cal_id),
+									'action_text_button'	=> lang('Reinstate'),
+									'action_confirm_button'	=> '',
+									'action_extra_field'	=> ''
+								);
+								$p->set_var($var);
+								echo $p->fp('out','form_button');
+							}
 						}
 						else
 						{
@@ -722,6 +737,126 @@
 			echo nl2br(execmethod('calendar.boicalendar.export',$GLOBALS['HTTP_GET_VARS']['cal_id']));
 		}
 
+		function reinstate_list($params='')
+		{
+			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			{
+			   $this->no_edit();
+			}
+			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))
+			{
+				$this->index();
+			}
+
+  			unset($GLOBALS['phpgw_info']['flags']['noheader']);
+ 	 		unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
+			$GLOBALS['phpgw']->common->phpgw_header();
+	   	
+			echo '<center>';
+
+			$cal_id = (isset($params['cal_id'])?intval($params['cal_id']):'');
+			$cal_id = ($cal_id==''?intval($GLOBALS['HTTP_GET_VARS']['cal_id']):$cal_id);
+
+			if ($cal_id < 1)
+			{
+				echo lang('Invalid entry id.').'</center>'."\n";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+
+			if(!$this->bo->check_perms(PHPGW_ACL_READ))
+			{
+				echo lang('You do not have permission to read this record!').'</center>'."\n";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+
+			$event = $this->bo->read_entry($cal_id);
+
+			if(!isset($event['id']))
+			{
+				echo lang('Sorry, this event does not exist').'.'.'</center>'."\n";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+			elseif(!isset($event['recur_exception']))
+			{
+				echo lang('Sorry, this event does not have exceptions defined').'.'.'</center>'."\n";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+
+			$ret_value = $this->view_event($event,True);
+			echo $ret_value;
+
+			if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
+			{
+				echo '</center>'."\n";
+				$GLOBALS['phpgw']->common->phpgw_exit(True);
+			}
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'form_button'	=> 'form_button_script.tpl'
+				)
+			);
+
+			$str = '';
+
+			for($i=0;$i<count($event['recur_exception']);$i++)
+			{
+				$str .= '    <option value="'.$i.'">'.$GLOBALS['phpgw']->common->show_date($event['recur_exception'][$i]).'</option>'."\n";
+			}
+
+			$var = Array(
+				'action_url_button'	=> $this->page('reinstate','&cal_id='.$cal_id),
+				'action_text_button'	=> lang('Reinstate'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> "\n".'   <select name="reinstate_index[]" multiple size="5">'."\n".$str.'   </select>'
+			);
+			$p->set_var($var);
+			echo $p->fp('out','form_button');
+
+			$var = Array(
+				'action_url_button'	=> $this->page(''),
+				'action_text_button'	=> lang('Cancel'),
+				'action_confirm_button'	=> '',
+				'action_extra_field'	=> ''
+			);
+			$p->set_var($var);
+			echo $p->fp('out','form_button').'</center>';
+		}
+
+		function reinstate($params='')
+		{
+			if(!$this->bo->check_perms(PHPGW_ACL_EDIT))
+			{
+			   $this->no_edit();
+			}
+			elseif(!$this->bo->check_perms(PHPGW_ACL_ADD))
+			{
+				$this->index();
+			}
+			$cal_id = (isset($params['cal_id'])?intval($params['cal_id']):'');
+			$cal_id = ($cal_id==''?intval($GLOBALS['HTTP_GET_VARS']['cal_id']):$cal_id);
+
+			$reinstate_index = (isset($params['reinstate_index'])?intval($params['reinstate_index']):'');
+			$reinstate_index = ($reinstate_index==''?intval($GLOBALS['HTTP_POST_VARS']['reinstate_index']):$reinstate_index);
+			if($this->debug)
+			{
+				echo '<!-- Calling bo->reinstate -->'."\n";
+			}
+			$cd = $this->bo->reinstate(
+				Array(
+					'cal_id'	=> $cal_id,
+					'reinstate_index'	=> $reinstate_index
+				)
+			);
+			if($this->debug)
+			{
+				echo '<!-- Return Value = '.$cd.' -->'."\n";
+			}
+			Header('Location: '.$this->page('',($cd?'&cd='.$cd:'')));
+			$GLOBALS['phpgw']->common->phpgw_exit();	
+		}
+
 		function add($cd=0,$readsess=0)
 		{
 			if(!$this->bo->check_perms(PHPGW_ACL_ADD))
@@ -782,24 +917,30 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
+			$date = sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day);
 			$event = $this->bo->read_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
 			if(($GLOBALS['HTTP_GET_VARS']['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
 			{
-				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 
-				if(isset($GLOBALS['HTTP_GET_VARS']['delete_type']) && $GLOBALS['HTTP_GET_VARS']['delete_type'] == 'delete_series')
+				if(isset($GLOBALS['HTTP_POST_VARS']['delete_type']) && $GLOBALS['HTTP_POST_VARS']['delete_type'] == 'single')
+				{
+					$cd = $this->bo->delete_single(
+						Array(
+							'id'	=> intval($GLOBALS['HTTP_GET_VARS']['cal_id']),
+							'year'	=> $this->bo->year,
+							'month'	=> $this->bo->month,
+							'day'	=> $this->bo->day
+						)
+					);
+				}
+				elseif((isset($GLOBALS['HTTP_POST_VARS']['delete_type']) && $GLOBALS['HTTP_POST_VARS']['delete_type'] == 'series') || !isset($GLOBALS['HTTP_POST_VARS']['delete_type']))
 				{
 					$cd = $this->bo->delete_entry(intval($GLOBALS['HTTP_GET_VARS']['cal_id']));
 					$this->bo->expunge();
 				}
-				else
-				{
-					// Still need to create a function to handle the deletion of a single day in a repeating serires.
-				}
 			}
 			else
 			{
-				$date = sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day);
 				$cd = '';
 			}
 			Header('Location: '.$this->page('','&date='.$date.($cd?'&cd='.$cd:'')));
@@ -810,7 +951,7 @@
 		{
 			$this->bo->read_holidays();
 			
-			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
 				$minical = $this->mini_calendar(
 					Array(
@@ -852,10 +993,12 @@
 					'day_t' => 'day.tpl'
 				)
 			);
+			$p->set_block('day_t','day','day');
+			$p->set_block('day_t','day_event','day_event');
 
 			$var = Array(
 				'printer_friendly'		=> $printer,
-				'bg_text'			=> $GLOBALS['phpgw_info']['themem']['bg_text'],
+				'bg_text'			=> $GLOBALS['phpgw_info']['theme']['bg_text'],
 				'daily_events'			=> $this->print_day(
 					Array(
 						'year'	=> $this->bo->year,
@@ -870,7 +1013,8 @@
 			);
 
 			$p->set_var($var);
-			$p->pparse('out','day_t');
+			$p->parse('day_events','day_event');
+			$p->pparse('out','day');
 		}
 
 		function edit_status()
@@ -1611,6 +1755,16 @@
 
 		function css()
 		{
+			$GLOBALS['phpgw']->browser->browser();
+			if($GLOBALS['phpgw']->browser->get_agent() == 'MOZILLA')
+			{
+				$time_width = (intval($this->bo->prefs['common']['time_format']) == 12?12:8);
+			}
+			else
+			{
+			   $time_width = (intval($this->bo->prefs['common']['time_format']) == 12?10:7);
+			}
+
 			return 'A.minicalendar { color: #000000 }'."\n"
 				. '  A.bminicalendar { color: #336699; font-weight: bold; font-style: italic }'."\n"
 				. '  A.minicalendargrey { color: #999999 }'."\n"
@@ -1618,7 +1772,9 @@
 				. '  A.minicalhol { color: #000000; background-color: '.$this->holiday_color.' }'."\n"
 				. '  A.bminicalhol { color: #336699; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n"
 				. '  A.minicalgreyhol { color: #999999; background-color: '.$this->holiday_color.' }'."\n"
-				. '  A.bminicalgreyhol { color: #999999; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n";
+				. '  A.bminicalgreyhol { color: #999999; background-color: '.$this->holiday_color.'; font-weight: bold; font-style: italic }'."\n"
+				. '  .event { color: '.$this->theme['bg_text'].'; font-family: '.$this->theme['font'].'; font-weight: 100; font-size: 80%; line-height: 110%; vertical-align: middle; }'."\n"
+				. '  .time { width: '.$time_width.'%; background-color: '.$this->theme['navbar_bg'].'; border-color: '.$this->theme['navbar_text'].'; border-width: 1; color: '.$this->theme['bg_text'].'; font-family: '.$this->theme['font'].'; font-size: 65%; line-height: 100%; vertical-align: middle; }'."\n";
 		}
 
 		function no_edit()
@@ -2492,25 +2648,6 @@
 			{
 				echo "Interval set to : ".intval($this->bo->prefs['calendar']['interval'])."<br>\n";
 			}
-
-			$GLOBALS['phpgw']->browser->browser();
-			if($GLOBALS['phpgw']->browser->get_agent() == 'MOZILLA')
-			{
-				$time_width = (intval($this->bo->prefs['common']['time_format']) == 12?12:8);
-			}
-			else
-			{
-			   $time_width = (intval($this->bo->prefs['common']['time_format']) == 12?10:7);
-			}
-			$var = Array(
-				'time_width'		=> $time_width,
-				'time_bgcolor'		=> $this->theme['navbar_bg'],
-				'font_color'		=> $this->theme['bg_text'],
-				'time_border_color'	=> $this->theme['navbar_text'],
-				'font'			=> $this->theme['font']
-			);
-
-			$p->set_var($var);
 
 			for ($i=0;$i<24;$i++)
 			{

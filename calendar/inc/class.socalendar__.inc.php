@@ -182,13 +182,13 @@ class socalendar__
 		return $this->fetch_event($this->event['id']);
 	}
 	
-	function add_attribute($attribute,$value,$element='False')
+	function add_attribute($attribute,$value,$element='**(**')
 	{
 		if(is_array($value))
 		{
 			reset($value);
 		}
-		if($element!='False')
+		if($element!='**(**')
 		{
 			$this->event[$attribute][$element] = $value;
 		}

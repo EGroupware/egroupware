@@ -59,6 +59,7 @@
 				'recur_enddate' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
 				'recur_interval' => array('type' => 'int', 'precision' => 8, 'nullable' => True, 'default' => 1),
 				'recur_data' => array('type' => 'int', 'precision' => 8, 'nullable' => True, 'default' => 1)
+				'recur_exception' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True, 'default' => '')
 			),
 			'pk' => array(),
 			'fk' => array(),

@@ -23,7 +23,8 @@
 			'update'       => True,
 			'preferences'  => True,
 			'store_to_cache'	=> True,
-			'export_event'	=> True
+			'export_event'	=> True,
+			'reinstate'		=> True
 		);
 
 		var $soap_functions = Array(
@@ -366,6 +367,36 @@
 			}
 		}
 
+		function delete_single($param)
+		{
+			
+			if($this->check_perms(PHPGW_ACL_DELETE))
+			{
+				$temp_event = $this->get_cached_event();
+			   $event = $this->read_entry(intval($param['id']));
+			   if($this->owner == $event['owner'])
+			   {
+			   	$exception_time = mktime($event['start']['hour'],$event['start']['min'],0,$param['month'],$param['day'],$param['year']) - $this->datetime->tz_offset;
+			   	$event['recur_exception'][] = intval($exception_time);
+			   	$this->so->cal->event = $event;
+			   	if($this->debug)
+			   	{
+				   	echo '<!-- exception time = '.$event['recur_exception'][count($event['recur_exception']) -1].' -->'."\n";
+				   	echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
+				   }
+   				$this->so->add_entry($event);
+   				$cd = 16;
+   			}
+   			else
+   			{
+   			   $cd = 60;
+   			}
+			}
+			$this->so->cal->event = $temp_event;
+			unset($temp_event);
+			return $cd;
+		}
+
 		function delete_entry($id)
 		{
 			if($this->check_perms(PHPGW_ACL_DELETE))
@@ -382,6 +413,52 @@
    			}
 			}
 			return $cd;
+		}
+
+		function reinstate($params='')
+		{
+			if($this->check_perms(PHPGW_ACL_EDIT) && isset($params['cal_id']) && isset($params['reinstate_index']))
+			{
+				$event = $this->so->read_entry($params['cal_id']);
+				@reset($params['reinstate_index']);
+				echo '<!-- Count of reinstate_index = '.count($params['reinstate_index']).' -->'."\n";
+				if(count($params['reinstate_index']) > 1)
+				{
+					while(list($key,$value) = each($params['reinstate_index']))
+					{
+						if($this->debug)
+						{
+							echo '<!-- reinstate_index ['.$key.'] = '.intval($value).' -->'."\n";
+							echo '<!-- exception time = '.$event['recur_exception'][intval($value)].' -->'."\n";
+						}
+						unset($event['recur_exception'][intval($value)]);
+						if($this->debug)
+						{
+							echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
+						}
+				 	}
+				}
+				else
+				{
+			   	if($this->debug)
+			   	{
+		   			echo '<!-- reinstate_index [0] = '.intval($params['reinstate_index'][0]).' -->'."\n";
+			   		echo '<!-- exception time = '.$event['recur_exception'][intval($params['reinstate_index'][0])].' -->'."\n";
+				   }
+					unset($event['recur_exception'][intval($params['reinstate_index'][0])]);
+			   	if($this->debug)
+			   	{
+				   	echo '<!-- count event exceptions = '.count($event['recur_exception']).' -->'."\n";
+			   	}
+			   }
+		   	$this->so->cal->event = $event;
+  				$this->so->add_entry($event);
+  				return 42;
+			}
+			else
+			{
+				return 43;
+			}
 		}
 
 		function delete_calendar($owner)
@@ -1169,6 +1246,24 @@
 			return $temp;
 		}
 
+		function get_exception_array($exception_str='')
+		{
+			$exception = Array();
+			if(strpos(' '.$exception_str,','))
+			{
+				$exceptions = explode(',',$exception_str);
+				for($exception_count=0;$exception_count<count($exceptions);$exception_count++)
+				{
+					$exception[] = intval($exceptions[$exception_count]);
+				}
+			}
+			elseif($exception_str != '')
+			{
+				$exception[] = intval($exception_str);
+			}
+			return $exception;
+		}
+
 		function build_time_for_display($fixed_time)
 		{
 			$time = $this->splittime($fixed_time);
@@ -1185,7 +1280,19 @@
 		function sort_event($event,$date)
 		{
 			$inserted = False;
-			if($this->cached_events[$date])
+			if(isset($event['recur_exception']))
+			{
+				$event_time = mktime($event['start']['hour'],$event['start']['min'],0,intval(substr($date,4,2)),intval(substr($date,6,2)),intval(substr($date,0,4))) - $this->datetime->tz_offset;
+				while($inserted == False && list($key,$exception_time) = each($event['recur_exception']))
+				{
+					echo '<!-- checking exception datetime '.$exception_time.' to event datetime '.$event_time.' -->'."\n";
+					if($exception_time == $event_time)
+					{
+						$inserted = True;
+					}
+				}
+			}
+			if($this->cached_events[$date] && $inserted == False)
 			{
 				
 				if($this->debug)

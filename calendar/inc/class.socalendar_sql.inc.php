@@ -182,6 +182,18 @@ class socalendar_ extends socalendar__
 					echo 'Event ID#'.$this->event['id'].' : Enddate = '.$enddate."<br>\n";
 				}
 				$this->add_attribute('recur_data',$this->stream->f('recur_data'));
+
+				$exception_list = $this->stream->f('recur_exception');
+				$exceptions = Array();
+				if(strpos(' '.$exception_list,','))
+				{
+					$exceptions = explode(',',$exception_list);
+				}
+				elseif($exception_list != '')
+				{
+					$exceptions[]= $exception_list;
+				}
+				$this->add_attribute('recur_exception',$exceptions);
 			}
 			
 		//Legacy Support
@@ -513,10 +525,12 @@ class socalendar_ extends socalendar__
 			else
 			{
 				$this->stream->query('UPDATE phpgw_cal_repeats '
-					.'SET recur_type='.$event['recur_type'].', '
-					.'recur_enddate='.$end.', '
-					.'recur_data='.$event['recur_data'].', recur_interval='.$event['recur_interval'].' '
-					.'WHERE cal_id='.$event['id'],__LINE__,__FILE__);
+					. 'SET recur_type='.$event['recur_type'].', '
+					. 'recur_enddate='.$end.', '
+					. 'recur_data='.$event['recur_data'].', '
+					. 'recur_interval='.$event['recur_interval'].', '
+					. "recur_exception='".(count($event['recur_exception'])>1?implode(',',$event['recur_exception']):(count($event['recur_exception'])==1?$event['recur_exception'][0]:''))."' "
+					. 'WHERE cal_id='.$event['id'],__LINE__,__FILE__);
 			}
 		}
 		else

@@ -897,4 +897,13 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.006';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+	$test[] = '0.9.13.006';
+	function calendar_upgrade0_9_13_006()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_cal_repeats','recur_exception',array('type' => 'varchar', 'precision' => 255, 'nullable' => True, 'default' => ''));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.13.007';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>
