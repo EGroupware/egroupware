@@ -185,14 +185,14 @@
 			return $accounts;
 		}
 
-		function name2id($account_name)
+		function name2id($account_lid)
 		{
 			global $phpgw, $phpgw_info;
 
-			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_name."'",__LINE__,__FILE__);
+			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
 			if($this->db->num_rows()) {
 				$this->db->next_record();
-				return intval($this->db->f("account_id"));
+				return intval($this->db->f('account_id'));
 			} else {
 				return False;
 			}
@@ -205,7 +205,7 @@
 			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if($this->db->num_rows()) {
 				$this->db->next_record();
-				return $this->db->f("account_lid");
+				return $this->db->f('account_lid');
 			} else {
 				return False;
 			}
