@@ -265,11 +265,13 @@
 					($char == 'all' && !$this->cquery))
 				{
 					$GLOBALS['phpgw']->template->set_var('charbgcolor','#000000');
+					$GLOBALS['phpgw']->template->set_var('charhovbgcolor','#000000');
 					$GLOBALS['phpgw']->template->set_var('charcolor','#FFFFFF');
 				}
 				else
 				{
 					$GLOBALS['phpgw']->template->set_var('charbgcolor',$GLOBALS['phpgw_info']['theme']['th_bg']);
+					$GLOBALS['phpgw']->template->set_var('charhovbgcolor','#e3ecf3');
 					$GLOBALS['phpgw']->template->set_var('charcolor',$GLOBALS['phpgw_info']['theme']['th_text']);
 				}
 				if($char == 'all')

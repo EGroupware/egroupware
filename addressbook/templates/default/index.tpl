@@ -74,5 +74,5 @@ function check_all(which)
  </div>
 <!-- END addressbook_footer -->
 
-<!-- BEGIN addressbook_alpha --><td bgcolor="{charbgcolor}" align="center"><a href="{charlink}"><font color="{charcolor}">{char}</a></font></td>
+<!-- BEGIN addressbook_alpha --><td bgcolor="{charbgcolor}" align="center" onMouseOver="this.style.backgroundColor='{charhovbgcolor}';" onMouseOut="this.style.backgroundColor='{charbgcolor}';" onClick="window.location='{charlink}';"><a href="{charlink}"><font color="{charcolor}">{char}</a></font></td>
 <!-- END addressbook_alpha -->
