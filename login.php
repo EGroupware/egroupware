@@ -71,12 +71,10 @@
 	if (! $deny_login && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
 		$tmpl->set_file(array('login_form'  => 'login.tpl'));
-		$tmpl->set_var('charset',lang('charset'));
 	}
 	elseif ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
 		$tmpl->set_file(array('login_form'  => 'login_selectdomain.tpl'));
-		$tmpl->set_var('charset',lang('charset'));
 	}
 
 	function check_logoutcode($code)
@@ -274,6 +272,10 @@
 		}
 		$GLOBALS['phpgw']->translation->add_app('login');
 		$GLOBALS['phpgw']->translation->add_app('loginscreen');
+		if (lang('loginscreen_message') == 'loginscreen_message*')
+		{
+			$GLOBALS['phpgw']->translation->add_app('loginscreen','en');	// trying the en one
+		}
 		if (lang('loginscreen_message') != 'loginscreen_message*')
 		{
 			$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
@@ -320,6 +322,7 @@
 		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
 	}
 
+	$tmpl->set_var('charset',lang('charset'));
 	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
 	$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
 	$tmpl->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
