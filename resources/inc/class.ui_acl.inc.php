@@ -57,7 +57,7 @@
 			{
 				foreach($_POST['catids'] as $cat_id)
 				{
-					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],$_POST['inputbook'][$cat_id]);
+					$this->bo->set_rights($cat_id,$_POST['inputread'][$cat_id],$_POST['inputwrite'][$cat_id],$_POST['inputbook'][$cat_id],$_POST['inputadmin'][$cat_id]);
 				}
 			}
 
@@ -72,6 +72,7 @@
 				'lang_write' => lang('Write permissions'),
 				'lang_implies' => lang('implies read permission'),
 				'lang_book' => lang('Direct booking permissions'),
+				'lang_cat_admin' => lang('Categories admin')
 			));
 
 			$left  = $this->nextmatchs->left('/index.php',$this->start,$this->bo->catbo->total_records,'menuaction=resources.uiacl.acllist');
@@ -100,25 +101,29 @@
 					'catid' => $cat['id'],
 					'read' => $this->selectlist(PHPGW_ACL_READ),
 					'write' => $this->selectlist(PHPGW_ACL_ADD),
-					'book' =>$this->selectlist(PHPGW_ACL_DIRECT_BOOKING)
+					'book' =>$this->selectlist(PHPGW_ACL_DIRECT_BOOKING),
+					'admin' => '<option value="" selected="1">'.lang('choose categories admin').'</option>'.$this->selectlist(PHPGW_ACL_CAT_ADMIN,true)
 				));
 				$GLOBALS['phpgw']->template->parse('Cblock','cat_list',True);
 			}
 			$GLOBALS['phpgw']->template->pfp('out','acl',True);
 		}
 
-		function selectlist($right)
+		function selectlist($right,$users_only=false)
 		{
 			reset($this->bo->accounts);
 			while (list($null,$account) = each($this->bo->accounts))
 			{
- 				$selectlist .= '<option value="' . $account['account_id'] . '"';
-  				if($this->rights[$account['account_id']] & $right)
- 				{
- 					$selectlist .= ' selected="selected"';
- 				}
-				$selectlist .= '>' . $account['account_firstname'] . ' ' . $account['account_lastname']
+				if(!($users_only && $account['account_lastname'] == 'Group'))
+				{
+ 					$selectlist .= '<option value="' . $account['account_id'] . '"';
+  					if($this->rights[$account['account_id']] & $right)
+ 					{
+ 						$selectlist .= ' selected="selected"';
+ 					}
+					$selectlist .= '>' . $account['account_firstname'] . ' ' . $account['account_lastname']
 										. ' [ ' . $account['account_lid'] . ' ]' . '</option>' . "\n";
+				}
 			}
 			return $selectlist;
 		}

@@ -34,12 +34,11 @@
 
 			$this->so = CreateObject('resources.so_acl');
 			$this->permissions = $this->so->get_permissions($GLOBALS['phpgw_info']['user']['account_id'],true);
-			
 			$this->egw_cats = createobject('phpgwapi.categories');
-			
 			$this->accounts = $GLOBALS['phpgw']->accounts->get_list();
 			$this->debug = False;
-			//all this is only needed when called from uiacl. not from ui,
+			
+			//all this is only needed when called from uiacl.
 			if($session)
 			{
 				$this->read_sessiondata();
@@ -64,7 +63,7 @@
 			@function get_cats
 			@abstract get list of cats where current user has given rights
 			@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
-			@param int $perm_type one of PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE
+			@param int $perm_type one of PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE, PHPGW_ACL_DIRECT_BOOKING
 			@return array cat_name => cat_id
 			TODO mark subcats and so on!
 		*/
@@ -81,6 +80,43 @@
 			return $readcats;
 		}
 		
+		/*!
+			@function get_cat_admin
+			@abstract gets userid of admin for given category
+			@author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+			@param int $cat_id
+			@return int userid of cat admin
+		*/
+		function get_cat_admin($cat_id)
+		{
+			return array_search (PHPGW_ACL_CAT_ADMIN, $this->get_rights($cat_id));
+		}
+		
+		/*!
+			@function is_permitted
+			@abstract cheks one of the following rights for current user:
+			@abstract PHPGW_ACL_READ, PHPGW_ACL_ADD, PHPGW_ACL_EDIT, PHPGW_ACL_DELETE, PHPGW_ACL_DIRECT_BOOKING
+			@param int $cat_id
+			@param int $right
+			@return bool user is permitted or not for right
+		*/
+		function is_permitted($cat_id,$right)
+		{
+			return $this->permissions['L'.$cat_id] & $right;
+		}
+		
+		/*!
+			@function get_rights
+			@abstract gets all rights from all user for given cat
+			@param int $cat_id
+			@return array userid => right
+		*/
+		function get_rights($cat_id)
+		{
+			return $this->so->get_rights('L'.$cat_id);
+		}
+
+// privat functions from here on -------------------------------------------------------------------------
 		function save_sessiondata()
 		{
 			$data = array(
@@ -106,31 +142,12 @@
 			$this->limit = $data['limit'];
 		}
 
-		function get_rights($cat_id)
-		{
-			return $this->so->get_rights('L'.$cat_id);
-		}
-
-		function is_permitted($cat_id,$right)
-		{
-			return $this->permissions['L'.$cat_id] & $right;
-		}
-
-		function is_readable($cat_id)
-		{
-			return $this->is_permitted($cat_id,PHPGW_ACL_READ);
-		}
-
-		function is_writeable($cat_id)
-		{
-			return $this->is_permitted($cat_id,PHPGW_ACL_ADD);
-		}
-
-		function set_rights($cat_id,$read,$write,$book)
+		function set_rights($cat_id,$read,$write,$book,$admin)
 		{
 			$readcat = $read ? $read : array();
 			$writecat = $write ? $write : array();
 			$bookcat = $book ? $book : array();
+			$admincat = $admin ? $admin : array();
 
 			$this->so->remove_location('L' . $cat_id);
 			reset($this->accounts);
@@ -142,6 +159,7 @@
 					(PHPGW_ACL_READ | PHPGW_ACL_ADD | PHPGW_ACL_EDIT | PHPGW_ACL_DELETE) :
 					(in_array($account_id,$readcat) ? PHPGW_ACL_READ : False);
 				$rights = in_array($account_id,$bookcat) ? ($rights | PHPGW_ACL_DIRECT_BOOKING) : $rights;
+				$rights = in_array($account_id,$admincat) ? ($rights | PHPGW_ACL_CAT_ADMIN) : $rights;
 				if ($rights)
 				{
 					$GLOBALS['phpgw']->acl->add_repository('resources','L'.$cat_id,$account_id,$rights);
