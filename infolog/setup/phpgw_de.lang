@@ -1,0 +1,74 @@
+infolog	common	de	InfoLog
+infolog preferences	common	de	InfoLog Einstellungen
+urgency	infolog	de	Priorität
+sub	infolog	de	Teil-<br>projekte
+add sub	infolog	de	neues Teilprojekt anlegen
+view subs	infolog	de	Teilprojekte anzeigen
+type	infolog	de	Typ
+urgent	infolog	de	Dringend
+confirm	infolog	de	Bestätigung
+not	infolog	de	keine
+done	infolog	de	erledigt
+accept	infolog	de	bei Annahme
+both	infolog	de	Annahme+erledigt
+offer	infolog	de	Angebot
+ongoing	infolog	de	in Arbeit
+call	infolog	de	anrufen
+will-call	infolog	de	ruft zurück
+billed	infolog	de	abgerechnet
+finish	infolog	de	wenn erledigt
+from	infolog	de	Von
+phone/email	infolog	de	Telefon/Email
+note	infolog	de	Notiz
+fax	infolog	de	Fax
+task	infolog	de	Auftrag
+phone	infolog	de	Anruf
+reject	infolog	de	Absage
+not assigned	infolog	de	nicht zugewiesen
+responsible	infolog	de	Auftrag an
+duration	infolog	de	Dauer
+days	infolog	de	Tage
+today	infolog	de	Heute
+startdate	infolog	de	Startdatum
+enddate	infolog	de	Enddatum
+info log - edit	infolog	de	Info Log - Bearbeiten
+info log	infolog	de	Info Log
+info log - delete	infolog	de	Info Log - Löschen
+are you sure you want to delete this entry	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
+phonecall	infolog	de	Telefonanruf
+no - cancel	infolog	de	Nein - Abbruch
+yes - delete	infolog	de	Ja - Löschen
+info log - new	infolog	de	Info Log - Anlegen
+info log - new subproject	infolog	de	Info Log - Anlegen Teilprojekt
+re:	infolog	de	Re: 
+info log - subprojects from	infolog	de	Info Log - Teilprojekte von
+back to projectlist	infolog	de	Zurück zur Gesamtliste
+view other subs	infolog	de	andere Teileprojekte anzeigen
+action	infolog	de	Befehle
+showing x - x of x	infolog	de	Einträge %1 - %2 von %3
+datecreated	infolog	de	Erstellt am
+you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum angegeben
+you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
+owner	infolog	de	Erstellt von
+no entrys found for %1, try again ...	infolog	de	Keine Einträge für %1 gefunden, nochmal versuchen ...
+search for:	infolog	de	Suchen nach:
+project	infolog	de	Projekt
+pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
+pattern for search in projects	infolog	de	Muster für Suche des Projekts
+not set, use button to search for	infolog	de	nicht gesetzt, Button zum Suchen verwenden
+import csv-file into info log	infolog	de	Import CSV-Datei ins Info Log
+csv-fieldname	infolog	de	CSV-Feldname
+info log-fieldname	infolog	de	Info Log-Feldname
+translation	infolog	de	Translation
+import	infolog	de	Import
+startrecord	infolog	de	Startdatensatz
+number of records to read (<=200)	infolog	de	Anzahl Datensätze lesen (<=200)
+test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
+csv-filename	infolog	de	CSV-Dateiname
+fieldseparator	infolog	de	Feldbegrenzer
+download	infolog	de	Datei laden
+%1 records imported	infolog	de	%1 Datensätze importiert
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+csv-import	infolog	de	CSV-Import
+use Button to search for Address	infolog	de	Button zum Suchen der Adresse verwenden
+use Button to search for Project	infolog	de	Button zum Suchen des Projekts verwenden

@@ -1,0 +1,62 @@
+infolog	common	en	InfoLog
+infolog preferences	common	en	InfoLog preferences
+%1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+Import CSV-File into Info Log	infolog	en	Import CSV-File into Info Log
+CSV-Filename	infolog	en	CSV-Filename
+Fieldseparator	infolog	en	Fieldseparator
+Download	infolog	en	Download
+CSV-Fieldname	infolog	en	CSV-Fieldname
+Info Log-Fieldname	infolog	en	Info Log-Fieldname
+help	infolog	en	help
+Import	infolog	en	Import
+Test Import (show importable records <u>only</u> in browser)	infolog	en	Test Import (show importable records <u>only</u> in browser)
+Startrecord	infolog	en	Startrecord
+Number of records to read (<=200)	infolog	en	Number of records to read (<=200)
+%1 records read (not yet imported, you may go back and uncheck Test Import)	infolog	en	%1 records read (not yet imported, you may go back and uncheck Test Import)
+%1 records imported	infolog	en	%1 records imported
+Info Log - Delete	infolog	en	Info Log - Delete
+Are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
+Description can not exceed 8000 characters in length	infolog	en	Description can not exceed 8000 characters in length
+You must enter a subject or a description	infolog	en	You must enter a subject or a description
+You have entered an invalid starting date	infolog	en	You have entered an invalid starting date
+You have entered an invalid ending date	infolog	en	You have entered an invalid ending date
+Ending date can not be before start date	infolog	en	Ending date can not be before start date
+Re:	infolog	en	Re:
+Search for:	infolog	en	Search for:
+Category	infolog	en	Category
+None	infolog	en	None
+Owner	infolog	en	Owner
+Type	infolog	en	Type
+From	infolog	en	From
+Phone/Email	infolog	en	Phone/Email
+Subject	infolog	en	Subject
+Description	infolog	en	Description
+Start Date	infolog	en	Start Date
+End Date	infolog	en	End Date
+Today	infolog	en	Today
+Duration	infolog	en	Duration
+days	infolog	en	days
+Status	infolog	en	Status
+Priority	infolog	en	Priority
+Confirm	infolog	en	Confirm
+Responsible	infolog	en	Responsible
+Private	infolog	en	Private
+Info Log - Subprojects from	infolog	en	Info Log - Subprojects from
+Info Log	infolog	en	Info Log
+Info Log	infolog	en	Info Log
+Info Log	infolog	en	Info Log
+Category	infolog	en	Category
+All	infolog	en	All
+Select	infolog	en	Select
+Sub	infolog	en	Sub
+Action	infolog	en	Action
+showing x - x of x	infolog	en	showing %1 - %2 of %3
+showing x	infolog	en	showing %1
+Back to Projectlist	infolog	en	Back to Projectlist
+View Matrix of actual Month	infolog	en	View Matrix of actual Month
+Add	infolog	en	Add
+datecreated	infolog	en	Datecreated
+startdate	infolog	en	Startdate
+enddate	infolog	en	Enddate
+no - cancel	infolog	de	No - Cancel
+yes - delete	infolog	de	Yes - Delete
