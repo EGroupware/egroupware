@@ -356,53 +356,24 @@
 
 		function getMonthText($name, $selected=0)
 		{
-			$out = '<select name="'.$name.'">'."\n";
+			$out = '';
 			$c_monthnames = count($this->monthnames);
 			for($i=0;$i<$c_monthnames;$i++)
 			{
-				$out .= '<option value="'.$i.'"';
-				if($selected==$i)
-				{
-					$out .= ' SELECTED';
-				}
-				$out .= '>'; 
-				if($this->monthnames[$i]!='')
-				{
-					$out .= lang($this->monthnames[$i]);
-				}
-				else
-				{
-					$out .= '';
-				}
-				$out .= '</option>'."\n";
+				$out .= '<option value="'.$i.'"'.($selected!=$i?'':' selected').'>'.($this->monthnames[$i]!=''?lang($this->monthnames[$i]):'').'</option>'."\n";
 			}
-			$out .= '</select>'."\n";
-			return $out;
+			return '<select name="'.$name.'">'."\n".$out.'</select>'."\n";
 		}
 
 		function getDays($name, $selected=0)
 		{
-			$out = '<select name="'.$name.'">'."\n";
+			$out = '';
 
 			for($i=0;$i<32;$i++)
 			{
-				if($i==0)
-				{
-					$val = '';
-				}
-				else
-				{
-					$val = $i;
-				}
-				$out .= '<option value="'.$val.'"';
-				if($selected==$i)
-				{
-					$out .= ' SELECTED';
-				}
-				$out .= '>'.$val.'</option>'."\n";
+				$out .= '<option value="'.($i?$i:'').'"'.($selected!=$i?'':' selected').'>'.($i?$i:'').'</option>'."\n";
 			}
-			$out .= '</select>'."\n";
-			return $out;
+			return '<select name="'.$name.'">'."\n".$out.'</select>'."\n";
 		}
 
 		function getYears($name, $selected = 0, $startYear = 0, $endyear = 0)
