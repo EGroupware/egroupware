@@ -152,7 +152,7 @@
         return $return_fields;
      }
 
-     function read($start,$offset,$fields,$query="",$filter="",$sort="",$order="") // send this the range,query,sort,order
+     function read($start,$offset,$fields=array(),$query="",$filter="",$sort="",$order="") // send this the range,query,sort,order
                                                                                    // and whatever fields you want to see
      {
         global $phpgw,$phpgw_info;
