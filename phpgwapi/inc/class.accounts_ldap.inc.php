@@ -415,7 +415,7 @@
 		{
 			static $name_list;
 
-			if(@isset($name_list[$account_lid]))
+			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
 			{
 				return $name_list[$account_lid];
 			}
@@ -424,19 +424,19 @@
 
 			$sri = ldap_search($ds, $this->group_context, "(&(cn=$account_lid)(phpgwaccounttype=g))");
 			$allValues = ldap_get_entries($ds, $sri);
-
-			if ($allValues[0]['gidnumber'][0])
+			
+			if (@$allValues[0]['gidnumber'][0])
 			{
 				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
 			}
 
 			$sri = ldap_search($ds, $this->user_context, "(&(uid=$account_lid)(phpgwaccounttype=u))");
+
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]['uidnumber'][0])
+			if (@$allValues[0]['uidnumber'][0])
 			{
-				/* $name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]); */
-				return intval($allValues[0]['uidnumber'][0]);
+				$name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]);
 			}
 
 			return $name_list[$account_lid];
