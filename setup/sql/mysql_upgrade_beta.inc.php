@@ -338,6 +338,11 @@
   $test[] = "0.9.4pre3";
   function upgrade0_9_4pre3(){
     global $currentver, $oldversion, $phpgw_info, $db;
+   	$sql = "ALTER TABLE todo ADD todo_startdate int(11) not null";
+   	$db->query($sql);
+		
+	  $sql = "ALTER TABLE todo CHANGE todo_datedue todo_enddate int(11) not null";
+	  $db->query($sql);	
     $currentver = "0.9.4pre4";
   }
 
