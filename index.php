@@ -12,116 +12,142 @@
 
   /* $Id$ */
 
-  if (! is_file("header.inc.php")) {
-     echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
-        . 'here</a>.</center>';
-     exit;
-  }
+	if (!is_file("header.inc.php"))
+	{
+		echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
+			. 'here</a>.</center>';
+		exit;
+	}
 
-  if (!isset($sessionid) || !$sessionid) {
-     Header("Location: login.php");
-     exit;
-  }
+	if (!isset($sessionid) || !$sessionid)
+	{
+		Header("Location: login.php");
+		exit;
+	}
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
-                               "enable_network_class" => True, "enable_todo_class" => True,
-                               "enable_addressbook_class" => True, "enable_nextmatchs_class" => True
-                              );
-  include("header.inc.php");
-  // Note: I need to add checks to make sure these apps are installed.
+	$phpgw_info["flags"] = array(
+		"noheader" => True, "nonavbar" => True, "currentapp" => "home",
+		"enable_network_class" => True, "enable_todo_class" => True,
+		"enable_contacts_class" => True, "enable_nextmatchs_class" => True
+	);
+	include("header.inc.php");
+	// Note: I need to add checks to make sure these apps are installed.
 
-  if ($phpgw_forward) {
-     if ($phpgw_forward) {
-        while (list($name,$value) = each($HTTP_GET_VARS)) {
-           if (ereg("phpgw_",$name)) {
-              $extra_vars .= "&" . $name . "=" . urlencode($value);
-           }
-        }
-     }
-     $phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
-  }
+	if ($phpgw_forward)
+	{
+		// Why again?
+		if ($phpgw_forward)
+		{
+			while (list($name,$value) = each($HTTP_GET_VARS))
+			{
+				if (ereg("phpgw_",$name))
+				{
+					$extra_vars .= "&" . $name . "=" . urlencode($value);
+				}
+			}
+		}
+		$phpgw->redirect($phpgw->link($phpgw_forward,$extra_vars));
+	}
 
-  if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
-     || ($phpgw_info["server"]["useframes"] == "always")) {
+	if (($phpgw_info["user"]["preferences"]["common"]["useframes"] &&
+		$phpgw_info["server"]["useframes"] == "allowed") ||
+		($phpgw_info["server"]["useframes"] == "always"))
+		{
+			if ($cd == "yes")
+			{
+				if (! $navbarframe && ! $framebody)
+				{
+					$tpl = new Template($phpgw_info["server"]["template_dir"]);
+					$tpl->set_file(array(
+						"frames"       => "frames.tpl",
+						"frame_body"   => "frames_body.tpl",
+						"frame_navbar" => "frames_navbar.tpl"
+					));
+					$tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
+					if ($forward)
+					{
+						$tpl->set_var("body_link",$phpgw->link($forward));
+					}
+					else
+					{
+						$tpl->set_var("body_link",$phpgw->link("index.php","framebody=True&cd=yes"));
+					}
 
-     if ($cd == "yes") {
-
-        if (! $navbarframe && ! $framebody) {
-           $tpl = new Template($phpgw_info["server"]["template_dir"]);
-           $tpl->set_file(array("frames"       => "frames.tpl",
-                                "frame_body"   => "frames_body.tpl",
-                                "frame_navbar" => "frames_navbar.tpl"
-                               ));
-           $tpl->set_var("navbar_link",$phpgw->link("index.php","navbarframe=True&cd=yes"));
-           if ($forward) {
-              $tpl->set_var("body_link",$phpgw->link($forward));
-           } else {
-              $tpl->set_var("body_link",$phpgw->link("index.php","framebody=True&cd=yes"));
-           }
-   
-           if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom") {
-              $tpl->set_var("frame_size","*,60");
-              $tpl->parse("frames_","frame_body",True);
-              $tpl->parse("frames_","frame_navbar",True);
-           } else {
-              $tpl->set_var("frame_size","60,*");        
-              $tpl->parse("frames_","frame_navbar",True);
-              $tpl->parse("frames_","frame_body",True);
-           }
-           $tpl->pparse("out","frames");
-        }
-        if ($navbarframe) {
-           $phpgw->common->phpgw_header();
-           echo parse_navbar();
-        }
-    }
-  } elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
-      && $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]]) {
-     $phpgw->redirect($phpgw->link('/' . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/" . "index.php"));
-     $phpgw->common->phpgw_exit();
-  } else {
-     $phpgw->common->phpgw_header();
-     echo parse_navbar();  
-  }
+					if ($phpgw_info["user"]["preferences"]["common"]["frame_navbar_location"] == "bottom")
+					{
+						$tpl->set_var("frame_size","*,60");
+						$tpl->parse("frames_","frame_body",True);
+						$tpl->parse("frames_","frame_navbar",True);
+					}
+					else
+					{
+						$tpl->set_var("frame_size","60,*");
+						$tpl->parse("frames_","frame_navbar",True);
+						$tpl->parse("frames_","frame_body",True);
+					}
+					$tpl->pparse("out","frames");
+				}
+				if ($navbarframe)
+				{
+					$phpgw->common->phpgw_header();
+					echo parse_navbar();
+				}
+			}
+		}
+		elseif ($cd=="yes" && $phpgw_info["user"]["preferences"]["common"]["default_app"]
+			&& $phpgw_info["user"]["apps"][$phpgw_info["user"]["preferences"]["common"]["default_app"]])
+		{
+			$phpgw->redirect($phpgw->link('/' . $phpgw_info["user"]["preferences"]["common"]["default_app"] . "/" . "index.php"));
+			$phpgw->common->phpgw_exit();
+		}
+		else
+		{
+			$phpgw->common->phpgw_header();
+			echo parse_navbar();  
+		}
   
-
-  //$phpgw->hooks->proccess("location","mainscreen");
-
-// $phpgw->preferences->read_preferences("addressbook");
-//  $phpgw->preferences->read_preferences("email");
-//  $phpgw->preferences->read_preferences("calendar");
-//  $phpgw->preferences->read_preferences("stocks");
+		// $phpgw->hooks->proccess("location","mainscreen");
+		// $phpgw->preferences->read_preferences("addressbook");
+		// $phpgw->preferences->read_preferences("email");
+		// $phpgw->preferences->read_preferences("calendar");
+		// $phpgw->preferences->read_preferences("stocks");
   
-  $phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
-  $phpgw->db->next_record();
+		$phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
+		$phpgw->db->next_record();
 
-  if ($phpgw_info["server"]["versions"]["phpgwapi"] > $phpgw->db->f("app_version")) {
-     echo "<p><b>" . lang("Your are running a newer version of phpGroupWare then your database is setup for")
-        . "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
-        . "</b>";
-  }
+		if ($phpgw_info["server"]["versions"]["phpgwapi"] > $phpgw->db->f("app_version"))
+		{
+			echo "<p><b>" . lang("Your are running a newer version of phpGroupWare then your database is setup for")
+				. "<br>" . lang("It is recommend that you run setup to upgrade your tables to the current version")
+				. "</b>";
+		}
 
-  $phpgw->translation->add_app("mainscreen");  
-  if (lang("mainscreen_message") != "mainscreen_message*") {
-     echo "<center>" . stripslashes(lang("mainscreen_message")) . "</center>";
-  }
+		$phpgw->translation->add_app("mainscreen");  
+		if (lang("mainscreen_message") != "mainscreen_message*")
+		{
+			echo "<center>" . stripslashes(lang("mainscreen_message")) . "</center>";
+		}
 
-  if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
-       $phpgw_info["user"]["apps"]["admin"]) && 
-      (isset($phpgw_info["server"]["checkfornewversion"]) &&
-       $phpgw_info["server"]["checkfornewversion"])) {
-     $phpgw->network->set_addcrlf(False);
-     $lines = $phpgw->network->gethttpsocketfile("http://www.phpgroupware.org/currentversion");
-     for ($i=0; $i<count($lines); $i++) {
-         if (ereg("currentversion",$lines[$i])) {
-            $line_found = explode(":",chop($lines[$i]));
-         }
-     }
-     if($phpgw->common->cmp_version($phpgw_info["server"]["versions"]["phpgwapi"],$line_found[1])) {
-        echo "<p>There is a new version of phpGroupWare available. <a href=\""
-	   . "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
-     }
-  }
+		if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
+			$phpgw_info["user"]["apps"]["admin"]) && 
+			(isset($phpgw_info["server"]["checkfornewversion"]) &&
+			$phpgw_info["server"]["checkfornewversion"]))
+		{
+			$phpgw->network->set_addcrlf(False);
+			$lines = $phpgw->network->gethttpsocketfile("http://www.phpgroupware.org/currentversion");
+			for ($i=0; $i<count($lines); $i++)
+			{
+				if (ereg("currentversion",$lines[$i]))
+				{
+					$line_found = explode(":",chop($lines[$i]));
+				}
+			}
+			if($phpgw->common->cmp_version($phpgw_info["server"]["versions"]["phpgwapi"],$line_found[1]))
+			{
+				echo "<p>There is a new version of phpGroupWare available. <a href=\""
+					. "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
+			}
+		}
 ?>
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 	var NotifyWindow;
@@ -145,42 +171,23 @@
 </SCRIPT>
 
 <?php
-  echo '<p><table border="0" width="100%" align="center">';
-//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
-  //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
-  
-  if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {
-     include(PHPGW_INCLUDE_ROOT . "/stocks/inc/functions.inc.php");
-     echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
-  }  
-  $phpgw->common->hook('',array('email','calendar','news'));
-  if ($phpgw_info["user"]["apps"]["addressbook"]
-  && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
-    echo "<!-- Birthday info -->\n";
-    $phpgw->db->query("select owner,access,n_given,n_family,bday from phpgw_addressbook where bday like '"
-		. $phpgw->common->show_date(time(),"n/d")."/%'"
-		. " and owner='" . $phpgw_info["user"]["account_id"] . "' and access='public'",__LINE__,__FILE__);
-      while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("n_given") . " "
-	  . $phpgw->db->f("n_family")) . "</td></tr>\n";
-      }
-      $tomorrow = $phpgw->common->show_date(mktime(0,0,0,
-      $phpgw->common->show_date(time(),"m"),
-      $phpgw->common->show_date(time(),"d")+1,
-      $phpgw->common->show_date(time(),"Y")),"n/d" );
-	$phpgw->db->query("select owner,access,n_given,n_family,bday from phpgw_addressbook where bday like '$tomorrow/%'"
-		. " and owner='" . $phpgw_info["user"]["account_id"] . "' and access='public'",__LINE__,__FILE__);
-      while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang("Tomorrow is x's birthday.", $phpgw->db->f("n_given") . " "
-	  . $phpgw->db->f("n_family")) . "</td></tr>\n";
-      }
-      echo "<!-- Birthday info -->\n";
-  }
-  //$phpgw->common->debug_phpgw_info();
-  //$phpgw->common->debug_list_core_functions();
+	echo '<p><table border="0" width="100%" align="center">';
+	//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
+	//echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
+
+	if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"])
+	{
+		include(PHPGW_INCLUDE_ROOT . "/stocks/inc/functions.inc.php");
+		echo '<tr><td align="right">' . return_quotes($quotes) . '</td></tr>';
+	}
+
+	$phpgw->common->hook('',array('email','calendar','news'));  //,'addressbook'));
+
+	//$phpgw->common->debug_phpgw_info();
+	//$phpgw->common->debug_list_core_functions();
 ?>
 <TR><TD></TD></TR>
 </TABLE>
 <?php
-  $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>
