@@ -196,6 +196,7 @@ july	common	fr	Juillet
 june	common	fr	Juin
 kazakstan	common	fr	KAZAKSTAN
 kenya	common	fr	KENYA
+keywords	common	fr	Mots-clés
 kiribati	common	fr	KIRIBATI
 korea, democratic peoples republic of	common	fr	COREE, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DE
 korea, republic of	common	fr	COREE, REPUBLIQUE DE
@@ -254,6 +255,7 @@ nauru	common	fr	NAURU
 nepal	common	fr	NEPAL
 netherlands	common	fr	PAYS-BAS
 netherlands antilles	common	fr	ANTILLES HOLLANDAISES
+never	common	fr	Jamais
 new caledonia	common	fr	NOUVELLE CALEDONIE
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
 new main category	common	fr	Nouvelle catégorie principale
@@ -301,6 +303,7 @@ philippines	common	fr	PHILIPPINES
 pitcairn	common	fr	PITCAIRN
 please enter a name	common	fr	Veuillez saisir un nom !
 please run setup to become current	common	fr	SVP exécutez setup pour vous mettre à jour
+please set your global preferences	common	fr	SVP réglez vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
@@ -313,6 +316,7 @@ public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
 read	common	fr	Lire
+reject	common	fr	Rejetter
 rename	common	fr	Renommer
 reunion	common	fr	REUNION
 romania	common	fr	ROUMANIE
@@ -332,8 +336,11 @@ save	common	fr	Sauver
 search	common	fr	Chercher
 section	common	fr	Section
 select category	common	fr	Sélectionner la catégorie
+send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
+server x has been added	common	fr	Le serveur %1 a été ajouté
+server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été tuée
 seychelles	common	fr	SEYCHELLES
 show all	common	fr	Tous les éléments
@@ -418,6 +425,7 @@ welcome	common	fr	Bienvenue
 western sahara	common	fr	SAHARA OUEST
 which groups	common	fr	Quels groupes
 written by:	common	fr	Ecrit par:
+year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are running a newer version of phpGroupWare than your database is setup for	common	fr	Vous utilisez une version de phpGroupWare plus récente que celle définie pour la base de données.
