@@ -68,12 +68,18 @@
 					ini_set('mbstring.internal_encoding',$this->system_charset);
 					if (ini_get('mbstring.func_overload') < 7)
 					{
-						if ($warnings) echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+						if ($warnings)
+						{
+							echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
+						}
 					}
 				}
 				else
 				{
-					if ($warnings) echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
+					if ($warnings)
+					{
+						echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
+					}
 				}
 			}
 		}
@@ -464,7 +470,10 @@
 				if (file_exists($fname))
 				{
 					$ctime = filectime($fname);
-					$ltime = (int)$GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang][$app];
+					/* This is done to avoid string offset error at least in php5 */
+					$tmp = $GLOBALS['phpgw_info']['server']['lang_ctimes'][$lang];
+					$ltime = (int)$tmp[$app];
+					unset($tmp);
 					//echo "checking lang='$lang', app='$app', ctime='$ctime', ltime='$ltime'<br>\n";
 
 					if ($ctime != $ltime)
