@@ -82,7 +82,8 @@
 
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
-				$this->memberships[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $this->id2name(intval($security_equals[$idx])));
+				$groups = intval($security_equals[$idx]);
+				$this->memberships[] = Array('account_id' => $groups, 'account_name' => $this->id2name($groups));
 			}
 
 			return $this->memberships;
