@@ -73,12 +73,12 @@
 
 		if($can_edit == False)
 		{
-			header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$id.'&owner='.$owner));
+			header('Location: '.$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$owner));
 		}
 	}
 	elseif(isset($readsess))
 	{
-		$event = $phpgw->session->appsession('entry','calendar');
+		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
 		
 		if($event->owner == 0)
 		{
@@ -91,7 +91,7 @@
 	{
 		if($phpgw->calendar->check_perms(PHPGW_ACL_ADD) == False)
 		{
-			header('Location: '.$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/view.php','id='.$id.'&owner='.$owner));
+			header('Location: '.$phpgw->link('/calendar/view.php','id='.$id.'&owner='.$owner));
 		}
 
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($cal_info->owner),'');
@@ -123,6 +123,7 @@
 		$phpgw->calendar->event_set_title($cal_stream,'');
 		$phpgw->calendar->event_set_description($cal_stream,'');
 		$phpgw->calendar->event->priority = 2;
+		$phpgw->calendar->event_set_class(True);
 
 		$phpgw->calendar->event_set_recur_none($cal_stream);
 		$event = $phpgw->calendar->event;
@@ -154,6 +155,15 @@
 		$action = lang('Calendar - Add');
 	}
 
+	if($cd)
+	{
+		$errormsg = $phpgw->common->check_code($cd);
+	}
+	else
+	{
+		$errormsg = '';
+	}
+
 	$common_hidden = '<input type="hidden" name="id" value="'.$event->id.'">'."\n"
 						. '<input type="hidden" name="owner" value="'.$owner.'">'."\n";
 						
@@ -161,7 +171,8 @@
 						'bg_color'			=>	$phpgw_info['theme']['bg_text'],
 						'calendar_action'	=>	$action,
 						'action_url'		=>	$phpgw->link('/'.$phpgw_info['flags']['currentapp'].'/edit_entry_handler.php'),
-						'common_hidden'	=>	$common_hidden
+						'common_hidden'	=>	$common_hidden,
+						'errormsg'			=>	$errormsg
 	);
 	
 	$p->set_var($vars);
