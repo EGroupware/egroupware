@@ -1122,7 +1122,7 @@
 					// create popup target
 					if ($data['status'] == 4)
 					{
-						$GLOBALS['phpgw_info']['navbar'][$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this,this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
+						$GLOBALS['phpgw_info']['navbar'][$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this+'".(strstr($GLOBALS['phpgw_info']['navbar'][$app]['url'],'?')?'&':'?')."referer='+encodeURI(location),this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
 					}
 
 					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
