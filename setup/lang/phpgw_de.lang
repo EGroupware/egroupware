@@ -163,9 +163,9 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
-header admin login	setup	de	Headerverwaltung Login
-header password	setup	de	Headerverwaltung Passwort
-header username	setup	de	Headerverwaltung Benutzername
+header admin login	setup	de	Headerverwaltungs-Login
+header password	setup	de	Headerverwaltungspasswort
+header username	setup	de	Headerverwaltungsbenutzername
 historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
@@ -336,7 +336,7 @@ setup	setup	de	Einrichtung
 setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
-setup/config admin login	setup	de	Setup/Konfigurations Admin Login
+setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
 show 'powered by' logo on	setup	de	Zeige 'powered by' Logo
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
