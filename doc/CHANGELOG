@@ -23,6 +23,8 @@
 	     This is for the todo list and addressbook.
 	   - Added a search field and next matchs icons to accounts and groups form.
 	   - Fixed the "code" messages not showing up after adding new entrys and what not.
+	   - Started converting the admin section to work off templates
+	   - Started converting the todo list to work off templates
 
 [08152000] - Fixed a problem with the calendar not showing the months in the users
 	     langague preference.

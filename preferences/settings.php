@@ -260,6 +260,7 @@
        </tr>
        </table>
       </form>
+
  <?php
   } else {
      $phpgw->db->query("delete from preferences where owner='" . $phpgw->session->loginid
