@@ -41,7 +41,7 @@
 		}
 	}
 
-	if (!$cat_id) {
+	if ($cat_id=='') {
 		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
 	}
 
@@ -60,7 +60,8 @@
 			$showcol = display_name($column[0]);
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=".$cat_id);
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort,
+				$column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=".$cat_id);
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 
@@ -91,7 +92,8 @@
 	if (! $start)
 		$start = 0;
 
-	if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] && $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0) {
+	if($phpgw_info["user"]["preferences"]["common"]["maxmatchs"] &&
+		$phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > 0) {
 		$offset = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
 	} else {
 		$offset = 30;
@@ -136,7 +138,8 @@
 			if (!$showcol) { $showcol = $column[1]; }
 			$cols .= "  <td height=\"21\">\n";
 			$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
-			$cols .= $phpgw->nextmatchs->show_sort_order($sort, $column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=$cat_id");
+			$cols .= $phpgw->nextmatchs->show_sort_order($sort,
+				$column[0],$order,"/addressbook/index.php",$showcol,"&cat_id=$cat_id");
 			$cols .= "</font>\n  </td>";
 			$cols .= "\n";
 		}
@@ -150,7 +153,9 @@
 	// now that the query is done, reset filter, since nextmatchs grabs it globally
 	$filter=$savefilter;
 
-	$search_filter = $phpgw->nextmatchs->show_tpl("/addressbook/index.php",$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%", $phpgw_info["theme"]["th_bg"]);
+	$search_filter = $phpgw->nextmatchs->show_tpl("/addressbook/index.php",
+		$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query&cat_id=$cat_id","75%",
+		$phpgw_info["theme"]["th_bg"]);
 
 	if ($this->total_records > $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
 		if ($start + $phpgw_info["user"]["preferences"]["common"]["maxmatchs"] > $this->total_records) {
@@ -173,8 +178,9 @@
 	$t->set_var(searchreturn,$noprefs . " " . $searchreturn);
 	$t->set_var(lang_showing,$lang_showing);
 	$t->set_var(search_filter,$search_filter);
-	$t->set_var(cats,lang('Categories'));
-	$t->set_var(cats_url,$phpgw->link("/addressbook/index.php","sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
+	$t->set_var(cats,lang('Category'));
+	$t->set_var(cats_url,$phpgw->link("/addressbook/index.php",
+		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	$t->set_var(cats_link,cat_option($cat_id));
 	$t->set_var(lang_cats,lang('Select'));
 	$t->set_var("lang_addressbook",lang("Address book"));
@@ -193,7 +199,8 @@
 	$t->set_var("filter",$filter);
 	$t->set_var("qfield",$qfield);
 	$t->set_var("query",$query);
-	$t->set_var("actionurl",$phpgw->link("/addressbook/add.php","sort=$sort&order=$order&filter=$filter&start=$start&cat_id=$cat_id"));
+	$t->set_var("actionurl",$phpgw->link("/addressbook/add.php",
+		"sort=$sort&order=$order&filter=$filter&start=$start&cat_id=$cat_id"));
 	$t->set_var("start",$start);
 	$t->set_var("filter",$filter);
 	$t->set_var("cols",$cols);
@@ -231,18 +238,21 @@
 		}
 
 		if (1) {
-			$t->set_var(row_view_link,$phpgw->link("/addressbook/view.php","ab_id=$myid&start=$start&order=$order&filter="
+			$t->set_var(row_view_link,$phpgw->link("/addressbook/view.php",
+				"ab_id=$myid&start=$start&order=$order&filter="
 				. "$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 		} else {
 			$t->set_var(row_view_link,"");
 			$t->set_var("lang_view",lang("Private"));
 		}
 		
-		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
+		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php",
+			"ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort&cat_id=$cat_id"));
 //			echo '<br>: ' . $this->grants[$myowner] . ' - ' . $myowner;
 		if ($this->check_perms($this->grants[$myowner],PHPGW_ACL_EDIT) || $myowner == $phpgw_info['user']['account_id']) {
-			$t->set_var(row_edit,'<a href="' . $phpgw->link("/addressbook/edit.php","ab_id=$myid&start=$start&sort=$sort&order=$order"
+			$t->set_var(row_edit,'<a href="' . $phpgw->link("/addressbook/edit.php",
+				"ab_id=$myid&start=$start&sort=$sort&order=$order"
 				. "&query=$query&sort=$sort&cat_id=$cat_id") . '">' . lang('Edit') . '</a>');
 		} else {
 			$t->set_var(row_edit,'&nbsp;');
