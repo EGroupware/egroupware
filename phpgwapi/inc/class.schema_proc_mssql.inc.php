@@ -334,7 +334,7 @@
 
 		function CreateTable($oProc, &$aTables, $sTableName, $aTableDef)
 		{
-			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL))
+			if ($oProc->_GetTableSQL($sTableName, $aTableDef, $sTableSQL, $sSequenceSQL,$append_ix))
 			{
 				// create sequence first since it will be needed for default
 				if ($sSequenceSQL != '')
