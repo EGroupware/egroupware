@@ -111,6 +111,7 @@
     <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}"></td>
    </tr>
 
+<!-- until they are working
    <tr class="row_off">
     <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
     <td><input name="newsettings[site_username]" value="{value_site_username}"></td>
@@ -120,7 +121,8 @@
     <td>{lang_Enter_the_site_password_for_peer_servers}.</td>
     <td><input type="password" name="newsettings[site_password]" value="{value_site_password}"></td>
    </tr>
- 
+-->
+
   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
