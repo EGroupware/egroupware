@@ -132,6 +132,7 @@ detail	tts	en	Detail
 disabled	admin	en	Disabled
 display	admin	en	Display
 display missing phrases in lang set	transy	en	Display missing phrases in lang set
+display status of events	calendar	en	Display Status of Events
 done	common	en	Done
 download	filemanager	en	Download
 do_delete	filemanager	en	Delete
@@ -537,6 +538,7 @@ wednesday	common	en	Wednesday
 week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
 weekly	calendar	en	Weekly
+when creating new events default set to private	calendar	en	When creating new events default set to private
 which groups	common	en	Which groups
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on

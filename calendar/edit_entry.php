@@ -123,7 +123,14 @@
 		$phpgw->calendar->event_set_title($cal_stream,'');
 		$phpgw->calendar->event_set_description($cal_stream,'');
 		$phpgw->calendar->event->priority = 2;
-		$phpgw->calendar->event_set_class(True);
+		if($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True)
+		{
+			$phpgw->calendar->event_set_class(False);
+		}
+		else
+		{
+			$phpgw->calendar->event_set_class(True);
+		}
 
 		$phpgw->calendar->event_set_recur_none($cal_stream);
 		$event = $phpgw->calendar->event;

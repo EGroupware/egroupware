@@ -57,6 +57,14 @@
 			$phpgw->preferences->delete('calendar','display_status');
 		}
 
+		if ($default_private == True)
+		{
+			$phpgw->preferences->add('calendar','default_private');
+		}
+		else
+		{
+			$phpgw->preferences->delete('calendar','default_private');
+		}
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
@@ -171,6 +179,9 @@
 	$str = '<input type="checkbox" name="display_status" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_status'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
 	display_item(lang('display status of events'),$str);
 
+	$str = '<input type="checkbox" name="default_private" value="True"'.($phpgw_info['user']['preferences']['calendar']['default_private'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['default_private'] == True?' checked':'').'>';
+	display_item(lang('when creating new events default set to private'),$str);
+	
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();
 ?>
