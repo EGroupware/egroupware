@@ -13,11 +13,11 @@
 
   $phpgw_info = array();
   if ($submit) {
-     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
+     $phpgw_info['flags'] = array('noheader' => True, 'nonavbar' => True);
   }
 
-  $phpgw_info["flags"]["currentapp"] = "admin";
-  include("../header.inc.php");
+  $phpgw_info['flags']['currentapp'] = 'admin';
+  include('../header.inc.php');
 
   function is_odd($n)
   {
@@ -29,43 +29,52 @@
      }
   }
 
-  $phpgw->template->set_file(array("form"	=> "groups_form.tpl"));
-
   if ($submit) {
-     $phpgw->db->query("select count(*) from groups where group_name='" . $n_group . "'");
-     $phpgw->db->next_record();
-
-     if ($phpgw->db->f(0) != 0) {
-        $error = "<br>" . lang("Sorry, that group name has already been taken.");
-     }
+  
      if (! $n_group) {
-        $error = "<br>" . lang("You must enter a group name.");
+        $error = '<br>' . lang('You must enter a group name.');
+     } else {     
+        $phpgw->db->query("select count(*) from phpgw_accounts where account_lid='" . $n_group . "'");
+        $phpgw->db->next_record();
+
+        if ($phpgw->db->f(0) != 0) {
+          $error = '<br>' . lang('Sorry, that group name has already been taken.');
+        }
      }
 
      if (! $error) {
-        $phpgw->db->lock(array("groups","phpgw_acl","preferences"));
+        $phpgw->db->lock(array('phpgw_accounts','preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
+        while(1) {
+          $group_id = mt_rand (1000, 60000);
+          $phpgw->db->query("SELECT account_id FROM phpgw_accounts WHERE account_id=$group_id",__LINE__,__FILE__);
+          if(!$phpgw->db->num_rows()) { break; }
+        }
 
-        $phpgw->db->query("INSERT INTO groups (group_name) VALUES ('$n_group')");
-        $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
-        $phpgw->db->next_record();
+        $phpgw->db->query("INSERT INTO phpgw_accounts(account_id,account_lid,account_type) "
+                         ."VALUES($group_id,'$n_group','g')");
 
-        $group_id = $phpgw->db->f("group_id");
-
-        $apps = CreateObject('phpgwapi.applications',array(intval($group_id),'g'));
+        $apps = CreateObject('phpgwapi.applications',intval($group_id));
+        $apps->update_data(Array());
         @reset($n_group_permissions);
         while($app = each($n_group_permissions)) {
           if($app[1]) {
-            $apps->add_app($app[0]);
+            $apps->add($app[0]);
             $new_apps[] = $app[0];
           }
         }
-        $apps->save_apps();
-        
+        $apps->save_repository();
+
+        $acl = CreateObject('phpgwapi.acl',$group_id);
+        $acl->read_repository();
         for ($i=0; $i<count($n_users);$i++) {
-          $phpgw->acl->add("phpgw_group","$group_id",$n_users[$i],"u",1);
+          $acl->add_repository('phpgw_group',$group_id,$n_users[$i],1);
+
+          // If the user is logged in, it will force a refresh of the session_info
+          $phpgw->db->query("update phpgw_sessions set session_info='' "
+                            ."where session_lid='" . $phpgw->accounts->id2name(intval($n_users[$i])) . "@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
           $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
-          $t = $pref->get_preferences();
+          $t = $pref->read_repository();
 
           $docommit = False;
           for ($j=0;$j<count($new_apps);$j++) {
@@ -80,13 +89,11 @@
             }
           }
           if ($docommit) {
-            $pref->commit();
+            $pref->save_repository();
           }
         }
 
-        $sep = $phpgw->common->filesystem_separator();
-
-        $basedir = $phpgw_info["server"]["files_dir"] . $sep . "groups" . $sep;
+        $basedir = $phpgw_info["server"]["files_dir"] . SEP . "groups" . SEP;
 
         $cd = 31;
 
@@ -100,45 +107,49 @@
      }
   }
 
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+
+  $p->set_file(array("form"	=> "groups_form.tpl"));
+
   if ($error) {
      $phpgw->common->phpgw_header();
      echo parse_navbar();
-     $phpgw->template->set_var("error","<p><center>$error</center>");
+     $p->set_var("error","<p><center>$error</center>");
   } else {
-     $phpgw->template->set_var("error","");
+     $p->set_var("error","");
   }
 
-  $phpgw->template->set_var("form_action",$phpgw->link("newgroup.php"));
-  $phpgw->template->set_var("hidden_vars","");
-  $phpgw->template->set_var("lang_group_name",lang("New group name"));
-  $phpgw->template->set_var("group_name_value","");
+  $p->set_var("form_action",$phpgw->link("newgroup.php"));
+  $p->set_var("hidden_vars","");
+  $p->set_var("lang_group_name",lang("New group name"));
+  $p->set_var("group_name_value","");
 
-  $phpgw->db->query("select count(*) from accounts where account_status !='L'");
+  $phpgw->db->query("select count(*) from phpgw_accounts where account_status !='L' AND account_type='u'");
   $phpgw->db->next_record();
 
   if ($phpgw->db->f(0) < 5) {
-     $phpgw->template->set_var("select_size",$phpgw->db->f(0));
+     $p->set_var("select_size",$phpgw->db->f(0));
   } else {
-     $phpgw->template->set_var("select_size","5");
+     $p->set_var("select_size","5");
   }
 
-  $phpgw->template->set_var("lang_include_user",lang("Select users for inclusion"));
+  $p->set_var("lang_include_user",lang("Select users for inclusion"));
   for ($i=0; $i<count($n_users); $i++) {
      $selected_users[$n_users[$i]] = " selected";
   }
 
-  $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM accounts where "
-	  	        . "account_status != 'L' ORDER BY account_lastname,account_firstname,account_lid asc");
+  $phpgw->db->query("SELECT account_id,account_firstname,account_lastname,account_lid FROM phpgw_accounts WHERE "
+	  	        . "account_status != 'L' AND account_type='u' ORDER BY account_lastname,account_firstname,account_lid asc");
   while ($phpgw->db->next_record()) {
-     $user_list .= "<option value=\"" . $phpgw->db->f("account_id") . "\""
-    	         . $selected_users[$phpgw->db->f("account_id")] . ">"
-	         . $phpgw->common->display_fullname($phpgw->db->f("account_lid"),
-								   	    $phpgw->db->f("account_firstname"),
-								   	    $phpgw->db->f("account_lastname")) . "</option>";
+     $user_list .= '<option value="' . $phpgw->db->f('account_id') . '"'
+    	        . $selected_users[$phpgw->db->f('account_id')] . '>'
+	            . $phpgw->common->display_fullname($phpgw->db->f('account_lid'),
+						       $phpgw->db->f('account_firstname'),
+						       $phpgw->db->f('account_lastname')) . '</option>';
   }
-  $phpgw->template->set_var("user_list",$user_list);
+  $p->set_var("user_list",$user_list);
 
-  $phpgw->template->set_var("lang_permissions",lang("Permissions this group has"));
+  $p->set_var("lang_permissions",lang("Permissions this group has"));
 
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
@@ -179,10 +190,10 @@
      $i++;
   }
 
-  $phpgw->template->set_var("permissions_list",$perm_html);	
-  $phpgw->template->set_var("lang_submit_button",lang("Create Group"));
+  $p->set_var("permissions_list",$perm_html);	
+  $p->set_var("lang_submit_button",lang("Create Group"));
 
-  $phpgw->template->pparse("out","form");
+  $p->pparse("out","form");
 
   $phpgw->common->phpgw_footer();
 ?>

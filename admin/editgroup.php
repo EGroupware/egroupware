@@ -18,8 +18,8 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
-  
+$debugme = "on";
+
   function is_odd($n)
   {
      $ln = substr($n,-1);
@@ -55,7 +55,7 @@
           if($app[1]) {
             $apps->add($app[0]);
             if(!$apps_before[$app[0]]) {
-              $apps_after[] = $app[0];
+              $new_apps[] = $app[0];
             }
           }
         }
@@ -86,14 +86,14 @@
           $t = $pref->read_repository();
 
           $docommit = False;
-          for ($j=1;$j<count($apps_after) - 1;$j++) {
-            if($apps_after[$j]=='admin') {
+          for ($j=1;$j<count($new_apps) - 1;$j++) {
+            if($new_apps[$j]=='admin') {
               $check = 'common';
             } else {
-              $check = $apps_after[$j];
+              $check = $new_apps[$j];
             }
             if (!$t[$check]) {
-              $phpgw->common->hook_single('add_def_pref', $apps_after[$j]);
+              $phpgw->common->hook_single('add_def_pref', $new_apps[$j]);
               $docommit = True;
             }
           }
@@ -102,10 +102,8 @@
           }
         }
 
-        $sep = $phpgw->common->filesystem_separator();
-
         if ($old_group_name <> $n_group) {
-          $basedir = $phpgw_info['server']['files_dir'] . $sep . 'groups' . $sep;
+          $basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
           if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
             $cd = 39;
           } else {
@@ -122,6 +120,8 @@
      }
   }
 
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+  
   $p->set_file(array('form'	=> 'groups_form.tpl'));
   
   if ($error) {
@@ -133,17 +133,12 @@
   }
 
   if ($submit) {
-     $p->set_var('group_name_value',$n_group_name);
+//     $p->set_var('group_name_value',$n_group_name);
 
      for ($i=0; $i<count($n_users); $i++) {
         $selected_users[$n_user[$i]] = ' selected';
      }
   } else {
-     $phpgw->db->query('SELECT account_lid FROM phpgw_accounts WHERE account_id='.$group_id,__LINE__,__FILE__);
-     $phpgw->db->next_record();
-
-     $p->set_var('group_name_value',$phpgw->db->f('account_id'));
-
      $group_user = $phpgw->acl->get_ids_for_location($group_id,1,'phpgw_group');
 
      while ($user = each($group_user)) {
@@ -151,18 +146,14 @@
      }
 
      $apps = CreateObject('phpgwapi.applications',intval($group_id));
-     $apps->read_repository();
      $db_perms = $apps->read_account_specific();
   }
-
-  $phpgw->db->query('SELECT * FROM phpgw_accounts WHERE account_id='.$group_id,__LINE__,__FILE__);
-  $phpgw->db->next_record();
 
   $p->set_var('form_action',$phpgw->link('editgroup.php'));
   $p->set_var('hidden_vars','<input type="hidden" name="group_id" value="' . $group_id . '">');
 
   $p->set_var('lang_group_name',lang('group name'));
-  $p->set_var('group_name_value',$phpgw->db->f('account_lid'));
+  $p->set_var('group_name_value',$phpgw->accounts->id2name($group_id));
 
   $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_status !='L' AND account_type='u'");
   $phpgw->db->next_record();
@@ -206,7 +197,7 @@
      $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="n_group_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]["enabled"]) {
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td>";
@@ -220,7 +211,7 @@
      $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="n_group_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
-     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]["enabled"]) {
+     if ($n_group_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
      $perm_html .= "></td></tr>\n";
