@@ -98,6 +98,7 @@
 			);
 			$alarm['id'] = $this->so->save_alarm($cal_id,$alarm);
 			$event['alarm'][$alarm['id']] = $alarm;
+			$event['alarm'][$alarm['id']]['time'] = $alarm['time'] + $this->tz_offset;	// allows viewing alarm time in users timezone
 
 			return $alarm;
 		}

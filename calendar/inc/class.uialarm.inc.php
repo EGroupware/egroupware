@@ -163,7 +163,7 @@
 						continue;
 					}
 					$var = Array(
-						'field'    => $GLOBALS['phpgw']->common->show_date($alarm['time']-$this->bo->tz_offset),
+						'field'    => $GLOBALS['phpgw']->common->show_date($alarm['time']),
 						//'data'   => $alarm['text'],
 						'data'     => lang('Email Notification'),
 						'owner'    => $GLOBALS['phpgw']->common->grab_owner_name($alarm['owner']),

@@ -176,6 +176,7 @@
 			}
 			$alarm['cal_id'] = $cal_id;		// we need the back-reference
 
+			$alarm['time'] -= $GLOBALS['phpgw']->datetime->tz_offset;	// time should be stored in server timezone
 			if (!$this->async->set_timer($alarm['time'],$id,'calendar.bocalendar.send_alarm',$alarm))
 			{
 				return False;
