@@ -1,24 +1,52 @@
+%1 email addresses inserted	common	pl	%1 adresów email dodane
+%1 is not executable by the webserver !!!	common	pl	%1 nie mo¿e byæ wykonany przez webserver !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1eGroupWare%2 jest pakietem oprogramowania do pracy grupowej dla wielu u¿ytkowników, dzia³aj±cym w ¶rodowisku internetowym / intranetowym i napisanym w PHP4.
+(shift-)click or drag to change value	jscalendar	pl	Kilknij z Shift-em aby przenie¶æ lub zmieniæ warto¶æ
+- click on any of the time parts to increase it	jscalendar	pl	- Kliknij na dowolny wycinek czasu aby go zwiêkszyæ
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	pl	- Zatrzymaj przycisk myszy na którym¶ z powy¿szych przycisków, aby szybciej wybraæ.
+- or click and drag for faster selection.	jscalendar	pl	- lub kliknij i przenie¶, aby szybciej wybraæ.
+- or shift-click to decrease it	jscalendar	pl	- lub kliknij z Shift-em aby zmniejszyæ
+- use the %1, %2 buttons to select month	jscalendar	pl	- U¿yj przycisków %1, %2 aby wybraæ miesi±c
+- use the %1, %2 buttons to select year	jscalendar	pl	- U¿yj przycisków %1, %2 aby wybraæ rok
+00 (disable)	admin	pl	00 (wy³±czony)
+13 (ntp)	admin	pl	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	pl	3 ilo¶æ znaków dla skrótu dnia
+3 number of chars for month-shortcut	jscalendar	pl	3 ilo¶æ znaków dla skrótu miesi±ca
+80 (http)	admin	pl	80 (http)
+about	common	pl	O aplikacji
+about %1	common	pl	O aplikacji %1
+about the calendar	jscalendar	pl	O kalendarzu
+about this editor	htmlarea	pl	O tym edytorze
 access	common	pl	Dostêp
-access not permitted	common	pl	Brak prawa dostêpu
+access not permitted	common	pl	Dostêp zabroniony
+account has been created	common	pl	Konto zosta³o utworzone
+account has been deleted	common	pl	Konto zosta³o skasowane
+account has been updated	common	pl	Konto zosta³o uaktualnione
+account is expired	common	pl	Konto wygas³o
 acl	common	pl	ACL
 active	common	pl	Aktywne
+active	common	pl	Aktywne
 add	common	pl	Dodaj
-add category	common	pl	Dodaj kategoriê
-add sub	common	pl	Dodaj podrz.
 add %1 category for	common	pl	Dodaj kategoriê %1 dla
+add category	common	pl	Dodaj kategoriê
+add sub	common	pl	Dodaj podrzêdne
+addressbook	common	pl	Adresy, kontakty
 admin	common	pl	Administrator
 administration	common	pl	Administracja
 afghanistan	common	pl	AFGANISTAN
 albania	common	pl	ALBANIA
 algeria	common	pl	ALGIERIA
 all	common	pl	Wszystko
+alphabet	common	pl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,t,u,w,x,y,z
 american samoa	common	pl	SAMOA AMERYKAÑSKIE
 andorra	common	pl	ANDORA
 angola	common	pl	ANGOLA
 anguilla	common	pl	ANGUILLA
 antarctica	common	pl	ANTARKTYKA
 antigua and barbuda	common	pl	ANTIGUA I BARBUDA
+apply	common	pl	Uaktualnij
 april	common	pl	Kwiecieñ
+are you sure you want to delete these entries ?	common	pl	Czy na pewno usun±æ te wpisy?
 are you sure you want to delete this entry ?	common	pl	Czy na pewno usun±æ ten wpis?
 argentina	common	pl	ARGENTYNA
 armenia	common	pl	ARMENIA
@@ -27,20 +55,27 @@ august	common	pl	Sierpieñ
 australia	common	pl	AUSTRALIA
 austria	common	pl	AUSTRIA
 author	common	pl	Autor
+autohide sidebox menus	common	pl	Automatyczne ukrywanie bocznych menu
+automatically hide the sidebox menus?	common	pl	Automatycznie ukrywaæ menu boczne?
 autosave default category	common	pl	Automatyczny zapis domy¶lnej kategorii
 azerbaijan	common	pl	AZERBEJD¯AN
 back	common	pl	Powrót
+back to user login	common	pl	Wróæ do logowania uzytkowników
+background color	htmlarea	pl	Kolor t³a
 bad login or password	common	pl	B³êdna nazwa u¿ytkownika lub has³o
 bahamas	common	pl	BAHAMY
 bahrain	common	pl	BAHRAJN
 bangladesh	common	pl	BANGLADESZ
 barbados	common	pl	BARBADOS
+bcc	common	pl	Bcc
 belarus	common	pl	BIA£ORU¦
 belgium	common	pl	BELGIA
 belize	common	pl	BELIZE
 benin	common	pl	BENIN
 bermuda	common	pl	BERMUDY
 bhutan	common	pl	BHUTAN
+blocked, too many attempts	common	pl	Zablokowane, za duzo prób
+bold	htmlarea	pl	Pogrubione
 bolivia	common	pl	BOLIWIA
 bosnia and herzegovina	common	pl	BO¦NIA I HERCEGOWINA
 botswana	common	pl	BOTSWANA
@@ -49,8 +84,10 @@ brazil	common	pl	BRAZYLIA
 british indian ocean territory	common	pl	BRYTYJSKIE TERYTORIUM OCEANU INDYJSKIEGO
 brunei darussalam	common	pl	BRUNEI
 bulgaria	common	pl	BU£GARIA
+bulleted list	htmlarea	pl	Lista wypunktowana
 burkina faso	common	pl	BURKINA FASO
 burundi	common	pl	BURUNDI
+calendar	common	pl	Kalendarz
 cambodia	common	pl	KAMBOD¯A
 cameroon	common	pl	KAMERUN
 canada	common	pl	KANADA
@@ -62,10 +99,12 @@ category	common	pl	Kategoria
 category %1 has been added !	common	pl	Kategoria %1 zosta³a dodana !
 category %1 has been updated !	common	pl	Kategoria %1 zosta³a uaktualniona !
 cayman islands	common	pl	KAJMANY
+cc	common	pl	Cc
 central african republic	common	pl	REPUBLIKA ¦RODKOWOAFRYKANSKA
 chad	common	pl	CZAD
 change	common	pl	Zmieñ
-charset	common	pl	iso-8859-2
+charset	common	pl	ISO-8859-2
+check installation	common	pl	Sprawd¼ instalacjê
 chile	common	pl	CHILE
 china	common	pl	CHINY
 choose the category	common	pl	Wybierz kategoriê
@@ -73,13 +112,19 @@ choose the parent category	common	pl	Wybierz kategoriê nadrzêdn±
 christmas island	common	pl	WYSPA BO¯EGO NARODZENIA
 clear	common	pl	Wyczy¶æ
 clear form	common	pl	Wyczy¶æ formularz
+click	common	pl	Kliknij
+click or mouse over to show menus	common	pl	Kliknij  lub najed¼ myszk±, aby wy¶wietliæ menu
+click or mouse over to show menus?	common	pl	Kliknij  lub najed¼ myszk±, aby wy¶wietliæ menu?
+close	common	pl	Zamknij
 cocos (keeling) islands	common	pl	WYSPY KOKOSOWE
 colombia	common	pl	KOLUMBIA
 comoros	common	pl	KOMORY
+company	common	pl	Firma
 congo	common	pl	KONGO
 congo, the democratic republic of the	common	pl	REPUBLIKA DEMOKRATYCZNA KONGA
 cook islands	common	pl	WYSPY COOKA
 copy	common	pl	Kopiuj
+copy selection	htmlarea	pl	Kopiuj zaznaczone
 costa rica	common	pl	KOSTARYKA
 cote d ivoire	common	pl	WYBRZE¯E KO¦CI S£ONIOWEJ
 create	common	pl	Utwórz
@@ -88,37 +133,56 @@ croatia	common	pl	CHORWACJA
 cuba	common	pl	KUBA
 currency	common	pl	Waluta
 current	common	pl	Bie¿±cy
+current style	htmlarea	pl	Bie¿±cy styl
 current users	common	pl	Bie¿±cy u¿ytkownicy
+cut selection	htmlarea	pl	Wytnij zaznaczone
 cyprus	common	pl	CYPR
 czech republic	common	pl	REPUBLIKA CZESKA
 date	common	pl	Data
 date due	common	pl	Data wymagalno¶ci
+date selection:	jscalendar	pl	Wybór daty:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pl	Port datetime.<br>Je¿eli u¿ywasz portu 13, ustaw odpowiednio regu³y firewall-a przed zaakceptowaniem tej zmiany.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	pl	Grudzieñ
+decrease indent	htmlarea	pl	Zmniejsz wciêcie
 default category	common	pl	Kategoria domy¶lna
 delete	common	pl	Usuñ
 denmark	common	pl	DANIA
 description	common	pl	Opis
 detail	common	pl	Opis szczegó³owy
 details	common	pl	Opis szczegó³owy
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pl	Wy³±czyæ poprawkê do Internet Explorera 5.5 i wy¿szych aby pokazaæ prze¼roczyscto¶æ ilustracji PNG?
+disable internet explorer png-image-bugfix	common	pl	Wy³±cz poprawkê Internet Explorera dotycz±c± ilustracji png
+disable slider effects	common	pl	Wy³±cz efekt p³ynnego przesuwania
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pl	Wy³±czyæ efekty p³ynnego przesuwania podczas pokazywania lub ukrywania menu?? U¿ytkownicy Opery i Konquerora najprawdopodobniej musz± to zrobiæ.
 disabled	common	pl	Zablokowany
+display %s first	jscalendar	pl	Wy¶wietl najpierw %s
 djibouti	common	pl	D¯IBUTI
 do you also want to delete all subcategories ?	common	pl	Czy chcesz równie¿ usun±æ wszystkie podkategorie?
+domain	common	pl	Domena
+domain name for mail-address, eg. "%1"	common	pl	nawza domeny adresu mailowego, np. "%1"
+domestic	common	pl	Domowy
 dominica	common	pl	DOMINIKA
 dominican republic	common	pl	DOMINIKANA
 done	common	pl	Gotowe
+drag to move	jscalendar	pl	Przeci±gnij aby przenie¶æ
 e-mail	common	pl	E-mail
 east timor	common	pl	TIMOR WSCHODNI
 ecuador	common	pl	EKWADOR
 edit	common	pl	Edytuj
+edit %1 category for	common	pl	Edytuj kategoriê %1 dla
 edit categories	common	pl	Edytuj kategorie
 edit category	common	pl	Edytuj kategoriê
-edit %1 category for	common	pl	Edytuj kategoriê %1 dla
+egroupware api version %1	common	pl	Wersja API eGroupWare: %1
+egroupware: login blocked for user '%1', ip %2	common	pl	eGroupWare: zablokowane logowanie dla u¿ytkownika '%1', IP %2
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
+email-address of the user, eg. "%1"	common	pl	email u¿ytkownika, np. "%1"
 enabled	common	pl	Aktywny
 end date	common	pl	Data koñcowa
 end time	common	pl	Czas koñcowy
+enlarge editor	htmlarea	pl	Powiêksz edytor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu eGroupWare.<br>Przyk³ad: http://www.twojadomena.pl/egroupware &nbsp; lub &nbsp; /egroupware<br><b>Bez koñcowego slasha</b>
 entry has been deleted sucessfully	common	pl	Dane zosta³y usuniête
 entry updated sucessfully	common	pl	Dane zosta³y uaktualnione
 equatorial guinea	common	pl	GWINEA RÓWNIKOWA
@@ -131,6 +195,7 @@ estonia	common	pl	ESTONIA
 ethiopia	common	pl	ETIOPIA
 falkland islands (malvinas)	common	pl	FALKLANDY (MALWINY)
 faroe islands	common	pl	WYSPY FAROE
+fax number	common	pl	numer faxu
 february	common	pl	Luty
 fields	common	pl	Pola
 fiji	common	pl	FID¯I
@@ -138,7 +203,11 @@ files	common	pl	Pliki
 filter	common	pl	Filtr
 finland	common	pl	FINLANDIA
 first name	common	pl	Imiê
+first name of the user, eg. "%1"	common	pl	imie uzytkownika, np. "%1"
+first page	common	pl	Pierwsza strona
 firstname	common	pl	Imiê
+fixme!	common	pl	NAPRAW MNIE!
+font color	htmlarea	pl	Kolor fontu
 force selectbox	common	pl	Wymu¶ wybór z listy
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
@@ -146,22 +215,31 @@ french polynesia	common	pl	POLINEZJA FRANCUSKA
 french southern territories	common	pl	FRANCUSKIE TERYTORIA PO£UDNIOWE
 friday	common	pl	Pi±tek
 ftp	common	pl	FTP
+fullname	common	pl	Imiê i nazwisko
 gabon	common	pl	GABON
 gambia	common	pl	GAMBIA
+general menu	common	pl	Menu g³ówne
 georgia	common	pl	GRUZJA
 germany	common	pl	NIEMCY
 ghana	common	pl	GHANA
 gibraltar	common	pl	GIBRALTAR
 global	common	pl	Globalne
 global public	common	pl	Globalny publiczny
+go today	jscalendar	pl	Id¼ do Dzisiaj
 grant access	common	pl	Przyznaj dostêp
 greece	common	pl	GRECJA
 greenland	common	pl	GRENLANDIA
 grenada	common	pl	GRENADA
 group	common	pl	Grupa
 group access	common	pl	Dostêp grupy
+group has been added	common	pl	Grupa zosta³a dodana
+group has been deleted	common	pl	Grupa zosta³a skasowana
+group has been updated	common	pl	Grupa zosta³a uaktualniona
+group name	common	pl	nazwa grupy
 group public	common	pl	Grupowy publiczny
 groups	common	pl	Grupy
+groups with permission for %1	common	pl	Grupy z uprawnieniami do %1
+groups without permission for %1	common	pl	Grupy bez uprawnieñ do %1
 guadeloupe	common	pl	GWADELUPA
 guam	common	pl	WYSPY GUAM
 guatemala	common	pl	GWATEMALA
@@ -171,29 +249,47 @@ guyana	common	pl	GUJANA
 haiti	common	pl	HAITI
 heard island and mcdonald islands	common	pl	WYSPY HEARDA I MCDONALDA
 help	common	pl	Pomoc
+help using editor	htmlarea	pl	Pomoc do edytora
 high	common	pl	Wysoki
 highest	common	pl	Najwy¿szy
 holy see (vatican city state)	common	pl	PAÑSTWO WATYKAN
 home	common	pl	Powrót na stronê g³ówn±
+home email	common	pl	email domowy
 honduras	common	pl	HONDURAS
 hong kong	common	pl	HONG KONG
+horizontal rule	htmlarea	pl	Linia pozioma
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pl	Jak du¿o ikon ma siê pojawiaæ w pasku nawigacyjnym (nag³ówku strony). Pozosta³e ikony znajd&#177; siê w menu rozwijanym po prawej stronie paska nawigacyjnego.
 hungary	common	pl	WÊGRY
 iceland	common	pl	ISLANDIA
+increase indent	htmlarea	pl	Powiêksz wciêcie
 india	common	pl	INDIE
 indonesia	common	pl	INDONEZJA
+insert all %1 addresses of the %2 contacts in %3	common	pl	Wstaw wszystkie 1% adresów z %2 kontaktów do %3
+insert image	htmlarea	pl	Wstaw ilustracjê
+insert table	htmlarea	pl	Wstaw tabelê
+insert web link	htmlarea	pl	Wstaw link
+international	common	pl	Miedzynarodowy
+invalid ip address	common	pl	Z³y adres IP
+invalid password	common	pl	Z³e has³o
 iran, islamic republic of	common	pl	IRAN
 iraq	common	pl	IRAK
 ireland	common	pl	IRLANDIA
 israel	common	pl	IZRAEL
 it has been more then %1 days since you changed your password	common	pl	Up³ynê³o ponad %1 dni od momentu zmiany has³a
 it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca siê uruchomienie instalatora do uaktualnienia tabel do bie¿±cej wersji
+italic	common	pl	Kursywa
 italy	common	pl	W£OCHY
 jamaica	common	pl	JAMAJKA
 january	common	pl	Styczeñ
 japan	common	pl	JAPONIA
 jordan	common	pl	JORDANIA
 july	common	pl	Lipiec
+jun	common	pl	Czer
 june	common	pl	Czerwiec
+justify center	htmlarea	pl	Wy¶rodkuj
+justify full	htmlarea	pl	Wyjustuj
+justify left	htmlarea	pl	Wyrównaj do lewej
+justify right	htmlarea	pl	Wyrównaj do prawej
 kazakstan	common	pl	KAZACHSTAN
 kenya	common	pl	KENIA
 keywords	common	pl	S³owa kluczowe
@@ -205,16 +301,21 @@ kyrgyzstan	common	pl	KIRGISTAN
 language	common	pl	Jêzyk
 lao peoples democratic republic	common	pl	LAOS
 last name	common	pl	Nazwisko
+last name of the user, eg. "%1"	common	pl	nazwisko u¿ytkownika, np. "%1"
+last page	common	pl	Ostatnia strona
 lastname	common	pl	Nazwisko
 latvia	common	pl	£OTWA
 lebanon	common	pl	LIBAN
 lesotho	common	pl	LESOTO
 liberia	common	pl	LIBERIA
 libyan arab jamahiriya	common	pl	LIBIA
+license	common	pl	Licencja
 liechtenstein	common	pl	LIECHTENSTEIN
 list	common	pl	Lista
 lithuania	common	pl	LITWA
+local	common	pl	Lokalny
 login	common	pl	Zaloguj siê
+loginid	common	pl	Identyfikator (login)
 logout	common	pl	Wylogowanie
 low	common	pl	Niski
 lowest	common	pl	Najni¿szy
@@ -222,8 +323,10 @@ luxembourg	common	pl	LUKSEMBURG
 macau	common	pl	MAKAO
 macedonia, the former yugoslav republic of	common	pl	MACEDONIA
 madagascar	common	pl	MADAGASKAR
+mail domain, eg. "%1"	common	pl	domena maila, np. "%1"
 main category	common	pl	Kategoria g³ówna
 main screen	common	pl	Strona g³ówna
+maintainer	common	pl	Prowadz±cy
 malawi	common	pl	MALAWI
 malaysia	common	pl	MALEZJA
 maldives	common	pl	MALEDIWY
@@ -235,9 +338,11 @@ marshall islands	common	pl	WYSPY MARSHALLA
 martinique	common	pl	MARTYNIKA
 mauritania	common	pl	MAURETANIA
 mauritius	common	pl	MAURITIUS
+max number of icons in navbar	common	pl	Maksymalna ilo¶æ ikon w pasku nawigacyjnym
 may	common	pl	Maj
 mayotte	common	pl	MAYOTTE
 medium	common	pl	¦redni
+menu	common	pl	Menu
 message	common	pl	Komunikat
 mexico	common	pl	MEKSYK
 micronesia, federated states of	common	pl	MIKRONEZJA
@@ -250,6 +355,7 @@ morocco	common	pl	MAROKO
 mozambique	common	pl	MOZAMBIK
 myanmar	common	pl	MYANMAR
 name	common	pl	Nazwa
+name of the user, eg. "%1"	common	pl	nazwa uzytkownika, np. "%1"
 namibia	common	pl	NAMIBIA
 nauru	common	pl	NAURU
 nepal	common	pl	NEPAL
@@ -262,11 +368,15 @@ new main category	common	pl	Nowa kategoria g³ówna
 new value	common	pl	Nowa warto¶æ
 new zealand	common	pl	NOWA ZELANDIA
 next	common	pl	Nastêpny
+next month (hold for menu)	jscalendar	pl	Nastêpny miesi±c (zatrzymaj aby pokazaæ menu)
+next page	common	pl	Nastêpna strona
+next year (hold for menu)	jscalendar	pl	Nastêpny rok (zatrzymaj aby pokazaæ menu)
 nicaragua	common	pl	NIKARAGUA
 niger	common	pl	NIGER
 nigeria	common	pl	NIGERIA
 niue	common	pl	NIUE
 no	common	pl	Nie
+no entries found, try again ...	common	pl	nie znaleziono wpisów, spróbuj jeszcze raz...
 no history for this record	common	pl	Brak historii dla tego zapisu
 no subject	common	pl	Bez tematu
 none	common	pl	¯aden
@@ -274,6 +384,7 @@ norfolk island	common	pl	WYSPA NORFOLK
 normal	common	pl	Normalny
 northern mariana islands	common	pl	PÓ£NOCNE WYSPY MARIANA
 norway	common	pl	NORWEGIA
+not assigned	common	pl	nie przypisany
 note	common	pl	Uwaga
 notes	common	pl	Uwagi
 notify window	common	pl	Okno powiadamiania
@@ -282,42 +393,72 @@ october	common	pl	Pa¼dziernik
 ok	common	pl	OK
 old value	common	pl	Poprzednia warto¶æ
 oman	common	pl	OMAN
-only yours	common	pl	Tylko twoje
+on *nix systems please type: %1	common	pl	W systemach Unixowych wpisz: %1
+on mouse over	common	pl	Dla On Mouse Over
+only private	common	pl	tylko prywatne
+only yours	common	pl	tylko twoje
 open notify window	common	pl	Otwórz okno powiadamiania
+open popup window	common	pl	Otwórz okno typu popup
+ordered list	htmlarea	pl	Lista numerowana
 original	common	pl	Oryginalny
 other	common	pl	Inne
 overview	common	pl	Przegl±d
 owner	common	pl	W³a¶ciciel
+page was generated in %1 seconds	common	pl	Strona wygenerowana w %1 sekundy
 pakistan	common	pl	PAKISTAN
 palau	common	pl	PALAU
 palestinian territory, occupied	common	pl	PALESTYNA
 panama	common	pl	PANAMA
 papua new guinea	common	pl	PAPUA NOWA GWINEA
 paraguay	common	pl	PARAGWAJ
+parcel	common	pl	Paczka
 parent category	common	pl	Kategoria nadrzêdna
 password	common	pl	Has³o
+password could not be changed	common	pl	Has³o nie mo¿e byæ zmienione
 password has been updated	common	pl	Has³o zosta³o zaktualizowane
+paste from clipboard	htmlarea	pl	Wklej ze schowka
+path	htmlarea	pl	¦cie¿ka
+path to user and group files has to be outside of the webservers document-root!!!	common	pl	¦cie¿ka do plików u¿ytkowników i grup MUSI BYÆ POZA rootem dokumentów serwera!!!
+pattern for search in addressbook	common	pl	Wzorzec wyszukiwania w Ksi±¿ce adresowej
+pattern for search in calendar	common	pl	Wzorzec wyszukiwania w in Kalendarzu
+pattern for search in projects	common	pl	Wzorzec wyszukiwania w Projektach
+permissions to the files/users directory	common	pl	uprawnienia do katalogu plików/u¿ytkowników
 personal	common	pl	Osobisty
 peru	common	pl	PERU
 philippines	common	pl	FILIPINY
+phone number	common	pl	numer  telefonu
 pitcairn	common	pl	PITCAIRN
+please %1 by hand	common	pl	Proszê %1 rêcznie
 please enter a name	common	pl	Proszê podaæ nazwê
 please run setup to become current	common	pl	Proszê uruchom instalacjê (setup) w celu uaktualnienia
+please select	common	pl	Proszê wybraæ
 please set your global preferences	common	pl	Proszê wprowadziæ swoje globalne preferencje !
 please set your preferences for this application	common	pl	Proszê wprowadziæ ustawienia dla tej aplikacji
+please wait...	common	pl	Proszê czekac...
 poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
+postal	common	pl	Pocztowy
 powered by phpgroupware version %1	common	pl	Dzia³a na <a href="http://www.phpgroupware.org">phpGroupWare</a> wersja %1
 preferences	common	pl	Ustawienia
+preferences for the idots template set	common	pl	Preferencje dla template-u idots
+prev. month (hold for menu)	jscalendar	pl	Poprz. miesi¹c (zatrzymaj aby pokazaæ menu)
+prev. year (hold for menu)	jscalendar	pl	Poprz. rok (zatrzymaj aby pokazaæ menu)
+previous page	common	pl	Poprzednia strona
 print	common	pl	Drukuj
 priority	common	pl	Priorytet
 private	common	pl	Prywatny
+project	common	pl	Projekt
 public	common	pl	Publiczny
 puerto rico	common	pl	PORTORYKO
 qatar	common	pl	KATAR
 read	common	pl	Czytaj
+read this list of methods.	common	pl	Odczytaj listê metod.
+redoes your last action	htmlarea	pl	Powtarza ostatnia akcjê
 reject	common	pl	Odrzuæ
 rename	common	pl	Zmieñ nazwê
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	pl	Pokazuje pe³n¹ liste kont w systemie.  Uwaga: Lista mo¿e byæ d³uga
+returns an array of todo items	common	pl	Pokazuje tablicê Zadañ
+returns struct of users application access	common	pl	Returns struct of users application access
 reunion	common	pl	REUNION
 romania	common	pl	RUMUNIA
 russian federation	common	pl	ROSJA
@@ -335,15 +476,30 @@ saudi arabia	common	pl	ARABIA SAUDYJSKA
 save	common	pl	Zapisz
 search	common	pl	Szukaj
 section	common	pl	Sekcja
+select	common	pl	Wybierz
+select all %1 %2 for %3	common	pl	Wybierz wszystkie %1 %2 dla %3
 select category	common	pl	Wybierz kategoriê
+select date	common	pl	Wybierz datê
+select group	common	pl	Wybierz grupê
+select home email address	common	pl	Wybierz prywatny adres e-meil
+select one	common	pl	Wybierz jeden
+select user	common	pl	Wybierz u¿ytkownika
+select work email address	common	pl	Wybierz s³u¿bowy adres e-meil
 send	common	pl	Wy¶lij
 senegal	common	pl	SENEGAL
 september	common	pl	Wrzesieñ
-server name	common	pl	Nazwa serwera
 server %1 has been added	common	pl	Serwer %1 zosta³ dodany
+server name	common	pl	Nazwa serwera
 session has been killed	common	pl	Sesja zosta³a zamkniêta
+setup	common	pl	Setup
+setup main menu	common	pl	Menu g³ówne setupu
 seychelles	common	pl	SESZELE
 show all	common	pl	Poka¿ wszystko
+show all categorys	common	pl	Poka¿ wszystkie kategorie
+show menu	common	pl	poka¿ menu
+show page generation time	common	pl	Wy¶wietl czas generowania strony
+show page generation time on the bottom of the page?	common	pl	Wy¶wietlaæ czas generowania strony w jej stopce?
+show_more_apps	common	pl	show_more_apps
 showing %1	common	pl	Wy¶wietlono %1
 showing %1 - %2 of %3	common	pl	Wy¶wietlanie %1 - %2 z %3
 sierra leone	common	pl	SIERRA LEONE
@@ -360,10 +516,14 @@ sri lanka	common	pl	SRI LANKA
 start date	common	pl	Data pocz±tkowa
 start time	common	pl	Czas pocz±tkowy
 status	common	pl	Status
+strikethrough	htmlarea	pl	Przekre¶lenie
 subject	common	pl	Temat
 submit	common	pl	Wprowad¼
+subscript	htmlarea	pl	Indeks dolny
+substitutions and their meanings:	common	pl	Podstawienia i ich znaczenia:
 sudan	common	pl	SUDAN
 sunday	common	pl	Niedziela
+superscript	htmlarea	pl	Indeks górny
 suriname	common	pl	SURINAM
 svalbard and jan mayen	common	pl	SVALBARD AND JAN MAYEN
 swaziland	common	pl	SUAZILAND
@@ -383,13 +543,21 @@ this application requires an upgrade	common	pl	Aplikacja wymaga aktualizacji
 this name has been used already	common	pl	Ta nazwa zosta³a ju¿ u¿yta
 thursday	common	pl	Czwartek
 time	common	pl	Czas
+time selection:	jscalendar	pl	Wybór czasu:
 time zone	common	pl	Strefa czasowa
 time zone offset	common	pl	Przesuniêcie strefy czasowej
 title	common	pl	Tytu³
+to	common	pl	Do
+to correct this error for the future you will need to properly set the	common	pl	Aby usun¹æ ten b³±d na przysz³o¶æ, bêdziesz musia³ ustawiæ poprawnie
 to go back to the msg list, click <a href= %1 >here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
+today	common	pl	Dzisiaj
+todays date, eg. "%1"	common	pl	dzisiajsza data, np. "%1"
+toggle first day of week	jscalendar	pl	Zmieñ pierwszy dzieñ tygodnia
+toggle html source	htmlarea	pl	Prze³±cz do ¼ród³a HTML
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
+too many unsucessful attempts to login: %1 for the user %2, %3 for the ip %4	common	pl	Zbyt wiele nieudanych prób logowania: %1 dla u¿ytkownika %2, %3 dla IP %4
 total	common	pl	Ogó³em
 trinidad and tobago	common	pl	TRINIDAD I TOBAGO
 tuesday	common	pl	Wtorek
@@ -400,6 +568,8 @@ turks and caicos islands	common	pl	TURKS AND CAICOS ISLANDS
 tuvalu	common	pl	TUVALU
 uganda	common	pl	UGANDA
 ukraine	common	pl	UKRAINA
+underline	htmlarea	pl	Podkre¶lenie
+undoes your last action	htmlarea	pl	Cofa ostatnia akcjê
 united arab emirates	common	pl	ZJEDNOCZONE EMIRATY ARABSKIE
 united kingdom	common	pl	WIELKA BRYTANIA
 united states	common	pl	STANY ZJEDNOCZONE
@@ -408,13 +578,20 @@ unknown	common	pl	Nieznany
 update	common	pl	Aktualizuj
 url	common	pl	Adres URL
 uruguay	common	pl	URUGWAJ
+use button to search for	common	pl	u¿yj przycisku aby szukaæ
+use button to search for address	common	pl	u¿yj przycisku aby szukaæ adresu
+use button to search for calendarevent	common	pl	u¿yj przycisku aby szukaæ zdarzenia w kalendarzu
+use button to search for project	common	pl	u¿yj przycisku aby szukaæ Projektu
 user	common	pl	U¿ytkownik
+user accounts	common	pl	konta u¿ytkowników
+user groups	common	pl	grupy u¿ytkowników
 username	common	pl	Nazwa u¿ytkownika
 users	common	pl	U¿ytkownicy
 users choice	common	pl	Wybieraj± u¿ytkownicy
 uzbekistan	common	pl	UZBEKISTAN
 vanuatu	common	pl	VANUATU
 venezuela	common	pl	WENEZUELA
+version	common	pl	Wersja
 viet nam	common	pl	WIETNAM
 view	common	pl	Przegl±daj
 virgin islands, british	common	pl	BRYTYJSKIE WYSPY DZIEWICZE
@@ -423,18 +600,29 @@ wallis and futuna	common	pl	WALLIS AND FUTUNA
 wednesday	common	pl	¦roda
 welcome	common	pl	Strona g³ówna
 western sahara	common	pl	SAHARA ZACHODNIA
-which groups	common	pl	Która grupa
+which groups	common	pl	Które grupy
+wk	jscalendar	pl	tydz
+work email	common	pl	email s³u¿bowy
 written by:	common	pl	Napisany przez:
 year	common	pl	Rok
 yemen	common	pl	JEMEN
 yes	common	pl	Tak
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	pl	Jestes w trybie tekstowym. Kliknij na przycisk [<>] aby przej¶æ do trybu WYSIWIG.
+you are required to change your password during your first login	common	pl	Po pierwszym zalogowaniu siê musisz zmieniæ swoje has³o
 you are running a newer version of phpgroupware than your database is setup for	common	pl	Uruchomi³e¶ nowsz± wersjê phpGroupWare ni¿ zainstalowana baza danych
 you have been successfully logged out	login	pl	Zosta³e¶ pomy¶lnie wylogowany
+you have not entered a title	common	pl	Nie wprowadzi³e¶ tytu³u
+you have not entered a valid date	common	pl	Nie wprowadzi³e¶ w³a¶ciwej daty
+you have not entered a valid time of day	common	pl	Nie wprowadzi³e¶ w³aœciwego czasu dnia
+you have not entered participants	common	pl	Nie wprowadzi³e¶ uczestników
 you have selected an invalid date	common	pl	Wybra³e¶ nieprawid³ow± datê
 you have selected an invalid main category	common	pl	Wybra³e¶ niew³a¶ciw± kategoriê g³ówn±
+you have successfully logged out	common	pl	Wylogowa³es/a¶ siê pomy¶lnie
+you need to add the webserver user '%1' to the group '%2'.	common	pl	Musisz dodaæ u¿ytkownika '%1' do grupy '%2'.
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomo¶æ <b>nie</b> zosta³a wys³ana!<br>
-your search returned 1 match	common	pl	wyszukiwanie zwróci³o 1 trafienie
+your message has been sent	common	pl	Wiadomo¶æ zosta³a wys³ana
 your search returned %1 matchs	common	pl	wyszukiwanie zwróci³o %1 trafieñ
+your search returned 1 match	common	pl	wyszukiwanie zwróci³o 1 trafienie
 your session could not be verified.	login	pl	Nie mo¿na zweryfikowaæ sesji.
 your settings have been updated	common	pl	Twoje ustawienia zosta³y uaktualnione
 yugoslavia	common	pl	JUGOS£AWIA

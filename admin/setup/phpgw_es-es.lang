@@ -1,4 +1,5 @@
 %1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
+%1 - %2 of %3 user groups	admin	es-es	%1 - %2 de %3 grupos de usuarios
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
@@ -15,6 +16,7 @@ account preferences	admin	es-es	Preferencias de la cuenta
 acl manager	admin	es-es	Manejo de LCA
 acl rights	admin	es-es	Permisos de LCA
 action	admin	es-es	Acción
+activate wsiwyg-editor	admin	es-es	activar editor WSIWYG
 active	admin	es-es	Activo
 add a category	admin	es-es	agregar una categoría
 add a group	admin	es-es	agregar un grupo
@@ -121,6 +123,7 @@ deny access to user accounts	admin	es-es	Denegar acceso a las cuentas de usuario
 deny all users access to grant other users access to their entries ?	admin	es-es	¿Denegar a los usuarios permitir el acceso de otros usuarios a sus registros?
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
 disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
+disable wsiwyg-editor	admin	es-es	desactivar editor WSIWYG
 disabled	admin	es-es	Deshabilitado
 disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
 display	admin	es-es	Mostrar
@@ -347,6 +350,7 @@ the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario n
 the testjob sends you a mail everytime it is called.	admin	es-es	El trabajo de prueba le envía un correo cada vez que se ejecuta
 the two passwords are not the same	admin	es-es	Las dos contraseñas no son iguales
 the users bellow are still members of group %1	admin	es-es	Los usuarios siguientes todavía son miembros del grupo %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	es-es	Ya hay un grupo con este nombre. El id de usuario no puede tener el mismo nombre que el id de un grupo.
 they must be removed before you can continue	admin	es-es	Estos deben ser removidos para poder continuar
 this application is current	admin	es-es	Esta aplicacion esta actualizada
 this application requires an upgrade	admin	es-es	Esta aplicacion requiere ser actualizada
