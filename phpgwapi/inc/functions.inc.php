@@ -311,6 +311,18 @@
 		/*************************************************************************\
 		* These lines load up the themes                                          *
 		\*************************************************************************/
+		if (! $phpgw_info['user']['preferences']['common']['theme'])
+		{
+			if ($phpgw_info['server']['template_set'] == 'user_choice')
+			{
+				$phpgw_info['user']['preferences']['common']['theme'] = 'default';
+			}
+			else
+			{
+				$phpgw_info['user']['preferences']['common']['theme'] = $phpgw_info['server']['template_set'];
+			}
+		}
+
 		include(PHPGW_SERVER_ROOT . "/phpgwapi/themes/" .
 		 $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
 
