@@ -118,6 +118,7 @@
 	$cat->app_name = "phpgw";
 	$catinfo  = $cat->return_single($cat_id);
 	$catname .= $catinfo[0]["name"];
+	if (!$catname) { $catname = lang('none'); }
 
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
