@@ -182,8 +182,8 @@
 
 		/*!
 		@function get_nextid
-		@@abstract Using the common functions next_id and last_id, find the next available account_id
-		@@param $account_type (optional, default to 'u'
+		@abstract Using the common functions next_id and last_id, find the next available account_id
+		@param $account_type (optional, default to 'u'
 		*/
 		function get_nextid($account_type='u')
 		{
