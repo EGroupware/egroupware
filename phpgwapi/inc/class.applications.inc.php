@@ -37,17 +37,13 @@
     function users_enabled_apps()
     {
        global $phpgw, $phpgw_info;
-       $acl_apps = $phpgw->acl->get_app_list('run', 1);
-       if ($acl_apps != False) {
-          reset ($acl_apps);
-          while (list($app) = each($phpgw_info["apps"])) {
-             if ($phpgw->acl->check("run",1,$app)) {
-                $phpgw_info["user"]["apps"][$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
-             } 
-          }
-       }
        if (gettype($phpgw_info["apps"]) != "array") {
           $this->read_installed_apps();
+       }
+       while (list($app) = each($phpgw_info["apps"])) {
+          if ($phpgw->acl->check("run",1,$app)) {
+             $phpgw_info["user"]["apps"][$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
+          } 
        }
     }
 
