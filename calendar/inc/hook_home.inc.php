@@ -22,7 +22,8 @@
 	}
 	unset($d1);
 
-	if ($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])
+	$showevents = intval($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents']);
+	if($showevents>0)
 	{
 		$GLOBALS['phpgw']->translation->add_app('calendar');
 		if(!is_object($GLOBALS['phpgw']->datetime))
@@ -38,13 +39,20 @@
 		$GLOBALS['css'] = "\n".'<style type="text/css">'."\n".'<!--'."\n"
 			. ExecMethod('calendar.uicalendar.css').'-->'."\n".'</style>';
 
-		$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
-		$_page = substr($page_[0],0,7);	// makes planner from planner_{user|category}
-		if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year' && $_page != 'planner'))
+		if($showevents==2)
 		{
-			$_page = 'month';
+			$_page = "small";
+		}
+		else
+		{
+			$page_ = explode('.',$GLOBALS['phpgw_info']['user']['preferences']['calendar']['defaultcalendar']);
+			$_page = substr($page_[0],0,7);	// makes planner from planner_{user|category}
+			if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year' && $_page != 'planner'))
+			{
+				$_page = 'month';
 //			$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar','month');
 //			$GLOBALS['phpgw']->preferences->save_repository();
+			}
 		}
 
 		if(!@file_exists(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php'))
@@ -88,4 +96,5 @@
 		unset($cal);
 	} 
 	flush();
+	unset($showevents);
 ?>

@@ -3335,9 +3335,14 @@
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('keep');
 
-			$templates = Array(
-				'day_cal'	=> 'day_cal.tpl'
-			);
+            $tpl = 'day_cal.tpl';
+            if(intval($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])==2)
+            {
+                $tpl = 'day_list.tpl';
+            }
+            $templates = Array(
+                'day_cal'   => $tpl
+            );
 			$p->set_file($templates);
 			$p->set_block('day_cal','day','day');
 			$p->set_block('day_cal','day_row','day_row');

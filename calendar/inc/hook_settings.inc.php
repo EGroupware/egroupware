@@ -28,8 +28,18 @@
 	create_select_box('default calendar view','defaultcalendar',$default,
 		'Which of calendar view do you want to see, when you start calendar ?');
 
-	create_check_box('show default view on main screen','mainscreen_showevents',
-		'Displays your default calendar view on the startpage (page you get when you enter phpGroupWare or click on the homepage icon)?');
+	/* Selection of list for home page is different from default calendar,
+	   since the decision for the front page is different for the decision
+	   for the main calendar page.  But the list could be added to the
+	   default list above, if requested.  - shrykedude. */
+	$mainpage = array(
+		'1' => lang('Yes'),	
+		'0' => lang('No'),
+		'2' => lang('No').' - '.lang('show list of upcoming events'),
+	);
+	create_select_box('show default view on main screen','mainscreen_showevents',$mainpage,
+		'Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?');
+	unset($mainpage);
 /*
 	$summary = array(
 		'no'     => lang('Never'),
