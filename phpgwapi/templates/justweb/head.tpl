@@ -20,7 +20,6 @@
 
 <script language="JavaScript" src="{webserver_url}/phpgwapi/templates/justweb/navcond.js"></script>
 <script language="JavaScript">
-<!--
 var myNavBar1 = new NavBar(0);
 var dhtmlMenu;
 
@@ -72,7 +71,6 @@ function init() {
   myNavBar1.create();
   myNavBar1.setzIndex(2);
 }
--->
 </script>
 
 </HEAD>

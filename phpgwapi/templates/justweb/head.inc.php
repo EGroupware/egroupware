@@ -34,6 +34,6 @@
 	$tpl->set_var('font_family',$phpgw_info['theme']['font']);
 	$tpl->set_var('website_title', $phpgw_info['server']['site_title']);
 	$tpl->set_var('body_tags',$bodyheader);
-	echo $tpl->finish($tpl->parse('out','head'));
+	$tpl->pfp('out','head');
 	unset($tpl);
 ?>
