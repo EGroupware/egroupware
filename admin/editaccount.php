@@ -8,17 +8,119 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
+  	/* $Id$ */
+  	
+  	$phpgw_info["flags"] = array(
+  		"noheader" => True,
+  		"nonavbar" => True,
+  		"currentapp" => "admin",
+  		"parent_page" => "accounts.php"
+  	);
+  	
+  	include("../header.inc.php");
+  	include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+  	
+  	// creates the html for the user data
+  	function createPageBody($account_id)
+  	{
+  		global $phpgw,$phpgw_info;
+  		
+		$t = new Template($phpgw->common->get_tpl_dir("admin"));
+  		$t->set_file(array("form" => "account_form.tpl"));
 
-  /* $Id$ */
+		$account = CreateObject('phpgwapi.accounts',$account_id);
+	
+		$userData = $account->read_repository($account_id);
 
-  $phpgw_info = array();
-  $phpgw_info["flags"] = array("noheader" => True, 
-                "nonavbar" => True, 
-                "currentapp" => "admin",
-                "parent_page" => "accounts.php");
-  include("../header.inc.php");
-  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=".$userData["account_id"]));
+				
+		$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+		$t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
+		$t->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
+		
+		$t->set_var("lang_action",lang("Edit user account"));
+		$t->set_var("lang_loginid",lang("LoginID"));
+		$t->set_var("lang_account_active",lang("Account active"));
+		$t->set_var("lang_password",lang("Password"));
+		$t->set_var("lang_reenter_password",lang("Re-Enter Password"));
+		$t->set_var("lang_lastname",lang("Last Name"));
+		$t->set_var("lang_groups",lang("Groups"));
+		$t->set_var("lang_firstname",lang("First Name"));
+  		$t->set_var("lang_button",lang('Save'));
 
+		$t->set_var("n_loginid_value",$userData["account_lid"]);
+		$t->set_var("n_passwd_value",$n_passwd);
+		$t->set_var("n_passwd_2_value",$n_passwd_2);
+		
+		if ($userData["status"]) 
+		{
+			$t->set_var("account_checked","checked");
+		} 
+		else 
+		{
+			$t->set_var("account_checked","");
+		}
+		$t->set_var("n_firstname_value",$userData["firstname"]);
+		$t->set_var("n_lastname_value",$userData["lastname"]);
+
+		$t->pparse('out','form');
+	}
+
+	// stores the userdata
+	function saveUserData($_userData)
+	{
+		$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
+		$account->update_data($_userData);
+		$account->save_repository();
+		if ($_userData['passwd'])
+		{
+			$auth = CreateObject('phpgwapi.auth');
+#			$auth->change_password($old_passwd, $_userData['passwd']);
+  		}
+  	}
+  	
+  	// checks if the userdata are valid
+  	function userDataValid($_userData)
+  	{
+  		return TRUE;
+  	}
+  	
+  	// todo
+  	// not needed if i use the same file for new users too
+  	if (! $account_id) {
+  		Header("Location: " . $phpgw->link("accounts.php"));
+  	}
+
+
+	if ($submit)
+	{
+		$userData = array(
+			'account_lid'    => $account_lid,     	'firstname'   => $firstname,
+			'lastname'       => $lastname,       	'passwd'      => $n_passwd,
+			'status' 	 => $status, 		'old_loginid' => $old_loginid,
+			'account_id'     => $account_id
+		);
+		
+		if (userDataValid($userData)) 
+		{ 
+			saveUserData($userData);
+			Header('Location: ' . $phpgw->link('accounts.php', 'cd='.$cd));
+			$phpgw->common->phpgw_exit();
+		}
+	}
+	else
+	{
+		$phpgw->common->phpgw_header();
+		echo parse_navbar();
+		
+		createPageBody($account_id);
+
+  		account_close();
+  		$phpgw->common->phpgw_footer();
+  	}
+  	
+  	return;
+  	
   function is_odd($n)
   {
      $ln = substr($n,-1);
@@ -188,63 +290,61 @@
 
   }                    // if $submit
 
-  $phpgw->common->phpgw_header();
-  echo parse_navbar();
-
-  $phpgw->template->set_file(array("form" => "account_form.tpl"));
   
-  if ($totalerrors) {
-     $phpgw->template->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
-  } else {
-     $phpgw->template->set_var("error_messages","");
-  }
+	if ($totalerrors) {
+     		$t->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
+	} else {
+		$t->set_var("error_messages","");
+	}
 
-  $userData = $phpgw->accounts->read_userData($account_id);
+  	$userData = $phpgw->accounts->read_repository($account_id);
+  	
+  	if (! $submit) {
+  		print $n_loginid   = $userData["account_lid"];
+  		print $n_firstname = $userData["firstname"];
+  		print $n_lastname  = $userData["lastname"];
+  		$apps = CreateObject('phpgwapi.applications',array(intval($userData["account_id"]),'u'));
+  		$apps->read_installed_apps();
+		/* $db_perms = $apps->read_account_specific(); */
+	}
+	
+	if ($phpgw_info["server"]["account_repository"] == "ldap") {
+		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
+	} else {
+		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
+	}
+	
+	$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+	$t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
+	$t->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
+	
+	$t->set_var("lang_action",lang("Edit user account"));
+	
+	$t->set_var("lang_loginid",lang("LoginID"));
+	$t->set_var("n_loginid_value",$n_loginid);
+	
+	$t->set_var("lang_account_active",lang("Account active"));
+	
+	if ($userData["status"]) {
+		$t->set_var("account_checked","checked");
+	} else {
+		$t->set_var("account_checked","");
+	}
 
-  if (! $submit) {
-     $n_loginid   = $userData["account_lid"];
-     $n_firstname = $userData["firstname"];
-     $n_lastname  = $userData["lastname"];
-     $apps = CreateObject('phpgwapi.applications',array(intval($userData["account_id"]),'u'));
-     $apps->read_installed_apps();
-     $db_perms = $apps->read_account_specific();
-  }
+  $t->set_var("lang_password",lang("Password"));
+  $t->set_var("n_passwd_value",$n_passwd);
 
-  if ($phpgw_info["server"]["account_repository"] == "ldap") {
-     $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
-  } else {
-     $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
-  }
+  $t->set_var("lang_reenter_password",lang("Re-Enter Password"));
+  $t->set_var("n_passwd_2_value",$n_passwd_2);
 
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $phpgw->template->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
-  $phpgw->template->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
+  $t->set_var("lang_firstname",lang("First Name"));
+  $t->set_var("n_firstname_value",$n_firstname);
 
-  $phpgw->template->set_var("lang_action",lang("Edit user account"));
+  $t->set_var("lang_lastname",lang("Last Name"));
+  $t->set_var("n_lastname_value",$n_lastname);
 
-  $phpgw->template->set_var("lang_loginid",lang("LoginID"));
-  $phpgw->template->set_var("n_loginid_value",$n_loginid);
-
-  $phpgw->template->set_var("lang_account_active",lang("Account active"));
-  if ($userData["status"]) {
-     $phpgw->template->set_var("account_checked","checked");
-  } else {
-     $phpgw->template->set_var("account_checked","");
-  }
-
-  $phpgw->template->set_var("lang_password",lang("Password"));
-  $phpgw->template->set_var("n_passwd_value",$n_passwd);
-
-  $phpgw->template->set_var("lang_reenter_password",lang("Re-Enter Password"));
-  $phpgw->template->set_var("n_passwd_2_value",$n_passwd_2);
-
-  $phpgw->template->set_var("lang_firstname",lang("First Name"));
-  $phpgw->template->set_var("n_firstname_value",$n_firstname);
-
-  $phpgw->template->set_var("lang_lastname",lang("Last Name"));
-  $phpgw->template->set_var("n_lastname_value",$n_lastname);
-
-  $phpgw->template->set_var("lang_groups",lang("Groups"));
+  $t->set_var("lang_groups",lang("Groups"));
+/*
   $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
 
   $groups_select = '<select name="n_groups[]" multiple>';
@@ -259,7 +359,7 @@
      $groups_select .= ">" . $phpgw->db->f("group_name") . "</option>\n";
   }
   $groups_select .= "</select>";
-  $phpgw->template->set_var("groups_select",$groups_select);
+  $t->set_var("groups_select",$groups_select);
 
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
@@ -300,7 +400,7 @@
      $i++;
   }
 
-  $phpgw->template->set_var("permissions_list",$perm_html);	
+  $t->set_var("permissions_list",$perm_html);	
   
   $apps->account_apps = Array(Array());
 
@@ -331,7 +431,7 @@
       $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
     }
   }
-
+*/
   $includedSomething = False;
   // start inlcuding other admin tools
   while($app = each($apps_after))
@@ -340,10 +440,10 @@
 	// {gui_hooks} to ""
   	if ($phpgw->common->hook_single('show_user_data', $app[0])) $includedSomething=True;
   }       
-  if (!$includedSomething) $phpgw->template->set_var('gui_hooks','');
+  if (!$includedSomething) $t->set_var('gui_hooks','');
 
-  $phpgw->template->set_var("lang_button",lang('Save'));
-  $phpgw->template->pparse('out','form');
+  $t->set_var("lang_button",lang('Save'));
+  $t->pparse('out','form');
 
   account_close();
   $phpgw->common->phpgw_footer();

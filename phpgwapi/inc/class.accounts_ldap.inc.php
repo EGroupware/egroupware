@@ -41,59 +41,49 @@
    
     function read_repository()
     {
-       global $phpgw, $phpgw_info;
-
-       // get a ldap connection handle
-       $ds = $phpgw->common->ldapConnect();
-
-       // search the dn for the given uid
-       $sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$this->account_id);
-       $allValues = ldap_get_entries($ds, $sri);
-
-       /* Now dump it into the array; take first entry found */
-       $this->data["account_id"]	= $allValues[0]["uidnumber"][0];
-       $this->data["account_lid"] 	= $allValues[0]["uid"][0];
-       $this->data["account_dn"]  	= $allValues[0]["dn"];
-       $this->data["firstname"]   	= $allValues[0]["givenname"][0];
-       $this->data["lastname"]    	= $allValues[0]["sn"][0];
-       $this->data["fullname"]    	= $allValues[0]["cn"][0];
-
-       $this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
-       $this->db->next_record();
-      
-       $this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-       $this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-       $this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-       $this->data["status"]            = $this->db->f("account_status");
-
-       return $this->data;
+	global $phpgw, $phpgw_info;
+	
+	// get a ldap connection handle
+	$ds = $phpgw->common->ldapConnect();
+	
+	// search the dn for the given uid
+	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
+	$allValues = ldap_get_entries($ds, $sri);
+	
+	/* Now dump it into the array; take first entry found */
+	$this->data["account_id"]	= $allValues[0]["uidnumber"][0];
+	$this->data["account_lid"] 	= $allValues[0]["uid"][0];
+	$this->data["account_dn"]  	= $allValues[0]["dn"];
+	$this->data["firstname"]   	= $allValues[0]["givenname"][0];
+	$this->data["lastname"]    	= $allValues[0]["sn"][0];
+	$this->data["fullname"]    	= $allValues[0]["cn"][0];
+	
+	$this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
+	$this->db->next_record();
+	
+	$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
+	$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+	$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+	$this->data["status"]            = $this->db->f("account_status");
+	
+	return $this->data;
     }
 
     function save_repository()
     {
        global $phpgw_info, $phpgw;
 
-       /* ********This sets the server variables from the database******** */
-/*       $db->query("select * from phpgw_config",__LINE__,__FILE__);
-       while ($db->next_record()) {
-          $phpgw_info["server"][$db->f("config_name")] = $db->f("config_value");
-       }
+	$ds = $phpgw->common->ldapConnect();
 
-       $phpgw_info_temp["user"]        = $phpgw_info["user"];
-       $phpgw_info_temp["apps"]        = $phpgw_info["apps"];
-       $phpgw_info_temp["server"]      = $phpgw_info["server"];
-       $phpgw_info_temp["hooks"]       = $phpgw->hooks->read();
-       $phpgw_info_temp["user"]["preferences"] = $phpgw_info["user"]["preferences"];
-       $phpgw_info_temp["user"]["kp3"] = "";                     // We don't want it anywhere in the
-                                                                 // database for security.
-       if ($PHP_VERSION < "4.0.0") {
-          $info_string = addslashes($phpgw->crypto->encrypt($phpgw_info_temp));
-       } else {
-          $info_string = $phpgw->crypto->encrypt($phpgw_info_temp);       
-       }
-       $db->query("update phpgw_sessions set session_info='$info_string' where session_id='"
-                . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
-*/        
+	// search the dn for the given uid
+	$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
+	$allValues = ldap_get_entries($ds, $sri);
+	
+	$entry["cn"] 		= sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
+	$entry["sn"]		= $this->data["lastname"];
+	$entry["givenname"]	= $this->data["firstname"];
+	
+	ldap_modify($ds, $allValues[0]["dn"], $entry);
     }
     
     function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 

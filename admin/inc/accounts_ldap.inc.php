@@ -108,7 +108,8 @@
   
     for ($i=0, $j=0; $i<$info["count"]; $i++,$j++) {
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
-          $account_info[$i]["account_id"]        = rawurlencode($info[$i]["dn"]);
+#          $account_info[$i]["account_id"]        = rawurlencode($info[$i]["dn"]);
+          $account_info[$i]["account_id"]        = $info[$i]["uidnumber"][0];
           $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
           $account_info[$i]["account_lastname"]  = $info[$i]["sn"][0];
           $account_info[$i]["account_firstname"] = $info[$i]["givenname"][0];

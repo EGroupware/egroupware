@@ -57,7 +57,7 @@
       return False;
     } 
     
-    function change_password($old_passwd, $new_passwd) {
+    function change_password($old_passwd, $new_passwd, $account_id="") {
       global $phpgw_info, $phpgw;
 
       $ldap = $phpgw->common->ldapConnect();
