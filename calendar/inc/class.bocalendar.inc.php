@@ -3041,14 +3041,14 @@
 			{
 				$str = lang($this->rpt_type[$event['recur_type']]);
 
-				$str_extra = '';
+				$str_extra = array();
 				if ($event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['year'] != 0)
 				{
 					$recur_end = $this->maketime($event['recur_enddate']);
 					if($recur_end != 0)
 					{
 						$recur_end -= $GLOBALS['phpgw']->datetime->tz_offset;
-						$str_extra .= lang('ends').': '.lang($GLOBALS['phpgw']->common->show_date($recur_end,'l')).', '.$this->long_date($recur_end).' ';
+						$str_extra[] = lang('ends').': '.lang($GLOBALS['phpgw']->common->show_date($recur_end,'l')).', '.$this->long_date($recur_end).' ';
 					}
 				}
 				// only weekly uses the recur-data (days) !!!
@@ -3064,17 +3064,17 @@
 					}
 					if(count($repeat_days))
 					{
-						$str_extra .= lang('days repeated').': '.implode(', ',$repeat_days);
+						$str_extra[] = lang('days repeated').': '.implode(', ',$repeat_days);
 					}
 				}
 				if($event['recur_interval'] != 0)
 				{
-					$str_extra .= lang('Interval').': '.$event['recur_interval'];
+					$str_extra[] = lang('Interval').': '.$event['recur_interval'];
 				}
 
-				if($str_extra)
+				if(count($str_extra))
 				{
-					$str .= ' ('.$str_extra.')';
+					$str .= ' ('.implode(', ',$str_extra).')';
 				}
 
 				$var['recure_type'] = Array(
