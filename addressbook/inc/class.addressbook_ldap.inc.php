@@ -100,7 +100,7 @@
 	    . "','" . addslashes($this->zip)
    	    . "','" . addslashes($this->bday)
 	    . "','" . addslashes($this->notes)
-   	    . "','" . addslashes($this->company_id)
+   	    . "','" . addslashes($this->company)
 	    . "','" . addslashes($this->access)
 	    . "','" . addslashes($this->url)
    	    . "','" . $phpgw_info["user"]["account_id"]
@@ -160,7 +160,7 @@
 	    . "', ab_zip='" 	    . addslashes($this->zip)
    	    . "', ab_bday='"        . addslashes($this->bday)
 	    . "', ab_notes='"       . addslashes($this->notes)
-   	    . "', ab_company_id='"  . addslashes($this->company_id)
+   	    . "', ab_company_id='"  . addslashes($this->company)
 	    . "', ab_access='" 	    . addslashes($this->access)
 	    . "', ab_url='"    	    . addslashes($this->url)
    	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"]
