@@ -23,14 +23,16 @@
 		var $owner;
 		var $g_owner;
 		var $is_group = False;
-		var $datetime;
 		var $filter;
 		var $cat_id;
 
 		function socalendar($param)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
-			$this->datetime = CreateObject('phpgwapi.datetime');
+			if(!is_object($GLOBALS['phpgw']->datetime))
+			{
+				$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
+			}
 
 			$this->owner = (!isset($param['owner']) || $param['owner'] == 0?$GLOBALS['phpgw_info']['user']['account_id']:$param['owner']);
 			$this->filter = (isset($param['filter']) && $param['filter'] != ''?$param['filter']:$this->filter);
@@ -46,7 +48,12 @@
 				echo '<!-- SO cat_id : '.$this->cat_id.' -->'."\n";
 			}
 			$this->cal = CreateObject('calendar.socalendar_');
-			$this->cal->open('INBOX',intval($this->owner));
+			$this->open_box($this->owner);
+		}
+
+		function open_box($owner)
+		{
+			$this->cal->open('INBOX',intval($owner));
 		}
 
 		function maketime($time)
@@ -66,11 +73,11 @@
 			$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
 			if($owner_id)
 			{
-				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset,$owner_id);
+				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$GLOBALS['phpgw']->datetime->tz_offset,$owner_id);
 			}
 			else
 			{
-				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
+				return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$GLOBALS['phpgw']->datetime->tz_offset);
 			}
 		}
 
@@ -81,8 +88,8 @@
 				return Array();
 			}
 
-			$starttime = mktime(0,0,0,$smonth,$sday,$syear) - $this->datetime->tz_offset;
-			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $this->datetime->tz_offset;
+			$starttime = mktime(0,0,0,$smonth,$sday,$syear) - $GLOBALS['phpgw']->datetime->tz_offset;
+			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $GLOBALS['phpgw']->datetime->tz_offset;
 //			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
 //			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
 			$sql = "AND (phpgw_cal.cal_type='M') "

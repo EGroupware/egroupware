@@ -29,9 +29,8 @@
 //		var $debug = True;
 
 		var $cat_id;
-		var $datetime;
-		var $tz_offset;
 		var $theme;
+		var $link_tpl;
 
 		var $public_functions = array(
 			'mini_calendar' => True,
@@ -68,8 +67,6 @@
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
 
 			$this->bo = CreateObject('calendar.bocalendar',1);
-			$this->datetime = $this->bo->datetime;
-			$this->tz_offset = $this->datetime->tz_offset;
 
 			if($this->debug)
 			{
@@ -83,6 +80,19 @@
 			$this->holiday_color = (substr($this->theme['bg06'],0,1)=='#'?'':'#').$this->theme['bg06'];
 			
 			$this->cat_id   = $this->bo->cat_id;
+
+			$this->link_tpl = CreateObject('phpgwapi.Template',$this->template_dir);
+			$this->link_tpl->set_unknowns('remove');
+			$this->link_tpl->set_file(
+			   Array(
+				   'link_picture'	=> 'link_pict.tpl'
+			   )
+			);
+			$this->link_tpl->set_block('link_picture','link_pict','link_pict');
+			$this->link_tpl->set_block('link_picture','pict','pict');
+			$this->link_tpl->set_block('link_picture','link_open','link_open');
+			$this->link_tpl->set_block('link_picture','link_close','link_close');
+			$this->link_tpl->set_block('link_picture','link_text','link_text');
 
 			if($this->bo->use_session)
 			{
@@ -129,13 +139,13 @@
 
 			$this->bo->read_holidays($params['year']);
 
-			$date = $this->datetime->makegmttime(0,0,0,$params['month'],$params['day'],$params['year']);
+			$date = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0,$params['month'],$params['day'],$params['year']);
 			$month_ago = intval(date('Ymd',mktime(0,0,0,$params['month'] - 1,$params['day'],$params['year'])));
 			$month_ahead = intval(date('Ymd',mktime(0,0,0,$params['month'] + 1,$params['day'],$params['year'])));
 			$monthstart = intval(date('Ymd',mktime(0,0,0,$params['month'],1,$params['year'])));
 			$monthend = intval(date('Ymd',mktime(0,0,0,$params['month'] + 1,0,$params['year'])));
 
-			$weekstarttime = $this->datetime->get_weekday_start($params['year'],$params['month'],1);
+			$weekstarttime = $GLOBALS['phpgw']->datetime->get_weekday_start($params['year'],$params['month'],1);
 
 			if($this->debug)
 			{
@@ -206,17 +216,17 @@
 			for($i=0;$i<7;$i++)
 			{
 				$var = Array(
-					'dayname'	=> '<b>' . substr(lang($this->datetime->days[$i]['name']),0,2) . '</b>',
+					'dayname'	=> '<b>' . substr(lang($GLOBALS['phpgw']->datetime->days[$i]['name']),0,2) . '</b>',
 					'day_image'	=> ''
 				);
 				$this->output_template_array($p,'daynames','mini_day',$var);
 			}
-			$today = date('Ymd',$this->datetime->gmtnow + $this->tz_offset);
+			$today = date('Ymd',$GLOBALS['phpgw']->datetime->gmtnow + $GLOBALS['phpgw']->datetme->tz_offset);
 			unset($date);
-			for($i=$weekstarttime + $this->tz_offset;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
+			for($i=$weekstarttime + $GLOBALS['phpgw']->datetme->tz_offset;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
 			{
 				unset($var);
-				$daily = $this->set_week_array($i - $this->tz_offset,$cellcolor,$weekly);
+				$daily = $this->set_week_array($i - $GLOBALS['phpgw']->datetme->tz_offset,$cellcolor,$weekly);
 				@reset($daily);
 				while(list($date,$day_params) = each($daily))
 				{
@@ -380,8 +390,8 @@
 		{
 			$this->bo->read_holidays();
 
-			$next = $this->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
-			$prev = $this->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day - 7,$this->bo->year);
+			$next = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
+			$prev = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day - 7,$this->bo->year);
 
 			if (!$this->bo->printer_friendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
 			{
@@ -503,8 +513,8 @@
 				$print =	'';
 			}
 
-			$now	= $this->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
-			$now['raw'] += $this->tz_offset;
+			$now	= $GLOBALS['phpgw']->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
+			$now['raw'] += $GLOBALS['phpgw']->datetme->tz_offset;
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -644,7 +654,7 @@
 			$this->bo->repeating_events = Array();
 			$this->bo->cached_events = Array();
 			$this->bo->repeating_events[0] = $event;
-			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
+			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $GLOBALS['phpgw']->datetme->tz_offset;
 			$this->bo->check_repeating_events($datetime);
 			$check_date = $GLOBALS['phpgw']->common->show_date($datetime,'Ymd');
 			if(is_array($this->bo->cached_events[$check_date][0]) &&
@@ -1151,8 +1161,8 @@
 				$print =	'';
 			}
 
-			$now	= $this->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
-			$now['raw'] += $this->tz_offset;
+			$now	= $GLOBALS['phpgw']->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
+			$now['raw'] += $GLOBALS['phpgw']->datetme->tz_offset;
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1209,7 +1219,7 @@
 			   return;
 			}
 
-			$freetime = $this->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $this->tz_offset);
+			$freetime = $GLOBALS['phpgw']->datetime->localdates(mktime(0,0,0,$event['start']['month'],$event['start']['mday'],$event['start']['year']) - $GLOBALS['phpgw']->datetme->tz_offset);
 			echo $this->timematrix(
 				Array(
 					'date'		=> $freetime,
@@ -1268,9 +1278,9 @@
 				23 => 2
 			);
 
-			$startdate = mktime(0,0,0,$this->bo->month,1,$this->bo->year) - $this->tz_offset;
-			$days = $this->datetime->days_in_month($this->bo->month,$this->bo->year);
-			$enddate   = mktime(23,59,59,$this->bo->month,$this->bo->days,$this->bo->year) - $this->tz_offset;
+			$startdate = mktime(0,0,0,$this->bo->month,1,$this->bo->year) - $GLOBALS[\'phpgw\']->datetme->tz_offset;
+			$days = $GLOBALS[\'phpgw\']->datetime->days_in_month($this->bo->month,$this->bo->year);
+			$enddate   = mktime(23,59,59,$this->bo->month,$this->bo->days,$this->bo->year) - $GLOBALS[\'phpgw\']->datetme->tz_offset;
 
 			$header[] = lang(\'Category\');
 			for ($d = 1; $d <= $days; $d++)
@@ -1436,7 +1446,7 @@
 
 		function matrixselect()
 		{
-			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
+			$datetime = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $GLOBALS['phpgw']->datetme->tz_offset;
 
 			$sb = CreateObject('phpgwapi.sbox');
 	
@@ -1599,7 +1609,7 @@
 			switch($GLOBALS['HTTP_POST_VARS']['matrixtype'])
 			{
 				case 'free/busy':
-					$freetime = $this->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
+					$freetime = $GLOBALS['phpgw']->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
 					echo $this->timematrix(
 						Array(
 							'date'		=> $freetime,
@@ -1672,7 +1682,7 @@
 			{
 				$event = $this->bo->read_entry($id);
 				
-				$datetime = $this->bo->maketime($event['start']) - $this->tz_offset;
+				$datetime = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetme->tz_offset;
 				
 				$ids[strval($event['id'])]++;
 				$info[strval($event['id'])] = $GLOBALS['phpgw']->common->show_date($datetime).$this->link_to_entry($event,$event['start']['month'],$event['start']['mday'],$event['start']['year']);
@@ -1866,8 +1876,8 @@
 			$this->output_template_array($p,'table_row','footer_row',$var);
 
 			unset($thisdate);
-			$thisdate = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
-			$sun = $this->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $this->tz_offset;
+			$thisdate = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $GLOBALS['phpgw']->datetme->tz_offset;
+			$sun = $GLOBALS['phpgw']->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $GLOBALS['phpgw']->datetme->tz_offset;
 
 			$str = '';
 			for ($i = -7; $i <= 7; $i++)
@@ -1970,24 +1980,12 @@
 			$str = '';
 			$is_private = $this->bo->is_private($event,$event['owner']);
 			$editable = ((!$this->bo->printer_friendly) && (($is_private && $this->bo->check_perms(PHPGW_ACL_PRIVATE)) || !$is_private));
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_unknowns('remove');
-			$p->set_file(
-			   Array(
-				   'link_picture'	=> 'link_pict.tpl'
-			   )
-			);
-			$p->set_block('link_picture','link_pict','link_pict');
-			$p->set_block('link_picture','pict','pict');
-			$p->set_block('link_picture','link_open','link_open');
-			$p->set_block('link_picture','link_close','link_close');
-			$p->set_block('link_picture','link_text','link_text');
 
-			$starttime = $this->bo->maketime($event['start']) - $this->tz_offset;
-			$endtime = $this->bo->maketime($event['end']) - $this->tz_offset;
+			$starttime = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetme->tz_offset;
+			$endtime = $this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetme->tz_offset;
 			$rawdate = mktime(0,0,0,$month,$day,$year);
-			$rawdate_offset = $rawdate - $this->tz_offset;
-			$nextday = mktime(0,0,0,$month,$day + 1,$year) - $this->tz_offset;
+			$rawdate_offset = $rawdate - $GLOBALS['phpgw']->datetme->tz_offset;
+			$nextday = mktime(0,0,0,$month,$day + 1,$year) - $GLOBALS['phpgw']->datetme->tz_offset;
 			if (intval($GLOBALS['phpgw']->common->show_date($starttime,'Hi')) && $starttime == $endtime)
 			{
 				$time = $GLOBALS['phpgw']->common->show_date($starttime,$this->bo->users_timeformat);
@@ -2009,7 +2007,7 @@
 
 				if($endtime >= ($rawdate_offset + 86400))
 				{
-					$end_time = $GLOBALS['phpgw']->common->show_date(mktime(23,59,59,$month,$day,$year) - $this->tz_offset,$this->bo->users_timeformat);
+					$end_time = $GLOBALS['phpgw']->common->show_date(mktime(23,59,59,$month,$day,$year) - $GLOBALS['phpgw']->datetme->tz_offset,$this->bo->users_timeformat);
 				}
 				else
 				{
@@ -2031,9 +2029,9 @@
 			if ($editable)
 			{
 				$date = sprintf('%04d%02d%02d',$year,$month,$day);
-				$p->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
-				$p->set_var('lang_view',lang('View this entry'));
-				$p->parse('picture','link_open',True);
+				$this->link_tpl->set_var('link_link',$this->page('view','&cal_id='.$event['id'].'&date='.$date));
+				$this->link_tpl->set_var('lang_view',lang('View this entry'));
+				$this->link_tpl->parse('picture','link_open',True);
 			
 				if($event['priority'] == 3)
 				{
@@ -2096,7 +2094,7 @@
 						'height'	=> $picture[$i]['height'],
 						'description'	=> $description
 					);
-					$this->output_template_array($p,'picture','pict',$var);
+					$this->output_template_array($this->link_tpl,'picture','pict',$var);
 				}
 			}
 			else
@@ -2108,15 +2106,17 @@
 				$var = Array(
 					'text' => $text
 				);
-				$this->output_template_array($p,'picture','link_text',$var);
+				$this->output_template_array($this->link_tpl,'picture','link_text',$var);
 			}
 
 			if ($editable)
 			{
-				$p->parse('picture','link_close',True);
+				$this->link_tpl->parse('picture','link_close',True);
 			}
-			$str = $p->fp('out','link_pict');
-			unset($p);
+			$str = $this->link_tpl->fp('out','link_pict');
+			$this->link_tpl->set_var('picture','');			
+			$this->link_tpl->set_var('out','');
+//			unset($p);
 			return $str;
 		}
 
@@ -2135,8 +2135,8 @@
 			$mday = $event['start']['mday'];
 			$year = $event['start']['year'];
 
-			$start = mktime($event['start']['hour'],$event['start']['min'],$event['start']['sec'],$month,$mday,$year) - $this->tz_offset;
-			$end = $this->bo->maketime($event['end']) - $this->tz_offset;
+			$start = mktime($event['start']['hour'],$event['start']['min'],$event['start']['sec'],$month,$mday,$year) - $GLOBALS['phpgw']->datetme->tz_offset;
+			$end = $this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetme->tz_offset;
 
 			$overlap = '';
 			for($i=0;$i<count($overlapping_events);$i++)
@@ -2241,7 +2241,7 @@
 
 		function week_header($month,$year,$display_name = False)
 		{
-			$this->weekstarttime = $this->datetime->get_weekday_start($year,$month,1);
+			$this->weekstarttime = $GLOBALS['phpgw']->datetime->get_weekday_start($year,$month,1);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
@@ -2275,7 +2275,7 @@
 				$col_width = 12;
 			}
 
-			if($this->datetime->days[$i]['weekday'])
+			if($GLOBALS['phpgw']->datetime->days[$i]['weekday'])
 			{
 				switch($col_width)
 				{
@@ -2292,9 +2292,9 @@
 
 			for($i=0;$i<7;$i++)
 			{
-				if($this->bo->prefs['calendar']['weekdays_only'] && $this->datetime->days[$i]['weekday'])
+				if($this->bo->prefs['calendar']['weekdays_only'] && $GLOBALS['phpgw']->datetime->days[$i]['weekday'])
 				{
-					$p->set_var('col_title',lang($this->datetime->days[$i]['name']));
+					$p->set_var('col_title',lang($GLOBALS['phpgw']->datetime->days[$i]['name']));
 					$p->parse('column_header','column_title',True);
 				}
 			}
@@ -2309,7 +2309,7 @@
 			}
 
 			$temp_owner = $this->bo->owner;
-			$this->bo->owner = $owner;
+//			$this->bo->owner = $owner;
 
 			$str = '';
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -2335,15 +2335,15 @@
 				$p->parse('column_header','month_column',True);
 				$p->set_var('col_width','12');
 			}
-			$today = date('Ymd',$this->datetime->gmtnow + $this->tz_offset);
-			$daily = $this->set_week_array($startdate - $this->tz_offset,$cellcolor,$weekly);
+			$today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
+			$daily = $this->set_week_array($startdate - $GLOBALS['phpgw']->datetme->tz_offset,$cellcolor,$weekly);
 			@reset($daily);
 			while(list($date,$day_params) = each($daily))
 			{
 				$year = intval(substr($date,0,4));
 				$month = intval(substr($date,4,2));
 				$day = intval(substr($date,6,2));
-				$dow = $this->datetime->day_of_week($year,$month,$day);
+				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$month,$day);
 				if($this->bo->prefs['calendar']['weekdays_only'] && ($dow == 0 || $dow == 6))
 				{
 					continue;
@@ -2430,7 +2430,7 @@
 		{
 			if($this->debug)
 			{
-				echo '<!-- datetime:gmtdate = '.$this->datetime->cv_gmtdate.' -->'."\n";
+				echo '<!-- datetime:gmtdate = '.$GLOBALS['phpgw']->datetime->cv_gmtdate.' -->'."\n";
 			}
 
 			$this->bo->store_to_cache(
@@ -2444,7 +2444,7 @@
 			$monthstart = intval(date('Ymd',mktime(0,0,0,$month    ,1,$year)));
 			$monthend   = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
 
-			$start = $this->datetime->get_weekday_start($year, $month, 1);
+			$start = $GLOBALS['phpgw']->datetime->get_weekday_start($year, $month, 1);
 
 			if($this->debug)
 			{
@@ -2472,7 +2472,7 @@
 
 			$cellcolor = $this->theme['row_on'];
 
-			for ($i=intval($start + $this->tz_offset);intval(date('Ymd',$i)) <= $monthend;$i += 604800)
+			for ($i=intval($start + $GLOBALS['phpgw']->datetme->tz_offset);intval(date('Ymd',$i)) <= $monthend;$i += 604800)
 			{
 				$cellcolor = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($cellcolor);
 				$var = Array(
@@ -2507,7 +2507,7 @@
 			$p->set_block('week','m_w_table','m_w_table');
 			$p->set_block('week','event','event');
 		
-			$start = $this->datetime->get_weekday_start($year, $month, $day);
+			$start = $GLOBALS['phpgw']->datetime->get_weekday_start($year, $month, $day);
 
 			$cellcolor = $this->theme['row_off'];
 
@@ -2641,12 +2641,12 @@
 			}
 			$var[] = Array(
 				'field'	=> lang('Start Date/Time'),
-				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['start']) - $this->tz_offset)
+				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetme->tz_offset)
 			);
 	
 			$var[] = Array(
 				'field'	=> lang('End Date/Time'),
-				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['end']) - $this->tz_offset)
+				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetme->tz_offset)
 			);
 
 			$var[] = Array(
@@ -2661,7 +2661,7 @@
 	
 			$var[] = Array(
 				'field'	=> lang('Updated'),
-				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['modtime']) - $this->tz_offset)
+				'data'	=> $GLOBALS['phpgw']->common->show_date($this->bo->maketime($event['modtime']) - $GLOBALS['phpgw']->datetme->tz_offset)
 			);
 
 			$var[] = Array(
@@ -2718,7 +2718,7 @@
 					$recur_end = $this->bo->maketime($event['recur_enddate']);
 					if($recur_end != 0)
 					{
-						$recur_end -= $this->tz_offset;
+						$recur_end -= $GLOBALS['phpgw']->datetme->tz_offset;
 						$str_extra .= lang('ends').': '.lang($GLOBALS['phpgw']->common->show_date($recur_end,'l')).', '.lang($GLOBALS['phpgw']->common->show_date($recur_end,'F')).' '.$GLOBALS['phpgw']->common->show_date($recur_end,'d, Y').' ';
 					}
 				}
@@ -2887,7 +2887,7 @@
 	
 			$time = Array();
 
-			$daily = $this->set_week_array($this->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
+			$daily = $this->set_week_array($GLOBALS['phpgw']->datetime->get_weekday_start($params['year'],$params['month'],$params['day']),$this->theme['row_on'],True);
 			if($this->debug)
 			{
 				echo '<!-- Date to Eval : '.$date_to_eval.' -->'."\n";
@@ -3005,7 +3005,7 @@
 					$last_endtime = $endtime;
 					if($this->debug)
 					{
-						echo '<!-- Time : '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $this->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $this->tz_offset).' : Start : '.$ind.' : Interval # : '.$interval_start.' -->'."\n";
+						echo '<!-- Time : '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['start']) - $GLOBALS['phpgw']->datetme->tz_offset).' - '.$GLOBALS['phpgw']->common->show_date($this->bo->maketime($events[$i]['end']) - $GLOBALS['phpgw']->datetme->tz_offset).' : Start : '.$ind.' : Interval # : '.$interval_start.' -->'."\n";
 					}
 				}
 			}
@@ -3218,7 +3218,8 @@
 
 				$this->bo->cached_events = Array();
 				$this->bo->owner = $part;
-				$this->so->owner = $part;
+				$this->bo->so->owner = $part;
+				$this->bo->so->open_box($part);
 				$this->bo->store_to_cache(
 					Array(
 						'syear'	=> $date['year'],
@@ -3266,7 +3267,8 @@
 					. '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="#999999"><img src="'.$pix.'"></td></tr>';
 			}
 			$this->bo->owner = $owner;
-			$this->so->owner = $owner;
+			$this->bo->so->owner = $owner;
+			$this->bo->so->open_box($owner);
 			return $str.'</table></center>'."\n";
 		}      
 
@@ -3395,7 +3397,7 @@
 			);
 
 // Date
-			$start = $this->bo->maketime($event['start']) - $this->tz_offset;
+			$start = $this->bo->maketime($event['start']) - $GLOBALS['phpgw']->datetme->tz_offset;
 			$var[] = Array(
 				'field'	=> lang('Start Date'),
 				'data'	=> $GLOBALS['phpgw']->common->dateformatorder(
@@ -3417,7 +3419,7 @@
 			);
 
 // End Date
-			$end = $this->bo->maketime($event['end']) - $this->tz_offset;
+			$end = $this->bo->maketime($event['end']) - $GLOBALS['phpgw']->datetme->tz_offset;
 			$var[] = Array(
 				'field'	=> lang('End Date'),
 				'data'	=> $GLOBALS['phpgw']->common->dateformatorder(
@@ -3528,12 +3530,12 @@
 			if($event['recur_enddate']['year'] != 0 && $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0)
 			{
 				$checked = ' checked';
-				$recur_end = $this->bo->maketime($event['recur_enddate']) - $this->tz_offset;
+				$recur_end = $this->bo->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetme->tz_offset;
 			}
 			else
 			{
 				$checked = '';
-				$recur_end = $this->bo->maketime($event['start']) + 86400 - $this->tz_offset;
+				$recur_end = $this->bo->maketime($event['start']) + 86400 - $GLOBALS['phpgw']->datetme->tz_offset;
 			}
 	
 			$var[] = Array(

@@ -17,7 +17,6 @@
 	class uiicalendar
 	{
 		var $bo;
-		var $datetime;
 		var $template;
 
 		var $public_functions = array(
@@ -30,7 +29,6 @@
 		function uiicalendar()
 		{
 			$this->bo = CreateObject('calendar.boicalendar');
-			$this->datetime = CreateObject('phpgwapi.datetime');
 			$this->template = $GLOBALS['phpgw']->template;
 		}
 

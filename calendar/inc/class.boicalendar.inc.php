@@ -1251,6 +1251,10 @@ class boicalendar
 				)
 			)			
 		);
+		if(!is_object($GLOBALS['phpgw']->datetime))
+		{
+			$GLOBALS['phpgw']->datetime = createobject('phpgwaqpi.datetime');
+		}
 	}
 
 	function set_var(&$event,$type,$value)
@@ -3046,7 +3050,7 @@ class boicalendar
 					{
 						if(isset($ical['event'][$i][$i_datevar]))
 						{
-							$temp_time = $so_event->maketime($ical['event'][$i][$i_datevar]) + $so_event->datetime->tz_offset;
+							$temp_time = $so_event->maketime($ical['event'][$i][$i_datevar]) + $GLOBALS['phpgw']->datetime->tz_offset;
 							@reset($date_array);
 							while(list($key,$var) = each($date_array))
 							{
@@ -3271,11 +3275,11 @@ class boicalendar
 
 				$ical_event['priority'] = $event['priority'];
 				$ical_event['class'] = intval($event['public']);
-				$dtstart_mktime = $so_event->maketime($event['start']) - $so_event->datetime->tz_offset;
+				$dtstart_mktime = $so_event->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
 				$this->parse_value($ical_event,'dtstart',date('Ymd\THis\Z',$dtstart_mktime),'vevent');
-				$dtend_mktime = $so_event->maketime($event['end']) - $so_event->datetime->tz_offset;
+				$dtend_mktime = $so_event->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
 				$this->parse_value($ical_event,'dtend',date('Ymd\THis\Z',$dtend_mktime),'vevent');
-				$mod_mktime = $so_event->maketime($event['modtime']) - $so_event->datetime->tz_offset;
+				$mod_mktime = $so_event->maketime($event['modtime']) - $GLOBALS['phpgw']->datetime->tz_offset;
 				$this->parse_value($ical_event,'last_modified',date('Ymd\THis\Z',$mod_mktime),'vevent');
 				@reset($string_array);
 				while(list($ical_value,$event_value) = each($string_array))
@@ -3389,7 +3393,7 @@ class boicalendar
 					}
 					if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
 					{
-						$recur_mktime = $so_event->maketime($event['recur_enddate']) - $so_event->datetime->tz_offset;
+						$recur_mktime = $so_event->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetime->tz_offset;
 						$str .= ';UNTIL='.date('Ymd\THis\Z',$recur_mktime);
 					}
 					$this->parse_value($ical_event,'rrule',$str,'vevent');

@@ -63,13 +63,15 @@ class socalendar__
 	var $stream;
 	var $user;
 	var $users_status;
-	var $datetime;
 	var $debug = False;
 //	var $debug = True;
 
 	function socalendar__()
 	{
-		$this->datetime = CreateObject('phpgwapi.datetime');
+		if(!is_object($GLOBALS['phpgw']->datetime))
+		{
+			$GLOBALS['phpgw']->datetime = createobject('phpgwapi.datetime');
+		}
 	}
 
 	function maketime($time)
