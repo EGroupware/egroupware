@@ -126,5 +126,57 @@
 
 			return $this->members;
 		}
+
+		/*!
+		@function get_nextid
+		@@abstract Using the common functions next_id and last_id, find the next available account_id
+		@@param $account_type (optional, default to 'u'
+		*/
+		function get_nextid($account_type='u')
+		{
+			global $phpgw,$phpgw_info;
+
+			if ($phpgw_info['server']['account_min_id']) { $min = $phpgw_info['server']['account_min_id']; }
+			if ($phpgw_info['server']['account_max_id']) { $max = $phpgw_info['server']['account_max_id']; }
+
+			if ($account_type == 'g')
+			{
+				$nextid = $phpgw->common->last_id('groups',$min,$max);
+			}
+			else
+			{
+				$nextid = $phpgw->common->last_id('accounts',$min,$max);
+			}
+
+			/* Loop until we find a free id */
+			$free = 0;
+			while (!$free)
+			{
+				//echo '<br>calling search for id: '.$nextid;
+				if ($this->exists($nextid))
+				{
+					$nextid = $phpgw->common->next_id('accounts',$min,$max);
+				}
+				else
+				{
+					/* echo '<br>calling search for lid: '.$account_lid; */
+					if ($this->exists($account_lid))
+					{
+						$nextid = $phpgw->common->next_id('accounts',$min,$max);
+					}
+					else
+					{
+						$free = True;
+					}
+				}
+			}
+			if	($phpgw_info['server']['account_max_id'] &&
+				($nextid > $phpgw_info['server']['account_max_id']))
+			{
+				return False;
+			}
+			/* echo '<br>using'.$nextid;exit; */
+			return $nextid;
+		}
 	}
 ?>
