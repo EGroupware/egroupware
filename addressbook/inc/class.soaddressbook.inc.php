@@ -65,7 +65,8 @@
 				$data['query'],
 				$data['filter'],
 				$data['sort'],
-				$data['order']
+				$data['order'],
+				$data['cquery']
 			);
 		}
 

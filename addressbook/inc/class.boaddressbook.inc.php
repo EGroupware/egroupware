@@ -74,8 +74,9 @@
 				$this->use_session = True;
 			}
 
-			$start  = get_var('start',   array('POST','GET'));
+			$start  = intval(get_var('start',   array('POST','GET')));
 			$query  = get_var('query',   array('POST','GET'));
+			$cquery = get_var('cquery',  array('GET'));
 			$sort   = get_var('sort',    array('POST','GET'));
 			$order  = get_var('order',   array('POST','GET'));
 			$filter = get_var('filter',  array('POST','GET'));
@@ -83,6 +84,7 @@
 
 			$this->start  = (!empty($start) || ($start == '0')) ? $start : $this->start;
 			$this->query  = (empty($query) && !empty($this->query)) || !empty($query) ? $query : $this->query;
+			$this->cquery = (empty($cquery) && !empty($this->cquery)) || !empty($cquery) ? $cquery : $this->cquery;
 			$this->sort   = (!empty($sort)) ? $sort : $this->sort;
 			$this->order  = (!empty($order)) ? $order : $this->order;
 			$this->filter = (!empty($filter) || ($filter == '0')) ? $filter : $this->filter;
@@ -104,7 +106,8 @@
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
-				'cat_id' => $this->cat_id
+				'cat_id' => $this->cat_id,
+				'cquery' => $this->cquery
 			);
 			echo '<br>BO:';
 			_debug_array($data);
@@ -189,6 +192,7 @@
 
 			$this->start  = $data['start'];
 			$this->query  = $data['query'];
+			$this->cquery = $data['cquery'];
 			$this->sort   = $data['sort'];
 			$this->order  = $data['order'];
 			$this->filter = $data['filter'];

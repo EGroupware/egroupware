@@ -72,6 +72,7 @@
 		{
 			$this->start    = $this->bo->start;
 			$this->query    = $this->bo->query;
+			$this->cquery   = $this->bo->cquery;
 			$this->sort     = $this->bo->sort;
 			$this->order    = $this->bo->order;
 			$this->filter   = $this->bo->filter;
@@ -87,6 +88,7 @@
 			$data = array(
 				'start'  => $this->start,
 				'query'  => $this->query,
+				'cquery' => $this->cquery,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
@@ -102,6 +104,7 @@
 			$data = array(
 				'start'  => $this->start,
 				'query'  => $this->query,
+				'cquery' => $this->cquery,
 				'sort'   => $this->sort,
 				'order'  => $this->order,
 				'filter' => $this->filter,
@@ -267,6 +270,38 @@
 			$this->template->set_block('addressbook_list_t','row','row');
 			$this->template->set_block('addressbook_list_t','remsearch','remsearch');
 			$this->template->set_block('addressbook_list_t','addressbook_footer','addressbook_footer');
+			$this->template->set_block('addressbook_list_t','addressbook_alpha','addressbook_alpha');
+
+			$aar = explode(',',lang('alphabet'));
+			$aar[] = 'all';
+			while(list(,$char) = @each($aar))
+			{
+				if($this->cquery == $char ||
+					($char == 'all' && !$this->cquery))
+				{
+					$this->template->set_var('charbgcolor','#000000');
+					$this->template->set_var('charcolor','#FFFFFF');
+				}
+				else
+				{
+					$this->template->set_var('charbgcolor',$GLOBALS['phpgw_info']['theme']['th_bg']);
+					$this->template->set_var('charcolor',$GLOBALS['phpgw_info']['theme']['th_text']);
+				}
+				if($char == 'all')
+				{
+					$this->template->set_var('charlink',
+						$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index&cquery=')
+					);
+				}
+				else
+				{
+					$this->template->set_var('charlink',
+						$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.index&cquery=' . $char)
+					);
+				}
+				$this->template->set_var('char',$char != 'all' ? strtoupper($char) : lang('all'));
+				$this->template->fp('alphalinks','addressbook_alpha',True);
+			}
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -431,6 +466,7 @@
 					'fields' => $columns_to_display,
 					'filter' => $qfilter,
 					'query'  => $this->query,
+					'cquery' => $this->cquery,
 					'sort'   => $this->sort,
 					'order'  => $this->order
 				));
