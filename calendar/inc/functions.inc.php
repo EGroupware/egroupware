@@ -378,6 +378,7 @@ function month_name ( $m ) {
   function read_repeated_events()
   {
     global $phpgw;
+    global $phpgw_info;
 
     $sql = "SELECT webcal_entry.cal_name, webcal_entry.cal_date, "
 	 . "webcal_entry_repeats.*, webcal_entry.cal_description, "
