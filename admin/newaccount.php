@@ -77,7 +77,7 @@
        // start inlcuding other admin tools
        while(list($key,$value) = each($phpgw_info["user"]["app_perms"]))
        {
-         $phpgw->common->hook_single("update_user_data", $value);
+         $phpgw->common->hook_single("add_user_data", $value);
        }       
 
         Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
