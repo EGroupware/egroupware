@@ -1,0 +1,367 @@
+%1 - %2 of %3 user accounts	admin	pt-br	%1 -2 de %3 contas de usuários
+%1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável !!!
+(stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
+accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de Força Bruta
+account active	admin	pt-br	Conta ativa
+account has been created	common	pt-br	Conta foi criada
+account has been deleted	common	pt-br	Conta foi apagada
+account has been updated	common	pt-br	Conta foi atualizada
+account list	admin	pt-br	Lista de Contas
+account permissions	admin	pt-br	Permissões da conta
+account preferences	admin	pt-br	Preferências da conta
+acl manager	admin	pt-br	Administração de regras de acesso
+acl rights	admin	pt-br	Permissões de acesso
+action	admin	pt-br	Ação
+add a category	admin	pt-br	adicionar uma categoria
+add a group	admin	pt-br	adicionar um grupo
+add a new account.	admin	pt-br	Adicionar nova conta.
+add a subcategory	admin	pt-br	adicionar uma subcategoria
+add a user	admin	pt-br	adicionar um usuário
+add account	admin	pt-br	Adicionar um conta
+add application	admin	pt-br	Adicionar um aplicativo
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pt-br	Adicionar usuários criados automaticamente para este grupo ('Default' será tentado se este campo estiver vazio.)
+add global category	admin	pt-br	Adicionar categoria global
+add global category for %1	admin	pt-br	Adicionar categoria global para %1
+add group	admin	pt-br	Adicionar grupo
+add new account	admin	pt-br	Adicionar nova conta
+add new application	admin	pt-br	Adicionar nova aplicação
+add peer server	admin	pt-br	Adicionar servidor remoto
+add sub-category	admin	pt-br	Adicionar sub-categoria
+admin email	admin	pt-br	Email do Administrador
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	Endereços eletrônicos dos administradores (seprados por vírgula) a serem notificados em caso de bloqueio (em branco para não notificar)
+admin name	admin	pt-br	Nome do Administrador
+administration	admin	pt-br	Administração
+admins	admin	pt-br	Administradores
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	Após quantas tentativas erradas de entrada, a conta deverá ser bloqueada (padrão 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt-br	Após quantas tentativas erradas de entrada, um endereço IP deverá ser bloqueado (padrão 3)?
+all records and account information will be lost!	admin	pt-br	Todos registros e informações de contas serão perdidos!
+all users	admin	pt-br	Todos usuários
+allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
+anonymous user	admin	pt-br	Usuário Anônimo
+anonymous user (not shown in list sessions)	admin	pt-br	Usuário Anônimo (não é exibido na lista de sessões)
+appearance	admin	pt-br	Aparência
+application	admin	pt-br	Aplicativo
+application name	admin	pt-br	Nome da aplicação
+application title	admin	pt-br	Título da aplicação
+applications	admin	pt-br	Aplicações
+applications list	admin	pt-br	Lista de aplicativos
+apply	admin	pt-br	aplicar
+are you sure you want to delete the application %1 ?	admin	pt-br	Você tem certeza que deseja apagar o aplicativo %1
+are you sure you want to delete this account ?	admin	pt-br	Você tem certeza que deseja remover esta conta ?
+are you sure you want to delete this application ?	admin	pt-br	Você tem certeza que deseja remover esta aplicação ?
+are you sure you want to delete this category ?	common	pt-br	Você tem certeza que deseja remover esta categoria ?
+are you sure you want to delete this global category ?	admin	pt-br	Você tem certeza que deseja apagar essa categoria global?
+are you sure you want to delete this group ?	admin	pt-br	Você tem certeza que deseja remover este grupo ?
+are you sure you want to delete this server?	admin	pt-br	Você tem certeza que deseja remover este servidor ?
+are you sure you want to kill this session ?	admin	pt-br	Você tem certeza que deseja terminar esta seção ?
+async services last executed	admin	pt-br	Última execução dos Serviços Assíncronos
+asynchronous timed services	admin	pt-br	Serviços Assíncronos agendados
+asyncservices not yet installed or other error (%1) !!!	admin	pt-br	Serviços Assíncronos não instalados ainda ou outro erro
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt-br	Tentar usar mimetype correto para FTP ao invés do padrão 'application/octet-stream'
+authentication / accounts	admin	pt-br	Autenticação / Contas
+auto create account records for authenticated users	admin	pt-br	Automaticamente criar registros da conta para usuários autenticados
+back to the list	admin	pt-br	voltar à lista
+bi-dir passthrough	admin	pt-br	bi-dir passthrough
+bi-directional	admin	pt-br	bi-direcional
+bottom	admin	pt-br	inferior
+calculate next run	admin	pt-br	Calcular próxima execução
+can change password	admin	pt-br	Pode alterar a senha
+cancel testjob!	admin	pt-br	Cancelar TestJob!
+categories list	admin	pt-br	Lista de Categorias
+category %1 has been saved !	admin	pt-br	Categoria %1 foi salva!
+category list	admin	pt-br	Lista de categorias
+change acl rights	admin	pt-br	Mudar direitos da ACL
+change config settings	admin	pt-br	Mudar parâmetros de configuração
+change main screen message	admin	pt-br	Alterar mensagem da tela principal
+check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
+check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
+country selection	admin	pt-br	Seleção de País
+create group	admin	pt-br	Criar Grupo
+crontab only (recomended)	admin	pt-br	somente crontab (recomendado)
+data	admin	pt-br	Dados
+day	admin	pt-br	Dia
+day of week<br>(0-6, 0=sun)	admin	pt-br	Dia da Semana <br> (0-6, 0=Dom)
+default	admin	pt-br	Padrão
+default file system space per user	admin	pt-br	Espaço em disco padrão por usuário ?
+default file system space per user/group ?	admin	pt-br	Espaço em disco padrão por usuário/grupo ?
+deinstall crontab	admin	pt-br	Desinstalar crontab
+delete account	admin	pt-br	Apagar conta
+delete all records	admin	pt-br	Apagar todos os registros
+delete application	admin	pt-br	Apagar aplicativo
+delete category	admin	pt-br	Apagar categoria
+delete group	admin	pt-br	Apagar grupo
+delete peer server	admin	pt-br	Apagar servidor parceiro
+delete the category	admin	pt-br	apagar a categoria
+delete the group	admin	pt-br	apagar o grupo
+delete this category	admin	pt-br	apagar esta categoria
+delete this group	admin	pt-br	apagar esse grupo
+delete this user	admin	pt-br	apagar esse usuário
+deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
+deny access to application registery	admin	pt-br	Negar acesso ao registro de aplicativos
+deny access to applications	admin	pt-br	Negar acesso às aplicações
+deny access to asynchronous timed services	admin	pt-br	Negar acesso aos Serviços Assícronos agendados
+deny access to current sessions	admin	pt-br	Negar acesso as sessões atuais
+deny access to error log	admin	pt-br	Negar acesso ao regsitro de erros
+deny access to global categories	admin	pt-br	Negar acesso as categorias globais
+deny access to groups	admin	pt-br	Negar acesso aos grupos
+deny access to mainscreen message	admin	pt-br	Negar acesso a mensagem da tela principal
+deny access to peer servers	admin	pt-br	Negar acesso a servidores remotos
+deny access to phpinfo	admin	pt-br	Negar acesso ao phpinfo
+deny access to site configuration	admin	pt-br	Negar acesso à configuração do site
+deny access to user accounts	admin	pt-br	Negar acesso as contas de usuários
+deny all users access to grant other users access to their entries ?	admin	pt-br	Não permitir que usuários concedam acesso a seus registros a outros usuários ?
+deny to site configuration	admin	pt-br	Negar acesso a configuração do servidor
+description can not exceed 255 characters in length !	admin	pt-br	A descrição não deverá exceder 255 caracteres !
+disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formulário de entrada
+disabled (not recomended)	admin	pt-br	desabilitar (não recomendado)
+display	admin	pt-br	Visualizar
+do not delete the category and return back to the list	admin	pt-br	NÃO apague essa categoria e retorne à lista
+do you also want to delete all global subcategories ?	admin	pt-br	Deseja também remover todas subcategorias globais ?
+do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais ?
+do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
+edit account	admin	pt-br	Editar conta
+edit application	admin	pt-br	Editar aplicação
+edit global category	admin	pt-br	Editar categoria global
+edit global category for %1	admin	pt-br	Editar categoria global para %1
+edit group	admin	pt-br	Editar Grupo
+edit login screen message	admin	pt-br	Editar mensagem da tela de conexão
+edit main screen message	admin	pt-br	Editar mensagem da tela inicial
+edit peer server	admin	pt-br	Editar servidor remoto
+edit table format	admin	pt-br	Editar formato de tabela
+edit this category	admin	pt-br	editar essa categoria
+edit this group	admin	pt-br	editar esse grupo
+edit this user	admin	pt-br	editar esse usuário
+edit user	admin	pt-br	editar usuário
+edit user account	admin	pt-br	Editar conta de usuário
+enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
+enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegação
+enter a description for the category	admin	pt-br	entre com a descrição dessa categoria
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt-br	Digite algum texto aleatório para a encriptação de sessão (requer mcrypt)
+enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a página de login
+enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o título do site
+enter the file name of your logo	admin	pt-br	Digite o nome do seu logotipo
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
+enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do phpGroupWare.<br>Exemplo: http://www.domain.com/phpgroupware &nbsp; ou &nbsp; /phpgroupware<br><b>Sem a barra final</b>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe esse campo em branco e pressione ENVIAR novamente
+enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicação com servidores remotos
+enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores remotos
+enter the title for your site	admin	pt-br	Digite o título para o seu site
+enter the title of your logo	admin	pt-br	Digite o título do seu logotipo
+enter the url where your logo should link to	admin	pt-br	Digite a url para aonde o seu logotipo deve apontar
+enter your default ftp server	admin	pt-br	Digite seu servidor FTP padrão
+enter your http proxy server	admin	pt-br	Digite o endereço do servidor proxy HTTP
+enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy
+error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum configurado !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
+error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro !!!
+expires	admin	pt-br	Expira
+fallback (after each pageview)	admin	pt-br	recuperar (após cada página visualizada)
+file space	admin	pt-br	Espaço para arquivos
+file space must be an integer	admin	pt-br	Espaço para arquivos deve ser um número inteiro
+find and register all application hooks	admin	pt-br	Procurar e registrar todas as configurações de aplicações
+for the times above	admin	pt-br	para os horários acima
+for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os horários abaixo (campos vazios contam como '*", todos vazios = a cada minuto)
+force selectbox	admin	pt-br	Forçar Caixa de seleção
+global categories	common	pt-br	Categorias globais
+group ?	admin	pt-br	grupo ?
+group has been added	common	pt-br	Grupo adicionado
+group has been deleted	common	pt-br	Grupo removido
+group has been updated	common	pt-br	Grupo atualizado
+group list	admin	pt-br	Lista de Grupos
+group manager	admin	pt-br	Manutenção de grupos
+group name	admin	pt-br	Nome do Grupo
+hide php information	admin	pt-br	Esconder informações de PHP
+home directory	admin	pt-br	Diretório da instalação
+host information	admin	pt-br	Informações do servidor
+hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem apagadas (padrão 90)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
+idle	admin	pt-br	ocioso
+if no acl records for user or any group the user is a member of	admin	pt-br	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login ?
+inbound	admin	pt-br	Entrada
+install crontab	admin	pt-br	Instalar crontab
+installed applications	common	pt-br	Aplicativos Instalados
+installed crontab	admin	pt-br	Crontab instalada
+interface	admin	pt-br	Interface
+ip	admin	pt-br	IP
+jobs	admin	pt-br	Trabalhos
+kill	admin	pt-br	Terminar
+kill session	admin	pt-br	Terminar sessão
+last %1 logins	admin	pt-br	Últimas %1 conexões
+last %1 logins for %2	admin	pt-br	Últimas %1 conexões para %2
+last login	admin	pt-br	última conexão
+last login from	admin	pt-br	última conexão de
+last time read	admin	pt-br	Última vez lido
+ldap accounts context	admin	pt-br	contexto de contas LDAP
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
+ldap default shell (e.g. /bin/bash)	admin	pt-br	shell padrão LDAP (Exemplo: /bin/bash)
+ldap encryption type	admin	pt-br	tipo de encriptação LDAP
+ldap groups context	admin	pt-br	contexto de grupos LDAP
+ldap host	admin	pt-br	servidor LDAP
+ldap root password	admin	pt-br	senha do super usuário LDAP
+ldap rootdn	admin	pt-br	super usuário LDAP
+leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar à lista
+leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar à lista
+list config settings	admin	pt-br	Listar parâmetros de configuração
+list current sessions	admin	pt-br	Listar sessões correntes
+list of current users	admin	pt-br	lista de usuários conectados
+login history	admin	pt-br	Histórico de conexões
+login message	admin	pt-br	Mensagem de entrada
+login screen	admin	pt-br	Tela de login
+login shell	admin	pt-br	Shell de login
+login time	admin	pt-br	Hora da conexão
+loginid	admin	pt-br	Código do usuário
+main screen message	admin	pt-br	Mensagem da tela principal
+manager	admin	pt-br	Gerenciador
+maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id máximo para contas (Exemplo: 65535 ou 1000000)
+maximum entries in click path history	admin	pt-br	Máximo de entradas no histórico de caminho
+message has been updated	admin	pt-br	Mensagem foi atualizada
+method	admin	pt-br	Método
+minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mínimo para contas (Exemplo: 500 ou 100, etc.)
+minute	admin	pt-br	Minuto
+mode	admin	pt-br	Modo
+month	admin	pt-br	Mês
+never	admin	pt-br	Nunca
+new group name	admin	pt-br	Nome do novo Grupo
+new password [ leave blank for no change ]	admin	pt-br	Nova senha [ Deixe em branco para não alterar ]
+next run	admin	pt-br	Próxima execução
+no algorithms available	admin	pt-br	nenhum algoritmo disponível
+no jobs in the database !!!	admin	pt-br	Nenhum trabalho na base de dados !!!
+no login history exists for this user	admin	pt-br	Não existe histórico de conexões para este usuário
+no matches found	admin	pt-br	Nenhuma ocorrência encontrada
+no modes available	admin	pt-br	nenhum modo disponível
+no permission to add groups	admin	pt-br	sem permissão para adicionar grupos
+no permission to add users	admin	pt-br	sem permissão para adicionar grupos
+no permission to create groups	admin	pt-br	sem permissão para criar grupos
+note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: SSL estará disponível somente se o PHP houver sido compilado com suporte a curl
+outbound	admin	pt-br	Saída
+passthrough	admin	pt-br	Atravessar
+path information	admin	pt-br	Informação de Path
+peer server list	admin	pt-br	Lista de servidores parceiros
+peer servers	admin	pt-br	Servidores parceiros
+percent of users that logged out	admin	pt-br	Percentual de usuários que desconectaram
+percent this user has logged out	admin	pt-br	Percentagem de vezes que este usuário desconectou
+permissions	admin	pt-br	Permissões
+permissions this group has	admin	pt-br	Permissões do grupo
+phpinfo	admin	pt-br	Informações do PHP
+please enter a name	admin	pt-br	Por favor digite um nome
+please enter a name for that server !	admin	pt-br	Por favor digite um nome para este servidor !
+please run setup to become current	admin	pt-br	Por favor execute a Configuração para atualizar o sistema
+please select	admin	pt-br	Por favor selecione
+preferences	admin	pt-br	Preferências
+primary group	admin	pt-br	Grupo primário
+re-enter password	admin	pt-br	Re-digite a senha
+read this list of methods.	admin	pt-br	Ler esta lista de métodos
+register application hooks	admin	pt-br	Registrar configurações das aplicações
+remove all users from this group	admin	pt-br	Remover todos os usuários deste grupo
+remove all users from this group ?	admin	pt-br	Remover todos os usuários desse grupo?
+return to admin mainscreen	admin	pt-br	retornar à tela principal da Administração
+return to view account	admin	pt-br	retornar à visualização da conta
+run asynchronous services	admin	pt-br	Executar Serviços Assícronos
+save the category	admin	pt-br	salvar a categoria
+save the category and return back to the list	admin	pt-br	salvar a categoria e retornar à lista
+search accounts	admin	pt-br	Pesquisar contas
+search categories	admin	pt-br	Pesquisar categorias
+search groups	admin	pt-br	Pesquisar grupos
+search peer servers	admin	pt-br	Pesquisar servidores parceiros
+security	admin	pt-br	Segurança
+select group managers	admin	pt-br	Selecione Manutenção de Grupos
+select permissions this group will have	admin	pt-br	Selecione as permissões que este grupo terá
+select the parent category. if this is a main category select no category	admin	pt-br	Selecione a categoria-pai. Caso seja um categoria principal selecione SEM CATEGORIA
+select users for inclusion	admin	pt-br	Selecione usuários para inclusão
+select where you want to store/retrieve filesystem information	admin	pt-br	Selecione onde você deseja guardar as informações de sitema de arquivos
+select where you want to store/retrieve user accounts	admin	pt-br	Selecione onde você deseja guardar as contas de usuários
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	pt-br	Selecione onde esta aplicação deve aparecer na barra de navegação, esquerda para direita
+selectbox	admin	pt-br	Tela de seleção
+server %1 has been added	admin	pt-br	Servdor %1 foi adicionado
+server %1 has been updated	admin	pt-br	Servidor %1 foi atualizado
+server list	admin	pt-br	Lista de servidores
+server name	admin	pt-br	Nome do servidor
+server password	admin	pt-br	Senha do servidor
+server type(mode)	admin	pt-br	Tipo de servidor (modo)
+server url	admin	pt-br	URL do servidor
+server username	admin	pt-br	Usuário do servidor
+set preference values.	admin	pt-br	Definir preferências.
+show 'powered by' logo on	admin	pt-br	Área para exibição da logomarca do phpGroupWare
+show access log	admin	pt-br	Exibir registros de acessos
+show current action	admin	pt-br	Exibir ação corrente
+show error log	admin	pt-br	Exibir registro de erros
+show phpinfo()	admin	pt-br	Exibir phpinfo()
+show session ip address	admin	pt-br	Exibir endereço IP das sessões
+site	admin	pt-br	Site
+site configuration	common	pt-br	Configuração do servidor
+soap	admin	pt-br	SOAP
+sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo já está em uso.
+sorry, that group name has already been taking.	admin	pt-br	Desculpe, este grupo já existe
+sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1
+sorry, the follow users are still a member of the group %1	admin	pt-br	Desculpe, os seguintes usuários ainda são membros do grupo %1
+sort the entries	admin	pt-br	ordenar as entradas
+ssl	admin	pt-br	ssl
+standard	admin	pt-br	padrão
+start testjob!	admin	pt-br	Iniciar TestJob!
+status	admin	pt-br	Status
+submit changes	admin	pt-br	Enviar alterações
+submit the search string	admin	pt-br	Enviar expressão de busca
+template selection	admin	pt-br	Seleção de modelos
+text entry	admin	pt-br	Entrada de texto
+that application name already exists.	admin	pt-br	Este nome de aplicação já existe.
+that application order must be a number.	admin	pt-br	O campo ordem da aplicação deve ser um número.
+that loginid has already been taken	admin	pt-br	Este código de usuário já existe
+that name has been used already	admin	pt-br	Este nome já está em uso
+that server name has been used already !	admin	pt-br	Este nome de servidor já está em uso !
+the api is current	admin	pt-br	A base (API) do phpGroupWare está atualizada
+the api requires an upgrade	admin	pt-br	A base (API) do phpGroupWare precisa ser atualizada
+the login and password can not be the same	admin	pt-br	O login e a senha não podem ser iguais
+the loginid can not be more then 8 characters	admin	pt-br	O código de usuário não pode ter mais de 8 caracteres
+the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que é executado.
+the two passwords are not the same	admin	pt-br	As senhas não conferem entre si
+the users bellow are still members of group %1	admin	pt-br	os usuários abaixo ainda são membros do grupo %1
+they must be removed before you can continue	admin	pt-br	Eles devem ser removidos antes de continuar
+this application is current	admin	pt-br	Este aplicativo está atualizado
+this application requires an upgrade	admin	pt-br	Esta aplicativo precisa ser atualizado
+this category is currently being used by applications as a parent category	admin	pt-br	Esta categoria está sendo usada por aplicações como categoria pai.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	pt-br	Tempo para expiração de dados da sessão do aplicativo em segundos (padrão 86400 = 1 dia)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expiração da sessões em segundos (padrão 14400 = 4 horas)
+times	admin	pt-br	Horários
+top	admin	pt-br	topo
+total records	admin	pt-br	Total de registros
+trust level	admin	pt-br	Nível de confiança
+trust relationship	admin	pt-br	Relação de confiança
+under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	Em janelas você só pode usar o modo de seguro no momento. Modo seguro significa que os trabalhos serão marcados após cada visualização de página.
+use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
+use pure html compliant code (not fully working yet)	admin	pt-br	Usar puro código HTML (não funciona totalmente ainda)
+use theme	admin	pt-br	Usar tema
+user accounts	admin	pt-br	Contas de usuários
+user data	admin	pt-br	Dados de usuários
+user groups	admin	pt-br	Grupos de usuários
+userdata	admin	pt-br	Dados de usuário
+users choice	admin	pt-br	Escolha do usuário
+view access log	admin	pt-br	Exibir registro de acessos
+view account	admin	pt-br	Visualizar conta
+view category	admin	pt-br	Visualizar categoria
+view error log	admin	pt-br	Exibir registro de erros
+view sessions	admin	pt-br	Exibir sessões
+view this user	admin	pt-br	visualizar este usuário
+view user account	admin	pt-br	visualizar conta de usuário
+who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para que você deseja transferir todas as entradas do usuário removido ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupware verificasse automaticamente por novas versões<br> quando administradores entrarem?
+would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verificasse automaticamente por novas versões de aplicativos quando administradores entrarem?
+would you like phpgroupware to cache the phpgw info array ?	admin	pt-br	Deseja que o phpGroupWare faça cache do vetor de informações phpgw ?
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o phpGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
+would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicação está atualizada ?
+xml-rpc	admin	pt-br	XML-RPC
+you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida
+you must add at least 1 permission or group to this account	admin	pt-br	Você deve adicionar no mínimo uma permissão ou grupo para esta conta
+you must enter a group name.	admin	pt-br	Você deve digitar um nome de grupo.
+you must enter a lastname	admin	pt-br	Você deve digitar um sobrenome
+you must enter a loginid	admin	pt-br	Você deve digitar um código
+you must enter an application name and title.	admin	pt-br	Você deve digitar um nome e um título para aplicação.
+you must enter an application name.	admin	pt-br	Você deve digitar um nome para a aplicação.
+you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
+you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo
+you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as sub-categorias antes de remover esta categoria !
