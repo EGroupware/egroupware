@@ -283,7 +283,7 @@
 		@result Boolean True/False
 		*/
 	
-		function add_journal ($string, $relatives = array (RELATIVE_CURRENT), $operation, $state_one, $state_two, $incversion = True)
+		function add_journal ($string, $relatives = array (RELATIVE_CURRENT), $operation, $state_one = False, $state_two = False, $incversion = True)
 		{
 			global $phpgw, $phpgw_info;
 	
@@ -315,12 +315,6 @@
 					continue;
 				}
 	
-				if ($i > 1)
-				{
-					$sql .= ", ";
-					$sql2 .= ", ";
-				}
-	
 				if ($attribute == "owner_id")
 				{
 					$value = $account_id;
@@ -329,6 +323,11 @@
 				if ($attribute == "created")
 				{
 					$value = $this->now;
+				}
+
+				if ($attribute == "modified" && !$modified)
+				{
+					unset ($value);
 				}
 	
 				if ($attribute == "mime_type")
@@ -437,9 +436,18 @@
 	
 					$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("version" => $newversion));
 				}
-	
-				$sql .= "$attribute";
-				$sql2 .= "'" . $this->db_clean ($value) . "'";
+
+				if (isset ($value))
+				{
+					if ($i > 1)
+					{
+						$sql .= ", ";
+						$sql2 .= ", ";
+					}
+
+					$sql .= "$attribute";
+					$sql2 .= "'" . $this->db_clean ($value) . "'";
+				}
 			}
 	
 			$sql .= ")";
@@ -1019,6 +1027,7 @@
 		@discussion To cd to the files root "/", use cd ("/", False, array (RELATIVE_NONE));
 		@param $target default "/".  directory to cd into.  if "/" and $relative is True, uses "/home/<working_lid>";
 		@param $relative default True/relative means add target to current path, else pass $relative as mask to getabsolutepath()
+		@param $relatives Relativity array
 		*/
 	
 		function cd ($target = "/", $relative = True, $relatives = array (RELATIVE_CURRENT))
@@ -1104,7 +1113,7 @@
 				return False;
 			}
 	
-			if ($fp = fopen ($p->real_full_path, "r"))
+			if ($fp = fopen ($p->real_full_path, "rb"))
 			{
 				$contents = fread ($fp, filesize ($p->real_full_path));
 				fclose ($fp);
@@ -1156,7 +1165,7 @@
 			*/
 			$this->touch ($p->fake_full_path, array ($p->mask));
 	
-			if ($fp = fopen ($p->real_full_path, "w"))
+			if ($fp = fopen ($p->real_full_path, "wb"))
 			{
 				fwrite ($fp, $contents, strlen ($contents));
 				fclose ($fp);
@@ -1214,7 +1223,7 @@
 					return False;
 				}
 	
-				$vr = $this->set_attributes ($p->fake_full_path, array ($p->mask), array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")));
+				$vr = $this->set_attributes ($p->fake_full_path, array ($p->mask), array ("modifiedby_id" => $account_id, "modified" => $this->now));
 			}
 			else
 			{
@@ -1283,7 +1292,7 @@
 	
 			umask(000);
 	
-			if ($this->file_type ($from, array ($relatives[0])) != "Directory")
+			if ($this->file_type ($f->fake_full_path, array ($f->mask)) != "Directory")
 			{
 				if (!copy ($f->real_full_path, $t->real_full_path))
 				{
@@ -1413,7 +1422,10 @@
 				/* We get the listing now, because it will change after we update the database */
 				$ls = $this->ls ($f->fake_full_path, array ($f->mask));
 	
-				$this->rm ($t->fake_full_path, array ($t->mask));
+				if ($this->file_exists ($t->fake_full_path, array ($t->mask)))
+				{
+					$this->rm ($t->fake_full_path, array ($t->mask));
+				}
 	
 				/*
 				   We add the journal entry now, before we delete.  This way the mime_type
@@ -1637,7 +1649,7 @@
 			{
 				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
 	
-				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 4096, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 4096, "mime_type" => "Directory", "created" => $this->now, deleteable => "Y", "app" => $currentapp));
 	
 				$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 	
@@ -1742,7 +1754,7 @@
 			}
 	
 			/*
-			   All this voodoo just decides which attributes to keep, and which to update
+			   All this voodoo just decides which attributes to update
 			   depending on if the attribute was supplied in the $attributes array
 			*/
 	
@@ -1751,6 +1763,9 @@
 	
 			$attribute_names = array ("owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "link_directory", "link_name", "version");
 	
+			$sql = "UPDATE phpgw_vfs SET ";
+
+			$change_attributes = 0;
 			while (list ($num, $attribute) = each ($attribute_names))
 			{
 				if (isset ($attributes[$attribute]))
@@ -1765,28 +1780,20 @@
 					{
 						$edited_comment = 1;
 					}
-				}
-				else
-				{
-					$$attribute = $record[$attribute];
-				}
 	
-				$$attribute = $this->db_clean ($$attribute);
+					$$attribute = $this->db_clean ($$attribute);
+
+					if ($change_attributes > 0)
+					{
+						$sql .= ", ";
+					}
+	
+					$sql .= "$attribute='" . $$attribute . "'";
+
+					$change_attributes++;
+				}
 			}
-	
-			$sql = "UPDATE phpgw_vfs SET ";
-	
-			reset ($attribute_names);
-			while (list ($num, $attribute) = each ($attribute_names))
-			{
-				if ($num)
-				{
-					$sql .= ", ";
-				}
-	
-				$sql .= "$attribute='" . $$attribute . "'";
-			}
-	
+
 			$sql .= " WHERE file_id='$record[file_id]'";
 			$sql .= $this->extra_sql (VFS_SQL_UPDATE);
 	
@@ -1957,7 +1964,7 @@
 				   Make sure the file is in the directory we want, and not
 				   some deeper nested directory with a similar name
 				*/
-				if (!ereg ("^$p->fake_full_path", $file_array["directory"]))
+				if (@!ereg ("^$p->fake_full_path", $file_array["directory"]))
 				{
 					continue;
 				}
@@ -2183,6 +2190,11 @@
 					$rarray[] = $this->get_real_info ($p->fake_full_path, array (RELATIVE_NONE));
 				}
 	
+				if (!is_array ($rarray))
+				{
+					$rarray = array ();
+				}
+
 				while (list ($num, $file_array) = each ($rarray))
 				{
 					$p2 = $this->path_parts ($file_array["directory"] . "/" . $file_array["name"], array (RELATIVE_NONE));
