@@ -377,7 +377,7 @@
 						$sSQL .= ',';
 					}
 
-					if ($oProc->m_odb->f($i) != null)
+					if ($oProc->m_odb->f($name) != null)
 					{
 						switch ($arraydef['type'])
 						{
@@ -387,10 +387,10 @@
 							case 'text':
 							case 'timestamp':
 							case 'varchar':
-								$sSQL .= "'" . $oProc->m_odb->db_addslashes($oProc->m_odb->f($i)) . "'";
+								$sSQL .= "'" . $oProc->m_odb->db_addslashes($oProc->m_odb->f($name)) . "'";
 								break;
 							default:
-								$sSQL .= intval($oProc->m_odb->f($i));
+								$sSQL .= intval($oProc->m_odb->f($name));
 						}
 					}
 					else
@@ -451,7 +451,8 @@
 		{
 			$this->DropSequenceForTable($oProc,$sTableName);
 
-			return !!($oProc->m_odb->query("DROP TABLE " . $sTableName));
+			return $oProc->m_odb->query("DROP TABLE " . $sTableName) &&
+			       $this->DropSequenceForTable($oProc, $sTableName);
 		}
 
 		function DropColumn($oProc, &$aTables, $sTableName, $aNewTableDef, $sColumnName, $bCopyData = true)
