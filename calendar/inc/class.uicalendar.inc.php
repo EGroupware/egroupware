@@ -1705,7 +1705,8 @@
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-			$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
+			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
+			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -2153,7 +2154,7 @@
 				'data'	=>	$event['public']==True?'False':'True'
 			);
 
-			if($event->groups[0])
+			if(@isset($event['groups'][0]))
 			{
 				$cal_grps = '';
 				for($i=0;$i<count($event['groups']);$i++)

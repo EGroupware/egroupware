@@ -1536,12 +1536,12 @@
 				case MSG_MODIFIED:
 					$action = 'Modified';
 					$event_id = $old_event['id'];
-					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
+					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
 					break;
 				case MSG_ADDED:
 					$action = 'Added';
 					$event_id = $new_event['id'];
-					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event->id.'"';
+					$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
 					break;
 				case MSG_REJECTED:
 					$action = 'Rejected';
