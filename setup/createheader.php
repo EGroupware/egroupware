@@ -145,14 +145,14 @@
       </td></tr>
       <tr bgcolor=486591><th colspan=2><font color="fefefe">Settings</font></th></tr>
       <form action="<? echo $PHP_SELF ?>"  method=post>
-      <input type=hidden name=write_config value=true>
-        <tr><td colspan=2><b>Server Root</b><br><input type=text name=server_root size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
-        <tr><td colspan=2><b>Include Root (this should be the same as Server Root unless you know what you are doing)</b><br><input type=text name=include_root size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
-        <tr><td><b>DB Host</b><br><input type=text name=db_host value="<? echo $phpgw_info["server"]["db_host"] ?>"></td><td>Hostname/IP of Databaseserver</td></tr>
-        <tr><td><b>DB Name</b><br><input type=text name=db_name value="<? echo $phpgw_info["server"]["db_name"] ?>"></td><td>Name of Database</td></tr>
-        <tr><td><b>DB User</b><br><input type=text name=db_user value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>
-        <tr><td><b>DB Password</b><br><input type=text name=db_pass value="<? echo $phpgw_info["server"]["db_pass"] ?>"></td><td>Password of DB User</td></tr>
-        <tr><td><b>DB Type</b><br><select name=db_type>
+      <input type=hidden name="setting[write_config]" value=true>
+        <tr><td colspan=2><b>Server Root</b><br><input type=text name="setting[server_root]" size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
+        <tr><td colspan=2><b>Include Root (this should be the same as Server Root unless you know what you are doing)</b><br><input type=text name="setting[include_root]" size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
+        <tr><td><b>DB Host</b><br><input type=text name="setting[db_host]" value="<? echo $phpgw_info["server"]["db_host"] ?>"></td><td>Hostname/IP of Databaseserver</td></tr>
+        <tr><td><b>DB Name</b><br><input type=text name="setting[db_name]" value="<? echo $phpgw_info["server"]["db_name"] ?>"></td><td>Name of Database</td></tr>
+        <tr><td><b>DB User</b><br><input type=text name="setting[db_user]" value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>
+        <tr><td><b>DB Password</b><br><input type=text name="setting[db_pass]" value="<? echo $phpgw_info["server"]["db_pass"] ?>"></td><td>Password of DB User</td></tr>
+        <tr><td><b>DB Type</b><br><select name="setting[db_type]">
       <?
         $selected = "";
         $found_dbtype = false;
@@ -169,9 +169,9 @@
         </select>
         </td><td>What Database do you want to use with PHPGroupWare?
       
-        <tr><td><b>Configuration Password</b><br><input type=text name=config_pass value="<? echo $phpgw_info["server"]["config_passwd"] ?>"></td><td>Password needed for configuration</td></tr>
-        <tr><td colspan=2><b>Enable MCrypt<br>
-        <select name=enable_mcrypt >
+        <tr><td><b>Configuration Password</b><br><input type=text name="setting[config_pass]" value="<? echo $phpgw_info["server"]["config_passwd"] ?>"></td><td>Password needed for configuration</td></tr>
+        <tr><td colspan=2><b>Enable MCrypt</b><br>
+        <select name="setting[enable_mcrypt]">
         <? if($phpgw_info["flags"]["mcrypt_enabled"] == True) { ?>
         <option value=True selected>True
         <option value=False>False
@@ -181,9 +181,15 @@
         <? } ?>
         </select>
         </td></tr>
-        <tr><td><b>MCrypt version</b><br><input type=text name=mcrypt_version value="<? echo $phpgw_info["server"]["mcrypt_version"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
-        <tr><td><b>MCrypt initilazation vector</b><br><input type=text name=mcrypt_iv value="<? echo $phpgw_info["server"]["mcrypt_iv"] ?>"></td><td>It should be around 30 bytes in length</td></tr>
-      </table>
+        <tr><td><b>MCrypt version</b><br><input type=text name="setting[mcrypt_version]" value="<? echo $phpgw_info["server"]["mcrypt_version"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
+        <tr><td><b>MCrypt initilazation vector</b><br><input type=text name="setting[mcrypt_iv]" value="<? echo $phpgw_info["server"]["mcrypt_iv"] ?>" size="30"></td><td>It should be around 30 bytes in length.<br>Note: The default has been randomly generated.</td></tr>
+        <tr><td><b>Domain select box on login</b><br>
+         <select name="setting[domain_selectbox]">
+          <option value="True"<?php echo ($phpgw_info["server"]["domain_selectbox"]?" selected":""); ?>>True</option>
+          <option value="False"<?php echo (! $phpgw_info["server"]["domain_selectbox"]?" selected":""); ?>>False</option>
+         </select></td><td></td>
+        </tr>
+       </table>
       <?
       if(!$found_dbtype) {
         echo "<br><font color=red>Warning!<br>The db_type in defaults (".$phpgw_info["server"]["db_type"].") is not supported on this server. using first supported type.</font>";

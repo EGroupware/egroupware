@@ -115,7 +115,7 @@
       }
       if ($docommit) {
          if ($account_id <> $phpgw_info["user"]["account_id"]) {
-            $phpgw->preferences->commit_user($users_account_id);
+//            $phpgw->preferences->commit_user($users_account_id);
          } else {
             $phpgw_info["user"]["preferences"] = $phpgw_newuser["user"]["preferences"];
             unset($phpgw_newuser);

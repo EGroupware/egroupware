@@ -101,21 +101,15 @@
       }
     }
   
-    function generate_header(){
-      global $SCRIPT_FILENAME, $HTTP_POST_VARS, $k, $v;
-      $ftemplate = fopen(dirname($SCRIPT_FILENAME)."/../header.inc.php.template","r");
-      if($ftemplate){
-        $ftemplate = fopen(dirname($SCRIPT_FILENAME)."/../header.inc.php.template","r");
-        $template = fread($ftemplate,filesize(dirname($SCRIPT_FILENAME)."/../header.inc.php.template"));
-        fclose($ftemplate);
-        while(list($k,$v) = each($HTTP_POST_VARS)) {
-          $template = ereg_replace("__".strtoupper($k)."__",$v,$template);
-        }
-        return $template;
-      }else{
-        echo "Could not open the header template for reading!<br>";
-        exit;
+    function generate_header()
+    {
+      global $setting, $phpgw_setup;
+      
+      $phpgw_setup->template->set_file(array("header" => "header.inc.php.template"));
+      while(list($k,$v) = each($setting)) {
+         $phpgw_setup->template->set_var(strtoupper($k),$v);
       }
+      return $phpgw_setup->template->parse("out","header");
     }
   
     function config_auth()
