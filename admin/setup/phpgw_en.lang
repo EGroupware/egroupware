@@ -4,26 +4,36 @@ account has been deleted	common	en	Account has been deleted
 account has been updated	common	en	Account has been updated
 account permissions	admin	en	Account permissions
 account preferences	admin	en	Account Preferences
+acl manager	admin	en	ACL Manager
 action	admin	en	Action
+add a new account.	admin	en	Add a new account.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 add global category	admin	en	Add global category
 add new account	admin	en	Add new account
 add new application	admin	en	Add new application
+add peer server	admin	en	Add Peer Server
+admin email	admin	en	Admin Email
+administration	admin	en	Administration
+admin name	admin	en	Admin Name
 admins	admin	en	Admins
+allow anonymous access to this app	admin	en	Allow anonymous access to this app
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All Users
-allow anonymous access to this app	admin	en	Allow anonymous access to this app
 anonymous user	admin	en	Anonymous user
 application name	admin	en	Application name
-application title	admin	en	Application title
 applications	admin	en	Applications
+application title	admin	en	Application title
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account ?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application ?
+are you sure you want to delete this category ?	admin	en	Are you sure you want to delete this category ?
 are you sure you want to delete this group ?	admin	en	Are you sure you want to delete this group ?
+are you sure you want to delete this server?	admin	en	Are you sure you want to delete this server?
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session ?
 attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	admin	en	Authentication / Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users
+bi-directional	admin	en	bi-directional
+bi-dir passthrough	admin	en	bi-dir passthrough
 change main screen message	admin	en	Change main screen message
 check ip address of all sessions	admin	en	check ip address of all sessions
 country selection	admin	en	Country Selection
@@ -36,6 +46,10 @@ do you also want to delete all global subcategories ?	admin	en	Do you also want 
 edit application	admin	en	Edit application
 edit global category	admin	en	Edit global category
 edit group	admin	en	Edit Group
+edit login screen message	admin	en	Edit login screen message
+edit main screen message	admin	en	Edit main screen message
+edit peer server	admin	en	Edit Peer Server
+edit table format	admin	en	Edit Table format
 edit user account	admin	en	Edit user account
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption (requires mcrypt)
@@ -46,9 +60,9 @@ enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpg
 enter the site password for peer servers	admin	en	Enter the site password for peer servers
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
 enter the title for your site	admin	en	Enter the title for your site
+enter your default FTP server	admin	en	Enter your default FTP server
 enter your HTTP proxy server	admin	en	Enter your HTTP proxy server
 enter your HTTP proxy server port	admin	en	Enter your HTTP proxy server port
-enter your default FTP server	admin	en	Enter your default FTP server
 force selectbox	admin	en	Force SelectBox
 global categories	admin	en	Global Categories
 group ?	admin	en	group ?
@@ -62,6 +76,7 @@ host information	admin	en	Host information
 idle	admin	en	idle
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+inbound	admin	en	inbound
 installed applications	common	en	Installed applications
 interface	admin	en	Interface
 ip	admin	en	IP
@@ -76,63 +91,100 @@ ldap default shell (e.g. /bin/bash)	admin	en	LDAP Default shell (e.g. /bin/bash)
 ldap encryption type	admin	en	LDAP encryption type
 ldap groups context	admin	en	LDAP groups context
 ldap host	admin	en	LDAP host
-ldap root password	admin	en	LDAP root password
 ldap rootdn	admin	en	LDAP rootdn
+ldap root password	admin	en	LDAP root password
 list of current users	admin	en	list of current users
+loginid	admin	en	LoginID
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell
 login time	admin	en	Login Time
-loginid	admin	en	LoginID
 main screen message	admin	en	Main screen message
 manager	admin	en	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id (e.g. 65535 or 1000000)
+message has been updated	admin	en	message has been updated
 minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500 or 100, etc.)
+mode	admin	en	Mode
 new group name	admin	en	New group name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
+no login history exists for this user	admin	en	No login history exists for this user
 no matchs found	admin	en	No matchs found
+outbound	admin	en	outbound
+passthrough	admin	en	passthrough
 path information	admin	en	Path information
 peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
+percent this user has logged out	admin	en	Percent this user has logged out
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 phpinfo	admin	en	PHP information
+please enter a name	admin	en	Please enter a name
+please enter a name for that server !	admin	en	Please enter a name for that server !
+please run setup to become current	admin	en	Please run setup to become current
 preferences	admin	en	Preferences
 re-enter password	admin	en	Re-enter password
 remove all users from this group	admin	en	Remove all users from this group
+security	admin	en	Security
+selectbox	admin	en	Selectbox
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
 select where you want to store/retrieve filesystem information	admin	en	Select where you want to store/retrieve filesystem information
 select where you want to store/retrieve user accounts	admin	en	Select where you want to store/retrieve user accounts
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right)
-selectbox	admin	en	Selectbox
+server list	admin	en	Server List
+server name	admin	en	Server name
+server password	admin	en	Server Password
+server type(mode)	admin	en	Server Type(mode)
+server url	admin	en	Server URL
+server username	admin	en	Server Username
+set preference values.	admin	en	Set preference values.
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 site	admin	en	Site
 site configuration	admin	en	Site configuration
+sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
+status	admin	en	Status
+(stored password will not be shown here)	admin	en	(Stored password will not be shown here)
 submit changes	admin	en	Submit Changes
 template selection	admin	en	Template Selection
 text entry	admin	en	Text Entry
+that application name already exists.	admin	en	That application name already exists.
+that application order must be a number.	admin	en	That application order must be a number.
 that loginid has already been taken	admin	en	That loginid has already been taken
+that name has been used already	admin	en	That name has been used already
+that server name has been used already !	admin	en	That server name has been used already !
+the api is current	admin	en	The API is current
+the api requires an upgrade	admin	en	The API requires an upgrade
 the login and password can not be the same	admin	en	The login and password can not be the same
+the loginid can not be more then 8 characters	admin	en	The loginid can not be more then 8 characters
 the two passwords are not the same	admin	en	The two passwords are not the same
 they must be removed before you can continue	admin	en	They must be removed before you can continue
+this application is current	admin	en	This application is current
+this application requires an upgrade	admin	en	This application requires an upgrade
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
 total records	admin	en	Total records
+trust level	admin	en	Trust Level
+trust relationship	admin	en	Trust Relationship
 use cookies to pass sessionid	admin	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code (not fully working yet)
-use theme	admin	en	Use theme
 user accounts	admin	en	User accounts
-user groups	admin	en	User groups
 userdata	admin	en	userdata
+user groups	admin	en	User groups
 users choice	admin	en	Users Choice
+use theme	admin	en	Use theme
 view access log	admin	en	View access log
 view error log	admin	en	View error log
 view sessions	admin	en	View sessions
+who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like phpgroupWare to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
 would you like phpgroupWare to check for a new version<br>when admins login ?	admin	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
+you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
+you must enter a group name.	admin	en	You must enter a group name.
+you must enter a loginid	admin	en	You must enter a loginid
+you must enter an application name.	admin	en	You must enter an application name.
 you must enter an application name and title.	admin	en	You must enter an application name and title.
+you must enter an application title.	admin	en	You must enter an application title.
 you must select a file type	admin	en	You must select a file type
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
