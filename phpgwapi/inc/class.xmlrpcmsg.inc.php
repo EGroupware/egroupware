@@ -130,7 +130,7 @@
 			$hdrfnd = 0;
 			if ($this->debug)
 			{
-				echo '<PRE>---GOT---' . "\n" . htmlspecialchars($data) . "\n" . '---END---' . "\n" . '</PRE>';
+				echo '<PRE style="text-align: left;">---GOT---' . "\n" . htmlspecialchars($data) . "\n" . '---END---' . "\n" . '</PRE>';
 			}
 			if ($data == '')
 			{
@@ -206,7 +206,7 @@
 			xml_parser_free($parser);
 			if ($this->debug)
 			{
-				echo '<PRE>---EVALING---['
+				echo '<PRE style="text-align: left;">---EVALING---['
 					. strlen($GLOBALS['_xh'][$parser]['st']) . ' chars]---' . "\n"
 					. htmlspecialchars($GLOBALS['_xh'][$parser]['st']) . ';' . "\n" . '---END---</PRE>';
 			}
