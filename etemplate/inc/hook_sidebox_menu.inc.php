@@ -16,7 +16,12 @@
 	$file = Array(
 		'eTemplate Editor' => $GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.editor.edit'),
 		'DB-Tools' => $GLOBALS['phpgw']->link('/index.php','menuaction=etemplate.db_tools.edit'),
-		'_NewLine_', // give a newline
-		'developer_tools' => $GLOBALS['phpgw']->link('/index.php','menuaction=developer_tools.uilangfile.index'),
 	);
+	if (@$GLOBALS['phpgw_info']['user']['apps']['developer_tools'])
+	{
+		$file += array(
+			'_NewLine_', // give a newline
+			'developer_tools' => $GLOBALS['phpgw']->link('/index.php','menuaction=developer_tools.uilangfile.index'),
+		);
+	}
 	display_sidebox($appname,$menu_title,$file);
