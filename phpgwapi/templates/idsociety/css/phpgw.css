@@ -24,6 +24,11 @@ table
 	border-width: 0;
 }
 
+td.alarm
+{
+	color: #FF0000;
+}
+
 a:link,a:visited,a:active,a:hover
 {
 	text-decoration: none;

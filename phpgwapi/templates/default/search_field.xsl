@@ -1,10 +1,10 @@
 <!-- $Id$ -->
 
 	<xsl:template name="search_field">
-		<xsl:variable name="select_action"><xsl:value-of select="select_action"/></xsl:variable>
+		<xsl:variable name="search_url"><xsl:value-of select="search_url"/></xsl:variable>
 		<xsl:variable name="query"><xsl:value-of select="query"/></xsl:variable>
-		<xsl:variable name="lang_submit"><xsl:value-of select="lang_submit"/></xsl:variable>
-			<form method="post" action="{$select_action}">
+		<xsl:variable name="lang_search"><xsl:value-of select="lang_search"/></xsl:variable>
+			<form method="post" action="{$search_url}">
 				<input type="text" name="query" value="{$query}" onMouseout="window.status='';return true;">
 					<xsl:attribute name="onMouseover">
 						<xsl:text>window.status='</xsl:text>
@@ -13,7 +13,7 @@
 					</xsl:attribute>
 				</input>
 				<xsl:text> </xsl:text>
-				<input type="submit" name="submit" value="{$lang_submit}" onMouseout="window.status='';return true;"> 
+				<input type="submit" name="submit" value="{$lang_search}" onMouseout="window.status='';return true;"> 
 					<xsl:attribute name="onMouseover">
 						<xsl:text>window.status='</xsl:text>
 							<xsl:value-of select="lang_searchbutton_statustext"/>
