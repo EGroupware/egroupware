@@ -290,7 +290,7 @@
 				. "','" . $account_info['account_expires'] . "')",__LINE__,__FILE__);
 
 			$accountid = $this->db->get_last_insert_id('phpgw_accounts','account_id');
-			if($accountid)
+			if($accountid && is_object($GLOBALS['phpgw']->preferences))
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
 				return $accountid;

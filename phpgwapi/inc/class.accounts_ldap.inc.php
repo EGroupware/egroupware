@@ -689,7 +689,7 @@
 			}
 			/* print ldap_error($this->ds); */
 
-			if($account_id)
+			if($account_id && is_object($GLOBALS['phpgw']->preferences))
 			{
 				$GLOBALS['phpgw']->preferences->create_defaults($account_id);
 				return $account_id;
