@@ -20,7 +20,7 @@ categories	common	it	Categorie
 category	common	it	Categoria
 change	common	it	Cambia
 charset	common	it	iso-8859-1
-clear	common	it	Cancella
+clear	common	it	Pulisci
 clear form	common	it	Cancella il modulo
 copy	common	it	Copia
 create	common	it	Create
@@ -30,9 +30,9 @@ current users	common	it	Utenti attivi
 custom	common	it	Personalizza
 date	common	it	Data
 december	common	it	Dicembre
-delete	common	it	Cancella
+delete	common	it	Elimina
 domestic	common	it	Locale
-done	common	it	Terminato
+done	common	it	Finito
 edit	common	it	Modifica
 edit category	common	it	Modifica Categoria
 edit categories	common	it	Modifica Categorie
@@ -62,7 +62,7 @@ group public	common	it	Gruppo Pubblico
 groups	common	it	Gruppi
 help	common	it	Aiuto
 high	common	it	Alta
-home	common	it	Casa
+home	common	it	Pagina Principale
 international	common	it	Internazionale
 it has been more then x days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
 january	common	it	Gennaio
@@ -122,9 +122,9 @@ select headline news sites	common	it	Seleziona siti di NEWS
 send updates via email	common	it	Invia aggiornamenti via email
 september	common	it	Settembre
 session has been killed	common	it	La sessione è stata terminata
-show all	common	it	mostra tutto
+show all	common	it	visualizza tutto
 showing x	common	it	visualizzati %1
-showing x - x of x	common	it	mostro %1 - %2 si %3
+showing x - x of x	common	it	visualizzo %1 - %2 di %3
 sorry, there was a problem processing your request.	common	it	Peccato, c'è stato un problema nel processare la tua richiesta.
 start time	common	it	Ora Inizio
 status	common	it	Stato
@@ -167,3 +167,6 @@ use cookies	login	it	usa i cookie
 username	login	it	Nome utente
 you have been successfully logged out	login	it	Sei uscito dal sistema con successo
 your session could not be verified.	login	it	La tua sessione non può essere verificata.
+open notify window	common	it	Apri finestra di notifica
+from	common	it	Da
+size	common	it	Dimensione
