@@ -430,5 +430,13 @@
 				. "qfield=$qfield&start=$start&query=$query" . $extra) . '">' . $text . '</a>';
 		}
 
+		function show_sort_order_imap($sort,$order,$program,$text,$extra='')
+		{
+			global $phpgw, $filter, $qfield, $start, $query;
+
+			return '<a href="' . $phpgw->link($program,"sort=$sort&order=$order&filter=$filter&"
+				. "qfield=$qfield&start=$start" . $extra) . '">' . $text . '</a>';
+		}
+
 	}		// End of nextmatchs class
 ?>
