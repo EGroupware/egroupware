@@ -32,9 +32,7 @@
   $db->Password    = $phpgw_info["server"]["db_pass"];
 
   if ($newsettings["auth_type"] != "ldap") {
-     echo "<title>phpGroupWare - setup</title>";
-     echo '<body bgcolor="FFFFFF">';
-     echo "<center>phpGroupWare version " . $phpgw_info["server"]["version"] . " setup</center><p>";
+     setup_header();
   }
 
   if ($submit) {
@@ -65,6 +63,13 @@
   while (@$db->next_record()) {
     $current_config[$db->f("config_name")] = $db->f("config_value");
   }
+  
+  if ($error == "badldapconnection") {
+     // Please check the number and dial again :)
+     echo "<br><center><b>Error:</b> There was a problem tring to connect to your LDAP server, please "
+        . "check your config.</center>";
+  }
+  
 ?>  
  <form method="POST" action="config.php">
   <table border="0" align="center">

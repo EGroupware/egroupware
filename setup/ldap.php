@@ -41,10 +41,19 @@
 
   // First, see if we can connect to the LDAP server, if not send `em back to config.php with an
   // error message.
-  $ldap = @$common->ldapConnect($config["ldap_host"],$config["ldap_root_dn"],$config["ldap_root_pw"]);
+
+  // connect to ldap server
+  if (! $ldap = @ldap_connect($config["ldap_host"])) {
+     $noldapconnection = True;
+  }
+
+  // bind as admin, we not to able to do everything
+  if (! @ldap_bind($ldap,$config["ldap_root_dn"],$config["ldap_root_pw"])) {
+     $noldapconnection = True;
+  }
   
-  if (! $ldap) {
-     Header("Location: config.php?error=ldapconnect");
+  if ($noldapconnection) {
+     Header("Location: config.php?error=badldapconnection");
      exit;
   }
 
