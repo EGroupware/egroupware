@@ -40,9 +40,10 @@
 
 		var $account_id;
 		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id
-		var $email_types;				// VCard email type array
-		var $total_records;			// This will contain numrows for data retrieved
-		var $grants;					// This holds all of the users that have granted access to there entrys
+		var $non_contact_fields;    // Here are the rest
+		var $email_types;           // VCard email type array
+		var $total_records;         // This will contain numrows for data retrieved
+		var $grants;                // This holds all of the users that have granted access to there entrys
 
 		function contacts_()
 		{
@@ -104,6 +105,15 @@
 				"email_type"             => "email_type", //'INTERNET','CompuServe',etc...
 				"email_home"             => "email_home",
 				"email_home_type"        => "email_home_type" //'INTERNET','CompuServe',etc...
+			);
+
+			$this->non_contact_fields = array(
+				"id"     => "id",
+				"lid"    => "lid",
+				"tid"    => "tid",
+				"cat_id" => "cat_id",
+				"access" => "access",
+				"owner"  => "owner"
 			);
 
 			/* Used to flag an address as being:

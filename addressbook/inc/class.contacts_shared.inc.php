@@ -25,12 +25,6 @@
 
 	class contacts extends contacts_
 	{
-		var $db;
-		var $account_id;
-		var $stock_contact_fields;     // This is an array of all the fields in the addressbook
-		var $email_types;              // VCard email type array
-		var $total_records;            // This will contain numrows for data retrieved
-
 		function check_perms($has, $needed)
 		{
 			return (!!($has & $needed) == True);
