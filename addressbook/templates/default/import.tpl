@@ -23,7 +23,7 @@
             </SELECT><P></LI>
    <LI>{lang_cat}:{cat_link}</LI>
    <LI><INPUT NAME="private" TYPE="checkbox" VALUE="private" CHECKED>{mark_private}</LI>
-            <LI><INPUT NAME="download" TYPE="checkbox" VALUE="{debug}" CHECKED>{debug_output}</LI>
+            <LI><INPUT NAME="download" TYPE="checkbox" VALUE="{debug}" CHECKED>{debug_browser}</LI>
             <LI><INPUT NAME="convert" TYPE="submit" VALUE="{download}"></LI>
             </OL>
               <input type="hidden" name="sort" value="{sort}">

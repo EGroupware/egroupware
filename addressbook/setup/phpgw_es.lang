@@ -46,7 +46,7 @@ download export file (uncheck to debug output in browser)	addressbook	es	Descarg
 edit custom field	admin	es	Editar Campo Personalizado
 edit custom fields	admin	es	Editar Campos Personalizados
 e-mail	addressbook	es	E-Mail
-enter the path to the exported file here	addressbook	es	Ingrese la ruta al archivo exportado aqui
+enter the path to the export file here	addressbook	es	Ingrese la ruta al archivo exportado aqui
 export contacts	addressbook	es	Exportar Contactos
 export file name	addressbook	es	Nombre del Archivo a Exportar
 export from addressbook	addressbook	es	Exportar de la Libreta de Direcciones
@@ -76,7 +76,7 @@ import file	addressbook	es	Importar Archivo
 import from ldif, csv, or vcard	addressbook	es	Importar desde LDIF, CSV o VCard
 import from netscape	addressbook	es	Importar desde Netscape
 import from outlook	addressbook	es	Importar desde Outlook
-In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.       <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	es	Desde Outlook, seleccione su carpeta de contactos, seleccione <b>Importar y Exportar</b> del menu <b>Archivo</b> y exporte sus contactos en un archivo de Texto separado por comas (CSV).
+In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.<br>The file exported will be in LDIF format.<P>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <P>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu. The file exported will be in VCard format.<P>	addressbook	es	Desde Outlook, seleccione su carpeta de contactos, seleccione <b>Importar y Exportar</b> del menu <b>Archivo</b> y exporte sus contactos en un archivo de Texto separado por comas (CSV).
 international	common	es	Internacional
 isdn phone	addressbook	es	Telefono ISDN
 label	addressbook	es	Etiqueta
