@@ -76,6 +76,8 @@
 				"adr_postal"      => "adr_postal", //yn
 				"tz"              => "tz",
 				"geo"             => "geo",
+				"url"             => "url",
+				"bday"            => "bday",
 				"a_tel"           => "a_tel",
 				"a_tel_work"      => "a_tel_work",   //yn
 				"a_tel_home"      => "a_tel_home",   //yn

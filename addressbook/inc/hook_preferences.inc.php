@@ -11,26 +11,30 @@
   \**************************************************************************/
   /* $ Id $ */
 {
-  echo "<p>\n";
-  $imgfile = $phpgw->common->get_image_dir($appname)."/" . $appname .".gif";
-  if (file_exists($imgfile)) {
-    $imgpath = $phpgw->common->get_image_path($appname)."/" . $appname .".gif";
-  } else {
-    $imgfile = $phpgw->common->get_image_dir($appname)."/navbar.gif";
-    if (file_exists($imgfile)) {
-      $imgpath = $phpgw->common->get_image_path($appname)."/navbar.gif";
-    } else {
-      $imgpath = "";
-    }
-  }
-  section_start(ucfirst($appname),$imgpath);
+	echo "<p>\n";
+	$imgfile = $phpgw->common->get_image_dir($appname)."/" . $appname .".gif";
+	if (file_exists($imgfile)) {
+		$imgpath = $phpgw->common->get_image_path($appname)."/" . $appname .".gif";
+	} else {
+		$imgfile = $phpgw->common->get_image_dir($appname)."/navbar.gif";
+		if (file_exists($imgfile)) {
+			$imgpath = $phpgw->common->get_image_path($appname)."/navbar.gif";
+		} else {
+			$imgpath = "";
+		}
+	}
 
-  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
-  echo "<a href=".$pg.">" . lang("Addressbook preferences") . "</a><br>";
+	section_start(ucfirst($appname),$imgpath);
 
-  $pg = $phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
-  echo "<a href=".$pg.">" . lang("Grant Addressbook Access") . "</a>";
+	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/preferences.php");
+	echo "<a href=".$pg.">" . lang("Addressbook preferences") . "</a><br>";
 
-  section_end(); 
+	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/fields.php");
+	echo "<a href=".$pg.">" . lang("Edit custom fields") . "</a><br>";
+
+	$pg=$phpgw->link($phpgw_info["server"]["webserver_url"]."/".$appname."/acl_preferences.php");
+	echo "<a href=".$pg.">" . lang("Grant Addressbook Access") . "</a>";
+
+	section_end(); 
 }
 ?>

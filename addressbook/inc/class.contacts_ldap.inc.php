@@ -1,6 +1,6 @@
 <?php
 /**************************************************************************\
-* phpGroupWare API - Contacts manager for SQL                              *
+* phpGroupWare API - Accounts manager for SQL                              *
 * This file written by Joseph Engo <jengo@phpgroupware.org>                *
 * View and manipulate contact records using SQL                            *
 * Copyright (C) 2001 Joseph Engo                                           *
@@ -23,6 +23,15 @@
 
 /* $Id$ */
 
+	/*
+	phpgw_addressbook_extra (
+		contact_id          int,
+		contact_owner       int,
+		contact_name        varchar(255),
+		contact_value       varchar(255)
+	);
+	*/
+  
 	/* ldap is a copy of sql for now */
   
 	class contacts_
@@ -30,9 +39,10 @@
 		var $db;
 		var $std_table="phpgw_addressbook";
 		var $ext_table="phpgw_addressbook_extra";
+		// temp table definition for listings is in read function
+
 		var $account_id;
-		var $stock_contact_fields;	// This is an array of almost the fields in the
-									//   phpgw_addressbook table, except id,owner,lid,tid
+		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
 		var $email_types;			// VCard email type array
 		var $total_records;			// This will contain numrows for data retrieved
 
@@ -194,12 +204,15 @@
 
 
 		// send this the range, query, sort, order and whatever fields you want to see
-		// 'rights' is unused at this time
+		// 'rights' and 'query' are unused at this time
 		function read($start,$offset,$fields="",$query="",$filter="",$sort="",$order="",$rights="")
 		{
 			global $phpgw,$phpgw_info;
+
+			$tmp_table="phpgw_addressbook_user".$phpgw_info["user"]["account_id"]."_cache";
+
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			$DEBUG = 1;
+			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 			if (count($stock_fieldnames)) {
@@ -209,14 +222,20 @@
 				}
 			}
 
+			//if ($query) { echo "DEBUG: Queries temporarily unavailable"; }
+
+			// turn filter's a=b,c=d OR a=b into an array
 			if ($filter) {
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
 				$filterarray = split(',',$filter);
 				if ($filterarray[1]) {
 					$i=0;
-					while (list($name,$value) = split('=',$filterarray[$i])) {
-						$filterfields[$i] .= array($name => $value);
-						$i++;
+					for ($i=0;$i<count($filterarray);$i++) {
+						list($name,$value) = split("=",$filterarray[$i]);
+						if ($name) {
+							if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#"; }
+							$filterfields[$name] = $value;
+						}
 					}
 				} else {
 					list($name,$value) = split('=',$filter);
@@ -226,76 +245,187 @@
 					$filterfields = array($name => $value);
 				}
 
+				// now check each element of the array and convert into SQL for queries
+				// below
 				$i=0;
 				while (list($name,$value) = each($filterfields)) {
 					if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#"; }
-					$filterlist .= $name."='".$value."',";
+					$isstd=0;
+					if ($name && empty($value)) {
+						reset($stock_fields);
+						while (list($fname,$fvalue)=each($stock_fields)) {
+							if ($fvalue==$name) {
+								$filterlist .= $name.' is NULL,';
+								$isstd=1;
+								break;
+							}
+						}
+						if (!$isstd) {
+							$filterlist2 .= 'b.'.$name.' is NULL,';
+							$fieldlist2  .= 'b.'.$name.',';
+						}
+					} elseif($name && $value) {
+						reset($stock_fields);
+						while (list($fname,$fvalue)=each($stock_fields)) {
+							if ($fvalue==$name) {
+								$filterlist .= $name.'="'.$value.'",';
+								$isstd=1;
+								break;
+							}
+						}
+						if (!$isstd) {
+							$filterlist2 .= 'b.'.$name.'="'.$value.'",';
+							$fieldlist2  .= 'b.'.$name.',';
+						}
+					}
 					$i++;
 				}
-				$filterlist = substr($filterlist,0,-1);
+				$filterlist  = substr($filterlist,0,-1);
+				$filterlist  = ereg_replace(","," AND ",$filterlist);
+				$filterlist2 = substr($filterlist2,0,-1);
+				$fieldlist2  = substr($fieldlist2,0,-1);
 
 				if ($DEBUG) {
-					echo "<br>DEBUG - Filter output string: #".$filterlist."#";
+					echo "<br>DEBUG - Filter output string1: #".$filterlist."#";
+					echo "<br>DEBUG - Filter output string2: #".$filterlist2."#";
 				}
 
-				list($fields,$fieldnames,$extra) = $this->split_stock_and_extras($filterfields); 
-
-				if ($extra) {
-					while (list($name,$value) = each($extra)) {
-						$value = "%," . $value . ",%";
-						$filterextra .= " AND contact_name='".$name."' AND contact_value like '".$value."',";
-					}
-					$filterextra = substr($filterextra,0,-1);
-				} else {
-					$filterstock = " AND ($filterlist) ";
+				if ($filterlist) {
+					$filtermethod = ' WHERE ('.$filterlist.') ';
 				}
 			}
-			if ($DEBUG && ($filterextra || $filterstock)) {
-				if ($filterextra) {
-					echo "<br>DEBUG - Filtering on extra fields with: #" . $filterextra . "#";
-				}
-				if ($filterstock) {
-					echo "<br>DEBUG - Filtering on standard fields with: #" . $filterstock . "#";
-				}
+			if ($DEBUG && $filtermethod) {
+				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
 			}
 
 			if (!$sort) { $sort = "ASC";  }
 
 			if ($order) {
-				$ordermethod = "order by $order $sort ";
+				while (list($name,$value)=each($stock_fields)) {
+					if ($name == $order) {
+						$ordermethod = "order by a.$order $sort ";
+						break;
+					} else {
+						$ordermethod = "order by b.$order $sort ";
+					}
+				}
 			}  else {
-				$ordermethod = "order by n_family,n_given,d_email $sort";
+				$ordermethod = "order by a.n_family,a.n_given,a.d_email $sort";
+			}
+
+			if ($DEBUG && $ordermethod) {
+				echo "<br>DEBUG - $ordermethod";
 			}
 
 			$this->db3 = $this->db2 = $this->db; // Create new result objects before our queries
 
-			if ($query) {
-				$this->db3->query("SELECT * from $this->std_table WHERE (n_family like '"
-					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
-					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
-					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-					. "'%$query%' OR org_name like '%$query%') " . $filterstock . $ordermethod,__LINE__,__FILE__);
-				$this->total_records = $this->db3->num_rows();
+			// start create sql for temp table
+			$tempcreate  = "CREATE TABLE ".$tmp_table." (id int(11),";
 
-				$this->db->query("SELECT * from $this->std_table WHERE (n_family like '"
-					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
-					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
-					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
-					. "'%$query%' OR ORG_Name like '%$query%') " . $filterstock . $ordermethod . " "
-					. $this->db->limit($start,$offset),__LINE__,__FILE__);
-			}  else  {
-				$this->db3->query("select id,lid,tid,owner $t_fields from $this->std_table "
-					. $filterstock,__LINE__,__FILE__);
-				$this->total_records = $this->db3->num_rows();
+			// construct query and count rows based on filter sent to function
+			$this->db->query("select id from $this->std_table ".$filtermethod,__LINE__,__FILE__);
+			$this->total_records = $this->db->num_rows();
+			
+			$i=0;
+			while ($this->db->next_record()) {
+				$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='"
+				. $this->db->f("id") . "'",__LINE__,__FILE__);
 
-				$this->db->query("select id,lid,tid,owner $t_fields from $this->std_table "
-					. $filterstock . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
+				$tempinsert[$i] = "INSERT INTO " . $tmp_table . " (id,";
+				while ($this->db2->next_record()) {
+					// If its not in the list to be returned, don't return it.
+					// This is still quicker then 5(+) separate queries
+					if (!strstr($tempcreate,$this->db2->f("contact_name"))) {
+						$tempcreate .= $this->db2->f("contact_name") ." TEXT,";
+					}
+					if ($extra_fields[$this->db2->f("contact_name")]) {
+						$tempinsert[$i] .= $this->db2->f("contact_name").",";
+						$tempvalues[$i] .= '"'.$this->db2->f("contact_value").'",';
+					}
+				}
+				$tempinsert[$i]  = substr($tempinsert[$i],0,-1);
+				$tempvalues[$i]  = substr($tempvalues[$i],0,-1);
+				if ($tempvalues[$i]) {
+					$tempval = $this->db->f("id").','.$tempvalues[$i].',';
+				} else {
+					$tempval = $this->db->f("id").',';
+				}
+				$tempinsert[$i] .= ') VALUES ('.$tempval;
+				$tempinsert[$i]  = substr($tempinsert[$i],0,-1).")";
+				$i++;
 			}
+
+			// fixup strings, create and populate temp table of extra fields
+			// this section adds the extra_fields to the table
+			// if no prior data existed (new application, etc.)
+			if ($extra_fields) {
+				while (list($name,$value) = each($extra_fields)) {
+					if (!strstr($tempcreate,$name)) {
+						$tempcreate .= $name ." TEXT,";
+					}
+				}
+			}
+			$tempcreate = substr($tempcreate,0,-1) . ")";
+			//echo $tempcreate;
+
+			if ($phpgw_info["server"]["db_type"]=="mysql") {
+				$ifexists = "IF EXISTS";
+			}
+			
+			$this->db->query("DROP TABLE $ifexists $tmp_table");
+			$this->db->query($tempcreate);
+
+			for ($i=0;$i<count($tempinsert);$i++) {
+				$this->db->query($tempinsert[$i]);
+			}
+
+			reset($stock_fields);
+			if ($extra_fields) { reset($extra_fields); }
+			// create strings for insertion into crosstable query below
+			while(list($name,$value)=each($stock_fields)) {
+				$std .= "a.".$name.",";
+			}
+			//$std = substr($std,0,-1);
+			if ($extra_fields) {
+				while(list($name,$value)=each($extra_fields)) {
+					$ext .= "b.".$name.",";
+				}
+			}
+			//$ext = substr($ext,0,-1);
+			if (!empty($fieldlist2)) {
+				$filtertemp = " AND " . $filterlist2 . " ";
+			}
+
+			if ($DEBUG && $filtertemp) {
+				echo "<br>DEBUG - Filtering with: #" . $filtertemp . "#";
+			}
+
+			$qfields = $std . $ext;
+			$qfields = substr($qfields,0,-1);
+
+			if ($query) {
+				$squery = " AND (n_family like '%$query%' OR n_middle like '"
+					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
+					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
+					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
+					. "'%$query%' OR adr_countryname like '%$query%' OR "
+					. "org_name like '%$query%')";
+			}
+			
+			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'
+				. $qfields . ' FROM '.$this->std_table.' AS a, '
+				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
+				. $squery . $ordermethod;
+
+ 			$this->db3->query($sql,__LINE__,__FILE__);
+			$this->total_records = $this->db3->num_rows();
+
+			$this->db->query($sql. " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
 
 			$i=0;
 			while ($this->db->next_record()) {
 				// unique id, lid for group/account records,
-				// type id (g/u) for groups/accounts, and
+				// type id (g/u) for groups/accounts/inv records, and
 				// id of owner/parent for the record
 				$return_fields[$i]["id"]     = $this->db->f("id");
 				$return_fields[$i]["lid"]    = $this->db->f("lid");
@@ -303,23 +433,14 @@
 				$return_fields[$i]["owner"]  = $this->db->f("owner");
 
 				if (gettype($stock_fieldnames) == "array") {
-					while (list($f_name) = each($stock_fieldnames)) {
+					while (list($f_name) = each($fields)) {
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
 					}
-					reset($stock_fieldnames);
-				}
-				$this->db2->query("select contact_name,contact_value from $this->ext_table where contact_id='"
-				. $this->db->f("id") . "'" .$filterextra,__LINE__,__FILE__);
-				while ($this->db2->next_record()) {
-					// If its not in the list to be returned, don't return it.
-					// This is still quicker then 5(+) separate queries
-					if ($extra_fields[$this->db2->f("contact_name")]) {
-						$return_fields[$i][$this->db2->f("contact_name")] = $this->db2->f("contact_value");
-					}
+					reset($fields);
 				}
 				$i++;
 			}
-        
+			$this->db->query("DROP TABLE $tmp_table");
 			return $return_fields;
 		}
 

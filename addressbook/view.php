@@ -48,8 +48,6 @@
 		"mphone"   => "mphone",
 		"ophone"   => "ophone",
 		"address2" => "address2",
-		"bday"     => "bday",
-		"url"      => "url",
 		"notes"    => "notes",
 	);
 	$qfields = $this->stock_contact_fields + $extrafields;
