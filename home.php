@@ -170,7 +170,7 @@
 			{
 				echo '<br>' . lang('The following applications require upgrades') . ':' . "\n";
 				echo $_app_string . "\n";
-				echo '<br>' . lang('Please run setup to become current') . '.' . "\n";
+				echo '<br><a href="setup/" target="_blank">' . lang('Please run setup to become current') . '.' . "</a>\n";
 				unset($_app_string);
 			}
 		}
