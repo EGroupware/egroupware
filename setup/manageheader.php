@@ -31,6 +31,13 @@
 	{
 	}
 
+	$default_db_ports = array(
+		'pgsql'  => 5432,
+		'mysql'  => 3306,
+		'mssql'  => 1433,
+		'oracle' => 1521
+	);
+
 	function check_form_values()
 	{
 		$errors = '';
@@ -213,7 +220,6 @@
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr><tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
-			$default_db_ports = array();
 			if(extension_loaded('mysql') || function_exists('mysql_connect'))
 			{
 				$detected .= lang('You appear to have MySQL support enabled') . '<br>' . "\n";
@@ -228,7 +234,6 @@
 			{
 				$detected .= lang('You appear to have PostgreSQL support enabled') . '<br>' . "\n";
 				$supported_db[]  = 'pgsql';
-				$default_db_ports['pgsql'] = '5432';
 			}
 			else
 			{
@@ -238,7 +243,6 @@
 			{
 				$detected .= lang('You appear to have Microsoft SQL Server support enabled') . '<br>' . "\n";
 				$supported_db[] = 'mssql';
-				$default_db_ports['mssql'] = '1433';
 			}
 			else
 			{
@@ -248,7 +252,6 @@
 			{
 				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br>' . "\n";
 				$supported_db[] = 'oracle';
-				$default_db_ports['oracle'] = '1521';
 			}
 			else
 			{
@@ -256,7 +259,6 @@
 				{
 					$detected .= lang('You appear to have Oracle support enabled') . '<br>' . "\n";
 					$supported_db[] = 'oracle';
-					$default_db_ports['oracle'] = '1521';
 				}
 				else
 				{
