@@ -57,28 +57,18 @@
 				$this->start = $start;
 			}
 			if($limit)  { $this->limit  = $limit;  }
-			if(!empty($query))  { $this->query  = $query;  }
-			if(!empty($sort))   { $this->sort   = $sort;   }
-			if(!empty($order))  { $this->order  = $order;  }
-			if(!empty($filter)) { $this->filter = $filter; }
+			if(isset($query))   { $this->query  = $query;  }
+			if(isset($sort))    { $this->sort   = $sort;   }
+			if(isset($order))   { $this->order  = $order;  }
+			if(isset($filter))  { $this->filter = $filter; }
 			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
 		}
 
-		function save_sessiondata()
+		function save_sessiondata($data)
 		{
-			global $phpgw,$start,$limit,$query,$sort,$order,$filter,$cat_id;
-
 			if ($this->use_session)
 			{
-				$data = array(
-					'start'  => $start,
-					'limit'  => $limit,
-					'query'  => $query,
-					'sort'   => $sort,
-					'order'  => $order,
-					'filter' => $filter,
-					'cat_id' => $cat_id
-				);
+				global $phpgw;
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
 				$phpgw->session->appsession('session_data','addressbook',$data);
 			}
@@ -236,6 +226,11 @@
 		function update_entry($userid,$fields)
 		{
 			return $this->so->update_entry($userid,$fields);
+		}
+
+		function delete_entry($ab_id)
+		{
+			return $this->so->delete_entry($ab_id);
 		}
 	}
 ?>

@@ -39,7 +39,8 @@
 			'add'  => True,
 			'add_email' => True,
 			'copy' => True,
-			'edit' => True
+			'edit' => True,
+			'delete' => True
 		);
 
 	 	var $extrafields = array(
@@ -92,7 +93,16 @@
 		/* Called only by get_list(), just prior to page footer. */
 		function save_sessiondata()
 		{
-			$this->bo->save_sessiondata();
+			$data = array(
+				'start'  => $this->start,
+				'limit'  => $this->limit,
+				'query'  => $this->query,
+				'sort'   => $this->sort,
+				'order'  => $this->order,
+				'filter' => $this->filter,
+				'cat_id' => $this->cat_id
+			);
+			$this->bo->save_sessiondata($data);
 		}
 
 		function formatted_list($name,$list,$id='',$default=False,$java=False)
@@ -1234,7 +1244,7 @@
 
 			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) || $check[0]['owner'] == $phpgw_info['user']['account_id'])
 			{
-				$this->template->set_var('delete_link','<form method="POST" action="'.$phpgw->link("/addressbook/delete.php") . '">');
+				$this->template->set_var('delete_link','<form method="POST" action="'.$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.delete') . '">');
 				$this->template->set_var('delete_button','<input type="submit" name="delete" value="' . lang('Delete') . '">');
 			}
 
@@ -1480,6 +1490,51 @@
 			$phpgw->common->hook('addressbook_view');
 
 			$phpgw->common->phpgw_footer();
+		}
+
+		function delete()
+		{
+			global $phpgw,$phpgw_info,$entry,$ab_id,$confirm;
+
+			if (!$ab_id)
+			{
+				$ab_id = $entry['ab_id'];
+			}
+			if (!$ab_id)
+			{
+				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
+			}
+
+			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner', 'tid' => 'tid'));
+
+			if (($this->contacts->grants[$check[0]['owner']] & PHPGW_ACL_DELETE) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+			{
+				Header('Location: ' . $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
+				$phpgw->common->phpgw_exit();
+			}
+
+			$this->template->set_file(array('delete' => 'delete.tpl'));
+
+			if ($confirm != 'true')
+			{
+				$phpgw->common->phpgw_header();
+				echo parse_navbar();
+		
+				$this->template->set_var('lang_sure',lang('Are you sure you want to delete this entry ?'));
+				$this->template->set_var('no_link',$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
+				$this->template->set_var('lang_no',lang('NO'));
+				$this->template->set_var('yes_link',$phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.delete&ab_id=' . $ab_id . '&confirm=true'));
+				$this->template->set_var('lang_yes',lang('YES'));
+				$this->template->pparse('out','delete');
+	
+				$phpgw->common->phpgw_footer(); 
+			}
+			else
+			{
+				$this->bo->delete_entry($ab_id);
+	
+				@Header('Location: ' . $phpgw->link('/addressbook/index.php','menuaction=addressbook.uiaddressbook.get_list'));
+			}
 		}
 
 		function html_input_hidden($vars)

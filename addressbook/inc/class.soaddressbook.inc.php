@@ -95,5 +95,15 @@
 			}
 			return;
 		}
+
+		function delete_entry($ab_id)
+		{
+			$this->makeobj();
+			if ($this->rights & PHPGW_ACL_DELETE)
+			{
+				$this->contacts->delete($ab_id);
+			}
+			return;
+		}
 	}
 ?>
