@@ -42,6 +42,7 @@
 	/* These are used in calls to extra_sql () */
 	define (VFS_SQL_SELECT, 1);
 	define (VFS_SQL_DELETE, 2);
+	define (VFS_SQL_UPDATE, 2);
 
 	/* These are used in calls to add_journal (), and allow journal messages to be more standard */
 	define (VFS_OPERATION_CREATED, 1);
@@ -228,7 +229,7 @@ class vfs
 	{
 		global $phpgw, $phpgw_info;
 
-		if ($query_type == VFS_SQL_SELECT || $query_type == VFS_SQL_DELETE)
+		if ($query_type == VFS_SQL_SELECT || $query_type == VFS_SQL_DELETE || $query_type = VFS_SQL_UPDATE)
 		{
 			$sql = " AND ((";
 
@@ -249,10 +250,16 @@ class vfs
 
 	/*!
 	@function add_journal
-	@abstract Add a journal entry after completing an operation, and increment the version number
-		  This function should be used internally only
-	@discussion Note that $state_one and $state_two are optional, and are only used for some
-		    VFS_OPERATION's and not for any "custom" operation
+	@abstract Add a journal entry after (or before) completing an operation,
+		  and increment the version number.  This function should be used internally only
+	@discussion Note that $state_one and $state_two are ignored for some VFS_OPERATION's, for others
+		    they are required.  They are ignored for any "custom" operation
+		    The two operations that require $state_two:
+		    $operation			$state_two
+		    VFS_OPERATION_COPIED	Copied to fake_full_path
+		    VFS_OPERATION_MOVED		Moved to fake_full_path
+
+		    If deleting, you must call add_journal () before you delete the entry from the database
 	@param $string File or directory to add entry for
 	@param $relatives Relativity array
 	@param $operation The operation that was performed.  Either a VFS_OPERATION define or
@@ -270,6 +277,8 @@ class vfs
 	function add_journal ($string, $relatives = array (RELATIVE_CURRENT), $operation, $state_one, $state_two, $incversion = True)
 	{
 		global $phpgw, $phpgw_info;
+
+		$account_id = $phpgw_info["user"]["account_id"];
 
 		$p = $this->path_parts ($string, array ($relatives[0]));
 
@@ -327,12 +336,16 @@ class vfs
 					case VFS_OPERATION_COPIED:
 						if (!$state_one)
 							$state_one = $p->fake_full_path;
+						if (!$state_two)
+							return False;
 						$value = "Copied $state_one to $state_two";
 						$incversion = False;
 						break;
 					case VFS_OPERATION_MOVED:
 						if (!$state_one)
 							$state_one = $p->fake_full_path;
+						if (!$state_two)
+							return False;
 						$value = "Moved $state_one to $state_two";
 						$incversion = False;
 						break;
@@ -403,6 +416,53 @@ class vfs
 
 		$sql .= $sql2;
 
+		/*
+		   These are some special situations where we need to flush the journal entries
+		   or move the 'journal' entries to 'journal-deleted'.  Kind of hackish, but they
+		   provide a consistent feel to the system
+		*/
+		if ($operation == VFS_OPERATION_CREATED)
+		{
+			$flush_path = $p->fake_full_path;
+			$deleteall = True;
+		}
+
+		if ($operation == VFS_OPERATION_COPIED || $operation == VFS_OPERATION_MOVED)
+		{
+			$flush_path = $state_two;
+			$deleteall = False;
+		}
+
+		if ($flush_path)
+		{
+			$flush_path_parts = $this->path_parts ($flush_path, array (RELATIVE_NONE));
+
+			$this->flush_journal ($flush_path_parts->fake_full_path, array ($flush_path_parts->mask), $deleteall);
+		}
+
+		if ($operation == VFS_OPERATION_COPIED)
+		{
+			/*
+			   We copy it going the other way as well, so both files show the operation.
+			   The code is a bad hack to prevent recursion.  Ideally it would use VFS_OPERATION_COPIED
+			*/
+			$this->add_journal ($state_two, array (RELATIVE_NONE), "Copied $state_one to $state_two", NULL, NULL, False);
+		}
+
+		if ($operation == VFS_OPERATION_MOVED)
+		{
+			$state_one_path_parts = $this->path_parts ($state_one, array (RELATIVE_NONE));
+
+			$query = $phpgw->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='$state_one_path_parts->fake_leading_dirs_clean' AND name='$state_one_path_parts->fake_name_clean' AND mime_type='journal'");
+
+			/*
+			   We create the file in addition to logging the MOVED operation.  This is an
+			   advantage because we can now search for 'Create' to see when a file was created
+			*/
+			$this->add_journal ($state_two, array (RELATIVE_NONE), VFS_OPERATION_CREATED);
+		}
+
+		/* This is the SQL query we made for THIS request, remember that one? */
 		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
 		if ($operation == VFS_OPERATION_DELETED)
@@ -411,6 +471,53 @@ class vfs
 		}
 
 		return True;
+	}
+
+	/*!
+	@function flush_journal
+	@abstract Flush journal entries for $string.  Used before adding $string
+	@discussion flush_journal () is an internal function and should be called from add_journal () only
+	@param $string File/directory to flush journal entries of
+	@param $relatives Realtivity array
+	@param $deleteall Delete all types of journal entries, including the active Create entry.
+			  Normally you only want to delete the Create entry when replacing the file
+			  Note that this option does not effect $deleteonly
+	@param $deletedonly Only flush 'journal-deleted' entries (created when $string was deleted)
+	@result Boolean True/False
+	*/
+
+	function flush_journal ($string, $relatives = array (RELATIVE_CURRENT), $deleteall = False, $deletedonly = False)
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		$sql = "DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+
+		if (!$deleteall)
+		{
+			$sql .= " AND (mime_type != 'journal' AND comment != 'Created')";
+		}
+
+		$sql .= "  AND (mime_type='journal-deleted'";
+
+		if (!$deletedonly)
+		{
+			$sql .= " OR mime_type='journal'";
+		}
+
+		$sql .= ")";
+
+		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
+
+		if ($query)
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
 	}
 
 	/*!
@@ -1109,7 +1216,7 @@ class vfs
 
 			if ($this->file_exists ($to, array ($relatives[1])))
 			{
-				$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'", __LINE__, __FILE__);
+				$phpgw->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 
 				$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => $size, "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"]));
 
@@ -1224,7 +1331,7 @@ class vfs
 
 			/*
 			   We add the journal entry now, before we delete.  This way the mime_type
-			   field will be updated to 'journal-old' when the file is actually deleted
+			   field will be updated to 'journal-deleted' when the file is actually deleted
 			*/
 			if (!$f->outside)
 			{
@@ -1240,11 +1347,11 @@ class vfs
 				$size = filesize ($f->real_full_path);
 
 				$this->touch ($t->fake_full_path, array ($t->mask));
-				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'");
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 			}
 			elseif (!$t->outside)
 			{
-				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'", __LINE__, __FILE__);
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 			}
 
 			$this->set_attributes ($t->fake_full_path, array ($t->mask), array ("modifiedby_id" => $account_id, modified => $this->now));
@@ -1274,7 +1381,7 @@ class vfs
 				$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry["directory"]);
 				$newdir_clean = $this->db_clean ($newdir);
 
-				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir_clean' WHERE file_id='$entry[file_id]'", __LINE__, __FILE__);
+				$query = $phpgw->db->query ("UPDATE phpgw_vfs SET directory='$newdir_clean' WHERE file_id='$entry[file_id]'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 				$this->correct_attributes ("$newdir/$entry[name]", array ($t->mask));
 			}
 		}
@@ -1564,7 +1671,11 @@ class vfs
 			{
 				$$attribute = $attributes[$attribute];
 
-				if ($attribute == "comment")
+				/*
+				   Indicate that the EDITED_COMMENT operation needs to be journaled,
+				   but only if the comment changed
+				*/
+				if ($attribute == "comment" && $attributes[$attribute] != $record[$attribute])
 				{
 					$edited_comment = 1;
 				}
@@ -1589,6 +1700,7 @@ class vfs
 		}
 
 		$sql .= " WHERE file_id='$record[file_id]'";
+		$sql .= $this->extra_sql (VFS_SQL_UPDATE);
 
 		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
 
