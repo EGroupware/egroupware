@@ -40,7 +40,7 @@
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Category $cat_name has been added !")); }
+    if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Category x has been added !', $cat_name)); }
     if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
     $t->set_var('title_categories',lang('Add global category'));
