@@ -19,4 +19,7 @@
 	<tr>
 		<td><font face="{font}">{zip}</font></td>
 	</tr>
+	<tr>
+		<td><font face="{font}">{country}</font></td>
+	</tr>
 </table>
