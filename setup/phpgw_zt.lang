@@ -1,472 +1,472 @@
-(for weekly)	calendar	zh_TW	(每週的)
-1 match found	calendar	zh_TW	找到一個符合
-1 message has been deleted	email	zh_TW	訊息已被刪除
-a	calendar	zh_TW	一個
-access	common	zh_TW	選擇讀取群組
-access type	common	zh_TW	存取形態
-access type	todo	zh_TW	存取形態
-account active	admin	zh_TW	帳號狀態 (有效/無效)
-account has been created	common	zh_TW	新增帳號
-account has been deleted	common	zh_TW	刪除帳號
-account has been updated	common	zh_TW	修改帳號
-account preferences	common	zh_TW	帳號設定
-active	admin	zh_TW	狀態
-add	common	zh_TW	新增
-add a single pharse	transy	zh_TW	新增一個pharse
-add new account	admin	zh_TW	新增帳號
-add new application	admin	zh_TW	新增應用程式
-add new pharse	transy	zh_TW	新增一個新的pharse
-add to addressbook	email	zh_TW	新增至通訊錄
-address book	common	zh_TW	通訊錄
-address book	addressbook	zh_TW	通訊錄
-address book - view	addressbook	zh_TW	瀏覽通訊錄
-addressbook	common	zh_TW	通訊錄
-addressbook preferences	common	zh_TW	通訊錄設定
-addsub	todo	zh_TW	回覆
-admin	common	zh_TW	控制台
-administration	common	zh_TW	管理員
-all	transy	zh_TW	所有
-all	calendar	zh_TW	所有
-all records and account information will be lost!	admin	zh_TW	所有的帳號和記錄將清除！
-anonymous user	admin	zh_TW	匿名使用者
-any	transy	zh_TW	任何的
-application	transy	zh_TW	應用程式
-application name	admin	zh_TW	應用程式名稱
-application title	admin	zh_TW	應用程式標題
-applications	admin	zh_TW	應用程式
-april	common	zh_TW	四月
-are you sure you want to delete this account ?	admin	zh_TW	你確定要刪除這個帳號嗎？
-are you sure you want to delete this application ?	admin	zh_TW	你確定要刪除這個應用程式嗎？
-are you sure you want to delete this entry	todo	zh_TW	確定要刪除這一筆資料？
-are you sure you want to delete this entry ?	common	zh_TW	確定要刪除這一筆資料？
-are you sure you want to delete this group ?	admin	zh_TW	你確定要刪除這個群組嗎？
-are you sure you want to delete this news site ?	admin	zh_TW	你確定要刪除這個新聞標題嗎？
-are you sure you want to kill this session ?	admin	zh_TW	你確定要刪除這個session嗎？
-are you sure\nyou want to\ndelete this entry ?	calendar	zh_TW	確定要刪除這個記事？
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zh_TW	確定要刪除這個記事？\n\n這樣會使所有使用者都看不到！
-august	common	zh_TW	八月
-author	nntp	zh_TW	編輯者
-available groups	nntp	zh_TW	群組可使用
-bad login or password	login	zh_TW	密碼或帳號錯誤
-base url	admin	zh_TW	網址
-birthday	addressbook	zh_TW	生日
-book marks	common	zh_TW	電子書籤
-bookmarks	common	zh_TW	電子書籤
-brief description	calendar	zh_TW	待辦事項
-calendar	common	zh_TW	行事曆
-calendar - add	calendar	zh_TW	新增
-calendar - edit	calendar	zh_TW	編輯
-calendar preferences	common	zh_TW	行事曆設定
-cancel	common	zh_TW	取消
-cancel	filemanager	zh_TW	取消
-cc	email	zh_TW	副本
-change	common	zh_TW	變更
-change your password	preferences	zh_TW	更改密碼
-change your profile	preferences	zh_TW	更改profile
-change your settings	preferences	zh_TW	更改設定
-charset	common	zh_TW	字元設定
-chat	common	zh_TW	聊天室
-city	addressbook	zh_TW	城市
-clear	common	zh_TW	清除
-clear form	common	zh_TW	清除表格
-clear form	todo	zh_TW	清除表格
-clipboard_contents	filemanager	zh_TW	附加文件
-company name	addressbook	zh_TW	公司名稱
-completed	todo	zh_TW	完成進度
-compose	email	zh_TW	新增電子郵件
-copy	common	zh_TW	複製
-copy	filemanager	zh_TW	複製
-copy_as	filemanager	zh_TW	複製到
-create	common	zh_TW	建立時間
-create	filemanager	zh_TW	建立時間
-create group	admin	zh_TW	建立新群組
-create lang.sql file	transy	zh_TW	建立新語言
-create new langague set	transy	zh_TW	新語言的設定
-created by	common	zh_TW	編輯者
-created by	todo	zh_TW	編輯者
-current users	common	zh_TW	線上使用者
-current_file	filemanager	zh_TW	使用資料夾
-daily	calendar	zh_TW	每日的
-daily matrix view	calendar	zh_TW	預覽每日
-date	common	zh_TW	日期
-date	email	zh_TW	日期
-date	nntp	zh_TW	日期
-date due	todo	zh_TW	截止日期
-date format	preferences	zh_TW	日期更新
-days datedue	todo	zh_TW	截止日期
-days repeated	calendar	zh_TW	重複天數
-december	common	zh_TW	十二月
-default application	preferences	zh_TW	預設應用程式
-default sorting order	email	zh_TW	預設值
-delete	common	zh_TW	刪除
-delete	email	zh_TW	刪除
-delete	filemanager	zh_TW	刪除
-description	calendar	zh_TW	描述
-disabled	admin	zh_TW	關閉
-display	admin	zh_TW	列出
-display missing pharases in lang set	transy	zh_TW	語系設定
-done	common	zh_TW	完成
-download	filemanager	zh_TW	下載
-do_delete	filemanager	zh_TW	刪除
-duration	calendar	zh_TW	持續
-e-mail	common	zh_TW	電子郵件
-e-mail	addressbook	zh_TW	電子郵件
-e-mail preferences	common	zh_TW	電子郵件設定
-edit	common	zh_TW	編輯
-edit	filemanager	zh_TW	編輯
-edit application	admin	zh_TW	編輯應用程式
-edit group	admin	zh_TW	編輯群組
-email	email	zh_TW	電子郵件
-email	common	zh_TW	電子郵件
-email account name	email	zh_TW	帳號
-email address	email	zh_TW	Email的帳號
-email password	email	zh_TW	密碼
-email signature	email	zh_TW	Ｅ-MAIL簽核
-enabled	admin	zh_TW	開啟 
-enabled - hidden from navbar	admin	zh_TW	開啟但隱藏圖示
-end date/time	calendar	zh_TW	結束日期/時間
-enter your new password	preferences	zh_TW	輸入新密碼
-entry has been deleted sucessfully	common	zh_TW	刪除完成
-entry updated sucessfully	common	zh_TW	修改完成
-error	common	zh_TW	錯誤訊息
-error creating x x directory	common	zh_TW	新增發生錯誤 %1%2 
-error deleting x x directory	common	zh_TW	刪除錯誤 %1%2 
-error renaming x x directory	common	zh_TW	重新命名發生錯誤 %1%2 
-err_saving_file	filemanager	zh_TW	儲存格式錯誤
-exit	common	zh_TW	離開
-exit	filemanager	zh_TW	離開
-fax	addressbook	zh_TW	傳真
-february	common	zh_TW	二月
-file manager	common	zh_TW	檔案管理
-files	email	zh_TW	檔案
-files	filemanager	zh_TW	檔案
-file_upload	filemanager	zh_TW	檔案上傳
-filter	common	zh_TW	選擇群組
-first name	common	zh_TW	姓
-first name	addressbook	zh_TW	姓
-first page	common	zh_TW	第一頁
-folder	email	zh_TW	文件夾
-forum	common	zh_TW	討論區
-forward	email	zh_TW	轉寄
-fr	calendar	zh_TW	F
-free/busy	calendar	zh_TW	空閒的/忙碌的
-frequency	calendar	zh_TW	次數
-fri	calendar	zh_TW	星期五
-friday	common	zh_TW	五
-from	email	zh_TW	寄件者
-ftp	common	zh_TW	檔案傳輸
-full description	calendar	zh_TW	內容
-generate new lang.sql file	transy	zh_TW	新增lang.sql檔案
-generate printer-friendly version	calendar	zh_TW	列印
-global public	common	zh_TW	顯示整個群組
-global public and group public	calendar	zh_TW	顯示整個群組和自己所屬的群組
-global public only	calendar	zh_TW	只顯示整個群組
-go!	calendar	zh_TW	ＧＯ！
-group access	common	zh_TW	群組存取
-group has been added	common	zh_TW	新增群組
-group has been deleted	common	zh_TW	刪除群組
-group has been updated	common	zh_TW	修改群組
-group name	admin	zh_TW	群組名稱
-group public	common	zh_TW	顯示自己所屬的群組
-group public only	calendar	zh_TW	只顯示自己所屬的群組
-groups	common	zh_TW	群組
-groupsfile_perm_error	filemanager	zh_TW	錯誤：請至群組資料夾做適當的設定
-group_files	filemanager	zh_TW	群組檔案夾
-headline sites	admin	zh_TW	新聞頭條位址
-headlines	common	zh_TW	新聞頭條
-help	common	zh_TW	說明
-high	common	zh_TW	高
-home	common	zh_TW	首頁
-home phone	addressbook	zh_TW	住家電話
-human resources	common	zh_TW	人力資源
-i participate	calendar	zh_TW	參與
-idle	admin	zh_TW	閒置時間
-if applicable	email	zh_TW	可應用的
-ignore conflict	calendar	zh_TW	略過錯誤
-image	email	zh_TW	圖片
-imap server type	email	zh_TW	電子郵件的型態
-import lang set	transy	zh_TW	輸入語系設定
-installed applications	admin	zh_TW	已安裝的應用程式
-inventory	common	zh_TW	庫存管理
-ip	admin	zh_TW	位址
-it has been more then x days since you changed your password	common	zh_TW	更改密碼後幾天
-january	common	zh_TW	一月
-july	common	zh_TW	七月
-june	common	zh_TW	六月
-kill	admin	zh_TW	刪除
-language	preferences	zh_TW	語言
-last name	common	zh_TW	名
-last name	addressbook	zh_TW	名
-last page	common	zh_TW	最後一頁
-last time read	admin	zh_TW	最後讀取時間
-last updated	todo	zh_TW	最近修改記錄
-last x logins	admin	zh_TW	最近登入記錄
-line 2	addressbook	zh_TW	line 2 
-list of current users	admin	zh_TW	顯示使用者列表
-listings displayed	admin	zh_TW	顯示列表
-login	common	zh_TW	登入
-login	login	zh_TW	登入
-login time	admin	zh_TW	登入時間
-loginid	admin	zh_TW	登入帳號
-logout	common	zh_TW	登出
-low	common	zh_TW	低
-mail server	email	zh_TW	郵件伺服器
-mail server type	email	zh_TW	郵件伺服器種類
-manager	admin	zh_TW	系統管理者
-march	common	zh_TW	三月
-max matchs per page	preferences	zh_TW	符合所需的資料
-may	common	zh_TW	五月
-medium	common	zh_TW	中
-message	email	zh_TW	訊息
-message	transy	zh_TW	訊息
-message x	nntp	zh_TW	訊息
-messages	email	zh_TW	訊息
-minutes	calendar	zh_TW	分鐘
-minutes between reloads	admin	zh_TW	登入時間
-mo	calendar	zh_TW	M
-mobile	addressbook	zh_TW	大哥大
-mon	calendar	zh_TW	星期一
-monday	common	zh_TW	一
-monitor	email	zh_TW	螢幕
-monitor	nntp	zh_TW	螢幕
-monitor newsgroups	preferences	zh_TW	群組新聞
-month	calendar	zh_TW	月
-monthly	calendar	zh_TW	每月
-monthly (by date)	calendar	zh_TW	每月(by date)
-monthly (by day)	calendar	zh_TW	每月(by d)
-move selected messages into	email	zh_TW	移動訊息至
-name	common	zh_TW	群組名稱
-network news	admin	zh_TW	網路新聞
-new entry	calendar	zh_TW	新的記事
-new entry added sucessfully	common	zh_TW	新增記事完成
-new group name	admin	zh_TW	新群組名稱
-new message	email	zh_TW	新訊息
-new password [ leave blank for no change ]	admin	zh_TW	新密碼
-new pharse has been added	common	zh_TW	New pharse has been added
-new pharse has been added	transy	zh_TW	New pharse has been added
-news file	admin	zh_TW	新檔案
-news headlines	common	zh_TW	頭條新聞
-news reader	common	zh_TW	新的讀者
-news type	admin	zh_TW	新群組名稱
-newsgroups	nntp	zh_TW	新群組
-new_file	filemanager	zh_TW	新檔案
-next	email	zh_TW	下一個
-next	nntp	zh_TW	下一個
-next page	common	zh_TW	下一頁
-nntp	common	zh_TW	網路新聞
-no	common	zh_TW	否
-no	filemanager	zh_TW	否
-no matches found.	calendar	zh_TW	找不到符合的項目
-no subject	email	zh_TW	沒有標題
-non-standard	email	zh_TW	Non-Standard
-none	calendar	zh_TW	無
-normal	common	zh_TW	一般
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh_TW	注意：email的密碼更改失敗，您必須手動更改。
-notes	addressbook	zh_TW	記事本
-november	common	zh_TW	十一月
-no_file_name	filemanager	zh_TW	找不到符合的項目
-october	common	zh_TW	十月
-ok	common	zh_TW	確定
-on *nix systems please type: x	common	zh_TW	On *nix systems please type: %1
-only yours	common	zh_TW	私人的
-original	transy	zh_TW	原始的
-other number	addressbook	zh_TW	其它
-pager	addressbook	zh_TW	呼叫器
-participants	calendar	zh_TW	參與人員
-password	common	zh_TW	輸入密碼
-password	login	zh_TW	輸入密碼
-password has been updated	common	zh_TW	密碼已經更改
-percent of users that logged out	admin	zh_TW	使用者登出比率
-permissions	admin	zh_TW	新檔案
-permissions this group has	admin	zh_TW	允許\組使用
-permissions to the files/users directory	common	zh_TW	允許使\用資料夾
-pharse in english	transy	zh_TW	英語的pharse
-pharse in new langague	transy	zh_TW	新語言的pharse
-phpgroupware login	login	zh_TW	登入
-please select a message first	email	zh_TW	請選擇訊息
-please x by hand	common	zh_TW	請由傳遞
-please, select a new theme	preferences	zh_TW	請選擇一個新的
-powered by phpgroupware version x	common	zh_TW	此版本由www.phpgroupware.org提供
-preferences	common	zh_TW	設定
-previous	email	zh_TW	預覽
-previous page	common	zh_TW	前一頁
-print	common	zh_TW	列印
-printer friendly	calendar	zh_TW	列印
-priority	common	zh_TW	優先順序
-private and global public	calendar	zh_TW	顯示個人的和整個群組
-private and group public	calendar	zh_TW	顯示個人的和自己所屬群組
-private_files	filemanager	zh_TW	個人的資料夾
-private	common	zh_TW	個人的
-private only	calendar	zh_TW	只顯示個人的行事曆
-project description	todo	zh_TW	專案敘述
-re-edit event	calendar	zh_TW	增加事項
-re-enter password	admin	zh_TW	再次輸入密碼
-re-enter your password	preferences	zh_TW	再次輸入密碼
-record access	addressbook	zh_TW	使用記錄
-record owner	addressbook	zh_TW	個人記錄
-remove all users from this group	admin	zh_TW	自群組移除所有使用者
-rename	common	zh_TW	重新命名
-rename	filemanager	zh_TW	重新命名
-rename_to	filemanager	zh_TW	重新命名為
-repeat day	calendar	zh_TW	重複天數
-repeat end date	calendar	zh_TW	結束重複日期
-repeat type	calendar	zh_TW	重複屬性
-repeating event information	calendar	zh_TW	重複事件訊息
-repetition	calendar	zh_TW	重複事件
-reply	email	zh_TW	回覆
-reply all	email	zh_TW	回覆全部
-sa	calendar	zh_TW	Sa
-sat	calendar	zh_TW	星期六
-saturday	common	zh_TW	六
-save	common	zh_TW	儲存
-save	filemanager	zh_TW	儲存
-search	common	zh_TW	搜尋
-search results	calendar	zh_TW	搜尋結果
-section	email	zh_TW	段落
-select application	transy	zh_TW	選擇應用程式
-select different theme	preferences	zh_TW	選擇不同的主題
-select headline news sites	preferences	zh_TW	選擇頭條新聞的網站
-select langague to generate for	transy	zh_TW	從哪選擇語言
-select permissions this group will have	admin	zh_TW	選擇那個群組可使用
-select users for inclusion	admin	zh_TW	選擇可使用的使用者
-select which application for this pharse	transy	zh_TW	選擇pharse的應用
-select which langauge for this pharse	transy	zh_TW	選擇pharse的語系
-send	email	zh_TW	送出
-send deleted messages to the trash	email	zh_TW	刪除
-september	common	zh_TW	九月
-session has been killed	common	zh_TW	刪除此session
-show all	common	zh_TW	顯示全部
-show all groups	nntp	zh_TW	顯示全部群組
-show birthday reminders on main screen	addressbook	zh_TW	顯示生日在首頁上
-show current users on navigation bar	preferences	zh_TW	顯示現在所使用的navigation bar
-show groups containing	nntp	zh_TW	顯示群組
-show high priority events on main screen	calendar	zh_TW	顯示事情優先順序在首頁上
-show new messages on main screen	email	zh_TW	顯示新訊息在主要首頁上
-show text on navigation icons	preferences	zh_TW	顯示文字與按鈕
-showing x	common	zh_TW	顯示 %1
-showing x - x of x	common	zh_TW	顯示 %1 - %2 of %3
-site	admin	zh_TW	網站
-size	email	zh_TW	大小
-sorry, that group name has already been taking.	admin	zh_TW	抱歉，群組名稱已存在
-sorry, the follow users are still a member of the group x	admin	zh_TW	Sorry, the follow users are still a member of the group %1
-sorry, there was a problem processing your request.	common	zh_TW	抱歉，這個問題處理過程發生錯誤
-sorry, your login has expired	login	zh_TW	登入終止
-source language	transy	zh_TW	原始的語言
-specify_file_name	filemanager	zh_TW	您必須明確的說明所建立的資料夾
-start date/time	calendar	zh_TW	開始日期/時間
-state	addressbook	zh_TW	國家
-status	todo	zh_TW	進度
-status	admin	zh_TW	進度
-street	addressbook	zh_TW	街
-su	calendar	zh_TW	Su
-subject	email	zh_TW	主旨
-subject	nntp	zh_TW	主旨
-submit	common	zh_TW	送出
-submit changes	admin	zh_TW	改變送出
-sun	calendar	zh_TW	星期日
-sunday	common	zh_TW	日
-switch current folder to	email	zh_TW	關閉現在所適用的資料夾到
-target language	transy	zh_TW	本國語言
-th	calendar	zh_TW	T
-that loginid has already been taken	admin	zh_TW	已經登入了
-that site has already been entered	admin	zh_TW	狀態
-the following conflicts with the suggested time:<ul>x</ul>	calendar	zh_TW	發生抵觸<ul>%1</ul>
-the login and password can not be the same	admin	zh_TW	登入帳號和密碼不能為同樣地
-the two passwords are not the same	admin	zh_TW	密碼不相同
-the two passwords are not the same	preferences	zh_TW	密碼不相同
-they must be removed before you can continue	admin	zh_TW	您必須先移除才能繼續！
-this folder is empty	email	zh_TW	文件夾是空的
-this month	calendar	zh_TW	本月
-this server is located in the x timezone	preferences	zh_TW	 時間區域 
-this week	calendar	zh_TW	本週
-threads	nntp	zh_TW	threads
-thu	calendar	zh_TW	星期四
-thursday	common	zh_TW	四
-time	common	zh_TW	時間
-time format	preferences	zh_TW	時間的轉換
-time zone offset	preferences	zh_TW	時間區域的補強
-title	admin	zh_TW	應用程式名稱
-title	addressbook	zh_TW	應用程式名稱
-to	email	zh_TW	收件者
-to correct this error for the future you will need to properly set the	common	zh_TW	To correct this error for the future you will need to properly set the
-today	calendar	zh_TW	今天
-today is x's birthday!	common	zh_TW	專案敘述
-todo	todo	zh_TW	todo
-todo list	common	zh_TW	工作進度管理
-todo list	todo	zh_TW	工作進度管理
-todo list - add	todo	zh_TW	新增
-todo list - edit	todo	zh_TW	編輯
-tommorow is x's birthday.	common	zh_TW	Tommorow is %1's birthday.
-total	common	zh_TW	全部
-total records	admin	zh_TW	所有記錄
-translation	transy	zh_TW	翻譯
-translation management	common	zh_TW	語系轉換
-trouble ticket system	common	zh_TW	投票區
-tu	calendar	zh_TW	T
-tue	calendar	zh_TW	星期二
-tuesday	common	zh_TW	二
-undisclosed recipients	email	zh_TW	Undisclosed Recipients
-undisclosed sender	email	zh_TW	未知寄件者
-update	nntp	zh_TW	更新
-updated	common	zh_TW	更新
-upload	filemanager	zh_TW	上傳
-urgency	todo	zh_TW	重要性
-url	addressbook	zh_TW	個人網址
-use cookies	login	zh_TW	use cookies
-use custom settings	email	zh_TW	使用者帳號
-use end date	calendar	zh_TW	Use End date
-user accounts	admin	zh_TW	使用者帳號
-user groups	admin	zh_TW	使用者群組
-username	login	zh_TW	使用者名稱
-users	common	zh_TW	使用者
-usersfile_perm_error	filemanager	zh_TW	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
-view	common	zh_TW	預覽
-view access log	admin	zh_TW	察看使用記錄
-view sessions	admin	zh_TW	察看session
-view this entry	calendar	zh_TW	預覽記事
-view/edit/delete all pharses	transy	zh_TW	預覽、編輯、刪除記事
-we	calendar	zh_TW	W
-wed	calendar	zh_TW	星期三
-wednesday	common	zh_TW	三
-week	calendar	zh_TW	週
-weekday starts on	calendar	zh_TW	工作日開始
-weekly	calendar	zh_TW	每週的
-which groups	common	zh_TW	請選擇群組
-which groups	todo	zh_TW	請選擇群組
-work day ends on	calendar	zh_TW	工作截止日
-work day starts on	calendar	zh_TW	工作開始日
-work phone	addressbook	zh_TW	公司電話
-x matches found	calendar	zh_TW	%1 找到符合的資料
-x messages have been deleted	email	zh_TW	%1 訊息刪除
-year	calendar	zh_TW	年
-yearly	calendar	zh_TW	每年的
-yes	common	zh_TW	是
-yes	filemanager	zh_TW	是
-you are required to change your password durring your first login	common	zh_TW	首次登入，請變更您的密碼
-you have 1 high priority event on your calendar today.	common	zh_TW	您有重要訊息！
-you have 1 new message!	common	zh_TW	You have 1 new 您有一通新訊息！
-you have been successfully logged out	login	zh_TW	您已成功\登出了
-you have entered an invailed date	todo	zh_TW	您上次進入的日期
-you have not entered a\nbrief description	calendar	zh_TW	請輸入主題
-you have not entered a\nvalid time of day.	calendar	zh_TW	請輸入時間
-you have x high priority events on your calendar today.	common	zh_TW	您有重要訊息！
-you have x new messages!	common	zh_TW	您有 %1 訊息！
-you must add at least 1 permission to this account	admin	zh_TW	您最少必須加入一個群組
-you must enter a base url	admin	zh_TW	請輸入網址
-you must enter a display	admin	zh_TW	請按顯示
-you must enter a news url	admin	zh_TW	請輸入新聞網址
-you must enter a password	admin	zh_TW	請輸入密碼
-you must enter a password	preferences	zh_TW	請輸入密碼
-you must enter an application name and title.	admin	zh_TW	請輸入應用程式和標題
-you must enter one or more search keywords	calendar	zh_TW	請輸入搜尋的key word
-you must enter the number of listings display	admin	zh_TW	請輸入顯示列表
-you must enter the number of minutes between reload	admin	zh_TW	從新reload，須等幾分鐘
-you must select a file type	admin	zh_TW	請選擇檔案形態
-your current theme is: x	preferences	zh_TW	您所使用的：x </b>
-your message has been sent	common	zh_TW	你的訊息已送出
-your search returned 1 match	common	zh_TW	找到一個符合的
-your search returned x matchs	common	zh_TW	符合您所要的資料%1
-your session could not be verified.	login	zh_TW	找不到此session
-your settings have been updated	common	zh_TW	設定更新
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	zh_TW	您所輸入的時間<B>%1-%2</B>和原有存在行事曆的形成有衝突！
-zip code	addressbook	zh_TW	郵遞區號
+(for weekly)	calendar	zt	(每週的)
+1 match found	calendar	zt	找到一個符合
+1 message has been deleted	email	zt	訊息已被刪除
+a	calendar	zt	一個
+access	common	zt	選擇讀取群組
+access type	common	zt	存取形態
+access type	todo	zt	存取形態
+account active	admin	zt	帳號狀態 (有效/無效)
+account has been created	common	zt	新增帳號
+account has been deleted	common	zt	刪除帳號
+account has been updated	common	zt	修改帳號
+account preferences	common	zt	帳號設定
+active	admin	zt	狀態
+add	common	zt	新增
+add a single pharse	transy	zt	新增一個pharse
+add new account	admin	zt	新增帳號
+add new application	admin	zt	新增應用程式
+add new pharse	transy	zt	新增一個新的pharse
+add to addressbook	email	zt	新增至通訊錄
+address book	common	zt	通訊錄
+address book	addressbook	zt	通訊錄
+address book - view	addressbook	zt	瀏覽通訊錄
+addressbook	common	zt	通訊錄
+addressbook preferences	common	zt	通訊錄設定
+addsub	todo	zt	回覆
+admin	common	zt	控制台
+administration	common	zt	管理員
+all	transy	zt	所有
+all	calendar	zt	所有
+all records and account information will be lost!	admin	zt	所有的帳號和記錄將清除！
+anonymous user	admin	zt	匿名使用者
+any	transy	zt	任何的
+application	transy	zt	應用程式
+application name	admin	zt	應用程式名稱
+application title	admin	zt	應用程式標題
+applications	admin	zt	應用程式
+april	common	zt	四月
+are you sure you want to delete this account ?	admin	zt	你確定要刪除這個帳號嗎？
+are you sure you want to delete this application ?	admin	zt	你確定要刪除這個應用程式嗎？
+are you sure you want to delete this entry	todo	zt	確定要刪除這一筆資料？
+are you sure you want to delete this entry ?	common	zt	確定要刪除這一筆資料？
+are you sure you want to delete this group ?	admin	zt	你確定要刪除這個群組嗎？
+are you sure you want to delete this news site ?	admin	zt	你確定要刪除這個新聞標題嗎？
+are you sure you want to kill this session ?	admin	zt	你確定要刪除這個session嗎？
+are you sure\nyou want to\ndelete this entry ?	calendar	zt	確定要刪除這個記事？
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	確定要刪除這個記事？\n\n這樣會使所有使用者都看不到！
+august	common	zt	八月
+author	nntp	zt	編輯者
+available groups	nntp	zt	群組可使用
+bad login or password	login	zt	密碼或帳號錯誤
+base url	admin	zt	網址
+birthday	addressbook	zt	生日
+book marks	common	zt	電子書籤
+bookmarks	common	zt	電子書籤
+brief description	calendar	zt	待辦事項
+calendar	common	zt	行事曆
+calendar - add	calendar	zt	新增
+calendar - edit	calendar	zt	編輯
+calendar preferences	common	zt	行事曆設定
+cancel	common	zt	取消
+cancel	filemanager	zt	取消
+cc	email	zt	副本
+change	common	zt	變更
+change your password	preferences	zt	更改密碼
+change your profile	preferences	zt	更改profile
+change your settings	preferences	zt	更改設定
+charset	common	zt	字元設定
+chat	common	zt	聊天室
+city	addressbook	zt	城市
+clear	common	zt	清除
+clear form	common	zt	清除表格
+clear form	todo	zt	清除表格
+clipboard_contents	filemanager	zt	附加文件
+company name	addressbook	zt	公司名稱
+completed	todo	zt	完成進度
+compose	email	zt	新增電子郵件
+copy	common	zt	複製
+copy	filemanager	zt	複製
+copy_as	filemanager	zt	複製到
+create	common	zt	建立時間
+create	filemanager	zt	建立時間
+create group	admin	zt	建立新群組
+create lang.sql file	transy	zt	建立新語言
+create new langague set	transy	zt	新語言的設定
+created by	common	zt	編輯者
+created by	todo	zt	編輯者
+current users	common	zt	線上使用者
+current_file	filemanager	zt	使用資料夾
+daily	calendar	zt	每日的
+daily matrix view	calendar	zt	預覽每日
+date	common	zt	日期
+date	email	zt	日期
+date	nntp	zt	日期
+date due	todo	zt	截止日期
+date format	preferences	zt	日期更新
+days datedue	todo	zt	截止日期
+days repeated	calendar	zt	重複天數
+december	common	zt	十二月
+default application	preferences	zt	預設應用程式
+default sorting order	email	zt	預設值
+delete	common	zt	刪除
+delete	email	zt	刪除
+delete	filemanager	zt	刪除
+description	calendar	zt	描述
+disabled	admin	zt	關閉
+display	admin	zt	列出
+display missing pharases in lang set	transy	zt	語系設定
+done	common	zt	完成
+download	filemanager	zt	下載
+do_delete	filemanager	zt	刪除
+duration	calendar	zt	持續
+e-mail	common	zt	電子郵件
+e-mail	addressbook	zt	電子郵件
+e-mail preferences	common	zt	電子郵件設定
+edit	common	zt	編輯
+edit	filemanager	zt	編輯
+edit application	admin	zt	編輯應用程式
+edit group	admin	zt	編輯群組
+email	email	zt	電子郵件
+email	common	zt	電子郵件
+email account name	email	zt	帳號
+email address	email	zt	Email的帳號
+email password	email	zt	密碼
+email signature	email	zt	Ｅ-MAIL簽核
+enabled	admin	zt	開啟 
+enabled - hidden from navbar	admin	zt	開啟但隱藏圖示
+end date/time	calendar	zt	結束日期/時間
+enter your new password	preferences	zt	輸入新密碼
+entry has been deleted sucessfully	common	zt	刪除完成
+entry updated sucessfully	common	zt	修改完成
+error	common	zt	錯誤訊息
+error creating x x directory	common	zt	新增發生錯誤 %1%2 
+error deleting x x directory	common	zt	刪除錯誤 %1%2 
+error renaming x x directory	common	zt	重新命名發生錯誤 %1%2 
+err_saving_file	filemanager	zt	儲存格式錯誤
+exit	common	zt	離開
+exit	filemanager	zt	離開
+fax	addressbook	zt	傳真
+february	common	zt	二月
+file manager	common	zt	檔案管理
+files	email	zt	檔案
+files	filemanager	zt	檔案
+file_upload	filemanager	zt	檔案上傳
+filter	common	zt	選擇群組
+first name	common	zt	姓
+first name	addressbook	zt	姓
+first page	common	zt	第一頁
+folder	email	zt	文件夾
+forum	common	zt	討論區
+forward	email	zt	轉寄
+fr	calendar	zt	F
+free/busy	calendar	zt	空閒的/忙碌的
+frequency	calendar	zt	次數
+fri	calendar	zt	星期五
+friday	common	zt	五
+from	email	zt	寄件者
+ftp	common	zt	檔案傳輸
+full description	calendar	zt	內容
+generate new lang.sql file	transy	zt	新增lang.sql檔案
+generate printer-friendly version	calendar	zt	列印
+global public	common	zt	顯示整個群組
+global public and group public	calendar	zt	顯示整個群組和自己所屬的群組
+global public only	calendar	zt	只顯示整個群組
+go!	calendar	zt	ＧＯ！
+group access	common	zt	群組存取
+group has been added	common	zt	新增群組
+group has been deleted	common	zt	刪除群組
+group has been updated	common	zt	修改群組
+group name	admin	zt	群組名稱
+group public	common	zt	顯示自己所屬的群組
+group public only	calendar	zt	只顯示自己所屬的群組
+groups	common	zt	群組
+groupsfile_perm_error	filemanager	zt	錯誤：請至群組資料夾做適當的設定
+group_files	filemanager	zt	群組檔案夾
+headline sites	admin	zt	新聞頭條位址
+headlines	common	zt	新聞頭條
+help	common	zt	說明
+high	common	zt	高
+home	common	zt	首頁
+home phone	addressbook	zt	住家電話
+human resources	common	zt	人力資源
+i participate	calendar	zt	參與
+idle	admin	zt	閒置時間
+if applicable	email	zt	可應用的
+ignore conflict	calendar	zt	略過錯誤
+image	email	zt	圖片
+imap server type	email	zt	電子郵件的型態
+import lang set	transy	zt	輸入語系設定
+installed applications	admin	zt	已安裝的應用程式
+inventory	common	zt	庫存管理
+ip	admin	zt	位址
+it has been more then x days since you changed your password	common	zt	更改密碼後幾天
+january	common	zt	一月
+july	common	zt	七月
+june	common	zt	六月
+kill	admin	zt	刪除
+language	preferences	zt	語言
+last name	common	zt	名
+last name	addressbook	zt	名
+last page	common	zt	最後一頁
+last time read	admin	zt	最後讀取時間
+last updated	todo	zt	最近修改記錄
+last x logins	admin	zt	最近登入記錄
+line 2	addressbook	zt	line 2 
+list of current users	admin	zt	顯示使用者列表
+listings displayed	admin	zt	顯示列表
+login	common	zt	登入
+login	login	zt	登入
+login time	admin	zt	登入時間
+loginid	admin	zt	登入帳號
+logout	common	zt	登出
+low	common	zt	低
+mail server	email	zt	郵件伺服器
+mail server type	email	zt	郵件伺服器種類
+manager	admin	zt	系統管理者
+march	common	zt	三月
+max matchs per page	preferences	zt	符合所需的資料
+may	common	zt	五月
+medium	common	zt	中
+message	email	zt	訊息
+message	transy	zt	訊息
+message x	nntp	zt	訊息
+messages	email	zt	訊息
+minutes	calendar	zt	分鐘
+minutes between reloads	admin	zt	登入時間
+mo	calendar	zt	M
+mobile	addressbook	zt	大哥大
+mon	calendar	zt	星期一
+monday	common	zt	一
+monitor	email	zt	螢幕
+monitor	nntp	zt	螢幕
+monitor newsgroups	preferences	zt	群組新聞
+month	calendar	zt	月
+monthly	calendar	zt	每月
+monthly (by date)	calendar	zt	每月(by date)
+monthly (by day)	calendar	zt	每月(by d)
+move selected messages into	email	zt	移動訊息至
+name	common	zt	群組名稱
+network news	admin	zt	網路新聞
+new entry	calendar	zt	新的記事
+new entry added sucessfully	common	zt	新增記事完成
+new group name	admin	zt	新群組名稱
+new message	email	zt	新訊息
+new password [ leave blank for no change ]	admin	zt	新密碼
+new pharse has been added	common	zt	New pharse has been added
+new pharse has been added	transy	zt	New pharse has been added
+news file	admin	zt	新檔案
+news headlines	common	zt	頭條新聞
+news reader	common	zt	新的讀者
+news type	admin	zt	新群組名稱
+newsgroups	nntp	zt	新群組
+new_file	filemanager	zt	新檔案
+next	email	zt	下一個
+next	nntp	zt	下一個
+next page	common	zt	下一頁
+nntp	common	zt	網路新聞
+no	common	zt	否
+no	filemanager	zt	否
+no matches found.	calendar	zt	找不到符合的項目
+no subject	email	zt	沒有標題
+non-standard	email	zt	Non-Standard
+none	calendar	zt	無
+normal	common	zt	一般
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	zt	注意：email的密碼更改失敗，您必須手動更改。
+notes	addressbook	zt	記事本
+november	common	zt	十一月
+no_file_name	filemanager	zt	找不到符合的項目
+october	common	zt	十月
+ok	common	zt	確定
+on *nix systems please type: x	common	zt	On *nix systems please type: %1
+only yours	common	zt	私人的
+original	transy	zt	原始的
+other number	addressbook	zt	其它
+pager	addressbook	zt	呼叫器
+participants	calendar	zt	參與人員
+password	common	zt	輸入密碼
+password	login	zt	輸入密碼
+password has been updated	common	zt	密碼已經更改
+percent of users that logged out	admin	zt	使用者登出比率
+permissions	admin	zt	新檔案
+permissions this group has	admin	zt	允許\組使用
+permissions to the files/users directory	common	zt	允許使\用資料夾
+pharse in english	transy	zt	英語的pharse
+pharse in new langague	transy	zt	新語言的pharse
+phpgroupware login	login	zt	登入
+please select a message first	email	zt	請選擇訊息
+please x by hand	common	zt	請由傳遞
+please, select a new theme	preferences	zt	請選擇一個新的
+powered by phpgroupware version x	common	zt	此版本由www.phpgroupware.org提供
+preferences	common	zt	設定
+previous	email	zt	預覽
+previous page	common	zt	前一頁
+print	common	zt	列印
+printer friendly	calendar	zt	列印
+priority	common	zt	優先順序
+private and global public	calendar	zt	顯示個人的和整個群組
+private and group public	calendar	zt	顯示個人的和自己所屬群組
+private_files	filemanager	zt	個人的資料夾
+private	common	zt	個人的
+private only	calendar	zt	只顯示個人的行事曆
+project description	todo	zt	專案敘述
+re-edit event	calendar	zt	增加事項
+re-enter password	admin	zt	再次輸入密碼
+re-enter your password	preferences	zt	再次輸入密碼
+record access	addressbook	zt	使用記錄
+record owner	addressbook	zt	個人記錄
+remove all users from this group	admin	zt	自群組移除所有使用者
+rename	common	zt	重新命名
+rename	filemanager	zt	重新命名
+rename_to	filemanager	zt	重新命名為
+repeat day	calendar	zt	重複天數
+repeat end date	calendar	zt	結束重複日期
+repeat type	calendar	zt	重複屬性
+repeating event information	calendar	zt	重複事件訊息
+repetition	calendar	zt	重複事件
+reply	email	zt	回覆
+reply all	email	zt	回覆全部
+sa	calendar	zt	Sa
+sat	calendar	zt	星期六
+saturday	common	zt	六
+save	common	zt	儲存
+save	filemanager	zt	儲存
+search	common	zt	搜尋
+search results	calendar	zt	搜尋結果
+section	email	zt	段落
+select application	transy	zt	選擇應用程式
+select different theme	preferences	zt	選擇不同的主題
+select headline news sites	preferences	zt	選擇頭條新聞的網站
+select langague to generate for	transy	zt	從哪選擇語言
+select permissions this group will have	admin	zt	選擇那個群組可使用
+select users for inclusion	admin	zt	選擇可使用的使用者
+select which application for this pharse	transy	zt	選擇pharse的應用
+select which langauge for this pharse	transy	zt	選擇pharse的語系
+send	email	zt	送出
+send deleted messages to the trash	email	zt	刪除
+september	common	zt	九月
+session has been killed	common	zt	刪除此session
+show all	common	zt	顯示全部
+show all groups	nntp	zt	顯示全部群組
+show birthday reminders on main screen	addressbook	zt	顯示生日在首頁上
+show current users on navigation bar	preferences	zt	顯示現在所使用的navigation bar
+show groups containing	nntp	zt	顯示群組
+show high priority events on main screen	calendar	zt	顯示事情優先順序在首頁上
+show new messages on main screen	email	zt	顯示新訊息在主要首頁上
+show text on navigation icons	preferences	zt	顯示文字與按鈕
+showing x	common	zt	顯示 %1
+showing x - x of x	common	zt	顯示 %1 - %2 of %3
+site	admin	zt	網站
+size	email	zt	大小
+sorry, that group name has already been taking.	admin	zt	抱歉，群組名稱已存在
+sorry, the follow users are still a member of the group x	admin	zt	Sorry, the follow users are still a member of the group %1
+sorry, there was a problem processing your request.	common	zt	抱歉，這個問題處理過程發生錯誤
+sorry, your login has expired	login	zt	登入終止
+source language	transy	zt	原始的語言
+specify_file_name	filemanager	zt	您必須明確的說明所建立的資料夾
+start date/time	calendar	zt	開始日期/時間
+state	addressbook	zt	國家
+status	todo	zt	進度
+status	admin	zt	進度
+street	addressbook	zt	街
+su	calendar	zt	Su
+subject	email	zt	主旨
+subject	nntp	zt	主旨
+submit	common	zt	送出
+submit changes	admin	zt	改變送出
+sun	calendar	zt	星期日
+sunday	common	zt	日
+switch current folder to	email	zt	關閉現在所適用的資料夾到
+target language	transy	zt	本國語言
+th	calendar	zt	T
+that loginid has already been taken	admin	zt	已經登入了
+that site has already been entered	admin	zt	狀態
+the following conflicts with the suggested time:<ul>x</ul>	calendar	zt	發生抵觸<ul>%1</ul>
+the login and password can not be the same	admin	zt	登入帳號和密碼不能為同樣地
+the two passwords are not the same	admin	zt	密碼不相同
+the two passwords are not the same	preferences	zt	密碼不相同
+they must be removed before you can continue	admin	zt	您必須先移除才能繼續！
+this folder is empty	email	zt	文件夾是空的
+this month	calendar	zt	本月
+this server is located in the x timezone	preferences	zt	 時間區域 
+this week	calendar	zt	本週
+threads	nntp	zt	threads
+thu	calendar	zt	星期四
+thursday	common	zt	四
+time	common	zt	時間
+time format	preferences	zt	時間的轉換
+time zone offset	preferences	zt	時間區域的補強
+title	admin	zt	應用程式名稱
+title	addressbook	zt	應用程式名稱
+to	email	zt	收件者
+to correct this error for the future you will need to properly set the	common	zt	To correct this error for the future you will need to properly set the
+today	calendar	zt	今天
+today is x's birthday!	common	zt	專案敘述
+todo	todo	zt	todo
+todo list	common	zt	工作進度管理
+todo list	todo	zt	工作進度管理
+todo list - add	todo	zt	新增
+todo list - edit	todo	zt	編輯
+tommorow is x's birthday.	common	zt	Tommorow is %1's birthday.
+total	common	zt	全部
+total records	admin	zt	所有記錄
+translation	transy	zt	翻譯
+translation management	common	zt	語系轉換
+trouble ticket system	common	zt	投票區
+tu	calendar	zt	T
+tue	calendar	zt	星期二
+tuesday	common	zt	二
+undisclosed recipients	email	zt	Undisclosed Recipients
+undisclosed sender	email	zt	未知寄件者
+update	nntp	zt	更新
+updated	common	zt	更新
+upload	filemanager	zt	上傳
+urgency	todo	zt	重要性
+url	addressbook	zt	個人網址
+use cookies	login	zt	use cookies
+use custom settings	email	zt	使用者帳號
+use end date	calendar	zt	Use End date
+user accounts	admin	zt	使用者帳號
+user groups	admin	zt	使用者群組
+username	login	zt	使用者名稱
+users	common	zt	使用者
+usersfile_perm_error	filemanager	zt	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
+view	common	zt	預覽
+view access log	admin	zt	察看使用記錄
+view sessions	admin	zt	察看session
+view this entry	calendar	zt	預覽記事
+view/edit/delete all pharses	transy	zt	預覽、編輯、刪除記事
+we	calendar	zt	W
+wed	calendar	zt	星期三
+wednesday	common	zt	三
+week	calendar	zt	週
+weekday starts on	calendar	zt	工作日開始
+weekly	calendar	zt	每週的
+which groups	common	zt	請選擇群組
+which groups	todo	zt	請選擇群組
+work day ends on	calendar	zt	工作截止日
+work day starts on	calendar	zt	工作開始日
+work phone	addressbook	zt	公司電話
+x matches found	calendar	zt	%1 找到符合的資料
+x messages have been deleted	email	zt	%1 訊息刪除
+year	calendar	zt	年
+yearly	calendar	zt	每年的
+yes	common	zt	是
+yes	filemanager	zt	是
+you are required to change your password durring your first login	common	zt	首次登入，請變更您的密碼
+you have 1 high priority event on your calendar today.	common	zt	您有重要訊息！
+you have 1 new message!	common	zt	You have 1 new 您有一通新訊息！
+you have been successfully logged out	login	zt	您已成功\登出了
+you have entered an invailed date	todo	zt	您上次進入的日期
+you have not entered a\nbrief description	calendar	zt	請輸入主題
+you have not entered a\nvalid time of day.	calendar	zt	請輸入時間
+you have x high priority events on your calendar today.	common	zt	您有重要訊息！
+you have x new messages!	common	zt	您有 %1 訊息！
+you must add at least 1 permission to this account	admin	zt	您最少必須加入一個群組
+you must enter a base url	admin	zt	請輸入網址
+you must enter a display	admin	zt	請按顯示
+you must enter a news url	admin	zt	請輸入新聞網址
+you must enter a password	admin	zt	請輸入密碼
+you must enter a password	preferences	zt	請輸入密碼
+you must enter an application name and title.	admin	zt	請輸入應用程式和標題
+you must enter one or more search keywords	calendar	zt	請輸入搜尋的key word
+you must enter the number of listings display	admin	zt	請輸入顯示列表
+you must enter the number of minutes between reload	admin	zt	從新reload，須等幾分鐘
+you must select a file type	admin	zt	請選擇檔案形態
+your current theme is: x	preferences	zt	您所使用的：x </b>
+your message has been sent	common	zt	你的訊息已送出
+your search returned 1 match	common	zt	找到一個符合的
+your search returned x matchs	common	zt	符合您所要的資料%1
+your session could not be verified.	login	zt	找不到此session
+your settings have been updated	common	zt	設定更新
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	zt	您所輸入的時間<B>%1-%2</B>和原有存在行事曆的形成有衝突！
+zip code	addressbook	zt	郵遞區號
