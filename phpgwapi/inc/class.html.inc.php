@@ -196,6 +196,9 @@
 
 		function submit_button($name,$lang,$onClick='',$no_lang=0,$options='',$image='',$app='')
 		{
+			// workaround for idots and IE button problem (wrong cursor-image)
+			$options .= ' style="cursor: hand;"';
+
 			if ($image != '')
 			{
 				if (strpos($image,'.'))
