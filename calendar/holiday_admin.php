@@ -118,7 +118,7 @@
 		}
 	}
 
-	$p->set_var('new_action',$phpgw->link('/calendar/new_locale.php'));
+	$p->set_var('new_action',$phpgw->link('/calendar/editholiday.php','id=0'));
 	$p->set_var("lang_add",lang('add'));
 
 	$p->set_var('search_action',$phpgw->link('/calendar/holiday_admin.php'));

@@ -15,6 +15,8 @@
 		'currentapp'		=> 'calendar',
 		'enable_nextmatchs_class'	=> True,
 		'admin_header'		=>	True,
+		'noheader'			=> True,
+		'nonavbar'			=> True,
 		'noappheader'		=> True,
 		'noappfooter'		=> True,
 		'parent_page'		=> 'holiday_admin.php'
@@ -27,25 +29,27 @@
 		$start = 0;
 	}
 	
-	function country_total($query)
+	function country_total($locale,$query)
 	{
 		global $phpgw;
 
 		$querymethod='';
 		if($query)
 		{
-			$querymethod = ' WHERE '.$query;
+			$querymethod = ' AND '.$query;
 		}
-		$phpgw->db->query("SELECT locale FROM phpgw_cal_holidays".$querymethod,__LINE__,__FILE__);
-		$count = 0;
-		while($phpgw->db->next_record())
-		{
-			$count++;
-		}
-		return $count;
+		$phpgw->db->query("SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod,__LINE__,__FILE__);
+		$phpgw->db->next_record();
+		return intval($phpgw->db->f(0));
+//		$count = 0;
+//		while($phpgw->db->next_record())
+//		{
+//			$count++;
+//		}
+//		return $count;
 	}
 
-	function get_holiday_list($sort, $order, $query, $total)
+	function get_holiday_list($locale, $sort, $order, $query, $total)
 	{
 		global $phpgw;
 		
@@ -53,14 +57,14 @@
 
 		if($query)
 		{
-			$querymethod .= ' WHERE '.$query;
+			$querymethod .= ' AND '.$query;
 		}
 		
 		if($order)
 		{
 			$querymethod .= ' ORDER BY '.$order;
 		}
-		$phpgw->db->query("SELECT hol_id,name FROM phpgw_cal_holidays".$querymethod,__LINE__,__FILE__);
+		$phpgw->db->query("SELECT hol_id,name FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod,__LINE__,__FILE__);
 		while($phpgw->db->next_record())
 		{
 			$holiday[$phpgw->db->f('hol_id')] = $phpgw->strip_html($phpgw->db->f('name'));
@@ -72,16 +76,20 @@
 	{
 		$query = str_replace('=',"='",$query)."'";
 	}
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array(
-		'group'      => 'groups.tpl'
+		'locale'	=> 'locales.tpl'
 	);
 	$p->set_file($templates);
-	$p->set_block('group','list','list');
-	$p->set_block('group','row','row');
-	$p->set_block('group','row_empty','row_empty');
+	$p->set_block('locale','list','list');
+	$p->set_block('locale','row','row');
+	$p->set_block('locale','row_empty','row_empty');
 
-	$total = country_total($query);
+	$total = country_total($locale,$query);
+	if(!$total && !isset($query))
+	{
+		Header('Location: ' . $phpgw->link('/calendar/holiday_admin.php'));
+	}
  
 	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
@@ -93,9 +101,9 @@
 	$p->set_var('header_edit',lang('Edit'));
 	$p->set_var('header_delete',lang('Delete'));
 
-	$holidays = get_holiday_list($sort, $order, $query, $total);
+	$holidays = get_holiday_list($locale, $sort, $order, $query, $total);
 
-	if (! count($holidays))
+	if (!count($holidays))
 	{
 		$p->set_var('message',lang('No matchs found'));
 		$p->parse('rows','row_empty',True);
@@ -120,10 +128,14 @@
 	$p->set_var('new_action',$phpgw->link('/calendar/editholiday.php','locale='.$locale.'&id=0'));
 	$p->set_var('lang_add',lang('add'));
 
+	$p->set_var('back_action',$phpgw->link('/calendar/holiday_admin.php'));
+	$p->set_var('lang_back',lang('Back'));
+
 	$p->set_var('search_action',$phpgw->link('/calendar/editlocale.php'));
 	$p->set_var('lang_search',lang('search'));
 
+	$phpgw->common->phpgw_header();
+	echo parse_navbar();
 	$p->pparse('out','list');
-
 	$phpgw->common->phpgw_footer();
 ?>

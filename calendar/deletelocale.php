@@ -11,9 +11,9 @@
   \**************************************************************************/
 	/* $Id$ */
 
-	if(!$id)
+	if(!$locale)
 	{
-		Header('Location: ' . $phpgw->link('/calendar/editlocale.php','locale='.$locale));
+		Header('Location: ' . $phpgw->link('/calendar/holiday_admin.php'));
 	}
 	
 	$phpgw_flags = Array(
@@ -31,8 +31,8 @@
 
 	if(isset($yes) && $yes==True)
 	{
-		$phpgw->calendar->holidays->delete_holiday($id);
-		Header('Location: ' . $phpgw->link('/calendar/editlocale.php','locale='.$locale));
+		$phpgw->calendar->holidays->delete_locale($locale);
+		Header('Location: ' . $phpgw->link('/calendar/holiday_admin.php'));
 	}
 
 	$phpgw->common->phpgw_header();
@@ -45,10 +45,10 @@
 	);
 	$p->set_file($templates);
 
-	$p->set_var('messages',lang('Are you sure you want to delete this holiday ?'));
+	$p->set_var('messages',lang('Are you sure you want to delete this  ?'));
 
 	$var = Array(
-		'action_url_button'	=> $phpgw->link('/calendar/editlocale.php','locale='.$locale),
+		'action_url_button'	=> $phpgw->link('/calendar/holiday_admin.php'),
 		'action_text_button'	=> lang('No'),
 		'action_confirm_button'	=> '',
 		'action_extra_field'	=> ''
@@ -57,7 +57,7 @@
 	$p->parse('no','form_button');
 
 	$var = Array(
-		'action_url_button'	=> $phpgw->link('/calendar/deleteholiday.php','locale='.$locale.'&id='.$id.'&yes=true'),
+		'action_url_button'	=> $phpgw->link('/calendar/deletelocale.php','locale='.$locale.'&yes=true'),
 		'action_text_button'	=> lang('Yes'),
 		'action_confirm_button'	=> '',
 		'action_extra_field'	=> ''
