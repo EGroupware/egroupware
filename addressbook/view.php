@@ -210,25 +210,40 @@
 	{
 		if ($referer)
 		{
-			$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php",'referer='.urlencode($referer)).'">');
+			$t->set_var('edit_link','<form method="POST" action="'
+				. $phpgw->link("/addressbook/edit.php",'referer=' . urlencode($referer),
+				"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id").'">');
 		}
 		else
 		{
-			$t->set_var('edit_link','<form method="POST" action="' . $phpgw->link("/addressbook/edit.php").'">');
+			$t->set_var('edit_link','<form method="POST" action="'
+				. $phpgw->link("/addressbook/edit.php",
+				"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query&cat_id=$cat_id").'">');
 		}
 		$t->set_var('edit_button','<input type="submit" name="edit" value="' . lang('Edit') . '">');
 	}
 
 	$copylink  = '<form method="POST" action="' . $phpgw->link("/addressbook/add.php").'">';
-	$vcardlink = '<form method="POST" action="' . $phpgw->link("/addressbook/vcardout.php").'">';
-	if ($referer)
+	if ($fields[0]['n_family'] && $fields[0]['n_given'])
 	{
-		$referer = ereg_replace('/phpgroupware','',$referer);
-		$donelink  = '<form method="POST" action="' . $phpgw->link($referer).'">';
+		$vcardlink = '<form method="POST" action="' . $phpgw->link("/addressbook/vcardout.php").'">';
 	}
 	else
 	{
-		$donelink  = '<form method="POST" action="' . $phpgw->link("/addressbook/index.php").'">';
+		$vcardlink = lang('no').' '.lang('vcard');
+	}
+	if ($referer)
+	{
+		$referer = ereg_replace('/phpgroupware','',$referer);
+		$donelink  = '<form method="POST" action="'
+			. $phpgw->link($referer,
+			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query").'">';
+	}
+	else
+	{
+		$donelink  = '<form method="POST" action="'
+			. $phpgw->link("/addressbook/index.php",
+			"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query").'">';
 	}
 
 	$t->set_var("access_link",$access_link);
