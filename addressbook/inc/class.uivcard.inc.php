@@ -72,7 +72,7 @@
 
 		function out()
 		{
-			global $phpgw,$phpgw_info,$ab_id;
+			global $phpgw,$phpgw_info,$ab_id,$nolname,$nofname;
 
 			if ($nolname || $nofname)
 			{
