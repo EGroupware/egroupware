@@ -860,6 +860,41 @@ if (is_array($str)) $this->halt('db::db_addslashes('.print_r($str,True).",'$type
 		}
 
 		/**
+		* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
+		*
+		* This is mostly copy & paste from adodb's datadict class
+		* @param string $name
+		* @return string quoted string
+		*/
+		function name_quote($name = NULL)
+		{
+			if (!is_string($name)) {
+				return FALSE;
+			}
+
+			$name = trim($name);
+
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
+
+			$quote = $this->Link_ID->nameQuote;
+
+			// if name is of the form `name`, quote it
+			if ( preg_match('/^`(.+)`$/', $name, $matches) ) {
+				return $quote . $matches[1] . $quote;
+			}
+
+			// if name contains special characters, quote it
+			if ( preg_match('/\W/', $name) ) {
+				return $quote . $name . $quote;
+			}
+
+			return $name;
+		}
+
+		/**
 		* Escape values before sending them to the database - prevents SQL injunction and SQL errors ;-)
 		*
 		* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
