@@ -32,11 +32,22 @@
 	);
 	$tpl->set_file($templates);
 	$tpl->set_block('head_tpl','head','head');
+	$tpl->set_block('head_tpl','head_table','head_table');
 	$tpl->set_block('head_tpl','head_col','head_col');
 	$tpl->set_block('form_button_script','form_button');
-	$tpl->set_var('cols',$cols);
+
+	if(floor(phpversion()) >= 4)
+	{
+		$tpl->set_var('cols',8);
+	}
+	else
+	{
+		$tpl->set_var('cols',7);
+	}
 
 	$today = date('Ymd',time());
+
+	$col_width = 12;
 
 	add_col($tpl,'  <td width="2%">&nbsp;</td>');
 
@@ -51,22 +62,63 @@
 	if(floor(phpversion()) >= 4)
 	{
 		add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('planner','&date='.$today),'planner.gif',lang('Planner')).'</td>');
+		$col_width += 2;
 	}
 
 	add_col($tpl,'  <td width="2%" align="left">'.add_image_ahref($this->page('matrixselect'),'view.gif',lang('Daily Matrix View')).'</td>');
 
-	$remainder = 63;
+	add_col($tpl,'  <td width="'.(100 - $col_width).'%" align="left"'.(floor(phpversion()) < 4?' colspan="2"':'').'>&nbsp;</td>');
+
+	$tpl->parse('row','head_table',True);
+
+	$tpl->set_var('header_column','');
+	$tpl->set_var('cols',$cols);
+
+	$remainder = 72;
+
+	$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
+	if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
+	{
+		$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+	}
+	if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+	{
+		$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+	}
+	if(isset($GLOBALS['HTTP_POST_VARS']['matrixtype']) && $GLOBALS['HTTP_POST_VARS']['matrixtype'])
+	{
+		$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
+	}
+	if(isset($GLOBALS['HTTP_POST_VARS']['participants']) && $GLOBALS['HTTP_POST_VARS']['participants'])
+	{
+		for ($i=0;$i<count($GLOBALS['HTTP_POST_VARS']['participants']);$i++)
+		{
+			$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
+		}
+	}
+	if($this->debug) { echo 'Cat ID = ('.$this->bo->cat_id.")<br>\n"; }
+
+	$var = Array(
+		'form_width' => '28',
+		'form_link'	=> $this->page($referrer),
+		'form_name'	=> 'cat_id',
+		'title'	=> lang('Category'),
+		'hidden_vars'	=> $hidden_vars,
+		'form_options'	=> '<option value="0">All</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
+		'button_value'	=> lang('Go!')
+	);
+	$tpl->set_var($var);
+	$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
+	$tpl->parse('header_column','head_col',True);
+
 	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 	{
 		$remainder -= 28;
 		$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-		if(isset($GLOBALS['HTTP_GET_VARS']['date']) && $GLOBALS['HTTP_GET_VARS']['date'])
+		if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
 		{
-			$hidden_vars .= '    <input type="hidden" name="date" value="'.$HTP_GET_VARS['date'].'">'."\n";
+			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
 		}
-		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 		if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
 		{
 			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
@@ -103,13 +155,6 @@
 	if(count($this->bo->grants) > 0)
 	{
 		$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-		if(isset($GLOBALS['HTTP_GET_VARS']['date']) && $GLOBALS['HTTP_GET_VARS']['date'])
-		{
-			$hidden_vars .= '    <input type="hidden" name="date" value="'.$GLOBALS['HTTP_GET_VARS']['date'].'">'."\n";
-		}
-		$hidden_vars .= '    <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-		$hidden_vars .= '    <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
 		if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
 		{
 			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
@@ -174,4 +219,5 @@
 	$button = $tpl->fp('out','form_button');
 	$tpl->set_var('str','<td align="right" valign="bottom">'.$button.'</td>');
 	$tpl->parse('header_column','head_col',True);
+	$tpl->parse('row','head_table',True);
 ?>

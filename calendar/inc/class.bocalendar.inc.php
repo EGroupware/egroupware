@@ -156,8 +156,8 @@
 
 			$this->printer_friendly = ($GLOBALS['friendly'] == 1?True:False);
 
-			if(isset($GLOBALS['filter']))   { $this->filter = $GLOBALS['filter']; }
-			if(isset($GLOBALS['cat_id']))  { $this->cat_id = $GLOBALS['cat_id']; }
+			if(isset($GLOBALS['HTTP_POST_VARS']['filter']))   { $this->filter = $GLOBALS['HTTP_POST_VARS']['filter']; }
+			if(isset($GLOBALS['HTTP_POST_VARS']['cat_id']))  { $this->cat_id = $GLOBALS['HTTP_POST_VARS']['cat_id']; }
 
 			if(!isset($this->filter))
 			{

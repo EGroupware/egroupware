@@ -55,7 +55,7 @@
 		{
 			$extra = '';
 			$extra .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
-			$extra .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
+			$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
 			return $this->cal->list_events($startYear,$startMonth,$startDay,$endYear,$endMonth,$endDay,$extra,$this->datetime->tz_offset);
 		}
 
@@ -77,7 +77,7 @@
 
 			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
 
-			$sql .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
+			$sql .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
 
 			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
@@ -104,7 +104,7 @@
 			}
 
 			$sql .= (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'');
-			$sql .= ($this->cat_id?'AND phpgw_cal.category = '.$this->cat_id.' ':'');
+			$sql .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
 			$sql .= 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 			return $this->get_event_ids(False,$sql);
 		}

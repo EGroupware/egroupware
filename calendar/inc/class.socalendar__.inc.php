@@ -133,9 +133,9 @@ class socalendar__
 		$this->add_attribute('public',$class);
 	}
 
-	function set_common_recur($year=0,$month=0,$day=0,$interval)
+	function set_common_recur($year=0,$month=0,$day=0,$interval=0)
 	{
-		$this->add_attribute('recur_interval',intval(interval));
+		$this->add_attribute('recur_interval',intval($interval));
 		$this->set_date('recur_enddate',$year,$month,$day,0,0,0);
 		$this->add_attribute('recur_data',0);
 	}

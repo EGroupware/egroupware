@@ -484,7 +484,10 @@
 	   	
 	   	echo '<center>';
 
-   		$cal_id = $vcal_id?$vcal_id:$GLOBALS['HTTP_GET_VARS']['cal_id'];
+   		$cal_id = ($vcal_id?$vcal_id:'');
+   		$cal_id = (isset($GLOBALS['HTTP_POST_VARS']['cal_id'])?$GLOBALS['HTTP_POST_VARS']['cal_id']:$cal_id);
+   		$cal_id = (isset($GLOBALS['HTTP_GET_VARS']['cal_id'])?$GLOBALS['HTTP_GET_VARS']['cal_id']:$cal_id);
+   		
    		$date = $cal_date?$cal_date:0;
    		$date = $date?$date:intval($GLOBALS['HTTP_GET_VARS']['date']);
 	   	
@@ -1420,7 +1423,7 @@
 			{
 				$cols++;
 			}
-	
+
 			$tpl = CreateObject('phpgwapi.Template',$this->template_dir);
 			$tpl->set_unknowns('remove');
 
