@@ -588,6 +588,8 @@
 					if (!empty($new_extravars)) $new_extravars .= '&';
 					$new_extravars .= "$key=$value";
 				}
+				// This needs to be explictly reset to a string variable type for PHP3
+				settype($extravars,'string');
 				$extravars = $new_extravars;
 			}
 
