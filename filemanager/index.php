@@ -1,47 +1,85 @@
 <?php
 
-if ($noheader || $download || $op == "view" || $op == "history" || $op == help)
-{
-	$noheader = True;
-}
-
-$phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
-				"noheader" => $noheader,
-				"noappheader" => False,
-				"enable_vfs_class" => True,
-				"enable_browser_class" => True);
-
-include ("../header.inc.php");
-
-error_reporting (4);
-
-###
-# Page to process users
-# Code is fairly hackish at the beginning, but it gets better
-# Highly suggest turning wrapping off due to long SQL queries
-###
-
-###
-# Note that $userinfo["username"] is actually the id number, not the login name
-###
-
-$userinfo["username"] = $phpgw_info["user"]["account_id"];
-$userinfo["account_lid"] = $phpgw->accounts->id2name ($userinfo["username"]);
-$userinfo["hdspace"] = 10000000000;
-$homedir = "$fakebase/$userinfo[account_lid]";
-
 ###
 # Enable this to display some debugging info
 ###
 
 $phpwh_debug = 0;
 
-###
-# Default is to sort by name
-###
+reset ($GLOBALS['HTTP_POST_VARS']);
+while (list ($name,) = each ($GLOBALS['HTTP_POST_VARS']))
+{
+	$$name = $GLOBALS['HTTP_POST_VARS'][$name];
+}
 
-if (!$sortby)
-	$sortby = "name";
+$to_decode = array
+(
+	/*
+	Decode
+	'var'	when	  'avar' == 'value'
+	*/
+	'op'	=> array ('op' => ''),
+	'path'	=> array ('path' => ''),
+	'file'	=> array ('file' => ''),
+	'sortby'	=> array ('sortby' => ''),
+	'fileman'	=> array ('fileman' => ''),
+	'help_name'	=> array ('help_name' => ''),
+	'renamefiles'	=> array ('renamefiles' => ''),
+	'comment_files'	=> array ('comment_files' => ''),
+	'show_upload_boxes'	=> array ('show_upload_boxes' => '')
+);
+
+reset ($to_decode);
+while (list ($var, $conditions) = each ($to_decode))
+{
+	while (list ($condvar, $condvalue) = each ($conditions))
+	{
+		if (isset ($$condvar) && ($condvar == $var || $$condvar == $condvalue))
+		{
+			if (is_array ($$var))
+			{
+				while (list ($varkey, $varvalue) = each ($$var))
+				{
+					if (is_int ($varkey))
+					{
+						$temp[$varkey] = stripslashes (base64_decode ($varvalue));
+					}
+					else
+					{
+						$temp[stripslashes (base64_decode ($varkey))] = $varvalue;
+					}
+				}
+				$$var = $temp;
+			}
+			elseif (isset ($$var))
+			{
+				$$var = stripslashes (base64_decode ($$var));
+			}
+		}
+	}
+}
+
+if ($noheader || $download || $op == "view" || $op == "history" || $op == help)
+{
+	$noheader = True;
+}
+
+$phpgw_info["flags"] = array
+(
+	"currentapp" => "phpwebhosting",
+	"noheader" => $noheader,
+	"noappheader" => False,
+	"enable_vfs_class" => True,
+	"enable_browser_class" => True
+);
+
+include ("../header.inc.php");
+
+###
+# Page to process users
+# Code is fairly hackish at the beginning, but it gets better
+# Highly suggest turning wrapping off due to long SQL queries
+###
 
 ###
 # Some hacks to set and display directory paths correctly
@@ -55,20 +93,26 @@ if ($go)
 if (!$path)
 {
 	$path = $phpgw->vfs->pwd ();
+
 	if (!$path || $phpgw->vfs->pwd (False) == "")
+	{
 		$path = $homedir;
+	}
 }
 
-$extra_dir = substr ($path, strlen ($homedir) + 1);
 $phpgw->vfs->cd (False, False, array (RELATIVE_NONE));
 $phpgw->vfs->cd ($path, False, array (RELATIVE_NONE));
 
 $pwd = $phpgw->vfs->pwd ();
 
 if (!$cwd = substr ($path, strlen ($homedir) + 1))
+{
 	$cwd = "/";
+}
 else
+{
 	$cwd = substr ($pwd, strrpos ($pwd, "/") + 1);
+}
 
 $disppath = $path;
 
@@ -82,9 +126,6 @@ if (!($lesspath = substr ($path, 0, strrpos ($path, "/"))))
 	$lesspath = "/";
 
 $now = date ("Y-m-d");
-
-//This will hopefully be replaced by a session management working_id
-//if (!$phpgw->vfs->working_id = preg_replace ("/\$fakebase\/(.*)\/(.*)$/U", "\\1", $path))
 
 if ($phpwh_debug)
 {
@@ -106,6 +147,11 @@ if ($phpwh_debug)
 ###
 
 $memberships = $phpgw->accounts->membership ($userinfo["username"]);
+
+if (!is_array ($memberships))
+{
+	$memberships = array ();
+}
 
 while (list ($num, $group_array) = each ($memberships))
 {
@@ -189,6 +235,25 @@ if ($update || rand (0, 19) == 4)
 }
 
 ###
+# Default is to sort by name
+###
+
+if (!$sortby)
+{
+	$sortby = "name";
+}
+
+###
+# Decide how many upload boxes to show
+###
+
+if (!$show_upload_boxes || $show_upload_boxes <= 0)
+{
+	$show_upload_boxes = $settings["show_upload_boxes"];
+}
+
+
+###
 # Read in file info from database to use in the rest of the script
 # $fakebase is a special directory.  In that directory, we list the user's
 # home directory and the directories for the groups they're in
@@ -241,6 +306,11 @@ else
 	}
 }
 
+if (!is_array ($files_array))
+{
+	$files_array = array ();
+}
+
 if ($download)
 {
 	for ($i = 0; $i != $numoffiles; $i++)
@@ -251,8 +321,8 @@ if ($download)
 		}
 
 		$download_browser = CreateObject ('phpgwapi.browser');
-		$download_browser->content_header (string_decode ($fileman[$i], 1));
-		echo $phpgw->vfs->read (string_decode (stripslashes ($fileman[$i]), 1));
+		$download_browser->content_header ($fileman[$i]);
+		echo $phpgw->vfs->read ($fileman[$i]);
 		$phpgw->common->phpgw_exit ();
 	}
 }
@@ -322,6 +392,9 @@ if ($op == "help" && $help_name)
 		if ($help_array[0] != $help_name)
 			continue;
 
+		$help_array[1] = preg_replace ("/\[(.*)\|(.*)\]/Ue", "html_help_link ('\\1', '\\2', False, True)", $help_array[1]);
+		$help_array[1] = preg_replace ("/\[(.*)\]/Ue", "html_help_link ('\\1', '\\1', False, True)", $help_array[1]);
+
 		html_font_set ("4");
 		$title = ereg_replace ("_", " ", $help_array[0]);
 		$title = ucwords ($title);
@@ -334,7 +407,8 @@ if ($op == "help" && $help_name)
 		html_text ($help_array[1]);
 		html_font_end ();
 	}
-	
+
+	$phpgw->common->phpgw_exit ();
 }
 
 ###
@@ -345,6 +419,15 @@ if ($op != "changeinfo" && $op != "logout" && $op != "delete")
 {
 	html_page_begin ("Users :: $userinfo[username]");
 	html_page_body_begin (HTML_PAGE_BODY_COLOR);
+}
+
+if (!is_array ($settings))
+{
+	$pref = CreateObject ('phpgwapi.preferences', $userinfo["username"]);
+	$phpgw->common->hook_single ('add_def_pref', $appname);
+	$pref->save_repository (True);
+	$pref_array = $pref->read_repository ();
+	$settings = $pref_array[$appname];
 }
 
 ###
@@ -477,7 +560,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
         	                for ($j = 0; $j != $numoffiles; $j++)
 				{
-                	                if ($fileman[$j] == string_encode ($files["name"], 1))
+                	                if ($fileman[$j] == $files["name"])
 					{
                         	                $this_selected = 1;
 						break;
@@ -505,11 +588,11 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 			if (!$rename && !$edit_comments && $path != $fakebase && $path != "/")
 			{
-				html_form_input ("checkbox", "fileman[$i]", "$files[name]");
+				html_form_input ("checkbox", "fileman[$i]", base64_encode ("$files[name]"));
 			}
 			elseif ($renamethis)
 			{
-				html_form_input ("hidden", "fileman[" . string_encode ($files[name], 1) . "]", "$files[name]", NULL, NULL, "checked");
+				html_form_input ("hidden", "fileman[" . base64_encode ($files[name]) . "]", "$files[name]", NULL, NULL, "checked");
 			}
 			else
 			{
@@ -530,7 +613,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				{
 					if ($files["mime_type"] == "Directory")
 						html_image ("images/folder.gif", "Folder");
-					html_form_input ("text", "renamefiles[" . string_encode ($files[name], 1) . "]", $files["name"], 255);
+					html_form_input ("text", "renamefiles[" . base64_encode ($files[name]) . "]", $files["name"], 255);
 				}
 				else
 				{
@@ -662,7 +745,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 				html_table_col_begin ();
 				if ($edit_this_comment)
 				{
-					html_form_input ("text", "comment_files[" . string_encode ($files[name], 1) . "]", html_encode ($files["comment"], 1), 255);
+					html_form_input ("text", "comment_files[" . base64_encode ($files[name]) . "]", html_encode ($files["comment"], 1), 255);
 				}
 				else
 				{
@@ -678,7 +761,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			if ($settings["version"])
 			{
 				html_table_col_begin ();
-				html_link ("$appname/index.php?op=history&file=" . string_encode ($files[name], 1) . "&path=$path", $files["version"], NULL, NULL, NULL, "_new");
+				html_link ("$appname/index.php?op=history&file=$files[name]&path=$path", $files["version"], NULL, True, NULL, "_new");
 				html_table_col_end ();
 			}
 
@@ -834,7 +917,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			
 			if ((($dir["directory"] . $dir["name"]) != $path) && $phpgw->vfs->file_exists ($dir["directory"] . $dir["name"], array (RELATIVE_NONE)))
 			{
-				html_form_option ($dir["directory"] . $dir["name"]);
+				html_form_option ($dir["directory"] . $dir["name"], $dir["directory"] . $dir["name"]);
 			}
 		}
 
@@ -884,7 +967,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		}
 		
 		###
-		# Show file upload boxes. Note the last argument to html ().  Repeats 5 times
+		# Show file upload boxes. Note the last argument to html ().  Repeats $show_upload_boxes times
 		###
 
 		if ($path != "/" && $path != $fakebase)
@@ -905,15 +988,29 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 			html_table_row_begin ();
 			html_table_col_begin ();
-			html (html_form_input ("file", "file[]", NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
+			html_form_input ("hidden", "show_upload_boxes", base64_encode ($show_upload_boxes));
+			html (html_form_input ("file", "upload_file[]", NULL, 255, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
 			html_table_col_end ();
 			html_table_col_begin ();
-			html (html_form_input ("text", "comment[]", NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), 5);
+			html (html_form_input ("text", "upload_comment[]", NULL, NULL, NULL, NULL, NULL, 1) . html_break (1, NULL, 1), $show_upload_boxes);
 			html_table_col_end ();
 			html_table_row_end ();
 			html_table_end ();
 			html_form_input ("submit", "upload_files", "Upload files");
 			html_help_link ("upload_files");
+			html_break (2);
+			html_text ("Show" . html_nbsp (1, True));
+			html_link ("$appname/index.php?show_upload_boxes=5", "5");
+			html_nbsp ();
+			html_link ("$appname/index.php?show_upload_boxes=10", "10");
+			html_nbsp ();
+			html_link ("$appname/index.php?show_upload_boxes=20", "20");
+			html_nbsp ();
+			html_link ("$appname/index.php?show_upload_boxes=50", "50");
+			html_nbsp ();
+			html_text ("upload fields");
+			html_nbsp ();
+			html_help_link ("show_upload_fields");
 			html_form_end ();
 		}
 	}
@@ -941,11 +1038,10 @@ if ($edit)
 
 	if ($edit_preview)
 	{
-		$edit_file_decoded = stripslashes (base64_decode (string_decode ($edit_file, 1)));
 		$content = $edit_file_content;
 
 		html_break (1);
-		html_text_bold ("Preview of $path/$edit_file_decoded");
+		html_text_bold ("Preview of $path/$edit_file");
 		html_break (2);
 
 		html_table_begin ("90%");
@@ -958,18 +1054,17 @@ if ($edit)
 	}
 	elseif ($edit_save)
 	{
-		$edit_file_decoded = stripslashes (base64_decode (string_decode ($edit_file, 1)));
 		$content = $edit_file_content;
 
-		if ($phpgw->vfs->write ($edit_file_decoded, array (RELATIVE_ALL), $content))
+		if ($phpgw->vfs->write ($edit_file, array (RELATIVE_ALL), $content))
 		{
-			html_text_bold ("Saved $path/$edit_file_decoded");
+			html_text_bold ("Saved $path/$edit_file");
 			html_break (2);
 			html_link_back ();
 		}
 		else
 		{
-			html_text_error ("Could not save $path/$edit_file_decoded");
+			html_text_error ("Could not save $path/$edit_file");
 			html_break (2);
 			html_link_back ();
 		}
@@ -980,20 +1075,20 @@ if ($edit)
 	{
 		for ($j = 0; $j != $numoffiles; $j++)
 		{
-			$fileman_decoded = string_decode ($fileman[$j], 1);
+			$fileman[$j];
 
 			$content = $$fileman[$j];
 			echo "fileman[$j]: $fileman[$j]<br><b>$content</b><br>";
 			continue;
 
-			if ($phpgw->vfs->write ($fileman_decoded, array (RELATIVE_ALL), $content))
+			if ($phpgw->vfs->write ($fileman[$j], array (RELATIVE_ALL), $content))
 			{
-				html_text_bold ("Saved $path/$fileman_decoded");
+				html_text_bold ("Saved $path/$fileman[$j]");
 				html_break (1);
 			}
 			else
 			{
-				html_text_error ("Could not save $path/$fileman_decoded");
+				html_text_error ("Could not save $path/$fileman[$j]");
 				html_break (1);
 			}
 		}
@@ -1008,20 +1103,17 @@ if ($edit)
 
 	for ($j = 0; $j != $numoffiles; $j++)
 	{
-		$fileman[$j] = string_decode ($fileman[$j], 1);
-		$fileman_decoded = stripslashes (string_decode ($fileman[$j], 1));
-
 		###
 		# If we're in preview or save mode, we only show the file
 		# being previewed or saved
 		###
 
-		if ($edit_file && ($fileman_decoded != base64_decode ($edit_file)))
+		if ($edit_file && ($fileman[$j] != $edit_file))
 		{
 			continue;
 		}
 
-		if ($fileman_decoded && $phpgw->vfs->file_exists ($fileman_decoded, array (RELATIVE_ALL)))
+		if ($fileman[$j] && $phpgw->vfs->file_exists ($fileman[$j], array (RELATIVE_ALL)))
 		{
 			if ($edit_file)
 			{
@@ -1029,13 +1121,13 @@ if ($edit)
 			}
 			else
 			{
-				$content = $phpgw->vfs->read ($fileman_decoded);
+				$content = $phpgw->vfs->read ($fileman[$j]);
 			}
 
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
 			html_form_input ("hidden", "edit", True);
-			html_form_input ("hidden", "edit_file", base64_encode (string_decode ($fileman[$j], 1)));
+			html_form_input ("hidden", "edit_file", $fileman[$j]);
 
 			###
 			# We need to include all of the fileman entries for each file's form,
@@ -1044,7 +1136,7 @@ if ($edit)
 
 			for ($i = 0; $i != $numoffiles; $i++)
 			{
-				html_form_input ("hidden", "fileman[$i]", string_encode ($fileman[$i], 1));
+				html_form_input ("hidden", "fileman[$i]", base64_encode ($fileman[$i]));
 			}
 
 			html_table_row_begin ();
@@ -1052,9 +1144,9 @@ if ($edit)
 			html_form_textarea ("edit_file_content", 35, 75, $content);
 			html_table_col_end ();
 			html_table_col_begin ("center");
-			html_form_input ("submit", "edit_preview", "Preview " . html_encode ($fileman_decoded, 1));
+			html_form_input ("submit", "edit_preview", "Preview " . html_encode ($fileman[$j], 1));
 			html_break (1);
-			html_form_input ("submit", "edit_save", "Save " . html_encode ($fileman_decoded, 1));
+			html_form_input ("submit", "edit_save", "Save " . html_encode ($fileman[$j], 1));
 //			html_break (1);
 //			html_form_input ("submit", "edit_save_all", "Save all");
 			html_table_col_end ();
@@ -1072,9 +1164,9 @@ if ($edit)
 
 elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 {
-	for ($i = 0; $i != 5; $i++)
+	for ($i = 0; $i != $show_upload_boxes; $i++)
 	{
-		if ($badchar = bad_chars ($file_name[$i], 1))
+		if ($badchar = bad_chars ($upload_file_name[$i], True, True))
 		{
 			echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
 
@@ -1085,7 +1177,7 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 		# Check to see if the file exists in the database, and get its info at the same time
 		###
 
-		$ls_array = $phpgw->vfs->ls ($path . "/" . $file_name[$i], array (RELATIVE_NONE), False, False, True);
+		$ls_array = $phpgw->vfs->ls ($path . "/" . $upload_file_name[$i], array (RELATIVE_NONE), False, False, True);
 		$fileinfo = $ls_array[0];
 
 		if ($fileinfo["name"])
@@ -1097,29 +1189,29 @@ elseif ($op == "upload" && $path != "/" && $path != $fakebase)
 			}
 		}
 
-		if ($file_size[$i] > 0)
+		if ($upload_file_size[$i] > 0)
 		{
 			if ($fileinfo["name"] && $fileinfo["deleteable"] != "N")
 			{
-				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $file_size[$i], mime_type => $file_type[$i], "deleteable" => "Y", "comment" => stripslashes ($comment[$i])));
-				$phpgw->vfs->cp ($file[$i], "$file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
+				$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("owner_id" => $userinfo["username"], "modifiedby_id" => $userinfo["username"], "modified" => $now, "size" => $upload_file_size[$i], mime_type => $upload_file_type[$i], "deleteable" => "Y", "comment" => stripslashes ($upload_comment[$i])));
+				$phpgw->vfs->cp ($upload_file[$i], "$upload_file_name[$i]", array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
 
-				html_text_summary ("Replaced $disppath/$file_name[$i]", $file_size[$i]);
+				html_text_summary ("Replaced $disppath/$upload_file_name[$i]", $upload_file_size[$i]);
 			}
 			else
 			{
-				$phpgw->vfs->cp ($file[$i], $file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
-				$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => stripslashes ($comment[$i])));
+				$phpgw->vfs->cp ($upload_file[$i], $upload_file_name[$i], array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL));
+				$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $upload_file_type[$i], "comment" => stripslashes ($upload_comment[$i])));
 
-				html_text_summary ("Created $disppath/$file_name[$i]", $file_size[$i]);
+				html_text_summary ("Created $disppath/$upload_file_name[$i]", $upload_file_size[$i]);
 			}
 		}
-		elseif ($file_name[$i])
+		elseif ($upload_file_name[$i])
 		{
-			$phpgw->vfs->touch ($file_name[$i], array (RELATIVE_ALL));
-			$phpgw->vfs->set_attributes ($file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $file_type[$i], "comment" => $comment[$i]));
+			$phpgw->vfs->touch ($upload_file_name[$i], array (RELATIVE_ALL));
+			$phpgw->vfs->set_attributes ($upload_file_name[$i], array (RELATIVE_ALL), array ("mime_type" => $upload_file_type[$i], "comment" => $upload_comment[$i]));
 
-			html_text_summary ("Created $disppath/$file_name[$i]", $file_size[$i]);
+			html_text_summary ("Created $disppath/$upload_file_name[$i]", $file_size[$i]);
 		}
 	}
 
@@ -1135,16 +1227,15 @@ elseif ($comment_files)
 {
 	while (list ($file) = each ($comment_files))
 	{
-		if ($badchar = bad_chars ($comment_files[$file], 1))
+		if ($badchar = bad_chars ($comment_files[$file], False, True))
 		{
-			echo $phpgw->common->error_list (array (html_encode ("Comments cannot contain \"$badchar\"", 1)));
+			echo $phpgw->common->error_list (array (html_text_italic ($file, 1) . html_encode (": Comments cannot contain \"$badchar\"", 1)));
 			continue;
 		}
 
-		$file_decoded = stripslashes (string_decode ($file, 1));
-		$phpgw->vfs->set_attributes ($file_decoded, array (RELATIVE_ALL), array ("comment" => stripslashes ($comment_files[$file])));
+		$phpgw->vfs->set_attributes ($file, array (RELATIVE_ALL), array ("comment" => stripslashes ($comment_files[$file])));
 
-		html_text_summary ("Updated comment for $path/$file_decoded");
+		html_text_summary ("Updated comment for $path/$file");
 	}
 
 	html_break (2);
@@ -1157,28 +1248,25 @@ elseif ($comment_files)
 
 elseif ($renamefiles)
 {
-	while (list ($file) = each ($renamefiles))
+	while (list ($from, $to) = each ($renamefiles))
 	{
-		$from_file_decoded = stripslashes (string_decode ($file, 1));
-		$to_file_decoded = stripslashes (string_decode ($renamefiles[$file], 1));
-
-		if ($badchar = bad_chars ($to_file_decoded, 1))
+		if ($badchar = bad_chars ($to, True, True))
 		{
 			echo $phpgw->common->error_list (array (html_encode ("File names cannot contain \"$badchar\"", 1)));
 			continue;
 		}
 
-		if (ereg ("/", $to_file_decoded) || ereg ("\\\\", $to_file_decoded))
+		if (ereg ("/", $to) || ereg ("\\\\", $to))
 		{
 			echo $phpgw->common->error_list (array ("File names cannot contain \\ or /"));
 		}
-		elseif (!$phpgw->vfs->mv ($from_file_decoded, $to_file_decoded))
+		elseif (!$phpgw->vfs->mv ($from, $to))
 		{
-			echo $phpgw->common->error_list (array ("Could not rename $disppath/$from_file_decoded to $disppath/$to_file_decoded"));
+			echo $phpgw->common->error_list (array ("Could not rename $disppath/$from to $disppath/$to"));
 		}
 		else 
 		{
-			html_text_summary ("Renamed $disppath/$from_file_decoded to $disppath/$to_file_decoded");
+			html_text_summary ("Renamed $disppath/$from to $disppath/$to");
 		}
 	}
 
@@ -1194,15 +1282,14 @@ elseif ($move)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		$file_decoded = stripslashes (string_decode ($file, 1));
-		if ($phpgw->vfs->mv ($file_decoded, $todir . "/" . $file_decoded, array (RELATIVE_ALL, RELATIVE_NONE)))
+		if ($phpgw->vfs->mv ($file, $todir . "/" . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
 			$moved++;
-			html_text_summary ("Moved $disppath/$file_decoded to $todir/$file_decoded");
+			html_text_summary ("Moved $disppath/$file to $todir/$file");
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Could not move $disppath/$file_decoded to $todir/$file_decoded"));
+			echo $phpgw->common->error_list (array ("Could not move $disppath/$file to $todir/$file"));
 		}
 	}
 
@@ -1224,16 +1311,14 @@ elseif ($copy)
 {
 	while (list ($num, $file) = each ($fileman))
 	{
-		$file_decoded = stripslashes (string_decode ($file, 1));
-
-		if ($phpgw->vfs->cp ($file_decoded, $todir . "/" . $file_decoded, array (RELATIVE_ALL, RELATIVE_NONE)))
+		if ($phpgw->vfs->cp ($file, $todir . "/" . $file, array (RELATIVE_ALL, RELATIVE_NONE)))
 		{
 			$copied++;
-			html_text_summary ("Copied $disppath/$file_decoded to $todir/$file_decoded");
+			html_text_summary ("Copied $disppath/$file to $todir/$file");
 		}
 		else
 		{
-			echo $phpgw->common->error_list (array ("Could not copy $disppath/$file_decoded to $todir/$file_decoded"));
+			echo $phpgw->common->error_list (array ("Could not copy $disppath/$file to $todir/$file"));
 		}
 	}
 
@@ -1257,12 +1342,6 @@ elseif ($delete)
 	{
 		if ($fileman[$i])
 		{
-			###
-			# There is no need to create a separate $fileman_decode variable, because it will never be passed again
-			###
-
-			$fileman[$i] = string_decode ($fileman[$i], 1);
-
 			if ($phpgw->vfs->delete ($fileman[$i]))
 			{
 				html_text_summary ("Deleted $disppath/$fileman[$i]", $fileinfo["size"]);
@@ -1280,7 +1359,7 @@ elseif ($delete)
 
 elseif ($newdir && $createdir)
 {
-	if ($badchar = bad_chars ($createdir, 1))
+	if ($badchar = bad_chars ($createdir, True, True))
 	{
 		echo $phpgw->common->error_list (array (html_encode ("Directory names cannot contain \"$badchar\"", 1)));
 		html_break (2);
