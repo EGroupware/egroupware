@@ -70,22 +70,113 @@ class html
 		}
 		
 		$html .= "\t</tr>\n";
+
+		// get GroupBy 
+		$groupby = $head['_groupby'];
+		$supres = $head['_supres'];
+		$lastgroup = '';
+
+		// build actual Rows...
 		
-
-
-		reset($rows);
-		while(list($rno,$r)=each($rows))
+		
+/*
+** Okay here goes nothing
+** Need to build a table in an array so that I can directly access 
+** the diferent portions and change attributes directly...
+*/		
+		// Start by making an empty table, with default values!
+		$rparms = array();
+		$table = array();
+		$mrow = count($rows);
+		$mcol = count($cols);
+		for ($rno=0;$rno<$mrow;$rno++)
 		{
-			$row = $obj->$frtn($rno,$r);
-			$rparms = $row['_rparms'];
-			$html .= "\t<tr $rparms> ";		
-			reset($cols);
-			while (list(,$name) = each($cols))
+			$rparms[$rno] =
+					array (
+						'VALIGN'	=>'TOP',
+						'bgcolor'	=>'FFFFFF'
+						);
+			for($cno=0;$cno<$mcol;$cno++)
 			{
-				$values = $head[$name];
-				$parms = $values['parms'];
-				$fparms = $row['_'.$name];
-				$html .= "\t\t<td ".$parms.$fparms.">".$row[$name]."</td>\n";
+				$table[$rno][$cno] = 
+					array (
+						'VALIGN'	=>'TOP',
+						'colspan'	=>1,
+						'rowspan'	=>1,
+						'value'		=>$rows[$rno][$cols[$cno]],
+						'bgcolor'	=>'FFFFFF',
+						'#supres'	=>'no'
+						);
+			}
+
+			// Build GroupKey
+			if (isset($groupby))
+			{
+				$gkey = '';
+				reset($groupby);
+				while (list($gname,)=each($groupby))
+				{
+					$gkey .= $rows[$rno][$gname];
+				}
+				$table[$rno]['#gkey'] = $gkey;
+			}
+		}
+
+		// Grouping Suppression
+
+		if (isset($groupby))
+		{
+			$grno = 0;
+			for ($rno=1;$rno<$mrow;$rno++)
+			{
+
+				$rowspan = 1;
+				$gkey = $table[$grno]['#gkey'];
+				$rkey = $table[$rno]['#gkey'];
+				while ( $gkey == $rkey)
+				{
+					$rowspan = $rowspan + 1;
+
+					for ($cno=0;$cno<$mcol;$cno++)
+					{
+						if ($supres[$cols[$cno]])
+						{
+							$table[$rno][$cno]['#supres']='yes';
+							$table[$rno][$cno]['value']='&nbsp ';
+							$table[$grno][$cno]['rowspan']=$rowspan;
+						}
+					}
+					$rno++;
+					if ($rno >= $mrow)
+					{
+						break;
+					}
+					$rkey = $table[$rno]['#gkey'];
+				}			
+				$grno=$rno;
+				$gkey=$rkey;
+			}
+		}
+
+		/*
+		** Now (finaly) Generate the Html For the Table
+		*/
+		
+		for ($rno=0;$rno<$mrow;$rno++)
+		{
+			// let user have a hack at the row...
+			$table[$rno]=$obj->$frtn($rno,$table[$rno]);
+			
+			$rp = $this->makeparms($rparms[$rno]);
+			$gkey = $table[$rno]['#gkey'];
+			$html .= "\t<tr $rp> <comment $gkey>\n";		
+			for($cno=0;$cno<$mcol;$cno++)
+			{
+				if ($table[$rno][$cno]['#supres']=='no')
+				{
+					$cp = $this->makeparms($table[$rno][$cno]);
+					$html .= "\t\t<td $cp>".$table[$rno][$cno]['value']."</td>\n";
+				};
 			}
 			$html .= "\t</tr>\n";
 		}
@@ -94,6 +185,37 @@ class html
 		return $html;	
 	}
 	
+
+
+	function makeparms($parmlist)
+	{
+		$html = '';
+		$comma = ' ';
+		reset($parmlist);
+		while(list($pname,$pvalue)=each($parmlist))
+		{
+			switch($pname)
+			{
+				case 'value':
+					break;
+				case 'colspan':
+				case 'rowspan':
+					if ($pvalue != 1)
+					{
+						$html .= $comma . $pname . '="' . $pvalue . '"';
+						$comma = ', ';
+					};
+					break;
+				default:
+					if (substr($pname,0,1) != '#')
+					{
+						$html .= $comma . $pname . '="' . $pvalue . '"';
+						$comma = ', ';
+					}
+			}
+		}
+		return $html;
+	}
 
 	function edit_table($rows,$head='',$obj, $frtn)
 	{
