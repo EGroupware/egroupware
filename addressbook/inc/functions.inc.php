@@ -329,8 +329,8 @@
 			}
 
 			$notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
-			$label   = '<TEXTAREA cols="60" name="notes" rows="6">' . $label . '</TEXTAREA>';
-			$pubkey  = '<TEXTAREA cols="60" name="notes" rows="6">' . $pubkey . '</TEXTAREA>';
+			$label   = '<TEXTAREA cols="60" name="label" rows="6">' . $label . '</TEXTAREA>';
+			$pubkey  = '<TEXTAREA cols="60" name="pubkey" rows="6">' . $pubkey . '</TEXTAREA>';
 		} else {
 			$notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
 					. $notes . "</TEXTAREA></form>";
