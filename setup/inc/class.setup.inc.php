@@ -67,7 +67,7 @@
 			$HeaderPW     = $HTTP_COOKIE_VARS['HeaderPW']   ? $HTTP_COOKIE_VARS['HeaderPW']   : $HTTP_POST_VARS['HeaderPW'];
 			$ConfigLang   = $HTTP_POST_VARS['ConfigLang']   ? $HTTP_POST_VARS['ConfigLang']   : $HTTP_COOKIE_VARS['ConfigLang'];
 
-			if (isset($FormLogout))
+			if (isset($FormLogout) && !empty($FormLogout))
 			{
 				if ($FormLogout == 'config' ||
 					$FormLogout == 'ldap' ||
@@ -88,9 +88,9 @@
 					return False;
 				}
 			}
-			elseif (isset($ConfigPW))
+			elseif (isset($ConfigPW) && !empty($ConfigPW))
 			{
-				if ($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]["config_passwd"] && $auth_type == 'Config')
+				if ($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'] && $auth_type == 'Config')
 				{
 					setcookie('ConfigPW');  // scrub the old one
 					setcookie('ConfigDomain');  // scrub the old one
@@ -103,7 +103,7 @@
 					return True;
 				}
 			}
-			elseif (isset($FormPW))
+			elseif (isset($FormPW) && !empty($FormPW))
 			{
 				if (isset($ConfigLogin))
 				{
@@ -122,7 +122,7 @@
 						return False;
 					}
 				}
-				elseif (isset($HeaderLogin))
+				elseif (isset($HeaderLogin) && !empty($HeaderLogin))
 				{
 					if ($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 					{
@@ -136,7 +136,7 @@
 					}
 				}
 			}
-			elseif (isset($HeaderPW))
+			elseif (isset($HeaderPW) && !empty($HeaderPW))
 			{
 				if ($HeaderPW != $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 				{
