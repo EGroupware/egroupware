@@ -39,8 +39,8 @@
 	define('IN_PROCESS',6);
 
 	/* class */
-	define('PRIVATE',0);
-	define('PUBLIC',1);
+	define('PRIVATECAL',0);
+	define('PUBLICCAL',1);
 	define('CONFIDENTIAL',3);
 
 	/* transparency */
@@ -1910,10 +1910,10 @@
 				switch($var)
 				{
 					case 'PRIVATE':
-						return PRIVATE;
+						return PRIVATECAL;
 						break;
 					case 'PUBLIC':
-						return PUBLIC;
+						return PUBLICCAL;
 						break;
 					case 'CONFIDENTIAL':
 						return CONFIDENTIAL;
@@ -1924,10 +1924,10 @@
 			{
 				switch((int)$var)
 				{
-					case PRIVATE:
+					case PRIVATECAL:
 						return 'PRIVATE';
 						break;
-					case PUBLIC:
+					case PUBLICCAL:
 						return 'PUBLIC';
 						break;
 					case CONFIDENTIAL:
