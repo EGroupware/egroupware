@@ -20,6 +20,8 @@
 	- Merged patch for parsing of non-compliant rfc822 email addresses.
 	  Thanks bwulf
 	- Fixed the addressbook not opening when composing email.
+	- Applied patch to fix md5 en/decryption.
+	  Thanks milosch
 
 [0.9.7] - Fixed SQL error in tts
         - Fixed table locking in admin -> edit account
