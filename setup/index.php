@@ -61,7 +61,8 @@
   $phpgw_setup->show_header($phpgw_info["setup"]["header_msg"]);
   if (PHP_VERSION < "3.0.16") {
     echo "You appear to be running an old version of PHP.  It its recommend that you upgrade "
-      . "to a new version.  Older version of PHP might not run phpGroupWare correctly, if at all.";
+      . "to a new version.  Older version of PHP might not run phpGroupWare correctly, if at all."
+	  . "Please upgrade to at least version 3.0.16.";
     exit;
   }
 
