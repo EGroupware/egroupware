@@ -65,6 +65,11 @@
   while (@$db->next_record()) {
     $current_config[$db->f("config_name")] = $db->f("config_value");
   }
+
+  if ($current_config["files_dir"] == "/path/to/dir/phpgroupware/files") {
+     $current_config["files_dir"] = $phpgw_info["server"]["server_root"] . "/files";
+  }
+
   
   if ($error == "badldapconnection") {
      // Please check the number and dial again :)
