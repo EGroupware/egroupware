@@ -210,6 +210,7 @@
 			$start      = $GLOBALS['HTTP_POST_VARS']['start'] ? $GLOBALS['HTTP_POST_VARS']['start'] : $GLOBALS['HTTP_GET_VARS']['start'];
 			$query      = $GLOBALS['HTTP_POST_VARS']['query'] ? $GLOBALS['HTTP_POST_VARS']['query'] : $GLOBALS['HTTP_GET_VARS']['query'];
 			$sort       = $GLOBALS['HTTP_POST_VARS']['sort']  ? $GLOBALS['HTTP_POST_VARS']['sort']  : $GLOBALS['HTTP_GET_VARS']['sort'];
+			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
 
 			if (!$field)
 			{
@@ -225,7 +226,7 @@
 				. '<input type="hidden" name="start" value="' . $start . '">' . "\n"
 				. '<input type="hidden" name="field" value="' . $field . '">' . "\n";
 
-			if ($GLOBALS['HTTP_POST_VARS']['submit'])
+			if ($submit)
 			{
 				$errorcount = 0;
 				if (!$field_name) { $error[$errorcount++] = lang('Please enter a name for that field!'); }
@@ -266,7 +267,7 @@
 
 			$GLOBALS['phpgw']->template->set_var('title_fields',lang('Edit Field'));
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.edit'));
-			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifieldsdelete&field=$field&start=$start&query=$query&sort=$sort"));
+			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$field&start=$start&query=$query&sort=$sort"));
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.index&start=$start&query=$query&sort=$sort"));
 
 			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
