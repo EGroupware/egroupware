@@ -180,7 +180,11 @@
 
 			$values = array();
 			$maxmatchs = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-			$dir = opendir($path = ini_get('session.save_path'));
+			$dir = @opendir($path = ini_get('session.save_path'));
+			if (!$dir)	// eg. openbasedir restrictions
+			{
+				return $values;
+			}
 			while ($file = readdir($dir))
 			{
 				if (substr($file,0,5) != 'sess_')
