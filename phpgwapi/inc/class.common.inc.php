@@ -1294,7 +1294,7 @@
 				$salt       = $this->randomstring(2);
 				$e_password = $this->des_cryptpasswd($password, $salt);
 				
-				return $_epassword;
+				return $e_password;
 			}
 			elseif (strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']) == 'md5')
 			{
