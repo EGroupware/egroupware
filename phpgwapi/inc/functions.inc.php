@@ -252,19 +252,19 @@
 		}
 
 		/* A few hacker resistant constants that will be used throught the program */
-
-		define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
-		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
-		define("PHPGW_IMAGES_FILEDIR", $phpgw->common->get_image_dir("phpgwapi"));
-		define("PHPGW_APP_ROOT", $phpgw->common->get_app_dir());
-		define("PHPGW_APP_INC", $phpgw->common->get_inc_dir());
-		define("PHPGW_APP_TPL", $phpgw->common->get_tpl_dir());
-		define("PHPGW_IMAGES", $phpgw->common->get_image_path());
-		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_dir());
-		define("PHPGW_ACL_READ",1);
-		define("PHPGW_ACL_ADD",2);
-		define("PHPGW_ACL_EDIT",4);
-		define("PHPGW_ACL_DELETE",8);
+		define('PHPGW_TEMPLATE_DIR',$phpgw->common->get_tpl_dir('phpgwapi'));
+		define('PHPGW_IMAGES_DIR', $phpgw->common->get_image_path('phpgwapi'));
+		define('PHPGW_IMAGES_FILEDIR', $phpgw->common->get_image_dir('phpgwapi'));
+		define('PHPGW_APP_ROOT', $phpgw->common->get_app_dir());
+		define('PHPGW_APP_INC', $phpgw->common->get_inc_dir());
+		define('PHPGW_APP_TPL', $phpgw->common->get_tpl_dir());
+		define('PHPGW_IMAGES', $phpgw->common->get_image_path());
+		define('PHPGW_IMAGES_DIR', $phpgw->common->get_image_dir());
+		define('PHPGW_ACL_READ',1);
+		define('PHPGW_ACL_ADD',2);
+		define('PHPGW_ACL_EDIT',4);
+		define('PHPGW_ACL_DELETE',8);
+		define('PHPGW_ACL_PRIVATE',16);
 
 		/********* Load up additional phpgw_info["server"] values *********/
 		/* LEGACY SUPPORT!!! WILL BE DELETED AFTER 0.9.11 IS RELEASED !!! */
