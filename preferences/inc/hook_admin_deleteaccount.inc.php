@@ -9,16 +9,13 @@
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-	/* $Id$ */
-	
-	// Delete all records for a user
-	if (floor(phpversion()) == 4)
-	{
-		global $phpgw, $account_id;
-	}
 
+  /* $Id$ */
+
+	// Delete all records for a user
 	$table_locks = Array('phpgw_preferences');
-	$phpgw->db->lock($table_locks);
-	$phpgw->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.$account_id,__LINE__,__FILE__);
-	$phpgw->db->unlock();
+
+	$GLOBALS['phpgw']->db->lock($table_locks);
+	$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.$account_id,__LINE__,__FILE__);
+	$GLOBALS['phpgw']->db->unlock();
 ?>

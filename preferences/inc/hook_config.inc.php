@@ -12,11 +12,8 @@
 
   /* $Id$ */
 
-
 	function country_set($config)
 	{
-		global $phpgw;
-
 		$country  = array(
 			'user_choice'  => 'Users Choice',
 			'force_select' => 'Force Selectbox'
@@ -38,5 +35,4 @@
 		}
 		return $out;
 	}
-
 ?>
