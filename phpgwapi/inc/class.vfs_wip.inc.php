@@ -537,15 +537,15 @@ class vfs
 			}
 		}
 
-		if ($group_ok)
-		{
-			return True;
-		}
-		
 		$acl = CreateObject ("phpgwapi.acl", $group_id);
 		$acl->read_repository ();
 
-		if ($acl->check ($account_id, $operation))
+		$rights = $acl->get_rights ($account_id);
+		if ($rights & $operation)
+		{
+			return True;
+		}
+		elseif (!$rights && $group_ok)
 		{
 			return True;
 		}
@@ -1327,13 +1327,55 @@ class vfs
 	}
 
 	/*!
+	@function get_size
+	@abstract Return size of $string
+	@param $string file/directory to get size of
+	@param $relatives Relativity array
+	@param $checksubdirs Boolean, recursively add the size of all sub directories as well?
+	@result Size of $string in bytes
+	*/
+
+	function get_size ($string, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True)
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_READ, True))
+		{
+			return False;
+		}
+
+		$ls_array = $this->ls ($p->fake_full_path, array ($p->mask), $checksubdirs, False, !$checksubdirs);
+
+		while (list ($num, $file_array) = each ($ls_array))
+		{
+			/*
+			   Make sure the file is in the directory we want, and not
+			   some deeper nested directory with a similar name
+			*/
+			if (!ereg ("^$p->fake_full_path", $file_array["directory"]))
+			{
+				continue;
+			}
+
+			$size += $file_array["size"];
+		}
+
+		if ($checksubdirs)
+		{
+			$query = $phpgw->db->query ("SELECT size FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'");
+			$phpgw->db->next_record ();
+			$size += $phpgw->db->Record[0];
+		}
+
+		return $size;
+	}
+
+	/*!
 	@function checkperms
-	@abstract Check if you have write access to create files in $dir
-	@discussion This isn't perfect, because vfs->touch () returns True even
-			if only the database entry worked.  ACLs need to be
-			implemented for better permission checking.  It's
-			also pretty slow, so I wouldn't recommend using it
-			often
+	@abstract Check if $this->working_id has write access to create files in $dir
+	@discussion Simple call to acl_check
 	@param $dir Directory to check access of
 	@param $relatives Relativity array
 	@result Boolean True/False
@@ -1341,41 +1383,28 @@ class vfs
 		
 	function checkperms ($dir, $relatives = array (RELATIVE_CURRENT))
 	{
-		global $phpgw;
-		global $phpgw_info;
+		global $phpgw, $phpgw_info;
 
-		if ($this->file_type ($dir, array ($relatives[0])) != "Directory")
+		$p = $this->path_parts ($dir, array ($relatives[0]));
+
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_ADD))
 		{
 			return False;
-		}
-
-		/* Create a simple 10 digit random filename */
-		srand ((double) microtime () * 1000000);
-		for ($i = 0; $i < 9; $i++)
-		{
-			$filename .= rand (0,9);
-		}
-
-		if ($this->touch ("$dir/$filename", array ($relatives[0])))
-		{
-			$this->rm ("$dir/$filename", array ($relatives[0]));
-
-			return True;
 		}
 		else
 		{
-			return False;
+			return True;
 		}
 	}
 
 	/*!
 	@function ls
-	@abstract get directory listing
+	@abstract get directory listing or info about a single file
 	@discussion Note: the entries are not guaranteed to be returned in any logical order
-	@param $dir Directory
+	@param $dir File or Directory
 	@param $relatives Relativity array
 	@param $checksubdirs Boolean, recursively list all sub directories as well?
-	@param $mime_type Only return entries matching MIME-type $mime_type.  Can be "Directory" or "\ " for those without MIME types
+	@param $mime_type Only return entries matching MIME-type $mime_type.  Can be any MIME-type, "Directory" or "\ " for those without MIME types
 	@param $nofiles Boolean.  True means you want to return just the information about the directory $dir.  If $dir is a file, $nofiles is implied.  This is the equivalent of 'ls -ld $dir'
 	@result array of arrays.  Subarrays contain full info for each file/dir.
 	*/
