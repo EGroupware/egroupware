@@ -394,6 +394,7 @@ user account prefix	setup	de	Präfix für Benutzernamen
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
+version	setup	de	Version
 version mismatch	setup	de	Versionen passen nicht zueinander
 view	setup	de	Anzeigen
 warning!	setup	de	Warnung!

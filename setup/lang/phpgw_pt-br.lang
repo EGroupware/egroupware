@@ -215,6 +215,7 @@ upgrading tables	setup	pt	Atualizando tabelas
 Use cookies to pass sessionid	setup	pt	Usar cookies para transmitir id de sessão
 Use pure HTML compliant code (not fully working yet)	setup	pt	Usar puro código HTML (não funciona totalmente ainda)
 Users Choice	setup	pt	À escolha dos usuários
+version	setup	pt	versão
 version mismatch	setup	pt	Erro de versão
 we will automatically update your tables/records to %1	setup	pt	As tabelas/registros serão automaticamente atualizadas para %1
 Would you like eGroupWare to cache the phpgw info array ?	setup	pt	Deseja que o eGroupWare faça cache do vetor de informações phpgw ?

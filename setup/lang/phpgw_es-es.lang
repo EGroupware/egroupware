@@ -416,6 +416,7 @@ user account prefix	setup	es-es	Prefijo de cuentas de usuario
 usernames are casesensitive	setup	es-es	Nombres de usuario distinguen mayúsculas
 users choice	setup	es-es	A elegir por el usuario
 utf-8 (unicode)	setup	es-es	utf-8 (Unicode)
+version	setup	es-es	versión
 version mismatch	setup	es-es	Disparidad de versiones
 view	setup	es-es	Ver
 warning!	setup	es-es	¡Aviso!

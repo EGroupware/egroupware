@@ -391,6 +391,7 @@ user account prefix	setup	en	User account prefix
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
+version	setup	en	version
 version mismatch	setup	en	Version Mismatch
 view	setup	en	View
 warning!	setup	en	Warning!

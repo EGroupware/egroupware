@@ -140,6 +140,7 @@ uninstalled	setup	it	disinstallato
 upgraded	setup	it	aggiornato
 upgrade	setup	it	Aggiorna
 upgrading tables	setup	it	Aggiornamento Tabelle
+version	setup	it	versione
 version mismatch	setup	it	Version Mismatch
 we will automatically update your tables/records to %1	setup	it	Aggiorner&ograve; automaticamente le tue tabelle/dati alla %1
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version 4.1.0	setup	it	Sembra che tu stia usando una vecchia versione di PHP <br>&Egrave raccomandabile che tu esegua un aggiornamento ad una versione recente. <br>Vecchie versioni di PHP potrebbero non far funzionare correttamenterun eGroupWare, o potrebbero non farlo funzionare per nulla. <br><br>Per favore aggiorna almeno alla versione 4.1.0

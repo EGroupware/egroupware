@@ -323,6 +323,7 @@ upgrading tables	setup	fr	Met à jour les tables
 use cookies to pass sessionid	setup	fr	Utiliser les cookies pour passer l'ID de session
 use pure HTML compliant code (not fully working yet)	setup	fr	Utiliser du code HTML entièrement standard (ne fonctionne pas encore complètement)
 users choice	setup	fr	Choix utilisateur
+version	setup	fr	version
 version mismatch	setup	fr	Différence de version
 view	setup	fr	Voir
 warning!	setup	fr	Attention!
