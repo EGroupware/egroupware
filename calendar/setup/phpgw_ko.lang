@@ -35,22 +35,22 @@ calendar - add	calendar	ko	달력 - 추가
 calendar - edit	calendar	ko	달력 - 편집
 calendar event	calendar	ko	일정 이벤트
 calendar holiday management	admin	ko	일정 공휴일 관리
-calendar preferences	calendar	ko	일정 설정
+calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
 calendar-fieldname	calendar	ko	일정-필드이름
 canceled	calendar	ko	취소됨
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	ko	$params['old_owner']의 모든 이벤트를 $params['new_owner']로 바꿉니다.
 change status	calendar	ko	상태 변경
-charset of file	calendar	ko	파일 문자셋
+charset of file	calendar	ko	파일의 문자셋
 click %1here%2 to return to the calendar.	calendar	ko	일정으로 돌아가려면 %1여기%2를 클릭하세요
-configuration	calendar	ko	설정
+configuration	calendar	ko	구성
 countries	calendar	ko	국가들
 country	calendar	ko	국가
 created by	calendar	ko	다음에 의해 작성됨:
 csv-fieldname	calendar	ko	컴마구분값-필드이름
 csv-filename	calendar	ko	컴마구분값-파일이름
-custom fields	calendar	ko	특성 필드
-custom fields and sorting	common	ko	특성 필드와 정렬
+custom fields	calendar	ko	사용자정의 필드
+custom fields and sorting	common	ko	사용자정의 필드와 정렬
 daily	calendar	ko	매일
 daily matrix view	calendar	ko	행열식  하루보기
 days	calendar	ko	일동안
@@ -265,7 +265,7 @@ this day is shown as first day in the week or month view.	calendar	ko	이날은 월�
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ko	이 정의는 하루 보기에 가장 끝입니다. 이 시간 이후에 이벤트는 하루보기 아래에 나타납니다.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ko	이 정의는 하루 보기에 가장 처음입니다. 이 시간 이전에 이벤트는 하루보기 위에 나타납니다.<br>이 시간은 새로 발생하는 이벤트의 기본 하루 시작 시간으로 사용됩니다.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ko	이 그룹은 플레너로 들어갈때 이미 선택되었습니다. 물론 플레너에서 언제든 바꾸고 싶으실때 바꾸실수 있습니다.
-this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	ko	이는 대부분 SMTP서버를 잘못 설정한 것이 원입니다. 관리자에게 알리세요.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	ko	이는 대부분 SMTP서버를 잘못 구성한 것이 원입니다. 관리자에게 알리세요.
 this message is sent for canceled or deleted events.	calendar	ko	이 메세지는 취소되었거나 삭제된 이벤트에게 보내집니다.
 this message is sent for modified or moved events.	calendar	ko	이 메세지는 변경되거나 이동된 이벤트에게 보내집니다.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ko	이 메세지는 귀하가 주최한 이벤트에 보내지며 받아보실 분들은 새 이벤트 발생시 알림을 요구한 모든 분들에게 보내집니다.<br>특정 이벤트의 자료와 바꾸실 특정한 변수를 이용하실수 있으며, 첫번째 라인은 이 메일의 제목이 됩니다.

@@ -1,7 +1,7 @@
 %1 records imported	addressbook	ko	%1 개의 레코드를 가져왔습니다
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 가져오기 테스트를 체크해제한 후 수행하세요)
 (e.g. 1969)	addressbook	ko	예 1969
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ko	<b>변환 &lt;none&gt; 타입없음 </b> 리스트에서 변환할 타입을 선택하세요
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ko	<b>변환할 타입이 &lt;없습니다&gt;</b> 리스트에서 변환할 타입을 선택하세요
 @-eval() is only availible to admins!!!	addressbook	ko	@-eval() 은 관리자만 가능합니다!!
 actions	addressbook	ko	액션
 add a single entry by passing the fields.	addressbook	ko	필드로 단일항목 추가
@@ -13,7 +13,7 @@ address line 2	addressbook	ko	주소 2
 address line 3	addressbook	ko	주소 1
 address type	addressbook	ko	주소 형태
 addressbook	common	ko	주소록
-addressbook preferences	addressbook	ko	주소록 설정
+addressbook preferences	addressbook	ko	주소록 환경설정
 addressbook-fieldname	addressbook	ko	주소록-필드이름
 addvcard	addressbook	ko	VCard 추가
 alt. csv import	addressbook	ko	다른 방법으로 CVS 가져오기
@@ -35,15 +35,15 @@ business street	addressbook	ko	직장주소
 business zip code	addressbook	ko	직장 우편번호
 car phone	addressbook	ko	자가 전용 전화
 cell phone	addressbook	ko	이동전화
-charset of file	addressbook	ko	문자셋 파일
+charset of file	addressbook	ko	파일의 문자셋
 city	common	ko	도시
 company	common	ko	회사
 company name	common	ko	회사 이름
-configuration	common	ko	설정
+configuration	common	ko	구성
 contact	common	ko	인적관계
-contact application	admin	ko	인적관계 응용프로그램
+contact application	admin	ko	인적관계관리 응용프로그램
 contact settings	admin	ko	인적관계 설정
-copied by %1, from record #%2.	addressbook	ko	항목 #%2에서 %1 복사됨.
+copied by %1, from record #%2.	addressbook	ko	#%2 레코드에서 %1이 복사함
 country	common	ko	국가
 csv-fieldname	addressbook	ko	컴마구분값-필드이름
 csv-filename	addressbook	ko	컴마구분값-파일이름
@@ -51,14 +51,14 @@ custom	addressbook	ko	사용자정의
 custom fields	addressbook	ko	사용자정의 필드
 debug output in browser	addressbook	ko	브라우저에서 디버그 출력
 default filter	addressbook	ko	기본 필터
-delete a single entry by passing the id.	addressbook	ko	** ID값으로 단일 엔트리 삭제
+delete a single entry by passing the id.	addressbook	ko	ID값으로 단일 엔트리 삭제
 department	common	ko	부서
 domestic	addressbook	ko	기숙사
 download	addressbook	ko	내려받기
 download export file (uncheck to debug output in browser)	addressbook	ko	내보내기 파일 내려받기 (브라우저에서 디버그 출력하기위해서 체크해제)
 e-mail	addressbook	ko	E-Mail
 edit custom field	addressbook	ko	사용자정의 필드 편집
-edit custom fields	admin	ko	사용자정의 필드 편집
+edit custom fields	admin	ko	복수의 사용자정의 필드 편집
 empty for all	addressbook	ko	모두 비우기
 enter the path to the exported file here	addressbook	ko	내보낸 파일 경로를 여기에 입력
 export contacts	addressbook	ko	인적관계를 내보내기
@@ -88,7 +88,7 @@ home zip code	addressbook	ko	집 우편번호
 import	addressbook	ko	가져오기
 import contacts	addressbook	ko	인적관계 가져오기
 import csv-file into addressbook	addressbook	ko	컴마구분파일을 주소록으로 가져오기
-import file	addressbook	ko	가져올 파일
+import file	addressbook	ko	파일 가져오기
 import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV 나 VCard에서 가져오기
 import from outlook	addressbook	ko	아웃룩에서 가져오기
 import next set	addressbook	ko	** 다음 집합(set)에서 가져오기
@@ -110,7 +110,7 @@ mobile	addressbook	ko	핸드폰
 mobile phone	addressbook	ko	이동전화
 modem phone	addressbook	ko	모뎀 전화
 no vcard	addressbook	ko	VCard 없음
-number of records to read (%1)	addressbook	ko	(%1) 레코드를 읽었습니다
+number of records to read (%1)	addressbook	ko	(%1) 읽을 레코드수
 other number	addressbook	ko	기타번호
 other phone	addressbook	ko	기타 전화
 pager	common	ko	삐삐
@@ -128,26 +128,26 @@ record owner	addressbook	ko	레코드 소유자
 retrieve contacts	admin	ko	인적관계 회수
 select all	addressbook	ko	모두 선택
 select the type of conversion	addressbook	ko	변환할 형식을 선택하세요
-select the type of conversion:	addressbook	ko	번환할 형식을 선택:
+select the type of conversion:	addressbook	ko	변환할 형식선택:
 select where you want to store	admin	ko	저장할 곳을 선택
 show birthday reminders on main screen	addressbook	ko	주 화면에서 생일 알림을 표시
 startrecord	addressbook	ko	시작레코드
-state	common	ko	지역
+state	common	ko	주
 street	common	ko	주소
 successfully imported %1 records into your addressbook.	addressbook	ko	%1 개의 레코드를 주소록으로 가져오는데 성공했습니다
 suffix	addressbook	ko	접미어
 test import (show importable records <u>only</u> in browser)	addressbook	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
 that field name has been used already !	addressbook	ko	필드 이름이 이미 사용되었습니다
-this person's first name was not in the address book.	addressbook	ko	주소록에 이 사람의 이름이 없습니다.
-this person's last name was not in the address book.	addressbook	ko	주소록에 이 사람의 성이 없습니다.
-to many might exceed your execution-time-limit	addressbook	ko	너무 많을 경우 최대실행시간(execution-time-limit)를 초과하게 됩니다
+this person's first name was not in the address book.	addressbook	ko	이 사람의 이름이 주소록에 없습니다.
+this person's last name was not in the address book.	addressbook	ko	이 사람의 성이 주소록에 없습니다.
+to many might exceed your execution-time-limit	addressbook	ko	너무 많을 경우 최대실행시간(execution-time-limit)을 초과함
 today is %1's birthday!	common	ko	오늘은 %1의 생일입니다!
 tomorrow is %1's birthday.	common	ko	내일은 %1의 생일입니다.
 tork phone	addressbook	ko	직장전화
 translation	addressbook	ko	번역
 update a single entry by passing the fields.	addressbook	ko	필드값으로 단일 엔트리 갱신
 use country list	addressbook	ko	국가 목록 사용
-vcard	common	ko	V카드
+vcard	common	ko	VCard
 vcards require a first name entry.	addressbook	ko	VCard에는 이름 항목이 필요합니다.
 vcards require a last name entry.	addressbook	ko	VCard에는 성 항목이 필요합니다.
 video phone	addressbook	ko	화상 전화
