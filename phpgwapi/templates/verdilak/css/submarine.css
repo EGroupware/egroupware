@@ -29,7 +29,7 @@ a:hover
 	border-color: #000000;
 }
 
-.portal_text
+.portal_text,.info
 {
 	color: #FFFFFF;
 }

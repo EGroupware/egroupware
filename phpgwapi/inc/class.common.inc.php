@@ -483,7 +483,7 @@
 						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start1.gif"></td>';
 					}
 
-					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" nowrap background="' . $ir . '/tabs-bg1.gif">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label']
 						. $fse . '</a></b>&nbsp;</td>';
 					if ($i == count($tabs))
@@ -501,7 +501,7 @@
 					{
 						$output_text .= '<td align="right"><img src="' . $ir . '/tabs-start0.gif"></td>';
 					}
-					$output_text .= '<td align="left" background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
+					$output_text .= '<td align="left" nowrap background="' . $ir . '/tabs-bg0.gif">&nbsp;<b><a href="'
 						. $tab[1]['link'] . '" class="tablink">' . $fs . $tab[1]['label'] . $fse
 						. '</a></b>&nbsp;</td>';
 					if (($i + 1) == $selected)
@@ -922,50 +922,37 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			return $imgfile;
 		}
 
-		function image($appname,$image='',$ext='')
+		function image($appname,$image='',$ext='',$use_lang=True)
 		{
-			if(is_array($image))
+			if (!is_array($image))
 			{
-				$i = 0;
-				if(isset($this->found_files[$appname][$image[$i].$ext]))
+				if (empty($image))
 				{
-					$image_found = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image[$i].$ext].'/'.$image[$i].$ext;
+					return '';
+				}
+				$image = array($image);
+			}
+			if ($use_lang)
+			{
+				while (list(,$img) = each($image))
+				{
+					$lang_images[] = $img . '_' . $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+					$lang_images[] = $img;
+				}
+				$image = $lang_images;
+			}
+			while (!$image_found && list(,$img) = each($image))
+			{
+				if(isset($this->found_files[$appname][$img.$ext]))
+				{
+					$image_found = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$img.$ext].'/'.$img.$ext;
 				}
 				else
 				{
-					$image_found = $this->find_image($appname,$image[$i].$ext);
-				}
-				$c_image = count($image);
-				$i++;
-				while($image_found == '' && $i<$c_image)
-				{
-					if(isset($this->found_files[$appname][$image[$i].$ext]))
-					{
-						$image_found = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image[$i].$ext].'/'.$image[$i].$ext;
-					}
-					else
-					{
-						$image_found = $this->find_image($appname,$image[$i].$ext);
-						$i++;
-					}
-				}
-				return $image_found;
-			}
-			elseif($image != '')
-			{
-				if(isset($this->found_files[$appname][$image.$ext]))
-				{
-					return $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname][$image.$ext].'/'.$image.$ext;
-				}
-				else
-				{
-					return $this->find_image($appname,$image.$ext);
+					$image_found = $this->find_image($appname,$img.$ext);
 				}
 			}
-			else
-			{
-				return '';
-			}
+			return $image_found;
 		}
 
 		function image_on($appname,$image,$extension='_on')
@@ -1080,7 +1067,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				'website_title'		=> $GLOBALS['phpgw_info']['server']['site_title'],
 				'phpgw_css_file'	=> $css[0],
 				'theme_css_file'	=> $css[1],
-				'phpgw_body'		=> $phpgw_body
+				'app_tpl'			=> $app_tpl
 			);
 
 			$GLOBALS['phpgw']->xslttpl->add_file($this->get_tpl_dir('phpgwapi') . SEP . 'phpgw');
@@ -1160,13 +1147,13 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					$var['prefs_img']	= $this->image('phpgwapi','preferences-'.($app=='preferences' ? 'red' : 'grey'));
 					$var['logout_img']	= $this->image('phpgwapi','logout-grey');
 					$var['about_img']	= $this->image('phpgwapi','help');
-					$var['greybar']		= $this->image('phpgwapi','greybar.jpg');
+					$var['greybar']		= $this->image('phpgwapi','greybar');
 					break;
 				default:
 					$var['home_img']	= $GLOBALS['phpgw_info']['navbar']['home']['icon'];
 					$var['prefs_img']	= $GLOBALS['phpgw_info']['navbar']['preferences']['icon'];
 					$var['logout_img']	= $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
-					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon'];
+					$var['about_img']	= $GLOBALS['phpgw_info']['navbar']['about']['icon']; 
 					break;
 			}
 			$var['home_link']		= $GLOBALS['phpgw_info']['navbar']['home']['url'];
@@ -1202,7 +1189,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 						'icon'			=> $data['icon'],
 						'title'			=> $data['title'],
 						'img_src_over'	=> $data['icon_hover'],
-						'url'				=> $data['url'],
+						'url'			=> $data['url'],
 						'name'			=> str_replace('-','_',$app)
 					);
 
@@ -1210,7 +1197,37 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					{
 						$GLOBALS['phpgw_info']['flags']['preload_images'][] = $data['icon_hover'];
 					}
+
+					if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
+				    	$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
+					{
+						$tabs[$app] = array
+						(
+							'label' => $data['title'],
+							'link'  => $data['url']
+						);
+					}
 				}
+
+				if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
+				    $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
+				{
+					if ($app == 'home' || $app == 'preferences' || $app == 'about' || $app == 'logout')
+					{
+						$base_tabs[$app] = array
+						(
+							'label' => $data['title'],
+							'link'  => $data['url']
+						);
+					}
+				}
+			}
+
+			if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text' &&
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'default')
+			{
+				$var['app_tabs']	= $this->create_tabs($tabs,$GLOBALS['phpgw_info']['flags']['currentapp'],-1);
+				$var['base_tabs']	= $this->create_tabs($base_tabs,$GLOBALS['phpgw_info']['flags']['currentapp'],-1);
 			}
 
 			$var['onload'] = $this->load_preload_images_data();
@@ -1235,6 +1252,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$var['phpgw_version']			= $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 			$var['lang_phpgw_statustext']	= lang('phpGroupWare --> homepage');
 			$var['top_spacer_middle_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','top_spacer_middle');
+			$var['navbar_format'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'];
 
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw',$var);
 		}
@@ -1271,28 +1289,28 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			unset($value);
 			unset($newarray);
 
-			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
+			while (list($app,$data) = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
-				if (is_long($permission[0]))
+				if (is_long($app))
 				{
 					continue;
 				}
 
-				if ($GLOBALS['phpgw_info']['apps'][$permission[0]]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$permission[0]]['status'] != 3)
+				if ($GLOBALS['phpgw_info']['apps'][$app]['status'] != 2 && $GLOBALS['phpgw_info']['apps'][$app]['status'] != 3)
 				{
-					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['title']	= lang($permission[0]);
-					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['url']		= $GLOBALS['phpgw']->link('/' . $permission[0] . '/index.php');
-					$GLOBALS['phpgw_info']['navbar'][$permission[0]]['name']	= $permission[0];
+					$GLOBALS['phpgw_info']['navbar'][$app]['title']	= lang($data['title']);
+					$GLOBALS['phpgw_info']['navbar'][$app]['url']		= $GLOBALS['phpgw']->link('/' . $app . '/index.php');
+					$GLOBALS['phpgw_info']['navbar'][$app]['name']	= $app;
 
-					if ($permission[0] != $GLOBALS['phpgw_info']['flags']['currentapp'])
+					if ($app != $GLOBALS['phpgw_info']['flags']['currentapp'])
 					{
-						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']		= $this->image($permission[0],Array('navbar','nonav'));
-						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon_hover']	= $this->image_on($permission[0],Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']		= $this->image($app,Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image_on($app,Array('navbar','nonav'),'-over');
 					}
 					else
 					{
-						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon']		= $this->image_on($permission[0],Array('navbar','nonav'),'-over');
-						$GLOBALS['phpgw_info']['navbar'][$permission[0]]['icon_hover']	= $this->image($permission[0],Array('navbar','nonav'));
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon']		= $this->image_on($app,Array('navbar','nonav'),'-over');
+						$GLOBALS['phpgw_info']['navbar'][$app]['icon_hover']	= $this->image($app,Array('navbar','nonav'));
 					}
 				}
 			}
