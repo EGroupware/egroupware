@@ -35,7 +35,7 @@
     <td colspan="2"><b>{lang_includeroot}</b><br><input type="text" name="setting[include_root]" size="80" value="{include_root}"></td>
   </tr>
   <tr>
-    <td colspan="2"><b>{lang_adminpass}</b><br><input type="text" name="setting[HEADER_ADMIN_PASSWORD]" size="80" value="{header_admin_password}"></td>
+    <td colspan="2"><b>{lang_adminpass}</b><br><input type="password" name="setting[HEADER_ADMIN_PASSWORD]" size="80" value="{header_admin_password}"></td>
   </tr>
   <br><br>
   <tr>
@@ -135,10 +135,10 @@
     <td><b>{lang_dbuser}</b><br><input type="text" name="setting_{db_domain}[db_user]" value="{db_user}"></td><td>{lang_dbuserdescr}</td>
   </tr>
   <tr>
-    <td><b>{lang_dbpass}</b><br><input type="text" name="setting_{db_domain}[db_pass]" value="{db_pass}"></td><td>{lang_dbpassdescr}</td>
+    <td><b>{lang_dbpass}</b><br><input type="password" name="setting_{db_domain}[db_pass]" value="{db_pass}"></td><td>{lang_dbpassdescr}</td>
   </tr>
   <tr>
-    <td><b>{lang_configpass}</b><br><input type="text" name="setting_{db_domain}[config_pass]" value="{config_pass}"></td>
+    <td><b>{lang_configpass}</b><br><input type="password" name="setting_{db_domain}[config_pass]" value="{config_pass}"></td>
     <td>{lang_passforconfig}</td>
   </tr>
 <!-- END domain -->
