@@ -135,7 +135,7 @@ email account name	email	en	Email Account Name
 email address	email	en	Email address
 email password	email	en	Email Password
 email signature	email	en	E-Mail signature
-email type	common	EMail Type
+email type	common	en	EMail Type
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 end date	todo	en	End Date
