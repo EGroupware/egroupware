@@ -148,19 +148,19 @@
     if($cal_info->rpt_type == "weekly" || $cal_info->rpt_type == "daily") {
       $repeat_days = "";
       if ($cal_info->rpt_sun)
-	add_day(&$repeat_days,lang("Sunday "));
+	add_day($repeat_days,lang("Sunday "));
       if ($cal_info->rpt_mon)
-	add_day(&$repeat_days,lang("Monday "));
+	add_day($repeat_days,lang("Monday "));
       if ($cal_info->rpt_tue)
-	add_day(&$repeat_days,lang("Tuesay "));
+	add_day($repeat_days,lang("Tuesay "));
       if ($cal_info->rpt_wed)
-	add_day(&$repeat_days,lang("Wednesday "));
+	add_day($repeat_days,lang("Wednesday "));
       if ($cal_info->rpt_thu)
-	add_day(&$repeat_days,lang("Thursday "));
+	add_day($repeat_days,lang("Thursday "));
       if ($cal_info->rpt_fri)
-	add_day(&$repeat_days,lang("Friday "));
+	add_day($repeat_days,lang("Friday "));
       if ($cal_info->rpt_sat)
-	add_day(&$repeat_days,lang("Saturday "));
+	add_day($repeat_days,lang("Saturday "));
       $str .= lang("days repeated").": ".$repeat_days;
     }
     if($cal_info->rpt_freq) $str .= lang("frequency")." ".$cal_info->rpt_freq;

@@ -18,10 +18,35 @@
 
   $cal_info = new calendar_item;
 
+  function validate($cal_info) {
+    $error = 0;
+    // do a little form verifying
+    if ($cal_info->name == "") {
+      $error = 40;
+    } elseif (($cal_info->hour < 0 || $cal_info->hour > 23) || ($cal_info->end_hour < 0 || $cal_info->end_hour > 23)) {
+      $error = 41;
+    } elseif (($cal_info->minute < 0 || $cal_info->minute > 59) || ($cal_info->end_minute < 0 || $cal_info->minute > 59)) {
+      $error = 41;
+    } elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day == $cal_info->end_day)) {
+      if ($cal_info->hour > $cal_info->end_hour) {
+	$error = 42;
+      } elseif (($cal_info->hour == $cal_info->end_hour) && ($cal_info->minute > $cal_info->end_minute)) {
+	$error = 42;
+      }
+    } elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day > $cal_info->end_day)) {
+      $error = 42;
+    } elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month > $cal_info->end_month)) {
+      $error = 42;
+    } elseif ($cal_info->year > $cal_info->end_year) {
+      $error = 42;
+    }
+    return $error;
+  }
+
   if(!isset($readsess)) {
     $groups = Array();
-    for(reset($HTTP_POST_VARS);$key=key($HTTP_POST_VARS);next($HTTP_POST_VARS)) {
-      $data = $HTTP_POST_VARS[$key];
+    for(reset($cal);$key=key($cal);next($cal)) {
+      $data = $cal[$key];
       $cal_info->set($key,$data);
     }
 
@@ -33,11 +58,15 @@
       $cal_info->owner = $cal_info->participants[0];
     }
     $phpgw->common->appsession($cal_info);
+    $datetime_check = validate($cal_info);
     $overlapping_events = $phpgw->calendar->overlap($cal_info->month,$cal_info->day,$cal_info->year,$cal_info->hour,$cal_info->minute,$cal_info->ampm,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year,$cal_info->end_hour,$cal_info->end_minute,$cal_info->end_ampm,$cal_info->participants,$cal_info->owner,$cal_info->id);
   } else {
     $cal_info = $phpgw->common->appsession();
   }
-  if($overlapping_events) {
+
+  if($datetime_check) {
+    Header("Location: ".$phpgw->link("edit_entry.php","readsess=".$cal_info->id."&cd=".$datetime_check));
+  } elseif($overlapping_events) {
     $phpgw->common->phpgw_header();
     $phpgw->common->navbar();
     $phpgw->template->set_file(array("overlap" => "overlap.tpl",
