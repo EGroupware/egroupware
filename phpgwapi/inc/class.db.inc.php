@@ -788,8 +788,22 @@
 		*/
 		function index_names()
 		{
-			echo "<p>db::index_names() not yet implemented</p>\n";
-			return array();
+			$indices = array();
+			if ($this->Type != 'pgsql')
+			{
+				echo "<p>db::index_names() not yet implemented for db-type '$this->Type'</p>\n";
+				return $indices;
+			}
+			$this->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relkind ='i' ORDER BY relname");
+			while ($this->next_record())
+			{
+				$indices[] = array(
+					'index_name'      => $this->f(0),
+					'tablespace_name' => $this->Database,
+					'database'        => $this->Database,
+				);
+			}
+			return $indices;
 		}
 
 		/**
