@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Accounts manager shared functions                     *
+	* phpGroupWare API - SOAP functions                                        *
 	* This file written by dietrich@ganx4.com                                  *
 	* shared functions and vars for use with soap client/server                *
 	* -------------------------------------------------------------------------*
@@ -57,6 +57,7 @@
 	);
 
 	/*
+	NOTE: already defined in xml_functions
 	$xmlEntities = array(
 		'quot' => '"',
 		'amp'  => '&',
@@ -74,7 +75,7 @@
 		$username    = trim($m2);
 		$password    = trim($m3);
 
-		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password);
+		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password,'text');
 
 		if(!$sessionid && !$kp3)
 		{
@@ -86,7 +87,7 @@
 			{
 				$user = $username;
 			}
-			$sessionid = $GLOBALS['phpgw']->session->create($user,$password);
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password,'text');
 			$kp3 = $GLOBALS['phpgw']->session->kp3;
 			$domain = $GLOBALS['phpgw']->session->account_domain;
 		}
