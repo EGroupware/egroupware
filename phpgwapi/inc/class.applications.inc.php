@@ -99,7 +99,6 @@
 		*/
 		function read_repository()
 		{
-			global $phpgw, $phpgw_info;
 			if (!isset($GLOBALS['phpgw_info']['apps']) ||
 			    !is_array($GLOBALS['phpgw_info']['apps']))
 			{
@@ -135,7 +134,10 @@
 		*/
 		function read()
 		{
-			if (count($this->data) == 0){ $this->read_repository(); }
+			if (count($this->data) == 0)
+			{
+				$this->read_repository();
+			}
 			reset($this->data);
 			return $this->data;
 		}
@@ -213,7 +215,10 @@
 			reset($this->data);
 			while($app = each($this->data))
 			{
-				if(!$this->is_system_enabled($app[0])) { continue; }
+				if(!$this->is_system_enabled($app[0]))
+				{
+					continue;
+				}
 				$GLOBALS['phpgw']->acl->add_repository($app[0],'run',$this->account_id,1);
 			}
 			reset($this->data);
