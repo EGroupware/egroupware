@@ -64,7 +64,7 @@ class html
 		while (list($k,$text) = each($arr))
 		{
 			$out .= '<option value="'.$k.'"';
-			if($k == $key || strstr(",$key,",",$k,"))
+			if("$k" == "$key" || strstr(",$key,",",$k,"))
 			{
 				$out .= " SELECTED";
 			}
