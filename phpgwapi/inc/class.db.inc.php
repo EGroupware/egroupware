@@ -279,7 +279,6 @@
 			{
 				return False;
 			}
-			// the substring is needed as the string is already in quotes
 			return $this->Link_ID->addq($str);
 		}
 
@@ -965,11 +964,15 @@
 			switch($type)
 			{
 				case 'blob':
-					if ($this->Type == 'mysql')
+					switch ($this->Link_ID->blobEncodeType)
 					{
-						break;	// ADOdb has no BlobEncode for mysql and returns an unquoted string !!!
+						case 'C':	// eg. postgres
+							return "'" . $this->Link_ID->BlobEncode($value) . "'";
+						case 'I':
+							return $this->Link_ID->BlobEncode($value);
+						default:
+							break;	// handled like strings					
 					}
-					return "'" . $this->Link_ID->BlobEncode($value) . "'";
 				case 'date':
 					return $this->Link_ID->DBDate($value);
 				case 'timestamp':
@@ -1155,6 +1158,7 @@
 			}
 			$sql = "INSERT INTO $table ".$this->column_data_implode(',',$data,'VALUES',False,$table_def['fd']).$sql_append;
 
+			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app') sql='$sql'</p>\n";
 			return $this->query($sql,$line,$file);
 		}
 
@@ -1176,7 +1180,9 @@
 			if ($this->Debug) echo "<p>db::update('$table',".print_r($data,true).','.print_r($where,true).",$line,$file,'$app')</p>\n";
 			$table_def = $this->get_table_definitions($app,$table);
 			
-			// use insert for MaxDB (with UPDATE DUBLICATES) if $data and $where dont intersect 
+			$blobs2update = array();
+			// SapDB/MaxDB cant update LONG columns / blob's: if a blob-column is included in the update we remember it in $blobs2update 
+			// and remove it from $data
 			if ($this->Type == 'sapdb')
 			{
 				// check if data contains any LONG columns
@@ -1187,20 +1193,30 @@
 						case 'text':
 						case 'longtext':
 						case 'blob':
-							if (!count(array_intersect_assoc($data,$where)))
-							{
-								if ($this->Debug) echo "<p>db::update using db::insert('$table',,$line,$file,'$app') db::Type='$this->Type'</p>\n";
-								return $this->insert($table,$data,$where,$line,$file,$app);
-							}
+							$blobs2update[$col] = $data[$col];
+							unset($data[$col]);
 							break;
 					}
 				}
 			}
-			$sql = "UPDATE $table SET ".
-				$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.
-				$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
+			$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 
-			return $this->query($sql,$line,$file);
+			if (count($data))
+			{
+				$sql = "UPDATE $table SET ".
+					$this->column_data_implode(',',$data,True,False,$table_def['fd']).' WHERE '.$where;
+
+				$ret = $this->query($sql,$line,$file);
+			}
+			// if we have any blobs to update, we do so now
+			if (($ret || !count($data)) && count($blobs2update))
+			{
+				foreach($blobs2update as $col => $val)
+				{
+					$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
+				}
+			}
+			return $ret;
 		}
 
 		/**
