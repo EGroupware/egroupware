@@ -91,8 +91,6 @@
 		*/
 		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$public = False, $parent_id = '')
 		{
-			global $phpgw, $phpgw_info;
-
 			if ($public)
 			{
 				$public_cats = " OR cat_appname='phpgw' ";
@@ -208,21 +206,19 @@
 		*/
 		function categories($accountid = '',$app_name = '')
 		{
-			global $phpgw, $phpgw_info;
-
 			$account_id = get_account_id($accountid);
 
 			if (! $app_name)
 			{
-				$app_name   = $phpgw_info['flags']['currentapp'];
+				$app_name   = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
 			$this->account_id		= $account_id;
 			$this->app_name			= $app_name;
-			$this->db				= $phpgw->db;
+			$this->db				= $GLOBALS['phpgw']->db;
 			$this->db2				= $this->db;
 			$this->total_records	= $this->db2->num_rows();
-			$this->grants			= $phpgw->acl->get_grants($app_name);
+			$this->grants			= $GLOBALS['phpgw']->acl->get_grants($app_name);
 			$this->cats				= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
 
@@ -253,7 +249,6 @@
 		*/
 		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
 		{
-			global $phpgw;
 			$filter = $this->filter($type);
 
 			if (!is_array($selected))
@@ -272,7 +267,7 @@
 					{
 						$s .= ' selected';
 					}
-					$s .= '>' . $phpgw->strip_html($cats[$i]['name']);
+					$s .= '>' . $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
 					{
 						$s .= '&lt;' . lang('Global') . '&gt;';
@@ -312,7 +307,7 @@
 
 						$s .= '<tr>' . "\n";
 						$s .= '<td width="8">' . $image_set . '</td>' . "\n";
-						$s .= '<td>' . $space_set . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name'])
+						$s .= '<td>' . $space_set . '<a href="' . $GLOBALS['phpgw']->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $GLOBALS['phpgw']->strip_html($cats[$i]['name'])
 									. '</a></td>' . "\n";
 						$s .= '</tr>' . "\n";
 					}

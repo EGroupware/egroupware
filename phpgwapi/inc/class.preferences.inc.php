@@ -49,8 +49,7 @@
 		*/
 		function preferences($account_id = '')
 		{
-			global $phpgw, $phpgw_info;
-			$this->db         = $phpgw->db;
+			$this->db         = $GLOBALS['phpgw']->db;
 			$this->account_id = get_account_id($account_id);
 		}
 
@@ -166,10 +165,8 @@
 		*/
 		function save_repository($update_session_info = False)
 		{
-			global $phpgw, $phpgw_info;
-
 			$temp_data = $this->data;
-			if (! $phpgw->acl->check('session_only_preferences',1,'preferences'))
+			if (! $GLOBALS['phpgw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
 				$this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id
@@ -190,13 +187,13 @@
 			}
 			else
 			{
-				$phpgw_info['user']['preferences'] = $this->data;
-				$phpgw->session->save_repositories();
+				$GLOBALS['phpgw_info']['user']['preferences'] = $this->data;
+				$GLOBALS['phpgw']->session->save_repositories();
 			}
 
-			if ($phpgw_info['server']['cache_phpgw_info'] && $this->account_id == $phpgw_info['user']['account_id'])
+			if ($GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $this->account_id == $GLOBALS['phpgw_info']['user']['account_id'])
 			{
-				$phpgw->session->read_repositories(False);
+				$GLOBALS['phpgw']->session->read_repositories(False);
 			}
 			
 			return $temp_data;
@@ -238,50 +235,49 @@
 		*/
 		function verify_basic_settings()
 		{
-			global $phpgw, $phpgw_info;
-			if (gettype($phpgw_info['user']['preferences']) != 'array')
+			if (gettype($GLOBALS['phpgw_info']['user']['preferences']) != 'array')
 			{
-				 $phpgw_info['user']['preferences'] = array();
+				 $GLOBALS['phpgw_info']['user']['preferences'] = array();
 			}
 			/* This takes care of new users who dont have proper default prefs setup */
-			if (!isset($phpgw_info['flags']['nocommon_preferences']) || 
-				!$phpgw_info['flags']['nocommon_preferences'])
+			if (!isset($GLOBALS['phpgw_info']['flags']['nocommon_preferences']) || 
+				!$GLOBALS['phpgw_info']['flags']['nocommon_preferences'])
 			{
 				$preferences_update = False;
-				if (!isset($phpgw_info['user']['preferences']['common']['maxmatchs']) || 
-					!$phpgw_info['user']['preferences']['common']['maxmatchs'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'])
 				{
 					$this->add('common','maxmatchs',15);
 					$preferences_update = True;
 				}
-				if (!isset($phpgw_info['user']['preferences']['common']['theme']) || 
-					!$phpgw_info['user']['preferences']['common']['theme'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
 				{
 					$this->add('common','theme','default');
 					$preferences_update = True;
 				}
-				if (!isset($phpgw_info['user']['preferences']['common']['template_set']) || 
-					!$phpgw_info['user']['preferences']['common']['template_set'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'])
 				{
 					$this->add('common','template_set','default');
 					$preferences_update = True;
 				}
-				if (!isset($phpgw_info['user']['preferences']['common']['dateformat']) || 
-					!$phpgw_info['user']['preferences']['common']['dateformat'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'])
 				{
 					$this->add('common','dateformat','m/d/Y');
 					$preferences_update = True;
 				}
-				if (!isset($phpgw_info['user']['preferences']['common']['timeformat']) || 
-					!$phpgw_info['user']['preferences']['common']['timeformat'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'])
 				{
 					$this->add('common','timeformat',12);
 					$preferences_update = True;
 				}
-				if (!isset($phpgw_info['user']['preferences']['common']['lang']) || 
-					!$phpgw_info['user']['preferences']['common']['lang'])
+				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']) || 
+					!$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'])
 				{
-					$this->add('common','lang',$phpgw->common->getPreferredLanguage());
+					$this->add('common','lang',$GLOBALS['phpgw']->common->getPreferredLanguage());
 					$preferences_update = True;
 				}
 				if ($preferences_update)
