@@ -281,7 +281,18 @@
 
 		function write($values,$check_defaults=True,$touch_modified=True)
 		{
-			if ($values['info_id'] && !$this->check_access($values['info_id'],PHPGW_ACL_EDIT) ||
+			foreach($values as $key => $val)
+			{
+				if ($key[0] != '#' && substr($key,0,5) != 'info_')
+				{
+					$values['info_'.$key] = $val;
+					unset($values[$key]);
+				}
+			}
+			$status_only = $values['info_id'] && $values['info_responsible'] == $this->user && 
+				!$this->check_access($values['info_id'],PHPGW_ACL_EDIT);	// responsible has implicit right to change status
+
+			if ($values['info_id'] && !$this->check_access($values['info_id'],PHPGW_ACL_EDIT) && !$status_only ||
 			    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],PHPGW_ACL_ADD))
 			{
 				if ($this->xmlrpc)
@@ -294,13 +305,20 @@
 			{
 				$values = $this->xmlrpc2data($values);
 			}
-			foreach($values as $key => $val)
+			if ($status_only)	// make sure only status gets writen
 			{
-				if ($key[0] != '#' && substr($key,0,5) != 'info_')
+				$set_enddate = !$values['info_enddate'] &&	// set enddate of finished job, only if its not already set 
+					($values['info_status'] == 'done' || $values['info_status'] == 'billed');
+
+				$values = array(
+					'info_id' => $values['info_id'],
+					'info_status' => $values['info_status'],
+				);
+				if ($set_enddate)
 				{
-					$values['info_'.$key] = $val;
-					unset($values[$key]);
+					$values['info_enddate'] = time();
 				}
+				$check_defaults = False;
 			}
 			if ($check_defaults)
 			{
