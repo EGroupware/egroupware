@@ -109,7 +109,14 @@
           $tmpl->set_var("lang_message",stripslashes(lang("loginscreen_message")));
        }
     } else {
-       $tmpl->set_var("lang_message","");
+       // If the lastloginid cookies isn't set, we will default to english.
+       // Change this if you need.
+       $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
+       $phpgw->translation->add_app("login");
+       $phpgw->translation->add_app("loginscreen");
+       if (lang("loginscreen_message") != "loginscreen_message*") {
+          $tmpl->set_var("lang_message",stripslashes(lang("loginscreen_message")));
+       }
     }
   }
 
