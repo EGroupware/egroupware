@@ -48,4 +48,5 @@
 	if ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'idots')
 	{
 		$phpgw_info['theme']['row_off'] = '#E8F0F0';
+		$phpgw_info['theme']['em_folder'] = '#a0a0a0';
 	}
