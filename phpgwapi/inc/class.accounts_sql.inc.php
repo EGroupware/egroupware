@@ -346,7 +346,10 @@
 				$expiredate = time() + ((60 * 60) * (30 * 24));
 			}
 
-			$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
+			if ($expires != -1)
+			{
+				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
+			}
 
 			$default_group_id  = $this->name2id($GLOBALS['phpgw_info']['server']['default_group_lid']);
 			if (!$default_group_id)
