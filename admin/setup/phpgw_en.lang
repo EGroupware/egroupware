@@ -25,9 +25,6 @@ edit group	admin	en	Edit Group
 edit user account	admin	en	Edit user account
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
-forecast	admin	en	Forecast
-forecast zone	admin	en	Forecast Zone
-fzone	admin	en	FZone
 global categories	admin	en	Global Categories
 group name	admin	en	Group Name
 hide php information	admin	en	hide php information
@@ -56,8 +53,6 @@ permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 php information	admin	en	PHP Information
 re-enter password	admin	en	Re-enter password
-region	admin	en	Region
-regions	admin	en	Regions
 remove all users from this group	admin	en	Remove all users from this group
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
@@ -66,8 +61,6 @@ site	admin	en	Site
 site configuration	admin	en	Site configuration
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
-station	admin	en	Station
-stations	admin	en	Stations
 submit changes	admin	en	Submit Changes
 table	admin	en	Table
 that loginid has already been taken	admin	en	That loginid has already been taken
@@ -82,4 +75,3 @@ view sessions	admin	en	View sessions
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
 you must enter an application name and title.	admin	en	You must enter an application name and title.
 you must select a file type	admin	en	You must select a file type
-zone	admin	en	Zone
