@@ -164,8 +164,8 @@
 					if($addclass)
 					{
 						reset($entry[0]['objectclass']);
-						unset($replace['objectclass']['count']);
 						$replace['objectclass'] = $entry[0]['objectclass'];
+						unset($replace['objectclass']['count']);
 						$replace['objectclass'][]       = 'phpgwAccount';
 						sort($replace['objectclass']);
 						ldap_mod_replace($ldap,$thisdn,$replace);
@@ -278,6 +278,7 @@
 						$replace['objectclass'] = $entry[0]['objectclass'];
 						unset($replace['objectclass']['count']);
 						$replace['objectclass'][]       = 'phpgwAccount';
+						sort($replace['objectclass']);
 						ldap_mod_replace($ldap,$thisdn,$replace);
 						unset($replace);
 						unset($addclass);
