@@ -20,44 +20,20 @@
     exit;
   } unset($d1);unset($d2);unset($d3);
 
-  $d1 = strtolower(substr($phpgw_info["server"]["api_inc"],0,3));
-  $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  $d3 = strtolower(substr($phpgw_info["server"]["app_inc"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp" || $d3 == "htt" || $d3 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
-    exit;
-  } unset($d1);unset($d2);unset($d3);
-
   /****************************************************************************\
   * Direct functions, which are not part of the API class                      *
   * for whatever reason.                                                       *
   \****************************************************************************/
-  function CreateObject($classname, $val = "")
-  {
+  function CreateObject($classname, $val = ""){
     global $phpgw, $phpgw_info, $phpgw_domain;
     $classpart = explode (".", $classname);
-    $classpart_count = count($classpart);
-    if ($classpart_count >= 1){
-      $includedChk = sprintf("%s_PHP3_INCLUDED", strtoupper($classpart[1]));
-    }else{
-      $includedChk = sprintf("%s_PHP3_INCLUDED", strtoupper($classpart[0]));
-    }
+    $includedChk = sprintf("%s_INC_PHP_INCLUDED", strtoupper($classpart[1]));
+    //$includedChk = sprintf("%s_PHP3_INCLUDED", strtoupper($classpart[1]));
     if (!isset($GLOBALS["$includedChk"])){
-      switch($classpart_count){
-        case 1:
-          include($phpgw_info["server"]["include_root"]."/".$phpgw_info["flags"]["currentapp"]."/inc/class.".$classpart[0].".inc.php");
-          break;
-        case 2:
-          include($phpgw_info["server"]["include_root"]."/".$classpart[0]."/inc/class.".$classpart[1].".inc.php");
-          break;      
-      }
-      if ($classpart_count >= 1){
-        $obj = new $classpart[1]($val);
-      }else{
-        $obj = new $classpart[0]($val);
-      }
+      include($phpgw_info["server"]["include_root"]."/".$classpart[0]."/inc/class.".$classpart[1].".inc.php");
+      $obj = new $classpart[1]($val);
       return $obj;
-    } 
+    }
   }
 
   function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
