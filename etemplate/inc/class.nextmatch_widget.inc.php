@@ -118,7 +118,10 @@
 
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			$loop = False;
-			if (is_array($value) && ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
+			$is_array_value = is_array($value);
+			$value['start'] = $old_value['start'];	// need to be set, to be reported back
+
+			if ($is_array_value && ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
 			    $old_value['filter'] != '' && $value['filter'] != $old_value['filter'] ||
 			    $old_value['filter2'] != '' && $value['filter2'] != $old_value['filter2']))
 			{
@@ -148,8 +151,6 @@
 				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
 				$loop = True;
 			}
-			$value['start'] = $old_value['start'];	// need to be set, to be reported back
-			
 			return True;
 		}
 	}
