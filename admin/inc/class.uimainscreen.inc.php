@@ -90,7 +90,7 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("SELECT content FROM lang WHERE lang='$select_lang' AND message_id='$section"
+				$GLOBALS['phpgw']->db->query("SELECT content FROM phpgw_lang WHERE lang='$select_lang' AND message_id='$section"
 				. "_message'");
 				$GLOBALS['phpgw']->db->next_record();
 				$current_message = $GLOBALS['phpgw']->db->f('content');
