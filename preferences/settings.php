@@ -143,6 +143,7 @@
            <option value="fr"<?php echo $lang_select["fr"]; ?>>French</option>
            <option value="nl"<?php echo $lang_select["nl"]; ?>>Dutch</option>
            <option value="kr"<?php echo $lang_select["kr"]; ?>>Korean</option>
+           <option value="cs"<?php echo $lang_select["cs"]; ?>>Czechoslovakian</option>
           </select>
          </td>
        </tr>
