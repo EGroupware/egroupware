@@ -258,7 +258,11 @@
 				$GLOBALS['phpgw_info']['user']['preferences'] = $prefs->read_repository();
 			}
 		}
-		if(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
+		if ($_GET['lang'])
+		{
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $_GET['lang'];
+		}
+		elseif(!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
 		{
 			// If the lastloginid cookies isn't set, we will default to the first language,
 			// the users browser accepts.
@@ -377,7 +381,7 @@
 
 	if (@$GLOBALS['phpgw_info']['server']['login_show_language_selection'])
 	{
-		$select_lang = '<select name="lang">';
+		$select_lang = '<select name="lang" onchange="'."location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
 		$langs = $GLOBALS['phpgw']->translation->get_installed_langs();
 		uasort($langs,'strcasecmp');
 		foreach ($langs as $key => $name)	// if we have a translation use it

@@ -69,14 +69,14 @@
 
 	<table class="divLoginbox" cellspacing="0" cellpadding="0" border="0" align="center">
 	<tr> 
-		<td colspan="2" class="divLoginboxHeader" style="border-bottom: #9c9c9c 1px solid;" align="center">{website_title}</td>
+		<td class="divLoginboxHeader" style="border-bottom: #9c9c9c 1px solid;" align="center">{website_title}</td>
 	</tr>
 	<tr > 
 		<td class="divSideboxEntry">
 
-		<table  cellspacing=0 cellpadding=0 width="100%" border="0">
+		<table  cellspacing="2" cellpadding="0" width="100%" border="0">
 		<tr>
-			<td colspan="3" align="left">
+			<td colspan="4" align="left">
 			{register_link}<br/>
 				<img width="200" height="1" src="phpgwapi/templates/{template_set}/images/spacer.gif" alt="spacer" />
 			</td>
@@ -86,11 +86,9 @@
 				<input type="hidden" name="passwd_type" value="text">
 				<input type="hidden" name="account_type" value="u">
 			</td>
-		</tr>
-		<tr>
-			<td align="right">{lang_username}:&nbsp;</td>
-			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
-			<td align="left">{select_domain}</td>
+			<td rowspan="4">
+				<img src="phpgwapi/templates/{template_set}/images/password.png" />
+			</td>
 		</tr>
 <!-- BEGIN language_select -->
 		<tr>
@@ -99,29 +97,31 @@
 		</tr>
 <!-- END language_select -->
 		<tr>
+			<td align="right">{lang_username}:&nbsp;</td>
+			<td align="left"><input name="login" value="{cookie}" style="width: 100px; border: 1px solid silver;"></td>
+			<td align="left">{select_domain}</td>
+		</tr>
+		<tr>
 			<td align="right">{lang_password}:&nbsp;</td>
 			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 100px; border: 1px solid silver;"></td>
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="3">&nbsp;</td>
+			<td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
-			<td colspan="3" align="center">
+			<td colspan="4" align="center">
 				<input type="submit" value="{lang_login}" name="submitit" style="border: 1px solid silver;">
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3" align="center">
+			<td colspan="4" align="center">
 			&nbsp;
 			</td>
 		</tr>
 		</table>
 
 	</td>
-	<td class="divSideboxEntry">
-	<img src="phpgwapi/templates/{template_set}/images/password.png" alt="keys" />
-</td>
 </tr>
 </table>
 <p>&nbsp;</p>
