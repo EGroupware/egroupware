@@ -219,7 +219,7 @@
 			}
 
 
-			if (isset($plugins)) 
+			if (!empty($plugins)) 
 			{
 			   $plg_arr = explode(',',$plugins);
 			   foreach($plg_arr as $plg_name) 
