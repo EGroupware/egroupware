@@ -1184,4 +1184,19 @@
 		}
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(PHPGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
+
+	foreach(array('_GET','_POST','_REQUEST','HTTP_GET_VARS','HTTP_POST_VARS','HTTP_REQUEST_VARS') as $where)
+	{
+		$pregs = array(
+			'order' => '/^[a-zA-Z0-9_, ]*$/',
+			'sort'  => '/^(ASC|DESC|asc|desc){0,1}$/',
+		);
+		foreach(array('order','sort') as $name)
+		{
+			if (isset($GLOBALS[$where][$name]) && !preg_match($pregs[$name],$GLOBALS[$where][$name]))
+			{
+				$GLOBALS[$where][$name] = '';
+			}
+		}
+	}
 ?>
