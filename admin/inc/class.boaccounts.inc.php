@@ -739,10 +739,17 @@
 			
 			if ($_userData['old_loginid'] != $_userData['account_lid']) 
 			{
-				if ($GLOBALS['phpgw']->accounts->exists($_userData['account_lid']))
+			   if ($GLOBALS['phpgw']->accounts->exists($_userData['account_lid']))
 				{
-					$error[$totalerrors] = lang('That loginid has already been taken');
-					$totalerrors++;
+				   if ($GLOBALS['phpgw']->accounts->exists($_userData['account_lid']) && $GLOBALS['phpgw']->accounts->get_type($_userData['account_lid'])=='g')
+				   {
+					  $error[$totalerrors] = lang('There already is a group with this name. Userid\'s can not have the same name as a groupid');
+				   }
+				   else
+				   {
+					  $error[$totalerrors] = lang('That loginid has already been taken');
+				   }
+				   $totalerrors++;
 				}
 			}
 
