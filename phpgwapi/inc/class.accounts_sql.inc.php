@@ -228,8 +228,17 @@
 		function get_type($accountid)
 		{
 			static $account_type;
-
 			$account_id = get_account_id($accountid);
+
+			if (isset($this->account_type) && $account_id == $this->account_id)
+			{
+				return $this->account_type;
+			}
+			elseif($account_id == '')
+			{
+				return False;
+			}
+
 			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
 			{
 				return $account_type[$account_id];

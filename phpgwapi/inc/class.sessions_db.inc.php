@@ -330,13 +330,13 @@
 				return False;
 			}
 
-			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) || $GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
+			if ((!$GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type)) || $GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
 			{
 				return False;
 				exit;
 			}
 
-			if (!$GLOBALS['phpgw']->accounts->exists($this->account_lid) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
+			if ((!$GLOBALS['phpgw']->accounts->exists($this->account_lid)) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
 			{
 				$this->account_id = $GLOBALS['phpgw']->accounts->auto_add($this->account_lid, $passwd);
 			}
@@ -633,7 +633,7 @@
 		function update_dla()
 		{
 			global $PHP_SELF;
-			if(MENUACTION)
+			if(defined('MENUACTION'))
 			{
 				$action = MENUACTION;
 			}
@@ -973,6 +973,7 @@
 			/* and return the result */
 			if (is_array($extravars))
 			{
+				$new_extravars = '';
 				reset($extravars);
 				while(list($key,$value) = each($extravars))
 				{
@@ -983,10 +984,13 @@
 					$new_extravars .= $key.'='.htmlentities(urlencode($value));
 				}
 				/* This needs to be explictly reset to a string variable type for PHP3 */
+/*
 				settype($extravars,'string');
 				$extravars = $new_extravars;
 				unset($new_extravars);
 				return $url .= '?' . $extravars;
+*/
+				return $url .= '?' . $new_extravars;
 			}
 			/* if no extravars then we return the cleaned up url/scriptname */
 			return $url;

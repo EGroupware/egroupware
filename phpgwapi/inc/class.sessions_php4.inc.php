@@ -313,13 +313,13 @@
 				return False;
 			}
 
-			if (! $GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type) || $GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
+			if ((!$GLOBALS['phpgw']->auth->authenticate($this->account_lid, $this->passwd, $this->passwd_type)) || $GLOBALS['phpgw']->accounts->get_type($this->account_lid) == 'g')
 			{
 				return False;
 				exit;
 			}
 
-			if (!$GLOBALS['phpgw']->accounts->exists($this->account_lid) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
+			if ((!$GLOBALS['phpgw']->accounts->exists($this->account_lid)) && $GLOBALS['phpgw_info']['server']['auto_create_acct'] == True)
 			{
 				$this->account_id = $GLOBALS['phpgw']->accounts->auto_add($this->account_lid, $passwd);
 			}
@@ -954,4 +954,3 @@
 			return $url;
 		}
 	}
-
