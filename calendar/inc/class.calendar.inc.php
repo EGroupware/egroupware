@@ -522,74 +522,82 @@
       $this->checked_re = 0;
       if(!$this->re) return False;
       $link = Array();
-      $date = $this->gmtdate($datetime);
+//      $date = $this->gmtdate($datetime);
+      $date = $this->localdates($datetime);
       for ($i=0;$i<$this->re;$i++) {
         $rep_events = $this->repeated_events[$i];
-	$start = $this->localdates($rep_events->datetime);
-	if($rep_events->rpt_use_end)
-	  $end = $rep_events->rpt_end;
-	else
-	  $end   = mktime(0,0,0,1,1,2007) - ((60 * 60) * $phpgw_info["users"]["preferences"]["common"]["tz_offset"]);
+        $start = $this->localdates($rep_events->datetime);
+        if($rep_events->rpt_use_end)
+          $enddate = $this->gmtdate($rep_events->rpt_end);
+        else
+          $enddate   = $this->makegmttime(0,0,0,1,1,2007);
+        // only repeat after the beginning, and if there is an rpt_end before the end date
+        if ($rep_events->rpt_use_end && ($date["full"] > $enddate["full"])) {
+          continue;
+        }
 
-	$enddate = $this->localdates($end);
-	// only repeat after the beginning, and if there is an end
-	// before the end
-	if ($rep_events->rpt_use_end && ($date["full"] > $enddate["full"])) {
-	  continue;
-	}
+        if ($date["full"] <= $start["full"]) {
+          continue;
+        }
 
-	if ($date["full"] < $start["full"]) {
-	  continue;
-	}
+        if ($date["full"] == $start["full"]) {
+          $link[$this->checked_re] = $i;
+          $this->checked_re++;
+        } elseif ($rep_events->rpt_type == 'daily') {
+          if (floor(($date["raw"] - $start["raw"])/86400) % intval($rep_events->rpt_freq)) {
+            continue;
+          }
+          $link[$this->checked_re] = $i;
+          $this->checked_re++;
+        } elseif ($rep_events->rpt_type == 'weekly') {
+          $isDay = strtoupper(substr($rep_events->rpt_days, $date["dow"], 1));
 
-	if ($date["full"] == $start["full"]) {
-	  $link[$this->checked_re] = $i;
-	  $this->checked_re++;
-	} else if ($rep_events->rpt_type == 'daily') {
-	  if (floor(($date["raw"] - $start["raw"])/86400) % intval($rep_events->rpt_freq))
-	     continue;
-	  $link[$this->checked_re] = $i;
-	  $this->checked_re++;
-	} else if ($rep_events->rpt_type == 'weekly') {
-	  $isDay = strtoupper(substr($rep_events->rpt_days, $date["dow"], 1));
-
-	  /*if ( (floor($diff/86400) % $this->rep_events->rpt_freq) ) // Whats this for ?
-	  **   continue;
-	  */
-	  if (floor(($date["raw"] - $start["raw"])/604800) % intval($rep_events->rpt_freq)) continue;
-	  if (strcmp($isDay,"Y") == 0) {
-	    $link[$this->checked_re] = $i;
-	    $this->checked_re++;
-	  }
-	} else if ($rep_events->rpt_type == 'monthlybyday') {
-	  if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) continue;
+          /*if ( (floor($diff/86400) % $this->rep_events->rpt_freq) ) // Whats this for ?
+           **   continue;
+          */
+          
+          if (floor(($date["raw"] - $start["raw"])/604800) % intval($rep_events->rpt_freq)) {
+            continue;
+          }
+          if (strcmp($isDay,"Y") == 0) {
+            $link[$this->checked_re] = $i;
+            $this->checked_re++;
+          }
+        } elseif ($rep_events->rpt_type == 'monthlybyday') {
+          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) {
+            continue;
+          }
 	  
-	  if (($start["dow"] == $date["dow"]) && 
-	      (ceil($start["day"]/7) == ceil($date["day"]/7))) {
-	    $link[$this->checked_re] = $i;
-	    $this->checked_re++;
-	  }
-	} else if ($rep_events->rpt_type == 'monthlybydate') {
-	  if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) continue;
-	  if ($date["day"] == $start["day"]) {
-	    $link[$this->checked_re] = $i;
-	    $this->checked_re++;
-	  }
-	} else if ($rep_events->rpt_type == 'yearly') {
-	  if (($date["year"] - $start["year"]) % intval($rep_events->rpt_freq)) continue;
-	  if ($date["dm"] == $start["dm"]) {
-	    $link[$this->checked_re] = $i;
-	    $this->checked_re++;
-	  }
-	} else {
-	// unknown rpt type - because of all our else ifs
-	}
+          if (($start["dow"] == $date["dow"]) && 
+              (ceil($start["day"]/7) == ceil($date["day"]/7))) {
+            $link[$this->checked_re] = $i;
+            $this->checked_re++;
+          }
+        } elseif ($rep_events->rpt_type == 'monthlybydate') {
+          if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) {
+            continue;
+          }
+          if ($date["day"] == $start["day"]) {
+            $link[$this->checked_re] = $i;
+            $this->checked_re++;
+          }
+        } elseif ($rep_events->rpt_type == 'yearly') {
+          if (($date["year"] - $start["year"]) % intval($rep_events->rpt_freq)) {
+            continue;
+          }
+          if ($date["dm"] == $start["dm"]) {
+            $link[$this->checked_re] = $i;
+            $this->checked_re++;
+          }
+        } else {
+          // unknown rpt type - because of all our else ifs
+        }
       }	// end for loop
 
       if($this->checked_re) {
-	return $link;
+        return $link;
       } else {
-	return False;
+        return False;
       }
     }	// end function
 
@@ -770,7 +778,7 @@
                 } else {
                   $format = "H:i";
                 }
-                if($lr_events->datetime < $date["raw"]) {
+                if($lr_events->datetime < $date["raw"] && $lr_events->rpt_type=="none") {
                   $temp_time = $this->makegmttime(0,0,0,$date["month"],$date["day"],$date["year"]);
                   $start_time = $phpgw->common->show_date($temp_time["raw"],$format);
                 } else {
