@@ -420,11 +420,11 @@
 					$s .= $GLOBALS['phpgw']->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
 					{
-						$s .= '&lt;' . lang('Global') . '&gt;';
+						$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
 					}
 					if ($cats[$i]['owner'] == '-1')
 					{
-						$s .= '&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
+						$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
 					}
 
 					$s .= '</option>' . "\n";
