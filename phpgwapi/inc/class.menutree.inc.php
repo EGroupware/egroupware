@@ -41,7 +41,7 @@ class menutree {
     $img_expand   = "templates/default/images/tree_expand.gif";
     $img_collapse = "templates/default/images/tree_collapse.gif";
     $img_line     = "templates/default/images/tree_vertline.gif";  
-    $img_split	= "templates/default/images/tree_split.gif";
+    $img_split	  = "templates/default/images/tree_split.gif";
     $img_end      = "templates/default/images/tree_end.gif";
     $img_leaf     = "templates/default/images/tree_leaf.gif";
     $img_spc      = "templates/default/images/tree_space.gif";
@@ -204,14 +204,14 @@ class menutree {
         /****************************************/
         /* Create expand/collapse parameters    */
         /****************************************/
-        $i=1; $params="p=";
-        while($i<count($expand)) {
-          if ( ($expand[$i]==1) && ($cnt!=$i) || ($expand[$i]==0 && $cnt==$i)) {
-            $params=$params.$i;
-            $params=$params."|";
-          }
-          $i++;
-        }
+        #$i=1; $params="p=";
+        #while($i<count($expand)) {
+        #  if ( ($expand[$i]==1) && ($cnt!=$i) || ($expand[$i]==0 && $cnt==$i)) {
+        #    $params=$params.$i;
+        #    $params=$params."|";
+        #  }
+        #  $i++;
+        #}
 
         /****************************************/
         /* Always display the extreme top level */
