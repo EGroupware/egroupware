@@ -1,3 +1,5 @@
+[0.9.10] - Fixed the cron programs, they where out of date in the table structures
+
 [0.9.9] - Fixed a number of issues with the verdilak layout
         - Fixed parse_footer() not working if the header is turned off.
         - Fixed table problem in E-Mail
