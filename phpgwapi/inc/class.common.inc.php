@@ -37,61 +37,70 @@
 		@class common
 		@abstract common class that contains commonly used functions
 		*/
-  class common
-  {
-    var $phpgw;
-    var $iv = '';
-    var $key = '';
-    var $crypto;
+	class common
+	{
+		var $phpgw;
+		var $iv = '';
+		var $key = '';
+		var $crypto;
+		var $debug_info;		// An array with debugging info from the API
 
-    // Convert an array into the format needed for the access column.
+		// Convert an array into the format needed for the access column.
 		/*!
 		@functionn array_to_string
 		@abstract Convert an array into the format needed for the access column
 		@param $access
 		@param $array
 		*/
-    function array_to_string($access,$array)
-    {
-      $s = '';
-      if ($access == 'group' || $access == 'public' || $access == 'none') {
-         if (count($array)) {
-            while ($t = each($array)) {
-   			$s .= ',' . $t[1];
-            }
-            $s .= ',';
-         }
-         if (! count($array) && $access == 'none') {
-            $s = '';
-         }
-      }
-      return $s;
-    }
+		function array_to_string($access,$array)
+		{
+			$this->debug_info[] = 'array_to_string() is a depreciated function - use ACL instead';
+			$s = '';
+			if ($access == 'group' || $access == 'public' || $access == 'none')
+			{
+				if (count($array))
+				{
+					while ($t = each($array)) {
+						$s .= ',' . $t[1];
+					}
+					$s .= ',';
+				}
+				if (! count($array) && $access == 'none')
+				{
+					$s = '';
+				}
+			}
+			return $s;
+		}
 
 
-    // This is used for searching the access fields
+		// This is used for searching the access fields
 		/*!
 		@function sql_search
 		@abstract this function is used for searching the access fields
 		@param $table
 		@param $owner 
 		*/
-    function sql_search($table,$owner=0)
-    {
-      global $phpgw, $phpgw_info;
+		function sql_search($table,$owner=0)
+		{
+			global $phpgw, $phpgw_info;
 
-      $s = '';
-      if (!$owner) {
-         $owner = $phpgw_info['user']['account_id'];
-      }
-      $groups = $phpgw->accounts->memberships(intval($owner));
-      if (gettype($groups) == 'array') {
-         while ($group = each($groups)) {
-           $s .= " or $table like '%," . $group[2] . ",%'";
-        }
-      }
-      return $s;
-    }
+			$this->debug_info[] = 'sql_search() is a depreciated function - use ACL instead';
+			$s = '';
+			if (!$owner)
+			{
+				$owner = $phpgw_info['user']['account_id'];
+			}
+			$groups = $phpgw->accounts->memberships(intval($owner));
+			if (gettype($groups) == 'array')
+			{
+				while ($group = each($groups))
+				{
+					$s .= " or $table like '%," . $group[2] . ",%'";
+				}
+			}
+			return $s;
+		}
 
     // return a array of installed languages
 		/*!
@@ -251,6 +260,7 @@
        }
        return $html_error . '</table>';
     }
+
 		/*!
 		@function check_owner
 		@abstract none yet
@@ -259,23 +269,31 @@
 		@param $label ?
 		@param $extravars
 		*/
-    function check_owner($record,$link,$label,$extravars = '')
-    {
-       global $phpgw, $phpgw_info;
+      // This is a depreciated function - use ACL instead (jengo)
+		function check_owner($record,$link,$label,$extravars = '')
+		{
+			global $phpgw, $phpgw_info;
 
-       $s = '<a href="' . $phpgw->link($link,$extravars) . '"> ' . lang($label) . ' </a>';
-       if (ereg("^[0-9]+$",$record)) {
-          if ($record != $phpgw_info['user']['account_id']) {
-             $s = "&nbsp;";
-          }
-       } else {
-          if ($record != $phpgw_info['user']['userid']) {
-             $s = "&nbsp";
-          }
-      }
+			$this->debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
+			$s = '<a href="' . $phpgw->link($link,$extravars) . '"> ' . lang($label) . ' </a>';
+			if (ereg('^[0-9]+$',$record))
+			{
+				if ($record != $phpgw_info['user']['account_id'])
+				{
+					$s = '&nbsp;';
+				}
+			}
+			else
+			{
+				if ($record != $phpgw_info['user']['userid'])
+				{
+					$s = '&nbsp';
+				}
+			}
 
-      return $s;
-    }    
+			return $s;
+		}    
+
 		/*!
 		@function display_fullname
 		@abstract return the fullname of a user
