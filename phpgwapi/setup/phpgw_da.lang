@@ -152,6 +152,7 @@ denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
@@ -257,7 +258,7 @@ help using editor	htmlarea	da
 high	common	da	Høj
 highest	common	da	Højeste
 holy see (vatican city state)	common	da	Vatikanet
-home	common	da	Hjem
+home	common	da	Startside
 home email	common	da	privat e-mail
 honduras	common	da	Honduras
 hong kong	common	da	Hong Kong
@@ -289,10 +290,10 @@ japan	common	da	Japan
 jordan	common	da	Jordan
 july	common	da	Juli
 june	common	da	Juni
-justify center	htmlarea	da	
-justify full	htmlarea	da	
-justify left	htmlarea	da	
-justify right	htmlarea	da	
+justify center	htmlarea	da	Justify Centrer
+justify full	htmlarea	da	Justify Fuld
+justify left	htmlarea	da	Justify Venstre
+justify right	htmlarea	da	Justify Højre
 kazakstan	common	da	Kazakstan
 kenya	common	da	Kenia
 keywords	common	da	Stikord
@@ -390,7 +391,7 @@ norfolk island	common	da	Norfolk Øen
 normal	common	da	Normal
 northern mariana islands	common	da	Nordligt Mariana Øerne
 norway	common	da	Norge
-not assigned	common	da	
+not assigned	common	da	ikke tildelt
 note	common	da	Note
 notes	common	da	Noter
 notify window	common	da	Notificer vindue
@@ -462,7 +463,7 @@ puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
 read this list of methods.	common	da	
-redoes your last action	htmlarea	da	
+redoes your last action	htmlarea	da	Fortryder din sidste handling
 reject	common	da	Afvis
 rename	common	da	Omdøb
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	
@@ -500,8 +501,8 @@ september	common	da	September
 server %1 has been added	common	da	Server %1 er tilføjet
 server name	common	da	Servernavn
 session has been killed	common	da	Sessionen er afsluttet
-setup	common	da	
-setup main menu	common	da	
+setup	common	da	Setup
+setup main menu	common	da	Setup Hoved menu
 seychelles	common	da	Seychellerne
 show all	common	da	Vis alt
 show all categorys	common	da	Vis alle kategorier
