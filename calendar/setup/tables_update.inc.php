@@ -17,7 +17,7 @@
 		global $phpgw_info;
 		v0_9_2to0_9_3update_owner("webcal_entry","cal_create_by");
 		v0_9_2to0_9_3update_owner("webcal_entry_user","cal_login");
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.3pre2";
+		$phpgw_info["setup"]["currentver"]["calendar"] = "0.9.3pre2";
 	}
 
 	$test[] = "0.9.4pre2";
@@ -27,7 +27,7 @@
 	
 		$oProc->RenameColumn("webcal_entry", "cal_create_by", "cal_owner");
 		$oProc->AlterColumn("webcal_entry", "cal_owner", array("type" => "int", "precision" => 4, "nullable" => false));	
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.4pre3";
+		$phpgw_info["setup"]["currentver"]["calendar"] = "0.9.4pre3";
 	}
 
 	$test[] = "0.9.7pre1";
@@ -155,7 +155,7 @@
 		$oProc->DropTable("webcal_entry_repeats");
 		$oProc->m_odb->query("UPDATE applications SET app_tables='calendar_entry,calendar_entry_user,calendar_entry_repeats' WHERE app_name='calendar'",__LINE__,__FILE__);
 	
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7pre2";
+		$phpgw_info["setup"]["currentver"]["calendar"] = "0.9.7pre2";
 	}
 
 	$test[] = "0.9.7pre2";
@@ -181,6 +181,6 @@
 			}
 		}
 	
-		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.7pre3";
+		$phpgw_info["setup"]["currentver"]["calendar"] = "0.9.7pre3";
 	}
 ?>
