@@ -63,8 +63,11 @@
 		$fields["d_emailtype"]		= $email_type;
 		$fields["title"]			= $title;
 		$fields["a_tel"]			= $wphone;
+		$fields["a_tel_work"]		= "y";
 		$fields["b_tel"]			= $hphone;
+		$fields["b_tel_home"]		= "y";
 		$fields["c_tel"]			= $fax;
+		$fields["c_tel_fax"]		= "y";
 		$fields["pager"]			= $pager;
 		$fields["mphone"]			= $mphone;
 		$fields["ophone"]			= $ophone;

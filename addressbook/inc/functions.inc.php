@@ -80,9 +80,14 @@
 			"d_emailtype"		=> "email type",   //'INTERNET','CompuServe',etc...
 			"d_email_work"		=> "",  //yn
 			"d_email_home"		=> "",  //yn
+			//"access"			=> "access"
+			"pager"				=> "Pager",
+			"mphone"			=> "mobile phone",
+			"ophone"			=> "other phone",
+			"address2"			=> "address2",
 			"bday"				=> "birthday",
 			"url"				=> "url",
-			//"access"			=> "access"
+			"notes"				=> "notes"
 		);
 
 		while($name = each($abc) ) {

@@ -23,16 +23,6 @@
 
   /* $Id$ */
 
-
-/*
-	addressbook_extra (
-		contact_id          int,
-		contact_owner       int,
-		contact_name        varchar(255),
-		contact_value       varchar(255)
-	);
-*/
-
 	class contacts extends contacts_
 	{
 		var $db;
@@ -46,7 +36,7 @@
 			while (list($field,$value) = each($fields)) {
 				// Depending on how the array was build, this is needed.
 				// Yet, I can't figure out why ....
-				if (gettype($field) == "integer") {
+				if (gettype($value) == "integer") {
 					$field = $value;
 				}
 				if ($this->stock_contact_fields[$field]) {
@@ -81,5 +71,56 @@
 			}
 		}
 
+		// sort a multi-dimensional array on an array element
+		// using the named element
+		// This is neither used (yet) or guaranteed to work
+		function qsort_multiarray($array,$column,$order = "ASC",$left = 0,$right = -1,$num=0) 
+		{ 
+			if($right == -1)
+				{ $right = count($array) - 1; }
+
+			$i=0;
+			
+			if (!$num) {
+				$num=0;
+				echo "nonum";
+				if ($column && !empty($column)) {
+					while (list($name,$value) = each($array[0])) {
+						if ($column == $name) {
+							$num = $i;
+							break;
+						}
+						$i++;
+					}
+				}
+			}
+			echo "<br>". $num ." - name='".$name."', value='". $value . "'";
+
+			$lefts = $left;
+			$rights = $right;
+			$middle = $array[($left + $right) / 2][$num];
+
+			if($rights > $lefts) {
+				do {
+					if($order == "ASC") {
+						while($array[$lefts][$num]<$middle) $lefts++; 
+						while($array[$rights][$num]>$middle) $rights--; 
+					} else {
+						while($array[$lefts][$num]>$middle) $lefts++;
+						while($array[$rights][$num]<$middle) $rights--;
+					}
+
+					if($lefts <= $rights) {
+						$tmp = $array[$lefts];
+						$array[$lefts++] = $array[$rights];
+						$array[$rights--] = $tmp;
+					}
+				} while($lefts <= $rights);
+
+				$array = $this->qsort_multiarray($array,"",$order,$left,$rights,$num); 
+				$array = $this->qsort_multiarray($array,"",$order,$lefts,$right,$num); 
+			} 
+			return $array; 
+		}
 	}
 ?>

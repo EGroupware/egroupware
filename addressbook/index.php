@@ -64,25 +64,28 @@
 		$offset = 30;
 	}
 
-	// following sets up the filter for read, then restores the filter string for later checking
-	if ($filter == "none") { $filter = ""; }
+	// Set filter to display entries where tid is blank,
+	//   else they may be accounts, etc.
 	$savefilter = $filter;
-	// Set filter to display entries where tid is blank, else they may be accounts, etc.
-	if ($filter != "" ) { $filter = "tid="; }
-	//if ($filter != "" ) { $filter = "access=$filter"; }
-	
-	$qfilter = $filter;
-	$filter = $savefilter;
-	
+	if ($filter == "none") {
+		$filter  = 'tid=';
+	} elseif($filter == "private") {
+		$filter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=';
+	} else {
+		$filter .= ',tid=';
+	}
+
 	if (!$columns_to_display ) {
 		$columns_to_display = array("n_given","n_family","org_name");
 		$noprefs=lang("Please set your preferences for this app");
 	}
-	$qcols = $columns_to_display + array("access");
+	$qcols = $columns_to_display;# + array("access");
   
 	// read the entry list
 	if (!$userid) { $userid = $phpgw_info["user"]["account_id"]; }
-	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order,$userid);
+	$entries = addressbook_read_entries($start,$offset,$qcols,$query,$filter,$sort,$order,$userid);
+	// now that the query is done, reset filter, since nextmatchs grabs it globally
+	$filter=$savefilter;
 
 	$search_filter = $phpgw->nextmatchs->show_tpl("index.php",$start, $this->total_records,"&order=$order&filter=$filter&sort=$sort&query=$query","75%", $phpgw_info["theme"]["th_bg"]);
 
