@@ -96,10 +96,13 @@
           $phpgw_info["server"]["db_type"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["db_type"];
           $phpgw_info["server"]["config_passwd"] = $phpgw_domain[$phpgw_info["server"]["default_domain"]]["config_passwd"];
         }
+        if (!isset($phpgw_info["server"]["api_dir"])) {
+          $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["server_root"]."/phpgwapi";
+        }
       } else {      
         echo "sample configuration not found. using built in defaults<br>\n";
         $phpgw_info["server"]["server_root"] = "/path/to/phpgroupware";
-        $phpgw_info["server"]["include_root"] = "/path/to/phpgroupware/inc";
+        $phpgw_info["server"]["api_dir"] = "/path/to/phpgroupware/phpgwapi";
         /* This is the basic include needed on each page for phpGroupWare application compliance */
         $phpgw_info["flags"]["htmlcompliant"] = True;
     
@@ -134,7 +137,7 @@
         $this_dir = dirname($SCRIPT_FILENAME);
         $updir    = ereg_replace("/setup","",$this_dir);
         $phpgw_info["server"]["server_root"] = $updir; 
-        $phpgw_info["server"]["include_root"] = $updir."/inc"; 
+        $phpgw_info["server"]["api_dir"] = $updir."/phpgwapi"; 
       }
       ?>
       </td></tr>
@@ -142,7 +145,7 @@
       <form action="<? echo $PHP_SELF ?>"  method=post>
       <input type=hidden name=write_config value=true>
         <tr><td colspan=2><b>Server Root</b><br><input type=text name=server_root size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
-        <tr><td colspan=2><b>Include Root</b><br><input type=text name=include_root size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
+        <tr><td colspan=2><b>phpGW API Dir</b><br><input type=text name=api_dir size=80 value="<? echo $phpgw_info["server"]["api_dir"] ?>"></td></tr>
         <tr><td><b>DB Host</b><br><input type=text name=db_host value="<? echo $phpgw_info["server"]["db_host"] ?>"></td><td>Hostname/IP of Databaseserver</td></tr>
         <tr><td><b>DB Name</b><br><input type=text name=db_name value="<? echo $phpgw_info["server"]["db_name"] ?>"></td><td>Name of Database</td></tr>
         <tr><td><b>DB User</b><br><input type=text name=db_user value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>
