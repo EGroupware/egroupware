@@ -707,9 +707,9 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if (empty($phpgw_info['server']['template_set']))
+			if (empty($GLOBALS['phpgw_info']['server']['template_set']))
 			{
-				$phpgw_info['server']['template_set'] = 'default';
+				$GLOBALS['phpgw_info']['server']['template_set'] = 'default';
 			}
 
 			$imagedir            = PHPGW_SERVER_ROOT . '/' . $appname . '/templates/'
