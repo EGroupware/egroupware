@@ -46,6 +46,10 @@
 	$t->set_block('_preferences','footer');
 	$t->set_block('_preferences','row_error');
 
+	if ($GLOBALS['HTTP_GET_VARS']['appname'] != 'preverences')
+	{
+		$GLOBALS['phpgw']->translation->add_app('preferences');	// we need the prefs translations too
+	}
 	/* Make things a little easier to follow */
 	/* Some places we will need to change this if there in common */
 	function check_app()
@@ -102,6 +106,36 @@
 		$t->fp('rows','row',True);
 	}
 
+	function create_check_box($label_name,$preference_name)
+	{
+		global $t;
+
+		$_appname = check_app();
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+		$t->set_var('row_name',lang($label_name));
+
+		if (is_forced_value($_appname,$preference_name))
+		{
+			return True;
+		}
+
+		switch ($GLOBALS['type'])
+		{
+			case 'user':
+				$s = '<input type="checkbox" name="user[' . $preference_name . ']" value="1"' . ($GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] ? ' CHECKED' : '') . '">';
+				break;
+			case 'default':
+				$s = '<input type="checkbox" name="default[' . $preference_name . ']" value="1"' . ($GLOBALS['dp']->data[$_appname][$preference_name] ? ' CHECKED' : '') . '">';
+				break;
+			case 'forced':
+				$s = '<input type="checkbox" name="forced[' . $preference_name . ']" value="1"' . ($GLOBALS['gp']->data[$_appname][$preference_name] ? ' CHECKED' : '') . '">';
+				break;
+		}
+		$t->set_var('row_value',$s);
+
+		$t->fp('rows','row',True);
+	}
+
 	function create_option_string($selected,$values)
 	{
 		while (is_array($values) && list($var,$value) = each($values))
@@ -148,6 +182,36 @@
 				$t->set_var('row_value','<select name="forced[' . $preference_name . ']">' . $s . '</select>');
 				break;
 		}
+
+		$t->fp('rows','row',True);
+	}
+	
+	function create_text_area($label_name,$preference_name,$rows,$cols)
+	{
+		global $t;
+
+		$_appname = check_app();
+		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
+		$t->set_var('row_name',lang($label_name));
+
+		if (is_forced_value($_appname,$preference_name))
+		{
+			return True;
+		}
+
+		switch ($GLOBALS['type'])
+		{
+			case 'user':
+				$s = '<textarea rows="'.$rows.'" cols="'.$cols.'" name="user[' . $preference_name . ']">' . $GLOBALS['phpgw_info']['user']['preferences'][$_appname][$preference_name] . '</textarea>';
+				break;
+			case 'default':
+				$s = '<textarea rows="'.$rows.'" cols="'.$cols.'" name="default[' . $preference_name . ']">' . $GLOBALS['dp']->data[$_appname][$preference_name] . '</textarea>';
+				break;
+			case 'forced':
+				$s = '<textarea rows="'.$rows.'" cols="'.$cols.'" name="forced[' . $preference_name . ']">' . $GLOBALS['gp']->data[$_appname][$preference_name] . '</textarea>';
+				break;
+		}
+		$t->set_var('row_value',$s);
 
 		$t->fp('rows','row',True);
 	}
@@ -291,7 +355,7 @@
 	}
 	else
 	{
-		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['navbar'][$GLOBALS['appname']]['title']));
+		$t->set_var('lang_title',lang('%1 - Preferences',$GLOBALS['phpgw_info']['apps'][$GLOBALS['HTTP_GET_VARS']['appname']]['title']));
 	}
 
 	$t->set_var('action_url',$GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $GLOBALS['appname']));
