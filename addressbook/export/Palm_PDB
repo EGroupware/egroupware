@@ -21,56 +21,58 @@
 		var $id;
 		//list of all id's
 		var $ids = array();
-		var $type = "pdb";
+		var $type = 'pdb';
 
 		var $export = array(
-			"title"               => "Title",
-			"n_given"             => "First",
-			"n_middle"            => "Middle",
-			"n_family"            => "Last",
-			"n_suffix"            => "Suffix",
-			"org_name"            => "Company",
-			"org_unit"            => "Dept",
-			"adr_one_street"      => "Bus. Street",
-			"address2"            => "Bus. St. 2",
-			"address3"            => "Bus. St. 3",
-			"adr_one_locality"    => "Bus. City",
-			"adr_one_region"      => "Bus. State",
-			"adr_one_postalcode"  => "Bus. Postal Code",
-			"adr_one_countryname" => "Bus. Country",
-			"adr_two_street"      => "Home Street",
-			"adr_two_locality"    => "Home City",
-			"adr_two_region"      => "Home State",
-			"adr_two_postalcode"  => "Home Postal Code",
-			"adr_two_countryname" => "Home Country",
-			"tel_fax"             => "Bus. Fax",
-			"tel_work"            => "Bus. Phone",
-			"tel_msg"             => "Assistant's Phone",
-			"tel_car"             => "Car Phone",
-			"tel_isdn"            => "ISDN",
-			"tel_home"            => "Home Phone",
-			"tel_cell"            => "Mobile Phone",
-			"tel_pager"           => "Pager",
-			"ophone"              => "Bus. Phone2",
-			"bday"                => "Birthday",
-			"email"               => "Email Addr",
-			"email_home"          => "Email Addr2",
-			"url"                 => "URL",
-			"note"                => "Notes"
+			'title'               => 'Title',
+			'n_given'             => 'First',
+			'n_middle'            => 'Middle',
+			'n_family'            => 'Last',
+			'n_suffix'            => 'Suffix',
+			'org_name'            => 'Company',
+			'org_unit'            => 'Dept',
+			'adr_one_street'      => 'Bus. Street',
+			'address2'            => 'Bus. St. 2',
+			'address3'            => 'Bus. St. 3',
+			'adr_one_locality'    => 'Bus. City',
+			'adr_one_region'      => 'Bus. State',
+			'adr_one_postalcode'  => 'Bus. Postal Code',
+			'adr_one_countryname' => 'Bus. Country',
+			'adr_two_street'      => 'Home Street',
+			'adr_two_locality'    => 'Home City',
+			'adr_two_region'      => 'Home State',
+			'adr_two_postalcode'  => 'Home Postal Code',
+			'adr_two_countryname' => 'Home Country',
+			'tel_fax'             => 'Bus. Fax',
+			'tel_work'            => 'Bus. Phone',
+			'tel_msg'             => "Assistant's Phone",
+			'tel_car'             => 'Car Phone',
+			'tel_isdn'            => 'ISDN',
+			'tel_home'            => 'Home Phone',
+			'tel_cell'            => 'Mobile Phone',
+			'tel_pager'           => 'Pager',
+			'ophone'              => 'Bus. Phone2',
+			'bday'                => 'Birthday',
+			'email'               => 'Email Addr',
+			'email_home'          => 'Email Addr2',
+			'url'                 => 'URL',
+			'note'                => 'Notes'
 		);
 
 		// This will store the contacts object
 		var $contacts = '';
 
 		// Read full list of user's contacts only to get id's for each
-		function export_start_file($buffer,$ncat_id='') {
+		function export_start_file($buffer,$ncat_id='')
+		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = "tid=n,cat_id=".$ncat_id; }
-			else          { $filter = "tid=n"; }
+			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
+			else          { $filter = 'tid=n'; }
 			$this->contacts = CreateObject('phpgwapi.contacts');
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
-			for ($i=0;$i<count($tmp);$i++) {
+			for ($i=0;$i<count($tmp);$i++)
+			{
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
 			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
@@ -79,7 +81,8 @@
 		}
 
 		// Read each entry
-		function export_start_record($buffer) {
+		function export_start_record($buffer)
+		{
 			$this->id++;
 			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
@@ -88,8 +91,10 @@
 
 		// Read each attribute, populate buffer array
 		// name/value are the fields from the export array above
-		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name]) {
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name])
+			{
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
@@ -97,26 +102,30 @@
 		}
 
 		// Tack on some extra values - none for this file
-		function export_end_record($buffer) {
+		function export_end_record($buffer)
+		{
 			return $buffer;
 		}
 
 		// Parse it all into a string
-		function export_end_file($buffer) {
+		function export_end_file($buffer)
+		{
 			reset($this->ids);
 
-			for ($i=0;$i<count($this->ids);$i++) {
+			for ($i=0;$i<count($this->ids);$i++)
+			{
 				$j = $i + 1;
 				reset($this->export);
 				$entries .= "#" . $j . ":" . $buffer[$i]['n_given'] . $buffer[$i]['n_family'] . "\r\n";
-				while (list($name,$value)=each($this->export)) {
+				while (list($name,$value)=each($this->export))
+				{
 					$entries .= $value . ":\t" . $buffer[$i][$value] . "\n";
 				}
 				$entries .= "\r\n";
 			}
 
 			$buffer = $entries;
-			$pdb =  CreateObject("addressbook.pdb");
+			$pdb =  CreateObject('addressbook.pdb');
 			$pdb->fetch($buffer, 'phpgw Contacts', 'phpgw.pdb');
 			return $buffer;
 		}

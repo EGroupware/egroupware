@@ -28,56 +28,56 @@
 
 		// make sure to order how we ask for these
 		var $qfields = array(
-			"fn"                     => "fn",
-			"n_given"                => "n_given",
-			"n_family"               => "n_family",
-			"n_middle"               => "n_middle",
-			"n_prefix"               => "n_prefix",
-			"n_suffix"               => "n_suffix",
-			"sound"                  => "sound",
-			"bday"                   => "bday",
-			"note"                   => "note",
-			"tz"                     => "tz",
-			"geo"                    => "geo",
-			"url"                    => "url",
-			"pubkey"                 => "pubkey",
-			"org_name"               => "org_name",
-			"org_unit"               => "org_unit",
-			"title"                  => "title",
+			'fn'                     => 'fn',
+			'n_given'                => 'n_given',
+			'n_family'               => 'n_family',
+			'n_middle'               => 'n_middle',
+			'n_prefix'               => 'n_prefix',
+			'n_suffix'               => 'n_suffix',
+			'sound'                  => 'sound',
+			'bday'                   => 'bday',
+			'note'                   => 'note',
+			'tz'                     => 'tz',
+			'geo'                    => 'geo',
+			'url'                    => 'url',
+			'pubkey'                 => 'pubkey',
+			'org_name'               => 'org_name',
+			'org_unit'               => 'org_unit',
+			'title'                  => 'title',
 
-			"adr_one_type"           => "adr_one_type",
-			"adr_two_type"           => "adr_two_type",
-			"tel_prefer"             => "tel_prefer",
-			"email_type"             => "email_type",
-			"email_home_type"        => "email_home_type",
+			'adr_one_type'           => 'adr_one_type',
+			'adr_two_type'           => 'adr_two_type',
+			'tel_prefer'             => 'tel_prefer',
+			'email_type'             => 'email_type',
+			'email_home_type'        => 'email_home_type',
 
-			"adr_one_street"         => "adr_one_street",
-			"adr_one_locality"       => "adr_one_locality", 
-			"adr_one_region"         => "adr_one_region", 
-			"adr_one_postalcode"     => "adr_one_postalcode",
-			"adr_one_countryname"    => "adr_one_countryname",
-			"label"                  => "label",
+			'adr_one_street'         => 'adr_one_street',
+			'adr_one_locality'       => 'adr_one_locality', 
+			'adr_one_region'         => 'adr_one_region', 
+			'adr_one_postalcode'     => 'adr_one_postalcode',
+			'adr_one_countryname'    => 'adr_one_countryname',
+			'label'                  => 'label',
 
-			"adr_two_street"         => "adr_two_street",
-			"adr_two_locality"       => "adr_two_locality", 
-			"adr_two_region"         => "adr_two_region", 
-			"adr_two_postalcode"     => "adr_two_postalcode",
-			"adr_two_countryname"    => "adr_two_countryname",
+			'adr_two_street'         => 'adr_two_street',
+			'adr_two_locality'       => 'adr_two_locality', 
+			'adr_two_region'         => 'adr_two_region', 
+			'adr_two_postalcode'     => 'adr_two_postalcode',
+			'adr_two_countryname'    => 'adr_two_countryname',
 
-			"tel_work"               => "tel_work",
-			"tel_home"               => "tel_home",
-			"tel_voice"              => "tel_voice",
-			"tel_fax"                => "tel_fax", 
-			"tel_msg"                => "tel_msg",
-			"tel_cell"               => "tel_cell",
-			"tel_pager"              => "tel_pager",
-			"tel_bbs"                => "tel_bbs",
-			"tel_modem"              => "tel_modem",
-			"tel_car"                => "tel_car",
-			"tel_isdn"               => "tel_isdn",
-			"tel_video"              => "tel_video",
-			"email"                  => "email",
-			"email_home"             => "email_home"
+			'tel_work'               => 'tel_work',
+			'tel_home'               => 'tel_home',
+			'tel_voice'              => 'tel_voice',
+			'tel_fax'                => 'tel_fax', 
+			'tel_msg'                => 'tel_msg',
+			'tel_cell'               => 'tel_cell',
+			'tel_pager'              => 'tel_pager',
+			'tel_bbs'                => 'tel_bbs',
+			'tel_modem'              => 'tel_modem',
+			'tel_car'                => 'tel_car',
+			'tel_isdn'               => 'tel_isdn',
+			'tel_video'              => 'tel_video',
+			'email'                  => 'email',
+			'email_home'             => 'email_home'
 		);
 
 		// This will store the contacts and vcard objects
@@ -85,17 +85,19 @@
 		var $vcard = '';
 
 		// Read full list of user's contacts only to get id's for each
-		function export_start_file($buffer,$ncat_id='') {
+		function export_start_file($buffer,$ncat_id='')
+		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = "tid=n,cat_id=".$ncat_id; }
-			else          { $filter = "tid=n"; }
+			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
+			else          { $filter = 'tid=n'; }
 			// Setup the contact and vcard objects, and the export fields var
 			$this->contacts = CreateObject('phpgwapi.contacts');
-			$this->vcard = CreateObject("phpgwapi.vcard");
+			$this->vcard = CreateObject('phpgwapi.vcard');
 			$this->export = $this->vcard->export;
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
-			for ($i=0;$i<count($tmp);$i++) {
+			for ($i=0;$i<count($tmp);$i++)
+			{
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
 			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
@@ -104,7 +106,8 @@
 		}
 
 		// Read each entry
-		function export_start_record($buffer) {
+		function export_start_record($buffer)
+		{
 			$this->id++;
 			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
@@ -113,21 +116,26 @@
 
 		// Read each attribute, populate buffer
 		// name/value are the fields from the export array in the vcard class
-		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name] && ($value != "") ) {
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name] && ($value != '') )
+			{
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
 			return $buffer;
 		}
 
-		function export_end_record($buffer) {
+		function export_end_record($buffer)
+		{
 			return $buffer;
 		}
 
-		function export_end_file($buffer) {
+		function export_end_file($buffer)
+		{
 			reset($this->ids);
-			for ($i=0;$i<count($this->ids);$i++) {
+			for ($i=0;$i<count($this->ids);$i++)
+			{
 				$vcards .= $this->vcard->out($buffer[$i]);
 			}
 			$buffer = $vcards;

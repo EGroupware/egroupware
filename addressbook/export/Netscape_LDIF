@@ -24,41 +24,43 @@
 		var $type = 'ldif';
 
 		var $export= array(
-			"title"               => "title", 
-			"n_given"             => "givenname",
-			"n_family"            => "sn",
-			"fn"                  => "cn",
-			"org_name"            => "o",
-			"org_unit"            => "ou",
-			"adr_one_street"      => "streetaddress",
-			"adr_one_locality"    => "locality",
-			"adr_one_region"      => "st",
-			"adr_one_postalcode"  => "postalcode",
-			"adr_one_countryname" => "countryname",
-			"tel_work"            => "telephonenumber",
-			"tel_home"            => "homephone",
-			"tel_fax"             => "facsimiletelephonenumber",
-			"ophone"              => "xmozillaanyphone",
-			"tel_cell"            => "cellphone",
-			"note"                => "description",
-			"ophone"              => "ophone",
-			"tel_pager"           => "pagerphone",
-			"email"               => "mail",
-			"url"                 => "homeurl",
+			'title'               => 'title', 
+			'n_given'             => 'givenname',
+			'n_family'            => 'sn',
+			'fn'                  => 'cn',
+			'org_name'            => 'o',
+			'org_unit'            => 'ou',
+			'adr_one_street'      => 'streetaddress',
+			'adr_one_locality'    => 'locality',
+			'adr_one_region'      => 'st',
+			'adr_one_postalcode'  => 'postalcode',
+			'adr_one_countryname' => 'countryname',
+			'tel_work'            => 'telephonenumber',
+			'tel_home'            => 'homephone',
+			'tel_fax'             => 'facsimiletelephonenumber',
+			'ophone'              => 'xmozillaanyphone',
+			'tel_cell'            => 'cellphone',
+			'note'                => 'description',
+			'ophone'              => 'ophone',
+			'tel_pager'           => 'pagerphone',
+			'email'               => 'mail',
+			'url'                 => 'homeurl',
 		);
 
 		// This will store the contacts object
 		var $contacts = '';
 
 		// Read full list of user's contacts only to get id's for each
-		function export_start_file($buffer,$ncat_id='') {
+		function export_start_file($buffer,$ncat_id='')
+		{
 			$this->id=-1;
 			if ($ncat_id) { $filter = "tid=n,cat_id=".$ncat_id; }
 			else          { $filter = "tid=n"; }
 			$this->contacts = CreateObject('phpgwapi.contacts');
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
-			for ($i=0;$i<count($tmp);$i++) {
+			for ($i=0;$i<count($tmp);$i++)
+			{
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
 			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
@@ -67,7 +69,8 @@
 		}
 
 		// Read each entry
-		function export_start_record($buffer) {
+		function export_start_record($buffer)
+		{
 			$this->id++;
 			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
@@ -76,12 +79,17 @@
 
 		// Read each attribute, populate buffer
 		// name/value are the fields from the export array above
-		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name]) {
-				if (strstr($value,"\n")) {
-					$value = ": ".base64_encode($value);
-				} else {
-					 $value = " ".$value;
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name])
+			{
+				if (strstr($value,"\n"))
+				{
+					$value = ': '.base64_encode($value);
+				}
+				else
+				{
+					 $value = ' '.$value;
 				}
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
@@ -90,40 +98,48 @@
 		}
 
 		// Tack on some extra values
-		function export_end_record($buffer) {
-			$buffer[$this->id]["dn"]                          = 'cn='.$buffer[$this->id]["cn"].',mail='.$buffer[$this->id]["mail"];
-			$buffer[$this->id]["xmozillauseconferenceserver"] = "0";
-			$buffer[$this->id]["xmozillanickname"]            = "";
-			$buffer[$this->id]["xmozillausehtmlmail"]         = "False";
-			if ($buffer[$this->id]["ophone"]) {
-				$buffer[$this->id]["xmozillaanyphone"]        = $buffer[$this->id]["ophone"];
-			} else {
-				$buffer[$this->id]["xmozillaanyphone"]        = $buffer[$this->id]["telephonenumber"];
+		function export_end_record($buffer)
+		{
+			$buffer[$this->id]['dn']                          = 'cn='.$buffer[$this->id]['cn'].',mail='.$buffer[$this->id]['mail'];
+			$buffer[$this->id]['xmozillauseconferenceserver'] = '0';
+			$buffer[$this->id]['xmozillanickname']            = '';
+			$buffer[$this->id]['xmozillausehtmlmail']         = 'False';
+			if ($buffer[$this->id]['ophone'])
+			{
+				$buffer[$this->id]['xmozillaanyphone']        = $buffer[$this->id]['ophone'];
+			}
+			else
+			{
+				$buffer[$this->id]['xmozillaanyphone']        = $buffer[$this->id]['telephonenumber'];
 			}
 			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
 			return $buffer;
 		}
 
-		function export_end_file($buffer) {
+		function export_end_file($buffer)
+		{
 			reset($this->ids);
-			for ($i=0;$i<count($this->ids);$i++) {
+			for ($i=0;$i<count($this->ids);$i++)
+			{
 				$entries .= 'dn: ' . $buffer[$i]['dn'] . "\n";
 				reset($this->export);
-				while (list($name,$value)=each($this->export)) {
-					if ($value != 'dn') {
+				while (list($name,$value)=each($this->export))
+				{
+					if ($value != 'dn')
+					{
 						$entries .= $value . ":" . $buffer[$i][$value] . "\n";
 					}
 				}
-				$entries .= "xmozillauseconferenceserver: " . $buffer[$i]["xmozillauseconferenceserver"] . "\n";
-				$entries .= "xmozillanickname: "            . $buffer[$i]["xmozillanickname"] . "\n";
-				$entries .= "xmozillausehtmlmail: "         . $buffer[$i]["xmozillausehtmlmail"] . "\n";
-				$entries .= "xmozillaanyphone: "            . $buffer[$i]["xmozillaanyphone"] . "\n";
-				$entries .= "objectClass: person\n";
-				$entries .= "objectClass: account\n";
-				$entries .= "objectClass: organizationalPerson\n";
-				$entries .= "objectClass: posixAccount\n";
-				$entries .= "objectClass: inetOrgPerson\n";
-				$entries .= "objectClass: shadowAccount\n";
+				$entries .= 'xmozillauseconferenceserver: ' . $buffer[$i]['xmozillauseconferenceserver'] . "\n";
+				$entries .= 'xmozillanickname: '            . $buffer[$i]['xmozillanickname'] . "\n";
+				$entries .= 'xmozillausehtmlmail: '         . $buffer[$i]['xmozillausehtmlmail'] . "\n";
+				$entries .= 'xmozillaanyphone: '            . $buffer[$i]['xmozillaanyphone'] . "\n";
+				$entries .= 'objectClass: person' . "\n";
+				$entries .= 'objectClass: account' . "\n";
+				$entries .= 'objectClass: organizationalPerson' . "\n";
+				$entries .= 'objectClass: posixAccount' . "\n";
+				$entries .= 'objectClass: inetOrgPerson' . "\n";
+				$entries .= 'objectClass: shadowAccount' . "\n";
 				$entries .= "\n";
 			}
 			$buffer = $entries;

@@ -12,36 +12,41 @@
 
   /* $Id$ */
 
-	if ($download =='on') {
-		$phpgw_info["flags"] = array(
-			"noheader" => True,
-			"nonavbar" => True
+	if ($download == 'on')
+	{
+		$phpgw_info['flags'] = array(
+			'noheader' => True,
+			'nonavbar' => True
 		);
-	} else {
-		$phpgw_info["flags"] = array(
-			"noheader" => False,
-			"nonavbar" => False
+	}
+	else
+	{
+		$phpgw_info['flags'] = array(
+			'noheader' => False,
+			'nonavbar' => False
 		);
 	}
 
-	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	$phpgw_info["flags"]["enable_contacts_class"] = True;
-	$phpgw_info["flags"]["enable_browser_class"] = True;
-	include("../header.inc.php");
+	$phpgw_info['flags'] = array(
+		'currentapp'            => 'addressbook',
+		'enable_contacts_class' => True,
+		'enable_browser_class'  => True
+	);
+	include('../header.inc.php');
 
 	$sep = SEP;
 
 	if (!$convert)
 	{
 		$t = new Template(PHPGW_APP_TPL);
-		$t->set_file(array("export" => "export.tpl"));
+		$t->set_file(array('export' => 'export.tpl'));
 
-		$dir_handle=opendir($phpgw_info["server"]["app_root"].$sep."export");
-		$i=0; $myfilearray="";
+		$dir_handle=opendir($phpgw_info['server']['app_root'].$sep.'export');
+		$i=0; $myfilearray='';
 		while ($file = readdir($dir_handle))
 		{
 			#echo "<!-- ".is_file($phpgw_info["server"]["app_root"].$sep."conv".$sep.$file)." -->";
-			if ((substr($file, 0, 1) != ".") && is_file($phpgw_info["server"]["app_root"].$sep."export".$sep.$file) )
+			if ((substr($file, 0, 1) != '.') && is_file($phpgw_info['server']['app_root'].$sep.'export'.$sep.$file) )
 			{
 				$myfilearray[$i] = $file;
 				$i++;
@@ -52,40 +57,40 @@
 		for ($i=0;$i<count($myfilearray);$i++)
 		{
 			$fname = ereg_replace('_',' ',$myfilearray[$i]);
-			$conv .= '        <OPTION VALUE="'.$myfilearray[$i].'">'.$fname.'</OPTION>'."\n";
+			$conv .= '        <option value="'.$myfilearray[$i].'">'.$fname.'</option>'."\n";
 		}
 
-		$t->set_var("lang_cancel",lang("Cancel"));
-		$t->set_var("lang_cat",lang("Select Category"));
-		$t->set_var("cat_link",cat_option($cat_id,False,False));
-		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
-		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
-		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
-		$t->set_var("export_text",lang("Export from Addressbook"));
-		$t->set_var("action_url",$phpgw->link("/addressbook/export.php"));
-		$t->set_var("filename",lang("Export file name"));
-		$t->set_var("conv",$conv);
-		$t->set_var("debug",lang(""));
-		$t->set_var("download",lang("Submit"));
-		$t->set_var("start",$start);
-		$t->set_var("sort",$sort);
-		$t->set_var("order",$order);
-		$t->set_var("filter",$filter);
-		$t->set_var("query",$query);
-		$t->set_var("cat_id",$cat_id);
-		$t->pparse("out","export");
+		$t->set_var('lang_cancel',lang('Cancel'));
+		$t->set_var('lang_cat',lang('Select Category'));
+		$t->set_var('cat_link',cat_option($cat_id,False,False));
+		$t->set_var('cancel_url',$phpgw->link('/addressbook/index.php'));
+		$t->set_var('navbar_bg',$phpgw_info['theme']['navbar_bg']);
+		$t->set_var('navbar_text',$phpgw_info['theme']['navbar_text']);
+		$t->set_var('export_text',lang('Export from Addressbook'));
+		$t->set_var('action_url',$phpgw->link('/addressbook/export.php'));
+		$t->set_var('filename',lang('Export file name'));
+		$t->set_var('conv',$conv);
+		$t->set_var('debug',lang(''));
+		$t->set_var('download',lang('Submit'));
+		$t->set_var('start',$start);
+		$t->set_var('sort',$sort);
+		$t->set_var('order',$order);
+		$t->set_var('filter',$filter);
+		$t->set_var('query',$query);
+		$t->set_var('cat_id',$cat_id);
+		$t->pparse('out','export');
 
 		$phpgw->common->phpgw_footer();
 	}
 	else
 	{
-		include ($phpgw_info["server"]["app_root"].$sep."export".$sep.$conv_type);
+		include ($phpgw_info['server']['app_root'].$sep.'export'.$sep.$conv_type);
 		$buffer=array();
 		$this = new export_conv;
 
 		// Read in user custom fields, if any
 		$customfields = array();
-		while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"]))
+		while (list($col,$descr) = @each($phpgw_info['user']['preferences']['addressbook']))
 		{
 			if ( substr($col,0,6) == 'extra_' )
 			{
@@ -95,9 +100,9 @@
 			}
 		}
  		$extrafields = array(
-			"ophone"   => "ophone",
-			"address2" => "address2",
-			"address3" => "address3"
+			'ophone'   => 'ophone',
+			'address2' => 'address2',
+			'address3' => 'address3'
 		);
 		if ($this->type != 'vcard')
 		{
@@ -128,7 +133,7 @@
 
 		$tsvfilename = $phpgw_info['server']['temp_dir'].$sep.$tsvfilename;
 
-		if ( ($download == "on") || ($o->type == 'pdb') )
+		if ( ($download == 'on') || ($o->type == 'pdb') )
 		{
 			// filename, default application/octet-stream, length of file, default nocache True
 			$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
@@ -139,9 +144,9 @@
 			echo "<pre>\n";
 			echo $buffer;
 			echo "\n</pre>\n";
-			echo '<a href="'.$phpgw->link("/addressbook/index.php",
+			echo '<a href="'.$phpgw->link('/addressbook/index.php',
 				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
-				. '">'.lang("OK").'</a>';
+				. '">'.lang('OK').'</a>';
 			$phpgw->common->phpgw_footer();
 		}
 	}

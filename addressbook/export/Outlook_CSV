@@ -30,52 +30,54 @@
 		var $type = 'csv';
 
 		var $export = array(
-			"title"               => "Title",
-			"n_given"             => "First Name",
-			"n_middle"            => "Middle Name",
-			"n_family"            => "Last Name",
-			"n_suffix"            => "Suffix",
-			"org_name"            => "Company",
-			"org_unit"            => "Department",
-			"adr_one_street"      => "Business Street",
-			"address2"            => "Business Street 2",
-			"address3"            => "Business Street 3",
-			"adr_one_locality"    => "Business City",
-			"adr_one_region"      => "Business State",
-			"adr_one_postalcode"  => "Business Postal Code",
-			"adr_one_countryname" => "Business Country",
-			"adr_two_street"      => "Home Street",
-			"adr_two_locality"    => "Home City",
-			"adr_two_region"      => "Home State",
-			"adr_two_postalcode"  => "Home Postal Code",
-			"adr_two_countryname" => "Home Country",
-			"tel_fax"             => "Business Fax",
-			"tel_work"            => "Business Phone",
-			"tel_msg"             => "Assistant's Phone",
-			"tel_car"             => "Car Phone",
-			"tel_isdn"            => "ISDN",
-			"tel_home"            => "Home Phone",
-			"tel_cell"            => "Mobile Phone",
-			"tel_pager"           => "Pager",
-			"ophone"              => "Business Phone 2",
-			"bday"                => "Birthday",
-			"email"               => "E-mail Address",
-			"email_home"          => "E-mail Address 2",
-			"url"                 => "Web Page",
-			"note"                => "Notes"
+			'title'               => 'Title',
+			'n_given'             => 'First Name',
+			'n_middle'            => 'Middle Name',
+			'n_family'            => 'Last Name',
+			'n_suffix'            => 'Suffix',
+			'org_name'            => 'Company',
+			'org_unit'            => 'Department',
+			'adr_one_street'      => 'Business Street',
+			'address2'            => 'Business Street 2',
+			'address3'            => 'Business Street 3',
+			'adr_one_locality'    => 'Business City',
+			'adr_one_region'      => 'Business State',
+			'adr_one_postalcode'  => 'Business Postal Code',
+			'adr_one_countryname' => 'Business Country',
+			'adr_two_street'      => 'Home Street',
+			'adr_two_locality'    => 'Home City',
+			'adr_two_region'      => 'Home State',
+			'adr_two_postalcode'  => 'Home Postal Code',
+			'adr_two_countryname' => 'Home Country',
+			'tel_fax'             => 'Business Fax',
+			'tel_work'            => 'Business Phone',
+			'tel_msg'             => "Assistant's Phone",
+			'tel_car'             => 'Car Phone',
+			'tel_isdn'            => 'ISDN',
+			'tel_home'            => 'Home Phone',
+			'tel_cell'            => 'Mobile Phone',
+			'tel_pager'           => 'Pager',
+			'ophone'              => 'Business Phone 2',
+			'bday'                => 'Birthday',
+			'email'               => 'E-mail Address',
+			'email_home'          => 'E-mail Address 2',
+			'url'                 => 'Web Page',
+			'note'                => 'Notes'
 		);
 
 		// This will store the contacts object
 		var $contacts = '';
 
-		function export_start_file($buffer,$ncat_id='') {
+		function export_start_file($buffer,$ncat_id='')
+		{
 			$this->id=-1;
-			if ($ncat_id) { $filter = "tid=n,cat_id=".$ncat_id; }
-			else          { $filter = "tid=n"; }
+			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
+			else          { $filter = 'tid=n'; }
 			$this->contacts = CreateObject('phpgwapi.contacts');
 
 			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
-			for ($i=0;$i<count($tmp);$i++) {
+			for ($i=0;$i<count($tmp);$i++)
+			{
 				$this->ids[$i] = $tmp[$i]['id'];
 			}
 			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
@@ -84,7 +86,8 @@
 		}
 
 		// Read each entry
-		function export_start_record($buffer) {
+		function export_start_record($buffer)
+		{
 			$this->id++;
 			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
 			$this->currentrecord = $top[0];
@@ -93,8 +96,10 @@
 
 		// Read each attribute, populate buffer
 		// name/value are the fields from the export array above
-		function export_new_attrib($buffer,$name,$value) {
-			if ($this->export[$name]) {
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name])
+			{
 				$buffer[$this->id][$this->export[$name]] = $value;
 				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
 			}
@@ -102,14 +107,17 @@
 		}
 
 		// Tack on some extra values
-		function export_end_record($buffer) {
+		function export_end_record($buffer)
+		{
 			return $buffer;
 		}
 
-		function export_end_file($buffer) {
+		function export_end_file($buffer)
+		{
 			// Build the header for the file (field list)
 			reset($this->export);
-			while (list($name,$value)=each($this->export)) {
+			while (list($name,$value)=each($this->export))
+			{
 				$entries .= $value . ',';
 			}
 			$entries = substr($entries,0,-1);		
@@ -117,9 +125,11 @@
 
 			// Now add all the data
 			reset($this->ids);
-			for ($i=0;$i<count($this->ids);$i++) {
+			for ($i=0;$i<count($this->ids);$i++)
+			{
 				reset($this->export);
-				while (list($name,$value)=each($this->export)) {
+				while (list($name,$value)=each($this->export))
+				{
 					$entries .= $buffer[$i][$value] . ',';
 				}
 				$entries = substr($entries,0,-1);
