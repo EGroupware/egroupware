@@ -32,6 +32,13 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
+	$test[] = '0.9.14.000';
+	function phpgwapi_upgrade0_9_14_000()
+	{
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.15.001';
 	function phpgwapi_upgrade0_9_15_001()
 	{
@@ -68,7 +75,7 @@
 
 			$db2->query('INSERT INTO phpgw_newprefs (preference_owner,preference_value) VALUES('
 				. $accountid . ",'"
-				. $GLOBALS['phpgw_setup']->oProc->f('preference_value')	. "')",
+				. $GLOBALS['phpgw_setup']->oProc->f('preference_value') . "')",
 				__LINE__,__FILE__);
 		}
 
