@@ -306,26 +306,27 @@
 
 			if ($country == 'DE')
 			{
-				$t->set_file(array('address_format' => 'format_de.tpl'));
+				$a = $t->set_file(array('address_format' => 'format_de.tpl'));
 			}
 				elseif ($country == 'US')
 			{
-				$t->set_file(array('address_format' => 'format_us.tpl'));
+				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
 			}
 
-			$t->set_var('font',$font);
-			$t->set_var('title',$title);
-			$t->set_var('firstname',$address[0]['n_given']);
-			$t->set_var('lastname',$address[0]['n_family']);
-			$t->set_var('company',$address[0]['org_name']);
-			$t->set_var('department',$address[0]['org_unit']);
-			$t->set_var('street',$street);
-			$t->set_var('city',$city);
-			$t->set_var('zip',$zip);
-			$t->set_var('state',$state);
-			$t->set_var('country',$country);
+			$a .= $t->set_var('font',$font);
+			$a .= $t->set_var('title',$title);
+			$a .= $t->set_var('firstname',$address[0]['n_given']);
+			$a .= $t->set_var('lastname',$address[0]['n_family']);
+			$a .= $t->set_var('company',$address[0]['org_name']);
+			$a .= $t->set_var('department',$address[0]['org_unit']);
+			$a .= $t->set_var('street',$street);
+			$a .= $t->set_var('city',$city);
+			$a .= $t->set_var('zip',$zip);
+			$a .= $t->set_var('state',$state);
+			$a .= $t->set_var('country',lang($country));
 
-			$t->pparse('out','address_format');
+			$a .= $t->fp('out','address_format');
+			return $a;
 		}
 	}
 ?>
