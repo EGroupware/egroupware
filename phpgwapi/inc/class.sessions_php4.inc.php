@@ -291,11 +291,11 @@
 			$parts = explode('.',$dom);
 			if (count($parts) > 2)
 			{
-				$this->cookie_domain) = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
+				$this->cookie_domain = '.'.$parts[count($parts)-2].'.'.$parts[count($parts)-1];
 			}
 			else
 			{
-				$this->cookie_domain) = '';
+				$this->cookie_domain = '';
 			}
 		}
 
@@ -305,7 +305,7 @@
 			{
 				$this->phpgw_set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain)); 
+			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain); 
 		}
 
 		function create($login,$passwd = '',$passwd_type = '')
