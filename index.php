@@ -12,6 +12,12 @@
 
   /* $Id$ */
 
+  if (! is_file("header.inc.php")) {
+     echo '<center>It appears that phpGroupWare is not setup yet, please click <a href="setup/index.php">'
+        . 'here</a>.</center>';
+     exit;
+  }
+
   if (!isset($sessionid) || !$sessionid) {
      Header("Location: login.php");
      exit;
