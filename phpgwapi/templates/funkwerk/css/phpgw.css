@@ -121,12 +121,7 @@ table.login
 	font-weight: bold;
 }
 
-.th_text,.app_header_text
-{
-	font-weight: bold;
-}
-
-.app_header,.th
+.th_text,.app_header,.th
 {
 	font-weight: bold;
 }
