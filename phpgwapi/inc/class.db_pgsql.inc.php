@@ -43,6 +43,10 @@
 		// PostgreSQL changed somethings from 6.x -> 7.x
 		var $db_version;
 
+		// For our error handling
+		var $xmlrpc = False;
+		var $soap   = False;
+
 		function ifadd($add, $me)
 		{
 			if('' != $add)
@@ -55,6 +59,16 @@
 		function db($query = '')
 		{
 			$this->query($query);
+
+			if (ereg('xmlrpc.php',$GLOBALS['PHP_SELF']))
+			{
+				$this->xmlrpc = True;
+			}
+
+			if (ereg('soap.php',$GLOBALS['PHP_SELF']))
+			{
+				$this->soap = True;
+			}
 		}
 
 		function connect()
@@ -193,7 +207,7 @@
 
 			/* printf("<br>Debug: query = %s<br>\n", $Query_String); */
 
-			$this->Query_ID = pg_Exec($this->Link_ID, $Query_String);
+			$this->Query_ID = @pg_Exec($this->Link_ID, $Query_String);
 			$this->Row   = 0;
 
 			$this->Error = pg_ErrorMessage($this->Link_ID);
@@ -463,31 +477,75 @@
 			print $this->Record[$Name];
 		}
 
-		function halt($msg, $line = "", $file = "")
+		function halt($msg, $line = '', $file = '')
 		{
-			if($this->Halt_On_Error == "no")
+			if ($this->Halt_On_Error == 'no')
 			{
 				return;
 			}
-			/* Just in case there is a table currently locked */
-			$this->unlock();
 
-			printf("<b>Database error:</b> %s<br>\n", $msg);
-			printf("<b>PostgreSQL Error</b>: %s (%s)<br>\n",
-				$this->Errno,
-				$this->Error);
+			/* Just in case there is a table currently locked */
+			$this->transaction_abort();
+
+
+			if ($this->xmlrpc || $this->soap)
+			{
+				$s = sprintf("Database error: %s\n", $msg);
+				$s .= sprintf("PostgreSQL Error: %s\n\n (%s)\n\n",$this->Errno,$this->Error);
+			}
+			else
+			{
+				$s = sprintf("<b>Database error:</b> %s<br>\n", $msg);
+				$s .= sprintf("<b>PostgreSQL Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
+			}
+
 			if ($file)
 			{
-				printf("<br><b>File:</b> %s",$file);
+				if ($this->xmlrpc || $this->soap)
+				{
+					$s .=	sprintf("File: %s\n",$file);
+				}
+				else
+				{
+					$s .=	sprintf("<br><b>File:</b> %s",$file);
+				}
 			}
+
 			if ($line)
 			{
-				printf("<br><b>Line:</b> %s",$line);
+				if ($this->xmlrpc || $this->soap)
+				{
+					$s .=	sprintf("Line: %s\n",$line);
+				}
+				else
+				{
+					$s .=	sprintf("<br><b>Line:</b> %s",$line);
+				}
 			}
 
 			if ($this->Halt_On_Error == 'yes')
 			{
-				echo '<p><b>Session halted.</b>';
+				if (! $this->xmlrpc && ! $this->soap)
+				{
+					$s .= '<p><b>Session halted.</b>';
+				}
+			}
+
+			if ($this->xmlrpc || $this->soap)
+			{
+				$r = CreateObject('phpgwapi.xmlrpcresp',
+					CreateObject('phpgwapi.xmlrpcval'),
+					$GLOBALS['xmlrpcerr']['unknown_method'],
+					$s
+				);
+				$payload = "<?xml version=\"1.0\"?>\n" . $r->serialize();
+				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
+				print $payload;
+				$GLOBALS['phpgw']->common->phpgw_exit(False);
+			}
+			else
+			{
+				echo $s;
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
