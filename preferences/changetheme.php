@@ -28,7 +28,7 @@
      exit;
   }
 
-  $dh = opendir($phpgw_info["server"]["api_inc"] . "/themes");
+  $dh = opendir($phpgw_info["server"]["server_root"] . "/phpgwapi/themes");
   while ($file = readdir($dh)) {
     if (eregi("\.theme$", $file)) {
        $installed_themes[] = substr($file,0,strpos($file,"."));
