@@ -3007,7 +3007,7 @@
 			foreach($cats as $cat_id)
 			{
 				list($cat) = $this->cat->return_single($cat_id);
-				$cat_string[] = $cat['name'];
+				$cat_string[] = stripslashes($cat['name']);
 			}
 			$var['category'] = Array(
 				'field'	=> lang('Category'),
