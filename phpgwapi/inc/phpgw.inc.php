@@ -219,8 +219,8 @@
       // PHP won't allow you to set a var to a var
       // or function for default values
       if (! $url) {
-        #$url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
-        #$url = $url_root[0]."//".$url_root[2].$PHP_SELF;
+        $url_root = split ("/", $phpgw_info["server"]["webserver_url"]);
+        $url = $url_root[0]."//".$url_root[2].$PHP_SELF;
 	$url = $PHP_SELF;
       }
 
@@ -234,7 +234,9 @@
         $url .= "&kp3=" . $kp3;
         $url .= "&domain=" . $phpgw_info["user"]["domain"];
         // This doesn't belong in the API.
-	      // Its up to the app to pass this value. (jengo)
+	// Its up to the app to pass this value. (jengo)
+        // Putting it into the app requires a massive number of updates in email app. 
+        // Until that happens this needs to stay here (seek3r)
         if ($phpgw_info["flags"]["newsmode"]) {
           $url .= "&newsmode=on";
         }
