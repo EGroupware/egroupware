@@ -201,18 +201,19 @@
  <?php
      $phpgw->common->phpgw_footer();
   } else {
-     //$phpgw->preferences->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
 
      while ($setting = each($settings)) {
-        $phpgw->preferences->change($phpgw_info["user"]["account_id"],$setting[0],"common",$setting[1]);
+        $phpgw->preferences->change("common",$setting[0],$setting[1]);
      }
 
      // This one is specialized, so we do it manually
      if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->preferences->change($phpgw_info["user"]["account_id"],"show_currentusers","common");
+           $phpgw->preferences->change("common","show_currentusers");
         }
      }
+
+     $phpgw->preferences->commit();
 
      if ($phpgw_info["server"]["useframes"] != "never") {
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));

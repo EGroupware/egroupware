@@ -17,7 +17,7 @@
   include("../header.inc.php");
   
   if ($ntheme) {
-     $phpgw->preferences->change($phpgw_info["user"]["account_id"],"theme","common",$ntheme);
+     $phpgw->preferences->change("common","theme",$ntheme);
      $phpgw->preferences->commit();
      Header("location: " . $phpgw->link("changetheme.php"));
      exit;
