@@ -636,8 +636,8 @@
 		$fields["fn"]             = addslashes($firstname . " " . $lastname);
 		$fields["title"]          = addslashes($title);
 		$fields["d_email"]        = addslashes($email);
-		$fields["a_tel"]          = addslashes($hphone);
-		$fields["b_tel"]          = addslashes($wphone);
+		$fields["a_tel"]          = addslashes($wphone);
+		$fields["b_tel"]          = addslashes($hphone);
 		$fields["c_tel"]          = addslashes($fax);
 		$fields["pager"]          = addslashes($pager);
 		$fields["mphone"]         = addslashes($mphone);
