@@ -339,13 +339,13 @@
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
 	 			if ($other['mainscreen_showbirthdays'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays');
+					$GLOBALS['phpgw']->preferences->add('addressbook','mainscreen_showbirthdays',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','default_filter');
 	 			if ($other['default_filter'])
 				{
-					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter');
+					$GLOBALS['phpgw']->preferences->add('addressbook','default_filter',True);
 				}
 
 				$GLOBALS['phpgw']->preferences->delete('addressbook','autosave_category');
