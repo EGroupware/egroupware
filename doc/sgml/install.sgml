@@ -1,169 +1,226 @@
 <chapter id="installing">
-	<title>Installing on Tested Systems</title>
-		 <para>
-		         After you have met the system requirements, You can install
-		         it from the TarBall or you can get it directly from CVS.
-  		</para>
-<sect1 id=tarballins>
-	<title>Installing from TarBall</title>
-  		<para>Installing from a TarBall is very easy. The files should be
-  	                 installed in the webserver directory. So all you need to
-  	                 do is unpack the tar ball and copy the whole directory to
-  	                 the webserver directory (eg. /home/httpd/html for default
-  	                 apache configuration in many linux distros).You may
-  	                 have to get required permissions to do this. Contact
-  	                 your system administrator if you dont have the permission
-  	                 to write to your webserver directory
-  	         </para>
-</sect1>
-  			
-<sect1 id=CVSins>
- 	<title>Installing from CVS</title>
- 		<para>Fill this Seek3r</para>
-</sect1>
-  			
-<sect1>
- 	<title>Setup / Configure phpGroupWare</title>
-		<para>
-	      		Copy the <filename>header.inc.php.sample</filename> file to
-	      		<filename>header.inc.php</filename> and edit the file, following the
-	      		directions in the comments.
-		</para>
-		<para>
-	      		Then point your browser to phpgroupware/setup/ which will
-	      		create (or upgrade) the database tables.
-	      		You wil be asked to login, using the password set in
-	      		<filename>header.inc.php</filename>. Setup will attempt to determine what version
-	      		of the phpGroupWare database you have installed, and upgrade to the most recent
-	      		version.
-                	</para>
-                	        <note><title>Note</title>
-          	<para>
-                	The developers are concentrating on getting the beta
-	                working, and have not spent a great deal of time building upgrade scripts from the
-  		        alpha versions of phpGroupWare. You are advised to backup your existing alpha
-  			database before running the setup script to avoid problems!
-  		</para>
-  			</note>
-                <para>
-  			If you get no error messages, continue on to phpgroupware/setup/config.php
-  			to configure phpGroupWare to your system.
-  		</para>
-  		<para>
-  			If you are using the email system you will need to create a temporary directory
-  			where file uploads will be stored.  For security reasons, you should <constant>chown
-  			nobody.nobody</constant> and <constant>chmod 700</constant> to that directory.  Depending on your system configuration.
-  			Default installs of Apache normally run as the user nobody.  You may need your system
-  			administrator to do this for you if you do not have root access.
-  		</para>
-  		<para>
-  		        If you do not have access to root, create this file and run it.
-  		</para>
-  		<programlisting>
- &lt;?php
-	if (mkdir("/path/to/temp/directory",0700)) {
-	echo "Directory created successfully";
-	} else {
-	echo "Error creating directory";
-	}
-?&gt;
-    			                </programlisting>
-	        <para>
-	        	If you have access to cron, you may want to setup the files in the cron
-			directory.
-		</para>
-		<para>
-			stalesessions.pl - There are 2 reasons for this file.
-			<itemizedlist mark=bullet>
-			<listitem><para>Users always forget to logout. This way the session doesn't sit around forever, creating a possible security risk.</para></listitem>
-			<listitem><para>The email system requires plain text passwords which are stored in the sessions table.</para></listitem>
-			</itemizedlist>
-			 This file is not required, you can simply disable cron_apps in the admin -> applications section
-  			 to clean out the sessions table during login and logout
-  	        </para>
-  	        <para>
-  	        	stale_uploads.pl - This will delete file attachments for messages that where not
-			completed.  If a users browser crashes, Internet connection dies, etc, their
-			files will sit there forever unless deleted.  You could add a few lines to
-			logout.php that will look in the temp directory for any stale uploads and delete
-			them.  But, once again, it becomes a performance issue.
-		</para>	
-</sect1>
-<sect1>
-      	<title>Testing the install</title>
-       	<para>
-        	If your config is setup properly you can now login.  Point your browser to the
-		installed location and login with the username <classname>demo</classname> and the password is <classname>1234</classname>
-		At this point it would be a good idea to create a new user with administrative privileges and
-		delete the old one.
-	</para>
-</sect1>
-<sect1>
-	<title>Installing additional applications</title>
+  <title>Installation Steps</title>
 	<para>
-		Once you have the core phpGroupWare install up and running,
-		you may want to download and install additional applications.
-	</para>
-        <para>
-		You should consult any <filename>README</filename> or <filename>INSTALL</filename>
-		files that come with the new application first, as most require you
-		to create additional tables in the database, and add additional
-		translation data to the lang table (typically a file called <filename>lang.sql</filename>)
-	</para>
-        <para>
-		You install the new application within the phpGroupWare install tree by
-		copying the application directory into the phpGroupWare install location,
-		and enabling the application through the Administration page.
-	</para>
-        <para>
-		For example, this is the process to install the
-		Headlines application (see <ulink url="http://sourceforge.net/phpgwapps/">
-		<citetitle>http://sourceforge.net/phpgwapps/</citetitle></ulink> for
-		more on this and other applications).
-		<itemizedlist mark=bullet>
-		<listitem><para>Download the .tar.gz file for the application, or check out the source
-		with cvs with
-		<programlisting>
-export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'
-cvs login   (just hit enter if prompted for a password)
-cvs co headlines
-		</programlisting></para></listitem>
-	
-		<listitem><para>Move the <classname>headlines</classname> directory into your phpGroupWare
-			install directory.</para></listitem>
-        	<listitem><para>Log into phpGroupWare as an administrative user, and go to the Administration page.
-				</para></listitem>
+    After you have met the system requirements, You can install
+    it from the TarBall or you can get it directly from CVS.
+  </para>
 
-		<listitem><para>In the first section, choose the <classname>Applications</classname> link.
-				</para></listitem>
+  <sect1 id=tarballins>
+  	<title>Installing from TarBall</title>
+    <para>
+      The files should be	installed in the webserver directory. So all you need to
+    	do is unpack the tar ball and copy the whole directory to	the webserver directory 
+    </para>
+    <para>
+    	(eg. /home/httpd/html for default	apache configuration in many linux distros).
+    </para>
+    <para>
+    	You may	have to get required permissions to do this. Contact your system 
+    	administrator if you dont have the permission	to write to your webserver directory.
+    </para>
+  </sect1>
+    			
+  <sect1 id=cvsins>
+   	<title>Installing from CVS</title>
+   		<para>
+   		  Grabbing a copy from CVS is not as hard as it may seem. You will need to have a cvs client installed.
+   		  Then try the following commands:
+        <cmdsynopsis>
+          <command>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</command><sbr>
+          <command>cvs login (just hit enter when prompted for a password)</command><sbr>
+          <command>cvs checkout phpgroupware</command>
+        </cmdsynopsis>
+        If you need to install into a different dirname, you can add ' -d dirname' after 'checkout' and before 'phpgroupware'.
+        The commands would look like this:
+        <cmdsynopsis>
+          <command>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware'</command><sbr>
+          <command>cvs login (just hit enter when prompted for a password)</command><sbr>
+          <command>cvs checkout -d dirname phpgroupware</command>
+        </cmdsynopsis>
+   		</para>
+  </sect1>
+    			
+  <sect1>
+   	<title>Setup / Configure phpGroupWare</title>
+    <sect2>
+     	<title>The config file</title>
+    	<para>
+      	Copy the <filename>header.inc.php.sample</filename> file to
+      	<filename>header.inc.php</filename> and edit the file, following the
+      	directions in the comments.
+    	</para>
+    </sect2>
+    <sect2>
+     	<title>Create database in MySQL</title>
+    	<para>
+        An empty database will be needed for phpGroupWare. Here are the instructions for doing so with MySQL.
+        First create the database:
+        <cmdsynopsis>
+          <command>mysqladmin create phpgroupware -p</command>
+        </cmdsynopsis>
+        Then login to the mysql:
+        <cmdsynopsis>
+          <command>mysql -p</command>
+        </cmdsynopsis>
+        Finally grant the needed security rights:
+        <cmdsynopsis>
+          <command>grant all on phpgroupware.* to phpgroupware@localhost identified by "some_password";</command>
+        </cmdsynopsis>
+    	</para>
+    </sect2>
 
-		<listitem><para>Click on add, and fill in the form.</para>
-		<para>
-			<application>Application name</application>
-			should be identical to the name
-			of the directory you moved into the phpGroupWare install, in this case use <classname>headlines</classname>
-		</para>
-		<para>
-			<application>Application Title</application>
-			is shown in the navigation bar and other places to refer to the
-			new application. Enter <classname>Headlines</classname> for this example.
-		</para>
-		<para>
-			<application>Enabled</application>
-			can be used to disable an application for all users temporially. You
-			should normal check the box to enable the application.
-		</para>
-		</listitem>
-		<listitem><para>Back in the Administration page, you need to enable the application for specific users
-			or user groups by editing them, and checking the new <classname>Headlines</classname> box that appears
-			in the middle of the account editing page.</para></listitem>
-			<listitem><para>Once you have added the Headlines app to your account, you should see a Headlines
-			entry in the Administration and Preferences pages, and there should be an icon for
-			the Headlines application in the navigation bar.</para></listitem>
-			<listitem><para>Once you enable a few of the Headlines sites through the Administration page link, you
-			should see headlines grabbed from the sites you selected when you click on the Headlines
-			icon in the navigation bar.</para></listitem>
-		</itemizedlist>
-		</para>
-</sect1>
+    <sect2>
+     	<title>Create database in PostreSQL</title>
+    	<para>
+        An empty database will be needed for phpGroupWare. Here are the instructions for doing so with PostgreSQL.
+        Create the database:
+        <cmdsynopsis>
+          <command>postmaster -i -D /home/[username]/[dataDir]</command>
+        </cmdsynopsis>
+        You will probably need to review PostgreSQL documentation for futher details.
+    	</para>
+    </sect2>
+
+    <sect2>
+     	<title>The Setup Program</title>
+    	<para>
+    		Then point your browser to phpgroupware/setup/ which will
+    		create (or upgrade) the database tables.
+    		You wil be asked to login, using the password set in
+    		<filename>header.inc.php</filename>. Setup will attempt to determine what version
+    		of the phpGroupWare database you have installed, and upgrade to the most recent
+    		version.
+      </para>
+        <note><title>Note</title>
+          <para>
+            The developers are concentrating on getting the beta
+            working, and have not spent a great deal of time building upgrade scripts from the
+            alpha versions of phpGroupWare. You are advised to backup your existing alpha
+            database before running the setup script to avoid problems!
+         </para>
+    	</note>
+      <para>
+    	  If you get no error messages, continue on to phpgroupware/setup/config.php
+    		to configure phpGroupWare to your system.
+      </para>
+    	<para>
+    	  If you are using the email system you will need to create a temporary directory
+      	where file uploads will be stored.  For security reasons, you should <constant>chown
+      	nobody.nobody</constant> and <constant>chmod 700</constant> to that directory.  Depending on your system configuration.
+      	Default installs of Apache normally run as the user nobody.  You may need your system
+      	administrator to do this for you if you do not have root access.
+      </para>
+    	<para>
+    	  If you do not have access to root, create this file and run it.
+      </para>
+      <programlisting>
+&lt;?php
+if (mkdir("/path/to/temp/directory",0700)) {
+echo "Directory created successfully";
+} else {
+echo "Error creating directory";
+}
+?&gt;
+      </programlisting>
+    </sect2>
+    <sect2>
+     	<title>The phpGroupWare Daemon</title>
+      <para>
+        If you have access to cron, you may want to setup the files in the cron
+    		directory.
+    	</para>
+    	<para>
+    		stalesessions.pl - There are 2 reasons for this file.
+    		<itemizedlist mark=bullet>
+    		  <listitem><para>Users always forget to logout. This way the session doesn't sit around forever, creating a possible security risk.</para></listitem>
+    		  <listitem><para>The email system requires plain text passwords which are stored in the sessions table.</para></listitem>
+    		</itemizedlist>
+        This file is not required, you can simply disable cron_apps in the admin -> applications section
+      	to clean out the sessions table during login and logout
+      </para>
+      <para>
+        stale_uploads.pl - This will delete file attachments for messages that where not
+    		completed.  If a users browser crashes, Internet connection dies, etc, their
+    		files will sit there forever unless deleted.  You could add a few lines to
+    		logout.php that will look in the temp directory for any stale uploads and delete
+    		them. But, once again, it becomes a performance issue.
+    	</para>
+    </sect2>
+  </sect1>
+  <sect1>
+    <title>Testing the install</title>
+    <para>
+      If your config is setup properly you can now login.  Point your browser to the
+  		installed location and login with the username <classname>demo</classname> and the password is <classname>1234</classname>
+  		At this point it would be a good idea to create a new user with administrative privileges and
+  		delete the old one.
+  	</para>
+  </sect1>
+  <sect1>
+  	<title>Installing additional applications</title>
+  	<para>
+  		Once you have the core phpGroupWare install up and running,
+  		you may want to download and install additional applications.
+  	</para>
+    <para>
+  		You should consult any <filename>README</filename> or <filename>INSTALL</filename>
+  		files that come with the new application first, as most require you
+  		to create additional tables in the database, and add additional
+  		translation data to the lang table (typically a file called <filename>lang.sql</filename>)
+  	</para>
+    <para>
+  		You install the new application within the phpGroupWare install tree by
+  		copying the application directory into the phpGroupWare install location,
+  		and enabling the application through the Administration page.
+  	</para>
+    <para>
+      For example, this is the process to install the
+  		Headlines application (see <ulink url="http://sourceforge.net/phpgwapps/">
+  		<citetitle>http://sourceforge.net/phpgwapps/</citetitle></ulink> for
+  		more on this and other applications).
+  		<itemizedlist mark=bullet>
+    		<listitem><para>Download the .tar.gz file for the application, or check out the source with cvs with
+          <cmdsynopsis>
+            <command>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</command>
+            <command>cvs login   (just hit enter if prompted for a password)</command>
+            <command>cvs co headlines</command><sbr>
+          </cmdsynopsis>
+    		</para></listitem>
+    	
+    		<listitem><para>Move the <classname>headlines</classname> directory into your phpGroupWare
+    			install directory.</para></listitem>
+          <listitem><para>Log into phpGroupWare as an administrative user, and go to the Administration page.
+    			</para></listitem>
+    		<listitem><para>In the first section, choose the <classname>Applications</classname> link.
+    				</para></listitem>
+    		<listitem><para>Click on add, and fill in the form.</para>
+    		<para>
+    			<application>Application name</application>
+    			should be identical to the name
+    			of the directory you moved into the phpGroupWare install, in this case use <classname>headlines</classname>
+    		</para>
+    		<para>
+    			<application>Application Title</application>
+    			is shown in the navigation bar and other places to refer to the
+    			new application. Enter <classname>Headlines</classname> for this example.
+    		</para>
+    		<para>
+    			<application>Enabled</application>
+    			can be used to disable an application for all users temporially. You
+    			should normal check the box to enable the application.
+    		</para>
+    		</listitem>
+    		<listitem><para>Back in the Administration page, you need to enable the application for specific users
+    			or user groups by editing them, and checking the new <classname>Headlines</classname> box that appears
+    			in the middle of the account editing page.</para></listitem>
+    			<listitem><para>Once you have added the Headlines app to your account, you should see a Headlines
+    			entry in the Administration and Preferences pages, and there should be an icon for
+    			the Headlines application in the navigation bar.</para></listitem>
+    			<listitem><para>Once you enable a few of the Headlines sites through the Administration page link, you
+    			should see headlines grabbed from the sites you selected when you click on the Headlines
+  			  icon in the navigation bar.
+  			</para></listitem>
+  		</itemizedlist>
+    </para>
+  </sect1>
 </chapter>
