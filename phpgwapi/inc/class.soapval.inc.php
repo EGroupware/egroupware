@@ -1,4 +1,36 @@
 <?php
+/*
+
+	SOAPx4
+	by Dietrich Ayala (C) 2001 dietrich@ganx4.com
+
+	This project began based on code from the 2 projects below,
+	and still contains some original code. The licenses of both must be respected.
+
+	XML-RPC for PHP
+	originally by Edd Dumbill (C) 1999-2000
+
+	SOAP for PHP
+	by Victor Zou (C) 2000-2001 <victor@gigaideas.com.cn>
+
+*/
+
+	/*  changelog:
+	2001-07-04
+	- abstract type system to support either 1999 or 2001 schema (arg, typing still needs much
+	solidification.)
+	- implemented proxy support, based on sample code from miles lott <milos@speakeasy.net>
+	- much general cleanup of code & cleaned out what was left of original xml-rpc/gigaideas code
+	- implemented a transport argument into send() that allows you to specify different transports
+	(assuming you have implemented the function, and added it to the conditional statement in send()
+	- abstracted the determination of charset in Content-type header
+	2001-07-5
+	- fixed more weird type/namespace issues
+	*/
+
+	// $path can be a complete endpoint url, with the other parameters left blank:
+	// $soap_client = new soap_client("http://path/to/soap/server");
+
   /* $Id$ */
 
 	// soap value object
@@ -49,7 +81,7 @@
 			$this->type_code = 0;
 			$this->type_prefix = false;
 			$this->array_type = '';
-			$this->debug_flag = True;
+			$this->debug_flag = False;
 			$this->debug_str = '';
 			$this->debug("Entering soapval - name: '$name' type: '$type'");
 
