@@ -459,7 +459,7 @@
 			$old_group_info = $group->read_repository();
 
 			// Set group apps
-			$apps = CreateObject('phpgwapi.applications',$group_info['account_info']);
+			$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
 			$apps_before = $apps->read_account_specific();
 			$apps->update_data(Array());
 			$new_apps = Array();
