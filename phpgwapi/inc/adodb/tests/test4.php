@@ -17,10 +17,12 @@ error_reporting(E_ALL);
 function testsql()
 {
 
-//define('ADODB_FORCE_NULLS',1);
 
 include('../adodb.inc.php');
 include('../tohtml.inc.php');
+
+global $ADODB_FORCE_TYPE;
+
 
 //==========================
 // This code tests an insert
@@ -47,6 +49,9 @@ $record = array(); // Initialize an array to hold the record data to insert
 $record["firstname"] = 'null';
 $record["lastname"] = "Smith\$@//";
 $record["created"] = time();
+
+if (isset($_GET['f'])) $ADODB_FORCE_TYPE = $_GET['f'];
+
 //$record["id"] = -1;
 
 // Pass the empty recordset and the array containing the data to insert
@@ -71,19 +76,28 @@ if (!$rs) print "<p><b>No record found!</b></p>";
 
 $record = array(); // Initialize an array to hold the record data to update
 
+
 // Set the values for the fields in the record
 $record["firstName"] = "Caroline".rand();
-$record["lasTname"] = "Smithy Jones"; // Update Caroline's lastname from Miranda to Smith
+$record["lasTname"] = ""; // Update Caroline's lastname from Miranda to Smith
 $record["creAted"] = '2002-12-'.(rand()%30+1);
-$record['num'] = 3921;
+$record['num'] = '';
 // Pass the single record recordset and the array containing the data to update
 // into the GetUpdateSQL function. The function will process the data and return
 // a fully formatted update sql statement.
 // If the data has not changed, no recordset is returned
+
 $updateSQL = $conn->GetUpdateSQL($rs, $record);
 
 $conn->Execute($updateSQL); // Update the record in the database
 if ($conn->Affected_Rows() != 1)print "<p><b>Error</b>: Rows Affected=".$conn->Affected_Rows().", should be 1</p>";
+
+$record["firstName"] = "Caroline".rand();
+$record["lasTname"] = "Smithy Jones"; // Update Caroline's lastname from Miranda to Smith
+$record["creAted"] = '2002-12-'.(rand()%30+1);
+$record['num'] = 331;
+$updateSQL = $conn->GetUpdateSQL($rs, $record);
+$conn->Execute($updateSQL); // Update the record in the database
 
 $rs = $conn->Execute("select * from adoxyz where lastname like 'Smith%'");
 adodb_pr($rs);

@@ -57,9 +57,12 @@ pre {
 	<a href="#caching">Caching</a><br>
 	<a href="#pivot">Pivot Tables</a></b> 
 <p><a href="#ref"><b>REFERENCE</b></a>
-<p> <font size="2">Variables: <a href="#adodb_countrecs">$ADODB_COUNTRECS</a> <a href=#adodb_ansi_padding_off>$ADODB_ANSI_PADDING_OFF</a>
-  <a href="#adodb_cache_dir">$ADODB_CACHE_DIR</a> </font><font size="2"><a href=#adodb_fetch_mode>$ADODB_FETCH_MODE</a> 
-  <a href=#adodb_lang>$ADODB_LANG</a><br>
+<p> <font size="2">Variables: <a href="#adodb_countrecs">$ADODB_COUNTRECS</a> 
+<a href=#adodb_ansi_padding_off>$ADODB_ANSI_PADDING_OFF</a>
+  <a href="#adodb_cache_dir">$ADODB_CACHE_DIR</a> <BR>
+  &nbsp; &nbsp; &nbsp; &nbsp;  <a href=#force_type>$ADODB_FORCE_TYPE</a> 
+  <a href=#adodb_fetch_mode>$ADODB_FETCH_MODE</a> 
+  <a href=#adodb_lang>$ADODB_LANG</a> <br>
   Constants: </font><font size="2"><a href=#adodb_assoc_case>ADODB_ASSOC_CASE</a> 
   </font><br>
   <a href="#ADOConnection"><b> ADOConnection</b></a><br>
@@ -586,6 +589,7 @@ catch exceptions on errors as they occur.
 		$db->Connect('','scott','bad-password'); 
 	} catch (exception $e) { 
 		var_dump($e); 
+		adodb_backtrace($e->gettrace());
 	} 
 </pre>
 <p>Note that reaching EOF is <b>not</b> considered an error nor an exception.
@@ -1227,9 +1231,30 @@ $conn->Execute($updateSQL); # Update the record in the database
 $conn->Close();
 ?>
 </pre>
-GetInsertSQL/GetUpdateSQL ignore all empty fields (they are not added to the SQL generated). 
-To explicitly force a field to be set to "null", set the constant define('ADODB_FORCE_NULLS',1) before
-you call the functions.
+<a name=ADODB_FORCE_TYPE></a>
+<b>$ADODB_FORCE_TYPE</b><p>
+The behaviour of GetUpdateSQL() and GetInsertSQL()  
+when converting empty or null PHP variables to SQL is controlled by the
+ global $ADODB_FORCE_TYPE variable. Set it to one of the values below. Default
+  is ADODB_FORCE_VALUE (3):
+<pre>
+0 = ignore empty fields. All empty fields in array are ignored.
+1 = force null. All empty, php null and string 'null' fields are changed to sql NULL values.
+2 = force empty. All empty, php null and string 'null' fields are changed to sql empty '' or 0 values.
+3 = force value. Value is left as it is. Php null and string 'null' are set to sql NULL values and 
+    empty fields '' are set to empty '' sql values.
+
+define('ADODB_FORCE_IGNORE',0);
+define('ADODB_FORCE_NULL',1);
+define('ADODB_FORCE_EMPTY',2);
+define('ADODB_FORCE_VALUE',3);
+</pre>
+<p>
+Thanks to Niko (nuko#mbnet.fi) for the $ADODB_FORCE_TYPE code.
+<p>
+Note: the constant ADODB_FORCE_NULLS is obsolete since 4.52 and is ignored. Set $ADODB_FORCE_TYPE = ADODB_FORCE_NULL
+for equivalent behaviour.
+
 <p>
 <h3>Example 8: Implementing Scrolling with Next and Previous<a name="ex8"></a></h3>
 <p> The following code creates a very simple recordset pager, where you can scroll 
@@ -1405,9 +1430,19 @@ $conn-><strong>CompleteTrans</strong>();
 </pre>
 <p>Note: Savepoints are currently not supported. 
 <h2><a name="errorhandling"></a>Using Custom Error Handlers and PEAR_Error</h2>
-Apart from the old $con->debug = true; way of debugging, ADOdb 1.50 onwards provides 
-another way of handling errors using ADOdb's custom error handlers. 
-<p> ADOdb provides two custom handlers which you can modify for your needs. The 
+<p>ADOdb supports PHP5 exceptions.  Just include <i>adodb-exceptions.inc.php</i> and you can now 
+catch exceptions on errors as they occur.
+<pre>
+	<b>include("../adodb-exceptions.inc.php");</b> 
+	include("../adodb.inc.php");	 
+	try { 
+		$db = NewADOConnection("oci8://scott:bad-password@mytns/"); 
+	} catch (exception $e) { 
+		var_dump($e); 
+		adodb_backtrace($e->gettrace());
+	} 
+</pre>
+<p> ADOdb also provides two custom handlers which you can modify for your needs. The 
   first one is in the <b>adodb-errorhandler.inc.php</b> file. This makes use of 
   the standard PHP functions <a href=http://php.net/error_reporting>error_reporting</a> 
   to control what error messages types to display, and <a href=http://php.net/trigger_error>trigger_error</a> 
@@ -1801,6 +1836,8 @@ in adodb/lang/adodb-$lang.inc.php, where $lang is the supported langauge.
 <p>To use it, declare it before you incldue adodb.inc.php.</p>
 <p>define('ADODB_ASSOC_CASE', 2); # use native-case for ADODB_FETCH_ASSOC<br>
 	include('adodb.inc.php'); </p>
+<h3><font color="#000000"><a name="force_type"></a></font>$ADODB_FORCE_TYPE</h3>
+<p>See the <a href=#ADODB_FORCE_TYPE>GetUpdateSQL tutorial</a>.
 <hr>
 <h2>ADOConnection<a name="adoconnection"></a></h2>
 <p>Object that performs the connection to the database, executes SQL statements 
@@ -2234,7 +2271,7 @@ $ret = $db->Replace('atable2',
 	array('firstname'=>"'Harun'",'lastname'=>"'Al-Rashid'", 'age' => 'null'),
 	array('lastname','firstname'));	
 </pre>
-<p><b>GetUpdateSQL<a name="getupdatesql"></a>(&$rs, $arrFields, $forceUpdate=false,$magicq=false, $forcenulls=false)</b></p>
+<p><b>GetUpdateSQL<a name="getupdatesql"></a>(&$rs, $arrFields, $forceUpdate=false,$magicq=false, $force=null)</b></p>
 <p>Generate SQL to update a table given a recordset $rs, and the modified fields 
 	of the array $arrFields (which must be an associative array holding the column 
 	names and the new values) are compared with the current recordset. If $forceUpdate 
@@ -2242,20 +2279,17 @@ $ret = $db->Replace('atable2',
 	$rs-&gt;fields. Requires the recordset to be associative. $magicq is used 
 	to indicate whether magic quotes are enabled (see qstr()). The field names in the array 
 	are case-insensitive.</p>
-	<p>Since 3.61, define('ADODB_FORCE_NULLS',1) and all PHP nulls will be auto-converted to SQL nulls.
-	Since 4.24, we allow you to pass in $forcenulls as a parameter. This overrides the ADODB_FORCE_NULLS
-	constant.
-<p><b>GetInsertSQL<a name="getinsertsql"></a>(&$rs, $arrFields,$magicq=false,$forcenulls=false)</b></p>
+	<p>Since 4.52, we allow you to pass the $force type parameter, and this overrides the <a href=#ADODB_FORCE_TYPE>$ADODB_FORCE_TYPE</a>
+	global variable.
+<p><b>GetInsertSQL<a name="getinsertsql"></a>(&$rs, $arrFields,$magicq=false,$force=false)</b></p>
 <p>Generate SQL to insert into a table given a recordset $rs. Requires the query 
 	to be associative. $magicq is used to indicate whether magic quotes are enabled 
 	(for qstr()). The field names in the array are case-insensitive.</p>
 <p>
   Since 2.42, you can pass a  table name instead of a recordset into 
 GetInsertSQL (in $rs), and it will generate an insert statement for that table.
-<p>Since 3.61, define('ADODB_FORCE_NULLS',1) and all PHP nulls will be auto-converted 
-  to SQL nulls. 
-Since 4.24, we allow you to pass in $forcenulls as a parameter. This overrides the ADODB_FORCE_NULLS
-	constant.
+<p>Since 4.52, we allow you to pass the $force type parameter, and this overrides the <a href=#ADODB_FORCE_TYPE>$ADODB_FORCE_TYPE</a>
+	global variable.
 <p><b>PageExecute<a name="pageexecute"></a>($sql, $nrows, $page, $inputarr=false)</b> 
 <p>Used for pagination of recordset. $page is 1-based. See <a href="#ex8">Example 
   8</a>.</p>
@@ -3278,6 +3312,11 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
   PHP</a>. </p>
 </font>
 <h2>Change Log<a name="Changes"></a><a name="changes"></a><a name="changelog"></a></h2>
+<p><a name=4.52></a><b>4.52  ??  2004</b>
+<p>Bug found in Replace() when performance logging enabled, introduced in ADOdb 4.50. Fixed.
+<p>Replace() checks update stmt. If update stmt fails, we now return immediately. Thx to alex.
+<p>Added support for $ADODB_FORCE_TYPE in GetUpdateSQL/GetInsertSQL. Thx to niko.
+<p>Added ADODB_ASSOC_CASE support to postgres/postgres7 driver.
 <p><a name=4.51></a><b>4.51  29 July  2004</b>
 <p>Added adodb-xmlschema 1.0.2. Thx dan and richard.
 <p>Added new adorecordset_ext_* classes. If ADOdb extension installed for mysql, mysqlt and oci8 

@@ -575,7 +575,7 @@ NATSOFT.DOMAIN =
 		if ($this->session_sharing_force_blob) $this->Execute('ALTER SESSION SET CURSOR_SHARING=EXACT');
 		$commit = $this->autoCommit;
 		if ($commit) $this->BeginTrans();
-		$rs = $this->_Execute($sql,$arr);
+		$rs = $this->Execute($sql,$arr);
 		if ($rez = !empty($rs)) $desc->save($val);
 		$desc->free();
 		if ($commit) $this->CommitTrans();
@@ -630,7 +630,8 @@ NATSOFT.DOMAIN =
 
 		$BINDNUM += 1;
 		
-		if (@OCIStatementType($stmt) == 'BEGIN') {
+		$sttype = @OCIStatementType($stmt);
+		if ($sttype == 'BEGIN' || $sttype == 'DECLARE') {
 			return array($sql,$stmt,0,$BINDNUM, ($cursor) ? OCINewCursor($this->_connectionID) : false);
 		} 
 		
@@ -869,7 +870,8 @@ NATSOFT.DOMAIN =
             switch (@OCIStatementType($stmt)) {
                 case "SELECT":
 					return $stmt;
-					
+				
+				case 'DECLARE':
                 case "BEGIN":
                     if (is_array($sql) && !empty($sql[4])) {
 						$cursor = $sql[4];

@@ -96,7 +96,7 @@ including adodb-cryptsession.inc.php instead of adodb-session.inc.php. </li>
  <pre>
  <font color="#004040"><br>    include('adodb/adodb.inc.php');<br>    <br><b>    $ADODB_SESSION_DRIVER='mysql';<br>    $ADODB_SESSION_CONNECT='localhost';<br>    $ADODB_SESSION_USER ='scott';<br>    $ADODB_SESSION_PWD ='tiger';<br>    $ADODB_SESSION_DB ='sessiondb';</b><br>    <br>    <b>include('adodb/session/adodb-session.php');<br>    adodb_sess_open(false,false,false);</b><br>    session_start();<br> </font>
  </pre>
-<p> To use a encrypted sessions, simply replace the file:</p>
+<p> To use a encrypted sessions, simply replace the file adodb-session.php:</p>
  <pre> <font
  color="#004040"><br>    include('adodb/adodb.inc.php');<br>    <br><b>    $ADODB_SESSION_DRIVER='mysql';<br>    $ADODB_SESSION_CONNECT='localhost';<br>    $ADODB_SESSION_USER ='scott';<br>    $ADODB_SESSION_PWD ='tiger';<br>    $ADODB_SESSION_DB ='sessiondb';<br>    <br>    include('adodb/session/adodb-cryptsession.php');</b><br>    session_start();</font><br>
  </pre>
@@ -110,7 +110,7 @@ including adodb-cryptsession.inc.php instead of adodb-session.inc.php. </li>
  name="sessiontab"></a> <font color="#004040"><br>  create table sessions (<br>       SESSKEY char(32) not null,<br>       EXPIRY int(11) unsigned not null,<br>       EXPIREREF varchar(64),<br>       DATA text not null,<br>      primary key (sesskey)<br>  );</font><br> 
  </pre>
  <p> For the adodb-session-clob.php version, create this:
-  <pre>
+<p>  <pre>
     <font
  color="#004040"><br>    create table sessions (<br>       SESSKEY char(32) not null,<br>       EXPIRY int(11) unsigned not null,<br>       EXPIREREF varchar(64),<br>       DATA CLOB,<br>      primary key (sesskey)<br>  );</font>
  </pre>
@@ -118,7 +118,7 @@ including adodb-cryptsession.inc.php instead of adodb-session.inc.php. </li>
  <pre>      <font
  color="#004040"><br>    $ADODB_SESSION_DRIVER='database driver, eg. mysql or ibase';<br>    $ADODB_SESSION_CONNECT='server to connect to';<br>    $ADODB_SESSION_USER ='user';<br>    $ADODB_SESSION_PWD ='password';<br>    $ADODB_SESSION_DB ='database';<br>    $ADODB_SESSION_TBL = 'sessions'; # setting this is optional<br>	</font>
  </pre><p>
-     When the session is created, $<b>ADODB_SESS_CONN</b> holds the connection object.<br>    <br>  3. Recommended is PHP 4.0.6 or later. There are documented session bugs <br>  in earlier versions of PHP.
+     When the session is created, $<b>ADODB_SESS_CONN</b> holds the connection object.<br>    <br>  3. Recommended is PHP 4.0.6 or later. There are documented session bugs in earlier versions of PHP.
 <h3>Notifications</h3>
 <p>If you want to receive notification when a session expires, then tag
 the session record with a <a href="#sessiontab">EXPIREREF</a> tag (see

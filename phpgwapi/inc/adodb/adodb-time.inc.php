@@ -793,7 +793,7 @@ static $daylight;
 		case 'S': 
 			$d10 = $day % 10;
 			if ($d10 == 1) $dates .= 'st';
-			else if ($d10 == 2) $dates .= 'nd';
+			else if ($d10 == 2 && $day != 12) $dates .= 'nd';
 			else if ($d10 == 3) $dates .= 'rd';
 			else $dates .= 'th';
 			break;

@@ -14,7 +14,7 @@
 /**
 	\mainpage 	
 	
-	 @version V4.50 6 July 2004 (c) 2000-2004 John Lim (jlim\@natsoft.com.my). All rights reserved.
+	 @version V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim\@natsoft.com.my). All rights reserved.
 
 	Released under both BSD license and Lesser GPL library license. You can choose which license
 	you prefer.
@@ -64,6 +64,24 @@
 	//==============================================================================================	
 	
 	$ADODB_EXTENSION = defined('ADODB_EXTENSION');
+	
+	//********************************************************//
+	/*
+	Controls $ADODB_FORCE_TYPE mode. Default is ADODB_FORCE_VALUE (3).
+	Used in GetUpdateSql and GetInsertSql functions. Thx to Niko, nuko#mbnet.fi
+
+ 		0 = ignore empty fields. All empty fields in array are ignored.
+		1 = force null. All empty, php null and string 'null' fields are changed to sql NULL values.
+		2 = force empty. All empty, php null and string 'null' fields are changed to sql empty '' or 0 values.
+		3 = force value. Value is left as it is. Php null and string 'null' are set to sql NULL values and empty fields '' are set to empty '' sql values.
+	*/
+        define('ADODB_FORCE_IGNORE',0);
+        define('ADODB_FORCE_NULL',1);
+        define('ADODB_FORCE_EMPTY',2);
+        define('ADODB_FORCE_VALUE',3);
+    //********************************************************//
+
+
 	if (!$ADODB_EXTENSION || ADODB_EXTENSION < 4.0) {
 		
 		define('ADODB_BAD_RS','<p>Bad $rs in %s. Connection or SQL invalid. Try using $connection->debug=true;</p>');
@@ -132,10 +150,13 @@
 		$ADODB_vers, 		// database version
 		$ADODB_COUNTRECS,	// count number of records returned - slows down query
 		$ADODB_CACHE_DIR,	// directory to cache recordsets
-	 	$ADODB_FETCH_MODE;
+	 	$ADODB_FETCH_MODE,
+		$ADODB_FORCE_TYPE;
 		
 		$ADODB_FETCH_MODE = ADODB_FETCH_DEFAULT;
-		
+		$ADODB_FORCE_TYPE = ADODB_FORCE_VALUE;
+
+
 		if (!isset($ADODB_CACHE_DIR)) {
 			$ADODB_CACHE_DIR = '/tmp'; //(isset($_ENV['TMP'])) ? $_ENV['TMP'] : '/tmp';
 		} else {
@@ -151,7 +172,7 @@
 		/**
 		 * ADODB version as a string.
 		 */
-		$ADODB_vers = 'V4.50 6 July 2004 (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved. Released BSD & LGPL.';
+		$ADODB_vers = 'V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved. Released BSD & LGPL.';
 	
 		/**
 		 * Determines whether recordset->RecordCount() is used. 
@@ -1593,14 +1614,21 @@
 	 *
 	 * "Jonathan Younger" <jyounger@unilab.com>
   	 */
-	function GetUpdateSQL(&$rs, $arrFields,$forceUpdate=false,$magicq=false,$forcenulls=null)
+	function GetUpdateSQL(&$rs, $arrFields,$forceUpdate=false,$magicq=false,$force=null)
 	{
 		global $ADODB_INCLUDED_LIB;
-		if (!isset($forcenulls)) {
-			$forcenulls = defined('ADODB_FORCE_NULLS') ? true : false;
+
+        //********************************************************//
+        //This is here to maintain compatibility
+        //with older adodb versions. Sets force type to force nulls if $forcenulls is set.
+		if (!isset($force)) {
+				global $ADODB_FORCE_TYPE;
+			    $force = $ADODB_FORCE_TYPE;
 		}
+		//********************************************************//
+
 		if (empty($ADODB_INCLUDED_LIB)) include_once(ADODB_DIR.'/adodb-lib.inc.php');
-		return _adodb_getupdatesql($this,$rs,$arrFields,$forceUpdate,$magicq,$forcenulls);
+		return _adodb_getupdatesql($this,$rs,$arrFields,$forceUpdate,$magicq,$force);
 	}
 
 
@@ -1612,14 +1640,16 @@
 	 * Note: This function should only be used on a recordset
 	 *	   that is run against a single table.
   	 */
-	function GetInsertSQL(&$rs, $arrFields,$magicq=false,$forcenulls=null)
+	function GetInsertSQL(&$rs, $arrFields,$magicq=false,$force=null)
 	{	
 		global $ADODB_INCLUDED_LIB;
-		if (!isset($forcenulls)) {
-			$forcenulls = defined('ADODB_FORCE_NULLS') ? true : false;
+		if (!isset($force)) {
+			global $ADODB_FORCE_TYPE;
+			$force = $ADODB_FORCE_TYPE;
+			
 		}
 		if (empty($ADODB_INCLUDED_LIB)) include_once(ADODB_DIR.'/adodb-lib.inc.php');
-		return _adodb_getinsertsql($this,$rs,$arrFields,$magicq,$forcenulls);
+		return _adodb_getinsertsql($this,$rs,$arrFields,$magicq,$force);
 	}
 	
 
