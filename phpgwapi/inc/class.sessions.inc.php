@@ -485,23 +485,14 @@
 			$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
 								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 		}
-    
-		function destroy($sessionid='',$kp3='')
-		{
-			if(empty($sessionid) || !$sessionid)
-			{
-				$sessionid = $GLOBALS['HTTP_GET_VARS']['sessionid'] ? $GLOBALS['HTTP_GET_VARS']['sessionid'] : $GLOBALS['HTTP_COOKIE_VARS']['sessionid'];
-				$kp3       = $GLOBALS['HTTP_GET_VARS']['kp3']       ? $GLOBALS['HTTP_GET_VARS']['kp3']       : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
-			}
 
-			if(!$sessionid && $kp3)
+		function destroy($sessionid, $kp3)
+		{
+			if (! $sessionid && $kp3)
 			{
 				return False;
 			}
 
-			$GLOBALS['phpgw_info']['user']['sessionid'] = $sessionid;
-			$GLOBALS['phpgw_info']['user']['kp3'] = $kp3;
-	 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_id='"
 								. $sessionid . "'",__LINE__,__FILE__);
@@ -509,16 +500,12 @@
 								. $sessionid . "'",__LINE__,__FILE__);
 			$GLOBALS['phpgw']->db->query("update phpgw_access_log set lo='" . time() . "' where sessionid='"
 								. $sessionid . "'",__LINE__,__FILE__);
-			if ($GLOBALS['phpgw_info']['server']['usecookies'])
+
+			// Only do the following, if where working with the current user
+			if ($sessionid == $GLOBALS['phpgw_info']['user']['sessionid'])
 			{
-				Setcookie('sessionid');
-				Setcookie('kp3');
-				if ($GLOBALS['phpgw_info']['multiable_domains'])
-				{
-					Setcookie('domain');
-				}
+				$this->clean_sessions();
 			}
-			$this->clean_sessions();
 			$GLOBALS['phpgw']->db->transaction_commit();
 
 			return True;
