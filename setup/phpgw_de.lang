@@ -131,7 +131,6 @@ default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
 department	addressbook	de	Abteilung
-department	addressbook	de	Abteilung
 description	common	de	Beschreibung
 detail	tts	de	Detail
 disabled	admin	de	Deaktiviert
@@ -190,7 +189,6 @@ friday	common	de	Freitag
 from	email	de	Von
 ftp	common	de	FTP
 full description	calendar	de	vollständige Beschreibung
-full name	addressbook	de	vollständiger Name
 full name	addressbook	de	vollständiger Name
 generate new lang.sql file	transy	de	Erzeuge neue lang.sql Datei
 generate printer-friendly version	calendar	de	Drucker-freundliche Version erzeugen
@@ -284,7 +282,6 @@ message phone	addressbook	de	Anrufbeantworter
 message x	nntp	de	Nachricht %1
 messages	email	de	Nachrichten
 middle name	addressbook	de	Zweiter Vorname
-middle name	addressbook	de	zweiter Vorname
 minutes	calendar	de	Minuten
 minutes between reloads	admin	de	Minuten zwischen Reloads
 mo	calendar	de	Mo
@@ -449,7 +446,6 @@ subject	common	de	Betreff
 submit	common	de	Absenden
 submit changes	admin	de	Änderungen Speichern
 subproject description	todo	de	Beschreibung des Teilprojekts
-suffix	addressbook	de	Suffix
 suffix	addressbook	de	Zusatz
 sun	calendar	de	So
 sunday	common	de	Sonntag
