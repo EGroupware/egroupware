@@ -758,8 +758,37 @@
 		}
 
 		/**
+		* Escape values before sending them to the database - prevents SQL injunction and SQL errors ;-)
+		*
+		* Please note that the quote function already returns necessary quotes: quote('Hello') === "'Hello'".
+		* Int and Auto types are casted to int: quote('1','int') === 1, quote('','int') === 0, quote('Hello','int') === 0
+		* @param mixed $value the value to be escaped
+		* @param string $type the type of the db-column, default False === varchar
+		* @return string escaped sting
+		*/
+		function quote($value,$type=False)
+		{
+			switch($type)
+			{
+				case 'int':
+				case 'auto':
+					return (int) $value;
+			}
+			// REMOVE-IF-ONLY-ADODB
+			if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			{
+				return "'" . (!isset($value) || $value == '' ? '' : addslashes($value)) . "'";
+			}
+			if (!$this->Link_ID)
+			{
+				$this->connect();
+			}
+			return $this->Link_ID->quote($value);
+		}
+
+		/**
 		* Implodes an array of column-value pairs for the use in sql-querys.
-		* All data is either run through addslashes() or (int).
+		* All data is run through quote (does either addslashes() or (int)) - prevents SQL injunction and SQL errors ;-).
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
@@ -784,9 +813,7 @@
 				if (!$only || in_array($key,$only))
 				{
 					$column_type = is_array($column_definitions) ? @$colum_definitions[$key]['type'] : False;
-					$values[] = ($use_key ? $key.'=' : '').
-						($column_type == 'int' || $colum_type == 'auto' ?
-						(int)$data : "'" . $this->db_addslashes($data) . "'");
+					$values[] = ($use_key ? $key.'=' : '') . $this->quote($data,$column_type);
 				}
 			}
 			return implode($glue,$values);
