@@ -22,6 +22,8 @@
 
 	$phpgw_info['flags']['currentapp'] = 'addressbook';
 	$phpgw_info['flags']['enable_contacts_class'] = True;
+	$phpgw_info['flags']['enable_config_class'] = True;
+	$phpgw_info['flags']['enable_country_class'] = True;
 	include('../header.inc.php');
 
 	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
