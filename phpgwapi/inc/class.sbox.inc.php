@@ -43,11 +43,11 @@
 
 		var $country_array = array(
 			'  '=>'Select One',
-			'AF'=>'AFGHANISTAN', 
-			'AL'=>'ALBANIA', 
+			'AF'=>'AFGHANISTAN',
+			'AL'=>'ALBANIA',
 			'DZ'=>'ALGERIA', 
 			'AS'=>'AMERICAN SAMOA', 
-			'AD'=>'ANDORRA', 
+			'AD'=>'ANDORRA',
 			'AO'=>'ANGOLA', 
 			'AI'=>'ANGUILLA', 
 			'AQ'=>'ANTARCTICA', 
@@ -155,8 +155,8 @@
 			'KZ'=>'KAZAKSTAN', 
 			'KE'=>'KENYA', 
 			'KI'=>'KIRIBATI', 
-			'KP'=>'KOREA DEMOCRATIC PEOPLES REPUBLIC OF', 
-			'KR'=>'KOREA REPUBLIC OF', 
+			'KP'=>'KOREA, DEMOCRATIC PEOPLES REPUBLIC OF', 
+			'KR'=>'KOREA, REPUBLIC OF', 
 			'KW'=>'KUWAIT', 
 			'KG'=>'KYRGYZSTAN', 
 			'LA'=>'LAO PEOPLES DEMOCRATIC REPUBLIC', 
@@ -614,7 +614,7 @@
 			reset($this->country_array);
 			while(list($key,$value) = each($this->country_array))
 			{
-				$str .= ' <option value="'.$key.'"'.($selected == $key?' selected':'').'>'.$value.'</option>'."\n";
+				$str .= ' <option value="'.$key.'"'.($selected == $key?' selected':'') . '>'.lang($value).'</option>'."\n";
 			}
 			$str .= '</select>'."\n";
 			return $str;
