@@ -17,7 +17,13 @@
   include("../header.inc.php");
 
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
-  
+ 
+  // Authorize the user to use setup app
+  include("setup_auth.inc.php");
+  // Does not return unless user is authorized
+  echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+  echo "<body bgcolor='#ffffff'>\n";
+
   /* Database setup */
   switch($phpgw_info["server"]["db_type"]){
     case "postgresql":
@@ -289,3 +295,4 @@
    </tr>
  </table>
 </form>
+</body></html>
