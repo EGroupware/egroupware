@@ -275,7 +275,6 @@
 			{
 				return False;
 			}
-if (is_array($str)) $this->halt('db::db_addslashes('.print_r($str,True).",'$type') 1. arguments is an array!!!");
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->quote($str),1,-1);
 		}
@@ -857,6 +856,31 @@ if (is_array($str)) $this->halt('db::db_addslashes('.print_r($str,True).",'$type
 			$this->Password = $currentPassword;
 			$this->Database = $currentDatabase;
 			$this->connect();
+		}
+
+		/**
+		 * concat a variable number of strings together, to be used in a query
+		 *
+		 * Example: $db->concat($db->quote('Hallo '),'username') would return
+		 *	for mysql "concat('Hallo ',username)" or "'Hallo ' || username" for postgres
+		 * @param $str1 string already quoted stringliteral or column-name, variable number of arguments
+		 * @return string to be used in a query
+		 */
+		function concat($str1)
+		{
+			$args = func_get_args();
+
+			// REMOVE-IF-ONLY-ADODB
+			if (isset($GLOBALS['phpgw_info']['server']['use_adodb']) &&
+			    !@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			{
+				return $this->Type == 'mysql' ? 'concat('.implode(',',$args).')' : implode('||',$args);
+			}
+			if (!$this->Link_ID && !$this->connect())
+			{
+				return False;
+			}
+			return call_user_func_array(array(&$this->Link_ID,'concat'),$args);
 		}
 
 		/**
