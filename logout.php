@@ -37,6 +37,7 @@
 			}
 			rmdir($phpgw_info['server']['temp_dir'] . sep . $sessionid);
 		}
+		$phpgw->common->hook('logout');
 		$phpgw->session->destroy();
 	}
 	Setcookie('sessionid');
