@@ -26,11 +26,20 @@
     $repeat_days .= $day;
   }
 
+  function display_item($field,$data) {
+    global $phpgw;
+
+    $phpgw->template->set_var("field",$field);
+    $phpgw->template->set_var("data",$data);
+    $phpgw->template->parse("output","list",True);
+  }
+
+
   if ($year) $thisyear = $year;
   if ($month) $thismonth = $month;
 
   $pri[1] = lang("Low");
-  $pri[2] = lang("Medium");
+  $pri[2] = lang("Normal");
   $pri[3] = lang("High");
 
   $db = $phpgw->db;
@@ -62,27 +71,19 @@
   // Some browser add a \n when its entered in the database. Not a big deal
   // this will be printed even though its not needed.
   if (nl2br($cal_info->description)) {
-    $phpgw->template->set_var("field",lang("Description"));
-    $phpgw->template->set_var("data",nl2br($cal_info->description));
-    $phpgw->template->parse("output","list",True);
+    display_item(lang("Description"),nl2br($cal_info->description));
   }
 
-  $phpgw->template->set_var("field",lang("Start Date/Time"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->datetime));
-  $phpgw->template->parse("output","list",True);
+  display_item(lang("Start Date/Time"),$phpgw->common->show_date($cal_info->datetime));
 
   // save date so the trailer links are for the same time period
   $thisyear	= (int)$cal_info->year;
   $thismonth	= (int)$cal_info->month;
   $thisday 	= (int)$cal_info->day;
 
-  $phpgw->template->set_var("field",lang("End Date/Time"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->edatetime));
-  $phpgw->template->parse("output","list",True);
+  display_item(lang("End Date/Time"),$phpgw->common->show_date($cal_info->edatetime));
 
-  $phpgw->template->set_var("field",lang("Priority"));
-  $phpgw->template->set_var("data",$pri[$cal_info->priority]);
-  $phpgw->template->parse("output","list",True);
+  display_item(lang("Priority"),$pri[$cal_info->priority]);
 
   $phpgw->template->set_var("field",lang("Created by"));
   $participate = False;
@@ -92,16 +93,13 @@
     }
   }
   if($is_my_event && $participate)
-    $phpgw->template->set_var("data","<a href=\""
+    display_item(lang("Created by"),"<a href=\""
 	.$phpgw->link("viewmatrix.php","participants=".$cal_info->owner."&date=".$cal_info->year.$cal_info->month.$cal_info->day."&matrixtype=free/busy")
 	."\">".$phpgw->common->grab_owner_name($cal_info->owner)."</a>");
   else
-    $phpgw->template->set_var("data",$phpgw->common->grab_owner_name($cal_info->owner));
-  $phpgw->template->parse("output","list",True);
+    display_item(lang("Created by"),$phpgw->common->grab_owner_name($cal_info->owner));
 
-  $phpgw->template->set_var("field",lang("Updated"));
-  $phpgw->template->set_var("data",$phpgw->common->show_date($cal_info->mdatetime));
-  $phpgw->template->parse("output","list",True);
+  display_item(lang("Updated"),$phpgw->common->show_date($cal_info->mdatetime));
 
   if($cal_info->groups[0]) {
     $cal_grps = "";
@@ -111,9 +109,7 @@
       $db->next_record();
       $cal_grps .= $db->f("group_name");
     }
-    $phpgw->template->set_var("field",lang("Groups"));
-    $phpgw->template->set_var("data",$cal_grps);
-    $phpgw->template->parse("output","list",True);
+    display_item(lang("Groups"),$cal_grps);
   }
 
   $str = "";
@@ -121,9 +117,7 @@
     if($i) $str .= "<br>";
     $str .= $phpgw->common->grab_owner_name($cal_info->participants[$i]);
   }
-  $phpgw->template->set_var("field",lang("Participants"));
-  $phpgw->template->set_var("data",$str);
-  $phpgw->template->parse("output","list",True);
+  display_item(lang("Participants"),$str);
 
 // Repeated Events
   $str = $cal_info->rpt_type;
@@ -152,9 +146,7 @@
     if($cal_info->rpt_freq) $str .= lang("frequency")." ".$cal_info->rpt_freq;
     $str .= ")";
 
-    $phpgw->template->set_var("field",lang("Repetition"));
-    $phpgw->template->set_var("data",$str);
-    $phpgw->template->parse("output","list",True);
+    display_item(lang("Repetition"),$str);
   }
 
   if ($is_my_event) {

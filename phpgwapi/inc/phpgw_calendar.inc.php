@@ -270,10 +270,12 @@
 
       $sql = "SELECT DISTINCT calendar_entry.cal_id "
 	   . "FROM calendar_entry, calendar_entry_user, calendar_entry_repeats "
-	   . "WHERE calendar_entry.cal_id = calendar_entry_user.cal_id "
-	   . "AND (((".$starttime." <= calendar_entry.cal_datetime) AND (".$endtime." >= calendar_entry.cal_datetime) AND (".$endtime." <= calendar_entry.cal_edatetime)) "
-	   .   "OR ((".$starttime." >= calendar_entry.cal_datetime) AND (".$starttime." <= calendar_entry.cal_edatetime) AND (".$endtime." >= calendar_entry.cal_edatetime)) "
-	   .   "OR ((".$starttime." <= calendar_entry.cal_datetime) AND (".$endtime." >= calendar_entry.cal_edatetime)))";
+	   . "WHERE ((calendar_entry_user.cal_id = calendar_entry.cal_id) AND "
+	   . "(calendar_entry_repeats.cal_id = calendar_entry.cal_id)) AND "
+	   . "  (((".$starttime." <= calendar_entry.cal_datetime) AND (".$endtime." >= calendar_entry.cal_datetime) AND (".$endtime." <= calendar_entry.cal_edatetime)) "
+	   . "OR ((".$starttime." >= calendar_entry.cal_datetime) AND (".$starttime." <= calendar_entry.cal_edatetime) AND (".$endtime." >= calendar_entry.cal_edatetime)) "
+	   . "OR ((".$starttime." <= calendar_entry.cal_datetime) AND (".$endtime." >= calendar_entry.cal_edatetime))) AND "
+	   . "(calendar_entry_repeats.cal_type <> 'monthlyByDay') ";
 
       if(count($participants) || is_array($groups)) {
 	$p_g = "";
@@ -588,7 +590,7 @@
 	  if ((($date["year"] - $start["year"]) * 12 + $date["month"] - $start["month"]) % intval($rep_events->rpt_freq)) continue;
 	  
 	  if (($start["dow"] == $date["dow"]) && 
-	      (floor($start["day"]/7) == floor($date["day"]/7))) {
+	      (ceil($start["day"]/7) == ceil($date["day"]/7))) {
 	    $link[$this->checked_re] = $i;
 	    $this->checked_re++;
 	  }
