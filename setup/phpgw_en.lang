@@ -317,6 +317,7 @@ phpgroupware login	login	en	phpGroupWare login
 phrase in english	transy	en	Phrase in English
 phrase in new language	transy	en	Phrase in new language
 please select a message first	email	en	Please select a message first
+please set your preferences for this app	common	en	Please set your preferences for this application
 please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
