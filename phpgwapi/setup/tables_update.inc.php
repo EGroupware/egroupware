@@ -575,7 +575,7 @@
 
 		// this is the 0.9.15.004 update, needed for the polish translations
 		$GLOBALS['phpgw_setup']->db->query("UPDATE languages set available='Yes' WHERE lang_id='pl'");
-		
+
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.14.500';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -752,8 +752,7 @@
 		// unfortunally they are still in the tables_current of 0.9.14.508
 		// so it depends on having a new or an updated install, if one have them or not
 		// we now check if they are there and drop them if thats the case
-//echo "<pre>"; print_r(debug_backtrace()); echo "</pre>\n";
-//echo "<pre>"; print_r($GLOBALS['phpgw_setup']->oProc); echo "</pre>\n";
+
 		$GLOBALS['phpgw_setup']->oProc->m_oTranslator->_GetColumns($GLOBALS['phpgw_setup']->oProc,'phpgw_accounts',$columns);
 		$columns = explode(',',$columns);
 		if (in_array('account_permissions',$columns))
@@ -819,6 +818,16 @@
 		));
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.002';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.99.002';
+	function phpgwapi_upgrade0_9_99_002()
+	{
+		// needed for the chinese(simplified) translations
+		$GLOBALS['phpgw_setup']->db->query("UPDATE phpgw_languages SET lang_name='Chinese(simplified)',available='Yes' WHERE lang_id='zh'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.003';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
