@@ -1,9 +1,13 @@
+[0.9.14]
+	- Added in transaction support to the db classes
+
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
 	- Created a config option to force users to use a certian theme.
 	- Fixed nextmatchs on the categories preferences screen
 	- Added new config class so developers can centralize there configs
 	- Created new logos for the verdilak layout.
+	- You can now add enable_*_ class in $phpgw_info['flags'] to load any class in the API
 
 [0.9.10]
 	- Fixed the cron programs, they where out of date in the table structures
