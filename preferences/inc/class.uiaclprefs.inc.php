@@ -8,7 +8,6 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
-
 	/* $Id$ */
 
 	class uiaclprefs
@@ -30,7 +29,15 @@
 			$query    = get_var('query',Array('GET','POST'));
 			$s_groups = get_var('s_groups',Array('GET','POST'));
 			$s_users  = get_var('s_users',Array('GET','POST'));
-			$owner    = $GLOBALS['owner'];
+
+			if(isset(get_var('owner',Array('POST'))))
+			{
+				$owner = get_var('owner',Array('POST'));
+			}
+			else
+			{
+				$owner = get_var('owner',Array('GET'));
+			}
 
 			if (! $acl_app)
 			{
