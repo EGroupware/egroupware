@@ -59,6 +59,35 @@
 	{
 		global $setup_info;
 
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre1';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.3pre1";
+	function phpgwapi_upgrade0_9_3pre1()
+	{
+		global $setup_info;
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre2';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
+	$test[] = "0.9.3pre2";
+	function phpgwapi_upgrade0_9_3pre2()
+	{
+		global $setup_info;
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre3';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+
+	$test[] = "0.9.3pre3";
+	function phpgwapi_upgrade0_9_3pre3()
+	{
+		global $setup_info;
+
 		$setup_info['phpgwapi']['currentver'] = '0.9.3pre4';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
@@ -276,6 +305,54 @@
 
 	$test[] = "0.9.3pre8";
 	function phpgwapi_upgrade0_9_3pre8()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre9';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.3pre9";
+	function phpgwapi_upgrade0_9_3pre9()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.3pre10';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.3pre10";
+	function phpgwapi_upgrade0_9_3pre10()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.3';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.3";
+	function phpgwapi_upgrade0_9_3()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.4pre1';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.4pre1";
+	function phpgwapi_upgrade0_9_4pre1()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.4pre2';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.4pre2";
+	function phpgwapi_upgrade0_9_4pre2()
+	{
+		global $setup_info, $phpgw_setup;
+		$setup_info['phpgwapi']['currentver'] = '0.9.4pre3';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.4pre3";
+	function phpgwapi_upgrade0_9_4pre3()
 	{
 		global $setup_info, $phpgw_setup;
 		$setup_info['phpgwapi']['currentver'] = '0.9.4pre4';
@@ -550,6 +627,14 @@
 
 	$test[] = "0.9.7pre1";
 	function phpgwapi_upgrade0_9_7pre1()
+	{
+		global $setup_info;
+		$setup_info['phpgwapi']['currentver'] = '0.9.7pre2';
+		return $setup_info['phpgwapi']['currentver'];
+		//return True;
+	}
+	$test[] = "0.9.7pre2";
+	function phpgwapi_upgrade0_9_7pre2()
 	{
 		global $setup_info;
 		$setup_info['phpgwapi']['currentver'] = '0.9.7pre3';
