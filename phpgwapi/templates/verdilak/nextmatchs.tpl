@@ -1,10 +1,10 @@
 <!-- BEGIN nextmatchs -->
  <table width="{table_width}" border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0" cols="5">
   <tr>   {left}
-   <td align="center" valign="top" width="92%"></td>   {right}
+   <td align="center" bgcolor="{th_bg}" valign="top" width="92%"></td>   {right}
   </tr>
   <tr>
-   <td align="center" valign="top" colspan="5">
+   <td align="center" bgcolor="{th_bg}" valign="top" colspan="5">
     {cats_search_filter_data}
    </td>
   </tr>
@@ -29,7 +29,7 @@
    <td width="2%" align="{align}" valign="top">
     <form method="POST" action="{action}" name="{form_name}">
 {hidden}
-     <table border="0" cellspacing="0" cellpadding="0">
+     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
       <tr>
        <td align="{align}">
         <input type="image" src="{img}" border="{border}" alt="{label}" width="12" height="12" name="start" value="{start}">
@@ -48,7 +48,7 @@
 
 <!-- BEGIN link -->
    <td width="2%" align="{align}" valign="top">
-    <table border="0" cellspacing="0" cellpadding="0">
+    <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
      <tr>
       <td align="{align}">
        <img src="{img}" border="{border}" width="12" height="12" alt="{label}">

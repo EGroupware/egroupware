@@ -1,10 +1,10 @@
 <!-- BEGIN nextmatchs -->
  <table width="{table_width}" border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0" cols="5">
   <tr>   {left}
-   <td align="center" valign="top" width="92%"></td>   {right}
+   <td align="center" bgcolor="{th_bg}" valign="top" width="92%"></td>   {right}
   </tr>
   <tr>
-   <td align="center" valign="top" colspan="5">
+   <td align="center" bgcolor="{th_bg}" valign="top" colspan="5">
     {cats_search_filter_data}
    </td>
   </tr>
