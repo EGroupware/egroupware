@@ -259,6 +259,16 @@
    </tr>
 
    <tr class="row_on">
+     <td>{lang_Enable_LDAP_Version_3}:</td>
+     <td>
+      <select name="newsettings[ldap_version3]">
+       <option value="">{lang_No}</option>
+       <option value="True" {selected_ldap_version3_True}>{lang_Yes}</option>
+      </select>
+     </td>
+    </tr>
+
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
