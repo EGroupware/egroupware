@@ -484,6 +484,9 @@
 
 			if($cquery)
 			{
+				$cqueryl = strtolower($cquery);
+				$cqueryu = strtoupper($cquery);
+
 				$sql = "SELECT * FROM $this->std_table WHERE (";
 				$cfields = array(
 					'fn'       => 'cn',
@@ -492,10 +495,11 @@
 				);
 				while(list($f,$x) = each($cfields))
 				{
-					$sql .= " $f LIKE '$cquery%' OR ";
+					$sql .= " $f LIKE '$cqueryl%' OR $f LIKE '$cqueryu%' OR ";
 				}
 				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
 				unset($f); unset($x);
+				unset($cqueryl); unset($cqueryu);
 			}
 			elseif($query)
 			{
