@@ -907,7 +907,7 @@
 			}
  
 			// Clean up mcrypt
-			if (is_object($this->crypto))
+			if (@is_object($this->crypto))
 			{
 				$this->crypto->cleanup();
 				unset($this->crypto);
