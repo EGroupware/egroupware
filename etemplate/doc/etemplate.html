@@ -319,7 +319,7 @@ We are only lacking some way to show if we get more than one match on a search, 
 			$entry[$row] = $data;
 		}
 		$content = array(
-			'msg' => lang('%d matches on search criteria',,count($found)),
+			'msg' => lang('%d matches on search criteria',count($found)),
 			'entry' => $entry		<span>// et_media.show.rows uses this, as we put 'entry' in the Options-field</span>
 		);
 		$this->tmpl->read('et_media.show'); 	<span>// read the show-template</span>
