@@ -2,52 +2,24 @@
 
 	class bofilemanager
 	{
+
+		// used
+
 		var $so;
 		var $vfs;
-
-		var $sep;
-		var $file_attributes;
-		var $help_info;
 
 		var $rootdir;
 		var $fakebase;
 		var $appname;
-		var $settings;
 		var $filesdir;
 		var $hostname;
 		var $userinfo = Array();
 		var $homedir;
+		var $sep;
+		var $file_attributes;
 
-		var $errors;
+		var $matches;//FIXME matches not defined
 
-		var $rename;
-		var $delete;
-		var $go;
-		var $copy;
-		var $move;
-		var $download;
-		var $createdir;
-		var $newdir;
-		var $createfile;
-		var $newfile;
-
-		var $fileman = Array();
-		var $op;
-		var $file;
-		var $help_name;
-		var $path;
-		var $disppath;
-		var $dispsep;
-		var $sortby = 'name';
-		var $messages = Array();
-		var $renamefiles;
-		var $comment_files = Array();
-		var $show_upload_boxes = 5;
-		var $memberships;
-		var $now;
-		var $matches;
-
-		//		var $debug = True;
 		var $debug = False;
 
 		function bofilemanager()
@@ -63,30 +35,30 @@
 			### These are automatically set in phpGW - do not edit ###
 
 			$this->sep = SEP;
-			$GLOBALS['rootdir'] = $this->vfs->basedir;
-			$GLOBALS['fakebase'] = $this->vfs->fakebase;
-			$GLOBALS['appname'] = $GLOBALS['phpgw_info']['flags']['currentapp'];
-			$GLOBALS['settings'] = $GLOBALS['phpgw_info']['user']['preferences'][$appname];
-
-			if (stristr ($GLOBALS['rootdir'], PHPGW_SERVER_ROOT))
+			$this->rootdir = $this->vfs->basedir;
+			$this->fakebase = $this->vfs->fakebase;
+			$this->appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+		
+			if (stristr ($this->rootdir, PHPGW_SERVER_ROOT))
 			{
-				$GLOBALS['filesdir'] = substr ($GLOBALS['rootdir'], strlen (PHPGW_SERVER_ROOT));
+				$this->filesdir = substr ($this->rootdir, strlen (PHPGW_SERVER_ROOT));
 			}
 			else
 			{
-				unset ($GLOBALS['filesdir']);
+				unset ($this->filesdir);
 			}
 
-			$GLOBALS['hostname'] = $GLOBALS['phpgw_info']['server']['webserver_url'] . $GLOBALS['filesdir'];
+			$this->hostname = $GLOBALS['phpgw_info']['server']['webserver_url'] . $this->filesdir;
 
+//			die($this->hostname); 
 			###
 			# Note that $userinfo["username"] is actually the id number, not the login name
 			###
 
-			$GLOBALS['userinfo']['username'] = $GLOBALS['phpgw_info']['user']['account_id'];
-			$GLOBALS['userinfo']['account_lid'] = $GLOBALS['phpgw']->accounts->id2name ($GLOBALS['userinfo']['username']);
-			$GLOBALS['userinfo']['hdspace'] = 10000000000;
-			$GLOBALS['homedir'] = $GLOBALS['fakebase'].'/'.$GLOBALS['userinfo']['account_lid'];
+			$this->userinfo['username'] = $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->userinfo['account_lid'] = $GLOBALS['phpgw']->accounts->id2name ($this->userinfo['username']);
+			$this->userinfo['hdspace'] = 10000000000; // to settings
+			$this->homedir = $this->fakebase.'/'.$this->userinfo['account_lid'];
 
 			### End Configuration Options ###
 
@@ -199,8 +171,6 @@
 		
 		function html_text ($string, $times = 1, $return = 0, $lang = 0)
 		{
-			global $phpgw;
-
 			if ($lang)
 			$string = lang($string);
 
@@ -231,20 +201,23 @@
 			{
 				$rstring = $string;
 
-				preg_match_all ("/=(.*)(&|$)/U", $string, $matches, PREG_SET_ORDER);
+				preg_match_all ("/=(.*)(&|$)/U", $string, $matches, PREG_SET_ORDER);//FIXME matches not defined
 
-				reset ($matches);
-				while (list (,$match_array) = each ($matches))
+				reset ($matches);//FIXME matches not defined
+
+				while (list (,$match_array) = each ($matches))//FIXME matches not defined
+
 				{
 					$var_encoded = rawurlencode (base64_encode ($match_array[1]));
 					$rstring = str_replace ($match_array[0], '=' . $var_encoded . $match_array[2], $rstring);
 				}
 			}
-			elseif (ereg ('^'.$GLOBALS['hostname'], $string))
+			elseif ($this->hostname != "" && ereg('^'.$this->hostname, $string))
+//			elseif (ereg ('^'.$this->hostname, $string))
 			{
-				$rstring = ereg_replace ('^'.$GLOBALS['hostname'].'/', '', $string);
+				$rstring = ereg_replace ('^'.$this->hostname.'/', '', $string);
 				$rstring = preg_replace ("/(.*)(\/|$)/Ue", "rawurlencode (base64_encode ('\\1')) . '\\2'", $rstring);
-				$rstring = $GLOBALS['hostname'].'/'.$rstring;
+				$rstring = $this->hostname.'/'.$rstring;
 			}
 			else
 			{

@@ -51,11 +51,11 @@
 		var $todir;
 		var $changedir; // for switching dir.
 		var $cdtodir; // for switching dir.
-		var $createdir;
+//		var $createdir;
 		var $newfile_or_dir;
 		var $newdir_x;
 		var $newfile_x;
-		var $createfile;
+		var $createfile_var;
 		var $delete_x;
 		var $renamefiles;
 		var $rename_x;
@@ -74,11 +74,12 @@
 		var $uploadprocess;
 
 		// this ones must be checked thorougly;
-		var $fileman;
+		var $fileman = Array();
+		//var $fileman;
 		var $path;
-		var $file;
+		var $file; // FIXME WHERE IS THIS FILLED?
 		var $sortby;
-		var $messages;
+		var $messages = array();
 		var $show_upload_boxes;
 
 		var $debug = false;
@@ -160,12 +161,12 @@
 			}
 
 			// get appl. and user prefs
-			$pref = CreateObject('phpgwapi.preferences', $GLOBALS['userinfo']['username']);
+			$pref = CreateObject('phpgwapi.preferences', $this->bo->userinfo['username']);
 			$pref->read_repository();
 			//			$GLOBALS['phpgw']->hooks->single('add_def_pref', $GLOBALS['appname']);
 			$pref->save_repository(True);
 			$pref_array = $pref->read_repository();
-			$this->prefs = $pref_array[$GLOBALS['appname']];
+			$this->prefs = $pref_array[$this->bo->appname]; //FIXME check appname var in _debug_array
 
 			//always show name
 
@@ -176,6 +177,78 @@
 			{
 				$this->target = '_blank';
 			}
+
+
+			/*
+				Check for essential directories
+				admin must be able to disable these tests
+			*/
+			
+			// check if basedir exist 
+			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			if($test[mime_type]!='Directory')
+			{
+				die('Base directory does not exist, Ask adminstrator to check the global configuration.');
+			}
+
+			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			if($test[mime_type]!='Directory')
+			{
+
+				$this->bo->vfs->override_acl = 1;
+
+				$this->bo->vfs->mkdir(array(
+					'string' => $this->bo->fakebase,
+					'relatives' => array(RELATIVE_NONE)
+				));
+				
+				$this->bo->vfs->override_acl = 0;
+
+				//test one more time
+				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+
+				if($test[mime_type]!='Directory')
+				{
+					die('Fake Base directory does not exist and could not be created, please ask the adminstrator to check the global configuration.');
+				}
+				else
+				{
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+						lang('Fake Base Dir did not exist, eGroupWare created a new one.')
+					));
+				}
+			}
+
+//			die($this->bo->homedir);
+			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			if($test[mime_type]!='Directory')
+			{
+				$this->bo->vfs->override_acl = 1;
+
+				$this->bo->vfs->mkdir(array(
+					'string' => $this->bo->homedir,
+					'relatives' => array(RELATIVE_NONE)
+				));
+				
+				$this->bo->vfs->override_acl = 0;
+
+				//test one more time
+				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+
+				if($test[mime_type]!='Directory')
+				{
+					die('Your Home Dir does not exist and could not be created, please ask the adminstrator to check the global configuration.');
+				}
+				else
+				{
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+						lang('Your Home Dir did not exist, eGroupWare created a new one.')
+					));
+					// FIXME we just created a fresh home dir so we know there nothing in it so we have to remove all existing content
+				}
+			}
+			
+			
 		}
 
 		function index()
@@ -185,7 +258,7 @@
 				$noheader = True;
 				$nofooter = True;
 				$noappheader= True;
-				$nonavbar=True;
+				$nonavbar= True;
 			}
 			else
 			{
@@ -203,8 +276,6 @@
 
 			}
 
-			//	var_dump($GLOBALS[HTTP_POST_VARS]);
-			//var_dump($this->delete_x);
 
 			# Page to process users
 			# Code is fairly hackish at the beginning, but it gets better
@@ -231,7 +302,7 @@
 
 				if(!$this->path || $this->bo->vfs->pwd(array('full' => False)) == '')
 				{
-					$this->path = $GLOBALS['homedir'];
+					$this->path = $this->bo->homedir; 
 				}
 			}
 
@@ -240,7 +311,7 @@
 
 			$pwd = $this->bo->vfs->pwd();
 
-			if(!$this->cwd = substr($this->path, strlen($GLOBALS['homedir']) + 1))
+			if(!$this->cwd = substr($this->path, strlen($this->bo->homedir) + 1))  
 			{
 				$this->cwd = '/';
 			}
@@ -293,61 +364,68 @@
 
 			# We determine if they're in their home directory or a group's directory,
 			# and set the VFS working_id appropriately
-			if((preg_match('+^'.$GLOBALS['fakebase'].'\/(.*)(\/|$)+U', $this->path, $matches)) && $matches[1] != $GLOBALS['userinfo']['account_lid'])
+			if((preg_match('+^'.$this->bo->fakebase.'\/(.*)(\/|$)+U', $this->path, $matches)) && $matches[1] != $this->bo->userinfo['account_lid']) //FIXME matches not defined
+
 			{
-				$this->bo->vfs->working_id = $GLOBALS['phpgw']->accounts->name2id($matches[1]);
+				$this->bo->vfs->working_id = $GLOBALS['phpgw']->accounts->name2id($matches[1]);//FIXME matches not defined
+
 			}
 			else
 			{
-				$this->bo->vfs->working_id = $GLOBALS['userinfo']['username'];
+				$this->bo->vfs->working_id = $this->bo->userinfo['username'];
 			}
 
 
 			# FIXME # comment waht happens here
-			if($this->path != $GLOBALS['homedir'] && $this->path != $GLOBALS['fakebase'] && $this->path != '/' && !$this->bo->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => PHPGW_ACL_READ)))
+			if($this->path != $this->bo->homedir && $this->path != $this->bo->fakebase && $this->path != '/' && !$this->bo->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => PHPGW_ACL_READ)))
 			{
-				$this->messages.= $GLOBALS['phpgw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
-				$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$GLOBALS['homedir'], lang('Go to your home directory'));
+				$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
+				$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir, lang('Go to your home directory'));
 
 				$GLOBALS['phpgw']->common->phpgw_footer();
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$GLOBALS['userinfo']['working_id'] = $this->bo->vfs->working_id;
-			$GLOBALS['userinfo']['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($GLOBALS['userinfo']['working_id']);
+			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
+			$this->bo->userinfo['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->bo->userinfo['working_id']);
 
 			# If their home directory doesn't exist, we try to create it
 			# Same for group directories
-			if(($this->path == $GLOBALS['homedir'])	&& !$this->bo->vfs->file_exists($pim_tmp_arr))
+
+			
+		// Moved to constructor
+		/*
+			if(($this->path == $this->homedir)	&& !$this->bo->vfs->file_exists($pim_tmp_arr))
 			{
 				$this->bo->vfs->override_acl = 1;
 
 				if(!$this->bo->vfs->mkdir(array(
-					'string' => $GLOBALS['homedir'],
+					'string' => $this->bo->homedir,
 					'relatives' => array(RELATIVE_NONE)
 				)))
 				{
 					$p = $this->bo->vfs->path_parts($pim_tmp_arr);
 
-					$this->messages= $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
 						lang('Could not create directory %1',
-						$GLOBALS['homedir'] . ' (' . $p->real_full_path . ')'
+						$this->bo->homedir . ' (' . $p->real_full_path . ')'
 					)));
 				}
 
 				$this->bo->vfs->override_acl = 0;
 			}
+			*/
 
 			# Verify path is real
-			if($this->path != $GLOBALS['homedir'] && $this->path != '/' && $this->path != $GLOBALS['fakebase'])
+			if($this->path != $this->bo->homedir && $this->path != '/' && $this->path != $this->bo->fakebase)
 			{
 				if(!$this->bo->vfs->file_exists(array(
 					'string' => $this->path,
 					'relatives' => array(RELATIVE_NONE)
 				)))
 				{
-					$this->messages = $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
-					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$GLOBALS['homedir'], lang('Go to your home directory'));
+					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
+					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir, lang('Go to your home directory'));
 
 					$GLOBALS['phpgw']->common->phpgw_footer();
 					$GLOBALS['phpgw']->common->phpgw_exit();
@@ -465,8 +543,16 @@
 
 				$vars[toolbar0]=$this->toolbar('location');
 				$vars[toolbar1]=$this->toolbar('list_nav');
-				if($this->messages) $this->messages='<p>'.$this->messages.'</p>';
-				$vars[messages]=$this->messages;
+
+				if(count($this->messages)>0) 
+				{
+					foreach($this->messages as $msg)
+					{
+						$messages.='<p>'.$msg.'</p>';
+					}
+				}
+
+				$vars[messages]=$messages;
 
 				$this->t->set_var($vars);
 				$this->t->pparse('out','filemanager_header');
@@ -492,7 +578,10 @@
 					}
 
 					$this->t->set_var('row_tr_color','#dedede');
+					
+					//kan dit weg?
 					$this->t->parse('rows','row');
+					
 					$this->t->pparse('out','row');
 				}
 				else
@@ -563,7 +652,7 @@
 					}
 
 					# Checkboxes
-					if(!$this->rename_x && !$this->edit_comments_x && $this->path != $GLOBALS['fakebase'] && $this->path != '/')
+					if(!$this->rename_x && !$this->edit_comments_x && $this->path != $this->bo->fakebase && $this->path != '/')
 					{
 						$cbox='<input type="checkbox" name="fileman['.$i.']" value="'.$files['name'].'">';
 						$this->t->set_var('actions',$cbox);
@@ -598,10 +687,10 @@
 						else
 						{
 
-							if($this->prefs['viewonserver'] && isset($GLOBALS['filesdir']) && !$files['link_directory'])
+							if($this->prefs['viewonserver'] && isset($this->bo->filesdir) && !$files['link_directory'])
 							{
 								#FIXME
-								$clickview = $GLOBALS['filesdir'].$pwd.'/'.$files['name'];
+								$clickview = $this->filesdir.$pwd.'/'.$files['name'];
 
 								if($phpwh_debug)
 								{
@@ -768,10 +857,10 @@
 			$vars[lang_used_space]=lang('Used space');
 			$vars[used_space]=$this->bo->borkb($usedspace, NULL, 1);
 
-			if($this->path == $GLOBALS['homedir'] || $this->path == $GLOBALS['fakebase'])
+			if($this->path == $this->bo->homedir || $this->path == $this->bo->fakebase)
 			{
 				$vars[lang_unused_space]=lang('Unused space');
-				$vars[unused_space]=$this->bo->borkb($GLOBALS['userinfo']['hdspace'] - $usedspace, NULL, 1);
+				$vars[unused_space]=$this->bo->borkb($this->bo->userinfo['hdspace'] - $usedspace, NULL, 1);
 
 				$tmp_arr=array(
 					'string'	=> $this->path,
@@ -799,15 +888,16 @@
 			# $fakebase is a special directory.  In that directory, we list the user's
 			# home directory and the directories for the groups they're in
 			$this->numoffiles = 0;
-			if($this->path == $GLOBALS['fakebase'])
+			if($this->path == $this->bo->fakebase)
 			{
-				if(!$this->bo->vfs->file_exists(array('string' => $GLOBALS['homedir'], 'relatives' => array(RELATIVE_NONE))))
+				// FIXME this test can be removed
+				if(!$this->bo->vfs->file_exists(array('string' => $this->bo->homedir, 'relatives' => array(RELATIVE_NONE))))
 				{
-					$this->bo->vfs->mkdir(array('string' => $GLOBALS['homedir'], 'relatives' => array(RELATIVE_NONE)));
+					$this->bo->vfs->mkdir(array('string' => $this->bo->homedir, 'relatives' => array(RELATIVE_NONE)));
 				}
 
 				$ls_array = $this->bo->vfs->ls(array(
-					'string' => $GLOBALS['homedir'],
+					'string' => $this->bo->homedir,
 					'relatives' => array(RELATIVE_NONE),
 					'checksubdirs' => False,
 					'nofiles' => True
@@ -819,26 +909,29 @@
 				while(list($num, $group_array) = each($this->readable_groups))
 				{
 					# If the group doesn't have access to this app, we don't show it
-					if(!$this->groups_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
+					if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
 					{
 						continue;
 					}
 
 
-					if(!$this->bo->vfs->file_exists(array('string' => $GLOBALS['fakebase'].'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE))))
+					if(!$this->bo->vfs->file_exists(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE))))
 					{
 						$this->bo->vfs->override_acl = 1;
 						$this->bo->vfs->mkdir(array(
-							'string' => $GLOBALS['fakebase'].'/'.$group_array['account_name'],
+							'string' => $this->bo->fakebase.'/'.$group_array['account_name'],
 							'relatives' => array(RELATIVE_NONE)
 						));
 
+						// FIXME we just created a fresh group dir so we know there nothing in it so we have to remove all existing content
+						
+						
 						$this->bo->vfs->override_acl = 0;
 
-						$this->bo->vfs->set_attributes(array('string' => $GLOBALS['fakebase'].'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
+						$this->bo->vfs->set_attributes(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
 					}
 
-					$ls_array = $this->bo->vfs->ls(array('string' => $GLOBALS['fakebase'].'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'checksubdirs' => False,'nofiles' => True));
+					$ls_array = $this->bo->vfs->ls(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'checksubdirs' => False,'nofiles' => True));
 
 					$this->files_array[] = $ls_array[0];
 
@@ -900,9 +993,9 @@
 					}
 
 					// go home icon when we're not home already
-					if($this->path != $GLOBALS['homedir'])
+					if($this->path != $this->bo->homedir)
 					{
-						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$GLOBALS['homedir']);
+						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir);
 						$toolbar.=$this->buttonImage($link,'home',lang('go home'));
 					}
 
@@ -920,7 +1013,7 @@
 					';
 					$toolbar.=$this->inputImage('goto','goto',lang('Quick jump to'));
 					// upload button
-					if($this->path != '/' && $this->path != $GLOBALS['fakebase'] && $this->can_add)
+					if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 					{
 
 						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
@@ -940,7 +1033,7 @@
 					<tr>';
 					// selectbox for change/move/and copy to
 					// submit buttons for
-					if($this->path != '/' && $this->path != $GLOBALS['fakebase'])
+					if($this->path != '/' && $this->path != $this->bo->fakebase)
 					{
 						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 						$toolbar.='
@@ -973,7 +1066,7 @@
 					if(!$this->rename_x && !$this->edit_comments_x)
 					{
 						// copy and move buttons
-						if($this->path != '/' && $this->path != $GLOBALS['fakebase'])
+						if($this->path != '/' && $this->path != $this->bo->fakebase)
 						{
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
@@ -989,7 +1082,7 @@
 						}
 
 						// create dir and file button
-						if($this->path != '/' && $this->path != $GLOBALS['fakebase'] && $this->can_add)
+						if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 						{
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
@@ -1023,13 +1116,13 @@
 		# Handle File Uploads
 		function fileUpload()
 		{
-			if($this->path != '/' && $this->path != $GLOBALS['fakebase'])
+			if($this->path != '/' && $this->path != $this->bo->fakebase)
 			{
 				for($i = 0; $i != $this->show_upload_boxes; $i++)
 				{
 					if($badchar = $this->bo->bad_chars($_FILES['upload_file']['name'][$i], True, True))
 					{
-						$this->messages.= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 
 						continue;
 					}
@@ -1048,7 +1141,7 @@
 					{
 						if($fileinfo['mime_type'] == 'Directory')
 						{
-							$this->messages.= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot replace %1 because it is a directory', $fileinfo['name'])));
+							$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot replace %1 because it is a directory', $fileinfo['name'])));
 							continue;
 						}
 					}
@@ -1061,8 +1154,8 @@
 								'string'=> $_FILES['upload_file']['name'][$i],
 								'relatives'	=> array(RELATIVE_ALL),
 								'attributes'	=> array(
-									'owner_id' => $GLOBALS['userinfo']['username'],
-									'modifiedby_id' => $GLOBALS['userinfo']['username'],
+									'owner_id' => $this->bo->userinfo['username'],
+									'modifiedby_id' => $this->bo->userinfo['username'],
 									'modified' => $this->now,
 									'size' => $_FILES['upload_file']['size'][$i],
 									'mime_type' => $_FILES['upload_file']['type'][$i],
@@ -1079,7 +1172,7 @@
 							);
 							$this->bo->vfs->cp($tmp_arr);
 
-							$this->messages.=lang('Replaced %1', $this->disppath.'/'.$_FILES['upload_file']['name'][$i]);
+							$this->messages[]=lang('Replaced %1', $this->disppath.'/'.$_FILES['upload_file']['name'][$i]);
 						}
 						else
 						{
@@ -1099,7 +1192,7 @@
 								)
 							));
 
-							$this->messages.=lang('Created %1,%2', $this->disppath.'/'.$_FILES['upload_file']['name'][$i], $_FILES['upload_file']['size'][$i]);
+							$this->messages[]=lang('Created %1,%2', $this->disppath.'/'.$_FILES['upload_file']['name'][$i], $_FILES['upload_file']['size'][$i]);
 						}
 					}
 					elseif($_FILES['upload_file']['name'][$i])
@@ -1118,7 +1211,7 @@
 							)
 						));
 
-						$this->messages.=lang('Created %1,%2', $this->disppath.'/'.$_FILES['upload_file']['name'][$i], $file_size[$i]);
+						$this->messages[]=lang('Created %1,%2', $this->disppath.'/'.$_FILES['upload_file']['name'][$i], $file_size[$i]);
 					}
 				}
 
@@ -1134,7 +1227,7 @@
 			{
 				if($badchar = $this->bo->bad_chars($this->comment_files[$file], False, True))
 				{
-					$this->messages=$GLOBALS['phpgw']->common->error_list(array($file . $this->bo->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array($file . $this->bo->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
@@ -1146,7 +1239,7 @@
 					)
 				));
 
-				$this->messages=lang('Updated comment for %1', $this->path.'/'.$file);
+				$this->messages[]=lang('Updated comment for %1', $this->path.'/'.$file);
 			}
 
 			$this->readFilesInfo();
@@ -1160,24 +1253,24 @@
 			{
 				if($badchar = $this->bo->bad_chars($to, True, True))
 				{
-					$this->messages=$GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
 				if(ereg("/", $to) || ereg("\\\\", $to))
 				{
-					$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang("File names cannot contain \\ or /")));
+					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang("File names cannot contain \\ or /")));
 				}
 				elseif(!$this->bo->vfs->mv(array(
 					'from'	=> $from,
 					'to'	=> $to
 				)))
 				{
-					$this->messages= $GLOBALS['phpgw']->common->error_list(array(lang('Could not rename %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to)));
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Could not rename %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to)));
 				}
 				else
 				{
-					$this->messages=lang('Renamed %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to);
+					$this->messages[]=lang('Renamed %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to);
 				}
 			}
 			$this->readFilesInfo();
@@ -1196,11 +1289,11 @@
 				)))
 				{
 					$moved++;
-					$this->messages=lang('Moved %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
+					$this->messages[]=lang('Moved %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
 				}
 				else
 				{
-					$this->messages = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
 				}
 			}
 
@@ -1248,13 +1341,13 @@
 			{
 				if($this->bo->badchar = $this->bo->bad_chars($this->newfile_or_dir, True, True))
 				{
-					$this->messages= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
 				}
 
 				/* TODO is this right or should it be a single $ ? */
 				if($$this->newfile_or_dir[strlen($this->newfile_or_dir)-1] == ' ' || $this->newfile_or_dir[0] == ' ')
 				{
-					$this->messages= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
+					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
 				}
 
 				$ls_array = $this->bo->vfs->ls(array(
@@ -1270,25 +1363,25 @@
 				{
 					if($fileinfo['mime_type'] != 'Directory')
 					{
-						$this->messages= $GLOBALS['phpgw']->common->error_list(array(
+						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
 							lang('%1 already exists as a file',
 							$fileinfo['name'])
 						));
 					}
 					else
 					{
-						$this->messages= $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 already exists', $fileinfo['name'])));
+						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 already exists', $fileinfo['name'])));
 					}
 				}
 				else
 				{
 					if($this->bo->vfs->mkdir(array('string' => $this->newfile_or_dir)))
 					{
-						$this->messages=lang('Created directory %1', $this->disppath.'/'.$this->newfile_or_dir);
+						$this->messages[]=lang('Created directory %1', $this->disppath.'/'.$this->newfile_or_dir);
 					}
 					else
 					{
-						$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang('Could not create %1', $this->disppath.'/'.$this->newfile_or_dir)));
+						$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Could not create %1', $this->disppath.'/'.$this->newfile_or_dir)));
 					}
 				}
 
@@ -1305,18 +1398,18 @@
 				{
 					if($this->bo->vfs->delete(array('string' => $filename)))
 					{
-						$this->messages .= lang('Deleted %1', $this->disppath.'/'.$filename).'<br/>';
+						$this->messages[]= lang('Deleted %1', $this->disppath.'/'.$filename).'<br/>';
 					}
 					else
 					{
-						$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang('Could not delete %1', $this->disppath.'/'.$filename)));
+						$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Could not delete %1', $this->disppath.'/'.$filename)));
 					}
 				}
 			}
 			else
 			{
 				// make this a javascript func for quicker respons
-				$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang('Please select a file to delete.')));
+				$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Please select a file to delete.')));
 			}
 			$this->readFilesInfo();
 			$this->filelisting();
@@ -1359,7 +1452,7 @@
 			}
 
 			# Show file upload boxes. Note the last argument to html().  Repeats $this->show_upload_boxes times
-			if($this->path != '/' && $this->path != $GLOBALS['fakebase'] && $this->can_add)
+			if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 			{
 				$vars[form_action]=$GLOBALS[phpgw]->link('/index.php','menuaction=filemanager.uifilemanager.index');
 				$vars[path]=$this->path;
@@ -1396,12 +1489,12 @@
 		/* create textfile */
 		function createfile()
 		{
-			$this->createfile=$this->newfile_or_dir;
-			if($this->createfile)
+			$this->createfile_var=$this->newfile_or_dir;
+			if($this->createfile_var)
 			{
-				if($badchar = $this->bo->bad_chars($this->createfile, True, True))
+				if($badchar = $this->bo->bad_chars($this->createfile_var, True, True))
 				{
-					$this->messages = $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(
 						lang('File names cannot contain "%1"',$badchar),
 						1)
 					);
@@ -1410,28 +1503,28 @@
 				}
 
 				if($this->bo->vfs->file_exists(array(
-					'string'=> $this->createfile,
+					'string'=> $this->createfile_var,
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
 				{
-					$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 already exists. Please edit it or delete it first.', $this->createfile)));
+					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 already exists. Please edit it or delete it first.', $this->createfile_var)));
 					$this->fileListing();
 				}
 
 				if($this->bo->vfs->touch(array(
-					'string'	=> $this->createfile,
+					'string'	=> $this->createfile_var,
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
 				{
 					$this->fileman = array();
-					$this->fileman[0] = $this->createfile;
+					$this->fileman[0] = $this->createfile_var;
 					$this->edit = 1;
 					$this->numoffiles++;
 					$this->edit();
 				}
 				else
 				{
-					$this->messages=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 could not be created.', $this->createfile)));
+					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 could not be created.', $this->createfile_var)));
 					$this->fileListing();
 				}
 			}
@@ -1469,7 +1562,7 @@
 					'content'	=> $content
 				)))
 				{
-					$this->messages=lang('Saved %1', $this->path.'/'.$this->edit_file);
+					$this->messages[]=lang('Saved %1', $this->path.'/'.$this->edit_file);
 
 					if($this->edit_save_done_x)
 					{
@@ -1480,7 +1573,7 @@
 				}
 				else
 				{
-					$this->messages=lang('Could not save %1', $this->path.'/'.$this->edit_file);
+					$this->messages[]=lang('Could not save %1', $this->path.'/'.$this->edit_file);
 				}
 			}
 
@@ -1535,10 +1628,10 @@
 
 		function history()
 		{
-			if($this->file)
+			if($this->file) // FIXME this-file is never defined
 			{
 				$journal_array = $this->bo->vfs->get_journal(array(
-					'string'	=> $this->file,
+					'string'	=> $this->file,//FIXME
 					'relatives'	=> array(RELATIVE_ALL)
 				));
 
@@ -1590,10 +1683,10 @@
 
 		function view()
 		{
-			if($this->file)
+			if($this->file) //FIXME
 			{
 				$ls_array = $this->bo->vfs->ls(array(
-					'string'	=> $this->path.'/'.$this->file,
+					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_ALL),
 					'checksubdirs'	=> False,
 					'nofiles'	=> True
@@ -1612,14 +1705,14 @@
 				if(in_array($mime_type,$viewable))
 				{
 					header('Content-type: ' . $mime_type);
-					header('Content-disposition: filename="' . $this->file . '"');
+					header('Content-disposition: filename="' . $this->file . '"');//FIXME
 				}
 				else
 				{
-					$GLOBALS['phpgw']->browser->content_header($this->file,$mime_type);
+					$GLOBALS['phpgw']->browser->content_header($this->file,$mime_type);//FIXME
 				}
 				echo $this->bo->vfs->read(array(
-					'string'	=> $this->path.'/'.$this->file,
+					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_NONE)
 				));
 				$GLOBALS['phpgw']->common->phpgw_exit();
@@ -1647,10 +1740,10 @@
 		{
 			# First we get the directories in their home directory
 			$dirs = array();
-			$dirs[] = array('directory' => $GLOBALS['fakebase'], 'name' => $GLOBALS['userinfo']['account_lid']);
+			$dirs[] = array('directory' => $this->bo->fakebase, 'name' => $this->bo->userinfo['account_lid']);
 
 			$tmp_arr=array(
-				'string'	=> $GLOBALS['homedir'],
+				'string'	=> $this->bo->homedir,
 				'relatives'	=> array(RELATIVE_NONE),
 				'checksubdirs'	=> True,
 				'mime_type'	=> 'Directory'
@@ -1669,15 +1762,15 @@
 			while(list($num, $group_array) = each($this->readable_groups))
 			{
 				# Don't list directories for groups that don't have access
-				if(!$this->groups_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
+				if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
 				{
 					continue;
 				}
 
-				$dirs[] = array('directory' => $GLOBALS['fakebase'], 'name' => $group_array['account_name']);
+				$dirs[] = array('directory' => $this->bo->fakebase, 'name' => $group_array['account_name']);
 
 				$tmp_arr=array(
-					'string'	=> $GLOBALS['fakebase'].'/'.$group_array['account_name'],
+					'string'	=> $this->bo->fakebase.'/'.$group_array['account_name'],
 					'relatives'	=> array(RELATIVE_NONE),
 					'checksubdirs'	=> True,
 					'mime_type'	=> 'Directory'
