@@ -119,7 +119,7 @@
 				'firstname' => 'firstname',
 				'lastname' => 'lastname',
 				'lid' => 'LoginID',
-				'email' => 'email',	// sql-constructor unsets this again, til the email column is added
+				'email' => 'email',	
 				'start' => 'start with',
 				'exact' => 'exact',
 			);
@@ -247,6 +247,10 @@
 					}
 					$account_search[$serial2]['total'] = $this->total;
 				}
+				else
+				{
+					$this->total = $account_search[$serial2]['total'];
+				}
 				if ($app || $group)	// limit the search on accounts with run-rights for app or a group
 				{
 					$valid = array();
@@ -269,6 +273,7 @@
 						if (!$members) $members = array();
 						$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
 					}
+					//echo "<p>limiting result to app='app' and/or group=$group valid-ids=".print_r($valid,true)."</p>\n";
 					$offset = $param['offset'] ? $param['offset'] : $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 					$stop = $start + $offset;
 					$n = 0;
