@@ -82,7 +82,7 @@
 		@param $order order by
 		@result $cats array
 		*/
-		function return_array($public = 'False',$type = 'all',$start,$limit,$query = '',$sort = '',$order = '')
+		function return_array($type = 'all',$start,$limit,$query = '',$sort = '',$order = '',$public = 'False')
 		{
 			global $phpgw, $phpgw_info;
 
@@ -181,7 +181,7 @@
 			$this->app_name		= $app_name;
 			$this->db		= $phpgw->db;
 			$this->total_records	= $this->db->num_rows();
-			$this->cats		= $this->return_array($public,$type,$start,$limit,$query,$sort,$order);
+			$this->cats		= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
 
 		// Return into a select box, list or other formats
@@ -193,7 +193,7 @@
 		@param $selected ?
 		@result $s array - populated with categories
 		*/
-		function formated_list($format,$public = 'False',$type,$selected = "")
+		function formated_list($format,$type,$selected = '',$public = 'False')
 		{
 			global $phpgw;
 			$filter = $this->filter($type);

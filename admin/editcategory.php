@@ -71,7 +71,7 @@
 
     $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
     $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
-    $t->set_var('category_list',$c->formated_list('select','False','all',$cat_parent));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');

@@ -48,7 +48,7 @@
     $t->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $cat_id . '">');
     $t->set_var('lang_select_parent',lang('Select parent category'));
 
-    $t->set_var('category_list',$c->formated_list('select','False','all',$cat_parent));
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('cat_name',$cat_name);

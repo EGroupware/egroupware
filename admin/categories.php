@@ -46,7 +46,7 @@
 
     $c = CreateObject('phpgwapi.categories');
     $c->categories($phpgw_info['user']['account_id'],'phpgw');
-    $categories = $c->return_array('False','all',$start,$limit,$query,$sort,$order);
+    $categories = $c->return_array('all',$start,$limit,$query,$sort,$order,'False');
 
 //--------------------------------- nextmatch --------------------------------------------
 
