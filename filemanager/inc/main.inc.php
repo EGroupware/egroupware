@@ -87,22 +87,29 @@ function borkb ($size, $enclosed = NULL, $return = 0)
 
 function bad_chars ($string, $return = 0)
 {
-	if (preg_match("-([\\\|/|\||\?|\`|\@|\#|\$|%|\&|\*|\(|\)|\[|\{|\]|\}|\;|\:|\"|\'|\<|\>|\,|\ ])-", $string, $badchars))
+	if (preg_match("-([\\\|/|<|>|\"])-", $string, $badchars))
 		$rstring = $badchars[1];
 
 	return trim ((eor ($rstring, $return)));
 }
 
 ###
-# Check for and return the first character that can't be used in a file or directory name
+# Match character in string using ord ().
 ###
 
-function bad_chars_file ($string, $return = 0)
+function ord_match ($string, $charnum)
 {
-	if (preg_match ("-([\\\|\/|\&|\(|\)])-", $string, $badchars))
-		$rstring = $badchars[1];
+	for ($i = 0; $i < strlen ($string); $i++)
+	{
+		$character = ord (substr ($string, $i, 1));
 
-	return trim ((eor ($rstring, $return)));
+		if ($character == $charnum)
+		{
+			return True;
+		}
+	}
+
+	return False;
 }
 
 ###
