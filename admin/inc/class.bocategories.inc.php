@@ -133,7 +133,7 @@
 
 		function formatted_list($data)
 		{
-			if ($data['global_cats'])
+			if ($data['globals'])
 			{
 				return $this->cats->formated_list($data['select'],$data['all'],$data['parent'],True);
 			}

@@ -152,9 +152,8 @@
 				$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 
-				$id = $categories[$i]['cat_id'];
-				$level = $categories[$i]['level'];
-				$cat_name = $GLOBALS['phpgw']->strip_html($categories[$i]['name']);
+				$level		= $categories[$i]['level'];
+				$cat_name	= $GLOBALS['phpgw']->strip_html($categories[$i]['name']);
 
 				if ($level > 0)
 				{
@@ -188,7 +187,7 @@
 				));
 
 				$link_data['menuaction'] = 'admin.uicategories.add';
-				$link_data['cat_parent'] = $id;
+				$link_data['parent'] = $categories[$i]['cat_id'];
 				$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 				$GLOBALS['phpgw']->template->set_var('lang_sub_entry',lang('Add sub'));
 
@@ -207,7 +206,7 @@
 
 				if ($show_edit_del)
 				{
-					$link_data['cat_id'] = $id;
+					$link_data['cat_id'] = $categories[$i]['cat_id'];
 					$link_data['menuaction'] = 'admin.uicategories.edit';
 					$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$link_data));
 					$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
@@ -227,7 +226,7 @@
 			}
 
 			$link_data['menuaction'] = 'admin.uicategories.add';
-			$link_data['cat_parent'] = '';
+			$link_data['parent'] = '';
 			$GLOBALS['phpgw']->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$this->save_sessiondata();
@@ -236,7 +235,8 @@
 
 		function add()
 		{
-			$global_cats = get_var('global_cats',array('POST','GET'));
+			$global_cats	= get_var('global_cats',array('POST','GET'));
+			$parent			= get_var('parent',array('GET'));
 
 			$link_data = array
 			(
@@ -289,10 +289,15 @@
 			$link_data['menuaction'] = 'admin.uicategories.add';
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array('select'		=> 'select',
-																								'all'			=> 'all',
-																								'parent'		=> $values['parent'],
-																								'global_cats'	=> $global_cats)));
+			if ($values['parent'])
+			{
+				$parent = $values['parent'];
+			}
+
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array('format'	=> 'select',
+																								'type'		=> 'all',
+																								'selected'	=> $parent,
+																								'globals'	=> $global_cats)));
 
 			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
 			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
@@ -348,7 +353,7 @@
 				else
 				{
 					$this->cat_id = $this->bo->save_cat($values);
-					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been updated !',$cat_name));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Category x has been updated !',$values['name']));
 				}
 			}
 

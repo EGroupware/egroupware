@@ -218,6 +218,7 @@
 					if ($cats[$i]['owner'] == $this->account || $cats[$i]['app_name'] == 'phpgw')
 					{
 						$link_data['menuaction'] = 'preferences.uicategories.add';
+						$link_data['parent'] = $cats[$i]['cat_id'];
 						$GLOBALS['phpgw']->template->set_var('add_sub',$GLOBALS['phpgw']->link('/index.php',$link_data));
 						$GLOBALS['phpgw']->template->set_var('lang_sub_entry',lang('Add sub'));
 					}
@@ -250,6 +251,7 @@
 				$GLOBALS['phpgw']->template->fp('rows','cat_row',True);
 			}
 			$link_data['menuaction'] = 'preferences.uicategories.add';
+			$link_data['parent'] = '';
 			$GLOBALS['phpgw']->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
 			$this->save_sessiondata($cats_app);
 
@@ -273,6 +275,7 @@
 			);
 
 			$values		= get_var('values',array('POST'));
+			$parent		= get_var('parent',array('GET'));
 			$cat_data	= get_var('cat_data',array('POST'));
 
 			if (get_var('submit',Array('POST')))
@@ -328,7 +331,15 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$values['parent'],$global_cats));
+			if ($values['parent'])
+			{
+				$parent = $values['parent'];
+			}
+
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
+																								'type'		=> $type,
+																								'selected'	=> $parent,
+																								'globals'	=> $global_cats)));
 			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
 			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
 
@@ -339,7 +350,7 @@
 				$edata = explode(',',$extra);
 				for($i=0;$i<count($edata);$i++)
 				{
-					$GLOBALS['phpgw']->template->set_var('td_data','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $cat_data[$edata[$i]] . '">');
+					$GLOBALS['phpgw']->template->set_var('td_data$categories[$i]['cat_id']$categories[$i]['cat_id']','<input name="cat_data[' . $edata[$i] . ']" size="50" value="' . $cat_data[$edata[$i]] . '">');
 					$GLOBALS['phpgw']->template->set_var('lang_data',lang($edata[$i]));
 					$GLOBALS['phpgw']->template->fp('rows','data_row',True);
 				}
