@@ -678,8 +678,9 @@
 		@function alternate_row_color
 		@abstract alternate row colour
 		@param $currentcolor default ''
+		@param $do_class boolean default False return the color-value or just the class-name
 		*/
-		function alternate_row_color($currentcolor = '')
+		function alternate_row_color($currentcolor = '',$do_class=False)
 		{
 			if (! $currentcolor)
 			{
@@ -688,14 +689,14 @@
 
 			if ($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
 			{
-				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
+				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme'][$class='row_off'];
 			}
 			else
 			{
-				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_on'];
+				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme'][$class='row_on'];
 			}
 
-			return $GLOBALS['tr_color'];
+			return $do_class ? $class : $GLOBALS['tr_color'];
 		}
 
 		// If you are using the common bgcolor="{tr_color}"
