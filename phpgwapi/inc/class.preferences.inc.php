@@ -113,7 +113,7 @@
 			}
 			if ($update_session_info) {
 				 $phpgw_info["user"]["preferences"] = $this->data;
-				 $phpgw->session->update_session_info();
+				 $phpgw->session->save_repositories();
 			}
 			return $this->data;
 		}
