@@ -608,13 +608,17 @@ class calendar extends calendar_
 		
 		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
-		$event = Array();
+//		$event = Array();
 
 		$event = $this->get_event_ids(False,$sql);
 
 		if($this->repeating_event_matches == False && $event == False)
 		{
 			return False;
+		}
+		elseif($event == False)
+		{
+			unset($event);
 		}
 
 		if($this->repeating_event_matches != 0)
@@ -637,6 +641,7 @@ class calendar extends calendar_
 		}
 		else
 		{
+//			$events = Array();
 			for($i=0;$i<$this->sorted_events_matching;$i++)
 			{
 				$events[] = $this->fetch_event(intval($event[$i]));
@@ -648,6 +653,10 @@ class calendar extends calendar_
 			}
 		}
 
+//		$temp = CreateObject('calendar.calendar_item');
+//		$inner = CreateObject('calendar.calendar_item');
+//		$outer = CreateObject('calendar.calendar_item');
+		
 		for($outer_loop=0;$outer_loop<($this->sorted_events_matching - 1);$outer_loop++)
 		{
 			$outer = $events[$outer_loop];
@@ -665,7 +674,7 @@ class calendar extends calendar_
 			{
 				$oetime = 2359;
 			}
-			
+
 			for($inner_loop=$outer_loop;$inner_loop<$this->sorted_events_matching;$inner_loop++)
 			{
 				$inner = $events[$inner_loop];
@@ -889,7 +898,7 @@ class calendar extends calendar_
 
 		if($starttime == $endtime)
 		{
-			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->tz_offset - 1;
+			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->datetime->tz_offset - 1;
 		}
 
 		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
@@ -1077,9 +1086,9 @@ class calendar extends calendar_
 				{
 					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
 					{
-						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">';
-						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">';
-						$new_event_link .= '</a>';
+						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">'
+							. '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">'
+							. '</a>';
 					}
 					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$month.'&day='.$day.'&year='.$year.'&owner='.$owner).'">'.$day.'</a>';
 				}
@@ -1117,17 +1126,15 @@ class calendar extends calendar_
 					$p->set_var($var);
 					$c_rep_events = count($rep_events);
 					for ($k=0;$k<$c_rep_events;$k++)
-//					for ($k=0;$k<$this->sorted_events_matching;$k++)
 					{
 						$lr_events = $rep_events[$k];
 						
 						$is_private = $this->is_private($lr_events,$owner);
 
 						$p->set_var('day_events',$this->link_to_entry($lr_events,$month,$day,$year));
-						unset($picture);
 
 						$p->parse('events','event',True);
-						$p->set_var('day_events','');						
+						$p->set_var('day_events','');
 					}
 				}
 				$p->parse('daily_events','day_event',True);

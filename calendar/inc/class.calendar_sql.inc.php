@@ -324,7 +324,6 @@ class calendar_ extends calendar__
 
 	function get_event_ids($search_repeats=False,$extra='')
 	{
-		$retval = Array();
 		if($search_repeats == True)
 		{
 			$repeats_from = ', phpgw_cal_repeats ';
@@ -352,7 +351,6 @@ class calendar_ extends calendar__
 		}
 
 		$retval = Array();
-
 		while($this->stream->next_record())
 		{
 			$retval[] = intval($this->stream->f('cal_id'));
