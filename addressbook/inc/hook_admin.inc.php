@@ -15,9 +15,9 @@
 // Only Modify the $file and $title variables.....
 		$file = Array
 		(
-			'Site Configuration'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-			'Edit custom fields'	=> $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'),
-			'Global Categories'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True')
+			'Site Configuration' => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+			'Edit custom fields' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uifields.index'),
+			'Global Categories'  => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True')
 		);
 //Do not modify below this line
 		display_section($appname,$appname,$file);

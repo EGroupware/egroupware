@@ -20,6 +20,7 @@
 
 	$setup_info['addressbook']['author'] = 'Joseph Engo, Miles Lott';
 	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
+
 	/* Tables */
 	$setup_info['addressbook']['tables'][] = 'phpgw_addressbook_servers';
 
@@ -36,7 +37,7 @@
 
 	/* Dependencies for this app to work */
 	$setup_info['addressbook']['depends'][] = array(
-		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.15', '0.9.16')
+		'appname'  => 'phpgwapi',
+		'versions' => Array('0.9.15', '0.9.16')
 	);
 ?>
