@@ -8,7 +8,6 @@ TODO:
 - delete dialog --> also delete pictures from vfs
 - show dialog
 - make delete, show and edit dialoges popup
-- handle non 4:3 picutres
 - some artwork : general resource pictures like (room, car, beamer ...)
 - sitemgr module
 

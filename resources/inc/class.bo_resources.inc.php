@@ -176,7 +176,6 @@ class bo_resources
 		@param int $resource_id
 		@return mixed string with msg if somthing went wrong; nothing if all right
 		TODO make thumb an picture sizes choosable by preferences
-		TODO better handling for not 4:3 images
 	*/	
 	function save_picture($file,$resouce_id)
 	{
@@ -210,17 +209,24 @@ class bo_resources
 				return lang('Picture type is not supported, sorry!');
 		}
 		
-		$img_size = getimagesize($file['tmp_name']);
+		$src_img_size = getimagesize($file['tmp_name']);
+		$dst_img_size = array( 0 => 320, 1 => 240);
+		$thumb_size = array( 0 => 64, 1 => 48);
+		
 		$tmp_dir = $GLOBALS['phpgw_info']['server']['temp_dir'].'/';
-		if($img_size[0] > 64 || $img_size[1] > 48)
+		if($src_img_size[0] > 64 || $src_img_size[1] > 48)
 		{
-			$dst_img = imagecreatetruecolor(64, 48);
-			imagecopyresized($dst_img,$src_img,0,0,0,0,64,48,$img_size[0],$img_size[1]);
+			$f = $thumb_size[0] / $src_img_size[0];
+			$f = $thumb_size[1] / $src_img_size[1] < $f ? $thumb_size[1] / $src_img_size[1] : $f;
+			$dst_img = imagecreatetruecolor($src_img_size[0] * $f, $src_img_size[1] * $f);
+			imagecopyresized($dst_img,$src_img,0,0,0,0,$src_img_size[0] * $f,$src_img_size[1] * $f,$src_img_size[0],$src_img_size[1]);
 			imagejpeg($dst_img,$tmp_dir.$resouce_id.'.thumb.jpg');
-			if($img_size[0] > 320 || $img_size[1] > 240)
+			if($src_img_size[0] > $dst_img_size[0] || $src_img_size[1] > $dst_img_size[1])
 			{
-				$dst_img = imagecreatetruecolor(320, 240);
-				imagecopyresized($dst_img,$src_img,0,0,0,0,320,240,$img_size[0],$img_size[1]);
+				$f = $dst_img_size[0] / $src_img_size[0];
+				$f = $dst_img_size[1] / $src_img_size[1] < $f ? $dst_img_size[1] / $src_img_size[1] : $f;
+				$dst_img = imagecreatetruecolor($src_img_size[0] * $f, $src_img_size[1] * $f);
+				imagecopyresized($dst_img,$src_img,0,0,0,0,$src_img_size[0] * $f,$src_img_size[1] * $f,$src_img_size[0],$src_img_size[1]);
 				imagejpeg($dst_img,$tmp_dir.$resouce_id.'.jpg');
 			}
 			else
