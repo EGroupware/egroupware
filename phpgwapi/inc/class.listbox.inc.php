@@ -1,28 +1,27 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Link box generator                                    *
-  * http://www.phpgroupware.org/api                                          *
-  * This file written by Mark Peters <skeeter@phpgroupware.org>              *
-  * Creates listboxes using templates                                        *
-  * Copyright (C) 2000, 2001 Mark Peters                                     *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Link box generator                                    *
+	* http://www.phpgroupware.org/api                                          *
+	* Written by Mark Peters <skeeter@phpgroupware.org>                        *
+	* Creates listboxes using templates                                        *
+	* Copyright (C) 2000 - 2002 Mark Peters                                    *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 
 	CreateObject('phpgwapi.portalbox');
 
@@ -70,20 +69,22 @@
 		{
 			if(count($this->data))
 			{
-				$this->p->parse('row','portal_listbox_header',True);
-
 				for ($x = 0; $x < count($this->data); $x++)
 				{
-					$var = Array(
-						'text'	=> $this->data[$x]['text'],
-						'link'	=> $this->data[$x]['link']
+					$var = array
+					(
+						'text'					=> $this->data[$x]['text'],
+						'link'					=> $this->data[$x]['link'],
+						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
-					$this->p->set_var($var);
-					$this->p->parse('row','portal_listbox_link',True);
+					$this->output['portal_row'] = array
+					(
+						'listbox'	=> $var
+					);
 				}
-				$this->p->parse('row','portal_listbox_footer',True);
 			}
 			$this->set_internal($extra_data);
 			return $this->draw_box();
 		}
 	}
+?>

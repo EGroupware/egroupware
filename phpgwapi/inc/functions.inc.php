@@ -331,6 +331,9 @@
 		* These lines load up the templates class and set some default values     *
 		\*************************************************************************/
 		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+
+		$GLOBALS['phpgw']->xslttpl = CreateObject('phpgwapi.xslttemplates',PHPGW_TEMPLATE_DIR);
+
 		/* load required tpl files */
 		$GLOBALS['phpgw']->template->set_file('common', 'common.tpl');
 		$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
@@ -610,6 +613,9 @@
 				}
 
 				$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
+
+				$GLOBALS['phpgw']->xslttpl->set_root(PHPGW_APP_TPL);
+
 				$GLOBALS['phpgw']->template->halt_on_error = 'report';
 				if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)
 				{

@@ -20,13 +20,10 @@
 
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
-				'title'	=> '<font color="#FFFFFF">'.lang('Infolog').'</font>',
-				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'title'	=> lang('Infolog'),
 				'width'	=> '100%',
 				'outerborderwidth'	=> '0',
-				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler')
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
 			)
 		);
 
@@ -50,9 +47,12 @@
 		$GLOBALS['HTTP_POST_VARS']['filter'] = $GLOBALS['filter'] = 'own-open-today';
 		$infolog = CreateObject('infolog.uiinfolog');
 
-		echo "\n".'<!-- BEGIN infolog info -->'."\n".
+		/*echo "\n".'<!-- BEGIN infolog info -->'."\n".
 		     $portalbox->draw($infolog->get_list(2))."\n".
 			  '<!-- END infolog info -->'."\n";
+*/
+
+		$GLOBALS['phpgw']->template->set_var('phpgw_body',$portalbox->draw(),True);
 
 		unset($infolog);
 		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;

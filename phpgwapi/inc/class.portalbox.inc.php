@@ -1,27 +1,26 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Portal Box manager                                    *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * Helps manage the portal boxes for phpGroupWares main page                *
-  * Copyright (C) 2000, 2001  Joseph Engo                                    *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare API - Portal Box manager                                    *
+	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
+	* Helps manage the portal boxes for phpGroupWares main page                *
+	* Copyright (C) 2000 - 2002  Joseph Engo                                   *
+	* ------------------------------------------------------------------------ *
+	* This library is part of the phpGroupWare API                             *
+	* http://www.phpgroupware.org/api                                          * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
+	/* $Id$ */
 
 	class portalbox
 	{
@@ -39,7 +38,8 @@
 		var $close;
 		var $question;
 		var $edit;
-		
+
+		var $output;
 		var $data = Array();
 
 		// Textual variables
@@ -88,37 +88,22 @@
 
 		function start_template()
 		{
-			$this->p = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('home'));
-			$this->p->set_file(
-				array(
-					'PORTAL'	=> 'portal.tpl'
-				)
-			);
+			$GLOBALS['phpgw']->xslttpl->add_file(array('portal'));
 
-			$this->p->set_block('PORTAL','portal_box','portal_box');
-			$this->p->set_block('PORTAL','portal_row','portal_row');
-			$this->p->set_block('PORTAL','portal_listbox_header','portal_listbox_header');
-			$this->p->set_block('PORTAL','portal_listbox_link','portal_listbox_link');
-			$this->p->set_block('PORTAL','portal_listbox_footer','portal_listbox_footer');
-			$this->p->set_block('PORTAL','portal_control','portal_control');
-			$this->p->set_block('PORTAL','link_field','link_field');
-
-			$var = Array(
+			$this->output = array
+			(
 				'outer_border'				=> $this->getvar('outerborderwidth'),
 				'outer_width'				=> $this->getvar('width'),
 				'title'						=> $this->getvar('title'),
 				'inner_width'				=> $this->getvar('width'),
-				'header_background_image'	=> $this->getvar('header_background_image'),
-				'control_link'				=> ''
+				'header_background_image'	=> $this->getvar('header_background_image')
 			);
-			$this->p->set_var($var);
-			$this->p->set_var('row','',False);
 		}
 
 		function set_controls($control='',$control_param='')
 		{
-//			echo '<br>Control: ' . $control . ', control_param="' . $control_param . '"';
-//			if($control != '' && $control_param != '')
+			//echo '<br>Control: ' . $control . ', control_param="' . $control_param . '"';
+
 			if($control != '' && is_array($control_param))
 			{
 				$this->setvar($control,$GLOBALS['phpgw']->link($control_param['url'],'app='.$control_param['app'].'&control='.$control));
@@ -129,10 +114,13 @@
 		{
 			if($data=='' && !count($this->data))
 			{
-				$data = '<td>&nbsp;</td>';
+				$data = ' ';
 			}
-			$this->p->set_var('output',$data);
-			$this->p->parse('row','portal_row',true);
+
+			$this->output['portal_row']['extrabox'] = array
+			(
+				'data' => $data
+			);
 		}
 
 		function draw_box()
@@ -140,7 +128,8 @@
 			$control = '';
 			if($this->up || $this->down || $this->close || $this->question || $this->edit)
 			{
-				$control_array = Array(
+				$control_array = array
+				(
 					'up',
 					'down',
 					'question',
@@ -157,12 +146,20 @@
 						{
 							$image_width = 30;
 						}
-						$this->p->set_var('link_field_data','<a href="'.$this->$param.'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button.gif').'" border="0" width="'.$image_width.'" height="15" alt="'.lang($param).'"></a>');
-						$this->p->parse('control_link','link_field',True);
+
+						$control_link[] = array
+						(
+							'param_url' 			=> $this->$param,
+							'link_img'				=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button'),
+							'img_width'				=> $image_width,
+							'lang_param_statustext'	=> lang($param)
+						);
 					}
 				}
-				$this->p->parse('portal_controls','portal_control',True);
+
+				$this->output['control_link'] = $control_link;
 			}
-			return $this->p->fp('out','portal_box');
+			$GLOBALS['phpgw']->xslttpl->set_var('portal',$this->output);
+			return $GLOBALS['phpgw']->xslttpl->parse();
 		}
 	}
