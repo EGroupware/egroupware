@@ -96,9 +96,14 @@
          <td><?php echo lang("language"); ?></td>
          <td>
           <select name="lang">
-          <?php 
-            if (! $phpgw_info["user"]["preferences"]["common"]["lang"]) {
-               $phpgw_info["user"]["preferences"]["common"]["lang"] = "en";
+          <?php
+            $phpgw->db->query("select preference_value from preferences where preference_owner='"
+                            . $phpgw_info["user"]["account_id"] . "' and preference_name='lang' and "
+                            . "preference_appname='common'",__LINE__,__FILE__);
+            $phpgw->db->next_record();
+
+            if ($phpgw->db->f("preference_value") == "") {
+               $phpgw_info["user"]["preferences"]["common"]["lang"] = "EN";
             }
             $lang_select[$phpgw_info["user"]["preferences"]["common"]["lang"]] = " selected"; 
             $strSql = "SELECT lang_id, lang_name FROM languages WHERE available = 'Yes'";

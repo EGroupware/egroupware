@@ -27,4 +27,5 @@
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 1, 13, NULL, '".$currentver."')");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 14, NULL, '$currentver')");
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('bookmarks', 'Book Marks', 1, 15, NULL, '$currentver')");
 ?>
