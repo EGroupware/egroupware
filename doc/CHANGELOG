@@ -18,6 +18,7 @@
 		- Removed javascript from the login template
 		- Fixed HTML error in the application status select box for admin -> new/edit application
 		- Fixed group public filters in addressbook and todo list
+		- Cleanup up templates in admin section and created a few new templates.
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
