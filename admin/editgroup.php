@@ -90,7 +90,7 @@
             } else {
               $check = $apps_after[$j];
             }
-            if (!$t["$check"]) {
+            if (!$t[$check]) {
               $phpgw->common->hook_single("add_def_pref", $apps_after[$j]);
               $docommit = True;
             }
