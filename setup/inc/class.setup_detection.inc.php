@@ -23,12 +23,12 @@
 			$d = dir(PHPGW_SERVER_ROOT);
 			while($entry=$d->read())
 			{
-				if (!ereg('setup',$entry))
+				if (!ereg('setup',$entry) && is_dir(PHPGW_SERVER_ROOT.'/'.$entry))
 				{
 					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
-					if (file_exists ($f))
+					if (@file_exists ($f))
 					{
-						include($f);
+						@include($f);
 						$setup_info[$entry]['filename'] = $f;
 					}
 				}
