@@ -158,9 +158,12 @@
 		var $accounts;
 		var $applications;
 		var $db;
+		var $hooks;
 	}
 	$GLOBALS['phpgw'] = new phpgw;
 	$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
+	$GLOBALS['phpgw']->db     = $phpgw_setup->db;
+	$GLOBALS['phpgw']->hooks  = CreateObject('phpgwapi.hooks');
 
 	$cfg_apps = array('phpgwapi','admin','preferences');
 	while(list(,$cfg_app) = each($cfg_apps))
