@@ -173,7 +173,9 @@
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
 	$t->set_var("filter",$filter);
+	$t->set_var("query",$query);
 	$t->set_var("start",$start);
+	$t->set_var("cat_id",$cat_id);
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_clear",lang("clear"));
 	$t->set_var("lang_cancel",lang("cancel"));
