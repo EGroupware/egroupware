@@ -223,7 +223,25 @@
 		@reset ($setup_info);
 		while (list ($key, $value) = each ($setup_info))
 		{
-			if($value['name'])
+			unset($test);
+			if (file_exists(PHPGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
+			{
+				include(PHPGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php');
+			}
+
+			if (is_array($test))
+			{
+				reset($test);
+			}
+
+			$s = '<option value="">&nbsp;</option>';
+			while (is_array($test) && list(,$versionnumber) = each($test))
+			{
+				$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
+			}
+			$setup_tpl->set_var('select_version',$s);
+
+			if ($value['name'])
 			{
 				if ($i)
 				{

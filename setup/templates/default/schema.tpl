@@ -28,7 +28,7 @@
     <td><a href="schematoy.php?detail={appname}"><img src="templates/default/images/{instimg}" alt="{instalt}" border="0"></a></td>
     <td>{appinfo}&nbsp;</td>
     <td>{apptitle}&nbsp;</td>
-    <td align="center"><input name="version[{appname}]"></td>
+    <td align="center"><select name="version[{appname}]">{select_version}</select></td>
     <td bgcolor="CCFFCC" align="center">{install}</td>
   </tr>
 <!-- END apps -->
