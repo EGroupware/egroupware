@@ -17,7 +17,7 @@
 	    $bodyheader = "BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\"";
     }
 
-    $tpl = CreateObject('phpgwapi.Template',$phpgw_info["server"]["template_dir"]);
+    $tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
     $tpl->set_unknowns("remove");
     $tpl->set_file(array("head" => "head.tpl"));
     $tpl->set_var("webserver_url", $phpgw_info["server"]["webserver_url"]);

@@ -16,7 +16,7 @@
       $bodyheader .= "topmargin=\"0\" marginheight=\"0\" marginwidth=\"0\" leftmargin=\"0\"";
     }
 
-    $tpl = CreateObject('phpgwapi.Template',$phpgw_info["server"]["template_dir"]);
+    $tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
     $tpl->set_unknowns("remove");
     $tpl->set_file(array("head" => "head.tpl"));
     $tpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
