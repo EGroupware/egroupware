@@ -57,22 +57,22 @@ insert into applications (app_name, app_title, app_enabled, app_order, app_table
 --------------
 
 CREATE TABLE accounts (
-  con		number NOT NULL,
-  loginid	varchar2(25) NOT NULL,
-  passwd	varchar2(32) NOT NULL,
-  firstname	varchar2(50),
-  lastname	varchar2(50),
-  permissions	varchar2(255),
-  groups	varchar2(30),
-  lastlogin	number(11),
-  lastloginfrom	varchar2(255),
-  lastpasswd_change number(11),
-  status varchar2(40) DEFAULT 'A' check (status in ('A','L')) NOT NULL,  
-  PRIMARY KEY (con)
+  account_id             number NOT NULL,
+  account_lid            varchar2(25) NOT NULL,
+  account_pwd            varchar2(32) NOT NULL,
+  account_firstname      varchar2(50),
+  account_lastname       varchar2(50),
+  account_permissions    varchar2(255),
+  account_groups         varchar2(30),
+  account_lastlogin	     number(11),
+  account_lastloginfrom  varchar2(255),
+  account_lastpwd_change number(11),
+  account_status         varchar2(40) DEFAULT 'A' check (status in ('A','L')) NOT NULL,  
+  PRIMARY KEY (account_id)
 );
 
 create unique index accounts_loginid 
-  on accounts (loginid);
+  on accounts (account_lid);
 
 create sequence accounts_seq
   increment by 1
@@ -90,9 +90,8 @@ begin
 end;
 /
 
-insert into accounts (loginid,passwd,firstname,lastname,permissions,groups,
-  status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
-  ':admin:email:todo:addressbook:calendar:hr:',',1,','A');
+insert into accounts (account_ld,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,
+status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A');
 
 ------------
 -- GROUPS --
@@ -128,18 +127,18 @@ insert into groups (group_name) values ('Default');
 -----------------
 
 CREATE TABLE preferences (
-  owner	varchar2(20),
-  name		varchar2(50),
-  value	varchar2(50)
+  preference_owner  varchar2(20),
+  preference_name   varchar2(50),
+  preference_value  varchar2(50)
 );
 
-insert into preferences values ('demo','maxmatchs','10');
-insert into preferences values ('demo','mainscreen_showbirthdays','True');
-insert into preferences values ('demo','mainscreen_showevents','True');
-insert into preferences values ('demo','timeformat','12');
-insert into preferences values ('demo','dateformat','m/d/Y');
-insert into preferences values ('demo','theme','default');
-insert into preferences values ('demo','tz_offset','0');
+insert into preferences values ('demo','maxmatchs','10','');
+insert into preferences values ('demo','mainscreen_showbirthdays','True','');
+insert into preferences values ('demo','mainscreen_showevents','True','');
+insert into preferences values ('demo','timeformat','12','');
+insert into preferences values ('demo','dateformat','m/d/Y','');
+insert into preferences values ('demo','theme','default','');
+insert into preferences values ('demo','tz_offset','0','');
 
 --------------
 -- SESSIONS --

@@ -25,23 +25,22 @@ insert into applications (app_name, app_title, app_enabled, app_order, app_table
 
 
 create table accounts (
-  con 	 	serial,
-  loginid 	varchar(25) NOT NULL,
-  passwd  	char(32) NOT NULL,
-  firstname 	varchar(50),
-  lastname  	varchar(50),
-  permissions	text,
-  groups	varchar(30),
-  lastlogin	int,
-  lastloginfrom	varchar(255),
-  lastpasswd_change int,
-  status	char(1),
-  unique(loginid)
+  account_id             serial,
+  account_lid            varchar(25) NOT NULL,
+  account_pwd            char(32) NOT NULL,
+  account_firstname      varchar(50),
+  account_lastname       varchar(50),
+  account_permissions    text,
+  account_groups         varchar(30),
+  account_lastlogin	     int,
+  account_lastloginfrom  varchar(255),
+  account_lastpwd_change int,
+  account_status         char(1),
+  unique(account_lid)
 );
 
-insert into accounts (loginid,passwd,firstname,lastname,permissions,groups,
-status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
-':admin:email:todo:addressbook:calendar:hr:',',1,','A');
+insert into accounts (account_ld,account_pwd,account_firstname,account_lastname,account_permissions,account_groups,
+status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',':admin:email:todo:addressbook:calendar:',',1,','A');
 
 create table groups (
   group_id	serial,
@@ -69,19 +68,18 @@ CREATE TABLE app_sessions (
 );
 
 create table preferences ( 
-  owner 	varchar(20),
-  name		varchar(50),
-  value		varchar(50)
+  preference_owner       varchar(20),
+  preference_name        varchar(50),
+  preference_value       varchar(50)
 );
 
-insert into preferences values ('demo','maxmatchs','10');
-insert into preferences values ('demo','email_sig','');
-insert into preferences values ('demo','mainscreen_showbirthdays','True');
-insert into preferences values ('demo','mainscreen_showevents','True');
-insert into preferences values ('demo','timeformat','12');
-insert into preferences values ('demo','dateformat','m/d/Y');
-insert into preferences values ('demo','theme','default');
-insert into preferences values ('demo','tz_offset','0');
+insert into preferences values ('demo','maxmatchs','10','');
+insert into preferences values ('demo','mainscreen_showbirthdays','True','');
+insert into preferences values ('demo','mainscreen_showevents','True','');
+insert into preferences values ('demo','timeformat','12','');
+insert into preferences values ('demo','dateformat','m/d/Y','');
+insert into preferences values ('demo','theme','default','');
+insert into preferences values ('demo','tz_offset','0','');
 
 create table access_log (
    sessionid    varchar(30),
