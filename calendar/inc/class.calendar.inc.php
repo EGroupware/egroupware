@@ -1447,6 +1447,13 @@ class calendar extends calendar_
 		$p->set_var($var);
 		$p->parse('output','list',True);
 
+		$var = Array(
+			'field'	=>	lang('Private'),
+			'data'	=>	$event->public==True?'False':'True'
+		);
+		$p->set_var($var);
+		$p->parse('output','list',True);
+
 		if($event->groups[0])
 		{
 			$cal_grps = '';
