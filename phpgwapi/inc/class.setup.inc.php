@@ -128,8 +128,8 @@
 					/* config logout */
 					setcookie('ConfigPW','');
 					setcookie('ConfigDomain','');
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
 					setcookie('ConfigLang','');
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'You have successfully logged out';
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 
 					return False;
@@ -138,7 +138,8 @@
 				{
 					/* header admin logout */
 					setcookie('HeaderPW','');
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'You have successfully logged out';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
+					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 
 					return False;

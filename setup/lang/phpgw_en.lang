@@ -233,4 +233,5 @@ your database is working, but you dont have any applications installed	setup	en	
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
+you have successfully logged out	setup	en	You have successfully logged out
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
