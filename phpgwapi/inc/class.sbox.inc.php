@@ -209,18 +209,18 @@
 
     	$out = '<select name="' . $name . '" multiple>';
         while (list($null,$group) = each($groups)) {
-           $out .= '<option value="' . $group[0] . '"';
+           $out .= '<option value="' . $group['account_id'] . '"';
            if (strtolower(gettype($selected)) == strtolower("array")) {
               for($i=0;$i<count($selected);$i++) {
-                if ($group[0] == $selected[$i]) {
+                if ($group['account_id'] == $selected[$i]) {
                    $out .= " SELECTED";
                    break;
                 }
               }
-           } elseif (ereg("," . $group[0] . ",", $selected))  {
+           } elseif (ereg("," . $group['account_id'] . ",", $selected))  {
               $out .= " SELECTED";
            }
-           $out .= ">" . $group[1] . "</option>\n";
+           $out .= ">" . $group['account_name'] . "</option>\n";
         }
         $out .= "</select>\n";
   
