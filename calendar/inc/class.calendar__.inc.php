@@ -140,7 +140,7 @@ class calendar__
 			{
 				$preferences = CreateObject('phpgwapi.preferences',$participants[$i]);
 				$part_prefs = $preferences->read_repository();
-				if(!isset($part_prefs['calendar']['send_updates']) || $part_prefs['calendar']['send_updates'] == False)
+				if(!isset($part_prefs['calendar']['send_updates']) || !$part_prefs['calendar']['send_updates'])
 				{
 					continue;
 				}
@@ -177,7 +177,7 @@ class calendar__
 						break;
 				}
 				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
-				$send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
+				$returncode = $send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
 			}
 		}
 		unset($send);
