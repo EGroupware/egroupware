@@ -226,7 +226,7 @@ class send {
   $toaddr = explode(",",$to);
   $numaddr = count($toaddr);
   for ($i=0; $i<$numaddr; $i++) {
-    $src = $this->msg2socket($socket,"RCPT TO:<$toaddr[$i]>\r\n");
+    $src = $this->msg2socket($socket,'RCPT TO:<'.$toaddr[$i].">\r\n");
     $rrc = $this->socket2msg($socket);
     $this->to_res[$i][addr] = $toaddr[$i];     // for lateron validation
     $this->to_res[$i][code] = $this->err["code"];
