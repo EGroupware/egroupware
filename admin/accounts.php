@@ -16,6 +16,22 @@
   include('../header.inc.php');
 //  include(PHPGW_APP_INC . '/accounts_' . $phpgw_info['server']['account_repository'] . '.inc.php');
 
+	function account_total($query)
+	{
+		global $phpgw;
+
+		if ($query) {
+			$querymethod = " where account_firstname like '%$query%' OR account_lastname like "
+					. "'%$query%' OR account_lid like '%$query%' ";
+		}
+     
+		$phpgw->db->query('select count(*) from phpgw_accounts'.$querymethod,__LINE__,__FILE__);
+		$phpgw->db->next_record();
+
+		return $phpgw->db->f(0);
+	}
+
+
   $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
   
 	$p->set_file(array(
@@ -24,7 +40,7 @@
 		'empty_row'  => 'accounts_row_empty.tpl'
 	));
 
-  $total = account_total();
+  $total = account_total($query);
 
   $p->set_var('bg_color',$phpgw_info['theme']['bg_color']);
   $p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
