@@ -293,11 +293,17 @@
 				if ($this->data["account_type"] == "g" && $phpgw_info["server"]["ldap_group_context"] )
 				{
 					$members = $this->members($this->data["account_id"]);
-					$entry["memberuid"] = "";
+					$entry["memberuid"] = array();
 					for ($i=0;$i<count($members);$i++)
 					{
 						//echo $this->id2name($members[$i]['account_id']);
-						$entry["memberuid"][$i] = $this->id2name($members[$i]['account_id']);
+						//$currname = "@@".$this->id2name($members[$i]['account_id'])."@@";
+						$currname = $this->id2name($members[$i]['account_id']);
+						//if (!ereg($currname, "@@" . join("@@", $entry["memberuid"]) . "@@"))
+						if (!$this->isin_array($currname,$entry["memberuid"]))
+						{
+							$entry["memberuid"][] = $currname;
+						}
 					}
 					unset($entry["givenname"]);
 					unset($entry["sn"]);
@@ -325,7 +331,6 @@
 						else
 						{
 							// attribute was in LDAP, modify it
-							//echo $val.' ';
 							ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 						}
 					}
@@ -338,6 +343,12 @@
 				. "', account_status='"    . $this->data['status']
 				. "' where account_id='"   . $this->account_id . "'",__LINE__,__FILE__);
 
+		}
+
+		function isin_array($needle,$haystack=array()) 
+		{ 
+			for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++); 
+				return ($i!=count($haystack)); 
 		}
 
 		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
