@@ -23,6 +23,9 @@
    <tr bgcolor="#e6e6e6">
     <td colspan="2"><a href="{ldapexport}">{lang_ldapexport}</a></td>
    </tr>
+   <tr bgcolor="#e6e6e6">
+    <td colspan="2"><a href="{ldapdummy}">{lang_ldapdummy}</a></td>
+   </tr>
 <!-- END jump -->
 
 <!-- BEGIN user_list -->

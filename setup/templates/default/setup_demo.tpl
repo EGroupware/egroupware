@@ -36,7 +36,8 @@
             <td><input type="checkbox" name="create_demo" checked></td>
           </tr>
           <tr>
-            <td colspan="2"><input type="submit" name="submit" value="{lang_submit}"> </td>
+            <td><input type="submit" name="submit" value="{lang_submit}"> </td>
+            <td><input type="submit" name="cancel" value="{lang_cancel}"> </td>
           </tr>
         </table>
       </form>

@@ -24,7 +24,7 @@
 
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if (!$phpgw_setup->auth('Config'))
+	if (!$phpgw_setup->auth('Config') || $HTTP_POST_VARS['cancel'])
 	{
 		Header('Location: index.php');
 		exit;
@@ -76,6 +76,7 @@
 		$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 
 		$setup_tpl->set_var('lang_submit',lang('submit'));
+		$setup_tpl->set_var('lang_cancel',lang('cancel'));
 		$setup_tpl->pparse('out','T_setup_demo');
 		$phpgw_setup->show_footer();
 	}
