@@ -1011,7 +1011,7 @@
 					return array();
 				$this->boprojects = createobject('projects.boprojects');
 			}
-			$projs = $this->boprojects->list_projects( array('query'=>$pattern,'limit'=>FALSE) );
+			$projs = $this->boprojects->list_projects( array('action'=>'all','query'=>$pattern,'limit'=>FALSE) );
 			$content = array();
 			while ($projs && list( $key,$proj ) = each( $projs ))
 			{
