@@ -69,7 +69,7 @@
 
 		if ($cat_main && $cat_parent)
 		{
-			$main = $c->return_main($cat_parent);
+			$main = $c->id2name($cat_parent,'main');
 			if ($main != $cat_main)
 			{
 				$error[$errorcount++] = lang('You have selected an invalid main category');
