@@ -11,6 +11,11 @@
 		behind load balanced proxys.
 	- Merged patch for eventlog, this will show debugging info and warnings to admins.
 		Thanks j3rry
+	- Created dual pass preferences, this allows admins to force any preference option
+		on users.  (eg, templates, themes, max matchs, etc)
+	- Created generic preferneces/preferences.php app, which uses hooks to
+		set user preferences, admins can force preference, or set the defaults
+		for new accounts.
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)

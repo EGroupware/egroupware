@@ -35,7 +35,7 @@
 		/*! @var account_type */
 		var $account_type;
 		/*! @var data */
-		var $data = Array();
+		var $data = array();
 		/*! @var db */
 		var $db;
 
@@ -50,7 +50,7 @@
 		function preferences($account_id = '')
 		{
 			global $phpgw, $phpgw_info;
-			$this->db = $phpgw->db;
+			$this->db         = $phpgw->db;
 			$this->account_id = get_account_id($account_id);
 		}
 
@@ -65,18 +65,37 @@
 		*/
 		function read_repository()
 		{
-			$this->db->lock('phpgw_preferences');
-			$this->db->query("SELECT preference_value FROM phpgw_preferences WHERE preference_owner='".$this->account_id."'",__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM phpgw_preferences WHERE "
+				. "preference_owner='" . $this->account_id . "' or "
+				. "preference_owner='-1' order by preference_owner desc",__LINE__,__FILE__);
 			$this->db->next_record();
-			$pref_info = $this->db->f("preference_value");
-			/* echo "Pref_Info = ".$pref_info."<br>\n"; */
-			$this->data = Array();
+
+			$pref_info  = $this->db->f('preference_value');
 			$this->data = unserialize($pref_info);
-			$this->db->unlock();
+
+			if ($this->db->next_record())
+			{
+				$global_defaults = unserialize($this->db->f('preference_value'));
+
+				while (is_array($global_defaults) && list($appname,$values) = each($global_defaults))
+				{
+					while (is_array($values) && list($var,$value) = each($values))
+					{
+						$this->data[$appname][$var] = $value;
+					}
+				}
+			}
+
 			/* This is to supress warnings during login */
-			if (gettype($this->data) == 'array')
+			if (is_array($this->data))
 			{
 				 reset ($this->data);
+			}
+
+			// This is to supress warnings durring login
+			if (is_array($this->data))
+			{
+				reset($this->data);
 			}
 			return $this->data;
 		}
