@@ -359,8 +359,7 @@
 
 				//echo '<br>first total="'.$total.'"';
 				// Now, remove duplicate rows
-				if (!$PHP_VERSION) global $PHP_VERSION;
-				if (floor($PHP_VERSION ) == 4) {
+				if (floor(phpversion()) == 4) {
 					$tmp = array_unique($ldap_fields);
 					$ldap_fields = $tmp;
 				} else {

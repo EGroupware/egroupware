@@ -210,7 +210,7 @@
 				if ($allmatched)
 				{
 					if($DEBUG) { echo $ldap_fields[$i]["uidnumber"][0].' matched all!'."<br>"; }
-					$new_ldap[$i] = $ldap_fields[$i];
+					$new_ldap[] = $ldap_fields[$i];
 				}
 				else
 				{
