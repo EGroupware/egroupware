@@ -542,12 +542,12 @@
 				
 				if($quotaPercent > 50)
 				{
-					$this->t->set_var('quotaUsage_right','&nbsp;');
+					$this->t->set_var('quotaUsage_right','');
 					$this->t->set_var('quotaUsage_left',$quotaUsage .'/'.$quotaLimit);
 				}
 				else
 				{
-					$this->t->set_var('quotaUsage_left','&nbsp;');
+					$this->t->set_var('quotaUsage_left','');
 					$this->t->set_var('quotaUsage_right',$quotaUsage .'/'.$quotaLimit);
 				}
 				
