@@ -140,15 +140,15 @@
 <!-- {rows} -->
 				</td>
 				<td valign="top">
+				<xsl:variable name="edit_url"><xsl:value-of select="edit_url"/></xsl:variable>
+				<form method="POST" action="{$edit_url}">
 					<table border="0" width="100%">
-						<xsl:variable name="edit_url"><xsl:value-of select="edit_url"/></xsl:variable>
 						<xsl:variable name="account_id" select="account_id"/>
 						<xsl:variable name="account_lid" select="account_lid"/>
 						<xsl:variable name="account_firstname" select="account_firstname"/>
 						<xsl:variable name="account_lastname" select="account_lastname"/>
 						<xsl:variable name="account_passwd" select="account_passwd"/>
 						<xsl:variable name="account_passwd_2" select="account_passwd_2"/>
-						<form action="{$edit_url}" method="POST">
 						<input type="hidden" name="values[account_id]" value="{$account_id}"/>
 						<tr class="row_on">
 							<td width="25%"><xsl:value-of select="lang_lid"/></td>
@@ -221,24 +221,18 @@
 								</table>
 							</td>
 						</tr>
-
-						<tr>
-							<td colspan="2">
+						<tr height="50" valign="bottom">
+							<td colspan="3">
 							<xsl:variable name="lang_save"><xsl:value-of select="lang_save"/></xsl:variable>
 								<input type="submit" name="values[save]" value="{$lang_save}"/>
 							</td>
-						</tr>
- 						</form>
-						<tr>
-						<xsl:variable name="cancel_url"><xsl:value-of select="cancel_url"/></xsl:variable>
-						<xsl:variable name="lang_done"><xsl:value-of select="lang_cancel"/></xsl:variable>
-						<form method="POST" action="{$cancel_url}">
-							<td>
-								<input type="submit" name="cancel" value="{$lang_cancel}"/>
+							<td colspan="3" align="right">
+								<xsl:variable name="lang_cancel"><xsl:value-of select="lang_cancel"/></xsl:variable>
+								<input type="submit" name="values[cancel]" value="{$lang_cancel}"/>
 							</td>
-						</form>
 						</tr>
 					</table>
+				</form>
 				</td>
 			</tr>
 		</table>

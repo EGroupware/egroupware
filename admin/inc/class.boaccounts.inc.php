@@ -295,11 +295,10 @@
 			$GLOBALS['phpgw']->db->unlock();
 		}
 
-		function add_user()
+		function add_user($values)
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 
@@ -519,7 +518,6 @@
 		{
 			if ($GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
 

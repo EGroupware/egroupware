@@ -471,22 +471,17 @@
 
 		function edit_user()
 		{
-			$cd						= get_var('cd',array('GET'));
-			$account_id				= get_var('account_id',array('GET','POST'));
-			$values					= get_var('values',array('POST'));
-			$account_groups			= get_var('account_groups',array('POST'));
-			$account_permissions	= get_var('account_permissions',array('POST'));
+			$cd				= get_var('cd',array('GET'));
+			$account_id		= get_var('account_id',array('GET','POST'));
+			$values			= get_var('values',array('POST'));
+			$account_groups	= get_var('account_groups',array('POST'));
+			$account_apps	= get_var('account_apps',array('POST'));
 
-			if (!$account_id && $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
-			{
-				$this->list_user();
-				return False;
-			}
+			_debug_array($values);
 
-			if ($account_id && $GLOBALS['phpgw']->acl->check('account_access',16,'admin'))
+			if ($values['cancel'] || (!$account_id && $GLOBALS['phpgw']->acl->check('account_access',4,'admin')) || ($account_id && $GLOBALS['phpgw']->acl->check('account_access',16,'admin')))
 			{
-				$this->list_user();
-				return False;
+				$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_users');
 			}
 
 			/*$cdid = $cd;
@@ -540,6 +535,16 @@
 
 			$GLOBALS['phpgw']->xslttpl->add_file(array('app_data','users'));
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('administration') . ': ' . ($account_id?lang('edit user account'):lang('add user account'));
+
+			if ($account_id)
+			{
+				$user_info = Array
+				(
+					'account_name' => $GLOBALS['phpgw']->accounts->id2name($account_id),
+					'account_user' => $this->bo->load_group_users($account_id),
+					'account_apps' => $this->bo->load_group_apps($account_id)
+				);
+			}
 
 			if (is_array($_userData))
 			{
@@ -682,17 +687,16 @@
 				);
 			}
 
-			$page_params['menuaction'] = 'admin.boaccounts.edit_user';
-			if($_account_id)
+			$page_params['menuaction'] = 'admin.uiaccounts.edit_user';
+			if($account_id)
 			{
-				$page_params['account_id']  = $_account_id;
+				$page_params['account_id']  = $account_id;
 				$page_params['old_loginid'] = rawurlencode($userData['account_lid']);
 			}
 
 			$data = array
 			(
 				'edit_url'				=> $GLOBALS['phpgw']->link('/index.php',$page_params),
-				'cancel_url'			=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_user'),
 				'lang_lid'				=> lang('loginid'),
 				'lang_account_active'	=> lang('account active'),
 				'lang_password'			=> lang('password'),
