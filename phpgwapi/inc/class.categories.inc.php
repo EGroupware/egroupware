@@ -250,6 +250,18 @@
 		*/
 		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
 		{
+			if(is_array($format))
+			{
+				$temp_format = $format['format'];
+				$type = $format['type'];
+				$selected = (isset($format['selected'])?$format['selected']:'');
+				$public = (isset($format['public'])?$format['public']:False);
+				$site_link = (isset($format['site_link'])?$format['site_link']:'site');
+				settype($format,'string');
+				$format = $temp_format;
+				unset($temp_format);
+			}
+		
 			$filter = $this->filter($type);
 
 			if (!is_array($selected))
