@@ -126,7 +126,8 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_var('phpgw_body',$html);
+				echo $html;
+				// this removes {} eg.'${test}' -> '$' $GLOBALS['phpgw']->template->set_var('phpgw_body',$html);
 			}
 		}
 
