@@ -302,6 +302,19 @@
 					$acl->account_id = intval($thisacctid);
 					$acl->read_repository();
 
+					/*
+					However, if no groups were imported, we do need to give each user
+					apps access
+					*/
+					if(!$ldapgroups)
+					{
+						@reset($s_apps);
+						while (list($key,$app) = @each($s_apps))
+						{
+							$acl->delete($app,'run',1);
+							$acl->add($app,'run',1);
+						}
+					}
 					// Now add the acl to let them change their password
 					$acl->delete('preferences','changepassword',1);
 					$acl->add('preferences','changepassword',1);
