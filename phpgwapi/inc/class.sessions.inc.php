@@ -364,8 +364,8 @@
 								. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
-								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query('insert into phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
+				." values ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
