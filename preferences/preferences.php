@@ -327,4 +327,5 @@
 		$t->pfp('out','list');
 		$t->pfp('out','footer');
 	}
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

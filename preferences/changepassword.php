@@ -87,6 +87,8 @@
 	else
 	{
 		$GLOBALS['phpgw']->common->phpgw_header();
-		$GLOBALS['phpgw']->template->pfp('out','form');
+		$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array(
+			'body_data' => $GLOBALS['phpgw']->template->fp('out','form')
+		));
 	}
 ?>
