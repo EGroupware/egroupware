@@ -74,6 +74,7 @@
 			$this->db->query("UPDATE phpgw_accounts SET account_firstname='" . $this->data['firstname']
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
 				. $this->data['status'] . "', account_expires='" . $this->data['expires']
+				. ($this->data['account_lid']?"', account_lid='".$this->data['account_lid']:'')
 				. "' WHERE account_id='"
 				. $this->account_id . "'",__LINE__,__FILE__);
 		}
