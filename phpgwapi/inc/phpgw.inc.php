@@ -243,7 +243,6 @@
       $url = str_replace("/?", "/index.php?", $url);
       $webserver_url_count = strlen($phpgw_info["server"]["webserver_url"]);
       $slash_check = strtolower(substr($url ,0,1));
-      
       if(substr($url ,0,$webserver_url_count) != $phpgw_info["server"]["webserver_url"]) {
         $app = $phpgw_info["flags"]["currentapp"];
         if($slash_check == "/") {
@@ -251,6 +250,10 @@
         } elseif ($app == "home" || $app == "logout" || $app == "login"){
           $app = "/"; 
         }else{ 
+          /* This is going to be a problem for apps with subdirs. */
+          /* we can work around it using $PHP_SELF, striping out the file name, */
+          /* and replacing it with the one we want. For now I will leave this alone.*/
+          
           $app = "/".$app."/";
         }
         $url = $phpgw_info["server"]["webserver_url"].$app.$url; 
