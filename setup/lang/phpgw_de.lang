@@ -106,6 +106,7 @@ edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
 edit your existing header.inc.php	setup	de	Bearbeiten ihrer existierenden header.inc.php
 edit your header.inc.php	setup	de	Bearbeiten ihrer header.inc.php
 enable for extra debug-messages	setup	de	ankreutzen für zusätzliche Diagnosemeldungen
+enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüssellung der app session
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüssellung der app session<br>(benötigt mcrypt)
@@ -131,6 +132,7 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
+historylog removed	setup	de	Historylog gelöscht
 hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen

@@ -128,6 +128,9 @@
 
 		if(!empty($remove) && is_array($remove))
 		{
+			$historylog = CreateObject('phpgwapi.historylog');
+			$historylog->db = $GLOBALS['phpgw_setup']->db;
+
 			foreach($remove as $appname => $key)
 			{
 				$terror = array();
@@ -150,6 +153,11 @@
 
 				$terror = $GLOBALS['phpgw_setup']->process->drop_langs($terror,$DEBUG);
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
+
+				if ($historylog->delete($appname))
+				{
+					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Historylog removed') . '.';
+				}
 			}
 		}
 
@@ -393,7 +401,7 @@
 			if(@$value['name'])
 			{
 				$i = ($i ? 0 : 1); 
-				$setup_tpl->set_var('apptitle',$value['title']);
+				$setup_tpl->set_var('apptitle',$value['title']?$value['title']:lang($value['name']));
 				$setup_tpl->set_var('currentver',@$value['currentver']);
 				$setup_tpl->set_var('version',$value['version']);
 				$setup_tpl->set_var('bg_color',$bgcolor[$i]);

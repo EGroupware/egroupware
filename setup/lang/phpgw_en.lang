@@ -104,6 +104,7 @@ edit current configuration	setup	en	Edit Current Configuration
 edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
 edit your header.inc.php	setup	en	Edit your header.inc.php
 enable for extra debug-messages	setup	en	enable for extra debug-messages
+enable ldap version 3	setup	en	Enable LDAP Version 3
 enable mcrypt	setup	en	Enable MCrypt
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
@@ -129,6 +130,7 @@ go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
 has a version mismatch	setup	en	has a version mismatch
+historylog removed	setup	en	Historylog removed
 hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
 host information	setup	en	Host information
