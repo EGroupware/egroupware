@@ -24,7 +24,7 @@
     </td></tr>
     <tr><td align="left" bgcolor="486591"><font color="fefefe">Details for Admin account</td><td align="right" bgcolor="486591">&nbsp;</td></tr>
     <tr><td>
-      <form method="POST" acion="<?php echo $PHP_SELF; ?>">
+      <form method="POST" action="<?php echo $PHP_SELF; ?>">
         <table border="0">
           <tr>
             <td>Admin username</td>

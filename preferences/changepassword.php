@@ -27,7 +27,7 @@
      echo parse_navbar();
 
     ?>
-   <form method="POST" acion="<?php echo $phpgw->link("changepassword.php"); ?>">
+   <form method="POST" action="<?php echo $phpgw->link("changepassword.php"); ?>">
     <table border="0">
      <tr>
        <td>
