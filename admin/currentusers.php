@@ -27,7 +27,6 @@
 		$start = 0;
 	}
 
-	$limit = $phpgw->db->limit($start);
 	$phpgw->db->query("select count(*) from phpgw_sessions where session_flags != 'A'",__LINE__,__FILE__);
 	$phpgw->db->next_record();
 
@@ -60,7 +59,7 @@
 		$ordermethod = 'order by session_dla asc';
 	}
 
-	$phpgw->db->query("select * from phpgw_sessions where session_flags != 'A' $ordermethod " . $phpgw->db->limit($start),__LINE__,__FILE__);
+	$phpgw->db->limit_query("select * from phpgw_sessions where session_flags != 'A' $ordermethod ",$start,__LINE__,__FILE__);
 
 	$i = 0;
 	while ($phpgw->db->next_record())
