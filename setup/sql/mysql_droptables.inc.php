@@ -32,6 +32,6 @@
   $phpgw_setup->db->query("DROP TABLE lang");
   $phpgw_setup->db->query("DROP TABLE languages");
   $phpgw_setup->db->query("DROP TABLE customers");
-  $phpgw_setup->db->query("DROP TABLE categories");
+  $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("DROP TABLE notes");
 ?>

@@ -793,12 +793,14 @@
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
       $ver = "upgrade".ereg_replace("\.","_",$value);
-      $ver();
-      echo "<table>";
+      echo "<tr><td><table>";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from $value to ".$phpgw_info["setup"]["currentver"]["phpgwapi"]." is completed.</td>\n";
       echo "  </tr>\n";
-      echo "</table>";
+      echo "  <tr><td>\n";
+      $ver();
+      echo "  </td></tr>\n";
+      echo "</table></td></tr>\n";
       if ($tableschanged == True){$tablechanges = True;}
       if (!$phpgw_info["setup"]["prebeta"]){
         $phpgw_setup->db->query("update applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
