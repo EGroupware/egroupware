@@ -53,7 +53,7 @@
 			}
 
 			$phpgw->preferences->save_repository(True);
-			Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
+			Header("Location: " . $phpgw->link("/preferences/index.php"));
 		}
 	}
 
@@ -66,7 +66,7 @@
 
 	echo "<p><b>" . lang("Addressbook preferences") . ":" . "</b><hr><p>";
 ?>
-  <form method="POST" action="<?php echo $phpgw->link(); ?>">
+  <form method="POST" action="<?php echo $phpgw->link('/addressbook/preferences.php'); ?>">
    <table border="0" align="center" cellspacing="1" cellpadding="1">
     <?php
 	// I need to create a common function to handle displaying multiable columns
