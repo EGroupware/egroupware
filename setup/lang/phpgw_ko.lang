@@ -4,7 +4,7 @@
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ko	*** eGW이 완전히 동작 하기 위해서는 php.ini를 직접 수정해주어야 합니다 !!!
 00 (disable)	setup	ko	00 ( 미사용 / 추천 )
 13 (ntp)	setup	ko	13 (ntp)
-80 (http)	common	ko	80 (http)
+80 (http)	setup	ko	80 (http)
 <b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ko	<b>이것은 1개의 관리자 계정돠 3개의 데모 계정을 생성합니다</b><br>사용자이름/암호는 demo/guest, demo2/guest, demo3/guest 입니다
 accounts existing	setup	ko	계정 존재함
 actions	setup	ko	액션
@@ -37,74 +37,75 @@ application: %1, file: %2, line: "%3"	setup	ko	응용프로그램: %1 , 파일: %2 , 라�
 are you sure you want to delete your existing tables and data?	setup	ko	기존에 테이블과 데이터를 삭제하는게 맞습니까?
 are you sure?	setup	ko	확실합니까?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ko	귀하의 요구에 따라 이 스크리브는 데이터베이스를 생성하고 데이터베이스의 유저에게 권한을 줍니다
-at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ko	귀하의 요구에따라, 이 스크립트는 코어-테이블과 관리자 그리고 설정용 응용프로그램을 설치합니다
-at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ko	귀하의 요구에따라, 이 스크립트는 구-응용프로그램을 현재-버전으로 업그레이드 시도합니다
-at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ko	귀하의 요구에따라, 이 스크립트는 구-테이블을 새 형식으로 업그레이드 시도합니다
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	ko	귀하의 요구에따라, 이 스크립트는 핵심 테이블과 관리자 그리고 환경설정용 응용프로그램을 설치합니다
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ko	귀하의 요구에따라, 이 스크립트는 이전 응용프로그램을 현재-버전으로 업그레이드 시도합니다
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ko	귀하의 요구에따라, 이 스크립트는 이전 테이블을 새 형식으로 업그레이드 시도합니다
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ko	귀하의 요구에따라, 이 스크립트는 기존 테이블을 삭제하고 새로운 형식으로 다시 생성을 강행합니다
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ko	귀하의 요구에따라, 이 스크립트는 존재하는 모든 테이블과 데이터 그리고 모든 응용프로그램 삭제를 강행합니다
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ko	FTP를 위해 현재 mimetype을 기본설정인 'application/octet-stream'대신 사용합니다
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ko	FTP를 위해 적절한 mimetype사용을 시도하고 기본설정인'application/octet-stream'은 무시합니다
 authentication / accounts	setup	ko	인증 / 계정
-auto create account records for authenticated users	setup	ko	인증된 사용자들을 위한 자동 생성 계정 레코드
-auto-created user accounts expire	setup	ko	자동생성 사용자 계정 만료
+auto create account records for authenticated users	setup	ko	인증된 사용자들을 위한 자동생성계정 레코드
+auto-created user accounts expire	setup	ko	자동생성된 사용자 계정 만료
 available version	setup	ko	가능한 버전
 back to the previous screen	setup	ko	이전 화면으로 돌아가기
-back to user login	setup	ko	사용자 로그인으로 돌아가기
-backupwarn	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있으며</strong><br><em>더 진행하기 전에 백업하시길 권장합니다!</em>
+back to user login	setup	ko	사용자 접속으로 돌아가기
+backupwarn	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있습니다.</strong><br><em>더 진행하기 전에 백업하시길 권장합니다!</em>
 because an application it depends upon was upgraded	setup	ko	응용프로그램이 업그레이드 되었는지 여부에 달려있음
 because it depends upon	setup	ko	의존성때문에
 because it is not a user application, or access is controlled via acl	setup	ko	사용자 응용프로그램이 아니기때문에, 접근 제어는 ACL을 통해서
-because it requires manual table installation, <br>or the table definition was incorrect	setup	ko	because it requires manual table installation, <br>or the table definition was incorrect
-because it was manually disabled	setup	ko	직접 사용안함으로 설정했기 때문에
-because of a failed upgrade or install	setup	ko	업그레이드나 설치에 실패했기 때문에
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	ko	because of a failed upgrade, or the database is newer than the installed version of this app
-because the enable flag for this app is set to 0, or is undefined	setup	ko	because the enable flag for this app is set to 0, or is undefined
+because it requires manual table installation, <br>or the table definition was incorrect	setup	ko	이는 테이블 설치를 수동으로 해야하거나, 테이블 정의가 틀렸기 때문입니다
+because it was manually disabled	setup	ko	직접 사용안함으로 설정했기 때문입니다
+because of a failed upgrade or install	setup	ko	업그레이드나 설치에 실패했기 때문입니다
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ko	업그레이드에 실패했거나, 데이터베이스가 설치된 응용프로그램보다 새 버전이 때문입니다
+because the enable flag for this app is set to 0, or is undefined	setup	ko	이 응용프로그램의 활성화플레그가 0으로 설정되었거나, 아에 정의되지 않았기 때문입니다
 bottom	setup	ko	하단
 cancel	setup	ko	취소
-cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	ko	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	ko	파일 권한이 없기때문에 header.inc.php를 생성할수 없습니다. 대신 %1 파일로 할수 있습니다
 change system-charset	setup	ko	시스템 문자셋 바꾸기
 charset	setup	ko	문자셋
 charset to convert to	setup	ko	전환할 문자셋
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ko	웹서버를 통해 호출되지만 그 웹서버가 사용자ID와 이름을 모르는 상태에서 실행된다면 체크하세요
 check installation	setup	ko	설치 확인
 check ip address of all sessions	setup	ko	모든 세션에 ip 주소 확인
 checking extension %1 is loaded or loadable	setup	ko	%1 확장이 이미 로드되었거나 로드가 가능한지 확인
-checking file-permissions of %1 for %2: %3	setup	ko	** %1 파일-퍼미션을 확인 , %2 : %3
+checking file-permissions of %1 for %2: %3	setup	ko	%2를 위해 %1 파일-권한을 확인 : %3
 checking for gd support...	setup	ko	GD 지원여부 확인..
 checking php.ini	setup	ko	php.ini 확인
 checking the egroupware installation	setup	ko	eGroupWare 설치 확인
-click <a href="index.php">here</a> to return to setup.	setup	ko	Click <a href="index.php">here</a> to return to setup.
-click here	setup	ko	클릭하세요
+click <a href="index.php">here</a> to return to setup.	setup	ko	설정으로 돌아가려면 <a href="index.php">여기</a>를 클릭하세요
+click here	setup	ko	여기를 클릭하세요
 click here to re-run the installation tests	setup	ko	설치 테스트를 다시 수행하기위해서 여기를 클릭하세요
-completed	setup	ko	완료
-config password	setup	ko	암호 설정
-config username	setup	ko	사용자 이름 설정
-configuration	setup	ko	설정
-configuration completed	setup	ko	설정 완료
-configuration password	setup	ko	암호 설정
-configuration user	setup	ko	유저 설정
-configure now	setup	ko	지금 설정
+completed	setup	ko	완료됨
+config password	setup	ko	암호 구성
+config username	setup	ko	사용자 이름 구성
+configuration	setup	ko	구성
+configuration completed	setup	ko	구성 완료
+configuration password	setup	ko	암호 구성
+configuration user	setup	ko	유저 구성
+configure now	setup	ko	지금 구성
 contain	setup	ko	포함
 continue	setup	ko	계속
 continue to the header admin	setup	ko	상위 관리자 계정으로 계속
-convert	setup	ko	전환
+convert	setup	ko	변환
 could not open header.inc.php for writing!	setup	ko	header.inc.php 파일에 쓸수없습니다.
 country selection	setup	ko	국가 선택
 create	setup	ko	생성
 create admin account	setup	ko	관리 계정 생성
 create database	setup	ko	데이터베이스 생성
 create demo accounts	setup	ko	데모 계정 생성
-create one now	setup	ko	즉시 생성
+create one now	setup	ko	지금 하나 생성
 create the empty database -	setup	ko	빈 데이터베이스 생성 -
-create the empty database and grant user permissions -	setup	ko	Create the empty database and grant user permissions -
+create the empty database and grant user permissions -	setup	ko	빈 데이터베이스를 생성하고 사용자 권한을 부여 -
 create your header.inc.php	setup	ko	당신의 header.inc.php 생성
 created	setup	ko	생성됨
 created header.inc.php!	setup	ko	생성된 header.inc.php!
-creating tables	setup	ko	테이블 생성
+creating tables	setup	ko	테이블 생성중
 current system-charset	setup	ko	현재 시스템 문자셋
-current system-charset is %1, click %2here%3 to change it.	setup	ko	Current system-charset is %1, click %2here%3 to change it.
+current system-charset is %1, click %2here%3 to change it.	setup	ko	현재 시스템 문자셋은 %1입니다. 바꾸시려면 %2여기%3을 누르세요.
 current version	setup	ko	현재 버전
 currently installed languages: %1 <br>	setup	ko	현재 설치된 언어: %1 <br>
 database successfully converted from '%1' to '%2'	setup	ko	데이터베이스가 '%1'에서 '%2'으로 전환에 성공했습니다.
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	ko	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	ko	날짜시간 포트를 설정합니다<br> 만약 13번 포트를 사용하신다면 적합한 방화벽 정책을 설정하시고 이 페이지를 서브밋(submit)해 주세요.<br>(포트:13 / 호스트:129.6.15.28)
 db host	setup	ko	DB 호스트
 db name	setup	ko	DB 이름
 db password	setup	ko	DB 암호
@@ -115,87 +116,87 @@ db type	setup	ko	DB 형태
 db user	setup	ko	DB 사용자
 default file system space per user/group ?	setup	ko	유저/그룹 당 기본 파일시스템 용량은?
 delete	setup	ko	삭제
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ko	Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	ko	모든  SQL 계정, 그룹, ACL 그리고 환경설정 을 삭제합니까? (잘 쓰이진 않겠죠)?
 delete all my tables and data	setup	ko	내 모든 테이블과 데이터를 삭제
 delete all old languages and install new ones	setup	ko	이전 언어를 모두 삭제하고 새 언어를 설치
 deleting tables	setup	ko	테이블 삭제중
 demo server setup	setup	ko	데모 서버 설정
 deny access	setup	ko	접근 금지
-deny all users access to grant other users access to their entries ?	setup	ko	Deny all users access to grant other users access to their entries ?
+deny all users access to grant other users access to their entries ?	setup	ko	다른 사용자가 각자의 항목에 접근하는것 이외에 모든 사용자의 접근을 금지 시킬까요?
 dependency failure	setup	ko	의존성 확인 실패
 deregistered	setup	ko	등록해지됨
 details for admin account	setup	ko	관리자 계정에 자세한 정보
 developers' table schema toy	setup	ko	개발자용 테이블 스키마 도구
 did not find any valid db support!	setup	ko	유요한 DB 지원을 찾을수 없습니다!
-do you want persistent connections (higher performance, but consumes more resources)	setup	ko	Do you want persistent connections (higher performance, but consumes more resources)
-do you want to manage homedirectory and loginshell attributes?	setup	ko	Do you want to manage homedirectory and loginshell attributes?
+do you want persistent connections (higher performance, but consumes more resources)	setup	ko	지속적인 연결을 할까요? ( 실행속도는 좋습니다만,더 많은 자원을 소모합니다)
+do you want to manage homedirectory and loginshell attributes?	setup	ko	홈디렉토리와 로그인쉘 속성을 관리하시겠습니까?
 domain	setup	ko	도메인
 domain select box on login	setup	ko	로그인시 도메인 선택 상자 보이기
 dont touch my data	setup	ko	내 데이터는 손대지 말것
 download	setup	ko	내려받기
-edit current configuration	setup	ko	현재 설정을 편집
+edit current configuration	setup	ko	현재구성을 편집
 edit your existing header.inc.php	setup	ko	기존 header.inc.php를 편집
-edit your header.inc.php	setup	ko	당신의  header.inc.php를 편집
+edit your header.inc.php	setup	ko	귀하의 header.inc.php를 편집
 egroupware administration manual	setup	ko	eGroupWare 관리자 메뉴얼
 enable for extra debug-messages	setup	ko	자세한 디버그-메세지 출력
 enable ldap version 3	setup	ko	LDAP Version 3 활성화
 enable mcrypt	setup	ko	MCrypt 활성화
 enter some random text for app session encryption	setup	ko	응용프로그램 세션 암호화에 사용할 무작위 문자열 입력
-enter some random text for app_session <br>encryption (requires mcrypt)	setup	ko	Enter some random text for app_session <br>encryption (requires mcrypt)
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	ko	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	setup	ko	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
-enter the hostname of the machine on which this server is running	setup	ko	Enter the hostname of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ko	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
-enter the site password for peer servers	setup	ko	피어서버의 사이트 암호 입력
-enter the site username for peer servers	setup	ko	피어서버의 사이트 사용자이름 입력
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	ko	응용프로그램 세션 암호화에 <br>사용할 임의 문자열을 입력하세요 (mcrypt 필요)
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	ko	임시 파일의 완전한경로를 입력하세요.<br>예: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	ko	사용자와 그룹파일을 위한 완전한경로를 입력하세요. <br>예: /files, E:\FILES
+enter the hostname of the machine on which this server is running	setup	ko	이 서버가 실행되고 있는 장비의 호스트 이름을 입력하세요
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	ko	eGroupWare의 URL을 입력<br>예: http://domain.com/egroupware &nbsp;이나 &nbsp/egroupware<br><b>단 슬래시(/)로 끝나지 않게 하세요</b>
+enter the site password for peer servers	setup	ko	피어서버의 사이트암호 입력
+enter the site username for peer servers	setup	ko	피어서버의 사이트사용자이름 입력
 enter the title for your site	setup	ko	귀하의 사이트 제목을 입력
-enter your default ftp server	setup	ko	기본 FTP 서버주소 입력
+enter your default ftp server	setup	ko	귀하의 기본 FTP 서버주소 입력
 enter your http proxy server	setup	ko	HTTP 프록시 서버주소 입력
 enter your http proxy server password	setup	ko	HTTP 프록시 서버 암호 입력
 enter your http proxy server port	setup	ko	HTTP 프록시 서버 포트 입력
 enter your http proxy server username	setup	ko	HTTP 프록시 서버 사용자이름 입력
 error in admin-creation !!!	setup	ko	관리자 생성 에러!!!
 error in group-creation !!!	setup	ko	그룹 생성 에러!!!
-export egroupware accounts from sql to ldap	setup	ko	eGroupWare의 계정들을 SQL에서 LDAP로 "내보내기"
-export has been completed!  you will need to set the user passwords manually.	setup	ko	Export has been completed!  You will need to set the user passwords manually.
+export egroupware accounts from sql to ldap	setup	ko	eGroupWare의 계정들을 SQL에서 LDAP로 내보내기
+export has been completed!  you will need to set the user passwords manually.	setup	ko	내보내기가 완료 되었습니다! 사용자 암호를 직접 설정하셔야 합니다.
 export sql users to ldap	setup	ko	SQL사용자들을 LDAP로 내보내기
 false	setup	ko	거짓
-file	setup	ko	파일
+file	setup	ko	FILE
 file type, size, version, etc.	setup	ko	파일 형,크기,버전,기타.
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ko	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
-force selectbox	setup	ko	강제 선택박스
-found existing configuration file. loading settings from the file...	setup	ko	Found existing configuration file. Loading settings from the file...
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ko	새 설치를 위해, 가져오기를 선택하세요. 기존에 SQL 계저을 LDAP로 변환하시려면 내보내기를 선택하세요
+force selectbox	setup	ko	강제 선택상자
+found existing configuration file. loading settings from the file...	setup	ko	기존에 구성파일을 찾았습니다. 이 파일에서 설정을 불러옵니다...
 go back	setup	ko	뒤로 가기
-go to	setup	ko	..로 가기
+go to	setup	ko	이동하기(Go to)
 grant access	setup	ko	접속 승인
-has a version mismatch	setup	ko	은(는) 버전이 맞지 않습니다.
-header admin login	setup	ko	상위 관리자 로그인
-header password	setup	ko	상위 관리자 암호
+has a version mismatch	setup	ko	버전이 맞지 않습니다.
+header admin login	setup	ko	상위관리자 로그인
+header password	setup	ko	상위관리자 암호
 header username	setup	ko	상위관리자 사용자이름
 historylog removed	setup	ko	Historylog 삭제됨
-hooks deregistered	setup	ko	가로채기(Hooks) 등록해지됨
-hooks registered	setup	ko	가로채기(Hooks) 등록됨
+hooks deregistered	setup	ko	가로채기 등록해지됨
+hooks registered	setup	ko	가로채기 등록됨
 host information	setup	ko	호스트 정보
-hostname/ip of database server	setup	ko	데이터베이스 서버의 호스트이름/IP
-however, the application is otherwise installed	setup	ko	그러나, 응용프로그램이 설치됨
-however, the application may still work	setup	ko	그러나, 응용프로그램이 계속 동작중
-if no acl records for user or any group the user is a member of	setup	ko	If no ACL records for user or any group the user is a member of
-if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
-if the application has no defined tables, selecting upgrade should remedy the problem	setup	ko	If the application has no defined tables, selecting upgrade should remedy the problem
+hostname/ip of database server	setup	ko	데이터베이스서버의 호스트이름/IP
+however, the application is otherwise installed	setup	ko	어쨌든, 응용프로그램이 설치됨
+however, the application may still work	setup	ko	어쨌든, 응용프로그램이 계속 동작중
+if no acl records for user or any group the user is a member of	setup	ko	ACL 레코드가 없는 사용자나, 어떤 그룹의 구성원이 아닌 사용자라면
+if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ko	안전모드가 켜졌으면, eGW는 실행중엔 어떤 설정도 바꿀수 없을 뿐만 아니라,아직까지 로드되지 않은 어떤 모듈도 로드할수 없습니다
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	ko	응용프로그램이 정의된 테이블이 없으면 업그레이드를 선택하는게 문제를 해결할수 있을 것입니다
 if using ldap	setup	ko	만약 LDAP를 사용한다면
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ko	If using LDAP, do you want to manage homedirectory and loginshell attributes?
-if you did not receive any errors, your applications have been	setup	ko	If you did not receive any errors, your applications have been
-if you did not receive any errors, your tables have been	setup	ko	If you did not receive any errors, your tables have been
-if you running this the first time, don't forget to manualy %1 !!!	setup	ko	If you running this the first time, don't forget to manualy %1 !!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ko	If you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
+if you did not receive any errors, your applications have been	setup	ko	만약 아무런 오류가 없다면, 귀하의 응용프로그램은
+if you did not receive any errors, your tables have been	setup	ko	만약 아무런 오류가 없다면, 귀하의 응용프로그램은
+if you running this the first time, don't forget to manualy %1 !!!	setup	ko	처음 실행하는 것이라면, '%1', 직접 하는것을 잊지마세요 !!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ko	만약 같은 문자셋으로 하나의 언어를 사용하신다면 시스템 문자셋을 설정할 필요없습니다.(예 웨스턴 유럽)
 image type selection order	setup	ko	이미지 타입 선택 순서
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ko	Import accounts from LDAP to the eGroupWare accounts table (for a new install using SQL accounts)
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	ko	LDAP에서 eGroupWare로 계정 테이블을 가져오기 (SQL 계정 새로 설치시에 사용함)
 import has been completed!	setup	ko	가져오기를 마쳤습니다.
 import ldap users/groups	setup	ko	LDAP 사용자/그룹을 가져오기
-importing old settings into the new format....	setup	ko	예전 설정들을 새 형태로 가져오기
-include root (this should be the same as server root unless you know what you are doing)	setup	ko	Include Root (this should be the same as Server Root unless you know what you are doing)
-include_path need to contain "." - the current directory	setup	ko	include_path need to contain "." - the current directory
-insanity	setup	ko	Insanity
+importing old settings into the new format....	setup	ko	예전 설정들을 새 형태로 가져오는 중입니다...
+include root (this should be the same as server root unless you know what you are doing)	setup	ko	루트포함 (서버의 루트와 같습니다, 지금 하시는 작업을 정확하게 알지 못하신다면 권장하지 않습니다)
+include_path need to contain "." - the current directory	setup	ko	include_path는 "." (현재 디렉토리)를 포함해야 합니다
+insanity	setup	ko	아주위험
 install	setup	ko	설치
 install all	setup	ko	모두 설치
 install applications	setup	ko	응용프로그램 설치
@@ -210,7 +211,7 @@ ldap account import/export	setup	ko	LDAP 계정 가져오기/내보내기
 ldap accounts configuration	setup	ko	LDAP 계정 설정
 ldap accounts context	setup	ko	LDAP 계정 컨텍스트
 ldap config	setup	ko	LDAP 설정
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ko	LDAP Default homedirectory prefix (e.g. /home for /home/username)
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ko	LDAP 기본 홈디렉토리 접두어(prefix) (예: /home/username의 /home)
 ldap default shell (e.g. /bin/bash)	setup	ko	LDAP 기본 쉘 (예 /bin/bash)
 ldap encryption type	setup	ko	LDAP 암호화 타입
 ldap export	setup	ko	LDAP 내보내기
@@ -220,73 +221,73 @@ ldap host	setup	ko	LDAP 호스트
 ldap import	setup	ko	LDAP 가져오기
 ldap import users	setup	ko	LDAP 가져올 사용자
 ldap modify	setup	ko	LDAP 변경
-ldap root password	setup	ko	LDAP 최고관리자 암호
+ldap root password	setup	ko	LDAP 루트암호
 ldap rootdn	setup	ko	LDAP rootdn
-limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
-login to mysql -	setup	ko	mysql로 로그인 -
-logout	setup	ko	로그아웃
-makesure	setup	ko	Make sure that your database is created and the account permissions are set
+limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	주소나 네트웍, 호스트이름 설정에 접근을 제한함 (예: 127.0.0.1,101.1.1,myhost.dnydns.org)
+login to mysql -	setup	ko	mysql로 접속 -
+logout	setup	ko	접속해제
+makesure	setup	ko	귀하의 데이터베이스는 생성되었고 계정의 권한도 설정되었음을 확인하세요
 manage applications	setup	ko	응용프로그램 관리
 manage languages	setup	ko	언어 관리
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: eGroupWare는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다
 maximum account id (e.g. 65535 or 1000000)	setup	ko	최대 계정ID  (예 65535 나 1000000)
 may be broken	setup	ko	는 깨진것 같습니다.
 mcrypt algorithm (default tripledes)	setup	ko	Mcrypt 알고리즘 (기본 TRIPLEDES)
 mcrypt initialization vector	setup	ko	MCrypt 초기화 백터
-mcrypt mode (default cbc)	setup	ko	Mcrypt 방식  (기본 CBC)
-mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt 설정 (mcrypt PHP 익스텐션에 필요함)
+mcrypt mode (default cbc)	setup	ko	Mcrypt 방식 (기본 CBC)
+mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt 설정 (mcrypt PHP 확장에 필요함)
 mcrypt version	setup	ko	MCrypt 버전
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
+memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit 이 16M이하로 설정되어 있습니다: eGroupWare의 특정 응용프로그램은 8M이상 권장할 수도 있습니다, 물론 가씀 실패하는 경우는 예외입니다
 minimum account id (e.g. 500 or 100, etc.)	setup	ko	최소 계정ID (예 500 나 100, 기타.)
 modifications have been completed!	setup	ko	변경이 완료되었습니다!
 modify	setup	ko	변경
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ko	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	ko	eGroupWare에 사용하기 위해서 기존에 LDAP 계정을 저장합니다 (LDAP 계정을 사용해 처음 설치할때 사용함)
 multi-language support setup	setup	ko	다중-언어 지원 설정
 name of database	setup	ko	데이터베이스 이름
 name of db user egroupware uses to connect	setup	ko	eGroupWare가 사용할 DB 사용자 이름
-never	setup	ko	** 절대
-new	setup	ko	** 새로운
+never	setup	ko	절대(never)
+new	setup	ko	새로만들기
 no	setup	ko	아니오
 no accounts existing	setup	ko	계정이 없음
-no algorithms available	setup	ko	어떠한 알고리즘도 가능하지 않습니다.
+no algorithms available	setup	ko	가능한 알고리즘이 없습니다
 no microsoft sql server support found. disabling	setup	ko	Microsoft SQL 서버를 지원할 수 없습니다. 지원해제합니다.
 no modes available	setup	ko	가능한 방식이 없음
 no mysql support found. disabling	setup	ko	MySQL을 지원할 수 없습니다. 지원해제합니다.
 no oracle-db support found. disabling	setup	ko	Oracle-DB를 지원할 수 없습니다. 지원해제합니다.
 no postgresql support found. disabling	setup	ko	PostgreSQL을 지원할 수 없습니다. 지원해제합니다.
 no xml support found. disabling	setup	ko	XML을 지원할 수 없습니다. 지원해제합니다.
-not	setup	ko	** 아니
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
+not	setup	ko	아니(not)
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ko	모든 mcrypt 알고리즘과 모드들이 eGroupWare와 같이 동작할수 있는 것은 아닙니다 만약 문제점이 발견되면 꺼주세요
 not complete	setup	ko	완료 안됨
 not completed	setup	ko	완료되지 않았습니다
-not ready for this stage yet	setup	ko	아직 현재 스테이지에 준비가 갖춰지지 않았습니다
-not set	setup	ko	** 설정 안됨
+not ready for this stage yet	setup	ko	현재 스테이지가 아직 준비안됐습니다
+not set	setup	ko	설정 안됨
 note: you will be able to customize this later	setup	ko	확인: 이 설정은 나중에 다시 할수 있습니다
-now guessing better values for defaults...	setup	ko	기본으로 사용할 적절한 값을 찾는중입니다...
+now guessing better values for defaults...	setup	ko	적절한 기본값으로 찾는 중입니다...
 ok	setup	ko	오케이
 once the database is setup correctly	setup	ko	데이터베이스의 설정이 제대로 수행되었을때
 one month	setup	ko	한 달
 one week	setup	ko	일주일
-only add languages that are not in the database already	setup	ko	Only add languages that are not in the database already
-only add new phrases	setup	ko	** 새 구문 추가만
-or	setup	ko	** 이거나
+only add languages that are not in the database already	setup	ko	데이터베이스에 없을때만 새 언어 추가하기를 사용하세요
+only add new phrases	setup	ko	새 구문만 추가
+or	setup	ko	이거나(OR연산)
 or %1continue to the header admin%2	setup	ko	이거나 %1상위 관리자로 계속%2
-or http://webdav.domain.com (webdav)	setup	ko	이나  http://webdav.domain.com (WebDAV)
-or we can attempt to create the database for you:	setup	ko	아니면 제가 데이터베이스 생성을 시도할 수 있습니다:
-password needed for configuration	setup	ko	설정하기 위해서 암호가 필요합니다
+or http://webdav.domain.com (webdav)	setup	ko	이나 http://webdav.domain.com (WebDAV)
+or we can attempt to create the database for you:	setup	ko	아니면 데이터베이스 생성을 시도할 수 있습니다:
+password needed for configuration	setup	ko	구성하기 위해서 암호가 필요합니다
 password of db user	setup	ko	데이터베이스 사용자 암호
 passwords did not match, please re-enter	setup	ko	암호가 맞지 않습니다, 다시 입력하세요
 path information	setup	ko	경로 정보
-path to user and group files has to be outside of the webservers document-root!!!	setup	ko	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
-persistent connections	setup	ko	영구적 연결
-please check for sql scripts within the application's directory	setup	ko	Please check for sql scripts within the application's directory
-please check read/write permissions on directories, or back up and use another option.	setup	ko	Please check read/write permissions on directories, or back up and use another option.
+path to user and group files has to be outside of the webservers document-root!!!	setup	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!!!
+persistent connections	setup	ko	지속적 연결
+please check for sql scripts within the application's directory	setup	ko	응용프로그램 디렉토리에 포함된 sql 스크립트들을 확인해보세요
+please check read/write permissions on directories, or back up and use another option.	setup	ko	디렉토리의 읽기/쓰기 권한을 확인하시가나 돌아가셔서 다른 옵션을 사용해주세요
 please configure egroupware for your environment	setup	ko	귀하에게 맞는 eGroupWare 설정을 해주세요
 please consult the %1.	setup	ko	** %1 을(를) 고려해주세요.
 please fix the above errors (%1) and warnings(%2)	setup	ko	위와 같은 에러 (%1) 와 경고(%2)를 수정해주세요
 please install	setup	ko	설치해 주세요
 please login	setup	ko	로그인 해주세요
-please login to egroupware and run the admin application for additional site configuration	setup	ko	Please login to eGroupWare and run the admin application for additional site configuration
+please login to egroupware and run the admin application for additional site configuration	setup	ko	추가적인 사이트 구성작업을 하시려면 eGroupWare에 로그인 하시고 관리 어플리케이션을 이용해 주세요
 please make the following change in your php.ini	setup	ko	귀하의 php.ini에 다음과 같은 것을 변경해주세요
 please wait...	setup	ko	잠시만 기다리세요...
 possible reasons	setup	ko	가능한 이유들
@@ -296,59 +297,59 @@ potential problem	setup	ko	잠재적인 문제
 preferences	setup	ko	설정
 problem resolution	setup	ko	문제 해결
 process	setup	ko	프로세스
-re-check my database	setup	ko	저의 데이터베이스를 다시 체크
-re-check my installation	setup	ko	저의 설치를 다시 체크
+re-check my database	setup	ko	데이터베이스를 다시 체크
+re-check my installation	setup	ko	설치를 다시 체크
 re-enter password	setup	ko	암호 재입력
-read translations from	setup	ko	의 번역을 읽음
+read translations from	setup	ko	번역내용 읽기
 readable by the webserver	setup	ko	웹 서버가 읽을수 있음
-really uninstall all applications	setup	ko	모든 응용프로그램을 삭제하길 원함
+really uninstall all applications	setup	ko	모든 응용프로그램을 삭제
 recommended: filesystem	setup	ko	추천: 파일시스템
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals is turned On, eGroupWare does NOT require it and it's generaly more secure to have it turned Off
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, eGroupWare에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
 registered	setup	ko	등록됨
 rejected lines	setup	ko	거부된 라인
 remove	setup	ko	삭제
 remove all	setup	ko	모두 삭제
 requires reinstall or manual repair	setup	ko	재설치하거나 직접 수리가 필요함
 requires upgrade	setup	ko	업그레이드가 필요함
-resolve	setup	ko	** 해결(Resolve)
+resolve	setup	ko	해결(Resolve)
 return to setup	setup	ko	설정으로 돌아감
 run installation tests	setup	ko	설치 테스트를 수행
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ko	safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
-sample configuration not found. using built in defaults	setup	ko	Sample configuration not found. using built in defaults
+safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ko	safe_mode 가 활성화 되어 있습니다, 통상적으로 귀하의 설치를 좀더 안전하게 하는데 좋습니다.
+sample configuration not found. using built in defaults	setup	ko	구성 예제를 찾을수 없습니다. 기본설정으로 작성됩니다
 save	setup	ko	저장
 save this text as contents of your header.inc.php	setup	ko	이 텍스트를 귀하의 header.inc.php로 저장
-select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	ko	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	ko	응용프로그램을 선택해서 대상 버전을 입력한후 보내세요(submit).<br>만약 버전을 입력하지 않으시면, 설치된 응용프로그램의 기본 테이블들만  설치됩니다.<br><blink>이 작업은 모든 응용프로그램의 테이블을 먼저 삭제합니다</blink>
 select one...	setup	ko	하나를 선택하세요...
-select the default applications to which your users will have access	setup	ko	Select the default applications to which your users will have access
-select the desired action(s) from the available choices	setup	ko	Select the desired action(s) from the available choices
+select the default applications to which your users will have access	setup	ko	사용자가 접근할 기본응용프로그램 선택
+select the desired action(s) from the available choices	setup	ko	가능한 선택들 중에서 원하는 액션을 선택
 select to download file	setup	ko	다운로드할 파일을 선택
-select where you want to store/retrieve file contents	setup	ko	Select where you want to store/retrieve file contents
-select where you want to store/retrieve filesystem information	setup	ko	Select where you want to store/retrieve filesystem information
-select where you want to store/retrieve user accounts	setup	ko	Select where you want to store/retrieve user accounts
-select which group(s) will be exported (group membership will be maintained)	setup	ko	Select which group(s) will be exported (group membership will be maintained)
-select which group(s) will be imported (group membership will be maintained)	setup	ko	Select which group(s) will be imported (group membership will be maintained)
-select which group(s) will be modified (group membership will be maintained)	setup	ko	Select which group(s) will be modified (group membership will be maintained)
-select which languages you would like to use	setup	ko	사용하고 싶은 언어를 선택
-select which method of upgrade you would like to do	setup	ko	Select which method of upgrade you would like to do
+select where you want to store/retrieve file contents	setup	ko	파일 컨텐츠들을 저장/회수할 곳을 선택
+select where you want to store/retrieve filesystem information	setup	ko	파일시스템 정보를 저장/회수할 곳을 선택
+select where you want to store/retrieve user accounts	setup	ko	사용자 계정들을 저장/회수할 곳을 선택
+select which group(s) will be exported (group membership will be maintained)	setup	ko	내보내기를 수행할 그룹들을 선택 (그룹의 구성원은 유지됩니다)
+select which group(s) will be imported (group membership will be maintained)	setup	ko	가져오기를수행할 그룹들을 선택 (그룹의 구성원은 유지됩니다)
+select which group(s) will be modified (group membership will be maintained)	setup	ko	수정될 그룹들을 선택 (그룹의 구성원은 유지됩니다)
+select which languages you would like to use	setup	ko	사용할 언어를 선택
+select which method of upgrade you would like to do	setup	ko	업그레이방법을 선택
 select which type of authentication you are using	setup	ko	어떤 인증을 사용할지 선택
-select which user(s) will also have admin privileges	setup	ko	Select which user(s) will also have admin privileges
-select which user(s) will be exported	setup	ko	어떤 유저를 내보낼지 선택
-select which user(s) will be imported	setup	ko	어떤 유저를 가져올지 선택
-select which user(s) will be modified	setup	ko	어떤 유저를 변경할지 선택
-select which user(s) will have admin privileges	setup	ko	어떤 유저가 관리자-권한을 가질지 선택
-select your old version	setup	ko	귀하의 구-버전을 선택
+select which user(s) will also have admin privileges	setup	ko	관리자권한을 가질 사용자들을 선택
+select which user(s) will be exported	setup	ko	어떤 사용자들을 내보낼지 선택
+select which user(s) will be imported	setup	ko	어떤 사용자들을가져올지 선택
+select which user(s) will be modified	setup	ko	어떤 사용자들을변경할지 선택
+select which user(s) will have admin privileges	setup	ko	어떤 사용자들이 관리자-권한을 가질지 선택
+select your old version	setup	ko	귀하의 이전 버전을 선택
 selectbox	setup	ko	선택상자
 server root	setup	ko	서버 루트
 sessions type	setup	ko	세션 타입
 set	setup	ko	** 셋(set)
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ko	Set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ko	Setting the system-charset to UTF-8 (unicode) allows the coexistens of data from languages of different charsets.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ko	사용하는 mcrypt version 버전을 지정하세요 만약 2.4 보다 낮으면 "old"를 설정
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ko	시스템-문자셋을 UTF-8(유니코드)로 설정하면 서로 다른 언어의 문자셋이 공존할수 있습니다
 settings	setup	ko	설정
 setup	setup	ko	설정
 setup demo accounts in ldap	setup	ko	LDAP 데모 계정을 설정
 setup main menu	setup	ko	주 메뉴를 설정
 setup the database	setup	ko	데이터베이스 설정
-setup/config admin login	setup	ko	관리자 로그인을 설정/구성
+setup/config admin login	setup	ko	설정/구성 관리자 접속
 show 'powered by' logo on	setup	ko	'powered by' 로고를 보여줌
 some or all of its tables are missing	setup	ko	일부 또는 전체의 테이블이 없습니다.
 sql encryption type	setup	ko	암호에 사용할 SQL 암호화 타입 (기본 md5)
@@ -359,108 +360,108 @@ step %1 - advanced application management	setup	ko	%1 단계 - 고급사용자용 응용프
 step %1 - configuration	setup	ko	%1 단계 - 설정
 step %1 - language management	setup	ko	%1 단계 - 언어 관리
 step %1 - simple application management	setup	ko	%1 단계 - 간단한 응용프로그램 관리
-table change messages	setup	ko	** 테이블이 메세지를 바꿈
+table change messages	setup	ko	테이블 변경 메세지
 tables dropped	setup	ko	테이블이 삭제됨
-tables installed, unless there are errors printed above	setup	ko	tables installed, unless there are errors printed above
+tables installed, unless there are errors printed above	setup	ko	이상 출력된 에러가 있지만 테이블이 설치되었습니다
 tables upgraded	setup	ko	테이블이 업그레이드됨
 target version	setup	ko	타겟 버전
 tcp port number of database server	setup	ko	데이터베이스의 TCP 포트 번호
 text entry	setup	ko	텍스트 엔트리(Text entry)
-the %1 extension is needed, if you plan to use a %2 database.	setup	ko	The %1 extension is needed, if you plan to use a %2 database.
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	The db_type in defaults (%1) is not supported on this server. using first supported type.
+the %1 extension is needed, if you plan to use a %2 database.	setup	ko	%2 데이터베이스를 사용할 계획이라면 %1 확장이 필요합니다
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	이 서버에서 기본설정 %1 db_type 은 지원하지 않습니다. 먼저 지원하는 타입을 선택하세요
 the file	setup	ko	** 파일(the file)
-the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.
-the following applications need to be upgraded:	setup	ko	다음의 응용프로그램은 업그레이드가 필요합니다.
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ko	The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
-the table definition was correct, and the tables were installed	setup	ko	The table definition was correct, and the tables were installed
-the tables	setup	ko	** 테이블(the tables)
-there was a problem trying to connect to your ldap server. <br>	setup	ko	There was a problem trying to connect to your LDAP server. <br>
-there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	ko	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
-this has to be outside the webservers document-root!!!	setup	ko	This has to be outside the webservers document-root!!!
+the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ko	eGroupWare를 설치하는 가장 첫 단계는 응용프로그램을 구동하기위한 환경설정을 하는 것입니다
+the following applications need to be upgraded:	setup	ko	다음의 응용프로그램은 업그레이드가 해야합니다:
+the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	ko	imap 확장은 2개의 이메일 응용프로그램에서 필요합니다(pop3프로토콜로 email을 사용하셔도 역시 필요합니다)
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ko	mbstring 확장은 유니코드(UTF-8)이나 기타 다중바이트-문자셋을 완벽히 지원하는데 필요합니다
+the table definition was correct, and the tables were installed	setup	ko	테이블 정의가 수정되었고 테이블들이 설치되었습니다
+the tables	setup	ko	여러 테이블
+there was a problem trying to connect to your ldap server. <br>	setup	ko	LDAP서버에 접속하는데 문제가 있습니다.<br>
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	ko	+* LDAP서버에 접속하는데 문제가 있습니다.<br> 귀하의 LDAP 서버의 구성을 확인해보세요
+this has to be outside the webservers document-root!!!	setup	ko	웹서버의 DocumentRoot 외부에 있어야 합니다!!!
 this might take a while, please wait ...	setup	ko	약간 시간이 걸립니다, 잠시만 기다리세요...
-this program will convert your database to a new system-charset.	setup	ko	This program will convert your database to a new system-charset.
-this program will help you upgrade or install different languages for egroupware	setup	ko	This program will help you upgrade or install different languages for eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ko	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ko	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
-this section will help you setup your ldap accounts for use with egroupware	setup	ko	This section will help you setup your LDAP accounts for use with eGroupWare
-this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	ko	This should be around 30 bytes in length.<br>Note: The default has been randomly generated.
+this program will convert your database to a new system-charset.	setup	ko	이 프로그램은 귀하의 데이터베이스를 새 시스템-문자셋으로 변환해줍니다
+this program will help you upgrade or install different languages for egroupware	setup	ko	이 프로그램은 eGroupWare의 다른 언어를 설치하거나 업그레이드하는데 도움을 줍니다
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	ko	이 섹션은 eGroupWare의 사용자와 그룹들의 계정 테이블을 LDAP 트리로 내보는데 도움을 줍니다
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	ko	이 섹션은 LDAP 트리의 사용자와 그룹들의 eGroupWare의 계정 테이블로 가져오는데 도움을 줍니다
+this section will help you setup your ldap accounts for use with egroupware	setup	ko	이 섹션은 eGroupWare와 함께 사용할 LDAP 계정을 설정하는데 도움을 줍니다.
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	ko	30 바이트 내외여야 합니다.<br> 주의: 기본설정은 아무값이나 생성됩니다
 this stage is completed<br>	setup	ko	스테이지가 완료됨<br>
-to a version it does not know about	setup	ko	** 버전은 잘 알수 없습니다.
+to a version it does not know about	setup	ko	잘 알수 없는 버전으로
 to setup 1 admin account and 3 demo accounts.	setup	ko	1개의 관리자 계정과 3개의 데모 계정을 설정
 top	setup	ko	최상위
 translations added	setup	ko	번역 추가됨
 translations removed	setup	ko	번역 삭제됨
 translations upgraded	setup	ko	번역 업그레이드됨
-true	setup	ko	** 참(True)
-try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.
+true	setup	ko	참
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ko	위에서 언급한 DBMS중 하나를 지원하기위해서 php를 구성하시거나 eGroupWare를 수동으로 설치하세요
 two weeks	setup	ko	2주일
 uninstall	setup	ko	설치제거
 uninstall all applications	setup	ko	모든 응용프로그램을 설치제거
 uninstalled	setup	ko	설치제거됨
 upgrade	setup	ko	업그레이드
 upgrade all	setup	ko	모두 업그레이드
-upgraded	setup	ko	어그레이드됨
+upgraded	setup	ko	업그레이드됨
 upgrading tables	setup	ko	테이블을 업그레이드중
 use cookies to pass sessionid	setup	ko	sessionid 를 전달하기 위해 쿠키 사용
-use pure html compliant code (not fully working yet)	setup	ko	Use pure HTML compliant code (not fully working yet)
-user account prefix	setup	ko	사용자 계정 전위(prefix)
-usernames are casesensitive	setup	ko	사용자 이름은 대소문자구분됨
+use pure html compliant code (not fully working yet)	setup	ko	순수 HTML 호환 코드 사용 ( 아직 완벽하게 동작하지 않습니다)
+user account prefix	setup	ko	사용자계정 접두어(prefix)
+usernames are casesensitive	setup	ko	사용자이름은 대소문자구분함
 users choice	setup	ko	사용자 선택
 utf-8 (unicode)	setup	ko	utf-8 (유니코드)
 version	setup	ko	버전
 version mismatch	setup	ko	버전이 일치하지 않음
-view	setup	ko	뷰
+view	setup	ko	보기
 warning!	setup	ko	경고!
 we can proceed	setup	ko	진행 가능
-we will automatically update your tables/records to %1	setup	ko	We will automatically update your tables/records to %1
-we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
-welcome to the egroupware installation	setup	ko	eGroupWare 설치입니다. 환영합니다
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	ko	What type of sessions management do you want to use (PHP4 session management may perform better)?
-which database type do you want to use with egroupware?	setup	ko	Which database type do you want to use with eGroupWare?
+we will automatically update your tables/records to %1	setup	ko	귀하의 테이블/레코드들을 자동으로 %1로 변환합니다.
+we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ko	연속적인 테스트를 수행합니다, 몇분정도 걸릴수 있습니다. 계속하려면 링크를 클릭하세요
+welcome to the egroupware installation	setup	ko	eGroupWare 설치를 환영합니다
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	ko	+* 세션 관리를 위해 사용하실 것은 (PHP4 세션 관리가 조금 더 나은 성능)?
+which database type do you want to use with egroupware?	setup	ko	eGroupWare와 함께 사용할 데이터베이스 타입은?
 world readable	setup	ko	누구나 읽을수 있음
 world writable	setup	ko	누구나 쓸수 있음
-would you like egroupware to cache the phpgw info array ?	setup	ko	Would you like eGroupWare to cache the phpgw info array ?
-would you like egroupware to check for a new version<br>when admins login ?	setup	ko	Would you like eGroupWare to check for a new version<br>when admins login ?
-would you like to show each application's upgrade status ?	setup	ko	Would you like to show each application's upgrade status ?
+would you like egroupware to cache the phpgw info array ?	setup	ko	eGroupWare가 phpgw info 배열을 캐쉬하길 원하십니까?
+would you like egroupware to check for a new version<br>when admins login ?	setup	ko	관리자가 로그인했을때 <br> eGroupWare 새버전을 확인할까요?
+would you like to show each application's upgrade status ?	setup	ko	각 응용프로그램의 업그레이드 상태를 보여줄까요?
 writable by the webserver	setup	ko	웹서버가 쓸수 있음
-write config	setup	ko	설정 쓰기
+write config	setup	ko	구성 기록
 yes	setup	ko	예
-you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ko	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	ko	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
-you appear to be running version %1 of egroupware	setup	ko	eGroupWare 버전 %1을(를) 사용하고 있습니다
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ko	You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later
-you appear to be using php3. disabling php4 sessions support	setup	ko	You appear to be using PHP3. Disabling PHP4 sessions support
-you appear to be using php4. enabling php4 sessions support	setup	ko	You appear to be using PHP4. Enabling PHP4 sessions support
-you appear to have microsoft sql server support enabled	setup	ko	You appear to have Microsoft SQL Server support enabled
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	ko	eGroupWare 베타버전을 사용하시고 계십니다.<br>이 버전은 더이상 지원하지 않으며 설정에 업그레이드할 경로도 없습니다<br> 먼저 0.9.10 버전(베타업그레이드 지원 마지막버전)으로 업그레이드 하시고<br>그 후에 최신 버전으로 업그레이드 하세요.
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	ko	PHP버전이 오래되었습니다<br>새로운 버전으로 업그레이드 하시길 권장합니다.<br>이전 버전의 PHP는 eGroupWare가 정상적으로 동작하지 않습니다<br><br>적어도 %1 버전으로는 업그레이드 해주셔야 합니다.
+you appear to be running version %1 of egroupware	setup	ko	eGroupWare 버전 %1을 사용하고 있습니다
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	ko	PHP버전 4.1.0 이전버전을 사용하고 계십니다. eGroupWare는 4.1.0 이나 이 이후 버전이 필요합니다
+you appear to be using php3. disabling php4 sessions support	setup	ko	PHP3을 사용하고 계십니다. PHP4 세션 지원을 비활성화 합니다
+you appear to be using php4. enabling php4 sessions support	setup	ko	PHP4을 사용하고 계십니다. PHP4 세션 지원을 활성화 합니다
+you appear to have microsoft sql server support enabled	setup	ko	마이크로소프트 SQL서버 지원이 활성화 되었습니다.
 you appear to have mysql support enabled	setup	ko	MySQL을 지원합니다.
 you appear to have oracle support enabled	setup	ko	Oracle을 지원합니다.
 you appear to have oracle v8 (oci) support enabled	setup	ko	Oracle V8 (OCI) 을 지원합니다.
 you appear to have postgresql support enabled	setup	ko	PostgreSQL을 지원합니다.
 you appear to have xml support enabled	setup	ko	XML을 지원합니다.
-you are ready for this stage, but this stage is not yet written.<br>	setup	ko	You are ready for this stage, but this stage is not yet written.<br>
-you didn't enter a config password for domain %1	setup	ko	%1도메인에 사용할 암호를 설정하지 않았습니다
-you didn't enter a config username for domain %1	setup	ko	%1도메인에 사용할 사용자이름을 설정하지 않았습니다
-you didn't enter a header admin password	setup	ko	상위 관리자 암호를 입력하지 않았습니다
-you didn't enter a header admin username	setup	ko	상위 관리자 사용자이름을 입력하지 않았습니다.
-you do not have any languages installed. please install one now <br>	setup	ko	You do not have any languages installed. Please install one now <br>
-you have not created your header.inc.php yet!<br> you can create it now.	setup	ko	You have not created your header.inc.php yet!<br> You can create it now.
-you have successfully logged out	setup	ko	성공적으로 로그아웃 되었습니다
-you must enter a username for the admin	setup	ko	관리할 사용자 이름을 입력하셔야 합니다
-you need to add some domains to your header.inc.php.	setup	ko	You need to add some domains to your header.inc.php.
-you need to select your current charset!	setup	ko	문자셋을 반드시 선택해야합니다!
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	ko	You should either uninstall and then reinstall it, or attempt manual repairs
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	ko	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
-you're using an old configuration file format...	setup	ko	예전(old) 설정 파일의 형식을 사용하고 있습니다...
-you're using an old header.inc.php version...	setup	ko	예전(old) header.inc.php 버전을 사용하고 있습니다...
-your applications are current	setup	ko	** 응용프로그램이 정상(current)
+you are ready for this stage, but this stage is not yet written.<br>	setup	ko	현재 스테이지를 수행할 준비가 되었습니다만, 아직 완전히 작성되지는 않았습니다.<br>
+you didn't enter a config password for domain %1	setup	ko	%1도메인의 구성암호를 입력하지 않았습니다
+you didn't enter a config username for domain %1	setup	ko	%1도메인의 구성사용자이름을 입력하지 않았습니다
+you didn't enter a header admin password	setup	ko	상위관리자 암호를 입력하지 않았습니다
+you didn't enter a header admin username	setup	ko	상위관리자 사용자이름을 입력하지 않았습니다.
+you do not have any languages installed. please install one now <br>	setup	ko	아무언어도 설치되어 있지 않습니다. 한가지를 지금 설치하세요<br>
+you have not created your header.inc.php yet!<br> you can create it now.	setup	ko	귀하의 header.inc.php를 아직 생성하지 않았습니다!<br>지금 생성하세요.
+you have successfully logged out	setup	ko	성공적으로 접속종료 되었습니다
+you must enter a username for the admin	setup	ko	관리할 사용자이름을 입력하세요
+you need to add some domains to your header.inc.php.	setup	ko	header.inc.php 에 어떤 도메인이든 추가하셔야 합니다.
+you need to select your current charset!	setup	ko	현재 문자셋을 선택하세요!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	ko	설치제거나 재설치를 수행하셔야 하며, 아니면 직접 수정하셔야 합니다
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	ko	LDAP 서버에 적절한 스키마를 불러오셔야 합니다. 참고: <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you're using an old configuration file format...	setup	ko	이전 설정 파일의 형식을 사용하고 있습니다...
+you're using an old header.inc.php version...	setup	ko	이전 header.inc.php 버전을 사용하고 있습니다...
+your applications are current	setup	ko	응용프로그램이 현재 버전입니다
 your database does not exist	setup	ko	데이터베이스가 존재하지 않습니다.
 your database is not working!	setup	ko	데이터베이스가 동작하지 않습니다.
-your database is working, but you dont have any applications installed	setup	ko	Your database is working, but you dont have any applications installed
-your header admin password is not set. please set it now!	setup	ko	Your header admin password is NOT set. Please set it now!
+your database is working, but you dont have any applications installed	setup	ko	데이터베이스는 장동합니다만, 설치된 응용프로그램이 없습니다
+your header admin password is not set. please set it now!	setup	ko	상위관리자 암호가 설정되지 않았습니다. 지금 설정하세요!
 your header.inc.php needs upgrading.	setup	ko	header.inc.php 의 업그레이드가 필요합니다.
-your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ko	Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>
-your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ko	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.
-your tables are current	setup	ko	** 테이블이 정상(current)
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	ko	귀하의 header.inc.php 는 업그레이드가 필요합니다.<br><blink><b class="msg">경고!</b></blink><br><b>백업하세요!</b>
+your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	ko	귀하의 PHP에 GD지원이 없습니다. gd 라이브러리버전 1.8 이나 그 이후의 버전을 설치하셔야 프로젝트에서 간트챠트를 보실수 있습니다
+your tables are current	setup	ko	테이블에 이상 없음
 your tables may be altered and you may lose data	setup	ko	테이블이 변경되면서 데이터를 잃을수도 있습니다.
-your tables will be dropped and you will lose data	setup	ko	Your tables will be dropped and you will lose data !!
+your tables will be dropped and you will lose data	setup	ko	테이블들이 삭제되면서 귀하의 자료를 잃을수도 있습니다 !!
