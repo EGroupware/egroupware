@@ -57,7 +57,7 @@
 		@discussion Does NOT check if link already exists
 		@result db-errno or -1 (for param-error) or 0 for success
 		*/
-		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0 )
+		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0,$lastmod=0 )
 		{
 			if ($this->debug)
 			{
@@ -73,7 +73,11 @@
 				$owner = $this->user;
 			}
 			$remark = $this->db->db_addslashes($remark);
-			$lastmod = time();
+			if (!$lastmod)
+			{
+				$lastmod = time();
+         }
+			$this->unlink(0,$app1,$id1,'',$app2,$id2);	// remove link if one exists
 
 			$sql = "INSERT INTO $this->db_name (link_app1,link_id1,link_app2,link_id2,link_remark,link_lastmod,link_owner) ".
 			       " VALUES ('$app1','$id1','$app2','$id2','$remark',$lastmod,$owner)";
@@ -133,7 +137,8 @@
 						'id'   => stripslashes($row['link_id1'])
 					);
 				}
-				if ($only_app && $not_only == ($link['app'] == $only_app))
+				if ($only_app && $not_only == ($link['app'] == $only_app) ||
+					 !$GLOBALS['phpgw_info']['user']['apps'][$link['app']])
 				{
 					continue;
 				}
@@ -149,14 +154,14 @@
 
 		/*!
       @function unlink
-      @syntax unlink( $link_id,$app='',$id='',$owner='' )
+      @syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
       @author ralfbecker
 		@abstract Remove link with $link_id or all links matching given params
 		@param $link_id link-id to remove if > 0
-		@param $app,$id,$owner if $link_id <= 0: removes all links matching the non-empty params
+		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
 		@result the number of links deleted
 		*/
-		function unlink($link_id,$app='',$id='',$owner='')
+		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
 			$sql = "DELETE FROM $this->db_name WHERE ";
 			if ($link_id > 0)
@@ -169,7 +174,7 @@
 			}
 			else
 			{
-				if ($app != '')
+				if ($app != '' && $app2 == '')
 				{
 					$sql .= "((link_app1='$app'";
 					$sql2 = '';
@@ -180,6 +185,11 @@
 					}
 					$sql .= ") OR (link_app2='$app'$sql2))";
 				}
+				elseif ($app != '' && $app2 != '')
+				{
+					$sql .= "((link_app1='$app' AND link_id1='$id' AND link_app2='$app2' AND link_id2='$id2') OR";
+					$sql .= " (link_app1='$app2' AND link_id1='$id2' AND link_app2='$app' AND link_id2='$id'))";
+				}
 				if ($owner != '')
 				{
 					$sql .= ($app != '' ? ' AND ' : '') . "link_owner='$owner'";
@@ -187,7 +197,7 @@
 			}
 			if ($this->debug)
 			{
-				echo "<p>solink.unlink($link_id,$app,$id,$owner) sql='$sql'</p>\n";
+				echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2) sql='$sql'</p>\n";
 			}
 			$this->db->query($sql);
 
@@ -214,7 +224,6 @@
 			return $this->db->affected_rows();
 		}
 	}
-
 
 
 

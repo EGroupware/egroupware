@@ -91,11 +91,11 @@
 		@result db-errno or -1 (for param-error) or 0 for success
 		@result if $id1==0 or already an array: $id1 is array with links
 		*/
-		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0 )
+		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
 		{
 			if ($this->debug)
 			{
-				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
+				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner,$lastmod)</p>\n";
 			}
 			if (!$app1 || !$app2 || !$id1 && is_array($id2) || $app1 == $app2 && $id1 == $id2)
 			{
@@ -112,7 +112,8 @@
 					'id'  => $id2,
 					'remark' => $remark,
 					'owner'  => $owner,
-					'link_id' => "$app2:$id2"
+					'link_id' => "$app2:$id2",
+					'lastmod' => time()
 				);
 				return 0;
 			}
@@ -122,7 +123,7 @@
 				$err = 0;
 				while (!$err && list(,$link) = each($app2))
 				{
-					$err = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner']);
+					$err = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner'],$link['lastmod']);
 				}
 				return $err;
 			}
@@ -150,14 +151,15 @@
 					{
 						$only_app = substr(1,$only_app);
 					}
-					reset($id);
-					while (list($key,$link) = each($id))
+					end($id);
+					while ($link = current($id))
 					{
 						if ($only_app && $not_only == ($link['app'] == $only_app))
 						{
 							continue;
 						}
-						$ids[$key] = $link;
+						$ids[$link['link_id']] = $link;
+						prev($id);
 					}
 				}
 				return $ids;
@@ -167,20 +169,20 @@
 
 		/*!
       @function unlink
-      @syntax unlink( $link_id,$app='',$id='',$owner='' )
+      @syntax unlink( $link_id,$app='',$id='',$owner='',$app2='',$id2='' )
       @author ralfbecker
 		@abstract Remove link with $link_id or all links matching given $app,$id
 		@param $link_id link-id to remove if > 0
-		@param $app,$id,$owner if $link_id <= 0: removes all links matching the non-empty params
+		@param $app,$id,$owner,$app2,$id2 if $link_id <= 0: removes all links matching the non-empty params
 		@discussion Note: if $link_id != '' and $id is an array: unlink removes links from that array only
 		@discussion       unlink has to be called with &$id so see the result !!!
 		@result the number of links deleted
 		*/
-		function unlink($link_id,$app='',$id='',$owner='')
+		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
 			if ($link_id > 0 || !is_array($id))
 			{
-				return solink::unlink($link_id,$app,$id,$owner);
+				return solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
 			}
 			$result = isset($id[$link_id]);
 
@@ -193,7 +195,7 @@
 		@function app_list
 		@syntax app_list(   )
 		@author ralfbecker
-		@abstrac get list/array of link-aware apps
+		@abstrac get list/array of link-aware apps the user has rights to use 
 		@result array( $app => lang($app), ... )
 		*/
 		function app_list( )
@@ -202,7 +204,10 @@
 			$apps = array();
 			while (list($app,$reg) = each($this->app_register))
 			{
-				$apps[$app] = lang($app);
+				if ($GLOBALS['phpgw_info']['user']['apps'][$app])
+				{
+					$apps[$app] = lang($app);
+				}
 			}
 			return $apps;
 		}
@@ -399,7 +404,7 @@
 			if (!is_object($this->boprojects))
 			{
 				if (!file_exists(PHPGW_SERVER_ROOT.'/projects'))	// check if projects installed
-					return '';
+					return '';  
 				$this->boprojects = createobject('projects.boprojects');
 			}
 			if (!is_array($proj))
