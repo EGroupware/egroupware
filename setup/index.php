@@ -73,7 +73,7 @@
       echo "      <input type=\"hidden\" name=\"oldversion\" value=\"".$oldversion."\">\n";
       echo "      <input type=\"hidden\" name=\"useglobalconfigsettings\">\n";
       echo "      <input type=\"submit\" name=\"action\" value=\"Upgrade\">\n";
-      echo "      <input type=\"submit\" name=\"action\" value=\"Drop my old tables\">\n";
+      echo "      <input type=\"submit\" name=\"action\" value=\"Delete my old tables\">\n";
       echo "      </form>\n";
       echo "      <form method=\"POST\" action=\"config.php\">\n";
       echo "      <input type=\"submit\" name=\"action\" value=\"Dont touch my data\">\n";
@@ -127,13 +127,13 @@
           <td colspan="2" align="center"><input type="submit" name="action" value="Upgrade"></td>
         </tr>
         <tr>
-          <td colspan="2" align="center"><input type="submit" name="action" value="Drop my old tables"></td>
+          <td colspan="2" align="center"><input type="submit" name="action" value="Delete my old tables"></td>
         </tr>
       </table>
       </form>
 <?php
       break;
-    case "Drop my old tables":
+    case "Delete my old tables":
       echo "<html><head><title>phpGroupWare Setup</title></head>\n";
       echo "<body bgcolor='#ffffff'>\n"; 
       echo "<table border=\"0\" align=\"center\">\n";
@@ -141,7 +141,7 @@
       echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Information</b></font></td>\n";
       echo "  </tr>\n";
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>At your request, this script is going to take the evil action of dropping your existing tables and re-creating them in the new format.</td>\n";
+      echo "    <td>At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format.</td>\n";
       echo "  </tr>\n";
       $db->Halt_On_Error = "report";
       $currentver = "drop";
