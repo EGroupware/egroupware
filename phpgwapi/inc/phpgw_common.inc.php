@@ -18,7 +18,10 @@
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
   } unset($d1);unset($d2);unset($d3);
-  
+  //incase we are dealing with a fresh login
+  if (!isset($phpgw_info["user"]["preferences"]["common"]["template_set"])){
+    $phpgw_info["user"]["preferences"]["common"]["template_set"] = "default";
+  }
   // Since LDAP will return system accounts, there are a few we don't want to login.
   $phpgw_info["server"]["global_denied_users"] = array('root'     => True,
                                                        'bin'      => True,
