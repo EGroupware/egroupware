@@ -42,7 +42,6 @@
 	</table>
 </div>
 
-<div class="main_body" style="position: absolute; border-left-width:medium;
-border-left-style:double;
-height:100%; left:15% ; top :0px ; width:85%; overflow : auto">
+<div class="main_body" style="position: absolute; padding: 0px; height:100%; left:15% ; top :0px ;
+width:85%; overflow : auto">
 <!-- END navbar -->

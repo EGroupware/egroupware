@@ -38,6 +38,12 @@
 		$bodyheader .= ' topmargin="0" marginheight="0" marginwidth="0" leftmargin="0"';
 	}
 
+	if ($fp = @fopen(PHPGW_APP_TPL."/app.css","r"))
+	{
+		$app_css = fread ($fp, filesize (PHPGW_APP_TPL."/app.css"));
+		fclose($fp);
+	}
+	
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
 	$tpl->set_file(array('head' => 'head.tpl'));
@@ -47,6 +53,7 @@
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'],
 		'app_name'	=> lang($GLOBALS['phpgw_info']['flags']['currentapp']),
 		'body_tags'	=> $bodyheader,
+		'bg_color'	=> $GLOBALS['phpgw_info']['theme']['bg_color'],
 		'css_link'	=> $GLOBALS['phpgw_info']['theme']['link'],
 		'css_alink'	=> $GLOBALS['phpgw_info']['theme']['alink'],
 		'css_vlink'	=> $GLOBALS['phpgw_info']['theme']['vlink'],
