@@ -23,6 +23,20 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["countrylist"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Country Selection (Text Entry/SelectBox):</td>
+    <td>
+     <select name="newsettings[countrylist]">
+    <?php
+    echo '<option value="user_choice"'  . $selected['user_choice']  . '>Users Choice</option>';
+    echo '<option value="force_select"' . $selected['force_select'] . '>Force Selectbox</option>';
+    ?>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
    <?php $selected[$current_config["template_set"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Interface/Template Selection:<br> <!---(if user choice, and they dont make a selection, then classic will be used)---></td>
@@ -88,24 +102,50 @@
    <?php $selected = array(); */
    ?>
 
-   <tr bgcolor="e6e6e6">
-    <td>Use pure HTML compliant code (not fully working yet):</td>
-    <td><input type="checkbox" name="newsettings[htmlcompliant]" value="True"<?php echo ($current_config["htmlcompliant"]?" checked":""); ?>></td>
-   </tr>
    <?php $selected = array(); ?>
-
+   <?php $selected[$current_config['htmlcompliant']] = ' selected'; ?>
    <tr bgcolor="e6e6e6">
-    <td>Use cookies to pass sessionid:</td>
-    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
-   </tr>
+     <td>Use pure HTML compliant code (not fully working yet):</td>
+     <td>
+      <select name="newsettings[htmlcompliant]">
+       <option value="">No</option>
+       <option value="True"<?php echo $selected['True']?>>Yes</option>
+      </select>
+     </td>
+    </tr>
 
+   <?php $selected = array(); ?>
+   <?php $selected[$current_config['usecookies']] = ' selected'; ?>
    <tr bgcolor="e6e6e6">
-    <td>Would you like phpGroupWare to check for new version<br>when admins login ?:</td>
-    <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
-   </tr>
+     <td>Use cookies to pass sessionid:</td>
+     <td>
+      <select name="newsettings[usecookies]">
+       <option value="">No</option>
+       <option value="True"<?php echo $selected['True']?>>Yes</option>
+      </select>
+     </td>
+    </tr>
 
-   <tr bgcolor="e6e6e6">   
-     <td>Would you like phpGroupWare to cache the phpgw_info array ?:</td>   
-     <td><input type="checkbox" name="newsettings[cache_phpgw_info]" value="True"<?php echo ($current_config["cache_phpgw_info"]?" checked":""); ?>></td>   
-    </tr> 
+   <?php $selected = array(); ?>
+   <?php $selected[$current_config['checkfornewversion']] = ' selected'; ?>
+   <tr bgcolor="e6e6e6">
+     <td>Would you like phpGroupWare to check for new version<br>when admins login ?:</td>
+     <td>
+      <select name="newsettings[checkfornewversion]">
+       <option value="">No</option>
+       <option value="True"<?php echo $selected['True']?>>Yes</option>
+      </select>
+     </td>
+    </tr>
 
+   <?php $selected = array(); ?>
+   <?php $selected[$current_config['cache_phpgw_info']] = ' selected'; ?>
+   <tr bgcolor="e6e6e6">
+     <td>Would you like phpGroupWare to cache the phpgw_info array ?:</td>
+     <td>
+      <select name="newsettings[cache_phpgw_info]">
+       <option value="">No</option>
+       <option value="True"<?php echo $selected['True']?>>Yes</option>
+      </select>
+     </td>
+    </tr>

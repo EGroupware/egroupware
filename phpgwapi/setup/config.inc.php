@@ -39,9 +39,16 @@
     <td><input name="newsettings[default_ftp_server]" value="<?php echo $current_config['default_ftp_server']; ?>"></td>
    </tr>
 
+   <?php $selected = array(); ?>
+   <?php $selected[$current_config['ftp_use_mime']] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'.</td>
-    <td><input type="checkbox" name="newsettings[ftp_use_mime]" value="True"<?php echo ($current_config['ftp_use_mime']?' checked':''); ?>></td>
+    <td>
+     <select name="newsettings[ftp_use_mime]">
+      <option value="">No</option>
+      <option value="True"<?php echo $selected['True']; ?>>Yes</option>
+     </select>
+    </td>
    </tr>
 
    <tr bgcolor="e6e6e6">
