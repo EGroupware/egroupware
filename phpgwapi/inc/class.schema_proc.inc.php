@@ -348,7 +348,6 @@
 			$sType = '';
 			$iPrecision = 0;
 			$iScale = 0;
-			$sDefault = '';
 			$bNullable = true;
 
 			reset($aField);
@@ -365,12 +364,10 @@
 					case 'scale':
 						$iScale = (int)$vAttrVal;
 						break;
-					case 'default':
-						$sDefault = $vAttrVal;
-						if($DEBUG) { echo'<br>_GetFieldSQL(): Default="' . $sDefault . '"'; }
-						break;
 					case 'nullable':
 						$bNullable = $vAttrVal;
+						break;
+					default:
 						break;
 				}
 			}
@@ -378,21 +375,17 @@
 			// Translate the type for the DBMS
 			if($sFieldSQL = $this->m_oTranslator->TranslateType($sType, $iPrecision, $iScale))
 			{
-				if($bNullable == False)
+				if(!$bNullable)
 				{
 					$sFieldSQL .= ' NOT NULL';
 				}
 
-				if($sDefault != '')
+				if(isset($aField['default']))
 				{
-					if($DEBUG) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $sDefault . '"'; }
+					if($DEBUG) { echo'<br>_GetFieldSQL(): Calling TranslateDefault for "' . $aField['default'] . '"'; }
 					// Get default DDL - useful for differences in date defaults (eg, now() vs. getdate())
-					$sTranslatedDefault = $this->m_oTranslator->TranslateDefault($sDefault);
+					$sTranslatedDefault = $aField['default'] == '0' ? $aField['default'] : $this->m_oTranslator->TranslateDefault($aField['default']);
 					$sFieldSQL .= " DEFAULT '$sTranslatedDefault'";
-				}
-				elseif($sDefault == '0')
-				{
-					$sFieldSQL .= " DEFAULT '0'";
 				}
 				if($DEBUG) { echo'<br>_GetFieldSQL(): Outgoing SQL:   ' . $sFieldSQL; }
 				return true;
