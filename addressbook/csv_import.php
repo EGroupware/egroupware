@@ -90,7 +90,7 @@
 			return '';
 		}
 
-		$cats = explode(',',$cats);
+		$cats = split('[,;]',$cats);
 
 		while (list($k,$cat) = each($cats))
 		{
@@ -104,18 +104,24 @@
 				{
 					$GLOBALS['phpgw']->categories = createobject('phpgwapi.categories');
 				}			
-				if ($id = $GLOBALS['phpgw']->categories->name2id( $cat ))
+				if ($id = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) ))
 				{	// cat exists
 					$cat2id[$cat] = $ids[$cat] = $id;
 				}
 				else
 				{	// create new cat
-					$GLOBALS['phpgw']->categories->add( $cat,0,$cat,'','public',0);
-					$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( $cat );
+					$GLOBALS['phpgw']->categories->add( array('name' => $cat,'descr' => $cat ));
+					$cat2id[$cat] = $ids[$cat] = $GLOBALS['phpgw']->categories->name2id( addslashes($cat) );
 				}
 			}
 		}
-		return implode( ',',$ids );
+		$id_str = implode( ',',$ids );
+
+		if (count($ids) > 1)		// multiple cats need to be in ','
+		{
+			$id_str = ",$id_str,";
+		}
+		return  $id_str;
 	}
 
 	switch ($action)
@@ -308,12 +314,10 @@
 								$val = ereg_replace((string) $pattern,str_replace($VPre,'\\',$replace),(string) $val);
 								// echo "'$val'</p>";
 
-								$quote = $val[0] == '@' ? "'" : '';
-
 								$reg = $CPreReg.'([a-zA-Z_0-9]+)'.$CPosReg;
 								while (ereg($reg,$val,$vars))
 								{	// expand all CSV fields
-									$val = str_replace($CPre.$vars[1].$CPos,$quote.$fields[index($vars[1],$csv_fields)].$quote,$val);
+									$val = str_replace($CPre.$vars[1].$CPos,$val[0] == '@' ? "'".addslashes($fields[index($vars[1],$csv_fields)])."'" : $fields[index($vars[1],$csv_fields)],$val);
 								}
 								if ($val[0] == '@')
 								{
