@@ -73,16 +73,16 @@
 					$FormLogout == 'ldapimport' ||
 					$FormLogout == 'sqltoarray')
 				{
-					setcookie('ConfigPW');  /* scrub the old one */
-					setcookie('ConfigDomain');  /* scrub the old one */
-					setcookie('ConfigLang');
+					setcookie('ConfigPW','');  /* scrub the old one */
+					setcookie('ConfigDomain','');  /* scrub the old one */
+					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'You have successfully logged out';
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
 				elseif($FormLogout == 'header')
 				{
-					setcookie('HeaderPW');  /* scrub the old one */
+					setcookie('HeaderPW','');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'You have successfully logged out';
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
@@ -92,9 +92,9 @@
 			{
 				if ($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'] && $auth_type == 'Config')
 				{
-					setcookie('ConfigPW');  /* scrub the old one */
-					setcookie('ConfigDomain');  /* scrub the old one */
-					setcookie('ConfigLang');
+					setcookie('ConfigPW','');  /* scrub the old one */
+					setcookie('ConfigDomain','');  /* scrub the old one */
+					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
@@ -110,11 +110,11 @@
 				{
 					if ($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'] && $auth_type == 'Config')
 					{
-						setcookie('HeaderPW');  /* scrub the old one */
-						setcookie('ConfigPW',$FormPW);
-						setcookie('ConfigDomain',$FormDomain);
-						setcookie('ConfigLang',$ConfigLang);
-						$ConfigDomain = $FormDomain;
+						setcookie('HeaderPW','');  /* scrub the old one */
+						setcookie('ConfigPW',"$FormPW");
+						setcookie('ConfigDomain',"$FormDomain");
+						setcookie('ConfigLang',"$ConfigLang");
+						$ConfigDomain = "$FormDomain";
 						return True;
 					}
 					else
@@ -128,7 +128,7 @@
 				{
 					if ($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 					{
-						setcookie('HeaderPW',$FormPW);
+						setcookie('HeaderPW',"$FormPW");
 						return True;
 					}
 					else
@@ -143,7 +143,7 @@
 			{
 				if ($HeaderPW != $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
 				{
-					setcookie('HeaderPW');  /* scrub the old one */
+					setcookie('HeaderPW','');  /* scrub the old one */
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
