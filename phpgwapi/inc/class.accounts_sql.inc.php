@@ -351,5 +351,29 @@
 			$this->db->transaction_commit();
 			return $accountid;
 		}
+
+		function get_account_name($accountid,&$lid,&$fname,&$lname)
+		{
+			static $account_name;
+			
+			$account_id = get_account_id($accountid);
+			if(isset($account_name[$account_id]))
+			{
+				$lid = $account_name[$account_id]['lid'];
+				$fname = $account_name[$account_id]['fname'];
+				$lname = $account_name[$account_id]['lname'];
+				return;
+			}
+			$db = $GLOBALS['phpgw']->db;
+			$db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
+			$db->next_record();
+			$$account_name[$account_id]['lid']   = $$db->f('account_lid');
+			$$account_name[$account_id]['fname'] = $$db->f('account_firstname');
+			$$account_name[$account_id]['lname'] = $$db->f('account_lastname');
+			$lid   = $account_name[$account_id]['lid'];
+			$fname = $account_name[$account_id]['fname'];
+			$lname = $account_name[$account_id]['lname'];
+			return;
+		}
 	} //end of class
 ?>

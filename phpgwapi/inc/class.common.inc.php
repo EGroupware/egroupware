@@ -379,12 +379,8 @@
 		*/
 		function grab_owner_name($accountid = '')
 		{
-			$account_id = get_account_id($accountid);
-			$db = $GLOBALS['phpgw']->db;
-			$db->query('select account_lid,account_firstname,account_lastname from phpgw_accounts where account_id='.$account_id,__LINE__,__FILE__);
-			$db->next_record();
-
-			return $this->display_fullname($db->f('account_lid'),$db->f('account_firstname'),$db->f('account_lastname'));
+			$GLOBALS['phpgw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
+			return $this->display_fullname($lid,$fname,$lname);
 		}
 
 		/*!

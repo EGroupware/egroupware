@@ -399,7 +399,7 @@
 			}
 			elseif ($_type == 'both' || $_type == 'groups')
 			{
-				$sri = ldap_search($ds, $this->group_context, '(|(gidnumber=*)(phpgwaccounttype=g))');
+				$sri = ldap_search($ds, $this->group_context, '(&(gidnumber=*)(phpgwaccounttype=g))');
 				$allValues = ldap_get_entries($ds, $sri);
 				while (list($null,$allVals) = @each($allValues))
 				{
@@ -772,6 +772,52 @@
 			$this->db->transaction_commit();
 			return $accountid;
 		}
+
+		function get_account_name($accountid,&$lid,&$fname,&$lname)
+		{
+			static $account_name;
+			
+			$account_id = get_account_id($accountid);
+			if(isset($account_name[$account_id]))
+			{
+				$lid = $account_name[$account_id]['lid'];
+				$fname = $account_name[$account_id]['fname'];
+				$lname = $account_name[$account_id]['lname'];
+				return;
+			}
+			/* get an ldap connection handle */
+			$ds = $GLOBALS['phpgw']->common->ldapConnect();
+			$acct_type = $this->get_type($account_id);
+
+			/* search the dn for the given uid */
+			if ( ($acct_type == 'g') && $this->group_context )
+			{
+				$sri = ldap_search($ds, $this->group_context, 'gidnumber='.$account_id);
+			}
+			else
+			{
+				$sri = ldap_search($ds, $this->user_context, 'uidnumber='.$account_id);
+			}
+			$allValues = ldap_get_entries($ds, $sri);
+
+			if($acct_type =='g')
+			{
+				$account_name[$account_id]['lid']   = $allValues[0]['cn'][0];
+				$account_name[$account_id]['fname'] = $allValues[0]['cn'][0];
+				$account_name[$account_id]['lname'] = 'Group';
+			}
+			else
+			{
+				$account_name[$account_id]['lid']   = $allValues[0]['uid'][0];
+				$account_name[$account_id]['fname'] = $allValues[0]['givenname'][0];
+				$account_name[$account_id]['lname'] = $allValues[0]['sn'][0];
+			}
+			$lid = $account_name[$account_id]['lid'];
+			$fname = $account_name[$account_id]['fname'];
+			$lname = $account_name[$account_id]['lname'];
+			return;
+		}
+
 
 		function getDNforID($_accountid = '')
 		{
