@@ -28,7 +28,13 @@
 	}
 	// Does not return unless user is authorized
 
-	$common       = CreateObject("phpgwapi.common");
+	class phpgw {
+		var $common;
+	}
+	$phpgw = new phpgw;
+	$phpgw->common = CreateObject("phpgwapi.common");
+
+	$common       = $phpgw->common;
 	$phpgw_setup->loaddb();
 
 	$phpgw_info["server"]["auth_type"] = "ldap";
@@ -39,20 +45,19 @@
 	while ($phpgw_setup->db->next_record()) {
 		$config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
 	}
+	$phpgw_info["server"]["ldap_host"]    = $config["ldap_host"];
+	$phpgw_info["server"]["ldap_context"] = $config["ldap_context"];
+	$phpgw_info["server"]["ldap_root_dn"] = $config["ldap_root_dn"];
+	$phpgw_info["server"]["ldap_root_pw"] = $config["ldap_root_pw"];
 
 	// First, see if we can connect to the LDAP server, if not send `em back to config.php with an
 	// error message.
 
 	// connect to ldap server
-	if (! $ldap = @ldap_connect($config["ldap_host"])) {
+	if (! $ldap = $common->ldapConnect()) {
 		$noldapconnection = True;
 	}
 
-	// bind as admin, we not to able to do everything
-	if (! @ldap_bind($ldap,$config["ldap_root_dn"],$config["ldap_root_pw"])) {
-		$noldapconnection = True;
-	}
-  
 	if ($noldapconnection) {
 		Header("Location: config.php?error=badldapconnection");
 		exit;
@@ -87,7 +92,7 @@
 
 		if (! $error) {
 			// Create the 'Default' group
- 			$defaultgroupid = mt_rand (100, 600000);
+ 			$defaultgroupid = mt_rand (100, 65535);
 
 			$acct = CreateObject('phpgwapi.accounts',$defaultgroupid);
 			$acct->db = $phpgw_setup->db;
