@@ -54,8 +54,10 @@
 		@abstract the mother of all multipass upgrade parental loop functions
 		@param $setup_info	array of application info from setup.inc.php files
 		@param $type		optional, defaults to new(install), could also be 'upgrade'
+		@param $DEBUG		optional, print debugging info
+		@param $force_en	optional, install english language files
 		*/
-		function process_pass($setup_info,$method='new',$DEBUG=False)
+		function process_pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
 		{
 			if (!$method)
 			{
@@ -76,15 +78,15 @@
 			{
 				$passing = array();
 				if ($DEBUG) { echo '<br>process_pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
-				// Check current versions and dependencies
+				/* Check current versions and dependencies */
 				$setup_info = $this->get_db_versions($setup_info);
 				$setup_info = $this->compare_versions($setup_info);
-				//var_dump($setup_info);exit;
+				// var_dump($setup_info);exit;
 				$setup_info = $this->check_depends($setup_info);
 				//if($i==2) { var_dump($passed);exit; }
 
-				// stuff the rest of the apps, but only those with available upgrades
-				while(list($key,$value) = each($setup_info))
+				/* stuff the rest of the apps, but only those with available upgrades */
+				while(list($key,$value) = @each($setup_info))
 				{
 					if (($value['name'] != 'phpgwapi') && ($value['status'] == 'U'))
 					{
@@ -93,34 +95,38 @@
 							$pass[$value['name']] = $setup_info[$value['name']];
 						}
 					}
-					// Now if we are on the 2nd or more passes, add api in
-					//if (!$pass['phpgwapi'])
-					//{
-					//	$pass['phpgwapi'] = $setup_info['phpgwapi'];
-					//}
+					/*
+					Now if we are on the 2nd or more passes, add api in
+					if (!$pass['phpgwapi'])
+					{
+						$pass['phpgwapi'] = $setup_info['phpgwapi'];
+					}
+					*/
 				}
 
 				switch ($method)
 				{
 					case 'new':
-						// Create tables and insert new records for each app in this list
+						/* Create tables and insert new records for each app in this list */
 						$passing = $this->process_current($pass,$DEBUG);
 						$passing = $this->process_default_records($passing,$DEBUG);
+						$passing = $this->process_add_langs($passing,$DEBUG,$force_en);
 						break;
 					case 'upgrade':
-						// Run upgrade scripts on each app in the list
+						/* Run upgrade scripts on each app in the list */
 						$passing = $this->process_upgrade($pass,$DEBUG);
+						$passing = $this->process_upgrade_langs($passing,$DEBUG);
 						//echo var_dump($pass);exit;
 						break;
 					default:
-						// What the heck are you doing?
+						/* What the heck are you doing? */
 						return False;
 						break;
 				}
 
 				$pass = array();
-				reset($passing);
-				while(list($key,$value) = each($passing))
+				@reset($passing);
+				while(list($key,$value) = @each($passing))
 				{
 					if($value['status'] == 'C')
 					{
@@ -161,7 +167,7 @@
 
 			// now return the list
 			@reset($passed);
-			while(list($key,$value) = each($passed))
+			while(list($key,$value) = @each($passed))
 			{
 				$setup_info[$value['name']] = $passed[$value['name']];
 			}
@@ -190,7 +196,7 @@
 			}
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				if ($setup_info[$key]['tables'])
 				{
@@ -227,7 +233,7 @@
 			$this->oProc->m_bDeltaOnly = False;
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				$enabled = False;
 				$appname  = $setup_info[$key]['name'];
@@ -308,7 +314,7 @@
 			$oProc = $this->oProc;
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
@@ -331,6 +337,72 @@
 		}
 
 		/*!
+		@function process_add_langs
+		@abstract process application lang files and uninstall
+		@param $setup_info	array of application info from setup.inc.php files, etc.
+		*/
+		function process_add_langs($setup_info,$DEBUG=False,$force_en=False)
+		{
+			@reset($setup_info);
+			while (list($key,$null) = @each($setup_info))
+			{
+				$appname = $setup_info[$key]['name'];
+				/* This is in the setup_lang class */
+				$this->add_langs($appname,$force_en);
+				if($DEBUG)
+				{
+					echo '<br>process_add_langs(): Translations added for ' . $appname . "\n";
+				}
+			}
+			// Done, return current status
+			return ($setup_info);
+		}
+
+		/*!
+		@function process_drop_langs
+		@abstract process application lang files and install
+		@param $setup_info	array of application info from setup.inc.php files, etc.
+		*/
+		function process_drop_langs($setup_info,$DEBUG=False)
+		{
+			@reset($setup_info);
+			while (list($key,$null) = @each($setup_info))
+			{
+				$appname = $setup_info[$key]['name'];
+				/* This is in the setup_lang class */
+				$this->drop_langs($appname);
+				if($DEBUG)
+				{
+					echo '<br>process_drop_langs():  Translations removed for ' . $appname . "\n";
+				}
+			}
+			// Done, return current status
+			return ($setup_info);
+		}
+
+		/*!
+		@function process_upgrade_langs
+		@abstract process application lang files and reinstall
+		@param $setup_info	array of application info from setup.inc.php files, etc.
+		*/
+		function process_upgrade_langs($setup_info,$DEBUG=False)
+		{
+			@reset($setup_info);
+			while (list($key,$null) = @each($setup_info))
+			{
+				$appname = $setup_info[$key]['name'];
+				/* These are in the setup_lang class */
+				$this->drop_langs($appname);
+				$this->add_langs($appname);
+				if($DEBUG)
+				{
+					echo '<br>process_upgrade_langs(): Translations reinstalled for ' . $appname . "\n";
+				}
+			}
+			// Done, return current status
+			return ($setup_info);
+		}
+		/*!
 		@function process_test_data
 		@abstract process test_data.inc.php in each application/setup dir for developer tests
 		This data should work with the baseline tables
@@ -346,7 +418,7 @@
 			$oProc = $this->oProc;
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
@@ -380,7 +452,7 @@
 			}
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				$appname = $setup_info[$key]['name'];
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
@@ -428,7 +500,7 @@
 			
 
 			@reset($setup_info);
-			while (list($key,$null) = each($setup_info))
+			while (list($key,$null) = @each($setup_info))
 			{
 				// if upgrade required, or if we are running again after an upgrade or dependency failure
 				if ($DEBUG) { echo '<br>process_upgrade(): Incoming : appname: '.$setup_info[$key]['name'] . ' status: ' . $setup_info[$key]['status']; }

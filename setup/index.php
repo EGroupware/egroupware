@@ -10,10 +10,12 @@
   \**************************************************************************/
 
   /* $Id$ */
-  
-  // Idea:  This is so I don't forget.  When they are preforming a new install, after config,
-  //        forward them right to index.php.  Create a session for them and have a nice little intro
-  //        page explaining what to do from there (ie, create there own account)
+
+	/*
+	 Idea:  This is so I don't forget.  When they are preforming a new install, after config,
+	 forward them right to index.php.  Create a session for them and have a nice little intro
+	 page explaining what to do from there (ie, create there own account)
+	*/
 	$DEBUG = False;
 
 	$phpgw_info = array();
@@ -246,7 +248,8 @@
 					$setup_info = $phpgw_setup->process_droptables($setup_info);
 					break;
 				case 'new':
-					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG);
+					/* process all apps and langs(last param True) */
+					$setup_info = $phpgw_setup->process_pass($setup_info,'new',$DEBUG,True);
 					$included = True;
 					include('lang.php');
 					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';

@@ -12,10 +12,12 @@
   /* $Id$ */
 
 	$DEBUG = False;
-	// TODO: We allow a user to hose their setup here, need to make use
-	// of dependencies so they are warned that they are pulling the rug
-	// out from under other apps.  e.g. if they select to uninstall the api
-	// this will happen without further warning.
+	/*
+	 TODO: We allow a user to hose their setup here, need to make use
+	 of dependencies so they are warned that they are pulling the rug
+	 out from under other apps.  e.g. if they select to uninstall the api
+	 this will happen without further warning.
+	*/
 
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
@@ -142,12 +144,8 @@
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks deregistered') . '.';
 			}
 
-			$dropped = False;
-			$dropped = $phpgw_setup->drop_langs($appname);
-			if($dropped)
-			{
-				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
-			}
+			$terror = $phpgw_setup->process_drop_langs($terror);
+			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations removed') . '.';
 		}
 
 		while (list($appname,$key) = @each($install))
@@ -180,7 +178,7 @@
 					echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('hooks registered') . '.';
 				}
 			}
-			$phpgw_setup->add_langs($appname);
+			$terror = $phpgw_setup->process_add_langs($terror);
 			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations added') . '.';
 		}
 
@@ -199,6 +197,9 @@
 			{
 				echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('upgraded') . '.';
 			}
+
+			$terror = $phpgw_setup->process_upgrade_langs($terror);
+			echo '<br>' . $setup_info[$appname]['title'] . ' ' . lang('Translations upgraded') . '.';
 		}
 
 		//$setup_tpl->set_var('goback',

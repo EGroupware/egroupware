@@ -107,7 +107,7 @@
 			return $ret;
 		}
 
-		/* Following functions are called for app (un)install in applications.php only */
+		/* Following functions are called for app (un)install */
 
 		/*!
 		@function get_langs
@@ -148,9 +148,13 @@
 		@abstract process an application's lang files, calling get_langs() to see what langs the admin installed already
 		@param $appname app_name of application to process
 		*/
-		function add_langs($appname)
+		function add_langs($appname,$force_en=False)
 		{
 			$langs = $this->get_langs();
+			if($force_en && !isinarray('en',$langs))
+			{
+				$langs[] = 'en';
+			}
 
 			$GLOBALS['phpgw_setup']->db->transaction_begin();
 
@@ -165,7 +169,7 @@
 
 					while (list($null,$line) = @each($raw_file))
 					{
-						list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
+						list($message_id,$app_name,$GLOBALS['phpgw_setup']->db_lang,$content) = explode("\t",$line);
 						$message_id = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($message_id));
 						/* echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id; */
 						$app_name   = $GLOBALS['phpgw_setup']->db->db_addslashes(chop($app_name));
