@@ -32,6 +32,7 @@
 		var $data;
 		var $user_context  = '';
 		var $group_context = '';
+		var $total;
 
 		function accounts_()
 		{
@@ -350,14 +351,17 @@
 					$test = @$allVals['uid'][0];
 					if (!$GLOBALS['phpgw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
 					{
-						$accounts[] = Array(
-							'account_id'        => $allVals['uidnumber'][0],
-							'account_lid'       => $allVals['uid'][0],
-							'account_type'      => $allVals['phpgwaccounttype'],
-							'account_firstname' => $allVals['givenname'][0],
-							'account_lastname'  => $allVals['sn'][0],
-							'account_status'    => $allVals['phpgwaccountstatus'][0]
-						);
+						if(!$query || strpos(' '.$allVals['cn'][0],$query) || strpos(' '.$allVals['givenname'][0],$query) || strpos(' '.$allVals['sn'][0],$query))
+						{
+							$accounts[] = Array(
+								'account_id'        => $allVals['uidnumber'][0],
+								'account_lid'       => $allVals['uid'][0],
+								'account_type'      => $allVals['phpgwaccounttype'],
+								'account_firstname' => $allVals['givenname'][0],
+								'account_lastname'  => $allVals['sn'][0],
+								'account_status'    => $allVals['phpgwaccountstatus'][0]
+							);
+						}
 					}
 				}
 			}
@@ -371,14 +375,17 @@
 					$test = $allVals['cn'][0];
 					if (!$GLOBALS['phpgw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
 					{
-						$accounts[] = Array(
-							'account_id'        => $allVals['gidnumber'][0],
-							'account_lid'       => $allVals['cn'][0],
-							'account_type'      => $allVals['phpgwaccounttype'],
-							'account_firstname' => $allVals['givenname'][0],
-							'account_lastname'  => $allVals['sn'][0],
-							'account_status'    => $allVals['phpgwaccountstatus'][0]
-						);
+						if(!$query || strpos(' '.$allVals['cn'][0],$query) || strpos(' '.$allVals['givenname'][0],$query) || strpos(' '.$allVals['sn'][0],$query))
+						{
+							$accounts[] = Array(
+								'account_id'        => $allVals['gidnumber'][0],
+								'account_lid'       => $allVals['cn'][0],
+								'account_type'      => $allVals['phpgwaccounttype'],
+								'account_firstname' => $allVals['givenname'][0],
+								'account_lastname'  => $allVals['sn'][0],
+								'account_status'    => $allVals['phpgwaccountstatus'][0]
+							);
+						}
 					}
 				}
 			}

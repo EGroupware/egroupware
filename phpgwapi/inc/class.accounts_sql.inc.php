@@ -29,6 +29,7 @@
 		var $db;
 		var $account_id;
 		var $data;
+		var $total;
 
 		function accounts_()
 		{
@@ -149,6 +150,7 @@
 					'account_expires'   => $this->db->f('account_expires')
 				);
 			}
+			$this->total = count($accounts);
 			return $accounts;
 		}
 
