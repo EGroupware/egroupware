@@ -36,9 +36,9 @@
 	$GLOBALS['phpgw_info']['server']['db_persistent'] = {DB_PERSISTENT};
 
 	/*
-	** eGroupWare can handle session management using the database, but if
-	** you are using PHP4 you can usually get better performance by having eGroupWare
-	** use the session support built into PHP4. PHP3 users will have to use the database.
+	** eGroupWare can handle session management using the database or 
+	** the session support built into PHP4 which usually gives better
+	** performance. 
 	** Your choices are 'db' or 'php4'
 	*/
 	$GLOBALS['phpgw_info']['server']['sessions_type'] = '{SESSIONS_TYPE}';
