@@ -48,7 +48,7 @@
 		var $last_error = '';
 
 		// if true change all phpGroupWare into eGroupWare in set_var
-		var $egroupware_hack = True;
+		var $egroupware_hack = False;
 
 		/***************************************************************************/
 		/* public: Constructor.
