@@ -24,7 +24,7 @@
 
   /* $Id$ */
 
-  	// Dont know where to put this (seek3r)
+	// Dont know where to put this (seek3r)
 	// This is where it belongs (jengo)
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
@@ -43,7 +43,7 @@
 		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
 		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
 		'pvm'      => True, 'squid'    => True, 'ident'    => True,
-		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'    => True,
 		'backup'    => True
 	);
 
@@ -105,13 +105,13 @@
 			}
 			else
 			{
-				$this->data['account_id']	= $allValues[0]['uidnumber'][0];
+				$this->data['account_id']   = $allValues[0]['uidnumber'][0];
 				$this->data['account_lid']  = $allValues[0]['uid'][0];
 				$this->data['firstname']    = $allValues[0]['givenname'][0];
 				$this->data['lastname']     = $allValues[0]['sn'][0];
 			}
-			$this->data['account_dn']  	= $allValues[0]['dn'];
-			$this->data['fullname']    	= $allValues[0]['cn'][0];
+			$this->data['account_dn']  = $allValues[0]['dn'];
+			$this->data['fullname']    = $allValues[0]['cn'][0];
 
 			if ($phpgw_info['server']['ldap_extra_attributes'])
 			{
@@ -167,8 +167,14 @@
 			Changing the uid:  Need to delete and add new, since
 			PHP cannot change the dn for the entry.
 			*/
-			if ($acct_type == 'g') { $test = $allValues[0]['cn'][0];  }
-			else                   { $test = $allValues[0]['uid'][0]; }
+			if ($acct_type == 'g')
+			{
+				$test = $allValues[0]['cn'][0];
+			}
+			else
+			{
+				$test = $allValues[0]['uid'][0];
+			}
 			if ($test != $this->data['account_lid'])
 			{
 				ldap_delete($ds,$allValues[0]['dn']);
@@ -182,13 +188,19 @@
 						{
 							if (count($val) == 1)
 							{
-								if($val[0]) { $entry[$key] = $val[0]; }
+								if($val[0])
+								{
+									$entry[$key] = $val[0];
+								}
 							}
 							else
 							{
 								for ($i=0;$i<count($val);$i++)
 								{
-									if($val[$i]) { $entry[$key][$i] = $val[$i]; }
+									if($val[$i])
+									{
+										$entry[$key][$i] = $val[$i];
+									}
 								}
 							}
 						}
@@ -410,7 +422,7 @@
 			if ($allValues[0]['uidnumber'][0])
 			{
 				return $allValues[0]['uidnumber'][0];
-			}		
+			}
 
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_group_context'], "cn=$account_id");
 			$allValues = ldap_get_entries($ds, $sri);
@@ -692,7 +704,7 @@
 		{
 			return False;
 
-			global $phpgw, $phpgw_info;
+			global $phpgw;
 
 			if (! $expiredate)
 			{
@@ -736,7 +748,7 @@
 
 		function getDNforID($_accountid = '')
 		{
-			global $phpgw;
+			global $phpgw, $phpgw_info;
 
 			$_account_id = get_account_id($_accountid);
 
