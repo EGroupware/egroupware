@@ -12,28 +12,36 @@
 
 /* $Id$ */
 
-	if ($submit || ! $ab_id) {
-		$phpgw_info["flags"] = array(
-			"noheader" => True,
-			"nonavbar" => True
-		);
-	}
-
 	$phpgw_info["flags"] = array(
+		"noheader" => True,
+		"nonavbar" => True,
 		"currentapp" => "addressbook",
 		"enable_contacts_class" => True,
-		"enable_nextmatchs_class" => True);
+		"enable_nextmatchs_class" => True
+	);
 
 	include("../header.inc.php");
 
-	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
-	$t->set_file(array( "view"	=> "view.tpl"));
-
 	$this = CreateObject("phpgwapi.contacts");
 
-	if (! $ab_id) {
-		Header("Location: " . $phpgw->link("/addressbook/index.php"));
+	// First, make sure they have permission to this entry
+	$check = addressbook_read_entry($ab_id,array('owner' => 'owner'));
+
+	if (! $this->check_perms($this->grants[$check[0]['owner']],PHPGW_ACL_PRIVATE) && $check[0]['owner'] != $phpgw_info['user']['account_id'])
+	{
+		Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+		$phpgw->common->phpgw_exit();
 	}
+
+	if (!$ab_id) {
+		Header("Location: " . $phpgw->link("/addressbook/index.php"));
+	} elseif (!$submit && $ab_id) {
+		$phpgw->common->phpgw_header();
+		echo parse_navbar();
+	}
+
+	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t->set_file(array( "view"	=> "view.tpl"));
 
 	while ($column = each($this->stock_contact_fields)) {
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
@@ -46,9 +54,13 @@
 	// No prefs?
 	if (!$columns_to_display ) {
 		$columns_to_display = array(
-			"n_given"  => "n_given",
-			"n_family" => "n_family",
-			"org_name" => "org_name"
+			"n_given"    => "n_given",
+			"n_family"   => "n_family",
+			"org_name"   => "org_name",
+			"tel_work"   => "tel_work",
+			"tel_home"   => "tel_home",
+			"email"      => "email",
+			"email_home" => "email_home"
 		);
 		while ($column = each($columns_to_display)) {
 			$colname[$column[0]] = $column[1];
@@ -67,6 +79,12 @@
 	$fields  = addressbook_read_entry($ab_id,$qfields);
 
 	$record_owner  = $fields[0]["owner"];
+
+	if ($fields[0]["access"] == 'private') {
+		$access_check = lang('private');
+	} else {
+		$access_check = lang('public');
+	}
 
 	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . $noprefs . "</b><hr><p>";
 	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
@@ -95,8 +113,10 @@
 
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
 		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
-		. $phpgw->common->grab_owner_name($record_owner) . '</td><td><b>' 
-		. $access_link . '</b></td><td></table>';
+		. $phpgw->common->grab_owner_name($record_owner) . '</td></tr>'
+		. '<tr><td><b>' . lang("Record access") . '</b></td><td>'
+		. $access_check . '</b></td></tr>'
+		. '</td></td></table>';
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
