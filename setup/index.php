@@ -97,7 +97,7 @@
 	//$action = 'Upgrade';
 	// end DEBUG code	
 
-	switch($action)
+	switch($HTTP_POST_VARS['action'])
 	{
 		case 'Uninstall all applications':
 			$subtitle = lang('Deleting Tables');
