@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xml:lang="nl" xmlns="http://www.w3.org/1999/xhtml">
+<html xml:lang="{lang_code}" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<!--
 		HTML Coding Standards;
@@ -25,7 +25,7 @@
 		<meta name="description" content="egroupware" />
 		<meta name="keywords" content="egroupware" />
 		<meta name="copyright" content="egroupware http://www.egroupware.org (c) 2003" />
-		<meta name="language" content="en" />
+		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="egroupware http://www.egroupware.org" />
 		<meta name="robots" content="none" />
 		<link rel="icon" href="../phpgwapi/templates/default/images/favicon.ico" type="image/x-ico" />
