@@ -191,7 +191,7 @@
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DE','German','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DZ','Bhutani','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EL','Greek','No')");
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EN','English / American','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EN','English / US','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EO','Esperanto','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ES','Spanish','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ET','Estonian','No')");
@@ -417,7 +417,7 @@
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('de','German','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('dz','Bhutani','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('el','Greek','No')");
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('en','English / American','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('en','English / US','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('eo','Esperanto','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('es','Spanish','Yes')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('et','Estonian','No')");

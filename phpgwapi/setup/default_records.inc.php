@@ -35,7 +35,7 @@
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('de','German','Yes')");
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('dz','Bhutani','No')");
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('el','Greek','No')");
-	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('en','English / American','Yes')");
+	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('en','English / US','Yes')");
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('eo','Esperanto','No')");
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('es','Spanish','Yes')");
 	$oProc->query("INSERT INTO languages (lang_id, lang_name, available) VALUES ('et','Estonian','No')");
