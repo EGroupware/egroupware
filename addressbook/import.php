@@ -95,10 +95,24 @@
 			}
 		} elseif ($this->type == 'ldif') {
 			while ($data = fgets($fp,8000)) {
-				list($name,$value,$url) = split(':', $data);
+				$url = "";
+				list($name,$value,$extra) = split(':', $data);
 				if (substr($name,0,2) == 'dn') {
 					$buffer = $this->import_start_record($buffer);
 				}
+				
+				$test = trim($value);
+				if ($name && !empty($test) && $extra) {
+					// Probable url string
+					$url = $test;
+					$value = $extra;
+				} elseif ($name && empty($test) && $extra) {
+					// Probable multiline encoding
+					$newval = base64_decode(trim($extra));
+					$value = $newval;
+					echo $name.':'.$value;
+				}
+				
 				if ($name && $value) {
 					$test = split(',mail=',$value);
 					if ($test[1]) {
@@ -107,7 +121,7 @@
 					}
 					if ($url) {
 						$name = "homeurl";
-						$value = $value . ':' . $url;
+						$value = $url. ':' . $value;
 					}
 					//echo '<br>'.$j.': '.$name.' => '.$value;
 					if ($this->import[$name] != "" && $value != "") {
