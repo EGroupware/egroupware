@@ -114,6 +114,7 @@ human resources	common	en	Human Resources
 international	common	en	International
 inventory	common	en	Inventory
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version
 january	common	en	January
 july	common	en	July
 june	common	en	June
@@ -235,5 +236,6 @@ phpgroupware login	login	en	phpGroupWare login
 sorry, your login has expired	login	en	Sorry, your login has expired
 use cookies	login	en	use cookies
 username	login	en	Username
+you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for
 you have been successfully logged out	login	en	You have been successfully logged out
 your session could not be verified.	login	en	Your session could not be verified.

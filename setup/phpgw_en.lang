@@ -319,6 +319,7 @@ ip	admin	en	IP
 i participate	calendar	en	I Participate
 isdn phone	addressbook	en	ISDN Phone
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
+it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version
 january	common	en	January
 july	common	en	July
 june	common	en	June
@@ -684,6 +685,7 @@ year	calendar	en	Year
 yearly	calendar	en	Yearly
 yes	common	en	Yes
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
+you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for
 you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
 you have 1 new message!	common	en	You have 1 new message!
 you have been successfully logged out	login	en	You have been successfully logged out
