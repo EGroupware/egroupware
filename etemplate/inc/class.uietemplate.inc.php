@@ -97,7 +97,10 @@
 				$changes = array();
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
-
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
+			{
+				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
+			}
 			$id = $this->appsession_id();
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
@@ -129,6 +132,7 @@
 			if ($this->stable)
 			{
 				echo parse_navbar() . $html;
+				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 			else
 			{
@@ -581,14 +585,14 @@
 							$sels += $cell['sel_options'];
 						}
 					}
-					if (isset($sel_options[$name]))
+					if (isset($sel_options[$name]) && is_array($sel_options[$name]))
 					{
 						$sels += $sel_options[$name];
 					}
 					elseif (count($name_parts))
 					{
 						$org_name = $name_parts[count($name_parts)-1];
-						if (isset($sel_options[$org_name]))
+						if (isset($sel_options[$org_name]) && is_array($sel_options[$org_name]))
 						{
 							$sels += $sel_options[$org_name];
 						}
