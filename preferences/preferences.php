@@ -154,7 +154,7 @@
 
 		while (is_array($array) && list($var,$value) = each($array))
 		{
-			if ($value && $value != '**NULL**')
+			if (isset($value) && $value != '' && $value != '**NULL**')
 			{
 				$_p->add($_appname,$var,$value);
 			}
