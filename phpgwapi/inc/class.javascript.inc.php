@@ -125,11 +125,11 @@
 						{
 							if(!empty($files) && is_array($files))
 							{
-								foreach($files as $file)
+								foreach($files as $file => $ignored)
 								{
 									$links .= '<script type="text/javascript" src="'
 								 	. $GLOBALS['phpgw_info']['server']['webserver_url']
-								 	. "/$app/js/$pkg/$file.js".'">'
+								 	. "/$app/js/$pkg/$file" . '.js">'
 								 	. "</script>\n";
 								}
 							}
@@ -192,14 +192,14 @@
 		*/
 		function validate_file($package, $file, $app='phpgwapi')
 		{
-			if(is_readable(PHPGW_INCLUDE_ROOT . "/$app/js/" . $package .'/'. $file . '.js'))
+			if(is_readable(PHPGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package .SEP. $file . '.js'))
 			{
 				$this->files[$app][$package][$file] = $file;
 				return True;
 			}
 			elseif($app != 'phpgwapi')
 			{
-				if(is_readable(PHPGW_INCLUDE_ROOT . '/phpgwapi/js/' . $package .'/'. $file . '.js'))
+				if(is_readable(PHPGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $file . '.js'))
 				{
 					$this->files['phpgwapi'][$package][$file] = $file;
 					return True;
