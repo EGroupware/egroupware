@@ -41,7 +41,6 @@ file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file name	filemanager	en	File Name
-file names cannot contain  or /	filemanager	en	
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file names cannot contain \ or /	filemanager	en	File names cannot contain \ or /
 filemanager	common	en	Filemanager
