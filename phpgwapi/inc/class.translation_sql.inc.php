@@ -50,7 +50,7 @@
 			$this->db = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			if (!isset($GLOBALS['phpgw_setup']))
 			{
-				$this->system_charset = $GLOBALS['phpgw_info']['server']['system_charset'];
+				$this->system_charset = @$GLOBALS['phpgw_info']['server']['system_charset'];
 			}
 			else
 			{
@@ -98,7 +98,7 @@
 				return $this->system_charset;
 			}
 			// if no translations are loaded (system-startup) use a default, else lang('charset')
-			return !is_array($GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
+			return !is_array(@$GLOBALS['lang']) ? 'iso-8859-1' : strtolower($this->translate('charset'));
 		}
 
 		function init()
@@ -106,7 +106,7 @@
 			// post-nuke and php-nuke are using $GLOBALS['lang'] too
 			// but not as array!
 			// this produces very strange results
-			if (!is_array($GLOBALS['lang']))
+			if (!is_array(@$GLOBALS['lang']))
 			{
 				$GLOBALS['lang'] = array();
 			}
@@ -135,7 +135,7 @@
 			{
 				$vars = array();
 			}
-			if (!is_array($GLOBALS['lang']) || !count($GLOBALS['lang']))
+			if (!is_array(@$GLOBALS['lang']) || !count($GLOBALS['lang']))
 			{
 				$this->init();
 			}

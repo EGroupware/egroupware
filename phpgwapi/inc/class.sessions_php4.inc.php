@@ -31,7 +31,7 @@
 			$this->sessions_();
 			//controls the time out for php4 sessions - skwashd 18-May-2003
 			ini_set('session.gc_maxlifetime', $GLOBALS['phpgw_info']['server']['sessions_timeout']);
-			define('PHPGW_PHPSESSID', ini_get('session.name'));
+			@define('PHPGW_PHPSESSID', ini_get('session.name'));
 		}
 		
 		function read_session()

@@ -1,5 +1,5 @@
 <?php
-	if (!$phpgw_info['server']['contact_repository'])
+	if (!isset($phpgw_info['server']['contact_repository']))
 	{
 		$phpgw_info['server']['contact_repository'] = 'sql';
 	}

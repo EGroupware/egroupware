@@ -129,7 +129,7 @@
 		*/
 		function standard_substitutes()
 		{
-			if (!is_array($GLOBALS['phpgw_info']['user']['preferences']))
+			if (!is_array(@$GLOBALS['phpgw_info']['user']['preferences']))
 			{
 				$GLOBALS['phpgw_info']['user']['preferences'] = $this->data;	// else no lang()
 			}
@@ -272,7 +272,7 @@
 			{
 				reset($this->data);
 			}
-			if ($this->debug && substr($GLOBALS['phpgw_info']['flags']['currentapp'],0,3) != 'log') {
+			if (isset($this->debug) && substr($GLOBALS['phpgw_info']['flags']['currentapp'],0,3) != 'log') {
 				echo "user<pre>";    print_r($this->user); echo "</pre>\n";
 				echo "forced<pre>";  print_r($this->forced); echo "</pre>\n";
 				echo "default<pre>"; print_r($this->default); echo "</pre>\n";
@@ -771,7 +771,7 @@
 		*/
 		function email_address($account_id='')
 		{
-			if ($this->data['email']['address'])
+			if (isset($this->data['email']['address']))
 			{
 				return $this->data['email']['address'];
 			}

@@ -294,7 +294,7 @@
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 
 			/* init the crypto object before appsession call below */
-			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->key = md5($this->kp3 . $this->sessionid . @$GLOBALS['phpgw_info']['server']['encryptkey']);
 			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
 			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
 
