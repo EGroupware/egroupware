@@ -63,7 +63,7 @@ end date/time	calendar	en	End Date/Time
 ends	calendar	en	ends
 enter output filename: ( .vcs appended )	calendar	en	Enter Output Filename: ( .vcs appended )
 event details follow	calendar	en	Event Details Follow
-execptions	calendar	en	Execptions
+exceptions	calendar	en	Exceptions
 export	calendar	en	Export
 export a list of entries in ical format.	calendar	en	Export a list of entries in iCal format.
 fieldseparator	calendar	en	Fieldseparator

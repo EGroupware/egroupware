@@ -1165,7 +1165,7 @@
 					$event['recur_enddate']['month'] = 0;
 					$event['recur_enddate']['mday'] = 0;
 					$event['recur_enddate']['year'] = 0;
-					$event['recur_execption'] = array();
+					$event['recur_exception'] = array();
 				}
 				$this->edit_form(
 					Array(
@@ -1304,7 +1304,7 @@
 				$str .= '    <option value="'.$i.'">'.$GLOBALS['phpgw']->common->show_date($event['recur_exception'][$i]).'</option>'."\n";
 			}
 			$this->output_template_array($p,'row','list',array(
-				'field'	=> lang('Execptions'),
+				'field'	=> lang('Exceptions'),
 				'data'	=> '<select name="reinstate_index[]" multiple size="5">'."\n".$str.'</select>'
 			));
 
