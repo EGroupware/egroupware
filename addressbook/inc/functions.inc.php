@@ -141,10 +141,10 @@
         $bday_day  = '<input name="bday_day" size="2" maxlength="2">';
         $bday_year = '<input name="bday_year" size="4" maxlength="4">';
       }
-
+    $this = CreateObject("phpgwapi.contacts");
     $email_type = "<select name=email_type>";
     while ($type = each($this->email_types)) {
-       $email_type .= "<option value=\"\" $type[0]> </option>";
+       $email_type .= "<option value=\"".$type[0]."\">".$type[1]."</option>";
     }
     $email_type .= "</select>";
     
