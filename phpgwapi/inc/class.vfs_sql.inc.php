@@ -70,17 +70,9 @@
 			   unlink(), rmdir(), touch(), etc.).  If not, then we're working completely
 			   in the database.
 			*/
-			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
-			$conf->read_repository();
-			if ($conf->config_data['file_store_contents'] == 'filesystem' || !$conf->config_data['file_store_contents'])
-			{
-				$this->file_actions = 1;
-			}
-			else
-			{
-				$this->file_actions = 0;
-			}
-	
+			$this->file_actions = $GLOBALS['phpgw_info']['server']['file_store_contents'] == 'filesystem' ||
+				!$GLOBALS['phpgw_info']['server']['file_store_contents'];
+
 			// test if the files-dir is inside the document-root, and refuse working if so
 			//
 			if ($this->file_actions && $this->in_docroot($this->basedir))
@@ -125,7 +117,7 @@
 		*/
 		function in_docroot($path)
 		{
-			$docroots = array(PHPGW_SERVER_ROOT,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']);
+			$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
 
 			foreach ($docroots as $docroot)
 			{
@@ -459,7 +451,9 @@
 					)
 				);
 
-				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".$state_one_path_parts->fake_leading_dirs_clean."' AND name='".$state_one_path_parts->fake_name_clean."' AND mime_type='journal'");
+				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($state_one_path_parts->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($state_one_path_parts->fake_name_clean)."' AND mime_type='journal'");
 
 				/*
 				   We create the file in addition to logging the MOVED operation.  This is an
@@ -482,7 +476,9 @@
 			*/
 			if ($data['operation'] == VFS_OPERATION_DELETED)
 			{
-				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean' AND mime_type='journal'");
+				$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='journal-deleted' WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."' AND mime_type='journal'");
 			}
 
 			return True;
@@ -522,7 +518,9 @@
 				)
 			);
 
-			$sql = "DELETE FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'";
+			$sql = "DELETE FROM phpgw_vfs WHERE directory='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'";
 
 			if (!$data['deleteall'])
 			{
@@ -582,7 +580,9 @@
 				return False;
 			}
 
-			$sql = "SELECT * FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'";
+			$sql = "SELECT * FROM phpgw_vfs WHERE directory='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+				$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'";
 
 			if ($data['type'] == 1)
 			{
@@ -696,7 +696,9 @@
 				   We don't use ls () to get owner_id as we normally would,
 				   because ls () calls acl_check (), which would create an infinite loop
 				*/
-				$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='".$p2->fake_leading_dirs_clean."' AND name='".$p2->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($p2->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($p2->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 				$GLOBALS['phpgw']->db->next_record ();
 
 				$owner_id = $GLOBALS['phpgw']->db->Record['owner_id'];
@@ -1029,7 +1031,9 @@
 					return False;
 				}
 
-				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs_clean', '$p->fake_name_clean')", __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."', '".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."')", __LINE__, __FILE__);
 
 				$this->set_attributes(array(
 					'string'	=> $p->fake_full_path,
@@ -1069,6 +1073,7 @@
 
 		/*
 		 * See vfs_shared
+		 * If $data['symlink'] the file is symlinked instead of copied
 		 */
 		function cp ($data)
 		{
@@ -1108,7 +1113,7 @@
 				return False;
 			}
 
-			if ($this->file_exists (array(
+			if ($exists = $this->file_exists (array(
 					'string'	=> $t->fake_full_path,
 					'relatives'	=> array ($t->mask)
 				))
@@ -1135,7 +1140,6 @@
 				{
 					return False;
 				}
-
 			}
 
 			umask(0177);
@@ -1148,7 +1152,18 @@
 			{
 				if ($this->file_actions)
 				{
-					if (!copy ($f->real_full_path, $t->real_full_path))
+					if (@$data['symlink'])
+					{
+						if ($exists)
+						{
+							@unlink($t->real_full_path);
+						}
+						if (!symlink($f->real_full_path, $t->real_full_path))
+						{
+							return False;
+						}
+					}
+					elseif (!copy ($f->real_full_path, $t->real_full_path))
 					{
 						return False;
 					}
@@ -1187,7 +1202,11 @@
 					))
 				)
 				{
-					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='$t->fake_leading_dirs_clean', name='$t->fake_name_clean' WHERE owner_id='$this->working_id' AND directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
+					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET owner_id='$this->working_id', directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."', name='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."' WHERE owner_id='$this->working_id' AND directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' AND name='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'" . $this->extra_sql (VFS_SQL_UPDATE), __LINE__, __FILE__);
 
 					$set_attributes_array = array (
 						'createdby_id' => $account_id,
@@ -1459,11 +1478,17 @@
 							'relatives'	=> array ($t->mask)
 						)
 					);
-					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='$t->fake_leading_dirs_clean' AND name='$t->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET size=$size WHERE directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' AND name='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
 				}
 				elseif (!$t->outside)
 				{
-					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET name='$t->fake_name_clean', directory='$t->fake_leading_dirs_clean' WHERE directory='$f->fake_leading_dirs_clean' AND name='$f->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET name='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_name_clean)."', directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($t->fake_leading_dirs_clean)."' WHERE directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($f->fake_leading_dirs_clean)."' AND name='".
+						$GLOBALS['phpgw']->db->db_addslashes($f->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
 				}
 
 				$this->set_attributes(array(
@@ -1517,7 +1542,9 @@
 					$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry['directory']);
 					$newdir_clean = $this->clean_string (array ('string' => $newdir));
 
-					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET directory='$newdir_clean' WHERE file_id='$entry[file_id]'" . $this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
+					$query = $GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($newdir_clean)."' WHERE file_id='$entry[file_id]'" .
+						$this->extra_sql (array ('query_type' => VFS_SQL_UPDATE)), __LINE__, __FILE__);
 					$this->correct_attributes (array(
 							'string'	=> "$newdir/$entry[name]",
 							'relatives'	=> array ($t->mask)
@@ -1609,7 +1636,9 @@
 					)
 				);
 
-				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'".$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'".$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
 
 				if ($this->file_actions)
 				{
@@ -1702,7 +1731,10 @@
 					)
 				);
 
-				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
+					$this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
 
 				if ($this->file_actions)
 				{
@@ -1782,7 +1814,9 @@
 				))
 			)
 			{
-				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."', '".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."')", __LINE__, __FILE__);
 	
 				$this->set_attributes(array(
 					'string'	=> $p->fake_full_path,
@@ -2137,14 +2171,19 @@
 			   passed a directory
 			*/
 			$db2 = $GLOBALS['phpgw']->db;
-			$db2->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+			$db2->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='".
+				$db2->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+				$db2->db_addslashes($p->fake_name_clean)."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 			$db2->next_record ();
 			$mime_type = $db2->Record['mime_type'];
 			if(!$mime_type)
 			{
 				$mime_type = $this->get_ext_mime_type (array ('string' => $data['string']));
 				{
-					$db2->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+					$db2->query ("UPDATE phpgw_vfs SET mime_type='$mime_type' WHERE directory='".
+						$db2->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+						$db2->db_addslashes($p->fake_name_clean)."'" .
+						$this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 				}
 			}
 
@@ -2263,7 +2302,10 @@
 
 			if ($data['checksubdirs'])
 			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT size FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_text' => VFS_SQL_SELECT)));
+				$query = $GLOBALS['phpgw']->db->query ("SELECT size FROM phpgw_vfs WHERE directory='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+					$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
+					$this->extra_sql (array ('query_text' => VFS_SQL_SELECT)));
 				$GLOBALS['phpgw']->db->next_record ();
 				$size += $GLOBALS['phpgw']->db->Record[0];
 			}
@@ -2316,6 +2358,8 @@
 
 		/*
 		 * See vfs_shared
+		 * If $data['readlink'] then a readlink is tryed on the real file
+		 * If $data['file_id'] then the file_id is used instead of a path
 		 */
 		function ls ($data)
 		{
@@ -2343,7 +2387,8 @@
 			$dir = $p->fake_full_path;
 
 			/* If they pass us a file or 'nofiles' is set, return the info for $dir only */
-			if (((($type = $this->file_type (array(
+			if (@$data['file_id']
+				|| ((($type = $this->file_type (array(
 					'string'	=> $dir,
 					'relatives'	=> array ($p->mask)
 				)) != 'Directory'))
@@ -2363,8 +2408,17 @@
 					$sql .= $attribute;
 				}
 
-				$sql .= " FROM phpgw_vfs WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'".$this->extra_sql (array ('query_type' => VFS_SQL_SELECT));
-
+				$sql .= " FROM phpgw_vfs WHERE ";
+				if (@$data['file_id'])
+				{
+					$sql .= 'file_id='.(int)$data['file_id'];
+				}
+				else
+				{
+					$sql .= "directory='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean).
+						"' AND name='".$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'".
+						$this->extra_sql (array ('query_type' => VFS_SQL_SELECT));
+				}
 				$query = $GLOBALS['phpgw']->db->query ($sql, __LINE__, __FILE__);
 
 				$GLOBALS['phpgw']->db->next_record ();
@@ -2389,6 +2443,10 @@
 					}
 
 					$rarray[0][$attribute] = $record[$attribute];
+				}
+				if ($this->file_actions && @$data['readlink'])	// test if file is a symlink and get it's target
+				{
+					$rarray[0]['symlink'] = @readlink($p->real_full_path);
 				}
 
 				return $rarray;
@@ -2447,7 +2505,7 @@
 			}
 
 			$dir_clean = $this->clean_string (array ('string' => $dir));
-			$sql .= " FROM phpgw_vfs WHERE directory LIKE '$dir_clean%'";
+			$sql .= " FROM phpgw_vfs WHERE directory LIKE '".$GLOBALS['phpgw']->db->db_addslashes($dir_clean)."%'";
 			$sql .= $this->extra_sql (array ('query_type' => VFS_SQL_SELECT));
 
 			if ($data['mime_type'])
@@ -2633,7 +2691,10 @@
 
 				if($mime_type)
 				{
-					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".
+						$GLOBALS['phpgw']->db->db_addslashes($p->fake_leading_dirs_clean)."' AND name='".
+						$GLOBALS['phpgw']->db->db_addslashes($p->fake_name_clean)."'" .
+						$this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
 				}
 			}
 
