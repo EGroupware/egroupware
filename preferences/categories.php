@@ -56,7 +56,7 @@
 
 //--------------------------------- nextmatch --------------------------------------------
 
-    $left = $phpgw->nextmatchs->left('/preferneces/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
+    $left = $phpgw->nextmatchs->left('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
     $right = $phpgw->nextmatchs->right('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
     $t->set_var('left',$left);
     $t->set_var('right',$right);
