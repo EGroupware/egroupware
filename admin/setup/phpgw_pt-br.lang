@@ -158,7 +158,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	D
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe esse campo em branco e pressione ENVIAR novamente
 enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicação com servidores Parceiros
 enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores Parceiros
@@ -382,8 +382,8 @@ wiki administration	common	pt-br	Administração Wiki
 wiki menu	common	pt-br	Wiki menú
 would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versões<br> quando administradores estiverm conectados?
 would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
-would you like phpgroupware to cache the phpgw info array ?	admin	pt-br	Deseja que o eGroupWare faça cache do vetor de informações phpgw ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o phpGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
+would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o eGroupWare faça cache do vetor de informações egw ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
 would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicação está atualizada ?
 xml-rpc	admin	pt-br	XML-RPC

@@ -185,8 +185,8 @@ view peer server	admin	ja	対等サーバ表示
 view sessions	admin	ja	セッション参照
 view user account	admin	ja	ユーザアカウント表示
 who would you like to transfer all records owned by the deleted user to?	admin	ja	削除ユーザの記録を転送するユーザを選択してください。
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、phpGroupWareのバージョンチェックを行う
-would you like phpgroupware to cache the phpgw info array ?	admin	ja	phpGroupWare のキャッシュにphpgw info 配列を利用する
+would you like egroupware to check for a new version<br>when admins login ?	admin	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like egroupware to cache the egw info array ?	admin	ja	eGroupWare のキャッシュにegw info 配列を利用する
 would you like to show each application's upgrade status ?	admin	ja	アプリケーションのアップグレード状況表示
 xml-rpc	admin	ja	XML-RPC
 yes	admin	ja	はい
