@@ -43,6 +43,11 @@
 			$this->template_dir = $GLOBALS['phpgw']->common->get_tpl_dir('calendar');
 			$this->sb = CreateObject('phpgwapi.sbox');
 
+			// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
+			if (!is_object($GLOBALS['phpgw']->jscalendar))
+			{
+				$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+			}
 			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Holiday Management');
 		}
 

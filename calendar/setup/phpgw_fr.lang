@@ -106,7 +106,7 @@ firstname of person to notify	calendar	fr	Prénom de la personne à prévenir
 format of event updates	calendar	fr	Format des mises à jour d'événement
 fr	calendar	fr	V
 free/busy	calendar	fr	Libre/occupé
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fr	
+freebusy: unknow user '%1', wrong password or not available to not loged in users !!!	calendar	fr	
 frequency	calendar	fr	Fréquence
 fri	calendar	fr	Ven
 full description	calendar	fr	Description complète
@@ -129,7 +129,7 @@ hours	calendar	fr	Heures
 i participate	calendar	fr	Je participe
 ical / rfc2445	calendar	fr	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fr	Si activé les vacances tombant sur un Week-End, sont prises sur le lundi d'après.
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	fr	Si vous ne mettez pas de mot de passe ici, l'information sera accessible par n'importe quelle personne connaissant l'URL!
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne mettez pas de mot de passe ici, l'information sera accessible par n'importe quelle personne connaissant l'URL!
 ignore conflict	calendar	fr	Ignorer le conflit
 import	calendar	fr	Import
 import csv-file	common	fr	Importer un fichier CSV
@@ -148,7 +148,6 @@ list all categories.	calendar	fr	Lister toutes les catégories
 load [iv]cal	calendar	fr	Charger [iv]Cal
 location	calendar	fr	Emplacement
 location to autoload from	admin	fr	Emplacement depuis lequel auto-charger
-make freebusy information availible to not loged in persons?	calendar	fr	
 matrixview	calendar	fr	Vue matricielle
 minutes	calendar	fr	minutes
 mo	calendar	fr	L
@@ -194,7 +193,7 @@ password for not loged in users to your freebusy information?	calendar	fr
 people holiday	calendar	fr	Vacances des personnes
 permission denied	calendar	fr	Permission refusée
 planner	calendar	fr	Planificateur
-planner by category	calendar	fr	Planificateur par catégrie
+planner by category	calendar	fr	Planificateur par catégorie
 planner by user	calendar	fr	Planificateur par utilisateur
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	fr	SVP confirmez, acceptez, rejetez ou examinez les modifications dans l'entrée correspondante de votre calendrier
 please enter a filename !!!	calendar	fr	veuillez entrer un nom de fichier !!!
@@ -329,3 +328,18 @@ you need to set either a day or a occurence !!!	calendar	fr	Vous devez régler so
 your meeting scheduled for %1 has been canceled	calendar	fr	Votre réunion planifiée pour %1 a été annulée
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fr	Votre réunion qui avait été planifiée pour %1 a été replanifiée pour %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:
+weekview without weekend	calendar	fr	Vue par semaine sans Week-end
+No filter	calendar	fr	Pas de filtre
+All categories	calendar	fr	Pas de catégories
+default week view	calendar	fr	Vue par défaut pour les semaines
+How much day do you want to see per week ?	calendar	fr	Combien de jour voulez-vous afficher par semaine ?
+previous day	calendar	fr	précédent jour
+next day	calendar	fr	suivant jour
+show next seven days	calendar	fr	Voir les 7 prochains jours
+show only one day	calendar	fr	Voir un seul jour
+show this week	calendar	fr	Voir cette semaine
+show the calendar of multiple users	calendar	fr	Montrer le calendrier en multi-utilisateurs
+make freebusy information available to not loged in persons?	calendar	fr	Rends l'information de disponibilité accessible aux personnes non loggées
+should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.	calendar	fr	Permet aux personnes non connectés de disposer des informations de disponibilités. Vous pouvez définir un « extra password » différent de votre mot de passe habituel, afin de protéger cette information. Les informations disposées sont aux format iCal et inclus le temps ou vous êtes occupés. Il n'include pas le nom de l'évènement en lui-même, ni même sa description et ni sa localisation. Le lien pour voir cette information est celui ci : %1
+password for not loged in users to your freebusy information?	calendar	fr	Le mot de passe « informations de disponibilité » pour les utilisateurs non-loggués
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne définissez pas de mot de passe ici, vos informations de disponibilitées seront accessibles par tous connaissant l'adresse !!!

@@ -20,6 +20,7 @@ alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
 alarm-management	calendar	de	Alarm Management
 alarms	calendar	de	Alarme
+all categories	calendar	de	Alle Kategorien
 all day	calendar	de	ganztägig
 are you sure you want to delete this country ?	calendar	de	Sind Sie sicher, dass Sie dieses Land löschen wollen ?
 are you sure you want to delete this holiday ?	calendar	de	Sind Sie sicher, dass Sie diesen Feiertag löschen wollen ?
@@ -68,6 +69,7 @@ default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendareinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
 default view of appointments	calendar	de	Standard-Ansicht der Termine
+default week view	calendar	de	Vorgabe Wochenansicht
 defines the size in minutes of the lines in the day view.	calendar	de	Bestimmt die Zeitskala in Minuten der Tagesansicht des Kalendars.
 delete a single entry by passing the id.	calendar	de	Lösche einen einzelnen Eintrag über seine Id.
 delete an entire users calendar.	calendar	de	Lösche den kompletten Kalender eines Benutzers.
@@ -76,12 +78,15 @@ delete series	calendar	de	Serie löschen
 delete single	calendar	de	Einzelevent löschen
 deleted	calendar	de	Abgesagt
 description	calendar	de	Beschreibung
+determining window width ...	calendar	de	Bestimme die Fensterbreite ...
 disable	calendar	de	Ausschalten
 disabled	calendar	de	ausgeschaltet
 display interval in day view	calendar	de	Intervall der Tagesansicht
 display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
 display status of events	calendar	de	Status von Terminen anzeigen
+displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalendar-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
+do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all changes include changes of title, description, participants and the acceptions and rejections of the appointment.	calendar	de	Möchten Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden benachrichtigt werden über Änderungen welche Sie selbst durchführen.<br> Sie können die benachrichtigungen beschränken auf bestimmte Änderungen. Jeder auszuwählende Punkt schließt auch die darüber aufgeführten Benachrichtigungen mit ein. Alle Änderungen beinhaltet Änderungen des Titels, der Beschreibung, Teilnehmer so wie Zusagen so wie Absagen von Terminen.
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
@@ -167,8 +172,11 @@ monthly	calendar	de	Monatlich
 monthly (by date)	calendar	de	Monatlich (nach Datum)
 monthly (by day)	calendar	de	Monatlich (nach Wochentag)
 monthview	calendar	de	Monatsansicht
+needs javascript to be enabled !!!	calendar	de	Dafür muss Javascript aktiviert sein !!!
 new entry	calendar	de	Neuer Eintrag
 new name must not exist and not be empty!!!	calendar	de	Neuer Name darf nicht exisitieren und nicht leer sein!!!
+next day	calendar	de	nächster Tag
+no filter	calendar	de	Kein Filter
 no matches found	calendar	de	Keine Treffer gefunden
 no matches found.	calendar	de	Keine Treffer gefunden.
 no response	calendar	de	Keine Antwort
@@ -210,6 +218,7 @@ planner by user	calendar	de	Planer nach Benutzern
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	de	Bitte den entsprechenden Eintrag im Ihrem Kalendar bestätigen, Zusagen, Absagen oder die Änderungen beachten
 please enter a filename !!!	calendar	de	Bitte geben Sie einen Dateinamen an !!!
 preselected group for entering the planner	calendar	de	vorausgewählte Gruppe beim Planeraufruf
+previous day	calendar	de	vorheriger Tag
 print calendars in black & white	calendar	de	Kalender in schwarz und weiß drucken
 print the mini calendars	calendar	de	Mini- Kalender drucken
 printer friendly	calendar	de	Drucker-freundlich
@@ -242,6 +251,7 @@ sa	calendar	de	Sa
 sat	calendar	de	Sa
 scheduling conflict	calendar	de	Terminüberschneidung
 search results	calendar	de	Suchergebnisse
+select a %1	calendar	de	%1 auswählen
 selected contacts (%1)	calendar	de	Ausgewählte Kontakte (%1)
 send updates via email	common	de	Updates via E-Mail senden
 send/receive updates via email	calendar	de	Senden/Empfangen von Aktualisierungen via EMail
@@ -258,6 +268,11 @@ show default view on main screen	calendar	de	Standardansicht auf der Startseite 
 show high priority events on main screen	calendar	de	Termine mit hoher Priorität auf der Startseite anzeigen
 show invitations you rejected	calendar	de	Zeige Einladungen welche abgelehnt wurden an
 show list of upcoming events	calendar	de	Zeige eine Liste der kommenden Termine
+show next seven days	calendar	de	Nächsten sieben Tage anzeigen
+show only one day	calendar	de	Nur einen Tag anzeigen
+show the calendar of multiple users	calendar	de	Kalender von mehreren Benutzeren anzeigen
+show this month	calendar	de	Diesen Monat anzeigen
+show this week	calendar	de	Diese Woche anzeigen
 single event	calendar	de	Einzelner Termin
 sorry, the owner has just deleted this event	calendar	de	Der Eigentümer hat diesen Termin gerade gelöscht
 sorry, this event does not exist	calendar	de	Dieser Termin existiert nicht
@@ -305,6 +320,7 @@ today	calendar	de	Heute
 translation	calendar	de	Übersetzung
 tu	calendar	de	Di
 tue	calendar	de	Di
+two dayview	calendar	de	Zweitagesansicht
 update a single entry by passing the fields.	calendar	de	Einen einzelnen Termin über seine Felder updaten.
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
@@ -315,15 +331,18 @@ week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
 weekview	calendar	de	Wochenansicht
+weekview including weekend	calendar	de	Wochenansicht mit Wochenende
+weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 when creating new events default set to private	calendar	de	neue Termine sind privat
 which events do you want to see when you enter the calendar.	calendar	de	Welche Termine möchten Sie angezeigt bekommen wenn Sie den Kalender öffnen?
 which of calendar view do you want to see, when you start calendar ?	calendar	de	Welche der möglichen Ansichten des Kalenders möchten Sie als Standard sehen wenn der Kalender geöffnet wird?
+wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um
 work day starts on	calendar	de	Arbeitstag beginnt um
 workdayends	calendar	de	Arbeitstag endet
 year	calendar	de	Jahr
 yearly	calendar	de	Jährlich
-yearview	calendar	de	Jährliche Ansicht
+yearview	calendar	de	Jahresansicht
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to add alarms to this event !!!	calendar	de	Sie haben keine Berechtigung Alarme zu diesem Termin zuzufügen !!!

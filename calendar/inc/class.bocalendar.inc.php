@@ -15,6 +15,14 @@
 
 	/* $Id$ */
 
+	/**
+	* Depricated BO class of the calendar app.
+	*
+	* Note: All new code should only access the bocal class and NOT this class !!!
+	*
+	* If you need a function not already available in bocal, please ask RalfBecker@outdoor-training.de
+	*/
+
 	class bocalendar
 	{
 		var $public_functions = Array(
@@ -234,7 +242,7 @@
 			$this->printer_friendly = ((int)$friendly == 1?True:False);
 
 			if(isset($_POST['filter'])) { $this->filter = $_POST['filter']; }
-			if(isset($_POST['sortby'])) { $this->sortby = $_POST['sortby']; }
+			if(isset($_REQUEST['sortby'])) { $this->sortby = $_REQUEST['sortby']; }
 			if(isset($_POST['cat_id'])) { $this->cat_id = $_POST['cat_id']; }
 
 			if(!isset($this->filter))
@@ -1249,7 +1257,11 @@
 			{
 				if (!is_object($this->jscal))
 				{
-					$this->jscal = CreateObject('phpgwapi.jscalendar');
+					if (!is_object($GLOBALS['phpgw']->jscalendar))
+					{
+						$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+					}
+					$this->jscal = &$GLOBALS['phpgw']->jscalendar;
 				}
 				$time_param += $this->jscal->input2date($time_param['str'],False,'mday');
 				unset($time_param['str']);
@@ -1757,6 +1769,10 @@
 			return $str;
 		}
 
+		/**
+		 * Inserts $event in $this->cached_events, if its not already there, because of a recur-expection
+		 * Note: It maintains the sorting after starttime in the cached_events !!!
+		 */
 		function sort_event($event,$date)
 		{
 			$inserted = False;
@@ -1836,6 +1852,9 @@
 			}
 		}
 
+		/**
+		 * Creates copies of each repeating event in $this->repeating_events in $this->cached_events (via sort_event)
+		 */
 		function check_repeating_events($datetime)
 		{
 			@reset($this->repeating_events);

@@ -36,6 +36,12 @@
 				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
 			}
 			$this->html = &$GLOBALS['phpgw']->html;
+
+			// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
+			if (!is_object($GLOBALS['phpgw']->jscalendar))
+			{
+				$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+			}
 		}
 
 		function index($error='')

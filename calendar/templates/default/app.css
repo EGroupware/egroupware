@@ -1,5 +1,212 @@
 /* CSS Document */
 
+/*
+ * CSS settings for the new uiviews code
+ */
+
+/* timeGridWidget, contains timeRow's and dayCol's
+ */
+.calTimeGrid{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	border:1px solid gray;
+	margin-top: 20px;	/* contains the dayColHeader */
+/* set via inline style on runtime:
+ *  width:
+ */
+}
+
+/* single row in the time-line, always used in conjunction with row_{on|off}, you dont need to set a bgcolor, but you can
+ */
+.calTimeRow,.calTimeRowOff{
+	position: relative;
+	width: 100%;
+/* set via inline style on runtime:
+ *  height:
+ */
+}
+.calTimeRow{
+/*	background-color: silver; */
+}
+
+/* time in a timeRow
+ */
+.calTimeRowTime{
+	padding-left: 5px;
+	height: 100%;
+}
+
+/* contains (multiple) dayCol's
+ */
+.calDayCols{
+	position: absolute;
+	top: 0px;
+	height: 100%;
+/* set via inline style on runtime:
+ *  left:  width(calTimeRowTime)
+ *  width: 100% - width(calTimeRowTime)
+ */
+}
+
+/* contains (multiple) eventCol's
+ */
+.calDayCol{
+	position: absolute;
+	top: 0px;
+	height: 100%;
+/* set via inline style on runtime:
+ *  left:
+ *  width:
+ */
+	border-left: 1px solid gray;
+}
+
+/* header for the dayCol
+ */
+.calDayColHeader,.calGridHeader{
+	position: absolute;
+	top: -20px;
+	width: 100%;
+	text-align: center;
+	font-size: 100%;
+	white-space: nowrap;
+	border: 1px solid gray;
+	height: 16px;
+	left: -1px;
+	padding-top: 2px;
+}
+.calToday{
+	background: #ffffcc;
+}
+.calHoliday{
+	background: #dac0c0;
+}
+
+.calViewUserNameBox {
+	position: absolute;
+	top: -1px;
+	width: 95%;
+	text-align: left;
+	font-size: 120%;
+	white-space: nowrap;
+	border: 1px solid gray;
+	height: 17px;
+	left: -1px;
+	padding-top: 0px;
+	padding-left: 10px;
+	background: #dac0c0;
+}
+.calViewUserName {
+	font-weight: normal;
+}
+.calViewUserName:first-letter {
+	text-transform:uppercase;
+}
+.calViewUserNameFirst {
+}
+.calViewUserNameFirst:after {
+	content: ", ";
+}
+	
+/* header of the time-grid, eg. for the weeks in the month-view (leftmost of the day-col-headers)
+ */
+.calGridHeader{
+	text-align: left;
+	padding-left: 3px;
+}
+
+/* contains (multiple) events's
+ */
+.calEventCol{
+	position: absolute;
+	top: 0px;
+	height: 100%;
+/* set via inline style on runtime:
+ *  left:
+ *  width:
+ */
+/*	border: 1px dotted red; */
+}
+
+/* contains one event: header-row & -body
+ */
+.calEvent,.calEvent:hover{
+	position: absolute;
+/*	background-color: #ffffC0;*/
+	left: 0px;
+	width: 100%;
+	overflow: hidden;
+/* set via inline style on runtime:
+ *  top: depending on startime
+ *  top: depending on length
+ */
+}
+.calEvent:hover{
+/*	background-color: #ffff80;*/
+	cursor: pointer;
+	cursor: hand;
+}
+
+/* header-row of the event
+ */
+.calEventHeader,.calEventHeaderSmall{
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #0000ff;
+	color: white;
+	text-align: center;
+	white-space: nowrap;
+}
+.calEventHeaderSmall{
+	font-size: 10px;
+}
+
+/* body of the event
+ */
+.calEventBody,.calEventBodySmall{
+	padding: 0px 3px 0px;
+}
+
+.calEventBodySmall{
+	font-size: 95%;
+}
+
+.calEventLabel
+{
+	font-weight: bold;
+	font-size: 90%;
+}
+
+.calEventTitle
+{
+	font-weight: bold;
+	font-size: 110%;
+}
+
+/* cal day-view's todo column
+ */
+.calDayToDos {
+	width: 250px;
+	text-align: center;
+}
+/* header row
+*/
+.calDayTodos .calDayTodosHeader {
+	margin: 0px; 
+	padding: 2px;
+	font-weight: bold;
+}
+/* div containing the table with the ToDo's
+*/
+.calDayTodos .calDayTodosTable {
+	overflow: auto; 
+	max-height: 400px;
+}
+
+/*
+ * From here on, settings for the "old" uicalendar code
+ */
 .to_continue
 {
 	font-size: 9px;
@@ -17,7 +224,7 @@ A.bminicalendar
 	color: #336699; 
 	font-style: italic;
 	font-weight: bold;
-	font-size: 9px; 
+	font-size: 9px;
 }
 
 A.minicalendargrey 
@@ -31,7 +238,7 @@ A.bminicalendargrey
 { 
 	color: #336699; 
 	font-style: italic; 
-	font-size:10px; 
+	font-size:10px;
 }
 
 A.minicalhol
@@ -40,7 +247,7 @@ A.minicalhol
 	padding-right:3px;
 	background: #dab0b0;
 	color: #000000; 
-	font-size: 10px; 
+	font-size: 10px;
 }
 
 A.bminicalhol
@@ -49,7 +256,7 @@ A.bminicalhol
 	padding-right:3px;
 	background: #dab0b0;
 	color: #336699; 
-	font-size: 10px; 
+	font-size: 10px;
 }
 
 A.minicalgreyhol
@@ -58,7 +265,7 @@ A.minicalgreyhol
 	padding-right:3px;
 	background: #dab0b0;
 	color: #999999; 
-	font-size: 10px; 
+	font-size: 10px;
 }
 
 A.bminicalgreyhol
@@ -67,7 +274,7 @@ A.bminicalgreyhol
 	padding-right:3px;
 	background: #dab0b0;
 	color: #999999; 
-	font-size: 10px; 
+	font-size: 10px;
 }
 
 

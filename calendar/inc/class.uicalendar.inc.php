@@ -139,6 +139,13 @@
 				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
 			}
 			$this->html = &$GLOBALS['phpgw']->html;
+
+			// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
+			if (!is_object($GLOBALS['phpgw']->jscalendar))
+			{
+				$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+			}
+			$this->jscal = &$GLOBALS['phpgw']->jscalendar;
 		}
 
 		/* Public functions */
@@ -2288,7 +2295,12 @@
 			{
 				$this->index();
 			}
-			$participants = $_POST['participants'];
+			
+			$participants 	= get_var("participants", array("GET", "POST"));
+			$date["year"] 	= get_var("year",  array("GET", "POST"));
+			$date["month"] 	= get_var("month", array("GET", "POST"));
+			$date["day"] 	= get_var("day",   array("GET", "POST"));
+
 			$parts = Array();
 			$acct = CreateObject('phpgwapi.accounts',$this->bo->owner);
 
@@ -2330,18 +2342,26 @@
 			if ($this->always_app_header) $GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Matrixview');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			switch($_POST['matrixtype'])
+			switch( get_var("matrixtype", array("GET", "POST")) )
 			{
 				case 'free/busy':
-					$freetime = $GLOBALS['phpgw']->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
-					echo '<br>'.$this->timematrix(
-						Array(
-							'date'		=> $freetime,
-							'starttime'	=> $this->bo->splittime('000000',False),
-							'endtime'	=> 0,
-							'participants'	=> $parts
-						)
-					);
+					if( get_var("sevendays", array("GET", "POST")) )
+					{
+						$_f_daysend=7;
+					}
+					
+					for($_f_days=0; $_f_days<=$_f_daysend; $_f_days++)
+					{
+						$freetime = $GLOBALS['phpgw']->datetime->gmtdate(mktime(0,0,0,$date["month"],( $date["day"] + $_f_days ),$date["year"]));
+						echo '<br>'.$this->timematrix(
+							Array(
+								'date'		=> $freetime,
+								'starttime'	=> $this->bo->splittime('000000',False),
+								'endtime'	=> 0,
+								'participants'	=> $parts
+							)
+						);
+					}
 					break;
 				case 'weekly':
 					echo '<br>'.$this->display_weekly(
@@ -2355,10 +2375,10 @@
 			}
 			echo "\n<br>\n".'<form action="'.$this->page('viewmatrix').'" method="post" name="matrixform">'."\n";
 			echo ' <table cellpadding="5"><tr><td>'."\n";
-			echo '  <input type="hidden" name="year" value="'.$this->bo->year.'">'."\n";
-			echo '  <input type="hidden" name="month" value="'.$this->bo->month.'">'."\n";
-			echo '  <input type="hidden" name="day" value="'.$this->bo->day.'">'."\n";
-			echo '  <input type="hidden" name="matrixtype" value="'.$_POST['matrixtype'].'">'."\n";
+			echo '  <input type="hidden" name="year" value="'.$date["year"].'">'."\n";
+			echo '  <input type="hidden" name="month" value="'.$date["month"] .'">'."\n";
+			echo '  <input type="hidden" name="day" value="'.$date["day"].'">'."\n";
+			echo '  <input type="hidden" name="matrixtype" value="'.get_var("matrixtype", array("POST", "GET")).'">'."\n";
 			foreach($participants as $part)
 			{
 				echo '  <input type="hidden" name="participants[]" value="'.$part.'">'."\n";
@@ -2366,6 +2386,17 @@
 			echo '  <input type="submit" name="refresh" value="'.lang('Refresh').'">'."\n";
 			echo ' </td><td>'."\n";
 			echo '  <input type="submit" name="cancel" value="'.lang('Cancel').'">'."\n";
+			echo ' </td><td>'."\n";
+
+			// Seven days
+			if( get_var("matrixtype", array("GET", "POST")) == "free/busy" )
+			{
+				if( !get_var("sevendays", array("GET", "POST")) )
+					echo '  <input type="submit" name="sevendays" value="'.lang('Show next seven days').'">'."\n";
+				else
+					echo '  <input type="submit" name="oneday" value="'.lang('Show only one day').'">'."\n";
+			}
+
 			echo ' </td></tr></table>'."\n";
 			echo '</form>'."\n";
 		}
@@ -2534,19 +2565,22 @@
 			{
 				$page_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if (is_array($params))
-			{
-				$params['menuaction'] = $page_app.'.ui'.$page_app.'.'.$_page;
-			}
-			else
-			{
-				$params = 'menuaction='.$page_app.'.ui'.$page_app.'.'.$_page.$params;
+			$page_class = $_page == 'day' || $_page == 'week' || $_page == 'month' ? 'uiviews' : 'uicalendar';
+
+ 			if (is_array($params))
+ 			{
+				$params['menuaction'] = $page_app.'.'.$page_class.'.'.$_page;
+ 			}
+ 			else
+ 			{
+				$params = 'menuaction='.$page_app.'.'.$page_class.'.'.$_page.$params;
 			}
 			return $GLOBALS['phpgw']->link('/index.php',$params);
 		}
 
 		function header()
 		{
+return;
 			$cols = 8;
 			if($this->bo->check_perms(PHPGW_ACL_PRIVATE) == True)
 			{
@@ -2568,6 +2602,7 @@
 
 		function footer()
 		{
+return;
 			$menuaction = $_GET['menuaction'];
 			list(,,$method) = explode('.',$menuaction);
 
@@ -3714,7 +3749,7 @@
 			{
 				$participants[$part] = $GLOBALS['phpgw']->common->grab_owner_name($part);
 				// Much better for processor  :)
-				$participants_id[]  .= $part;
+				$participants_id[]  = $part;
 			}
 			uasort($participants,'strnatcasecmp');	// sort them after their fullname
 
@@ -3726,27 +3761,74 @@
 			}
 			$increment = $this->bo->prefs['calendar']['interval'];
 			$interval = (int)(60 / $increment);
+			$colspan  = $this->bo->prefs['calendar']['workdayends'] - $this->bo->prefs['calendar']['workdaystarts'];
 
 			$pix = $GLOBALS['phpgw']->common->image('calendar','pix');
 
-			$str = '<center>'.lang($GLOBALS['phpgw']->common->show_date($date['raw'],'l'))
-				. ', '.$this->bo->long_date($date).'<br>'
-				. '<table width="85%" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">'
-				. '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$pix.'"></td></tr>'
-				. '<tr><td width="15%"><font color="'.$this->theme['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'.lang('Participant').'</font></td>';
-			for($i=0;$i<24;$i++)
+			/* Make link */
+			$url_parts = "&participants[]=" . implode("&participants[]=", array_keys($param["participants"]));
+			if( get_var("sevendays", array("GET", "POST") ) )
+				$sevendays = "&sevendays=yes";
+
+			$_f_date = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0, $date["month"], ( $date["day"] - 1 ),$date["year"]);
+			$url_prevday = $GLOBALS['phpgw']->link('/index.php',
+								"menuaction=calendar.uicalendar.viewmatrix"
+							.	"&year="  . $_f_date["year"]
+							.	"&month=" . $_f_date["month"]
+							.	"&day="   . $_f_date["day"]
+							.	"&matrixtype=" . get_var("matrixtype", array("POST", "GET"))
+							.	$url_parts
+							.	$sevendays
+							);
+			$_f_date = $GLOBALS['phpgw']->datetime->makegmttime(0,0,0, $date["month"], ( $date["day"] + 1 ),$date["year"]);
+			$url_nextday = $GLOBALS['phpgw']->link('/index.php',
+								"menuaction=calendar.uicalendar.viewmatrix"
+							.	"&year="  . $_f_date["year"]
+							.	"&month=" . $_f_date["month"]
+							.	"&day="   . $_f_date["day"]
+							.	"&matrixtype=" . get_var("matrixtype", array("POST", "GET"))
+							.	$url_parts
+							.	$sevendays
+							);
+			$str = 		'<table border="0" align="center" width="90%">'
+					. 	'<tr>'
+					.	'	<td align="left"><a href="' . $url_prevday . '"><< ' . lang('previous day') . '</a></td>'
+					.	'	<td align="center">' . lang($GLOBALS['phpgw']->common->show_date($date['raw'],'l')) 
+												 . ', '.$this->bo->long_date($date)
+					.	'	</td>'
+					.	'	<td align="right"><a href="' . $url_nextday . '">' . lang('next day') . ' >></a></td>'
+					.	'</tr>'
+					.	'</table>'
+					. 	'<table width="90%" align="center" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">'
+					. 	'<tr><td colspan="'. (($colspan * $interval) + 1) .'"><hr noshade></td></tr>'
+					. 	'<tr><td bgcolor="' . $this->theme['bg02'] . '">'
+					. 	'<font color="'.$this->theme['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
+					. 		lang('Participant').'</font>'
+					.	'</td>';
+
+			// Destroy old variable
+			unset($_f_date);
+			unset($url_parts);
+			unset($url_prevday);
+			unset($url_nextday);
+
+
+			// Show TimeMatrix
+			for( $i=$this->bo->prefs['calendar']['workdaystarts'];
+				 $i<$this->bo->prefs['calendar']['workdayends'];
+				 $i++ )
 			{
 				for($j=0;$j<$interval;$j++)
 				{
 					$k = ($j == 0 ? sprintf('%02d',$i).'<br>':'').sprintf('%02d',$j*$increment);
 
-					$str .= '<td align="left" bgcolor="'.$this->theme['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
+					$str .= '<td align="left" bgcolor="'.$this->theme['bg02'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
 						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.($increment * $j))."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
 						. $k."</a>&nbsp;</font></td>\n";
 				}
 			}
 			$str .= '</tr>'
-				. '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$pix.'"></td></tr>';
+				. '<tr><td colspan="'.(($colspan * $interval) + 1).'"><hr noshade></td></tr>';
 			if(!$endtime)
 			{
 				$endtime = $starttime;
@@ -3755,7 +3837,7 @@
 			foreach($participants as $part => $fullname)
 			{
 				$str .= '<tr align="center">'
-					. '<td width="15%" align="left"><font color="'.$this->theme['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'.$fullname.'</font></td>';
+					. '<td width="15%" align="left" bgcolor="'.$this->theme['th_bg'].'"><font color="'.$this->theme['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'.$fullname.'</font></td>';
 
 				$this->bo->cached_events = Array();
 				$this->bo->so->owner = $part;
@@ -3773,7 +3855,9 @@
 
 				if(!$this->bo->cached_events[$date['full']])
 				{
-					for($j=0;$j<24;$j++)
+					for( $j=$this->bo->prefs['calendar']['workdaystarts'];
+						 $j<$this->bo->prefs['calendar']['workdayends'];
+						 $j++ )
 					{
 						for($k=0;$k<$interval;$k++)
 						{
@@ -3785,7 +3869,9 @@
 				else
 				{
 					$time_slice = $this->bo->prepare_matrix($interval,$increment,$part,$date['full']);
-					for($h=0;$h<24;$h++)
+					for( $h=$this->bo->prefs['calendar']['workdaystarts'];
+						 $h<$this->bo->prefs['calendar']['workdayends'];
+						 $h++ )
 					{
 						$hour = $h * 10000;
 						for($m=0;$m<$interval;$m++)
@@ -3809,7 +3895,7 @@
 					}
 				}
 				$str .= '</tr>'
-					. '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="#999999"><img src="'.$pix.'"></td></tr>';
+					. '<tr><td colspan="'.(($colspan * $interval) + 1).'"><hr noshade></td></tr>';
 			}
 			$this->bo->owner = $owner;
 			$this->bo->so->owner = $owner;
@@ -3877,7 +3963,6 @@
 
 			// $sb = CreateObject('phpgwapi.sbox');
 			$sb = CreateObject('phpgwapi.sbox2');
-			$jscal = CreateObject('phpgwapi.jscalendar');	// before phpgw_header() !!!
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -3999,7 +4084,7 @@
 				   $sb->getDays('start[mday]',(int)$GLOBALS['phpgw']->common->show_date($start,'d'))
 				)
 */
-				'data' => $jscal->input('start[str]',$start)
+				'data' => $this->jscal->input('start[str]',$start)
 			);
 
 // Time
@@ -4024,7 +4109,7 @@
 				   $sb->getDays('end[mday]',(int)$GLOBALS['phpgw']->common->show_date($end,'d'))
 				)
 */
-				'data' => $jscal->input('end[str]',$end)
+				'data' => $this->jscal->input('end[str]',$end)
 			);
 
 // End Time
@@ -4211,7 +4296,7 @@
 						$sb->getDays('recur_enddate[mday]',(int)$GLOBALS['phpgw']->common->show_date($recur_end,'d'))
 					)
 */
-					$jscal->input('recur_enddate[str]',$recur_end)
+					$this->jscal->input('recur_enddate[str]',$recur_end)
 			);
 
 			$i = 0; $boxes = '';

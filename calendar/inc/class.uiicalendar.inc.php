@@ -31,6 +31,12 @@
 			$this->bo = CreateObject('calendar.boicalendar');
 			$this->template = $GLOBALS['phpgw']->template;
 			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Calendar - [iv]Cal Importer');
+
+			// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
+			if (!is_object($GLOBALS['phpgw']->jscalendar))
+			{
+				$GLOBALS['phpgw']->jscalendar = CreateObject('phpgwapi.jscalendar');
+			}
 		}
 
 		function print_test($val,$title,$x_pre='')

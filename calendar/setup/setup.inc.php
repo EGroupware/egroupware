@@ -47,7 +47,7 @@
 	$setup_info['calendar']['hooks'][] = 'manual';
 	$setup_info['calendar']['hooks'][] = 'preferences';
 	$setup_info['calendar']['hooks'][] = 'settings';
-	$setup_info['calendar']['hooks'][] = 'sidebox_menu';
+	$setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.uical.sidebox_menu';
 
 	/* Dependencies for this app to work */
 	$setup_info['calendar']['depends'][] = array(

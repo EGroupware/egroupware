@@ -20,6 +20,7 @@ alarm for %1 at %2 in %3	calendar	en	Alarm for %1 at %2 in %3
 alarm management	calendar	en	Alarm Management
 alarm-management	calendar	en	Alarm-Management
 alarms	calendar	en	Alarms
+all categories	calendar	en	All categories
 all day	calendar	en	All Day
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this Country ?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday ?
@@ -61,6 +62,7 @@ default appointment length (in minutes)	calendar	en	default appointment length (
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	en	Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.
+default week view	calendar	en	Default week view
 defines the size in minutes of the lines in the day view.	calendar	en	Defines the size in minutes of the lines in the day view.
 delete a single entry by passing the id.	calendar	en	Delete a single entry by passing the id.
 delete an entire users calendar.	calendar	en	Delete an entire users calendar.
@@ -69,12 +71,15 @@ delete series	calendar	en	Delete Series
 delete single	calendar	en	Delete Single
 deleted	calendar	en	Deleted
 description	calendar	en	Description
+determining window width ...	calendar	en	Determining window width ...
 disable	calendar	en	Disable
 disabled	calendar	en	disabled
 display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
+displayed view	calendar	en	displayed view
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
+do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	en	Do you want to receive a regulary summary of your appointsments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summarys.<br>It is only sent when you have any appointments on that day or week.
 do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
@@ -157,8 +162,11 @@ monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
 monthview	calendar	en	Month View
+needs javascript to be enabled !!!	calendar	en	Needs javascript to be enabled !!!
 new entry	calendar	en	New Entry
 new name must not exist and not be empty!!!	calendar	en	New name must not exist and not be empty!!!
+next day	calendar	en	next day
+no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found
 no response	calendar	en	No Response
 notification messages for added events	calendar	en	Notification messages for added events
@@ -195,6 +203,7 @@ planner by user	calendar	en	Planner by user
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	en	Please confirm, accept, reject or examine changes in the corresponding entry in your calendar
 please enter a filename !!!	calendar	en	please enter a filename !!!
 preselected group for entering the planner	calendar	en	Preselected group for entering the planner
+previous day	calendar	en	previous day
 print calendars in black & white	calendar	en	Print calendars in black & white
 print the mini calendars	calendar	en	Print the mini calendars
 printer friendly	calendar	en	Printer Friendly
@@ -225,6 +234,7 @@ sa	calendar	en	Sa
 sat	calendar	en	Sat
 scheduling conflict	calendar	en	Scheduling Conflict
 search results	calendar	en	Search Results
+select a %1	calendar	en	Select a %1
 selected contacts (%1)	calendar	en	Selected contacts (%1)
 send updates via email	common	en	Send updates via EMail
 send/receive updates via email	calendar	en	Send/Receive updates via EMail
@@ -241,6 +251,11 @@ show default view on main screen	calendar	en	Show default view on main screen
 show high priority events on main screen	calendar	en	Show high priority events on main screen
 show invitations you rejected	calendar	en	Show invitations you rejected
 show list of upcoming events	calendar	en	Show list of upcoming events
+show next seven days	calendar	en	Show next seven days
+show only one day	calendar	en	Show only one day
+show the calendar of multiple users	calendar	en	show the calendar of multiple users
+show this month	calendar	en	show this month
+show this week	calendar	en	show this week
 single event	calendar	en	single event
 sorry, the owner has just deleted this event	calendar	en	Sorry, the owner has just deleted this event
 sorry, this event does not exist	calendar	en	Sorry, this event does not exist
@@ -286,6 +301,7 @@ today	calendar	en	Today
 translation	calendar	en	Translation
 tu	calendar	en	T
 tue	calendar	en	Tue
+two dayview	calendar	en	two dayview
 update a single entry by passing the fields.	calendar	en	Update a single entry by passing the fields.
 updated	calendar	en	Updated
 use end date	calendar	en	Use End date
@@ -296,9 +312,12 @@ week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
 weekly	calendar	en	Weekly
 weekview	calendar	en	Week View
+weekview including weekend	calendar	en	Weekview including weekend
+weekview without weekend	calendar	en	weekview without weekend
 when creating new events default set to private	calendar	en	When creating new events default set to private
 which events do you want to see when you enter the calendar.	calendar	en	Which events do you want to see when you enter the calendar.
 which of calendar view do you want to see, when you start calendar ?	calendar	en	Which of calendar view do you want to see when you start calendar ?
+wk	calendar	en	Wk
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 workdayends	calendar	en	workdayends

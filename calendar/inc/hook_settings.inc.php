@@ -28,6 +28,15 @@
 	create_select_box('default calendar view','defaultcalendar',$default,
 		'Which of calendar view do you want to see, when you start calendar ?');
 
+
+	/* Select list with number of day by week */
+	$week_view = array(
+		'5'	=> lang('Weekview without weekend'),
+		'7' => lang('Weekview including weekend'),
+	);
+	create_select_box('default week view', 'days_in_weekview', $week_view, 'Do you want a weekview with or without weekend?');
+
+		
 	/* Selection of list for home page is different from default calendar,
 	   since the decision for the front page is different for the decision
 	   for the main calendar page.  But the list could be added to the
@@ -184,7 +193,7 @@
 		$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
 	}
 	$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
-	create_check_box('Make freebusy information availible to not loged in persons?','freebusy',
+	create_check_box('Make freebusy information available to not loged in persons?','freebusy',
 		$freebusy_help,'',False);
 	create_input_box('Password for not loged in users to your freebusy information?','freebusy_pw',
-		'If you dont set a password here, the information is availible to everyone, who knows the URL!!!');
+		'If you dont set a password here, the information is available to everyone, who knows the URL!!!');

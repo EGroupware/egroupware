@@ -35,7 +35,7 @@
 	$tpl->set_block('head_tpl','head_table','head_table');
 	$tpl->set_block('head_tpl','head_col','head_col');
 	$tpl->set_block('form_button_script','form_button');
-
+return;
 	if(floor(phpversion()) >= 4)
 	{
 		$tpl->set_var('cols',8);
@@ -131,7 +131,7 @@
 
 			$form_options = '<option value="user"'.($this->bo->sortby=='user'?' selected':'').'>'.lang('User').'</option>'."\n";
 			$form_options .= '     <option value="category"'.((!isset($this->bo->sortby) || !$this->bo->sortby) || $this->bo->sortby=='category'?' selected':'').'>'.lang('Category').'</option>'."\n";
-		
+
 			$var = Array(
 				'form_width' => '28',
 				'form_link'	=> $this->page($referrer),
@@ -151,7 +151,7 @@
 			$remainder -= 28;
 			$form_options = '<option value=" all "'.($this->bo->filter==' all '?' selected':'').'>'.lang('All').'</option>'."\n";
 			$form_options .= '     <option value=" private "'.((!isset($this->bo->filter) || !$this->bo->filter) || $this->bo->filter==' private '?' selected':'').'>'.lang('Private Only').'</option>'."\n";
-		
+
 			$var = Array(
 				'form_width' => '28',
 				'form_link'	=> $this->page($referrer),
@@ -174,7 +174,7 @@
 			{
 				$form_options .= '    <option value="'.$grant['value'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
 			}
-		
+
 			$var = Array(
 				'form_width' => $remainder,
 				'form_link'	=> $this->page($referrer),

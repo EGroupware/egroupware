@@ -28,7 +28,7 @@
 		var $filter;
 		var $cat_id;
 
-		function socalendar($param)
+		function socalendar($param=False)
 		{
 			$this->db = $GLOBALS['phpgw']->db;
 			if(!is_object($GLOBALS['phpgw']->datetime))
@@ -75,11 +75,20 @@
 			//$extra .= ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'');
 			if ($this->cat_id)
 			{
-				if (!is_object($GLOBALS['phpgw']->categories))
+				if (!is_array($this->cat_id) && !@$GLOBALS['phpgw_info']['user']['preferences']['common']['cats_no_subs'])
 				{
-					$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+					if (!is_object($GLOBALS['phpgw']->categories))
+					{
+						$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+					}
+					$cats = $GLOBALS['phpgw']->categories->return_all_children($this->cat_id);
 				}
-				$cats = $GLOBALS['phpgw']->categories->return_all_children($this->cat_id);
+				else
+				{
+					$cats = is_array($this->cat_id) ? $this->cat_id : array($this->cat_id);
+				}
+				array_walk($cats,create_function('&$val,$key','$val = (int) $val;'));
+
 				$extra .= "AND (phpgw_cal.category".(count($cats) > 1 ? ' IN ('.implode(',',$cats).')' : '='.(int)$this->cat_id);
 				foreach($cats as $cat)
 				{
@@ -97,6 +106,12 @@
 			}
 		}
 
+		/**
+		 * Returns the id's of all repeating events started after s{year,month,day} AND still running at e{year,month,day}
+		 *
+		 * The startdate of an repeating events is the regular event-startdate.
+		 * Events are "still running" if no recur-enddate is set or its after e{year,month,day}
+		 */
 		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id=0)
 		{
 			if(!$owner_id)
