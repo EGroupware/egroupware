@@ -55,7 +55,7 @@ because the enable flag for this app is set to 0, or is undefined	setup	it	poich
 bottom	setup	it	in fondo
 cancel	setup	it	Annulla
 change system-charset	setup	it	Cambia set di caratteri
-charset	setup	it	Set di caratteri
+charset	setup	it	iso-8859-15
 check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
 checking php.ini	setup	it	Esecuzione controllo di php.ini
