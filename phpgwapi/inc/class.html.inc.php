@@ -554,8 +554,8 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			$accesskey = '';
 			$label_u = $label;
 		}
-		if ($onClick) $options .= " onclick=\"$onClick\"";
-		
+		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
+	
 		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
 		{
 			return $this->input($name,$label,$image != '' ? 'image' : 'submit',$options.$image);
