@@ -264,6 +264,7 @@
 	$phpgw->preferences  = CreateObject("phpgwapi.preferences");
 	$phpgw->applications = CreateObject("phpgwapi.applications");
 	$phpgw->translation  = CreateObject("phpgwapi.translation");
+//	$phpgw->datetime		= CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
 
 	/****************************************************************************\

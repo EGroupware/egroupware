@@ -50,6 +50,7 @@
 		var $crypto;
 		var $categories;
 		var $common;
+		var $datetime;
 		var $hooks;
 		var $network;
 		var $nextmatchs;
