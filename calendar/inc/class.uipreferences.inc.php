@@ -64,7 +64,7 @@
 	
 			$this->output_template_array('row','pref_colspan',$var);
 
-			$this->display_item(lang('show day view on main screen'),'<input type="checkbox" name="prefs[mainscreen_showevents]" value="True"'.(@$this->bo->prefs['calendar']['mainscreen_showevents']?' checked':'').'>');
+			$this->display_item(lang('show default view on main screen'),'<input type="checkbox" name="prefs[mainscreen_showevents]" value="True"'.(@$this->bo->prefs['calendar']['mainscreen_showevents']?' checked':'').'>');
 
 			$days = Array(
 			   'Monday',
