@@ -1,0 +1,160 @@
+%1 records imported	addressbook	el	%1 εγγραφές εισήχθησαν
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	el	%1 εγγραφές αναγνώσθηκαν (δεν εισηχθησαν ακόμη, μπορείτε να %2επιστρέψετε%3 και να ξετσεκάρετε τη Δοκιμαστική Εισαγωγή)
+(e.g. 1969)	addressbook	el	(π.χ. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	el	<b>Κανένας τύπος μετατροπής &lt;none&gt; δεν εντοπίστηκε.</b> Παρακαλώ επιλέξτε έναν τύπο μετατροπής από τον κατάλογο
+@-eval() is only availible to admins!!!	addressbook	el	@-eval() διατίθεται μόνο σε διαχειριστές!!!
+actions	addressbook	el	Ενέργειες
+add a single entry by passing the fields.	addressbook	el	Προσθέστε ένα λήμμα διαβαίνοντας τα πεδία.
+add custom field	addressbook	el	Πρόσθεση Τυχαίου Πεδίου
+address book	common	el	Επαφές
+address book - vcard in	addressbook	el	Επαφές - VCard in
+address book - view	addressbook	el	Επαφές - εμφάνιση
+address line 2	addressbook	el	Γραμμή Διευθύνσεων 2
+address line 3	addressbook	el	Γραμμή Διευθύνσεων 3
+address type	addressbook	el	Τύπος Διεύθυνσης
+addressbook	common	el	Επαφές
+addressbook preferences	addressbook	el	Προτιμήσεις Επαφών
+addressbook-fieldname	addressbook	el	Επαφές-Πεδίο ονόματος
+addvcard	addressbook	el	Προσθήκη VCard
+alt. csv import	addressbook	el	Εναλλακτική εισαγωγή CSV
+are you sure you want to delete this field?	addressbook	el	Θέλετε σίγουρα να διαγραφεί αυτό το πεδίο;
+bbs phone	addressbook	el	Τηλέφωνο BBS
+birthday	common	el	Ημέρα Γενεθλίων
+birthdays	common	el	Γενέθλια
+blank	addressbook	el	Κενό
+business	common	el	Εργασία
+business address type	addressbook	el	Τύπος Διεύθυνσης Εργασίας
+business city	addressbook	el	Πόλη εργασίας
+business country	addressbook	el	Χώρα Εργασίας
+business email	addressbook	el	EMail Εργασίας
+business email type	addressbook	el	Τύπος EMail εργασίας
+business fax	addressbook	el	Fax Εργασίας
+business phone	addressbook	el	Τηλέφωνο εργασίας
+business state	addressbook	el	Νομός εργασίας
+business street	addressbook	el	Διεύθυνση εργασίας
+business zip code	addressbook	el	Τ.Κ. εργασίας
+car phone	addressbook	el	Τηλέφωνο αυτοκινήτου
+cell phone	addressbook	el	Κινητό τηλέφωνο
+charset of file	addressbook	el	Κωδικοσελίδα αρχείου
+city	common	el	Πόλη
+company	common	el	Εταιρία
+company name	common	el	Ονομα εταιρίας
+configuration	common	el	Διαμόρφωση
+contact	common	el	Επαφή
+contact application	admin	el	Αίτηση επαφής
+contact settings	admin	el	Ρυθμίσεις επαφής
+copied by %1, from record #%2.	addressbook	el	Αντιγράφτηκε από %1, από την εγγραφή #%2.
+country	common	el	Χώρα
+csv-fieldname	addressbook	el	Ονομα πεδίου  CSV
+csv-filename	addressbook	el	Ονομα αρχείου CSV
+custom	addressbook	el	Προσαρμογή
+custom fields	addressbook	el	Προσαρμοσμένα πεδία
+debug output in browser	addressbook	el	Αποσφαλμάτωση εξαγωγής στο φυλλομετρητή
+default filter	addressbook	el	Προκαθορισμένο φίλτρο
+delete a single entry by passing the id.	addressbook	el	Διαγραφή μιας καταχώρησης με εισαγωγή του id.
+department	common	el	Διαμέρισμα
+domestic	addressbook	el	Εσωτερικός
+download	addressbook	el	Καταβίβαση
+download export file (uncheck to debug output in browser)	addressbook	el	Καταβίβαση αρχείου εξαγωγής (Ξετσεκάρετε για αποσφαλμάτωση εξαγωγής στο φυλλομετρητή)
+edit custom field	addressbook	el	Επεξεργασία προσαρμοσμένου πεδίου
+edit custom fields	admin	el	Επεξεργασία προσαρμοσμένων πεδίων
+empty for all	addressbook	el	Κενό για όλα
+enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
+export contacts	addressbook	el	Εξαγωγή επαφών
+export file name	addressbook	el	Ονομα αρχείου εξαγωγής
+export from addressbook	addressbook	el	Εξαγωγή από το βιβλίο Διευθύνσεων
+extra	addressbook	el	Επιπλέον
+fax	addressbook	el	Fax
+fax number	common	el	Αριθμός Fax
+field %1 has been added !	addressbook	el	Το πεδίο %1 προστέθηκε !
+field %1 has been updated !	addressbook	el	Το πεδίο %1 ενημερώθηκε !
+field name	addressbook	el	Ονομα πεδίου
+fields to show in address list	addressbook	el	Πεδία που θα εμφανίζονται στη λίστα διευθύνσεων
+fieldseparator	addressbook	el	Διαχωριστής πεδίων
+full name	addressbook	el	Πλήρες όνομα
+geo	addressbook	el	GEO
+global categories	addressbook	el	Παγκόσμιες κατηγορίες
+grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευθύνσεων
+home address type	addressbook	el	Τύπος Διεύθυνσης οικίας
+home city	addressbook	el	Πόλη οικίας
+home country	addressbook	el	Χώρα οικίας
+home email	addressbook	el	Email οικίας
+home email type	addressbook	el	Τύπος email οικίας
+home phone	addressbook	el	Τηλέφωνο οικίας
+home state	addressbook	el	Νομός οικίας
+home street	addressbook	el	Διεύθυνση οικίας
+home zip code	addressbook	el	Τ.Κ. οικίας
+import	addressbook	el	Εισαγωγή
+import contacts	addressbook	el	Εισαγωγή επαφών
+import csv-file into addressbook	addressbook	el	Εισαγωγή αρχείου CSV στο βιβλίο Διευθύνσεων
+import file	addressbook	el	Εισαγωγή Αρχείου
+import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV, ή VCard
+import from outlook	addressbook	el	Εισαγωγή από το Outlook
+import next set	addressbook	el	Εισαγωγή επόμενου σετ
+import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το
+international	addressbook	el	Διεθνείς
+isdn phone	addressbook	el	Τηλέφωνο ISDN
+label	addressbook	el	Ετικέττα
+ldap context for contacts	admin	el	LDAP πλαίσιο για τις επαφές
+ldap host for contacts	admin	el	LDAP φορέας για τις επαφές
+ldap root dn for contacts	admin	el	LDAP root dn για τις επαφές
+ldap root pw for contacts	admin	el	LDAP root pw για τις επαφές
+ldif	addressbook	el	LDIF
+line 2	addressbook	el	Γραμμή 2
+mark records as private	addressbook	el	Σημείωση εγγραφών ως ιδιωτικές
+message phone	addressbook	el	Τηλέφωνο μηνυμάτων
+middle name	addressbook	el	Μεσαίο όνομα
+mobile	addressbook	el	Κινητό
+mobile phone	addressbook	el	Κινητό τηλέφωνο
+modem phone	addressbook	el	Τηλέφωνο modem
+no vcard	addressbook	el	Οχι VCard
+number of records to read (%1)	addressbook	el	Αριθμός εγγραφών προς ανάγνωση (%1)
+other number	addressbook	el	Αλλος αριθμός
+other phone	addressbook	el	Αλλο τηλέφωνο
+pager	common	el	Αριθμός μπίπερ
+parcel	addressbook	el	Πακέτο
+phone number	common	el	Αριθμός τηλεφώνου
+phone numbers	common	el	Αριθμοί τηλεφώνων
+please enter a name for that field !	addressbook	el	Παρακαλώ εισάγετε όνομα γι' αυτό το πεδίο !
+postal	common	el	Ταχυδρομικός
+pref	addressbook	el	Προτιμήσεις
+prefix	addressbook	el	Πρόθεμα
+public key	addressbook	el	Δημόσιο κλειδί
+read a list of entries.	addressbook	el	Ανάγνωση λίστας καταχωρήσεων
+read a single entry by passing the id and fieldlist.	addressbook	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή id και λίστας πεδίων
+record access	addressbook	el	Πρόσβαση Εγγραφής
+record owner	addressbook	el	Ιδιοκτήτης εγγραφής
+retrieve contacts	admin	el	Ανάκτηση επαφών
+select all	addressbook	el	Απιλογή όλων
+select the type of conversion	addressbook	el	Επιλέξτε τύπο μετατροπής
+select the type of conversion:	addressbook	el	Επιλέξτε τύπο μετατροπής:
+select where you want to store	admin	el	Επιλέξτε θέση αποθήκευσης
+show birthday reminders on main screen	addressbook	el	Εμφάνιση υπενθυμίσεων γενεθλίων στην κεντρική οθόνη
+startrecord	addressbook	el	Αρχική εγγραφή
+state	common	el	Νομός
+street	common	el	Οδός
+successfully imported %1 records into your addressbook.	addressbook	el	Επιτυχής εισαγωγή %1 εγγραφής(ών) στο βιβλίο Διευθύνσεων
+suffix	addressbook	el	Επίθεμα
+test import (show importable records <u>only</u> in browser)	addressbook	el	Δοκιμαστική Εξαγωγή
+that field name has been used already !	addressbook	el	Το όνομα πεδίου χρησιμοποιείται ήδη !
+this person's first name was not in the address book.	addressbook	el	Το όνομα αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
+this person's last name was not in the address book.	addressbook	el	Το επίθετο αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
+to many might exceed your execution-time-limit	addressbook	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσης
+today is %1's birthday!	common	el	Σήμερα είναι τα γενέθλια του/της %1 !
+tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια του/της %1 !
+translation	addressbook	el	Μετάφραση
+update a single entry by passing the fields.	addressbook	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία
+use country list	addressbook	el	Χρήση καταλόγου χωρών
+vcard	common	el	VCard
+vcards require a first name entry.	addressbook	el	VCards απαιτούν καταχώρηση ονόματος
+vcards require a last name entry.	addressbook	el	VCards απαιτούν καταχώρηση επίθετου
+video phone	addressbook	el	Video Phone
+voice phone	addressbook	el	Τηλέφωνο
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση
+work phone	addressbook	el	Τηλέφωνο Εργασίας
+you must select a vcard. (*.vcf)	addressbook	el	Πρέπει να επιλέξετε μια VCard (*.vcf)
+you must select at least 1 column to display	addressbook	el	Πρέπει να επιλέξετε τουλάχιστο μία στήλη για εμφάνιση
+zip code	common	el	Τ.Κ.
+zip_note	addressbook	el	<p><b>Σημείωση:</b> Το αρχείο μπορεί να είναι μια συλλογή συμπιεσμένων αρχείων .csv, .vcf, ή .ldif αρχείων. Εντούτοις, μην αναμίξτε τους τύπους αρχείου ανά εισαγωγή.
+εξαγόμενο αρχείο θα είναι σε ldif μορφώ.<p>Ή, στο outlook, επιλύξτε το φόκελο επαφών σας, επιλύξτε <b>εισαγωγώ και εξαγωγώ... </b> από το <b>αρχείο</b > και εξόγετε τις επαφύς σας σε ύνα αρχείο κειμύνου χωρισμύνο με κόμμα  (csv)<p>Ή, στο palm desktop 4.0  ώ μεγαλύτερο, πηγαίνετε στο βιβλίο διευθύνσεών και επιλύξτε <b>εξαγωγώ</b> από το <b>αρχείο</b>. το εξαγόμενο αρχείο  θα είναι της μορφώς vcard.		el
+λογαριασμών!		el
