@@ -23,8 +23,9 @@ class holidaycalc {
 			if($holiday['occurence'] != 99)
 			{
 				$dow = $datetime->day_of_week($year,$holiday['month'],1);
-				$day = (7 * $holiday['occurence'] - 6 + ($holiday['dow'] - $dow) % 7);
+				$day = (((7 * $holiday['occurence']) - 6) + (($holiday['dow'] - $dow) % 7));
 				$day += ($day < 1 ? 7 : 0);
+				$day += ($holiday['dow']==1 ? 7 : 0);
 			}
 			else
 			{
