@@ -24,7 +24,7 @@
 	\*******************************************************************/
 	/* $Id$ */
 
-	require_once('class.help.inc.php');
+	CreateObject('phpgwapi.help');
 
 	class help_helper extends help
 	{

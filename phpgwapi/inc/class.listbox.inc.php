@@ -25,8 +25,7 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	require_once('class.portalbox.inc.php');
-
+	CreateObject('phpgwapi.portalbox');
 	class listbox extends portalbox
 	{
 		/*
