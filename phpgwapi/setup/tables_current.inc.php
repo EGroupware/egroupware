@@ -73,7 +73,7 @@
 		),
 		'phpgw_preferences' => array(
 			'fd' => array(
-				'preference_owner' => array('type' => 'varchar', 'precision' => 20, 'nullable' => false),
+				'preference_owner' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'preference_value' => array('type' => 'text')
 			),
 			'pk' => array('preference_owner'),
@@ -346,6 +346,18 @@
 				'history_timestamp' => array('type' => 'timestamp', 'nullable' => False, 'default' => 'current_timestamp')
 			),
 			'pk' => array('history_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),
+		'phpgw_app_link', array(
+			'fd' => array(
+				'appname' => array('type' => 'varchar', 'precision' => 64, 'nullable' => False),
+				'appid'   => array('type' => 'int',     'precision' => 4,  'nullable' => False),
+				'linkapp' => array('type' => 'varchar', 'precision' => 64, 'nullable' => False),
+				'linkid'  => array('type' => 'int',     'precision' => 4,  'nullable' => False),
+			),
+			'pk' => array('appname','linkapp'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
