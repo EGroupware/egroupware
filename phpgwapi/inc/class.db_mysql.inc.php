@@ -289,11 +289,16 @@
 			return True;
 		}
 
-		function get_last_insert_id()
+		function get_last_insert_id($table, $field)
 		{
 			/* This will get the last insert ID created on the current connection.  Should only be called
-			 * after an insert query is run on a table that has an auto incrementing field.
+			 * after an insert query is run on a table that has an auto incrementing field.  $table and
+			 * $field are required, but unused here since it's unnecessary for mysql.  For compatibility
+			 * with pgsql, the params must be supplied.
 			 */
+
+			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+				return -1;
 
 			return @mysql_insert_id($this->Link_ID);
 		}

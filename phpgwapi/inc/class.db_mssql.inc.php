@@ -256,6 +256,28 @@
 		}
 
 		/* public: table locking */
+		function get_last_insert_id($table, $field)
+		{
+			/* This will get the last insert ID created on the current connection.  Should only be called
+			 * after an insert query is run on a table that has an auto incrementing field.  Of note, table
+			 * and field are required for pgsql compatiblity.  MSSQL uses a query to retrieve the last
+			 * identity on the connection, so table and field are ignored here as well.
+			 */
+			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+				return -1;
+
+			$result = @mssql_query("select @@identity", $this->Link_ID);
+			if (!$result)
+				return -1;
+
+			$Record = @mssql_fetch_row(0);
+			@mssql_free_result($result);
+			if (!is_array($Record)) /* no identity? */
+				return -1;
+
+			return $Record[0];
+		}
+
 		function lock($table, $mode="write")
 		{
 			return 1; // FIXME: fill it in!

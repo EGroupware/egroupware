@@ -273,6 +273,33 @@
 			return pg_Exec($this->Link_ID,'rollback');
 		}
 
+		function get_last_insert_id($table, $field)
+		{
+			/* This will get the last insert ID created on the current connection.  Should only be called
+			 * after an insert query is run on a table that has an auto incrementing field.  Of note, table
+			 * and field are required because pgsql returns the last inserted OID, which is unique across
+			 * an entire installation.  These params allow us to retrieve the sequenced field without adding
+			 * conditional code to the apps.
+			 */
+			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+				return -1;
+
+			$oid = pg_getlastoid($this->Query_ID);
+			if ($oid == -1)
+				return -1;
+
+			$result = @pg_Exec($this->Link_ID, "select $field from $table where oid=$oid");
+			if (!$result)
+				return -1;
+
+			$Record = @pg_fetch_array($result, 0);
+			@pg_freeresult($result);
+			if (!is_array($Record)) /* OID not found? */
+				return -1;
+
+			return $Record[0];
+		}
+
 		function lock($table, $mode = 'write')
 		{
 			$result = $this->transaction_begin();
