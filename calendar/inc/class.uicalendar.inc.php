@@ -233,7 +233,7 @@
 						'dayname'	=> '<b>' . substr(lang($GLOBALS['phpgw']->datetime->days[$i]['name']),0,2) . '</b>',
 						'day_image'	=> ''
 					);
-					$this->output_template_array($p,'daynames','mini_day',$var);
+					$this->output_template_array($mini_cal_tpl,'daynames','mini_day',$var);
 				}
 			}
 			$today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
