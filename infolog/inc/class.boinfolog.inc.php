@@ -60,6 +60,7 @@
 				'out' => array('array')
 			),
 		);
+		var $xmlrpc = False;	// called via xmlrpc
 
 		function boinfolog( $info_id = 0)
 		{
@@ -135,7 +136,14 @@
 			// are we called via xmlrpc?
 			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 
-			$this->read( $info_id);
+			if ($info_id)
+			{
+				$this->read( $info_id );
+			}
+			else
+			{
+				$this->init();
+			}
 		}
 
 		/*!
@@ -247,7 +255,15 @@
 			{
 				$delete_children = $info_id['delete_children'];
 				$new_parent = $info_id['new_parent'];
-				$info_id = $info_id['info_id'];
+				$info_id = (int)(isset($info_id[0]) ? $info_id[0] : (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id['info_id']));
+			}
+			if ($this->so->read($info_id) === False)
+			{
+				if ($this->xmlrpc)
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
+				}
+				return False;
 			}
 			if (!$this->check_access($info_id,PHPGW_ACL_DELETE))
 			{
@@ -342,12 +358,15 @@
 		*/
 		function search(&$query)
 		{
+			//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
 			$ret = $this->so->search($query);
 			if ($this->xmlrpc && is_array($ret))
 			{
-				foreach($ret as $id => $data)
+				$infos = $ret;
+				$ret = array();
+				foreach($infos as $id => $data)
 				{
-					$ret[$id] = $this->data2xmlrpc($data);
+					$ret[] = $this->data2xmlrpc($data);
 				}
 			}
 			//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";
@@ -492,7 +511,7 @@
 					$xml_functions = array(
 						'read' => array(
 							'function'  => 'read',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
 							'docstring' => lang('Read one record by passing its id.')
 						),
 						'search' => array(
@@ -507,12 +526,12 @@
 						),
 						'delete' => array(
 							'function'  => 'delete',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
 							'docstring' => lang('Delete one record by passing its id.')
 						),
 						'categories' => array(
 							'function'  => 'categories',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcBool,xmlrpcStruct)),
 							'docstring' => lang('List all categories.')
 						),
 						'list_methods' => array(
@@ -534,6 +553,8 @@
 
 		function data2xmlrpc($data)
 		{
+			$data['rights'] = $this->so->grants[$data['info_owner']];
+
 			// translate timestamps
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
 			{
@@ -543,15 +564,31 @@
 				}
 			}
 			// translate cat_id
-			if (isset($data['cat_id']))
+			if (isset($data['info_cat']))
 			{
-				$data['cat_id'] = $GLOBALS['server']->cats2xmlrpc(array($data['cat_id']));
+				$data['info_cat'] = $GLOBALS['server']->cats2xmlrpc(array($data['info_cat']));
+			}
+			foreach($data as $name => $val)
+			{
+				if (substr($name,0,5) == 'info_')
+				{
+					unset($data[$name]);
+					$data[substr($name,5)] = $val;
+				}
 			}
 			return $data;
 		}
 
 		function xmlrpc2data($data)
 		{
+			foreach($data as $name => $val)
+			{
+				if (substr($name,0,5) != 'info_')
+				{
+					unset($data[$name]);
+					$data['info_'.$name] = $val;
+				}
+			}
 			// translate timestamps
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
 			{
@@ -561,10 +598,10 @@
 				}
 			}
 			// translate cat_id
-			if (isset($data['cat_id']))
+			if (isset($data['info_cat']))
 			{
-				$cats = $GLOBALS['server']->xmlrpc2cats($data['cat_id']);
-				$data['cat_id'] = (int)$cats[0];
+				$cats = $GLOBALS['server']->xmlrpc2cats($data['info_cat']);
+				$data['info_cat'] = (int)$cats[0];
 			}
 			return $data;
 		}

@@ -80,8 +80,7 @@
 				($info['info_access'] == 'public' ||
 				!!($this->grants[$owner] & PHPGW_ACL_PRIVATE));
 
-			// echo "check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied");
-
+			//echo "<p>check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied")."</p>\n";
 			return $access_ok;
 		}
 
@@ -487,13 +486,19 @@
 					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' phpgw_infolog.info_id IN ('.implode(',',$links).')';
 				}
 			}
-			if ($query['order'])
+			if (!empty($query['order']) && eregi('^[a-z_0-9, ]+$',$query['order']) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
 			{
-			  $ordermethod = 'ORDER BY ' . $this->db->db_addslashes($query['order']) . ' ' . $this->db->db_addslashes($query['sort']);
+				$order = array();
+				foreach(explode(',',$query['order']) as $val)
+				{
+					$val = trim($val);
+					$order[] = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
+				}
+				$ordermethod = 'ORDER BY ' . implode(',',$order) . ' ' . $query['sort'];
 			}
 			else
 			{
-			  $ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
+				$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 			}
 			$filtermethod = $this->aclFilter($query['filter']);
 			$filtermethod .= $this->statusFilter($query['filter']);
@@ -504,7 +509,8 @@
 				foreach($query['col_filter'] as $col => $data)
 				{
 					$data = $this->db->db_addslashes($data);
-					if (!empty($data))
+					if (substr($col,0,5) != 'info_') $col = 'info_'.$col;
+					if (!empty($data) && eregi('^[a-z_0-9]+$',$col))
 					{
 						$filtermethod .= " AND $col = '$data'";
 					}
