@@ -12,17 +12,19 @@
 
 /* $Id$ */
 
-	$phpgw_info["flags"] = array("currentapp" =>
-								"addressbook","enable_contacts_class" => True,
-								"enable_nextmatchs_class" => True);
+	$phpgw_info["flags"] = array(
+		"currentapp" => "addressbook",
+		"enable_contacts_class" => True,
+		"enable_nextmatchs_class" => True);
+
 	include("../header.inc.php");
 
-	#$t = new Template($phpgw_info["server"]["app_tpl"]);
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
-	$t->set_file(array( "addressbook_header"	=> "header.tpl",
-						"column"				=> "column.tpl",
-						"row"					=> "row.tpl",
-						"addressbook_footer"	=> "footer.tpl" ));
+	$t->set_file(array(
+		"addressbook_header"	=> "header.tpl",
+		"column"				=> "column.tpl",
+		"row"					=> "row.tpl",
+		"addressbook_footer"	=> "footer.tpl" ));
 
 	$this = CreateObject("phpgwapi.contacts");
 
@@ -50,7 +52,6 @@
 		$offset = 30;
 	}
 
-	// insert acl stuff here in lieu of old access perms
 	// following sets up the filter for read, then restores the filter string for later checking
 	if ($filter == "none") { $filter = ""; }
 	$savefilter = $filter;
@@ -108,7 +109,7 @@
 
 	// Show the entries
 	for ($i=0;$i<count($entries);$i++) { // each entry
-		$rights = $phpgw->acl->get_rights('u_'.$entries[$i]["owner"],$phpgw_info["flags"]["currentapp"]);
+		$rights = $phpgw->acl->get_rights($entries[$i]["owner"],$phpgw_info["flags"]["currentapp"]);
 		if ( ($rights & PHPGW_ACL_READ) || ($entries[$i]["owner"] == $phpgw_info["user"]["account_id"]) ) {
 		//if ( ($entries[$i]["access"] == $filter) ||
 		//	($entries[$i]["access"] == "," . $filter . ",") ||

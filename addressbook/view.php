@@ -16,9 +16,10 @@
 		$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True);
 	}
 
-	$phpgw_info["flags"] = array("currentapp" => "addressbook",
-								"enable_contacts_class" => True,
-								"enable_nextmatchs_class" => True);
+	$phpgw_info["flags"] = array(
+		"currentapp" => "addressbook",
+		"enable_contacts_class" => True,
+		"enable_nextmatchs_class" => True);
 
 	include("../header.inc.php");
 
@@ -53,7 +54,7 @@
 	
 	$owner  = $fields[0]["owner"];
 
-	$rights = $phpgw->acl->get_rights('u_'.$owner,$phpgw_info["flags"]["currentapp"]);
+	$rights = $phpgw->acl->get_rights($owner,$phpgw_info["flags"]["currentapp"]);
 	if ( ($rights & PHPGW_ACL_READ) || ($owner == $phpgw_info["user"]["account_id"]) ) {
 
 		$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";

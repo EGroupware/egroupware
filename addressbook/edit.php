@@ -17,7 +17,7 @@
 	}
 
 	$phpgw_info["flags"]["currentapp"] = "addressbook";
-	$phpgw_info["flags"]["enable_addressbook_class"] = True;
+	$phpgw_info["flags"]["enable_contacts_class"] = True;
 	include("../header.inc.php");
 
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
@@ -47,7 +47,7 @@
 		form("","edit.php","Edit",$fields[0]);
 	} else {
 		//verify edit capabilities
-		$rights = $phpgw->acl->get_rights('u_'.$owner,$phpgw_info["flags"]["currentapp"]);
+		$rights = $phpgw->acl->get_rights($owner,$phpgw_info["flags"]["currentapp"]);
 		if ( ($rights & PHPGW_ACL_EDIT) || ($owner == $phpgw_info["user"]["account_id"]) ) {
 			if ($url == "http://") {
 				$url = "";

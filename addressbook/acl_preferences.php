@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Calendar                                                  *
+  * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -11,47 +11,58 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
-  include("../header.inc.php");
+  $phpgw_info['flags'] = array('currentapp' => 'addressbook', 'enable_nextmatchs_class' => True, 'noappheader' => True, 'noappfooter' => True);
+  include('../header.inc.php');
+
+  $private_acl = True;
+
+  if($private_acl == True)
+  {
+    define(PHPGW_ACL_PRIVATE,16);
+  }
+
+  function check_acl($label,$id,$acl,$rights,$right)
+  {
+    global $phpgw_info, $p;
+
+    $p->set_var($acl,$label.$phpgw_info['flags']['currentapp'].'['.$id.']['.$right.']');
+    if ($rights & $right) {
+      $p->set_var($acl.'_selected',' checked');
+    } else {
+      $p->set_var($acl.'_selected','');
+    }
+  }
+  
 
   function display_row($bg_color,$label,$id,$name) {
     global $p;
     global $phpgw;
     global $phpgw_info;
     global $acl;
+    global $private_acl;
     
     $p->set_var('row_color',$bg_color);
     $p->set_var('user',$name);
-    $rights = $acl->get_rights($label.$id,$phpgw_info["flags"]["currentapp"]);
-    $p->set_var('read',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_READ.']');
-    if ($rights & PHPGW_ACL_READ) {
-      $p->set_var('read_selected',' checked');
-    } else {
-      $p->set_var('read_selected','');
+    $rights = $acl->get_rights($id,$phpgw_info['flags']['currentapp']);
+
+    check_acl($label,$id,'read',$rights,PHPGW_ACL_READ);
+    
+    check_acl($label,$id,'add',$rights,PHPGW_ACL_ADD);
+    
+    check_acl($label,$id,'edit',$rights,PHPGW_ACL_EDIT);
+    
+    check_acl($label,$id,'delete',$rights,PHPGW_ACL_DELETE);
+
+    if($private_acl == True)
+    {
+      check_acl($label,$id,'private',$rights,PHPGW_ACL_PRIVATE);
     }
-    $p->set_var('add',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_ADD.']');
-    if ($rights & PHPGW_ACL_ADD) {
-      $p->set_var('add_selected',' checked');
-    } else {
-      $p->set_var('add_selected','');
-    }
-    $p->set_var('edit',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_EDIT.']');
-    if ($rights & PHPGW_ACL_EDIT) {
-      $p->set_var('edit_selected',' checked');
-    } else {
-      $p->set_var('edit_selected','');
-    }
-    $p->set_var('delete',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_DELETE.']');
-    if ($rights & PHPGW_ACL_DELETE) {
-      $p->set_var('delete_selected',' checked');
-    } else {
-      $p->set_var('delete_selected','');
-    }
+    
     $p->parse('row','acl_row',True);
   }
 
-  if(!isset($owner) || !$phpgw_info["user"]["apps"]["admin"]) {
-    $owner = $phpgw_info["user"]["account_id"];
+  if(!isset($owner) || !$phpgw_info['user']['apps']['admin']) {
+    $owner = $phpgw_info['user']['account_id'];
   }
   $groups = $phpgw->accounts->memberships($owner);
   $acl = CreateObject('phpgwapi.acl',intval($owner));
@@ -60,10 +71,10 @@
   if ($submit) {
     $to_remove = unserialize(urldecode($processed));
     for($i=0;$i<count($to_remove);$i++) {
-      $acl->delete($phpgw_info["flags"]["currentapp"],$to_remove[$i]);
+      $acl->delete($phpgw_info['flags']['currentapp'],$to_remove[$i]);
     }
 // Group records
-    $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
+    $group_variable = 'g_'.$phpgw_info['flags']['currentapp'];
 
     @reset($$group_variable);
     while(list($group_id,$acllist) = each($$group_variable)) {
@@ -71,11 +82,11 @@
       while(list($right,$permission) = each($acllist)) {
         $totalacl += $right;
       }
-      $acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$totalacl);
+      $acl->add($phpgw_info['flags']['currentapp'],$group_id,$totalacl);
     }
 
 // User records
-    $user_variable = 'u_'.$phpgw_info["flags"]["currentapp"];
+    $user_variable = 'u_'.$phpgw_info['flags']['currentapp'];
     
     @reset($$user_variable);
     while(list($user_id,$acllist) = each($$user_variable)) {
@@ -83,9 +94,9 @@
       while(list($right,$permission) = each($acllist)) {
         $totalacl += $right;
       }
-      $acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$totalacl);
+      $acl->add($phpgw_info['flags']['currentapp'],$user_id,$totalacl);
     }
-	$acl->save_repository();
+    $acl->save_repository();
   }
 
   $processed = Array();
@@ -114,7 +125,7 @@
   }
 
   if(!isset($maxm)) {
-    $maxm = $phpgw_info["user"]["preferences"]["common"]["maxmatchs"];
+    $maxm = $phpgw_info['user']['preferences']['common']['maxmatchs'];
   }
 
   if(!isset($totalentries)) {
@@ -125,17 +136,26 @@
     $totalentries += intval($db->f(0));
   }
 
-  $p = CreateObject('phpgwapi.Template',$phpgw_info["server"]["app_tpl"]);
-  $p->set_file(array('preferences' => 'preference_acl.tpl',
-                     'row_colspan' => 'preference_colspan.tpl',
-                     'acl_row' => 'preference_acl_row.tpl'));
+  $p = CreateObject('phpgwapi.Template',$phpgw_info['server']['app_tpl']);
+  if($private_acl == True)
+  {
+    $p->set_file(array('preferences' => 'preference_acl.tpl',
+                       'row_colspan' => 'preference_colspan_private.tpl',
+                       'acl_row' => 'preference_acl_row_private.tpl'));
+  }
+  else
+  {
+    $p->set_file(array('preferences' => 'preference_acl.tpl',
+                       'row_colspan' => 'preference_colspan.tpl',
+                       'acl_row' => 'preference_acl_row.tpl'));
+  }
 
 //  $p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
   $p->set_var('errors','');
   $p->set_var('title','<p><b>'.lang($phpgw_info["flags"]["currentapp"]." preferences").' - '.lang("acl").':</b><hr><p>');
 
   $p->set_var('action_url',$phpgw->link(''));
-  $p->set_var('bg_color',$phpgw_info["theme"]["th_bg"]);
+  $p->set_var('bg_color',$phpgw_info['theme']['th_bg']);
   $p->set_var('submit_lang',lang('submit'));
 
   $common_hidden_vars = '     <input type="hidden" name="s_groups" value="'.$s_groups.'">'."\n"
@@ -148,13 +168,18 @@
   $p->set_var('common_hidden_vars_form',$common_hidden_vars);
   
   if(isset($query_result) && $query_result)
-    $common_hidden_vars .= "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
+    $common_hidden_vars .= '<input type="hidden" name="query_result" value="'.$query_result.'">'."\n";
 
   $p->set_var('common_hidden_vars',$common_hidden_vars);
   $p->set_var(array('read_lang' => lang('Read'),
                     'add_lang' => lang('Add'),
                     'edit_lang' => lang('Edit'),
                     'delete_lang' => lang('Delete')));
+                    
+  if($private_acl == True)
+  {
+    $p->set_var('private_lang',lang('Private'));
+  }
 
   if(intval($s_groups) <> count($groups)) {
     $p->set_var('string',lang('Groups'));
@@ -165,15 +190,15 @@
       $group = $groups[$k];
       $go = True;
       if($query) {
-        if(!strpos(' '.$group["account_id"].' ',$query)) {
+        if(!strpos(' '.$group['account_id'].' ',$query)) {
           $go = False;
         }
       }
       if($go) {
         $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-        display_row($tr_color,'g_',$group["account_id"],$group["account_name"]);
+        display_row($tr_color,'g_',$group['account_id'],$group['account_name']);
         $s_groups++;
-        $processed[] = 'g_'.$group["account_id"];
+        $processed[] = $group['account_id'];
         $total++;
         if($total == $maxm) break;
       }
@@ -195,17 +220,17 @@
         while($db->next_record()) {
           $go = True;
           if($query) {
-            $name = ' '.$db->f("account_firstname").' '.$db->f("account_lastname").' '.$db->f("account_lid").' ';
+            $name = ' '.$db->f('account_firstname').' '.$db->f('account_lastname').' '.$db->f('account_lid').' ';
             if(!strpos($name,$query)) {
               $go = False;
             }
           }
           if($go) {
             $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-            $id = $db->f("account_id");
+            $id = $db->f('account_id');
             display_row($tr_color,'u_',$id,$phpgw->common->grab_owner_name($id));
             $s_users++;
-            $processed[] = 'u_'.$id;
+            $processed[] = $id;
             $total++;
             if($total == $maxm) break;
           }
@@ -214,13 +239,13 @@
     }
   }
 
-  $extra_parms = "&s_users=".$s_users."&s_groups=".$s_groups."&maxm=".$maxm."&totalentries=".$totalentries."&total=".($start + $total)."&owner=".$owner;
+  $extra_parms = '&s_users='.$s_users.'&s_groups='.$s_groups.'&maxm='.$maxm.'&totalentries='.$totalentries.'&total='.($start + $total).'&owner='.$owner;
   
-  $p->set_var("nml",$phpgw->nextmatchs->left("",$start,$totalentries,$extra_parms));
-  $p->set_var("nmr",$phpgw->nextmatchs->right("",$start,$totalentries,$extra_parms));
+  $p->set_var('nml',$phpgw->nextmatchs->left('',$start,$totalentries,$extra_parms));
+  $p->set_var('nmr',$phpgw->nextmatchs->right('',$start,$totalentries,$extra_parms));
 
-  $p->set_var("search_value",(isset($query) && $query?$query:""));
-  $p->set_var("search",lang("search"));
+  $p->set_var('search_value',(isset($query) && $query?$query:''));
+  $p->set_var('search',lang('search'));
 
   $p->set_var('processed',urlencode(serialize($processed)));
   $p->pparse('out','preferences');
