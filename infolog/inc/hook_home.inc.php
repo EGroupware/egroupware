@@ -26,7 +26,7 @@
 		$GLOBALS['HTTP_POST_VARS']['filter'] = $GLOBALS['filter'] = 'own-open-today';
 		$infolog = CreateObject('infolog.uiinfolog');
 
-		$GLOBALS['phpgw']->portalbox->draw($infolog->get_list(2));
+		$GLOBALS['phpgw']->portalbox->draw($infolog->index());
 
 		unset($infolog);
 		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
