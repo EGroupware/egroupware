@@ -112,10 +112,13 @@
 
 	$phpgw_setup->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
 
-	if ($submit)
+	if ($HTTP_POST_VARS['submit'])
 	{
 		$setup_tpl->set_var('description',lang('App process') . ':');
 		$setup_tpl->pparse('out','header');
+
+		$appname = $HTTP_POST_VARS['appname'];
+		$install = $HTTP_POST_VARS['install'];
 
 		while (list($appname,$key) = @each($install))
 		{
