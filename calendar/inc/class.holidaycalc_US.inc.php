@@ -60,7 +60,7 @@ class holidaycalc {
 					$holidays[$i]['month'] = $holiday['month'];
 					$holidays[$i]['occurence'] = $holiday['occurence'];
 					$holidays[$i]['dow'] = $holiday['dow'];
-					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year) - $datetime->tz_offset;
+					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day+1,$year);
 					$holidays[$i]['obervance_rule'] = 0;
 				}
 				elseif($dow == 6)
@@ -72,12 +72,12 @@ class holidaycalc {
 					$holidays[$i]['month'] = $holiday['month'];
 					$holidays[$i]['occurence'] = $holiday['occurence'];
 					$holidays[$i]['dow'] = $holiday['dow'];
-					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year) - $datetime->tz_offset;
+					$holidays[$i]['date'] = mktime(0,0,0,$holiday['month'],$day-1,$year);
 					$holidays[$i]['obervance_rule'] = 0;
 				}
 			}
 		}
-		$date = mktime(0,0,0,$holiday['month'],$day,$year) - $datetime->tz_offset;
+		$date = mktime(0,0,0,$holiday['month'],$day,$year);
 
 		return $date;
 	}
