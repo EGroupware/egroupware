@@ -2,7 +2,7 @@
 %1 - %2 of %3 user groups	admin	sl	Uporabniške skupine %1 do %2 od vseh %3
 %1 not found or not executable !!!	admin	sl	Ne najdem datoteke %1 ali pa ni izvedljiva!
 (stored password will not be shown here)	admin	sl	(Shranjeno geslo tu ne bo vidno)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabi <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
 accesslog and bruteforce defense	admin	sl	Beleženje dostopov in BruteForce obramba
 account active	admin	sl	Račun je aktiven
 account has been created	common	sl	Račun je bil ustvarjen.
@@ -32,13 +32,13 @@ add new application	admin	sl	Dodaj novo aplikacijo
 add peer server	admin	sl	Dodaj vzporedni strežnik
 add sub-category	admin	sl	Dodaj podkategorijo
 admin email	admin	sl	Oskrbnikov E-naslov
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sl	E-naslovi oskrbnikov (ločeni z vejicami) za opozorila glede blokad. Če ne želite opozoril pustite prazno.
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sl	E-naslovi oskrbnikov (ločeni z vejicami) za opozorila pri blokadah. Če ne želite opozoril pustite prazno.
 admin name	admin	sl	Ime oskrbnika
 administration	admin	sl	Upravljanje
 admins	admin	sl	Oskrbniki
 advanced options	admin	sl	razširjene izbire
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po koliko neuspešnih prijavah se račun onemogoči? (privzeto 3)
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sl	Po koliko neuspešnih prijavah se onemogoči IP? (privzeto 3)
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se račun onemogoči? (privzeto 3)
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se onemogoči IP? (privzeto 3)
 aliases	admin	sl	Psevdonimi
 all records and account information will be lost!	admin	sl	Vsi podatki o računih bodo izgubljeni!
 all users	admin	sl	Vsi uporabniki
@@ -52,7 +52,7 @@ application name	admin	sl	Ime aplikacije
 application title	admin	sl	Naslov aplikacije
 applications	admin	sl	Aplikacije
 applications list	admin	sl	Seznam aplikacij
-apply	admin	sl	Uporabi
+apply	admin	sl	uporabi
 are you sure you want to delete the application %1 ?	admin	sl	Ste prepričani, da želite izbrisati aplikacijo %1?
 are you sure you want to delete this account ?	admin	sl	Ste prepričani, da želite izbrisati ta račun?
 are you sure you want to delete this application ?	admin	sl	Ste prepričani, da želite izbrisati to aplikacijo?
@@ -60,13 +60,13 @@ are you sure you want to delete this category ?	common	sl	Ste prepričani, da ž
 are you sure you want to delete this global category ?	admin	sl	Ste prepričani, da želite izbrisati to globalno kategorijo?
 are you sure you want to delete this group ?	admin	sl	Ste prepričani, da želite izbrisati to skupino?
 are you sure you want to delete this server?	admin	sl	Ste prepričani, da želite izbrisati ta strežnik?
-are you sure you want to kill this session ?	admin	sl	Ste prepričani, da želite prisilno prekiniti to sejo?
+are you sure you want to kill this session ?	admin	sl	Ste prepričani, da želite prekiniti to sejo?
 async services last executed	admin	sl	Zadnja izvedena asinhrona storitev
 asynchronous timed services	admin	sl	Asinhrono regulirane storitve
-asyncservices not yet installed or other error (%1) !!!	admin	sl	Asinhrona storitev še ni nameščena ali druga napaka (%1)!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sl	Poskus uporabe pravilnega MIME tipa za FTP, namesto privzete 'application/octet-stream'.
+asyncservices not yet installed or other error (%1) !!!	admin	sl	asinhrona storitev še ni nameščena ali druga napaka (%1)!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sl	Poskušaj uporabiti pravilen MIME tip za FTP, namesto privzetega 'application/octet-stream'
 attribute accountstatus explained	admin	sl	To določa atribut <b><i>-accountStatus-</i></b> za QMAIL shemo.
-attribute mail explained	admin	sl	To določa atribut <b><i>-mail-</i></b> za QMAIL shemo in naj nikoli ne bo prazen.
+attribute mail explained	admin	sl	To določa atribut <b><i>-mail-</i></b> za QMAIL shemo in naj ne bo nikoli prazen.
 attribute mailalternateaddress explained	admin	sl	To določa atribut <b><i>-mailAlternateAddress-</i></b> za QMAIL shemo. Določa tudi navidezne povezave in psevdonime.
 attribute mailforwardingaddress explained	admin	sl	To določa atribut <b><i>-mailForwardingAddress-</i></b> za QMAIL shemo. Ne sme biti prazen če je posredovanje določeno.
 authentication / accounts	admin	sl	Avtentikacija / Računi
@@ -106,11 +106,11 @@ delete application	admin	sl	Izbriši aplikacijo
 delete category	admin	sl	Izbriši kategorijo
 delete group	admin	sl	Izbriši skupino
 delete peer server	admin	sl	Izbriši vzporedni strežnik
-delete the category	admin	sl	Izbriši kategorijo
-delete the group	admin	sl	Izbriši skupino
-delete this category	admin	sl	Izbriši to kategorijo
-delete this group	admin	sl	Izbriši to skupino
-delete this user	admin	sl	Izbriši tega uporabnika
+delete the category	admin	sl	izbriši kategorijo
+delete the group	admin	sl	izbriši skupino
+delete this category	admin	sl	izbriši to kategorijo
+delete this group	admin	sl	izbriši to skupino
+delete this user	admin	sl	izbriši tega uporabnika
 deliver extern	admin	sl	dostavi zunanji aplikaciji
 deny access to access log	admin	sl	Prepreči dostop do dnevnika dostopov
 deny access to application registery	admin	sl	Prepreči dostop do registra aplikacij
@@ -134,12 +134,12 @@ disable wysiwyg-editor	admin	sl	onemogoči WYSIWYG urejevalnik
 disabled (not recomended)	admin	sl	onemogočeno (ni priporočeno)
 display	admin	sl	Prikaži
 do not delete the category and return back to the list	admin	sl	<B>Ne</B> izbriši kategorije in se vrni nazaj na seznam.
-do you also want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne podkategorije?
-do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne podkategorije?
+do you also want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi vse globalne podkategorije?
+do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne vse podkategorije?
 do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
 edit account	admin	sl	Urejanje računa
 edit application	admin	sl	Urejanje aplikacije
-edit email settings	admin	sl	Urejanje E-poštnih nastavitev
+edit email settings	admin	sl	urejanje E-poštnih nastavitev
 edit global category	admin	sl	Urejanje globalne kategorije
 edit global category for %1	admin	sl	Urejanje globalne kategorije za %1
 edit group	admin	sl	Urejanje skupine
@@ -158,7 +158,7 @@ email address	admin	sl	E-poštni naslov
 enable debug-messages	admin	sl	Omogoči sporočila za iskanje napak
 enabled - hidden from navbar	admin	sl	Omogočeno - skrito z navigacijske vrstice
 enabled - popup window	admin	sl	Omogočeno - pojavna okna
-enter a description for the category	admin	sl	Vnesite opis kategorije
+enter a description for the category	admin	sl	vnesite opis kategorije
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sl	Vnesi neko naključno besedilo za <br> kodiranje app_session (zahteva mcrypt)
 enter the background color for the login page	admin	sl	Vnesite barvo ozadja prijavne strani
 enter the background color for the site title	admin	sl	Vnesite barvo ozadja naslova strežnika
@@ -182,12 +182,12 @@ enter your http proxy server	admin	sl	Vnesite privzet strežnik s HTTP proxy-em
 enter your http proxy server port	admin	sl	Vnesite privzeta vrata strežnika s HTTP proxy-em
 enter your smtp server hostname or ip address	admin	sl	Vnesite ime SMTP strežnika ali IP naslov
 enter your smtp server port	admin	sl	Vnesite vrata SMTP strežnika (25)
-error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju kronometra: morda sploh ni nastavljen!
+error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju kronometra: morda ni nastavljen!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sl	Napaka ob vzpostavljanju kronometra: napačna sintaksa ali pa je kronometer že vzpostavljen!
 error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga napaka!
 expires	admin	sl	Preteče
-explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberet v README.ldapman v mapi "doc" oskrbnika.
-fallback (after each pageview)	admin	sl	povračanje (po prikazu vsake strani)
+explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
+fallback (after each pageview)	admin	sl	vzpostavitven (po prikazu vsake strani)
 file space	admin	sl	Prostor za datoteke
 file space must be an integer	admin	sl	Prostor za datoteke mora biti celo števlio
 find and register all application hooks	admin	sl	Poišči in registriraj vse zanke v aplikacijah
@@ -195,7 +195,7 @@ for the times above	admin	sl	za čase nad
 for the times below (empty values count as '*', all empty = every minute)	admin	sl	za čase pod (prazno šteje kot '*'; vse prazno = vsako minuto)
 force selectbox	admin	sl	Vsili izbiro
 forward also to	admin	sl	posreduj tudi
-forward email's to	admin	sl	posreduj sporočila k
+forward email's to	admin	sl	posreduj E-pošto na
 forward only	admin	sl	samo posreduj
 global categories	common	sl	Globalne kategorije
 group ?	admin	sl	skupina ?
@@ -209,7 +209,7 @@ hide php information	admin	sl	skrij PHP informacije
 home directory	admin	sl	Domači direktorij
 host information	admin	sl	Informacije o gostitelju (host)
 hour<br>(0-23)	admin	sl	Ura <BR> (0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sl	Koliko dni zapisi ostanejo v evidenci dostopov, preden se izbrišejo? (privzeto 90)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sl	Koliko dni zapisi ostanejo v evidenci dostopov predno se izbrišejo? (privzeto 90)
 how many minutes should an account or ip be blocked (default 30) ?	admin	sl	Koliko minut naj bo račun ali IP onemogočen? (privzeto 30)
 icon	admin	sl	Ikona
 idle	admin	sl	nedejaven
@@ -219,7 +219,7 @@ in mbyte	admin	sl	v megabajtih
 inbound	admin	sl	vhodno
 install crontab	admin	sl	Namesti crontab
 installed applications	common	sl	Nameščene aplikacije
-installed crontab	admin	sl	Crontab je nameščen.
+installed crontab	admin	sl	Crontab je nameščen
 interface	admin	sl	Vmesnik
 ip	admin	sl	IP
 jobs	admin	sl	Naloge
@@ -233,14 +233,14 @@ last time read	admin	sl	Čas zadnjega branja
 ldap accounts context	admin	sl	Kontekst LDAP računa
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sl	Predpona privzetega LDAP direktorija (npr. /home za /home/username)
 ldap default shell (e.g. /bin/bash)	admin	sl	Privzeta LDAP lupina (npr. /bin/bash)
-ldap encryption type	admin	sl	Tip LDAP kriptiranja
+ldap encryption type	admin	sl	Tip LDAP šifriranja
 ldap groups context	admin	sl	Kontekst LDAP skupine
 ldap host	admin	sl	LDAP gostitelj
 ldap root password	admin	sl	LDAP glavno geslo (root)
 ldap rootdn	admin	sl	LDAP rootdn
 leave empty for no quota	admin	sl	pustite prazno za neomejeno
-leave the category untouched and return back to the list	admin	sl	Pusti kategorijo nedotaknjeno in se vrni nazaj na seznam.
-leave the group untouched and return back to the list	admin	sl	Pusti skupino nedotaknjeno in se vrni nazaj na seznam.
+leave the category untouched and return back to the list	admin	sl	pusti kategorijo nedotaknjeno in se vrni nazaj na seznam
+leave the group untouched and return back to the list	admin	sl	Pusti skupino nedotaknjeno in se vrni nazaj na seznam
 list config settings	admin	sl	Seznam konfiguracijskih nastavitev
 list current sessions	admin	sl	Seznam trenutnih sej
 list of current users	admin	sl	seznam trenutnih uporabnikov
@@ -257,7 +257,7 @@ manager	admin	sl	Upravitelj
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
 maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
-method	admin	sl	Metoda
+method	admin	sl	Postopek
 minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 100 ali 500)
 minute	admin	sl	Minute
 mode	admin	sl	Način
@@ -288,14 +288,14 @@ permissions this group has	admin	sl	Dovoljenja za to skupino
 phpinfo	admin	sl	Podatki o PHPju
 please enter a name	admin	sl	Vnesite ime
 please enter a name for that server !	admin	sl	Vnesite ime tistega strežnika!
-please run setup to become current	admin	sl	Poženite namestitev (setup) za posodobitev!
+please run setup to become current	admin	sl	Poženite namestitev za posodobitev!
 please select	admin	sl	Izberite
 postfix with ldap	admin	sl	Pripona za LDAP
 preferences	admin	sl	Nastavitve
 primary group	admin	sl	osnovna skupina
 qmaildotmode	admin	sl	qmaildot način
-qouta size in mbyte	admin	sl	Velikost kvote v megabajtih
-quota settings	admin	sl	Nastavitvev kvote
+qouta size in mbyte	admin	sl	velikost kvote v megabajtih
+quota settings	admin	sl	nastavitvev kvote
 re-enter password	admin	sl	Ponovite geslo
 read this list of methods.	admin	sl	Preberite ta seznam metod
 register application hooks	admin	sl	Registrirajte zanke aplikacij
@@ -303,7 +303,7 @@ remove	admin	sl	odstrani
 remove all users from this group	admin	sl	Odstranite vse uporabnike iz te skupine
 remove all users from this group ?	admin	sl	Odstranim vse uporabnike iz te skupine?
 return to admin mainscreen	admin	sl	vrni se na oskrbnikov zaslon
-return to view account	admin	sl	Vrni se na pregled računa.
+return to view account	admin	sl	Vrni se na pregled računa
 route all mails to	admin	sl	Preusmeri vso pošto na
 run asynchronous services	admin	sl	Poženi asinhrone storitve
 save the category	admin	sl	shrani to kategorijo
@@ -328,12 +328,12 @@ server type(mode)	admin	sl	Tip (način) strežnika
 server url	admin	sl	URL strežnika
 server username	admin	sl	Uporabniško ime strežnika
 set preference values.	admin	sl	Vnesite vrednosti nastavitev.
-should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire (uporabno za demo-strani) ?
-show 'powered by' logo on	admin	sl	Pokaži "poganja" logotip na
+should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?
+show 'powered by' logo on	admin	sl	Pokaži 'teče na' logotip na
 show access log	admin	sl	Pokaži evidenco dostopov
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
-show phpinfo()	admin	sl	Pokaži phpinfo()
+show phpinfo()	admin	sl	Pokaži phpinfo() informacije
 show session ip address	admin	sl	Pokaži IP naslov seje
 site	admin	sl	Strežnik
 site configuration	common	sl	Nastavitve strežnika
@@ -354,62 +354,62 @@ template selection	admin	sl	Izbor predloge
 text entry	admin	sl	Besedilni vnos
 that application name already exists.	admin	sl	Aplikacija s tem imenom že obstaja.
 that application order must be a number.	admin	sl	Vrstni red aplikacije mora biti številka.
-that loginid has already been taken	admin	sl	Ta ID prijave je že uporabljen.
+that loginid has already been taken	admin	sl	Ta uporabniško ime je že uporabljeno.
 that name has been used already	admin	sl	To ime je že uporabljeno.
 that server name has been used already !	admin	sl	To ime strežnika je že uporabljeno.
-the api is current	admin	sl	API je najnovejša
+the api is current	admin	sl	API je najnovejši
 the api requires an upgrade	admin	sl	API potrebuje nadgradnjo.
 the groups must include the primary group	admin	sl	Skupine morajo vsebovati primarno skupino
 the login and password can not be the same	admin	sl	Uporabniško ime in geslo ne smeta biti enaka.
-the loginid can not be more then 8 characters	admin	sl	ID prijave ne more biti daljši od 8 znakov.
-the testjob sends you a mail everytime it is called.	admin	sl	TestJob vam pošlje E-pošto vedno, ko je zagnan.
+the loginid can not be more then 8 characters	admin	sl	Uporabniško ime ne sme biti daljše od 8 znakov.
+the testjob sends you a mail everytime it is called.	admin	sl	Testna naloga "TestJob" vam pošlje E-pošto vedno, ko se zažene.
 the two passwords are not the same	admin	sl	Gesli se ne ujemata.
-the users bellow are still members of group %1	admin	sl	Spodnji uporabniki so še vedno člani skupine %1.
-there already is a group with this name. userid's can not have the same name as a groupid	admin	sl	Skupina s tem imenom že obstaja. Uporabniški ID ne more imeti enakega imena kot ID skupine.
-they must be removed before you can continue	admin	sl	Potrebno jih je odstraniti, preden lahko nadaljujete
+the users bellow are still members of group %1	admin	sl	spodnji uporabniki so še vedno člani skupine %1.
+there already is a group with this name. userid's can not have the same name as a groupid	admin	sl	Skupina s tem imenom že obstaja. Uporabniško ime ne sme biti enako imenu skupine.
+they must be removed before you can continue	admin	sl	Potrebno jih je odstraniti, predno lahko nadaljujete
 this application is current	admin	sl	Aplikacija je najnovejša
-this application requires an upgrade	admin	sl	Aplikacija potrebuje posodobitev.
+this application requires an upgrade	admin	sl	Aplikacija potrebuje nadgradnjo
 this category is currently being used by applications as a parent category	admin	sl	Ta kategorija se pri aplikacijah uporablja kot nadrejena kategorija.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sl	Čas preteka podatkov aplikacij, shranjenih v seji v sekundah (privzeto 86400 = 1 dan).
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sl	Čas preteka seje v sekundah (privzeto 14400 = 4 ure).
 times	admin	sl	Časi
 top	admin	sl	vrh
-total records	admin	sl	Skupno zapisov
+total records	admin	sl	Skupno vseh zapisov
 trust level	admin	sl	Stopnja zaupanja
-trust relationship	admin	sl	Odnos zaupanja
+trust relationship	admin	sl	Povezava zaupanja
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windows je trenutno mogoče uporabljati le naknadni način: posli se preverijo po pregledu vsake strani.
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windowsi morate asinhrone storitve namestiti %1ročno%2.
 use cookies to pass sessionid	admin	sl	Uporaba piškotkov za prenos ID seje.
-use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (še ne deluje popolnoma).
+use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (popolnoma še ne deluje).
 use theme	admin	sl	Uporabi temo
 user accounts	admin	sl	Uporabniški računi
 user data	admin	sl	Podatki o uporabniku
 user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za SMTP avtentikacijo (pustite prazno, če ni zahtevana)
 user groups	admin	sl	Uporabniške skupine
-userdata	admin	sl	Podatki o uporabniku
+userdata	admin	sl	podatki o uporabniku
 users choice	admin	sl	Uporabnikova izbira
-view access log	admin	sl	Preglej evidenco dostopov
+view access log	admin	sl	Preglej dnevnik dostopov
 view account	admin	sl	Preglej račun
 view category	admin	sl	Preglej kategorijo
 view error log	admin	sl	Preglej evidenco napak
 view sessions	admin	sl	Preglej seje
-view this user	admin	sl	Preglej tega uporabnika
+view this user	admin	sl	preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov račun
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
-would you like egroupware to cache the egw info array ?	admin	sl	Želite, da EGW predpomni informacije v egw info niz?
-would you like egroupware to cache the phpgw info array ?	admin	sl	Ali želite, da EGW shrani spremenljivko phpgw_info v predpomnilnik?
-would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da EGE preveri veljavnost različice ob oskrbnikovi prijavi?
-would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da EGW preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
+would you like egroupware to cache the egw info array ?	admin	sl	Želite, da eGroupWare shrani informacije v predpomnilnik kot niz egw_info?
+would you like egroupware to cache the phpgw info array ?	admin	sl	Ali želite, da eGroupWare shrani spremenljivko phpgw_info v predpomnilnik?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice ob oskrbnikovi prijavi?
+would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali želite samodejno naložiti nove jezike (ob prijavi)?
 would you like to show each application's upgrade status ?	admin	sl	Ali želite prikazati status različice vsake aplikacije?
 xml-rpc	admin	sl	XML-RPC
 you have entered an invalid expiration date	admin	sl	Vnesli ste napačen datum preteka
-you must add at least 1 permission or group to this account	admin	sl	Skupini ali uporabniku morate dati vsaj eno dovoljenje.
+you must add at least 1 permission or group to this account	admin	sl	Skupini ali uporabniku morate dati vsaj eno dovoljenje
 you must enter a group name.	admin	sl	Vnesti morate ime skupine.
-you must enter a lastname	admin	sl	Vnesti morate priimek.
-you must enter a loginid	admin	sl	Vnesti morate ID prijave.
+you must enter a lastname	admin	sl	Vnesti morate priimek
+you must enter a loginid	admin	sl	Vnesti morate uporabniško ime
 you must enter an application name and title.	admin	sl	Vnesti morate ime in naziv aplikacije.
 you must enter an application name.	admin	sl	Vnesti morate ime aplikacije.
 you must enter an application title.	admin	sl	Vnesti morate naslov aplikacije.
-you must select a file type	admin	sl	Izbrati morate tip datoteke.
+you must select a file type	admin	sl	Izbrati morate tip datoteke
 you will need to remove the subcategories before you can delete this category	admin	sl	Preden lahko izbrišete to kategorijo, morate izbrisati vse podkategorije!
