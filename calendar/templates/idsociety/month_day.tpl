@@ -1,4 +1,3 @@
 <!-- $Id$    month_day -->
-   {new_event_link}
-[ {day_number} ]<br>
+   <font size="-1">[ {day_number} ]</font>{new_event_link}<br>
 

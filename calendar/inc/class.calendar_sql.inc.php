@@ -77,17 +77,17 @@ class calendar_ extends calendar__
     
 	function delete_calendar($stream='',$calendar='')
 	{
-		$this->stream->query('SELECT cal_id FROM calendar_entry WHERE cal_owner='.$calendar,__LINE__,__FILE__);
+		$this->stream->query('SELECT id FROM phpgw_cal WHERE owner='.$calendar,__LINE__,__FILE__);
 		if($this->stream->num_rows())
 		{
 			while($this->stream->next_record())
 			{
-				$this->delete_event($stream,intval($this->stream->f('cal_id')));
+				$this->delete_event($stream,intval($this->stream->f('id')));
 			}
 			$this->expunge($stream);
 		}
-		$this->stream->lock(array('calendar_entry_user'));
-		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_login='.$calendar,__LINE__,__FILE__);
+		$this->stream->lock(array('phpgw_cal_user'));
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE login='.$calendar,__LINE__,__FILE__);
 		$this->stream->unlock();
 			
 		return $calendar;
@@ -102,88 +102,37 @@ class calendar_ extends calendar__
 			return False;
 		}
 	  
-		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats'));
 
-		// This is the preferred method once everything is normalized...
-		//$this->stream->query('SELECT * FROM calendar_entry WHERE id='.$event_id,__LINE__,__FILE__);
-		// But until then, do it this way...
-		$this->stream->query('SELECT * FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
+		$this->stream->query('SELECT * FROM phpgw_cal WHERE id='.$event_id,__LINE__,__FILE__);
 		
 		if($this->stream->num_rows() > 0)
 		{
 			$this->event = CreateObject('calendar.calendar_item');
 			$this->event->start = new calendar_time;
 			$this->event->end = new calendar_time;
+			$this->event->mod = new calendar_time;
 			$this->event->recur_enddate = new calendar_time;
 
 			$this->stream->next_record();
 			// Load the calendar event data from the db into $event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
 			
-			// This is the preferred method once everything is normalized...
-			//$this->event->owner = $this->user;
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->owner = $this->stream->f('cal_owner');
+			$this->event->owner = $this->stream->f('owner');
+			$this->event->id = intval($this->stream->f('id'));
+			$this->event->public = intval($this->stream->f('public'));
+			$this->event->category = intval($this->stream->f('category'));
+			$this->event->title = $phpgw->strip_html($this->stream->f('title'));
+			$this->event->description = $phpgw->strip_html($this->stream->f('description'));
 			
-			// This is the preferred method once everything is normalized...
-			//$this->event->id = $event_id;
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->id = intval($this->stream->f('cal_id'));
-			
-			// This is the preferred method once everything is normalized...
-			//$this->event->public = $this->stream->f('public');
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->access = $this->stream->f('cal_access');
-		//Legacy Support (New)
-			$this->event->public = ($this->stream->f('cal_access')=='private'?0:1);
-
-			// This is the preferred method once everything is normalized...
-			//$this->event->category = $this->stream->f('category');
-			// But until then, do it this way...
-		//Legacy Support (New)
-			$this->event->category = 'Unfiled';
-
-			// This is the preferred method once everything is normalized...
-			//$this->event->title = $phpgw->strip_html($this->stream->f('title'));
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->name = $phpgw->strip_html($this->stream->f('cal_name'));
-		//Legacy Support (New)
-			$this->event->title = $phpgw->strip_html($this->stream->f('cal_name'));
-			
-			// This is the preferred method once everything is normalized...
-			//$this->event->title = $phpgw->strip_html($this->stream->f('description'));
-			// But until then, do it this way...
-		//Legacy Support
-		//Legacy Support (New)
-			$this->event->description = $phpgw->strip_html($this->stream->f('cal_description'));
-
 			// This is the preferred method once everything is normalized...
 			//$this->event->alarm = intval($this->stream->f('alarm'));
 			// But until then, do it this way...
 		//Legacy Support (New)
 			$this->event->alarm = 0;
 			
-			// This is the preferred method once everything is normalized...
-			//$this->event->start = unserialize($this->stream->f('start'));
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->datetime = $this->stream->f('cal_datetime');
-			$date = $this->localdates($this->event->datetime);
-			$this->event->day = $date['day'];
-			$this->event->month = $date['month'];
-			$this->event->year = $date['year'];
-
-			$time = $this->splittime($phpgw->common->show_date($this->event->datetime,'His'));
-			$this->event->hour   = (int)$time['hour'];
-			$this->event->minute = (int)$time['minute'];
-			$this->event->ampm   = $time['ampm'];
-
-		//Legacy Support (New)
-			$datetime = $this->localdates($this->stream->f('cal_datetime'));
+			$this->event->datetime = $this->stream->f('datetime');
+			$datetime = $this->localdates($this->stream->f('datetime'));
 			$this->event->start->year	= $datetime['year'];
 			$this->event->start->month	= $datetime['month'];
 			$this->event->start->mday	= $datetime['day'];
@@ -191,40 +140,19 @@ class calendar_ extends calendar__
 			$this->event->start->min	= $datetime['minute'];
 			$this->event->start->sec	= $datetime['second'];
 			$this->event->start->alarm	= 0;
-			
 
-		//Legacy Support
-			$this->event->mdatetime = $this->stream->f('cal_mdatetime');
-			$date = $this->localdates($this->event->mdatetime);
-			$this->event->mod_day = $date['day'];
-			$this->event->mod_month = $date['month'];
-			$this->event->mod_year = $date['year'];
+			$this->event->mdatetime = $this->stream->f('mdatetime');
+			$datetime = $this->localdates($this->stream->f('mdatetime'));
+			$this->event->mod->year	= $datetime['year'];
+			$this->event->mod->month	= $datetime['month'];
+			$this->event->mod->mday	= $datetime['day'];
+			$this->event->mod->hour	= $datetime['hour'];
+			$this->event->mod->min	= $datetime['minute'];
+			$this->event->mod->sec	= $datetime['second'];
+			$this->event->mod->alarm	= 0;
 
-			$time = $this->splittime($phpgw->common->show_date($this->event->mdatetime,'His'));
-			$this->event->mod_hour = (int)$time['hour'];
-			$this->event->mod_minute = (int)$time['minute'];
-			$this->event->mod_second = (int)$time['second'];
-			$this->event->mod_ampm = $time['ampm'];
-
-
-			// This is the preferred method once everything is normalized...
-			//$this->event->end = unserialize($this->stream->f('end'));
-			// But until then, do it this way...
-		//Legacy Support
-			$this->event->edatetime = $this->stream->f('cal_edatetime');
-			$date = $this->localdates($this->event->edatetime);
-			$this->event->end_day = $date['day'];
-			$this->event->end_month = $date['month'];
-			$this->event->end_year = $date['year'];
-
-			$time = $this->splittime($phpgw->common->show_date($this->event->edatetime,'His'));
-			$this->event->end_hour = (int)$time['hour'];
-			$this->event->end_minute = (int)$time['minute'];
-			$this->event->end_second = (int)$time['second'];
-			$this->event->end_ampm = $time['ampm'];
-
-		//Legacy Support (New)
-			$datetime = $this->localdates($this->stream->f('cal_edatetime'));
+			$this->event->edatetime = $this->stream->f('edatetime');
+			$datetime = $this->localdates($this->stream->f('edatetime'));
 			$this->event->end->year	= $datetime['year'];
 			$this->event->end->month	= $datetime['month'];
 			$this->event->end->mday	= $datetime['day'];
@@ -234,98 +162,37 @@ class calendar_ extends calendar__
 			$this->event->end->alarm	= 0;
 
 		//Legacy Support
-			$this->event->priority = intval($this->stream->f('cal_priority'));
-			if($this->stream->f('cal_group') || $this->stream->f('cal_group') != 'NULL')
+			$this->event->priority = intval($this->stream->f('priority'));
+			if($this->stream->f('cal_group') || $this->stream->f('groups') != 'NULL')
 			{
-				$groups = explode(',',$this->stream->f('cal_group'));
+				$groups = explode(',',$this->stream->f('groups'));
 				for($j=1;$j<count($groups) - 1;$j++)
 				{
 					$this->event->groups[] = $groups[$j];
 				}
 			}
 
-			// This should all be one table,
-			// but for now we'll leave it separate...
-			// This is the preferred method once everything is normalized...
-			//$this->stream->query('SELECT * FROM calendar_entry_repeats WHERE id='.$event_id,__LINE__,__FILE__);
-			// But until then, do it this way...
-		//Legacy Support
-			$this->stream->query('SELECT * FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('SELECT * FROM phpgw_cal_repeats WHERE id='.$event_id,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				$this->stream->next_record();
 
-				// This is the preferred method once everything is normalized...
-				//$this->event->recur_type = intval($this->stream->f('recur_type'));
-				// But until then, do it this way...
-		//Legacy Support
-				$rpt_type = strtolower($this->stream->f('cal_type'));
-				$this->event->rpt_type = (!$rpt_type?'none':$rpt_type);
-				
-		//Legacy Support (New)
-				switch($this->event->rpt_type)
+				$this->event->recur_type = intval($this->stream->f('recur_type'));
+				$this->event->recur_interval = intval($this->stream->f('recur_interval'));
+				$enddate = $this->stream->f('recur_enddate');
+				if($enddate != 0 && $enddate != Null)
 				{
-					case 'none':
-						$this->event->recur_type = RECUR_NONE;
-						break;
-					case 'daily':
-						$this->event->recur_type = RECUR_DAILY;
-						break;
-					case 'weekly':
-						$this->event->recur_type = RECUR_WEEKLY;
-						break;
-					case 'monthlybydate':
-						$this->event->recur_type = RECUR_MONTHLY_MDAY;
-						break;
-					case 'monthlybyday':
-						$this->event->recur_type = RECUR_MONTHLY_WDAY;
-						break;
-					case 'yearly':
-						$this->event->recur_type = RECUR_YEARLY;
-						break;
-				}
-				
-				// This is the preferred method once everything is normalized...
-				//$this->event->recur_interval = intval($this->stream->f('recur_interval'));
-				// But until then, do it this way...
-		//Legacy Support
-				$this->event->rpt_freq = (int)$this->stream->f('cal_frequency');
-		//Legacy Support (New)
-				$this->event->recur_interval = (int)$this->stream->f('cal_frequency');
-
-				// This is the preferred method once everything is normalized...
-				//$this->event->recur_enddate = unserialize($this->stream->f('recur_enddate'));
-				// But until then, do it this way...
-		//Legacy Support
-				$this->event->rpt_end_use = $this->stream->f('cal_use_end');
-				if($this->event->rpt_end_use == True)
-				{
-					$date = $this->localdates($this->stream->f('cal_end'));
-		//Legacy Support
-					$this->event->rpt_end = $this->stream->f('cal_end');
-					$this->event->rpt_end_day = (int)$date['day'];
-					$this->event->rpt_end_month = (int)$date['month'];
-					$this->event->rpt_end_year = (int)$date['year'];
-					
-		//Legacy Support (New)
-					$this->event->recur_enddate->year	= $date['year'];
-					$this->event->recur_enddate->month	= $date['month'];
-					$this->event->recur_enddate->mday	= $date['day'];
-					$this->event->recur_enddate->hour	= $date['hour'];
-					$this->event->recur_enddate->min	= $date['minute'];
-					$this->event->recur_enddate->sec	= $date['second'];
+					$datetime = $this->localdates($enddate);
+					$this->event->recur_enddate->year	= $datetime['year'];
+					$this->event->recur_enddate->month	= $datetime['month'];
+					$this->event->recur_enddate->mday	= $datetime['day'];
+					$this->event->recur_enddate->hour	= $datetime['hour'];
+					$this->event->recur_enddate->min	= $datetime['minute'];
+					$this->event->recur_enddate->sec	= $datetime['second'];
 					$this->event->recur_enddate->alarm	= 0;
 				}
 				else
 				{
-		//Legacy Support
-					$this->event->rpt_end_use = 0;
-					$this->event->rpt_end = 0;
-					$this->event->rpt_end_day = 0;
-					$this->event->rpt_end_month = 0;
-					$this->event->rpt_end_year = 0;
-
-		//Legacy Support (New)
 					$this->event->recur_enddate->year	= 0;
 					$this->event->recur_enddate->month	= 0;
 					$this->event->recur_enddate->mday	= 0;
@@ -334,45 +201,21 @@ class calendar_ extends calendar__
 					$this->event->recur_enddate->sec	= 0;
 					$this->event->recur_enddate->alarm	= 0;
 				}
-				
-				// This is the preferred method once everything is normalized...
-				//$this->event->recur_data = $this->stream->f('recur_data');
-				// But until then, do it this way...
-		//Legacy Support
-				$rpt_days = strtoupper($this->stream->f('cal_days'));
-				$this->event->rpt_days = $rpt_days;
-				$this->event->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
-				$this->event->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
-				$this->event->rpt_tue = (substr($rpt_days,2,1)=='Y'?1:0);
-				$this->event->rpt_wed = (substr($rpt_days,3,1)=='Y'?1:0);
-				$this->event->rpt_thu = (substr($rpt_days,4,1)=='Y'?1:0);
-				$this->event->rpt_fri = (substr($rpt_days,5,1)=='Y'?1:0);
-				$this->event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
-
-		//Legacy Support (New)
-				$rpt_days = strtoupper($this->stream->f('cal_days'));
-				$this->event->recur_data = 0;
-				$this->event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
-				$this->event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);
-				$this->event->recur_data += (substr($rpt_days,2,1)=='Y'?M_TUESDAY:0);
-				$this->event->recur_data += (substr($rpt_days,3,1)=='Y'?M_WEDNESDAY:0);
-				$this->event->recur_data += (substr($rpt_days,4,1)=='Y'?M_THURSDAY:0);
-				$this->event->recur_data += (substr($rpt_days,5,1)=='Y'?M_FRIDAY:0);
-				$this->event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SATURDAY:0);
+				$this->event->recur_data = $this->stream->f('recur_data');
 			}
 			
 		//Legacy Support
-			$this->stream->query('SELECT * FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			$this->stream->query('SELECT * FROM phpgw_cal_user WHERE id='.$event_id,__LINE__,__FILE__);
 			if($this->stream->num_rows())
 			{
 				while($this->stream->next_record())
 				{
 					if($this->stream->f('cal_login') == $this->user)
 					{
-						$this->event->users_status = $this->stream->f('cal_status');
+						$this->event->users_status = $this->stream->f('status');
 					}
-					$this->event->participants[] = $this->stream->f('cal_login');
-					$this->event->status[] = $this->stream->f('cal_status');
+					$this->event->participants[] = $this->stream->f('login');
+					$this->event->status[] = $this->stream->f('status');
 				}
 			}
 		}
@@ -394,12 +237,12 @@ class calendar_ extends calendar__
 		}
 
 		$datetime = $this->makegmttime(0,0,0,$startMonth,$startDay,$startYear);
-		$startDate = ' AND (calendar_entry.datetime >= '.$datetime.') ';
+		$startDate = ' AND (phpgw_cal.datetime >= '.$datetime.') ';
 	  
 		if($endYear != '' && $endMonth != '' && $endDay != '')
 		{
 			$edatetime = $this->makegmttime(23,59,59,intval($endMonth),intval($endDay),intval($endYear));
-			$endDate = 'AND (calendar_entry.edatetime <= '.$edatetime.') ';
+			$endDate = 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
 		}
 		else
 		{
@@ -473,7 +316,6 @@ class calendar_ extends calendar__
 	function event_set_title($stream,$title='')
 	{
 		$this->event->title = $title;
-		$this->event->name = $title;
 //		echo 'Setting Calendar Title = '.$this->event->title.'<br>'."\n";
 		return True;
 	}
@@ -489,16 +331,6 @@ class calendar_ extends calendar__
 	{
 		global $phpgw_info;
 		
-	// Legacy Support
-		$this->event->year = intval($year);
-		$this->event->month = intval($month);
-		$this->event->day = intval($day);
-		$this->event->hour = intval($hour);
-		$this->event->minute = intval($min);
-		$this->event->datetime = mktime(intval($hour),intval($min),intval($sec),intval($month),intval($day),intval($year));
-		$this->event->datetime -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-
-	// Legacy Support (New)
 		$this->event->start->year = intval($year);
 		$this->event->start->month = intval($month);
 		$this->event->start->mday = intval($day);
@@ -515,17 +347,6 @@ class calendar_ extends calendar__
 	{
 		global $phpgw_info;
 		
-	// Legacy Support
-		$this->event->end_year = intval($year);
-		$this->event->end_month = intval($month);
-		$this->event->end_day = intval($day);
-		$this->event->end_hour = intval($hour);
-		$this->event->end_minute = intval($min);
-		$this->event->end_second = intval($sec);
-		$this->event->edatetime = mktime(intval($hour),intval($min),intval($sec),intval($month),intval($day),intval($year));
-		$this->event->edatetime -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-
-	// Legacy Support (New)
 		$this->event->end->year = intval($year);
 		$this->event->end->month = intval($month);
 		$this->event->end->mday = intval($day);
@@ -637,24 +458,6 @@ class calendar_ extends calendar__
 
 	function event_set_recur_none($stream)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'none';
-		$this->event->rpt_end_use = 0;
-		$this->event->rpt_end = 0;
-		$this->event->rpt_end_day = 0;
-		$this->event->rpt_end_month = 0;
-		$this->event->rpt_end_year = 0;
-		$this->event->rpt_days = 'nnnnnnn';
-		$this->event->rpt_sun = 0;
-		$this->event->rpt_mon = 0;
-		$this->event->rpt_tue = 0;
-		$this->event->rpt_wed = 0;
-		$this->event->rpt_thu = 0;
-		$this->event->rpt_fri = 0;
-		$this->event->rpt_sat = 0;
-		$this->event->rpt_freq = 0;
-
-	// Legacy Support (New)
 		$this->event->recur_type = RECUR_NONE;
 		$this->event->recur_interval = 0;
 		$this->event->recur_enddate->year = 0;
@@ -671,75 +474,33 @@ class calendar_ extends calendar__
 
 	function event_set_recur_daily($stream,$year,$month,$day,$interval)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'daily';
-
-	// Legacy Support (New)
-		$this->event->recur_type = RECUR_DAILY;
-
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_DAILY;
 	}
 
 	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'weekly';
-
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
-
-		$this->event->rpt_sun = (intval($weekdays) & M_SUNDAY    ? 1 : 0);
-		$this->event->rpt_mon = (intval($weekdays) & M_MONDAY	   ? 1 : 0);
-		$this->event->rpt_tue = (intval($weekdays) & M_TUESDAY   ? 1 : 0);
-		$this->event->rpt_wed = (intval($weekdays) & M_WEDNESDAY ? 1 : 0);
-		$this->event->rpt_thu = (intval($weekdays) & M_THURSDAY  ? 1 : 0);
-		$this->event->rpt_fri = (intval($weekdays) & M_FRIDAY    ? 1 : 0);
-		$this->event->rpt_sat = (intval($weekdays) & M_SATURDAY  ? 1 : 0);
-
-		$this->event->rpt_days =
-			  ($this->event->rpt_sun == 1?'y':'n')
-			. ($this->event->rpt_mon == 1?'y':'n')
-			. ($this->event->rpt_tue == 1?'y':'n')
-			. ($this->event->rpt_wed == 1?'y':'n')
-			. ($this->event->rpt_thu == 1?'y':'n')
-			. ($this->event->rpt_fri == 1?'y':'n')
-			. ($this->event->rpt_sat == 1?'y':'n');
-
-	// Legacy Support (New)
 		$this->event->recur_type = RECUR_WEEKLY;
 		$this->event->recur_data = intval($weekdays);
 	}
 
 	function event_set_recur_monthly_mday($stream,$year,$month,$day,$interval)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'monthlybydate';
-
-	// Legacy Support
-		$this->event->recur_type = RECUR_MONTHLY_MDAY;
-
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_MONTHLY_MDAY;
 	}
 	
 	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'monthlybyday';
-
-	// Legacy Support (New)
-		$this->event->recur_type = RECUR_MONTHLY_WDAY;
-		
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_MONTHLY_WDAY;
 	}
 	
 	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
 	{
-	// Legacy Support
-		$this->event->rpt_type = 'yearly';
-
-	// Legacy Support (New)
-		$this->event->recur_type = RECUR_YEARLY;
-		
 		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
+		$this->event->recur_type = RECUR_YEARLY;
 	}
 
 	function fetch_current_stream_event($stream)
@@ -759,7 +520,12 @@ class calendar_ extends calendar__
 			return 1;
 		}
 		$this_event = $this->event;
-		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+		$locks = Array(
+			'phpgw_cal',
+			'phpgw_cal_user',
+			'phpgw_cal_repeats'
+		);
+		$this->stream->lock($locks);
 		for($i=0;$i<count($this->deleted_events);$i++)
 		{
 			$event_id = $this->deleted_events[$i];
@@ -767,9 +533,10 @@ class calendar_ extends calendar__
 			$event = $this->fetch_event($stream,$event_id);
 			$this->send_update(MSG_DELETED,$event->participants,$event);
 
-			$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
-			$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
-			$this->stream->query('DELETE FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			for($k=0;$k<count($locks);$k++)
+			{
+				$this->stream->query('DELETE FROM '.$locks[$k].' WHERE id='.$event_id,__LINE__,__FILE__);
+			}
 		}
 		$this->stream->unlock();
 		$this->event = $this_event;
@@ -783,8 +550,8 @@ class calendar_ extends calendar__
 		$retval = Array();
 		if($search_repeats == True)
 		{
-			$repeats_from = ', calendar_entry_repeats ';
-			$repeats_where = 'AND (calendar_entry_repeats.cal_id = calendar_entry.cal_id) ';
+			$repeats_from = ', phpgw_cal_repeats ';
+			$repeats_where = 'AND (phpgw_cal_repeats.id = phpgw_cal.id) ';
 		}
 		else
 		{
@@ -792,12 +559,12 @@ class calendar_ extends calendar__
 			$repeats_where = '';
 		}
 		
-		$sql = 'SELECT DISTINCT calendar_entry.cal_id,'
-				. 'calendar_entry.cal_datetime,calendar_entry.cal_edatetime,'
-				. 'calendar_entry.cal_priority '
-				. 'FROM calendar_entry, calendar_entry_user'
+		$sql = 'SELECT DISTINCT phpgw_cal.id,'
+				. 'phpgw_cal.datetime,phpgw_cal.edatetime,'
+				. 'phpgw_cal.priority '
+				. 'FROM phpgw_cal, phpgw_cal_user'
 				. $repeats_from
-				. 'WHERE (calendar_entry_user.cal_id = calendar_entry.cal_id) '
+				. 'WHERE (phpgw_cal_user.id = phpgw_cal.id) '
 				. $repeats_where . $extra;
 
 		$this->stream->query($sql,__LINE__,__FILE__);
@@ -811,7 +578,7 @@ class calendar_ extends calendar__
 
 		while($this->stream->next_record())
 		{
-			$retval[] = intval($this->stream->f('cal_id'));
+			$retval[] = intval($this->stream->f('id'));
 		}
 
 		return $retval;
@@ -820,29 +587,27 @@ class calendar_ extends calendar__
 	function save_event(&$event)
 	{
 		global $phpgw_info;
-		
-		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
+
+		$cat = CreateObject('phpgwapi.categories');
+		$categ = $cat->return_single($event->category);
+		$category = $categ[0]['name'];
+
+		$locks = Array(
+			'phpgw_cal',
+			'phpgw_cal_user',
+			'phpgw_cal_repeats'
+		);
+		$this->stream->lock($locks);
 		if($event->id == 0)
 		{
 			$temp_name = tempnam($phpgw_info['server']['temp_dir'],'cal');
-			$this->stream->query("INSERT INTO calendar_entry(cal_name) values('".$temp_name."')");
-			$this->stream->query("SELECT cal_id FROM calendar_entry WHERE cal_name='".$temp_name."'");
+			$this->stream->query('INSERT INTO phpgw_cal(title,owner,category,priority,public) '
+				. "values('".$temp_name."',".$event->owner.",'".$category."',".$event->priority.",".$event->public.")");
+			$this->stream->query("SELECT id FROM phpgw_cal WHERE title='".$temp_name."'");
 			$this->stream->next_record();
-			$event->id = $this->stream->f('cal_id');
+			$event->id = $this->stream->f('id');
 		}
 
-//		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-//		{
-//			if ($event->ampm == 'pm' && ($event->hour < 12 && $event->hour <> 12))
-//			{
-//				$event->hour += 12;
-//			}
-//			
-//			if ($event->end_ampm == 'pm' && ($event->end_hour < 12 && $event->end_hour <> 12))
-//			{
-//				$event->end_hour += 12;
-//			}
-//		}
 		$tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $tz_offset;
 		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $tz_offset;
@@ -857,30 +622,21 @@ class calendar_ extends calendar__
 			$type = 'E';
 		}
 
-		if($event->public == True)
-		{
-			$event->access = 'public';
-		}
-		else
-		{
-			$event->access = 'private';
-		}
-
-		$sql = 'UPDATE calendar_entry SET '
-				. 'cal_owner='.$event->owner.', '
-				. 'cal_datetime='.$date.', '
-				. 'cal_mdatetime='.$today.', '
-				. 'cal_edatetime='.$enddate.', '
-				. 'cal_priority='.$event->priority.', '
-				. "cal_type='".$type."', "
-				. "cal_access='".$event->access."', "
-				. "cal_name='".addslashes($event->name)."', "
-				. "cal_description='".addslashes($event->description)."' "
-				. 'WHERE cal_id='.$event->id;
+		$sql = 'UPDATE phpgw_cal SET '
+				. 'owner='.$event->owner.', '
+				. 'datetime='.$date.', '
+				. 'mdatetime='.$today.', '
+				. 'edatetime='.$enddate.', '
+				. 'priority='.$event->priority.', '
+				. "type='".$type."', "
+				. 'public='.$event->access.', '
+				. "title='".addslashes($event->name)."', "
+				. "description='".addslashes($event->description)."' "
+				. 'WHERE id='.$event->id;
 				
 		$this->stream->query($sql,__LINE__,__FILE__);
 		
-		$this->stream->query('DELETE FROM calendar_entry_user WHERE cal_id='.$event->id,__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE id='.$event->id,__LINE__,__FILE__);
 
 		reset($event->participants);
 		while (list($key,$value) = each($event->participants))
@@ -893,47 +649,41 @@ class calendar_ extends calendar__
 			{
 				$status = $event->status[$key];
 			}
-			$this->stream->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
+			$this->stream->query('INSERT INTO phpgw_cal_user(id,login,status) '
 				. 'VALUES('.$event->id.','.$value.",'".$status."')",__LINE__,__FILE__);
 		}
 
 		if($event->recur_type != RECUR_NONE)
 		{
-			if($event->rpt_end_use)
+			if($event->recur_enddate->month != 0 && $event->recur_enddate->mday != 0 && $event->recur_enddate->year != 0)
 			{
 				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $tz_offset;
-				$use_end = 1;
 			}
 			else
 			{
 				$end = '0';
-				$use_end = 0;
 			}
 
-			$days = $event->rpt_days;
-			
-			$this->stream->query('SELECT count(cal_id) FROM calendar_entry_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('SELECT count(id) FROM phpgw_cal_repeats WHERE id='.$event->id,__LINE__,__FILE__);
 			$this->stream->next_record();
 			$num_rows = $this->stream->f(0);
 			if($num_rows == 0)
 			{
-				$this->stream->query('INSERT INTO calendar_entry_repeats(cal_id,'
-					.'cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
-					.'VALUES('.$event->id.",'".$event->rpt_type."',".$use_end.','
-					.$end.",'".$days."',".$event->recur_interval.')',__LINE__,__FILE__);
+				$this->stream->query('INSERT INTO phpgw_cal_repeats(id,recur_type,recur_enddate,recur_data,recur_interval) '
+					.'VALUES('.$event->id.",'".$event->recur_type."',".$end.','.$event->recur_data.','.$event->recur_interval.')',__LINE__,__FILE__);
 			}
 			else
 			{
-				$this->stream->query('UPDATE calendar_entry_repeats '
-					."SET cal_type='".$event->rpt_type."', "
-					.'cal_use_end='.$use_end.", cal_end='".$end."', "
-					."cal_days='".$days."', cal_frequency=".$event->recur_interval.' '
-					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
+				$this->stream->query('UPDATE phpgw_cal_repeats '
+					."SET recur_type='".$event->rpt_type."', "
+					."recur_end='".$end."', "
+					."recur_data='".$event->recur_data."', recur_interval=".$event->recur_interval.' '
+					.'WHERE id='.$event->id,__LINE__,__FILE__);
 			}
 		}
 		else
 		{
-			$this->stream->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
+			$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE id='.$event->id,__LINE__,__FILE__);
 		}
 		
 		$this->stream->unlock();
@@ -956,7 +706,7 @@ class calendar_ extends calendar__
 			TENTATIVE	=>	'T',
 			ACCEPTED	=>	'A'
 		);
-		$this->stream->query("UPDATE calendar_entry_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
+		$this->stream->query("UPDATE phpgw_cal_user SET status='".$status_code_short[$status]."' WHERE id=".$id." AND login=".$owner,__LINE__,__FILE__);
 		return True;
 	}
 	
@@ -967,14 +717,14 @@ class calendar_ extends calendar__
 		global $phpgw, $phpgw_info;
       
 		$owner = $owner==$phpgw_info['user']['account_id']?0:$owner;
-		$groups = substr($phpgw->common->sql_search('calendar_entry.cal_group',intval($owner)),4);
+		$groups = substr($phpgw->common->sql_search('phpgw_cal.groups',intval($owner)),4);
 		if (!$groups)
 		{
 			return '';
 		}
 		else
 		{
-			return "(calendar_entry.cal_access='group' AND (". $groups .')) ';
+			return "(phpgw_cal.public=2 AND (". $groups .')) ';
 		}
 	}
 
@@ -1100,626 +850,6 @@ class calendar_ extends calendar__
 		}
 		
 		return $str;
-	}
-
-// Start from here to meet coding stds.......
-// This function may be removed in the near future.....
-	function pretty_small_calendar($day,$month,$year,$link='')
-	{
-		global $phpgw, $phpgw_info, $view;
-
-//		$tz_offset = (-1 * ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset'])));
-		$date = $this->makegmttime(0,0,0,$month,$day,$year);
-		$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
-		$month_ahead = intval(date('Ymd',mktime(0,0,0,$month + 1,$day,$year)));
-		$monthstart = intval(date('Ymd',mktime(0,0,0,$month,1,$year)));
-		$monthend = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
-
-		$weekstarttime = $this->get_weekday_start($year,$month,1);
-
-		$str  = '';
-		$str .= '<table border="0" cellspacing="0" cellpadding="0" valign="top">';
-		$str .= '<tr valign="top">';
-		$str .= '<td bgcolor="'.$phpgw_info['theme']['bg_text'].'">';
-		$str .= '<table border="0" width="100%" cellspacing="1" cellpadding="2" border="0" valign="top">';
-		
-		if ($view == 'day')
-		{
-			$str .= '<tr><th colspan="7" bgcolor="'.$phpgw_info['theme']['th_bg'].'"><font size="+4" color="'.$phpgw_info['theme']['th_text'].'">'.$day.'</font></th></tr>';
-		}
-		
-		$str .= '<tr>';
-
-		if ($view == 'year')
-		{
-			$str .= '<td align="center" colspan="7" bgcolor="' . $phpgw_info['theme']['th_bg'] . '">';
-		}
-		else
-		{
-			$str .= '<td align="left" bgcolor="' . $phpgw_info['theme']['th_bg'] .'">';
-		}
-
-		if ($view != 'year')
-		{
-			if (!$this->printer_friendly)
-			{
-				$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','date='.$month_ago).'" class="monthlink">';
-			}
-			
-			$str .= '&lt;';
-			if (!$this->printer_friendly)
-			{
-				$str .= '</a>';
-			}
-			$str .= '</td>';
-			$str .= '<th colspan="5" bgcolor="'.$phpgw_info['theme']['th_bg'].'"><font color="'.$phpgw_info['theme']['th_text'].'">';
-		}
-		
-		if (!$this->printer_friendly)
-		{
-			$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/index.php','year='.$year.'&month='.$month).'">';
-		}
-		
-		$str .= lang($phpgw->common->show_date($date['raw'],'F')).' '.$year;
-		
-		if(!$this->printer_friendly)
-		{
-			$str .= '</a>';
-		}
-		
-		if ($view != 'year')
-		{
-			$str .= '</font></th>';
-		}
-
-		if ($view != 'year')
-		{
-			$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['th_bg'].'">';
-			
-			if (!$this->printer_friendly)
-			{
-				$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','date='.$month_ahead).'" class="monthlink">';
-			}
-			
-			$str .= '&gt;';
-			
-			if (!$this->printer_friendly)
-			{
-				$str .= '</a>';
-			}
-			
-			$str .= '</td>';
-		}
-		$str .= '</tr>';
-		$str .= '<tr>';
-		
-		for($i=0;$i<7;$i++)
-		{
-			$str .= '<td bgcolor="'.$phpgw_info['theme']['cal_dayview'].'"><font size="-2">'.substr(lang($days[$i]),0,2).'</td>';
-		}
-		
-		$str .= '</tr>';
-		
-		for($i=$weekstarttime;date('Ymd',$i)<=$monthend;$i += (24 * 3600 * 7))
-		{
-			$str .= '<tr>';
-			for($j=0;$j<7;$j++)
-			{
-				$cal = $this->gmtdate($i + ($j * 24 * 3600));
-				
-				if($cal['full'] >= $monthstart && $cal['full'] <= $monthend)
-				{
-					$str .= '<td align="center" bgcolor="';
-					
-					if($cal['full'] == $this->today['full'])
-					{
-						$str .= $phpgw_info['theme']['cal_today'];
-					}
-					else
-					{
-						$str .= $phpgw_info['theme']['cal_dayview'];
-					}
-					
-					$str .= '"><font size="-2">';
-
-					if(!$this->printer_friendly)
-					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="monthlink">';
-					}
-					
-					$str .= $cal['day'];
-					
-					if(!$this->printer_friendly)
-					{
-						$str .= '</a>';
-					}
-					
-					$str .= '</font></td>';
-				}
-				else
-				{
-					$str .= '<td bgcolor="' . $phpgw_info['theme']['cal_dayview'] 
-							. '"><font size="-2" color="' . $phpgw_info['theme']['cal_dayview'] . '">.</font></td>';
-				}
-			}
-			$str .= '</tr>';
-		}
-		$str .= '</table>';
-		$str .= '</td>';
-		$str .= '</tr>';
-		$str .= '</table>';
-		return $str;
-	}
-
-// This function may be removed in the near future.....
-	function display_small_month($month,$year,$showyear,$link='')
-	{
-		global $phpgw, $phpgw_info;
-
-		$weekstarttime = $this->get_weekday_start($year,$month,1);
-
-		$str  = '';
-		$str .= '<table border="0" bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
-
-		$monthstart = $this->localdates(mktime(0,0,0,$month    ,1,$year));
-		$monthend   = $this->localdates(mktime(0,0,0,$month + 1,0,$year));
-
-		$str .= '<tr><td colspan="7" align="center"><font size="2">';
-
-		if(!$this->printer_friendly)
-		{
-			$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/index.php',"year=$year&month=$month").'">';
-		}
-		
-		$str .= lang(date('F',$monthstart['raw']));
-
-		if($showyear)
-		{
-			$str .= ' '.$year;
-		}
-    
-		if(!$this->printer_friendly)
-		{
-			$str .= '</a>';
-		}
-
-		$str .= '</font></td></tr><tr>';
-		
-		for($i=0;$i<7;$i++)
-		{
-			$str .= '<td>'.lang($days[$i]).'</td>';
-		}
-		
-		$str .= '</tr>';
-
-		for($i=$weekstarttime;date('Ymd',$i)<=$monthend['full'];$i+=604800)
-		{
-			$str .= '<tr>';
-			for($j=0;$j<7;$j++)
-			{
-				$date = $this->localdates($i + ($j * 86400));
-				
-				if($date['full']>=$monthstart['full'] &&
-					$date['full']<=$monthend['full'])
-				{
-					$str .= '<td align="right">';
-					
-					if(!$this->printer_friendly || $link)
-					{
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$date['year'].'&month='.$date['month'].'&day='.$date['day']).'">';
-					}
-					
-					$str .= '<font size="2">'.date('j',$date['raw']);
-					if(!$this->printer_friendly || $link)
-					{
-						$str .= '</a>';
-					}
-					
-					$str .= '</font></td>';
-				}
-				else
-				{
-					$str .= '<td></td>';
-				}
-			}
-			$str .= '</tr>';
-		}
-		$str .= '</table>';
-		return $str;
-	}
-
-	function prep($calid)
-	{
-		global $phpgw, $phpgw_info;
-
-		if(!$phpgw_info['user']['apps']['calendar']) return false;
-
-		$db2 = $phpgw->db;
-      
-		$cal_id = array();
-		if(is_long($calid))
-		{
-			if(!$calid)
-			{
-				return false;
-			}
-			
-			$cal_id[0] = $calid;
-		}
-		elseif(is_string($calid))
-		{
-			$calid = $phpgw->account->name2id($calid);
-			$db2->query('SELECT cal_id FROM calendar_entry WHERE cal_owner='.$calid,__LINE__,__FILE__);
-			while($phpgw->db->next_record())
-			{
-				$cal_id[] = $db2->f('cal_id');
-			}
-		}
-		elseif(is_array($calid))
-		{
-		
-			if(is_string($calid[0]))
-			{
-			
-				for($i=0;$i<count($calid);$i++)
-				{
-					$db2->query('SELECT cal_id FROM calendar_entry WHERE cal_owner='.$calid[$i],__LINE__,__FILE__);
-					while($db2->next_record())
-					{
-						$cal_id[] = $db2->f('cal_id');
-					}
-          }
-        }
-        elseif(is_long($calid[0]))
-        {
-				$cal_id = $calid;
-			}
-		}
-		return $cal_id;
-	}
-
-	function getwithindates($from,$to)
-	{
-		global $phpgw, $phpgw_info;
-
-		if(!$phpgw_info['user']['apps']['calendar'])
-		{
-			return false;
-		}
-
-		$phpgw->db->query('SELECT cal_id FROM calendar_entry WHERE cal_date >= '.$from.' AND cal_date <= '.$to,__LINE__,__FILE__);
-
-		if($phpgw->db->num_rows())
-		{
-			while($phpgw->db->next_record())
-			{
-				$calid[count($calid)] = intval($phpgw->db->f('cal_id'));
-			}
-			return $this->getevent($calid);
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	function add($calinfo,$calid=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		$db2 = $phpgw->db;
-
-		if(!$phpgw_info['user']['apps']['calendar'])
-		{
-			return false;
-		}
-		
-		if(!$calid)
-		{
-			$db2->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
-			$db2->query("INSERT INTO calendar_entry(cal_name) VALUES('".addslashes($calinfo->name)."')",__LINE__,__FILE__);
-			$db2->query('SELECT MAX(cal_id) FROM calendar_entry',__LINE__,__FILE__);
-			$db2->next_record();
-			$calid = $db2->f(0);
-			$db2->unlock();
-		}
-		if($calid)
-		{
-			return $this->modify($calinfo,$calid);
-		}
-	}
-
-	function delete($calid=0)
-	{
-		global $phpgw;
-
-		$cal_id = $this->prep($calid);
-
-		if(!$cal_id)
-		{
-			return false;
-		}
-
-		$db2 = $phpgw->db;
-
-		$db2->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
-
-      for($i=0;$i<count($cal_id);$i++)
-      {
-			$db2->query('DELETE FROM calendar_entry_user WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-			$db2->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-			$db2->query('DELETE FROM calendar_entry WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-		}
-		$db2->unlock();
-	}
-
-	function modify($calinfo,$calid=0)
-	{
-		global $phpgw, $phpgw_info;
-
-		if(!$phpgw_info['user']['apps']['calendar'])
-		{
-			return false;
-		}
-
-		if(!$calid)
-		{
-			return false;
-		}
-
-		$db2 = $phpgw->db;
-
-		$db2->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
-
-		$owner = ($calinfo->owner?$calinfo->owner:$phpgw_info['user']['account_id']);
-		
-		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
-		{
-			if ($calinfo->ampm == 'pm' && ($calinfo->hour < 12 && $calinfo->hour <> 12))
-			{
-				$calinfo->hour += 12;
-			}
-			
-			if ($calinfo->end_ampm == 'pm' && ($calinfo->end_hour < 12 && $calinfo->end_hour <> 12))
-			{
-				$calinfo->end_hour += 12;
-			}
-		}
-		$date = $this->makegmttime($calinfo->hour,$calinfo->minute,0,$calinfo->month,$calinfo->day,$calinfo->year);
-		$enddate = $this->makegmttime($calinfo->end_hour,$calinfo->end_minute,0,$calinfo->end_month,$calinfo->end_day,$calinfo->end_year);
-		$today = $this->gmtdate(time());
-
-		if($calinfo->rpt_type != 'none')
-		{
-			$rpt_type = 'M';
-		}
-		else
-		{
-			$rpt_type = 'E';
-		}
-
-		$query = 'UPDATE calendar_entry SET cal_owner='.$owner.", cal_name='".addslashes($calinfo->name)."', "
-			. "cal_description='".addslashes($calinfo->description)."', cal_datetime=".$date['raw'].', '
-			. 'cal_mdatetime='.$today['raw'].', cal_edatetime='.$enddate['raw'].', '
-			. 'cal_priority='.$calinfo->priority.", cal_type='".$rpt_type."' ";
-
-		if(($calinfo->access == 'public' || $calinfo->access == 'group') && count($calinfo->groups))
-		{
-			$query .= ", cal_access='".$calinfo->access."', cal_group = '".$phpgw->accounts->array_to_string($calinfo->access,$calinfo->groups)."' ";
-		}
-		elseif(($calinfo->access == 'group') && !count($calinfo->groups))
-		{
-			$query .= ", cal_access='private', cal_group = '' ";
-		}
-		else
-		{
-			$query .= ", cal_access='".$calinfo->access."', cal_group = '' ";
-		}
-
-		$query .= 'WHERE cal_id='.$calid;
-
-		$db2->query($query,__LINE__,__FILE__);
-
-		$db2->query('DELETE FROM calendar_entry_user WHERE cal_id='.$calid,__LINE__,__FILE__);
-
-		while ($participant = each($calinfo->participants))
-		{
-			$phpgw->db->query('INSERT INTO calendar_entry_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$calid.','.$participant[1].",'A')",__LINE__,__FILE__);
-		}
-
-		if(strcmp($calinfo->rpt_type,'none') <> 0)
-		{
-			$freq = ($calinfo->rpt_freq?$calinfo->rpt_freq:0);
-
-			if($calinfo->rpt_use_end)
-			{
-				$end = $this->makegmttime(0,0,0,$calinfo->rpt_month,$calinfo->rpt_day,$calinfo->rpt_year);
-				$use_end = 1;
-			}
-			else
-			{
-				$end = 'NULL';
-				$use_end = 0;
-			}
-
-			if($calinfo->rpt_type == 'weekly' || $calinfo->rpt_type == 'daily')
-			{
-				$days = ($calinfo->rpt_sun?'y':'n')
-						. ($calinfo->rpt_mon?'y':'n')
-						. ($calinfo->rpt_tue?'y':'n')
-						. ($calinfo->rpt_wed?'y':'n')
-						. ($calinfo->rpt_thu?'y':'n')
-						. ($calinfo->rpt_fri?'y':'n')
-						. ($calinfo->rpt_sat?'y':'n');
-			}
-			else
-			{
-				$days = 'nnnnnnn';
-			}
-			
-			$db2->query('SELECT count(cal_id) FROM calendar_entry_repeats WHERE cal_id='.$calid,__LINE__,__FILE__);
-			$db2->next_record();
-			$num_rows = $db2->f(0);
-			if(!$num_rows)
-			{
-				$db2->query('INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
-					."VALUES($calid,'".$calinfo->rpt_type."',$use_end,".$end['raw'].",'$days',$freq)",__LINE__,__FILE__);
-			}
-			else
-			{
-				$db2->query("UPDATE calendar_entry_repeats SET cal_type='".$calinfo->rpt_type."', cal_use_end=".$use_end.', '
-					."cal_end='".$end['raw']."', cal_days='".$days."', cal_frequency=".$freq.' '
-					.'WHERE cal_id='.$calid,__LINE__,__FILE__);
-			}
-		}
-		else
-		{
-			$db2->query('DELETE FROM calendar_entry_repeats WHERE cal_id='.$calid,__LINE__,__FILE__);
-		}
-		
-		$db2->unlock();      
-	}
-
-	function getevent($calid)
-	{
-		global $phpgw;
-
-		$cal_id = $this->prep($calid);
-
-		if(!$cal_id)
-		{
-			return false;
-		}
-
-		$db2 = $phpgw->db;
-
-		$db2->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
-
-		$calendar = CreateObject('calendar.calendar_item');
-
-		for($i=0;$i<count($cal_id);$i++)
-		{
-			$db2->query('SELECT * FROM calendar_entry WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-			$db2->next_record();
-
-			$calendar->id = (int)$db2->f('cal_id');
-			$calendar->owner = $db2->f('cal_owner');
-
-			$calendar->datetime = $db2->f('cal_datetime');
-//			$date = $this->date_to_epoch($phpgw->common->show_date($calendar->datetime,'Ymd'));
-			$date = $this->localdates($calendar->datetime);
-			$calendar->day = $date['day'];
-			$calendar->month = $date['month'];
-			$calendar->year = $date['year'];
-
-			$time = $this->splittime($phpgw->common->show_date($calendar->datetime,'His'));
-			$calendar->hour   = (int)$time['hour'];
-			$calendar->minute = (int)$time['minute'];
-			$calendar->ampm   = $time['ampm'];
-
-			$calendar->mdatetime = $db2->f('cal_mdatetime');
-//			$date = $this->date_to_epoch($phpgw->common->show_date($calendar->mdatetime,'Ymd'));
-			$date = $this->localdates($calendar->mdatetime);
-			$calendar->mod_day = $date['day'];
-			$calendar->mod_month = $date['month'];
-			$calendar->mod_year = $date['year'];
-
-			$time = $this->splittime($phpgw->common->show_date($calendar->mdatetime,'His'));
-			$calendar->mod_hour = (int)$time['hour'];
-			$calendar->mod_minute = (int)$time['minute'];
-			$calendar->mod_second = (int)$time['second'];
-			$calendar->mod_ampm = $time['ampm'];
-
-			$calendar->edatetime = $db2->f('cal_edatetime');
-//			$date = $this->date_to_epoch($phpgw->common->show_date($calendar->edatetime,'Ymd'));
-			$date = $this->localdates($calendar->edatetime);
-			$calendar->end_day = $date['day'];
-			$calendar->end_month = $date['month'];
-			$calendar->end_year = $date['year'];
-
-			$time = $this->splittime($phpgw->common->show_date($calendar->edatetime,'His'));
-			$calendar->end_hour = (int)$time['hour'];
-			$calendar->end_minute = (int)$time['minute'];
-			$calendar->end_second = (int)$time['second'];
-			$calendar->end_ampm = $time['ampm'];
-
-			$calendar->priority = $db2->f('cal_priority');
-// not loading webcal_entry.cal_type
-			$calendar->access = $db2->f('cal_access');
-			$calendar->name = htmlspecialchars(stripslashes($db2->f('cal_name')));
-			$calendar->description = htmlspecialchars(stripslashes($db2->f('cal_description')));
-			if($db2->f('cal_group'))
-			{
-				$groups = explode(',',$db2->f('cal_group'));
-				for($j=1;$j<count($groups) - 1;$j++)
-				{
-					$calendar->groups[] = $groups[$j];
-				}
-			}
-
-			$db2->query('SELECT * FROM calendar_entry_repeats WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-			if($db2->num_rows())
-			{
-				$db2->next_record();
-
-				$rpt_type = strtolower($db2->f('cal_type'));
-				$calendar->rpt_type = !$rpt_type?'none':$rpt_type;
-				$calendar->rpt_use_end = $db2->f('cal_use_end');
-				if($calendar->rpt_use_end)
-				{
-					$calendar->rpt_end = $db2->f('cal_end');
-					$date = $this->localdates($db2->f('cal_end'));
-					$calendar->rpt_end_day = (int)$date['day'];
-					$calendar->rpt_end_month = (int)$date['month'];
-					$calendar->rpt_end_year = (int)$date['year'];
-				}
-				else
-				{
-					$calendar->rpt_end = 0;
-					$calendar->rpt_end_day = 0;
-					$calendar->rpt_end_month = 0;
-					$calendar->rpt_end_year = 0;
-				}
-				
-				$calendar->rpt_freq = (int)$db2->f('cal_frequency');
-				$rpt_days = strtoupper($db2->f('cal_days'));
-				$calendar->rpt_days = $rpt_days;
-				$calendar->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
-				$calendar->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
-				$calendar->rpt_tue = (substr($rpt_days,2,1)=='Y'?1:0);
-				$calendar->rpt_wed = (substr($rpt_days,3,1)=='Y'?1:0);
-				$calendar->rpt_thu = (substr($rpt_days,4,1)=='Y'?1:0);
-				$calendar->rpt_fri = (substr($rpt_days,5,1)=='Y'?1:0);
-				$calendar->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
-			}
-
-			$db2->query('SELECT * FROM calendar_entry_user WHERE cal_id='.$cal_id[$i],__LINE__,__FILE__);
-			
-			if($db2->num_rows())
-			{
-				while($db2->next_record())
-				{
-					$calendar->participants[] = $db2->f('cal_login');
-					$calendar->status[] = $db2->f('cal_status');
-				}
-			}
-			
-			$calendar_item[$i] = $calendar;
-		}
-		$db2->unlock();
-		
-		return $calendar_item;
-	}
-
-	function findevent()
-	{
-		global $phpgw_info;
-
-		if(!$phpgw_info['user']['apps']['calendar'])
-		{
-			return false;
-		}
 	}
 }
 ?>

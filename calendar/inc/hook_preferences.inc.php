@@ -36,11 +36,11 @@
 	echo '<a href="' . $phpgw->link('/calendar/preferences.php') . '">' . lang('Calendar preferences')
 		. '</a><br>';
 
-//	echo '<a href="' . $phpgw->link('/calendar/categories.php') . '">'
-//		. lang('Edit Categories') . '</a><br>';
+	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app='.$appname) . '">'
+		. lang('Grant Calendar Access') . '</a><br>';
 
-	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app=calendar') . '">'
-		. lang('Grant Calendar Access') . '</a>';
+	echo '<a href="' . $phpgw->link('/preferences/categories.php','cats_app='.$appname) . '">'
+		. lang('Edit Categories') . '</a>';
 
 	section_end(); 
 }

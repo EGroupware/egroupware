@@ -281,15 +281,15 @@ class calendar extends calendar_
 		global $phpgw, $phpgw_info, $grants;
 
 		if($owner == 0) { $owner = $phpgw_info['user']['account_id']; }
-		$is_private  = False;
-		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True))
+		if ($owner == $phpgw_info['user']['account_id'] || (!!($grants[$owner] & PHPGW_ACL_PRIVATE) == True) || ($event->public == 1))
 		{
+			$is_private  = False;
 		}
-		elseif ($event->public == False)
+		elseif($event->public == 0)
 		{
 			$is_private = True;
 		}
-		elseif($event->access == 'group')
+		elseif($event->public == 2)
 		{
 			$is_private = True;
 			$groups = $phpgw->accounts->memberships($owner);
@@ -300,6 +300,10 @@ class calendar extends calendar_
 					$is_private = False;
 				}
 			}
+		}
+		else
+		{
+			$is_private  = False;
 		}
 
 		if ($is_private)
@@ -322,8 +326,8 @@ class calendar extends calendar_
 	{
 		if($phpgw_info['server']['calendar_type'] == 'sql')
 		{
-			$this->stream->query('UPDATE calendar_entry SET cal_owner='.$new_owner.' WHERE cal_owner='.$account_id,__LINE__,__FILE__);
-			$this->stream->query('UPDATE calendar_entry_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
+			$this->stream->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
+			$this->stream->query('UPDATE phpgw_cal_user SET login='.$new_owner.' WHERE login='.$account_id);
 		}
 	}
 
@@ -333,17 +337,17 @@ class calendar extends calendar_
 
 		$this->set_filter();
 		$owner = $owner == 0?$phpgw_info['user']['account_id']:$owner;
-		$sql = "AND (calendar_entry.cal_type='M') "
-			. 'AND (calendar_entry_user.cal_login='.$owner.' '
-			. 'AND ((calendar_entry_repeats.cal_end >= '.$this->end_repeat_day.') OR (calendar_entry_repeats.cal_end=0))';
+		$sql = "AND (phpgw_cal.type='M') "
+			. 'AND (phpgw_cal_user.login='.$owner.' '
+			. 'AND ((phpgw_cal_repeats.recur_enddate >= '.$this->end_repeat_day.') OR (phpgw_cal_repeats.recur_enddate=0))';
 
 // Private
 		if(strpos($this->filter,'private'))
 		{
-			$sql .= " AND calendar_entry.cal_access='private'";
+			$sql .= " AND phpgw_cal.public=0";
 		}
 		
-		$sql .= ') ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
+		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 		$events = $this->get_event_ids(True,$sql);
 
@@ -399,7 +403,7 @@ class calendar extends calendar_
 			$full_event_date = date('Ymd',$event_beg_day);
 			
 			// only repeat after the beginning, and if there is an rpt_end before the end date
-			if (($rep_events->rpt_use_end && ($search_date_full > $end_recur_date)) ||
+			if (($rep_events->rpt_end_use && ($search_date_full > $end_recur_date)) ||
 				($search_date_full < $full_event_date))
 			{
 				continue;
@@ -424,6 +428,11 @@ class calendar extends calendar_
 						}
 						break;
 					case RECUR_WEEKLY:
+						if (floor(($search_beg_day - $event_beg_day)/604800) % $rep_events->recur_interval)
+						{
+							continue;
+						}
+				
 						$check = 0;
 						switch($search_date_dow)
 						{
@@ -449,11 +458,6 @@ class calendar extends calendar_
 								$check = M_SATURDAY;
 								break;
 						}
-						if (floor(($search_beg_day - $event_beg_day)/604800) % $rep_events->recur_interval)
-						{
-							continue;
-						}
-				
 						if ($rep_events->recur_data & $check)
 						{
 							$link[$this->repeating_event_matches++] = $id;
@@ -515,21 +519,19 @@ class calendar extends calendar_
 		$this->set_filter();
 		$owner = !$owner?$phpgw_info['user']['account_id']:$owner;
 		$repeating_events_matched = $this->check_repeating_entries($datetime - $this->tz_offset);
-		$sql = "AND (calendar_entry.cal_type != 'M') "
-				. 'AND ((calendar_entry.cal_datetime >= '.$datetime.' AND calendar_entry.cal_datetime <= '.($datetime + 86399).') '
-				.   'OR (calendar_entry.cal_datetime <= '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
-//				. 'AND ((calendar_entry.cal_datetime > '.$datetime.' AND calendar_entry.cal_datetime < '.($datetime + 86399).') '
-//				.   'OR (calendar_entry.cal_datetime < '.$datetime.' AND calendar_entry.cal_edatetime >= '.($datetime + 86399).') '
-				.   'OR (calendar_entry.cal_edatetime >= '.$datetime.' AND calendar_entry.cal_edatetime <= '.($datetime + 86399).')) '
-				. 'AND (calendar_entry_user.cal_login='.$owner;
+		$sql = "AND (phpgw_cal.type != 'M') "
+				. 'AND ((phpgw_cal.datetime >= '.$datetime.' AND phpgw_cal.datetime <= '.($datetime + 86399).') '
+				.   'OR (phpgw_cal.datetime <= '.$datetime.' AND phpgw_cal.edatetime >= '.($datetime + 86399).') '
+				.   'OR (phpgw_cal.edatetime >= '.$datetime.' AND phpgw_cal.edatetime <= '.($datetime + 86399).')) '
+				. 'AND (phpgw_cal_user.login='.$owner;
 
 // Private
 		if(strpos($this->filter,'private'))
 		{
-			$sql .= " AND calendar_entry.cal_access='private'";
+			$sql .= " AND endar_entry.cal.public=0";
 		}
 		
-		$sql .= ') ORDER BY calendar_entry.cal_datetime ASC, calendar_entry.cal_edatetime ASC, calendar_entry.cal_priority ASC';
+		$sql .= ') ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
 
 		$event = $this->get_event_ids(False,$sql);
 
@@ -770,14 +772,13 @@ class calendar extends calendar_
 
 		if($starttime == $endtime)
 		{
-//			$endtime = mktime($phpgw->common->show_date($starttime,'H'),$phpgw->common->show_date($starttime,'i'),0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->tz_offset - 1;
 			$endtime = mktime(0,0,0,$phpgw->common->show_date($starttime,'m'),$phpgw->common->show_date($starttime,'d') + 1,$phpgw->common->show_date($starttime,'Y')) - $this->tz_offset - 1;
 		}
 
-		$sql = 'AND ((('.$starttime.' <= calendar_entry.cal_datetime) AND ('.$endtime.' >= calendar_entry.cal_datetime) AND ('.$endtime.' <= calendar_entry.cal_edatetime)) '
-				.  'OR (('.$starttime.' >= calendar_entry.cal_datetime) AND ('.$starttime.' < calendar_entry.cal_edatetime) AND ('.$endtime.' >= calendar_entry.cal_edatetime)) '
-				.  'OR (('.$starttime.' <= calendar_entry.cal_datetime) AND ('.$endtime.' >= calendar_entry.cal_edatetime)) '
-				.  'OR (('.$starttime.' >= calendar_entry.cal_datetime) AND ('.$endtime.' <= calendar_entry.cal_edatetime))) ';
+		$sql = 'AND ((('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime)) '
+				.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$starttime.' < phpgw_cal.edatetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+				.  'OR (('.$starttime.' <= phpgw_cal.datetime) AND ('.$endtime.' >= phpgw_cal.edatetime)) '
+				.  'OR (('.$starttime.' >= phpgw_cal.datetime) AND ('.$endtime.' <= phpgw_cal.edatetime))) ';
 
 		if(count($participants) > 0)
 		{
@@ -790,7 +791,7 @@ class calendar extends calendar_
 					{
 						$p_g .= ' OR ';
 					}
-					$p_g .= 'calendar_entry_user.cal_login='.$participants[$i];
+					$p_g .= 'phpgw_cal_user.login='.$participants[$i];
 				}
 			}
 			if($p_g)
@@ -801,7 +802,7 @@ class calendar extends calendar_
       
 		if($id)
 		{
-			$sql .= ' AND calendar_entry.cal_id <> '.$id;
+			$sql .= ' AND phpgw_cal.id <> '.$id;
 		}
 
 		$db2 = $phpgw->db;
@@ -813,7 +814,7 @@ class calendar extends calendar_
 		}
 		for($i=0;$i<count($events);$i++)
 		{
-			$db2->query('SELECT cal_type FROM calendar_entry_repeats WHERE cal_id='.$events[$i],__LINE__,__FILE__);
+			$db2->query('SELECT recur_type FROM phpgw_cal_repeats WHERE id='.$events[$i],__LINE__,__FILE__);
 			if($db2->num_rows() == 0)
 			{
 				$retval[] = $events[$i];
@@ -822,7 +823,7 @@ class calendar extends calendar_
 			else
 			{
 				$db2->next_record();
-				if($db2->f('cal_type') <> 'monthlyByDay')
+				if($db2->f('recur_type') <> RECUR_MONTHLY_MDAY)
 				{
 					$retval[] = $events[$i];
 					$ok = True;
@@ -859,10 +860,12 @@ class calendar extends calendar_
 		);
 		$p->set_var($var);
 		
+		$p->set_var('col_width','14');
 		if($display_name == True)
 		{
 			$p->set_var('col_title',lang('name'));
 			$p->parse('column_header','column_title',True);
+			$p->set_var('col_width','12');
 		}
 
 		for($i=0;$i<7;$i++)
@@ -898,11 +901,13 @@ class calendar extends calendar_
 		$p->set_file($templates);
 
 		$p->set_var('extra','');
-		
+
+		$p->set_var('col_width','14');
 		if($display_name)
 		{
 			$p->set_var('column_data',$phpgw->common->grab_owner_name($owner));
 			$p->parse('column_header','month_column',True);
+			$p->set_var('col_width','12');
 		}
 		
 		for ($j=0;$j<7;$j++)
@@ -940,7 +945,7 @@ class calendar extends calendar_
 					if((!!($grants[$owner] & PHPGW_ACL_ADD) == True))
 					{
 						$new_event_link .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day'].'&owner='.$owner).'">';
-						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="right">';
+						$new_event_link .= '<img src="'.$this->image_dir.'/new.gif" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">';
 						$new_event_link .= '</a>';
 					}
 					$day_number = '<a href="'.$phpgw->link('/calendar/day.php','month='.$month.'&day='.$day.'&year='.$year.'&owner='.$owner).'">'.$day.'</a>';
@@ -1044,7 +1049,7 @@ class calendar extends calendar_
 							'start_time'		=>	$start_time,
 							'end_time'			=>	$end_time,
 							'close_view_link'	=> $close_link,
-							'name'				=>	$this->is_private($lr_events,$owner,'name').$this->display_status($lr_events->users_status)
+							'name'				=>	$this->is_private($lr_events,$owner,'title').$this->display_status($lr_events->users_status)
 						);
 						$p->set_var($var);
 						$p->parse('events','week_day_event',True);
@@ -1104,12 +1109,14 @@ class calendar extends calendar_
 			$display_name = True;
 			$counter = count($owners);
 			$owners_array = $owners;
+			$p->set_var('cols','8');
 		}
 		else
 		{
 			$display_name = False;
 			$counter = 1;
 			$owners_array[0] = $owners;
+			$p->set_var('cols','7');
 		}
 		$p->set_var('month_filler_text',$this->large_month_header($month,$year,$display_name));
 		$p->parse('row','month_filler',True);
@@ -1156,7 +1163,8 @@ class calendar extends calendar_
 			'month_header'	=>	'month_header.tpl'
 		);
 		$p->set_file($templates);
-		
+
+		$p->set_var('cols','7');
 		$p->set_var('month_filler_text',$this->large_month_header($month,$year,False));
 		$p->parse('row','month_filler',True);
 
@@ -1543,7 +1551,7 @@ class calendar extends calendar_
 
 		$var = Array(
 			'bg_text'	=>	$phpgw_info['theme']['bg_text'],
-			'name'	=>	$event->name
+			'name'	=>	$event->title
 		);
 		$p->set_var($var);
 		$p->parse('out','view_begin');
@@ -1555,6 +1563,16 @@ class calendar extends calendar_
 			$var = Array(
 				'field'	=>	lang('Description'),
 				'data'	=>	nl2br($event->description)
+			);
+			$p->set_var($var);
+			$p->parse('output','list',True);
+		}
+
+		if ($event->category)
+		{
+			$var = Array(
+				'field'	=>	lang('Category'),
+				'data'	=>	$event->category
 			);
 			$p->set_var($var);
 			$p->parse('output','list',True);
@@ -1663,7 +1681,15 @@ class calendar extends calendar_
 		$p->parse('output','list',True);
 
 // Repeated Events
-		$str = lang($event->rpt_type);
+		$rpt_type = Array(
+			'none',
+			'daily',
+			'weekly',
+			'monthlybyday',
+			'monthlybydate',
+			'yearly'
+		);
+		$str = lang($rpt_type[$event->recur_type]);
 		if($event->recur_type <> RECUR_NONE)
 		{
 			$str .= ' (';

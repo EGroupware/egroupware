@@ -45,7 +45,7 @@
 ?>
 
 <center>
-<table border="0" cellspacing="3" cellpadding="4">
+<table border="0" cellspacing="3" cellpadding="4" cols=4>
  <tr>
   <?php
     if (!$friendly)
@@ -53,7 +53,7 @@
   ?>
   </td>
   </td>
-  <td colspan="<?php echo ($friendly?'6':'4'); ?>" align="center">
+  <td align="center">
    <font face=\"".$phpgw_info["theme"][font]."\" size="+1"><?php echo $year; ?></font>
   </td>
   <?php
@@ -72,7 +72,7 @@
     else
       echo $phpgw->calendar->mini_calendar($i,$i,$year,'','none',False);
     echo '</td>';
-    if($i==6) echo '</tr><tr valign="top">';
+    if($i % 3 == 0) echo '</tr><tr valign="top">';
   }
 ?>
  </tr>

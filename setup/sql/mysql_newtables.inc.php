@@ -210,36 +210,37 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE calendar_entry (
-    cal_id		int(11) DEFAULT '0' NOT NULL auto_increment,
-    cal_owner 		int(11) DEFAULT '0' NOT NULL,
-    cal_group		varchar(255),
-    cal_datetime	int(11),
-    cal_mdatetime	int(11),
-    cal_edatetime 	int(11),
-    cal_priority 	int(11) DEFAULT '2' NOT NULL,
-    cal_type		varchar(10),
-    cal_access		varchar(10),
-    cal_name		varchar(80) NOT NULL,
-    cal_description 	text,
-    PRIMARY KEY (cal_id)
+  $sql = "CREATE TABLE phpgw_cal (
+    id		int(11) DEFAULT '0' NOT NULL auto_increment,
+    owner		int(11) DEFAULT '0' NOT NULL,
+    category	int(11) DEFAULT '0' NOT NULL ,
+    groups		varchar(255),
+    datetime	int(11),
+    mdatetime	int(11),
+    edatetime	int(11),
+    priority	int(11) DEFAULT '2' NOT NULL,
+    type		varchar(10),
+    public		int DEFAULT '1' NOT NULL,
+    title		varchar(80) NOT NULL,
+    description	text,
+    PRIMARY KEY (id)
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE calendar_entry_repeats (
-    cal_id		int(11) DEFAULT '0' NOT NULL,
-    cal_type		enum('daily','weekly','monthlyByDay','monthlyByDate','yearly') DEFAULT 'daily' NOT NULL,
-    cal_use_end		int DEFAULT '0',
-    cal_end		int(11),
-    cal_frequency	int(11) DEFAULT '1',
-    cal_days		char(7)
+  $sql = "CREATE TABLE phpgw_cal_repeats (
+    id		int(11) DEFAULT '0' NOT NULL,
+    recur_type		int DEFAULT '0' NOT NULL,
+    recur_use_end	int DEFAULT '0',
+    recur_enddate	int(11) DEFAULT '0',
+    recur_interval	int(11) DEFAULT '1',
+    recur_data		int
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE calendar_entry_user (
-    cal_id       int(11) DEFAULT '0' NOT NULL,
-    cal_login    int(11) DEFAULT '0' NOT NULL,
-    cal_status   char(1) DEFAULT 'A',
+  $sql = "CREATE TABLE phpgw_cal_user (
+    id       int(11) DEFAULT '0' NOT NULL,
+    login    int(11) DEFAULT '0' NOT NULL,
+    status   char(1) DEFAULT 'A',
     PRIMARY KEY (cal_id, cal_login)
   )";
   $phpgw_setup->db->query($sql);  

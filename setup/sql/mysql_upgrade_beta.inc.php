@@ -1474,9 +1474,91 @@
 	{
 		global $phpgw_info,$phpgw_setup;
 
-                $phpgw_setup->db->query("alter table phpgw_notes add column note_access char(7) after note_owner");
+		$phpgw_setup->db->query("alter table phpgw_notes add column note_access char(7) after note_owner");
 
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.001';
+	}
+
+	$test[] = '0.9.11.001';
+	function upgrade0_9_11_001()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		if(extension_loaded('mcal') == False)
+		{
+			define(RECUR_NONE,0);
+			define(RECUR_DAILY,1);
+			define(RECUR_WEEKLY,2);
+			define(RECUR_MONTHLY_MDAY,3);
+			define(RECUR_MONTHLY_WDAY,4);
+			define(RECUR_YEARLY,5);
+	
+			define(M_SUNDAY,1);
+			define(M_MONDAY,2);
+			define(M_TUESDAY,4);
+			define(M_WEDNESDAY,8);
+			define(M_THURSDAY,16);
+			define(M_FRIDAY,32);
+			define(M_SATURDAY,64);
+		}
+
+		$temp_db = $phpgw_setup->db;
+
+		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='0' WHERE cal_access='private'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='1' WHERE cal_access='public'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='2' WHERE cal_access='group'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_id id int(11) DEFAULT '0' NOT NULL auto_increment",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_owner owner int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry add column category int(11) DEFAULT '0' NOT NULL after owner",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_group groups varchar(255)",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_datetime datetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_mdatetime mdatetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_edatetime edatetime int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_priority priority int(11) DEFAULT '2' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_type type varchar(10)",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_access public int DEFAULT '1' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_name title varchar(80) NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry change cal_description description text",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry rename phpgw_cal",__LINE__,__FILE__);
+		
+// Prepare the calendar with the field data before washing it.....
+		$phpgw_setup->db->query("SELECT cal_id,cal_days,cal_type+0 AS rpt_type FROM calendar_entry_repeats",__LINE__,__FILE__);
+		while($phpgw_setup->db->next_record())
+		{
+			$id = $phpgw_setup->db->f('cal_id');
+			$days = strtoupper($phpgw_setup->db->f('cal_days'));
+			$rpt_type[$id] = $phpgw_setup->db->f('rpt_type');
+			$new_days = 0;
+			$new_days += (substr($days,0,1)=='Y'?M_SUNDAY:0);
+			$new_days += (substr($days,1,1)=='Y'?M_MONDAY:0);
+			$new_days += (substr($days,2,1)=='Y'?M_TUESDAY:0);
+			$new_days += (substr($days,3,1)=='Y'?M_WEDNESDAY:0);
+			$new_days += (substr($days,4,1)=='Y'?M_THURSDAY:0);
+			$new_days += (substr($days,5,1)=='Y'?M_FRIDAY:0);
+			$new_days += (substr($days,6,1)=='Y'?M_SATURDAY:0);
+			$temp_db->query("UPDATE calendar_entry_repeats SET cal_days = '".$new_days."' WHERE cal_id=".$id,__LINE__,__FILE__);
+		}
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_id id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_type recur_type int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+// I'm thinking I can delete the use_end field and just check to see if the end is != 0....
+//		$phpgw_setup->db->query("alter table calendar_entry_repeats drop recur_use_end",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_use_end recur_use_end int DEFAULT '0'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_end recur_enddate int(11) DEFAULT '0'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_frequency recur_interval int(11) DEFAULT '1'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats change cal_days recur_data int(11) DEFAULT '0'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_repeats rename phpgw_cal_repeats",__LINE__,__FILE__);
+
+		while(list($key,$value) = each($rpt_type))
+		{
+			$phpgw_setup->db->query("UPDATE phpgw_cal_repeats SET recur_type=".$value." WHERE id=".$key,__LINE__,__FILE__);
+		}
+		
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_id id int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_login login int(11) DEFAULT '0' NOT NULL",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user change cal_status status char(1) DEFAULT 'A'",__LINE__,__FILE__);
+		$phpgw_setup->db->query("alter table calendar_entry_user rename phpgw_cal_user",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.11.002';
 	}
 
   reset ($test);

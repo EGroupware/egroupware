@@ -1,5 +1,5 @@
 <!-- $Id$   month_column -->
-  <td valign="top" width="75" height="75"{extra}>
+  <td valign="top" height="75" colspan=1 width="{col_width}%"{extra}>
 {column_data}
   </td>
 

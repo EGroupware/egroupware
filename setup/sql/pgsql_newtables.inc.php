@@ -185,35 +185,36 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE calendar_entry (
-    cal_id		serial,
-    cal_owner		int DEFAULT 0 NOT NULL,
-    cal_group		varchar(255),
-    cal_datetime	int4,
-    cal_mdatetime	int4,
-    cal_edatetime	int4,
-    cal_priority	int DEFAULT 2,
-    cal_type		varchar(10),
-    cal_access		varchar(10),
-    cal_name		varchar(80) NOT NULL,
-    cal_description	text
-  )";
+	$sql = "CREATE TABLE phpgw_cal (
+		id		serial,
+		owner		int DFAULT 0 NOT NULL,
+		category	int DFAULT 0 NOT NULL,
+		groups	varchar(255),
+		datetime	int4,
+		mdatetime	int4,
+		edatetime	int4,
+		priority		int DEFAULT 2 NOT NULL,
+		type		varchar(10),
+		public	int DEFAULT 1 NOT NULL,
+		title		varchar(80) NOT NULL,
+		desription	text
+	)";
   $phpgw_setup->db->query($sql);
 
-  $sql = "CREATE TABLE calendar_entry_user (
-    cal_id		int DEFAULT 0 NOT NULL,
-    cal_login		int DEFAULT 0 NOT NULL,
-    cal_status		char(1) DEFAULT 'A'
-  )";
+	$sql = "CREATE TABLE phpgw_cal_user (
+		id       int DEFAULT 0 NOT NULL,
+		login    int DEFAULT 0 NOT NULL,
+		status   char(1) DEFAULT 'A'
+	)";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table calendar_entry_repeats ( 
-    cal_id		int DEFAULT 0 NOT NULL,
-    cal_type		varchar(20),
-    cal_use_end		int default 0,
-    cal_end		int4,
-    cal_frequency	int default 1,
-    cal_days		char(7)
+  $sql = "CREATE TABLE phpgw_cal_repeats (
+  	 id		int DEFAULT 0 NOT NULL,
+    recur_type		int DEFAULT 0 NOT NULL,
+  	 recur_use_end	int DEFAULT 0,
+    recur_enddate	int4 DEFAULT 0,
+  	 recur_interval	int DEFAULT 1,
+    recur_data		int
   )";
   $phpgw_setup->db->query($sql);
 

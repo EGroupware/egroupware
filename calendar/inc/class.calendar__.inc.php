@@ -252,34 +252,6 @@ class calendar__
 
 	function set_common_recur($year,$month,$day,$interval)
 	{
-		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
-		{
-			$this->event->rpt_end_use = 0;
-			$this->event->rpt_end = 0;
-			$this->event->rpt_end_day = 0;
-			$this->event->rpt_end_month = 0;
-			$this->event->rpt_end_year = 0;
-		}
-		else
-		{
-			$this->event->rpt_end_use = 1;
-			$this->event->rpt_end = mktime(0,0,0,intval($month),intval($day),intval($year));
-			$this->event->rpt_end -= ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
-			$this->event->rpt_end_day = intval($day);
-			$this->event->rpt_end_month = intval($month);
-			$this->event->rpt_end_year = intval($year);
-		}
-		$this->event->rpt_sun = 0;
-		$this->event->rpt_mon = 0;
-		$this->event->rpt_tue = 0;
-		$this->event->rpt_wed = 0;
-		$this->event->rpt_thu = 0;
-		$this->event->rpt_fri = 0;
-		$this->event->rpt_sat = 0;
-		$this->event->rpt_days = 'nnnnnnn';
-		$this->event->rpt_freq = intval($interval);
-
-	// Legacy Support (New)
 		$this->event->recur_interval = intval($interval);
 		if(intval($day) == 0 && intval($month) == 0 && intval($year) == 0)
 		{

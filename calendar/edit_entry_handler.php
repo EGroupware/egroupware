@@ -15,12 +15,13 @@
   /* $Id$ */
 
 	$phpgw_flags = Array(
-								'currentapp'					=>	'calendar',
-								'noheader'						=> True,
-								'nonavbar'						=> True,
-								'enable_nextmatchs_class'	=> True,
-								'noappheader'					=>	True,
-								'noappfooter'					=>	True
+		'currentapp'					=>	'calendar',
+		'noheader'						=> True,
+		'nonavbar'						=> True,
+		'enable_nextmatchs_class'	=> True,
+		'enable_categories_class'	=> True,
+		'noappheader'					=>	True,
+		'noappfooter'					=>	True
 	);
 	
 	$phpgw_info['flags'] = $phpgw_flags;
@@ -109,6 +110,7 @@
 
 		$cal_stream = $phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init($cal_stream);
+//		$cat = $phpgw->categories->return_single($category);
 		$phpgw->calendar->event_set_category($cal_stream,$category);
 		$phpgw->calendar->event_set_title($cal_stream,$title);
 		$phpgw->calendar->event_set_description($cal_stream,$description);

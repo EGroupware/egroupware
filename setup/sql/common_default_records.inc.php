@@ -34,7 +34,7 @@
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('mail_login_type', 'standard')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('smtp_server', 'localhost')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('smtp_port', '25')");
-    $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('nntp_server', 'yournewsserver.com')");
+    $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('nntp_server', 'news.freshmeat.net')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('nntp_port', '119')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('nntp_sender', 'complaints@yourserver.com')");
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('nntp_organization', 'phpGroupWare')");
