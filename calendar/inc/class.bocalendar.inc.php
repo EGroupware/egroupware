@@ -209,10 +209,24 @@
 
 		function list_methods($_type='xmlrpc')
 		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+			if (is_array($_type))
+			{
+				$_type = $_type['type'];
+			}
 			switch($_type)
 			{
 				case 'xmlrpc':
 					$xml_functions = array(
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+ 						),
 						'read_entry' => array(
 							'function'  => 'read_entry',
 							'signature' => array(array(xmlrpcStruct,xmlrpcInt)),
@@ -220,12 +234,12 @@
 						),
 						'add_entry' => array(
 							'function'  => 'update',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Add a single entry by passing the fields.')
 						),
 						'update_entry' => array(
 							'function'  => 'update',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
 							'docstring' => lang('Update a single entry by passing the fields.')
 						),
 						'delete_entry' => array(
