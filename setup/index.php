@@ -54,8 +54,14 @@
 	$GLOBALS['phpgw_info']['setup']['stage']['header'] = $GLOBALS['phpgw_setup']->detection->check_header();
 	if ($GLOBALS['phpgw_info']['setup']['stage']['header'] != '10')
 	{
-//		Header('Location: manageheader.php');
-		Header('Location: check_install.php?intro=1');
+		if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == 4)	// header needs update, go there direct
+		{
+			Header('Location: manageheader.php');
+		}
+		else	// run check-install first
+		{
+			Header('Location: check_install.php?intro=1');
+		}
 		exit;
 	}
 	elseif(!$GLOBALS['phpgw_setup']->auth('Config'))
