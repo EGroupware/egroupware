@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={charset}">
-<meta name="author" content="eGroupware http://www.phpgroupware.org">
-<meta name="description" content="eGroupware login screen">
-<meta name="keywords" content="eGroupware login screen">
+<meta name="author" content="eGroupWare http://www.phpgroupware.org">
+<meta name="description" content="eGroupWare login screen">
+<meta name="keywords" content="eGroupWare login screen">
 <link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css">	
 <link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico">
 <link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico">
