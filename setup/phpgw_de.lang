@@ -134,6 +134,7 @@ clear form	common	de	Eingaben löschen
 clipboard_contents	filemanager	de	Clipboard Inhalt
 close	tts	de	Schließen
 close date	tts	de	Geschlossen am
+color    common    de    Farbe
 company	common	de	Firma
 company name	addressbook	de	Firma
 completed	todo	de	fertig
@@ -158,6 +159,17 @@ custom fields	addressbook	de	Benutzerdefinierte Felder
 customer	projects	de	Kunde
 daily	calendar	de	Täglich
 daily matrix view	calendar	de	Matrix-Ansicht des Tages
+dark blue    common    de    Dunkelblau
+dark cyan    common    de    Dunkeltürkis
+dark gray    common    de    Dunkelgrau
+dark green    common    de    Dunkelgrün
+dark magenta    common    de    Dunkelrot
+dark yellow    common    de    Dunkelgelb
+light blue    common    de    Hellblau
+light cyan    common    de    Helltürkis
+light green    common    de    Hellgrün
+light magenta    common    de    Hellrot
+light yellow    common    de    Hellgelb
 date	common	de	Datum
 date called	phonelog	de	Datum des Anrufs
 date due	common	de	fällig am
@@ -191,6 +203,7 @@ display note for	notes	de	Display note for
 do_delete	filemanager	de	Lösche
 domestic	addressbook	de	Wohnung
 done	common	de	Fertig
+down    common    de    runter
 download	filemanager	de	Download
 duration	calendar	de	Dauer
 e-mail	common	de	E-Mail
@@ -238,6 +251,7 @@ filter	common	de	Filter
 first name	common	de	Vorname
 firstname	common	de	Vorname
 first page	common	de	erste Seite
+flags    squirelmail    de    Flags
 folder	email	de	Ordner
 forum	common	de	Forum
 forward	email	de	Weiterleiten
@@ -246,7 +260,7 @@ free/busy	calendar	de	frei/belegt
 frequency	calendar	de	Häufigkeit
 fri	calendar	de	Fr
 friday	common	de	Freitag
-from	email	de	Von
+from	Common	de	Von
 ftp	common	de	FTP
 full description	calendar	de	vollständige Beschreibung
 full name	addressbook	de	vollständiger Name
@@ -261,10 +275,7 @@ global public and group public	common	de	öffentliche und Gruppen
 global public only	common	de	nur öffentliche
 go!	calendar	de	Go!
 grab new news sites	common	de	Neue Sites für Schlagzeilen suchen
-grant addressbook access	common	de	Berechtigungen für Adressbuchzugriffe
-grant bookmark access	preferences	de	Berechtigungen für Lesezeichen Zugriffe
-grant calendar access	common	de	Berechtigungen für Kalenderzugriffe
-grant todo access	common	de	Berechtigungen für Aufgabenlisten-Zugriffe
+grant access	common	de	Berechtigungen
 group	common	de	Gruppe
 group access 	common	de	Gruppenzugriff
 group has been added	common	de	Gruppe hinzugefügt
@@ -298,6 +309,7 @@ hours	projects	de	Stunden
 i participate	calendar	de	Ich nehme teil
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
+identifying name    squirrelmail    de    Bezeichnung der Hervorhebung
 idle	admin	de	idle
 if applicable	email	de	falls zutreffend
 ignore conflict	calendar	de	Konflikt ignorieren
@@ -308,6 +320,8 @@ import file	addressbook	de	Datei importieren
 import from outlook	addressbook	de	Aus Outlook importieren
 import lang set	transy	de	Sprachset importieren
 in progress	tts	de	in Bearbeitung
+index_what_is    squirrelmail    en    Die Reihenfolge der Indizes legt fest, in welcher Reihenfolge die Spalten des Nachrichten-Indexes angeordnet werden. Es können Spalten verschoben, hinzugefügt und entfernt werden, um die Anordnung an den persönlichen Geschmack anzupassen.
+index order    common    de    Reihenfolge der Indizes
 installed applications	admin	de	Installierte Anwendungen
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 international	addressbook	de	international
@@ -343,6 +357,7 @@ last page	common	de	letzte Seite
 last time read	admin	de	Zuletzt gelesen
 last updated	todo	de	Zuletzt geändert
 last x logins	admin	de	Letze %1 Logins
+light gray    common    de    Hellgrau
 line 2	addressbook	de	Zeile 2
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
 listings displayed	admin	de	Zeilen maximal
@@ -360,10 +375,13 @@ main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
 manual	common	de	Handbuch
 march	common	de	März
+match    squirrelmail    de    Übereinstimmung
 max matchs per page	preferences	de	Maximale Treffer pro Seite
 may	common	de	Mai
 medium	common	de	Mittel
+medium gray    common    de    Grau
 message	common	de	Nachricht
+message highlighting    common    de    Nachrichten Hervorheben
 message phone	addressbook	de	Anrufbeantworter
 message x	nntp	de	Nachricht %1
 messages	email	de	Nachrichten
@@ -388,6 +406,7 @@ name	common	de	Name
 net	projects	de	Netto
 network news	admin	de	Network News
 never	admin	de	Nie
+new    common    de    Neu
 new entry	calendar	de	Neuer Eintrag
 new entry added sucessfully	common	de	Neuer Eintrag erfolgreich hinzugefügt
 new group name	admin	de	Neuer Gruppenname
@@ -405,6 +424,7 @@ next	nntp	de	Nächste
 next page	common	de	nächste Seite
 nntp	common	de	NNTP
 no	common	de	Nein
+no highlighting is defined    common    de    keine Hervorhebungen definiert
 no matches found.	calendar	de	Keine Treffer gefunden.
 no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
@@ -431,6 +451,7 @@ opened by	tts	de	Angelegt von
 or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
 or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
+other:    squirrelmail    de    Andere
 other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
 other phone	common	de	Tel sonst.
@@ -448,6 +469,7 @@ permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
 personal	addressbook	de	Persönlich
+personal information    squirrelmail    de    Persönliche Angaben
 personalized notes for	notes	de	Persönliche Notizen für
 phone numbers	addressbook	de	Telefonnummern
 php information	admin	de	PHP Informationen
@@ -506,6 +528,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatz Eigentümer
 remark	projects	de	Anmerkung
 remark required	projects	de	Anmerkung erforderlich
+remove    common    de    entfernen
 remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
 rename	filemanager	de	Umbenennen
 rename_to	filemanager	de	Umbenennen in
@@ -516,6 +539,7 @@ repeating event information	calendar	de	Informationen zu sich wiederholenden Ere
 repetition	calendar	de	Repetition
 reply	email	de	Antworten
 reply all	email	de	Allen antworten
+return to options page    squirrelmail    de    Zurück zur Optionsseite
 sa	calendar	de	Sa
 sat	calendar	de	Sa
 saturday	common	de	Samstag
@@ -532,6 +556,7 @@ select groups	projects	de	Gruppen auswählen
 select headline news sites	common	de	News-Sites für Schlagzeilen auswählen
 select headlines to display	preferences	de	Anzuzeigende Schlagzeilen auswählen
 select language to generate for	transy	de	Sprache auswählen
+select layout    preferences    de    Layout wählen
 select per button !	projects	de	Auswahl per Button!
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select project	projects	de	Projekt auswählen
@@ -561,7 +586,7 @@ show text on navigation icons	preferences	de	Text zu Icons in der Navigationslei
 showing x	common	de	%1 Einträge
 showing x - x of x	common	de	%1 Einträge - %2 von %3
 site	admin	de	Site
-size	email	de	Größe
+size	common	de	Größe
 small	notes	de	Klein
 sorry, that group name has already been taking.	admin	de	Dieser Gruppenname ist bereits vergeben.
 sorry, the follow users are still a member of the group x	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
@@ -569,6 +594,7 @@ sorry, there was a problem processing your request.	common	de	Sorry, es gab ein 
 sorry, your login has expired	login	de	Sorry - Login abgelaufen
 source language	transy	de	Quellsprache
 specify_file_name	filemanager	de	Es muß ein Name für die zu erstellende Datei angegeben werden
+squirrelmail    common    de    Squirrelmail
 start date	common	de	Startdatum
 start date/time	calendar	de	Startdatum/-zeit
 start time	common	de	Startzeit
@@ -641,6 +667,7 @@ tue	calendar	de	Di
 tuesday	common	de	Dienstag
 undisclosed recipients	email	de	Verborgene Empfänger
 undisclosed sender	email	de	Verborgener Absender
+up    common    de    hoch
 update	common	de	Aktualisieren
 updated	common	de	Updated
 upload	filemanager	de	Upload
@@ -681,6 +708,7 @@ week	calendar	de	Woche
 weekday starts on	common	de	Arbeitswoche beginnt am
 weekly	calendar	de	Wöchentlich
 which groups	common	de	Welche Gruppen
+white    common    de    Weiß
 work date	projects	de	Arbeitstag
 work day ends on	common	de	Arbeitstag endet um
 work day starts on	common	de	Arbeitstag beginnt um

@@ -246,7 +246,7 @@ free/busy	calendar	en	Free/Busy
 frequency	calendar	en	Frequency
 fri	calendar	en	Fri
 friday	common	en	Friday
-from	email	en	From
+from	common	en	From
 ftp	common	en	FTP
 full description	calendar	en	Full Description
 full name	addressbook	en	Full Name
@@ -310,6 +310,7 @@ import file	addressbook	en	Import File
 import from outlook	addressbook	en	Import from Outlook
 import lang set	transy	en	Import lang set
 income	bookkeeping	en	Income
+index_what_is    squirrelmail    en    The index order is the order that the columns are arranged in the message index. You can add, remove, and move columns around to customize them to fit your needs.
 installed applications	admin	en	Installed applications
 interface/template selection	preferences	en	Interface/Template Selection
 international	common	en	International
@@ -540,7 +541,7 @@ show new messages on main screen	email	en	Show new messages on main screen
 show sender's email address with name	email	en	Show sender's email address with name
 show text on navigation icons	preferences	en	Show text on navigation icons
 site	admin	en	Site
-size	email	en	Size
+size	common	en	Size
 small	notes	en	Small
 sorry, that group name has already been taking.	admin	en	Sorry, that group name has already been taking.
 sorry, the follow users are still a member of the group x	admin	en	Sorry, the follow users are still a member of the group %1
