@@ -1520,7 +1520,7 @@ class calendar extends calendar_
 		$participating = False;
 		for($j=0;$j<count($event->participants);$j++)
 		{
-			if($event->participants[$j] == $owner)
+			if($event->participants[$j] == $this->owner)
 			{
 				$participating = True;
 			}
