@@ -15,10 +15,15 @@
 		'Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).');
 	
 	$ui = CreateObject('infolog.uiinfolog');	// need some labels from
-	create_select_box('Default Filter for InfoLog','defaultFilter',$ui->filters,
-		'This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.');
+	foreach($ui->filters as $key => $label)
+	{
+		$filters[$key] = lang($label);
+	}
 	unset($ui);
-	
+	create_select_box('Default Filter for InfoLog','defaultFilter',$filters,
+		'This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.');
+	unset($filters);
+
 	create_check_box('List no Subs/Childs','listNoSubs',
 		'Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the Subs via there parent.');
 /*
