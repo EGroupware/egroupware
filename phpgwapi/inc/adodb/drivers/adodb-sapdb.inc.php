@@ -28,13 +28,52 @@ class ADODB_SAPDB extends ADODB_odbc {
 	var $sysTimeStamp = 'TIMESTAMP';
 	var $fmtDate = "\\D\\A\\T\\E('Y-m-d')";	/// used by DBDate() as the default date format used by the database
 	var $fmtTimeStamp = "\\T\\I\\M\\E\\S\\T\\A\\M\\P('Y-m-d','H:i:s')"; /// used by DBTimeStamp as the default timestamp fmt.
-	
+	var $hasInsertId = true;
+
 	function ADODB_SAPDB()
 	{
 		//if (strncmp(PHP_OS,'WIN',3) === 0) $this->curmode = SQL_CUR_USE_ODBC;
 		$this->ADODB_odbc();
 	}
 	
+	// ToDo: retrive column-names and use $primary !!!
+ 	function &MetaIndexes ($table, $primary = FALSE)
+	{
+		$table = $this->Quote(strtoupper($table));
+		$sql = "SELECT INDEXNAME,TYPE,COLUMNNAME FROM INDEXCOLUMNS ".
+			" WHERE TABLENAME=$table".
+			" ORDER BY INDEXNAME,COLUMNNO";
+
+		$save = $ADODB_FETCH_MODE;
+        $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+        if ($this->fetchMode !== FALSE) {
+                $savem = $this->SetFetchMode(FALSE);
+        }
+        
+        $rs = $this->Execute($sql);
+        if (isset($savem)) {
+                $this->SetFetchMode($savem);
+        }
+        $ADODB_FETCH_MODE = $save;
+
+        if (!is_object($rs)) {
+        	return FALSE;
+        }
+
+		$indexes = array();
+		while ($row = $rs->FetchRow()) {
+            $indexes[$row[0]]['unique'] = $row[1] == 'UNIQUE';
+            $indexes[$row[0]]['columns'][] = $row[2];
+    	}
+        return $indexes;
+	}
+
+	// unlike it seems, this depends on the db-session and works in a multiuser environment
+	function _insertid($table,$column)
+	{
+		return empty($table) ? False : $this->GetOne("SELECT $table.CURRVAL FROM DUAL");
+	}
+
 	/*
 		SelectLimit implementation problems:
 	
