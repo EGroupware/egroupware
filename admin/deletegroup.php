@@ -16,6 +16,7 @@
   if (! $group_id)
      Header("Location: " . $phpgw->link("groups.php"));
 
+
   $phpgw_info["flags"]["currentapp"] = "admin";
   $phpgw_info["flags"]["disable_message_class"] = True;
   $phpgw_info["flags"]["disable_send_class"] = True;
@@ -29,7 +30,7 @@
         }
 
         while ($user = each($groups)) {
-          $user_[1] = ereg_replace(",$group_id,",",",$user[1]);
+          $user_[1] = ereg_replace(",$group_id:[0-9]+,",",",$user[1]);
           if ($user_[1] == ",") {
              $user_[1] = "";
           }
