@@ -46,6 +46,7 @@
 
     $cats = $c->return_single($cat_id);
 
+	$t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
     $t->set_var('font',$font);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Edit category for'));
@@ -57,6 +58,7 @@
     $t->set_var('hidden_vars',$hidden_vars);
     $t->set_var('lang_name',lang('Category name'));
     $t->set_var('lang_descr',lang('Category description'));
+    $t->set_var('lang_select_parent',lang('Select parent category'));
 
     $cat_id = $cats[0]['id'];
 
