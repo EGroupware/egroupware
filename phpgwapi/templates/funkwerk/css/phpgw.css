@@ -104,12 +104,6 @@ table.login
 	border-style: ridge;
 }
 
-.portal_text
-{
-	font-weight: bold;
-	background: url(../../default/images/bg_filler.png);
-}
-
 .small_text
 {
 	font-size: 85%;

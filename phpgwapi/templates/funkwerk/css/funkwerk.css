@@ -73,9 +73,10 @@ a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.t
 	border-color: #000000;
 }
 
-.portal_text
+a.portal_text,.portal_text
 {
 	color: #FFFFFF;
+	text-decoration: none;
 }
 
 .row_on,.th_bright,.app_header
