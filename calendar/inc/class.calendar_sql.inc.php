@@ -676,6 +676,7 @@ class calendar_
 			$p->set_var('pic_image',$phpgw->common->get_image_path('calendar').'/'.$pic);
 			$p->set_var('description',$description);
 			$str = $p->finish($p->parse('out','link_pict'));
+			unset($p);
 		}
 		return $str;
 	}
@@ -1072,7 +1073,7 @@ class calendar_
 					}
             
 					$p->set_var('new_event_link',$str);
-					$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year']).'">'.$date['day'].'</a>';
+					$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/day.php','month='.$date['month'].'&day='.$date['day'].'&year='.$date['year'].'&owner='.$this->owner).'">'.$date['day'].'</a>';
 					$p->set_var('day_number',$str);
 				}
 				else
@@ -1156,7 +1157,7 @@ class calendar_
 					
 					if(!$this->printer_friendly)
 					{
-						$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/week.php','date='.$date['full']).'">week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7).'</a>';
+						$str = '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/week.php','date='.$date['full'].'&owner='.$this->owner).'">week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7).'</a>';
 					}
 					else
 					{
@@ -1639,10 +1640,10 @@ class calendar_
 			$this->hour_arr[$ind] = '';
 		}
 
-		if (!$this->printer_friendly)
+		if ($this->printer_friendly == False)
 		{
 			$this->hour_arr[$ind] .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
-								.'/calendar/view.php','id='.$event->id)
+								.'/calendar/view.php','id='.$event->id.'&owner='.$this->owner)
 								. "\" onMouseOver=\"window.status='"
 								. lang('View this entry')."'; return true;\">";
 		}
@@ -1678,7 +1679,12 @@ class calendar_
 			}
 		}
 		$this->hour_arr[$ind] .= '] ';
-		$this->hour_arr[$ind] .= '<img src="'.$phpgw->common->get_image_path('calendar').'/circle.gif" border="0" alt="' . $event->description . '"></a>';
+		$this->hour_arr[$ind] .= '<img src="'.$phpgw->common->get_image_path('calendar').'/circle.gif" border="0" alt="' . $event->description . '">';
+
+		if ($this->printer_friendly == False)
+		{
+			$this->hour_arr[$ind] .= '</a>';
+		}
 		
 		if ($event->priority == 3)
 		{
@@ -1863,19 +1869,19 @@ class calendar_
 			$p->set_var('close_link','');
 			$str = ' - ';
 			
-			if(!$this->printer_friendly && $this->check_perms(PHPGW_ACL_EDIT))
+			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
 				$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url']
 						. '/calendar/edit_entry.php','year='.$date['year']
 						. '&month='.$date['month'].'&day='.$date['day']
 						. '&hour='.substr($time,0,strpos($time,':'))
-						. '&minute='.substr($time,strpos($time,':')+1,2)).'">';
+						. '&minute='.substr($time,strpos($time,':')+1,2).'&owner='.$this->owner).'">';
 			}
 			
 			$p->set_var('open_link',$str);
 			$p->set_var('time',(intval(substr($time,0,strpos($time,':'))) < 10 ? '0'.$time : $time) );
 			
-			if(!$this->printer_friendly && $this->check_perms(PHPGW_ACL_EDIT))
+			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
 				$p->set_var('close_link','</a>');
 			}

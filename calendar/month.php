@@ -51,16 +51,18 @@
   $p->set_var('username',$phpgw->common->grab_owner_name($owner));
   $p->set_var('small_calendar_next',$phpgw->calendar->mini_calendar(1,$thismonth + 1,$thisyear,'day.php'));
   $p->set_var('large_month',$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
-  if (!$friendly) {
-    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
-    $p->set_var('print','<a href="'.$phpgw->link('',$param).'" TARGET="cal_printer_friendly" onMouseOver="window.'
-	   . "status = '" . lang('Generate printer-friendly version'). "'\">[". lang('Printer Friendly') . ']</a>');
-    $p->parse('out','index_t');
-    $p->pparse('out','index_t');
-  } else {
-    $p->set_var('print','');
-    $p->parse('out','index_t');
-    $p->pparse('out','index_t');
-  }
+
+	if ($friendly == 0)
+	{
+		$param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
+		$print = '<a href="'.$phpgw->link('',$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
+	}
+	else
+	{
+		$print =	'';
+	}
+
+	$p->set_var('print',$print);
+  $p->pparse('out','index_t');
   $phpgw->common->phpgw_footer();
 ?>

@@ -100,6 +100,9 @@
 <?php if(isset($keywords) && $keywords) { ?>
     <input type="hidden" name="keywords" value="<?php echo $keywords; ?>">
 <?php } ?>
+<?php if(isset($id) && $id != 0) { ?>
+    <input type="hidden" name="id" value="<?php echo $id; ?>">
+<?php } ?>
     <select name="owner" onchange="document.setowner.submit()">
 <?php
       while(list($grantor,$temp_rights) = each($grants))
