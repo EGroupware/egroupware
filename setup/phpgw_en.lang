@@ -135,6 +135,7 @@ email account name	email	en	Email Account Name
 email address	email	en	Email address
 email password	email	en	Email Password
 email signature	email	en	E-Mail signature
+email type	common	EMail Type
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 end date	todo	en	End Date
@@ -170,6 +171,7 @@ friday	common	en	Friday
 from	email	en	From
 ftp	common	en	FTP
 full description	calendar	en	Full Description
+full name	addressbook	en	Full Name
 generate new lang.sql file	transy	en	Generate new lang.sql file
 generate printer-friendly version	calendar	en	Generate printer-friendly version
 georgia    notes    en       Georgia
