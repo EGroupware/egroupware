@@ -1060,7 +1060,7 @@
   {
 		global $phpgw_info, $phpgw_setup;
 
-		$phpgw_setup->db->query('alter table preferences rename phpgw_preferences',__LINE__,__FILE__);
+		$phpgw_setup->db->query('alter table preferences rename to phpgw_preferences',__LINE__,__FILE__);
      
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
   }
