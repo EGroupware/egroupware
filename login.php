@@ -266,9 +266,12 @@
 		}
 		else
 		{
-			// If the lastloginid cookies isn't set, we will default to english.
-			// Change this if you need.
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = 'en';
+			// If the lastloginid cookies isn't set, we will default to the first language,
+			// the users browser accepts.
+			list($lang) = explode(',',$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+			$lang = substr($lang,0,2);
+			if(strlen($lang) != 2) $lang="en";
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $lang;
 		}
 		$GLOBALS['phpgw']->translation->add_app('login');
 		$GLOBALS['phpgw']->translation->add_app('loginscreen');
