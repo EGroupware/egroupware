@@ -1,8 +1,7 @@
 <?php
-	include('../version.inc.php');
-	$phpgw_info['setup']['phpgwapi']['name'] = 'phpgwapi';
-	$phpgw_info['setup']['phpgwapi']['version'] = $phpgw_info['server']['versions']['phpgwapi'];
-//	$phpgw_info['setup']['phpgwapi']['app_order'] = '6';
+	$setup_info['phpgwapi']['name'] = 'phpgwapi';
+	$setup_info['phpgwapi']['version'] = '0.9.11';
+//	$setup_info['phpgwapi']['app_order'] = '6';
 	$tables = Array();
 	$tables[] = 'phpgw_sessions';
 	$tables[] = 'phpgw_preferences';
@@ -17,8 +16,8 @@
 	$tables[] = 'phpgw_lang';
 	$tables[] = 'phpgw_languages';
 	$tables_string = implode (',', $tables);
-	$phpgw_info['setup']['phpgwapi']['tables'] = $tables_string;
+	$setup_info['phpgwapi']['tables'] = $tables_string;
 	$hooks = Array();
 	$hooks_string = implode (',', $hooks);
-	$phpgw_info['setup']['phpgwapi']['hooks'] = $hooks_string;
+	$setup_info['phpgwapi']['hooks'] = $hooks_string;
 ?>
