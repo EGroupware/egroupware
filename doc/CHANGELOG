@@ -6,6 +6,14 @@
 	     database lockups if the program executes some invailed SQL.
 	   - Moved around the directory layout.  The include files and images are now
 	     in the applications directory.
+	   - You can now add permissions to a group, all users within that group
+	     would be granted those permissions.
+	   - Fixed parse errors and footer problems with the calendars printer
+	     friendly version.
+	   - Fixed a problem with the groups directory not being deleted.
+	   - Fixed a problem with not being able to add users to a group.
+	   - Fixed bad link in calendar
+	   - Added feature to be able to remove users from a group automaticly
 
 [08152000] - Fixed a problem with the calendar not showing the months in the users
 	     langague preference.

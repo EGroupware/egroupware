@@ -11,17 +11,28 @@
 
   /* $Id$ */
 
-  if ($confirm) {
-     $phpgw_flags = array("noheader" => True, "nonavbar" => True);
-  }
+  $phpgw_flags = array("noheader" => True, "nonavbar" => True);
 
   if (! $group_id)
      Header("Location: " . $phpgw->link("groups.php"));
 
   $phpgw_flags["currentapp"] = "admin";
   include("../header.inc.php");
-  // I would like to have an option to auto remove users from the group
-  if (($group_id) && (! $confirm)) {
+
+  if ((($group_id) && ($confirm)) || $removeusers) {
+     if ($removeusers) {
+        $phpgw->db->query("select con,groups from accounts where groups like '%$group_id%'");
+        while ($phpgw->db->next_record()) {
+          $groups[$phpgw->db->f("con")] = $phpgw->db->f("groups");
+        }
+
+        while ($user = each($groups)) {
+          $user[1] = ereg_replace(",$group_id,",",",$user[1]);
+          $phpgw->db->query("update accounts set groups='$user[1]' where con='$user[0]'");
+        }
+        $confirm = True;
+     }
+
      $phpgw->db->query("select group_name from groups where group_id='$group_id'");
      $phpgw->db->next_record();
 
@@ -29,6 +40,9 @@
 
      $phpgw->db->query("select con,loginid from accounts where groups like '%$group_id%'");
      if ($phpgw->db->num_rows()) {
+        $phpgw->common->header();
+        $phpgw->common->navbar();
+
         echo '<p><center>';
 	echo lang_admin("Sorry, the follow users are still a member of the group x",$group_name)
 	   . '<br>' . lang_admin("They must be removed before you can continue")
@@ -40,10 +54,36 @@
           echo '<tr><td><a href="' . $phpgw->link("editaccount.php","con=" . $phpgw->db->f("con")) . '">' . $phpgw->db->f("loginid") . '</a></tr></td>';
         }
         echo "</table></center>";
+        echo "<a href=\"" . $phpgw->link("deletegroup.php","group_id=" . $group_id . "&removeusers=True")
+	   . "\">" . lang_admin("Remove all users from this group") . "</a>";
         exit;
      }
 
-     ?>
+     if ($confirm) {
+        $phpgw->db->query("select group_name from groups where group_id='$group_id'");
+        $phpgw->db->next_record();
+        $group_name = $phpgw->db->f("group_name");
+
+        $phpgw->db->query("delete from groups where group_id='$group_id'");
+
+        $sep = $phpgw->common->filesystem_sepeartor();
+
+        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
+	         . "groups" . $sep;
+
+        if (! @rmdir($basedir . $group_name)) {
+   	   $cd = 38;
+        } else {
+           $cd = 32;
+        }
+
+        Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
+     }
+  }
+
+  $phpgw->common->header();
+  $phpgw->common->navbar();
+  ?>
      <center>
       <table border=0 with=65%>
        <tr colspan=2>
@@ -63,24 +103,4 @@
      </center>
      <?
      include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
-  }
-  if ($confirm) {
-     $phpgw->db->query("select group_name from groups where group_id='$group_id'");
-     $phpgw->db->next_record();
-     $group_name = $phpgw->db->f("group_name");
 
-     $phpgw->db->query("delete from groups where group_id='$group_id'");
-
-     $sep = $phpgw->common->filesystem_sepeartor();
-
-     $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-	      . "groups" . $sep;
-
-     if (! @rmdir($basedir . $group_name)) {
-	$cd = 38;
-     } else {
-        $cd = 32;
-     }
-
-     Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
-  }
