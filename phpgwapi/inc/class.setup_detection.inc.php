@@ -250,9 +250,9 @@
 			return '10';
 		}
 
-		function check_db()
+		function check_db($setup_info='')
 		{
-			$setup_info = $GLOBALS['setup_info'];
+			$setup_info = $setup_info ? $setup_info : $GLOBALS['setup_info'];
 
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 			// _debug_array($setup_info);
@@ -273,7 +273,7 @@
 			{
 				$setup_info = $this->get_db_versions($setup_info);
 			}
-			// _debug_array($setup_info);
+//			_debug_array($setup_info);
 			if (isset($setup_info['phpgwapi']['currentver']))
 			{
 				if(@$setup_info['phpgwapi']['currentver'] == @$setup_info['phpgwapi']['version'])
