@@ -384,7 +384,7 @@
 			}
 			
 			if ($query) {
-				$squery = " AND (n_family like '"
+				$squery = " AND (n_family like '%$query%' OR n_middle like '"
 					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
 					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
 					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
