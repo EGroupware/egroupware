@@ -326,8 +326,8 @@ this has to be outside the webservers document-root!!!	setup	zh	该目录不能�
 this program will convert your database to a new system-charset.	setup	zh	该程序将转换您的数据库,使之符合新的系统编码.
 this program will help you upgrade or install different languages for egroupware	setup	zh	该程序将帮助升级您的 eGroupWare 或安装其他语言
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	zh	这部分将帮助您从 eGroupWare 的帐户表格中将用户和组信息导出到 LDAP 树
-this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	zh	这部分将帮助您从 LDAP 树中将用户和组信息导入到 phpGroupWare 的帐户表格中
-this section will help you setup your ldap accounts for use with phpgroupware	setup	zh	这部分将帮助您建立您的 LDAP 帐户，以便和 phpGroupWare 一起使用
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	zh	这部分将帮助您从 LDAP 树中将用户和组信息导入到 eGroupWare 的帐户表格中
+this section will help you setup your ldap accounts for use with egroupware	setup	zh	这部分将帮助您建立您的 LDAP 帐户，以便和 eGroupWare 一起使用
 this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	zh	长度应该在30字节左右.<br>注意: 默认值已经随机生成.
 this stage is completed<br>	setup	zh	本阶段配置已完成<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	zh	这将创建一个管理员帐户和三个演示帐户<br>用户名/密码是: demo/guest, demo2/guest 和 demo3/guest.<br><b>!!!这将删除所有帐户!!!</b><br>
