@@ -980,7 +980,9 @@
 		* @author RalfBecker<at>outdoor-training.de
 		*
 		* @param string $glue in most cases this will be either ',' or ' AND ', depending you your query
-		* @param array  $array column-value pairs
+		* @param array  $array column-value pairs, if the value is an array all its array-values will be quoted
+		*	according to the type of the column, and the whole array with be formatted like (val1,val2,...)
+		*	If $use_key == True, a columname ' IN ' instead a '=' is used. Good for category- or user-lists.
 		* @param boolean/string If $use_key===True a "$key=" prefix each value (default), typically set to False
 		*	or 'VALUES' for insert querys, on 'VALUES' "(key1,key2,...) VALUES (val1,val2,...)" is returned
 		* @param array/boolean $only if set to an array only colums which are set (as data !!!) are written
@@ -1006,7 +1008,19 @@
 					$keys[] = $key;
 
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
-					$values[] = ($use_key===True ? $key.'=' : '') . $this->quote($data,$column_type);
+
+					if (is_array($data))
+					{
+						foreach($data as $k => $v)
+						{
+							$data[$k] = $this->quote($v,$column_type);
+						}
+						$values[] = ($use_key===True ? $key.' IN ' : '') . '('.implode(',',$data).')';
+					}
+					else
+					{
+						$values[] = ($use_key===True ? $key.'=' : '') . $this->quote($data,$column_type);
+					}
 				}
 			}
 			return ($use_key==='VALUES' ? '('.implode(',',$keys).') VALUES (' : '').
