@@ -425,6 +425,7 @@
 		/*!
 		@function getToTranslate
 		@abstract extracts all texts: labels and helptexts from an eTemplate-object
+		@note some extensions use a '|' to squezze multiple texts in a label or help field
 		@returns array with messages as key AND value
 		*/
 		function getToTranslate()
@@ -436,13 +437,13 @@
 			{
 				while (list($col,$cell) = each($cols))
 				{
-					if (strlen($cell['label']) > 1)
+					$all = explode('|',$cell['help'].($cell['type'] != 'image'?'|'.$cell['label']:''));
+					while (list(,$str) = each($all))
 					{
-						$to_trans[strtolower($cell['label'])] = $cell['label'];
-					}
-					if (strlen($cell['help']) > 1)
-					{
-						$to_trans[strtolower($cell['help'])] = $cell['help'];
+						if (strlen($str) > 1)
+						{
+							$to_trans[strtolower($str)] = $str;
+						}
 					}
 				}
 			}
