@@ -10,7 +10,7 @@
 
 	function ExchangeAccountSelect(thisform)
 	{
-		NewEntry = new Option(thisform.elements[1].value,thisform.elements[0].value,false,true);
+		NewEntry = new Option(thisform.elements['accountdisplay'].value,thisform.elements['accountid'].value,false,true);
  		userSelectBox.options[userSelectBox.length] = NewEntry;
 	}
 </script>
@@ -71,8 +71,8 @@
 					<td><a href="{link_user_group}"><font face="{font}">{name_user_group}</font></a></td>
 					<td align="center">
 					<form>
-						<input type="hidden" name="hidden" value="{accountid}">
-						<input type="hidden" name="hidden" value="{account_display}">
+						<input type="hidden" name="accountid" value="{accountid}">
+						<input type="hidden" name="accountdisplay" value="{account_display}">
 						<input type="image" src="{img}" onClick="{js_function}(this.form); return false;" name="{lang_select_group}" title="{lang_select_group}">
 					</form>
 					</td>
@@ -127,8 +127,8 @@
 		<td><font face="{font}">{firstname}</font></td>
 		<td><font face="{font}">{lastname}</font></td>
 		<form>
-			<input type="hidden" name="hidden" value="{accountid}">
-			<input type="hidden" name="hidden" value="{account_display}">
+			<input type="hidden" name="accountid" value="{accountid}">
+			<input type="hidden" name="accountdisplay" value="{account_display}">
 			<td align="center">
 				<input type="image" src="{img}" onClick="{js_function}(this.form); return false;" name="{lang_select_user}" title="{lang_select_user}"></td>
 		</form>
