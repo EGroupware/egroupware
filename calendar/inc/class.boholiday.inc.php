@@ -224,12 +224,10 @@
 		{
 			if($this->so->holiday_total($locale) == 0)
 			{
-				global $HTTP_HOST, $SERVER_PORT;
-		
 				@set_time_limit(0);
 
 				/* get the file that contains the calendar events for your locale */
-				/* "http://www.egroupware.org/cal/holidays.US";                 */
+				/* "http://www.egroupware.org/cal/holidays.US.csv";                 */
 				$network = CreateObject('phpgwapi.network');
 				if(isset($GLOBALS['phpgw_info']['server']['holidays_url_path']) && $GLOBALS['phpgw_info']['server']['holidays_url_path'] != 'localhost')
 				{
@@ -257,8 +255,8 @@
 					}
 					$load_from = $server_host.'/calendar/egroupware.org';
 				}
-//				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale)."<br>\n";
-				$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'csv');
+//				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale).'.csv'."<br>\n";
+				$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'.csv');
 				if (!$lines)
 				{
 					return false;
