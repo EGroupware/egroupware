@@ -22,15 +22,16 @@
 
   $phpgw->template->set_block("header","row","footer");
 
-  $phpgw->templateotal = account_total();
+  $total = account_total();
 
   $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-  $phpgw->template->set_var("left_next_matchs",$phpgw->nextmatchs->left("accounts.php",$start,$phpgw->templateotal));
+  $phpgw->template->set_var("left_next_matchs",$phpgw->nextmatchs->left("accounts.php",$start,$total));
   $phpgw->template->set_var("lang_user_accounts",lang("user accounts"));
-  $phpgw->template->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$phpgw->templateotal));
+  $phpgw->template->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$total));
 
+  $phpgw->template->set_var("lang_loginid",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"accounts.php",lang("LoginID")));
   $phpgw->template->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"account_lastname",$order,"accounts.php",lang("last name")));
   $phpgw->template->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"account_firstname",$order,"accounts.php",lang("first name")));
 
@@ -63,6 +64,7 @@
     if (! $lastname)  $lastname  = '&nbsp;';
     if (! $firstname) $firstname = '&nbsp;';
 
+    $phpgw->template->set_var("row_loginid",$loginid);
     $phpgw->template->set_var("row_firstname",$firstname);
     $phpgw->template->set_var("row_lastname",$lastname);
     $phpgw->template->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
@@ -78,10 +80,10 @@
     $phpgw->template->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
 				         . $account_id) . '"> ' . lang("View") . ' </a>');
 
-    if ($phpgw->templateotal == 1) {
+    if ($total == 1) {
        $phpgw->template->set_var("output","");
     }
-    if ($phpgw->templateotal != ++$i) {
+    if ($total != ++$i) {
        $phpgw->template->parse("output","row",True);
     }
   }

@@ -22,7 +22,7 @@
      if ($order) {
         $ordermethod = "order by $order $sort";
      } else {
-        $ordermethod = "order by account_lastname,account_firstname,account_lid asc";
+        $ordermethod = "order by account_lid,account_lastname,account_firstname asc";
      }
 
      if (! $sort) {

@@ -76,8 +76,8 @@
           <option value="Y.m.d"<?php echo $df["Y.m.d"]; ?>>y.m.d</option>
 
           <option value="d/m/Y"<?php echo $df["d/m/Y"]; ?>>d/m/y</option>
-	  <option value="d-m-Y"<?php echo $df["d-m-Y"]; ?>>d-m-y</option>
-	  <option value="d.m.Y"<?php echo $df["d.m.Y"]; ?>>d.m.y</option>
+    	  <option value="d-m-Y"<?php echo $df["d-m-Y"]; ?>>d-m-y</option>
+    	  <option value="d.m.Y"<?php echo $df["d.m.Y"]; ?>>d.m.y</option>
          </select>
         </td>
        </tr>
@@ -103,8 +103,9 @@
           while ($phpgw->db->next_record()) {
               echo "<option value=\"" . $phpgw->db->f("lang_id") . "\"";
               if ($phpgw_info["user"]["preferences"]["common"]["lang"]) {
-              if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
-                 echo " selected"; }
+                 if ($phpgw->db->f("lang_id") == $phpgw_info["user"]["preferences"]["common"]["lang"]) {
+                    echo " selected";
+                 }
               } elseif ($phpgw->db->f("lang_id") == "EN") {
                  echo " selected";
               }

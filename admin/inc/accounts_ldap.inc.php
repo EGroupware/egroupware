@@ -41,11 +41,15 @@
     $sr = ldap_search($ldap,$phpgw_info["server"]["ldap_context"],$filter,array("uid"));
     $info = ldap_get_entries($ldap, $sr);
 
-    $total = 0;
+    $total = -1;
     for ($i=0;$i<count($info);$i++) {
        if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
           $total++;
        }
+    }
+
+    if ($total == 1) {
+       $total = 2;
     }
 
     return $total;
@@ -110,80 +114,77 @@
   function account_add($account_info)
   {
      global $phpgw_info, $phpgw, $ldap;
-
+   
      $account_info["passwd"] = $phpgw->common->encrypt_password($account_info["passwd"]);
 
      // This method is only temp.  We need to figure out the best way to assign uidnumbers and
      // guidnumbers.
      
-     //$phpgw->db->query("select (max(account_id)+1) from accounts");
-     //$phpgw->db->next_record();
+     $phpgw->db->query("select (max(account_id)+1) from accounts");
+     $phpgw->db->next_record();
      
-     //$account_info["account_id"] = $phpgw->db->f(0);
+     $account_info["account_id"] = $phpgw->db->f(0);
 
      // Much of this is going to be guess work for now, until we get things planned out.
      $entry["uid"]              = $account_info["loginid"];
-     //$entry["uidNumber"]        = $account_info["account_id"];
-     #$entry["gidNumber"]		= $account_info["account_id"];
-     $entry["userpassword"]	 = $account_info["passwd"];
-     $entry["loginShell"]	   = "/bin/bash";
-     $entry["homeDirectory"]	= "/home/" . $account_info["loginid"];
-     $entry["cn"]			   = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
-     $entry["sn"]			   = $account_info["lastname"];
-     $entry["givenname"]		= $account_info["firstname"];
-     //$entry["company"]		  = $company;
-     //$entry["title"] 		   = $title;
-     $entry["mail"]			 = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+     $entry["uidNumber"]        = $account_info["account_id"];
+     $entry["gidNumber"]                = $account_info["account_id"];
+     $entry["userpassword"]      = $account_info["passwd"];
+     $entry["loginShell"]          = "/bin/bash";
+     $entry["homeDirectory"]    = "/home/" . $account_info["loginid"];
+     $entry["cn"]                          = sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
+     $entry["sn"]                          = $account_info["lastname"];
+     $entry["givenname"]                = $account_info["firstname"];
+     //$entry["company"]                  = $company;
+     //$entry["title"]             = $title;
+     $entry["mail"]                      = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
      //$entry["telephonenumber"]  = $telephonenumber;
-     //$entry["homephone"]		= $homephone;
-     //$entry["pagerphone"]	   = $pagerphone;
-     //$entry["cellphone"]		= $cellphone;
-     //$entry["streetaddress"]	= $streetaddress;
-     //$entry["locality"]		 = $locality;
-     //$entry["st"] 			  = $st;
-     //$entry["postalcode"]	   = $postalcode;
-     //$entry["countryname"] 	 = $countryname;
-     //$entry["homeurl"]		  = $homeurl;
-     //$entry["description"]	  = $description;
+     //$entry["homephone"]              = $homephone;
+     //$entry["pagerphone"]        = $pagerphone;
+     //$entry["cellphone"]              = $cellphone;
+     //$entry["streetaddress"]  = $streetaddress;
+     //$entry["locality"]                = $locality;
+     //$entry["st"]                       = $st;
+     //$entry["postalcode"]        = $postalcode;
+     //$entry["countryname"]     = $countryname;
+     //$entry["homeurl"]                  = $homeurl;
+     //$entry["description"]      = $description;
      $entry["objectclass"][0]   = "account";
      $entry["objectclass"][1]   = "posixAccount";
      $entry["objectclass"][2]   = "shadowAccount";
      $entry["objectclass"][3]   = "inetOrgperson";
      $entry["objectclass"][4]   = "person";
      $entry["objectclass"][5]   = "top";
-
-     $i=0;
-     reset ($account_info["permissions"]);
-     while (list($key,$value) = each($account_info["permissions"]))
-     {
-     	$entry["phpgw_account_perms"][$i] = $key;
-     	$i++;
-     }
+     /* $dn=sprintf("cn=%s %s, %s", $givenname, $sn, $BASEDN);*/
+     $dn=sprintf("uid=%s, %s", $account_info["loginid"], $phpgw_info["server"]["ldap_context"]);
       
-     // find a free userid, we need that for the dn
-     $sri = ldap_search($ldap,rawurldecode("$dn"),"objectclass=*");
-     $allValues = ldap_get_entries($ldap, $sri);
-     
-     $newUIDNumber = 0;
-     for($i=0; $i < $allValues["count"]; $i++)
-     {
-     	if (($allValues[$i]["uidnumber"][0]) > $newUIDNumber) $newUIDNumber = $allValues[$i]["uidnumber"][0];
-     }
-     $newUIDNumber++;
-     $entry["uidNumber"] = $newUIDNumber;
-     
-     $dn=sprintf("uidnumber=%s, %s", $newUIDNumber, $phpgw_info["server"]["ldap_context"]);
-     
      // add the entries
      if (ldap_add($ldap, $dn, $entry)) {
         $cd = 28;
      } else {
-        $cd = 99;		// Come out with a code for this
+        $cd = 99;               // Come out with a code for this
      }
-     
+  
      @ldap_close($ldap);
      
      add_default_preferences($account_info["account_id"]);
+     $phpgw->db->lock(array("accounts","preferences"));
+
+     while ($permission = each($account_info["permissions"])) {
+       if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
+          $phpgw->accounts->add_app($permission[0]);
+       }
+     }
+
+     $sql = "insert into accounts (account_id,account_lid,account_pwd,account_firstname,"
+          . "account_lastname,account_permissions,account_groups,account_status,"
+          . "account_lastpwd_change) values ('" . $account_info["account_id"] . "','"
+          . $account_info["loginid"] . "','x','". addslashes($account_info["firstname"]) . "','"
+          . addslashes($account_info["lastname"]) . "','" . $phpgw->accounts->add_app("",True)
+          . "','" . $account_info["groups"] . "','A',0)";
+
+     $phpgw->db->query($sql);
+     $phpgw->db->unlock();
 
      $sep = $phpgw->common->filesystem_separator();
 
@@ -197,7 +198,7 @@
 
      return $cd;
   }
-  
+    
   function account_edit($account_info)
   {
      global $phpgw, $phpgw_info, $ldap;
