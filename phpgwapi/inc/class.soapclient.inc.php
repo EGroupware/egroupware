@@ -82,7 +82,7 @@ class soapclient
 
 		// make message
 		$soapmsg = CreateObject('phpgwapi.soapmsg',$method,$params,$namespace);
-		_debug_array($soapmsg);
+		/* _debug_array($soapmsg); */
 		
 		// instantiate client
 		$dbg = "calling server at '$this->endpoint'...";
