@@ -25,7 +25,7 @@
 
 		function index()
 		{
-			$acl_app = get_var('acl_app',Array('GET'));
+			$acl_app = get_var('acl_app',Array('GET','POST'));
 			$owner   = $GLOBALS['owner'];
 
 			if (! $acl_app)
@@ -216,7 +216,8 @@
 				. '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
 				. '     <input type="hidden" name="start" value="'.$start.'">'."\n"
 				. '     <input type="hidden" name="query" value="'.$query.'">'."\n"
-				. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
+				. '     <input type="hidden" name="owner" value="'.$owner.'">'."\n"
+				. '     <input type="hidden" name="acl_app" value="'.$acl_app.'">'."\n";
 
 			$var = Array(
 				'errors'      => '',
