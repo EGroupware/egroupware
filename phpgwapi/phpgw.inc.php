@@ -12,13 +12,12 @@
 
   /* $Id$ */
   
-  $d1 = strtolower(substr($phpgw_info["server"]["include_root"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  $d3 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp" || $d3 == "htt" || $d3 == "ftp") {
+  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
-  } unset($d1);unset($d2);unset($d3);
+  } unset($d1);unset($d2);
 
   error_reporting(7);
 
@@ -32,7 +31,7 @@
   /**************************************************************************\
   * Load up all the base files                                               *
   \**************************************************************************/
-  include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw_info.inc.php");
+  include($phpgw_info["server"]["api_dir"] . "/phpgw_info.inc.php");
 
   /**************************************************************************\
   * Required classes                                                         *
@@ -364,13 +363,13 @@
      /**************************************************************************\
      * These lines load up the themes                                           *
      \**************************************************************************/
-     include($phpgw_info["server"]["server_root"] . "/themes/" .
+     include($phpgw_info["server"]["api_dir"] . "/themes/" .
 	        $phpgw_info["user"]["preferences"]["common"]["theme"] . ".theme");
 
      if ($phpgw_info["theme"]["bg_color"] == "") {
         /* Looks like there was a problem finding that theme. Try the default */
         echo "Warning: error locating selected theme";
-        include ($phpgw_info["server"]["server_root"] . "/themes/default.theme");
+        include ($phpgw_info["server"]["api_dir"] . "/themes/default.theme");
         if ($phpgw_info["theme"]["bg_color"] == "") {
            // Hope we don't get to this point.  Better then the user seeing a 
            // complety back screen and not know whats going on

@@ -12,4 +12,4 @@
   /* $Id$ */
 
   $phpgw_info["server"]["version"] = "0.9.8pre5";
-  $phpgw_info["server"]["current_header_version"] = "1.5";
+  $phpgw_info["server"]["current_header_version"] = "1.6";

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["include_root"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
   if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";

@@ -12,13 +12,12 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["include_root"],0,3));
+  $d1 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
   $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  $d3 = strtolower(substr($phpgw_info["server"]["api_dir"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp" || $d3 == "htt" || $d3 == "ftp") {
+  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
     echo "Failed attempt to break in via an old Security Hole!<br>\n";
     exit;
-  } unset($d1);unset($d2);unset($d3);
+  } unset($d1);unset($d2);
 
   magic_quotes_runtime(false);
 
@@ -28,15 +27,12 @@
 	  echo "!!! PLEASE CORRECT THIS SITUATION !!!";
   }
 
-  /* Additional dirs that are set from exsisting information. */
-  $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"] . "/phpgwapi";
-
   if (empty($phpgw_info["server"]["default_tplset"])){
     $phpgw_info["server"]["default_tplset"] = "default";
   }
 
   if (empty($phpgw_info["server"]["template_dir"])){
-    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["include_root"]."/templates/".$phpgw_info["server"]["default_tplset"];
+    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"]."/templates/".$phpgw_info["server"]["default_tplset"];
   }
 
   if (!isset($phpgw_domain)) { // make them fix their header
@@ -98,7 +94,7 @@
   {
     global $phpgw, $phpgw_info, $cd, $colspan;
     $phpgw_info["server"]["images_dir"]   = $phpgw_info["server"]["webserver_url"] . "/images";
-    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["include_root"] . "/templates/"
+    $phpgw_info["server"]["template_dir"] = $phpgw_info["server"]["api_dir"] . "/templates/"
                                           . $phpgw_info["server"]["default_tplset"];
   
     $phpgw_info["server"]["app_root"]   = $phpgw_info["server"]["server_root"]."/".$phpgw_info["flags"]["currentapp"];
