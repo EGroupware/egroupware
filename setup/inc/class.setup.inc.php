@@ -527,12 +527,17 @@
 		*/
 		function execute_script($script, $order = '')
 		{
-			global $phpgw_info, $phpgw_domain, $current_config, $newsetting, $phpgw_setup, $SERVER_NAME;
-			if ($order != '' && gettype($order) != 'array'){ $order = array($order); }
-			if ($order == '') { $order = array(); }
+			if ($order != '' && gettype($order) != 'array')
+			{
+				$order = array($order);
+			}
+			if ($order == '')
+			{
+				$order = array();
+			}
 			/* First include the ordered setup script file */
-			reset ($order);
-			while (list (, $appname) = each ($order))
+			@reset ($order);
+			while (list (,$appname) = @each($order))
 			{
 				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/setup/' . $script . '.inc.php';
 				if (file_exists($f)) { include($f); }

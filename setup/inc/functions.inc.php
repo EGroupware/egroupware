@@ -12,9 +12,9 @@
   /* $Id$ */
 
 	/* ######## Start security check ########## */
-	$d1 = strtolower(substr($phpgw_info['server']['api_inc'],0,3));
-	$d2 = strtolower(substr($phpgw_info['server']['server_root'],0,3));
-	$d3 = strtolower(substr($phpgw_info['server']['app_inc'],0,3));
+	$d1 = strtolower(substr($GLOBALS['phpgw_info']['server']['api_inc'],0,3));
+	$d2 = strtolower(substr($GLOBALS['phpgw_info']['server']['server_root'],0,3));
+	$d3 = strtolower(substr($GLOBALS['phpgw_info']['server']['app_inc'],0,3));
 	if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp')
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>';
@@ -38,10 +38,7 @@
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
 		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
 	{
-		global $phpgw_info;
-
-		/* error_reporting(0); */
-		list($appname,$classname) = explode(".", $class);
+		list($appname,$classname) = explode('.', $class);
 
 		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
@@ -73,11 +70,10 @@
 			$code = substr($code,0,-1) . ');';
 			eval($code);
 		}
-		/* error_reporting(E_ERROR | E_WARNING | E_PARSE); */
 		return $obj;
 	}
 
-	// This is needed is some parts of setup, until we include the API directly
+	/* This is needed is some parts of setup, until we include the API directly */
 	function filesystem_separator()
 	{
 		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2')
@@ -94,8 +90,6 @@
 
 	function get_account_id($account_id = '',$default_id = '')
 	{
-		global $phpgw, $phpgw_info;
-
 		if (gettype($account_id) == 'integer')
 		{
 			return $account_id;
@@ -104,36 +98,41 @@
 		{
 			if ($default_id == '')
 			{
-				return $phpgw_info['user']['account_id'];
+				return $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			elseif (gettype($default_id) == 'string')
 			{
-				return $phpgw->accounts->name2id($default_id);
+				return $GLOBALS['phpgw']->accounts->name2id($default_id);
 			}
 			return intval($default_id);
 		}
 		elseif (gettype($account_id) == 'string')
 		{
-			if($phpgw->accounts->exists(intval($account_id)) == True)
+			if($GLOBALS['phpgw']->accounts->exists(intval($account_id)) == True)
 			{
 				return intval($account_id);
 			}
 			else
 			{
-				return $phpgw->accounts->name2id($account_id);
+				return $GLOBALS['phpgw']->accounts->name2id($account_id);
 			}
 		}
 	}
 
 	/*!
-	@function lang
-	@abstract function to deal with multilanguage support
+	 @function lang
+	 @abstract function to handle multilanguage support
 	*/
-	function lang($key, $m1="", $m2="", $m3="", $m4="", $m5="", $m6="", $m7="", $m8="", $m9="", $m10=""  ) 
+	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
 	{
-		// # TODO: check if $m1 is of type array.
-		// If so, use it instead of $m2-$mN (Stephan)
-		$vars = array( $m1, $m2, $m3, $m4, $m5, $m6, $m7, $m8, $m9, $m10 );
+		if(is_array($m1))
+		{
+			$vars = $m1;
+		}
+		else
+		{
+			$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
+		}
 		$value = $GLOBALS['phpgw_setup']->translate("$key", $vars );
 		return $value;
 	}
@@ -158,7 +157,7 @@
 		$d = dir('./lang');
 		while($entry=$d->read())
 		{
-			if (ereg("phpgw_",$entry))
+			if (ereg('phpgw_',$entry))
 			{
 				$z = substr($entry,6,2);
 				$languages[$z]['available'] = True;
@@ -194,14 +193,15 @@
 		return $select;
 	}
 
-	// Include to check user authorization against the 
-	// password in ../header.inc.php to protect all of the setup
-	// pages from unauthorized use.
+	/* Include to check user authorization against the 
+	   password in ../header.inc.php to protect all of the setup
+	   pages from unauthorized use.
+	*/
 
 	if(file_exists(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'))
 	{
 		include(PHPGW_SERVER_ROOT.'/phpgwapi/setup/setup.inc.php'); // To set the current core version
-		// This will change to just use setup_info
+		/* This will change to just use setup_info */
 		$GLOBALS['phpgw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
 	}
 	else
@@ -213,7 +213,4 @@
 
 	include('./inc/class.setup.inc.php');
 	$phpgw_setup = new phpgw_setup;
-
-	//include('./inc/class.schema_proc.inc.php');
-	//$phpgw_lang = CreateObject('setup.setup_lang',$lang);
 ?>

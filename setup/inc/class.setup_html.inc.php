@@ -13,8 +13,6 @@
 
 	class phpgw_setup_html extends phpgw_setup_lang
 	{
-		var $db;
-
 		/*!
 		@function generate_header
 		@abstract generate header.inc.php file output - NOT a generic html header function
@@ -64,7 +62,7 @@
 			$GLOBALS['setup_tpl']->set_var('page_title',$title);
 			if ($configdomain == '')
 			{
-				$GLOBALS['setup_tpl']->set_var('configdomain',"");
+				$GLOBALS['setup_tpl']->set_var('configdomain','');
 			}
 			else
 			{

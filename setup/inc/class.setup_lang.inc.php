@@ -96,7 +96,7 @@
 			}
 			else
 			{
-				$ret = $key."*";
+				$ret = $key.'*';
 			}
 			$ndx = 1;
 			while( list($key,$val) = each( $vars ) )

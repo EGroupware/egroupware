@@ -23,7 +23,7 @@
 			$d = dir(PHPGW_SERVER_ROOT);
 			while($entry=$d->read())
 			{
-				if (!ereg("setup",$entry))
+				if (!ereg('setup',$entry))
 				{
 					$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 					if (file_exists ($f))
@@ -35,15 +35,15 @@
 			}
 			$d->close();
 
-//			echo "<pre>";	echo var_dump($setup_info);	echo "</pre>"; exit;
+//			echo '<pre>';	echo var_dump($setup_info);	echo '</pre>'; exit;
 			return $setup_info;
 		}
 
-		function get_db_versions($setup_info = "")
+		function get_db_versions($setup_info='')
 		{
 			global $phpgw_info;
 
-			$this->db->Halt_On_Error = "no";
+			$this->db->Halt_On_Error = 'no';
 			$tables = $this->db->table_names();
 			while(list($key,$val) = @each($tables))
 			{
@@ -57,7 +57,7 @@
 				/* one of these tables exists. checking for post/pre beta version */
 				if ($newapps)
 				{
-					$this->db->query("select * from phpgw_applications");
+					$this->db->query('select * from phpgw_applications');
 					while (@$this->db->next_record())
 					{
 						$setup_info[$this->db->f('app_name')]['currentver'] = $this->db->f('app_version');
@@ -128,7 +128,7 @@
 					}
 				}
 			}
-			//echo "<pre>";	echo var_dump($setup_info);	echo "</pre>";
+			//echo '<pre>';	echo var_dump($setup_info);	echo '</pre>';
 			return $setup_info;
 		}
 
@@ -184,39 +184,39 @@
 		function check_header()
 		{
 			global $phpgw_domain, $phpgw_info;
-			if(!file_exists("../header.inc.php"))
+			if(!file_exists('../header.inc.php'))
 			{
-				$phpgw_info["setup"]["header_msg"] = "Stage One";
-				return "1";
+				$phpgw_info['setup']['header_msg'] = 'Stage One';
+				return '1';
 			}
 			else
 			{
-				if (!isset($phpgw_info["server"]["header_admin_password"]))
+				if (!isset($phpgw_info['server']['header_admin_password']))
 				{
-					$phpgw_info["setup"]["header_msg"] = "Stage One (No header admin password set)";
-					return "2";
+					$phpgw_info['setup']['header_msg'] = 'Stage One (No header admin password set)';
+					return '2';
 				}
 				elseif (!isset($phpgw_domain))
 				{
-					$phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
-					return "3";
+					$phpgw_info['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
+					return '3';
 				}
-				elseif ($phpgw_info["server"]["versions"]["header"] != $phpgw_info["server"]["versions"]["current_header"])
+				elseif ($phpgw_info['server']['versions']['header'] != $phpgw_info['server']['versions']['current_header'])
 				{
-					$phpgw_info["setup"]["header_msg"] = "Stage One (Upgrade your header.inc.php)";
-					return "3";
+					$phpgw_info['setup']['header_msg'] = 'Stage One (Upgrade your header.inc.php)';
+					return '3';
 				}
 			}
 			/* header.inc.php part settled. Moving to authentication */
-			$phpgw_info["setup"]["header_msg"] = "Stage One (Completed)";
-			return "10";
+			$phpgw_info['setup']['header_msg'] = 'Stage One (Completed)';
+			return '10';
 		}
 
 		function check_db()
 		{
 			global $phpgw_info,$setup_info;
 
-			$this->db->Halt_On_Error = "no";
+			$this->db->Halt_On_Error = 'no';
 			//echo '<pre>'.var_dump($setup_info).'</pre>';exit;
 
 			if (isset($setup_info['phpgwapi']['currentver']))
@@ -259,7 +259,7 @@
 		function check_config()
 		{
 			global $phpgw_info;
-			$this->db->Halt_On_Error = "no";
+			$this->db->Halt_On_Error = 'no';
 			if ($phpgw_info['setup']['stage']['db'] != 10){return '';}
 
 			// Since 0.9.10pre6 config table is named as phpgw_config
@@ -292,30 +292,34 @@
 		function check_lang()
 		{
 			global $phpgw_info;
-			$this->db->Halt_On_Error = "no";
-			if ($phpgw_info["setup"]["stage"]["db"] != 10){return "";}
+
+			$this->db->Halt_On_Error = 'no';
+			if ($phpgw_info['setup']['stage']['db'] != 10)
+			{
+				return '';
+			}
 
 			$this->db->query("select distinct lang from lang;");
 			if ($this->db->num_rows() == 0)
 			{
-				$phpgw_info["setup"]["header_msg"] = "Stage 3 (No languages installed)";
+				$phpgw_info['setup']['header_msg'] = 'Stage 3 (No languages installed)';
 				return 1;
 			}
 			else
 			{
 				while (@$this->db->next_record())
 				{
-					$phpgw_info["setup"]["installed_langs"][$this->db->f("lang")] = $this->db->f("lang");
+					$phpgw_info['setup']['installed_langs'][$this->db->f('lang')] = $this->db->f('lang');
 				}
-				reset ($phpgw_info["setup"]["installed_langs"]);
-				while (list ($key, $value) = each ($phpgw_info["setup"]["installed_langs"]))
+				reset ($phpgw_info['setup']['installed_langs']);
+				while (list ($key, $value) = each ($phpgw_info['setup']['installed_langs']))
 				{
 					$sql = "select lang_name from languages where lang_id = '".$value."';";
 					$this->db->query($sql);
 					$this->db->next_record();
-					$phpgw_info["setup"]["installed_langs"][$value] = $this->db->f("lang_name");
+					$phpgw_info['setup']['installed_langs'][$value] = $this->db->f('lang_name');
 				}
-				$phpgw_info["setup"]["header_msg"] = "Stage 3 (Completed)";
+				$phpgw_info['setup']['header_msg'] = 'Stage 3 (Completed)';
 				return 10;
 			}
 		}
@@ -334,7 +338,7 @@
 			{
 				// Make a copy, else we send some callers into an infinite loop
 				$copy = $setup_info;
-				$this->db->Halt_On_Error = "no";
+				$this->db->Halt_On_Error = 'no';
 				$tablenames = $this->db->table_names();
 				while(list($key,$val) = @each($tablenames))
 				{

@@ -72,12 +72,12 @@
 			$i = 1;
 			$passed = array();
 			$passing = array();
-			$pass_string = implode (":", $pass);
-			$passing_string = implode (":", $passing);
+			$pass_string = implode (':', $pass);
+			$passing_string = implode (':', $passing);
 			while ($pass_string != $passing_string)
 			{
 				$passing = array();
-				if ($DEBUG) { echo '<br>process_pass(): #' . $i . " for " . $method . " processing\n"; }
+				if ($DEBUG) { echo '<br>process_pass(): #' . $i . ' for ' . $method . ' processing' . "\n"; }
 				// Check current versions and dependencies
 				$setup_info = $this->get_db_versions($setup_info);
 				$setup_info = $this->compare_versions($setup_info);
@@ -104,12 +104,12 @@
 
 				switch ($method)
 				{
-					case "new":
+					case 'new':
 						// Create tables and insert new records for each app in this list
 						$passing = $this->process_current($pass,$DEBUG);
 						$passing = $this->process_default_records($passing,$DEBUG);
 						break;
-					case "upgrade":
+					case 'upgrade':
 						// Run upgrade scripts on each app in the list
 						$passing = $this->process_upgrade($pass,$DEBUG);
 						//echo var_dump($pass);exit;
@@ -157,8 +157,8 @@
 					echo "</pre>";
 					exit;
 				}
-				$pass_string = implode (":", $pass);
-				$passing_string = implode (":", $passing);
+				$pass_string = implode (':', $pass);
+				$passing_string = implode (':', $passing);
 			}
 
 			// now return the list
@@ -235,13 +235,13 @@
 				$appname  = $setup_info[$key]['name'];
 				$apptitle = $setup_info[$key]['title'];
 
-				if($DEBUG) { echo "<br>process_current(): Incoming status: " . $appname . ',status: '. $setup_info[$key]['status']; }
+				if($DEBUG) { echo '<br>process_current(): Incoming status: ' . $appname . ',status: '. $setup_info[$key]['status']; }
 
 				$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 				if ($setup_info[$key]['tables'] && file_exists($appdir.'tables_current.inc.php'))
 				{
-					if($DEBUG) { echo "<br>process_current(): Including: " . $appdir.'tables_current.inc.php'; }
+					if($DEBUG) { echo '<br>process_current(): Including: ' . $appdir.'tables_current.inc.php'; }
 					include ($appdir.'tables_current.inc.php');
 					$ret = $this->post_process($phpgw_baseline,$DEBUG);
 					if($ret)
@@ -262,7 +262,7 @@
 					else
 					{
 						// script processing failed
-						if($DEBUG) { echo "<br>process_current(): Failed for " . $appname . ',status: '. $setup_info[$key]['status']; }
+						if($DEBUG) { echo '<br>process_current(): Failed for ' . $appname . ',status: '. $setup_info[$key]['status']; }
 						$setup_info[$key]['status'] = 'F';
 					}
 				}
@@ -288,7 +288,7 @@
 					}
 					$setup_info[$key]['status'] = 'C';
 				}
-				if($DEBUG) { echo "<br>process_current(): Outgoing status: " . $appname . ',status: '. $setup_info[$key]['status']; }
+				if($DEBUG) { echo '<br>process_current(): Outgoing status: ' . $appname . ',status: '. $setup_info[$key]['status']; }
 			}
 
 			// Done, return current status
@@ -425,7 +425,7 @@
 			{
 				$this->init_process();
 			}
-			$this->oProc->m_odb->HaltOnError = "no";
+			$this->oProc->m_odb->HaltOnError = 'no';
 			$this->oProc->m_bDeltaOnly = True;
 			
 
@@ -490,7 +490,7 @@
 							$currentver = $setup_info[$key]['currentver'];
 
 							// build upgrade function name
-							$function = $appname . "_upgrade" . ereg_replace("\.", "_", $value);
+							$function = $appname . '_upgrade' . ereg_replace("\.", '_', $value);
 
 							if ($DEBUG)
 							{
