@@ -70,8 +70,8 @@
           $acl->add_repository('phpgw_group',$group_id,$n_users[$i],1);
 
           // If the user is logged in, it will force a refresh of the session_info
-          $phpgw->db->query("update phpgw_sessions set session_info='' "
-                            ."where session_lid='" . $phpgw->accounts->id2name(intval($n_users[$i])) . "@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
+#          $phpgw->db->query("update phpgw_sessions set session_info='' "
+#                            ."where session_lid='" . $phpgw->accounts->id2name(intval($n_users[$i])) . "@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
           $pref = CreateObject('phpgwapi.preferences',intval($n_users[$i]));
           $t = $pref->read_repository();

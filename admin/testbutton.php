@@ -17,10 +17,15 @@
   	include("../header.inc.php");
 
 	$button = CreateObject('phpgwapi.graphics');
-	
+
+	$button->createInputButton(lang('save'), 'save');
+
+	if (isset($submit)) print "it workied<br>";
+
 	print "<form>";
-	print "<input type=\"image\" src=\"/phpgroupware/phpgwapi/templates/default/images/".
-			$button->createButton("Lars is the best ;)")."\" border=\"0\" name=\"text\">";
+	print $button->createInputButton("Lars is the best ;)",'submit');
+	print "<br>the same as ascii<br>";
+	print $button->createInputButton("Lars is the best ;)",'submit','ascii');
 	print "</form>";
 	
 	$phpgw->common->phpgw_footer();

@@ -31,11 +31,21 @@
 		if ($_userData)
 		{
 			$userData=$_userData;
+			reset($userData['n_groups']);
+			while(list($key, $value) = each($userData['n_groups']))
+			{
+				$userGroups[$key]['account_id'] = $value;
+			}
+			
+			$account = CreateObject('phpgwapi.accounts');
+			$allGroups = $account->get_list('groups');
 		}
 		else
 		{
 			$account = CreateObject('phpgwapi.accounts',$_account_id);
 			$userData = $account->read_repository();
+			$userGroups = $account->memberships(intval($_account_id));
+			$allGroups = $account->get_list('groups');
 		}
 
 		$t->set_var("form_action",$phpgw->link("editaccount.php",
@@ -102,6 +112,28 @@
 		$t->set_var("n_firstname_value",$userData["firstname"]);
 		$t->set_var("n_lastname_value",$userData["lastname"]);
 
+		$allAccounts;
+		$userGroups;
+		
+		$groups_select = '<select name="n_groups[]" multiple>';
+		reset($allGroups);
+		while (list($key,$value) = each($allGroups)) 
+		{
+			$groups_select .= '<option value="' . $value['account_id'] . '"';
+			for ($i=0; $i<count($userGroups); $i++) 
+			{
+				#print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>";
+				if ($userGroups[$i]['account_id'] == $value['account_id']) 
+				{
+					$groups_select .= " selected";
+				}
+			}
+			$groups_select .= ">" . $value['account_lid'] . "</option>\n";
+		}
+		$groups_select .= "</select>";
+		$t->set_var("groups_select",$groups_select);
+
+		
 		// create list of available app
 		$i = 0;
 		
@@ -173,8 +205,6 @@
 	// stores the userdata
 	function saveUserData($_userData)
 	{
-		global $new_permissions;
-		
 		$account = CreateObject('phpgwapi.accounts',$_userData['account_id']);
 		$account->update_data($_userData);
 		$account->save_repository();
@@ -191,7 +221,7 @@
 		$apps->account_type = 'u';
 		$apps->account_id = $_userData['account_id'];
 		$apps->account_apps = Array(Array());
-		while($app = each($new_permissions)) 
+		while($app = each($_userData['new_permissions'])) 
 		{
 			if($app[1]) 
 			{
@@ -203,6 +233,36 @@
 			}
 		}
 		$apps->save_repository();
+		
+
+
+		$account = CreateObject('phpgwapi.accounts');
+		$allGroups = $account->get_list('groups');
+		
+		reset($_userData['n_groups']);
+		while (list($key,$value) = each($_userData['n_groups']))
+		{
+			$newGroups[$value] = $value;
+		}
+
+		$acl = CreateObject('phpgwapi.acl',$_userData['account_id']);
+
+		reset($allGroups);
+		while (list($key,$groupData) = each($allGroups)) 
+		{
+			#print "$key,". $groupData['account_id'] ."<br>";
+
+			#print "$key,". $_userData['n_groups'][1] ."<br>";
+
+			if ($newGroups[$groupData['account_id']]) 
+			{
+				$acl->add_repository('phpgw_group',$groupData['account_id'],$_userData['account_id'],1);
+			}
+			else
+			{
+				$acl->delete_repository('phpgw_group',$groupData['account_id'],$_userData['account_id']);
+			}
+		}
 	}
   	
 	// checks if the userdata are valid
@@ -241,10 +301,10 @@
 			}
 		}
 		
-		if (!count($new_permissions) || !count($n_groups)) 
+		if (!count($_userData['new_permissions']) || !count($_userData['n_groups'])) 
 		{
-			#$error[$totalerrors] = "<br>" . lang("You must add at least 1 permission or group to this account");
-			#$totalerrors++;
+			$error[$totalerrors] = "<br>" . lang("You must add at least 1 permission or group to this account");
+			$totalerrors++;
 		}
 		
 		if ($totalerrors == 0)
@@ -270,7 +330,8 @@
 			'account_lid'    => $account_lid,     	'firstname'   => $firstname,
 			'lastname'       => $lastname,       	'n_passwd'    => $n_passwd,
 			'status' 	 => $status, 		'old_loginid' => rawurldecode($old_loginid),
-			'account_id'     => $account_id,	'n_passwd_2'  => $n_passwd_2
+			'account_id'     => $account_id,	'n_passwd_2'  => $n_passwd_2,
+			'n_groups' 	 => $n_groups,		'new_permissions' => $new_permissions
 		);
 		
 		if (!$errors = userDataInvalid($userData)) 
@@ -309,96 +370,6 @@
 //			the old code
 //
 /////////////////////////////////////////////////////////////////////////////////////////  	
-  if (! $account_id) {
-     Header("Location: " . $phpgw->link("accounts.php"));
-  }
-
-  if ($submit) {
-     $totalerrors = 0;
-
-     if ($phpgw_info["server"]["account_repository"] == "ldap" && ! $allow_long_loginids) {
-        if (strlen($n_loginid) > 8) {
-           $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
-        }
-     }
-    
-     if ($old_loginid != $n_loginid) {
-        if (account_exsists($n_loginid)) {
-           $error[$totalerrors++] = lang("That loginid has already been taken");
-        }
-//        $c_loginid = $n_loginid;
-//        $n_loginid = $old_loginid;
-     }
-  
-     if ($n_passwd || $n_passwd_2) {
-        if ($n_passwd != $n_passwd_2) {
-           $error[$totalerrors++] = lang("The two passwords are not the same");
-        }
-        if (! $n_passwd){
-           $error[$totalerrors++] = lang("You must enter a password");
-        }
-     }
-
-     if (!count($new_permissions) || !count($n_groups)) {
-        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission or group to this account");
-     }
-     
-     if (! $totalerrors) {
-       $phpgw->db->lock(array('accounts','preferences','phpgw_sessions','phpgw_acl','applications'));
-       $phpgw->db->query("SELECT account_id FROM accounts WHERE account_lid='" . $old_loginid . "'",__LINE__,__FILE__);
-       $phpgw->db->next_record();
-       $account_id = intval($phpgw->db->f("account_id"));
-
-       $apps = CreateObject('phpgwapi.applications',array(intval($account_id),'u'));
-       $apps->read_installed_apps();
-       $apps_before = $apps->read_account_specific();
-
-       // Read Old Group ID's
-       $old_groups = $phpgw->accounts->read_groups($account_id);
-       // Read Old Group Apps
-       if ($old_groups) {
-         $apps->account_type = 'g';
-         reset($old_groups);
-         while($groups = each($old_groups)) {
-           $apps->account_id = $groups[0];
-           $old_app_groups = $apps->read_account_specific();
-           @reset($old_app_groups);
-           while($old_group_app = each($old_app_groups)) {
-             if(!$apps_before[$old_group_app[0]]) {
-               $apps_before[$old_group_app[0]] = $old_app_groups[$old_group_app[0]];
-             }
-           }
-           // delete old groups user was associated to
-           $phpgw->acl->delete('phpgw_group',$groups[0],$account_id,'u');
-         }
-       }
-
-       $apps->account_type = 'u';
-       $apps->account_id = $account_id;
-       $apps->account_apps = Array(Array());
-       while($app = each($new_permissions)) {
-         if($app[1]) {
-           $apps->add_app($app[0]);
-           if(!$apps_before[$app[0]]) {
-             $apps_after[] = $app[0];
-           }
-         }
-       }
-       $apps->save_apps();
-       @reset($new_permissions);
-
-       $cd = account_edit(array('loginid'        => $n_loginid,        'firstname'   => $n_firstname,
-                                'lastname'       => $n_lastname,       'passwd'      => $n_passwd,
-                                'account_status' => $n_account_status, 'old_loginid' => $old_loginid,
-                                'account_id'     => rawurldecode($account_id)));
-
-       // If the user is logged in, it will force a refresh of the session_info
-       //$phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$new_loginid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
-
-       // Add new groups user is associated to
-       for($i=0;$i<count($n_groups);$i++) {
-         $phpgw->acl->add('phpgw_group',$n_groups[$i],$account_id,'u',1);
-       }
        
        // The following sets any default preferences needed for new applications..
        // This is smart enough to know if previous preferences were selected, use them.
@@ -424,192 +395,12 @@
 		 $pref->commit();
 	   }
 
-       $apps->account_apps = Array(Array());
-       $apps_after = Array(Array());
-
-       // Read new Group ID's
-       $new_groups = $phpgw->accounts->read_groups($account_id);
-       // Read new Group Apps
-       if ($new_groups) {
-         $apps->account_type = 'g';
-         reset($new_groups);
-         while($groups = each($new_groups)) {
-           $apps->account_id = intval($groups[0]);
-           $new_app_groups = $apps->read_account_specific();
-           @reset($new_app_groups);
-           while($new_group_app = each($new_app_groups)) {
-             if(!$apps_after[$new_group_app[0]]) {
-               $apps_after[$new_group_app[0]] = $new_app_groups[$new_group_app[0]];
-             }
-           }
-         }
-       }
-
-       $apps->account_type = 'u';
-       $apps->account_id = $account_id;
-       $new_app_user = $apps->read_account_specific();
-       while($new_user_app = each($new_app_user)) {
-         if(!$apps_after[$new_user_app[0]]) {
-           $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
-         }
-       }
-
        // start including other admin tools
        while($app = each($apps_after))
        {
          $phpgw->common->hook_single('update_user_data', $app[0]);
        }       
 
-       $phpgw->db->unlock();
-       
-       Header('Location: ' . $phpgw->link('accounts.php', 'cd='.$cd));
-       $phpgw->common->phpgw_exit();
-     }
-
-  }                    // if $submit
-
-  
-	if ($totalerrors) {
-     		$t->set_var("error_messages","<center>" . $phpgw->common->error_list($error) . "</center>");
-	} else {
-		$t->set_var("error_messages","");
-	}
-
-  	$userData = $phpgw->accounts->read_repository($account_id);
-  	
-  	if (! $submit) {
-  		print $n_loginid   = $userData["account_lid"];
-  		print $n_firstname = $userData["firstname"];
-  		print $n_lastname  = $userData["lastname"];
-  		$apps = CreateObject('phpgwapi.applications',array(intval($userData["account_id"]),'u'));
-  		$apps->read_installed_apps();
-		/* $db_perms = $apps->read_account_specific(); */
-	}
-	
-	if ($phpgw_info["server"]["account_repository"] == "ldap") {
-		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . rawurlencode($userData["account_dn"]) . "&old_loginid=" . $userData["account_lid"]));
-	} else {
-		$t->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
-	}
-	
-	$t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-	$t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
-	$t->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
-	
-	$t->set_var("lang_action",lang("Edit user account"));
-	
-	$t->set_var("lang_loginid",lang("LoginID"));
-	$t->set_var("n_loginid_value",$n_loginid);
-	
-	$t->set_var("lang_account_active",lang("Account active"));
-	
-	if ($userData["status"]) {
-		$t->set_var("account_checked","checked");
-	} else {
-		$t->set_var("account_checked","");
-	}
-
-  $t->set_var("lang_password",lang("Password"));
-  $t->set_var("n_passwd_value",$n_passwd);
-
-  $t->set_var("lang_reenter_password",lang("Re-Enter Password"));
-  $t->set_var("n_passwd_2_value",$n_passwd_2);
-
-  $t->set_var("lang_firstname",lang("First Name"));
-  $t->set_var("n_firstname_value",$n_firstname);
-
-  $t->set_var("lang_lastname",lang("Last Name"));
-  $t->set_var("n_lastname_value",$n_lastname);
-
-  $t->set_var("lang_groups",lang("Groups"));
-/*
-  $user_groups = $phpgw->accounts->read_group_names($userData["account_lid"]);
-
-  $groups_select = '<select name="n_groups[]" multiple>';
-  $phpgw->db->query("select * from groups");
-  while ($phpgw->db->next_record()) {
-     $groups_select .= '<option value="' . $phpgw->db->f("group_id") . '"';
-     for ($i=0; $i<count($user_groups); $i++) {
-        if ($user_groups[$i][0] == $phpgw->db->f("group_id")) {
-           $groups_select .= " selected";
-        }
-     }
-     $groups_select .= ">" . $phpgw->db->f("group_name") . "</option>\n";
-  }
-  $groups_select .= "</select>";
-  $t->set_var("groups_select",$groups_select);
-
-  $i = 0;
-  $sorted_apps = $phpgw_info["apps"];
-  @asort($sorted_apps);
-  @reset($sorted_apps);
-  while ($permission = each($sorted_apps)) {
-     if ($permission[1]["enabled"]) {
-        $perm_display[$i][0] = $permission[0];
-        $perm_display[$i][1] = $permission[1]["title"];
-        $i++;
-     }
-  }
-
-  @reset($db_perms);
-  for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
-     if (! $perm_display[$i][1]) break;
-     $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
-                 . '<td><input type="checkbox" name="new_permissions['
-                 . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
-        $perm_html .= " checked";
-     }
-     $perm_html .= "></td>";
-     $i++;
-
-     if ($i == count($perm_display) && is_odd(count($perm_display))) {
-        $perm_html .= '<td colspan="2">&nbsp;</td></tr>';
-     }
-
-     if (! $perm_display[$i][1]) break;
-     $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
-                 . '<td><input type="checkbox" name="new_permissions['
-                 . $perm_display[$i][0] . ']" value="True"';
-     if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
-        $perm_html .= " checked";
-     }
-     $perm_html .= "></td></tr>\n";
-     $i++;
-  }
-
-  $t->set_var("permissions_list",$perm_html);	
-  
-  $apps->account_apps = Array(Array());
-
-  // Read new Group ID's
-  $new_groups = $phpgw->accounts->read_groups($account_id);
-  $apps_after = Array(Array());
-  // Read new Group Apps
-  if ($new_groups) {
-    $apps->account_type = 'g';
-    reset($new_groups);
-    while($groups = each($new_groups)) {
-      $apps->account_id = intval($groups[0]);
-      $new_app_groups = $apps->read_account_specific();
-      @reset($new_app_groups);
-      while($new_group_app = each($new_app_groups)) {
-        if(!$apps_after[$new_group_app[0]]) {
-          $apps_after[$new_group_app[0]] = $new_app_groups[$new_group_app[0]];
-        }
-      }
-    }
-  }
-
-  $apps->account_type = 'u';
-  $apps->account_id = intval($userData["account_id"]);
-  $new_app_user = $apps->read_account_specific();
-  while($new_user_app = each($new_app_user)) {
-    if(!$apps_after[$new_user_app[0]]) {
-      $apps_after[$new_user_app[0]] = $new_app_user[$new_user_app[0]];
-    }
-  }
-*/
   $includedSomething = False;
   // start inlcuding other admin tools
   while($app = each($apps_after))
@@ -620,9 +411,4 @@
   }       
   if (!$includedSomething) $t->set_var('gui_hooks','');
 
-  $t->set_var("lang_button",lang('Save'));
-  $t->pparse('out','form');
-
-  account_close();
-  $phpgw->common->phpgw_footer();
 ?>
