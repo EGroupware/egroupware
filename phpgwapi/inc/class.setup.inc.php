@@ -229,7 +229,7 @@
 						$testremoteip = join('.',$tmp);
 					}
 					elseif(count($test) == 4 &&
-						intval($test[3]) == 0)
+						(int)$test[3] == 0)
 					{
 						$tmp = split("\.",$remoteip);
 						$tmp[3] = 0;
@@ -318,7 +318,7 @@
 			{
 				$enable = $setup_info[$appname]['enable'];
 			}
-			$enable = intval($enable);
+			$enable = (int)$enable;
 
 			/*
 			Use old applications table if the currentver is less than 0.9.10pre8,
@@ -382,7 +382,7 @@
 					. $app_id
 					. "'" . $setup_info[$appname]['name'] . "',"
 					. $enable . ","
-					. intval($setup_info[$appname]['app_order']) . ","
+					. (int)$setup_info[$appname]['app_order'] . ","
 					. "'" . $tables . "',"
 					. "'" . $setup_info[$appname]['version'] . "');"
 				);
@@ -484,8 +484,8 @@
 
 				$sql = "UPDATE $appstbl "
 					. "SET app_name='" . $setup_info[$appname]['name'] . "',"
-					. " app_enabled=" . intval($setup_info[$appname]['enable']) . ","
-					. " app_order=" . intval($setup_info[$appname]['app_order']) . ","
+					. " app_enabled=" . (int)$setup_info[$appname]['enable'] . ","
+					. " app_order=" . (int)$setup_info[$appname]['app_order'] . ","
 					. " app_tables='" . $tables . "',"
 					. " app_version='" . $setup_info[$appname]['version'] . "'"
 					. " WHERE app_name='" . $appname . "'";
@@ -650,8 +650,8 @@
 				echo'<br>Input values: '
 					. 'A="'.$a.'", B="'.$b.'"';
 			}
-			$newa = ereg_replace('pre','.',$a);
-			$newb = ereg_replace('pre','.',$b);
+			$newa = str_replace('pre','.',$a);
+			$newb = str_replace('pre','.',$b);
 			$testa = explode('.',$newa);
 			if(@$testa[1] == '')
 			{
@@ -674,8 +674,8 @@
 
 			for($i=0;$i<count($testa);$i++)
 			{
-				if($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is less than ' . intval($testb[$i]) . ' ...'; }
-				if(intval($testa[$i]) < intval($testb[$i]))
+				if($DEBUG) { echo'<br>Checking if '. (int)$testa[$i] . ' is less than ' . (int)$testb[$i] . ' ...'; }
+				if((int)$testa[$i] < (int)$testb[$i])
 				{
 					if ($DEBUG) { echo ' yes.'; }
 					$less++;
@@ -687,7 +687,7 @@
 						break;
 					}
 				}
-				elseif(intval($testa[$i]) > intval($testb[$i]))
+				elseif((int)$testa[$i] > (int)$testb[$i])
 				{
 					if($DEBUG) { echo ' no.'; }
 					$less--;
@@ -739,8 +739,8 @@
 				echo'<br>Input values: '
 					. 'A="'.$a.'", B="'.$b.'"';
 			}
-			$newa = ereg_replace('pre','.',$a);
-			$newb = ereg_replace('pre','.',$b);
+			$newa = str_replace('pre','.',$a);
+			$newb = str_replace('pre','.',$b);
 			$testa = explode('.',$newa);
 			if($testa[3] == '')
 			{
@@ -755,8 +755,8 @@
 
 			for($i=0;$i<count($testa);$i++)
 			{
-				if($DEBUG) { echo'<br>Checking if '. intval($testa[$i]) . ' is more than ' . intval($testb[$i]) . ' ...'; }
-				if(intval($testa[$i]) > intval($testb[$i]))
+				if($DEBUG) { echo'<br>Checking if '. (int)$testa[$i] . ' is more than ' . (int)$testb[$i] . ' ...'; }
+				if((int)$testa[$i] > (int)$testb[$i])
 				{
 					if($DEBUG) { echo ' yes.'; }
 					$less++;
@@ -768,7 +768,7 @@
 						break;
 					}
 				}
-				elseif(intval($testa[$i]) < intval($testb[$i]))
+				elseif((int)$testa[$i] < (int)$testb[$i])
 				{
 					if($DEBUG) { echo ' no.'; }
 					$less--;
@@ -806,8 +806,8 @@
 
 		function get_hooks_table_name()
 		{
-			if($this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'],'0.9.8pre5') &&
-			   $GLOBALS['setup_info']['phpgwapi']['currentver'] != '')
+			if(@$this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'],'0.9.8pre5') &&
+			   @$GLOBALS['setup_info']['phpgwapi']['currentver'] != '')
 			{
 				/* No phpgw_hooks table yet. */
 				return False;
