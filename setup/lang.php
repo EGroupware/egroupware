@@ -96,17 +96,21 @@
 	}
 
 	// Rejected Lines
-	unset($str);
-	foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
+	if( is_array($GLOBALS['phpgw_setup']->translation->sql->line_rejected) )
 	{
-		$_f_buffer = split("/", $badline["appfile"]);
-		$langfile  = $_f_buffer[count($_f_buffer)-1] . " " . lang("in") . " " . $_f_buffer[count($_f_buffer)-3] . " " . lang("module");
+		unset($str);
+		foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
+		{
+			$_f_buffer = split("/", $badline["appfile"]);
+			$langfile  = $_f_buffer[count($_f_buffer)-1] . " " . lang("in") . " " . $_f_buffer[count($_f_buffer)-3] . " " . lang("module");
 		
-		$str .= lang("File") . " : " . $langfile . "<br>";
-		$str .= lang("Line") . " : " . $badline["line"] . "<br>";
+			$str .= lang("File") . " : " . $langfile . "<br>";
+			$str .= lang("Line") . " : " . $badline["line"] . "<br>";
+		}
+		$setup_tpl->set_var('V_alert_word', lang("Rejected lines"));
+		$setup_tpl->set_var('V_alert_msg', $str);
+		$alert = TRUE;
 	}
-	$setup_tpl->set_var('V_alert_word', lang("Rejected lines"));
-	$setup_tpl->set_var('V_alert_msg', $str);
 
 	$setup_tpl->set_var('stage_title',$stage_title);
 	$setup_tpl->set_var('stage_desc',$stage_desc);
@@ -122,6 +126,9 @@
 
 	$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_lang_main');
-	$setup_tpl->pparse('out','T_alert_msg');
+	
+	if($alert)
+		$setup_tpl->pparse('out','T_alert_msg');
+		
 	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>
