@@ -24,14 +24,14 @@
 
   /* $Id$ */
 
-  $phpgw_info["server"]["global_denied_users"] = array();
-  $phpgw_info["server"]["global_denied_groups"] = array();
+	$phpgw_info["server"]["global_denied_users"] = array();
+	$phpgw_info["server"]["global_denied_groups"] = array();
 
-  class accounts_
-  {
-    var $db;
-    var $account_id;
-    var $data;
+	class accounts_
+	{
+		var $db;
+		var $account_id;
+		var $data;
 
 		function accounts_()
 		{
@@ -45,17 +45,18 @@
 			$this->db->query("select * from phpgw_accounts where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->data["userid"]            = $this->db->f("account_lid");
-			$this->data["account_id"]        = $this->db->f("account_id");
-			$this->data["account_lid"]       = $this->db->f("account_lid");
-			$this->data["firstname"]         = $this->db->f("account_firstname");
-			$this->data["lastname"]          = $this->db->f("account_lastname");
-			$this->data["fullname"]          = $this->db->f("account_firstname")." ".$this->db->f("account_lastname");
-			$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-			$this->data["account_type"]      = $this->db->f("account_type");
-			$this->data["status"]            = $this->db->f("account_status");
+			$this->data['userid']            = $this->db->f('account_lid');
+			$this->data['account_id']        = $this->db->f('account_id');
+			$this->data['account_lid']       = $this->db->f('account_lid');
+			$this->data['firstname']         = $this->db->f('account_firstname');
+			$this->data['lastname']          = $this->db->f('account_lastname');
+			$this->data['fullname']          = $this->db->f('account_firstname').' '.$this->db->f('account_lastname');
+			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
+			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
+			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
+			$this->data['account_type']      = $this->db->f('account_type');
+			$this->data['status']            = $this->db->f('account_status');
+			$this->data['expires']           = $this->db->f('account_expires');
 			return $this->data;
 		}
 
@@ -63,10 +64,11 @@
 		{
 			$this->db->query("update phpgw_accounts set account_lid='" . $this->data["account_lid"]
 				. "', account_firstname='" . $this->data['firstname']
-				. "', account_lastname='" . $this->data['lastname']
-				. "', account_status='" . $this->data['status']
-				. "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
+				. $this->data['status'] . "', account_expires='" . $this->data['expires'] . "' where account_id='"
+				. $this->account_id . "'",__LINE__,__FILE__);
 		}
+
 
 		function delete($accountid = '')
 		{
@@ -82,119 +84,128 @@
 		}
 
 
-	function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
-	{
-		global $phpgw, $phpgw_info;
+		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
+		{
+			global $phpgw, $phpgw_info;
 
-		if ($offset)
-		{
-			$limitclause = $phpgw->db->limit($start,$offset);
-		}
-		elseif ($start && !$offset)
-		{
-			$limitclause = $phpgw->db->limit($start);
-		}
-
-		if (! $sort)
-		{
-			$sort = "desc";
-		}
-
-		if ($order)
-		{
-			$orderclause = "order by $order $sort";
-		}
-		else
-		{
-			$orderclause = "order by account_lid,account_lastname,account_firstname asc";
-		}
-
-		switch($_type)
-		{
-			case 'accounts':
-				$whereclause = "where account_type = 'u'";
-				break;
-			case 'groups':
-				$whereclause = "where account_type = 'g'";
-				break;
-			default:
-				$whereclause = "";
-		}
-
-		if ($query)
-		{
-			if ($whereclause)
+			if ($offset)
 			{
-				$whereclause .= ' and ( ';
+				$limitclause = $phpgw->db->limit($start,$offset);
+			}
+			elseif ($start && !$offset)
+			{
+				$limitclause = $phpgw->db->limit($start);
+			}
+
+			if (! $sort)
+			{
+				$sort = "desc";
+			}
+
+			if ($order)
+			{
+				$orderclause = "order by $order $sort";
 			}
 			else
 			{
-				$whereclause .= ' where ';
+				$orderclause = "order by account_lid,account_lastname,account_firstname asc";
 			}
 
-			$whereclause .= " account_firstname like '%$query%' OR account_lastname like "
-				. "'%$query%' OR account_lid like '%$query%' ";
-			if ($whereclause)
+			switch($_type)
 			{
-				$whereclause .= ' ) ';
+				case 'accounts':
+					$whereclause = "where account_type = 'u'";
+					break;
+				case 'groups':
+					$whereclause = "where account_type = 'g'";
+					break;
+				default:
+					$whereclause = "";
 			}
 
+			if ($query)
+			{
+				if ($whereclause)
+				{
+					$whereclause .= ' and ( ';
+				}
+				else
+				{
+					$whereclause .= ' where ';
+				}
+
+				$whereclause .= " account_firstname like '%$query%' OR account_lastname like "
+					. "'%$query%' OR account_lid like '%$query%' ";
+				if ($whereclause)
+				{
+					$whereclause .= ' ) ';
+				}
+			}
+
+			$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
+			$this->db->query($sql,__LINE__,__FILE__);
+			while ($this->db->next_record()) {
+				$accounts[] = Array(
+					'account_id'        => $this->db->f('account_id'),
+					'account_lid'       => $this->db->f('account_lid'),
+					'account_type'      => $this->db->f('account_type'),
+					'account_firstname' => $this->db->f('account_firstname'),
+					'account_lastname'  => $this->db->f('account_lastname'),
+					'account_status'    => $this->db->f('account_status',
+					'account_expires'   => $this->db->f('account_expires')
+				);
+			}
+			return $accounts;
 		}
 
-		$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
-		$this->db->query($sql,__LINE__,__FILE__);
-		while ($this->db->next_record()) {
-			$accounts[] = Array(
-				"account_id" => $this->db->f("account_id"),
-				"account_lid" => $this->db->f("account_lid"),
-				"account_type" => $this->db->f("account_type"),
-				"account_firstname" => $this->db->f("account_firstname"),
-				"account_lastname" => $this->db->f("account_lastname"),
-				"account_status" => $this->db->f("account_status")
-			);
+		function name2id($account_lid)
+		{
+			global $phpgw, $phpgw_info;
+
+			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
+			if($this->db->num_rows())
+			{
+				$this->db->next_record();
+				return $this->db->f('account_id');
+			}
+			else
+			{
+				return False;
+			}
 		}
-		return $accounts;
-	}
 
-    function name2id($account_lid)
-    {
-      global $phpgw, $phpgw_info;
+		function id2name($account_id)
+		{
+			global $phpgw, $phpgw_info;
 
-      $this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-      if($this->db->num_rows()) {
-        $this->db->next_record();
-        return $this->db->f('account_id');
-      }else{
-        return False;
-      }
-    }
+			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+			if($this->db->num_rows())
+			{
+				$this->db->next_record();
+				return $this->db->f('account_lid');
+			}
+			else
+			{
+				return False;
+			}
+		}
 
-    function id2name($account_id)
-    {
-      global $phpgw, $phpgw_info;
-      
-      $this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-      if($this->db->num_rows()) {
-        $this->db->next_record();
-        return $this->db->f('account_lid');
-      }else{
-        return False;
-      }
-    }
+		function get_type($accountid)
+		{
+			global $phpgw, $phpgw_info;
 
-    function get_type($accountid)
-    {
-      global $phpgw, $phpgw_info;
-
- 		$account_id = get_account_id($accountid);
-      $this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-      if ($this->db->num_rows()) {
-         $this->db->next_record();
-         return $this->db->f('account_type');
-      } else {
-         return False;
-      }
-    }
+			$account_id = get_account_id($accountid);
+			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
+			if ($this->db->num_rows())
+			{
+				$this->db->next_record();
+				return $this->db->f('account_type');
+			}
+			else
+			{
+				return False;
+			}
+		}
 
 		function exists($account_lid)
 		{
@@ -210,6 +221,8 @@
 			return $this->db->f(0) > 0;
 		}
 
+		// !! NOTE: We should pass an array to this to make updates easier, plus I need to add account_expires
+		//          I didn't want to risk breaking too much code at once, I will do this soon. (jengo)
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
 		{
 			//echo '<br>in create for account_lid: "'.$account_lid.'"';
