@@ -73,7 +73,7 @@
 	$GLOBALS['phpgw_setup']->loaddb();
 
 	/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-	$GLOBALS['phpgw_setup']->clear_session_cache();
+	/* $GLOBALS['phpgw_setup']->clear_session_cache(); */
 
 	// Database actions
 	$setup_info = $GLOBALS['phpgw_setup']->detection->get_versions();
