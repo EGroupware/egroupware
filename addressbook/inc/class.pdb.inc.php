@@ -1,4 +1,4 @@
-<?
+<?php
   /**************************************************************************\
   * phpGroupWare API - Palm Database Access                                  *
   * This file written by Miles Lott <milos@speakeasy.net>                    *
