@@ -22,7 +22,7 @@
 	if ($GLOBALS['phpgw_info']['user']['apps']['addressbook']
 		&& $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
-		echo "\n<!-- Birthday info -->\n";
+		$tmp = "\n<!-- Birthday info -->\n";
 
 		$c = CreateObject('phpgwapi.contacts');
 		$qfields = array(
@@ -71,10 +71,6 @@
 				'text' => lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),
 				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id'])
 			);
-//			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
-//				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
-//			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . '</td></tr>' . "\n";
 		}
 
 		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
@@ -87,16 +83,14 @@
 				'text' => lang("Tomorrow is x's birthday.", $val['n_given'] . ' ' . $val['n_family']),
 				'link' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
 			);
-//			$tmp = '<a href="'
-//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
-//				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
-//			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . '</td></tr>' . "\n";
 		}
-//		if(count($portalbox->data))
-//		{
-			echo $portalbox->draw();
-//		}
+		if(count($portalbox->data))
+		{
+			$tmp = $portalbox->draw();
+		}
 		unset($portalbox);
-		echo "\n<!-- Birthday info -->\n";
+		$tmp .= "\n<!-- Birthday info -->\n";
+		$GLOBALS['phpgw']->template->set_var('phpgw_body',$tmp,True);
+		unset($tmp);
 	}
 ?>

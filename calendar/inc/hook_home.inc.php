@@ -85,7 +85,7 @@
 
 		$portalbox->data = Array();
 
-		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($GLOBALS['extra_data'])."\n".'<!-- END Calendar info -->'."\n";
+		$GLOBALS['phpgw']->template->set_var('phpgw_body', "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($GLOBALS['extra_data'])."\n".'<!-- END Calendar info -->'."\n",True);
 		unset($cal);
 	} 
 	flush();
