@@ -43,7 +43,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('mainscreen_message_access',1,'admin'))
 	{
-		$file['Change Main Screen Message'] = $GLOBALS['phpgw']->link('/admin/mainscreen_message.php');
+		$file['Change Main Screen Message'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('current_sessions_access',1,'admin'))
