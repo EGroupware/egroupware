@@ -1,6 +1,6 @@
 <!-- $Id$ -->
 
-	<xsl:template match="msgbox">
+	<xsl:template name="msgbox">
 		<xsl:apply-templates select="msgbox_data"/>
 	</xsl:template>
 
