@@ -610,21 +610,6 @@
 		@function list_themes
 		@abstract list themes available
 		*/
-		/*function list_themes()
-		{
-			$dh = opendir(PHPGW_SERVER_ROOT . '/phpgwapi/themes');
-			while ($file = readdir($dh))
-			{
-				if (eregi("\.theme$", $file))
-				{
-					$list[] = substr($file,0,strpos($file,'.'));
-				}
-			}
-			//$dh->close();
-			reset ($list);
-			return $list;
-		} */
-
 		function list_themes()
 		{
 			$tpl_dir = $this->get_tpl_dir('phpgwapi');
@@ -1170,117 +1155,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		}
 
 		/*!
-		@function load_theme
-		@abstract Discover the selected theme and include it into the template set
+		@function get_css_url
+		@abstract returns the path of the css file for the choosen layout/theme
 		@discussion *someone wanna add some detail here*
 		*/
-		function load_theme_data()
-		{
-			if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
-			{
-				if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-				}
-				else
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
-				}
-			}
-			if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
-			{
-				if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']))
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
-				}
-			}
-			else
-			{
-				if (isset($GLOBALS['phpgw_info']['server']['force_theme']))
-				{
-					$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['force_theme'];
-				}
-			}
-
-			if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme'))
-			{
-				include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme');
-			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
-			{
-				include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
-			}
-			else
-			{
-				/* Hope we don't get to this point.  Better then the user seeing a */
-				/* complety back screen and not know whats going on                */
-				$phpgw_info['theme']['bg_color'] = 'FFFFFF';
-				$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
-			}
-
-			/* This covers putting the theme values into the template, excluding CSS stuff which will be done later */
-			if (is_array($GLOBALS['phpgw_info']['theme']))
-			{
-				$theme_data = $GLOBALS['phpgw_info']['theme'];
-				unset($theme_data['css']);
-				$GLOBALS['phpgw']->template->set_var($theme_data);
-				unset($theme_data);
-			}
-			else
-			{
-				$GLOBALS['phpgw']->template->set_var('bg_color','FFFFFF');
-			}
-		}
-
-		/*!
-		@function load_css
-		@abstract generate CSS format from $phpgw_info['theme']['css'] and set its value into the template
-		@discussion *someone wanna add some detail here*
-		*/
-		function load_css_data()
-		{
-			//Make sure some of the defaults are set
-			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A']))
-			{
-				$GLOBALS['phpgw_info']['theme']['css']['A'] = 'text-decoration:none;';
-			}
-			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:link']) && !empty($GLOBALS['phpgw_info']['theme']['link']))
-			{
-				$GLOBALS['phpgw_info']['theme']['css']['A:link'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['link'].';';
-			}
-
-			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:visited']) && !empty($GLOBALS['phpgw_info']['theme']['vlink']))
-			{
-				$GLOBALS['phpgw_info']['theme']['css']['A:visited'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['vlink'].';';
-			}
-
-			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:active']) && !empty($GLOBALS['phpgw_info']['theme']['alink']))
-			{
-				$GLOBALS['phpgw_info']['theme']['css']['A:active'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['alink'].';';
-			}
-
-			if (!isset($GLOBALS['phpgw_info']['theme']['css']['A:hover']) && !empty($GLOBALS['phpgw_info']['theme']['hovlink']))
-			{
-				$GLOBALS['phpgw_info']['theme']['css']['A:hover'] = 'text-decoration:none; color: '.$GLOBALS['phpgw_info']['theme']['hovlink'].';';
-			}
-
-			// now put the css data into the template class
-			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
-			{
-				$css_string = '';
-				reset($GLOBALS['phpgw_info']['theme']['css']);
-				$css_string = "<STYLE type=\"text/css\">";
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['theme']['css']))
-				{
-					$css_string .= "\n\t\t$key { $value } ";
-				}
-				$css_string .= "\n";
-				$css_string .= "\t</STYLE>\n";
-				$GLOBALS['phpgw']->template->set_var('phpgw_css',$css_string);
-			}
-		}
-
-		function load_css_url()
+		function get_css_url()
 		{
 			if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
 			{
@@ -1332,7 +1211,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		function load_preload_images_data()
 		{
 			//$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw_info']['navbar']['logout']['icon'];
-			
+
 			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
 			{
 				$preload_image_string = '';
@@ -1352,43 +1231,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			}
 			return '';
 		}
-		
-
-		/*function load_phpgw_body_tags()
-		{
-			$GLOBALS['phpgw_info']['flags']['body_tags']['bgcolor'] = $GLOBALS['phpgw_info']['theme']['bg_color'];
-			$GLOBALS['phpgw_info']['flags']['body_tags']['alink'] = $GLOBALS['phpgw_info']['theme']['alink'];
-			$GLOBALS['phpgw_info']['flags']['body_tags']['link'] = $GLOBALS['phpgw_info']['theme']['link'];
-			$GLOBALS['phpgw_info']['flags']['body_tags']['vlink'] = $GLOBALS['phpgw_info']['theme']['vlink'];
-
-			if (!$GLOBALS['phpgw_info']['server']['htmlcompliant'])
-			{
-				$GLOBALS['phpgw_info']['flags']['body_tags']['marginwidth']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['marginheight']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['topmargin']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['bottommargin']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['rightmargin']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['leftmargin']='0';
-				$GLOBALS['phpgw_info']['flags']['body_tags']['border']='0';
-			}
-
-			$GLOBALS['phpgw_info']['flags']['body_tags']['onLoad'] .= $this->load_preload_images_data(); 
-			
-			if(@is_array($GLOBALS['phpgw_info']['flags']['body_tags']))
-			{
-				$body_tags_string = '';
-				reset($GLOBALS['phpgw_info']['flags']['body_tags']);
-				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['body_tags']))
-				{
-					if($value != '')
-					{
-						$body_tags_string .= " $key=\"$value\"";
-					}
-				}
-				$GLOBALS['phpgw']->template->set_var('phpgw_body_tags',$body_tags_string);
-			}
-		}*/
 
 		function load_phpgw_body_tags()
 		{
@@ -1413,21 +1255,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 		@function phpgw_header
 		@abstract load the phpgw header
 		*/
-		/*function phpgw_header($forceheader = True, $forcenavbar = True)
-		{
-			// So far I dont have use for $forceheader and $forcenavbar
-			// I only allow this to be run once by using the constant
-			if(!defined('PHPGW_HEADER_RAN'))
-			{
-				define('PHPGW_HEADER_RAN',True);
-				$this->msgbox('',False,'phpgw_msgbox');
-				$this->load_css_data();
-				$this->load_phpgw_body_tags();
-				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
-				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
-			}
-		}*/
-
 		function phpgw_header($forceheader = True, $forcenavbar = True)
 		{
 			/* So far I dont have use for $forceheader and $forcenavbar */
@@ -1436,7 +1263,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			{
 				define('PHPGW_HEADER_RAN',True);
 				$this->msgbox('',False,'phpgw_msgbox');
-				$this->load_css_url();
+				$this->get_css_url();
 				$this->load_phpgw_body_tags();
 				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_head_javascript');
 				$GLOBALS['phpgw']->template->pfp('out','phpgw_main_start');
