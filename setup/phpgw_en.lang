@@ -26,6 +26,8 @@ add ticket 	tts	en	Add ticket
 add to addressbook	email	en	Add to addressbook
 address book	common	en	Address Book
 address book - view	addressbook	en	Address book - view
+address line 2	addressbook	en	Address Line 2
+address line 3	addressbook	en	Address Line 3
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
 addsub	todo	en	AddSub
@@ -57,17 +59,28 @@ august	common	en	August
 author	nntp	en	Author
 available groups	nntp	en	Available Groups
 bad login or password	login	en	Bad login or password
+bbs phone	addressbook	en	BBS Phone
 base url	admin	en	Base URL
 birthday	addressbook	en	Birthday
 book marks	common	en	Book marks
 bookmarks	common	en	Bookmarks
 brief description	calendar	en	Brief Description
-calendar	common	en	calendar
+business city	addressbook	en	Business City
+business country	addressbook	en	Business Country
+business email	addressbook	en	Business EMail
+business email type	addressbook	en	Business EMail Type
+business fax	addressbook	en	Business Fax
+business phone	addressbook	en	Business Phone
+business state	addressbook	en	Business State
+business street	addressbook	en	Business Street
+business zip code	addressbook	en	Business Postal Code
+calendar	common	addressbook	en	calendar
 calendar - add	calendar	en	Calendar - Add
 calendar - edit	calendar	en	Calendar - Edit
 calendar preferences	common	en	Calendar preferences
 cancel	common	en	Cancel
 cannot display the requested article from the requested newsgroup	nntp	en	Cannot display the requested article from the requested newsgroup
+car phone	addressbook	en	Car Phone
 cc	email	en	CC
 change	common	en	Change
 change main screen message	admin	en	Change main screen message
@@ -196,7 +209,14 @@ help	common	en	Help
 helvetica       notes       en       Helvetica
 high	common	en	High
 home	common	en	Home
+home city	addressbook	en	Home City
+home country	addressbook	en	Home Country
+home email	addressbook	en	Home EMail
+home email type	addressbook	en	Home EMail Type
 home phone	addressbook	en	Home Phone
+home state	addressbook	en	Home State
+home street	addressbook	en	Home Street
+home zip code	addressbook	en	Home ZIP Code
 human resources	common	en	Human Resources
 i participate	calendar	en	I Participate
 icons and text	preferences	en	Icons and text
@@ -212,6 +232,7 @@ import lang set	transy	en	Import lang set
 installed applications	admin	en	Installed applications
 inventory	common	en	Inventory
 ip	admin	en	IP
+isdn phone	addressbook	en	ISDN Phone
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
 january	common	en	January
 july	common	en	July
@@ -254,6 +275,7 @@ minutes between reloads	admin	en	Minutes between Reloads
 mo	calendar	en	M
 mobile	addressbook	en	Mobile
 mobile phone	common	en	Mobile phone
+modem phone	common	en	Modem Phone
 mon	calendar	en	Mon
 monday	common	en	Monday
 monitor	common	en	Monitor
@@ -290,9 +312,9 @@ non-standard	email	en	Non-Standard
 none	calendar	en	None
 normal	common	en	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does *not* change your email password. This will need to be done manually.
-notes	common          en      Notes
-notes list     notes    en      Notes list
-notes preferences      common     en       Notes preferences
+notes	common	en	Notes
+notes list	notes	en	Notes list
+notes preferences	common	en	Notes preferences
 november	common	en	November
 october	common	en	October
 ok	common	en	OK
@@ -321,6 +343,7 @@ please set your preferences for this app	common	en	Please set your preferences f
 please x by hand	common	en	Please %1 by hand
 please, select a new theme	preferences	en	Please, select a new theme
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+prefer	common	en	Prefer
 preferences	common	en	Preferences
 prefix	addressbook	en	Prefix
 previous	email	en	Previous
@@ -334,6 +357,7 @@ private and group public	calendar	en	Private and Group Public
 private only	calendar	en	Private Only
 private_files	filemanager	en	Private files
 project description	todo	en	Project Description
+public key	common	en	Public Key
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
@@ -469,6 +493,7 @@ vcards require a first name entry.	addressbook	en	VCards require a first name en
 verdana    notes       en      Verdana
 very large    notes    en      Very Large
 very small    notes    en      Very Small
+video phone	addressbook	en	Video Phone
 view	common	en	View
 view access log	admin	en	View Access Log
 view all tickets	tts	en	View all tickets
@@ -486,7 +511,6 @@ weekly	calendar	en	Weekly
 which groups	common	en	Which groups
 work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
-work phone	addressbook	en	Work Phone
 x matches found	calendar	en	%1 matches found
 x messages have been deleted	email	en	%1 messages have been deleted
 year	calendar	en	Year
