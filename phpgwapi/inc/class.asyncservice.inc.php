@@ -472,8 +472,7 @@
 			if (strpos($id,'%') !== False || strpos($id,'_') !== False)
 			{
 				$id = $this->db->quote($id);
-//				$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
-				$where = "id LIKE $id AND id != '##last-check-run##'";
+				$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
 			}
 			elseif (!$id)
 			{
