@@ -160,10 +160,11 @@ class uiviews extends uical
 			': '.$this->bo->long_date($first,$last);
 		$GLOBALS['phpgw']->common->phpgw_header();
 
-		$search_params = $this->search_params + array(
+		$search_params = array(
 				'start'   => $first,
 				'end'     => $last,
-			);
+			) + $this->search_params;
+
 		$users = $this->search_params['users'];
 		if (!is_array($users)) $users = array($users);
 		
@@ -553,7 +554,9 @@ class uiviews extends uical
 			}
 			$timespan = implode(' - ',$timespan);
 		}
-		$icons = $this->event_icons($event);
+		$is_private = !$this->bo->check_perms(PHPGW_ACL_READ,$event);
+
+		$icons = !$is_private ? $this->event_icons($event) : array($this->html->image('calendar','private',lang('private')));
 		$cats  = $this->bo->categories($event['category'],$color);
 
 		// these values control varius aspects of the geometry of the eventWidget
@@ -567,22 +570,22 @@ class uiviews extends uical
 		// the body-colors (gradient) are calculated from the headercolor, which depends on the cat of an event
 		$bodybgcolor1 = $this->brighter($headerbgcolor,170);
 		$bodybgcolor2 = $this->brighter($headerbgcolor,220);
-
+		
 		$tpl->set_var(array(
 			// event-content, some of it displays only if it really has content or is needed
 			'header_icons' => $width > $small_trigger_width ? implode("",$icons) : '',
 			'body_icons' => $width > $small_trigger_width ? '' : implode("\n",$icons).'<br>',
 			'icons' => implode("\n",$icons),
 			'header' => $timespan,
-			'title'   => $this->html->htmlspecialchars($event['title']),
-			'description' => nl2br($this->html->htmlspecialchars($event['description'])),
-			'location'   => $this->add_nonempty($event['location'],lang('Location')),
-			'participants' => count($event['participants']) == 1 && isset($event['participants'][$this->user]) ? '' :
+			'title'   => !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private'),
+			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
+			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
+			'participants' => count($event['participants']) == 1 && isset($event['participants'][$this->user]) || $is_private ? '' :
 				$this->add_nonempty($this->bo->participants($event['participants']),lang('Participants'),True),
 			'multidaytimes' => !$event['multiday'] ? '' :
 				$this->add_nonempty($GLOBALS['phpgw']->common->show_date($this->bo->date2ts($event['start'])),lang('Start Date/Time')).
 				$this->add_nonempty($GLOBALS['phpgw']->common->show_date($this->bo->date2ts($event['end'])),lang('End Date/Time')),
-			'category' => $this->add_nonempty($cats,lang('Category')),
+			'category' => !$is_private ? $this->add_nonempty($cats,lang('Category')) : '',
 			// the tooltip is based on the content of the actual widget, this way it takes no extra bandwidth/volum
 //			'tooltip' => $this->html->tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
 			// various aspects of the geometry or style
