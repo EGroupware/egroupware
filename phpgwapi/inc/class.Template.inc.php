@@ -357,7 +357,6 @@
 		 */
 		function filename($filename,$root='',$time=1)
 		{
-			global $phpgw_info;
 			if($root=='')
 			{
 				$root=$this->root;
@@ -379,7 +378,7 @@
 				}
 				else
 				{
-					$new_root = str_replace($phpgw_info['server']['template_set'],'default',$root);
+					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
 					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 				}
 			}
@@ -427,8 +426,6 @@
 		 */
 		function halt($msg)
 		{
-			global $phpgw;
-
 			$this->last_error = $msg;
 
 			if ($this->halt_on_error != 'no')
@@ -441,7 +438,7 @@
 				echo('<b>Halted.</b>');
 			}
 
-			$phpgw->common->phpgw_exit(True);
+			$GLOBALS['phpgw']->common->phpgw_exit(True);
 		}
 
 		/* public, override: haltmsg($msg)
