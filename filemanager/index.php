@@ -158,27 +158,6 @@ else
 $userinfo["working_id"] = $phpgw->vfs->working_id;
 $userinfo["working_lid"] = $phpgw->accounts->id2name ($userinfo["working_id"]);
 
-// WIP - make this work - replace 4 with $numoffiles, but get $numoffiles first - probably move the whole thing down below $numoffiles
-if ($download)
-{
-	for ($i = 0; $i != 4; $i++)
-	{
-		if (!$fileman[$i])
-			continue;
-
-		$download_browser = CreateObject ('phpgwapi.browser');
-		$download_browser->content_header (string_decode ($fileman[0], 1));
-		echo $phpgw->vfs->read ("$path/$fileman[0]");
-		$phpgw->common->phpgw_exit ();
-	}
-}
-
-if ($op == "view" && $file)
-{
-	echo $phpgw->vfs->read ($file);
-	$phpgw->common->phpgw_exit ();
-}
-
 ###
 # If their home directory doesn't exist, we create it
 # Same for group directories
@@ -262,6 +241,28 @@ else
 
 	while ($files_array[] = db_fetch_array ($files_query))
 		;
+}
+
+if ($download)
+{
+	for ($i = 0; $i != $numoffiles; $i++)
+	{
+		if (!$fileman[$i])
+		{
+			continue;
+		}
+
+		$download_browser = CreateObject ('phpgwapi.browser');
+		$download_browser->content_header (string_decode ($fileman[$i], 1));
+		echo $phpgw->vfs->read (string_decode (stripslashes ($fileman[$i]), 1));
+		$phpgw->common->phpgw_exit ();
+	}
+}
+
+if ($op == "view" && $file)
+{
+	echo $phpgw->vfs->read ($file);
+	$phpgw->common->phpgw_exit ();
 }
 
 ###
@@ -457,13 +458,23 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 						html_image ("images/folder.gif", "Folder");		
 						html_link ("$appname/index.php?path=$path$dispsep$files[name]", $files["name"]);
 	                                }
-        	                        elseif (isset ($filesdir))
-					{
-						html_link ("$filesdir$pwd/$files[name]", $files["name"]);
-					}
 					else
 					{
-						html_link ("$appname/index.php?op=view&file=$files[name]&path=$path", $files["name"], 0, 1, 0, "_new");
+						if ($settings["viewonserver"] && isset ($filesdir))
+						{
+							$clickview = "$filesdir$pwd/$files[name]";
+						}
+						else
+						{
+							$clickview = "$appname/index.php?op=view&file=$files[name]&path=$path";
+						}
+
+	        	                        if ($settings["viewinnewwin"])
+						{
+							$target = "_new";
+						}
+
+						html_link ($clickview, $files["name"], 0, 1, 0, $target);
 					}
 	                        }
 
