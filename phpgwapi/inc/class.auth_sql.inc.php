@@ -59,20 +59,7 @@
 						}
 						if($this->db->f('account_pwd'))
 						{
-							/* Start with the first char after {SHA} */
-							$hash = base64_decode(substr($this->db->f('account_pwd'),5));
-							$new_hash = mhash(MHASH_SHA1, $passwd);
-//							echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);
-
-							if(strcmp($hash,$new_hash) == 0)
-							{
-								$this->previous_login = $this->db->f('account_lastlogin');
-								return True;
-							}
-							else
-							{
-								return False;
-							}
+							return $this->sha_compare($passwd,$this->db->f('account_pwd'));
 						}
 						break;
 					case 'ssha':
@@ -90,24 +77,7 @@
 						}
 						if($this->db->f('account_pwd'))
 						{
-							/* Start with the first char after {SSHA} */
-							$hash = base64_decode(substr($this->db->f('account_pwd'), 6));
-
-							// SHA-1 hashes are 160 bits long
-							$orig_hash = substr($hash, 0, 20);
-							$salt = substr($hash, 20);
-							$new_hash = mhash(MHASH_SHA1, $passwd . $salt);
-//							echo '<br>  DB: ' . base64_encode($orig_hash) . '<br>FORM: ' . base64_encode($new_hash);exit;
-
-							if(strcmp($orig_hash,$new_hash) == 0)
-							{
-								$this->previous_login = $this->db->f('account_lastlogin');
-								return True;
-							}
-							else
-							{
-								return False;
-							}
+							return $this->ssha_compare($passwd,$this->db->f('account_pwd'));
 						}
 						break;
 					case 'md5_crypt':
@@ -128,29 +98,7 @@
 						}
 						if($this->db->f('account_pwd'))
 						{
-							$saltlen = array(
-								'blowfish_crypt' => 16,
-								'md5_crypt' => 12,
-								'ext_crypt' => 9,
-								'crypt' => 2
-							);
-							$hash = $this->db->f('account_pwd');
-
-							// PHP's crypt(): salt + hash
-							// notice: "The encryption type is triggered by the salt argument."
-							$salt = substr($hash, 0, (int)$saltlen[$type]);
-							$new_hash = crypt($passwd, $salt);
-//							echo "$hash<br>" . $new_hash;
-
-							if(strcmp($hash,$new_hash) == 0)
-							{
-								$this->previous_login = $this->db->f('account_lastlogin');
-								return True;
-							}
-							else
-							{
-								return False;
-							}
+							return $this->crypt_compare($passwd,$this->db->f('account_pwd'),$type);
 						}
 						break;
 					case 'md5':
@@ -212,15 +160,16 @@
 
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
+			$admin = True;
 			// Don't allow password changes for other accounts when using XML-RPC
 			if(!$account_id || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
 			{
+				$admin = False;
 				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			$encrypted_passwd = $this->encrypt_sql($new_passwd);
-			echo 'old: ' . $old_passwd . 'new: ' . $new_passwd . ' ' . $account_id;
-			echo $encrypted_passwd;exit;
 
+			/* Grab configured type, or default to md5() (old method) */
 			$type = @$GLOBALS['phpgw_info']['server']['sql_encryption_type']
 				? strtolower($GLOBALS['phpgw_info']['server']['sql_encryption_type'])
 				: 'md5';
@@ -233,28 +182,20 @@
 					$this->db->next_record();
 					if($this->db->f('account_pwd'))
 					{
-						/* Start with the first char after {SHA} */
-						$hash = base64_decode(substr($this->db->f('account_pwd'),5));
-						$new_hash = mhash(MHASH_SHA1, $old_passwd);
-						if(strcmp($orig_hash,$new_hash) == 0)
+						if(!$admin)
 						{
-							/* old password ok */
-							$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
-								. "account_lastpwd_change='" . time()
-								. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
-							$this->db->next_record();
-							if($this->db->affected_rows())
-							{
-								$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-								return $encrypted_passwd;
-							}
-							else
+							/* Check the old_passwd to make sure this is legal */
+							if(!$this->sha_compare($old_passwd,$this->db->f('account_pwd')))
 							{
 								return False;
 							}
 						}
+						/* old password ok, or admin called the function from
+						 * the admin application (no old passwd available).
+						 */
+						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
 					}
-					break;
+					return False;
 				case 'ssha':
 					$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
 						. "' AND " // . " account_type='u' AND "
@@ -262,32 +203,20 @@
 					$this->db->next_record();
 					if($this->db->f('account_pwd'))
 					{
-						/* Start with the first char after {SSHA} */
-						$hash = base64_decode(substr($this->db->f('account_pwd'), 6));
-
-						// SHA-1 hashes are 160 bits long
-						$orig_hash = substr($hash, 0, 20);
-						$salt = substr($hash, 20);
-						$new_hash = mhash(MHASH_SHA1, $old_passwd . $salt);
-						if(strcmp($orig_hash,$new_hash) == 0)
+						if(!$admin)
 						{
-							/* old password ok */
-							$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
-								. "account_lastpwd_change='" . time()
-								. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
-							$this->db->next_record();
-							if($this->db->affected_rows())
-							{
-								$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-								return $encrypted_passwd;
-							}
-							else
+							/* Check the old_passwd to make sure this is legal */
+							if(!$this->ssha_compare($old_passwd,$this->db->f('account_pwd')))
 							{
 								return False;
 							}
 						}
+						/* old password ok, or admin called the function from
+						 * the admin application (no old passwd available).
+						 */
+						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
 					}
-					break;
+					return False;
 				case 'crypt':
 				case 'ext_crypt':
 				case 'md5_crypt':
@@ -298,55 +227,68 @@
 					$this->db->next_record();
 					if($this->db->f('account_pwd'))
 					{
-						$saltlen = array(
-							'blowfish_crypt' => 16,
-							'md5_crypt' => 12,
-							'ext_crypt' => 9,
-							'crypt' => 2
-						);
-						$hash = $this->db->f('account_pwd');
-
-						// PHP's crypt(): salt + hash
-						// notice: "The encryption type is triggered by the salt argument."
-						$salt = substr($hash, 0, (int)$saltlen[$type]);
-						$new_hash = crypt($old_passwd, $salt);
-//						echo "$hash<br>" . $new_hash;
-
-						if(strcmp($hash,$new_hash) == 0)
+						if(!$admin)
 						{
-							/* old password ok */
-							$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
-								. "account_lastpwd_change='" . time()
-								. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
-							$this->db->next_record();
-							if($this->db->affected_rows())
-							{
-								$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
-								return $encrypted_passwd;
-							}
-							else
+							/* Check the old_passwd to make sure this is legal */
+							if(!$this->crypt_compare($old_passwd,$this->db->f('account_pwd'),$type))
 							{
 								return False;
 							}
 						}
+						/* old password ok, or admin called the function from
+						 * the admin application (no old passwd available).
+						 */
+						return $this->_update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin,__FILE__);
 					}
 					return False;
 				case 'md5':
 				default:
-					$pwd_check = " AND account_pwd='" . $GLOBALS['phpgw']->common->sql_encrypt_password($old_passwd) . "'";
+					$pwd_check = '';
+					if(!$admin)
+					{
+						$pwd_check = " AND account_pwd='" . $GLOBALS['phpgw']->common->sql_encrypt_password($old_passwd) . "'";
+					}
 					$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
 						. "account_lastpwd_change='" . time() . "' WHERE account_id='" . $account_id . "'" . $pwd_check,__LINE__,__FILE__);
 					$this->db->next_record();
 					if($this->db->affected_rows())
 					{
-						$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
+						if(!$admin)
+						{
+							$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
+						}
 						return $encrypted_passwd;
 					}
 					else
 					{
 						return False;
 					}
+			}
+		}
+
+		function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=False,$file='')
+		{
+			/* This should only be called from this file */
+			if($file != PHPGW_API_INC . SEP . 'class.auth_sql.inc.php')
+			{
+				return False;
+			}
+			$this->db->query("UPDATE phpgw_accounts SET account_pwd='" . $encrypted_passwd . "',"
+				. "account_lastpwd_change='" . time()
+				. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
+			$this->db->next_record();
+			if($this->db->affected_rows())
+			{
+				if(!$admin)
+				{
+					$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 				}
+				return $encrypted_passwd;
+			}
+			else
+			{
+				return False;
+			}
 		}
 
 		function update_lastlogin($account_id, $ip)
