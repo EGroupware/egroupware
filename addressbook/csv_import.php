@@ -124,6 +124,9 @@
 		return  $id_str;
 	}
 
+	$GLOBALS['phpgw']->preferences->read_repository();
+	echo "prefs[addressbook] = "; _debug_array($GLOBALS['phpgw_info']['user']['preferences']['addressbook']);
+
 	switch ($action)
 	{
 		case '':	// Start, ask Filename
@@ -139,12 +142,12 @@
 			break;
 
 		case 'download':
-			$pref_file = '/tmp/csv_import_addrbook.php';
-			if (is_readable($pref_file) && ($prefs = fopen($pref_file,'r')))
+			$GLOBALS['phpgw']->preferences->read_repository();
+			$defaults = $GLOBALS['phpgw_info']['user']['preferences']['addressbook']['cvs_import'];
+			if (!is_array($defaults))
 			{
-				eval("fread\(\$prefs,8000\);");
-				// echo "<p>defaults = array".dump_array($defaults)."</p>\n";
-			}		
+				$defaults = array();
+			}
 			$GLOBALS['phpgw']->template->set_var('lang_csv_fieldname',lang('CSV-Fieldname'));
 			$GLOBALS['phpgw']->template->set_var('lang_addr_fieldname',lang('Addressbook-Fieldname'));
 			$GLOBALS['phpgw']->template->set_var('lang_translation',lang("Translation").' <a href="#help">'.lang('help').'</a>');
@@ -152,8 +155,7 @@
 			$GLOBALS['phpgw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
 			$GLOBALS['phpgw']->template->parse('fheaderhandle','fheader');
 			$hiddenvars .= '<input type="hidden" name="action" value="import">'."\n"
-				. '<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n"
-				. '<input type="hidden" name="pref_file" value="'.$pref_file."\">\n";
+				. '<input type="hidden" name="fieldsep" value="'.$fieldsep."\">\n";
 
 			$addr_names = $GLOBALS['phpgw']->contacts->stock_contact_fields + array(
 				'cat_id' => 'Categories: @cat_id(Cat1,Cat2)',
@@ -176,8 +178,8 @@
 			}
 			$csv_fields = fgetcsv($fp,8000,$fieldsep);
 			$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
-			$csv_fields[] = 'no CSV 2'; 
-			$csv_fields[] = 'no CSV 3'; 
+			$csv_fields[] = 'no CSV 2';
+			$csv_fields[] = 'no CSV 3';
 			while (list($csv_idx,$csv_field) = each($csv_fields))
 			{
 				$GLOBALS['phpgw']->template->set_var('csv_field',$csv_field);
@@ -241,28 +243,26 @@
 		case 'import':
 			$fp=fopen($csvfile,"r");
 			$csv_fields = fgetcsv($fp,8000,$fieldsep);
+			$csv_fields[] = 'no CSV 1'; 						// eg. for static assignments
+			$csv_fields[] = 'no CSV 2';
+			$csv_fields[] = 'no CSV 3';
 
 			$addr_fields = array_diff($addr_fields,array( '' ));	// throw away empty / not assigned entrys
 
-			if ($pref_file)
-			{
-				// echo "writing pref_file ...<p>";
-				if (file_exists($pref_file))
+			$defaults = array();
+			while (list($csv_idx,$addr) = each($addr_fields))
+			{	// convert $trans[$csv_idx] into array of pattern => value
+				$defaults[$csv_fields[$csv_idx]] = $addr;
+				if ($trans[$csv_idx])
 				{
-					rename($pref_file,$pref_file.'.old');
+					$defaults[$csv_fields[$csv_idx]] .= $PSep.$trans[$csv_idx];
 				}
-				$pref = fopen($pref_file,'w');
-				while (list($csv_idx,$addr) = each($addr_fields))
-				{	// convert $trans[$csv_idx] into array of pattern => value
-					$defaults[$csv_fields[$csv_idx]] = $addr;
-					if ($trans[$csv_idx])
-					{
-						$defaults[$csv_fields[$csv_idx]] .= $PSep.$trans[$csv_idx];
-					}
-				}
-				fwrite($pref,'$defaults = array'.dump_array( $defaults ).';');
-				fclose($pref);
 			}
+
+			$GLOBALS['phpgw']->preferences->read_repository();
+			$GLOBALS['phpgw']->preferences->add('addressbook','cvs_import',$defaults);
+			$GLOBALS['phpgw']->preferences->save_repository(True);
+
 			$log = "<table border=1>\n\t<tr><td>#</td>\n";
 
 			reset($addr_fields);
