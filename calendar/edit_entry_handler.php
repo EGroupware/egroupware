@@ -1,3 +1,5 @@
+
+<?php_track_vars?>
 <?php
   /**************************************************************************\
   * phpGroupWare - Calendar                                                  *
@@ -44,14 +46,9 @@
   }
 
   if(!isset($readsess)) {
-    $groups = Array();
     for(reset($cal);$key=key($cal);next($cal)) {
       $data = $cal[$key];
-      if($data=="participants") {
-	$cal_info->set("participants[]",$data);
-      } else {
-	$cal_info->set($key,$data);
-      }
+      $cal_info->set($key,$data);
     }
 
     $participating = False;
@@ -72,7 +69,8 @@
     $cal_info->datetime = mktime($cal_info->hour,$cal_info->minute,0,$cal_info->month,$cal_info->day,$cal_info->year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
     $cal_info->edatetime = mktime($cal_info->end_hour,$cal_info->end_minute,0,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
     $cal_info->rpt_end = mktime(12,0,0,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
-    $phpgw->common->appsession($cal_info);
+
+    $cal_info = $phpgw->common->appsession($cal_info);
     $datetime_check = validate($cal_info);
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       if ($cal_info->hour >= 12) {
