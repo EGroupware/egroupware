@@ -39,7 +39,7 @@
 	{
 		$setup_tpl->set_file(array(
 			'sqlarr'   => 'arraydl.tpl'
-		));	
+		));
 		$setup_tpl->set_var('idstring',"/* \$Id" . ": tables_current.inc.php" . ",v 1.0" . " 2001/05/28 08:42:04 username " . "Exp \$ */");
 		$setup_tpl->set_block('sqlarr','sqlheader','sqlheader');
 		$setup_tpl->set_block('sqlarr','sqlbody','sqlbody');

@@ -99,9 +99,9 @@
 
 	if ($DEBUG) { echo 'Stage: ' . $GLOBALS['phpgw_info']['setup']['stage']['db']; }
 	// begin DEBUG code
-	//$GLOBALS['phpgw_info']['setup']['stage']['db'] = 0;	
+	//$GLOBALS['phpgw_info']['setup']['stage']['db'] = 0;
 	//$action = 'Upgrade';
-	// end DEBUG code	
+	// end DEBUG code
 
 	switch($HTTP_POST_VARS['action'])
 	{

@@ -275,10 +275,10 @@
 				echo 'sample configuration not found. using built in defaults<br>' . "\n";
 				$phpgw_info['server']['server_root'] = '/path/to/phpgroupware';
 				$phpgw_info['server']['include_root'] = '/path/to/phpgroupware';
-					/* This is the basic include needed on each page for phpGroupWare application compliance */
+				/* This is the basic include needed on each page for phpGroupWare application compliance */
 				$phpgw_info['flags']['htmlcompliant'] = True;
-	
-					/* These are the settings for the database system */
+
+				/* These are the settings for the database system */
 				$phpgw_info['server']['db_host'] = 'localhost';
 				$phpgw_info['server']['db_name'] = 'phpgroupware';
 				$phpgw_info['server']['db_user'] = 'phpgroupware';
@@ -352,8 +352,8 @@
         <select type="checkbox" name="setting[db_persistent]">
         <option value="True"<?php echo ($phpgw_info['server']['db_persistent']?' selected':''); ?>>True</option>
         <option value="False"<?php echo (! $phpgw_info['server']['db_persistent']?' selected':''); ?>>False</option>
-		  </select></td>
-		  <td>Do you want persistent connections (higher performance, but eats memory)</td></tr>
+        </select></td>
+        <td>Do you want persistent connections (higher performance, but eats memory)</td></tr>
 
         <tr><td><b>Sessions Type</b><br><select name="setting[sessions_type]">
       <?php
@@ -373,8 +373,6 @@
 ?>
         </select>
         </td><td>What sessions management type do you want to use (PHP4 session management often performs better)?</td></tr>
-
-			
         <tr><td colspan=2><b>Enable MCrypt</b><br>
         <select name="setting[enable_mcrypt]">
         <?php if($phpgw_info["server"]["mcrypt_enabled"] == True) { ?>
