@@ -659,7 +659,7 @@
 				ACCEPTED	=> 'A'
 			);
 
-			$this->db->query($this->user_table,array(
+			$this->db->update($this->user_table,array(
 				'cal_status'	=> $status_code_short[$status],
 			),array(
 				'cal_id'		=> $id,
