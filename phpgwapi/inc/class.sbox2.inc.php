@@ -162,7 +162,7 @@
 		 */
 		 
 		function getProject( $name,$id_name,$query_name,$title='' ) {
-			echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
+			// echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
 			global $phpgw;
 			
 			if ($id_name || $query_name) {
@@ -212,7 +212,7 @@
         	return $out;
      	}
 
-		function accountInfo($id,$account_data=0) {
+		function accountInfo($id,$account_data=0,$longname=0) {
 			global $phpgw;
 			
 			if (!$id) return '&nbsp;';
@@ -223,7 +223,7 @@
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
-			if ($this->longnames)
+			if ($longnames)
 			   return $account_data['firstname'].' '.$account_data['lastname'];
 				
 			return $account_data['account_lid'];	
@@ -236,7 +236,7 @@
 		 *						$id2text($id,$acct_data)	fkt that translates account_id $id in text to show
 		 */
 		 
-		function getAccount($name,$id) {
+		function getAccount($name,$id,$longnames=0) {
 			global $phpgw;
 			$accounts = createobject('phpgwapi.accounts');
 			$accounts->db = $phpgw->db;
@@ -244,7 +244,7 @@
 			
 			$aarr = Array(lang('not assigned'));
 			while ($a = current($accs)) {
-				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a);
+				$aarr[$a['account_id']] = $this->accountInfo($a['account_id'],$a,$longnames);
 				next($accs);
 			}
 			return $this->getArrayItem($name,$selected,$aarr,1);			
