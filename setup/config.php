@@ -85,8 +85,12 @@
 
 		while (list($setting,$value) = @each($newsettings))
 		{
-	//		echo '<br>Updating: ' . $setting . '=' . $value;
-			@$phpgw_setup->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
+			/*echo '<br>Updating: ' . $setting . '=' . $value; */
+			/* Don't erase passwords, since we also do not print them below */
+			if(!ereg('passwd',$value) && !ereg('password',$value) && !ereg('root_pw',$value))
+			{
+				@$phpgw_setup->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
+			}
 			if($value)
 			{
 				$phpgw_setup->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) VALUES ('phpgwapi','" . $phpgw_setup->db->db_addslashes($setting)
