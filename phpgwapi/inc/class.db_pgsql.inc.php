@@ -354,7 +354,7 @@
 			$res   = array();
 
 			$this->connect();
-			$id = pg_exec($this->Link_ID, "select * from $table");
+			$id = pg_exec($this->Link_ID, "select * from $table where false");
 			if ($id < 0)
 			{
 				$this->Error = pg_ErrorMessage($id);
@@ -515,18 +515,13 @@
 			{
 				$this->User = $adminname;
 				$this->Password = $adminpasswd;
+				$this->Database = "template1";
 			}
+			$this->disconnect();
+			$outval = $this->query("CREATE DATABASE $currentDatabase;");
+			$this->disconnect();
 
-			if (! $this->Host)
-			{
-				system('createdb ' . $currentDatabase, $outval);
-			}
-			else
-			{
-				system('createdb -h ' . $this->Host . ' ' . $currentDatabase, $outval);
-			}
-
-			if($outval != 0) 
+			if(!$outval)
 			{
 				/* either the rights r not available or the postmaster is not running .... */
 				echo 'database creation failure <BR>';
@@ -537,7 +532,6 @@
 			$this->Password = $currentPassword;
 			$this->Database = $currentDatabase;
 			$this->connect();
-			//return $return;
 		}
 	}
 
