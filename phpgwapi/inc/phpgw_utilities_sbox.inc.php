@@ -11,7 +11,71 @@ class sbox {
 	
 	var $monthnames = array ("", "january", "February", "March", "April", "May", "June", "July",
 									"August", "September", "October", "November", "December");
-	
+
+   function hour_formated_text($name, $selected = 0)
+   {
+      global $phpgw;
+
+      $s = '<select name="' . $name . '">';
+      $t_s[$selected] = " selected";
+	   for ($i=0; $i<24; $i++) {
+	       $s .= '<option value="' . $i . '"' . $t_s[$i] . '>'
+  		      . $phpgw->common->formattime($i+1,"00") . '</option>';
+  		  $s .= "\n";
+		}
+		$s .= "</select>";
+		return $s;
+   }
+
+   function hour_text($name, $selected = 0)
+   {
+      global $phpgw;
+
+      $s = '<select name="' . $name . '">';
+      $t_s[$selected] = " selected";
+	   for ($i=1; $i<13; $i++) {
+	       $s .= '<option value="' . $i . '"' . $t_s[$i] . '>'
+  		      . $i . '</option>';
+  		  $s .= "\n";
+		}
+		$s .= "</select>";
+		return $s;
+   }
+
+   // I would like to add a increment feature
+   function sec_minute_text($name, $selected = 0)
+   {
+      $s = '<select name="' . $name . '">';
+      $t_s[$selected] = " selected";
+	   for ($i=0; $i<60; $i++) {
+	       $s .= '<option value="' . $i . '"' . $t_s[sprintf("%02d",$i)] . '>' . sprintf("%02d",$i) . '</option>';
+  		  $s .= "\n";
+		}
+		$s .= "</select>";
+		return $s;
+   }
+   
+   function ap_text($name,$selected)
+   {
+      $selected = strtolower($selected);
+      $t[$selected] = " selected";
+      $s = '<select name="' . $name . '">'
+         . ' <option value="am"' . $t["am"] . '>am</option>'
+         . ' <option value="pm"' . $t["pm"] . '>pm</option>';
+		$s .= "</select>";
+		return $s;
+   }
+
+   function full_time($hour_name,$hour_selected,$min_name,$min_selected,$sec_name,$sec_selected,$ap_name,$ap_selected)
+   {
+      // This needs to be changed to support there time format preferences
+      $s = $this->hour_text($hour_name,$hour_selected)
+         . $this->sec_minute_text($min_name,$min_selected)
+         . $this->sec_minute_text($sec_name,$sec_selected)
+         . $this->ap_text($ap_name,$ap_selected);
+      return $s;
+   }
+
 	function getMonthText($name, $selected=0)
 	{
 		$out = "<select name=\"$name\">\n";

@@ -18,11 +18,14 @@
     exit;
   } unset($d1);
 
+  // Note: We should add a way to force the developer to say which ones to use. (jengo)
+
   include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_rssparse.inc.php");
   include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_clientsniffer.inc.php");
   include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_http.inc.php");
   include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_matrixview.inc.php");
   include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_menutree.inc.php");
+  include($phpgw_info["server"]["api_inc"] . "/phpgw_utilities_sbox.inc.php");
 
   class utilities
   {
@@ -31,6 +34,7 @@
     var $http;
     var $matrixview;
     var $menutree;
+    var $sbox;
 
     function utilities_()
     {
@@ -39,6 +43,7 @@
       $this->http             = new http;
       $this->matrixview       = new matrixview;
       $this->menutree         = new menutree;
+      $this->sbox             = new sbox;
     }
   }
 ?>
