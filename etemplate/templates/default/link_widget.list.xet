@@ -1,19 +1,21 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="etemplate.link_widget.list" template="" lang="" group="" version="0.9.15.001" class="whiteback">
+	<grid id="etemplate.link_widget.list" template="" lang="" group="" version="0.9.15.002" class="whiteback">
 		<columns>
 			<column/>
 			<column/>
 			<column/>
 			<column/>
+			<column disabled="!@primary"/>
 		</columns>
 		<rows>
 			<row class="nmr">
 				<description id="${row}[app]"/>
-				<description no_lang="1" id="${row}[title]"/>
+				<description options=",@${row}[view]" no_lang="1" id="${row}[title]" statustext="view this linked entry in its application"/>
 				<description no_lang="1" id="${row}[remark]"/>
 				<button image="delete.gif" label="Unlink" id="unlink[$row_cont[link_id]]" statustext="Remove this link (not the entry itself)"/>
+				<radio options="$row_cont[link_id]" id="primary" statustext="Select a primary contact, to show in the list"/>
 			</row>
 		</rows>
 		<styles>
