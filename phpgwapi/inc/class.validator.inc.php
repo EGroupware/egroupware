@@ -7,25 +7,15 @@
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
   * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  *  This program is Free Software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
   \**************************************************************************/
 
-	/* $Id$ */
+ /* $Id$ */
 
-	/*
-	The code that used to be here was non-free code from www.thewebmasters.net
-	This file has been stubbed and will soon be removed from phpGW 
-	*/
+  //NOTE This class still needs to be documented and the stubbed methods fixed!
 
 	class validator
 	{
@@ -116,19 +106,81 @@
 			echo '<pre>';
 		}
 
-		function is_email ($Address='')
+		function is_email ($address='')
 		{
-			$this->nonfree_call();
+			list($user, $domain) = explode('@', $address);
+			
+			if(!($user && $domain))
+			{
+				return false;
+			}
+			
+			if(!$this->has_space($user) && $this->is_host($domain))
+			{
+				return true;
+			}
 		}
 
-		function is_url ($Url='')
+		function is_url ($url='')
 		{
-			$this->nonfree_call();
+			//echo "Checking $url<br>";
+			$uris = array(
+				'ftp'	=> True,
+				'https'	=> True,
+				'http'	=> True, 
+				);
+			$url_elements = parse_url($url);
+			
+			//echo '<pre>';
+			//print_r($url_elements);
+			//echo '</pre>';
+
+			if(!is_array($url_elements))
+			{
+				return false;
+			}
+
+			//echo 'Scheme ' . $url_elements['scheme'];
+			if(@$uris[$url_elements['scheme']])
+			{
+				//echo ' is valid<br>host ' . $url_elements['host'];
+				if( eregi("[a-z]", $url_elements['host']) )
+				{
+					//echo ' is name<br>';
+					return $this->is_hostname($url_elements['host']);
+				}
+				else
+				{
+					//echo ' is ip<br>';
+					return $this->is_ipaddress($url_elements['host']);
+				}
+			}
+			else
+			{
+				//echo ' is invalid<br>';
+				return $false;
+			}
+			
 		}
 
-		function url_responds ($Url='')
+		//the url may be valid, but this method can't test all types
+		function url_responds ($url='')
 		{
-			$this->nonfree_call();
+			if(!$this->is_url($url))
+			{
+				return false;
+			}
+
+			$fp=@fopen($url);
+			if($fp)
+			{
+				fclose($fp);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		function is_phone ($Phone='')
@@ -138,7 +190,26 @@
 
 		function is_hostname ($hostname='')
 		{
-			$this->nonfree_call();
+			//echo "Checking $hostname<br>";
+			$segs = explode('.', $hostname);
+			if(is_array($segs))
+			{
+				foreach($segs as $seg)
+				{
+					//echo "Checking $seg<br>";
+					if(eregi("[a-z0-9\-]{0,62}",$seg))
+					{
+						$return = True;	
+					}
+
+					if(!$return)
+					{
+						return False;
+					}
+				}
+				return True;
+			}
+			return False;
 		}
 
 		function is_bigfour ($tld)
@@ -148,17 +219,51 @@
 
 		function is_host ($hostname='', $type='ANY')
 		{
-			$this->nonfree_call();
+			if($this->is_hostname($hostname))
+			{
+				return checkdnsrr($hostname, $type);
+			}
+			else
+			{
+				return false;
+			}
+			
 		}
 
-		function is_ipaddress ($IP='')
+		function is_ipaddress ($ip='')
 		{
-			$this->nonfree_call();
+			if(strlen($ip) <= 15)
+			{
+				$segs = explode('.', $ip);
+				if(count($segs) != 4)
+				{
+					return false;
+				}
+				foreach($segs as $seg)
+				{
+					if( ($seg < 0) || ($seg >= 255) )
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
-		function ip_resolves ($IP='')
+		function ip_resolves ($ip='')
 		{
-			$this->nonfree_call();
+			if($this->is_ipaddress($ip))
+			{
+				return !strcmp($hostname, gethostbyaddr($ip));
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		function browser_gen ()
