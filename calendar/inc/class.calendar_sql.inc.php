@@ -14,7 +14,8 @@
 
   /* $Id$ */
 
-if ($phpgw_info['flags']['included_classes']['calendar_'] == True)
+if (isset($phpgw_info['flags']['included_classes']['calendar_']) && 
+    $phpgw_info['flags']['included_classes']['calendar_'] == True)
 {
 	return;
 }

@@ -140,7 +140,8 @@
 
 			$phpgw_info['user']['account_id'] = $this->account_id;
 			
-			if ($phpgw_info['server']['cache_phpgw_info'])
+			if (isset($phpgw_info['server']['cache_phpgw_info']) &&
+			    $phpgw_info['server']['cache_phpgw_info'])
 			{
 				$t = $this->appsession('phpgw_info_cache','phpgwapi');
 				$phpgw_info['server'] = $t['server'];

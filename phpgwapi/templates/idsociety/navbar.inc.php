@@ -25,7 +25,8 @@
 		$tpl->set_var('img_root_roll',PHPGW_IMAGES_DIR . '/rollover');
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
 
-#  echo '<pre>'; print_r($phpgw_info['navbar']); echo '</pre>';  
+#  echo '<pre>'; print_r($phpgw_info['navbar']); echo '</pre>';
+		$applications = '';
 		while ($app = each($phpgw_info['navbar']))
 		{
 			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && ! ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
@@ -38,8 +39,7 @@
 
 // onMouseOver="two.src='rollover/admin_over.gif'" onMouseOut="two.src='images/admin.gif'"><img src="images/admin.gif" border="0" name="two"
 				$applications .= '<tr><td><a href="' . $app[1]['url'] . '"';
-				if (isset($phpgw_info['flags']['navbar_target']) &&
-				    $phpgw_info['flags']['navbar_target'])
+				if (isset($phpgw_info['flags']['navbar_target']))
 				{
 					$applications .= ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
 				}
@@ -118,7 +118,10 @@
 */
 
 		// If the application has a header include, we now include it
-		if ($phpgw_info['flags']['noheader'] && ! $phpgw_info['flags']['noappheader'])
+		if ((isset($phpgw_info['flags']['noheader']) && 
+		     $phpgw_info['flags']['noheader']) && 
+		    (!isset($phpgw_info['flags']['noappheader']) ||
+		     !$phpgw_info['flags']['noappheader']))
 		{
 
 		}
