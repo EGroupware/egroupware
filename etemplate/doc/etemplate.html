@@ -37,9 +37,11 @@ The eTemplates
 	<li>they are stored in an array and in serialized form in the db-table 'phpgw_etemplate'
 	<li>the dialog editor can dump all templates of an app for distribution (so they can be in the CVS too)
 	<li>they encapsulate differnt UI (User Interface) types from the app: at the moment only a HTML one is ready,
-	but a GTK one (using php-gtk, <b>running as native app under linux and win32</b>) and XUL is under development.
-	Here is a first <a href="gtk.png">screenshot of the DB-Tools</a> as native Linux Application.
+	but a GTK one (using <a href="http://gtk.php.net" target=_blank>php-gtk</a>, <b>running as native app under linux and
+	win32</b>) and XUL is under development.<br>
+	Here is a first screenshot of the DB-Tools as native Linux Application:
 </ul>
+<img src="gtk.png">
 <hr>
 <h1>Tutorial / Example: a simple media database</h1>
 <p>As an example we will run now through the necessary steps to create a simple media database using eTemplates and
@@ -75,19 +77,19 @@ et_media				<span>that has to be identical to our app-name</span>
 <p>That files contains the necessary information for setup to install the app. </p>
 <pre>
 &lt;?php
-	$setup_info['et_media']['name']      = 'et_media';
-	$setup_info['et_media']['title']     = 'eT-Media';
-	$setup_info['et_media']['version']   = '0.9.15.001';
-	$setup_info['et_media']['app_order'] = 100;		<span>// at the end</span>
-	$setup_info['et_media']['tables']    = array('phpgw_et_media');
-	$setup_info['et_media']['enable']    = 1;
+	$GLOBALS['setup_info']['et_media']['name']      = 'et_media';
+	$GLOBALS['setup_info']['et_media']['title']     = 'eT-Media';
+	$GLOBALS['setup_info']['et_media']['version']   = '0.9.15.001';
+	$GLOBALS['setup_info']['et_media']['app_order'] = 100;		<span>// at the end</span>
+	$GLOBALS['setup_info']['et_media']['tables']    = array('phpgw_et_media');
+	$GLOBALS['setup_info']['et_media']['enable']    = 1;
 
 	<span>/* Dependencies for this app to work */</span>
-	$setup_info['et_media']['depends'][] = array(
+	$GLOBALS['setup_info']['et_media']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
-	$setup_info['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
+	$GLOBALS['setup_info']['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
 		 'appname' => 'etemplate',
 		 'versions' => Array('0.9.13','0.9.14','0.9.15')
 	);
