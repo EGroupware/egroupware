@@ -84,7 +84,11 @@
 
 			while(list($text,$url) = each($file))
 			{
-				section_item($url,lang($text));
+				// If user doesn't have application configuration access, then don't show the configuration links
+				if (!preg_match('/admin\.uiconfig/', $url) || !$GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
+				{
+					section_item($url,lang($text));
+				}
 			}
 			section_end();
 		}
