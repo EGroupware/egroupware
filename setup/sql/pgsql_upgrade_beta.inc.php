@@ -1866,11 +1866,11 @@
 	{
 		global $phpgw_info,$phpgw_setup;
 
-                $phpgw_setup->db->query("create table phpgw_temp as select * from notes",__LINE__,__FILE__);
+                $phpgw_setup->db->query("create table phpgw_temp as select * from phpgw_notes",__LINE__,__FILE__);
 
-                $phpgw_setup->db->query("drop sequence notes_note_id_seq",__LINE__,__FILE__);
+                $phpgw_setup->db->query("drop sequence phpgw_notes_note_id_seq",__LINE__,__FILE__);
 
-                $phpgw_setup->db->query("drop table notes",__LINE__,__FILE__);
+                $phpgw_setup->db->query("drop table phpgw_notes",__LINE__,__FILE__);
 
                 $sql = "CREATE TABLE phpgw_notes (
                         note_id        	serial,
@@ -1910,7 +1910,7 @@
 			title		varchar(80) NOT NULL,
 			desription	text
 		)";
-		$phpgw_setup->db->query($sql);
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
 		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='1' WHERE cal_access='public'",__LINE__,__FILE__);
 		$phpgw_setup->db->query("UPDATE calendar_entry SET cal_access='0' WHERE cal_access='private'",__LINE__,__FILE__);
@@ -1935,7 +1935,7 @@
 		}
 
 		$phpgw_setup->db->query("drop table calendar_entry",__LINE__,__FILE__);
-		$phpgw_setup->db->query("drop sequence calender_entry_cal_id_seq",__LINE__,__FILE__);
+//		$phpgw_setup->db->query("drop sequence calender_entry_cal_id_seq",__LINE__,__FILE__);
 
 		$sql = "CREATE TABLE phpgw_cal_repeats (
 			cal_id		int DEFAULT 0 NOT NULL,
@@ -1945,7 +1945,7 @@
 			recur_interval	int DEFAULT 1,
 			recur_data		int
 		)";
-		$phpgw_setup->db->query($sql);
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
 		$phpgw_setup->db->query("SELECT * FROM calendar_entry_repeats",__LINE__,__FILE__);
 		while($phpgw_setup->db->next_record())
@@ -1974,7 +1974,7 @@
 			cal_login    int DEFAULT 0 NOT NULL,
 			cal_status   char(1) DEFAULT 'A'
 		)";
-		$phpgw_setup->db->query($sql);  
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);  
 
 		$phpgw_setup->db->query("SELECT * FROM calendar_entry_user",__LINE__,__FILE__);
 		while($phpgw_setup->db->next_record())
