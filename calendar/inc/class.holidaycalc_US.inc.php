@@ -27,7 +27,7 @@ class holidaycalc {
 			}
 			else
 			{
-				$ld = $datetime->days_in_month($holiday['month'],$this->year);
+				$ld = $datetime->days_in_month($holiday['month'],$year);
 				$dow = $datetime->day_of_week($year,$holiday['month'],$ld);
 				$day = $ld - ($dow - $holiday['dow']) % 7 ;
 			}
