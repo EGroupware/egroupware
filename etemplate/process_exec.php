@@ -13,7 +13,7 @@
 	/* $Id$ */
 
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp'	=> $GLOBALS['HTTP_POST_VARS']['app'],
+		'currentapp'	=> $GLOBALS['HTTP_POST_VARS']['etemplate_exec_app'],
 		'noheader'		=> True,
 		'nonavbar'		=> True
 	);
