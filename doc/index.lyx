@@ -32,7 +32,7 @@
 
 
 \series bold 
-phpGroupWare Docs V0.06
+phpGroupWare Docs V0.07
 \layout Author
 
 
@@ -48,6 +48,14 @@ Dan Kuykendall
 \layout Standard
 
 $Id$
+\layout Standard
+
+
+\begin_inset LatexCommand \tableofcontents{}
+
+\end_inset 
+
+
 \layout Section*
 
 Dedication 
@@ -110,6 +118,48 @@ You will need PHP compiled and installed on your system.
  these steps.
  Windows is supported, but there is no documentation for it currently.
  
+\layout Standard
+
+In order to check if you have php installed create the file with your favorite
+ text editor named test.php in your webserver root directory:
+\layout Standard
+
+
+\family typewriter 
+<? phpinfo(); ?>
+\layout Standard
+
+Then point your browser to http://yourserverroot/test.php.
+ You should get a very detailed page describing various options in php.
+\layout Standard
+
+If you need to to compile php and apache the following links are good starting
+ points: 
+\layout Standard
+
+A set of scripts to compile and install various modules with apache: 
+\begin_inset LatexCommand \htmlurl{http://www.apachetoolbox.com}
+
+\end_inset 
+
+
+\layout Standard
+
+The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of this writing):
+ 
+\begin_inset LatexCommand \htmlurl{http://www.linuxhelp.net/guides/}
+
+\end_inset 
+
+
+\layout Standard
+
+The Soothing Seemless Setup of Apache, SSL, MySQL, and PHP: 
+\begin_inset LatexCommand \htmlurl{http://www.devshed.com/Server_Side/PHP/SoothinglySeamless}
+
+\end_inset 
+
+
 \layout Subsection
 
 Tested Systems 
@@ -263,6 +313,10 @@ You may have to get required permissions to do this.
 \layout Subsection
 
 Setup the database
+\layout Standard
+
+You need to create empty databases for the setup app to create the tables
+ in.
 \layout Subsubsection
 
 Mysql (assuming an existing and working Mysql install)
@@ -311,10 +365,11 @@ To create the required database in Postgresql make sure postgresql is started:
 Mandrake or Redhat : /etc/rc.d/init.d/postgresql start
 \layout Itemize
 
-others: pg_ctl -D /path/to/database/dir -p /path/to/postmaster start
+others: /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl -D
+ /var/lib/pgsq/data start (adjust for your install dirs)
 \layout Itemize
 
-create the empty database: createdb phpgroupware
+create the empty database: /usr/bin/createdb phpgroupware
 \layout Standard
 
 For more detailed user documentation on Postgresql see their website : 
@@ -328,8 +383,8 @@ For more detailed user documentation on Postgresql see their website :
 Setup / Configure phpGroupWare 
 \layout Standard
 
-Point your browser to phpgroupware/setup/ which will create (or upgrade)
- the header.inc.php and database tables.
+Point your browser to http://yourserverroot/phpgroupware/setup/ which will
+ create (or upgrade) the header.inc.php and database tables.
  Setup will attempt to determine what version of the phpGroupWare databases
  and header.inc.php you have installed, and upgrade to the most recent version.
  
@@ -339,8 +394,8 @@ Point your browser to phpgroupware/setup/ which will create (or upgrade)
 \series bold 
 Note: 
 \series default 
- You are advised to backup your existing alpha database before running the
- setup script to avoid problems!
+ You are advised to backup your existing database before running the setup
+ script to avoid problems!
 \layout Subsection
 
 Testing the install 
@@ -613,4 +668,9 @@ v.0.05 (November 5, 2000) - gnrfan , Completely revamped according to Seek's
 
 v.0.06 (Jan 10, 2001) - Darryl VanDorp, imported to lyx source reformatted
  and touched up some sections
+\layout Standard
+
+v.0.07 (Jan 16, 2001) - Darryl VanDorp, added TOC, fixed some Postgresql setup
+ instructions, added some links to install/compilation instructions for
+ apache, php and mysql.
 \the_end

@@ -1,10 +1,12 @@
-phpGroupWare Docs V0.06
+phpGroupWare Docs V0.07
 
 Joseph Engo
 
 Dan Kuykendall  
 
 $Id$
+
+
 
  Dedication 
 
@@ -54,6 +56,27 @@ line version, the Apache module is preferred. We will assume
 that you are running on a Linux or other Unix system for
 these steps. Windows is supported, but there is no documentation
 for it currently. 
+
+In order to check if you have php installed create the file
+with your favorite text editor named test.php in your webserver
+root directory:
+
+<? phpinfo(); ?>
+
+Then point your browser to http://yourserverroot/test.php.
+You should get a very detailed page describing various options
+in php.
+
+If you need to to compile php and apache the following links
+are good starting points: 
+
+A set of scripts to compile and install various modules with
+apache: [http://www.apachetoolbox.com]
+
+The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of
+this writing): [http://www.linuxhelp.net/guides/]
+
+The Soothing Seemless Setup of Apache, SSL, MySQL, and PHP: [http://www.devshed.com/Server_Side/PHP/SoothinglySeamless]
 
 3.2 Tested Systems 
 
@@ -156,6 +179,9 @@ to write to your webserver directory.
 
 4.4 Setup the database
 
+You need to create empty databases for the setup app to create
+the tables in.
+
 4.4.1 Mysql (assuming an existing and working Mysql install)
 
 * Mandrake or Redhat: /etc/rc.d/init.d/mysqld start
@@ -183,24 +209,24 @@ is started:
 
 * Mandrake or Redhat : /etc/rc.d/init.d/postgresql start
 
-* others: pg_ctl -D /path/to/database/dir -p /path/to/postmaster
-  start
+* others: /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl
+  -D /var/lib/pgsq/data start (adjust for your install dirs)
 
-* create the empty database: createdb phpgroupware
+* create the empty database: /usr/bin/createdb phpgroupware
 
 For more detailed user documentation on Postgresql see their
 website : [http://www.postgresql.org]
 
 4.5 Setup / Configure phpGroupWare 
 
-Point your browser to phpgroupware/setup/ which will create
-(or upgrade) the header.inc.php and database tables. Setup
-will attempt to determine what version of the phpGroupWare
-databases and header.inc.php you have installed, and upgrade
-to the most recent version. 
+Point your browser to http://yourserverroot/phpgroupware/setup/
+which will create (or upgrade) the header.inc.php and database
+tables. Setup will attempt to determine what version of
+the phpGroupWare databases and header.inc.php you have installed,
+and upgrade to the most recent version. 
 
-Note:  You are advised to backup your existing alpha database
-before running the setup script to avoid problems!
+Note:  You are advised to backup your existing database before
+running the setup script to avoid problems!
 
 4.6 Testing the install 
 
@@ -389,3 +415,7 @@ HOWTO.
 
 v.0.06 (Jan 10, 2001) - Darryl VanDorp, imported to lyx source
 reformatted and touched up some sections
+
+v.0.07 (Jan 16, 2001) - Darryl VanDorp, added TOC, fixed
+some Postgresql setup instructions, added some links to
+install/compilation instructions for apache, php and mysql.

@@ -3,11 +3,12 @@
 <html>
 <meta name="GENERATOR" content="TtH 2.86">
  
-                   
- 
-<title> \textbf{phpGroupWare Docs V0.06}</title>
+
+                      
+
+<title> \textbf{phpGroupWare Docs V0.07}</title>
     
-<h1 align="center"><b>phpGroupWare Docs V0.06</b> </h1>
+<h1 align="center"><b>phpGroupWare Docs V0.07</b> </h1>
 
 <p>
 
@@ -19,6 +20,55 @@
 
 <p>
 $Id$
+
+<p>
+
+<h1>Contents </h1>
+<a href="#tth_sEc1"
+>1&nbsp; What is phpGroupWare </a><br />
+<a href="#tth_sEc2"
+>2&nbsp; Why you should use it </a><br />
+<a href="#tth_sEc3"
+>3&nbsp; Installation</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.1"
+>3.1&nbsp; Requirements </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc3.2"
+>3.2&nbsp; Tested Systems </a><br />
+<a href="#tth_sEc4"
+>4&nbsp; Obtaining and Installing phpGroupWare </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.1"
+>4.1&nbsp; Installing from TarBall </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.2"
+>4.2&nbsp; Installing from CVS </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.3"
+>4.3&nbsp; Setting File Permissions </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.4"
+>4.4&nbsp; Setup the database</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.4.1"
+>4.4.1&nbsp; Mysql (assuming an existing and working Mysql install)</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.4.2"
+>4.4.2&nbsp; Postgresql (assuming an existing and working Postgresql install)</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.5"
+>4.5&nbsp; Setup / Configure phpGroupWare </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.6"
+>4.6&nbsp; Testing the install </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc4.7"
+>4.7&nbsp; Installing additional applications </a><br />
+<a href="#tth_sEc5"
+>5&nbsp; Trouble Shooting</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.1"
+>5.1&nbsp; It seems to hang when I try to read my mail </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.2"
+>5.2&nbsp; When I log in I see the directory listing instead of a web page </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc5.3"
+>5.3&nbsp; I get garbage that looks like code when I go to the phpGroupWare URL </a><br />
+<a href="#tth_sEc6"
+>6&nbsp; About this document</a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.1"
+>6.1&nbsp; History </a><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#tth_sEc6.2"
+>6.2&nbsp; Version History </a><br />
+ 
 
 <p>
 
@@ -80,6 +130,32 @@ module or command line version, the Apache module is preferred. We
 will assume that you are running on a Linux or other Unix system for
 these steps. Windows is supported, but there is no documentation for
 it currently. 
+
+<p>
+In order to check if you have php installed create the file with your
+favorite text editor named test.php in your webserver root directory:
+
+<p>
+<tt>&lt;? phpinfo(); ?&#62;</tt>
+
+<p>
+Then point your browser to http://yourserverroot/test.php. You should
+get a very detailed page describing various options in php.
+
+<p>
+If you need to to compile php and apache the following links are good
+starting points: 
+
+<p>
+A set of scripts to compile and install various modules with apache:
+<a href="http://www.apachetoolbox.com"><tt>http://www.apachetoolbox.com</tt></a>
+
+<p>
+The Linux Apache MySQL PHP (LAMP) Guide v2 (latest as of this writing):
+<a href="http://www.linuxhelp.net/guides/"><tt>http://www.linuxhelp.net/guides/</tt></a>
+
+<p>
+The Soothing Seemless Setup of Apache, SSL, MySQL, and PHP: <a href="http://www.devshed.com/Server_Side/PHP/SoothinglySeamless"><tt>http://www.devshed.com/Server_Side/PHP/SoothinglySeamless</tt></a>
 
 <p>
      <h3><a name="tth_sEc3.2">
@@ -226,6 +302,10 @@ webserver directory.
 4.4</a>&nbsp;&nbsp;Setup the database</h3>
 
 <p>
+You need to create empty databases for the setup app to create the
+tables in.
+
+<p>
       <h4><a name="tth_sEc4.4.1">
 4.4.1</a>&nbsp;&nbsp;Mysql (assuming an existing and working Mysql install)</h4>
 
@@ -262,9 +342,10 @@ is started:
 <ul><p>
 <li> Mandrake or Redhat : /etc/rc.d/init.d/postgresql start</li>
 <p>
-<li> others: pg_ctl -D /path/to/database/dir -p /path/to/postmaster start</li>
+<li> others: /usr/bin/postmaster -D /var/lib/pgsql/data or /usr/bin/pg_ctl
+-D /var/lib/pgsq/data start (adjust for your install dirs)</li>
 <p>
-<li> create the empty database: createdb phpgroupware</li>
+<li> create the empty database: /usr/bin/createdb phpgroupware</li>
 </ul>
 For more detailed user documentation on Postgresql see their website
 : <a href="http://www.postgresql.org"><tt>http://www.postgresql.org</tt></a>
@@ -274,14 +355,15 @@ For more detailed user documentation on Postgresql see their website
 4.5</a>&nbsp;&nbsp;Setup / Configure phpGroupWare </h3>
 
 <p>
-Point your browser to phpgroupware/setup/ which will create (or upgrade)
-the header.inc.php and database tables. Setup will attempt to determine
-what version of the phpGroupWare databases and header.inc.php you
-have installed, and upgrade to the most recent version. 
+Point your browser to http://yourserverroot/phpgroupware/setup/ which
+will create (or upgrade) the header.inc.php and database tables. Setup
+will attempt to determine what version of the phpGroupWare databases
+and header.inc.php you have installed, and upgrade to the most recent
+version. 
 
 <p>
-<b>Note:</b>  You are advised to backup your existing alpha database
-before running the setup script to avoid problems!
+<b>Note:</b>  You are advised to backup your existing database before
+running the setup script to avoid problems!
 
 <p>
      <h3><a name="tth_sEc4.6">
@@ -532,9 +614,14 @@ to Seek's idea and intregrated the Developers HOWTO.
 v.0.06 (Jan 10, 2001) - Darryl VanDorp, imported to lyx source reformatted
 and touched up some sections
 
+<p>
+v.0.07 (Jan 16, 2001) - Darryl VanDorp, added TOC, fixed some Postgresql
+setup instructions, added some links to install/compilation instructions
+for apache, php and mysql.
+
 <br /><br /><hr /><small>File translated from
 T<sub><font size="-1">E</font></sub>X
 by <a href="http://hutchinson.belmont.ma.us/tth/">
 T<sub><font size="-1">T</font></sub>H</a>,
-version 2.86.<br />On 10 Jan 2001, 23:02.</small>
+version 2.86.<br />On 16 Jan 2001, 23:02.</small>
 </html>
