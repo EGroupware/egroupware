@@ -15,7 +15,7 @@
   $phpgw_info["flags"] = array("currentapp"  => "admin", "noheader" => True, "nonavbar" => True,
                			       "parent_page" => "accounts.php");
   include("../header.inc.php");
-  include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
+  #include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
   function is_odd($n)
   {
@@ -273,6 +273,6 @@
   $phpgw->template->set_var("lang_button",Lang("Add"));
   echo $phpgw->template->finish($phpgw->template->parse("out","form"));
   
-  account_close();
+  #account_close();
   $phpgw->common->phpgw_footer();
 ?>
