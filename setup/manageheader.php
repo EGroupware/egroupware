@@ -254,7 +254,6 @@
         echo "<br><font color=red>Warning!<br>The db_type in defaults (".$phpgw_info["server"]["db_type"].") is not supported on this server. using first supported type.</font>";
       }
       echo "<br>";
-      echo "<form>";
     
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
         echo '<input type=submit name="action" value="write config">';
