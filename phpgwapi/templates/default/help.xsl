@@ -5,13 +5,13 @@
 	</xsl:template>
 
 	<xsl:template match="help_data">
-		<table cellpadding="0" cellspacing="0" class="portal">
- 			<tr>
-  				<td class="portal_text">
+		<table cellpadding="0" cellspacing="0" width="100%">
+ 			<tr class="th">
+  				<td class="th_text">
 					<xsl:value-of disable-output-escaping="yes" select="space"/>
 					<xsl:value-of select="title"/>
 				</td>
-				<td valign="middle" align="right" class="portal_text">
+				<td valign="middle" align="right">
 					<xsl:apply-templates select="control_link"/>
 				</td>
 			</tr>
