@@ -41,7 +41,7 @@
 				<vbox options="0,0">
 					<description options="b,@${row}[info_link_view]" value="%s $row_cont[info_addr]" no_lang="1" id="${row}[info_link_title]" statustext="view this linked entry in its application"/>
 					<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
-					<description no_lang="1" id="${row}[info_des]"/>
+					<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 					<link-string id="${row}[filelinks]"/>
 				</vbox>
 				<vbox options="0,0">
@@ -127,7 +127,7 @@
 				<vbox options="0,0">
 					<description options="b,@${row}[info_link_view]" value="%s $row_cont[info_addr]" no_lang="1" id="${row}[info_link_title]" statustext="view this linked entry in its application"/>
 					<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
-					<description no_lang="1" id="${row}[info_des]"/>
+					<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 					<link-string id="${row}[filelinks]"/>
 				</vbox>
 				<vbox options="0,0">
