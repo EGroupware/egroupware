@@ -38,23 +38,24 @@
 			'select_app' => 'Select an app first !!!'
 		);
 		var $types = array(
+			'varchar'	=> 'varchar',
+			'int'		=> 'int',
 			'auto'		=> 'auto',
 			'blob'		=> 'blob',
 			'char'		=> 'char',
 			'date'		=> 'date',
 			'decimal'	=> 'decimal',
 			'float'		=> 'float',
-			'int'		=> 'int',
 			'longtext'	=> 'longtext',
 			'text'		=> 'text',
 			'timestamp'	=> 'timestamp',
 //			'abstime'   => 'abstime (mysql:timestamp)',
-			'varchar'	=> 'varchar'
 		);
 		var $setup_header = '<?php
   /**************************************************************************\\
   * phpGroupWare - Setup                                                     *
   * http://www.phpgroupware.org                                              *
+  * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -82,9 +83,10 @@
 			}
 			if ($lang_on_messages)
 			{
-				reset($this->messages);
-				while(list($key,$msg) = each($this->messages))
+				foreach($this->messages as $key => $msg)
+				{
 					$this->messages[$key] = lang($msg);
+				}
 			}
 		}
 
@@ -129,7 +131,7 @@
 			{
 				$this->read($this->app,$this->data);
 
-				for (reset($this->data); list($name,$table) = each($this->data); )
+				foreach($this->data as $name => $table)
 				{
 					$table_names[$name] = $name;
 				}
@@ -296,8 +298,11 @@
 			if (isset($this->data[$posted_table]) &&
 				 $this->tables_identical($this->data[$posted_table],$edited_table))
 			{
-				$this->app = $new_app;
-				$this->data = array();
+				if ($new_app != $this->app)	// are we changeing the app, or hit the user just write
+				{
+					$this->app = $new_app;	// if we change init the data empty
+					$this->data = array();
+				}
 				return False;	// continue edit
 			}
 			$content = array(
@@ -501,8 +506,8 @@
 			}
 			$def = "array($tabs".($tabs ? "\t" : '');
 
-			reset($arr);
-			for ($n = 0; list($key,$val) = each($arr); ++$n)
+			$n = 0;
+			foreach($arr as $key => $val)
 			{
 				if (!$only_vals)
 				{
@@ -527,6 +532,7 @@
 				{
 					$def .= ",$tabs".($tabs ? "\t" : '');
 				}
+				++$n;
 			}
 			$def .= "$tabs)";
 
@@ -549,6 +555,10 @@
 			if (file_exists($file) && ($f = fopen($file,'r')))
 			{
 				$header = fread($f,filesize($file));
+				if ($end = strpos($header,');'))
+				{
+					$footer = substr($header,$end+3);	// this preservs other stuff, which should not be there
+				}
 				$header = substr($header,0,strpos($header,'$phpgw_baseline'));
 				fclose($f);
 
@@ -573,7 +583,7 @@
 			$def .= $this->write_array($phpgw_baseline,1);
 			$def .= ";\n";
 
-			fwrite($f,$header . $def);
+			fwrite($f,$header . $def . $footer);
 			fclose($f);
 
 			return True;
@@ -628,7 +638,41 @@
 			{
 				if ($setup_info[$app]['tables'])	// if there is already tables array, update it
 				{
-					$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fnew);
+					$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*","\\1$tables",$fwas=$fnew);
+
+					if ($fwas == $fnew)	// nothing changed => tables are in single lines
+					{
+						$fwas = explode("\n",$fwas);
+						$fnew = $prefix = '';
+						$stage = 0;	// 0 = before, 1 = in, 2 = after tables section
+						foreach($fwas as $line)
+						{
+							if (eregi("(.*\\$"."setup_info\\['$app'\\]\\['tables'\\]\\[[ \\t]*\\][ \\t]*=[ \\t]*)'",$line,$parts))
+							{
+								if ($stage == 0)	// first line of tables-section
+								{
+									$stage = 1;
+									$prefix = $parts[1];
+								}
+							}
+							else					// not in table-section
+							{
+								if ($stage == 1)	// first line after tables-section ==> add it
+								{
+									$tables = explode(',',$tables);
+									foreach ($tables as $table)
+									{
+										$fnew .= $prefix . $table . ";\n";
+									}
+									$stage = 2; 
+								}
+								if (strpos($line,'?>') === False)	// dont write the closeing tag
+								{
+									$fnew .= $line . "\n";
+								}
+							}
+						}
+					}
 				}
 				else	// add the tables array
 				{
@@ -718,8 +762,7 @@
 
 		function remove_from_array(&$arr,$value)
 		{
-			reset($arr);
-			while (list($key,$val) = each($arr))
+			foreach($arr as $key => $val)
 			{
 				if ($val == $value)
 				{
@@ -733,8 +776,7 @@
 			$this->read($app,$old);
 
 			$tables = '';
-			reset($old);
-			while (list($name,$table_def) = each($old))
+			foreach($old as $name => $table_def)
 			{
 				if (!isset($current[$name]))	// table $name droped
 				{
@@ -744,9 +786,8 @@
 				{
 					$tables .= ($tables ? ',' : '') . "'$name'";
 
-					reset($table_def['fd']);
 					$new_table_def = $table_def;
-					while(list($col,$col_def) = each($table_def['fd']))
+					foreach($table_def['fd'] as $col => $col_def)
 					{
 						if (!isset($current[$name]['fd'][$col]))	// column $col droped
 						{
@@ -767,19 +808,20 @@
 							}
 						}
 					}
-					@reset($this->changes[$name]);
-					while (list($col,$new_col) = @each($this->changes[$name]))
+					if (is_array($this->changes[$name]))
 					{
-						if ($new_col != '**deleted**')
+						foreach($this->changes[$name] as $col => $new_col)
 						{
-							$old[$name]['fd'][$new_col] = $old[$name]['fd'][$col];	// to be able to detect further changes of the definition
-							unset($old[$name]['fd'][$col]);
+							if ($new_col != '**deleted**')
+							{
+								$old[$name]['fd'][$new_col] = $old[$name]['fd'][$col];	// to be able to detect further changes of the definition
+								unset($old[$name]['fd'][$col]);
+							}
 						}
 					}
 				}
 			}
-			reset($current);
-			while(list($name,$table_def) = each($current))
+			foreach($current as $name => $table_def)
 			{
 				if (!isset($old[$name]))	// table $name added
 				{
@@ -792,8 +834,7 @@
 				{
 					$old_norm = $this->normalize($old[$name]);
 					$new_norm = $this->normalize($table_def);
-					reset($table_def['fd']);
-					while (list($col,$col_def) = each($table_def['fd']))
+					foreach($table_def['fd'] as $col => $col_def)
 					{
 						if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
 							 serialize($old_norm['fd'][$col]) != serialize($new_norm['fd'][$col])) // column definition altered
@@ -822,8 +863,7 @@
 		{
 			$all_props = array('type','precision','nullable','default');
 
-			reset($table['fd']);
-			while (list($col,$props) = each($table['fd']))
+			foreach($table['fd'] as $col => $props)
 			{
 				$table['fd'][$col] = array(
 					'type' => ''.$props['type'],
