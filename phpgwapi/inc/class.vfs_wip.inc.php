@@ -256,8 +256,8 @@ class vfs
 		    they are required.  They are ignored for any "custom" operation
 		    The two operations that require $state_two:
 		    $operation			$state_two
-		    VFS_OPERATION_COPIED	Copied to fake_full_path
-		    VFS_OPERATION_MOVED		Moved to fake_full_path
+		    VFS_OPERATION_COPIED	fake_full_path of copied to
+		    VFS_OPERATION_MOVED		fake_full_path of moved to
 
 		    If deleting, you must call add_journal () before you delete the entry from the database
 	@param $string File or directory to add entry for
@@ -310,6 +310,16 @@ class vfs
 			{
 				$sql .= ", ";
 				$sql2 .= ", ";
+			}
+
+			if ($attribute == "owner_id")
+			{
+				$value = $account_id;
+			}
+
+			if ($attribute == "created")
+			{
+				$value = $this->now;
 			}
 
 			if ($attribute == "mime_type")
@@ -518,6 +528,51 @@ class vfs
 		{
 			return False;
 		}
+	}
+
+	/*!
+	@function get_journal
+	@abstract Retrieve journal entries for $string
+	@param $string File/directory to retrieve journal entries of
+	@param $relatives Relativity array
+	@param $type 0/False = any, 1 = 'journal', 2 = 'journal-deleted'
+	@result Array of arrays of journal entries
+	*/
+
+	function get_journal ($string, $relatives = array (RELATIVE_CURRENT), $type = False)
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask)))
+		{
+			return False;
+		}
+
+		$sql = "SELECT * FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+
+		if ($type == 1)
+		{
+			$sql .= " AND mime_type='journal'";
+		}
+		elseif ($type == 2)
+		{
+			$sql .= " AND mime_type='journal-deleted'";
+		}
+		else
+		{
+			$sql .= " AND (mime_type='journal' OR mime_type='journal-deleted')";
+		}
+
+		$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
+		
+		while ($phpgw->db->next_record ())
+		{
+			$rarray[] = $phpgw->db->Record;
+		}	
+
+		return $rarray;
 	}
 
 	/*!
@@ -1055,14 +1110,15 @@ class vfs
 
 		if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
 		{
-			$operation = PHPGW_ACL_EDIT;
+			$acl_operation = PHPGW_ACL_EDIT;
+			$journal_operation = VFS_OPERATION_EDITED;
 		}
 		else
 		{
-			$operation = PHPGW_ACL_ADD;
+			$acl_operation = PHPGW_ACL_ADD;
 		}
 
-		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), $operation))
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), $acl_operation))
 		{
 			return False;
 		}
@@ -1080,7 +1136,12 @@ class vfs
 			fwrite ($fp, $contents, strlen ($contents));
 			fclose ($fp);
 
-			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("size" => filesize ($p->real_full_path)));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("size" => $this->get_size ($p->real_full_path, array (RELATIVE_NONE|VFS_REAL))));
+
+			if ($journal_operation)
+			{
+				$this->add_journal ($p->fake_full_path, array ($p->mask), $journal_operation);
+			}
 
 			return True;
 		}
@@ -1773,6 +1834,19 @@ class vfs
 			return False;
 		}
 
+		if ($p->outside)
+		{
+			if (is_dir ($p->real_full_path))
+			{
+				return ("Directory");
+			}
+
+			/*
+			   We don't return an empty string here, because it may still match with a database query
+			   because of linked directories
+			*/
+		}
+
 		/*
 		   We don't use ls () because it calls file_type () to determine if it has been
 		   passed a directory
@@ -1910,11 +1984,11 @@ class vfs
 	@param $checksubdirs Boolean, recursively list all sub directories as well?
 	@param $mime_type Only return entries matching MIME-type $mime_type.  Can be any MIME-type, "Directory" or "\ " for those without MIME types
 	@param $nofiles Boolean.  True means you want to return just the information about the directory $dir.  If $dir is a file, $nofiles is implied.  This is the equivalent of 'ls -ld $dir'
-	@param $orderby How to order results
+	@param $orderby How to order results.  Note that this only works for directories inside the virtual root
 	@result array of arrays.  Subarrays contain full info for each file/dir.
 	*/
 
-	function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "Directory")
+	function ls ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
 	{
 		global $phpgw, $phpgw_info;
 
@@ -1922,10 +1996,9 @@ class vfs
 		$dir = $p->fake_full_path;
 
 		/* If they pass us a file or $nofiles is set, return the info for $dir only */
-		if ((($type = $this->file_type ($dir, array ($p->mask))) != "Directory") || ($nofiles))
+		if (((($type = $this->file_type ($dir, array ($p->mask))) != "Directory") || ($nofiles)) && !$p->outside)
 		{
-			$p = $this->path_parts ($dir, array ($p->mask));
-
+			/* SELECT all, the, attributes FROM phpgw_vfs WHERE file=$dir */
 			$sql = "SELECT ";
 
 			reset ($this->attributes);
@@ -1938,6 +2011,7 @@ class vfs
 			}
 
 			$sql .= " FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'";
+
 			$sql .= $this->extra_sql (VFS_SQL_SELECT);
 
 			$query = $phpgw->db->query ($sql, __LINE__, __FILE__);
@@ -1956,6 +2030,33 @@ class vfs
 			return $rarray;
 		}
 
+		//WIP - this should recurse using the same options the virtual part of ls () does
+		/* If $dir is outside the virutal root, we have to check the file system manually */
+		if ($p->outside)
+		{
+			if ($this->file_type ($p->fake_full_path, array ($p->mask)) == "Directory" && !$nofiles)
+			{
+				$dir_handle = opendir ($p->real_full_path);
+				while ($filename = readdir ($dir_handle))
+				{
+					if ($filename == "." || $filename == "..")
+					{
+						continue;
+					}
+
+					$rarray[] = $this->get_real_info ($p->real_full_path . SEP . $filename, array ($p->mask));
+				}
+			}
+			else
+			{
+				$rarray[] = $this->get_real_info ($p->real_full_path, array ($p->mask));
+			}
+
+			return $rarray;
+		}
+
+		/* $dir's not a file, is inside the virtual root, and they want to check subdirs */
+		/* SELECT all, the, attributes FROM phpgw_vfs WHERE file=$dir */
 		$sql = "SELECT ";
 
 		reset ($this->attributes);
@@ -2012,9 +2113,86 @@ class vfs
 	@abstract shortcut to ls
 	*/
 
-	function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False)
+	function dir ($dir = False, $relatives = array (RELATIVE_CURRENT), $checksubdirs = True, $mime_type = False, $nofiles = False, $orderby = "directory")
 	{
-		return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles);
+		return $this->ls ($dir, $relatives, $checksubdirs, $mime_type, $nofiles, $orderby);
+	}
+
+	/*!
+	@function update_real
+	@abstract Update database information for file or directory $string
+	@param $string File or directory to update database information for
+	@param $relatives Relativity array
+	@result Boolean True/False
+	*/
+
+	function update_real ($string, $relatives = array (RELATIVE_CURRENT))
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if (file_exists ($p->real_full_path))
+		{
+			if (is_dir ($p->real_full_path))
+			{
+				$dir_handle = opendir ($p->real_full_path);
+				while ($filename = readdir ($dir_handle))
+				{
+					if ($filename == "." || $filename == "..")
+					{
+						continue;
+					}
+
+					$rarray[] = $this->get_real_info ($p->fake_full_path . "/" . $filename, array (RELATIVE_NONE));
+				}
+			}
+			else
+			{
+				$rarray[] = $this->get_real_info ($p->fake_full_path, array (RELATIVE_NONE));
+			}
+
+			while (list ($num, $file_array) = each ($rarray))
+			{
+				$p2 = $this->path_parts ($file_array["directory"] . "/" . $file_array["name"], array (RELATIVE_NONE));
+
+				/* Note the mime_type.  This can be "Directory", which is how we create directories */
+				$set_attributes_array = array ("size" => $file_array["size"], "mime_type" => $file_array["mime_type"]);
+
+				if (!$this->file_exists ($p2->fake_full_path, array (RELATIVE_NONE)))
+				{
+					$this->touch ($p2->fake_full_path, array (RELATIVE_NONE));
+
+					$this->set_attributes ($p2->fake_full_path, array (RELATIVE_NONE), $set_attributes_array);
+				}
+				else
+				{
+					$this->set_attributes ($p2->fake_full_path, array (RELATIVE_NONE), $set_attributes_array);
+				}
+			}
+		}
+	}
+
+
+	/* Helper functions */
+
+	/* This fetchs all available file system information for $string (not using the database) */
+	function get_real_info ($string, $relatives = array (RELATIVE_CURRENT))
+	{
+		global $phpgw, $phpgw_info;
+
+		$p = $this->path_parts ($string, array ($relatives[0]));
+
+		if (is_dir ($p->real_full_path))
+		{
+			$mime_type = "Directory";
+		}
+
+		$size = filesize ($p->real_full_path);
+
+		$rarray = array ("directory" => $p->fake_leading_dirs, "name" => $p->fake_name, "size" => $size, "mime_type" => $mime_type);
+
+		return ($rarray);
 	}
 }
 
