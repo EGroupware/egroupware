@@ -127,6 +127,10 @@
 			'func' => 'extension_check',
 			'warning' => '<div id="setup_info">' . lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).') . '</div>'
 		),
+		'session' => array(
+			'func' => 'extension_check',
+			'warning' => '<div id="setup_info">' . lang('The session extension is needed to use php4 session (db-sessions work without).') . "</div>"
+		),	
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
