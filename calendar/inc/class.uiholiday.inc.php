@@ -273,7 +273,7 @@
 			$t->set_var($var);
 
 // Locale
-			$this->display_item($t,lang('Country'),'<input name="holiday[locale]" size="3" maxlength="2" value="'.$holiday[locale].'">');
+			$this->display_item($t,lang('Country'),$this->sb->form_select($holiday['locale'],'holiday[locale]'));
 
 // Title/Name
 			$this->display_item($t,lang('title'),'<input name="holiday[name]" size="60" maxlength="50" value="'.$holiday['name'].'">');
