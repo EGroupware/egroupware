@@ -288,6 +288,12 @@
 				}
 				$log .= "\t\t<td><b>$addr</b></td>\n";
 			}
+			if (!in_array('fn',$addr_fields))	// autocreate full name, if not set by user
+			{
+				$log .= "\t\t<td><b>fn</b></td>\n";
+
+				$auto_fn = array('n_prefix','n_given','n_middle','n_family','n_suffix');
+			}
 			if($start < 1)
 			{
 				$start = 1;
@@ -341,6 +347,15 @@
 				}
 				// if (!isset($values['datecreated'])) $values['datecreated'] = $values['startdate'];
 
+				if (is_array($auto_fn) && !isset($values['fn']))	// autocreate full name
+				{
+					reset($auto_fn);
+					while (list($idx,$name) = each($auto_fn))
+					{
+						$values['fn'] .= ($values['fn'] != '' && $values[$name] != '' ? ' ' : '') . $values[$name];
+					}
+					$log .= "\t\t<td>".$values['fn']."</td>\n";
+				}
 				if(!$debug)
 				{
 					$GLOBALS['phpgw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['phpgw_info']['user']['account_id'],
