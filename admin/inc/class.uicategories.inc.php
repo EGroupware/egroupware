@@ -285,15 +285,6 @@
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Add global category');
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
-
-			$this->set_langs();
-
-			$this->template->set_file(array('form' => 'category_form.tpl'));
-			$this->template->set_block('form','delete','deletehandle');
-
 			if ($_POST['save'])
 			{
 				$values = array
@@ -312,11 +303,20 @@
 				else
 				{
 					$this->bo->save_cat($values);
-					$this->template->set_var('message',lang('Category %1 has been added !', $cat_name));
+					$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 				}
 			}
 
-			$link_data['menuaction'] = 'admin.uicategories.add'; 			
+			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Add global category');
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+
+			$this->set_langs();
+
+			$this->template->set_file(array('form' => 'category_form.tpl'));
+			$this->template->set_block('form','delete','deletehandle');
+
+			$link_data['menuaction'] = 'admin.uicategories.add';
 			$this->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
 			$this->template->set_var('category_list',$this->bo->cats->formatted_list(array('selected' => $cat_parent)));
@@ -350,14 +350,6 @@
 				$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Edit global category');
-			$GLOBALS['phpgw']->common->phpgw_header();
-			echo parse_navbar();
-
-			$this->set_langs();
-
-			$this->template->set_file(array('form' => 'category_form.tpl'));
-
 			if ($_POST['save'])
 			{
 				$values = array
@@ -378,9 +370,17 @@
 				else
 				{
 					$this->cat_id = $this->bo->save_cat($values);
-					$this->template->set_var('message',lang('Category %1 has been updated !',$cat_name));
+					$GLOBALS['phpgw']->redirect_link('/index.php',$link_data);
 				}
 			}
+
+			$GLOBALS['phpgw_info']['flags']['app_header'] .= ' - '.lang('Edit global category');
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+
+			$this->set_langs();
+
+			$this->template->set_file(array('form' => 'category_form.tpl'));
 
 			$cats = $this->bo->cats->return_single($this->cat_id);
 

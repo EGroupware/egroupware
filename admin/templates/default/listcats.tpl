@@ -44,9 +44,10 @@
 			<tr valign="bottom" height="50">
 			<form method="POST" action="{action_url}">
 <!-- BEGIN add -->
-				<td colspan="2"><input type="submit" name="add" value="{lang_add}"></td>
+				<td><input type="submit" name="add" value="{lang_add}"> &nbsp;
 <!-- END add -->
-				<td colspan="3" align="right"><input type="submit" name="done" value="{lang_done}"></td>
+				<input type="submit" name="done" value="{lang_cancel}"></td>
+				<td colspan="5">&nbsp;</td>
 			</form>
 			</tr>
 		</table>
