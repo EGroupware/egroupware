@@ -146,7 +146,7 @@
 
 			if (! $phpgw->acl->check('session_only_preferences',1,'preferences'))
 			{
-				$this->db->lock('phpgw_preferences');
+				$this->db->transaction_begin();
 				$this->db->query("delete from phpgw_preferences where preference_owner='" . $this->account_id
 						. "'",__LINE__,__FILE__);
 	 
@@ -162,7 +162,7 @@
 				$this->db->query("insert into phpgw_preferences (preference_owner,preference_value) values ('"
 						. $this->account_id . "','" . $pref_info . "')",__LINE__,__FILE__);
 
-				$this->db->unlock();
+				$this->db->transaction_commit();
 			}
 			else
 			{
