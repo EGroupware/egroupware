@@ -96,6 +96,10 @@ If safe_mode is turned on, eGW is not able to change certain settings on runtime
 		'func' => 'extension_check',
 		'warning' => 'The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.'
 	),
+	'imap' => array(
+		'func' => 'extension_check',
+		'warning' => 'The imap extension is needed by the two email apps (even if you use email with pop3 as protokoll).'
+	),
 	'.' => array(
 		'func' => 'permission_check',
 		'is_world_writable' => False,
@@ -130,7 +134,7 @@ function extension_check($name,$args)
 	{
 		return True;	// check only under windows
 	}
-	$availible = extension_loaded($name) || dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
+	$availible = extension_loaded($name) || function_exists('dl') && dl(PHP_SHLIB_PREFIX.$name.'.'.PHP_SHLIB_SUFFIX);
 
 	echo "Checking extension $name is loaded or loadable: ".($availible ? 'True' : 'False')."\n";
 
@@ -200,8 +204,8 @@ function permission_check($name,$args,$verbose=True)
 
 	if ($verbose)
 	{
-		$owner = posix_getpwuid(fileowner($name));
-		$group = posix_getgrgid(filegroup($name));
+		$owner = function_exists('posix_getpwuid') ? posix_getpwuid(fileowner($name)) : 'not availible';
+		$group = function_exists('posix_getgrgid') ? posix_getgrgid(filegroup($name)) : 'not availible';
 
 		$checks = array();
 		if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').'writable by webserver';
@@ -265,7 +269,11 @@ function php_ini_check($name,$args)
 	$ini_value = ini_get($name);
 	$check = isset($args['check']) ? $args['check'] : '=';
 	$verbose_value = isset($args['verbose_value']) ? $args['verbose_value'] : $args['value'];
-	echo "Checking php.ini: $name $check $verbose_value: ini_get('$name')='$ini_value'\n";
+	if ($verbose_value == 'On' || $verbose_value == 'Off')
+	{
+		$ini_value_verbose = ' = '.($ini_value ? 'On' : 'Off');
+	}
+	echo "Checking php.ini: $name $check $verbose_value: ini_get('$name')='$ini_value'$ini_value_verbose\n";
 	switch ($check)
 	{
 		case 'not set':
@@ -275,7 +283,7 @@ function php_ini_check($name,$args)
 			$result = !!($ini_value & $args['value']);
 			break;
 		case '>=':
-			$result = intval($ini_value) >= intval($args['value']) &&
+			$result = $ini_value && intval($ini_value) >= intval($args['value']) &&
 				($args['value'] == intval($args['value']) ||
 				substr($args['value'],-1) == substr($ini_value,-1));
 			break;
