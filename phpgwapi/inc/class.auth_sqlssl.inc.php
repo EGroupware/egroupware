@@ -29,9 +29,7 @@
 
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info, $phpgw, $HTTP_SERVER_VARS;
-
-			$db = $phpgw->db;
+			$db = $GLOBALS['phpgw']->db;
 
 			$local_debug = False;
 
@@ -43,7 +41,7 @@
 			# Apache + mod_ssl provide the data in the environment
 			# Certificate (chain) verification occurs inside mod_ssl
 			# see http://www.modssl.org/docs/2.8/ssl_howto.html#ToC6
-			if (!isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
+			if (!isset($GLOBALS['HTTP_SERVER_VARS']['SSL_CLIENT_S_DN']))
 			{
 				# if we're not doing SSL authentication, behave like auth_sql
 				$db->query("SELECT * FROM phpgw_accounts WHERE account_lid = '$username' AND "
@@ -69,35 +67,30 @@
 
 		function change_password($old_passwd, $new_passwd, $account_id = '')
 		{
-			global $phpgw_info, $phpgw;
-
 			if (! $account_id)
 			{
-				$account_id = $phpgw_info['user']['account_id'];
+				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 
 			$encrypted_passwd = md5($new_passwd);
 
-			$phpgw->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_pwd='" . md5($new_passwd) . "',"
 				. "account_lastpwd_change='" . time() . "' where account_id='" . $account_id . "'",__LINE__,__FILE__);
 
-			$phpgw->session->appsession('password','phpgwapi',$new_passwd);
+			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
 
 			return $encrypted_passwd;
 		}
 
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
-
-			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$phpgw->db->next_record();
+			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->next_record();
 			$this->previous_login = $phpgw->db->f('account_lastlogin');
 
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}
-
 	}
 ?>

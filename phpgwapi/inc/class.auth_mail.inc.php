@@ -29,60 +29,60 @@
 
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info, $phpgw;
 			error_reporting(error_reporting() - 2);
 
-			if ($phpgw_info['server']['mail_login_type'] == 'vmailmgr')
+			if ($GLOBALS['phpgw_info']['server']['mail_login_type'] == 'vmailmgr')
 			{
-				$username = $username . '@' . $phpgw_info['server']['mail_suffix'];
+				$username = $username . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
 			}
-			if ($phpgw_info['server']['mail_server_type']=='imap')
+			if ($GLOBALS['phpgw_info']['server']['mail_server_type']=='imap')
 			{
-				$phpgw_info['server']['mail_port'] = '143';
+				$GLOBALS['phpgw_info']['server']['mail_port'] = '143';
 			}
-			elseif ($phpgw_info['server']['mail_server_type']=='pop3')
+			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3')
 			{
-				$phpgw_info['server']['mail_port'] = '110';
+				$GLOBALS['phpgw_info']['server']['mail_port'] = '110';
 			}
 
-			if( $phpgw_info['server']['mail_server_type']=='pop3')
+			if( $GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3')
 			{
-				$mailauth = imap_open('{'.$phpgw_info['server']['mail_server'].'/pop3'
-					.':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
+				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server'].'/pop3'
+					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
 			}
 			else
-			{ //assume imap 
-				$mailauth = imap_open('{'.$phpgw_info['server']['mail_server']
-					.':'.$phpgw_info['server']['mail_port'].'}INBOX', $username , $passwd);
+			{
+				/* assume imap */
+				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']
+					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
 			}
 
 			error_reporting(error_reporting() + 2);
-			if ($mailauth == False) {
+			if ($mailauth == False)
+			{
 				return False;
-			} else {
+			}
+			else
+			{
 				imap_close($mailauth);
 				return True;
 			}
 		}
 
-		function change_password($old_passwd, $new_passwd) {
-			global $phpgw_info, $phpgw;
+		function change_password($old_passwd, $new_passwd)
+		{
 			return False;
 		}
 
 		// Since there account data will still be stored in SQL, this should be safe to do. (jengo)
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
+			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->next_record();
+			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
 
-			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$phpgw->db->next_record();
-			$this->previous_login = $phpgw->db->f('account_lastlogin');
-
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}
-
 	}
 ?>

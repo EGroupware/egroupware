@@ -30,9 +30,7 @@
 
 		function authenticate($username, $passwd)
 		{
-			global $phpgw_info, $phpgw, $PHP_AUTH_USER;
-
-			if (isset($PHP_AUTH_USER))
+			if (isset($GLOBALS['PHP_AUTH_USER']))
 			{
 				return True;
 			}
@@ -44,20 +42,17 @@
 
 		function change_password($old_passwd, $new_passwd)
 		{
-			global $phpgw_info, $phpgw;
 			return False;
 		}
 
 		// Since there account data will still be stored in SQL, this should be safe to do. (jengo)
 		function update_lastlogin($account_id, $ip)
 		{
-			global $phpgw;
+			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->next_record();
+			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
 
-			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$phpgw->db->next_record();
-			$this->previous_login = $phpgw->db->f('account_lastlogin');
-
-			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}
