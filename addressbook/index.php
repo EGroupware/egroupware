@@ -119,31 +119,22 @@
 	//   else they may be accounts, etc.
 	if (!$filter) { $filter = 'none'; }
 
-	if ($filter == "none") {
-		if (!$cat_id) {
-			$qfilter  = 'tid=n';
-		} else {
-			$qfilter  = 'tid=n,cat_id='.$cat_id;
-		}
-	} elseif($filter == "private") {
-		if (!$cat_id) {
-			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info['user']['account_id'];
-		} else {
-			$qfilter  = 'tid=n,access=private,owner='.$phpgw_info['user']['account_id'].',cat_id='.$cat_id;
-		}
-	} elseif($filter == "yours") {
-		if (!$cat_id) {
-			$qfilter  = 'tid=n,owner='.$phpgw_info['user']['account_id'];
-		} else {
-			$qfilter  = 'tid=n,owner='.$phpgw_info['user']['account_id'].',cat_id='.$cat_id;
-		}
-	} else {
-		if (!$cat_id) {
-			$qfilter = 'tid=n,owner='.$filter;
-		} else {
-			$qfilter = 'tid=n,owner='.$filter.'cat_id='.$cat_id;
-		}
+	$qfilter = 'tid=n';
+	
+	switch ($filter) {
+		case 'none':
+			break;
+		case 'private':
+			$qfilter .= ',access=private';	// fall through
+		case 'yours':
+			$qfilter .= ',owner='.$phpgw_info['user']['account_id'];
+			break;
+		default:
+			$qfilter .= ',owner='.$filter;
 	}
+	if ($cat_id) {
+		$qfilter .= ',cat_id='.$cat_id;
+	}		
 
 	// Check if prefs were set, if not, create some defaults
 	if (!$columns_to_display )
@@ -221,6 +212,8 @@
 	$t->set_var('vcard_url',$phpgw->link('/addressbook/vcardin.php'));
 	$t->set_var('lang_import',lang('Import Contacts'));
 	$t->set_var('import_url',$phpgw->link('/addressbook/import.php'));
+	$t->set_var('lang_import_alt',lang('Alt. CSV Import'));
+	$t->set_var('import_alt_url',$phpgw->link('/addressbook/csv_import.php'));
 	$t->set_var('lang_export',lang('Export Contacts'));
 	$t->set_var('export_url',$phpgw->link('/addressbook/export.php'));
 	$t->set_var('start',$start);

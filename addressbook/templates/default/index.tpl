@@ -103,6 +103,17 @@
      </td>
      <td width="16%">
        <div align="left">
+         <form action="{import_alt_url}" method="post">
+         <input type="hidden" name="sort" value="{sort}">
+         <input type="hidden" name="order" value="{order}">
+         <input type="hidden" name="filter" value="{filter}">
+         <input type="hidden" name="start" value="{start}">
+         <input type="submit" name="Import" value="{lang_import_alt}">
+         </form>
+       </div>
+     </td>
+     <td width="16%">
+       <div align="left">
          <form action="{export_url}" method="post">
          <input type="hidden" name="sort" value="{sort}">
          <input type="hidden" name="order" value="{order}">
