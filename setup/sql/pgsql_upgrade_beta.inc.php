@@ -1875,7 +1875,7 @@
                 $sql = "CREATE TABLE phpgw_notes (
                         note_id        	serial,
                         note_owner     	int,
-			note_access	char(7),
+						note_access		char(7),
                         note_date      	int,
                         note_category  	int,
                         note_content   	text
@@ -2000,17 +2000,17 @@
 	$phpgw_setup->db->query("drop table phpgw_categories",__LINE__,__FILE__);
 
 	$phpgw_setup->db->query("CREATE TABLE phpgw_categories (
-    	        cat_id          serial,
-		cat_main	int,
-        	cat_parent      int DEFAULT 0,
-		cat_level	int DEFAULT 0,
-        	cat_owner       int,
-        	cat_access      varchar(25),
-        	cat_appname     varchar(50) NOT NULL,
-        	cat_name        varchar(150) NOT NULL,
-        	cat_description varchar(255) NOT NULL,
-        	cat_data        text
-        	)");
+		cat_id			serial,
+		cat_main		int,
+		cat_parent		int DEFAULT 0,
+		cat_level		int DEFAULT 0,
+		cat_owner		int,
+		cat_access		varchar(25),
+		cat_appname		varchar(50) NOT NULL,
+		cat_name		varchar(150) NOT NULL,
+		cat_description	varchar(255) NOT NULL,
+		cat_data		text
+	)");
 
 	$phpgw_setup->db->query("insert into phpgw_categories select * from temp",__LINE__,__FILE__);
 
@@ -2203,6 +2203,58 @@
 	{
 		global $phpgw_info;
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+	}
+
+	$test[] = '0.9.13.001';
+	function upgrade0_9_13_001()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+		$phpgw_setup->db->query("create table temp as select * from phpgw_categories",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop table phpgw_categories",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("CREATE TABLE phpgw_categories (
+			cat_id			serial,
+			cat_main		int,
+			cat_parent		int DEFAULT 0,
+			cat_level		int DEFAULT 0,
+			cat_owner		int,
+			cat_access		varchar(7),
+			cat_appname		varchar(50) NOT NULL,
+			cat_name		varchar(150) NOT NULL,
+			cat_description	varchar(255) NOT NULL,
+			cat_data		text
+		)");
+    
+		$phpgw_setup->db->query("insert into phpgw_categories select * from temp",__LINE__,__FILE__);
+    
+		$phpgw_setup->db->query("drop table temp",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("create table phpgw_temp as select * from phpgw_notes",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop sequence phpgw_notes_note_id_seq",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop table phpgw_notes",__LINE__,__FILE__);
+
+		$sql = "CREATE TABLE phpgw_notes (
+			note_id			serial,
+			note_owner		int,
+			note_access		varchar(7),
+			note_date		int,
+			note_category	int,
+			note_content	text
+		)";
+
+		$phpgw_setup->db->query($sql);
+
+		$phpgw_setup->db->query("insert into phpgw_notes select * from phpgw_temp",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.002';
 	}
 
     reset ($test);

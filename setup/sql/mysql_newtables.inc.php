@@ -303,18 +303,18 @@
     PRIMARY KEY (message_id,app_name,lang)
   )";
   $phpgw_setup->db->query($sql);
-  
+
   $sql = "CREATE TABLE phpgw_categories (
-            cat_id          int(9) DEFAULT '0' NOT NULL auto_increment,
-            cat_main      int(9) DEFAULT '0' NOT NULL,
-            cat_parent      int(9) DEFAULT '0' NOT NULL,
-            cat_level      int(3) DEFAULT '0' NOT NULL,
+            cat_id			int(9) DEFAULT '0' NOT NULL auto_increment,
+            cat_main		int(9) DEFAULT '0' NOT NULL,
+            cat_parent		int(9) DEFAULT '0' NOT NULL,
+            cat_level		int(3) DEFAULT '0' NOT NULL,
             cat_owner       int(11) DEFAULT '0' NOT NULL,
-	    cat_access	    char(7),
-            cat_appname     varchar(50) NOT NULL,
-            cat_name        varchar(150) NOT NULL,
-            cat_description varchar(255) NOT NULL,
-            cat_data        text,
+			cat_access		varchar(7),
+            cat_appname		varchar(50) NOT NULL,
+            cat_name		varchar(150) NOT NULL,
+            cat_description	varchar(255) NOT NULL,
+            cat_data		text,
             PRIMARY KEY (cat_id)
          )";
   $phpgw_setup->db->query($sql);
@@ -330,7 +330,7 @@
   $sql = "CREATE TABLE phpgw_notes (
             note_id        	int(20) NOT NULL auto_increment, 
             note_owner     	int(11),
-	    note_access		char(7),    
+			note_access		varchar(7),    
             note_date      	int(11),
             note_category  	int(9),
             note_content   	text, 
@@ -354,7 +354,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.002';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

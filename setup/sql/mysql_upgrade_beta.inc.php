@@ -1685,6 +1685,17 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
 	}
 
+	$test[] = '0.9.13.001';
+	function upgrade0_9_13_001()
+	{
+		global $phpgw_info,$phpgw_setup;
+
+        $phpgw_setup->db->query("alter table phpgw_categories modify column cat_access varchar(7)",__LINE__,__TABLE__);
+        $phpgw_setup->db->query("alter table phpgw_notes modify column note_access varchar(7)",__LINE__,__TABLE__);		
+
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.002';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

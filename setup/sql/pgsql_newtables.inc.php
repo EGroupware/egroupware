@@ -283,7 +283,7 @@
             cat_parent      int DEFAULT 0,
             cat_level       int DEFAULT 0,
             cat_owner       int,
-	    cat_access	    char(7),
+			cat_access		varchar(7),
             cat_appname     varchar(50) NOT NULL,
             cat_name        varchar(150) NOT NULL,
             cat_description varchar(255) NOT NULL,
@@ -302,7 +302,7 @@
   $sql = "CREATE TABLE phpgw_notes (
             note_id        	serial, 
             note_owner     	int,
-	    note_access		char(7),    
+			note_access		varchar(7),    
             note_date      	int,
             note_category  	int,
             note_content   	text
@@ -323,7 +323,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.001';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.13.002';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
