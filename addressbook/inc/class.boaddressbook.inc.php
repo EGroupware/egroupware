@@ -34,6 +34,7 @@
 		var $order;
 		var $filter;
 		var $cat_id;
+		var $total;
 
 		var $use_session = False;
 
@@ -117,6 +118,8 @@
 		function read_entries($start,$limit,$qcols,$qfilter,$userid='')
 		{
 			$entries = $this->so->read_entries($start,$limit,$qcols,$this->query,$qfilter,$this->sort,$this->order,$userid);
+			$this->total = $this->so->contacts->total_records;
+			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
 			return $this->strip_html($entries);
 		}
 

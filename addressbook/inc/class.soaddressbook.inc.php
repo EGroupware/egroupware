@@ -19,22 +19,30 @@
 
 		function soaddressbook()
 		{
-			global $phpgw,$rights;
+			global $rights;
 
-			$phpgw->contacts   = CreateObject('phpgwapi.contacts');
+			$this->rights = $rights;
+		}
 
-			$this->contacts = $phpgw->contacts;
-			$this->rights   = $rights;
+		function makeobj()
+		{
+			if (!is_object($this->contacts))
+			{
+				$this->contacts = CreateObject('phpgwapi.contacts');
+			}
+			return;
 		}
 
 		function read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order)
 		{
+			$this->makeobj();
 			$readrights = $this->rights & PHPGW_ACL_READ;
 			return $this->contacts->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
 		}
 
 		function read_entry($id,$fields)
 		{
+			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_single_entry($id,$fields);
@@ -48,6 +56,7 @@
 
 		function read_last_entry($fields)
 		{
+			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_last_entry($fields);
@@ -61,6 +70,7 @@
 
 		function add_entry($userid,$fields)
 		{
+			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_ADD)
 			{
 				$this->contacts->add($userid,$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
@@ -70,6 +80,7 @@
 
 		function get_lastid()
 		{
+			$this->makeobj();
 		 	$entry = $this->contacts->read_last_entry();
 			$ab_id = $entry[0]['id'];
 			return $ab_id;
@@ -77,6 +88,7 @@
 
 		function update_entry($userid,$fields)
 		{
+			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_EDIT)
 			{
 				$this->contacts->update($fields['ab_id'],$userid,$fields,$fields['access'],$fields['cat_id']);

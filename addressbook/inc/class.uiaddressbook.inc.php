@@ -58,7 +58,7 @@
 
 			$this->bo       = CreateObject('addressbook.boaddressbook',True);
 			$this->template = $phpgw->template;
-			$this->contacts = $this->bo->so->contacts;
+			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->cat      = CreateObject('phpgwapi.categories');
 			$this->company  = CreateObject('phpgwapi.categories','addressbook_company');
 			$this->prefs    = $phpgw_info['user']['preferences']['addressbook'];
@@ -412,12 +412,13 @@
 			if ($nosearch && !$this->query)
 			{
 				$entries = array();
-				$this->contacts->total_records = 0;
+				$total_records = 0;
 			}
 			else
 			{
 				/* read the entry list */
 				$entries = $this->bo->read_entries($this->start,$this->limit,$columns_to_display,$qfilter,$userid);
+				$total_records = $this->bo->total;
 			}
 
 			/* global here so nextmatchs accepts our setting of $query */
@@ -425,11 +426,11 @@
 
 			$query = $this->query;
 			$search_filter = $phpgw->nextmatchs->show_tpl('/index.php',
-				$this->start, $this->contacts->total_records,'&menuaction=addressbook.uiaddressbook.get_list',"75%",
+				$this->start, $total_records,'&menuaction=addressbook.uiaddressbook.get_list',"75%",
 				$phpgw_info["theme"]["th_bg"],1,1,1,1);
 			$query = '';
 
-			$lang_showing = $phpgw->nextmatchs->show_hits($this->contacts->total_records,$this->start);
+			$lang_showing = $phpgw->nextmatchs->show_hits($total_records,$this->start);
 
 			/* set basic vars and parse the header */
 			$this->template->set_var('font',$phpgw_info['theme']['font']);
