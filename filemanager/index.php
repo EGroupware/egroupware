@@ -17,12 +17,15 @@ $to_decode = array
 	/*
 	Decode
 	'var'	when	  'avar' == 'value'
+	or
+	'var'	when	  'var'  is set
 	*/
 	'op'	=> array ('op' => ''),
 	'path'	=> array ('path' => ''),
 	'file'	=> array ('file' => ''),
 	'sortby'	=> array ('sortby' => ''),
 	'fileman'	=> array ('fileman' => ''),
+	'messages'	=> array ('messages'	=> ''),
 	'help_name'	=> array ('help_name' => ''),
 	'renamefiles'	=> array ('renamefiles' => ''),
 	'comment_files'	=> array ('comment_files' => ''),
@@ -38,6 +41,7 @@ while (list ($var, $conditions) = each ($to_decode))
 		{
 			if (is_array ($$var))
 			{
+				$temp = array ();
 				while (list ($varkey, $varvalue) = each ($$var))
 				{
 					if (is_int ($varkey))
@@ -59,21 +63,39 @@ while (list ($var, $conditions) = each ($to_decode))
 	}
 }
 
-if ($noheader || $download || $op == "view" || $op == "history" || $op == help)
+if ($noheader || $nofooter || ($download && (count ($fileman) > 0)) || ($op == "view" && $file) || ($op == "history" && $file) || ($op == help && $help_name))
 {
 	$noheader = True;
+	$nofooter = True;
 }
 
 $phpgw_info["flags"] = array
 (
-	"currentapp" => "phpwebhosting",
-	"noheader" => $noheader,
-	"noappheader" => False,
-	"enable_vfs_class" => True,
-	"enable_browser_class" => True
+	"currentapp"	=> "phpwebhosting",
+	"noheader"	=> $noheader,
+	"nofooter"	=> $nofooter,
+	"noappheader"	=> False,
+	"enable_vfs_class"	=> True,
+	"enable_browser_class"	=> True
 );
 
 include ("../header.inc.php");
+
+if ($execute && $command_line)
+{
+	if ($result = $phpgw->vfs->command_line ($command_line))
+	{
+		$messages = html_text_bold ("Command sucessfully run", 1);
+		if ($result != 1 && strlen ($result) > 0)
+		{
+			$messages .= html_break (2, NULL, 1) . $result;
+		}
+	}
+	else
+	{
+		$messages = $phpgw->common->error_list (array ("Error running command"));
+	}
+}
 
 ###
 # Page to process users
@@ -249,7 +271,10 @@ if (!$sortby)
 
 if (!$show_upload_boxes || $show_upload_boxes <= 0)
 {
-	$show_upload_boxes = $settings["show_upload_boxes"];
+	if (!$show_upload_boxes = $settings["show_upload_boxes"])
+	{
+		$show_upload_boxes = 5;
+	}
 }
 
 
@@ -382,7 +407,37 @@ if ($op == "history" && $file)
 	}
 
 	html_table_end ();
-	$phpgw->common->phpgw_exit ();
+	html_page_close ();
+}
+
+if ($newfile && $createfile)
+{
+	if ($badchar = bad_chars ($createfile, True, True))
+	{
+		echo $phpgw->common->error_list (array (html_encode ("Filenames cannot contain \"$badchar\"", 1)));
+		html_break (2);
+		html_link_back ();
+		html_page_close ();
+	}
+
+	if ($phpgw->vfs->file_exists ($createfile, array (RELATIVE_ALL)))
+	{
+		echo $phpgw->common->error_list (array ("File $createfile already exists.  Please edit it or delete it first."));
+		html_break (2);
+		html_link_back ();
+		html_page_close ();
+	}
+
+	if ($phpgw->vfs->touch ($createfile, array (RELATIVE_ALL)))
+	{
+		$fileman = array ();
+		$fileman[0] = $createfile;
+		$edit = 1;
+	}
+	else
+	{
+		echo $phpgw->common->error_list (array ("File $createfile could not be created."));
+	}
 }
 
 if ($op == "help" && $help_name)
@@ -415,10 +470,12 @@ if ($op == "help" && $help_name)
 # Start Main Page
 ###
 
-if ($op != "changeinfo" && $op != "logout" && $op != "delete")
+html_page_begin ("Users :: $userinfo[username]");
+html_page_body_begin (HTML_PAGE_BODY_COLOR);
+
+if ($messages)
 {
-	html_page_begin ("Users :: $userinfo[username]");
-	html_page_body_begin (HTML_PAGE_BODY_COLOR);
+	html_text ($messages);
 }
 
 if (!is_array ($settings))
@@ -710,7 +767,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			if ($settings["createdby_id"])
 			{
 				html_table_col_begin ();
-				html_text ($phpgw->accounts->id2name ($files["createdby_id"]));
+				if ($files["createdby_id"])
+				{
+					html_text ($phpgw->accounts->id2name ($files["createdby_id"]));
+				}
 				html_table_col_end ();
 			}
 
@@ -721,7 +781,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			if ($settings["modifiedby_id"])
 			{
 				html_table_col_begin ();
-				html_text ($phpgw->accounts->id2name ($files["modifiedby_id"]));
+				if ($files["modifiedby_id"])
+				{
+					html_text ($phpgw->accounts->id2name ($files["modifiedby_id"]));
+				}
 				html_table_col_end ();
 			}
 
@@ -940,6 +1003,24 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_break (1);
 		html_form_input ("submit", "update", "Update");
 		html_help_link ("update");
+
+		if ($path != "/" && $path != $fakebase)
+		{
+			html_nbsp (3);
+			html_form_input ("text", "createfile", NULL, 255, 15);
+			html_form_input ("submit", "newfile", "Create File");
+		}
+
+		if ($settings["show_command_line"])
+		{
+			html_break (2);
+			html_form_input ("text", "command_line", NULL, NULL, 50);
+			html_help_link ("command_line");
+		}
+
+		html_break (1);
+		html_form_input ("submit", "execute", "Execute");
+		html_help_link ("execute");
 
 		html_form_end ();
 
