@@ -17,7 +17,7 @@
 	<xsl:variable name="prefs_title"><xsl:value-of select="prefs_title"/></xsl:variable>
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
-	<xsl:variable name="phpgw_body"><xsl:value-of select="phpgw_body"/></xsl:variable>
+	<xsl:variable name="navbar_format"><xsl:value-of select="navbar_format"/></xsl:variable>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -40,7 +40,9 @@
 									<td colspan="4">
 										<table cellspacing="0" cellpadding="0" width="100%">
 											<tr>
-												<xsl:apply-templates select="applications"/>
+												<xsl:apply-templates select="applications">
+													<xsl:with-param name="navbar_format" select="{$navbar_format}"/>
+												</xsl:apply-templates>
 											</tr>
 										</table>
 									</td>
@@ -113,6 +115,7 @@
 	</xsl:template>
 
 	<xsl:template match="applications">
+	<xsl:param name="navbar_format" select="'icon'"/>
 	<xsl:variable name="url"><xsl:value-of select="url"/></xsl:variable>
 	<xsl:variable name="name"><xsl:value-of select="name"/></xsl:variable>
 	<xsl:variable name="icon"><xsl:value-of select="icon"/></xsl:variable>
