@@ -273,8 +273,18 @@
   {
     global $phpgw_info, $phpgw, $ldap;
 
-    #ldap_delete($ldap,"appl=email, ou=phpgwpreferences,".$account_id);
     #ldap_delete($ldap,"ou=phpgwpreferences,".$account_id);
+    
+    //delete sub dn's
+    $sri = ldap_search($ldap, $phpgw_info["server"]["ldap_context"], "objectclass=phpgw_*");
+    $allValues = ldap_get_entries($ldap, $sri);
+    
+    for ($i=0; $i < $allValues["count"]; $i++)
+    {
+        #print "<br> delete".$allValues[$i]["dn"];
+    	ldap_delete($ldap,$allValues[$i]["dn"]);
+    	#print ldap_error($ldap);
+    } 
     ldap_delete($ldap,$account_id);
   }
 

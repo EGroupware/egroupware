@@ -155,24 +155,24 @@
 
  <?php
   } else {
-     $phpgw->common->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
+     $phpgw->preferences->preferences_delete("byappnotheme",$phpgw_info["user"]["account_id"],"common");
 
      $phpgw->db->lock("preferences");
 
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"maxmatchs","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"tz_offset","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"dateformat","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"timeformat","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"lang","common");
-     $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"default_app","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"maxmatchs","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"tz_offset","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"dateformat","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"timeformat","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"lang","common");
+     $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"default_app","common");
 
      if ($navbar_text) {
-        $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"navbar_text","common");
+        $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"navbar_text","common");
      }
 
      if ($phpgw_info["user"]["apps"]["admin"]) {
         if ($show_currentusers) {
-           $phpgw->common->preferences_add($phpgw_info["user"]["account_id"],"show_currentusers","common");
+           $phpgw->preferences->preferences_add($phpgw_info["user"]["account_id"],"show_currentusers","common");
         }
      }
 
