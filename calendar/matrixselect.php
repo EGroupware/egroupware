@@ -81,8 +81,8 @@
 
 // View type
   $phpgw->template->set_var("field",lang("View"));
-  $str = "<select name=\"view\">";
-  $str .= "<option value=\"free/busy\">".lang("free/busy")."</option>\n";
+  $str = "<select name=\"matrixtype\">";
+  $str .= "<option value=\"free/busy\" selected>".lang("free/busy")."</option>\n";
   $str .= "<option value=\"weekly\">".lang("Weekly")."</option>\n";
   $str .= "</select>\n";
   $phpgw->template->set_var("data",$str);
@@ -126,11 +126,14 @@
   $phpgw->template->set_var("data",$str);
   $phpgw->template->parse("output","list",True);
 
-  $phpgw->template->set_var("action_url_button","");
-  $phpgw->template->set_var("action_text_button",lang("Submit"));
-  $phpgw->template->set_var("action_confirm_button","onClick=\"document.matrixform.submit();\"");
+//  $phpgw->template->set_var("action_url_button","");
+//  $phpgw->template->set_var("action_text_button",lang("Submit"));
+//  $phpgw->template->set_var("action_confirm_button","onClick=\"document.matrixform.submit();\"");
+//  $phpgw->template->parse("submit_button","form_button");
+  $phpgw->template->set_var("submit_button",lang("Submit"));
 
-  $phpgw->template->parse("submit_button","form_button");
+//<!-- {submit_button} -->
+
 
 
   $phpgw->template->set_var("action_url_button","");

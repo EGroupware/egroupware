@@ -8,6 +8,7 @@
         - Fix for TTS with Update by non-email user.
         - Fixed admin/accesslog.php wasn't using phpgw_access_log
 	- Fix for Week View warning in calendar.
+	- Fix for Matrix View not working with Netscape 6.
 
 [0.9.6] - Fix user permissions where not being checked properly.
 

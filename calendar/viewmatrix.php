@@ -53,7 +53,7 @@
     }
   }
 
-  switch($view) {
+  switch($matrixtype) {
     case "free/busy" :
       echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),$phpgw->calendar->splittime("000000"),0,$participants);
       break;
@@ -64,7 +64,7 @@
   echo "<center>";
   echo "<form action=\"".$phpgw->link("viewmatrix.php")."\" method=\"post\" name=\"matrixform\" target=\"viewmatrix\">";
   echo "<input type=\"hidden\" name=\"date\" value=\"".$date."\">";
-  echo "<input type=\"hidden\" name=\"view\" value=\"".$view."\">";
+  echo "<input type=\"hidden\" name=\"matrixtype\" value=\"".$matrixtype."\">";
   for ($i=0;$i<count($participants);$i++)
     echo "<input type=\"hidden\" name=\"participants[]\" value=\"".$participants[$i]."\">";
   echo "<input type=\"submit\" value=\"Refresh\">";
