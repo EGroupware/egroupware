@@ -15,7 +15,7 @@
 		'noheader'                => True,
 		'noappheader'             => True,
 		'nonavbar'                => True,
-		'currentapp'              => $_GET['appname'],
+		'currentapp'              => @$_GET['appname'] ? $_GET['appname'] : 'preferences',
 		'enable_nextmatchs_class' => True
 	);
 	include('../header.inc.php');
