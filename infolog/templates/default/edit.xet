@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="infolog.edit.description" template="" lang="" group="0" version="0.9.15.001" width="100%" border="0">
+		<columns>
+			<column width="100"/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="th">
+				<description span="all" value="Description"/>
+			</row>
+			<row class="row">
+				<description/>
+				<textbox multiline="true" rows="15" cols="80" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
+			</row>
+		</rows>
+	</grid>
+	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.001" width="100%">
+		<columns>
+			<column width="100"/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="th">
+				<description span="all" value="Custom regarding"/>
+			</row>
+			<row class="row">
+				<description value="Contact"/>
+				<textbox size="64" maxlength="64" id="info_from" statustext="enter a custom contact, leave empty if linked entry should be used"/>
+			</row>
+			<row class="row">
+				<description value="Phone/Email"/>
+				<textbox size="64" maxlength="64" id="info_addr" statustext="enter a custom phone/email, leave empty if linked entry should be used"/>
+			</row>
+			<row class="th">
+				<description span="all" value="Links"/>
+			</row>
+			<row class="row">
+				<linkto span="all" id="info_id"/>
+			</row>
+			<row class="row" valign="top" height="200">
+				<linklist span="all" id="info_id"/>
+			</row>
+		</rows>
+	</grid>
+	<grid id="infolog.edit.delegation" template="" lang="" group="0" version="0.9.15.001" width="100%">
+		<columns>
+			<column width="100"/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="th">
+				<description span="all" value="Priority"/>
+			</row>
+			<row class="row">
+				<description value="Priority"/>
+				<menulist>
+					<menupopup id="info_priority" statustext="select a priority for this task"/>
+				</menulist>
+			</row>
+			<row class="th">
+				<description span="all" value="Delegation"/>
+			</row>
+			<row class="row">
+				<description value="Responsible"/>
+				<menulist>
+					<menupopup type="select-account" options="Self" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
+				</menulist>
+			</row>
+			<row class="row">
+				<description value="Confirmation"/>
+				<menulist>
+					<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
+				</menulist>
+			</row>
+			<row class="row" height="200">
+				<description span="all"/>
+			</row>
+		</rows>
+	</grid>
+	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.001" width="100%">
+		<columns>
+			<column width="103"/>
+			<column width="300"/>
+			<column width="100"/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<description span="3" value="InfoLog -" id="subtitle"/>
+				<button label="Categories" align="right" id="cats" statustext="Edit or create categories for IngoLog"/>
+			</row>
+			<row>
+				<hrule span="all"/>
+			</row>
+			<row>
+				<description span="all"/>
+			</row>
+			<row class="th">
+				<description value="Type"/>
+				<menulist span="all">
+					<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo"/>
+				</menulist>
+				<description/>
+				<description/>
+			</row>
+			<row class="row">
+				<description value="Category"/>
+				<menulist span="all">
+					<menupopup type="select-cat" options="None" id="info_cat" statustext="select a category for this entry"/>
+				</menulist>
+				<description/>
+				<description/>
+			</row>
+			<row class="row">
+				<description value="Regarding"/>
+				<description span="all" id="linked"/>
+			</row>
+			<row class="row">
+				<description value="Subject"/>
+				<textbox size="64" maxlength="64" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
+			</row>
+			<row>
+				<tabbox>
+					<tabs span="all">
+						<tab label="Description" statustext="longer textual description"/>
+						<tab label="Links" statustext="Links of this entry"/>
+						<tab label="Delegation" statustext="responsible user, priority, ..."/>
+					</tabs>
+					<tabpanels>
+						<grid id="description"/>
+						<grid id="links"/>
+						<grid id="delegation"/>
+					</tabpanels>
+				</tabbox>
+			</row>
+			<row class="th">
+				<description span="all" value="Dates, Status, Access"/>
+			</row>
+			<row class="row">
+				<description value="Startdate"/>
+				<date id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
+				<description value="Enddate"/>
+				<date id="info_enddate" statustext="til when should the ToDo or Phonecall be finished"/>
+			</row>
+			<row class="row">
+				<description value="Status"/>
+				<menulist>
+					<menupopup id="info_status" statustext="@status_help"/>
+				</menulist>
+				<description value="Private"/>
+				<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>
+			</row>
+			<row class="th">
+				<description value="Owner"/>
+				<menulist>
+					<menupopup type="select-account" options=",,2" id="info_owner" readonly="true"/>
+				</menulist>
+				<description value="Last modified"/>
+				<date id="info_datemodified" readonly="true"/>
+			</row>
+			<row>
+				<button label="Save" id="save" statustext="Saves this entry"/>
+				<button label="Cancel" id="cancel" statustext="leave without saveing the entry"/>
+				<description/>
+				<button label="Delete" align="right" id="delete" statustext="delete this entry"/>
+			</row>
+		</rows>
+	</grid>
+</overlay>
