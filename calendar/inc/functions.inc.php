@@ -1262,7 +1262,7 @@
         }
         $p->parse('row','day_row',True);
       }	// end for
-      return $p->pparse('output','day_cal');
+      return $p->finish($p->parse('out','day_cal'));
     }	// end function
 
     function prep($calid) {
