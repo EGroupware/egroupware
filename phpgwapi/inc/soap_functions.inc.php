@@ -68,49 +68,62 @@
 
 	$GLOBALS['soap_defencoding'] = 'UTF-8';
 
-	function system_auth($m1,$m2,$m3)
+	function system_login($m1,$m2,$m3)
 	{
-		$serverdata['server_name'] = $m1;
-		$serverdata['username']    = $m2;
-		$serverdata['password']    = $m3;
+		$server_name = trim($m1);
+		$username    = trim($m2);
+		$password    = trim($m3);
 
-		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
+		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password);
 
+		if(!$sessionid && !$kp3)
+		{
+			if($server_name)
+			{
+				$user = $username.'@'.$server_name;
+			}
+			else
+			{
+				$user = $username;
+			}
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password);
+			$kp3 = $GLOBALS['phpgw']->session->kp3;
+			$domain = $GLOBALS['phpgw']->session->account_domain;
+		}
 		if($sessionid && $kp3)
 		{
 			$rtrn = array(
-				CreateObject('phpgwapi.soapval','sessionid', 'string',$sessionid),
+				CreateObject('phpgwapi.soapval','domain','string',$domain),
+				CreateObject('phpgwapi.soapval','sessionid','string',$sessionid),
 				CreateObject('phpgwapi.soapval','kp3','string',$kp3)
 			);
 		}
 		else
 		{
-			$rtrn = array(
-				CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO')
-			);
+			$rtrn = array(CreateObject('phpgwapi.soapval','GOAWAY','string',$username));
 		}
 		//$r = CreateObject('phpgwapi.soapmsg','system_authResponse',$rtrn);
 		return $rtrn;
 	}
 
-	function system_auth_verify($m1,$m2,$m3)
+	function system_logout($m1,$m2)
 	{
-		$server_name = $m1;
-		$sessionid   = $m2;
-		$kp3         = $m3;
+		$sessionid   = $m1;
+		$kp3         = $m2;
 
-		$verified = $GLOBALS['phpgw']->session->verify_server($sessionid,$kp3);
+		$username = $GLOBALS['phpgw']->session->account_lid;
+		$later = $GLOBALS['phpgw']->session->destroy();
 
-		if($verified)
+		if($later)
 		{
 			$rtrn = array(
-				CreateObject('phpgwapi.soapval','HELO','string',$sessionid)
+				CreateObject('phpgwapi.soapval','GOODBYE','string',$username)
 			);
 		}
 		else
 		{
 			$rtrn = array(
-				CreateObject('phpgwapi.soapval','GOAWAY','string','XOXO')
+				CreateObject('phpgwapi.soapval','OOPS','string','WHAT?')
 			);
 		}
 		//$r = CreateObject('phpgwapi.soapmsg','system_auth_verifyResponse',$rtrn);
