@@ -263,7 +263,7 @@
       $size = 5;
     else
       $size = $db2->num_rows();
-    $str = "<select name=\"cal[participants[]]\" multiple size=\"5\">";
+    $str = "<select name=\"cal[participants][]\" multiple size=\"5\">";
     for ($l=0;$l<count($cal_info->participants);$l++)
       $parts[$cal_info->participants[$l]] = True;
     while ($db2->next_record()) {
