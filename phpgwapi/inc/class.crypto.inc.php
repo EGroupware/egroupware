@@ -34,9 +34,13 @@
 		var $td = False; /* Handle for mcrypt */
 		var $iv = '';
 		var $key = '';
+		var $debug = True;
+		var $debug = False;
 
 		function crypto($vars)
 		{
+			/* _debug_array(mcrypt_list_algorithms()); */
+
 			$key = $vars[0];
 			$iv  = $vars[1];
 			if ($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
@@ -214,14 +218,14 @@
 				{
 					echo '<br>' . time() . ' crypto->decrypt() decrypted data: ---->>>>' . $data;
 				}
-				$test = unserialize(stripslashes($data));
-				if($test)
+				$test = stripslashes($data);
+				if(@unserialize($test))
 				{
 					if($this->debug)
 					{
 						echo '<br>' . time() . ' crypto->decrypt() stripping slashes' . "\n";
 					}
-					$data = stripslashes($data);
+					$data = $test;
 				}
 				unset($test);
 
@@ -236,7 +240,7 @@
 				$data = $encrypteddata;
 			}
 
-			$newdata = unserialize($data);
+			$newdata = @unserialize($data);
 			if($newdata)
 			{
 				if($this->debug)
