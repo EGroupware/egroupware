@@ -2883,7 +2883,7 @@
 						{
 							echo 'IND before = '.$ind."<br>\n";
 						}
-						if(($ind >= date('H',$starttime)) || ($ind <= date('H',$endtime)))
+						if(($ind >= date('H',$last_starttime)) && ($ind <= date('H',$last_endtime)))
 						{
 							$ind = $last_ind;
 							$interval_start = $last_interval_start;
