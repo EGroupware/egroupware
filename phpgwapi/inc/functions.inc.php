@@ -241,30 +241,31 @@
 	{
 		$setup_dir = ereg_replace($PHP_SELF,'index.php','setup/');
 		echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-				.'phpGroupWare. Click <a href="' . $setup_dir . '">here</a> run for setup.</center>';
+			.'phpGroupWare. Click <a href="' . $setup_dir . '">here</a> run for setup.</center>';
 		exit;
 	}
 	$phpgw->db->Halt_On_Error = 'yes';
 
 	/* Fill phpgw_info["server"] array */
-	$phpgw->db->query("select * from phpgw_config",__LINE__,__FILE__);
-	while ($phpgw->db->next_record()) {
-		$phpgw_info["server"][$phpgw->db->f("config_name")] = stripslashes($phpgw->db->f("config_value"));
+	$phpgw->db->query("select * from phpgw_config WHERE config_app='phpgwapi'",__LINE__,__FILE__);
+	while ($phpgw->db->next_record())
+	{
+		$phpgw_info['server'][$phpgw->db->f('config_name')] = stripslashes($phpgw->db->f('config_value'));
 	}
 
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
-	$phpgw->common       = CreateObject("phpgwapi.common");
-	$phpgw->hooks        = CreateObject("phpgwapi.hooks");
-	$phpgw->auth         = createobject("phpgwapi.auth");
-	$phpgw->acl          = CreateObject("phpgwapi.acl");
-	$phpgw->accounts     = createobject("phpgwapi.accounts");
-	$phpgw->session      = CreateObject("phpgwapi.sessions");
-	$phpgw->preferences  = CreateObject("phpgwapi.preferences");
-	$phpgw->applications = CreateObject("phpgwapi.applications");
-	$phpgw->translation  = CreateObject("phpgwapi.translation");
-//	$phpgw->datetime		= CreateObject('phpgwapi.datetime');
+	$phpgw->common       = CreateObject('phpgwapi.common');
+	$phpgw->hooks        = CreateObject('phpgwapi.hooks');
+	$phpgw->auth         = CreateObject('phpgwapi.auth');
+	$phpgw->acl          = CreateObject('phpgwapi.acl');
+	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
+	$phpgw->session      = CreateObject('phpgwapi.sessions');
+	$phpgw->preferences  = CreateObject('phpgwapi.preferences');
+	$phpgw->applications = CreateObject('phpgwapi.applications');
+	$phpgw->translation  = CreateObject('phpgwapi.translation');
+//	$phpgw->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
 
 	/****************************************************************************\
