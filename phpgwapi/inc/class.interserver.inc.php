@@ -105,8 +105,8 @@
 				$this->accounts = CreateObject('phpgwapi.accounts');
 				$this->accounts->server = $this->serverid;
 			}
-			$this->security = $this->server->security;
-			$this->mode = $this->server->mode;
+			$this->security = $this->server['server_security'];
+			$this->mode = $this->server['server_mode'];
 		}
 
 		/* send command to remote server */
@@ -123,9 +123,9 @@
 		function _split_url($url)
 		{
 			preg_match('/^(.*?\/\/.*?)(\/.*)/',$url,$matches);
-			$hostport = $matches[1];
+			$hostpart = $matches[1];
 			$uri = $matches[2];
-			return array($uri,$hostport);
+			return array($uri,$hostpart);
 		}
 
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
@@ -138,18 +138,18 @@
 			/* curl Method borrowed from:
 			  http://sourceforge.net/tracker/index.php?func=detail&aid=427359&group_id=23199&atid=377731
 			*/
-			list($uri,$hostport) = $this->_split_url($url);
+			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
 			$this->debug("opening curl to $url", $debug);
 
 			if(gettype($args) != 'array')
 			{
-				$arr = array(CreateObject('phpgwapi.xmlrpcval',$args,'string'));
+				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 			}
 			else
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$arr[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
 				}
 			}
 			$f = CreateObject('phpgwapi.xmlrpcmsg',$method_name,$arr);
@@ -158,7 +158,8 @@
 			$cliversion = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 			$http_request = 'POST ' . $uri . ' HTTP/1.0' . "\r\n"
 				. 'User-Agent: phpGroupware/' . $cliversion . '(PHP) ' . "\r\n"
-				. 'X-PHPGW-Server: ' . $method_name . ' ' . "\r\n"
+				. 'X-PHPGW-Server: ' . $GLOBALS['HTTP_HOST'] . ' ' . "\r\n"
+				. 'X-PHPGW-Version: ' . $cliversion . "\r\n"
 				. 'Content-Type: text/xml' . "\r\n"
 				. 'Content-Length: ' . $content_len . "\r\n\r\n"
 				. $f->serialize();
@@ -166,7 +167,7 @@
 			$this->debug("sending http request:</h3><xmp>\n" . $http_request . "\n</xmp>", $debug);
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,$hostport);
+			curl_setopt($ch, CURLOPT_URL,$hostpart);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_request);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -185,12 +186,12 @@
 				}
 				else
 				{
-					$this->debug('Error: no xml start found from'.$hostport.'!');
+					$this->debug('Error: no xml start found from'.$hostpart.'!');
 				}
 			}
 			else
 			{
-				$this->debug('Error: no response from '.$hostport.'!');
+				$this->debug('Error: no response from '.$hostpart.'!');
 			}
 
 			return $retval;
@@ -198,19 +199,20 @@
 
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
 		{
-			list($uri,$hostport) = $this->_split_url($url);
+			list($uri,$hostpart) = $this->_split_url($url);
 			if(gettype($args) != 'array')
 			{
-				$arr = array(CreateObject('phpgwapi.xmlrpcval',$args,'string'));
+				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
 			}
 			else
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$arr[$key] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
+					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 				}
 			}
-			$f = CreateObject('phpgwapi.xmlrpcmsg', $method, $arr);
+			_debug_array($arr);
+			$f = CreateObject('phpgwapi.xmlrpcmsg', $method, CreateObject('phpgwapi.xmlrpcval',$arr,'struct'));
 			//echo "<pre>" . htmlentities($f->serialize()) . "</pre>\n";
 			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $uri, 80);
 			$c->setDebug(0);
@@ -237,7 +239,7 @@
 			/* Not working */
 			return;
 			preg_match('/^(.*?\/\/.*?)(\/.*)/',$url,$matches);
-			$hostport = $matches[1];
+			$hostpart = $matches[1];
 			$uri = $matches[2];
 
 			$this->debug("opening curl to $url", $debug);
@@ -267,7 +269,7 @@
 			$this->debug("sending http request:</h3><xmp>\n" . $http_request . "\n</xmp>", $debug);
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,$hostport);
+			curl_setopt($ch, CURLOPT_URL,$hostpart);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_request);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -286,12 +288,12 @@
 				}
 				else
 				{
-					$this->debug('Error: no xml start found from'.$hostport.'!');
+					$this->debug('Error: no xml start found from'.$hostpart.'!');
 				}
 			}
 			else
 			{
-				$this->debug('Error: no response from '.$hostport.'!');
+				$this->debug('Error: no response from '.$hostpart.'!');
 			}
 
 			return $retval;
@@ -322,6 +324,10 @@
 		/* Following are for server list management and query */
 		function read_repository($serverid='')
 		{
+			if(!$serverid)
+			{
+				$serverid = $this->serverid;
+			}
 			$sql = "SELECT * FROM $this->table WHERE server_id=" . intval($serverid);
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
