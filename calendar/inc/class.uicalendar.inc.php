@@ -126,6 +126,7 @@
 
 		function mini_calendar($params)
 		{
+			static $mini_cal_tpl;
 			if(!is_array($params))
 			{
 				return;
@@ -164,23 +165,23 @@
 
 			$weekstarttime = $GLOBALS['phpgw']->datetime->get_weekday_start($params['year'],$params['month'],1);
 
-			if($this->debug)
+			print_debug('mini_calendar:monthstart',$monthstart);
+			print_debug('mini_calendar:weekstarttime',date('Ymd H:i:s',$weekstarttime));
+
+			if(!is_object($mini_cal_tpl))
 			{
-				echo '<!-- mini_calendar:monthstart = '.$monthstart.' -->'."\n";
-				echo '<!-- mini_calendar:weekstarttime = '.date('Ymd H:i:s',$weekstarttime).' -->'."\n";
+				$mini_cal_tpl = CreateObject('phpgwapi.Template',$this->template_dir);
+				$mini_cal_tpl->set_unknowns('remove');
+
+				$mini_cal_tpl->set_file(
+					Array(
+						'mini_calendar'	=> 'mini_cal.tpl'
+					)
+				);
+				$mini_cal_tpl->set_block('mini_calendar','mini_cal','mini_cal');
+				$mini_cal_tpl->set_block('mini_calendar','mini_week','mini_week');
+				$mini_cal_tpl->set_block('mini_calendar','mini_day','mini_day');
 			}
-
-			$p = CreateObject('phpgwapi.Template',$this->template_dir);
-			$p->set_unknowns('remove');
-
-			$p->set_file(
-				Array(
-					'mini_calendar'	=> 'mini_cal.tpl'
-				)
-			);
-			$p->set_block('mini_calendar','mini_cal','mini_cal');
-			$p->set_block('mini_calendar','mini_week','mini_week');
-			$p->set_block('mini_calendar','mini_day','mini_day');
 
 			if($this->bo->printer_friendly == False)
 			{
@@ -192,7 +193,7 @@
 			}
 
 			$var = Array(
-				'cal_img_root'		=>	$GLOBALS['phpgw']->common->image('calendar','mini-calendar-bar.gif'),
+				'cal_img_root'		=>	$GLOBALS['phpgw']->common->image('calendar','mini-calendar-bar'),
 				'bgcolor'			=>	$this->theme['bg_color'],
 				'bgcolor1'			=>	$this->theme['bg_color'],
 				'month'				=>	$month,
@@ -200,24 +201,24 @@
 				'holiday_color'	=> $this->holiday_color
 			);
 
-			$p->set_var($var);
+			$mini_cal_tpl->set_var($var);
 
 			switch(strtolower($params['buttons']))
 			{
 				case 'right':
 					$var = Array(
-						'nextmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ahead).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','right.gif').'" border="0"></a>'
+						'nextmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ahead).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','right').'" border="0"></a>'
 					);
 					break;
 				case 'left':
 					$var = Array(
-						'prevmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ago).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','left.gif').'" border="0"></a>'
+						'prevmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ago).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','left').'" border="0"></a>'
 					);					
 					break;
 				case 'both':
 					$var = Array(
-						'prevmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ago).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','left.gif').'" border="0"></a>',
-						'nextmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ahead).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','right.gif').'" border="0"></a>'
+						'prevmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ago).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','left').'" border="0"></a>',
+						'nextmonth'			=>	'<a href="'.$this->page('month','&date='.$month_ahead).'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi','right').'" border="0"></a>'
 					);
 					break;
 				case 'none':
@@ -228,15 +229,18 @@
 					);
 					break;
 			}
-			$p->set_var($var);
+			$mini_cal_tpl->set_var($var);
 
-			for($i=0;$i<7;$i++)
+			if(!$mini_cal_tpl->get_var('daynames'))
 			{
-				$var = Array(
-					'dayname'	=> '<b>' . substr(lang($GLOBALS['phpgw']->datetime->days[$i]['name']),0,2) . '</b>',
-					'day_image'	=> ''
-				);
-				$this->output_template_array($p,'daynames','mini_day',$var);
+				for($i=0;$i<7;$i++)
+				{
+					$var = Array(
+						'dayname'	=> '<b>' . substr(lang($GLOBALS['phpgw']->datetime->days[$i]['name']),0,2) . '</b>',
+						'day_image'	=> ''
+					);
+					$this->output_template_array($p,'daynames','mini_day',$var);
+				}
 			}
 			$today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
 			unset($date);
@@ -247,10 +251,7 @@
 				@reset($daily);
 				while(list($date,$day_params) = each($daily))
 				{
-				   if($this->debug)
-				   {
-                  echo 'Mini-Cal Date : '.$date."<br>\n";
-               }               
+					print_debug('Mini-Cal Date',$date);
 					$year = intval(substr($date,0,4));
 					$month = intval(substr($date,4,2));
 					$day = intval(substr($date,6,2));
@@ -278,15 +279,15 @@
 				}
 				for($l=0;$l<count($var);$l++)
 				{
-					$this->output_template_array($p,'monthweek_day','mini_day',$var[$l]);
+					$this->output_template_array($mini_cal_tpl,'monthweek_day','mini_day',$var[$l]);
 				}
-				$p->parse('display_monthweek','mini_week',True);
-				$p->set_var('dayname','');
-				$p->set_var('monthweek_day','');
+				$mini_cal_tpl->parse('display_monthweek','mini_week',True);
+				$mini_cal_tpl->set_var('dayname','');
+				$mini_cal_tpl->set_var('monthweek_day','');
 			}
 		
-			$return_value = $p->fp('out','mini_cal');
-			unset($p);
+			$return_value = $mini_cal_tpl->fp('out','mini_cal');
+			$mini_cal_tpl->set_var('display_monthweek','');
 			return $return_value;
 		}
 
@@ -2827,7 +2828,7 @@
 					if ($day_params['new_event'])
 					{
 						$new_event_link = '<a href="'.$this->page('add','&date='.$date).'">'
-							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new.gif').'" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">'
+							. '<img src="'.$GLOBALS['phpgw']->common->image('calendar','new').'" width="10" height="10" alt="'.lang('New Entry').'" border="0" align="center">'
 							. '</a>';
 						$day_number = '<a href="'.$this->page('day','&date='.$date).'">'.$day.'</a>';
 					}
@@ -3269,7 +3270,7 @@
 				@reset($event['alarm']);
 				while(list($key,$alarm) = each($event['alarm']))
 				{
-					$icon = '<img src="'.$GLOBALS['phpgw']->common->image('calendar',($alarm['enabled']?'enabled.gif':'disabled.gif')).'" width="13" height="13">';
+					$icon = '<img src="'.$GLOBALS['phpgw']->common->image('calendar',($alarm['enabled']?'enabled':'disabled')).'" width="13" height="13">';
 					$var = Array(
 						'field'	=> $icon.$GLOBALS['phpgw']->common->show_date($alarm['time']),
 						'data'	=> $alarm['text']
@@ -4068,19 +4069,14 @@
 		{
 			for ($j=0,$datetime=$startdate;$j<7;$j++,$datetime += 86400)
 			{
-				$date = date('Ymd',$datetime);
+				$date = date('Ymd',$datetime + (60 * 60 * 2));
 
-				if($this->debug)
-				{
-					echo '<!-- set_week_array : Date : '.$date.' -->'."\n";
-				}
+				print_debug('set_week_array:Date',$date);
 
 				if($this->bo->cached_events[$date])
 				{
-					if($this->debug)
-					{
-						echo '<!-- Date : '.$date.' Appointments found : '.count($this->bo->cached_events[$date]).' -->'."\n";
-					}
+					print_debug('Date',$date);
+					print_debug('Appointments Found',count($this->bo->cached_events[$date]));
 					$appts = True;
 				}
 				else
