@@ -162,6 +162,7 @@
 		{
 			$tpl->set_var('V_powered_bottom','');
 		}
-		
+
+		$phpgw->common->hook('navbar_end');
 		$tpl->pfp('out','footer');
 	}

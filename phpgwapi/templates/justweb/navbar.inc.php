@@ -108,9 +108,10 @@
     $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/justweb/images");
     $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
     $tpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
-     $tpl->set_var("user_info",$phpgw->common->display_fullname() . " - "
-                             . lang($phpgw->common->show_date(time(),"l")) . " "
-                             . lang($phpgw->common->show_date(time(),"F")) . " "     
-                             . $phpgw->common->show_date(time(),"d, Y"));
+    $tpl->set_var("user_info",$phpgw->common->display_fullname() . " - "
+		. lang($phpgw->common->show_date(time(),"l")) . " "
+		. lang($phpgw->common->show_date(time(),"F")) . " "     
+		. $phpgw->common->show_date(time(),"d, Y"));
+	$phpgw->common->hook('navbar_end');
     echo $tpl->finish($tpl->parse("out","footer"));
   }

@@ -134,5 +134,7 @@
 		$tpl->set_var('img_root',$phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/verdilak/images');
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
 		$tpl->set_var('version',$phpgw_info['server']['versions']['phpgwapi']);
+
+		$phpgw->common->hook('navbar_end');
 		echo $tpl->pfp('out','footer');
 	}
