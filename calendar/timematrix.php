@@ -13,7 +13,8 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True);
+  $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_calendar_class" => True, "enable_nextmatchs_class" => True, "parent_page" => "matrixselect.php");
+
   include("../header.inc.php");
 
   if (isset($date) && strlen($date) > 0) {
