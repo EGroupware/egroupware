@@ -37,7 +37,7 @@
 		);
 		var $db;
 		var $user;
-		var $db_name = 'phpgw_links';
+		var $link_table = 'phpgw_links';
 		var $debug;
 
 		/*!
@@ -49,6 +49,7 @@
 		function solink( )
 		{
 			$this->db     = $GLOBALS['phpgw']->db;
+			$this->db->set_app('infolog');
 			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
 
@@ -81,25 +82,15 @@
 			{
 				$owner = $this->user;
 			}
-			$vars2addslashes = array('app1','id1','app2','id2','remark');
-			foreach ($vars2addslashes as $var)
-			{
-				$$var = $this->db->db_addslashes($$var);
-			}
-			if (!$lastmod)
-			{
-				$lastmod = time();
-			}
-			$sql = "INSERT INTO $this->db_name (link_app1,link_id1,link_app2,link_id2,link_remark,link_lastmod,link_owner) ".
-			       " VALUES ('$app1','$id1','$app2','$id2','$remark',".intval($lastmod).','.intval($owner).')';
-
-			if ($this->debug)
-			{
-				echo "<p>solink.link($app1,$id1,$app2,$id2,'$remark',$owner) sql='$sql'</p>\n";
-			}
-			$this->db->query($sql,__LINE__,__FILE__);
-
-			return $this->db->errno ? False : $this->db->get_last_insert_id($this->db_name,'link_id');
+			return $this->db->insert($this->link_table,array(
+					'link_app1'		=> $app1,
+					'link_id1'		=> $id1,
+					'link_app2'		=> $app2,
+					'link_id2'		=> $id2,
+					'link_remark'	=> $remark,
+					'link_lastmod'	=> $lastmod ? $lastmod : time(),
+					'link_owner'	=> $owner,
+				),False,__LINE__,__FILE__) ? $this->db->get_last_insert_id($this->link_table,'link_id') : false;
 		}
 
 		/*!
@@ -113,22 +104,21 @@
 		*/
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 		{
-			$links = array();
-
-			$vars2addslashes = array('app','id','only_app','order');
-			foreach ($vars2addslashes as $var)
-			{
-				$$var = $this->db->db_addslashes($$var);
-			}
-			$sql = "SELECT * FROM $this->db_name".
-					 " WHERE (link_app1 = '$app' AND link_id1 = '$id')".
-					 " OR (link_app2 = '$app' AND link_id2 = '$id')".
-					 ($order != '' ? " ORDER BY $order" : '');
-
 			if ($this->debug)
 			{
-				echo "<p>solink.get_links($app,$id,$only_app,$order) sql='$sql'</p>\n";
+				echo "<p>solink.get_links($app,$id,$only_app,$order)</p>\n";
 			}
+			$links = array();
+
+			$this->db->select($this->link_table,'*',$this->db->expression($this->link_table,'(',array(
+						'link_app1'	=> $app,
+						'link_id1'	=> $id,
+					),') OR (',array(
+						'link_app2'	=> $app,
+						'link_id2'	=> $id,
+					),')'
+				),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '');
+
 			$this->db->query($sql,__LINE__,__FILE__);
 
 			if ($not_only = $only_app[0] == '!')
@@ -183,10 +173,9 @@
 			{
 				echo "<p>solink.get_link('$app_link_id',$id,'$app2','$id2')</p>\n";
 			}
-			$sql = "SELECT * FROM $this->db_name WHERE ";
-			if (intval($app_link_id) > 0)
+			if ((int) $app_link_id > 0)
 			{
-				$sql .= 'link_id='.intval($app_link_id);
+				$where = array('link_id' => $app_link_id);
 			}
 			else
 			{
@@ -199,10 +188,19 @@
 				{
 					$$var = $this->db->db_addslashes($$var);
 				}
-				$sql .= "(link_app1='$app_link_id' AND link_id1='$id' AND link_app2='$app2' AND link_id2='$id2') OR".
-				        "(link_app2='$app_link_id' AND link_id2='$id' AND link_app1='$app2' AND link_id1='$id2')";
+				$where = $this->db->expression($this->link_table,'(',array(
+						'link_app1'	=> $app_link_id,
+						'link_id1'	=> $id,
+						'link_app2'	=> $app2,
+						'link_id2'	=> $id2,
+					),') OR (',array(
+						'link_app2'	=> $app_link_id,
+						'link_id2'	=> $id,
+						'link_app1'	=> $app2,
+						'link_id1'	=> $id2,
+					),')');
 			}
-			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->select($this->link_table,'*',$where,__LINE__,__FILE__);
 
 			if ($this->db->next_record())
 			{
@@ -226,10 +224,14 @@
 		*/
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
-			$sql = "DELETE FROM $this->db_name WHERE ";
-			if (intval($link_id) > 0)
+			if ($this->debug)
 			{
-				$sql .= 'link_id='.intval($link_id);
+				echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2)</p>\n";
+			}
+			$sql = "DELETE FROM $this->link_table WHERE ";
+			if ((int)$link_id > 0)
+			{
+				$where = array('link_id' => $link_id);
 			}
 			elseif ($app == '' AND $owner == '')
 			{
@@ -237,37 +239,38 @@
 			}
 			else
 			{
-				$vars2addslashes = array('app','id','app2','id2');
-				foreach ($vars2addslashes as $var)
-				{
-					$$var = $this->db->db_addslashes($$var);
-				}
 				if ($app != '' && $app2 == '')
 				{
-					$sql .= "((link_app1='$app'";
-					$sql2 = '';
+					$check1 = array('link_app1' => $app);
+					$check2 = array('link_app2' => $app);
 					if ($id != '')
 					{
-						$sql  .= " AND link_id1='$id'";
-						$sql2 .= " AND link_id2='$id'";
+						$check1['link_id1'] = $id;
+						$check2['link_id2'] = $id;
 					}
-					$sql .= ") OR (link_app2='$app'$sql2))";
+					$where = $this->db->expression($this->link_table,'((',$check1,') OR (',$check2,'))');
 				}
 				elseif ($app != '' && $app2 != '')
 				{
-					$sql .= "((link_app1='$app' AND link_id1='$id' AND link_app2='$app2' AND link_id2='$id2') OR";
-					$sql .= " (link_app1='$app2' AND link_id1='$id2' AND link_app2='$app' AND link_id2='$id'))";
+					$where = $this->db->expression($this->link_table,'((',array(
+							'link_app1'	=> $app,
+							'link_id1'	=> $id,
+							'link_app2'	=> $app2,
+							'link_id2'	=> $id2,
+						),') OR (',array(
+							'link_app1'	=> $app2,
+							'link_id1'	=> $id2,
+							'link_app2'	=> $app,
+							'link_id2'	=> $id,
+						),')');
 				}
 				if ($owner != '')
 				{
-					$sql .= ($app != '' ? ' AND ' : '') . 'link_owner='.intval($owner);
+					if ($app) $where = array($where);
+					$where['link_owner'] = $owner;
 				}
 			}
-			if ($this->debug)
-			{
-				echo "<p>solink.unlink($link_id,$app,$id,$owner,$app2,$id2) sql='$sql'</p>\n";
-			}
-			$this->db->query($sql,__LINE__,__FILE__);
+			$this->db->delete($this->link_table,$where,__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}
@@ -283,11 +286,11 @@
 		*/
 		function chown($owner,$new_owner)
 		{
-			if (intval($owner) <= 0 || intval($new_owner) <= 0)
+			if ((int)$owner <= 0 || (int) $new_owner)
 			{
 				return 0;
 			}
-			$this->db->query("UPDATE $this->db_name SET owner=".intval($new_owner).' WHERE owner='.intval($owner),__LINE__,__FILE__);
+			$this->db->update($this->link_table,array('owner'=>$new_owner),array('owner'=>$owner),__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}

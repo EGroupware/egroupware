@@ -27,6 +27,8 @@
 		var $grants;
 		var $data = array( );
 		var $user;
+		var $info_table = 'phpgw_infolog';
+		var $extra_table = 'phpgw_infolog_extra';
 
 		/*!
 		@function soinfolog
@@ -35,6 +37,7 @@
 		function soinfolog( $info_id = 0)
 		{
 			$this->db     = $GLOBALS['phpgw']->db;
+			$this->db->set_app('infolog');
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('infolog');
 			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
 
@@ -265,7 +268,7 @@
 			$info_id = intval($info_id);
 
 			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
-				(!$this->db->query("select * FROM phpgw_infolog WHERE info_id=$info_id",__LINE__,__FILE__) ||
+				(!$this->db->select($this->info_table,'*',array('info_id'=>$info_id),__LINE__,__FILE__) ||
 				 !$this->db->next_record()))
 			{
 				$this->init( );
@@ -275,7 +278,7 @@
 			{
 				$this->db2data($this->data);
 
-				$this->db->query("SELECT info_extra_name,info_extra_value FROM phpgw_infolog_extra WHERE info_id=$info_id",__LINE__,__FILE__);
+				$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$info_id),__LINE__,__FILE__);
 				while ($this->db->next_record())
 				{
 					$this->data['#'.$this->db->f(0)] = $this->db->f(1);
@@ -295,12 +298,12 @@
 		function delete($info_id,$delete_children=True,$new_parent=0)  // did _not_ ensure ACL
 		{
 			//echo "<p>soinfolog::delete($info_id,'$delete_children',$new_parent)</p>\n";
-			if (($info_id = intval($info_id)) <= 0)
+			if ((int) $info_id <= 0)
 			{
 				return;
 			}
-			$this->db->query("DELETE FROM phpgw_infolog WHERE info_id=$info_id",__LINE__,__FILE__);
-			$this->db->query("DELETE FROM phpgw_infolog_extra WHERE info_id=$info_id");
+			$this->db->delete($this->info_table,array('info_id'=>$info_id),__LINE__,__FILE__);
+			$this->db->delete($this->extra_table,array('info_id'=>$info_id),__LINE__,__FILE__);
 			$this->links->unlink(0,'infolog',$info_id);
 
 			if ($this->data['info_id'] == $info_id)
@@ -311,15 +314,17 @@
 			if ($delete_children)
 			{
 				$db2 = $this->db;	// we need an extra result-set
-				$db2->query("SELECT info_id FROM phpgw_infolog WHERE info_id_parent=$info_id AND info_owner=$this->user",__LINE__,__FILE__);
+				$db2->select($this->info_table,'info_id',array(
+						'info_id_parent'	=> $info_id,
+						'info_owner'		=> $this->user,
+					),__LINE__,__FILE__);
 				while ($db2->next_record())
 				{
 					$this->delete($db2->f(0),$delete_children);
 				}
 			}
-			// set parent_id to $new_parent for all not deleted children
-			$new_parent = intval($new_parent);
-			$this->db->query("UPDATE phpgw_infolog SET info_id_parent=$new_parent WHERE info_id_parent=$info_id",__LINE__,__FILE__);
+			// set parent_id to $new_parent or 0 for all not deleted children
+			$this->db->update($this->info_table,array('info_id_parent'=>$new_parent),array('info_id_parent'=>$info_id),__LINE__,__FILE__);
 		}
 
 		/*!
@@ -331,11 +336,10 @@
 		*/
 		function change_delete_owner($owner,$new_owner=0)  // new_owner=0 means delete
 		{
-			$owner = intval($owner);
-			if (!($new_owner = intval($new_owner)))
+			if (!(int) $new_owner)
 			{
 				$db2 = $this->db;	// we need an extra result-set
-				$db2->query("SELECT info_id FROM phpgw_infolog WHERE info_owner=$owner",__LINE__,__FILE__);
+				$db2->select($this->info_table,'info_id',array('info_owner'=>$owner),__LINE__,__FILE__);
 				while($db2->next_record())
 				{
 					$this->delete($this->db->f(0),False);
@@ -343,9 +347,9 @@
 			}
 			else
 			{
-				$this->db->query("UPDATE phpgw_infolog SET info_owner=$new_owner WHERE info_owner=$owner",__LINE__,__FILE__);
+				$this->db->update($this->info_table,array('info_owner'=>$new_owner),array('info_owner'=>$owner),__LINE__,__FILE__);
 			}
-			$this->db->query("UPDATE phpgw_infolog SET info_responsible=$new_owner WHERE info_responsible=$owner",__LINE__,__FILE__);
+			$this->db->update($this->info_table,array('info_responsible'=>$new_owner),array('info_responsible'=>$owner),__LINE__,__FILE__);
 		}
 
 		/*!
@@ -357,59 +361,29 @@
 		*/
 		function write($values)  // did _not_ ensure ACL
 		{
-			include(PHPGW_SERVER_ROOT.'/infolog/setup/tables_current.inc.php');
-			$db_cols = $phpgw_baseline['phpgw_infolog']['fd'];
-			unset($phpgw_baseline);
+			$info_id = (int) $values['info_id'];
 
-			$info_id = intval($values['info_id']) > 0 ? intval($values['info_id']) : 0;
-
+			$table_def = $this->db->get_table_definitions('infolog',$this->info_table);
+			$to_write = array();
 			foreach($values as $key => $val)
 			{
-				if ($key != 'info_id')
+				if ($key != 'info_id' && isset($table_def['fd'][$key]))
 				{
-					if (!isset($db_cols[$key]))
-					{
-						continue;	// not in infolog-table
-					}
-					$this->data[$key] = $val;   // update internal data
-
-					switch($db_cols[$key]['type'])	// protection against query-insertion
-					{
-						case 'int': case 'auto':
-							$val = intval($val);
-							break;
-						default:
-							$val = "'".$this->db->db_addslashes($val)."'";
-							break;
-					}
-					$cols .= (strlen($cols) ? ',' : '').$key;
-					$vals .= (strlen($vals) ? ',' : '').$val;
-					$query .= (strlen($query) ? ',' : '')."$key=$val";
+					$to_write[$key] = $this->data[$key] = $val;   // update internal data
 				}
 			}
 			if (($this->data['info_id'] = $info_id))
 			{
-				$query = "UPDATE phpgw_infolog SET $query WHERE info_id=$info_id";
-				$this->db->query($query,__LINE__,__FILE__);
+				$this->db->update($this->info_table,$to_write,array('info_id'=>$info_id),__LINE__,__FILE__);
 			}
 			else
 			{
-				$query = "INSERT INTO phpgw_infolog ($cols) VALUES ($vals)";
-				$this->db->query($query,__LINE__,__FILE__);
-				$this->data['info_id']=$this->db->get_last_insert_id('phpgw_infolog','info_id');
+				$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
+				$this->data['info_id']=$this->db->get_last_insert_id($this->info_table,'info_id');
 			}
 			//echo "<p>soinfolog.write values= "; _debug_array($values);
 
 			// write customfields now
-			$existing = array();
-			if ($info_id)	// existing entry
-			{
-				$this->db->query("SELECT info_extra_name FROM phpgw_infolog_extra WHERE info_id=$info_id",__LINE__,__FILE__);
-				while($this->db->next_record())
-				{
-					$existing[strtolower($this->db->f(0))] = True;
-				}
-			}
 			foreach($values as $key => $val)
 			{
 				if ($key[0] != '#')
@@ -418,17 +392,12 @@
 				}
 				$this->data[$key] = $val;	// update internal data
 
-				$val  = $this->db->db_addslashes($val);
-				$name = $this->db->db_addslashes($key = substr($key,1));
-				if ($existing[strtolower($key)])
-				{
-					$query = "UPDATE phpgw_infolog_extra SET info_extra_value='$val' WHERE info_id=$info_id AND info_extra_name='$name'";
-				}
-				else
-				{
-					$query = "INSERT INTO phpgw_infolog_extra (info_id,info_extra_name,info_extra_value) VALUES (".$this->data['info_id'].",'$name','$val')";
-				}
-				$this->db->query($query,__LINE__,__FILE__);
+				$this->db->insert($this->extra_table,array(
+						'info_extra_value'=>$val
+					),array(
+						'info_id'			=> $info_id,
+						'info_extra_name'	=> substr($key,1),
+					),__LINE__,__FILE__);
 			}
 			// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
 
@@ -448,7 +417,10 @@
 			{
 				return 0;
 			}
-			$this->db->query($sql="select count(*) FROM phpgw_infolog WHERE info_id_parent=$info_id AND ".$this->aclFilter(),__LINE__,__FILE__);
+			$this->db->select($this->info_table,'count(*)',array(
+					'info_id_parent' => $info_id,
+					$this->aclFilter()
+				),__LINE__,__FILE__);
 
 			$this->db->next_record();
 			//echo "<p>anzSubs($info_id) = ".$this->db->f(0)." ($sql)</p>\n";
@@ -486,7 +458,7 @@
 
 				if (count($links))
 				{
-					$link_extra = ($action == 'sp' ? 'OR' : 'AND').' phpgw_infolog.info_id IN ('.implode(',',$links).')';
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." $this->info_table.info_id IN (".implode(',',$links).')';
 				}
 			}
 			if (!empty($query['order']) && eregi('^[a-z_0-9, ]+$',$query['order']) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
@@ -540,9 +512,23 @@
 			if ($query['query']) $query['search'] = $query['query'];	// allow both names
 			if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 			{
-				$pattern = "'%".$this->db->db_addslashes($query['search'])."%'";
-				$sql_query = "AND (info_from like $pattern OR info_subject LIKE $pattern OR info_des LIKE $pattern OR info_extra_value LIKE $pattern) ";
-				$join = 'LEFT JOIN phpgw_infolog_extra ON phpgw_infolog.info_id=phpgw_infolog_extra.info_id';
+				$pattern = $this->db->quote('%'.$query['search'].'%');
+
+				$columns = array('info_from','info_subject','info_extra_value');
+				switch($this->db->Type)
+				{
+					case 'mssql':
+						$columns[] = 'CAST(info_des AS varchar)';
+						break;
+					case 'sapdb':
+					case 'maxdb':
+						// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
+						break;
+					default:
+						$columns[] = 'info_des';
+				}
+				$sql_query = 'AND ('.implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
+				$join = "LEFT JOIN $this->extra_table ON $this->info_table.info_id=$this->extra_table.info_id";
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
 
@@ -554,10 +540,10 @@
 			$ids = array( );
 			if ($action == '' || $action == 'sp' || count($links))
 			{
-				$sql_query = "FROM phpgw_infolog $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+				$sql_query = "FROM $this->info_table $join WHERE ($filtermethod $pid $sql_query) $link_extra";
 				switch($this->db->Type)
 				{
-					// mssql and others cant use DISTICT of text columns (info_des) are involved
+					// mssql and others cant use DISTICT if text columns (info_des) are involved
 					case 'mssql':
 					case 'sapdb':
 					case 'maxdb':
@@ -566,14 +552,14 @@
 					default:
 						$distinct = 'DISTINCT';
 				}
-				$this->db->query($sql="SELECT $distinct phpgw_infolog.info_id ".$sql_query,__LINE__,__FILE__);
+				$this->db->query($sql="SELECT $distinct $this->info_table.info_id ".$sql_query,__LINE__,__FILE__);
 				$query['total'] = $this->db->num_rows();
 
 				if (!$query['start'] || $query['start'] > $query['total'])
 				{
 					$query['start'] = 0;
 				}
-				$this->db->limit_query($sql="SELECT $distinct phpgw_infolog.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
+				$this->db->limit_query($sql="SELECT $distinct $this->info_table.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
 				while ($this->db->next_record())
 				{
