@@ -111,8 +111,11 @@
 				$changes = array();
 			}
 			$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
-
-			$GLOBALS['phpgw']->common->phpgw_header();
+			
+			if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+			{
+				$GLOBALS['phpgw']->common->phpgw_header();
+			}
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
 				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
@@ -148,7 +151,11 @@
 
 			if ($this->stable)
 			{
-				echo parse_navbar() . $html;
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
+				{
+					echo parse_navbar();
+				}
+				echo $html;
 			}
 			else
 			{

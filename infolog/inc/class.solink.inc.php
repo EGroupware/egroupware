@@ -12,6 +12,7 @@
 
 	/* $Id$ */
 
+	$GLOBALS['phpgw_info']['flags']['included_classes']['solink'] = True;
 	/*!
 	@class solink
 	@author ralfbecker

@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$save_app = $GLOBALS['phpgw_info']['flags']['currentapp']; 
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog'; 
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
 
 	$GLOBALS['phpgw']->translation->add_app('infolog');
 
@@ -25,9 +25,13 @@
 	$out = $html->form($out,'','/index.php',array('menuaction'=>'addressbook.uiaddressbook.view','ab_id'=>$GLOBALS['ab_id']));
 	$GLOBALS['phpgw']->template->set_var('phpgw_body',$out,True);
 */
+	$GLOBALS['phpgw_info']['etemplate']['hooked'] = True;
+
 	$infolog = CreateObject('infolog.uiinfolog');
 	$infolog->index(0,'addressbook',$GLOBALS['ab_id'],array(
 		'menuaction' => 'addressbook.uiaddressbook.view',
 		'ab_id' => $GLOBALS['ab_id']
 	));
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app;
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
+	unset($GLOBALS['phpgw_info']['etemplate']['hooked']);
+

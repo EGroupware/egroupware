@@ -13,6 +13,8 @@
 	/* $Id$ */
 
 	include_once(PHPGW_INCLUDE_ROOT . '/infolog/inc/class.solink.inc.php');
+	
+	$GLOBALS['phpgw_info']['flags']['included_classes']['bolink'] = True;
 
 	/*!
 	@class bolink

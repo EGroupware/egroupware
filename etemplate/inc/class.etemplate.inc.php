@@ -12,6 +12,10 @@
 
 	/* $Id$ */
 
+	if (!function_exists('get_var'))
+	{
+		include_once('get_var.php');
+	}
 	$ui = ''; // html UI, which UI to use, should come from api and be in $GLOBALS['phpgw']???
 	if ($_ENV['DISPLAY'] && isset($_SERVER['_']))
 	{
