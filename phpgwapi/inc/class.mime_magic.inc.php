@@ -19,7 +19,7 @@
   *  the License, or (at your option) any later version.               *
   \********************************************************************/
 
-  /* $Id */
+  /* $Id$ */
 
 	class mime_magic
 	{
