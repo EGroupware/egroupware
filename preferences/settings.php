@@ -33,14 +33,16 @@
 				return True;
 			}
 		}
+
 		$memberships = $phpgw->accounts->memberships($owner);
 		for ($k=0;$k<count($memberships);$k++)
 		{
 			$apps_list = $acl->get_app_list_for_id('run',1,$memberships[$k]['account_id']);
-			asort($apps_list);
 
 			if (is_array($apps_list))
 			{
+				asort($apps_list);
+
 				while($apps = each($apps_list))
 				{
 					if($apps[1] == 'admin')
