@@ -1,4 +1,4 @@
-[08--2000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
+[08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly
 	   - remove all remaining references to $dbase and $phpgw_db we are now using
 	     $phpgw->db for database stuff
