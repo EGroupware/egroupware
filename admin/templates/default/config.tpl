@@ -29,16 +29,6 @@
     </td>
    </tr>
 
-<!--   <tr class="row_off">
-    <td>{lang_Use_pure_HTML_compliant_code_(not_fully_working_yet)}:</td>
-    <td>
-     <select name="newsettings[htmlcompliant]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_htmlcompliant_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr> -->
-
    <tr class="row_off">
     <td>{lang_Use_cookies_to_pass_sessionid}:</td>
     <td>
