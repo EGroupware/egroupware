@@ -126,15 +126,30 @@
      }
   }
 ?>
- <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
-    function opennotifywindow()
-    {
-      window.open("<?php echo $phpgw->link("notify.php")?>", "phpGroupWare", "width=150,height=25,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
-    }
- </SCRIPT>
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+	var NotifyWindow;
+
+	function opennotifywindow()
+	{
+		if (NotifyWindow)
+		{
+			if (NotifyWindow.closed)
+			{
+				NotifyWindow.stop();
+				NotifyWindow.close();
+			}
+		}
+		NotifyWindow = window.open("<?php echo $phpgw->link("notify.php")?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
+		if (NotifyWindow.opener == null)
+		{
+			NotifyWindow.opener = window;
+		}
+	}
+</SCRIPT>
 
 <?php
   echo '<p><table border="0" width="100%" align="center">';
+//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
   //echo '<a href="javascript:opennotifywindow()">Open notify window</a>';
   
   if ($phpgw_info["user"]["apps"]["stocks"] && $phpgw_info["user"]["preferences"]["stocks"]["enabled"]) {
