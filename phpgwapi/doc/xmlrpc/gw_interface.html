@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>   Proposal for a Common Groupware Interface Standard
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"></HEAD
+><BODY
+CLASS="ARTICLE"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>Proposal for a Common Groupware Interface Standard</A
+></H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+></A
+></H3
+><HR></DIV
+><DIV
+CLASS="SECT1"
+><H2
+CLASS="SECT1"
+><A
+NAME="AEN8"
+>Scope</A
+></H2
+><P
+>   As many different opensource and freesoftware groupware systems are being developed, the full realization of the dream of a connected world should be prefaced by an agreement to interoperate. There are limited ways in which cooperation with these and commercial groupware systems may be achecived, the majority if not all of which were derived via the establishment of open standards. These might include email (POP3/IMAP), contacts(LDAP,vcard), or scheduling(ical/vcal). It is felt that while these have proven themselves to be very useful, they are insufficient to satisfy the real needs of a typical business environment.
+  </P
+><P
+>   This document hopes to provide a reasonable, if limited, recommendation for a set of standardized methods to be used for groupware services interaction. More specifically, it hopes to address the need for such a standard as well as to spur discussion about the common service names and methods themselves.
+  </P
+><P
+>   Examples will be given for implementations in XML-RPC, since this standard is relatively fixed and open.
+  </P
+><P
+>   This document does not provide recommendations for the underlying access control system which would allow or deny a particular action.
+  </P
+><P
+>   Also not discussed here is login and authorization to be used for initial access to a service provider.
+  </P
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="AEN15"
+>The Services</A
+></H2
+><DIV
+CLASS="SECT2"
+><H3
+CLASS="SECT2"
+><A
+NAME="AEN17"
+>Overview</A
+></H3
+><P
+>    There are a few common services types that will be needed for minimum useability of a groupware server or application. They are:
+   </P
+><P
+></P
+><UL
+><LI
+><P
+>    Contacts
+    </P
+></LI
+><LI
+><P
+>    Schedule
+    </P
+></LI
+><LI
+><P
+>    Notes
+    </P
+></LI
+><LI
+><P
+>    Todo
+    </P
+></LI
+></UL
+><P
+>    These services are represented already in places such as existing groupware client-server applications and also in the PalmOS basic-4 buttons and applications. Different systems may have different names for these services internally, e.g. Contacts - addresses, addressbook, people, Schedule - calendar, agenda, meetings.
+   </P
+><P
+>    Within each of these services are some common methods that would be called to store, retreive, or update data:
+   </P
+><P
+></P
+><UL
+><LI
+><P
+>    read_list
+    </P
+></LI
+><LI
+><P
+>    read
+    </P
+></LI
+><LI
+><P
+>    save
+    </P
+></LI
+><LI
+><P
+>    delete
+    </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN40"
+>Detail</A
+></H3
+><DIV
+CLASS="SECT3"
+><H4
+CLASS="SECT3"
+><A
+NAME="AEN42"
+>Contacts</A
+></H4
+><P
+>     The concept of contacts may encompass local addressbooks, LDAP, and lists stored in other media. The purpose of the contacts service is not to duplicate or attempt to replace these. In some respects, it might do just that. But its goal is more so to provide a common and shareable way for the other core services to create, edit, and read a common user and address list. All of the other services may use the contact service to obtain record owner information to be used in access control. They would also use them when it is required to share this data, as with a meeting where other local and non-local users will be invited to attend.
+    </P
+><P
+>     Contacts may include the local installed user base, users on other cooperative servers, or email addresses used for limited cooperation with other groupware services that are not compliant with this service scheme or implementations thereof. It could also include individuals using web-based or local ISP email services. The scope of this document, however, is to define the service with regard to the common methods to be used for server-server and client-server communications:
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     read_list
+     </P
+></LI
+></UL
+><P
+>     This method is used to list contacts, with or without limits, filters, or search criteria. In this way it can be used for simple lists or to search for contact records and their identifiers. The optional search criteria includes:
+    </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>     start - Start at this identifier (integer: default 0)
+     </P
+></LI
+><LI
+><P
+>     limit - Limit to this number of records returned(integer: unlimited by default)
+     </P
+></LI
+><LI
+><P
+>     fieldlist - limit to showing only these fields (array: default to identifier, owner identifier, possibly firstname and lastname)
+     </P
+></LI
+><LI
+><P
+>     filter - Show records that are public or private only, or other system-specific filters, e.g group or company(string: default '')
+     </P
+></LI
+><LI
+><P
+>     query - Search internal fieldlist for a value (string: default '')
+     </P
+></LI
+></OL
+><P
+>     The return for this method includes:
+    </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>     count of number of records returned(integer)
+     </P
+></LI
+><LI
+><P
+>     array consisting of: array: identifier =&gt; (array: fieldlist key =&gt; value pairs)
+     </P
+></LI
+></OL
+><P
+></P
+><UL
+><LI
+><P
+>     read
+     </P
+></LI
+></UL
+><P
+>     Once the identifier for a single contact record is known, the contact may be read for more detail using this method. This takes two parameters:
+    </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>     identifier - (integer: no default)
+     </P
+></LI
+><LI
+><P
+>     fieldlist - limit to showing only these fields (array: default to identifier, owner identifier, possibly firstname and lastname)
+     </P
+></LI
+></OL
+><P
+>     And returns:
+    </P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>     array consisting of: array: identifier =&gt; (array: fieldlist key =&gt; value pairs)
+     </P
+></LI
+></OL
+><P
+></P
+><UL
+><LI
+><P
+>     save
+     </P
+></LI
+></UL
+><P
+>     This is a method used to save an existing record or create a new one. If the identifier for an existing record is not passed, a new entry will be created.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>     delete
+     </P
+></LI
+></UL
+><P
+>     This will allow deletion of a record by passing its identifier.
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="AEN88"
+>Schedule</A
+></H4
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="AEN90"
+>Notes</A
+></H4
+></DIV
+><DIV
+CLASS="SECT3"
+><HR><H4
+CLASS="SECT3"
+><A
+NAME="AEN92"
+>Todo</A
+></H4
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN94"
+>Examples in XML-RPC</A
+></H3
+><P
+>    Query the contacts service for read_list, using only start and limit to grab the first 5 records, starting with identifier 1. Additionally, return only the firstname and lastname fields n_given and n_family (firstname and lastname in pseudo vcard format):
+   </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;methodCall&#62;
+&#60;methodName&#62;service.contacts.read_list&#60;/methodName&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;start&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;1&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;limit&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;5&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;fields&#60;/name&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;n_given&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;n_given&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;n_family&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;n_family&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;query&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;filter&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodCall&#62;
+   </PRE
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECT1"
+><HR><H2
+CLASS="SECT1"
+><A
+NAME="AEN98"
+>Conclusion</A
+></H2
+><P
+>   This document outlined the following services and methods:
+  </P
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN101"
+>Contacts:</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>    service.contacts.read_list(&lsqb;search criteria&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.contacts.read(identifier,&lsqb;fieldlist&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.contacts.save(fields)
+    </P
+></LI
+><LI
+><P
+>    service.contacts.delete(identifier)
+    </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN112"
+>Schedule:</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>    service.schedule.read_list(&lsqb;search criteria&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.schedule.read(identifier,&lsqb;fieldlist&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.schedule.save(fields)
+    </P
+></LI
+><LI
+><P
+>    service.schedule.delete(identifier)
+    </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN123"
+>Notes:</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>    service.notes.read_list(&lsqb;search criteria&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.notes.read(identifier,&lsqb;fieldlist&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.notes.save(fields)
+    </P
+></LI
+><LI
+><P
+>    service.notes.delete(identifier)
+    </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><HR><H3
+CLASS="SECT2"
+><A
+NAME="AEN134"
+>Todo:</A
+></H3
+><P
+></P
+><UL
+><LI
+><P
+>    service.todo.read_list(search criteria)
+    </P
+></LI
+><LI
+><P
+>    service.todo.read(identifer,&lsqb;fieldlist&rsqb;)
+    </P
+></LI
+><LI
+><P
+>    service.todo.save(fields)
+    </P
+></LI
+><LI
+><P
+>    service.todo.delete(identifier)
+    </P
+></LI
+></UL
+></DIV
+></DIV
+></DIV
+></BODY
+></HTML
+>
