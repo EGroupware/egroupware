@@ -803,7 +803,7 @@
 			elseif($event['public'] == 2)
 			{
 				$is_private = True;
-				$groups = $phpgw->accounts->memberships($owner);
+				$groups = $phpgw->accounts->membership($owner);
 				while (list($key,$group) = each($groups))
 				{
 					if (strpos(' '.implode($event['groups'],',').' ',$group['account_id']))
