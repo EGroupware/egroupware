@@ -31,21 +31,15 @@ attributetype ( 2.3.6.1.1.1.1.103
 # BELOW ARE OPTIONAL
 attributetype ( 2.3.6.1.1.1.1.105
 	NAME 'phpgwMiddlename'
-	EQUALITY caseExactIA5Match
-	SUBSTR caseExactIA5SubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+	SUP name )
 
 attributetype ( 2.3.6.1.1.1.1.106
 	NAME 'phpgwPrefix'
-	EQUALITY caseExactIA5Match
-	SUBSTR caseExactIA5SubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+	SUP name )
 
 attributetype ( 2.3.6.1.1.1.1.107
 	NAME 'phpgwSuffix'
-	EQUALITY caseExactIA5Match
-	SUBSTR caseExactIA5SubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+	SUP name )
 
 attributetype ( 2.3.6.1.1.1.1.108
 	NAME 'phpgwAudio'
@@ -92,92 +86,63 @@ attributetype ( 2.3.6.1.1.1.1.115
 
 attributetype ( 2.3.6.1.1.1.1.116
 	NAME 'phpgwAdrTwoStreet'
-	EQUALITY caseIgnoreMatch
-	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+	SUP street )
 
 attributetype ( 2.3.6.1.1.1.1.117
 	NAME 'phpgwAdrTwoLocality'
-	EQUALITY caseIgnoreMatch
-	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+	SUP l )
 
 attributetype ( 2.3.6.1.1.1.1.118
 	NAME 'phpgwAdrTwoRegion'
-	EQUALITY caseIgnoreMatch
-	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+	SUP st )
 
 attributetype ( 2.3.6.1.1.1.1.119
 	NAME 'phpgwAdrTwoPostalCode'
-	EQUALITY caseIgnoreMatch
-	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+	SUP postalcode )
 
 attributetype ( 2.3.6.1.1.1.1.120
 	NAME 'phpgwAdrTwoCountryName'
-	EQUALITY caseIgnoreMatch
-	SUBSTR caseIgnoreSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+	SUP countryname )
 
 attributetype ( 2.3.6.1.1.1.1.121
 	NAME 'phpgwAdrTwoType'
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.14
-	SINGLE-VALUE )
+	SUP phpgwAdrOneType )
 
 attributetype ( 2.3.6.1.1.1.1.122
 	NAME 'phpgwVoiceTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
 
 attributetype ( 2.3.6.1.1.1.1.123
 	NAME 'phpgwMsgTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
 
 attributetype ( 2.3.6.1.1.1.1.124
 	NAME 'phpgwPagerTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
  
 attributetype ( 2.3.6.1.1.1.1.125
 	NAME 'phpgwCellTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
  
 attributetype ( 2.3.6.1.1.1.1.126
 	NAME 'phpgwBbsTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
  
 attributetype ( 2.3.6.1.1.1.1.127
 	NAME 'phpgwModemTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
 
 attributetype ( 2.3.6.1.1.1.1.128
 	NAME 'phpgwMobileTelephoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
  
 attributetype ( 2.3.6.1.1.1.1.129
 	NAME 'phpgwIsdnphoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
 
 attributetype ( 2.3.6.1.1.1.1.130
 	NAME 'phpgwVideophoneNumber'
-	EQUALITY telephoneNumberMatch
-	SUBSTR telephoneNumberSubstringsMatch
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+	SUP telephonenumber )
 
 attributetype ( 2.3.6.1.1.1.1.131
 	NAME 'phpgwPreferPhone'
@@ -191,14 +156,11 @@ attributetype ( 2.3.6.1.1.1.1.132
 
 attributetype ( 2.3.6.1.1.1.1.133
 	NAME 'phpgwMailHome'
-    EQUALITY caseIgnoreIA5Match
-    SUBSTR caseIgnoreIA5SubstringsMatch
-    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+	SUP mail )
 
 attributetype ( 2.3.6.1.1.1.1.134
 	NAME 'phpgwMailHomeType'
-	EQUALITY caseExactIA5Match
-	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
+	SUP phpgwMailType )
 
 # phpgwContact
 # The phpgwContact represents people who are associated with a
