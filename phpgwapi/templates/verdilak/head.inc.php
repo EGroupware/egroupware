@@ -26,7 +26,7 @@
 		'img_shortcut'  => PHPGW_IMAGES_DIR . '/favicon.ico',
 		'charset'	=> lang('charset'),
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'] . $app,
-		'body_tags'	=> $bodyheader . $GLOBALS['phpgw']->common->get_body_attribs(),
+		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
 		'css'		=> $GLOBALS['phpgw']->common->get_css(),
 		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
 	);

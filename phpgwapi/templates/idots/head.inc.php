@@ -38,7 +38,7 @@
 		'charset'	=> lang('charset'),
 		'font_family'	=> $GLOBALS['phpgw_info']['theme']['font'],
 		'website_title'	=> $GLOBALS['phpgw_info']['server']['site_title'].$app,
-		'body_tags'	=> $bodyheader . $GLOBALS['phpgw']->common->get_body_attribs(),
+		'body_tags'	=> $bodyheader .' '. $GLOBALS['phpgw']->common->get_body_attribs(),
 		'theme_css'	=> $theme_css,
 		'css'		=> $GLOBALS['phpgw']->common->get_css(),
 		'java_script'	=> $GLOBALS['phpgw']->common->get_java_script(),
