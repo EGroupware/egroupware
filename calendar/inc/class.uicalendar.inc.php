@@ -3971,7 +3971,7 @@
 				}
 				$var['participants'] = array(
 					'field'	=> lang('Participants'),
-					'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_select_participants',$event['participants'],'calendar',7,$event['owner']),
+					'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_select_participants',$event['participants'],'calendar+',7,$event['owner']),
 				);
 /*
 // External Participants
