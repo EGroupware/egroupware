@@ -311,8 +311,8 @@
     <td>Use pure HTML compliant code (not fully working yet):</td>
     <td>
      <select name="newsettings[htmlcompliant]">
-      <option value="bottom"<?php echo $selected["True"]; ?>>True</option>
-      <option value="top"<?php echo $selected["False"]; ?>>False</option>
+      <option value="True"<?php echo $selected["True"]; ?>>True</option>
+      <option value="False"<?php echo $selected["False"]; ?>>False</option>
      </select>
     </td>
    </tr>
