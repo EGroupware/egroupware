@@ -12,10 +12,10 @@ account has been updated	common	zt	修改帳號
 account preferences	common	zt	帳號設定
 active	admin	zt	狀態
 add	common	zt	新增
-add a single pharse	transy	zt	新增一個pharse
+add a single phrase	transy	zt	新增一個phrase
 add new account	admin	zt	新增帳號
 add new application	admin	zt	新增應用程式
-add new pharse	transy	zt	新增一個新的pharse
+add new phrase	transy	zt	新增一個新的phrase
 add to addressbook	email	zt	新增至通訊錄
 address book	common	zt	通訊錄
 address book	addressbook	zt	通訊錄
@@ -81,7 +81,7 @@ create	common	zt	建立時間
 create	filemanager	zt	建立時間
 create group	admin	zt	建立新群組
 create lang.sql file	transy	zt	建立新語言
-create new langague set	transy	zt	新語言的設定
+create new language set	transy	zt	新語言的設定
 created by	common	zt	編輯者
 created by	todo	zt	編輯者
 current users	common	zt	線上使用者
@@ -104,7 +104,7 @@ delete	filemanager	zt	刪除
 description	calendar	zt	描述
 disabled	admin	zt	關閉
 display	admin	zt	列出
-display missing pharases in lang set	transy	zt	語系設定
+display missing phrases in lang set	transy	zt	語系設定
 done	common	zt	完成
 download	filemanager	zt	下載
 do_delete	filemanager	zt	刪除
@@ -242,8 +242,7 @@ new entry added sucessfully	common	zt	新增記事完成
 new group name	admin	zt	新群組名稱
 new message	email	zt	新訊息
 new password [ leave blank for no change ]	admin	zt	新密碼
-new pharse has been added	common	zt	New pharse has been added
-new pharse has been added	transy	zt	New pharse has been added
+new phrase has been added	transy	zt	New phrase has been added
 news file	admin	zt	新檔案
 news headlines	common	zt	頭條新聞
 news reader	common	zt	新的讀者
@@ -280,8 +279,8 @@ percent of users that logged out	admin	zt	使用者登出比率
 permissions	admin	zt	新檔案
 permissions this group has	admin	zt	允許\組使用
 permissions to the files/users directory	common	zt	允許使\用資料夾
-pharse in english	transy	zt	英語的pharse
-pharse in new langague	transy	zt	新語言的pharse
+phrase in english	transy	zt	英語的phrase
+phrase in new language	transy	zt	新語言的phrase
 phpgroupware login	login	zt	登入
 please select a message first	email	zt	請選擇訊息
 please x by hand	common	zt	請由傳遞
@@ -326,11 +325,11 @@ section	email	zt	段落
 select application	transy	zt	選擇應用程式
 select different theme	preferences	zt	選擇不同的主題
 select headline news sites	preferences	zt	選擇頭條新聞的網站
-select langague to generate for	transy	zt	從哪選擇語言
+select language to generate for	transy	zt	從哪選擇語言
 select permissions this group will have	admin	zt	選擇那個群組可使用
 select users for inclusion	admin	zt	選擇可使用的使用者
-select which application for this pharse	transy	zt	選擇pharse的應用
-select which langauge for this pharse	transy	zt	選擇pharse的語系
+select which application for this phrase	transy	zt	選擇phrase的應用
+select which language for this phrase	transy	zt	選擇phrase的語系
 send	email	zt	送出
 send deleted messages to the trash	email	zt	刪除
 september	common	zt	九月
@@ -424,7 +423,7 @@ view	common	zt	預覽
 view access log	admin	zt	察看使用記錄
 view sessions	admin	zt	察看session
 view this entry	calendar	zt	預覽記事
-view/edit/delete all pharses	transy	zt	預覽、編輯、刪除記事
+view/edit/delete all phrases	transy	zt	預覽、編輯、刪除記事
 we	calendar	zt	W
 wed	calendar	zt	星期三
 wednesday	common	zt	三

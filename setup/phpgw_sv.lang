@@ -14,11 +14,10 @@ account preferences	common	sv	Konto inställningar
 account_permissions	admin	sv	Applikations rättigheter
 active	admin	sv	Aktiv
 add	common	sv	Lägg till
-add a single pharse	transy	sv	Lägg till en enkel fras
+add a single phrase	transy	sv	Lägg till en enkel fras
 add a single phrase	transy	sv	Lägg till enkel fras
 add new account	admin	sv	Lägg till nytt konto
 add new application	admin	sv	Lägg till ny application
-add new pharse	transy	sv	Lägg till ny fras
 add new phrase	transy	sv	Lägg till ny fras
 add to addressbook	email	sv	Lägg till i adressbok
 address book	addressbook	sv	Adress bok
@@ -95,7 +94,6 @@ create	common	sv	Skapa
 create	filemanager	sv	Skapa
 create group	admin	sv	Skapa Grupp
 create lang.sql file	transy	sv	Skapa lang.sql fil
-create new langague set	transy	sv	Skapa ny språk uppsättning
 create new language set	transy	sv	Skapa ny språkuppsättning
 created by	common	sv	Skapat av
 created by	todo	sv	Skapat av
@@ -120,7 +118,6 @@ delete	filemanager	sv	Ta bort
 description	calendar	sv	Beskrivning
 disabled	admin	sv	Deaktivera
 display	admin	sv	Visa
-display missing pharases in lang set	transy	sv	Visa saknade fraser i språkuppsättning
 display missing phrases in lang set	transy	sv	Visa saknade fraser i en språkuppsättning
 do_delete	filemanager	sv	Radera nu
 done	common	sv	Färdig
@@ -265,8 +262,6 @@ new group name	admin	sv	Nytt grupp namn
 new message	email	sv	Nytt meddelande
 new password [ leave blank for no change	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
 new password [ leave blank for no change ]	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
-new pharse has been added	common	sv	Ny fras har lagts till
-new pharse has been added	transy	sv	Ny fras har lagts till
 new phrase has been added	common	sv	Ny fras har lagts till
 new phrase has been added	transy	sv	Ny fras har lagts till
 new_file	filemanager	sv	Ny Fil
@@ -306,8 +301,6 @@ percent of users that logged out	admin	sv	Procent av användare som loggat ut
 permissions	admin	sv	Rättigheter
 permissions this group has	admin	sv	Tillåtna applicationer för denna gruppen
 permissions to the files/users directory	common	sv	rättigheter på files/users bibliotek
-pharse in english	transy	sv	Fras på Engelska
-pharse in new langague	transy	sv	Fras på det nya språket
 phrase in english	transy	sv	Fras på Engelska
 phrase in new language	transy	sv	Fras på det nya språket
 please select a message first	email	sv	Vänligen välj ett meddelande först
@@ -355,13 +348,10 @@ select application	transy	sv	Välj applikation
 select columns to display	preferences	sv	Välj vilka kolumner som skall visas
 select different theme	preferences	sv	Välj annat tema
 select headline news sites	preferences	sv	Välj Headline News sites
-select langague to generate for	transy	sv	Välj språk att generera för
 select language to generate for	transy	sv	Välj språk att generera för
 select permissions this group will have	admin	sv	Välj rättigheter för denna grupp
 select users for inclusion	admin	sv	Välj gruppmedlemmar
-select which application for this pharse	transy	sv	välj vilken applikation för denna fras
 select which application for this phrase	transy	sv	Välj applikation för denna fras
-select which langauge for this pharse	transy	sv	välj vilket språk för denna fras
 select which language for this phrase	transy	sv	Välj vilket språk för denna fras
 send	email	sv	Sänd
 send deleted messages to the trash	email	sv	Sänd borttagna meddelande till papperkorgen
@@ -461,7 +451,6 @@ view	common	sv	Visa
 view access log	admin	sv	Visa Access Log
 view sessions	admin	sv	Visa sessions
 view this entry	calendar	sv	Visa denna post
-view/edit/delete all pharses	transy	sv	Visa/ändra/ta bort alla fraser
 view/edit/delete all phrases	transy	sv	Visa/editera/radera alla fraser
 we	calendar	sv	On
 wed	calendar	sv	Ons
