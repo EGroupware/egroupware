@@ -8,6 +8,7 @@ date format	preferences	de	Datumsformat
 default application	preferences	de	Standard-Anwendung
 edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enter your new password	preferences	de	Neues Passwort eingeben
+grant access	preferences	de	Zugriff gew&auml;hren
 grant bookmark access	preferences	de	Berechtigungen für Lesezeichen Zugriffe
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
@@ -15,10 +16,7 @@ interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 max matchs per page	preferences	de	Maximale Treffer pro Seite
 monitor newsgroups	preferences	de	Newsgroups überwachen
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail server. Dies müssen sie separat tun.
-notes categories	preferences	de	Kategorien editieren
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
-project access	preferences	de	Berechtigungen für Projekt Zugriffe
-project categories	preferences	de	Projekt Kategorien
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
 select headlines to display	preferences	de	Anzuzeigende Schlagzeilen auswählen
