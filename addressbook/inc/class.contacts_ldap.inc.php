@@ -41,9 +41,10 @@
 		var $ext_table="phpgw_addressbook_extra";
 
 		var $account_id;
-		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid
+		var $stock_contact_fields;	// This is an array of almost the fields in the phpgw_addressbook table, except id,owner,access,lid,tid
 		var $email_types;			// VCard email type array
 		var $total_records;			// This will contain numrows for data retrieved
+		var $grants;                // This holds all of the users that have granted access to there entrys
 
 		function contacts_()
 		{
@@ -56,14 +57,10 @@
 				$phpgw_info['server']['ldap_contact_pw']
 			);
 			$this->account_id = $phpgw_info["user"]["account_id"];
+			$this->grants     = $phpgw->acl->get_grants('addressbook');
 
 			// The left side are the array elements used throughout phpgw, right side are the ldap attributes
     	    $this->stock_contact_fields = array(
-//				"id"                  => "uidnumber",
-//				"lid"                 => "uid",
-//				"tid"                 => "phpgwcontacttype",
-//				"owner"               => "phpgwowner",
-//				"access"              => "phpgwaccess",
 				"fn"                  => "cn",        // 'prefix given middle family suffix'
 				"n_given"             => "givenname",   // firstname
 				"n_family"            => "sn",  // lastname
