@@ -160,7 +160,8 @@ class html
 
 		if (!is_array($key))
 		{
-			$key = explode(',',$key);
+			// explode on ',' only if multiple values expected and the key contains just numbers and commas
+			$key = $multiple && ('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
 		}
 		foreach($arr as $k => $text)
 		{
@@ -549,6 +550,7 @@ htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 			$vars = $url;
 			$url = '/index.php';
 		}
+		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".$this->link($url,$vars)."</p>";
 		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
 
