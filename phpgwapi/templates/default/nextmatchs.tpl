@@ -21,18 +21,18 @@
 
 
 <!-- BEGIN form -->
-   <td width="2%" align="{align}" valign="top">
-    <form method="POST" action="{action}" name="{form_name}">
-{hidden}
-     <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
-      <tr>
-       <td align="{align}">
-        <input type="image" src="{img}" border="{border}" alt="{label}" width="12" height="12" name="start" value="{start}">
-       </td>
-      </tr>
-     </table>
-    </form>
-   </td>
+<form method="POST" action="{action}" name="{form_name}">
+<td width="2%" align="{align}" valign="top">
+	{hidden}
+	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="{align}">
+			<input type="image" src="{img}" border="{border}" alt="{label}" width="12" height="12" name="start" value="{start}">
+		</td>
+	</tr>
+	</table>
+</td>
+</form>
 <!-- END form -->
 
 
@@ -42,15 +42,15 @@
 
 
 <!-- BEGIN link -->
-   <td width="2%" align="{align}" valign="top">
-    <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
-     <tr>
-      <td align="{align}">
-       <img src="{img}" border="{border}" width="12" height="12" alt="{label}">
-      </td>
-     </tr>
-    </table>
-   </td>
+<td width="2%" align="{align}" valign="top">
+	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
+	<tr>
+		<td align="{align}">
+			<img src="{img}" border="{border}" width="12" height="12" alt="{label}">
+		</td>
+	</tr>
+	</table>
+</td>
 <!-- END link -->
 
 
