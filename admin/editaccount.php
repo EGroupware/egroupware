@@ -113,6 +113,8 @@
   $phpgw->common->header();
   $phpgw->common->navbar();
   
+  $phpgw->db->query("select loginid from accounts where con='$con'");
+  $phpgw->db->next_record();
   $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
 
   $phpgw->db->query("select * from accounts where con='$con'");
