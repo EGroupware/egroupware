@@ -239,53 +239,64 @@
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
-	function html_input_hidden($vars) {
-		if (!is_array($vars)) return '';
-		while (list($name,$value) = each($vars)) {
+	function html_input_hidden($vars)
+	{
+		if (!is_array($vars)) { return ''; }
+		while (list($name,$value) = each($vars))
+		{
 			if ($value != '')					// dont need to send all the empty vars
+			{
 				$html .= "<input type=hidden name=\"$name\" value=\"$value\">\n";
+			}
 		}
 		return $html;
 	}
 
-	function html_submit_button($name,$lang) {
+	function html_submit_button($name,$lang)
+	{
 		return "<input type=\"submit\" name=\"$name\" value=\"".lang($lang)."\">\n";
 	}
 
-	function phpgw_link($url,$vars='') {
+	function phpgw_link($url,$vars='')
+	{
 		global $phpgw;
-		if (is_array( $vars )) {
-			while(list($name,$value) = each($vars)) {
+		if (is_array( $vars ))
+		{
+			while(list($name,$value) = each($vars))
+			{
 				if ($value != '')				// dont need to send all the empty vars
+				{
 					$v[] = "$name=$value";
+				}
 			}
 			$vars = implode('&',$v);
 		}
 		return $phpgw->link($url,$vars);
 	}				
 
-	function html_1button_form($name,$lang,$hidden_vars,$url,$url_vars='',$method='POST') {
+	function html_1button_form($name,$lang,$hidden_vars,$url,$url_vars='',$method='POST')
+	{
 		$html = "<form method=\"$method\" action=\"".phpgw_link($url,$url_vars)."\">\n";
 		$html .= html_input_hidden($hidden_vars);
 		$html .= html_submit_button($name,$lang);
 		$html .= "</form>\n";
 		return $html;
 	}
-	
+
 	$common_vars = array('sort' => $sort,'order' => $order,'filter' => $filter,'start' => $start); // common vars for all buttons
-			
+
 	if (($this->grants[$record_owner] & PHPGW_ACL_EDIT) || ($record_owner == $phpgw_info['user']['account_id']))
 	{
 		$extra_vars = array('cd' => 16,'query' => $query,'cat_id' => $cat_id);
-		
+
 		if ($referer) $extra_vars += array( 'referer' => urlencode($referer));
-		
+
 		$t->set_var('edit_button',html_1button_form('edit','Edit',array('ab_id' => $ab_id),'/addressbook/edit.php',
-																  $common_vars + $extra_vars));
+			  $common_vars + $extra_vars));
 	}
 	$t->set_var('copy_button',html_1button_form('submit','copy',$common_vars+array( 'fields' => rawurlencode(serialize($fields[0]))),
-															  '/addressbook/add.php'));
-	
+		  '/addressbook/add.php'));
+
 	if ($fields[0]['n_family'] && $fields[0]['n_given'])
 	{
 		$t->set_var('vcard_button',html_1button_form('VCardForm','VCard',$common_vars+array( 'ab_id' => $ab_id),'/addressbook/vcardout.php'));
@@ -294,10 +305,10 @@
 	{
 		$t->set_var('vcard_button',lang('no vcard'));
 	}
-	
+
 	$t->set_var('done_button',html_1button_form('DoneForm','Done',$common_vars,
-																$referer ? ereg_replace('/phpgroupware','',$referer) : '/addressbook/index.php',
-																$common_vars + array('cd' => 16,'query' => $query)));
+		$referer ? ereg_replace('/phpgroupware','',$referer) : '/addressbook/index.php',
+		$common_vars + array('cd' => 16,'query' => $query)));
 	$t->set_var('access_link',$access_link);
 
 	$t->pfp('out','view_t');
