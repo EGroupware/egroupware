@@ -481,7 +481,8 @@
 				echo('<b>Halted.</b>');
 			}
 
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		/* public, override: haltmsg($msg)

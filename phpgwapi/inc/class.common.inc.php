@@ -301,28 +301,6 @@
 			return $ds;
 		}
 
-		// This function is used if the developer wants to stop a running app in the middle of execution
-		// We may need to do some clean up before hand
-		/*!
-		@function phpgw_exit
-		@abstract function to stop running an app
-		@discussion used to stop running an app in the middle of execution <br>
-		There may need to be some cleanup before hand
-		@param $call_footer boolean value to if true then call footer else exit
-		*/
-		function phpgw_exit($call_footer = False)
-		{
-			if ($call_footer)
-			{
-				$this->phpgw_footer();
-			}
-			else
-			{
-				$GLOBALS['phpgw']->db->disconnect();
-			}
-			exit;
-		}
-
 		/*!
 		@function randomstring
 		@abstract return a random string of size $size
@@ -1518,10 +1496,11 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					{
 						$this->phpgw_appfooter();
 					}
-					$GLOBALS['phpgw']->db->disconnect();
 					$this->phpgw_header();
 					$GLOBALS['phpgw']->template->pfp('out','phpgw_main_end');
 				}
+				
+				$GLOBALS['phpgw']->db->disconnect();
 
 				/* Clean up mcrypt */
 				if (@is_object($GLOBALS['phpgw']->crypto))
@@ -1536,7 +1515,6 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					echo 'Page loaded in ' . ($GLOBALS['debug_timer_stop'] - $GLOBALS['debug_timer_start']) . ' seconds.';
 				}
 			}
-//			echo 'an app is trying to run the phpgw_footer() more than once<br>';
 		}
 
 		function hex2bin($data)

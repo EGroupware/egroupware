@@ -169,12 +169,14 @@
 			if (!$resp)
 			{
 				echo '<p>IO error: '.$this->client->errstr.'</p>';
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			if ($resp->faultCode())
 			{
 				echo '<p>There was an error: '.$resp->faultCode().' '.$resp->faultString().'</p>';
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			return xmlrpc_decode($resp->value());
 		}

@@ -566,7 +566,7 @@
 							'readsess'	=> 1
 						)
 					);
-					$GLOBALS['phpgw']->common->phpgw_exit(True);
+					exit;
 				}
 				$overlapping_events = False;
 			}
@@ -575,7 +575,8 @@
 				if((!$l_cal['id'] && !$this->check_perms(PHPGW_ACL_ADD)) || ($l_cal['id'] && !$this->check_perms(PHPGW_ACL_EDIT,$l_cal['id'])))
 				{
 					ExecMethod('calendar.uicalendar.index');
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 
 				print_debug('prior to fix_update_time()');
@@ -732,7 +733,7 @@
 				   		'readsess'	=> 1
 				   	)
 				   );
-					$GLOBALS['phpgw']->common->phpgw_exit(True);
+					exit;
 				}
 
 				if($event['id'])
@@ -765,7 +766,7 @@
 				   			'this_event'	=> $event
 				   		)
 					);
-					$GLOBALS['phpgw']->common->phpgw_exit(True);
+					exit;
 				}
 				else
 				{
@@ -795,7 +796,8 @@
 				if($send_to_ui)
 				{
 					Execmethod('calendar.uicalendar.index');
-//					$GLOBALS['phpgw']->common->phpgw_exit();
+//					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+//					exit;
 				}
 			}
 		}

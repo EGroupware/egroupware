@@ -2903,7 +2903,8 @@ class boicalendar
 						)
 					)
 				);
-				$GLOBALS['phpwg']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			$uploaddir = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP;
 
@@ -2940,7 +2941,8 @@ class boicalendar
 						)
 					)
 				);
-				$GLOBALS['phpwg']->common->phpgw_exit();				
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			if(!is_object($GLOBALS['uicalendar']))
@@ -3202,7 +3204,8 @@ class boicalendar
 					)
 				)
 			);
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function export($l_event_id=0)

@@ -72,7 +72,8 @@
 			if ($var=='' || !isset($this->$var))
 			{
 				echo 'Programming Error: '.$this->getvar('classname').'->getvar('.$var.')!<br>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			//echo "Var = ".$var."<br>\n";
 			//echo $var." = ".$this->$var."<br>\n";

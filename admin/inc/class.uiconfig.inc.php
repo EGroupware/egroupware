@@ -137,7 +137,8 @@
 				{
 					$GLOBALS['phpgw']->session->appsession('session_data','admin_config',-1);
 					Header('Location: ' . $_redir);
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 			}
 

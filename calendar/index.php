@@ -37,5 +37,6 @@
 	);
 
 	Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$parms));
-	$GLOBALS['phpgw']->common->phpgw_exit();
+	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+	exit;
 ?>

@@ -80,7 +80,8 @@
 			if(!$ab_id)
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/addressbook/index.php'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			// First, make sure they have permission to this entry
@@ -95,7 +96,8 @@
 			if((!$perms) && ($check[0]['owner'] != $GLOBALS['phpgw_info']['user']['account_id']))
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.get_list'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$extrafields = array('address2' => 'address2');

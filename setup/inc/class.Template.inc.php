@@ -437,7 +437,7 @@
 				echo('<b>Halted.</b>');
 			}
 
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
+			exit;
 		}
 
 		/* public, override: haltmsg($msg)

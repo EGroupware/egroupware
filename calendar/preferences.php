@@ -88,7 +88,8 @@
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
-		$phpgw->common->phpgw_exit();
+		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+		exit;
 	}
 
 	function display_item($field,$data)

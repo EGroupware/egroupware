@@ -108,7 +108,7 @@
 				echo "</center>";
 				// Commit stack to log
 				$GLOBALS['phpgw']->log->commit();
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 		}
 	}

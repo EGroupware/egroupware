@@ -577,7 +577,7 @@
 					$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
 					$continue_app_data = False;
 					$GLOBALS['phpgw']->template->set_var('phpgw_body',"user has no rights to this app!!!<br>\n");
-					$GLOBALS['phpgw']->common->phpgw_exit(True);
+					exit;
 				}
 			}
 			if($continue_app_data)

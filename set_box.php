@@ -22,7 +22,6 @@
 //	if(basename($HTTP_REFERER) != 'home.php')
 //	{
 //		Header('Location: '.$GLOBALS['phpgw']->link('/home.php'));
-//		$GLOBALS['phpgw']->common->phpgw_exit();
 //	}
 
 //	$GLOBALS['phpgw']->preferences->delete('portal_order');
@@ -103,6 +102,6 @@
 	}
 
 	Header('Location: '.$GLOBALS['phpgw']->link('/home.php'));
-	$GLOBALS['phpgw']->common->phpgw_exit();
+	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+	exit;
 ?>
-

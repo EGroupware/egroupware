@@ -540,7 +540,7 @@
 			else
 			{
 				echo $s;
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 		}
 

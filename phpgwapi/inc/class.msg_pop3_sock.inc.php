@@ -119,7 +119,8 @@
 			if (!$this->open_port($server,$port,15))
 			{
 				echo '<p><center><b>' . lang('There was an error trying to connect to your POP3 server.<br>Please contact your admin to check the servername, username or password.').'</b></center>';
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			$this->read_port();
 			if(!$this->msg2socket('USER '.$user,"^\+ok",&$response) || !$this->msg2socket('PASS '.$pass,"^\+ok",&$response))

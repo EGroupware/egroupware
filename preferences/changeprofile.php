@@ -23,7 +23,8 @@
 	if ($GLOBALS['phpgw_info']['user']['permissions']['anonymous'])
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/'));
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+		exit;
 	}
 
 	if ($submit)

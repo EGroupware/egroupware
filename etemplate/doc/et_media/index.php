@@ -20,4 +20,5 @@
 	include('../header.inc.php');
 
 	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=et_media.et_media.edit'));
-	$GLOBALS['phpgw']->common->phpgw_exit();
+	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+	exit;

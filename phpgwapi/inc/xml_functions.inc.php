@@ -115,7 +115,8 @@
 		Header('Content-type: text/xml');
 		Header('Content-length: ' . strlen($payload));
 		print $payload;
-		$GLOBALS['phpgw']->common->phpgw_exit(False);
+		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+		exit;
 	}
 
 	// used to store state during parsing

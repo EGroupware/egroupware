@@ -288,7 +288,8 @@
 		function index($params='')
 		{
 			Header('Location: '. $this->page('',$params));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function printer_friendly($body)
@@ -642,13 +643,13 @@
 			if ($cal_id < 1)
 			{
 				echo lang('Invalid entry id.').'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			if(!$this->bo->check_perms(PHPGW_ACL_READ,$cal_id))
 			{
 				echo lang('You do not have permission to read this record!').'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$event = $this->bo->read_entry($cal_id);
@@ -656,7 +657,7 @@
 			if(!isset($event['id']))
 			{
 				echo lang("Sorry, this event does not exist").'.'.'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$this->bo->repeating_events = Array();
@@ -685,7 +686,7 @@
 			if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
 			{
 				echo '</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -846,7 +847,8 @@
 				if(!$this->bo->can_user_edit($event))
 				{
 					Header('Location: '.$this->page('view','&cal_id='.$cal_id));
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 				if(@isset($GLOBALS['HTTP_POST_VARS']['edit_type']) && $GLOBALS['HTTP_POST_VARS']['edit_type'] == 'single')
 				{
@@ -878,7 +880,8 @@
 			if(!isset($GLOBALS['HTTP_POST_VARS']['cal_id']) || !$GLOBALS['HTTP_POST_VARS']['cal_id'])
 			{
 				Header('Location: '.$this->index());
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
@@ -925,7 +928,8 @@
 				}
 
 				Header('Location: '.$this->index());
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 		}
 
@@ -952,13 +956,13 @@
 			if ($cal_id < 1)
 			{
 				echo lang('Invalid entry id.').'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			if(!$this->bo->check_perms(PHPGW_ACL_READ))
 			{
 				echo lang('You do not have permission to read this record!').'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$event = $this->bo->read_entry($cal_id);
@@ -966,12 +970,12 @@
 			if(!isset($event['id']))
 			{
 				echo lang('Sorry, this event does not exist').'.'.'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 			elseif(!isset($event['recur_exception']))
 			{
 				echo lang('Sorry, this event does not have exceptions defined').'.'.'</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$ret_value = $this->view_event($event,True);
@@ -980,7 +984,7 @@
 			if($ret_value == '<center>'.lang('You do not have permission to read this record!').'</center>')
 			{
 				echo '</center>'."\n";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
@@ -1046,7 +1050,8 @@
 				echo '<!-- Return Value = '.$cd.' -->'."\n";
 			}
 			Header('Location: '.$this->page('',($cd?'&cd='.$cd:'')));
-			$GLOBALS['phpgw']->common->phpgw_exit();	
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function add($cd=0,$readsess=0)
@@ -1107,7 +1112,8 @@
 			if(!$cal_id)
 			{
 				Header('Location: '.$this->page('','&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day)));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$date = sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day);
@@ -1139,7 +1145,8 @@
 				$cd = '';
 			}
 			Header('Location: '.$this->page('','&date='.$date.($cd?'&cd='.$cd:'')));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function day()
@@ -1260,7 +1267,8 @@
 			$this->bo->set_status(intval($GLOBALS['HTTP_GET_VARS']['cal_id']),intval($GLOBALS['HTTP_GET_VARS']['action']));
 
 			Header('Location: '.$this->page('',''));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function planner()
@@ -2052,7 +2060,8 @@
 				// If we reach this, it is because they didn't search for anything,
 				// attempt to send them back to where they where.
 				Header('Location: ' . $GLOBALS['phpgw']->link($from));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);

@@ -356,7 +356,7 @@
 			if($this->Halt_On_Error != "report")
 			{
 				echo "<p><b>Session halted.</b>";
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 		}
 

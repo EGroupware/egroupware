@@ -180,7 +180,8 @@
 					$GLOBALS['phpgw']->common->phpgw_header();
 					echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
 					echo '&nbsp<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export') . '">' . lang('OK') . '</a>';
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 
 				$buffer = $this->bo->export($conv_type,$cat_id);

@@ -41,4 +41,5 @@ $GLOBALS['phpgw_info']['flags']['currentapp'] = 'etemplate';
 
 ExecMethod('etemplate.db_tools.edit');
 
-$GLOBALS['phpgw']->common->phpgw_exit();
+$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+exit;

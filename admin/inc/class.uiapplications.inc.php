@@ -196,7 +196,8 @@
 					));
 
 					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list'));
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 				else
 				{
@@ -288,7 +289,8 @@
 					));
 
 					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list'));
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 			}
 
@@ -342,7 +344,8 @@
 			{
 				$this->bo->delete($app_name);
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();

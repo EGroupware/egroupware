@@ -117,7 +117,8 @@
 			$GLOBALS['phpgw']->db->unlock();
 
 			Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function delete_user()
@@ -579,7 +580,8 @@
 			if($GLOBALS['phpgw']->acl->check('group_access',16,'admin') || $GLOBALS['HTTP_POST_VARS']['cancel'])
 			{
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 			elseif($GLOBALS['HTTP_POST_VARS']['submit'])
 			{
@@ -599,7 +601,8 @@
 				}
 			}
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		function validate_group($group_info)
@@ -632,7 +635,8 @@
 			{
 				$ui = createobject('admin.uiaccounts');
 				$ui->create_edit_group($group_info,$errors);
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 		}
 

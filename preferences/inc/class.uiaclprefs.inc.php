@@ -56,7 +56,7 @@
 			if ($GLOBALS['phpgw_info']['server']['deny_user_grants_access'])
 			{
 				echo '<center><b>' . lang('Access not permitted') . '</b></center>';
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				exit;
 			}
 
 			/*

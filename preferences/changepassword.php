@@ -26,7 +26,8 @@
 	if (! $GLOBALS['phpgw']->acl->check('changepassword', 1))
 	{
 		Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php/'));
-		$GLOBALS['phpgw']->common->phpgw_exit();
+		$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+		exit;
 	}
 
 	$GLOBALS['phpgw']->template->set_file(array(

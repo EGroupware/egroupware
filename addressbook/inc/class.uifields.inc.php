@@ -35,7 +35,8 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$GLOBALS['phpgw']->template->set_file(array(
@@ -118,7 +119,8 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$field      = $GLOBALS['HTTP_POST_VARS']['field'];
@@ -194,7 +196,8 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$field      = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];
@@ -287,7 +290,8 @@
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				echo lang('access not permitted');
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+				exit;
 			}
 
 			$field    = $GLOBALS['HTTP_POST_VARS']['field'] ? $GLOBALS['HTTP_POST_VARS']['field'] : $GLOBALS['HTTP_GET_VARS']['field'];

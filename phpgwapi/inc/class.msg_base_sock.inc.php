@@ -380,7 +380,8 @@
 		{
 			echo 'Error: '.$this->error['code'].' : '.$this->error['msg'].' - '.$this->error['desc']."<br>\r\n";
 			$this->close();
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			exit;
 		}
 
 		// REDUNDANT FUNCTION FROM NON-SOCK CLASS
@@ -1066,7 +1067,8 @@
 			{
 				if ($i==count($str)-1 && $str[$i] == "`")
 				{
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+					exit;
 				}
 				$pos=1;
 				$d=0;
