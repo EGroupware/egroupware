@@ -182,6 +182,15 @@
 //			'groups'	=> 'Groups (dont know what this field is for)',
 //			'cal_type'	=> 'cal_type: single_event=E (default) else M',
 		);
+		$custom_fields = CreateObject('calendar.bocustom_fields');
+		//echo "custom-fields=<pre>".print_r($custom_fields,True)."</pre>";
+		foreach ($custom_fields->fields as $name => $data)
+		{
+			if ($name[0] == '#')	// a custom field ?
+			{
+				$cal_names[$name] = $data['name'].': Custom field, varchar('.$data['length'].')';
+			}
+		}
 
 		// the next line is used in the help-text too
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
@@ -482,6 +491,14 @@
 				if (!$participants)		// no valid participants so far --> add the importing user/owner
 				{
 					$calendar->add_attribute('participants','A',$values['owner']);
+				}
+				// add custom-fields
+				foreach($values as $name => $val)
+				{
+					if ($name[0] == '#')
+					{
+						$calendar->add_attribute($name,$values[$name]);
+					}
 				}
 				//echo "add_entry(<pre>".print_r($calendar->cal->event,True).")</pre>\n";
 				$calendar->add_entry( $calendar->cal->event );
