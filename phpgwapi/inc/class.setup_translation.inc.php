@@ -30,7 +30,7 @@
 
 	class setup_translation
 	{
-		var $langarray;
+		var $langarray = array();
 
 		/*!
 		@function setup_lang
@@ -55,20 +55,13 @@
 			{
 				$fn = '.' . SEP . 'lang' . SEP . 'phpgw_en.lang';
 			}
-
 			if (file_exists($fn))
 			{
 				$fp = fopen($fn,'r');
 				while ($data = fgets($fp,8000))
 				{
-					list($message_id,$app_name,$null,$content) = explode("\t",$data);
-					if ($app_name == 'setup' || $app_name == 'common' || $app_name == 'all')
-					{
-						$this->langarray[] = array(
-							'message_id' => $message_id,
-							'content'    => trim($content)
-						);
-					}
+					list($message_id,$app_name,$null,$content) = explode("\t",substr($data,0,-1));
+					$this->langarray[strtolower(trim($message_id))] = $content;
 				}
 				fclose($fp);
 			}
@@ -82,32 +75,18 @@
 		*/
 		function translate($key, $vars=False) 
 		{
-			if (!$vars)
+			$ret = $key.'*';
+			$key = strtolower(trim($key));
+			if (isset($this->langarray[$key]))
 			{
-				$vars = array();
+				$ret = $this->langarray[$key];
 			}
-
-			$ret = $key;
-
-			@reset($this->langarray);
-			while(list($null,$data) = @each($this->langarray))
+			if (is_array($vars))
 			{
-				$lang[strtolower($data['message_id'])] = $data['content'];
-			}
-
-			if (isset($lang[strtolower ($key)]) && $lang[strtolower ($key)])
-			{
-				$ret = $lang[strtolower ($key)];
-			}
-			else
-			{
-				$ret = $key.'*';
-			}
-			$ndx = 1;
-			while( list($key,$val) = each( $vars ) )
-			{
-				$ret = preg_replace( "/%$ndx/", $val, $ret );
-				++$ndx;
+				foreach($vars as $n => $var)
+				{
+					$ret = preg_replace( '/%'.($n+1).'/', $var, $ret );
+				}
 			}
 			return $ret;
 		}
