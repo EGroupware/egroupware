@@ -54,7 +54,7 @@
       exit;
     } else {
       //echo "<center>Your config has been updated<br><a href='".$newsettings["webserver_url"]."/login.php'>Click here to login</a>";
-      Header("Location: '.$newsettings['webserver_url'].'/index.php');
+      Header('Location: '.$newsettings['webserver_url'].'/index.php');
       exit;
     }
   }
