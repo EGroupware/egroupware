@@ -91,6 +91,7 @@
   )";
   $phpgw_setup->db->query($sql);  
 
+	// Note: This table will be removed durring 0.9.11
   $sql = "CREATE TABLE profiles (
     con int(11) DEFAULT '0' NOT NULL auto_increment,
     owner varchar(20),
@@ -192,7 +193,7 @@
   );";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE todo (
+  $sql = "CREATE TABLE phpgw_todo (
     todo_id      int(11) DEFAULT '0' NOT NULL auto_increment,
     todo_id_parent	int(11) DEFAULT '0' NOT NULL,
     todo_owner   varchar(25),
@@ -344,7 +345,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

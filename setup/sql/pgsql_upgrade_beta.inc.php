@@ -1732,6 +1732,17 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
 	}
 
+	$test[] = '0.9.10pre22';
+	function upgrade0_9_10pre22()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table todo rename to phpgw_todo",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
+	}
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {

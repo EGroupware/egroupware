@@ -90,6 +90,7 @@
   )";
   $phpgw_setup->db->query($sql);
 
+	// Note: This table will be removed durring 0.9.11
   $sql = "CREATE TABLE profiles (
    con		serial,
    owner 	varchar(20),
@@ -168,7 +169,7 @@
 
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table todo (
+  $sql = "create table phpgw_todo (
     todo_id	     serial,
     todo_id_parent int,
     todo_owner	varchar(25),
@@ -312,7 +313,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre22';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre23';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>
