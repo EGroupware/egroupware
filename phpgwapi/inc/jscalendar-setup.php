@@ -255,7 +255,7 @@ foreach($day2int as $name => $n)
 	echo "\n \"".substr(lang($name),0,(int)lang('3 number of chars for day-shortcut')).'"'.($n < 6 ? ',' : '');
 }
 ?>);
-Calendar._SDN_len = <?php echo (int) lang('3 number of chars for day-shortcut'); ?>2;
+Calendar._SDN_len = <?php echo (int) lang('3 number of chars for day-shortcut'); ?>;
 
 Calendar._MN = new Array
 (<?php // full month names
@@ -271,10 +271,15 @@ Calendar._SMN = new Array
 $monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
 foreach($monthnames as $n => $name)
 {
-	echo "\n \"".substr(lang($name),0,(int)lang('3 number of chars for month-shortcut')).'"'.($n < 11 ? ',' : '');
+	$short = lang(substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
+	if (substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	{
+		$short = substr(lang($name),0,(int)lang('3 number of chars for month-shortcut'));
+	}
+	echo "\n \"".$short.'"'.($n < 11 ? ',' : '');
 }
 ?>);
-Calendar._SMN_len = <?php echo (int) lang('3 number of chars for month-shortcut'); ?>2;
+Calendar._SMN_len = <?php echo (int) lang('3 number of chars for month-shortcut'); ?>;
 
 // tooltips
 Calendar._TT = {};

@@ -68,7 +68,12 @@
 				$date = date($this->dateformat,$ts = mktime(12,0,0,$month,$day,$year));
 				if (strpos($this->dateformat,'M') !== False)
 				{
-					$date = str_replace(date('M',$ts),substr(lang(date('F',$ts)),0,3),$date);
+					$short = lang(date('M',$ts));	// check if we have a translation of the short-cut
+					if (substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
+					{
+						$short = substr(lang(date('F',$ts)),0,(int) lang('3 number of chars for month-shortcut'));
+					}
+					$date = str_replace(date('M',$ts),$short,$date);
 				}
 			}
 			if ($helpmsg !== '')
@@ -156,17 +161,30 @@
 				{
 					if (!is_numeric($fields[$n]))
 					{
+						$partcial_match = 0;
 						for($i = 1; $i <= 12; $i++)
 						{
-							$long_name  = date('F',mktime(12,0,0,$i,1,2000));
-							$short_name = date('M',mktime(12,0,0,$i,1,2000));
-							$translated = lang($long_name);
-							if ($fields[$n] == $long_name || $fields[$n] == $short_name ||
-								strstr($translated,$fields[$n]) == $translated)	// multibyte save
+							$long_name  = lang(date('F',mktime(12,0,0,$i,1,2000)));
+							$short_name = lang(date('M',mktime(12,0,0,$i,1,2000)));	// do we have a translation of the short-cut
+							if (substr($short_name,-1) == '*')	// if not generate one by truncating the translation of the long name
 							{
+								$short_name = substr($long_name,0,(int) lang('3 number of chars for month-shortcut'));
+							}
+							//echo "<br>checking '".$fields[$n]."' against '$long_name' or '$short_name'";
+							if ($fields[$n] == $long_name || $fields[$n] == $short_name)
+							{
+								//echo " ==> OK<br>";
 								$fields[$n] = $i;
 								break;
 							}
+							if (strstr($long_name,$fields[$n]) == $long_name)	// partcial match => multibyte saver
+							{
+								$partcial_match = $i;
+							}
+						}
+						if ($i > 12 && $partcial_match)	// nothing found, but a partcial match
+						{
+							$fields[$n] = $partcial_match;
 						}
 					}
 					$field = 'm';
