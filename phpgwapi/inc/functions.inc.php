@@ -7,7 +7,7 @@
 	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	 * -------------------------------------------------------------------------*
 	 * This library is part of the phpGroupWare API                             *
-	 * http://www.phpgroupware.org/api                                          * 
+	 * http://www.phpgroupware.org/api                                          *
 	 * ------------------------------------------------------------------------ *
 	 * This library is free software; you can redistribute it and/or modify it  *
 	 * under the terms of the GNU Lesser General Public License as published by *
@@ -30,7 +30,7 @@
 
 	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
 	{
-		echo 'phpGroupWare now requires PHP 4.1 or greater.<br>';
+		echo 'eGroupWare requires PHP 4.1 or greater.<br>';
 		echo 'Please contact your System Administrator';
 		exit;
 	}
@@ -392,7 +392,7 @@
 		* If they are using frames, we need to set some variables                 *
 		\*************************************************************************/
 		if (((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
-			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) && 
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
 			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
 			($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 		{
@@ -445,9 +445,9 @@
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
-		if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && 
+		if (!@$GLOBALS['phpgw_info']['flags']['noheader'] &&
 			!@$GLOBALS['phpgw_info']['flags']['noappheader'] &&
-			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($_GET['menuaction']))
 		{
 			include(PHPGW_APP_INC . '/header.inc.php');
 		}
