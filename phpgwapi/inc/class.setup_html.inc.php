@@ -85,7 +85,7 @@
 			/* Admin did not type a new header password, so use the old one from the hidden field,
 			 * which is already md5 encoded.
 			 */
-			if($var['HEADER_ADMIN_PASS'] && !$var['HEADER_ADMIN_PASSWORD'])
+			if($var['HEADER_ADMIN_PASS'] && empty($setting['HEADER_ADMIN_PASSWORD']))
 			{
 				/* Real == hidden */
 				$var['HEADER_ADMIN_PASSWORD'] = $var['HEADER_ADMIN_PASS'];
