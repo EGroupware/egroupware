@@ -118,7 +118,7 @@ read a list of entries.	calendar	de	Eine Liste von Einträgen lesen.
 read a single entry by passing the id and fieldlist.	calendar	de	Einen einzelnen Eintrag über seine Id und eine Feldliste lesen.
 read this list of methods.	calendar	de	Diese Liste der Methoden lesen.
 receive extra information in event mails	calendar	de	Zusätzliche Informationen bei EMail-Benachrichtigung
-recurring event	calendar	de	recurring event
+recurring event	calendar	de	Wiederholender Termin event
 refresh	calendar	de	Aktualisieren
 reinstate	calendar	de	Wiedereinsetzen
 reject	calendar	de	Absagen
