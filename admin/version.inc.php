@@ -11,4 +11,4 @@
 
   /* $Id$ */
 
-  $phpgw_info["server"]["versions"]["admin"] = $phpgw_info["server"]["versions"]["phpgwapi"];
+	$phpgw_info["server"]["versions"]["admin"] = $phpgw_info["server"]["versions"]["phpgwapi"];

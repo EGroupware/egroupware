@@ -190,7 +190,8 @@
 
 	$p->set_var("lang_include_user",lang("Select users for inclusion"));
 
-	for ($i=0; $i<count($n_users); $i++) {
+	for ($i=0; $i<count($n_users); $i++)
+	{
 		$selected_users[$n_users[$i]] = " selected";
 	}
 
@@ -226,7 +227,8 @@
 	}
 
 	$perm_html = "";
-	for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
+	for ($i=0;$i<200;) // The $i<200 is only used for a brake
+	{
 		if (! $perm_display[$i][1]) break;
 		$perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
 			. '<td><input type="checkbox" name="n_group_permissions['

@@ -88,7 +88,7 @@
 		}
 	}
 	else
-	{     // else submit
+	{	// else submit
 		$p->set_var("error","");
 	}
 	$phpgw->common->phpgw_header();
