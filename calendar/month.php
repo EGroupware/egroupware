@@ -17,20 +17,20 @@
 	if (isset($friendly) && $friendly)
 	{
 		$phpgw_flags = Array(
-			'currentapp'					=>	'calendar',
-			'enable_nextmatchs_class'	=>	True,
-			'noheader'						=>	True,
-			'nonavbar'						=>	True,
-			'noappheader'					=>	True,
-			'noappfooter'					=>	True,
-			'nofooter'						=>	True
+			'currentapp'			=> 'calendar',
+			'enable_nextmatchs_class'	=> True,
+			'noheader'			=> True,
+			'nonavbar'			=> True,
+			'noappheader'			=> True,
+			'noappfooter'			=> True,
+			'nofooter'			=> True
 		);
 	}
 	else
 	{
 		$phpgw_flags = Array(
-			'currentapp'					=>	'calendar',
-			'enable_nextmatchs_class'	=>	True
+			'currentapp'			=> 'calendar',
+			'enable_nextmatchs_class'	=> True
 		);
 		
 		$friendly = 0;
