@@ -48,32 +48,32 @@
 			),
 			'pk' => array('hol_id'),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array('locale'),
 			'uc' => array()
 		),
 		'phpgw_cal_repeats' => array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False),
 				'recur_type' => array('type' => 'int','precision' => '8','nullable' => False),
-				'recur_use_end' => array('type' => 'int','precision' => '8','nullable' => True,'default' => '0'),
-				'recur_enddate' => array('type' => 'int','precision' => '8','nullable' => True),
-				'recur_interval' => array('type' => 'int','precision' => '8','nullable' => True,'default' => '1'),
-				'recur_data' => array('type' => 'int','precision' => '8','nullable' => True,'default' => '1'),
-				'recur_exception' => array('type' => 'varchar','precision' => '255','nullable' => True,'default' => '')
+				'recur_use_end' => array('type' => 'int','precision' => '8','default' => '0'),
+				'recur_enddate' => array('type' => 'int','precision' => '8'),
+				'recur_interval' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_data' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_exception' => array('type' => 'varchar','precision' => '255','default' => '')
 			),
 			'pk' => array(),
 			'fk' => array(),
-			'ix' => array(),
+			'ix' => array('cal_id'),
 			'uc' => array()
 		),
 		'phpgw_cal_user' => array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'cal_login' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'cal_status' => array('type' => 'char','precision' => '1','nullable' => True,'default' => 'A'),
+				'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
 				'cal_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
 			),
-			'pk' => array('cal_id','cal_login'),
+			'pk' => array('cal_id','cal_login','cal_type'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()

@@ -958,4 +958,76 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.002';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	// the following series of updates add some indices, to speedup the selects
+
+	$test[] = '0.9.16.002';
+	function calendar_upgrade0_9_16_002()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_repeats',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False),
+				'recur_type' => array('type' => 'int','precision' => '8','nullable' => False),
+				'recur_use_end' => array('type' => 'int','precision' => '8','default' => '0'),
+				'recur_enddate' => array('type' => 'int','precision' => '8'),
+				'recur_interval' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_data' => array('type' => 'int','precision' => '8','default' => '1'),
+				'recur_exception' => array('type' => 'varchar','precision' => '255','default' => '')
+			),
+			'pk' => array(),
+			'fk' => array(),
+			'ix' => array('cal_id'),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.003';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '0.9.16.003';
+	function calendar_upgrade0_9_16_003()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_user',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'cal_login' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
+				'cal_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
+			),
+			'pk' => array('cal_id','cal_login','cal_type'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.004';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '0.9.16.004';
+	function calendar_upgrade0_9_16_004()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_holidays',array(
+			'fd' => array(
+				'hol_id' => array('type' => 'auto','nullable' => False),
+				'locale' => array('type' => 'char','precision' => '2','nullable' => False),
+				'name' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'mday' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'month_num' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'occurence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'dow' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'observance_rule' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
+			),
+			'pk' => array('hol_id'),
+			'fk' => array(),
+			'ix' => array('locale'),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.16.005';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>
