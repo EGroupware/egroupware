@@ -62,15 +62,6 @@
 				lang('*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!')."\n".
 				lang('*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!')
 		),
-/* not longer needed, as it gets set now on runtime (works even with safe_mode)
-		'error_reporting' => array(
-			'func' => 'php_ini_check',
-			'value' => E_NOTICE,
-			'verbose_value' => 'E_NOTICE',
-			'check' => 'not set',
-			'safe_mode' => 'error_reporting = E_ALL & ~E_NOTICE'
-		),
-*/
 		'magic_quotes_runtime' => array(
 			'func' => 'php_ini_check',
 			'value' => 0,
@@ -116,6 +107,10 @@
 			'func' => 'extension_check',
 			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL'),
 			'win_only' => True
+		),
+		'odbc' => array(
+			'func' => 'extension_check',
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB')
 		),
 		'mbstring' => array(
 			'func' => 'extension_check',

@@ -8,12 +8,12 @@
 		<img src="{img_incomplete}" alt="{notcomplete}" border="0">
 	</td>
 	<td>
-    {dbnotexist}<br>
+    	{dbnotexist}<br>
 		{makesure}.<br>
 		<br>
 		{instr}<p>
 		<form action="index.php" method="post">
-		{createdb}<br>
+			{createdb}<br>
 		    DB root username: <input type="text" name="db_root" value="root"><br>
 		    DB root password: <input type="password" name="db_pass"><br>
 		    <input type="hidden" name="action" value="Create Database">
@@ -25,6 +25,21 @@
 	</td>
 </tr>
 <!-- END B_db_stage_1 -->
+
+<!-- BEGIN B_db_stage_1a -->
+<tr>
+	<td align="center">
+		<img src="{img_incomplete}" alt="{notcomplete}" border="0">
+	</td>
+	<td>
+    	{dbnotexist}<p>
+		{makesure}.
+		<form method="POST" action="index.php">
+		<input type="submit" value="Re-Check my database">
+		</form><br>
+	</td>
+</tr>
+<!-- END B_db_stage_1a -->
 
 &nbsp; <!-- ================================== --> &nbsp; 
 

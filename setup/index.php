@@ -41,6 +41,7 @@
 	$setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
 
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_1','V_db_stage_1');
+	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_1a','V_db_stage_1a');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_2','V_db_stage_2');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_3','V_db_stage_3');
 	$setup_tpl->set_block('T_setup_db_blocks','B_db_stage_4','V_db_stage_4');
@@ -182,6 +183,7 @@
 						. "<br><i>mysql> create database $info[db_name];</i>"
 						. "<br><i>mysql> grant all on " . $info['db_name']
 						. ".* to " . $info['db_user'] . "@localhost identified by '" . $info['db_pass'] . "';</i>");
+					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				case 'pgsql':
 					$setup_tpl->set_var('instr',
@@ -190,11 +192,11 @@
 						. "<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>"
 						. lang('Create the empty database -')
 						. "<br><i>[user@server user]# createdb " . $info['db_name'] . "</i>");
+					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				default:
-					$setup_tpl->set_var('instr','');
+					$setup_tpl->parse('V_db_stage_1','B_db_stage_1a');
 			}
-			$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_1');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
