@@ -118,7 +118,7 @@
 			break;
 	}
 
-	switch(@$get_var('action',Array('POST')))
+	switch(@get_var('action',Array('POST')))
 	{
 		case 'download':
 			check_form_values();
