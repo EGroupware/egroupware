@@ -29,8 +29,8 @@
 		var $debug = False;
 
 		var $mcrypt_version = '';
-		var $algo = 'MCRYPT_TRIPLEDES';
-		var $mode = 'MCRYPT_MODE_CBC';
+		var $algo = MCRYPT_TRIPLEDES;
+		var $mode = MCRYPT_MODE_CBC;
 		var $td = False; /* Handle for mcrypt */
 		var $iv = '';
 		var $key = '';
