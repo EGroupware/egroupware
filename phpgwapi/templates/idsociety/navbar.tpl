@@ -41,6 +41,11 @@
 
      </TD>
 	</TR>
+    <TR>
+      <TD ALIGN="left" COLSPAN="2">
+{user_info}&nbsp;&nbsp;{current_users}
+      </TD>
+    </TR>
 	<TR>
 		<TD>
 
