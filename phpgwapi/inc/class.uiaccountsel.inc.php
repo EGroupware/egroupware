@@ -69,7 +69,7 @@
 			//echo "<p>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options')</p>\n";
 			if (!is_array($selected))
 			{
-				$selected = $selected ? array($selected) : array();
+				$selected = $selected ? explode(',',$selected) : array();
 			}
 			$account_sel = $this->account_selection;
 			$app = False;
@@ -125,7 +125,7 @@
 					}
 					break;
 			}
-			$users = $groups = array();
+			$already_selected = $users = $groups = array();
 			$use_keys = count($select) && !isset($select[0]);	// id's are the keys
 			foreach($select as $key => $val)
 			{
@@ -135,7 +135,11 @@
 				{
 					continue;	// dont display that one
 				}
-				if ($this->get_type($id) == 'u')
+				if (in_array($id,$selected))	// show already selected accounts first
+				{
+					$already_selected[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
+				}
+				elseif ($this->get_type($id) == 'u')
 				{
 					$users[$id] = !is_array($val) ? $GLOBALS['phpgw']->common->grab_owner_name($id) :
 						$GLOBALS['phpgw']->common->display_fullname(
@@ -147,9 +151,10 @@
 				}
 			}
 			// sort users and groups alphabeticaly and put the groups behind the users
+			uasort($already_selected,strcasecmp);
 			uasort($users,strcasecmp);
 			uasort($groups,strcasecmp);
-			$select = $users + $groups;
+			$select = $already_selected + $users + $groups;
 
 			if (count($selected) && !isset($selected[0]))	// id's are the keys
 			{
