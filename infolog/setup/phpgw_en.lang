@@ -55,7 +55,8 @@ showing x	infolog	en	showing %1
 Back to Projectlist	infolog	en	Back to Projectlist
 View Matrix of actual Month	infolog	en	View Matrix of actual Month
 Add	infolog	en	Add
-datecreated	infolog	en	last changed
+datecreated	infolog	en	date created
+last changed	infolog	en	last changed
 startdate	infolog	en	Startdate
 enddate	infolog	en	Enddate
 no - cancel	infolog	de	No - Cancel

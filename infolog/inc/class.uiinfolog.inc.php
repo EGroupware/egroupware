@@ -228,7 +228,7 @@
 				'startdate'	=>	'Startdate',
 				'enddate'	=>	'Enddate',
 				'owner'		=>	'Owner',
-				'datecreated' => 'Modificationdate',
+				'datecreated' => 'last changed',	// is MODIFICATION date now
 				'responsible' => 'Responsible'
 			);
 			while (list($f,$lang) = each($fields))
