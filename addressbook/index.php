@@ -14,7 +14,7 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'currentapp' => 'addressbook',
 		'noheader'   => True,
 		'nonavbar'   => True
@@ -23,4 +23,6 @@
 
 	$obj = CreateObject('addressbook.uiaddressbook');
 	$obj->get_list();
+
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
