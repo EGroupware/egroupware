@@ -129,19 +129,14 @@
 		{
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
 			@reset($this->grants);
-			if($this->debug)
+			while(list($grantor,$rights) = each($this->grants))
 			{
-				while(list($grantor,$rights) = each($this->grants))
-				{
-					echo '<!-- Grantor: '.$grantor.' Rights: '.$rights.' -->'."\n";
-				}
-				@reset($this->grants);
+				print_debug('Grantor',$grantor);
+				print_debug('Rights',$rights);
 			}
+			@reset($this->grants);
 
-			if($this->debug)
-			{
-				echo '<!-- Read Use_Session : ('.$session.') -->'."\n";
-			}
+			print_debug('Read use_session',$session);
 
 			if($session)
 			{
@@ -149,13 +144,20 @@
 				$this->use_session = True;
 			}
 
-			if($this->debug)
-			{
-				echo '<!-- BO Filter : ('.$this->filter.') -->'."\n";
-				echo '<!-- Owner : '.$this->owner.' -->'."\n";
-			}
+			print_debug('BO Filter',$this->filter);
+			print_debug('Owner',$this->owner);
 
-			$owner = get_var('owner',Array('GLOBAL','HTTP_GET_VARS','HTTP_POST_VARS'));
+			$this->prefs['calendar']    = $GLOBALS['phpgw_info']['user']['preferences']['calendar'];
+			
+			$owner = get_var('owner',Array('GLOBAL','GET','POST'));
+
+			if ((!isset($owner) || $owner == '')
+				 && MENUACTION == 'calendar.uicalendar.planner'
+				 && get_var('from',Array('POST')) != 'calendar.uicalendar.planner'
+				 && $this->prefs['calendar']['planner_start_with_group'] != '-1')
+			{
+				$owner = $this->prefs['calendar']['planner_start_with_group'];
+			}
 
 			if(isset($owner) && $owner!='' && substr($owner,0,2) == 'g_')
 			{
@@ -175,7 +177,6 @@
 			}
 
 			$this->prefs['common']    = $GLOBALS['phpgw_info']['user']['preferences']['common'];
-			$this->prefs['calendar']    = $GLOBALS['phpgw_info']['user']['preferences']['calendar'];
 
 			if ($this->prefs['common']['timeformat'] == '12')
 			{
@@ -188,16 +189,26 @@
 
 			$this->holiday_color = (substr($GLOBALS['phpgw_info']['theme']['bg07'],0,1)=='#'?'':'#').$GLOBALS['phpgw_info']['theme']['bg07'];
 
-			$this->printer_friendly = (intval(get_var('friendly',Array('HTTP_GET_VARS','HTTP_POST_VARS','DEFAULT'),0)) == 1?True:False);
+			$this->printer_friendly = (intval(get_var('friendly',Array('GET','POST','DEFAULT'),0)) == 1?True:False);
 
-			$this->filter = get_var('filter',Array('HTTP_POST_VARS','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
+			$this->filter = get_var('filter',Array('POST','DEFAULT'),' '.$this->prefs['calendar']['defaultfilter'].' ');
+
+			$this->sortby = get_var('sortby',Array('POST'));
+			if(!isset($this->sortby))
+			{
+				$default_calender = $this->prefs['calendar']['defaultcalendar'];
+				if ($default_calender == 'planner_cat' || $default_calender == 'planner_user')
+				{
+					$this->sortby = ($default_calender == 'planner_cat' ? 'category' : 'user');
+				}
+			}
+
 			if($GLOBALS['phpgw']->accounts->get_type($this->owner)=='g')
 			{
 				$this->filter = ' all ';
 			}
 
-			$this->sortby = get_var('sortby',Array('HTTP_POST_VARS','DEFAULT'),'category');
-			$this->cat_id = get_var('cat_id',Array('HTTP_POST_VARS'));
+			$this->cat_id = get_var('cat_id',Array('POST'));
 
 			$this->so = CreateObject('calendar.socalendar',
 				Array(
@@ -209,11 +220,11 @@
 			);
 			$localtime = $GLOBALS['phpgw']->datetime->users_localtime;
 
-			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS','GLOBAL'));
-			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
-			$month = get_var('month',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
-			$day = get_var('day',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
-			$num_months = get_var('num_months',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$date = get_var('date',Array('GET','POST','GLOBAL'));
+			$year = get_var('year',Array('GET','POST'));
+			$month = get_var('month',Array('GET','POST'));
+			$day = get_var('day',Array('GET','POST'));
+			$num_months = get_var('num_months',Array('GET','POST'));
 			
 			if(isset($date) && $date!='')
 			{

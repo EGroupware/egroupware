@@ -103,13 +103,23 @@
 				$selected['month'] = ' selected';
 			}
 			$str = '<select name="prefs[defaultcalendar]">'
-				. '<option value="planner"'.$selected['planner'].'>'.lang('Planner').'</option>'
+				. '<option value="planner_cat"'.$selected['planner_cat'].'>'.lang('Planner by category').'</option>'
+				. '<option value="planner_user"'.$selected['planner_user'].'>'.lang('Planner by user').'</option>'
 				. '<option value="year"'.$selected['year'].'>'.lang('Yearly').'</option>'
 				. '<option value="month"'.$selected['month'].'>'.lang('Monthly').'</option>'
 				. '<option value="week"'.$selected['week'].'>'.lang('Weekly').'</option>'
 				. '<option value="day"'.$selected['day'].'>'.lang('Daily').'</option>'
 				. '</select>';
 			$this->display_item(lang('default calendar view'),$str);
+
+			$user = $GLOBALS['phpgw_info']['user']['account_id'];
+			$groups = $GLOBALS['phpgw']->accounts->membership($user);
+			$str =  '<option value="-1"'.(intval($this->bo->prefs['calendar']['planner_start_with__group'])==-1?' selected':'').'>none</option>'."\n";
+			while (list($key,$group) = each($groups))
+			{
+				$str .= '<option value="'.$key.'"'.(intval($this->bo->prefs['calendar']['planner_start_with_group'])==$key?' selected':'').'>'.$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']).'</option>'."\n";
+			}
+			$this->display_item(lang('Preselected group for entering the planner'),'<select name="prefs[planner_start_with_group]">'."\n".$str.'</select>'."\n");
 
 			$selected = array();
 			$selected[$this->bo->prefs['calendar']['defaultfilter']] = ' selected';

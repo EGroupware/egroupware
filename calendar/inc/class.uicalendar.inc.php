@@ -1379,6 +1379,17 @@
 							$index = $d + $this->planner_days;
 
 							$hdr[2][\'.\'.$index] = \'colspan="\'.$intervals_per_day.\'" align="center"\';
+
+							// highlight saturdays and sundays using bgcolor
+							// FIXME: what about holidays?
+							//
+							$dow = $GLOBALS[\'phpgw\']->datetime->day_of_week($y,$m,$d);
+							if ($dow == 0 || $dow == 6)
+							{
+								$hdr[2][\'.\'.$index] .= \'" bgcolor=\';
+								$hdr[2][\'.\'.$index] .= $dow == 0 ? \'"#ff8866"\' : \'"#ffcccc"\';
+							}
+
 							$hdr[2][$index] = \'<a href="\'.$this->planner_html->link(\'/index.php\',
 										array(
 											\'menuaction\' => \'calendar.uicalendar.add\',
@@ -2197,7 +2208,11 @@
 			{
 				$page_ = explode('.',$this->bo->prefs['calendar']['defaultcalendar']);
 				$_page = $page_[0];
-				if ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year' && $_page != 'planner'))
+				if ($_page=='planner_cat' || $_page=='planner_user')
+				{
+					$_page = 'planner';
+				}
+				elseif ($_page=='index' || ($_page != 'day' && $_page != 'week' && $_page != 'month' && $_page != 'year' && $_page != 'planner'))
 				{
 					$_page = 'month';
 					$GLOBALS['phpgw']->preferences->add('calendar','defaultcalendar','month');
@@ -2273,10 +2288,13 @@
 				$str .= '<option value="'.$d_ymd.'"'.($d_ymd == $thisdate?' selected':'').'>'.lang(date('F', $d)).strftime(' %Y', $d).'</option>'."\n";
 			}
 
+			$hidden_vars = '    <input type="hidden" name="from" value="'.MENUACTION.'">'."\n";
+
 			$var = Array(
 				'action_url'	=> $this->page($method,''),
 				'form_name'	=> 'SelectMonth',
 				'label'		=> lang('Month'),
+				'hidden_vars' => $hidden_vars,
 				'form_label'	=> 'date',
 				'form_onchange'	=> 'document.SelectMonth.submit()',
 				'row'		=> $str,
@@ -2304,6 +2322,7 @@
 					'action_url'	=> $this->page($method,''),
 					'form_name'	=> 'SelectWeek',
 					'label'		=> lang('Week'),
+					'hidden_vars' => $hidden_vars,
 					'form_label'	=> 'date',
 					'form_onchange'	=> 'document.SelectWeek.submit()',
 					'row'		=> $str,
@@ -2323,6 +2342,7 @@
 				'action_url'	=> $this->page($method,''),
 				'form_name'	=> 'SelectYear',
 				'label'		=> lang('Year'),
+				'hidden_vars' => $hidden_vars,
 				'form_label'	=> 'year',
 				'form_onchange'	=> 'document.SelectYear.submit()',
 				'row'		=> $str,
@@ -2349,11 +2369,13 @@
 					$str .= '<option value="'.$i.'"'.($i == $this->bo->num_months?' selected':'').'>'.$i.'</option>'."\n";
 				}
 
+				$hidden_vars .= $date_str;
+
 				$var = Array(
 					'action_url'	=> $this->page($method,''),
 					'form_name'	=> 'SelectNumberOfMonths',
 					'label'		=> lang('Number of Months'),
-					'hidden_vars' => $date_str,
+					'hidden_vars' => $hidden_vars,
 					'form_label'	=> 'num_months',
 					'form_onchange'	=> 'document.SelectNumberOfMonths.submit()',
 					'action_extra_field'	=> $date_str,
@@ -2406,7 +2428,7 @@
 
 		function no_edit()
 		{
-			if(!$isset($GLOBALS['phpgw_info']['flags']['noheader']))
+			if(!isset($GLOBALS['phpgw_info']['flags']['noheader']))
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
 				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);

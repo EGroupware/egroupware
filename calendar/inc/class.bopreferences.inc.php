@@ -31,8 +31,9 @@
 
 		function preferences()
 		{
-			if (isset($GLOBALS['HTTP_POST_VARS']['submit']))
+			if (get_var('submit',Array('POST')))
 			{
+				$prefs = get_var('prefs',Array('POST'));
 				$GLOBALS['phpgw']->preferences->read_repository();
 				
 				$pref_list = Array(
@@ -42,12 +43,13 @@
 					'defaultcalendar',
 					'defaultfilter',
 					'interval',
-					'planner_intervals_per_day'
+					'planner_intervals_per_day',
+					'planner_start_with_group'
 				);
 
 				for($i=0;$i<count($pref_list);$i++)
 				{
-					$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[$i],$GLOBALS['HTTP_POST_VARS']['prefs'][$pref_list[$i]]);
+					$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[$i],$prefs[$pref_list[$i]]);
 				}
 
 				$pref_list = Array(
@@ -62,9 +64,9 @@
 
 				for($i=0;$i<count($pref_list);$i++)
 				{
-					if ($GLOBALS['HTTP_POST_VARS']['prefs'][$pref_list[$i]] == True)
+					if ($prefs[$pref_list[$i]] == True)
 					{
-						$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[$i],$GLOBALS['HTTP_POST_VARS']['prefs'][$pref_list[$i]]);
+						$GLOBALS['phpgw']->preferences->add('calendar',$pref_list[$i],$prefs[$pref_list[$i]]);
 					}
 					else
 					{
