@@ -20,8 +20,18 @@
 		'currentapp'             => 'login',
 		'noheader'               => True
 	);
-	include('./header.inc.php');
 
+	if(file_exists('./header.inc.php'))
+	{
+		include('./header.inc.php');
+	}
+	else
+	{
+		Header('Location: setup/index.php');
+		exit;
+	}
+		
+	
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
 	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
 
