@@ -34,7 +34,7 @@
 
 		function split_stock_and_extras($fields)
 		{
-			while (list($field,$value) = each($fields))
+			while (list($field,$value) = @each($fields))
 			{
 				/* Depending on how the array was built, this is needed. */
 				if (gettype($value) == "integer")
