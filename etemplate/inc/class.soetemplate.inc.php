@@ -704,7 +704,7 @@
 
 			if ($cell['type'] != 'image')
 			{
-				$strings += explode('|',$cell['label']);
+				$strings = array_merge($strings,explode('|',$cell['label']));
 			}
 			list($extra_row) = explode(',',$cell['size']);
 			if (substr($cell['type'],0,6) == 'select' && !empty($extra_row) && !intval($extra_row))
