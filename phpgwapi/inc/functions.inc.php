@@ -42,6 +42,25 @@
 	 @collection_start direct functions
 	 @abstract Direct functions, which are not part of the API class because they are require to be availble at the lowest level.
 	*/
+	/*!
+	 @function print_debug_subarray
+	 @abstract Not to be used directly. Should only be used by print_debug()
+	*/
+	function print_debug_subarray($array)
+	{
+		while(list($key, $value) = each($array))
+		{
+			if (is_array($value))
+			{
+				$vartypes[$key] = print_debug_subarray($value);
+			}
+			else
+			{
+				$vartypes[$key] = gettype($value);
+			}
+		}
+		return $vartypes;
+	}
 
 	/*!
 	 @function print_debug
@@ -59,9 +78,16 @@
 			{
 				if (!is_array($var))
 				{
-					if ($var != 'messageonly')
+					if ($var == 'messageonly')
 					{
-						echo "$message is a ".gettype($var)."<br>\n";
+						if (!DEBUG_DATATYPES)
+						{
+							echo "$message\n$var<br>\n";
+						}
+						else
+						{
+							echo "$message\n$var is a ".gettype($var)."<br>\n";
+						}
 					}
 					else
 					{
@@ -72,9 +98,22 @@
 				{
 					echo "<pre>\n$message\n";
 					print_r($var);
-					while(list($key, $value) = each($var))
+					if (DEBUG_DATATYPES)
 					{
-						echo 'Array['.$key.'] is a '.gettype($var[$key])."\n";
+						while(list($key, $value) = each($var))
+						{
+							//echo 'Array['.$key.'] is a '.gettype($var[$key])."\n";
+							if (is_array($value))
+							{
+								$vartypes[$key] = print_debug_subarray($value);
+							}
+							else
+							{
+								$vartypes[$key] = gettype($value);
+							}
+						}
+						echo "Data Types:\n";
+						print_r($vartypes);
 					}
 					echo "\n<pre>\n";
 				}
@@ -265,7 +304,7 @@
 	{
 		global $phpgw_info, $phpgw;
 
-		if(is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
+		if (is_object(@$GLOBALS['phpgw']->log) && $class != 'phpgwapi.error' && $class != 'phpgwapi.errorlog')
 		{
 			//$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This class was run: '.$class,'file'=>__FILE__,'line'=>__LINE__));
 		}
@@ -273,10 +312,10 @@
 		/* error_reporting(0); */
 		list($appname,$classname) = explode(".", $class);
 
-		if(!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
+		if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
 			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			if(@file_exists(PHPGW_INCLUDE_ROOT . '/' . $appname . '/inc/class.' . $classname . '.inc.php'))
+			if(@file_exists(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php'))
 			{
 				include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 				$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;
@@ -288,7 +327,7 @@
 		}
 		if($GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 		{
-			if($p1 == '_UNDEF_' && $p1 != 1 && $p1 != '0')
+			if ($p1 == '_UNDEF_' && $p1 != 1)
 			{
 				eval('$obj = new ' . $classname . ';');
 			}
@@ -297,9 +336,9 @@
 				$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
 				$i = 1;
 				$code = '$obj = new ' . $classname . '(';
-				while(list($x,$test) = each($input))
+				while (list($x,$test) = each($input))
 				{
-					if(($test == '_UNDEF_' && $test != 1 && $test != '0') || $i == 17)
+					if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
 					{
 						break;
 					}
@@ -458,7 +497,7 @@
 	*/
 	function get_account_id($account_id = '',$default_id = '')
 	{
-		if (is_int($account_id))
+		if (gettype($account_id) == 'integer')
 		{
 			return $account_id;
 		}
