@@ -32,5 +32,5 @@
 
 	$phpgw->calendar->set_status(intval($id),$owner,intval($action));
 
-	Header('Location: '.$HTTP_REFERER);
+	Header('Location: '.$phpgw->link('/calendar/index.php','owner='.$owner));
 ?>
