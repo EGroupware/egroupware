@@ -100,11 +100,21 @@
 				$title = $fields[$i]['title'];
 
 				$GLOBALS['phpgw']->template->set_var('cfield',$title);
-
-				$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.edit&field=$field&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+				
+				$params = array(
+					'menuaction' => 'addressbook.uifields.edit',
+					'field'      => urlencode($field),
+					'start'      => $start,
+					'query'      => $query,
+					'sort'       => $sort,
+					'order'      => $order,
+					'filter'     => $filter
+				);
+				$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php',$params));
 				$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
 
-				$GLOBALS['phpgw']->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',"menuaction=addressbook.uifields.delete&field=$field&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+				$params['menuaction'] = 'addressbook.uifields.delete';
+				$GLOBALS['phpgw']->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php',$params));
 				$GLOBALS['phpgw']->template->set_var('lang_delete_entry',lang('Delete'));
 				$GLOBALS['phpgw']->template->parse('list','field_list',True);
 			}
