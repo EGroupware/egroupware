@@ -242,7 +242,10 @@
 
 		function index($params='')
 		{
+			global $GLOBALS;
+			
 			Header('Location: '. $this->page('',$params));
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function month()
@@ -650,20 +653,20 @@
 
 		function delete()
 		{
-			global $HTTP_GET_VARS;
+			global $GLOBALS, $HTTP_GET_VARS;
 
 			if(!isset($HTTP_GET_VARS['cal_id']))
 			{
-				Header('Location: '.$this->page('','&date'.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day)));
+				Header('Location: '.$this->page('','&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day)));
+				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$cal_id = $HTTP_GET_VARS['cal_id'];
-			$event = $this->bo->read_entry(intval($cal_id));
-			if(($cal_id > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
+			$event = $this->bo->read_entry(intval($HTTP_GET_VARS['cal_id']));
+			if(($HTTP_GET_VARS['cal_id'] > 0) && ($event['owner'] == $this->bo->owner) && $this->bo->check_perms(PHPGW_ACL_DELETE))
 			{
 				$date = sprintf("%04d%02d%02d",$event['start']['year'],$event['start']['month'],$event['start']['mday']);
 
-				$cd = $this->bo->delete_entry(intval($cal_id));
+				$cd = $this->bo->delete_entry(intval($HTTP_GET_VARS['cal_id']));
 				$this->bo->expunge();
 			}
 			else
@@ -672,6 +675,7 @@
 				$cd = '';
 			}
 			Header('Location: '.$this->page('','&date='.$date.($cd?'&cd='.$cd:'')));
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function day()
