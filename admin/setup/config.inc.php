@@ -34,6 +34,16 @@
    <?php $selected = array(); ?>
 
    <tr bgcolor="e6e6e6">
+    <td>Minimum account id (e.g. 500 or 100, etc.):</td>
+    <td><input name="newsettings[account_min_id]" value="<?php echo $current_config["account_min_id"]; ?>"></td>
+   </tr>
+   <tr bgcolor="e6e6e6">
+    <td>Maximum account id (e.g. 65535 or 1000000):</td>
+    <td><input name="newsettings[account_max_id]" value="<?php echo $current_config["account_max_id"]; ?>"></td>
+   </tr>
+   <?php $selected = array(); ?>
+
+   <tr bgcolor="e6e6e6">
     <td>If using LDAP, do you want to store homedirectory and loginshell attributes for new accounts?:</td>
     <td><input type="checkbox" name="newsettings[ldap_extra_attributes]" value="True"<?php echo ($current_config["ldap_extra_attributes"]?" checked":""); ?>></td>
    </tr>

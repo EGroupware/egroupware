@@ -301,25 +301,38 @@
 		{
 			global $phpgw_info, $phpgw;
 
-			if (!$account_id) {
-				mt_srand((double)microtime()*1000000);
-				$account_id =  mt_rand (100, 65535);
-			}
-			// auto_increment/serial in the db won't necessarily work for ldap, nor would
-			// randomization.  Need to check for lastid in ldap, then create newid for sql and ldap
+			$ds = $phpgw->common->ldapConnect();
 
-/*			if (!$account_id) {
-				$this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-					. "account_firstname, account_lastname, account_status) values ('" . $account_lid
-					. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
-					. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
-			} else { */
+			if (!$account_id) {
+				if ($phpgw_info["server"]["account_min_id"]) { $min = $phpgw_info["server"]["account_min_id"]; }
+				if ($phpgw_info["server"]["account_max_id"]) { $max = $phpgw_info["server"]["account_max_id"]; }
+
+				$nextid = $phpgw->common->last_id("accounts_ldap",$min,$max);
+
+				// Loop until we find a free id
+				$free = 0;
+				while (!$free) {
+					$ldap_fields = "";
+					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$nextid);
+					$ldap_test = ldap_get_entries($ds, $sri);
+					if ($ldap_test[0]['dn'][0]) {
+						$nextid = $phpgw->common->next_id("accounts_ldap",$min,$max);
+					} else {
+						$free = True;
+					}
+				}
+				if ($phpgw_info["server"]["account_max_id"] && ($nextid > $phpgw_info["server"]["account_max_id"])) {
+					return False;
+				}
+				$account_id = $nextid;
+				//echo $account_id;exit;
+			}
+
 			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
 				. "account_firstname, account_lastname, account_status) values ('" . $account_id . "','" . $account_lid
 				. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
 				. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
 
-			$ds = $phpgw->common->ldapConnect();
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
 
