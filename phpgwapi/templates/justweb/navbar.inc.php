@@ -28,7 +28,7 @@
      }
 
      while ($app = each($phpgw_info["navbar"])) {
-        if ($app[1]["title"] != "Home" && $app[1]["title"] != "Preferences" && ! ereg("About",$app[1]["title"]) && $app[1]["title"] != "Logout") {
+        if ($app[1]["title"] != "Home" && $app[1]["title"] != "preferences" && ! ereg("About",$app[1]["title"]) && $app[1]["title"] != "Logout") {
            $title = '<img src="' . $app[1]["icon"] . '" alt="' . $app[1]["title"] . '" title="'
                    . $app[1]["title"] . '" border="0">';
            if ($phpgw_info["user"]["preferences"]["common"]["navbar_format"] == "icons_and_text") {

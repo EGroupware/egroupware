@@ -11,6 +11,7 @@
           a change to them.
         - Fixed E-Mail display inline graphics
         - Fixed free/busy displaying incorrect title date
+        - Fixed templates messing up with certian languages
 
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch

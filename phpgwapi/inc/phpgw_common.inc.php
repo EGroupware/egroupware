@@ -429,13 +429,13 @@
     
        global $phpgw_info, $phpgw;
 
-       $phpgw_info["navbar"]["home"]["title"] = lang("Home");
+       $phpgw_info["navbar"]["home"]["title"] = "Home";
        $phpgw_info["navbar"]["home"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php");
        $phpgw_info["navbar"]["home"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
                                               . $phpgw_info["server"]["template_set"] . "/images/home.gif";
        while ($permission = each($phpgw_info["user"]["apps"])) {
           if ($phpgw_info["apps"][$permission[0]]["status"] != 2) {
-             $phpgw_info["navbar"][$permission[0]]["title"] = lang($phpgw_info["apps"][$permission[0]]["title"]);
+             $phpgw_info["navbar"][$permission[0]]["title"] = $phpgw_info["apps"][$permission[0]]["title"];
              $phpgw_info["navbar"][$permission[0]]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                             . "/" . $permission[0] . "/index.php");
             $icon_file = $phpgw_info["server"]["server_root"]."/".$permission[0] . "/templates/". $phpgw_info["server"]["template_set"]. "/images/navbar.gif";
@@ -448,7 +448,7 @@
             }
           }
        }
-       $phpgw_info["navbar"]["preferences"]["title"] = lang("preferences");
+       $phpgw_info["navbar"]["preferences"]["title"] = "preferences";
        $phpgw_info["navbar"]["preferences"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                      . "/preferences/index.php");
        $phpgw_info["navbar"]["preferences"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/preferences/templates/"
@@ -459,13 +459,14 @@
        } else {
           $app = $phpgw_info["flags"]["currentapp"];
        }
-       $phpgw_info["navbar"]["about"]["title"] = lang("About x",$about);
+       $phpgw_info["navbar"]["about"]["title"] = lang("About x",$about);    // We handle this here
+                                                                            // becuase its special
        $phpgw_info["navbar"]["about"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                . "/about.php");
        $phpgw_info["navbar"]["about"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
                                                . $phpgw_info["server"]["template_set"] . "/images/about.gif";
 
-       $phpgw_info["navbar"]["logout"]["title"] = lang("Logout");  // Add app name
+       $phpgw_info["navbar"]["logout"]["title"] = "Logout";
        $phpgw_info["navbar"]["logout"]["url"]   = $phpgw->link($phpgw_info["server"]["webserver_url"]
                                                 . "/logout.php");
        $phpgw_info["navbar"]["logout"]["icon"]  = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/"
