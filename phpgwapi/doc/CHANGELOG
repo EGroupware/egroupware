@@ -4,15 +4,12 @@
 		- Improved LDAP support for accounts and contacts
 		- Various minor api/setup/config fixes
 		- Additional Translations - especially German and French
-		- Enhanced email client - now supports multiple mailboxes, spell check and filters, 
-			includes "M$ Outlook" style addressbook choser
+		- Enhanced email client - now supports multiple mailboxes, spell check and filters
 		- Sitemgr content management system - with multilingual support
 		- Addressbook - minor fixes
 		- Bookmarks - various fixes - mainly ui related
 		- Calendar - email notifications, acl enforcement and other minor fixes
 		- Chat - scrolls properly and focus always set to text input field
-		- eTemplates - new template-system, templates stored in db or xml-files, 
-			interactive editor, automatically creates lang-files. Developer documents provided
 		- Felamimail - added sieve support, improved ui, various minor fixes
 		- FileManager/phpWebHosting - various minor fixes
 		- Forums - fixed colors
@@ -20,7 +17,7 @@
 		- Polls - add/strip slashes and other minor issues
 		- Projects - various minor fixes
 		- Time Track - minor fixes
-	Thanks to all those who contributed patches, bug reports, time or energy.  I can't remember you
+	Thanks to all those who contributed patches, bug reports, time or energy. We can't remember you
 		all but we are aware of your contribution and appreciate it.
 
 [0.9.14]
