@@ -737,7 +737,7 @@
 						),
 						'delete' => array(
 							'function'  => 'delete_entry',
-							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'signature' => array(array(xmlrpcString,xmlrpcString)),
 							'docstring' => lang('Delete a single entry by passing the id.')
 						),
 						'read_list' => array(

@@ -117,6 +117,7 @@
 		var $prefs;
 
 		var $owner;
+		var $grants;
 		var $holiday_color;
 		var $printer_friendly = False;
 
@@ -856,7 +857,7 @@
 					$this->so->add_attribute('id',$l_cal['id']);
 				}
 
-				if($l_cal['rpt_use_end'] != 'y')
+				if( ($l_cal['rpt_use_end'] != 'y') && !$this->xmlrpc )
 				{
 					$l_recur_enddate['year'] = 0;
 					$l_recur_enddate['month'] = 0;
@@ -2037,7 +2038,7 @@
 			}
 			if (!isset($params['owner']) && @$this->xmlrpc)
 			{
-				$owner_id = $GLOBALS['phpgw_info']['user']['user_id'];
+				$owner_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			else
 			{
