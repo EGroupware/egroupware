@@ -31,7 +31,7 @@
 			"org_unit"            => "ou",
 			"adr_one_street"      => "streetaddress",
 			"adr_one_locality"    => "locality",
-			"adr_one_state"       => "st",
+			"adr_one_region"      => "st",
 			"adr_one_postalcode"  => "postalcode",
 			"adr_one_countryname" => "countryname",
 			"tel_work"            => "telephonenumber",
