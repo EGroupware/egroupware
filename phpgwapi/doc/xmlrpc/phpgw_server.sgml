@@ -171,10 +171,10 @@
    Business layer requests
   </title>
   <para>
-   Once a successful login return packet has been received and sessionid/kp3 have been extracted, every subsequent packet sent to the phpgroupware server must be preceded by an Authorization header. Here is a sample header:
+   Once a successful login return packet has been received and sessionid/kp3 have been extracted, every subsequent packet sent to the egroupware server must be preceded by an Authorization header. Here is a sample header:
   </para>
   <programlisting>
-<![ CDATA [POST /phpgroupware/xmlrpc.php HTTP/1.0
+<![ CDATA [POST /egroupware/xmlrpc.php HTTP/1.0
 ]]><![ CDATA [User-Agent: PHP XMLRPC 1.0
 ]]><![ CDATA [Host: my.local.host
 ]]><![ CDATA [Authorization: Basic ZDgxNDIyZDRkYjg5NDEyNGNiMzZlMDhhZTdlYzAxZmY6NTU3YzkyYjBmNGE4ZDVlOTUzMzI2YmU2OTQyNjM3YjQ=

@@ -29,7 +29,7 @@ right off the bat to keep things neater.</P>
 <P>One of the design challenges for a Virtual File System is to
 try to figure out whether the calling application is referring to
 a file inside or outside the virtual root, and if inside, exactly
-where. To solve this problem, the phpGroupWare VFS uses RELATIVE
+where. To solve this problem, the eGoupWare VFS uses RELATIVE
 defines that are used in bitmasks passed to each function. The result
 is that any set of different relativities can be used in combination
 with each other. Let's look at a few examples. Say you want to move
@@ -59,12 +59,12 @@ MOVE "$fakebase/jason/logo.png" TO "$fakebase/my_group/project1/logo.png"
 <P>and the actual file system call would be:</P>
 <P>
 <PRE>
-rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware/files/home/my_group/project1/logo.png');
+rename ('/var/www/egroupware/files/home/jason/logo.php', '/var/www/egroupware/files/home/my_group/project1/logo.png');
 </PRE>
 </P>
 <P>Those used to the old VFS will note that you do not have to translate
 the path beforehand. Let's look at another example. Suppose you were
-moving an email attachment stored in phpGroupWare's temporary directory
+moving an email attachment stored in eGoupWare's temporary directory
 to the 'attachments' directory within the user's home directory (we're
 assuming the attachments directory exists). Note that the temporary
 directory is <EM>outside</EM> the virtual root.</P>
@@ -92,7 +92,7 @@ like this (keep in mind that $randomdir and $randomfile
 are just random strings):</P>
 <P>
 <PRE>
-rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext');
+rename ('/var/www/egroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/egroupware/files/home/jason/attachments/actual_name.ext');
 </PRE>
 </P>
 <P>Of course you don't have to know that, nor should you be concerned

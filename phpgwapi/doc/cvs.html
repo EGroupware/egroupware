@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>phpgroupware.org</title>
+<title>egroupware.org</title>
 <link rel="STYLESHEET" type="text/css" href="phpgw.css">
 </head>
 
@@ -14,7 +14,7 @@
        <td align="right">
         <table border="0" cellspacing="3" cellpadding="3">
          <tr>
-          <td><a href="http://www.phpgroupware.org/"><img src="../templates/default/images/logo.gif"></a></td>
+          <td><a href="http://www.egroupware.org/"><img src="../templates/default/images/logo.gif"></a></td>
          </tr>
         </table>
        </td>
@@ -22,16 +22,16 @@
       <tr>
         <td valign="top" width="85%">
           <table border="0" cellpadding="2"><tr><td>
-<p>You can get your own copy of the phpGroupWare CVS tree by using a CVS client from your own system. If you don't already
+<p>You can get your own copy of the eGroupWare CVS tree by using a CVS client from your own system. If you don't already
 have one, you can find one at <a href="http://www.cvshome.org">http://www.cvshome.org</a>.
 You can get your own copy of the tree with the commands:</p>
 
-<pre>cvs -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware login</pre>
+<pre>cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware login</pre>
 
 <p>When it asks you for a password, simply press the Enter key</p>
 <p>Then type:</p>
  
-<pre>cvs -z3 -d:pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgroupware co [ -r &lt;TAG&gt; ] &lt;MODULE&gt;</pre>
+<pre>cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware co [ -r &lt;TAG&gt; ] &lt;MODULE&gt;</pre>
 
 <p>This will create a <tt>&lt;MODULE&gt;</tt> directory in your current
 directory. It may take a bit of time, especially if your network connection
@@ -55,59 +55,30 @@ wish to checkout.  At this time, tags that would be of use are:
 
 <p>Valid module names are:</p>
 <table border="0" cellpadding="1" cellspacing="1">
-<tr><td>phpgroupware   * </td><td>The core phpGroupWare libraries</td></tr>
-<tr><td>phpgwapi       * </td><td>The phpGroupWare API</td></tr>
+<tr><td>egroupware   * </td><td>The core eGoupWare libraries</td></tr>
+<tr><td>phpgwapi       * </td><td>The eGoupWare API</td></tr>
 <tr><td>addressbook    * </td><td>an addressbook</td></tr>
 <tr><td>admin          * </td><td>Administration module</td></tr>
-<tr><td>bookkeeping      </td><td>Personal finance manager</td></tr>
 <tr><td>bookmarks        </td><td>Bookmark manager</td></tr>
 <tr><td>calendar       * </td><td>personal/Group calendar</td></tr>
-<tr><td>cart             </td><td>?</td></tr>
-<tr><td>cdb              </td><td>Contact Database Manager (work in progress)</td></tr>
-<tr><td>chat             </td><td>chat system</td></tr>
-<tr><td>chora            </td><td>CVS repository front-end</td></tr>
 <tr><td>comic            </td><td>Comic Strip system</td></tr>
-<tr><td>cron           * </td><td>cron files for administrative uses</td></tr>
-<tr><td>dj               </td><td>MP3 list manager (Indirectly interfacing with icecast)</td></tr>
-<tr><td>eldaptdir        </td><td>LDAP Browser</td></tr>
 <tr><td>email          * </td><td>EMAIL reader (interfaces to IMAP/POP3)</td></tr>
 <tr><td>filemanager    * </td><td>Personal/Group Filemanagement</td></tr>
-<tr><td>files          * </td><td>Simple Structure for filemanager system</td></tr>
 <tr><td>forum            </td><td>A forum system</td></tr>
 <tr><td>ftp              </td><td>web based FTP client</td></tr>
 <tr><td>headlines        </td><td>news site headline system</td></tr>
-<tr><td>hr               </td><td>Human Resource module</td></tr>
-<tr><td>inv              </td><td>Invoice system</td></tr>
-<tr><td>manual         * </td><td>online phpGroupWare manual</td></tr>
-<tr><td>mediadb          </td><td>Media database tracking system</td></tr>
-<tr><td>news_admin       </td><td>create system wide news for your phpGroupWare installation</td></tr>
-<tr><td>nntp           * </td><td>Network News Reader</td></tr>
-<tr><td>notes          * </td><td>create personal/group notes</td></tr>
-<tr><td>phonelog       * </td><td>Phonelog system</td></tr>
-<tr><td>bookkeeping      </td><td>Personal finance manager</td></tr>
-<tr><td>phpgroupware   * </td><td>The core phpGroupWare libraries</td></tr>
-<tr><td>phpgwapi       * </td><td>The phpGroupWare API</td></tr>
-<tr><td>phpgwnetsaint    </td><td>Netsaint viewer</td></tr>
+<tr><td>manual         * </td><td>online eGoupWare manual</td></tr>
+<tr><td>news_admin       </td><td>create system wide news for your eGoupWare installation</td></tr>
 <tr><td>polls          * </td><td>create/administer polls</td></tr>
-<tr><td>preferences    * </td><td>Manage phpGroupWare user preferences</td></tr>
-<tr><td>projectbilling   </td><td>?</td></tr>
-<tr><td>projectdelivery  </td><td>?</td></tr>
-<tr><td>projecthours     </td><td>?</td></tr>
+<tr><td>preferences    * </td><td>Manage eGoupWare user preferences</td></tr>
 <tr><td>projects         </td><td>?</td></tr>
-<tr><td>projectstatistics</td><td>?</td></tr>
-<tr><td>rbs              </td><td>Remote Booking System (soon to be merged into calendar)</td></tr>
-<tr><td>setup          * </td><td>phpGroupWare setup</td></tr>
-<tr><td>squirrelmail   * </td><td>EMAIL reader (interfaces to IMAP/POP3)</td></tr>
+<tr><td>setup          * </td><td>eGoupWare setup</td></tr>
 <tr><td>stocks           </td><td>stock info grabber</td></tr>
-<tr><td>todo           * </td><td>TO-DO List manger</td></tr>
-<tr><td>transy         * </td><td>Language translation management</td></tr>
 <tr><td>tts              </td><td>Trouble Ticket System</td></tr>
-<tr><td>wap              </td><td>Wireless Application Protocol templates</td></tr>
-<tr><td>weather          </td><td>weather information grabber</td></tr>
 </table>
 
-<p>You should probably check out <code>phpgroupware</code> first, then
-<code>cd&nbsp;phpgroupware</code>, and then check out any additional modules that you
+<p>You should probably check out <code>egroupware</code> first, then
+<code>cd&nbsp;egroupware</code>, and then check out any additional modules that you
 want.<br>We suggest at a minimum that you install those modules that mare marked with an "*".</p>
 
 <p>Please keep in mind that the CVS '-r HEAD' version may not always work correctly,

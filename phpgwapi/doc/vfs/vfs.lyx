@@ -45,7 +45,7 @@ Introduction and Purpose
 
 \layout Standard
 
-The latest version of the VFS for phpGroupWare combines actual file system
+The latest version of the VFS for eGoupWare combines actual file system
  manipulation with fully integrated database support.
  It features nearly transparent handling of files and directories, as well
  as files inside and outside the virtual root.
@@ -210,10 +210,10 @@ can
 $GLOBALS['phpgw']->vfs->cp (array(
 \layout Verbatim
 
-     'from' => '/var/www/phpgroupware/files/home/user/file1',
+     'from' => '/var/www/egroupware/files/home/user/file1',
 \layout Verbatim
 
-     'to' => '/var/www/phpgroupware/files/home/user/file2',
+     'to' => '/var/www/egroupware/files/home/user/file2',
 \layout Verbatim
 
      'relatives' => array(
@@ -392,10 +392,10 @@ $p->fake_extra_path - home/jason/dir
 $p->fake_name - file
 \layout Itemize
 
-$p->real_full_path - /var/www/phpgroupware/files/home/jason/dir/file
+$p->real_full_path - /var/www/egroupware/files/home/jason/dir/file
 \layout Itemize
 
-$p->real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir 
+$p->real_leading_dirs - /var/www/egroupware/files/home/jason/dir 
 \layout Itemize
 
 $p->real_extra_path - home/jason/dir
@@ -430,7 +430,7 @@ cd ()
 
 \layout Standard
 
-Part of the overall goal for the VFS in phpGroupWare is to give the user
+Part of the overall goal for the VFS in eGoupWare is to give the user
  a seamless experience during their session.
  For example, if they upload a file using a file manager to the directory
  /home/my_group/project1, and then go to download an email attachment, the
@@ -538,7 +538,7 @@ What is it and how does it work?
 One of the design challenges for a Virtual File System is to try to figure
  out whether the calling application is referring to a file inside or outside
  the virtual root, and if inside, exactly where.
- To solve this problem, the phpGroupWare VFS uses RELATIVE defines that
+ To solve this problem, the eGoupWare VFS uses RELATIVE defines that
  are used in bitmasks passed to each function.
  The result is that any set of different relativities can be used in combination
  with each other.
@@ -608,14 +608,14 @@ $fakebase/my_group/project1/logo.png
 and the actual file system call would be:
 \layout Verbatim
 
-rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware
+rename ('/var/www/egroupware/files/home/jason/logo.php', '/var/www/egroupware
 /files/home/my_group/project1/logo.png');
 \layout Standard
 
 Those used to the old VFS will note that you do not have to translate the
  path beforehand.
  Let's look at another example.
- Suppose you were moving an email attachment stored in phpGroupWare's temporary
+ Suppose you were moving an email attachment stored in eGoupWare's temporary
  directory to the 'attachments' directory within the user's home directory
  (we're assuming the attachments directory exists).
  Note that the temporary directory is 
@@ -668,7 +668,7 @@ outside
  $randomdir and $randomfile are just random strings):
 \layout Verbatim
 
-rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware
+rename ('/var/www/egroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/egroupware
 /files/home/jason/attachments/actual_name.ext');
 \layout Standard
 
@@ -878,7 +878,7 @@ Function reference
 \layout Standard
 
 To view the function reference for the VFS, use the doc/inlinedocparser.php
- script that comes with phpGroupWare, ie 
+ script that comes with eGoupWare, ie 
 \begin_inset LatexCommand \url[http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php]{http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php}
 
 \end_inset 
@@ -1110,7 +1110,7 @@ Contributing
 
 Contributions are always welcome.
  Please send to the current maintainer, Jason Wies, 
-\begin_inset LatexCommand \url[zone@phpgroupware.org]{mailto:zone@phpgroupware.org}
+
 
 \end_inset 
 

@@ -13,12 +13,12 @@ June 2001, February 2002
 </date>
 <abstract>
 The VFS, or Virtual File System, handles all file system activity
- for phpGroupWare.
+ for eGoupWare.
 </abstract>
 <sect>
 Introduction and Purpose<label id="sec:introduction" >
 <p>
-The latest version of the VFS for phpGroupWare combines actual
+The latest version of the VFS for eGoupWare combines actual
  file system manipulation with fully integrated database support.
  It features nearly transparent handling of files and directories,
  as well as files inside and outside the virtual root. This document
@@ -119,8 +119,8 @@ One of the VFS's responsibilities is to translate paths for you.
 <p>
 <verb>
 &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cp (array(
-     'from' =&gt; '/var/www/phpgroupware/files/home/user/file1',
-     'to' =&gt; '/var/www/phpgroupware/files/home/user/file2',
+     'from' =&gt; '/var/www/egroupware/files/home/user/file1',
+     'to' =&gt; '/var/www/egroupware/files/home/user/file2',
      'relatives' =&gt; array(
           RELATIVE_NONE|VFS_REAL,
           RELATIVE_NONE|VFS_REAL
@@ -229,9 +229,9 @@ Just like you would think, fake_full_path contains the full virtual
  <item>
 &dollar;p-&gt;fake_name - file
  <item>
-&dollar;p-&gt;real_full_path - /var/www/phpgroupware/files/home/jason/dir/file
+&dollar;p-&gt;real_full_path - /var/www/egroupware/files/home/jason/dir/file
  <item>
-&dollar;p-&gt;real_leading_dirs - /var/www/phpgroupware/files/home/jason/dir
+&dollar;p-&gt;real_leading_dirs - /var/www/egroupware/files/home/jason/dir
  
  <item>
 &dollar;p-&gt;real_extra_path - home/jason/dir
@@ -251,7 +251,7 @@ As you can see, path_parts () is a very useful function and will
 <sect1>
 cd ()<label id="sec:cd" >
 <p>
-Part of the overall goal for the VFS in phpGroupWare is to give
+Part of the overall goal for the VFS in eGoupWare is to give
  the user a seamless experience during their session. For example,
  if they upload a file using a file manager to the directory /home/my_group/project1,
  and then go to download an email attachment, the default directory
@@ -307,7 +307,7 @@ What is it and how does it work?
 One of the design challenges for a Virtual File System is to
  try to figure out whether the calling application is referring to
  a file inside or outside the virtual root, and if inside, exactly
- where. To solve this problem, the phpGroupWare VFS uses RELATIVE
+ where. To solve this problem, the eGoupWare VFS uses RELATIVE
  defines that are used in bitmasks passed to each function. The result
  is that any set of different relativities can be used in combination
  with each other. Let's look at a few examples. Say you want to move
@@ -340,12 +340,12 @@ and the actual file system call would be:
 </p>
 <p>
 <verb>
-rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware/files/home/my_group/project1/logo.png');
+rename ('/var/www/egroupware/files/home/jason/logo.php', '/var/www/egroupware/files/home/my_group/project1/logo.png');
 </verb>
 </p><p>
 Those used to the old VFS will note that you do not have to translate
  the path beforehand. Let's look at another example. Suppose you were
- moving an email attachment stored in phpGroupWare's temporary directory
+ moving an email attachment stored in eGoupWare's temporary directory
  to the 'attachments' directory within the user's home directory (we're
  assuming the attachments directory exists). Note that the temporary
  directory is <em>outside</em> the virtual root.
@@ -375,7 +375,7 @@ Those used to the old VFS will note that you do not have to translate
 </p>
 <p>
 <verb>
-rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext');
+rename ('/var/www/egroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/egroupware/files/home/jason/attachments/actual_name.ext');
 </verb>
 </p><p>
 Of course you don't have to know that, nor should you be concerned
@@ -494,7 +494,7 @@ You should notice that no relativity array is needed in the other
 Function reference<label id="sec:function_reference" >
 <p>
 To view the function reference for the VFS, use the doc/inlinedocparser.php
- script that comes with phpGroupWare, ie <url url="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php" name="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php">.
+ script that comes with eGoupWare, ie <url url="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php" name="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php">.
 </p>
 <sect>
 Notes<label id="sec:notes" >
@@ -641,7 +641,7 @@ Updated February 2002 to include arrayized parameters, single
 Contributing
 <p>
 Contributions are always welcome. Please send to the current
- maintainer, Jason Wies, <url url="mailto:zone@phpgroupware.org" name="zone@phpgroupware.org">.
+ maintainer, Jason Wies, 
 </p>
 
 

@@ -354,12 +354,12 @@ Business layer requests
 \layout Standard
 
 Once a successful login return packet has been received and sessionid/kp3
- have been extracted, every subsequent packet sent to the phpgroupware server
+ have been extracted, every subsequent packet sent to the egroupware server
  must be preceded by an Authorization header.
  Here is a sample header:
 \layout Code
 
-POST /phpgroupware/xmlrpc.php HTTP/1.0
+POST /egroupware/xmlrpc.php HTTP/1.0
 \layout Code
 
 User-Agent: PHP XMLRPC 1.0

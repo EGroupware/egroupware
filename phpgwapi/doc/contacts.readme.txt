@@ -1,6 +1,6 @@
   /**************************************************************************\
-  * phpGroupWare API - Contacts class documentation                          *
-  * This file written by Miles Lott <milosch@phpgroupware.org>               *
+  * eGroupWare API - Contacts class documentation                            *
+  * This file written by Miles Lott <milosch@groupwhare.org>                 *
   * -------------------------------------------------------------------------*
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
