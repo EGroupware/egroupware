@@ -241,6 +241,7 @@
   }
 
   function update_owner($table,$field){
+    global $db;
     $db->query("select distinct($field) from $table");
     if ($db->num_rows()) {
       while($db->next_record()) {
