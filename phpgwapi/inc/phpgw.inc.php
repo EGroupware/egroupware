@@ -145,7 +145,7 @@
     // You could redirect them to login.php with code 2 or use the default
     // I recommend using the default until all of the bugs are worked out.
 
-    function phpgw()
+    function phpgw_()
     {
       global $phpgw_info, $sessionid;
       /**************************************************************************\
@@ -196,7 +196,12 @@
       if (is_dir($template_root)) {          
          $this->template = new Template($template_root);
       }
-
+      if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
+        if (! $this->session->verify()) {
+          Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
+          exit;
+        }
+      }
     } 
     /**************************************************************************\
     * Core functions                                                           *
@@ -317,12 +322,12 @@
   * These lines load up the API, fill up the $phpgw_info array, etc          *
   \**************************************************************************/
   $phpgw = new phpgw;
-
+  $phpgw->phpgw_();
   if ($phpgw_info["flags"]["currentapp"] != "login" && $phpgw_info["flags"]["currentapp"] != "logout") {
-     if (! $phpgw->session->verify()) {
-        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
-        exit;
-     }
+//     if (! $phpgw->session->verify()) {
+//        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/login.php", "cd=10"));
+//        exit;
+//     }
      load_optional();
 
      phpgw_fillarray();
