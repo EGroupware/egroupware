@@ -62,6 +62,7 @@
 	$phpgw_info['server']['ldap_root_dn']       = $config['ldap_root_dn'];
 	$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
 	$phpgw_info['server']['account_repository'] = $config['account_repository'];
+	$phpgw_info['server']['ldap_version3']      = $config['ldap_version3'];
 
 	$phpgw->accounts = CreateObject('phpgwapi.accounts');
 	$acct            = $phpgw->accounts;
