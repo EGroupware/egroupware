@@ -308,6 +308,14 @@
        $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
        $currentver = "0.9.3pre7";
     }
+
+    // What happened to 0.9.3pre7 :) (jengo)
+
+    if ($currentver == "0.9.3pre8") {
+       $db->query("drop table users_headlines");
+       $currentver = "0.9.3pre9";
+       update_version_table();
+    }
       
     echo "  <tr bgcolor=\"e6e6e6\">\n";
     echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";

@@ -295,9 +295,6 @@
       if ($currentver == "0.9.3pre4") {
         $db->query("alter table config change config_name config_name varchar(255) NOT NULL");
 
-        // I decied too hold off on this table until 0.9.4pre1 (jengo)
-//        $db->query("create table domains (domain_id int NOT NULL auto_increment, domain_name varchar(255),"
-//         . "domain_database varchar(255),domain_status enum('Active,Disabled'),primary key(domain_id))");
         $currentver = "0.9.3pre5";
         update_version_table();
       }
@@ -319,6 +316,14 @@
          $db->query("alter table addressbook add ab_url varchar(255)");
          $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('transy', 'Translation Management', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
          $currentver = "0.9.3pre7";
+         update_version_table();
+      }
+
+      // What happened to 0.9.3pre7 :) (jengo)
+
+      if ($currentver == "0.9.3pre8") {
+         $db->query("drop table users_headlines");
+         $currentver = "0.9.3pre9";
          update_version_table();
       }
 
