@@ -964,9 +964,8 @@
 							return "'" . $this->Link_ID->BlobEncode($value) . "'";
 						case 'I':
 							return $this->Link_ID->BlobEncode($value);
-						default:
-							break;	// handled like strings					
 					}
+					break;	// handled like strings					
 				case 'date':
 					return $this->Link_ID->DBDate($value);
 				case 'timestamp':
