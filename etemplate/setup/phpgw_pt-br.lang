@@ -93,7 +93,6 @@ enable javascript onchange submit	etemplate	pt-br	ativar JavaScript sobre as alt
 enter '' for an empty default, nothing mean no default	etemplate	pt-br	informe '' para campos vazios, nada não significa padrão algum
 enter a search pattern	etemplate	pt-br	Informe um teste padrão para a busca
 enter filename to upload and attach, use [browse...] to search for it	etemplate	pt-br	Informe o nome do arquivo para envio e anexe, use [Localizar...] para procurar por ele
-
 enter the new version number here (> old_version), empty for no update-file	etemplate	pt-br	informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
 enter the new version number here (has to be > old_version)	etemplate	pt-br	informe o número da nova versão aqui (tem que ser > old_version)
 entry saved	etemplate	pt-br	Registro salvo
