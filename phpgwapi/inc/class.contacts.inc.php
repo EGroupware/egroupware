@@ -1,8 +1,32 @@
 <?php
-	if (!$phpgw_info['server']['contact_repository'])
+	if(!$GLOBALS['phpgw_info']['server']['contact_repository'])
 	{
-		$phpgw_info['server']['contact_repository'] = 'sql';
+		$GLOBALS['phpgw_info']['server']['contact_repository'] = 'sql';
 	}
-	include(PHPGW_API_INC . '/class.contacts_'.$phpgw_info['server']['contact_repository'] . '.inc.php');
-	include(PHPGW_API_INC . '/class.contacts_shared.inc.php');
+	if(!$GLOBALS['phpgw_info']['server']['contact_application'] ||
+		$GLOBALS['phpgw_info']['server']['contact_application'] == 'addressbook')
+	{
+		$contactapp = 'phpgwapi';
+	}
+	else
+	{
+		$contactapp = $GLOBALS['phpgw_info']['server']['contact_application'];
+	}
+
+	$repository = PHPGW_SERVER_ROOT . '/' . $contactapp
+		. '/inc/class.contacts_' . $GLOBALS['phpgw_info']['server']['contact_repository'] . '.inc.php';
+	$shared     = PHPGW_SERVER_ROOT . '/' . $contactapp . '/inc/class.contacts_shared.inc.php';
+
+	if(@file_exists($repository))
+	{
+		include($repository);
+	}
+	if(@file_exists($shared))
+	{
+		include($shared);
+	}
+
+	unset($contactapp);
+	unset($repository);
+	unset($shared);
 ?>
