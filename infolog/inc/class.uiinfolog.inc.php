@@ -131,7 +131,7 @@
 				if ($proj) $subject .= '<br>';
 				$addr = $this->bo->addr2name( $addr );
 				$subject .= $this->html->bold($this->html->a_href($addr,
-									'/index.php',$this->menuaction(),
+									'/index.php',$this->menuaction() +
 									array( 'filter' => $filter,'action' => 'addr',
 											 'addr_id' => $addr_id )));
 			}
@@ -204,11 +204,13 @@
 	 	function get_list( ) {
 			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
-			global $action,$addr_id,$proj_id,$info_id;
+			global $action,$addr_id,$proj_id,$info_id,$for_include;
 
-			$phpgw->common->phpgw_header();
-			echo parse_navbar();
-
+			echo "<p>for_include: $for_include, action: $action, addr_id: $addr_id</p>";
+			if (!$for_include) {
+				$phpgw->common->phpgw_header();
+				echo parse_navbar();
+			}
 			$db = $phpgw->db;
 			$db2 = $phpgw->db;
 			$t = &$this->template; $html = &$this->html;
@@ -426,7 +428,8 @@
 
 			// -------------- end Add form declaration ------------------------
 
-			$phpgw->common->phpgw_footer();
+			if (!$for_include)
+				$phpgw->common->phpgw_footer();
 		}
 
 		function edit( ) {
