@@ -14,7 +14,11 @@
 
 	class bocurrentsessions
 	{
+		var $ui;
 		var $so;
+		var $public_functions = array(
+				'kill'          => True
+			);
 
 		function bocurrentsessions()
 		{
@@ -59,6 +63,16 @@
 				);
 			}
 			return $_values;
+		}
+
+		function kill()
+		{
+			if ($GLOBALS['ksession'] && $GLOBALS['sessionid'] != $GLOBALS['ksession'] && ! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
+			{
+				$GLOBALS['phpgw']->session->destroy($GLOBALS['ksession']);
+			}
+			$this->ui = createobject('admin.uicurrentsessions');
+			$this->ui->list_sessions();
 		}
 
 	}
