@@ -71,7 +71,6 @@
 			));
 
 			$this->so = CreateObject('infolog.soinfolog');
-			$this->vfs = CreateObject('infolog.vfs');
 			$this->link = CreateObject('infolog.bolink');
 
 			$this->config = CreateObject('phpgwapi.config');
