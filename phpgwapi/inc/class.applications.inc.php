@@ -29,17 +29,21 @@
     var $group_apps = Array();
 
     function applications($var = ""){
+       global $phpgw, $phpgw_info;
       if ($var != ""){
         $this->users_enabled_apps();
       }
+
     }
 
     function users_enabled_apps()
     {
        global $phpgw, $phpgw_info;
+
        if (gettype($phpgw_info["apps"]) != "array") {
           $this->read_installed_apps();
        }
+       reset ($phpgw_info["apps"]);
        while (list($app) = each($phpgw_info["apps"])) {
           if ($phpgw->acl->check("run",1,$app)) {
              $phpgw_info["user"]["apps"][$app] = array("title" => $phpgw_info["apps"][$app]["title"], "name" => $app, "enabled" => True, "status" => $phpgw_info["apps"][$app]["status"]);
@@ -49,18 +53,16 @@
 
     function read_installed_apps(){
       global $phpgw, $phpgw_info;
-      $phpgw->db->lock(array("applications"));
       $phpgw->db->query("select * from applications where app_enabled != '0' order by app_order",__LINE__,__FILE__);
       if($phpgw->db->num_rows()) {
         while ($phpgw->db->next_record()) {
-#          echo "<br>TEST: " . $phpgw->db->f("app_order") . " - " . $phpgw->db->f("app_name");
+//          echo "<br>TEST: " . $phpgw->db->f("app_order") . " - " . $phpgw->db->f("app_name");
           $name = $phpgw->db->f("app_name");
           $title  = $phpgw->db->f("app_title");
           $status = $phpgw->db->f("app_enabled");
           $phpgw_info["apps"][$name] = array("title" => $title, "enabled" => True, "status" => $status);
         }
       }
-      $phpgw->db->unlock();
     }
 
     function read_user_apps($lid ="") {

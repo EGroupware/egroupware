@@ -75,6 +75,7 @@
     }
 
     function check($location, $required, $appname = False){
+      global $phpgw, $phpgw_info;
       $rights = $this->get_rights($location,$appname);
       
       return !!($rights & $required);
