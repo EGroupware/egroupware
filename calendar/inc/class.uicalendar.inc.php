@@ -2237,6 +2237,7 @@
 			$p->set_block('mq','list','list');
 
 			$p->set_var(array(
+				'delete_participants'	=> lang('Delete selected participants'),
 				'title'			=> lang('Daily Matrix View'),
 				'th_bg'			=> $this->theme['th_bg'],
 				'action_url'	=> $this->page('viewmatrix')
