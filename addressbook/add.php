@@ -42,8 +42,20 @@
 	if ($AddVcard){
 		Header("Location: " . $phpgw->link("/addressbook/vcardin.php"));
 	} else if ($add_email) {
-		list($fields["n_given"],$fields["n_family"]) = explode(" ", $name);
-		$fields["email"] = $add_email;
+		$named = explode(" ", $name);
+		for ($i=count($named);$i>=0;$i--) { $names[$i] = $named[$i]; }
+		if ($names[2])
+		{
+			$fields["n_given"]  = $names[0];
+			$fields["n_middle"] = $names[1];
+			$fields["n_family"] = $names[2];
+		}
+		else
+		{
+			$fields["n_given"]  = $names[0];
+			$fields["n_family"] = $names[1];
+		}
+		$fields["email"]    = $add_email;
 		addressbook_form("","add.php","Add",$fields,'',$cat_id);
 	} else if (! $submit && ! $add_email) {
 		// Default
