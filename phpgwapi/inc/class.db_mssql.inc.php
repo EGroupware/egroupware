@@ -19,69 +19,116 @@
 # echo "<BR>This is using the MSSQL class<BR>";
 
 class db {
-	var $Host     = "";
-	var $Database = "";
-	var $User     = "";
-	var $Password = "";
+	var $Host         = '';
+	var $Database     = '';
+	var $User         = '';
+	var $Password     = '';
 
-	var $Link_ID  = 0;
-	var $Query_ID = 0;
-	var $Record   = array();
-	var $Row      = 0;
+	var $Link_ID      = 0;
+	var $Query_ID     = 0;
+	var $Record       = array();
+	var $Row          = 0;
+	var $VEOF         = -1;
 
-	var $Errno    = 0;
-	var $Error    = "";
+	var $Errno        = 0;
+	var $Error        = '';
+	var $use_pconnect = True;
+	var $Auto_Free    = 0;     ## set this to 1 to automatically free results
 
-	var $Auto_Free = 0;     ## set this to 1 to automatically free results
 
-
-	function connect() {
-		if ( 0 == $this->Link_ID ) {
-			$this->Link_ID=mssql_pconnect($this->Host, $this->User, $this->Password);
+	function connect()
+	{
+		if ( 0 == $this->Link_ID )
+		{
+			if ($this->use_pconnect)
+				$this->Link_ID=mssql_pconnect($this->Host, $this->User, $this->Password);
+			else
+				$this->Link_ID=mssql_connect($this->Host, $this->User, $this->Password);
 			if (!$this->Link_ID)
 				$this->halt("Link-ID == false, mssql_pconnect failed");
 			else
 				mssql_select_db($this->Database, $this->Link_ID);
 		}
 	}
-	function free_result(){
+
+	function free_result()
+	{
 		mssql_free_result($this->Query_ID);
 		$this->Query_ID = 0;
+		$this->VEOF = -1;		
 	}
 
-	function query($Query_String) {
+	function query($Query_String, $line = '', $file = '')
+	{
+		$this->VEOF = -1;
+
 		if (!$this->Link_ID)
 			$this->connect();
-
-#   printf("<br>Debug: query = %s<br>\n", $Query_String);
 
 		$this->Query_ID = mssql_query($Query_String, $this->Link_ID);
 		$this->Row = 0;
 		if (!$this->Query_ID) {
-			$this->Errno = 1;
-			$this->Error = "General Error (The MSSQL interface cannot return detailed error messages).";
-			$this->halt("Invalid SQL: ".$Query_String);
+			$this->halt("Invalid SQL: " . $Query_String, $line, $file);
 		}
 		return $this->Query_ID;
 	}
 
-	function next_record() {
+	function limit_query($Query_String, $offset, $num_rows, $line = '', $file = '')
+	{
+		global $phpgw_info;
 
-		if ($this->Record = mssql_fetch_row($this->Query_ID)) {
-      // add to Record[<key>]
-			$count = mssql_num_fields($this->Query_ID);
-			for ($i=0; $i<$count; $i++){
-				$fieldinfo = mssql_fetch_field($this->Query_ID,$i);
-				$this->Record[strtolower($fieldinfo->name)] = $this->Record[$i];
-			}
-			$this->Row += 1;
-			$stat = 1;
-		} else {
-			if ($this->Auto_Free) {
-				$this->free_result();
-			}
-			$stat = 0;
+		if ($this->Debug)
+			printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
+
+		if (!IsSet($num_rows) || $num_rows < 1)
+			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+
+		$this->query($Query_String, $line, $file);
+		if ($this->Query_ID)
+		{
+			$this->Row = $offset;
+			// Push cursor to appropriate row in case next_record() is used
+			if ($offset > 0)
+				@mssql_data_seek($this->Query_ID, $offset);
+
+			$this->VEOF = $offset + $num_rows - 1;
 		}
+
+		return $this->Query_ID;
+	}
+
+	function next_record()
+	{
+		if (!$this->Query_ID)
+		{
+			$this->halt("next_record called with no query pending.");
+			return 0;
+		}
+
+		if ($this->VEOF == -1 || ($this->Row++ <= $this->VEOF))
+		{
+			// Work around for buggy mssql_fetch_array
+			$rec = @mssql_fetch_row($this->Query_ID);
+			if ($rec)
+			{
+				$this->Record = array();
+				for (var $i = 0; $i < count($rec); $i++)
+				{
+					$this->Record[$i] = $rec[$i];
+					$o = mssql_fetch_field($i, $this->Query_ID);
+					$this->Record[$o->name] = $rec[$i];
+				}
+			}
+			else
+				$this->Record = NULL;
+		}
+		else
+			$this->Record = NULL;
+
+		$stat = is_array($this->Record);
+		if (!$stat && $this->Auto_Free)
+			$this->free();
+
 		return $stat;
 	}
 
@@ -115,11 +162,9 @@ class db {
 
 		$this->connect();
 		$id = mssql_query("select * from $table", $this->Link_ID);
-		if (!$id) {
-			$this->Errno = 1;
-			$this->Error = "General Error (The MSSQL interface cannot return detailed error messages).";
+		if (!$id)
 			$this->halt("Metadata query failed.");
-		}
+
 		$count = mssql_num_fields($id);
 
 		for ($i=0; $i<$count; $i++) {
@@ -161,12 +206,52 @@ class db {
 		print $this->f($Field_Name);
 	}
 
-	function halt($msg) {
+	/* public: table locking */
+	function lock($table, $mode="write")
+	{
+		return 1; // FIXME: fill it in!
+	}
+
+	function unlock()
+	{
+		return 1; // FIXME: fill it in!
+	}
+
+	/* private: error handling */
+	function halt($msg, $line = '', $file = '')
+	{
+		global $phpgw;
+		$this->unlock();
+
+		$this->Errno = 1;
+		$this->Error = mssql_get_last_message();
+		if ($this->Error == '')
+			$this->Error = "General Error (The MS-SQL interface did not return a detailed error message).";
+
+		if ($this->Halt_On_Error == "no")
+			return;
+
+		$this->haltmsg($msg);
+
+		if ($file)
+			printf("<br><b>File:</b> %s",$file);
+
+		if ($line)
+			printf("<br><b>Line:</b> %s",$line);
+
+		if ($this->Halt_On_Error != "report")
+		{
+			echo "<p><b>Session halted.</b>";
+			$phpgw->common->phpgw_exit(True);
+		}
+	}
+
+	function haltmsg($msg)
+	{
 		printf("<b>Database error:</b> %s<br>\n", $msg);
-		printf("<b>MSSQL Error</b>: %s (%s)<br>\n",
-			$this->Errno,
-			$this->Error);
-		die("Session halted.");
+		if ($this->Errno != "0" && $this->Error != "()") {
+			printf("<b>MS-SQL Error</b>: %s (%s)<br>\n", $this->Errno, $this->Error);
+		}
 	}
 
 	function table_names()
