@@ -1566,10 +1566,10 @@
 
 //NDEE: cutting off too long entries 140304
 //ToDo: calculate length based on client window
-			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly)
+			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly && $field == "title")
 //			elseif(strlen($event[$field]) > 19 && $this->printer_friendly)
 			{
-				return substr($event[$field], 0 , 19) . '&nbsp;<span class="to_continue">[...]</span>';
+				return substr($event[$field], 0 , 19) . '&nbsp;...';
 			}
 			else
 			{
