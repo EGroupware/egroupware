@@ -69,7 +69,7 @@
 		}
 	}
 
-	function create_password_box($label_name,$preference_name,$help='',$size = '',$max_size = '')
+	function create_password_box($label_name,$preference_name,$help='',$size = '',$max_size = '',$run_lang=True)
 	{
 		global $user,$forced,$default;
 		
@@ -78,7 +78,7 @@
 		{
 			return True;
 		}
-		create_input_box($label_name,$preference_name.'][pw',$help,'',$size,$max_size,'password');
+		create_input_box($label_name,$preference_name.'][pw',$help,'',$size,$max_size,'password',$run_lang);
 	}
 	
 	function create_input_box($label,$name,$help='',$default='',$size = '',$max_size = '',$type='',
@@ -148,7 +148,7 @@
 		return False;
 	}
 
-	function create_check_box($label,$name,$help='',$default='')
+	function create_check_box($label,$name,$help='',$default='',$run_lang=True)
 	{
 		// checkboxes itself can't be use as they return nothing if uncheckt !!!
 		global $prefs;
@@ -165,7 +165,7 @@
 		return create_select_box($label,$name,array(
 			'0' => lang('No'),
 			'1' => lang('Yes')
-		),$help,$default);
+		),$help,$default,$run_lang);
 	}
 
 	function create_option_string($selected,$values)
@@ -194,7 +194,7 @@
 			$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
 		}
 
-	function create_select_box($label,$name,$values,$help='',$default='')
+	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True)
 	{
 		global $t,$prefs;
 
@@ -231,7 +231,7 @@
 		$t->set_var('row_name',lang($label));
 		$GLOBALS['phpgw']->nextmatchs->template_alternate_row_color($t);
 
-		$t->fp('rows',process_help($help) ? 'help_row' : 'row',True);
+		$t->fp('rows',process_help($help,$run_lang) ? 'help_row' : 'row',True);
 	}
 	
 	/*!
@@ -245,7 +245,7 @@
 	@param $default default-value
 	@param $vars2 array with extra substitution-variables of the form key => help-text
 	*/
-	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='',$subst_help=True)
+	function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='',$subst_help=True,$run_lang=True)
 	{
 		global $t,$prefs,$notifys;
 
@@ -258,7 +258,7 @@
 
 		$notifys[$name] = $vars;	// this gets saved in the app_session for re-translation
 
-		$help = $help ? lang($help) : '';
+		$help = $help && $run_lang ? lang($help) : $help;
 		if ($subst_help)
 		{
 			$help .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
