@@ -61,12 +61,42 @@ class calendar__
 	{
 		global $phpgw, $phpgw_info;
 		
+		$phpgw_info['user']['preferences'] = $phpgw->common->create_emailpreferences($phpgw_info['user']['preferences']);
+		$sender = $phpgw_info['user']['preferences']['email']['address'];
+
 		$temp_tz_offset = $phpgw_info['user']['preferences']['common']['tz_offset'];
 		$temp_timeformat = $phpgw_info['user']['preferences']['common']['timeformat'];
 		$temp_dateformat = $phpgw_info['user']['preferences']['common']['dateformat'];
 
 		$tz_offset = ((60 * 60) * intval($temp_tz_offset));
+
+		$temp_user = $phpgw_info['user'];
+
+		if((is_int($this->user) && $this->user != $temp_user['account_id']) ||
+			(is_string($this->user) && $this->user != $temp_user['account_lid']))
+		{
+			if(is_string($this->user))
+			{
+				$user = $phpgw->accounts->name2id($this->user);
+			}
+			elseif(is_int($this->user))
+			{
+				$user = $this->user;
+			}
 		
+			$accounts = CreateObject('phpgwapi.accounts',$user);
+			$phpgw_info['user'] = $accounts->read_repository();
+
+			$pref = CreateObject('phpgwapi.preferences',$user);
+			$phpgw_info['user']['preferences'] = $pref->read_repository();
+		}
+		else
+		{
+			$user = $phpgw_info['user']['account_id'];
+		}
+
+		$phpgw_info['user']['preferences'] = $phpgw->common->create_emailpreferences($phpgw_info['user']['preferences'],$user);
+
 		$send = CreateObject('phpgwapi.send');
 
 		switch($msg_type)
@@ -141,11 +171,17 @@ class calendar__
 						break;
 				}
 				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
-				$send->msg('email',$to,$subject,$body,$msgtype);
+				$send->msg('email',$to,$subject,$body,$msgtype,'','','',$sender);
 			}
 		}
 		unset($send);
 		
+		if((is_int($this->user) && $this->user != $temp_user['account_id']) ||
+			(is_string($this->user) && $this->user != $temp_user['account_lid']))
+		{
+			$phpgw_info['user'] = $temp_user;
+		}
+
 		$phpgw_info['user']['preferences']['common']['tz_offset'] = $temp_tz_offset;
 		$phpgw_info['user']['preferences']['common']['timeformat'] = $temp_timeformat;
 		$phpgw_info['user']['preferences']['common']['dateformat'] = $temp_dateformat;
