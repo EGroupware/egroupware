@@ -252,7 +252,7 @@
 				{
 					$null = "'nullable' => False";
 				}
-				if ($oProc->m_odb->f(4))
+				if ($oProc->m_odb->f(4) != '')
 				{
 					$default = "'default' => '".$oProc->m_odb->f(4)."'";
 					$nullcomma = ',';
