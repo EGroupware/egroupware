@@ -283,60 +283,37 @@
 
 		function checkip($remoteip='')
 		{
-			$allowed_ips = split(',',$GLOBALS['phpgw_info']['server']['setup_acl']);
-			if(!empty($GLOBALS['phpgw_info']['server']['setup_acl']) && is_array($allowed_ips) && count($allowed_ips) > 0)
+			//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['phpgw_info']['server']['setup_acl']."'</p>\n";
+			$allowed_ips = explode(',',$GLOBALS['phpgw_info']['server']['setup_acl']);
+			if(empty($GLOBALS['phpgw_info']['server']['setup_acl']) || !is_array($allowed_ips))
 			{
-				$foundip = False;
-				foreach($allowed_ips as $value)
+				return True;	// no test
+			}
+			$remotes = explode('.',$remoteip);
+			foreach($allowed_ips as $value)
+			{
+				if (!preg_match('/^[0-9.]+$/',$value))
 				{
-					if (!preg_match('/^[0-9.]$/',$value))
+					$value = gethostbyname($was=$value);		// resolve domain-name, eg. a dyndns account
+					//echo "resolving '$was' to '$value'<br>\n";
+				}
+				$values = explode('.',$value);
+				for($i = 0; $i < count($values); ++$i)
+				{
+					if ((int) $values[$i] != (int) $remotes[$i])
 					{
-						$value = gethostbyname($value);		// resolve domain-name, eg. a dyndns account
-					}
-					$test = split("\.",$value);
-					if(count($test) < 3)
-					{
-						$value .= ".0.0";
-						$tmp = split("\.",$remoteip);
-						$tmp[2] = 0;
-						$tmp[3] = 0;
-						$testremoteip = join('.',$tmp);
-					}
-					elseif(count($test) < 4)
-					{
-						$value .= ".0";
-						$tmp = split("\.",$remoteip);
-						$tmp[3] = 0;
-						$testremoteip = join('.',$tmp);
-					}
-					elseif(count($test) == 4 &&
-						(int)$test[3] == 0)
-					{
-						$tmp = split("\.",$remoteip);
-						$tmp[3] = 0;
-						$testremoteip = join('.',$tmp);
-					}
-					else
-					{
-						$testremoteip = $remoteip;
-					}
-
-					//echo '<br>testing: ' . $testremoteip . ' compared to ' . $value;
-
-					if($testremoteip == $value)
-					{
-						//echo ' - PASSED!';
-						$foundip = True;
+						break;
 					}
 				}
-				if(!$foundip)
+				if ($i == count($values))
 				{
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
-					return False;
+					return True;	// match
 				}
 			}
-			return True;
+			$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+			$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
+
+			return False;
 		}
 
 		/*!
@@ -350,7 +327,7 @@
 			{
 				return False;
 			}
-			
+
 			$version = str_replace('pre','.',$versionstring);
 			$varray  = explode('.',$version);
 			$major   = implode('.',array($varray[0],$varray[1],$varray[2]));
