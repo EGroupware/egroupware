@@ -122,6 +122,8 @@ class uiviews extends uical
 
 	/**
 	 * Displays the weekview, with 5 or 7 days
+	 *
+	 * @param int $days=0 number of days to show, if 0 (default) the value from the URL or the prefs is used
 	 */
 	function week($days=0)
 	{
@@ -158,12 +160,21 @@ class uiviews extends uical
 			': '.$this->bo->long_date($first,$last);
 		$GLOBALS['phpgw']->common->phpgw_header();
 
-		$search_params = $this->search_params;
-
-		echo $this->timeGridWidget($this->bo->search(array(
-			'start'   => $first,
-			'end'     => $last,
-		)+$this->search_params),max($this->width,$days*$this->eventCol_min_width+$this->timeRow_width));
+		$search_params = $this->search_params + array(
+				'start'   => $first,
+				'end'     => $last,
+			);
+		$users = $this->search_params['users'];
+		if (!is_array($users)) $users = array($users);
+		
+		foreach($users as $user)
+		{
+			$search_params['users'] = $user;
+			echo $this->timeGridWidget($this->bo->search($search_params),
+				max($this->width,$days*$this->eventCol_min_width+$this->timeRow_width),
+				count($users) * $this->cal_prefs['interval'],count($users) * 1.7,'',
+				count($users) > 1 ? $GLOBALS['phpgw']->common->grab_owner_name($user) : '');
+		}
 	}
 
 	/**
@@ -180,7 +191,7 @@ class uiviews extends uical
 		$todos = $this->get_todos(&$todo_label);
 
 		echo $this->html->table(array(0 => array(
-			$this->timeGridWidget($this->bo->search($this->search_params),$this->width-250,$this->cal_prefs['interval'],1.5),
+			$this->timeGridWidget($this->bo->search($this->search_params),$this->width-250,$this->cal_prefs['interval'],1.7),
 			$this->html->div(
 				$this->html->div($todo_label,'','calDayTodosHeader th')."\n".
 				$this->html->div($todos,'','calDayTodosTable'),
@@ -191,7 +202,7 @@ class uiviews extends uical
 	/**
 	 * Query the open ToDo's via a hook from InfoLog or any other 'calendar_include_todos' provider
 	 *
-	 * @param $todo_label array/string label for the todo-box or array with 2 values: the label and a boolean show_all
+	 * @param array/string $todo_label label for the todo-box or array with 2 values: the label and a boolean show_all
 	 *	On return $todo_label contains the label for the todo-box
 	 * @return string html with a table of open todo's
 	 */
@@ -263,6 +274,8 @@ class uiviews extends uical
 	 * Calculates the vertical position based on the time
 	 *
 	 * workday start- and end-time, is taken into account, as well as timeGrids px_m - minutes per pixel param
+	 * @param int $time in minutes
+	 * @return int position in pixels
 	 */
 	function time2pos($time)
 	{
@@ -292,6 +305,10 @@ class uiviews extends uical
 	 * Calculates the height of a differenc between 2 times
 	 *
 	 * workday start- and end-time, is taken into account, as well as timeGrids px_m - minutes per pixel param
+	 * @param int $start time in minutes
+	 * @param int $end time in minutes
+	 * @param int $minimum=0 minimum height
+	 * @return int height in pixel
 	 */
 	function times2height($start,$end,$minimum=0)
 	{
@@ -308,9 +325,11 @@ class uiviews extends uical
 	 * Uses the dayColWidget to display each day.
 	 *
 	 * @param $daysEvents array with subarrays of events for each day to show, day as YYYYMMDD as key
-	 * @param $width int width of the widget
-	 * @param $granularity int granularity in minutes of the rows
-	 * @param $px_m param int/float minutes per pixel - pixel in minutest ;-)
+	 * @param int $width width of the widget
+	 * @param int $granularity_m granularity in minutes of the rows
+	 * @param int/float $px_m minutes per pixel - pixel in minutes ;-)
+	 * @param string $indent string for correct indention
+	 * @param string $title title of the time-grid
 	 */
 	function timeGridWidget($daysEvents,$width,$granularity_m=30,$px_m=1.7,$indent='',$title='')
 	{
@@ -384,11 +403,13 @@ class uiviews extends uical
 	 *
 	 * Uses the eventColWidget to display each column.
 	 *
-	 * @param $day_ymd string/int date as Ymd
-	 * @param $events array of events to show
-	 * @param $left int start of the widget
-	 * @param $width int width of the widget
-	 * @param $short_title boolean should we add a label (weekday, day) with link to the day-view above each day
+	 * @param string/int $day_ymd date as Ymd
+	 * @param array $events of events to show
+	 * @param int $left start of the widget
+	 * @param int $width width of the widget
+	 * @param string $indent string for correct indention
+	 * @param boolean $short_title should we add a label (weekday, day) with link to the day-view above each day
+	 * @param boolean $on_off start with row_on or row_off, default false=row_off
 	 */
 	function dayColWidget($day_ymd,$events,$left,$width,$indent,$short_title=True,$on_off=False)
 	{
@@ -479,9 +500,10 @@ class uiviews extends uical
 	 *
 	 * Uses the eventWidget to display each event.
 	 *
-	 * @param $events array of events to show
-	 * @param $left int start of the widget
-	 * @param $width int width of the widget
+	 * @param array $events of events to show
+	 * @param int $left start of the widget
+	 * @param int $width width of the widget
+	 * @param string $indent string for correct indention
 	 */
 	function eventColWidget($events,$left,$width,$indent)
 	{
@@ -500,8 +522,11 @@ class uiviews extends uical
 	/**
 	 * Shows one event
 	 *
+	 * The display of the event and it's tooltip is done via the event_widget.tpl template
+	 *
 	 * @param $event array with the data of event to show
 	 * @param $width int width of the widget
+	 * @param string $indent string for correct indention
 	 */
 	function eventWidget($event,$width,$indent)
 	{
