@@ -7,8 +7,21 @@
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s Readonly
 ../../developer_tools/templates/default/images/navbar.gif	etemplate	en	../../developer_tools/templates/default/images/navbar.gif
+<	etemplate	en	<
+<<	etemplate	en	<<
+>	etemplate	en	>
+>>	etemplate	en	>>
+@cat1_help	etemplate	en	@cat1_help
+@cat1_label	etemplate	en	@cat1_label
+@cat2_help	etemplate	en	@cat2_help
+@cat2_label	etemplate	en	@cat2_label
+@filter2_help	etemplate	en	@filter2_help
+@filter2_label	etemplate	en	@filter2_label
+@filter_help	etemplate	en	@filter_help
+@filter_label	etemplate	en	@filter_label
 @help	etemplate	en	@help
 @label	etemplate	en	@label
+a pattern to be searched for	etemplate	en	a pattern to be searched for
 add column	etemplate	en	Add Column
 add table	etemplate	en	Add Table
 align	etemplate	en	Align
@@ -20,6 +33,7 @@ birthday	etemplate	en	Birthday
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
 cancel	etemplate	en	Cancel
 cancel, discarding changes	etemplate	en	Cancel, discarding changes
+category	etemplate	en	Category
 center	etemplate	en	Center
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
@@ -81,10 +95,16 @@ familyname	etemplate	en	Familyname
 fax	etemplate	en	Fax
 faxnumber	etemplate	en	Faxnumber
 fileupload	etemplate	en	FileUpload
+first	etemplate	en	First
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
 founded	etemplate	en	Founded
 free note-text	etemplate	en	free note-text
+go to the first entry	etemplate	en	go to the first entry
+go to the last entry	etemplate	en	go to the last entry
+go to the last page of entries	etemplate	en	go to the last page of entries
+go to the next page of entries	etemplate	en	go to the next page of entries
+go to the previous page of entries	etemplate	en	go to the previous page of entries
 group/-user	etemplate	en	Group/-User
 height	etemplate	en	Height
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
@@ -114,6 +134,7 @@ lang	etemplate	en	Lang
 language	etemplate	en	Language
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default to read the default template '')
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
+last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 load this template into the editor	etemplate	en	load this template into the editor
@@ -132,6 +153,7 @@ nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 only an other version found !!!	etemplate	en	only an other Version found !!!
+options	etemplate	en	Options
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
@@ -157,10 +179,12 @@ saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_cur
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
 search	etemplate	en	Search
+select a category	etemplate	en	select a Category
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
 select an application	etemplate	en	Select an application
 select an table of the application	etemplate	en	Select an table of the application
+select category	etemplate	en	Select Category
 select cathegory	etemplate	en	Select Cathegory
 select country	etemplate	en	Select Country
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
@@ -194,6 +218,8 @@ textfeld:	etemplate	en	Textfeld:
 this is a datefield	etemplate	en	This is a DateField
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
+to start the search	etemplate	en	to start the search
+total %s notes	etemplate	en	Total %s notes
 type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
