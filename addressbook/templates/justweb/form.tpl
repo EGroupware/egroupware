@@ -130,6 +130,15 @@
     <td><font size="-1"></font></td>
   </tr>
   <tr>
+    <td><font color="#000000" face="" size="-1">{lang_country}:</font></td>
+    <td>
+      <font size="-1">
+      {country}
+    </font></td>
+    <td><font size="-1"></font></td>
+    <td><font size="-1"></font></td>
+  </tr>
+  <tr>
     <td colspan="4"><font size="-1"></font></td>
   </tr>
   <tr>

@@ -24,7 +24,7 @@
   /* $Id$ */
 
   /*
-     contacts_extra (
+     addressbook_extra (
        contact_id          int,
        contact_owner       int,
        contact_name        varchar(255),
@@ -38,7 +38,8 @@
   {
      var $db;
      var $account_id;
-     var $stock_contact_fields;         // This is an array of all the fields in the contacts table
+     var $stock_contact_fields;         // This is an array of all the fields in the addressbook table
+     var $email_types;
      var $total_records;                // This will contain numrows for data retrieved
 
      function contacts_()
@@ -97,6 +98,11 @@
                                             "D_EMAIL_Work"    => "D.EMAIL.Work",  //yn
                                             "D_EMAIL_Home"    => "D.EMAIL.Home",  //yn
                                             );
+
+        $this->email_types = array("INTERNET","CompuServe","AOL","Prodigy",
+                                   "eWorld","AppleLink","AppleTalk","PowerShare",
+                                   "IBMMail","ATTMail","MCIMail","X.400","TLX"
+                                  );
      }
 
      function read_single_entry($id,$fields)
@@ -212,7 +218,7 @@
         list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
 
         //$this->db->lock(array("contacts"));
-        $this->db->query("insert into contacts (owner,"
+        $this->db->query("insert into addressbook (owner,"
                        . implode(",",$this->stock_contact_fields)
                        . ") values ('$owner','"
                        . implode("','",$this->loop_addslashes($ab_fields)) . "')",__LINE__,__FILE__);
@@ -224,7 +230,7 @@
 
         if (count($extra_fields)) {
            while (list($name,$value) = each($extra_fields)) {
-              $this->db->query("insert into contacts_extra values ('$id','" . $this->account_id . "','"
+              $this->db->query("insert into addressbook_extra values ('$id','" . $this->account_id . "','"
                              . addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
            }
         }
@@ -240,7 +246,7 @@
 
      function add_single_extra_field($id,$owner,$field_name,$field_value)
      {
-        $this->db->query("insert into contacts_extra values ($id,'$owner','" . addslashes($field_name)
+        $this->db->query("insert into addressbook_extra values ($id,'$owner','" . addslashes($field_name)
                        . "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
      }
 
@@ -268,7 +274,7 @@
            if ($field_s == ",") {
               unset($field_s);
            }
-           $this->db->query("update addressbook set owner='$owner', $fields_s where "
+           $this->db->query("update addressbook set owner='$owner' $fields_s where "
                           . "id='$id'",__LINE__,__FILE__);
         }
 

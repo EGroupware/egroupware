@@ -31,18 +31,25 @@
     Header("Location: " . $phpgw->link("index.php"));
   }
 
-  // Need to replace abc with $this->stock_addressbook_fields
-  while ($column = each($abc)) {
+  while ($column = each($this->stock_contact_fields)) {
     if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
       $phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) {
       $columns_to_display[$column[0]] = True;
       $colname[$column[0]] = $column[1];
     }
   }
+  // merge in what are now extra fields
+  $extrafields = array ("pager" => "pager",
+                        "mphone" => "mphone",
+                        "ophone" => "ophone",
+                        "address2" => "address2",
+                        "bday" => "bday",
+                        "url" => "url",
+                        "notes" => "notes");
+  $qfields = $this->stock_contact_fields + $extrafields;
+  $fields = $this->read_single_entry($ab_id,$qfields);
 
-  $fields = $this->read_single_entry($ab_id,$this->stock_addressbook_fields);
-
-  $access = $fields[0]["access"];
+  //$access = $fields[0]["access"];
   $owner  = $fields[0]["owner"];
  
   $view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";

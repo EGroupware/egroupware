@@ -38,6 +38,7 @@
      var $db;
      var $account_id;
      var $stock_contact_fields;     // This is an array of all the fields in the addressbook
+     var $email_types;
      var $total_records;
 
      function split_ab_and_extras($fields)

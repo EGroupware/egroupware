@@ -60,6 +60,7 @@
     $fields["N_Given"]        = $firstname;
     $fields["N_Family"]       = $lastname;
     $fields["D_EMAIL"]        = $email;
+    $fields["D_EMAILTYPE"]    = $email_type;
     $fields["TITLE"]          = $title;
     $fields["A_TEL"]          = $wphone;
     $fields["B_TEL"]          = $hphone;
@@ -72,6 +73,7 @@
     $fields["ADR_Locality"]   = $city;
     $fields["ADR_Region"]     = $state;
     $fields["ADR_PostalCode"] = $zip;
+    $fields["ADR_Country"]    = $country;
     $fields["bday"]           = $bday;
     $fields["url"]            = $url;
     $fields["notes"]          = $notes;

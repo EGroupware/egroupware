@@ -29,7 +29,14 @@
       {email}
     </td>
   </tr>
-
+  <tr>
+    <td>
+     <font color="#000000" face="" size="-1">{lang_email_type}:</font>
+    </td>
+    <td>
+     <font size="-1">{email_type}</font>
+    </td>
+  </tr>
   <tr>
     <td>
      <font color="#000000" face="" size="-1">{lang_company}:</font>
@@ -125,6 +132,15 @@
     <td>
       <font size="-1">
       {zip}
+    </font></td>
+    <td><font size="-1"></font></td>
+    <td><font size="-1"></font></td>
+  </tr>
+  <tr>
+    <td><font color="#000000" face="" size="-1">{lang_country}:</font></td>
+    <td>
+      <font size="-1">
+      {country}
     </font></td>
     <td><font size="-1"></font></td>
     <td><font size="-1"></font></td>

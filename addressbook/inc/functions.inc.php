@@ -55,6 +55,7 @@
     $city         = $fields["ADR_Locality"];
     $state        = $fields["ADR_Region"];
     $zip          = $fields["ADR_PostalCode"];
+    $country      = $fields["ADR_Country"];
     $bday         = $fields["bday"];
     $notes        = $fields["notes"];
     $company      = $fields["ORG_Name"];
@@ -76,6 +77,7 @@
       $city	 = "<input name=\"city\" value=\"$city\">";
       $state	 = "<input name=\"state\" value=\"$state\">";
       $zip	 = "<input name=\"zip\" value=\"$zip\">";
+      $country   = "<input name=\"country\" value=\"$country\">";
 
 /*
       if($phpgw_info["apps"]["timetrack"]["enabled"]) {
@@ -140,6 +142,12 @@
         $bday_year = '<input name="bday_year" size="4" maxlength="4">';
       }
 
+    $email_type = "<select name=email_type>";
+    while ($type = each($this->email_types)) {
+       $email_type .= "<option value=\"\" $type[0]> </option>";
+    }
+    $email_type .= "</select>";
+    
     $notes	 = '<TEXTAREA cols="60" name="notes" rows="4">' . $notes . '</TEXTAREA>';
     } else {
       $notes	= "<form><TEXTAREA cols=\"60\" name=\"notes\" rows=\"4\">"
@@ -246,6 +254,8 @@
     $t->set_var("title",$title);
     $t->set_var("lang_email",lang("Email"));
     $t->set_var("email",$email);
+    $t->set_var("lang_email_type",lang("Email Type"));
+    $t->set_var("email_type",$email_type);
     $t->set_var("lang_url",lang("URL"));
     $t->set_var("url",$url);
     $t->set_var("lang_hphone",lang("Home Phone"));
@@ -272,6 +282,8 @@
     $t->set_var("state",$state);
     $t->set_var("lang_zip",lang("Zip Code"));
     $t->set_var("zip",$zip);
+    $t->set_var("lang_country",lang("Country"));
+    $t->set_var("country",$country);
     $t->set_var("access_link",$access_link);
     $t->set_var("create",$create);
     $t->set_var("lang_notes",lang("notes"));
