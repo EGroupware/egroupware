@@ -499,6 +499,7 @@ class calendar_ extends calendar__
 		$this->event->start->hour = intval($hour);
 		$this->event->start->min = intval($min);
 		$this->event->start->sec = intval($sec);
+		$this->event->start->alarm = 0;
 
 //		echo 'Setting Calendar Start = '.$this->event->start->year.$this->event->start->month.$this->event->start->mday.':'.$this->event->start->hour.$this->event->start->min.$this->event->start->sec.'<br>'."\n";
 		return True;
@@ -525,6 +526,7 @@ class calendar_ extends calendar__
 		$this->event->end->hour = intval($hour);
 		$this->event->end->min = intval($min);
 		$this->event->end->sec = intval($sec);
+		$this->event->end->alarm = 0;
 		
 //		echo 'Setting Calendar End = '.$this->event->end->year.$this->event->end->month.$this->event->end->mday.':'.$this->event->end->hour.$this->event->end->min.$this->event->end->sec.'<br>'."\n";
 		return True;
@@ -661,7 +663,7 @@ class calendar_ extends calendar__
 		return True;
 	}
 
-	function event_set_recur_daily($stream,$year,$monh,$day,$interval)
+	function event_set_recur_daily($stream,$year,$month,$day,$interval)
 	{
 	// Legacy Support
 		$this->event->rpt_type = 'daily';
@@ -669,7 +671,7 @@ class calendar_ extends calendar__
 	// Legacy Support (New)
 		$this->event->recur_type = RECUR_DAILY;
 
-		$this->set_common_recur(intval($year),intval($month),intval($day));
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 	}
 
 	function event_set_recur_weekly($stream,$year,$month,$day,$interval,$weekdays)
@@ -677,7 +679,7 @@ class calendar_ extends calendar__
 	// Legacy Support
 		$this->event->rpt_type = 'weekly';
 
-		$this->set_common_recur(intval($year),intval($month),intval($day));
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 
 		$this->event->rpt_sun = (intval($weekdays) & M_SUNDAY	?1:0);
 		$this->event->rpt_mon = (intval($weekdays) & M_MONDAY	?1:0);
@@ -709,7 +711,7 @@ class calendar_ extends calendar__
 	// Legacy Support
 		$this->event->recur_type = RECUR_MONTHLY_MDAY;
 
-		$this->set_common_recur(intval($year),intval($month),intval($day));
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 	}
 	
 	function event_set_recur_monthly_wday($stream,$year,$month,$day,$interval)
@@ -720,7 +722,7 @@ class calendar_ extends calendar__
 	// Legacy Support (New)
 		$this->event->recur_type = RECUR_MONTHLY_WDAY;
 		
-		$this->set_common_recur(intval($year),intval($month),intval($day));
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 	}
 	
 	function event_set_recur_yearly($stream,$year,$month,$day,$interval)
@@ -731,7 +733,7 @@ class calendar_ extends calendar__
 	// Legacy Support (New)
 		$this->event->recur_type = RECUR_YEARLY;
 		
-		$this->set_common_recur(intval($year),intval($month),intval($day));
+		$this->set_common_recur(intval($year),intval($month),intval($day),$interval);
 	}
 
 	function fetch_current_stream_event($stream)
@@ -891,7 +893,7 @@ class calendar_ extends calendar__
 
 		if($event->recur_type != RECUR_NONE)
 		{
-			if($event->rpt_use_end)
+			if($event->rpt_end_use)
 			{
 				$end = mktime($event->recur_enddate->hour,$event->recur_enddate->min,$event->recur_enddate->sec,$event->recur_enddate->month,$event->recur_enddate->mday,$event->recur_enddate->year) - $tz_offset;
 				$use_end = 1;
