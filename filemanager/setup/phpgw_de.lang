@@ -48,6 +48,7 @@ file names cannot contain \ or /	filemanager	de	Dateinamen dürfen keine \ oder /
 filemanager	common	de	DateiManager
 filemanager preferences	filemanager	de	DateiManager Einstellungen
 files	filemanager	de	Dateien
+files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 files is this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder	filemanager	de	Verzeichnisse
 folder up	filemanager	de	Ein Verzeichnis nach oben
@@ -69,11 +70,13 @@ moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis vorhanden
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für dies Datei / Verzeichnis
 operation	filemanager	de	Operation
+other settings	filemanager	de	Weitere Einstellungen
 owner	filemanager	de	Eigentümer
 please select a file to delete.	filemanager	de	Bitte wählen Sie die Datei aus welche Sie löschen möchten
 preferences old	preferences	de	Alte Einstellungen
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
+quick jump to	filemanager	de	Sprung zu
 reload	filemanager	de	aktualisieren
 rename	filemanager	de	Umbenennen
 renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
