@@ -104,3 +104,7 @@ Display status of events	calendar	de	Status von Terminen anzeigen
 When creating new events default set to private	calendar	de	neue Termine sind privat
 Display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
 Print calendars in black & white	calendar	de	Kalender in Schwarz und Weiﬂ drucken
+Normal	calendar	de	normal
+normal	calendar	de	normal
+low	calendar	de	niedrig
+high	calendar	de	hoch
