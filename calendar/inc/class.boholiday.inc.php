@@ -50,7 +50,7 @@
 
 			if(isset($GLOBALS['locale'])) { $this->locales[] = $GLOBALS['locale']; }
 
-			if(isset($GLOBALS['start']))  { $this->start = $GLOBALS['start'];      } else { $this->start = 0; }
+			if(isset($GLOBALS['start']))  { $this->start = intval($GLOBALS['start']); } else { $this->start = 0; }
 
 			if(isset($GLOBALS['query']))  { $this->query = $GLOBALS['query'];      }
 
@@ -60,12 +60,14 @@
 
 			if(isset($GLOBALS['id']))     { $this->id = $GLOBALS['id'];            }
 			
+			if(isset($GLOBALS['year']))   { $this->year = $GLOBALS['year'];        } else { $this->year = date('Y'); }
+			
 			if($this->debug)
 			{
 				echo '<-- Locale = '.$this->locales[0].' -->'."\n";
 			}
 
-			$this->total = $this->so->holiday_total($this->locales[0],$this->query);
+			$this->total = $this->so->holiday_total($this->locales[0],$this->query,$this->year);
 		}
 
 		/* Begin Calendar functions */
@@ -154,13 +156,14 @@
 			Header('Location: '.$send_back_to);
 		}
 		
-		function get_holiday_list($locale='', $sort='', $order='', $query='', $total='')
+		function get_holiday_list($locale='', $sort='', $order='', $query='', $total='', $year=0)
 		{
 			$locale = ($locale?$locale:$this->locales[0]);
 			$sort = ($sort?$sort:$this->sort);
 			$order = ($order?$order:$this->order);
 			$query = ($query?$query:$this->query);
-			return $this->so->read_holidays($locale,$query,$order);
+			$year = ($$year?$$year:$this->year);
+			return $this->so->read_holidays($locale,$query,$order,$year);
 		}
 
 		function get_locale_list($sort='', $order='', $query='')
@@ -293,34 +296,56 @@
 		{
 			if(@$GLOBALS['HTTP_POST_VARS']['submit'])
 			{
-				if(empty($GLOBALS['HTTP_POST_VARS']['holiday']['mday']))
+				$holiday = $GLOBALS['HTTP_POST_VARS']['holiday'];
+
+				if(empty($holiday['mday']))
 				{
-					$GLOBALS['HTTP_POST_VARS']['holiday']['mday'] = 0;
+					$holiday['mday'] = 0;
 				}
 				if(!isset($this->bo->locales[0]) || $this->bo->locales[0]=='')
 				{
-					$this->bo->locales[0] = $GLOBALS['HTTP_POST_VARS']['holiday']['locale'];
+					$this->bo->locales[0] = $holiday['locale'];
 				}
-				elseif(!isset($GLOBALS['HTTP_POST_VARS']['holiday']['locale']) || $GLOBALS['HTTP_POST_VARS']['holiday']['locale']=='')
+				elseif(!isset($holiday['locale']) || $holiday['locale']=='')
 				{
-					$GLOBALS['HTTP_POST_VARS']['holiday']['locale'] = $this->bo->locales[0];
+					$holiday['locale'] = $this->bo->locales[0];
 				}
-				if(!isset($GLOBALS['HTTP_POST_VARS']['holiday']['hol_id']))
+				if(!isset($holiday['hol_id']))
 				{
-					$GLOBALS['HTTP_POST_VARS']['holiday']['hol_id'] = $this->bo->id;
+					$holiday['hol_id'] = $this->bo->id;
 				}
+				
+				// some input validation
+
+				if (!$holiday['mday'] == !$holiday['occurence'])
+				{
+					$errors[] = lang('You need to set either a day or a occurence !!!');
+				}
+				if($holiday['year'] && $holiday['occurence'])
+				{
+					$errors[] = lang('You can only set a year or a occurence !!!');
+				}
+				else
+				{
+					$holiday['occurence'] = intval($holiday['occurence'] ? $holiday['occurence'] : $holiday['year']);
+					unset($holiday['year']);
+				}
+
 		
 	// Still need to put some validation in here.....
 
 				$this->ui = CreateObject('calendar.uiholiday');
+
 				if (is_array($errors))
 				{
-					$this->ui->add($errors,$GLOBALS['HTTP_POST_VARS']['holiday']);
+					$holiday['month'] = $holiday['month_num'];
+					$holiday['day']   = $holiday['mday'];
+					$this->ui->edit_holiday($errors,$holiday);
 				}
 				else
 				{
-					$this->so->save_holiday($GLOBALS['HTTP_POST_VARS']['holiday']);
-					$this->ui->edit_locale();
+					$this->so->save_holiday($holiday);
+					$this->ui->edit_locale($holiday['locale']);
 				}
 			}
 		}
@@ -360,8 +385,7 @@
 			{
 				return $this->cached_holidays;
 			}
-
-			$holidays = $this->so->read_holidays($this->locales);
+			$holidays = $this->so->read_holidays($this->locales,'','',$this->year);
 
 			if(count($holidays) == 0)
 			{
@@ -403,6 +427,36 @@
 			{
 				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php'));
 			}
+		}
+		
+		function rule_string($holiday)
+		{
+			if (!is_array($holiday))
+			{
+				return false;
+			}
+			$sbox = CreateObject('phpgwapi.sbox');
+			$month = $holiday['month'] ? lang($sbox->monthnames[$holiday['month']]) : '';
+			unset($sbox);
+
+			if (!$holiday['day'])
+			{
+				$occ = $holiday['occurence'] == 99 ? lang('last') : $holiday['occurence'].'.';
+
+				$dow_str = Array(lang('Sun'),lang('Mon'),lang('Tue'),lang('Wed'),lang('Thu'),lang('Fri'),lang('Sat'));
+				$dow = $dow_str[$holiday['dow']];
+				
+				$str = lang('%1 %2 in %3',$occ,$dow,$month);
+			}
+			else
+			{
+				$str = $GLOBALS['phpgw']->common->dateformatorder($holiday['occurence']>1900?$holiday['occurence']:'',$month,$holiday[day]);
+			}
+			if ($holiday['observance_rule'])
+			{
+				$str .= ' ('.lang('Observance Rule').')';
+			}
+			return $str;
 		}
 	}
 ?>

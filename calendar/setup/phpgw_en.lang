@@ -1,4 +1,6 @@
 1 match found	calendar	en	1 match found
+%1 %2 in %3	calendar	en	%1 %2 in %3
+(for weekly)	calendar	en	(for Weekly)
 (i/v)cal	calendar	en	(i/v)Cal
 a	calendar	en	a
 accept	calendar	en	Accept
@@ -40,6 +42,8 @@ do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wis
 display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
+do you wish to autoload calendar holidays files dynamically?	admin	en	Do you wish to autoload calendar holidays files dynamically?
+download	calendar	en	Download
 duration	calendar	en	Duration
 edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
@@ -71,6 +75,7 @@ i participate	calendar	en	I Participate
 import	calendar	en	Import
 interval	calendar	en	Interval
 invalid entry id.	calendar	en	Invalid entry id.
+last	calendar	en	last
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
@@ -119,6 +124,7 @@ repeating event information	calendar	en	Repeating Event Information
 repeat type	calendar	en	Repeat type
 repetition	calendar	en	Repetition
 reset	calendar	en	Reset
+rule	calendar	en	Rule
 sa	calendar	en	Sa
 sat	calendar	en	Sat
 scheduling conflict	calendar	en	Scheduling Conflict
@@ -164,6 +170,7 @@ work day ends on	calendar	en	Work day ends on
 work day starts on	calendar	en	Work day starts on
 x matches found	calendar	en	%1 matches found
 yearly	calendar	en	Yearly
+you can only set a year or a occurence !!!	calendar	en	You can only set a year or a occurence !!!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have 1 high priority event on your calendar today.	common	en	You have 1 high priority event on your calendar today.
 you have x high priority events on your calendar today.	common	en	You have %1 high priority events on your calendar today.
@@ -174,6 +181,7 @@ you have not entered a valid time of day	calendar	en	You have not entered a vali
 you have not entered participants	calendar	en	You have not entered participants
 you must enter one or more search keywords	calendar	en	You must enter one or more search keywords
 you must select a [iv]cal. (*.[iv]cs)	calendar	en	You must select a [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	calendar	en	You need to set either a day or a occurence !!!
 your meeting scheduled for	calendar	en	Your meeting scheduled for
 your meeting that had been scheduled for	calendar	en	Your meeting that had been scheduled for
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	en	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:

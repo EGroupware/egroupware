@@ -3,24 +3,25 @@
  <table border="0" width="45%" align="center">
   <tr>
    <td align="left">{left_next_matchs}</td>
-   <td align="center">{lang_groups}</td>
+   {center}
    <td align="right">{right_next_matchs}</td>
   </tr>
  </table>
 
- <table border="0" width="45%" align="center">
+ <table border="0" width="70%" align="center">
   <tr class="th">
    <td>{sort_name}</td>
+   {header_rule}
    <td>{header_edit}</td>
    <td>{header_delete}</td>
-   {header_submit}
+   <td>{header_extra}</td>
   </tr>
 
   {rows}
 
  </table>
 
- <table border="0" width="45%" align="center">
+ <table border="0" width="60%" align="center">
   <tr>
    <td align="left">
     <form method="POST" action="{new_action}">
@@ -39,9 +40,10 @@
 <!-- BEGIN row -->
  <tr class="{tr_color}">
   <td>{group_name}</td>
+  {rule}
   <td width="5%">{edit_link}</td>
   <td width="5%">{delete_link}</td>
-  {submit_link_column}
+  <td align="center" {extra_width}>{extra_link}</td>
  </tr>
 <!-- END row -->
 <!-- BEGIN row_empty -->
@@ -49,9 +51,6 @@
     <td colspan="5" align="center">{message}</td>
    </tr>
 <!-- END row_empty -->
-<!-- BEGIN submit_column -->
-<td{submit_extra}>{submit_link}</td>
-<!-- END submit_column -->
 <!-- BEGIN back_button_form -->
    <td align="center">
     <form method="POST" action="{back_action}">

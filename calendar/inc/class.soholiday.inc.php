@@ -70,7 +70,7 @@
 			}
 		}
 
-		function read_holidays($locales='',$query='',$order='')
+		function read_holidays($locales='',$query='',$order='',$year=0)
 		{
 			global $phpgw;
 
@@ -81,7 +81,7 @@
 				return $holidays;
 			}
 
-			$sql = $this->build_query($locales,$query,$order);
+			$sql = $this->build_query($locales,$query,$order,$year);
 
 			if($this->debug)
 			{
@@ -117,7 +117,7 @@
 		}
 		
 		/* Private functions */
-		function build_query($locales,$query='',$order='')
+		function build_query($locales,$query='',$order='',$year=0)
 		{
 
 			if(is_string($locales))
@@ -142,12 +142,12 @@
 			{
 				$querymethod = " AND name like '%".$query."%'";
 			}
-		
-			if($order)
+			if (intval($year) > 1900)
 			{
-				$querymethod .= ' ORDER BY '.$order;
+				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
 			}
-			
+			$querymethod .= ' ORDER BY '.($order ? $order : 'month_num,mday');
+
 			return 'SELECT * FROM phpgw_cal_holidays WHERE locale in ('.$find.')'.$querymethod;
 		}
 
@@ -171,12 +171,16 @@
 			return $locale;
 		}
 		
-		function holiday_total($locale,$query='')
+		function holiday_total($locale,$query='',$year=0)
 		{
 			$querymethod='';
 			if($query)
 			{
 				$querymethod = " AND name like '%".$query."%'";
+			}
+			if (intval($year) >= 1900)
+			{
+				$querymethod .= " AND (occurence < 1900 OR occurence = $year)";
 			}
 			$sql = "SELECT count(*) FROM phpgw_cal_holidays WHERE locale='".$locale."'".$querymethod;
 
