@@ -526,12 +526,6 @@
 		 * sanitize - Remove any possible security problems from a location
 		 *	      string (i.e. remove leading '..')
 		 *
-		 * clean_string - Clean location string.  This function is used if
-		 *		  any special characters need to be escaped or removed
-		 *		  before accessing a database, network protocol, etc.
-		 *		  The default is to escape characters before doing an SQL
-		 *		  query.
-		 *
 		 * getabsolutepath - Translate a location string depending on the
 		 *		     relativity.  This is the only function that is
 		 *		     directly concerned with relativity.
@@ -617,28 +611,6 @@
 			);
 
 			return (ereg_replace ("^\.+", '', $p->fake_name));
-		}
-
-		/*!
-		 * @function clean_string
-		 * @abstract Clean location string.  This function is used if
-		 *	     any special characters need to be escaped or removed
-		 *	     before accessing a database, network protocol, etc.
-		 *	     The default is to escape characters before doing an SQL
-		 *	     query.
-		 * @required string	Location string to clean
-		 * @result String.  Cleaned version of 'string'.
-		 */
-		function clean_string ($data)
-		{
-			if (!is_array ($data))
-			{
-				$data = array ();
-			}
-
-			$string = $GLOBALS['phpgw']->db->db_addslashes ($data['string']);
-
-			return $string;
 		}
 
 		/*!
@@ -875,18 +847,6 @@
 		 *		real_leading_dirs
 		 *		real_extra_path		BROKEN
 		 *		real_name
-		 *		fake_full_path_clean
-		 *		fake_leading_dirs_clean
-		 *		fake_extra_path_clean	BROKEN
-		 *		fake_name_clean
-		 *		real_full_path_clean
-		 *		real_leading_dirs_clean
-		 *		real_extra_path_clean	BROKEN
-		 *		real_name_clean
-		 *	"clean" values are run through vfs->clean_string () and
-		 *	are safe for use in SQL queries that use key='value'
-		 *	They should be used ONLY for SQL queries, so are used
-		 *	mostly internally
 		 *	mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
 		 *	and is used internally
 		 *	outside is boolean, True if 'relatives' contains VFS_REAL
@@ -1040,28 +1000,6 @@
 			}
 
 			/*
-			   We have to count it before because new keys will be added,
-			   which would create an endless loop
-			*/
-			$count = count ($rarray);
-			reset ($rarray);
-			for ($i = 0; (list ($key, $value) = each ($rarray)) && $i != $count; $i++)
-			{
-				$rarray[$key . '_clean'] = $this->clean_string (array ('string' => $value));
-			}
-
-			if ($data['object'])
-			{
-				$robject = new path_class;
-
-				reset ($rarray);
-				while (list ($key, $value) = each ($rarray))
-				{
-					$robject->$key = $value;
-				}
-			}
-
-			/*
 			echo "<br>fake_full_path: $rarray[fake_full_path]
 				<br>fake_leading_dirs: $rarray[fake_leading_dirs]
 				<br>fake_extra_path: $rarray[fake_extra_path]
@@ -1074,12 +1012,15 @@
 
 			if ($data['object'])
 			{
+				$robject = new path_class;
+
+				foreach($rarray as $key => $value)
+				{
+					$robject->$key = $value;
+				}
 				return ($robject);
 			}
-			else
-			{
-				return ($rarray);
-			}
+			return ($rarray);
 		}
 
 		/*!
