@@ -510,7 +510,7 @@
 						$value = $GLOBALS[$meth][$varname];
 						$i = $cnt+1;
 					}
-					if(get_magic_quotes_gpc())
+					if(get_magic_quotes_gpc() && !@is_array($value))
 					{
 						$value = stripslashes($value);
 					}
