@@ -20,9 +20,11 @@
 	);
 	include('../header.inc.php');
 
-	if ($appname == 'admin')
+	$config_appname = $appname;
+	if ($appname == 'admin' || $appname == 'preferences')
 	{
 		$appname = 'preferences';
+		$config_appname = 'phpgwapi';
 	}
 	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($appname));
 	$t->set_unknowns('keep');
@@ -33,17 +35,11 @@
 	$t->set_block('config','body','body');
 	$t->set_block('config','footer','footer');
 
-	$c = CreateObject('phpgwapi.config',$appname);
+	$c = CreateObject('phpgwapi.config',$config_appname);
 	$c->read_repository();
 
 	if ($c->config_data)
 	{
-		$current_config = $c->config_data;
-	}
-	else
-	{
-		$c->appname = 'phpgwapi';
-		$c->read_repository();
 		$current_config = $c->config_data;
 	}
 
