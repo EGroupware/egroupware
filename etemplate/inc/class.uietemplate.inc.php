@@ -34,12 +34,14 @@
 						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html,$sbox;	// instance of html / sbox2-class
 		var $loop = 0;	// set by process_show if an other Exec-ProcessExec loop is needed
+
 		/*!
 		@function etemplate
 		@abstract constructor of etemplate class, reads an eTemplate if $name is given
-		@param as soetemplate.read
+		@param $name     name of etemplate or array with name and other keys
+		@param $load_via name/array with keys of other etemplate to load in order to get $name
 		*/
-		function etemplate($name='',$template='default',$lang='default',$group=0,$version='',$rows=2,$cols=2)
+		function etemplate($name='',$load_via='')
 		{
 			$this->public_functions += array(
 				'exec'			=> True,
@@ -47,16 +49,10 @@
 				'show'			=> True,
 				'process_show'	=> True,
 			);
-			$this->boetemplate();
 			$this->html = CreateObject('etemplate.html');	// should  be in the api (older version in infolog)
 			$this->sbox = CreateObject('etemplate.sbox2');	// older version is in the api
 
-			if (empty($name) || !$this->read($name,$template,$lang,$group,$version))
-			{
-				$this->init($name,$template,$lang,$group,$version,$rows,$cols);
-				return False;
-			}
-			return True;
+			$this->boetemplate($name,$load_via);
 		}
 
 		/*!
@@ -366,7 +362,8 @@
 			    (isset($this->extension[$cell['type']]) || $this->loadExtension($cell['type'],$this)))
 			{
 				$extra_label = $this->extension[$cell['type']]->pre_process($cell,$value,
-					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],$readonlys[$name]);
+					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],
+					$readonlys[$name],$this);
 				if (strstr($name,'|'))
 				{
 					$content = $this->complete_array_merge($content,$value);
@@ -498,7 +495,7 @@
 					{
 						$readonlys['__ALL__'] = True;
 					}
-					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name']);
+					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
 					$html .= $templ->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect]
@@ -758,7 +755,7 @@
 				}
 				$this->extension[$cell['type']]->post_process($cell,$value,
 					$GLOBALS['phpgw_info']['etemplate']['extension_data'][$cell['type']][$cell['name']],
-					$GLOBALS['phpgw_info']['etemplate']['loop']);
+					$GLOBALS['phpgw_info']['etemplate']['loop'],$this);
 
 				if ($this->debug > 1 || $this->debug && $this->debug == $this->name)
 				{
@@ -796,7 +793,7 @@
 					}
 					break;
 				case 'template':
-					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($name);
+					$templ = is_object($cell['name']) ? $cell['name'] : new etemplate($cell['name'],$this->as_array());
 					$templ->process_show($value,$readonlys);
 					if ($templ->loop)
 					{

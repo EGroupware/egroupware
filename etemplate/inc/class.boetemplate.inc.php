@@ -54,16 +54,22 @@
 		/*!
 		@function boetemplate
 		@abstract constructor of class
+		@param $name     name of etemplate or array with name and other keys
+		@param $load_via name/array with keys of other etemplate to load in order to get $name
 		@discussion Calls the constructor of soetemplate
 		*/
-		function boetemplate()
+		function boetemplate($name='',$load_via='')
 		{
-			$this->soetemplate();
-
 			$this->public_functions += array(
 				'disable_cells' => True,
 				'set_cell_attribute' => True
 			);
+			$this->soetemplate();
+
+			if (empty($name) || !$this->read($name,'','',0,'',$load_via))
+			{
+				$this->init($name);
+			}
 		}
 
 		/*!
@@ -466,13 +472,8 @@
 			//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
 			if ($cname = $this->in_cache($name,$template,$lang,$group))
 			{
-				reset($this->db_cols);
-				while (list($db_col,$col) = each($this->db_cols))
-				{
-					$this->$col = $GLOBALS['phpgw_info']['etemplate']['cache'][$cname][$col];
-				}
-				$this->rows = count($this->data) - 1;
-				$this->cols = count($this->data[1]); // 1 = first row, not 0
+				$this->init($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]);
+
 				return True;
 			}
 			return False;
@@ -482,14 +483,21 @@
 		@function read
 		@abstract Reads an eTemplate from the cache or database / filesystem (and updates the cache)
 		@param as discripted in soetemplate::read
+		@param $load_via name/array of keys of etemplate to load in order to get $name (only as second try!)
 		@result True if a fitting template is found, else False
 		*/
-		function read($name,$template='default',$lang='default',$group=0,$version='')
+		function read($name,$template='default',$lang='default',$group=0,$version='',$load_via='')
 		{
 			if (!$this->read_from_cache($name,$template,$lang,$group,$version))
 			{
 				if (!soetemplate::read($name,$template,$lang,$group,$version))
 				{
+					if ($load_via && (is_string($load_via) ||
+					    !isset($load_via['tpls_in_file']) || $load_via['tpls_in_file'] > 1))
+					{
+						soetemplate::read($load_via);
+						return $this->read_from_cache($name,$template,$lang,$group,$version);
+					}
 					return False;
 				}
 				$this->store_in_cache();

@@ -31,7 +31,7 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
 		{
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
@@ -83,7 +83,8 @@
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->set_cell_attribute('@tabs','name',$tabs);
-			$tab_widget->set_cell_attribute('@body','name',$selected_tab);
+			$tab_widget->set_cell_attribute('@body','name',
+				$tmpl->tpls_in_file > 1 ? new etemplate($selected_tab,$tmpl->as_array()) : $selected_tab);
 
 			$cell['type'] = 'template';
 			$cell['name'] = $tab_widget;
@@ -92,13 +93,13 @@
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop)
+		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			$old_value = array(
 				'_tab_widget' => array(
 					$extension_data => array(True)
 			));
-			$this->pre_process($cell,$old_value,$extension_data,$dummy);
+			$this->pre_process($cell,$old_value,$extension_data,$dummy,$tmpl);
 
 			if (is_array($value['_tab_widget']))
 			{

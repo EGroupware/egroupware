@@ -31,7 +31,7 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$extension_data,&$readonlys)
+		function pre_process(&$cell,&$value,&$extension_data,&$readonlys,&$tmpl)
 		{
 			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
 			// save values in persistent extension_data to be able use it in post_process
@@ -51,6 +51,8 @@
 			{
 				$value['template'] = $cell['size'];
 			}
+			$value['template'] = new etemplate($value['template'],$tmpl->as_array());
+
 			$nextmatch = new etemplate('etemplate.nextmatch_widget');
 			if ($value['no_cat'])
 			{
@@ -81,7 +83,7 @@
 			return False;	// NO extra Label
 		}
 
-		function post_process(&$cell,&$value,&$extension_data,&$loop)
+		function post_process(&$cell,&$value,&$extension_data,&$loop,&$tmpl)
 		{
 			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
 

@@ -115,6 +115,16 @@
 		}
 
 		/*!
+		@function set_rows_cols()
+		@abstract initialises rows & cols from the size of the data-array
+		*/
+		function set_rows_cols()
+		{
+			$this->rows = count($this->data) - 1;
+			$this->cols = count($this->data[1]); // 1 = first row, not 0
+		}
+
+		/*!
 		@function init
 		@abstract initialises all internal data-structures of the eTemplate and sets the keys
 		@param $name name of the eTemplate or array with the keys or all data
@@ -136,8 +146,11 @@
 			{
 				$this->lang = '';
 			}
+			$this->tpls_in_file = is_array($name) ? $name['tpls_in_file'] : 0;
+
 			if (is_array($name) && isset($name['data']))
 			{
+				$this->set_rows_cols();
 				return;	// data already set
 			}
 			$this->size = $this->style = '';
@@ -258,11 +271,15 @@
 			{
 				$this->xul_io = CreateObject('etemplate.xul_io');
 			}
-			if (!is_array($this->xul_io->import(&$this,$xul)))
+			$loaded = $this->xul_io->import(&$this,$xul);
+
+			if (!is_array($loaded))
 			{
 				return False;
 			}
 			$this->name = $app . '.' . $name;	// if template was copied or app was renamed
+
+			$this->tpls_in_file = count($loaded);
 
 			return True;
 		}
@@ -353,8 +370,7 @@
 					}
 				}
 			}
-			$this->rows = count($this->data) - 1;
-			$this->cols = count($this->data[1]); // 1 = first row, not 0
+			$this->set_rows_cols();
 		}
 
 		/*!
@@ -407,6 +423,9 @@
 			if ($data_too == 2)
 			{
 				$arr['data'] = serialize($arr['data']);
+			}
+			if ($this->tpls_in_file) {
+				$arr['tpls_in_file'] = $this->tpls_in_file;
 			}
 			return $arr;
 		}
