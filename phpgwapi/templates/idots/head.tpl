@@ -1,6 +1,5 @@
 <!-- BEGIN head -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xml:lang="nl" xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<!--
@@ -42,7 +41,7 @@
 		<![endif]-->
 
 	</head>
-	<!-- we don't need body tags anymore, do we?) -->
-	<!--<body {body_tags}>-->
+	<!-- we don't need body tags anymore, do we?) we do!!! onload!! LK -->
+	<body {body_tags}>
 	<body>
 <!-- END Head -->
