@@ -100,9 +100,9 @@
 		function return_array()
 		{
 			$this->data = array(
-				'agent'    = $this->get_agent,
-				'version'  = $this->get_version,
-				'platform' = $this->get_platform
+				'agent'    = $this->BROWSER_AGENT,
+				'version'  = $this->BROWSER_VER,
+				'platform' = $this->BROWSER_PLATFORM
 			);
 
 			return $this->data;
