@@ -44,7 +44,7 @@
 		$pngfix_src = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
 		$pngfix ='<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 and higher --> 
 		<!--[if gte IE 5.5000]>
-		<script src="'.$pngfix_src.'" type=text/javascript>
+		<script src="'.$pngfix_src.'" type="text/javascript">
 		</script>
 		<![endif]-->';
 	}
