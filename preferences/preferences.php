@@ -11,6 +11,10 @@
 
 	/* $Id$ */
 
+	$user    = (@isset($GLOBALS['HTTP_POST_VARS']['user'])?$GLOBALS['HTTP_POST_VARS']['user']:'');
+	$forced  = (@isset($GLOBALS['HTTP_POST_VARS']['forced'])?$GLOBALS['HTTP_POST_VARS']['forced']:'');
+	$default = (@isset($GLOBALS['HTTP_POST_VARS']['default'])?$GLOBALS['HTTP_POST_VARS']['default']:'');
+
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'                => True,
 		'noappheader'             => True,
