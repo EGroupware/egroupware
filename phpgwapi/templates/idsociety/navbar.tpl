@@ -58,4 +58,5 @@
 		</tr>
 		<tr>
 			<td>
+				<br>
 <!-- END navbar -->
