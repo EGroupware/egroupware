@@ -65,11 +65,11 @@
 					. $this->ifadd("'".$Password."'", 'password=');
 				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
-					$this->Link_ID=pg_pconnect($cstr);
+					$this->Link_ID = pg_pconnect($cstr);
 				}
 				else
 				{
-					$this->Link_ID=pg_connect($cstr);
+					$this->Link_ID = pg_connect($cstr);
 				}
 
 				if (! $this->Link_ID)
@@ -437,6 +437,15 @@
 				}
 			}
 
+			if ($this->xmlrpc || $this->soap)
+			{
+				$s .=	sprintf("Function/Module: %s\n",function_backtrace());
+			}
+			else
+			{
+				$s .=	sprintf("<br><b>Function/Module:</b> %s\n",function_backtrace());
+			}
+
 			if ($this->Halt_On_Error == 'yes')
 			{
 				if (! $this->xmlrpc && ! $this->soap)
@@ -456,7 +465,14 @@
 			else
 			{
 				echo $s;
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				if (is_object($GLOBALS['phpgw']->common))
+				{
+					$GLOBALS['phpgw']->common->phpgw_exit(True);
+				}
+				else
+				{
+					exit();
+				}
 			}
 		}
 

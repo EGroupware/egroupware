@@ -330,6 +330,7 @@
 			{
 				printf("<br><b>Line:</b> %s",$line);
 			}
+			printf("<br><b>Function:</b> %s\n",function_backtrace());
 
 			if ($this->Halt_On_Error != "report")
 			{
