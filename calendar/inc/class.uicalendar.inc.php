@@ -1270,6 +1270,7 @@
 
 				$can_edit = True;
 				$participants = (string)(get_var('participants',array('GET'),FALSE));
+				$matrix_mode  = (int)(get_var('matrix',array('GET', 'POST'),FALSE));
 				$starthour = (int)(get_var('hour',array('GET'),$this->bo->prefs['calendar']['workdaystarts']));
 				$startmin  = (int)(get_var('minute',array('GET'),0));
 				$endmin    = $startmin + (int)$this->bo->prefs['calendar']['defaultlength'];
@@ -1290,11 +1291,50 @@
 				{
 					$this->bo->set_class(True);
 				}
+
+				// Construct Participants stack
+				$_stack_participants = $GLOBALS['phpgw']->session->appsession("participants");
+				if($matrix_mode == 1) // You come from matrix, ok
+					$_stack_participants = ";" . $GLOBALS['phpgw']->session->appsession("participants_matrix");
+				
+				// Read each participant
+				foreach(explode(";", $_stack_participants) as $part)
+				{
+					// Skip Owner
+					if( !$part OR ($part == $this->bo->owner) )
+						continue;
+
+					// Add into stack
+					$this->bo->add_attribute('participants', 'U',$part);
+				}
+				unset($_stack_participants);
+
+
+				/* --- OLD CODE --- 
 				// Add participants from matrixview
+				if($matrix_mode == 1)
+				{
+					foreach(explode(';', $GLOBALS['phpgw']->session->appsession("participants_matrix")) as $part)
+					{
+						// Skip owner
+						if( !$part OR ( $part == $this->bo->owner) )
+							continue;
+
+						$this->bo->add_attribute('participants', 'U',$part);
+					}
+				}
+				// Add participants from outer space
 				foreach(explode(';',$GLOBALS['phpgw']->session->appsession("participants")) as $part)
 				{
-					if ($part) $this->bo->add_attribute('participants','U',$part);
+					// Skip owner
+					if( !$part OR ( $part == $this->bo->owner) )
+						continue;
+
+					$this->bo->add_attribute('participants','U',$part);
 				}
+				// --- END OLD CODE */
+
+
 				// Add misc
 				$this->bo->add_attribute('participants','A',$this->bo->owner);
 				$this->bo->set_recur_none();
@@ -2333,7 +2373,7 @@
 			$participants = array_keys($parts);	// get id's as values and a numeric index
 
 			// Defined - into session - who participates
-			$GLOBALS['phpgw']->session->appsession("participants", NULL, implode(";", $participants));
+			$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -3754,7 +3794,7 @@
 					$k = ($j == 0 ? sprintf('%02d',$i).'<br>':'').sprintf('%02d',$j*$increment);
 
 					$str .= '<td align="left" bgcolor="'.$this->theme['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$this->theme['font'].'" size="-2">'
-						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.($increment * $j))."\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
+						. '<a href="'.$this->page('add','&date='.$date['full'].'&hour='.$i.'&minute='.($increment * $j))."&matrix=1\" onMouseOver=\"window.status='".$i.':'.(($increment * $j)<=9?'0':'').($increment * $j)."'; return true;\">"
 						. $k."</a>&nbsp;</font></td>\n";
 				}
 			}
