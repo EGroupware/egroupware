@@ -78,10 +78,10 @@ function html_form_textarea ($name = NULL, $rows = NULL, $cols = NULL, $value = 
 
 function html_form_select_begin ($name = NULL, $return = 0)
 {
-	$test = ' ';
+	$text = ' ';
 	if ($name != NULL && $name)
 	{
-		$text = 'name="'.$name.'" ';
+		$text .= 'name="'.$name.'" ';
 	}
 	$rstring = '<select'.$text.'>';
 	return (eor ($rstring, $return));
