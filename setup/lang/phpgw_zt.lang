@@ -1,0 +1,157 @@
+"<br><center>Import has been completed!  Click <a href=""index.php"">here</a> to return to setup </center>"	setup	zt	"<br><center>已成功匯入！點選<a href=""index.php""此處</a>回到設定畫面。</center>"
+actions	setup	zt	動作
+admin first name	setup	zt	管理者名
+admin last name	setup	zt	管理者姓
+admin password	setup	zt	管理者密碼
+admin username	setup	zt	管理者使用者代號
+all applications	setup	zt	所有的應用程式
+app details	setup	zt	應用程式詳細內容
+app install/remove/upgrade	setup	zt	安裝／移除／升級應用程式
+application data	setup	zt	應用程式資料
+application management	setup	zt	應用程式管理
+application name and status	setup	zt	應用程式名稱及狀態
+application name and status information	setup	zt	應用程式名稱及狀態資訊
+application title	setup	zt	應用程式標題
+"at your request, this script is going to attempt to create the database and assign the db user rights to it"	setup	zt	"At your request, this script is going to attempt to create the database and assign the db user rights to it"
+"at your request, this script is going to attempt to install all the applications for you"	setup	zt	"At your request, this script is going to attempt to install all the applications for you"
+"at your request, this script is going to attempt to upgrade your old applications to the current versions"	setup	zt	"At your request, this script is going to attempt to upgrade your old applications to the current versions"
+"at your request, this script is going to attempt to upgrade your old tables to the new format"	setup	zt	"At your request, this script is going to attempt to upgrade your old tables to the new format"
+"at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format"	setup	zt	"At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format"
+"at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data"	setup	zt	"At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data"
+available version	setup	zt	Available Version
+backupwarn	setup	zt	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
+because it depends upon	setup	zt	because it depends upon
+"because it is not a user application, or access is controlled via acl"	setup	zt	"because it is not a user application, or access is controlled via acl"
+"because it requires manual table installation, <br>or the table definition was incorrect"	setup	zt	"because it requires manual table installation, <br>or the table definition was incorrect"
+because it was manually disabled	setup	zt	because it was manually disabled
+because of a failed upgrade or install	setup	zt	because of a failed upgrade or install
+"because of a failed upgrade, or the database is newer than the installed version of this app"	setup	zt	"because of a failed upgrade, or the database is newer than the installed version of this app"
+"because the enable flag for this app is set to 0, or is undefined"	setup	zt	"because the enable flag for this app is set to 0, or is undefined"
+cancel	setup	zt	Cancel
+charset	setup	zt	ISO-8859-1
+click here	setup	zt	Click Here
+configuration completed	setup	zt	Configuration completed
+configuration	setup	zt	Configuration
+configure now	setup	zt	Configure Now
+create database	setup	zt	Create Database
+create one now	setup	zt	Create one now
+create	setup	zt	Create
+creating tables	setup	zt	Creating Tables
+currently installed languages: x <br>	setup	zt	Currently installed languages: %1 <br>
+current version	setup	zt	Current Version
+db root password	setup	zt	DB root password
+db root username	setup	zt	DB root username
+delete all my tables and data	setup	zt	Delete all my tables and data
+delete all old languages and install new ones	setup	zt	Delete all old languages and install new ones
+deleting tables	setup	zt	Deleting Tables
+demo server setup	setup	zt	Demo Server Setup
+deregistered	setup	zt	deregistered
+details for admin account	setup	zt	Details for Admin account
+domain	setup	zt	Domain
+dont touch my data	setup	zt	Dont touch my data
+edit current configuration	setup	zt	Edit Current Configuration
+export sql users to ldap	setup	zt	Export SQL users to LDAP
+"for a new install, select import.  to convert existing sql accounts to ldap, select export"	setup	zt	"For a new install, select import.  To convert existing SQL accounts to LDAP, select export"
+go back	setup	zt	Go back
+has a version mismatch	setup	zt	has a version mismatch
+hooks deregistered	setup	zt	hooks deregistered
+hooks registered	setup	zt	hooks registered
+"however, the application is otherwise installed"	setup	zt	"However, the application is otherwise installed"
+"if the application has no defined tables, selecting upgrade should remedy the problem"	setup	zt	"If the application has no defined tables, selecting upgrade should remedy the problem"
+"if you did not receive any errors, your applications have been"	setup	zt	"If you did not receive any errors, your applications have been"
+"if you did not receive any errors, your tables have been"	setup	zt	"If you did not receive any errors, your tables have been"
+import ldap users/groups	setup	zt	Import LDAP users/groups
+insanity	setup	zt	Insanity
+install Applications	setup	zt	Install Applications
+install language	setup	zt	Install Language
+install	setup	zt	Install
+installed	setup	zt	installed
+is broken	setup	zt	is broken
+is disabled	setup	zt	is disabled
+ldap account import/export	setup	zt	LDAP account import/export
+ldap export users	setup	zt	LDAP export users
+ldap import users	setup	zt	LDAP import users
+logout	setup	zt	Logout
+makesure	setup	zt	Make sure that your database is created and the account permissions are set
+manage applications	setup	zt	Manage Applications
+manage languages	setup	zt	Manage Languages
+multi-language support setup	setup	zt	Multi-Language support setup
+mysqlinstr	setup	zt	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
+not complete	setup	zt	not complete
+note: you will be able to customize this later	setup	zt	Note: You will be able to customize this later
+not ready for this stage yet	setup	zt	Not ready for this stage yet
+ok	setup	zt	OK
+once the database is setup correctly	setup	zt	Once the database is setup correctly
+only add languages that are not in the database already	setup	zt	Only add languages that are not in the database already
+only add new phrases	setup	zt	Only add new phrases
+"passwords did not match, please re-enter"	setup	zt	"Passwords did not match, please re-enter"
+pgsqlinstr	setup	zt	Instructions for creating the database in PostgreSQL:<br>Start the postmaster<br><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br>Create the empty database -<br><i>[user@server user]# createdb phpgroupware</i>
+please check for sql scripts within the application's directory	setup	zt	Please check for sql scripts within the application's directory
+please configure phpGroupWare for your environment	setup	zt	Please configure phpGroupWare for your environment
+please install	setup	zt	Please install
+please login to phpgroupware and run the admin application for additional site configuration	setup	zt	Please login to phpgroupware and run the admin application for additional site configuration
+possible solutions	setup	zt	Possible Solutions
+potential problem	setup	zt	Potential Problem
+problem resolution	setup	zt	Problem resolution
+process	setup	zt	Process
+re-check my database	setup	zt	Re-Check my database
+re-check my installation	setup	zt	Re-Check My Installation
+re-enter password	setup	zt	Re-enter password
+registered	setup	zt	registered
+remove	setup	zt	Remove
+requires reinstall or manual repair	setup	zt	Requires reinstall or manual repair
+requires upgrade	setup	zt	Requires upgrade
+resolve	setup	zt	Resolve
+select the default applications to which your users will have access	setup	zt	Select the default applications to which your users will have access
+select the desired action(s) from the available choices	setup	zt	Select the desired action(s) from the available choices
+select which group(s) will be exported (group membership will be maintained)	setup	zt	Select which group(s) will be exported (group membership will be maintained)
+select which group(s) will be imported (group membership will be maintained)	setup	zt	Select which group(s) will be imported (group membership will be maintained)
+select which languages you would like to use	setup	zt	Select which languages you would like to use
+select which method of upgrade you would like to do	setup	zt	Select which method of upgrade you would like to do
+select which user(s) will be exported	setup	zt	Select which user(s) will be exported
+select which user(s) will be imported	setup	zt	Select which user(s) will be imported
+select which user(s) will have admin privileges	setup	zt	Select which user(s) will have admin privileges
+select your old version	setup	zt	Select your old version
+setup	setup	zt	Setup
+some or all of its tables are missing	setup	zt	Some or all of its tables are missing
+status	setup	zt	Status
+step 1 - simple application management	setup	zt	Step 1 - Simple Application Management
+step 2 - configuration	setup	zt	Step 2 - Configuration
+step 3 - language management	setup	zt	Step 3 - Language Management
+step 4 - advanced application management	setup	zt	Step 4 - Advanced Application Management
+submit	setup	zt	Submit
+table change messages	setup	zt	Table Change Messages
+tables dropped	setup	zt	tables dropped
+"tables installed, unless there are errors printed above"	setup	zt	"tables installed, unless there are errors printed above"
+tables upgraded	setup	zt	tables upgraded
+target version	setup	zt	Target Version
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	zt	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
+the tables	setup	zt	the tables
+"the table definition was correct, and the tables were installed"	setup	zt	"The table definition was correct, and the tables were installed"
+this program will help you upgrade or install different languages for phpGroupWare	setup	zt	This program will help you upgrade or install different languages for phpGroupWare
+this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	zt	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
+this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	zt	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
+this stage is completed<br>	setup	zt	This stage is completed<br>
+"this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>"	setup	zt	"This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>"
+"Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"	setup	zt	"Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>"
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	zt	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
+uninstall all applications	setup	zt	Uninstall all applications
+uninstalled	setup	zt	uninstalled
+upgraded	setup	zt	upgraded
+upgrade	setup	zt	Upgrade
+upgrading tables	setup	zt	Upgrading Tables
+version mismatch	setup	zt	Version Mismatch
+we will automatically update your tables/records to x	setup	zt	We will automatically update your tables/records to %1
+"you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16"	setup	zt	"You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16"
+"You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version."	setup	zt	"You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version."
+you appear to be running version x of phpGroupWare	setup	zt	You appear to be running version %1 of phpGroupWare
+"you are ready for this stage, but this stage is not yet written.<br>"	setup	zt	"You are ready for this stage, but this stage is not yet written.<br>"
+you do not have any languages installed. please install one now <br>	setup	zt	You do not have any languages installed. Please install one now <br>
+you must enter a username for the admin	setup	zt	You must enter a username for the admin
+your applications are current	setup	zt	Your applications are current
+your database does not exist	setup	zt	Your database does not exist
+"your database is working, but you dont have any applications installed"	setup	zt	"Your database is working, but you dont have any applications installed"
+your tables are current	setup	zt	Your tables are current
+your tables may be altered and you may lose data	setup	zt	Your tables may be altered and you may lose data
+your tables will be dropped and you will lose data	setup	zt	Your tables will be dropped and you will lose data
+"you should either uninstall and then reinstall it, or attempt manual repairs"	setup	zt	"You should either uninstall and then reinstall it, or attempt manual repairs"
