@@ -20,7 +20,7 @@
 			. "&filter=$filter"));
 	}
 
-	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_file(array('form' => 'category_form.tpl'));
 	$t->set_block('form','add','addhandle');
 	$t->set_block('form','edit','edithandle');
