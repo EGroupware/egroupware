@@ -1614,6 +1614,15 @@ class calendar extends calendar_
 	{
 		global $phpgw, $phpgw_info;
 
+		if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+		{
+			$time_format .= 'h:i:s a';
+		}
+		else
+		{
+			$time_format .= 'H:i:s';
+		}
+
 		if(!isset($phpgw_info['user']['preferences']['calendar']['interval']) ||
 			!$phpgw_info['user']['preferences']['calendar']['interval'])
 		{
@@ -1747,7 +1756,8 @@ class calendar extends calendar_
 								$index = ($hour + (($m * $increment) * 100));
 								$time_slice[$index]['marker'] = '-';
 								$time_slice[$index]['color'] = $phpgw_info['theme']['bg01'];
-								$time_slice[$index]['description'] = $this->is_private($event,$participants[$i],'title');
+								$time_display = $phpgw->common->show_date($eventstart['raw'],$time_format).'-'.$phpgw->common->show_date($eventend['raw'],$time_format);
+								$time_slice[$index]['description'] = '('.$time_display.') '.$this->is_private($event,$participants[$i],'title');
 								if(isset($phpgw_info['user']['preferences']['calendar']['display_status']) && $phpgw_info['user']['preferences']['calendar']['display_status'] == True)
 								{
 									$time_slice[$index]['description'] .= ' ('.$event->users_status.')';
