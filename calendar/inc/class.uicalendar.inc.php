@@ -3214,8 +3214,8 @@
 				{
 					$icon = '<img src="'.$GLOBALS['phpgw']->common->image('calendar',($alarm['enabled']?'enabled':'disabled')).'" width="13" height="13">';
 					$var = Array(
-						'field'	=> $icon.$GLOBALS['phpgw']->common->show_date($alarm['time']),
-						'data'	=> 'Email Notification'
+						'field'	=> $icon.$GLOBALS['phpgw']->common->show_date($alarm['time']-$GLOBALS['phpgw']->datetime->tz_offset),
+						'data'	=> lang('Email Notification for %1',$GLOBALS['phpgw']->common->grab_owner_name($alarm['owner']))
 					);
 					$this->output_template_array($p,'row','list',$var);
 				}

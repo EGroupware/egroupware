@@ -40,7 +40,6 @@
 			$this->theme = $GLOBALS['phpgw_info']['theme'];
 
 			$this->bo = CreateObject('calendar.boalarm');
-			$this->tz_offset = $this->bo->tz_offset;
 
 			if($this->debug)
 			{
@@ -53,18 +52,14 @@
 
 		function prep_page()
 		{
-			$this->event = $this->bo->read_entry($this->bo->cal_id);
-/*
-			$can_edit = $this->bo->bo->check_perms(PHPGW_ACL_EDIT,$this->event);
-
-			if(!$can_edit)
+			if ($this->bo->cal_id <= 0 ||
+			    !$this->event = $this->bo->read_entry($this->bo->cal_id))
 			{
 				$GLOBALS['phpgw']->redirect_link('/index.php',Array(
-					'menuaction'	=> 'calendar.uicalendar.view',
-					'cal_id'		=> $this->bo->cal_id
+					'menuaction'	=> 'calendar.uicalendar.index'
 				));
 			}
-*/
+
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
 			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Alarm Management');
@@ -142,16 +137,12 @@
 
 			$var = Array(
 				'tr_color'		=> $this->theme['th_bg'],
-				'action_url'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uialarm.manager')),
-				'hidden_vars'	=> $this->html->input_hidden('cal_id',$this->bo->cal_id),
 				'lang_select'	=> lang('Select'),
 				'lang_time'		=> lang('Time'),
 				'lang_text'		=> lang('Text'),
 				'lang_owner'	=> lang('Owner'),
 				'lang_enabled'	=> lang('enabled'),
 				'lang_disabled'	=> lang('disabled'),
-				'lang_enabled'	=> lang('enabled'),
-				'lang_disabled'	=> lang('disabled')
 			);
 			if($this->event['alarm'])
 			{
@@ -164,9 +155,9 @@
 						continue;
 					}
 					$var = Array(
-						'field'    => $GLOBALS['phpgw']->common->show_date($alarm['time']),
+						'field'    => $GLOBALS['phpgw']->common->show_date($alarm['time']-$this->bo->tz_offset),
 						//'data'   => $alarm['text'],
-						'data'     => 'Email Notification',
+						'data'     => lang('Email Notification'),
 						'owner'    => $GLOBALS['phpgw']->common->grab_owner_name($alarm['owner']),
 						'enabled'  => ($alarm['enabled']?'<img src="'.$GLOBALS['phpgw']->common->image('calendar','enabled.gif').'" width="13" height="13" title="'.lang('enabled').'">':
 							'<img src="'.$GLOBALS['phpgw']->common->image('calendar','disabled.gif').'" width="13" height="13" title="'.lang('disabled').'">'),
@@ -189,14 +180,19 @@
 			if (isset($this->event['participants'][intval($GLOBALS['phpgw_info']['user']['account_id'])]))
 			{
 				$this->template->set_var(Array(
-					'input_text'    => lang('Email reminder'),
 					'input_days'    => $this->html->select('time[days]',$_POST['time']['days'],range(0,31),True).' '.lang('days'),
 					'input_hours'   => $this->html->select('time[hours]',$_POST['time']['hours'],range(0,24),True).' '.lang('hours'),
 					'input_minutes' => $this->html->select('time[mins]',$_POST['time']['mins'],range(0,60),True).' '.lang('minutes').' '.lang('before the event'),
 					'input_owner'   => $this->html->select('owner',$GLOBALS['phpgw_info']['user']['account_id'],$this->bo->participants($this->event,True),True),
-					'input_add'     => $this->html->submit_button('add','Add Alarm')
+					'input_add'     => $this->html->submit_button('add','Add Alarm'),
 				));
 			}
+			$this->template->set_var(Array(
+				'action_url'	=> $GLOBALS['phpgw']->link('/index.php',Array('menuaction'=>'calendar.uialarm.manager')),
+				'hidden_vars'	=> $this->html->input_hidden('cal_id',$this->bo->cal_id),
+				'lang_enable'	=> lang('Enable'),
+				'lang_disable'	=> lang('Disable')
+			));
 //echo "<p>alarm_management='".htmlspecialchars($this->template->get_var('alarm_management'))."'</p>\n";
 			$this->template->pfp('out','alarm_management');
 		}

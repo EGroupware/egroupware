@@ -43,7 +43,7 @@
 			}
 			$this->bo = CreateObject('calendar.bocalendar',1);
 			$this->so = CreateObject('calendar.socalendar',1);
-			$this->tz_offset = $this->bo->datetime->tz_offset;
+			$this->tz_offset = $GLOBALS['phpgw']->datetime->tz_offset;
 
 			if($this->debug)
 			{

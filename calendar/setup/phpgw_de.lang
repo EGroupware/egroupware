@@ -69,6 +69,8 @@ delete series	calendar	de	Serie löschen
 delete single	calendar	de	Einzelevent löschen
 deleted	calendar	de	Abgesagt
 description	calendar	de	Beschreibung
+disable	calendar	de	Ausschalten
+disabled	calendar	de	ausgeschaltet
 display interval in day view	calendar	de	Intervall der Tagesansicht
 display mini calendars when printing	calendar	de	zeige einen kleinen Kalender beim drucken
 display status of events	calendar	de	Status von Terminen anzeigen
@@ -83,6 +85,10 @@ download	calendar	de	Herunterladen
 duration	calendar	de	Dauer
 edit series	calendar	de	Serie bearbeiten
 edit single	calendar	de	Einzel bearbeiten
+email notification	calendar	de	Benachrichtigung per Email
+email notification for %1	calendar	de	Benachrichtigung per Email für %1
+enable	calendar	de	Einschalten
+enabled	calendar	de	eingeschaltet
 end date/time	calendar	de	Enddatum/-zeit
 enddate	calendar	de	Enddatum
 ends	calendar	de	endet

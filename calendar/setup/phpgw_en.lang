@@ -66,6 +66,8 @@ delete series	calendar	en	Delete Series
 delete single	calendar	en	Delete Single
 deleted	calendar	en	Deleted
 description	calendar	en	DESCRIPTION
+disable	calendar	en	Disable
+disabled	calendar	en	disabled
 display interval in day view	calendar	en	Display interval in Day View
 display mini calendars when printing	calendar	en	Display mini calendars when printing
 display status of events	calendar	en	Display Status of Events
@@ -77,6 +79,10 @@ download	calendar	en	Download
 duration	calendar	en	Duration
 edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
+email notification	calendar	en	Email Notification
+email notification for %1	calendar	en	Email Notification for %1
+enable	calendar	en	Enable
+enabled	calendar	en	enabled
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	Enddate
 ends	calendar	en	ends

@@ -2,18 +2,12 @@
 <!-- BEGIN alarm_management -->
 <form action="{action_url}" method="post" name="alarmform">
 {hidden_vars}
-<center>
-  <table border="0" width="90%">
+  <table border="0" width="90%" align="center">
    {rows}
+   <tr><td colspan="6">
+	<br>&nbsp;{input_days}&nbsp;{input_hours}&nbsp;{input_minutes}&nbsp;{input_owner}&nbsp;{input_add}<br>&nbsp;
+   </td></tr>
   </table>
-</center>
-<p>
-<center>
-<b>{input_text}</b><p>
-{input_days}&nbsp;{input_hours}&nbsp;{input_minutes}&nbsp;{input_owner}
-<p>
-{input_add}
-</center>
 </form>
 <!-- END alarm_management -->
 <!-- BEGIN alarm_headers -->
