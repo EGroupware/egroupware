@@ -31,12 +31,14 @@
 		var $common;
 		var $accounts;
 		var $applications;
+		var $db;
 	}
 	$phpgw = new phpgw;
 	$phpgw->common = CreateObject('phpgwapi.common');
 
 	$common              = $phpgw->common;
 	$phpgw_setup->loaddb();
+	$phpgw->db           = $phpgw_setup->db;
 
 	$phpgw_info['server']['auth_type'] = 'ldap';
 	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
