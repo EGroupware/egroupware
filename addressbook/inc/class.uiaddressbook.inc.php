@@ -301,28 +301,31 @@
 			}
 
 			/* Check if prefs were set, if not, create some defaults */
-			if(!$columns_to_display)
+			//if(!$columns_to_display)
 			{
-				$columns_to_display = array(
-					'n_given'  => 'n_given',
-					'n_family' => 'n_family',
-					'org_name' => 'org_name'
-				);
-//				$columns_to_display = $columns_to_display + $customfields;
 				/* No prefs,. so cols above may have been set to '' or a bunch of <td></td> */
 				$cols='';
-				while ($column = each($columns_to_display))
+				$columns_to_display = array(
+					'fn'        => True,
+					'org_name'  => True,
+					'adr_one_locality' => True,
+					'tel_work'  => True,
+					'tel_cell'  => True,
+					'email'     => True
+				);
+				foreach($columns_to_display as $col => $nul)
 				{
-					$showcol = $this->display_name($column[0]);
-					if (!$showcol) { $showcol = $column[1]; }
+					$showcol = $this->display_name($col);
 					$cols .= '  <td height="21">' . "\n";
 					$cols .= '    <font size="-1" face="Arial, Helvetica, sans-serif">';
 					$cols .= $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->sort,
-						$column[0],$this->order,"/index.php",$showcol,'&menuaction=addressbook.uiaddressbook.index&cat_id='.$this->cat_id);
+						$col,$this->order,"/index.php",$showcol,'&menuaction=addressbook.uiaddressbook.index&cat_id='.$this->cat_id);
 					$cols .= "</font>\n  </td>";
 					$cols .= "\n";
+
+					$prefs[$col] = 'on';
 				}
-				$noprefs=lang('Please set your preferences for this application');
+				$this->bo->save_preferences($prefs,'',$columns_to_display,'');
 			}
 
 			if(!$this->start)
@@ -998,10 +1001,9 @@
 
 		function preferences()
 		{
-			$submit  = $_POST['submit'];
 			$prefs   = $_POST['prefs'];
 			$other   = $_POST['other'];
-			$fcat_id = (int) $_POST['fcat_id'];
+			$fcat_id = intval($_POST['fcat_id']);
 
 			$custom = $this->fields->read_custom_fields();
 			$customfields = array();
@@ -1012,7 +1014,12 @@
 
 			$qfields = $this->contacts->stock_contact_fields + $this->extrafields + $customfields;
 
-			if ($submit)
+			if ($_POST['cancel'])
+			{
+				$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
+			}
+
+			if ($_POST['save'])
 			{
 				$totalerrors = 0;
 				if (!count($prefs))
@@ -1023,9 +1030,11 @@
 				{
 					@reset($qfields);
 					$this->bo->save_preferences($prefs,$other,$qfields,$fcat_id);
+					$GLOBALS['phpgw']->redirect_link('/preferences/index.php');
 				}
 			}
 
+			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Addressbook').' '.lang('Preferences');
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
@@ -1132,7 +1141,6 @@
 			}
 			$this->template->set_var('lang_defaultcat',lang('Default Category'));
 			$this->template->set_var('cat_select',$this->cat_option($this->prefs['default_category'], false, false));
-			$this->template->set_var('lang_abprefs',lang('Addressbook').' '.lang('Preferences'));
 			$this->template->set_var('lang_fields',lang('Fields to show in address list'));
 			$this->template->set_var('lang_personal',lang('Personal'));
 			$this->template->set_var('lang_business',lang('Business'));
@@ -1140,7 +1148,8 @@
 			$this->template->set_var('lang_phones',lang('Extra').' '.lang('Phone Numbers'));
 			$this->template->set_var('lang_other',lang('Other').' '.lang('Fields'));
 			$this->template->set_var('lang_otherprefs',lang('Other').' '.lang('Preferences'));
-			$this->template->set_var('lang_submit',lang('submit'));
+			$this->template->set_var('lang_save',lang('Save'));
+			$this->template->set_var('lang_cancel',lang('Cancel'));
 			$this->template->set_var('th_bg',  $GLOBALS['phpgw_info']['theme']['th_bg']);
 			$this->template->set_var('th_text',$GLOBALS['phpgw_info']['theme']['th_text']);
 			$this->template->set_var('row_on', $GLOBALS['phpgw_info']['theme']['row_on']);

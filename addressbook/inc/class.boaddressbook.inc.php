@@ -379,7 +379,6 @@
 					}
 				}
 			}
-
 			if(is_array($other))
 			{
 				$GLOBALS['phpgw']->preferences->delete('addressbook','mainscreen_showbirthdays');
@@ -405,8 +404,6 @@
 			$GLOBALS['phpgw']->preferences->add('addressbook','default_category',$fcat_id);
 
 			$GLOBALS['phpgw']->preferences->save_repository(True);
-			/* _debug_array($prefs);exit; */
-			Header('Location: ' . $GLOBALS['phpgw']->link('/preferences/index.php'));
 		}
 	}
 ?>

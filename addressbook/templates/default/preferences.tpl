@@ -1,7 +1,7 @@
 <!-- BEGIN preferences.tpl -->
-<p><b>{lang_abprefs}:</b><hr><p>
-   <form method="POST" action="{action_url}">
-   <table border="0" align="center" cellspacing="1" cellpadding="1">
+<br>
+ <form method="POST" action="{action_url}">
+  <table border="0" align="center" cellspacing="1" cellpadding="1" width="98%">
   <tr bgcolor="{th_bg}">
     <td colspan="6" align="center"><font color="#000000" face="">{lang_fields}:</font></td>
   </tr>
@@ -110,9 +110,6 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
 {custom_fields}
   <tr>
     <td>&nbsp;</td>
@@ -121,26 +118,25 @@
     <td colspan="6" align="center"><font color="#000000" face="">{lang_otherprefs}:</font></td>
   </tr>
   <tr bgcolor="{row_off}">
-    <td colspan="3" align="center">
-     {lang_default_filter}
-     {filter_select}
-    </td>
-    <td colspan="3" align="center">{lang_showbirthday}
+    <td>{lang_default_filter}</td>
+    <td>{filter_select}</td>
+    <td colspan="3">
      <input type="checkbox" name="other[mainscreen_showbirthdays]"{show_birthday}>
+     {lang_showbirthday}
     </td>
   </tr>
   <tr bgcolor="{row_off}">
-    <td colspan="3" align="center">
-     {lang_defaultcat}
-     {cat_select}
-     </td>
-     <td colspan="3" align="center">
+    <td>{lang_defaultcat}</td>
+    <td>{cat_select}</td>
+    <td colspan="3">
+     <input type="checkbox" name="other[autosave_category]"{autosave}>
      {lang_autosave}
-     <input type="checkbox" name="other[autosave_category]"{autosave}></td>
+    </td>
   </tr>
-  <tr>
-    <td colspan="6" align="center">
-      <input type="submit" name="submit" value="{lang_submit}">
+  <tr height="40">
+    <td colspan="6">
+      <input type="submit" name="save" value="{lang_save}"> &nbsp;
+      <input type="submit" name="cancel" value="{lang_cancel}">
     </td>
   </tr>
   </table>
