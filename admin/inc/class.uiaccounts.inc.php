@@ -128,7 +128,6 @@
 				'left_next_matchs'  => $this->nextmatchs->left('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
 				'right_next_matchs' => $this->nextmatchs->right('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
 				'lang_groups' => lang('%1 - %2 of %3 user groups',$start+1,$start+count($account_info),$total),
-	//			'lang_groups'   => lang('user groups'),
 				'sort_name'     => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('name'),'menuaction=admin.uiaccounts.list_groups'),
 				'header_edit'   => lang('Edit'),
 				'header_delete' => lang('Delete')
@@ -214,45 +213,50 @@
 			{
 				$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/admin/index.php'));
 			}
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
 
 			if($param_cd)
 			{
 				$cd = $param_cd;
 			}
 			
-			if(isset($_POST['query']))
+			if(isset($_REQUEST['query']))
 			{
 				// limit query to limit characters
-				if(eregi('^[a-z_0-9]+$',$_POST['query']))
-					$GLOBALS['query'] = $_POST['query'];
+				if(eregi('^[a-z_0-9]+$',$_REQUEST['query']))
+					$GLOBALS['query'] = $_REQUEST['query'];
 			}
 			
-			if(isset($_POST['start']))
+			if(isset($_REQUEST['start']))
 			{
-				$start = (int)$_POST['start'];
+				$start = (int)$_REQUEST['start'];
 			}
 			else
 			{
 				$start = 0;
 			}
 
-			switch($_GET['order'])
+			switch($_REQUEST['order'])
 			{
 				case 'account_lastname':
 				case 'account_firstname':
 				case 'account_lid':
-					$order = $_GET['order'];
+				case 'account_email':
+					$order = $_REQUEST['order'];
 					break;
 				default:
 					$order = 'account_lid';
 					break;
 			}
 
-			switch($_GET['sort'])
+			switch($_REQUEST['sort'])
 			{
 				case 'ASC':
 				case 'DESC':
-					$sort = $_GET['sort'];
+					$sort = $_REQUEST['sort'];
 					break;
 				default:
 					$sort = 'ASC';
@@ -274,51 +278,85 @@
 
 			$p->set_file(
 				Array(
-					'accounts' => 'accounts.tpl'
+					'list' => 'accounts.tpl'
 				)
 			);
-			$p->set_block('accounts','list','list');
-			$p->set_block('accounts','row','row');
-			$p->set_block('accounts','row_empty','row_empty');
+			$p->set_block('list','row','rows');
+			$p->set_block('list','row_empty','row_empty');
+			$p->set_block('list','letter_search','letter_search_cells');
 
-			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
+			$search_param = array(
+				'type' => (int)$_REQUEST['group_id'] > 0 ? $_REQUEST['group_id'] : 'accounts',
+				'start' => $start,
+				'sort' => $sort,
+				'order' => $order,
+				'query_type' => $_REQUEST['query_type'],
+			);
+			if (!$GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$GLOBALS['query']);
+				$search_param['query'] = $GLOBALS['query'];
 			}
-			else
-			{
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order);
-			}
+			$account_info = $GLOBALS['phpgw']->accounts->search($search_param);
 			$total = $GLOBALS['phpgw']->accounts->total;
 
-			$url = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
-
-			$var = Array(
-				'bg_color' => $GLOBALS['phpgw_info']['theme']['bg_color'],
-				'th_bg'    => $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'left_next_matchs'   => $this->nextmatchs->left($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
-				'lang_user_accounts' => lang('%1 - %2 of %3 user accounts',$start+1,$start+count($account_info),$total),
-				'right_next_matchs'  => $this->nextmatchs->right($url,$start,$total,'menuaction=admin.uiaccounts.list_users'),
-				'lang_loginid'       => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,$url,lang('LoginID')),
-				'lang_lastname'      => $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,$url,lang('last name')),
-				'lang_firstname'     => $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,$url,lang('first name')),
+			$link_data = array(
+				'menuaction' => 'admin.uiaccounts.list_users',
+				'group_id'   => $_REQUEST['group_id'],
+				'query_type' => $_REQUEST['query_type'],
+			);
+			$uiaccountsel = CreateObject('phpgwapi.uiaccountsel');
+			$p->set_var(array(
+				'left_next_matchs'   => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
+				'lang_showing' => ($_REQUEST['group_id'] ? $GLOBALS['phpgw']->common->grab_owner_name($_REQUEST['group_id']).': ' : '').
+					($GLOBALS['query'] ? lang("Search %1 '%2'",lang($uiaccountsel->query_types[$_REQUEST['query_type']]),$GLOBALS['query']).': ' : '')
+					.$this->nextmatchs->show_hits($total,$start),
+				'right_next_matchs'  => $this->nextmatchs->right('/index.php',$start,$total,$link_data),
+				'lang_loginid'       => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data),
+				'lang_lastname'      => $this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('last name'),$link_data),
+				'lang_firstname'     => $this->nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('first name'),$link_data),
+				'lang_email'         => $this->nextmatchs->show_sort_order($sort,'account_email',$order,'/index.php',lang('email'),$link_data),
 				'lang_edit'    => lang('edit'),
 				'lang_delete'  => lang('delete'),
 				'lang_view'    => lang('view'),
-				'accounts_url' => $url,
 				'lang_search'  => lang('search')
+			));
+			$link_data += array(
+				'start'      => $start,
+				'order'      => $order,
+				'sort'       => $sort,
 			);
-			$p->set_var($var);
-			
+			$p->set_var(array(
+				'query_type' => is_array($uiaccountsel->query_types) ? $GLOBALS['phpgw']->html->select('query_type',$_REQUEST['query_type'],$uiaccountsel->query_types) : '',
+				'lang_group' => lang('group'),
+				'group' => $uiaccountsel->selection('group_id','admin_uiaccount_listusers_group_id',$_REQUEST['group_id'],'groups',0,False,'','this.form.submit();',lang('all')),
+				'accounts_url' => $GLOBALS['phpgw']->link('/index.php',$link_data),
+			));
+			$letters = lang('alphabet');
+			$letters = explode(',',substr($letters,-1) != '*' ? $letters : 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+			$link_data['query_type'] = 'start';
+			foreach($letters as $letter)
+			{
+				$link_data['query'] = $letter;
+				$p->set_var(array(
+					'letter' => $letter,
+					'link'   => $GLOBALS['phpgw']->link('/index.php',$link_data),
+					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'letter_box_active' : 'letter_box',
+				));
+				$p->fp('letter_search_cells','letter_search',True);
+			}
+			unset($link_data['query']);
+			unset($link_data['query_type']);
+			$p->set_var(array(
+				'letter' => lang('all'),
+				'link'   => $GLOBALS['phpgw']->link('/index.php',$link_data),
+				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'letter_box_active' : 'letter_box',
+			));
+			$p->fp('letter_search_cells','letter_search',True);
+
 			if (! $GLOBALS['phpgw']->acl->check('account_access',4,'admin'))
 			{
 				$p->set_var('new_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'));
 				$p->set_var('input_add','<input type="submit" value="' . lang('Add') . '">');
-			}
-
-			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
-			{
-				$p->set_var('input_search',lang('Search') . '&nbsp;<input type="text" name="query" value='.$GLOBALS['query'].'>');
 			}
 
 			if (!count($account_info) || !$total)
@@ -343,16 +381,11 @@
 					$can_delete = True;
 				}
 
-				while (list($null,$account) = each($account_info))
+				foreach($account_info as $account)
 				{
-					$this->nextmatchs->template_alternate_row_color($p);
+					$p->set_var('class',$this->nextmatchs->alternate_row_color('',True));
 
-					$var = array(
-						'row_loginid'   => $account['account_lid'],
-						'row_firstname' => (!$account['account_firstname']?'&nbsp':$account['account_firstname']),
-						'row_lastname'  => (!$account['account_lastname']?'&nbsp':$account['account_lastname'])
-					);
-					$p->set_var($var);
+					$p->set_var($account);
 
 					if ($can_edit)
 					{
@@ -1049,6 +1082,7 @@
 				'lang_action'    => ($_account_id?lang('Edit user account'):lang('Add new account')),
 				'lang_loginid'   => lang('LoginID'),
 				'lang_account_active' => lang('Account active'),
+				'lang_email'     => lang('email'),
 				'lang_password'  => lang('Password'),
 				'lang_reenter_password' => lang('Re-Enter Password'),
 				'lang_lastname'  => lang('Last Name'),
@@ -1130,6 +1164,7 @@
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
 				'account_firstname' => '<input name="account_firstname" value="' . $userData['firstname'] . '">',
 				'account_lastname'  => '<input name="account_lastname" value="' . $userData['lastname'] . '">',
+				'account_email'     => '<input name="account_email" size="32" value="' . $userData['email'] . '">',
 				'account_passwd'    => $account_passwd,
 				'account_passwd_2'  => $account_passwd_2,
 				'account_file_space' => $account_file_space

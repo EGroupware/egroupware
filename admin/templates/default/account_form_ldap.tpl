@@ -11,11 +11,11 @@
 			<td valign="top">
 
 			   <table border=0 width=100%>
-			    <tr bgcolor="{th_bg}">
+			    <tr class="th">
 			      <td colspan="4"><b>{lang_action}</b></td>
 			    </tr>
 				
-			    <tr bgcolor="{tr_color1}">
+			    <tr class="row_on">
 			     <td width="25%">{lang_loginid}</td>
 			     <td width="25%">{account_lid}&nbsp;</td>
 				
@@ -23,7 +23,7 @@
 			     <td width="25%">{account_status}</td>
 			    </tr>
 				
-			    <tr bgcolor="{tr_color2}">
+			    <tr class="row_off">
 			     <td>{lang_firstname}</td>
 			     <td>{account_firstname}&nbsp;</td>
 			     <td>{lang_lastname}</td>
@@ -32,26 +32,28 @@
 			
 				{password_fields}
 
-			    <tr bgcolor="{tr_color2}">
+			    <tr class="row_off">
 				 <td>{lang_homedir}</td>
 				 <td>{homedirectory}&nbsp;</td>
 				 <td>{lang_shell}</td>
 				 <td>{loginshell}&nbsp;</td>
 				</tr>
 
-			    <tr bgcolor="{tr_color2}">
+			    <tr class="row_off">
 			     <td>{lang_expires}</td>
-			     <td colspan="3">{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;{never_expires}</td>
+			     <td>{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;{never_expires}</td>
+			     <td>{lang_email}</td>
+			     <td>{account_email}</td>
 			    </tr>
  
-			    <tr bgcolor="{tr_color1}">
+			    <tr class="row_on">
 			     <td>{lang_changepassword}</td>
 			     <td>{changepassword}</td>
 			     <td>{lang_anonymous}</td>
 			     <td>{anonymous}</td>
 			    </tr>
 
-			    <tr bgcolor="{tr_color2}">
+			    <tr class="row_off">
 			     <td>{lang_groups}</td>
 			     <td>{groups_select}&nbsp;</td>
 			     <td>{lang_primary_group}</td>
@@ -71,7 +73,7 @@
 <!-- END form -->
 
 <!-- BEGIN form_passwordinfo -->
-    <tr bgcolor="{tr_color1}">
+    <tr class="row_on">
      <td>{lang_password}</td>
      <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
      <td>{lang_reenter_password}</td>
@@ -80,13 +82,13 @@
 <!-- END form_passwordinfo -->
 
 <!-- BEGIN form_buttons_ -->
-    <tr bgcolor="{tr_color2}">
+    <tr class="row_off">
      <td colspan="4" align="right"><input type="submit" name="submit" value="{lang_button}"></td>
     </tr>
 <!-- END form_buttons_ -->
 
 <!-- BEGIN form_logininfo -->
-    <tr bgcolor="{tr_color1}">
+    <tr class="row_on">
      <td>{lang_lastlogin}</td>
      <td>{account_lastlogin}</td>
 

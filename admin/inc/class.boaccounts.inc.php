@@ -331,7 +331,8 @@
 					'account_permissions'   => $_POST['account_permissions'],
 					'homedirectory'         => $_POST['homedirectory'],
 					'loginshell'            => $_POST['loginshell'],
-					'account_expires_never' => $_POST['never_expires']
+					'account_expires_never' => $_POST['never_expires'],
+					'email'                 => $_POST['account_email'],
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
 				
@@ -369,13 +370,7 @@
 						$GLOBALS['phpgw']->acl->delete_repository('phpgwapi','anonymous',$account_id);
 					}
 					// make this information for the hooks available
-					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
-					$GLOBALS['hook_values']['account_id'] = $account_id;
-					$GLOBALS['hook_values']['new_passwd'] = $userData['account_passwd'];
-					$GLOBALS['hook_values']['account_status'] = $userData['account_status'];
-					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
-					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
-
+					$GLOBALS['hook_values'] = $userData;
 					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 						'location' => 'addaccount'
 					),False,True);	// called for every app now, not only enabled ones
@@ -590,7 +585,8 @@
 					'account_permissions'   => $_POST['account_permissions'],
 					'homedirectory'         => $_POST['homedirectory'],
 					'loginshell'            => $_POST['loginshell'],
-					'account_expires_never' => $_POST['never_expires']
+					'account_expires_never' => $_POST['never_expires'],
+					'email'                 => $_POST['account_email'],
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
 				if ($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
@@ -605,12 +601,7 @@
 				if (!$errors = $this->validate_user($userData))
 				{
 					$this->save_user($userData);
-					$GLOBALS['hook_values']['account_id'] = $userData['account_id'];
-					$GLOBALS['hook_values']['account_lid'] = $userData['account_lid'];
-					$GLOBALS['hook_values']['account_status'] = $userData['account_status'];
-					$GLOBALS['hook_values']['account_firstname'] = $userData['account_firstname'];
-					$GLOBALS['hook_values']['account_lastname'] = $userData['account_lastname'];
-
+					$GLOBALS['hook_values'] = $userData;
 					$GLOBALS['phpgw']->hooks->process($GLOBALS['hook_values']+array(
 						'location' => 'editaccount'
 					),False,True);	// called for every app now, not only enabled ones)
