@@ -35,6 +35,7 @@
 	}	
 </script>
 <div id="divMain">
+<p align="center">{message}</p>
 <p align="center">{lang_showing}<br>
 <table border="0" width="100%">
 	<tr valign="top">
@@ -62,12 +63,20 @@
 		<td width="40%" colspan="2">
 			{sort_org_name}
 		</td>
+<form action="{form_action}" name="form" method="POST">
 		<td width="30%" align="center" rowspan="2">
-			{lang_email}
+			{lang_email}<br>
+			<input type="submit" name="all[wto]" value="{to}" title="{title_work_to}">
+			<input type="submit" name="all[wcc]" value="{cc}" title="{title_work_cc}">
+			<input type="submit" name="all[wbcc]" value="{bcc}" title="{title_work_bcc}">
 		</td>
 		<td width="30%" align="center" rowspan="2">
-			{lang_hemail}
+			{lang_hemail}<br>
+			<input type="submit" name="all[hto]" value="{to}" title="{title_home_to}">
+			<input type="submit" name="all[hcc]" value="{cc}" title="{title_home_cc}">
+			<input type="submit" name="all[hbcc]" value="{bcc}" title="{title_home_bcc}">
 		</td>
+</form>
 	</tr>
 	<tr class="th">
 		<td>{sort_n_family}</td>
@@ -88,9 +97,9 @@
 <form>
 		<td align="center" rowspan="2">
 			<input type="text" style="width: 100%" name="hemail" value="{hemail}"><br>
-			<input type="button" name="h_to" value="{to}" onClick="ExchangeTo(this.form);">
-			<input type="button" name="h_cc" value="{cc}" onClick="ExchangeCc(this.form);">
-			<input type="button" name="h_bcc" value="{bcc}" onClick="ExchangeBcc(this.form);">
+			<input type="button" name="hto" value="{to}" onClick="ExchangeTo(this.form);">
+			<input type="button" name="hcc" value="{cc}" onClick="ExchangeCc(this.form);">
+			<input type="button" name="hbcc" value="{bcc}" onClick="ExchangeBcc(this.form);">
 		</td>
 </form>
 	</tr>

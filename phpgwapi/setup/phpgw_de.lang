@@ -1,3 +1,4 @@
+%1 email addresses inserted	common	de	%1 Email Adressen eingefügt
 about %1	common	de	Über %1
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
@@ -44,6 +45,7 @@ bahrain	common	de	BAHRAIN
 bangladesh	common	de	BANGLADESH
 barbados	common	de	BARBADOS
 based on	common	de	Basierend auf
+bcc	common	de	Blindkopie
 belarus	common	de	BELORUSSLAND (WEISSRUSSLAND)
 belgium	common	de	BELGIEN
 belize	common	de	BELIZE
@@ -72,6 +74,7 @@ category	common	de	Kategorie
 category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
 category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
 cayman islands	common	de	KAIMAN INSELN
+cc	common	de	Kopie
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	ändern
@@ -87,6 +90,7 @@ close	common	de	Schließen
 cocos (keeling) islands	common	de	COCOS INSELN
 colombia	common	de	KOLUMBIEN
 comoros	common	de	KOMOREN
+company	common	de	Unternehmen
 congo	common	de	KONGO
 congo, the democratic republic of the	common	de	KONGO, DIE DEMOKRATISCHE REPUBLIK DES
 cook islands	common	de	COOK INSELN
@@ -131,6 +135,7 @@ edit	common	de	Editieren
 edit %1 category for	common	de	%1 Kategorie editieren für
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
+egroupware: login blocked for user '%1', ip %2	common	de	eGroupWare: Anmelden gesperrt für Benutzer '%1', IP %2
 egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
@@ -208,12 +213,14 @@ high	common	de	Hoch
 highest	common	de	Höchste
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
+home email	common	de	private Email
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
+insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
 international	common	de	International
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -412,8 +419,10 @@ select	common	de	Auswählen
 select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
+select home email address	common	de	private Email-Adresse auswählen
 select one	common	de	Einen auswählen
 select user	common	de	Benutzer auswählen
+select work email address	common	de	geschäftl. Email-Addresse auswählen
 send	common	de	Abschicken
 senegal	common	de	SENEGAL
 september	common	de	September
@@ -423,6 +432,7 @@ session has been killed	common	de	Session wurde gelöscht
 setup	common	de	Setup
 seychelles	common	de	SEYCHELLEN
 show all	common	de	alle anzeigen
+show all categorys	common	de	Alle Kategorien anzeigen
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 sierra leone	common	de	SIERRA LEONE
@@ -466,6 +476,7 @@ time	common	de	Zeit
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonen Differenz
 title	common	de	Titel
+to	common	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
@@ -474,6 +485,7 @@ toggle first day of week	common	de	ersten Tag der Woche wechseln
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Versuche sich anzumelden: %1 für den Benutzer '%2', %3 für die IP %4
 total	common	de	Gesamt
 trinidad and tobago	common	de	TRINIDAD AND TOBAGO
 tuesday	common	de	Dienstag
@@ -516,6 +528,7 @@ welcome	common	de	Willkommen
 western sahara	common	de	WEST SAHARA
 which groups	common	de	Welche Gruppen
 wk	common	de	KW
+work email	common	de	geschäftliche Email
 written by	common	de	Geschrieben von
 written by:	common	de	Geschrieben von:
 year	common	de	Jahr

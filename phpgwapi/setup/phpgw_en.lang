@@ -1,3 +1,4 @@
+%1 email addresses inserted	common	en	%1 email addresses inserted
 about %1	common	en	About %1
 access	common	en	Access
 access not permitted	common	en	Access not permitted
@@ -43,6 +44,7 @@ bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
 bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
+bcc	common	en	Bcc
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
 belize	common	en	BELIZE
@@ -71,6 +73,7 @@ category	common	en	Category
 category %1 has been added !	common	en	Category %1 has been added !
 category %1 has been updated !	common	en	Category %1 has been updated !
 cayman islands	common	en	CAYMAN ISLANDS
+cc	common	en	Cc
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
@@ -86,6 +89,7 @@ close	common	en	Close
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 colombia	common	en	COLOMBIA
 comoros	common	en	COMOROS
+company	common	en	Company
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	en	COOK ISLANDS
@@ -129,6 +133,7 @@ edit	common	en	Edit
 edit %1 category for	common	en	Edit %1 category for
 edit categories	common	en	Edit Categories
 edit category	common	en	Edit category
+egroupware: login blocked for user '%1', ip %2	common	en	eGroupWare: login blocked for user '%1', IP %2
 egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 email	common	en	E-Mail
@@ -205,12 +210,14 @@ high	common	en	High
 highest	common	en	Highest
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
+home email	common	en	home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
+insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
 international	common	en	International
 invalid ip address	common	en	Invalid IP address
 invalid password	common	en	Invalid password
@@ -408,8 +415,10 @@ select	common	en	Select
 select category	common	en	Select Category
 select date	common	en	Select date
 select group	common	en	Select group
+select home email address	common	en	Select home email address
 select one	common	en	Select one
 select user	common	en	Select user
+select work email address	common	en	Select work email address
 send	common	en	Send
 senegal	common	en	SENEGAL
 september	common	en	September
@@ -419,6 +428,7 @@ session has been killed	common	en	Session has been killed
 setup	common	en	Setup
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
+show all categorys	common	en	Show all categorys
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
@@ -462,6 +472,7 @@ time	common	en	Time
 time zone	common	en	Timezone
 time zone offset	common	en	Time zone offset
 title	common	en	Title
+to	common	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
@@ -470,6 +481,7 @@ toggle first day of week	common	en	Toggle first day of week
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
 total	common	en	Total
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
 tuesday	common	en	Tuesday
@@ -512,6 +524,7 @@ welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
 which groups	common	en	Which groups
 wk	common	en	wk
+work email	common	en	work email
 written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
