@@ -36,6 +36,10 @@
 
 		function read_session()
 		{
+			if (!$this->sessionid)
+			{
+				return False;
+			}
 			session_id($this->sessionid);
 			session_start();
 			return $GLOBALS['phpgw_session'] = $_SESSION['phpgw_session'];
