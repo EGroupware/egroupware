@@ -4,7 +4,12 @@
 <p>
  <table border="0" width="45%" align="center">
   <tr bgcolor="{bg_color}">
-
+{left}
+    <td align="center">{lang_showing}</td>
+{right}
+  </tr>
+ </table>
+ <table border="0" width="45%" align="center">
   <tr bgcolor="{th_bg}">
    <td> {sort_title} </td>
    <td>{lang_edit}</td>
