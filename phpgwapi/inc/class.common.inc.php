@@ -41,9 +41,8 @@
 	*/
 	class common
 	{
-		var $crypto;
-		var $debug_info;		// An array with debugging info from the API
-		
+		var $debug_info; // An array with debugging info from the API
+
 		/*!
 		@function cmp_version
 		@abstract Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
@@ -906,11 +905,11 @@
 				include(PHPGW_API_INC . '/footer.inc.php');
 			}
  
-			// Clean up mcrypt
-			if (@is_object($this->crypto))
+			/* Clean up mcrypt */
+			if (@is_object($GLOBALS['phpgw']->crypto))
 			{
-				$this->crypto->cleanup();
-				unset($this->crypto);
+				$GLOBALS['phpgw']->crypto->cleanup();
+				unset($GLOBALS['phpgw']->crypto);
 			}
 		}
 
@@ -919,6 +918,7 @@
 			$len = strlen($data);
 			return pack('H' . $len, $data);
 		}
+
 		/*!
 		@function encrypt
 		@abstract encrypt data passed to the function
@@ -937,6 +937,7 @@
 		{
 			return $GLOBALS['phpgw']->crypto->decrypt($data);
 		}
+
 		/*!
 		@function des_cryptpasswd
 		@abstract des encrypt a password
@@ -960,10 +961,9 @@
 		function md5_cryptpasswd($userpass, $random)
 		{
 			$bsalt = '$1$';
-			$esalt = '$';						// patch
+			$esalt = '$';
 			$lcrypt = '{crypt}';
-			//    $modsalt = sprintf('%s%s', $bsalt, $random);
-			$modsalt = sprintf('%s%s%s', $bsalt, $random, $esalt);	// patch
+			$modsalt = sprintf('%s%s%s', $bsalt, $random, $esalt);
 			$password = crypt($userpass, $modsalt);
 			$ldappassword = sprintf('%s%s', $lcrypt, $password);
 
@@ -984,8 +984,7 @@
 			}
 			if ($GLOBALS['phpgw_info']['server']['ldap_encryption_type'] == 'MD5')
 			{
-				//$salt = $this->randomstring(9);
-				$salt       = $this->randomstring(8);			// patch
+				$salt       = $this->randomstring(8);
 				$e_password = $this->md5_cryptpasswd($password, $salt);
 			}
 			return $e_password;
@@ -1059,9 +1058,9 @@
 						{
 							include($f);
 						}
-					}		// if
-				}			// while
-			}				// if
+					}
+				}
+			}
 			else
 			{
 				reset ($GLOBALS['phpgw_info']['user']['apps']);
@@ -1075,10 +1074,10 @@
 						{
 							include($f);
 						}
-					}		// if
-				}			// while
-			}				// if $no_permission_check
-		}					// function
+					}
+				}
+			}
+		}
 
 		/*!
 		@function hook_single
@@ -1121,7 +1120,7 @@
 			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				$f = PHPGW_SERVER_ROOT . $SEP . $permission[0] . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
-	
+
 				if (file_exists($f))
 				{
 					++$count;
@@ -1168,6 +1167,7 @@
 			}
 			return date($format,$t);
 		}
+
 		/*!
 		@function dateformatorder
 		@abstract 
@@ -1195,6 +1195,7 @@
 				return (implode(' ',$dlarr));
 			}
 		} 
+
 		/*!
 		@function formattime
 		@abstract format the time takes settings from user preferences
@@ -1240,29 +1241,6 @@
 			return "$h12:$min$sec$ampm";
 		}
 
-	/* If the above still works, please remove this */
-    function old_formattime($hour,$min,$sec='')
-    {
-      $h12 = $hour;
-      if ($GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'] == '12') {
-         if ($hour >= 12) 
-            $ampm = ' pm';
-         else
-            $ampm = ' am';
-         $h12 %= 12;
-         if ($h12 == 0 && $hour)
-            $h12 = 12;
-         if ($h12 == 0 && ! $hour)
-            $h12 = 0;
-      } else 
-         $h12 = $hour;
-
-       if ($sec)
-          $sec = ":$sec";
-
-       return "$h12:$min$sec$ampm";
-    }
-
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/*!
 		@function get_email_passwd_ex
@@ -1300,7 +1278,6 @@
 			return $email_passwd;
 		}
 		*/
-		
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/*!
@@ -1308,7 +1285,7 @@
 		@abstract create email preferences
 		@discussion This is not the best place for it, but it needs to be shared between Aeromail and SM
 		@param $prefs
-		@param $account_id -optional defaults to : phpgw_info['user']['account_id']	
+		@param $account_id -optional defaults to : phpgw_info['user']['account_id']
 		*/
 		function create_emailpreferences($prefs='',$accountid='')
 		{
@@ -1324,7 +1301,7 @@
 				$do_free_me = True;
 			}
 
-			// this sets the prederences into the phpgw_info structure
+			// this sets the preferences into the phpgw_info structure
 			$GLOBALS['phpgw']->msg->create_email_preferences();
 
 			// cleanup and return
@@ -1409,8 +1386,6 @@
 			return $prefs;
 		}
 		*/
-
-
 
 		// This will be moved into the applications area.
 		/*!

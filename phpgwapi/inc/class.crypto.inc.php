@@ -34,15 +34,22 @@
 		var $td = False; /* Handle for mcrypt */
 		var $iv = '';
 		var $key = '';
-		var $debug = True;
 		var $debug = False;
 
-		function crypto($vars)
+		function crypto($vars='')
+		{
+			if(is_array($vars))
+			{
+				$this->init($vars);
+			}
+		}
+
+		function init($vars)
 		{
 			/* _debug_array(mcrypt_list_algorithms()); */
-
 			$key = $vars[0];
 			$iv  = $vars[1];
+
 			if ($GLOBALS['phpgw_info']['server']['mcrypt_enabled'] && extension_loaded('mcrypt'))
 			{
 				if($GLOBALS['phpgw_info']['server']['mcrypt_algo'])
@@ -127,7 +134,7 @@
 				echo '<br>' . time() . ' crypto->encrypt() unencrypted data: ---->>>>' . $data . "\n";
 			}
 
-			if(gettype($data) == 'array' || gettype($data) == 'object')
+			if(is_array($data) || is_object($data))
 			{
 				if($this->debug)
 				{

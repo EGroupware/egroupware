@@ -39,6 +39,9 @@
 		var $session_flags;
 		var $sessionid;
 		var $kp3;
+		var $key;
+		var $iv;
+
 		var $data;
 		var $db;
 		var $db2;
@@ -56,6 +59,9 @@
 			$this->db2       = $GLOBALS['phpgw']->db;
 			$this->sessionid = (isset($GLOBALS['HTTP_GET_VARS']['sessionid'])?$GLOBALS['HTTP_GET_VARS']['sessionid']:(isset($GLOBALS['HTTP_COOKIE_VARS']['sessionid'])?$GLOBALS['HTTP_COOKIE_VARS']['sessionid']:''));
 			$this->kp3       = (isset($GLOBALS['HTTP_GET_VARS']['kp3'])?$GLOBALS['HTTP_GET_VARS']['kp3']:(isset($GLOBALS['HTTP_COOKIE_VARS']['kp3'])?$GLOBALS['HTTP_COOKIE_VARS']['kp3']:''));
+
+			/* Create the crypto object */
+			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto');
 		}
 
 		function DONTlist_methods($_type)
@@ -121,14 +127,7 @@
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$GLOBALS['phpgw']->common->key  = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$GLOBALS['phpgw']->common->iv   = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-
-			$cryptovars[0] = $GLOBALS['phpgw']->common->key;      
-			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;      
-			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
-
-			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
+			$db->query("SELECT * FROM phpgw_sessions WHERE session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
 
 			$this->session_flags = $db->f('session_flags');
@@ -180,6 +179,11 @@
 				return False;
 			}
 
+			/* init the crypto object before appsession call below */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
+
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
@@ -200,6 +204,11 @@
 					$GLOBALS['phpgw']->log->commit();
 				}
 
+				if(is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 				return False;
 			}
 
@@ -220,6 +229,11 @@
 						$GLOBALS['phpgw']->log->commit();
 					}
 
+					if(is_object($GLOBALS['phpgw']->crypto))
+					{
+						$GLOBALS['phpgw']->crypto->cleanup();
+						unset($GLOBALS['phpgw']->crypto);
+					}
 					return False;
 				}
 			}
@@ -242,6 +256,11 @@
 					$GLOBALS['phpgw']->log->commit();
 				}
 
+				if(is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 				return False;
 			}
 			else
@@ -256,11 +275,11 @@
 			// If you plan on using the cron apps, please remove the following lines.
 			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
 
-			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_dla <= '" . (time() - 7200)
-				. "' and session_flags !='A'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - 7200)
+				. "' AND session_flags !='A'",__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() - 86400)
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - 86400)
 				. "'",__LINE__,__FILE__);
 		}
 
@@ -316,14 +335,8 @@
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
 
-			$this->sessionid    = md5($GLOBALS['phpgw']->common->randomstring(10));
-			$this->kp3          = md5($GLOBALS['phpgw']->common->randomstring(15));
-
-			$GLOBALS['phpgw']->common->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$GLOBALS['phpgw']->common->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
-			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
-			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			$this->sessionid = md5($GLOBALS['phpgw']->common->randomstring(10));
+			$this->kp3       = md5($GLOBALS['phpgw']->common->randomstring(15));
 
 			if ($GLOBALS['phpgw_info']['server']['usecookies'])
 			{
@@ -333,13 +346,13 @@
 				Setcookie('last_domain',$this->account_domain,$now+1209600);
 				if ($this->account_domain == $GLOBALS['phpgw_info']['server']['default_domain'])
 				{
-					Setcookie('last_loginid', $this->account_lid ,$now+1209600);  // For 2 weeks
+					Setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
 				}
 				else
 				{
-					Setcookie('last_loginid', $login ,$now+1209600);              // For 2 weeks
+					Setcookie('last_loginid', $login ,$now+1209600); /* For 2 weeks */
 				}
-				unset ($GLOBALS['phpgw_info']['server']['default_domain']);                 // we kill this for security reasons
+				unset($GLOBALS['phpgw_info']['server']['default_domain']); /* we kill this for security reasons */
 			}
 
 			$this->read_repositories(False);
@@ -359,6 +372,11 @@
 				return False;
 			}
 
+			/* init the crypto object */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
+
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
@@ -372,16 +390,16 @@
 				$session_flags = 'N';
 			}
 
-			$user_ip  = $this->getuser_ip();
+			$user_ip = $this->getuser_ip();
 
 			$GLOBALS['phpgw']->db->transaction_begin();
-			$GLOBALS['phpgw']->db->query("insert into phpgw_sessions values ('" . $this->sessionid
+			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
 				. "','".$login."','" . $user_ip . "','"
 				. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
 				. "')",__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->db->query('insert into phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
-				." values ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id) '
+				." VALUES ('" . $this->sessionid . "','" . "$login','" . $user_ip . "',".$now.",''," . $this->account_id . ")",__LINE__,__FILE__);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['phpgw']->auth->previous_login);
 			$GLOBALS['phpgw']->auth->update_lastlogin($this->account_id,$user_ip);
@@ -398,14 +416,7 @@
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$GLOBALS['phpgw']->common->key  = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$GLOBALS['phpgw']->common->iv   = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-
-			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
-			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
-			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
-
-			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
+			$db->query("SELECT * FROM phpgw_sessions WHERE session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
 
 			$this->session_flags = $db->f('session_flags');
@@ -423,12 +434,15 @@
 			}
 
 			$GLOBALS['phpgw_info']['user']['kp3'] = $this->kp3;
-			$phpgw_info_flags    = $GLOBALS['phpgw_info']['flags'];
+			$phpgw_info_flags = $GLOBALS['phpgw_info']['flags'];
 
 			$GLOBALS['phpgw_info']['flags'] = $phpgw_info_flags;
 			$userid_array = explode('@',$db->f('session_lid'));
 // Thinking this might solve auth_http problems
-			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
+			if(@$userid_array[1] == '')
+			{
+				$userid_array[1] = 'default';
+			}
 			$this->account_lid = $userid_array[1];
 			$this->update_dla();
 			$this->account_id = $GLOBALS['phpgw']->interserver->name2id($this->account_lid);
@@ -442,10 +456,15 @@
 			
 			$this->read_repositories(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info']);
 
+			/* init the crypto object before appsession call below */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
+
 			$GLOBALS['phpgw_info']['user']  = $this->user;
 			$GLOBALS['phpgw_info']['hooks'] = $this->hooks;
 
-			$GLOBALS['phpgw_info']['user']['session_ip']  = $db->f('session_ip');
+			$GLOBALS['phpgw_info']['user']['session_ip'] = $db->f('session_ip');
 			$GLOBALS['phpgw_info']['user']['passwd'] = base64_decode($this->appsession('password','phpgwapi'));
 
 			if ($userid_array[1] != $GLOBALS['phpgw_info']['user']['domain'])
@@ -462,6 +481,11 @@
 					$GLOBALS['phpgw']->log->commit();
 				}
 
+				if(is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 				return False;
 			}
 
@@ -482,6 +506,11 @@
 						$GLOBALS['phpgw']->log->commit();
 					}
 
+					if(is_object($GLOBALS['phpgw']->crypto))
+					{
+						$GLOBALS['phpgw']->crypto->cleanup();
+						unset($GLOBALS['phpgw']->crypto);
+					}
 					return False;
 				}
 			}
@@ -504,6 +533,11 @@
 					$GLOBALS['phpgw']->log->commit();
 				}
 
+				if(is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 				return False;
 			}
 			else
@@ -549,14 +583,13 @@
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['phpgw']->interserver->serverid = $this->account_id;
 
-			$this->sessionid    = md5($GLOBALS['phpgw']->common->randomstring(10));
-			$this->kp3          = md5($GLOBALS['phpgw']->common->randomstring(15));
+			$this->sessionid = md5($GLOBALS['phpgw']->common->randomstring(10));
+			$this->kp3       = md5($GLOBALS['phpgw']->common->randomstring(15));
 
-			$GLOBALS['phpgw']->common->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
-			$GLOBALS['phpgw']->common->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
-			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
-			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
-			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			/* re-init the crypto object */
+			$this->key = md5($this->kp3 . $this->sessionid . $GLOBALS['phpgw_info']['server']['encryptkey']);
+			$this->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
+			$GLOBALS['phpgw']->crypto->init(array($this->key,$this->iv));
 
 			//$this->read_repositories(False);
 
@@ -566,7 +599,7 @@
 			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
 			$session_flags = 'S';
 
-			$user_ip  = $this->getuser_ip();
+			$user_ip = $this->getuser_ip();
 
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
@@ -597,11 +630,11 @@
 				$action = $PHP_SELF;
 			}
 
-			$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$action' "
-				. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_sessions SET session_dla='" . time() . "', session_action='$action' "
+				. "WHERE session_id='" . $this->sessionid."'",__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
-				. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_app_sessions SET session_dla='" . time() . "' "
+				. "WHERE sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 			return True;
 		}
 
@@ -613,11 +646,11 @@
 			}
 
 			$GLOBALS['phpgw']->db->transaction_begin();
-			$GLOBALS['phpgw']->db->query("delete from phpgw_sessions where session_id='"
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='"
 				. $sessionid . "'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->query("delete from phpgw_app_sessions where sessionid='"
+			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid='"
 				. $sessionid . "'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->query("update phpgw_access_log set lo='" . time() . "' where sessionid='"
+			$GLOBALS['phpgw']->db->query("UPDATE phpgw_access_log SET lo='" . time() . "' WHERE sessionid='"
 				. $sessionid . "'",__LINE__,__FILE__);
 
 			// Only do the following, if where working with the current user
@@ -691,7 +724,7 @@
 			$account_id = get_account_id($accountid,$this->account_id);
 
 			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
-				." AND app = 'phpgwapi' and location = 'phpgw_info_cache'";
+				." AND app = 'phpgwapi' AND location = 'phpgw_info_cache'";
 
 			$GLOBALS['phpgw']->db->query($query);
 		}
@@ -734,10 +767,10 @@
 				// Changed by milosch 2001 Dec 20
 				// do not stripslashes here unless this proves to be a problem.
 				// Changed by milosch 2001 Dec 25
-				// do not decrypt and return if no data (decrypt returning garbage)
+				/* do not decrypt and return if no data (decrypt returning garbage) */
 				if($data)
 				{
-					$data = $GLOBALS['phpgw']->common->decrypt($data);
+					$data = $GLOBALS['phpgw']->crypto->decrypt($data);
 					//echo 'appsession returning: '; _debug_array($data);
 					return $data;
 				}
@@ -749,8 +782,6 @@
 					. " AND app = '".$appname."' AND location = '".$location."'",__LINE__,__FILE__);
 
 				$encrypteddata = $GLOBALS['phpgw']->crypto->encrypt($data);
-				// Added by milosch 2001 Dec 20
-				// Use db_addslashes to slash this
 				$encrypteddata = $GLOBALS['phpgw']->db->db_addslashes($encrypteddata);
 
 				if ($GLOBALS['phpgw']->db->num_rows()==0)
@@ -837,8 +868,6 @@
 		\*************************************************************************/
 		function link($url, $extravars = '')
 		{
-			global $usercookie;
-
 			$kp3 = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
 
 			if (! $kp3)
