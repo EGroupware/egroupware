@@ -18,6 +18,7 @@
 		'noappheader'             => True,
 		'noappfooter'             => True,
 		'enable_contacts_class'   => True,
+		'enable_categories_class' => True,
 		'enable_nextmatchs_class' => True
 	);
 
