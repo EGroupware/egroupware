@@ -10,6 +10,8 @@
 	* --------------------------------------------                             *
 	\**************************************************************************/
 
+	/* $Id$ */
+	
 	class bo_acl
 	{
 		/*! @var $permissions Holds alls permissions for resources of user */
@@ -69,15 +71,28 @@
 		*/
 		function get_cats($perm_type)
 		{
-			foreach($this->permissions as $cat_id => $rights)
+			$cats = $this->egw_cats->return_sorted_array(0,False,'','','',!$type);
+			while (list(,$cat) = @each($cats))
 			{
-				if(strstr($cat_id,'L') && $rights & $perm_type)
+				if($this->is_permitted($cat['id'],$perm_type))
 				{
-					$cat_id = substr($cat_id,1);
-					$readcats[$cat_id] = $this->egw_cats->id2name($cat_id);
+					for ($j=0,$s=''; $j < $cat['level']; $j++)
+					{
+						$s .= '&nbsp;';
+					}
+					$s .= $GLOBALS['phpgw']->strip_html($cat['name']);
+					if ($cat['app_name'] == 'phpgw')
+					{
+						$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
+					}
+					if ($cat['owner'] == '-1')
+					{
+						$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
+					}
+					$perm_cats[$cat['id']] = $s;
 				}
 			}
-			return $readcats;
+			return $perm_cats;
 		}
 		
 		/*!
@@ -115,6 +130,7 @@
 		{
 			return $this->so->get_rights('L'.$cat_id);
 		}
+
 
 // privat functions from here on -------------------------------------------------------------------------
 		function save_sessiondata()

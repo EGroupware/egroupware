@@ -1,5 +1,5 @@
 <center>
-  <table border="0" cellspacing="2" cellpadding="2" width="60%">
+  <table border="0" cellspacing="2" cellpadding="2" width="80%">
    <tr>
     <td colspan="3" align="center" bgcolor="#c9c9c9"><b>{title}<b/></td>
    </tr>
@@ -22,7 +22,7 @@
   </tr>
  </table>
  <form method="POST">
-  <table border="0" cellspacing="2" cellpadding="2" width="60%">
+  <table border="0" cellspacing="2" cellpadding="2" width="80%">
    <tr bgcolor="{th_bg}" valign="middle" align="center">
 	<td>{sort_cat}<br>{lang_cat_admin}</td>
 	<td>{lang_read}</td>
@@ -41,9 +41,10 @@
    </tr>
    <!-- END cat_list -->
    <tr>
-    <td colspan="4" align="center">
-     <input type="submit" name="btnSave" value="{lang_save}"> &nbsp;
-     <input type="submit" name="btnDone" value="{lang_done}">
+    <td colspan="4" align="left">
+	<br>
+	<input type="submit" name="btnSave" value="{lang_save}"> &nbsp;
+	<input type="submit" name="btnDone" value="{lang_done}">
     </td>
    </tr>
   </table>
