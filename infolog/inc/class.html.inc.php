@@ -40,10 +40,16 @@ class html
 		return $html;
 	}
 
+	function input($name,$value='',$type='',$options='' )
+	{
+		if ($type) $type = "type=$type";
+
+		return "<input $type name=\"$name\" value=\"$value\" $options>\n";
+	}
+
 	function submit_button($name,$lang,$onClick='')
 	{
-		return "<input type=\"submit\" name=\"$name\" value=\"".lang($lang).'"'.
-			($onClick ? " onClick=\"$onClick\"" : '').">\n";
+		return $this->input($name,lang($lang),'submit',$onClick ? "onClick=\"$onClick\"" : '');
 	}
 
 	/*
@@ -74,12 +80,6 @@ class html
 	function checkbox($name,$value='')
 	{
 		return "<input type=\"checkbox\" name=\"$name\" value=\"True\"" .($value ? ' checked' : '') . ">\n";
-	}
-
-
-	function file($name,$value='')
-	{
-		return "<input type=\"file\" name=\"$name\">\n";
 	}
 
 	function form($content,$hidden_vars,$url,$url_vars='',$method='POST')

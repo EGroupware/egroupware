@@ -24,16 +24,14 @@
 			'delete'      => True,
 			'get_file'    => True,
 			'add_file'    => True,
+			'admin'       => True,
 			'preferences' => True
 		);
 		var $icons;
-		var $vfs;
-		var $basedir='/infolog';
 
 		function uiinfolog( )
 		{
 			$this->bo = CreateObject('infolog.boinfolog');
-			$this->vfs = CreateObject('phpgwapi.vfs');
 
 			$this->icons = array(
 				'type' => array(
@@ -198,16 +196,16 @@
 			}
 
 			// add the links to the files which corrospond to this entry
-			$attachments=$this->vfs->ls($this->basedir.'/'.$info['info_id'].'/',array(REALTIVE_NONE));
-			while (list($keys,$fileinfo) = each($attachments))
+			$attachments = $this->bo->list_attached($info['info_id']);
+			while (list($name,$comment) = @each($attachments))
 			{
 				$links .= isset($links) ? ', ' : '<br>';
-				$links .= $this->html->a_href($fileinfo['name'],'/index.php',
+				$links .= $this->html->a_href($name,'/index.php',
 					$this->menuaction('get_file') + array(
 						'info_id'    => $info['info_id'],
-						'filename'   => $fileinfo['name'])
-					);
-				if ($fileinfo['comment']) $links .= ' (' . $fileinfo['comment'] . ')';
+						'filename'   => $name
+					),'target=_blank');
+				if ($comment) $links .= ' (' . $comment . ')';
 			}
 
 			return array(
@@ -542,6 +540,7 @@
 		{
 			$info_id=$GLOBALS['HTTP_GET_VARS']['info_id'];
 			$filename=$GLOBALS['HTTP_GET_VARS']['filename'];
+			//echo "<p>get_file: info_id='$info_id', filename='$filename'</p>\n";
 
 			$browser = CreateObject('phpgwapi.browser');
 
@@ -549,54 +548,24 @@
 
 			if (!$info_id || !$filename || !$this->bo->check_access($info_id,PHPGW_ACL_READ))
 			{
-				Header('Location: ' .  $html->link($referer));
+				Header('Location: ' .  $this->html->link($referer));
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
+			$local = $this->bo->attached_local($info_id,$filename,$GLOBALS['HTTP_SERVER_VARS']['REMOTE_ADDR'],$browser->is_windows());
 
-			$fn=$this->basedir.'/'.$info_id.'/'.$filename;
-			$browser->content_header($fn);
-			echo $this->vfs->read($fn,array(RELATIVE_ROOT));
-			$GLOBALS['phpgw']->common->phpgw_exit();
-		}
-
-		/*
-		**	Put a file to the corrosponding place in the VFS and set the attributes
-		**	ACL check is done by the VFS
-		*/
-		function add_one_file($info_id,$filepos,$name,$size,$type,$comment='')
-		{
-			//echo "<p>add_one_file: info_id='$info_id', filepos='$filepos', name='$name', size='$size', type='$type', comment='$comment'</p>\n";
-
-			if ($filepos && ($filepos!="none") && $info_id)
+			if ($local)
 			{
-				// create the root for attached files in infolog, if it does not exists
-				if (!($this->vfs->file_exists($this->basedir,array(RELATIVE_ROOT))))
-				{
-					$this->vfs->override_acl = 1;
-					$this->vfs->mkdir($this->basedir,array(RELATIVE_ROOT));
-					$this->vfs->override_acl = 0;
-				}
-
-				if (!$this->vfs->securitycheck($filename))
-				{
-					return lang('Invalid filename');
-				}
-				else
-				{
-					$dir=$this->basedir.'/'.$info_id;
-					if (!($this->vfs->file_exists($dir,array(RELATIVE_ROOT))))
-					{
-						$this->vfs->override_acl = 1;
-						$this->vfs->mkdir($dir,array(RELATIVE_ROOT));
-						$this->vfs->override_acl = 0;
-					}
-					$this->vfs->cp($filepos,$dir.'/'.$name,array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT));
-					$this->vfs->set_attributes ($dir.'/'.$name, array (RELATIVE_ROOT),
-						array ('mime_type' => $type,
-								 'comment' => stripslashes ($comment),
-								 'app' => 'infolog'));
-				}
+				//echo "<p>local: '$local'</p>\n";
+				Header('Location: ' . $local  );
 			}
+			else
+			{
+				//echo "<p>not local: ".$this->bo->vfs_path($info_id,$filename)."</p>\n";
+				$info = $this->bo->info_attached($info_id,$filename);
+				$browser->content_header($filename,$info['mime_type']);
+				echo $this->bo->read_attached($info_id,$filename);
+			}
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		/*
@@ -606,7 +575,7 @@
 		{
 			global $upload,$info_id;
 			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
-			global $filecomment;
+			global $filecomment,$full_fname;
 			global $sort,$order,$query,$start,$filter,$cat_id;
 
 			$t = $this->template; $html = $this->html;
@@ -620,9 +589,10 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			if ($upload) {
-				$fileerror = $this->add_one_file($info_id,$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment);
-				if ($fileerror!='') $error[]=$fileerror;
+			if ($upload && $attachfile && $attachfile != "none")
+			{
+				$fileerror = $this->bo->attach_file($info_id,$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname);
+				if ($fileerror) $error[]=$fileerror;
 			}
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
@@ -632,7 +602,7 @@
 			$t->set_var( $this->infoHeaders(  ));
 			$t->set_var( $this->formatInfo( $info_id ));
 			$t->set_var( 'hidden_vars',$html->input_hidden(array(
-				'info_id' => $info_id, 'referer' => $referer
+				'info_id' => $info_id, 'referer' => $referer, 'full_fname' => '.'	// must not be empty
 			)));
 
 			if (is_array($error))
@@ -647,7 +617,7 @@
 			$t->set_var('lang_file',lang('attach file').':');
 			$t->set_var('lang_comment',lang('comment').':');
 
-			$t->set_var('submit_button',$html->submit_button('upload','attach file'));
+			$t->set_var('submit_button',$html->submit_button('upload','attach file','this.form.full_fname.value=this.form.attachfile.value'));
 			$t->set_var('cancel_button',$html->form_1button('cancel_button','Done','',$referer));
 
 			$t->pfp('out','info_add_file');
@@ -663,7 +633,7 @@
 			global $type,$from,$addr,$id_addr,$id_project,$subject,$des,$access;
 			global $pri,$status,$confirm,$info_cat,$id_parent,$responsible;
 			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
-			global $filecomment;
+			global $filecomment,$full_fname;
 
 			$t = $this->template; $html = $this->html;
 
@@ -780,9 +750,11 @@
 							'responsible' => $responsible
 						));
 
-						// save the attached file
-						$fileerror = $this->add_one_file($this->bo->so->data['info_id'],$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment);
-						if ($fileerror!='') $error[]=$fileerror;
+						if ($attachfile && $attachfile != "none")	// save the attached file
+						{
+							$fileerror = $this->bo->attach_file($this->bo->so->data['info_id'],$attachfile,$attachfile_name,$attachfile_size,$attachfile_type,$filecomment,$full_fname);
+							if ($fileerror) $error[]=$fileerror;
+						}
 					}
 
 					if (!$query_addr && !$query_project)
@@ -830,7 +802,8 @@
 				'info_id' => $info_id,
 				'action' => $action,
 				'id_parent' => $id_parent,
-				'referer' => $referer
+				'referer' => $referer,
+				'full_fname' => '.'	// must not be empty
 			));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
@@ -953,10 +926,10 @@
 			if (!isset($access)) $access = $this->bo->so->data['info_access'] == 'private';
 			$t->set_var('access_list',$html->checkbox('access',$access));
 
-			$t->set_var('lang_file',lang('attach file').':');
-			$t->set_var('lang_comment',lang('comment').':');
+			$t->set_var(array('lang_file' => lang('attach file').':','file_val' => $full_fname));
+			$t->set_var(array('lang_comment' => lang('comment').':','comment_val' => $filecomment));
 
-			$t->set_var('edit_button',$html->submit_button('save','Save'));
+			$t->set_var('edit_button',$html->submit_button('save','Save','this.form.full_fname.value=this.form.attachfile.value'));
 
 			$t->set_var('cancel_button',$html->form_1button('cancel','Cancel',0,$referer));
 
@@ -989,23 +962,13 @@
 			}
 			if ($confirm)
 			{
-				$file = $this->basedir.'/'.$info_id;	// whole dir
-
 				if (!isset($to_del) || $to_del == '.')
 				{
 					$this->bo->delete($info_id);
-
-					$file = $this->basedir.'/'.$info_id;	// whole dir
 				}
 				else
 				{
-					$file .= '/'.$to_del;
-				}
-				if ($this->vfs->file_exists($file,array(RELATIVE_ROOT)))
-				{
-					$this->vfs->override_acl = 1;
-					$this->vfs->delete($file,array(RELATIVE_ROOT));
-					$this->vfs->override_acl = 0;
+					$this->bo->delete_attached($info_id,$to_del);
 				}
 				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
 			}
@@ -1017,15 +980,14 @@
 				$t->set_file(array( 'info_delete' => 'delete.tpl' ));
 
 				// add the links to the files which corrospond to this entry
-				$attachments = $this->vfs->ls($this->basedir.'/'.$info_id.'/',array(REALTIVE_NONE));
-				if (count($attachments) && $attachments[0]['name'])
+				$attachments = $this->bo->list_attached($info_id);
+				if ($attachments)
 				{
 					$to_del = array('.' => lang('entry and all files'));
 
-					while (list($keys,$fileinfo) = each($attachments))
+					while (list($name,$comment) = each($attachments))
 					{
-						$to_del[$fileinfo['name']] = $fileinfo['name'] .
-							($fileinfo['comment'] ? ' ('.$fileinfo['comment'].')' : '');
+						$to_del[$name] = $name . ($comment ? ' ('.$comment.')' : '');
 					}
 					$sbox2 = CreateObject('phpgwapi.sbox2');
 					$t->set_var('to_del',$sbox2->getArrayItem('to_del','.',$to_del,True));
@@ -1049,6 +1011,68 @@
 
 				$t->pfp('out','info_delete');
 			}
+		}
+
+		function admin( )
+		{
+			if ($GLOBALS['HTTP_POST_VARS']['done'])
+			{
+				Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+				$GLOBALS['phpgw']->common->phpgw_exit();
+			}
+
+			if ($GLOBALS['HTTP_POST_VARS']['save'])
+			{
+				$this->bo->link_pathes = array(); $this->bo->send_file_ips = array();
+
+				while (list($key,$val) = each($GLOBALS['HTTP_POST_VARS']['valid']))
+				{
+					if ($val = stripslashes($val))
+					{
+						$this->bo->link_pathes[$val]   = stripslashes($GLOBALS['HTTP_POST_VARS']['trans'][$key]);
+						$this->bo->send_file_ips[$val] = stripslashes($GLOBALS['HTTP_POST_VARS']['ip'][$key]);
+					}
+				}
+				$this->config->config_data = array(
+					'link_pathes' => serialize($this->bo->link_pathes),
+					'send_file_ips' => serialize($this->bo->send_file_ips)
+				);
+				$this->bo->config->save_repository(True);
+			}
+
+			$GLOBALS['phpgw']->common->phpgw_header();
+			echo parse_navbar();
+
+			$this->template->set_file(array('info_admin' => 'admin.tpl'));
+
+			$this->template->set_var(Array(
+				'title' => lang('InfoLog').' - '.lang('configuration'),
+				'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
+				'action_url'  => $this->html->link('/index.php',$this->menuaction('admin')),
+				'bg_h_color'  => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'save_button' => $this->html->submit_button('save','Save'),
+				'done_button' => $this->html->submit_button('done','Done'),
+				'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
+				'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
+				'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.')
+			));
+			$this->template->set_block('info_admin', 'admin_line', 'admin_linehandle');
+
+			$i = 0; @reset($this->bo->link_pathes);
+			do {
+				list($valid,$trans) = @each($this->bo->link_pathes);
+				$this->template->set_var(array(
+					'bg_nm_color' => $this->nextmatchs->alternate_row_color(),
+					'num'       => $i+1,
+					'val_valid' => $this->html->input("valid[$i]",$valid),
+					'val_trans' => $this->html->input("trans[$i]",$trans),
+					'val_ip'    => $this->html->input("ip[$i]",$this->bo->send_file_ips[$valid])
+				));
+				$this->template->parse('admin_linehandle','admin_line',True);
+				++$i;
+			} while ($valid);
+
+			$this->template->pfp('out','info_admin');
 		}
 
 		function preferences( )
@@ -1088,8 +1112,7 @@
 			$vars = Array(
 				'title' => lang('InfoLog preferences'),
 				'text' => '&nbsp;',
-				'action_url' => $html->link('/index.php',
-													 $this->menuaction('preferences')),
+				'action_url' => $html->link('/index.php',$this->menuaction('preferences')),
 				'bg_h_color' => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'save_button' => $html->submit_button('save','Save')
 			);

@@ -1,5 +1,6 @@
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	de	<b>Dateianhänge über Symlinks</b> anstatt sie hochzuladen und Zugriff mit file:/pfad für lokale Benutzer
 Add a file	infolog	de	Datei anhängen
 Invalid filename	infolog	de	Ungültiger Dateiname
 accept	infolog	de	bei Annahme
@@ -16,6 +17,7 @@ call	infolog	de	anrufen
 category	infolog	de	Kategorie
 close	infolog	de	Schließen
 comment	infolog	de	Kommentar
+configuration	infolog	de	Konfiguration
 confirm	infolog	de	Bestätigung
 csv-fieldname	infolog	de	CSV-Feldname
 csv-filename	infolog	de	CSV-Dateiname
@@ -64,6 +66,7 @@ own open	infolog	de	eigene offen
 own overdue	infolog	de	eigene überfällig
 own upcoming	infolog	de	eigene zukünftig
 owner	infolog	de	Erstellt von
+path on (web-)serverside<br>eg. /var/samba/Share	infolog	de	Pfad auf (Web-)Server<br>zB. /var/samba/Share
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
 phone	infolog	de	Anruf
@@ -73,6 +76,7 @@ priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
 re:	infolog	de	Re: 
+reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 reject	infolog	de	Absage
 responsible	infolog	de	Auftrag an
 search for:	infolog	de	Suchen nach:
@@ -96,6 +100,7 @@ urgency	infolog	de	Priorität
 urgent	infolog	de	Dringend
 use Button to search for Address	infolog	de	Button zum Suchen der Adresse verwenden
 use Button to search for Project	infolog	de	Button zum Suchen des Projekts verwenden
+valid path on clientside<br>eg. \\Server\Share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 view other subs	infolog	de	andere Teileprojekte anzeigen
 view subs	infolog	de	Teilprojekte anzeigen
 will-call	infolog	de	ruft zurück

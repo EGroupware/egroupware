@@ -14,7 +14,8 @@
 // Only Modify the $file and $title variables.....
 	$title = $appname;
 	$file = Array(
-		'CSV-Import'		=> $phpgw->link('/infolog/csv_import.php')
+		'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array('menuaction' => 'infolog.uiinfolog.admin' )),
+		'CSV-Import' => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);

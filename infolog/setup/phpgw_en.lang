@@ -1,5 +1,6 @@
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog en	<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients
 Add a file	infolog	de	Add a file
 Invalid filename	infolog	de	Invalid filename
 accept	infolog	en	accept
@@ -16,6 +17,7 @@ call	infolog	en	call
 category	infolog	en	Category
 close	infolog	de	Close
 comment	infolog	en	Comment
+configuration	infolog	de	Konfiguration
 confirm	infolog	en	confirm
 csv-fieldname	infolog	en	CSV-Fieldname
 csv-filename	infolog	en	CSV-Filename
@@ -64,6 +66,7 @@ own open	infolog	en	own open
 own overdue	infolog	en	own overdue
 own upcoming	infolog	en	own upcoming
 owner	infolog	en	Owner
+path on (web-)serverside<br>eg. /var/samba/Share	infolog	en	path on (web-)serverside<br>eg. /var/samba/Share
 pattern for search in addressbook	infolog	en pattern for search in Addressbook
 pattern for search in projects	infolog	en	pattern for search in Projects
 phone	infolog	en	Phonecall
@@ -73,6 +76,7 @@ priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
 re:	infolog	en	Re:
+reg. expr. for local IP's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reject	infolog	en	reject
 responsible	infolog	en	Responsible
 search for:	infolog	en	Search for:
@@ -96,6 +100,7 @@ urgency	infolog	en	urgency
 urgent	infolog	en	urgent
 use Button to search for Address	infolog	en	use Button to search for Address
 use Button to search for Project	infolog	en	use Button to search for Project
+valid path on clientside<br>eg. \\Server\Share or e:\	infolog	en	valid path on clientside<br>eg. \\Server\Share or e:\
 view other subs	infolog	en	view other Subs
 view subs	infolog	en	view Subs
 will-call	infolog	en	will call
