@@ -448,7 +448,7 @@
 					global $$key;
 					$$key = $value;
 					$this->variableNames[$key] = 'registered';
-					#print "restored: ".$key.", $value<br>";
+					print "restored: ".$key.", $value<br>";
 				}
 			}
 		}
