@@ -84,14 +84,17 @@
 				{
 					while(list(,$tf) = each($this->test_function[$ext]['extfile']))
 					{
-						eval('dl(' . $tf . '.' . $this->os_ext . ');');
+						error_reporting(0);
+						eval('$tmp = dl(' . $tf . $this->os_ext . ');');
+						error_reporting(E_ERROR | E_WARNING | E_PARSE);
 						$this->check($ext,True);
 					}
 				}
 				else
 				{
-					//dl($ext. $this->os_ext);
-					eval('dl(' . $ext . '.' . $this->os_ext . ');');
+					error_reporting(0);
+					eval('$tmp = dl(' . $ext . $this->os_ext . ');');
+					error_reporting(E_ERROR | E_WARNING | E_PARSE);
 					return $this->check($ext,False);
 				}
 			}
