@@ -35,10 +35,10 @@
 	* Include the apps footer files if it exists                               *
 	\**************************************************************************/
 	if (file_exists (PHPGW_APP_INC . '/footer.inc.php') &&
-		$phpgw_info['flags']['currentapp'] != 'home' &&
-		$phpgw_info['flags']['currentapp'] != 'login' &&
-		$phpgw_info['flags']['currentapp'] != 'logout' &&
-		!@$phpgw_info['flags']['noappfooter'])
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+		$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+		!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 	{
 		if ($menuaction)
 		{
@@ -67,7 +67,7 @@
 	}
 
 	parse_navbar_end();
-	$phpgw->db->disconnect();
+	$GLOBALS['phpgw']->db->disconnect();
   
 ?>
 </BODY>
