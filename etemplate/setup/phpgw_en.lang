@@ -10,6 +10,7 @@
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
 '%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format !!!
+'%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floatingpoint number !!!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer !!!
 a pattern to be searched for	etemplate	en	a pattern to be searched for

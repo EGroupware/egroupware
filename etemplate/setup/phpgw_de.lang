@@ -10,6 +10,7 @@
 %s onchange	etemplate	de	%s onChange
 %s readonly	etemplate	de	%s Schreibschutz
 '%1' has an invalid format !!!	etemplate	de	'%1' hat ein ungültiges Format !!!
+'%1' is not a valid date !!!	etemplate	de	'%1' ist ein ungültiges Datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Kommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
