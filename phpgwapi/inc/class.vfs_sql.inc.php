@@ -2261,7 +2261,7 @@
 
 			umask (000);
 
-			if (!mkdir ($p->real_full_path, 0770))
+			if (!@mkdir ($p->real_full_path, 0770))
 			{
 				return False;
 			}

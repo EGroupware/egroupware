@@ -1,4 +1,24 @@
 <?php
+  /**************************************************************************\
+  * phpGroupWare                                                             *
+  * This file written by Mark A Peters (Skeeter) <skeeter@phpgroupware.org>  *
+  * This class user interface for the phpwebhosting app                      *
+  * Copyright (C) 2002 Mark A Peters                                         *
+  * -------------------------------------------------------------------------*
+  * This library is free software; you can redistribute it and/or modify it  *
+  * under the terms of the GNU Lesser General Public License as published by *
+  * the Free Software Foundation; either version 2.1 of the License,         *
+  * or any later version.                                                    *
+  * This library is distributed in the hope that it will be useful, but      *
+  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+  * See the GNU Lesser General Public License for more details.              *
+  * You should have received a copy of the GNU Lesser General Public License *
+  * along with this library; if not, write to the Free Software Foundation,  *
+  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+  \**************************************************************************/
+
+  /* $Id$ */
 
 	class uiphpwebhosting
 	{
@@ -104,7 +124,10 @@
 			if(($this->bo->path == $this->bo->homedir) && !$this->bo->vfs->file_exists($this->bo->homedir,Array(RELATIVE_NONE)))
 			{
 				//$this->bo->vfs->override_acl = 1;
-				$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE));
+				if (!$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE)))
+				{
+					echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
+				}
 				//$this->bo->vfs->override_acl = 0;
 			}
 			elseif(preg_match("|^".$this->bo->fakebase."\/(.*)$|U",$this->bo->path,$this->bo->matches))
@@ -112,7 +135,10 @@
 				if (!$this->bo->vfs->file_exists($this->bo->path,Array(RELATIVE_NONE)))
 				{
 					//$this->bo->vfs->override_acl = 1;
-					$this->bo->vfs->mkdir($this->bo->path,Array(RELATIVE_NONE));
+					if (!$this->bo->vfs->mkdir($this->bo->homedir,Array(RELATIVE_NONE)))
+					{
+						echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
+					}
 					//$this->bo->vfs->override_acl = 0;
 
 					if($this->bo->debug)
