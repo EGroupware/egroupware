@@ -487,6 +487,7 @@
 					}
 					break;
 				case 'button':
+					list($app) = explode('.',$this->name);
 					if ($this->java_script() && $cell['onchange'])
 					{
 						$html .= $this->html->input_hidden($form_name,'',False) . "\n";
@@ -496,10 +497,13 @@
 					else
 					{
 						list($img,$ro_img) = explode(',',$cell['size']);
-
+                  if (!empty($img))
+						{
+							$options .= ' TITLE="'.$label.'"';
+						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,'',
-								strlen($label) <= 1 || $cell['no_lang'],$options,$img) :
-							$this->html->image(substr($this->name,0,strpos($this->name,'.')),$ro_img);
+							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
+							$this->html->image($app,$ro_img);
 					}
 					$extra_label = False;
 					if (!$readonly)
