@@ -16,6 +16,7 @@
      $phpgw_info["flags"] = array("nonavbar" => True, "noheader" => True);
   }
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["parent_page"] = "accounts.php";
 
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
@@ -106,7 +107,7 @@
      <td>Last login</td><td> <?php 
 
     if (! $userData["lastlogin"])
-       echo "Never";
+       echo lang("Never");
     else
        echo $phpgw->common->show_date($userData["lastlogin"]);
 
@@ -117,7 +118,6 @@
     </tr>
     </table>
    </center>
-
 <?php
   $phpgw->common->phpgw_footer();
 ?>
