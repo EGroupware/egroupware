@@ -36,21 +36,23 @@
 			'sapdb' => 32,
 		);
 		var $sType;	// type of the database, set by the the constructor
+		var $max_varchar_length = 255;	// maximum length of a varchar column, everything above get converted to text
 
 		/**
 		 * Constructor of schema-processor
 		 *
 		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
 		 */
-		function schema_proc($dbms,$aTables=False)
+		function schema_proc($dbms=False,$aTables=False)
 		{
-			$this->sType = $dbms;
 			$this->m_aTables = array();
 			$this->m_bDeltaOnly = False; // Default to false here in case it's just a CreateTable script
 			
 			$this->m_odb = is_object($GLOBALS['phpgw']->db) ? $GLOBALS['phpgw']->db : $GLOBALS['phpgw_setup']->db;
 			$this->m_odb->connect();
 			
+			$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
+
 			$this->adodb = &$GLOBALS['phpgw']->ADOdb;
 			$this->dict = NewDataDictionary($this->adodb);
 			
@@ -59,6 +61,14 @@
 			
 			// to allow some of the former translator-functions to be called, we assign ourself as the translator
 			$this->m_oTranslator = &$this;
+			
+			switch($this->sType)
+			{
+				case 'sapdb':
+				case 'maxdb':
+					$this->max_varchar_length = 8000;
+					break;
+			}
 		}
 		
 		/**
@@ -111,6 +121,22 @@
 							if (!$options) continue;	// no index for our db-type
 						}
 						unset($mFields['options']);
+					}
+				}
+				else
+				{
+					// only create indexes on text-columns, if (db-)specifiy options are given or FULLTEXT for mysql
+					// most DB's cant do them and give errors
+					if ($aTableDef['fd'][$mFields]['type'] == 'text') 
+					{
+						if ($this->sType == 'mysql')
+						{
+							$options = 'FULLTEXT';
+						}
+						else
+						{
+							continue;	// ignore that index
+						}
 					}
 				}
 
@@ -424,11 +450,11 @@
 					// identify the sequence name, ADOdb uses a different name or it might be renamed
 					$columns = $this->dict->MetaColumns($sTableName);
 					$seq_name = 'seq_'.$sTableName;
-					if (preg_match("/nextval\('([^']+)'::text\)/",$columns[$sColumnName]->default_value,$matches)) 
+					if (preg_match("/nextval\('([^']+)'::text\)/",$columns[strtoupper($sColumnName)]->default_value,$matches)) 
 					{
 						$seq_name = $matches[1];
 					}
-					$sql = "SELECT setval('$seq_name',MAX($sColumnName) FROM $sTableName";
+					$sql = "SELECT setval('$seq_name',MAX($sColumnName)) FROM $sTableName";
 					if($GLOBALS['DEBUG']) { echo "<br>Updating sequence '$seq_name using: $sql"; }
 					return $this->query($sql,__LINE__,__FILE__);
 			}
@@ -852,12 +878,13 @@
 						break;
 					case 'char':	
 						// ADOdb does not differ between char and varchar
-					case 'varchar':					
-						if($col_data['precision'] > 0 && $col_data['precision'] < 256)
+					case 'varchar':		
+						$ado_col = "C";								
+						if(0 < $col_data['precision'] && $col_data['precision'] <= $this->max_varchar_length)
 						{
-							$ado_col = "C($col_data[precision])";
+							$ado_col .= "($col_data[precision])";
 						}
-						if($col_data['precision'] > 255)
+						if($col_data['precision'] > $this->max_varchar_length)
 						{
 							$ado_col = 'X';
 						}
@@ -938,6 +965,9 @@
 		 */
 		function GetTableDefinition($sTableName)
 		{
+			// MetaType returns all varchar >= blobSize as blob, it's by default 100, which is wrong
+			if ($this->dict->blobSize < 255) $this->dict->blobSize = 255;
+
 			if (!method_exists($this->dict,'MetaColumns') ||
 				!($columns = $this->dict->MetaColumns($sTableName)))
 			{
@@ -950,9 +980,19 @@
 				'ix' => array(),
 				'uc' => array(),
 			);
+			//echo "$sTableName: <pre>".print_r($columns,true)."</pre>";
 			foreach($columns as $column)
 			{
-				$name = strtolower($column->name);
+				switch($this->sType)
+				{
+					case 'sapdb':
+					case 'maxdb':
+						$name = strtolower($column->name);
+						break;
+					default:
+						$name = $column->name;
+						break;
+				}
 				
 				$type = method_exists($this->dict,'MetaType') ? $this->dict->MetaType($column) : strtoupper($column->type);
 				
@@ -968,14 +1008,27 @@
 					'D'		=> 'date',
 					'F'		=> 'float',
 					'N'		=> 'decimal',
+					'R'		=> 'auto',
 				);
 				$definition['fd'][$name]['type'] = $ado_type2egw[$type];
 
 				switch($type)
 				{
+					case 'D': case 'T':
+						// detecting the automatic timestamps again
+						if ($column->has_default && preg_match('/(0000-00-00|timestamp)/i',$column->default_value))
+						{
+							$column->default_value = $type == 'D' ? 'current_date' : 'current_timestamp';
+						}
+						break;
 					case 'C': case 'C2':
-						$definition['fd'][$name]['type'] = $column->type == 'char' ? 'char' : 'varchar';
+						$definition['fd'][$name]['type'] = 'varchar';
 						$definition['fd'][$name]['precision'] = $column->max_length;
+						break;
+					case 'B': 
+					case 'X': case 'XL': case 'X2':
+						// text or blob's need to be nullable for most databases
+						$column->not_null = false;
 						break;
 					case 'F':
 						$definition['fd'][$name]['precision'] = $column->max_length;
@@ -984,21 +1037,10 @@
 						$definition['fd'][$name]['precision'] = $column->max_length;
 						$definition['fd'][$name]['scale'] = $column->scale;
 						break;
-					case 'R': 						
+					case 'R':
+						$column->auto_increment = true;
+						// fall-through
 					case 'I': case 'I1': case 'I2': case 'I4': case 'I8':
-						if ($column->auto_increment)
-						{
-							$definition['fd'][$name] = array(
-								'type' => 'auto',
-								'nullable' => False,
-							);
-							$column->has_default = False;
-							$definition['pk'][] = $name;
-						}
-						else
-						{
-							$definition['fd'][$name]['type'] = 'int';
-						}
 						switch($type)
 						{
 							case 'I1': case 'I2': case 'I4': case 'I8':
@@ -1023,10 +1065,19 @@
 								}
 								break;
 						}
-						if ($column->has_default && is_null($colum->default_value))
+						if ($column->auto_increment)
 						{
-							$definition['fd'][$name]['default'] = (int) $this->default_value;
-							$column->has_default = false;
+							// no precision for auto!
+							$definition['fd'][$name] = array(
+								'type' => 'auto',
+								'nullable' => False,
+							);
+							$column->has_default = False;
+							$definition['pk'][] = $name;
+						}
+						else
+						{
+							$definition['fd'][$name]['type'] = 'int';
 						}
 						break;
 				}
@@ -1047,21 +1098,31 @@
 			
 			// not all DB's (odbc) return the primary keys via MetaColumns
 			if (!count($definition['pk']) && method_exists($this->dict,'MetaPrimaryKeys') &&
-				count($primary = $this->dict->MetaPrimaryKeys($sTableName)))
+				is_array($primary = $this->dict->MetaPrimaryKeys($sTableName)) && count($primary))
 			{
-				array_walk($primary,create_function('&$s','$s = strtolower($s);'));
-				
+				switch($this->sType)
+				{
+					case 'sapdb':
+					case 'maxdb':
+						array_walk($primary,create_function('&$s','$s = strtolower($s);'));
+						break;
+				}
 				$definition['pk'] = $primary;
 			}
 			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion: MetaPrimaryKeys(%1) = %2",False,$sTableName,$primary);
 			
 			if (method_exists($this->dict,'MetaIndexes') &&
-				count($indexes = $this->dict->MetaIndexes($sTableName)) > 0)
+				is_array($indexes = $this->dict->MetaIndexes($sTableName)) && count($indexes))
 			{
 				foreach($indexes as $index)
 				{
-					array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
-
+					switch($this->sType)
+					{
+						case 'sapdb':
+						case 'maxdb':
+							array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
+							break;
+					}
 					if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
 						$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))
 					{
