@@ -12,7 +12,10 @@
   /* $Id$ */
 
   $phpgw_info = array();
-  $phpgw_info["flags"] = array("currentapp" => "admin", "noheader" => True, "nonavbar" => True);
+  $phpgw_info["flags"] = array("currentapp" => "admin", 
+  			       "noheader" => True, 
+  			       "nonavbar" => True,
+  			       "parent_page" => "accounts.php");
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
@@ -77,10 +80,15 @@
   } else {
      $phpgw->template->set_var("error_messages","");
   }
+
+  $phpgw->template->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
+  $phpgw->template->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
   
   $phpgw->template->set_var("form_action",$phpgw->link("newaccount.php"));
   $phpgw->template->set_var("lang_loginid",lang("LoginID"));
   $phpgw->template->set_var("n_loginid_value",$n_loginid);
+
+  $phpgw->template->set_var("lang_account_active",lang("Account active"));
 
   $phpgw->template->set_var("lang_password",lang("Password"));
   $phpgw->template->set_var("n_passwd_value",$n_passwd);
@@ -123,7 +131,7 @@
   for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
       if (! $perm_display[$i][1]) break;
 
-      $perms_html .= '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
+      $perms_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                   . '<td><input type="checkbox" name="new_permissions['
 		          . $perm_display[$i][0] . ']" value="True"';
       if ($new_permissions[$perm_display[$i][0]]) {

@@ -12,7 +12,10 @@
   /* $Id$ */
 
   $phpgw_info = array();
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
+  $phpgw_info["flags"] = array("noheader" => True, 
+			       "nonavbar" => True, 
+			       "currentapp" => "admin",
+			       "parent_page" => "accounts.php");
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
@@ -136,10 +139,19 @@
       $phpgw->template->set_var("form_action",$phpgw->link("editaccount.php","account_id=" . $userData["account_id"] . "&old_loginid=" . $userData["account_lid"]));
   }
 
+  $phpgw->template->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
+  $phpgw->template->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
+
   $phpgw->template->set_var("lang_action",lang("Edit user account"));
 
   $phpgw->template->set_var("lang_loginid",lang("LoginID"));
   $phpgw->template->set_var("n_loginid_value",$n_loginid);
+
+  $phpgw->template->set_var("lang_account_active",lang("Account active"));
+  if ($userData["status"]) 
+    $phpgw->template->set_var("account_checked","checked");
+  else
+    $phpgw->template->set_var("account_checked","");
 
   $phpgw->template->set_var("lang_password",lang("Password"));
   $phpgw->template->set_var("n_passwd_value",$n_passwd);
@@ -184,7 +196,7 @@
 
   for ($i=0;$i<200;) {     // The $i<200 is only used for a brake
      if (! $perm_display[$i][1]) break;
-     $perm_html .= '<tr><td>' . lang($perm_display[$i][1]) . '</td>'
+     $perm_html .= '<tr bgcolor="'.$phpgw_info["theme"]["row_on"].'"><td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
                  . $perm_display[$i][0] . ']" value="True"';
      if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
@@ -203,11 +215,11 @@
      $perm_html .= "></td></tr>";
      $i++;
   }
-  $perm_html .= '<tr><td colspan="4" align="center">' . lang("Account active") . ':&nbsp;<input type="checkbox" name="n_account_status" value="A"' . ($userData["status"]?" checked":"") . '></td></tr>';
 
   $phpgw->template->set_var("permissions_list",$perm_html);
 
-  $phpgw->template->set_var("lang_button",lang("Edit"));
+
+  $phpgw->template->set_var("lang_button",lang("Save"));
   $phpgw->template->pparse("out","form");
 
   account_close();
