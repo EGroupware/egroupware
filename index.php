@@ -30,8 +30,8 @@
 	}
 	else
 	{
-		$phpgw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
-		$phpgw->log->commit();
+	//$phpgw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
+	//$phpgw->log->commit();
 
 		$app = 'home';
 		$invalid_data = True;

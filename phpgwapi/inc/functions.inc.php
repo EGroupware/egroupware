@@ -56,10 +56,9 @@
 			$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;   
 			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 		}
-		if ($p1 == '_UNDEF_' && $p1 != 1)
+		if ($p1 == '_UNDEF_')
 		{
-			$code = '$obj = new '.$classname.';';
-			eval($code);
+			eval('$obj = new '.$classname.';');
 		}
 		else
 		{
@@ -68,7 +67,7 @@
 			$code = '$obj = new '.$classname.'(';
 			while (list($x,$test) = each($input))
 			{
-				if (($test == '_UNDEF_' && $test != 1 ) || $i == 17)
+				if ($test == '_UNDEF_' || $i == 17)
 				{
 					break;
 				}
@@ -98,94 +97,99 @@
 	@param $loglevel developers choice of logging level
 	@param $classparams params to be sent to the contructor
 	*/
-	function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
+function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
+{
+	/* Need to make sure this is working against a single dimensional object */
+	$partscount = substr_count($object, '.');
+	if ($partscount == 2)
 	{
-		/* Need to make sure this is working against a single dimensional object */
-		$partscount = substr_count($object, '.');
-		if ($partscount == 2)
+		list($appname,$classname,$functionname) = explode(".", $object);
+		if (!is_object($GLOBALS[$classname]))
 		{
-			list($appname,$classname,$functionname) = explode(".", $object);
-			if (!is_object($GLOBALS[$classname]))
+			if ($classparams != '_UNDEF_')
 			{
-				if ($classparams != '_UNDEF_')
-				{
-					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
-				}
-				else
-				{
-					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
-				}
-			}
-
-			if ($functionparams != '_UNDEF_')
-			{
-				return $GLOBALS[$classname]->$functionname($functionparams);
+				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
 			}
 			else
 			{
-				return $GLOBALS[$classname]->$functionname();
+				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
 			}
 		}
-		/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
-		elseif ($partscount >= 3)
+
+		if ($functionparams != '_UNDEF_')
 		{
-			$classpart = explode(".", $object);
-			$classpartnum = $partscount - 1;
-
-			$classpart = explode (".", $classname);
-			$appname = $classpart[0];		
-			$classname = $classpart[$classpartnum];
-			$functionname = $classpart[$partscount];
-			/* Now I clear these out of the array so that I can do a proper */
-			/* loop and build the $parentobject */
-			unset ($classpart[0]);
-			unset ($classpart[$classpartnum]);
-			unset ($classpart[$partscount]);
-			reset ($classpart);
-			$firstparent = 'True';
-			while(list($key, $val) = each($classpart))
-			{ 
-				if ($firstparent == 'True')
-				{
-					$parentobject = '$GLOBALS["'.$val.'"]';
-					$firstparent = False;
-				}
-				else
-				{
-					$parentobject .= '->'.$val;
-				}
-			}
-			eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
-			if (!$isobject)
-			{
-				if ($classparams != '_UNDEF_')
-				{
-					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
-				}
-				else
-				{
-					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
-				}
-			}
-
-			if ($functionparams != '_UNDEF_')
-			{
-				eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
-				return $returnval;
-			}
-			else
-			{
-				eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
-				return $returnval;
-			}		
+			return $GLOBALS[$classname]->$functionname($functionparams);
 		}
 		else
 		{
-			return 'error in parts';
+			return $GLOBALS[$classname]->$functionname();
 		}
 	}
+	/* if the $object includes a parent class (multi-dimensional) then we have to work from it */	
+	elseif ($partscount >= 3)
+	{
+		$GLOBALS['objectparts'] = explode(".", $object);
+		$classpartnum = $partscount - 1;
+		$appname = $GLOBALS['objectparts'][0];		
+		$classname = $GLOBALS['objectparts'][$classpartnum];
+		$functionname = $GLOBALS['objectparts'][$partscount];
+		/* Now I clear these out of the array so that I can do a proper */
+		/* loop and build the $parentobject */
+		unset ($GLOBALS['objectparts'][0]);
+		unset ($GLOBALS['objectparts'][$classpartnum]);
+		unset ($GLOBALS['objectparts'][$partscount]);
+		reset ($GLOBALS['objectparts']);
+		$firstparent = 'True';
+		while (list ($key, $val) = each ($GLOBALS['objectparts'])) 
+		{
+			if ($firstparent == 'True')
+			{
+				$parentobject = '$GLOBALS["'.$val.'"]';
+				$firstparent = False;
+			}
+			else
+			{
+				$parentobject .= '->'.$val;
+			}
+		}
+		unset($GLOBALS['objectparts']);
+		eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
+		if (!$isobject)
+		{
+			if ($classparams != '_UNDEF_')
+			{
+				if (is_string($classparams))
+				{
+					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", "'.$classparams.'");');
+				}
+				else
+				{
+					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
+				}
+			}
+			else
+			{
+				eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
+			}
+		}
 
-	/*!
+		if ($functionparams != '_UNDEF_')
+		{
+			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
+			return $returnval;
+		}
+		else
+		{
+			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'();');
+			return $returnval;
+		}		
+	}
+	else
+	{
+		return 'error in parts';
+	}
+}
+			/*!
 	@function lang
 	@abstract function to handle multilanguage support
 	*/
@@ -313,7 +317,7 @@
 	}
 
 	magic_quotes_runtime(false);
-	@print_debug('sane environment');
+	print_debug('sane environment');
 
 	/****************************************************************************\
 	* Multi-Domain support                                                       *
@@ -472,7 +476,7 @@
 	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
 	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.log');
 //	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
-	@print_debug('main class loaded');
+	print_debug('main class loaded');
 	if (! isset($phpgw_info['flags']['included_classes']['error']) ||
 			! $phpgw_info['flags']['included_classes']['error'])
 	{
