@@ -48,7 +48,7 @@
 		@author ralfbecker
 		@abstract creates an inputfield for the jscalendar (returns the necessary html and js)
 		@param $name name and id of the input-field (it also names the id of the img $name.'-toggle')
-		@param $date date as string or unix timestamp (in users localtime)
+		@param $date date as string or unix timestamp (in server timezone)
 		@param $year,$month,$day if $date is not used
 		@param $helpmsg a helpmessage for the statusline of the browser
 		@param $options any other options to the inputfield
