@@ -34,6 +34,7 @@
 		var $cats;
 		var $db;
 		var $total_records;
+		var $grants;
 		/*!
 		@function filter
 		@abstract ?
@@ -61,7 +62,7 @@
 			{
 				case 'app':		$w = " cat_appname='" . $this->app_name . "'"; break;
 				case 'subs':		$w = " cat_parent != '0'"; break;
-				case 'mains':	$w = " cat_parent = '0'"; break;
+				case 'mains':		$w = " cat_parent = '0'"; break;
 				default:	return False;
 			
 			}
@@ -108,15 +109,30 @@
 				$ordermethod = " order by cat_parent asc";
 			}
 
+			if (is_array($this->grants))
+			{
+			    $grants = $this->grants;
+			    while(list($user) = each($grants))
+			    {
+                        	$public_user_list[] = $user;
+			    }
+			    reset($public_user_list);
+                                $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public' OR cat_owner in(" . implode(',',$public_user_list) . ")) ";			    
+			}
+			else 
+			{
+			    $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public') ";
+			}
+
 			if ($query)
 			{
-				$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "' $public_cats and "
-		 		   . "(cat_name like '%$query%' or cat_description like '%$query%') $filter $ordermethod";
+				$sql = "SELECT * from phpgw_categories WHERE cat_appname='" . $this->app_name . "' AND "
+				    . " $grant_cats $public_cats AND (cat_name like '%$query%' OR cat_description like '%$query%') $filter $ordermethod";
 			}
 			else
 			{
-				$sql = "select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
-					. "$public_cats $filter $ordermethod";
+				$sql = "SELECT * from phpgw_categories WHERE cat_appname='" . $this->app_name . "' AND " 
+					. " $grant_cats $public_cats $filter $ordermethod";
 			}
 
 			$this->db2->query($sql,__LINE__,__FILE__);
@@ -183,6 +199,7 @@
 			$this->app_name		= $app_name;
 			$this->db		= $phpgw->db;
 			$this->total_records	= $this->db->num_rows();
+			$this->grants		= $phpgw->acl->get_grants($app_name);
 			$this->cats		= $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 		}
 

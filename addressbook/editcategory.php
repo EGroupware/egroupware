@@ -30,15 +30,21 @@
     $errorcount = 0;
     if (!$cat_name) { $error[$errorcount++] = lang('Please enter a name for that category !'); }
     $phpgw->db->query("SELECT count(*) from phpgw_categories WHERE cat_name='$cat_name' AND cat_id !='$cat_id' AND cat_appname='"
-		     . $phpgw_info["flags"]["currentapp"] ."'");
+		     . $phpgw_info["flags"]["currentapp"] ."' AND cat_parent='0'");
     $phpgw->db->next_record();
-    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That category name has been used already !'); }
+    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That main category name has been used already !'); }
+
+    $phpgw->db->query("SELECT count(*) from phpgw_categories WHERE cat_name='$cat_name' AND cat_id !='$cat_id' AND cat_appname='"
+		     . $phpgw_info["flags"]["currentapp"] ."' AND cat_parent != '0'");
+    $phpgw->db->next_record();
+    if ($phpgw->db->f(0) != 0) { $error[$errorcount++] = lang('That sub category name has been used already !'); }
 
     $cat_name = addslashes($cat_name);
     $cat_description = addslashes($cat_description);
+    if ($access) { $cat_access = 'private'; }
+    else { $cat_access = 'public'; }
 
-
-    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data);	}
+    if (! $error) { $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access);	}
     }
 
     if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
@@ -47,7 +53,8 @@
 
     $cats = $c->return_single($cat_id);
 
-	$t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
+    $cat_parent = $cats[0]['parent'];
+    $t->set_var('category_list',$c->formated_list('select','all',$cat_parent,'False'));
     $t->set_var('font',$font);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('title_categories',lang('Edit category for'));
@@ -61,8 +68,8 @@
     $t->set_var('lang_descr',lang('Category description'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('lang_access',lang('Private'));
-    if ($access) { $t->set_var('access', '<input type="checkbox" name="private" value="True" checked>'); }
-    else { $t->set_var('access', '<input type="checkbox" name="private" value="True"'); }
+    if ($cats[0]['access']=='private') { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
+    else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
 
     $cat_id = $cats[0]['id'];
 
@@ -71,7 +78,7 @@
 
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
-	$t->set_var('lang_done',lang('Done'));
+    $t->set_var('lang_done',lang('Done'));
 
     $t->set_var('edithandle','');
     $t->set_var('addhandle','');
