@@ -203,7 +203,7 @@ class nextmatchs
           if ($filter_obj == 1)
           {
               $user_groups =
-                  $phpgw->accounts->read_group_names($phpgw_info["user"]["userid"]);
+                  $phpgw->accounts->memberships($phpgw_info["user"]["account_id"]);
               $indexlimit = count($user_groups);
               
               $filter_obj = array(array("none",lang("show all")),
