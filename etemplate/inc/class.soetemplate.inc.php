@@ -677,7 +677,7 @@
 
 			$path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
 
-			if ($time = filemtime($path))
+			if ($time = @filemtime($path))
 			{
 				$templ = new etemplate(".$app",'','##');
 				if ($templ->lang != '##' || $templ->data[0] < $time) // need to import
