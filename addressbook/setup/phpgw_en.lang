@@ -59,6 +59,7 @@ download export file (uncheck to debug output in browser)	addressbook	en	Downloa
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 empty for all	addressbook	en	empty for all
+enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
@@ -72,6 +73,7 @@ fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
+global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
 home address type	addressbook	en	Home Address Type
 home city	addressbook	en	Home City
@@ -89,6 +91,7 @@ import file	addressbook	en	Import File
 import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
 import from outlook	addressbook	en	Import from Outlook
 import next set	addressbook	en	Import next set
+import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 international	addressbook	en	International
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
@@ -98,6 +101,7 @@ ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
+mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
@@ -121,6 +125,8 @@ read a single entry by passing the id and fieldlist.	addressbook	en	Read a singl
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 retrieve contacts	admin	en	retrieve contacts
+select all	addressbook	en	Select all
+select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store	admin	en	Select where you want to store
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
@@ -149,9 +155,4 @@ work phone	addressbook	en	Work Phone
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 zip code	common	en	ZIP Code
-import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files.  However, do not mix file types per import.
-enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
-select the type of conversion	addressbook	en	Select the type of conversion
-mark records as private	addressbook	en	Mark records as private
-debug output in browser	addressbook	en	Debug output in browser
