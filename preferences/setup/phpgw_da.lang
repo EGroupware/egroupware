@@ -3,18 +3,29 @@ change your profile	preferences	da	Redigér Din profil
 change your settings	preferences	da	Redigér Dine indstillinger
 date format	preferences	da	Dato format
 default application	preferences	da	Standard applikation
+default preferences	preferences	da	Standard Preferencer
+edit custom fields	preferences	da	Ret valgfrie felter
 enter your new password	preferences	da	Skriv Dit nye password
+forced preferences	preferences	da	Tvungne Preferencer
+icons and text	preferences	da	Ikoner og tekst
+icons only	preferences	da	kun ikoner
+interface/template selection	preferences	da	Brugerflade/Skabelon Valg
 language	preferences	da	Sprog
-max matchs per page	preferences	da	Maksimale antal resultater pr. side
+max matches per page	preferences	da	Maksimale antal resultater pr. side
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	da	Bemærk: Denne feature vil *ikke* ændre Dit e-mail password. Dette skal gøres manuelt.
 please, select a new theme	preferences	da	Vælg et nyt emne
 re-enter your password	preferences	da	Indtast Dit password igen
 select different theme	preferences	da	Vælg et andet tema
+select one	preferences	da	Vælg en
 show current users on navigation bar	preferences	da	Vis nuværende brugere på navigationsbjælken
+show navigation bar as	preferences	da	Vis navigationsbjælke som
 show text on navigation icons	preferences	da	Vis tekst på navigationsbjælkens ikoner
+text only	preferences	da	Kun tekst
+theme (colors/fonts) selection	preferences	da	Tema (farver/fonte) Valg
 the two passwords are not the same	preferences	da	De to passwords stemmer ikke overens
 this server is located in the x timezone	preferences	da	Denne server er placeret i tidszone %1
 time format	preferences	da	Tidsformat
 time zone offset	preferences	da	Tidszone forskel
 you must enter a password	preferences	da	Du skal angive et password
 your current theme is: x	preferences	da	Det nuværende tema er
+your preferences	preferences	da	Dine Preferencer
