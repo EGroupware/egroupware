@@ -98,7 +98,6 @@
 			$tsvfilename = get_var('tsvfilename','POST');
 			$convert   = get_var('convert','POST');
 			$conv_type = get_var('conv_type','POST');
-			$cat_id    = get_var('cat_id','POST');
 			$fcat_id   = get_var('fcat_id','POST');
 			$private   = get_var('private','POST');
 			$download  = get_var('download','POST');
@@ -210,7 +209,7 @@
 		{
 			$convert   = get_var('convert','POST');
 			$conv_type = get_var('conv_type','POST');
-			$cat_id    = get_var('cat_id','POST');
+			$fcat_id   = get_var('fcat_id','POST');
 			$download  = get_var('download','POST');
 			$tsvfilename = get_var('tsvfilename','POST');
 
@@ -228,7 +227,7 @@
 					$GLOBALS['phpgw']->common->phpgw_exit();
 				}
 
-				$buffer = $this->bo->export($conv_type,$cat_id);
+				$buffer = $this->bo->export($conv_type,$fcat_id);
 
 				if(($download == 'on') || ($conv_type == 'Palm_PDB'))
 				{
