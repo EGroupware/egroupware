@@ -612,7 +612,7 @@
 			$accounts = Array();
 			if ($db2->num_rows() == 0)
 			{
-				$grants[$GLOBALS['phpgw_info']['user']['account_id']] = (~ 0);
+				$grants[$GLOBALS['phpgw_info']['user']['account_id']] = 31;
 				return $grants;
 			}
 			while ($db2->next_record())
@@ -651,7 +651,7 @@
 				}
 				reset($accounts[$grantor]);
 			}
-			$grants[$GLOBALS['phpgw_info']['user']['account_id']] = (~ 0);
+			$grants[$GLOBALS['phpgw_info']['user']['account_id']] = 31;
 			return $grants;
 		}
 	} //end of acl class

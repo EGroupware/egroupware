@@ -779,11 +779,11 @@
 		{
 			if($user == 0)
 			{
-				return ($this->grants[$this->owner] & $needed);
+				return !!($this->grants[$this->owner] & $needed);
 			}
 			else
 			{
-				return ($this->grants[intval($user)] & $needed);
+				return !!($this->grants[intval($user)] & $needed);
 			}
 		}
 
