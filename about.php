@@ -25,7 +25,7 @@
 function about_app()
 {
 	global $app;
-	$icon = $GLOBALS['phpgw']->common->image($app,'navbar.gif');
+	$icon = $GLOBALS['phpgw']->common->image($app,array('navbar','nonav'));
 	include (PHPGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php");
 	$info = $setup_info[$app];
 	$info['title'] = $GLOBALS['phpgw_info']['apps'][$app]['title'];
