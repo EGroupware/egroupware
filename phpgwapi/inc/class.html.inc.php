@@ -84,7 +84,7 @@ class html
 		}
 		if ($do_lang) $text = lang($text);
 
-		$opt_out = '';
+		$opt_out = 'this.T_WIDTH = 200;';
 		if (is_array($options))
 		{
 			foreach($options as $option => $value)
