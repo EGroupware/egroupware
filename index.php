@@ -136,7 +136,7 @@
 				NotifyWindow.close();
 			}
 		}
-		NotifyWindow = window.open("<?php echo $phpgw->link("notify.php")?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
+		NotifyWindow = window.open("<?php echo $phpgw->link("/notify.php")?>", "NotifyWindow", "width=300,height=35,location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=yes");
 		if (NotifyWindow.opener == null)
 		{
 			NotifyWindow.opener = window;
