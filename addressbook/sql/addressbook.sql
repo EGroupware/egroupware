@@ -2,10 +2,10 @@
 # --------------------------------------------------------
 
 #
-# Table structure for table 'addressbook'
+# Table structure for table 'phpgw_addressbook'
 #
 
-CREATE TABLE addressbook (
+CREATE TABLE phpgw_addressbook (
    id int(8) DEFAULT '0' NOT NULL,
    lid varchar(32),
    tid char(1),
@@ -63,7 +63,7 @@ CREATE TABLE addressbook (
    UNIQUE id (id),
 );
 
-CREATE TABLE addressbook_extra (
+CREATE TABLE phpgw_addressbook_extra (
    contact_id int(11),
    contact_owner int(11),
    contact_name varchar(255),
