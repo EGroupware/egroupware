@@ -227,7 +227,7 @@
 			}
 			$file .= '.xul';
 
-			if (!is_readable($file) || !($f = fopen($file,'r')))
+			if ($this->name == '' || $app == '' || $name == '' || !is_readable($file) || !($f = fopen($file,'r')))
 			{
 				//echo "<p>Can't open '$file' !!!</p>\n";
 				return False;
