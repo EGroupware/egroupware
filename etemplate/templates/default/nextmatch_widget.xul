@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
 <overlay>
-  <grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.004" spacing="0" padding="5">
+  <grid id="etemplate.nextmatch_widget" template="" lang="" group="" version="0.9.15.005" width="100%" spacing="0">
     <columns>
-      <column width="50%"/>
-      <column width="50%"/>
+      <column/>
     </columns>
     <rows>
       <row>
-        <description value="entries" no_lang="1" align="right" id="range"/>
-        <description span="all" value="of" no_lang="1" id="rows[0]"/>
+        <grid align="center" id="etemplate.nextmatch_widget.nm_row1"/>
       </row>
       <row>
-        <grid span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
+        <grid id="etemplate.nextmatch_widget.nm_row2"/>
       </row>
       <row>
-        <grid content="rows" span="all" align="center" id="@template"/>
+        <grid content="rows" align="center" id="@template"/>
       </row>
     </rows>
   </grid>
