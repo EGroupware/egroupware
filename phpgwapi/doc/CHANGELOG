@@ -16,6 +16,7 @@
 	- Created generic preferneces/preferences.php app, which uses hooks to
 		set user preferences, admins can force preference, or set the defaults
 		for new accounts.
+	- Added global config option to deny users to access grants, usefull for ISPs
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
