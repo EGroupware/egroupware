@@ -75,14 +75,14 @@
 				$this->template->set_var('row_lo',$record['lo']);
 				$this->template->set_var('row_total',$record['total']);
 
-				$this->template->fp('rows','row',True);
+				$this->template->fp('rows_access','row',True);
 			}
 
 			if (! $total_records && $account_id)
 			{
 				$this->nextmatchs->template_alternate_row_color(&$this->template);
 				$this->template->set_var('row_message',lang('No login history exists for this user'));
-				$this->template->fp('rows','row_empty',True);
+				$this->template->fp('rows_access','row_empty',True);
 			}
 
 			$loggedout = $this->bo->return_logged_out($account_id);
@@ -106,6 +106,10 @@
 			{
 				$this->template->set_var('lang_percent',lang('Percent of users that logged out') . ': ' . $percent . '%');
 			}
+			
+			// create the menu on the left, if needed
+			$menuClass = CreateObject('admin.uimenuclass');
+			$this->template->set_var('rows',$menuClass->createHTMLCode('view_account'));
 
 			$this->template->pfp('out','list');
 		}

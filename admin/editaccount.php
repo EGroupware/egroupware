@@ -23,7 +23,7 @@
 	// creates the html for the user data
 	function createPageBody($_account_id,$_userData='',$_errors='')
 	{
-		global $phpgw, $phpgw_info, $t;
+		global $phpgw, $phpgw_info;
 
 		$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		$t->set_unknowns('remove');
@@ -258,8 +258,10 @@
 			'permissions_list'	=> $appRightsOutput
 		);
 		$t->set_var($var);
-		
-		$phpgw->common->hook('edit_account');
+
+		// create the menu on the left, if needed		
+		$menuClass = CreateObject('admin.uimenuclass');
+		$t->set_var('rows',$menuClass->createHTMLCode('edit_account'));
 
 		echo $t->fp('out','form');
 	}
@@ -280,10 +282,7 @@
 
 		$apps = CreateObject('phpgwapi.applications',array(intval($_userData['account_id']),'u'));
 
-		$apps->account_type = 'u';
 		$apps->account_id = $_userData['account_id'];
-		$apps->account_apps = Array(Array());
-		$apps_before = $apps->read_account_specific();
 		if ($_userData['account_permissions'])
 		{
 			while($app = each($_userData['account_permissions'])) 
@@ -291,10 +290,6 @@
 				if($app[1]) 
 				{
 					$apps->add($app[0]);
-					if(!@$apps_before[$app[0]] || @$apps_before == False) 
-					{
-						$apps_after[] = $app[0];
-					}
 				}
 			}
 		}
@@ -408,44 +403,6 @@
 		}
 	}
 
- 	function section_item($pref_link='',$pref_text='', $bgcolor)
-	{
-		global $phpgw, $phpgw_info, $t;
-
-		$t->set_var('row_link',$pref_link);
-		$t->set_var('row_text',$pref_text);
-		$t->set_var('tr_color',$bgcolor);
-		$t->parse('rows','link_row',True);
-	}
-
-	// $file must be in the follow format:
-	// $file = Array(
-	//		'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
-	// );
-	// This allows extra data to be sent along
-	function display_section($appname,$title,$file)
-	{
-		global $phpgw, $phpgw_info, $account_id;
-
-		$i = 0;
-		$color[1] = $phpgw_info['theme']['row_off'];
-		$color[0] = $phpgw_info['theme']['row_on'];
-		while(list($text,$_url) = each($file))
-		{
-			list($url,$extra_data) = $_url;
-			if ($extra_data)
-			{
-				$link = $phpgw->link($url,'account_id=' . $account_id . '&' . $extra_data);
-			}
-			else
-			{
-				$link = $phpgw->link($url,'account_id=' . $account_id);
-			}
-			section_item($link,lang($text),$color[$i%2]);
-			$i++;
-		}
-	}
-
 	// todo
 	// not needed if i use the same file for new users too
 	if (! $account_id)
@@ -475,10 +432,27 @@
 		);
 
 		if (!$errors = userDataInvalid($userData))
-		{ 
+		{
 			saveUserData($userData);
-			Header('Location: ' . $phpgw->link('/admin/accounts.php', 'cd='.$cd));
-			$phpgw->common->phpgw_exit();
+			// check if would create a menu
+			// if we do, we can't return to the users list, because
+			// there are also some other plugins
+			$menuClass = CreateObject('admin.uimenuclass');
+			if (!$menuClass->createHTMLCode('edit_account'))
+			{
+				Header('Location: ' . $phpgw->link('/admin/accounts.php', 'cd='.$cd));
+				$phpgw->common->phpgw_exit();
+			}
+			else
+			{
+				$linkdata = array
+				(
+					'cd'	=> $cd,
+					'account_id'	=> $account_id
+				);
+				Header('Location: ' . $phpgw->link('/admin/editaccount.php', $linkdata));
+				$phpgw->common->phpgw_exit();
+			}
 		}
 		else
 		{

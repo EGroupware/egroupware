@@ -225,7 +225,10 @@
 
 	$t->set_var('permissions_list',$appRightsOutput);
 
-	$phpgw->common->hook('view_account');
+	// create the menu on the left, if needed
+	$menuClass = CreateObject('admin.uimenuclass');
+	$t->set_var('rows',$menuClass->createHTMLCode('view_account'));
+	
 	$t->pfp('out','form');
 	$phpgw->common->phpgw_footer();
 ?>

@@ -5,16 +5,7 @@
   <center>
 	<table border="0" width="95%">
 		<tr>
-			<td valign="top">
-
-				<table border="0" width="100%">
-					<tr bgcolor="{th_bg}">
-						<td>&nbsp;</td>
-					</tr>
-  					{rows}
-				</table>
-
-			</td>
+			{rows}
 			<td>
 
 			   <table border=0 width=100%>

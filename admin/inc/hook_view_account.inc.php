@@ -1,8 +1,14 @@
 <?php
-	$title = $appname;
-	$file = Array(
-		'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list_history')
+	// Only Modify the $file and $title variables.....
+	$data = Array
+	(
+		'description'	=> 'Login History',
+		'url'		=> '/index.php',
+		'extradata'	=> 'menuaction=admin.uiaccess_history.list_history'
 	);
 
-	display_section($appname,$title,$file);
+	//Do not modify below this line
+	global $menuData;
+
+	$menuData[] = $data;
 ?>
