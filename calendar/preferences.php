@@ -31,7 +31,7 @@
 		$phpgw->preferences->add('calendar','workdayends');
 		$phpgw->preferences->add('calendar','defaultcalendar');
 		$phpgw->preferences->add('calendar','defaultfilter');
-		if ($mainscreen_showevents)
+		if ($mainscreen_showevents == True)
 		{
 			$phpgw->preferences->add('calendar','mainscreen_showevents');
 		}
@@ -39,7 +39,7 @@
 		{
 			$phpgw->preferences->delete('calendar','mainscreen_showevents');
 		}
-		if ($send_updates)
+		if ($send_updates == True)
 		{
 			$phpgw->preferences->add('calendar','send_updates');
 		}
@@ -48,6 +48,15 @@
 			$phpgw->preferences->delete('calendar','send_updates');
 		}
 		
+		if ($display_status == True)
+		{
+			$phpgw->preferences->add('calendar','display_status');
+		}
+		else
+		{
+			$phpgw->preferences->delete('calendar','display_status');
+		}
+
 		$phpgw->preferences->save_repository(True);
      
 		Header('Location: '.$phpgw->link('/preferences/index.php'));
@@ -95,7 +104,7 @@
 //		echo '<p><center>' . $phpgw->common->error_list($errors) . '</center>';
 //	}
 
-	$str = '<input type="checkbox" name="mainscreen_showevents" value="Y"'.($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'] == 'Y'?' checked':'').'>';
+	$str = '<input type="checkbox" name="mainscreen_showevents" value="True"'.($phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['mainscreen_showevents'] == True?' checked':'').'>';
 	display_item(lang('show day view on main screen'),$str);
 
 	$t_weekday[$phpgw_info['user']['preferences']['calendar']['weekdaystarts']] = ' selected';
@@ -148,17 +157,19 @@
 	$str = '<select name="defaultfilter">'
 		. '<option value="all"'.$selected['all'].'>'.lang('all').'</option>'
 		. '<option value="private"'.$selected['private'].'>'.lang('private only').'</option>'
-		. '<option value="public"'.$selected['public'].'>'.lang('global public only').'</option>'
-		. '<option value="group"'.$selected['group'].'>'.lang('group public only').'</option>'
-		. '<option value="private+public"'.$selected['private+public'].'>'.lang('private and global public').'</option>'
-		. '<option value="private+group"'.$selected['private+group'].'>'.lang('private and group public').'</option>'
-		. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
+//		. '<option value="public"'.$selected['public'].'>'.lang('global public only').'</option>'
+//		. '<option value="group"'.$selected['group'].'>'.lang('group public only').'</option>'
+//		. '<option value="private+public"'.$selected['private+public'].'>'.lang('private and global public').'</option>'
+//		. '<option value="private+group"'.$selected['private+group'].'>'.lang('private and group public').'</option>'
+//		. '<option value="public+group"'.$selected['public+group'].'>'.lang('global public and group public').'</option>'
 		. '</select>';
 	display_item(lang('default calendar filter'),$str);
 
-	$str = '<input type="checkbox" name="send_updates" value="Y"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y'?' checked':'').'>';
+	$str = '<input type="checkbox" name="send_updates" value="True"'.($phpgw_info['user']['preferences']['calendar']['send_updates'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['send_updates'] == True?' checked':'').'>';
 	display_item(lang('send updates via email'),$str);
 
+	$str = '<input type="checkbox" name="display_status" value="True"'.($phpgw_info['user']['preferences']['calendar']['display_status'] == 'Y' || $phpgw_info['user']['preferences']['calendar']['display_status'] == True?' checked':'').'>';
+	display_item(lang('display status of events'),$str);
 
 	$p->pparse('out','pref');
 	$phpgw->common->phpgw_footer();
