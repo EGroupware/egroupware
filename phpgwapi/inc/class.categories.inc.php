@@ -433,7 +433,6 @@
 				case 'name':	$value = 'cat_name'; break;
 				case 'owner':	$value = 'cat_owner'; break;
 				case 'main':	$value = 'cat_main'; break;
-				return $value;
 			 }
 
 			$this->db->query("select $value from phpgw_categories where cat_id='"
