@@ -1406,30 +1406,30 @@
 		$phpgw_setup->db->query($sql);
 
 		$phpgw_setup->db->query("SELECT * FROM phpgw_addressbook");
-		while ($db->next_record()) {
-                    $fields['id']         = $db1->f("id");
-                    $fields['owner']      = $db1->f("owner");
-                    $fields['n_given']    = $db1->f("firstname");
-                    $fields['n_family']   = $db1->f("lastname");
-                    $fields['d_email']    = $db1->f("email");
-                    $fields['b_tel']      = $db1->f("hphone");
-                    $fields['a_tel']      = $db1->f("wphone");
-                    $fields['c_tel']      = $db1->f("fax");
-                    $fields['fn']         = $db1->f("fn");
+		while ($phpgw_setup->db->next_record()) {
+                    $fields['id']         = $phpgw_setup->db->f("id");
+                    $fields['owner']      = $phpgw_setup->db->f("owner");
+                    $fields['n_given']    = $phpgw_setup->db->f("firstname");
+                    $fields['n_family']   = $phpgw_setup->db->f("lastname");
+                    $fields['d_email']    = $phpgw_setup->db->f("email");
+                    $fields['b_tel']      = $phpgw_setup->db->f("hphone");
+                    $fields['a_tel']      = $phpgw_setup->db->f("wphone");
+                    $fields['c_tel']      = $phpgw_setup->db->f("fax");
+                    $fields['fn']         = $phpgw_setup->db->f("fn");
                     $fields["a_tel_work"] = "y";
                     $fields["b_tel_home"] = "y";
                     $fields["c_tel_fax"]  = "y";
-                    $fields['org_name']   = $db1->f("org_name");
-                    $fields['title']      = $db1->f("title");
-                    $fields['adr_street'] = $db1->f("adr_street");
-                    $fields['adr_locality']       = $db1->f("adr_locality");
-                    $fields['adr_region']         = $db1->f("adr_region");
-                    $fields['adr_postalcode']     = $db1->f("adr_postalcode");
-                    $fields['bday']        = $db1->f("bday");
-                    $fields['note']        = $db1->f("note");
-                    $fields['url']         = $db1->f("url");
+                    $fields['org_name']   = $phpgw_setup->db->f("org_name");
+                    $fields['title']      = $phpgw_setup->db->f("title");
+                    $fields['adr_street'] = $phpgw_setup->db->f("adr_street");
+                    $fields['adr_locality']       = $phpgw_setup->db->f("adr_locality");
+                    $fields['adr_region']         = $phpgw_setup->db->f("adr_region");
+                    $fields['adr_postalcode']     = $phpgw_setup->db->f("adr_postalcode");
+                    $fields['bday']        = $phpgw_setup->db->f("bday");
+                    $fields['note']        = $phpgw_setup->db->f("note");
+                    $fields['url']         = $phpgw_setup->db->f("url");
 
-			$sql="INSERT INTO phpgw_addressbook (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
+			$sql="INSERT INTO phpgw_addressbook_temp (org_name,n_given,n_family,fn,d_email,title,a_tel,a_tel_work,"
 				. "b_tel,b_tel_home,c_tel,c_tel_fax,adr_street,adr_locality,adr_region,adr_postalcode,owner,bday,url,note)"
 				. " VALUES ('".$fields["org_name"]."','".$fields["n_given"]."','".$fields["n_family"]."','"
 				. $fields["fn"]."','".$fields["d_email"]."','".$fields["title"]."','".$fields["a_tel"]."','"
@@ -1438,7 +1438,7 @@
 				. $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."','"
 				. $fields["owner"] ."','".$fields["bday"]."','".$fields["url"]."','".$fields["note"]."')";
 
-			$db->query($sql,__LINE__,__FILE__);
+			$db1->query($sql,__LINE__,__FILE__);
 		}
 
 		$phpgw_setup->db->query("DROP TABLE phpgw_addressbook");
