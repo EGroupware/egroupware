@@ -11,43 +11,89 @@
 
   /* $Id$ */
 
-  $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
-  $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
-  $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
-  $db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
-  $db->query("insert into config (config_name, config_value) values ('site_title', 'phpGroupWare')");
-  $db->query("insert into config (config_name, config_value) values ('hostname', 'local.machine.name')");
-  $db->query("insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware')");
-  $db->query("insert into config (config_name, config_value) values ('db_host', 'localhost')");
-  $db->query("insert into config (config_name, config_value) values ('db_name', 'phpGroupWare_dev')");
-  $db->query("insert into config (config_name, config_value) values ('db_user', 'phpgroupware')");
-  $db->query("insert into config (config_name, config_value) values ('db_pass', 'phpgr0upwar3')");
-  $db->query("insert into config (config_name, config_value) values ('db_type', 'mysql')");
-  $db->query("insert into config (config_name, config_value) values ('auth_type', 'sql')");
-  $db->query("insert into config (config_name, config_value) values ('ldap_host', 'localhost')");
-  $db->query("insert into config (config_name, config_value) values ('ldap_context', 'o=phpGroupWare')");
-  $db->query("insert into config (config_name, config_value) values ('usecookies', 'True')");
-  $db->query("insert into config (config_name, config_value) values ('mail_server', 'localhost')");
-  $db->query("insert into config (config_name, config_value) values ('mail_server_type', 'imap')");
-  $db->query("insert into config (config_name, config_value) values ('imap_server_type', 'Cyrus')");
-  $db->query("insert into config (config_name, config_value) values ('mail_suffix', 'yourdomain.com')");         
-  $db->query("insert into config (config_name, config_value) values ('mail_login_type', 'standard')");
-  $db->query("insert into config (config_name, config_value) values ('smtp_server', 'localhost')");
-  $db->query("insert into config (config_name, config_value) values ('smtp_port', '25')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_server', 'yournewsserver.com')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_port', '119')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_sender', 'complaints@yourserver.com')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_organization', 'phpGroupWare')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_admin', 'admin@yourserver.com')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_login_username', '')");
-  $db->query("insert into config (config_name, config_value) values ('nntp_login_password', '')");
-  $db->query("insert into config (config_name, config_value) values ('charset', 'iso-8859-1')");
-  $db->query("insert into config (config_name, config_value) values ('default_ftp_server', 'localhost')");
-  $db->query("insert into config (config_name, config_value) values ('httpproxy_server', '')");
-  $db->query("insert into config (config_name, config_value) values ('httpproxy_port', '')");
-  $db->query("insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom')");
-  $db->query("insert into config (config_name, config_value) values ('checkfornewversion', 'False')");
-  
+  function add_default_server_config(){
+    global $db;
+    $db->query("insert into config (config_name, config_value) values ('default_tplset', 'default')");
+    $db->query("insert into config (config_name, config_value) values ('temp_dir', '/path/to/tmp')");
+    $db->query("insert into config (config_name, config_value) values ('files_dir', '/path/to/dir/phpgroupware/files')");
+    $db->query("insert into config (config_name, config_value) values ('encryptkey', 'change this phrase 2 something else')");
+    $db->query("insert into config (config_name, config_value) values ('site_title', 'phpGroupWare')");
+    $db->query("insert into config (config_name, config_value) values ('hostname', 'local.machine.name')");
+    $db->query("insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware')");
+    $db->query("insert into config (config_name, config_value) values ('auth_type', 'sql')");
+    $db->query("insert into config (config_name, config_value) values ('ldap_host', 'localhost')");
+    $db->query("insert into config (config_name, config_value) values ('ldap_context', 'o=phpGroupWare')");
+    $db->query("insert into config (config_name, config_value) values ('usecookies', 'True')");
+    $db->query("insert into config (config_name, config_value) values ('mail_server', 'localhost')");
+    $db->query("insert into config (config_name, config_value) values ('mail_server_type', 'imap')");
+    $db->query("insert into config (config_name, config_value) values ('imap_server_type', 'Cyrus')");
+    $db->query("insert into config (config_name, config_value) values ('mail_suffix', 'yourdomain.com')");         
+    $db->query("insert into config (config_name, config_value) values ('mail_login_type', 'standard')");
+    $db->query("insert into config (config_name, config_value) values ('smtp_server', 'localhost')");
+    $db->query("insert into config (config_name, config_value) values ('smtp_port', '25')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_server', 'yournewsserver.com')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_port', '119')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_sender', 'complaints@yourserver.com')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_organization', 'phpGroupWare')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_admin', 'admin@yourserver.com')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_login_username', '')");
+    $db->query("insert into config (config_name, config_value) values ('nntp_login_password', '')");
+    $db->query("insert into config (config_name, config_value) values ('charset', 'iso-8859-1')");
+    $db->query("insert into config (config_name, config_value) values ('default_ftp_server', 'localhost')");
+    $db->query("insert into config (config_name, config_value) values ('httpproxy_server', '')");
+    $db->query("insert into config (config_name, config_value) values ('httpproxy_port', '')");
+    $db->query("insert into config (config_name, config_value) values ('showpoweredbyon', 'bottom')");
+    $db->query("insert into config (config_name, config_value) values ('checkfornewversion', 'False')");
+  }
+
+  if ($useglobalconfigsettings == "on"){
+    if (is_file($basedir)){
+      include ($phpgw_info["server"]["include_root"]."/globalconfig.inc.php");
+      $db->query("insert into config (config_name, config_value) values ('default_tplset', '".$phpgw_info["server"]["default_tplset"]."')");
+      $db->query("insert into config (config_name, config_value) values ('temp_dir', '".$phpgw_info["server"]["temp_dir"]."')");
+      $db->query("insert into config (config_name, config_value) values ('files_dir', '".$phpgw_info["server"]["files_dir"]."')");
+      $db->query("insert into config (config_name, config_value) values ('encryptkey', '".$phpgw_info["server"]["encryptkey"]."')");
+      $db->query("insert into config (config_name, config_value) values ('site_title', '".$phpgw_info["server"]["site_title"]."')");
+      $db->query("insert into config (config_name, config_value) values ('hostname', '".$phpgw_info["server"]["hostname"]."')");
+      $db->query("insert into config (config_name, config_value) values ('webserver_url', '".$phpgw_info["server"]["webserver_url"].")");
+      $db->query("insert into config (config_name, config_value) values ('auth_type', '".$phpgw_info["server"]["auth_type"]."')");
+      $db->query("insert into config (config_name, config_value) values ('ldap_host', '".$phpgw_info["server"]["ldap_host"]."')");
+      $db->query("insert into config (config_name, config_value) values ('ldap_context', '".$phpgw_info["server"]["ldap_context"]."')");
+      $db->query("insert into config (config_name, config_value) values ('usecookies', '".$phpgw_info["server"]["usecookies"]."')");
+      $db->query("insert into config (config_name, config_value) values ('mail_server', '".$phpgw_info["server"]["mail_server"]."')");
+      $db->query("insert into config (config_name, config_value) values ('mail_server_type', '".$phpgw_info["server"]["mail_server_type"]."')");
+      $db->query("insert into config (config_name, config_value) values ('imap_server_type', '".$phpgw_info["server"]["imap_server_type"]."')");
+      $db->query("insert into config (config_name, config_value) values ('mail_suffix', '".$phpgw_info["server"]["mail_suffix"]."')");         
+      $db->query("insert into config (config_name, config_value) values ('mail_login_type', '".$phpgw_info["server"]["mail_login_type"]."')");
+      $db->query("insert into config (config_name, config_value) values ('smtp_server', '".$phpgw_info["server"]["smtp_server"]."')");
+      $db->query("insert into config (config_name, config_value) values ('smtp_port', '".$phpgw_info["server"]["smtp_port"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_server', '".$phpgw_info["server"]["nntp_server"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_port', '".$phpgw_info["server"]["nntp_port"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_sender', '".$phpgw_info["server"]["nntp_sender"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_organization', '".$phpgw_info["server"]["nntp_organization"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_admin', '".$phpgw_info["server"]["nntp_admin"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_login_username', '".$phpgw_info["server"]["nntp_login_username"]."')");
+      $db->query("insert into config (config_name, config_value) values ('nntp_login_password', '".$phpgw_info["server"]["nntp_login_password"]."')");
+      $db->query("insert into config (config_name, config_value) values ('charset', '".$phpgw_info["server"]["charset"]."')");
+      $db->query("insert into config (config_name, config_value) values ('default_ftp_server', '".$phpgw_info["server"]["default_ftp_server"]."')");
+      $db->query("insert into config (config_name, config_value) values ('httpproxy_server', '".$phpgw_info["server"]["httpproxy_server"]."')");
+      $db->query("insert into config (config_name, config_value) values ('httpproxy_port', '".$phpgw_info["server"]["httpproxy_port"]."')");
+      $db->query("insert into config (config_name, config_value) values ('showpoweredbyon', '".$phpgw_info["server"]["showpoweredbyon"]."')");
+      $db->query("insert into config (config_name, config_value) values ('checkfornewversion', '".$phpgw_info["server"]["checkfornewversion"]."')");
+    }else{
+      echo "<table border=\"0\" align=\"center\">\n";
+      echo "  <tr bgcolor=\"486591\">\n";
+      echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Error</b></font></td>\n";
+      echo "  </tr>\n";
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Could not find your old globalconfig.inc.php.<br> You will be required to configure your installation manually.</td>\n";
+      echo "  </tr>\n";
+      echo "</table>\n";
+      add_default_server_config();
+    }
+  }else{
+    add_default_server_config();
+  }
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('admin', 'Administration', 1, 1, NULL)");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('tts', 'Trouble Ticket System', 0, 2, NULL)");
   $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('inv', 'Inventory', 0, 3, NULL)");
