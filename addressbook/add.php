@@ -31,7 +31,7 @@
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
 	$customfields = array();
-	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
 		if ( substr($col,0,6) == 'extra_' ) {
 			$field = ereg_replace('extra_','',$col);
 			$field = ereg_replace(' ','_',$field);

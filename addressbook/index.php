@@ -32,7 +32,7 @@
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
 	$customfields = array();
-	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
 		if ( substr($col,0,6) == 'extra_' ) {
 			$field = ereg_replace('extra_','',$col);
 			$field = ereg_replace(' ','_',$field);
@@ -207,9 +207,15 @@
 			$t->set_var(col_data,$ref.$data);
 			$t->parse("columns","column",True);
 		}
-    
-		$t->set_var(row_view_link,$phpgw->link("/addressbook/view.php","ab_id=$myid&start=$start&order=$order&filter="
-			. "$filter&query=$query&sort=$sort"));
+
+		if (1) {
+			$t->set_var(row_view_link,$phpgw->link("/addressbook/view.php","ab_id=$myid&start=$start&order=$order&filter="
+				. "$filter&query=$query&sort=$sort"));
+		} else {
+			$t->set_var(row_view_link,"");
+			$t->set_var("lang_view",lang("Private"));
+		}
+		
 		$t->set_var(row_vcard_link,$phpgw->link("/addressbook/vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
 			. "$filter&query=$query&sort=$sort"));
 		if ($rights & PHPGW_ACL_EDIT) {

@@ -36,7 +36,7 @@
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
 	$customfields = array();
-	while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"])) {
+	while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"])) {
 		if ( substr($col,0,6) == 'extra_' ) {
 			$field = ereg_replace('extra_','',$col);
 			$field = ereg_replace(' ','_',$field);
@@ -45,17 +45,20 @@
 	}
 
 	if (!$submit) {
-		// not checking acl here, only on submit - that ok?
 		// merge in extra fields
 		$extrafields = array(
 			"ophone" => "ophone",
 			"address2" => "address2",
 			"address3" => "address3"
 		);
-
-		$qfields = $this->stock_contact_fields + $extrafields + $customfields;
-		$fields = addressbook_read_entry($ab_id,$qfields);
-		addressbook_form("","edit.php","Edit",$fields[0],$customfields);
+		if ($rights & PHPGW_ACL_EDIT) {
+			$qfields = $this->stock_contact_fields + $extrafields + $customfields;
+			$fields = addressbook_read_entry($ab_id,$qfields);
+			addressbook_form("","edit.php","Edit",$fields[0],$customfields);
+		} else {
+			Header("Location: " . $phpgw->link('/addressbook/index.php',"cd=16&order=$order&sort=$sort&filter=$filter&start=$start&query=$query"));
+			$phpgw->common->phpgw_exit();
+		}
 	} else {
 		if ($url == "http://") {
 			$url = "";
