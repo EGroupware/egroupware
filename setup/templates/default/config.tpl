@@ -108,7 +108,7 @@
 
    <tr class="row_on">
     <td>{lang_Enter_your_HTTP_proxy_server_password}:</td>
-    <td><input name="newsettings[httpproxy_port_password]" value="{value_httpproxy_port_password}"></td>
+    <td><input name="newsettings[httpproxy_server_password]" value="{value_httpproxy_server_password}"></td>
    </tr>
 
    <tr class="row_off">
