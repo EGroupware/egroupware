@@ -147,10 +147,10 @@
 
 				$this->template->set_var('row_date',$GLOBALS['phpgw']->common->show_date($value['datetime']));
 				$this->template->set_var('row_owner',$value['owner']);
-				$this->template->set_var('row_owner',$value['status']);
+				$this->template->set_var('row_status',$this->types[$value['status']]);
 				$this->template->set_var('row_new_value',$value['new_value']);
 
-				$this->template->fp('rows','row');
+				$this->template->fp('rows','row',True);
 			}
 			return $this->template->fp('out','list');
 		}
