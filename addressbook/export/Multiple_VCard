@@ -190,6 +190,11 @@
 							if (strstr($buffer[$i][$value],"\n")) {
 								$buffer[$i][$value] = ereg_replace("\r\n","=0D=0A",$buffer[$i][$value]);
 								$entry .= $value . ";QUOTED-PRINTABLE:".$buffer[$i][$value]."\r\n";
+							} elseif ($value=="BDAY") {
+								$tmp = split("/",$buffer[$i][$value]); # 12/31/1969 -> 1969-12-31
+								if ($tmp[0]) {
+									$entry .= "BDAY:". $tmp[2]."-".$tmp[0]."/".$tmp[1]."\r\n";
+								}
 							} else {
 								$entry .= $value . ":".$buffer[$i][$value]."\r\n";
 							}
