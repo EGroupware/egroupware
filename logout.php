@@ -24,6 +24,7 @@
   $sep = $phpgw->common->filesystem_separator();
 
 /*
+
   if ($installed[cron_apps] != "Y") {
      $dh = opendir($phpgw_info["server"]["temp_dir"]);
      while ($dir = readdir($dh)) {
