@@ -33,7 +33,7 @@
 		return $phpgw->db->f(0);
 	}
 
-	$p = new Template(PHPGW_APP_TPL);
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$p->set_file(array(
 		'groups'   => 'groups.tpl',
 	));

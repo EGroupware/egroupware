@@ -31,7 +31,7 @@
 		Header('Location: ' . $phpgw->link('/admin/accounts.php'));
 	}
 
-	$t = new Template(PHPGW_APP_TPL);
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_unknowns('remove');
 	$t->set_file(array('account' => 'account_form.tpl'));
 	$t->set_block('account','form','form');

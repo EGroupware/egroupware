@@ -14,7 +14,7 @@
 	$phpgw_info['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
-        $t = new Template(PHPGW_APP_TPL);
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$t->set_file(array('form' => 'category_form.tpl'));
 	$t->set_block('form','add','addhandle');
 	$t->set_block('form','edit','edithandle');
