@@ -22,10 +22,13 @@
 			'delete' => True
 		);
 
-		function uifields()
+		function uifields($only_bo=False)
 		{
-			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			if (!$only_bo)
+			{
+				$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+				$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			}
 			$this->config = CreateObject('phpgwapi.config','addressbook');
 		}
 

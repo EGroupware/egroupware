@@ -53,6 +53,10 @@
 				'in'  => array('int'),
 				'out' => array('struct')
 			),
+			'customfields' => array(
+				'in' => array('array'),
+				'out'=> array('struct')
+			),
 		);
 
 		var $debug = False;
@@ -240,6 +244,35 @@
 			return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
 		}
 
+		// return array with all addressbook customfields (for xmlrpc)
+		function customfields($new_fields=False)
+		{
+			$fields = CreateObject('addressbook.uifields',True);	// no extra bo-class
+
+			if (is_array($new_fields) && count($new_fields))
+			{
+				if (!$GLOBALS['phpgw_info']['user']['apps']['admin'])
+				{
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+				}
+				foreach($new_fields as $new)
+				{
+					$fields->save_custom_field('',$new);
+				}
+			}
+			$customfields = array();
+			foreach($fields->read_custom_fields() as $data)
+			{
+				$customfields[$data['name']] = $data['title'];
+			}
+			if ($this->xmlrpc && !isset($customfields['freebusy_url']))
+			{
+				$fields->save_custom_field('','freebusy URL');
+				$customfields['freebusy_url'] = 'freebusy URL';
+			}
+			return $customfields;
+		}
+
 		// translate array of internal datas to xmlrpc, eg. format bday as iso8601
 		function data2xmlrpc($datas)
 		{
@@ -295,11 +328,90 @@
 			return $data;
 		}
 
+		// return a pseudo addressbook-entry for a user
+		function user_pseudo_entry($account)
+		{
+			static $prefs=False;
+			if (!is_object($prefs))
+			{
+				$prefs = CreateObject('phpgwapi.preferences');	// wie need a new copy, as wie change the user
+			}
+			if (!is_array($account))
+			{
+				$GLOBALS['phpgw']->accounts->account_id = $account;
+				$account = $GLOBALS['phpgw']->accounts->read_repository();
+			}
+			$prefs->account_id = $account['account_id'];
+			$prefs->read_repository();
+			$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$account['account_lid'];
+			if ($freebusy_url[0] == '/')
+			{
+				$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
+			}
+			$firstname = $account['account_firstname'] ? $account['account_firstname'] : $account['firstname'];
+			$lastname  = $account['account_lastname'] ? $account['account_lastname'] : $account['lastname'];
+			$ret = array(
+				'n_family' => $lastname,
+				'n_given'  => $firstname,
+				'fn'       => $GLOBALS['phpgw']->common->display_fullname($account['account_lid'],$firstname,$lastname),
+				'email'    => $prefs->email_address($account['account_id']),
+				'freebusy_url' => $freebusy_url,
+				'rights'   => PHPGW_ACL_READ,	// readonly access
+				'id'       => -$account['account_id'],
+				'tid'      => 'p',	// Profil
+			);
+			//echo "<p>user_pseudo_entry(".print_r($account,True).")=".print_r($ret,True)."</p>";
+			return $ret;
+		}
+
+		function get_users($type='all')
+		{
+			$users = array();
+			switch ($type)
+			{
+				case 'all':			// all
+					$accounts = $GLOBALS['phpgw']->accounts->get_list('accounts');
+					break;
+				case 'calendar':	// Calendar users
+					$accounts = $GLOBALS['phpgw']->acl->get_ids_for_location('run',1,'calendar');
+					break;
+				case 'groupmates':	// Groupmates
+					$accounts = array();
+					foreach($GLOBALS['phpgw']->accounts->membership() as $group)
+					{
+						$accounts[] = $group['account_id'];
+					}
+					break;
+			}
+			foreach($accounts as $key => $account)
+			{
+				if ($type == 'calendar' && $GLOBALS['phpgw']->accounts->get_type($account) == 'g' || $type == 'groupmates')
+				{
+					// $account is a group
+					unset($accounts[$key]);
+					foreach($GLOBALS['phpgw']->accounts->member($account) as $member)
+					{
+						$accounts[] = $member['account_id'];
+					}
+				}
+			}
+			if ($type != 'all')
+			{
+				$accounts = array_unique($accounts);	// remove doubles
+			}
+			$prefs = CreateObject('phpgwapi.preferences');	// wie need a new copy, as wie change the user
+			foreach($accounts as $account)
+			{
+				$users[] = $this->user_pseudo_entry($account);
+			}
+			return $users;
+		}
+
 		function read_entries($data)
 		{
 			if ($this->xmlrpc && !isset($data['fields']))
 			{
-				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields));
+				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields,$this->customfields()));
 			}
 			$entries = $this->so->read_entries($data);
 			$this->total = $this->so->contacts->total_records;
@@ -308,6 +420,12 @@
 				$entries = array();
 			}
 			$entries = $this->strip_html($entries);
+
+			// evtl. get uses as read-only addressbook entries, just with Name, Firstname, Email
+			if (@$data['include_users'])
+			{
+				$entries = array_merge($entries,$this->get_users($data['include_users']));
+			}
 			if ($this->xmlrpc)
 			{
 				$entries = $this->data2xmlrpc($entries);
@@ -320,7 +438,16 @@
 		{
 			if ($this->xmlrpc && !isset($data['fields']))
 			{
-				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields));
+				$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields,$this->customfields()));
+			}
+			if ($data['id'] < 0)
+			{
+				$entry = array($this->user_pseudo_entry(-$data['id']));
+				if ($this->xmlrpc)
+				{
+					$entry = $this->data2xmlrpc($entry);
+				}
+				return $entry;
 			}
 			if($this->check_perms($data,PHPGW_ACL_READ))
 			{
@@ -503,9 +630,14 @@
 		*/
 		function check_perms($addr,$rights)
 		{
+			$id = (int) (!is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']));
+
+			if ($id < 0)
+			{
+				return $rights == PHPGW_ACL_READ;
+			}
 			if (!is_array($addr) || !isset($addr['rights']) && !isset($addr['owner']))
 			{
-				$id = (int) (!is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']));
 				$addr = $this->so->read_entry($id,array('owner'));
 				if (!$addr && $this->xmlrpc)
 				{
@@ -616,8 +748,13 @@
 						),
 						'categories' => array(
 							'function'  => 'categories',
-							'signature' => array(array(xmlrpcBool,xmlrpcStruct)),
+							'signature' => array(array(xmlrpcBoolean,xmlrpcBoolean)),
 							'docstring' => lang('List all categories')
+						),
+						'customfields' => array(
+							'function'  => 'customfields',
+							'signature' => array(array(xmlrpcArray,xmlrpcArray)),
+							'docstring' => lang('List all customfields')
 						),
 						'list_methods' => array(
 							'function'  => 'list_methods',
