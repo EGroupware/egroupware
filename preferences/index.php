@@ -37,7 +37,10 @@
     echo "</TD></TR></TABLE>\n\n";
   }
 
-  $phpgw->common->hook();
+  $order[] = "notes"; 
+  $order[] = "email"; 
+  $order[] = "preferences"; 
+  $phpgw->common->hook("",$order);
 
   $phpgw->common->phpgw_footer();
 ?>
