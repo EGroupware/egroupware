@@ -41,6 +41,11 @@
 				{
 					$GLOBALS['header_template']->set_var(strtoupper($x),$y);
 				}
+				/* If the admin didn't select a db_port, set to the default */
+				if(!$dom['db_port'])
+				{
+					$GLOBALS['header_template']->set_var('DB_PORT',$GLOBALS['default_db_ports'][$dom['db_type']]);
+				}
 				$GLOBALS['header_template']->parse('domains','domain',True);
 			}
 
