@@ -222,7 +222,7 @@
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('pa','Punjabi','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('pl','Polish','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ps','Pashto / Pushto','No')");
-  @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('pt','Portuguese','Yes')");
+  @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('pt','Portuguese','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('qu','Quechua','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('rm','Rhaeto-Romance','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('rn','Kirundi','No')");
