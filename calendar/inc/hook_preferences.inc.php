@@ -39,7 +39,7 @@
 //	echo '<a href="' . $phpgw->link('/calendar/categories.php') . '">'
 //		. lang('Edit Categories') . '</a><br>';
 
-	echo '<a href="' . $phpgw->link('/calendar/acl_preferences.php') . '">'
+	echo '<a href="' . $phpgw->link('/preferences/acl_preferences.php','acl_app=calendar') . '">'
 		. lang('Grant Calendar Access') . '</a>';
 
 	section_end(); 

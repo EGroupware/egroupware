@@ -4,4 +4,5 @@
     <td align="center">{add_lang}</td>
     <td align="center">{edit_lang}</td>
     <td align="center">{delete_lang}</td>
+    <td align="center">{private_lang}</td>
   </tr>
