@@ -113,11 +113,13 @@
 	}
 
 	$cat = CreateObject('phpgwapi.categories');
-//	$catinfo  = $cat->return_single($cat_id);
+	$catinfo  = $cat->return_single($fields[0]['cat_id']);
 	$catname  = $catinfo[0]["name"];
+
 	$cat->app_name = "phpgw";
-//	$catinfo  = $cat->return_single($cat_id);
+	$catinfo  = $cat->return_single($fields[0]['cat_id']);
 	$catname .= $catinfo[0]["name"];
+
 	if (!$catname) { $catname = lang('none'); }
 
 	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
