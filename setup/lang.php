@@ -26,7 +26,8 @@
 
      include($phpgw_info["server"]["api_inc"]."/class.common.inc.php");
      $common = new common;
-     $sep = $common->filesystem_separator();
+     // this is not used
+     //$sep = $common->filesystem_separator();
   } else {
      $newinstall             = True;
      $lang_selected["en"]    = "en";
