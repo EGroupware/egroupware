@@ -727,13 +727,15 @@
 				{
 					/* Errors encountered during validation */
 					$errors = $ab_id;
-					break;
 				}
 //				$ab_id = $this->bo->get_lastid();
 
-				Header('Location: '
-					. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				if(!$errors)
+				{
+					Header('Location: '
+						. $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer));
+					$GLOBALS['phpgw']->common->phpgw_exit();
+				}
 			}
 
 			$GLOBALS['phpgw']->template->set_file(array('add' => 'add.tpl'));
@@ -743,7 +745,6 @@
 			echo parse_navbar();
 
 			$custom = $this->fields->read_custom_fields();
-//			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
 			{
 				$customfields[$y['name']] = $y['title'];
