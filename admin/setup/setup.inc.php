@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Chora                                                     *
+	* phpGroupWare - administration                                            *
 	* http://www.phpgroupware.org                                              *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -28,7 +28,7 @@
 	$setup_info['admin']['hooks'][] = 'manual';
 	$setup_info['admin']['hooks'][] = 'view_user';
 
-	/* Dependacies for this app to work */
+	/* Dependencies for this app to work */
 	$setup_info['admin']['depends'][] = array(
 		 'appname' => 'phpgwapi',
 		 'versions' => Array('0.9.13', '0.9.14', '0.9.15')
