@@ -277,10 +277,13 @@
 					{
 						if(!$this->bo->printer_friendly && $params['link'])
 						{
+//NDEE: class def what for?
 							$str = '<a href="'.$this->page($params['link'],'&date='.$date).'" class="'.$day_params['class'].'">'.$day.'</a>';
 						}
 						else
 						{
+
+//NDEE: printer-friendly (mini-calendar)
 							$str = $day;
 						}
 
@@ -325,22 +328,31 @@
 			$GLOBALS['phpgw']->redirect($this->page('',$params));
 		}
 
+
+
+// NDEE: printer-friendly
+
 		function printer_friendly($body,$app_header='')
 		{
 			if($this->bo->printer_friendly)
 			{
 				$new_body = '<html>'."\n"
 					.'<head>'."\n"
-					.'<STYLE type="text/css">'."\n"
-					.'<!-- '."\n"
-					.'  body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: "'.$GLOBALS['phpgw_info']['theme']['font'].'" }'."\n"
-					.'  .tablink { color: #000000; }'."\n"
-					.' '.$this->css()."\n"
-					.'-->'."\n"
-					.'</STYLE>'."\n"
-					.'</head>'."\n"
+//					.'<STYLE type="text/css">'."\n"
+//					.'<!-- '."\n"
+//					.'  .tablink { color: #000000; }'."\n"
+//					.' '.$this->css()."\n"
+//					.'-->'."\n"
+//					.'</STYLE>'."\n"
+					.'<LINK href="'.$GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/templates/default/app_print.css" type=text/css rel=StyleSheet>'."\n"
+					.'</head>
+					<table id="calendar_print_main" class="calendar_print_main">
+						<tr>
+							<td id="calendar_print_content" class="calendar_print_content">'."\n"
 					.$this->bo->debug_string.$body
-					.'</body>'."\n"
+					.'		</td>
+						</tr>
+					</table></body>'."\n"
 					.'</html>'."\n";
 			}
 			else
@@ -501,6 +513,8 @@
 			}
 			else
 			{
+
+//NDEE: printer-friendly what?
 				$minical_this = '';
 				$minical_prev = '';
 				$minical_next = '';
@@ -515,6 +529,8 @@
 			}
 			else
 			{
+
+//NDEE: printer-friendly (weekly-view)
 				$printer = '<body bgcolor="'.$this->theme['bg_color'].'">';
 				$prev_week_link = '';
 				$next_week_link = '';
@@ -642,6 +658,8 @@
 			}
 			else
 			{
+
+//NDEE: printer-friendly (year-view)
 				$print = '<body bgcolor="'.$this->theme['bg_color'].'">';
 				$left_link = '';
 				$right_link = '';
@@ -1303,6 +1321,8 @@
 			}
 			else
 			{
+
+//NDEE: printer-friendly (what?)
 				$minical = '';
 			}
 
@@ -1314,6 +1334,8 @@
 			}
 			else
 			{
+
+//NDEE: printer-friendly (daily-view)
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 				$printer = '<body bgcolor="'.$this->theme['bg_color'].'">';
 				$print =	'';
@@ -1348,6 +1370,8 @@
 				'print'				=> $print,
 				'lang_todos'		=> $todo_label,
 				'todos'				=> $this->bo->printer_friendly ? $todos :
+
+//NDEE: todo's layout
 					"<div style=\"overflow: auto; max-height: 200px\">\n$todos</div>\n"
 			);
 
@@ -1404,7 +1428,9 @@
 								$icons .= ($icons?' ':'').$GLOBALS['phpgw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"');
 							}
 							$class = $class == 'row_on' ? 'row_off' : 'row_on';
-							$content .= " <tr class=\"$class\">\n  <td valign=\"top\" width=\"15%\"nowrap>".
+
+//NDEE <tr starts here
+							$content .= " <tr id=\"debug\" class=\"$class\">\n  <td valign=\"top\" width=\"15%\"nowrap>".
 								($this->bo->printer_friendly?$icons:$GLOBALS['phpgw']->html->a_href($icons,$todo['view'])).
 								"</td>\n  <td>".($this->bo->printer_friendly?$todo['title']:
 								$GLOBALS['phpgw']->html->a_href($todo['title'],$todo['view']))."</td>\n </tr>\n";
@@ -1686,6 +1712,8 @@
 			$hdr[1][$w] = '';
 			if ($offset >= 3)
 			{
+
+//NDEE: style! (groupplanner)
 				$hdr[1][$w] .= '<font size="-2"> '.lang('week').' '.$w.' </font>';
 			}
 			$days_left = $this->planner_days - $offset;
@@ -1707,6 +1735,8 @@
 				$hdr[1][$w] = '';
 				if ($days_left >= 3)
 				{
+
+//NDEE: style! (groupplanner)
 					$hdr[1][$w] .= '<font size="-2"> '.lang('week').' '.$w.' </font>';
 				}
 
@@ -1805,6 +1835,8 @@
 						else
 						{
 							$has_amp = strpos($event['title'],'&amp;');
+							
+//NDEE: event title gets cut here							
 							$title = substr($event['title'], 0 , $max_chars-1+($has_amp!==False&&$has_amp<$max_chars?4:0)).'...';
 						}
 						$event['print_title'] = 'yes';
@@ -1863,10 +1895,14 @@
 
 			if (isset($event['print_title']) && $event['print_title'] == 'yes')
 			{
+
+//NDEE: style! where?
 				$cel .= '<font size="-2"> '.$title.' </font>';
 			}
 			if (isset($event['print_description']) && $event['print_description'] == 'yes')
 			{
+
+//NDEE: style! where ?
 				$cel .= '<font size="-2"> - '.$event['description'].' </font>';
 			}
 
@@ -3099,8 +3135,12 @@
 					);
 					if($day_params['week'])
 					{
-						$var['new_event_link'] .= '<font size="-2"> &nbsp; '.
-							(!$this->bo->printer_friendly?'<a href="'.$this->page('week','&date='.$date).'">' .$day_params['week'].'</a>':$day_params['week']);
+
+//NDEE: style! m_w_table in month_day.tpl
+// week-hilite
+						//$var['new_event_link'] .= '<font size="-2"> &nbsp; '.
+						$var['new_event_link'] .= ' &nbsp; '.
+							(!$this->bo->printer_friendly?'<a href="'.$this->page('week','&date='.$date).'"><span id="calendar_weekinfo" class="calendar_weekinfo">' .$day_params['week'].'</span></a>' : '<span id="calendar_weekinfo" class="calendar_weekinfo">'.$day_params['week'].'</span>');
 					}
 
 					$p->set_var($var);
