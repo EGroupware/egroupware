@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <HTML>
 <HEAD>
- <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.7.4">
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.17">
  <TITLE>phpgwapi - VFS Class: Basic Functions</TITLE>
  <LINK HREF="vfs-4.html" REL=next>
  <LINK HREF="vfs-2.html" REL=previous>
@@ -14,23 +14,28 @@
 <HR>
 <H2><A NAME="sec:basic_functions"></A> <A NAME="s3">3.</A> <A HREF="vfs.html#toc3">Basic Functions</A></H2>
 
-<P>These are two functions you'll need to know before we get into relativity.</P>
+<P>These are two functions you'll need to know before we get into
+relativity.</P>
 <H2><A NAME="sec:path_parts"></A> <A NAME="ss3.1">3.1</A> <A HREF="vfs.html#toc3.1">path_parts ()</A>
 </H2>
 
-<P>The job of path_parts () is to translate any given file location into its
-many component parts for any relativity. The prototype for path_parts () is:</P>
+<P>The job of path_parts () is to translate any given file location
+into its many component parts for any relativity. The values passed
+to path_parts () are:</P>
 <P>
 <PRE>
-function path_parts ($string, $relatives = array (RELATIVE_CURRENT), $object = True)
+string
+relatives
+object
 </PRE>
 </P>
-<P>$string is the path you want to translate, $relatives is
-the standard relativity array, and $object specifies how you would like
-the return value: if $object is True, an object will be returned; if
-$object is False, an array will be returned. I think you'll find the
-object easier to deal with, and we'll be using it throughout this document.
-The most important returned values (but not all) for path_parts () are:</P>
+<P>'string' is the path you want to translate, 'relatives' is the
+standard relativity array, and 'object' specifies how you would like
+the return value: if 'object' is True, an object will be returned;
+if 'object' is False, an array will be returned. I think you'll find
+the object easier to deal with, and we'll be using it throughout
+this document. The most important returned values (but not all) for
+path_parts () are:</P>
 <P>
 <PRE>
 fake_full_path
@@ -43,15 +48,21 @@ real_extra_path
 real_name
 </PRE>
 </P>
-<P>Just like you would think, fake_full_path contains the full virtual path
-of $string, and real_full_path contains the full real path of $string.
-The fake_name and real_name variables should always be the same, and contain
-the final file or directory name. The leading_dirs contain everything except
-the name, and the extra_path is everything from the / before "home" to the end
-of the leading_dirs. To better illustrate, here is an example:</P>
+<P>Just like you would think, fake_full_path contains the full virtual
+path of 'string', and real_full_path contains the full real path
+of 'string'. The fake_name and real_name variables should always
+be the same, and contain the final file or directory name. The leading_dirs
+contain everything except the name, and the extra_path is everything
+from the / before "home" to the end of the leading_dirs. To better
+illustrate, here is an example:</P>
 <P>
 <PRE>
-$p = $phpgw-&gt;vfs-&gt;path_parts ("/home/jason/dir/file", array (RELATIVE_NONE));
+$p = $GLOBALS['phpgw']-&gt;vfs-&gt;path_parts (array(
+     'string' =&gt; '/home/jason/dir/file',
+     'relatives' =&gt; array(
+         RELATIVE_NONE
+     )
+));
 </PRE>
 </P>
 <P>
@@ -67,31 +78,48 @@ $p = $phpgw-&gt;vfs-&gt;path_parts ("/home/jason/dir/file", array (RELATIVE_NONE
 <LI>$p-&gt;real_name - file</LI>
 </UL>
 </P>
-<P>As you can see, path_parts () is a very useful function and will save you
-from doing those darn substr ()'s yourself. For those of you used to the prior
-VFS, note that <EM>getabsolutepath () is depreciated</EM>. getabsolutepath () still
-exists (albeit in a much different form), and is responsible for some of the
-path translation, but it is an <EM>internal</EM> function only. Applications should
-only use path_parts (). We have shown you how to use path_parts () so you can
-experiment with it using different paths and relativities as we explore relativity.</P>
+<P>As you can see, path_parts () is a very useful function and will
+save you from doing those darn substr ()'s yourself. For those of
+you used to the prior VFS, note that <EM>getabsolutepath () is depreciated</EM>.
+getabsolutepath () still exists (albeit in a much different form),
+and is responsible for some of the path translation, but it is an
+<EM>internal</EM> function only. Applications should only use path_parts ().
+We have shown you how to use path_parts () so you can experiment
+with it using different paths and relativities as we explore relativity.</P>
 <H2><A NAME="sec:cd"></A> <A NAME="ss3.2">3.2</A> <A HREF="vfs.html#toc3.2">cd ()</A>
 </H2>
 
-<P>Part of the overall goal for the VFS in phpGroupWare is to give the user
-a seamless experience during their session. For example, if they upload a file
-using a file manager to /home/my_group/project1, and then go to download an
-email attachment, the default directory will be /home/my_group/project1. This
-is accomplished using the cd () function. The prototype and examples: </P>
+<P>Part of the overall goal for the VFS in phpGroupWare is to give
+the user a seamless experience during their session. For example,
+if they upload a file using a file manager to the directory /home/my_group/project1,
+and then go to download an email attachment, the default directory
+will be /home/my_group/project1. This is accomplished using the cd
+() function. Examples: </P>
 <P>
 <PRE>
-function cd ($target = &quot;/&quot;, $relative = True, $relatives = array (RELATIVE_CURRENT))
-$phpgw-&gt;vfs-&gt;cd ("/");     /* cd to their home directory */
-$phpgw-&gt;vfs-&gt;cd ("/home/jason/dir", False, array (RELATIVE_NONE)); /* cd to /home/jason/dir */
-$phpgw-&gt;vfs-&gt;cd ("dir2", True); /* When following the above, cd's to /home/jason/dir/dir2 */
+/* cd to their home directory */
+$GLOBALS['phpgw']-&gt;vfs-&gt;cd (array(
+     'string' =&gt; '/'
+));
+
+/* cd to /home/jason/dir */
+$GLOBALS['phpgw']-&gt;vfs-&gt;cd (array(
+     'string' =&gt; '/home/jason/dir',
+     'relative' =&gt; False,
+     'relatives' =&gt; array(
+          RELATIVE_NONE
+     )
+));
+
+/* When following the above, cd's to /home/jason/dir/dir2 */
+$GLOBALS['phpgw']-&gt;vfs-&gt;cd (array(
+     'string' =&gt; 'dir2',
+     'relative' =&gt; True
+));
 </PRE>
 </P>
-<P>If $relatives is True, the $target is simply appended to
-the current path. If you want to know what the current path is, use $phpgw-&gt;vfs-&gt;pwd
+<P>If 'relative' is True, the 'string' is simply appended to the
+current path. If you want to know what the current path is, use $GLOBALS['phpgw']-&gt;vfs-&gt;pwd
 ().</P>
 <P>Now you're ready for relativity.</P>
 <HR>

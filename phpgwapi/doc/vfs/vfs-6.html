@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <HTML>
 <HEAD>
- <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.7.4">
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.17">
  <TITLE>phpgwapi - VFS Class: Notes</TITLE>
  <LINK HREF="vfs-7.html" REL=next>
  <LINK HREF="vfs-5.html" REL=previous>
@@ -17,8 +17,8 @@
 <H2><A NAME="sec:database"></A> <A NAME="ss6.1">6.1</A> <A HREF="vfs.html#toc6.1">Database</A>
 </H2>
 
-<P>Data about the files and directories within the virtual root is kept in
-the SQL database. Currently, this information includes:</P>
+<P>Data about the files and directories within the virtual root
+is kept in the SQL database. Currently, this information includes:</P>
 <P>
 <UL>
 <LI>File ID (used internally, primary key for table)</LI>
@@ -34,73 +34,51 @@ the SQL database. Currently, this information includes:</P>
 <LI>App (appname of application that created the file)</LI>
 <LI>Directory (directory the file or directory is in)</LI>
 <LI>Name (name of file or directory)</LI>
+<LI>Link directory (if the file or directory is linked, what the
+actual directory is)</LI>
+<LI>Link name (if the file or directory is linked, what the actual
+name is)</LI>
+<LI>Version (numeric version of the file)</LI>
 </UL>
 </P>
-<P>The internal names of these (the database column names) are stored in the
-$phpgw-&gt;vfs-&gt;attributes array, which is useful for loops, and
-is guaranteed to be up-to-date.</P>
-
-
-<P>Note that no information is kept about files outside the virtual root.
-If a file is moved outside, all records of it are delete from the database.
-If a file is moved into the virtual root, some information, specifically MIME-type,
-is not stored in the database. The vital information has defaults: owner is
-based on where the file is being stored; size is correctly read; deleteable
-is set to Y.</P>
+<P>The internal names of these (the database column names) are stored
+in the $GLOBALS['phpgw']-&gt;vfs-&gt;attributes
+array, which is useful for loops, and is guaranteed to be up-to-date.</P>
+<P>Note that no information is kept about files outside the virtual
+root. If a file is moved outside, all records of it are deleted from
+the database (other than the journaling records). If a file is moved
+into the virtual root, some information, specifically MIME-type,
+is not always stored in the database. The vital information has defaults:
+owner is based on where the file is being stored; size is correctly
+read; deleteable is set to Y.</P>
 <H2><A NAME="sec:acl_support"></A> <A NAME="ss6.2">6.2</A> <A HREF="vfs.html#toc6.2">ACL support</A>
 </H2>
 
-<P>Because of the many different ways the VFS can be used, complete ACL support
-is not built in. There is a bit of access control built in, just because of
-the way database queries are made. However, that is a discussion beyond the
-scope of this document. Full ACL support may be added at a later time. For
-now, it is fairly easy to add basic access control to your application by matching
-path expressions. The VFS always follows the same naming convention of $fakebase/userorgroup.
-So if you need to check if a user has access to $fakebase/whatever/dir/file,
-you need only know if they their username is 'whatever' or if they belong to
-the group 'whatever', and that the group has access to your application. Here
-is an example from PHPWebHosting:</P>
+<P>ACL support is built into the VFS. vfs-&gt;acl_check () does
+the actual checking, and is called from all VFS functions as needed.
+If the file or directory sent to acl_check () doesn't exist, the
+permissions for the parent directory are used to determine access.
+ACL checking can be overridden at any time by setting vfs-&gt;override_acl.
+For example:</P>
 <P>
 <PRE>
-###
-# First we get their memberships
-###
-
-$memberships = $phpgw-&gt;accounts-&gt;memberships ($account_id);
-
-###
-# We determine if they're in their home directory or a group's directory
-# If they request a group's directory, we ensure they have access to the group,
-# and the group has access to the app
-###
-
-if ((preg_match (&quot;+^$fakebase\/(.*)(\/|$)+U&quot;, $path, $matches)) &amp;&amp; $matches[1] != $account_lid)
-{
-     $phpgw-&gt;vfs-&gt;working_id = $phpgw-&gt;accounts-&gt;name2id ($matches[1]);
-     reset ($memberships);
-     while (list ($num, $group_array) = each ($memberships))
-     {
-          if ($matches[1] == $group_array[&quot;account_name&quot;])
-          {
-               $group_ok = 1;
-               break;
-          }
-     }
-     if (!$group_ok)
-     {
-          echo $phpgw-&gt;common-&gt;error_list (array (&quot;You do not have access to group/directory $matches[1]&quot;));
-          exit;
-     }
-}
+$GLOBALS['phpgw']-&gt;vfs-&gt;override_acl = 1;
+$GLOBALS['phpgw']-&gt;vfs-&gt;mkdir (array(
+     'string' =&gt; $GLOBALS['fakebase']. '/' . $group_array['account_name'],
+     'relatives' =&gt; array(
+          RELATIVE_NONE
+     )
+));
+$GLOBALS['phpgw']-&gt;vfs-&gt;override_acl = 0;
 </PRE>
 </P>
-<P>You should also check if the group has access to your appilcation.</P>
 <H2><A NAME="sec:function_aliases"></A> <A NAME="ss6.3">6.3</A> <A HREF="vfs.html#toc6.3">Function aliases</A>
 </H2>
 
-<P>You might have noticed there are some functions that just pass the arguments
-on to other functions. These are provided in part because of legacy and in
-part for convenience. You can use either. Here is the list (alias -&gt; actual):</P>
+<P>You might have noticed there are some functions that just pass
+the arguments on to other functions. These are provided in part because
+of legacy and in part for convenience. You can use either. Here is
+the list (alias -&gt; actual):</P>
 <P>
 <UL>
 <LI>copy -&gt; cp</LI>
@@ -112,17 +90,18 @@ part for convenience. You can use either. Here is the list (alias -&gt; actual):
 <H2><A NAME="sec:fakebase"></A> <A NAME="ss6.4">6.4</A> <A HREF="vfs.html#toc6.4">Fakebase directory (changing /home)</A>
 </H2>
 
-<P>The old VFS was hard-coded to use &quot;/home&quot; as the fake base directory,
+<P>The old VFS was hard-coded to use '/home' as the fake base directory,
 even though the user never saw it. With the new system, crafty administrators
-may wish to change &quot;/home&quot; to something else, say &quot;/users&quot;
-or &quot;/public_html&quot;. The fake base directory name is stored in $phpgw-&gt;vfs-&gt;fakebase,
-and changing it will transparently change it throughout the VFS and all applications.
-However, this must be done <EM>before</EM> any data is in the VFS database. If you wish
-to change it afterwords, you'll have to manually update the database, replacing
-the old value with the new value. <EM>Application programmers need to recognize
-that /home is not absolute, and use $phpgw-&gt;vfs-&gt;fakebase instead</EM>.
-I suggest setting $fakebase = $phpgw-&gt;vfs-&gt;fakebase; right
-off the bat to keep things neater.</P>
+may wish to change '/home' to something else, say '/users' or '/public_html'.
+The fake base directory name is stored in $GLOBALS['phpgw']-&gt;vfs-&gt;fakebase,
+and changing it will transparently change it throughout the VFS and
+all applications. However, this must be done <EM>before</EM> any data is in
+the VFS database. If you wish to change it afterwords, you'll have
+to manually update the database, replacing the old value with the
+new value. <EM>Application programmers need to recognize that /home is
+not absolute, and use $GLOBALS['phpgw']-&gt;vfs-&gt;fakebase
+instead</EM>. I suggest setting $fakebase = $GLOBALS['phpgw']-&gt;vfs-&gt;fakebase;
+right off the bat to keep things neater.</P>
 <HR>
 <A HREF="vfs-7.html">Next</A>
 <A HREF="vfs-5.html">Previous</A>

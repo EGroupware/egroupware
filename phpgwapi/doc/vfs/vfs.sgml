@@ -1,7 +1,7 @@
 <!doctype linuxdoc system>
 
-<!-- LyX 1.1 created this file. For more info see http://www.lyx.org/ -->
 <article>
+<!-- LyX 1.1 created this file. For more info see http://www.lyx.org/ -->
 <title>
 phpgwapi - VFS Class
 </title>
@@ -9,43 +9,49 @@ phpgwapi - VFS Class
 Jason Wies
 </author>
 <date>
-June 2001
+June 2001, February 2002
 </date>
 <abstract>
-The VFS, or Virtual File System, handles all file system activity for phpGroupWare.
+The VFS, or Virtual File System, handles all file system activity
+ for phpGroupWare.
 </abstract>
 <sect>
 Introduction and Purpose<label id="sec:introduction" >
 <p>
-The latest version of the VFS for phpGroupWare combines actual file system
- manipulation with fully integrated database support. It features nearly transparent
- handling of files and directories, as well as files inside and outside the
- virtual root. This document is intended to provide API and application developers
- with a guide to incorporating the VFS into their work.
+The latest version of the VFS for phpGroupWare combines actual
+ file system manipulation with fully integrated database support.
+ It features nearly transparent handling of files and directories,
+ as well as files inside and outside the virtual root. This document
+ is intended to provide API and application developers with a guide
+ to incorporating the VFS into their work.
 </p>
 <sect>
 Basics<label id="sec:basics" >
 <sect1>
 Prerequisites<label id="sec:prerequisites" >
 <p>
-You must explicitly enable the VFS class. To do this, set "enable_vfs_class"
- to True in &dollar;phpgw_info&lsqb;&quot;flags&quot;&rsqb;. An example:
+You must explicitly enable the VFS class. To do this, set 'enable_vfs_class'
+ to True in &dollar;GLOBALS&lsqb;'phpgw_info'&rsqb;&lsqb;'flags'&rsqb;.
+ An example:
 </p>
 <p>
 <verb>
-&dollar;phpgw_info&lsqb;&quot;flags&quot;&rsqb; = array(&quot;currentapp&quot; =&gt; &quot;phpwebhosting&quot;,
-&quot;noheader&quot; =&gt; False,
-&quot;noappheader&quot; =&gt; False,
-&quot;enable_vfs_class&quot; =&gt; True,
-&quot;enable_browser_class&quot; =&gt; True);
+&dollar;GLOBALS&lsqb;'phpgw_info'&rsqb;&lsqb;'flags'&rsqb; = array(
+     'currentapp' =&gt; 'phpwebhosting',
+     'noheader' =&gt; False,
+     'noappheader' =&gt; False,
+     'enable_vfs_class' =&gt; True,
+     'enable_browser_class' =&gt; True
+);
 </verb>
 </p><sect1>
 Concepts<label id="sec:concepts" >
 <p>
-The VFS in located in phpgwapi/inc/class.vfs.inc.php. You can look over
- it, but I don't suggest trying to understand how it works. It isn't necessary
- to know its internals to use it, but you may find the inline comments helpful.
- The basic things to keep in mind:
+The VFS in located in phpgwapi/inc/class.vfs_sql.inc.php. You
+ can look over it, but I don't suggest trying to understand how it
+ works. It isn't necessary to know its internals to use it, but you
+ may find the inline comments helpful. The basic things to keep in
+ mind:
 </p>
 <p>
 <itemize>
@@ -54,62 +60,93 @@ Files and directories are synonymous in almost all cases
 </itemize>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;mv ("file1", "dir/file2");
-&dollar;phpgw-&gt;vfs-&gt;mv ("dir1", "dir/dir1");
-&dollar;phpgw-&gt;vfs-&gt;rm ("file");
-&dollar;phpgw-&gt;vfs-&gt;rm ("dir");
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mv (array(
+     'from' =&gt; 'file1',
+     'to' =&gt; 'dir/file2'
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mv (array(
+     'from' =&gt; 'dir1',
+     'to' =&gt; 'dir/dir1'
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;rm (array(
+     'string' =&gt; 'file'
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;rm (array(
+     'string' =&gt; 'dir'
+));
 </verb>
 </p><p>
 All work as you would except them to. The major exception is:
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;touch ("file");
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;touch (array(
+     'string' =&gt; 'file'
+));
 </verb>
 </p><p>
 vs.
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;mkdir ("dir");
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mkdir (array(
+     'string' =&gt; 'dir'
+));
+
 </verb>
 <p>
 <itemize>
  <item>
-Users and groups and synonymous
+Users and groups are synonymous
 </itemize>
 </p><p>
-As far as the actual paths are concerned, users and groups are the same.
- The VFS has no built in ACL support, so /home/username works the same as /home/groupname.
- See the note on ACL support in the Notes section.
+As far as the actual paths are concerned, users and groups are
+ the same. /home/username works the same as /home/groupname.
 </p>
 <p>
 <itemize>
  <item>
-You should never have to know the real path of files
+You should never have to know the real paths of files
 </itemize>
 </p><p>
-One of the VFS's responsibilities is to translate paths for you. While
- you certainly <em>can</em> operate using full paths, it is much simpler to use the virtual
- paths. For example, instead of using:
+One of the VFS's responsibilities is to translate paths for you.
+ While you certainly <em>can</em> operate using full paths, it is much simpler
+ to use the virtual paths. For example, instead of using:
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;cp ("/var/www/phpgroupware/files/home/user/file1", "/var/www/phpgroupware/files/home/user/file2", array (RELATIVE_NONE|VFS_REAL, RELATIVE_NONE|VFS_REAL));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/var/www/phpgroupware/files/home/user/file1',
+     'to' =&gt; '/var/www/phpgroupware/files/home/user/file2',
+     'relatives' =&gt; array(
+          RELATIVE_NONE|VFS_REAL,
+          RELATIVE_NONE|VFS_REAL
+     )
+));
 </verb>
 </p><p>
 you might use
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;cp ("/home/user/file1", "/home/user/file2", array (RELATIVE_NONE, RELATIVE_NONE));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/home/user/file1',
+     'to' =&gt; '/home/user/file2',
+     'relatives' =&gt; array(
+          RELATIVE_NONE,
+          RELATIVE_NONE
+     )
+));
 </verb>
 </p><p>
 (We'll get to the RELATIVE's in a minute.)
 </p>
 <p>
-Site administrators should be able to move their files dir around on their
- system and know that everything will continue to work smoothly.
+Site administrators should be able to move their files dir around
+ on their system and know that everything will continue to work smoothly.
 </p>
 <p>
 <itemize>
@@ -117,34 +154,40 @@ Site administrators should be able to move their files dir around on their
 Relativity is <em>vital</em>
 </itemize>
 </p><p>
-Relativity is a new feature in the VFS, and its importance cannot be stressed
- enough. It will make your life much easier, especially for file system intensive
- applications, but it will take some getting used to. If something doesn't work
- right the first time, chances are great it has to do with incorrect relativity
- settings. We will deal with relativity in depth in the Relativity section.
+Relativity is a new feature in the VFS, and its importance cannot
+ be stressed enough. It will make your life much easier, especially
+ for file system intensive applications, but it will take some getting
+ used to. If something doesn't work right the first time, chances
+ are great it has to do with incorrect relativity settings. We will
+ deal with relativity in depth in the Relativity section.
 </p>
 <sect>
 Basic Functions<label id="sec:basic_functions" >
 <p>
-These are two functions you'll need to know before we get into relativity.
+These are two functions you'll need to know before we get into
+ relativity.
 </p>
 <sect1>
 path_parts ()<label id="sec:path_parts" >
 <p>
-The job of path_parts () is to translate any given file location into its
- many component parts for any relativity. The prototype for path_parts () is:
+The job of path_parts () is to translate any given file location
+ into its many component parts for any relativity. The values passed
+ to path_parts () are:
 </p>
 <p>
 <verb>
-function path_parts (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;object = True)
+string
+relatives
+object
 </verb>
 </p><p>
-&dollar;string is the path you want to translate, &dollar;relatives is
- the standard relativity array, and &dollar;object specifies how you would like
- the return value: if &dollar;object is True, an object will be returned; if
- &dollar;object is False, an array will be returned. I think you'll find the
- object easier to deal with, and we'll be using it throughout this document.
- The most important returned values (but not all) for path_parts () are:
+'string' is the path you want to translate, 'relatives' is the
+ standard relativity array, and 'object' specifies how you would like
+ the return value: if 'object' is True, an object will be returned;
+ if 'object' is False, an array will be returned. I think you'll find
+ the object easier to deal with, and we'll be using it throughout
+ this document. The most important returned values (but not all) for
+ path_parts () are:
 </p>
 <p>
 <verb>
@@ -158,16 +201,22 @@ real_extra_path
 real_name
 </verb>
 </p><p>
-Just like you would think, fake_full_path contains the full virtual path
- of &dollar;string, and real_full_path contains the full real path of &dollar;string.
- The fake_name and real_name variables should always be the same, and contain
- the final file or directory name. The leading_dirs contain everything except
- the name, and the extra_path is everything from the / before "home" to the end
- of the leading_dirs. To better illustrate, here is an example:
+Just like you would think, fake_full_path contains the full virtual
+ path of 'string', and real_full_path contains the full real path
+ of 'string'. The fake_name and real_name variables should always
+ be the same, and contain the final file or directory name. The leading_dirs
+ contain everything except the name, and the extra_path is everything
+ from the / before "home" to the end of the leading_dirs. To better
+ illustrate, here is an example:
 </p>
 <p>
 <verb>
-&dollar;p = &dollar;phpgw-&gt;vfs-&gt;path_parts ("/home/jason/dir/file", array (RELATIVE_NONE));
+&dollar;p = &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;path_parts (array(
+     'string' =&gt; '/home/jason/dir/file',
+     'relatives' =&gt; array(
+         RELATIVE_NONE
+     )
+));
 </verb>
 <p>
 <itemize>
@@ -190,33 +239,50 @@ Just like you would think, fake_full_path contains the full virtual path
 &dollar;p-&gt;real_name - file
 </itemize>
 </p><p>
-As you can see, path_parts () is a very useful function and will save you
- from doing those darn substr ()'s yourself. For those of you used to the prior
- VFS, note that <em>getabsolutepath () is depreciated</em>. getabsolutepath () still
- exists (albeit in a much different form), and is responsible for some of the
- path translation, but it is an <em>internal</em> function only. Applications should
- only use path_parts (). We have shown you how to use path_parts () so you can
- experiment with it using different paths and relativities as we explore relativity.
+As you can see, path_parts () is a very useful function and will
+ save you from doing those darn substr ()'s yourself. For those of
+ you used to the prior VFS, note that <em>getabsolutepath () is depreciated</em>.
+ getabsolutepath () still exists (albeit in a much different form),
+ and is responsible for some of the path translation, but it is an
+ <em>internal</em> function only. Applications should only use path_parts ().
+ We have shown you how to use path_parts () so you can experiment
+ with it using different paths and relativities as we explore relativity.
 </p>
 <sect1>
 cd ()<label id="sec:cd" >
 <p>
-Part of the overall goal for the VFS in phpGroupWare is to give the user
- a seamless experience during their session. For example, if they upload a file
- using a file manager to /home/my_group/project1, and then go to download an
- email attachment, the default directory will be /home/my_group/project1. This
- is accomplished using the cd () function. The prototype and examples: 
+Part of the overall goal for the VFS in phpGroupWare is to give
+ the user a seamless experience during their session. For example,
+ if they upload a file using a file manager to the directory /home/my_group/project1,
+ and then go to download an email attachment, the default directory
+ will be /home/my_group/project1. This is accomplished using the cd
+ () function. Examples: 
 </p>
 <p>
 <verb>
-function cd (&dollar;target = &quot;/&quot;, &dollar;relative = True, &dollar;relatives = array (RELATIVE_CURRENT))
-&dollar;phpgw-&gt;vfs-&gt;cd ("/");     /* cd to their home directory */
-&dollar;phpgw-&gt;vfs-&gt;cd ("/home/jason/dir", False, array (RELATIVE_NONE)); /* cd to /home/jason/dir */
-&dollar;phpgw-&gt;vfs-&gt;cd ("dir2", True); /* When following the above, cd's to /home/jason/dir/dir2 */
+/* cd to their home directory */
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cd (array(
+     'string' =&gt; '/'
+));
+
+/* cd to /home/jason/dir */
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cd (array(
+     'string' =&gt; '/home/jason/dir',
+     'relative' =&gt; False,
+     'relatives' =&gt; array(
+          RELATIVE_NONE
+     )
+));
+
+/* When following the above, cd's to /home/jason/dir/dir2 */
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cd (array(
+     'string' =&gt; 'dir2',
+     'relative' =&gt; True
+));
 </verb>
 </p><p>
-If &dollar;relatives is True, the &dollar;target is simply appended to
- the current path. If you want to know what the current path is, use &dollar;phpgw-&gt;vfs-&gt;pwd
+If 'relative' is True, the 'string' is simply appended to the
+ current path. If you want to know what the current path is, use &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;pwd
  ().
 </p>
 <p>
@@ -225,36 +291,44 @@ Now you're ready for relativity.
 <sect>
 Relativity<label id="sec:relativity" >
 <p>
-Ok, just one last thing before we get into relativity. You will notice
- throughout the examples the use of &dollar;fakebase. &dollar;phpgw-&gt;vfs&gt;fakebase
- is by default "/home". The old VFS was hard-coded to use "/home", but the naming
- choice for this is now up to administrators. See the "Notes - Fakebase directory"
- section for more information. Throughout the rest of this document, you will
- see &dollar;fakebase used in calls to the VFS, and /home used in actual paths.
- <em>You should always use &dollar;fakebase when making applications. </em>I suggest
- doing &dollar;fakebase = &dollar;phpgw-&gt;vfs-&gt;fakebase; right off the
- bat to keep things neater.
+Ok, just one last thing before we get into relativity. You will
+ notice throughout the examples the use of &dollar;fakebase. &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;fakebase
+ is by default '/home'. The old VFS was hard-coded to use '/home',
+ but the naming choice for this is now up to administrators. See the
+ <ref id="sec:fakebase" name="Fakebase directory (changing /home)" > section for more information. Throughout the rest of this document,
+ you will see &dollar;fakebase used in calls to the VFS, and /home
+ used in actual paths. <em>You should always use &dollar;fakebase when
+ making applications. </em>I suggest doing &dollar;fakebase = &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;fakebase;
+ right off the bat to keep things neater.
 </p>
 <sect1>
 What is it and how does it work?
 <p>
-One of the design challenges for a Virtual File System is to try to figure
- out whether the calling application is referring to a file inside or outside
- the virtual root, and if inside, exactly where. To solve this problem, the
- phpGroupWare VFS uses RELATIVE defines that are used in bitmasks passed to
- each function. The result is that any set of different relativities can be
- used in combination with each other. Let's look at a few examples. Say you
- want to move "logo.png" from the user's home directory to the current directory.
+One of the design challenges for a Virtual File System is to
+ try to figure out whether the calling application is referring to
+ a file inside or outside the virtual root, and if inside, exactly
+ where. To solve this problem, the phpGroupWare VFS uses RELATIVE
+ defines that are used in bitmasks passed to each function. The result
+ is that any set of different relativities can be used in combination
+ with each other. Let's look at a few examples. Say you want to move
+ 'logo.png' from the user's home directory to the current directory.
  
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;mv ("logo.png", "", array (RELATIVE_USER, RELATIVE_ALL));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mv (array(
+    'from' =&gt; 'logo.png',
+    'to' =&gt; 'logo.png',
+    'relatives' =&gt; array(
+          RELATIVE_USER,
+          RELATIVE_ALL
+     )
+));
 </verb>
 </p><p>
 RELATIVE_USER means relative to the user's home directory. RELATIVE_ALL
- means relative to the current directory, as set by cd () and as reported by
- pwd (). So if the current directory was "&dollar;fakebase/my_group/project1",
+ means relative to the current directory, as set by cd () and as reported
+ by pwd (). So if the current directory was "&dollar;fakebase/my_group/project1",
  the call to mv () would be processed as:
 </p>
 <p>
@@ -266,86 +340,105 @@ and the actual file system call would be:
 </p>
 <p>
 <verb>
-rename ("/var/www/phpgroupware/files/home/jason/logo.php", "/var/www/phpgroupware/files/home/my_group/project1/logo.png");
+rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware/files/home/my_group/project1/logo.png');
 </verb>
 </p><p>
-Those used to the old VFS will note that you do not have to translate the
- path beforehand. Let's look at another example. Suppose you were moving an
- email attachment stored in phpGroupWare's temporary directory to the "attachments"
- directory within the user's home directory (we're assuming the attachments
- directory exists). Note that the temporary directory is <em>outside</em> the virtual
- root.
+Those used to the old VFS will note that you do not have to translate
+ the path beforehand. Let's look at another example. Suppose you were
+ moving an email attachment stored in phpGroupWare's temporary directory
+ to the 'attachments' directory within the user's home directory (we're
+ assuming the attachments directory exists). Note that the temporary
+ directory is <em>outside</em> the virtual root.
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;mv ("&dollar;phpgw_info&lsqb;server&rsqb;&lsqb;temp_dir&rsqb;/&dollar;randomdir/&dollar;randomfile", "attachments/actual_name.ext", array (RELATIVE_NONE|VFS_REAL, RELATIVE_USER));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mv (array(
+     'from' =&gt; &dollar;GLOBALS&lsqb;'phpgw_info'&rsqb;&lsqb;'server'&rsqb;&lsqb;'temp_dir'&rsqb; . '/' . &dollar;randomdir . '/' . &dollar;randomfile,
+     'to' =&gt; 'attachments/actual_name.ext',
+     'relatives' =&gt; array(
+          RELATIVE_NONE|VFS_REAL,
+          RELATIVE_USER
+     )
+));
 </verb>
 </p><p>
-&dollar;randomdir and &dollar;randomfile are what the directory and file
- might be called before they are given a proper name by the user, which is actual_name.ext
- in this example. RELATIVE_NONE is the define for using full path names. However,
- RELATIVE_NONE is still relative to the virtual root, so we pass along VFS_REAL
- as well, to say that the file is <em>outside</em> the virtual root, somewhere else in
- the file system. Once again, RELATIVE_USER means relative to the user's home
- directory. So the actual file system call might look like this (keep in mind
- that &dollar;randomdir and &dollar;randomfile are just random strings):
+&dollar;randomdir and &dollar;randomfile are what the directory
+ and file might be called before they are given a proper name by the
+ user, which is actual_name.ext in this example. RELATIVE_NONE is
+ the define for using full path names. However, RELATIVE_NONE is still
+ relative to the virtual root, so we pass along VFS_REAL as well,
+ to say that the file is <em>outside</em> the virtual root, somewhere else
+ in the file system. Once again, RELATIVE_USER means relative to the
+ user's home directory. So the actual file system call might look
+ like this (keep in mind that &dollar;randomdir and &dollar;randomfile
+ are just random strings):
 </p>
 <p>
 <verb>
-rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext");
+rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext');
 </verb>
 </p><p>
-Of course you don't have to know that, nor should you be concerned with
- it; you can take it for granted that the VFS will translate the paths correctly.
- Let's take a look at one more example, this time using the RELATIVE_USER_APP
- define. RELATIVE_USER_APP is used to store quasi-hidden application files,
- similar to the Unix convention of &tilde;/.appname. It simply appends .appname
- to the user's home directory. For example, if you were making an HTML editor
- application named htmledit, and wanted to keep a backup file in case something
- goes wrong, you would use RELATIVE_USER_APP to store it:
+Of course you don't have to know that, nor should you be concerned
+ with it; you can take it for granted that the VFS will translate
+ the paths correctly. Let's take a look at one more example, this
+ time using the RELATIVE_USER_APP define. RELATIVE_USER_APP is used
+ to store quasi-hidden application files, similar to the Unix convention
+ of &tilde;/.appname. It simply appends .appname to the user's home
+ directory. For example, if you were making an HTML editor application
+ named 'htmledit', and wanted to keep a backup file in case something
+ goes wrong, you could use RELATIVE_USER_APP to store it:
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;write ("file.name&tilde;", array (RELATIVE_USER_APP), &dollar;contents);
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;write (array(
+     'string' =&gt; 'file.name&tilde;',
+     'relatives' =&gt; array(
+          RELATIVE_USER_APP
+     ),
+     'content' =&gt; &dollar;contents
+));
 </verb>
 </p><p>
-This assumes that &tilde;/.htmledit exists of course. The backup file "file.name&tilde;"
- would then be written in &dollar;fakebase/jason/.htmledit/file.name&tilde;.
- Note that storing files like this might not be as good of a solution as storing
- them in the temporary directory or in the database. But it is there in case
- you need it.
+This assumes that &tilde;/.htmledit exists of course. The backup
+ file "file.name&tilde;" would then be written in &dollar;fakebase/jason/.htmledit/file.name&tilde;.
+ Note that storing files like this might not be as good of a solution
+ as storing them in the temporary directory or in the database. But
+ it is there in case you need it.
 </p>
 <sect1>
 Complete List<label id="sec:relatives_complete_list" >
 <p>
-Here is the complete list of RELATIVE defines, and what they do:
+Here is the complete list of RELATIVE defines, and what they
+ do:
 </p>
 <p>
 <descrip>
  <tag>
-RELATIVE_ROOT</tag>Don't translate the path at all. Just prepends a /.
- You'll probably want to use RELATIVE_NONE though, which handles both virtual
- and real files.
+RELATIVE_ROOT</tag>Don't translate the path at all. Just prepends
+ a /. You'll probably want to use RELATIVE_NONE though, which handles
+ both virtual and real files.
  <tag>
 RELATIVE_USER</tag>User's home directory
  <tag>
-RELATIVE_CURR_USER</tag>Current user's home directory. If the current
- directory is &dollar;fakebase/my_group/project1, this will return is &dollar;fakebase/my_group
+RELATIVE_CURR_USER</tag>Current user's home directory. If the
+ current directory is &dollar;fakebase/my_group/project1, this will
+ return is &dollar;fakebase/my_group
  <tag>
-RELATIVE_USER_APP</tag>Append .appname to the user's home directory, where
- appname is the current application's appname
+RELATIVE_USER_APP</tag>Append .appname to the user's home directory,
+ where appname is the current application's appname
  <tag>
-RELATIVE_PATH</tag>DO NOT USE. Relative to the current directory, used
- in RELATIVE_ALL
+RELATIVE_PATH</tag>DO NOT USE. Relative to the current directory,
+ used in RELATIVE_ALL
  <tag>
-RELATIVE_NONE</tag>Not relative to anything. Use this with VFS_REAL for
- files outside the virtual root. Note that using RELATIVE_NONE by itself still
- means relative to the virtual root
+RELATIVE_NONE</tag>Not relative to anything. Use this with VFS_REAL
+ for files outside the virtual root. Note that using RELATIVE_NONE
+ by itself still means relative to the virtual root
  <tag>
-RELATIVE_CURRENT</tag>An alias for the currently set RELATIVE define,
- or RELATIVE_ALL if none is set (see the Defaults section)
+RELATIVE_CURRENT</tag>An alias for the currently set RELATIVE
+ define, or RELATIVE_ALL if none is set (see the Defaults section)
  <tag>
-VFS_REAL</tag>File is outside of the virtual root. Usually used with RELATIVE_NONE
+VFS_REAL</tag>File is outside of the virtual root. Usually used
+ with RELATIVE_NONE
  <tag>
 RELATIVE_ALL</tag>Relative to the current directory. Use RELATIVE_ALL<em>
  </em>instead of RELATIVE_PATH
@@ -353,664 +446,63 @@ RELATIVE_ALL</tag>Relative to the current directory. Use RELATIVE_ALL<em>
 </p><sect1>
 Defaults<label id="sec:relatives_defaults" >
 <p>
-You might be thinking to yourself that passing along RELATIVE defines with
- every VFS call is overkill, especially if your application always uses the
- same relativity. The default RELATIVE define for all VFS calls is RELATIVE_CURRENT.
- RELATIVE_CURRENT itself defaults to RELATIVE_ALL (relative to the current path),
- <em>unless</em> your application sets a specific relativity. If your application requires
- most of the work to be done outside of the virtual root, you may wish to set
- RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is the function
- to do this. For example:
+You might be thinking to yourself that passing along RELATIVE
+ defines with every VFS call is overkill, especially if your application
+ always uses the same relativity. The default RELATIVE define for
+ all VFS calls is RELATIVE_CURRENT. RELATIVE_CURRENT itself defaults
+ to RELATIVE_ALL (relative to the current path), <em>unless</em> your application
+ sets a specific relativity. If your application requires most of
+ the work to be done outside of the virtual root, you may wish to
+ set RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is
+ the function to do this. For example:
 </p>
 <p>
 <verb>
-&dollar;phpgw-&gt;vfs-&gt;set_relative (RELATIVE_NONE|VFS_REAL);
-&dollar;phpgw-&gt;vfs-&gt;read ("/etc/passwd");
-&dollar;phpgw-&gt;vfs-&gt;cp ("/usr/include/stdio.h", "/tmp/stdio.h");
-&dollar;phpgw-&gt;vfs-&gt;cp ("/usr/share/pixmaps/yes.xpm", "icons/yes.xpm", array (RELATIVE_CURRENT, RELATIVE_USER));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;set_relative (array(
+     'mask' =&gt; RELATIVE_NONE|VFS_REAL
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;read (array(
+     'string' =&gt; '/etc/passwd'
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/usr/include/stdio.h',
+     'to' =&gt; '/tmp/stdio.h'
+));
+
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/usr/share/pixmaps/yes.xpm',
+     'to' =&gt; 'icons/yes.xpm',
+     'relatives' =&gt; array(
+          RELATIVE_CURRENT,
+          RELATIVE_USER
+     )
+));
 </verb>
 </p><p>
-You should notice that no relativity array is needed in the other calls
- that refer to files outside the virtual root, but one is needed for calls that
- include files inside the virtual root. Any RELATIVE define can be set as the
- default and works in the same fashion. To retrieve the currently set define,
- use get_relative (). Note that the relativity is reset after each page request;
- that is, it's good only for the life of the current page loading, and is not
- stored in session management.
+You should notice that no relativity array is needed in the other
+ calls that refer to files outside the virtual root, but one is needed
+ for calls that include files inside the virtual root. Any RELATIVE
+ define can be set as the default and works in the same fashion. To
+ retrieve the currently set define, use get_relative (). Note that
+ the relativity is reset after each page request; that is, it's good
+ only for the life of the current page loading, and is not stored
+ in session management.
 </p>
 <sect>
 Function reference<label id="sec:function_reference" >
-<sect1>
-About<label id="sec:function_reference_about" >
 <p>
-This function reference is periodically auto-generated from the inline
- comments in phpgwapi/inc/class.vfs.inc.php. For the most up-to-date (and nicer
- looking) reference, see class.vfs.inc.php. This reference is created as a separate
- DocBook document (using the inline2lyx.pl script), so it might look a bit out
- of place.
+To view the function reference for the VFS, use the doc/inlinedocparser.php
+ script that comes with phpGroupWare, ie <url url="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php" name="http://localhost/doc/inlinedocparser.php?fn=class.vfs_sql.inc.php">.
 </p>
-<sect1>
-class vfs<label id="sec:		class vfs" >
-<p>
-abstract: virtual file system
-</p>
-<p>
-description: Authors: Zone, Seek3r
-</p>
-<sect1>
-class path_class<label id="sec:	class path_class" >
-<p>
-abstract: helper class for path_parts
-</p>
-<sect1>
- vfs<label id="sec:	 vfs" >
-<p>
-abstract: constructor, sets up variables
-</p>
-<p>
-<verb>
-function vfs ()
-</verb>
-</p><sect1>
- set_relative<label id="sec:	 set_relative" >
-<p>
-abstract: Set path relativity
-</p>
-<p>
-param: &dollar;mask Relative bitmask (see RELATIVE_ defines)
-</p>
-<p>
-<verb>
-function set_relative (&dollar;mask)
-</verb>
-</p><sect1>
- get_relative<label id="sec:	 get_relative" >
-<p>
-abstract: Return relativity bitmask
-</p>
-<p>
-discussion: Returns relativity bitmask, or the default of &quot;completely
- relative&quot; if unset
-</p>
-<p>
-<verb>
-function get_relative ()
-</verb>
-</p><sect1>
-  sanitize<label id="sec: 	 sanitize" >
-<p>
- abstract: Removes leading .'s from &dollar;string
-</p>
-<p>
-discussion: You should not pass all filenames through sanitize () unless
- you plan on rejecting
-</p>
-<p>
-.files.  Instead, pass the name through securitycheck () first, and if
- it fails,
-</p>
-<p>
-pass it through sanitize
-</p>
-<p>
-param: &dollar;string string to sanitize
-</p>
-<p>
-result: &dollar;string without it's leading .'s
-</p>
-<p>
-<verb>
-function sanitize (&dollar;string)
-</verb>
-</p><sect1>
- securitycheck<label id="sec:	 securitycheck" >
-<p>
-abstract: Security check function
-</p>
-<p>
-discussion: Checks for basic violations such as ..
-</p>
-<p>
-If securitycheck () fails, run your string through vfs-&gt;sanitize ()
-</p>
-<p>
-param: &dollar;string string to check security of
-</p>
-<p>
-result: Boolean True/False.  True means secure, False means insecure
-</p>
-<p>
-<verb>
-function securitycheck (&dollar;string)
-</verb>
-</p><sect1>
- db_clean<label id="sec:	 db_clean" >
-<p>
-abstract: Clean &dollar;string for use in database queries
-</p>
-<p>
-param: &dollar;string String to clean
-</p>
-<p>
-result: Cleaned version of &dollar;string
-</p>
-<p>
-<verb>
-function db_clean (&dollar;string)
-</verb>
-</p><sect1>
- path_parts<label id="sec:	 path_parts" >
-<p>
-abstract: take a real or fake pathname and return an array of its component
- parts
-</p>
-<p>
-param: &dollar;string full real or fake path
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-param: &dollar;object True returns an object instead of an array
-</p>
-<p>
-result: &dollar;rarray/&dollar;robject Array or object containing the fake
- and real component parts of the path
-</p>
-<p>
-discussion: Returned values are:
-</p>
-<p>
-mask
-</p>
-<p>
-outside
-</p>
-<p>
-fake_full_path
-</p>
-<p>
-fake_leading_dirs
-</p>
-<p>
-fake_extra_path
-</p>
-<p>
-fake_name
-</p>
-<p>
-real_full_path
-</p>
-<p>
-real_leading_dirs
-</p>
-<p>
-real_extra_path
-</p>
-<p>
-real_name
-</p>
-<p>
-fake_full_path_clean
-</p>
-<p>
-fake_leading_dirs_clean
-</p>
-<p>
-fake_extra_path_clean
-</p>
-<p>
-fake_name_clean
-</p>
-<p>
-real_full_path_clean
-</p>
-<p>
-real_leading_dirs_clean
-</p>
-<p>
-real_extra_path_clean
-</p>
-<p>
-real_name_clean
-</p>
-<p>
-&quot;clean&quot; values are run through vfs-&gt;db_clean () and
-</p>
-<p>
-are safe for use in SQL queries that use key='value'
-</p>
-<p>
-They should be used ONLY for SQL queries, so are used
-</p>
-<p>
-mostly internally
-</p>
-<p>
-mask is either RELATIVE_NONE or RELATIVE_NONE|VFS_REAL,
-</p>
-<p>
-and is used internally
-</p>
-<p>
-outside is boolean, True if &dollar;relatives contains VFS_REAL
-</p>
-<p>
-<verb>
-function path_parts (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;object = True)
-</verb>
-</p><sect1>
- getabsolutepath<label id="sec:	 getabsolutepath" >
-<p>
-abstract: get the absolute path
-</p>
-<p>
-param: &dollar;target defaults to False, directory/file to get path of,
- relative to &dollar;relatives&lsqb;0&rsqb;
-</p>
-<p>
-param: &dollar;mask Relativity bitmask (see RELATIVE_ defines).  RELATIVE_CURRENT
- means use &dollar;this-&gt;relative
-</p>
-<p>
-param: &dollar;fake Returns the &quot;fake&quot; path, ie /home/user/dir/file
- (not always possible.  use path_parts () instead)
-</p>
-<p>
-result: &dollar;basedir Full fake or real path
-</p>
-<p>
-<verb>
-function getabsolutepath (&dollar;target = False, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;fake = True)
-</verb>
-</p><sect1>
- cd<label id="sec:	 cd" >
-<p>
-abstract: Change directory
-</p>
-<p>
-discussion: To cd to the files root &quot;/&quot;, use cd (&quot;/&quot;,
- False, array (RELATIVE_NONE));
-</p>
-<p>
-param: &dollar;target default &quot;/&quot;.  directory to cd into.  if
- &quot;/&quot; and &dollar;relative is True, uses &quot;/home/&lt;working_lid&gt;&quot;;
-</p>
-<p>
-param: &dollar;relative default True/relative means add target to current
- path, else pass &dollar;relative as mask to getabsolutepath()
-</p>
-<p>
-<verb>
-function cd (&dollar;target = &quot;/&quot;, &dollar;relative = True, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- pwd<label id="sec:	 pwd" >
-<p>
-abstract: current working dir
-</p>
-<p>
-param: &dollar;full default True returns full fake path, else just the
- extra dirs (false strips the leading /)
-</p>
-<p>
-result: &dollar;currentdir currentdir
-</p>
-<p>
-<verb>
-function pwd (&dollar;full = True)
-</verb>
-</p><sect1>
- read<label id="sec:	 read" >
-<p>
-abstract: return file contents
-</p>
-<p>
-param: &dollar;file filename
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: &dollar;contents Contents of &dollar;file, or False if file cannot
- be read
-</p>
-<p>
-<verb>
-function read (&dollar;file, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- write<label id="sec:	 write" >
-<p>
-abstract: write to a file
-</p>
-<p>
-param: &dollar;file file name
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-param: &dollar;contents contents
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-<verb>
-function write (&dollar;file, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;contents)
-</verb>
-</p><sect1>
- touch<label id="sec:	 touch" >
-<p>
-abstract: Create blank file &dollar;file or set the modification time and
- modified by of &dollar;file to current time and user
-</p>
-<p>
-param: &dollar;file File to touch or set modifies
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-<verb>
-function touch (&dollar;file, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- cp<label id="sec:	 cp" >
-<p>
-abstract: copy file
-</p>
-<p>
-param: &dollar;from from file/directory
-</p>
-<p>
-param: &dollar;to to file/directory
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: boolean True/False
-</p>
-<p>
-<verb>
-function cp (&dollar;from, &dollar;to, &dollar;relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- mv<label id="sec:	 mv" >
-<p>
-abstract: move file/directory
-</p>
-<p>
-param: &dollar;from from file/directory
-</p>
-<p>
-param: &dollar;to to file/directory
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: boolean True/False
-</p>
-<p>
-<verb>
-function mv (&dollar;from, &dollar;to, &dollar;relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- move<label id="sec:	 move" >
-<p>
-abstract: shortcut to mv
-</p>
-<p>
-<verb>
-function move (&dollar;from, &dollar;to, &dollar;relatives = array (RELATIVE_CURRENT, RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- rm<label id="sec:	 rm" >
-<p>
-abstract: delete file/directory
-</p>
-<p>
-param: &dollar;string file/directory to delete
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: boolean True/False
-</p>
-<p>
-<verb>
-function rm (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- delete<label id="sec:	 delete" >
-<p>
-abstract: shortcut to rm
-</p>
-<p>
-<verb>
-function delete (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- mkdir<label id="sec:	 mkdir" >
-<p>
-abstract: make a new directory
-</p>
-<p>
-param: &dollar;dir Directory name
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: boolean True on success
-</p>
-<p>
-<verb>
-function mkdir (&dollar;dir, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- set_attributes<label id="sec:	 set_attributes" >
-<p>
-abstract: Update database entry for &dollar;file with the attributes in
- &dollar;attributes
-</p>
-<p>
-param: &dollar;file file/directory to update
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-param: &dollar;attributes keyed array of attributes.  key is attribute
- name, value is attribute value
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-discussion: Valid attributes are:
-</p>
-<p>
-owner_id
-</p>
-<p>
-createdby_id
-</p>
-<p>
-modifiedby_id
-</p>
-<p>
-created
-</p>
-<p>
-modified
-</p>
-<p>
-size
-</p>
-<p>
-mime_type
-</p>
-<p>
-deleteable
-</p>
-<p>
-comment
-</p>
-<p>
-app
-</p>
-<p>
-<verb>
-function set_attributes (&dollar;file, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;attributes = array ())
-</verb>
-</p><sect1>
- correct_attributes<label id="sec:	 correct_attributes" >
-<p>
-abstract: Set the correct attributes for &dollar;string (e.g. owner)
-</p>
-<p>
-param: &dollar;string File/directory to correct attributes of
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-<verb>
-function correct_attributes (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- file_type<label id="sec:	 file_type" >
-<p>
-abstract: return file/dir type (MIME or other)
-</p>
-<p>
-param: &dollar;file File or directory path (/home/user/dir/dir2/dir3, /home/user/dir/dir2/file)
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: MIME type, &quot;Directory&quot;, or nothing if MIME type is not
- known
-</p>
-<p>
-<verb>
-function file_type (&dollar;file, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- file_exists<label id="sec:	 file_exists" >
-<p>
-abstract: check if file/directory exists
-</p>
-<p>
-param: &dollar;string file/directory to check existance of
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-<verb>
-function file_exists (&dollar;string, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- checkperms<label id="sec:	 checkperms" >
-<p>
-abstract: Check if you have write access to create files in &dollar;dir
-</p>
-<p>
-discussion: This isn't perfect, because vfs-&gt;touch () returns True even
-</p>
-<p>
-if only the database entry worked.  ACLs need to be
-</p>
-<p>
-implemented for better permission checking.  It's
-</p>
-<p>
-also pretty slow, so I wouldn't recommend using it
-</p>
-<p>
-often
-</p>
-<p>
-param: &dollar;dir Directory to check access of
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-result: Boolean True/False
-</p>
-<p>
-<verb>
-function checkperms (&dollar;dir, &dollar;relatives = array (RELATIVE_CURRENT))
-</verb>
-</p><sect1>
- ls<label id="sec:	 ls" >
-<p>
-abstract: get directory listing
-</p>
-<p>
-discussion: Note: the entries are not guaranteed to be returned in any
- logical order
-</p>
-<p>
-param: &dollar;dir Directory
-</p>
-<p>
-param: &dollar;relatives Relativity array
-</p>
-<p>
-param: &dollar;checksubdirs Boolean, recursively list all sub directories
- as well?
-</p>
-<p>
-param: &dollar;mime_type Only return entries matching MIME-type &dollar;mime_type.
-  Can be &quot;Directory&quot; or &quot;&bsol;&quot; for those without MIME
- types
-</p>
-<p>
-param: &dollar;nofiles Boolean.  True means you want to return just the
- information about the directory &dollar;dir.  If &dollar;dir is a file, &dollar;nofiles
- is implied.  This is the equivalent of 'ls -ld &dollar;dir'
-</p>
-<p>
-result: array of arrays.  Subarrays contain full info for each file/dir.
-</p>
-<p>
-<verb>
-function ls (&dollar;dir = False, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;checksubdirs = True, &dollar;mime_type = False, &dollar;nofiles = False)
-</verb>
-</p><sect1>
- dir<label id="sec:	 dir" >
-<p>
-abstract: shortcut to ls
-</p>
-<p>
-<verb>
-function dir (&dollar;dir = False, &dollar;relatives = array (RELATIVE_CURRENT), &dollar;checksubdirs = True, &dollar;mime_type = False, &dollar;nofiles = False)
-</verb>
-</p><sect>
+<sect>
 Notes<label id="sec:notes" >
 <sect1>
 Database<label id="sec:database" >
 <p>
-Data about the files and directories within the virtual root is kept in
- the SQL database. Currently, this information includes:
+Data about the files and directories within the virtual root
+ is kept in the SQL database. Currently, this information includes:
 </p>
 <p>
 <itemize>
@@ -1040,79 +532,57 @@ App (appname of application that created the file)
 Directory (directory the file or directory is in)
  <item>
 Name (name of file or directory)
+ <item>
+Link directory (if the file or directory is linked, what the
+ actual directory is)
+ <item>
+Link name (if the file or directory is linked, what the actual
+ name is)
+ <item>
+Version (numeric version of the file)
 </itemize>
 </p><p>
-The internal names of these (the database column names) are stored in the
- &dollar;phpgw-&gt;vfs-&gt;attributes array, which is useful for loops, and
- is guaranteed to be up-to-date.
+The internal names of these (the database column names) are stored
+ in the &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;attributes
+ array, which is useful for loops, and is guaranteed to be up-to-date.
 </p>
 <p>
-
-</p>
-<p>
-Note that no information is kept about files outside the virtual root.
- If a file is moved outside, all records of it are delete from the database.
- If a file is moved into the virtual root, some information, specifically MIME-type,
- is not stored in the database. The vital information has defaults: owner is
- based on where the file is being stored; size is correctly read; deleteable
- is set to Y.
+Note that no information is kept about files outside the virtual
+ root. If a file is moved outside, all records of it are deleted from
+ the database (other than the journaling records). If a file is moved
+ into the virtual root, some information, specifically MIME-type,
+ is not always stored in the database. The vital information has defaults:
+ owner is based on where the file is being stored; size is correctly
+ read; deleteable is set to Y.
 </p>
 <sect1>
 ACL support<label id="sec:acl_support" >
 <p>
-Because of the many different ways the VFS can be used, complete ACL support
- is not built in. There is a bit of access control built in, just because of
- the way database queries are made. However, that is a discussion beyond the
- scope of this document. Full ACL support may be added at a later time. For
- now, it is fairly easy to add basic access control to your application by matching
- path expressions. The VFS always follows the same naming convention of &dollar;fakebase/userorgroup.
- So if you need to check if a user has access to &dollar;fakebase/whatever/dir/file,
- you need only know if they their username is 'whatever' or if they belong to
- the group 'whatever', and that the group has access to your application. Here
- is an example from PHPWebHosting:
+ACL support is built into the VFS. vfs-&gt;acl_check () does
+ the actual checking, and is called from all VFS functions as needed.
+ If the file or directory sent to acl_check () doesn't exist, the
+ permissions for the parent directory are used to determine access.
+ ACL checking can be overridden at any time by setting vfs-&gt;override_acl.
+ For example:
 </p>
 <p>
 <verb>
-&num;&num;&num;
-&num; First we get their memberships
-&num;&num;&num;
-
-&dollar;memberships = &dollar;phpgw-&gt;accounts-&gt;memberships (&dollar;account_id);
-
-&num;&num;&num;
-&num; We determine if they're in their home directory or a group's directory
-&num; If they request a group's directory, we ensure they have access to the group,
-&num; and the group has access to the app
-&num;&num;&num;
-
-if ((preg_match (&quot;+^&dollar;fakebase&bsol;/(.*)(&bsol;/|&dollar;)+U&quot;, &dollar;path, &dollar;matches)) &amp;&amp; &dollar;matches&lsqb;1&rsqb; != &dollar;account_lid)
-&lcub;
-     &dollar;phpgw-&gt;vfs-&gt;working_id = &dollar;phpgw-&gt;accounts-&gt;name2id (&dollar;matches&lsqb;1&rsqb;);
-     reset (&dollar;memberships);
-     while (list (&dollar;num, &dollar;group_array) = each (&dollar;memberships))
-     &lcub;
-          if (&dollar;matches&lsqb;1&rsqb; == &dollar;group_array&lsqb;&quot;account_name&quot;&rsqb;)
-          &lcub;
-               &dollar;group_ok = 1;
-               break;
-          &rcub;
-     &rcub;
-     if (!&dollar;group_ok)
-     &lcub;
-          echo &dollar;phpgw-&gt;common-&gt;error_list (array (&quot;You do not have access to group/directory &dollar;matches&lsqb;1&rsqb;&quot;));
-          exit;
-     &rcub;
-&rcub;
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;override_acl = 1;
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;mkdir (array(
+     'string' =&gt; &dollar;GLOBALS&lsqb;'fakebase'&rsqb;. '/' . &dollar;group_array&lsqb;'account_name'&rsqb;,
+     'relatives' =&gt; array(
+          RELATIVE_NONE
+     )
+));
+&dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;override_acl = 0;
 </verb>
-</p><p>
-You should also check if the group has access to your appilcation.
-</p>
-<sect1>
+</p><sect1>
 Function aliases<label id="sec:function_aliases" >
 <p>
-You might have noticed there are some functions that just pass the arguments
- on to other functions. These are provided in part because of legacy and in
- part for convenience. You can use either. Here is the list (alias -&gt; actual):
+You might have noticed there are some functions that just pass
+ the arguments on to other functions. These are provided in part because
+ of legacy and in part for convenience. You can use either. Here is
+ the list (alias -&gt; actual):
 </p>
 <p>
 <itemize>
@@ -1128,30 +598,32 @@ dir -&gt; ls
 </p><sect1>
 Fakebase directory (changing /home)<label id="sec:fakebase" >
 <p>
-The old VFS was hard-coded to use &quot;/home&quot; as the fake base directory,
+The old VFS was hard-coded to use '/home' as the fake base directory,
  even though the user never saw it. With the new system, crafty administrators
- may wish to change &quot;/home&quot; to something else, say &quot;/users&quot;
- or &quot;/public_html&quot;. The fake base directory name is stored in &dollar;phpgw-&gt;vfs-&gt;fakebase,
- and changing it will transparently change it throughout the VFS and all applications.
- However, this must be done <em>before</em> any data is in the VFS database. If you wish
- to change it afterwords, you'll have to manually update the database, replacing
- the old value with the new value. <em>Application programmers need to recognize
- that /home is not absolute, and use &dollar;phpgw-&gt;vfs-&gt;fakebase instead</em>.
- I suggest setting &dollar;fakebase = &dollar;phpgw-&gt;vfs-&gt;fakebase; right
- off the bat to keep things neater.
+ may wish to change '/home' to something else, say '/users' or '/public_html'.
+ The fake base directory name is stored in &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;fakebase,
+ and changing it will transparently change it throughout the VFS and
+ all applications. However, this must be done <em>before</em> any data is in
+ the VFS database. If you wish to change it afterwords, you'll have
+ to manually update the database, replacing the old value with the
+ new value. <em>Application programmers need to recognize that /home is
+ not absolute, and use &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;fakebase
+ instead</em>. I suggest setting &dollar;fakebase = &dollar;GLOBALS&lsqb;'phpgw'&rsqb;-&gt;vfs-&gt;fakebase;
+ right off the bat to keep things neater.
 </p>
 <sect>
 About this Document
 <sect1>
 Copyright and License
 <p>
-Copyright (c) 2001 Jason Wies
+Copyright (c) 2001, 2002 Jason Wies
 </p>
 <p>
-Permission is granted to copy, distribute and/or modify this document under
- the terms of the GNU Free Documentation License, Version 1.1 or any later version
- published by the Free Software Foundation; with no Invarient Sections, with
- no Front-Cover Texts, and no Back-Cover Texts.
+Permission is granted to copy, distribute and/or modify this
+ document under the terms of the GNU Free Documentation License, Version
+ 1.1 or any later version published by the Free Software Foundation;
+ with no Invarient Sections, with no Front-Cover Texts, and no Back-Cover
+ Texts.
 </p>
 <p>
 A copy of the license is available at <url url="http://www.gnu.org/copyleft/fdl.html" name="http://www.gnu.org/copyleft/fdl.html">.
@@ -1161,11 +633,15 @@ History
 <p>
 Original document released in June 2001 by Jason Wies.
 </p>
+<p>
+Updated February 2002 to include arrayized parameters, single
+ quotes, and GLOBALS.
+</p>
 <sect1>
 Contributing
 <p>
-Contributions are always welcome. Please send to the current maintainer,
- Jason Wies, <url url="mailto:zone@users.sourceforge.net" name="zone@users.sourceforge.net">.
+Contributions are always welcome. Please send to the current
+ maintainer, Jason Wies, <url url="mailto:zone@phpgroupware.org" name="zone@phpgroupware.org">.
 </p>
 
 

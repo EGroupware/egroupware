@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <HTML>
 <HEAD>
- <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.7.4">
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.17">
  <TITLE>phpgwapi - VFS Class: Basics</TITLE>
  <LINK HREF="vfs-3.html" REL=next>
  <LINK HREF="vfs-1.html" REL=previous>
@@ -17,24 +17,28 @@
 <H2><A NAME="sec:prerequisites"></A> <A NAME="ss2.1">2.1</A> <A HREF="vfs.html#toc2.1">Prerequisites</A>
 </H2>
 
-<P>You must explicitly enable the VFS class. To do this, set "enable_vfs_class"
-to True in $phpgw_info[&quot;flags&quot;]. An example:</P>
+<P>You must explicitly enable the VFS class. To do this, set 'enable_vfs_class'
+to True in $GLOBALS['phpgw_info']['flags'].
+An example:</P>
 <P>
 <PRE>
-$phpgw_info[&quot;flags&quot;] = array(&quot;currentapp&quot; =&gt; &quot;phpwebhosting&quot;,
-&quot;noheader&quot; =&gt; False,
-&quot;noappheader&quot; =&gt; False,
-&quot;enable_vfs_class&quot; =&gt; True,
-&quot;enable_browser_class&quot; =&gt; True);
+$GLOBALS['phpgw_info']['flags'] = array(
+     'currentapp' =&gt; 'phpwebhosting',
+     'noheader' =&gt; False,
+     'noappheader' =&gt; False,
+     'enable_vfs_class' =&gt; True,
+     'enable_browser_class' =&gt; True
+);
 </PRE>
 </P>
 <H2><A NAME="sec:concepts"></A> <A NAME="ss2.2">2.2</A> <A HREF="vfs.html#toc2.2">Concepts</A>
 </H2>
 
-<P>The VFS in located in phpgwapi/inc/class.vfs.inc.php. You can look over
-it, but I don't suggest trying to understand how it works. It isn't necessary
-to know its internals to use it, but you may find the inline comments helpful.
-The basic things to keep in mind:</P>
+<P>The VFS in located in phpgwapi/inc/class.vfs_sql.inc.php. You
+can look over it, but I don't suggest trying to understand how it
+works. It isn't necessary to know its internals to use it, but you
+may find the inline comments helpful. The basic things to keep in
+mind:</P>
 <P>
 <UL>
 <LI>Files and directories are synonymous in almost all cases</LI>
@@ -42,64 +46,95 @@ The basic things to keep in mind:</P>
 </P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;mv ("file1", "dir/file2");
-$phpgw-&gt;vfs-&gt;mv ("dir1", "dir/dir1");
-$phpgw-&gt;vfs-&gt;rm ("file");
-$phpgw-&gt;vfs-&gt;rm ("dir");
+$GLOBALS['phpgw']-&gt;vfs-&gt;mv (array(
+     'from' =&gt; 'file1',
+     'to' =&gt; 'dir/file2'
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;mv (array(
+     'from' =&gt; 'dir1',
+     'to' =&gt; 'dir/dir1'
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;rm (array(
+     'string' =&gt; 'file'
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;rm (array(
+     'string' =&gt; 'dir'
+));
 </PRE>
 </P>
 <P>All work as you would except them to. The major exception is:</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;touch ("file");
+$GLOBALS['phpgw']-&gt;vfs-&gt;touch (array(
+     'string' =&gt; 'file'
+));
 </PRE>
 </P>
 <P>vs.</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;mkdir ("dir");
+$GLOBALS['phpgw']-&gt;vfs-&gt;mkdir (array(
+     'string' =&gt; 'dir'
+));
 </PRE>
 </P>
 <P>
 <UL>
-<LI>Users and groups and synonymous</LI>
+<LI>Users and groups are synonymous</LI>
 </UL>
 </P>
-<P>As far as the actual paths are concerned, users and groups are the same.
-The VFS has no built in ACL support, so /home/username works the same as /home/groupname.
-See the note on ACL support in the Notes section.</P>
+<P>As far as the actual paths are concerned, users and groups are
+the same. /home/username works the same as /home/groupname.</P>
 <P>
 <UL>
-<LI>You should never have to know the real path of files</LI>
+<LI>You should never have to know the real paths of files</LI>
 </UL>
 </P>
-<P>One of the VFS's responsibilities is to translate paths for you. While
-you certainly <EM>can</EM> operate using full paths, it is much simpler to use the virtual
-paths. For example, instead of using:</P>
+<P>One of the VFS's responsibilities is to translate paths for you.
+While you certainly <EM>can</EM> operate using full paths, it is much simpler
+to use the virtual paths. For example, instead of using:</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;cp ("/var/www/phpgroupware/files/home/user/file1", "/var/www/phpgroupware/files/home/user/file2", array (RELATIVE_NONE|VFS_REAL, RELATIVE_NONE|VFS_REAL));
+$GLOBALS['phpgw']-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/var/www/phpgroupware/files/home/user/file1',
+     'to' =&gt; '/var/www/phpgroupware/files/home/user/file2',
+     'relatives' =&gt; array(
+          RELATIVE_NONE|VFS_REAL,
+          RELATIVE_NONE|VFS_REAL
+     )
+));
 </PRE>
 </P>
 <P>you might use</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;cp ("/home/user/file1", "/home/user/file2", array (RELATIVE_NONE, RELATIVE_NONE));
+$GLOBALS['phpgw']-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/home/user/file1',
+     'to' =&gt; '/home/user/file2',
+     'relatives' =&gt; array(
+          RELATIVE_NONE,
+          RELATIVE_NONE
+     )
+));
 </PRE>
 </P>
 <P>(We'll get to the RELATIVE's in a minute.)</P>
-<P>Site administrators should be able to move their files dir around on their
-system and know that everything will continue to work smoothly.</P>
+<P>Site administrators should be able to move their files dir around
+on their system and know that everything will continue to work smoothly.</P>
 <P>
 <UL>
 <LI>Relativity is <EM>vital</EM></LI>
 </UL>
 </P>
-<P>Relativity is a new feature in the VFS, and its importance cannot be stressed
-enough. It will make your life much easier, especially for file system intensive
-applications, but it will take some getting used to. If something doesn't work
-right the first time, chances are great it has to do with incorrect relativity
-settings. We will deal with relativity in depth in the Relativity section.</P>
+<P>Relativity is a new feature in the VFS, and its importance cannot
+be stressed enough. It will make your life much easier, especially
+for file system intensive applications, but it will take some getting
+used to. If something doesn't work right the first time, chances
+are great it has to do with incorrect relativity settings. We will
+deal with relativity in depth in the Relativity section.</P>
 <HR>
 <A HREF="vfs-3.html">Next</A>
 <A HREF="vfs-1.html">Previous</A>

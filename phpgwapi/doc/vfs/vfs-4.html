@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <HTML>
 <HEAD>
- <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.7.4">
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.17">
  <TITLE>phpgwapi - VFS Class: Relativity</TITLE>
  <LINK HREF="vfs-5.html" REL=next>
  <LINK HREF="vfs-3.html" REL=previous>
@@ -14,34 +14,42 @@
 <HR>
 <H2><A NAME="sec:relativity"></A> <A NAME="s4">4.</A> <A HREF="vfs.html#toc4">Relativity</A></H2>
 
-<P>Ok, just one last thing before we get into relativity. You will notice
-throughout the examples the use of $fakebase. $phpgw-&gt;vfs&gt;fakebase
-is by default "/home". The old VFS was hard-coded to use "/home", but the naming
-choice for this is now up to administrators. See the "Notes - Fakebase directory"
-section for more information. Throughout the rest of this document, you will
-see $fakebase used in calls to the VFS, and /home used in actual paths.
-<EM>You should always use $fakebase when making applications. </EM>I suggest
-doing $fakebase = $phpgw-&gt;vfs-&gt;fakebase; right off the
-bat to keep things neater.</P>
+<P>Ok, just one last thing before we get into relativity. You will
+notice throughout the examples the use of $fakebase. $GLOBALS['phpgw']-&gt;vfs-&gt;fakebase
+is by default '/home'. The old VFS was hard-coded to use '/home',
+but the naming choice for this is now up to administrators. See the
+<A HREF="vfs-6.html#sec:fakebase">Fakebase directory (changing /home)</A> section for more information. Throughout the rest of this document,
+you will see $fakebase used in calls to the VFS, and /home
+used in actual paths. <EM>You should always use $fakebase when
+making applications. </EM>I suggest doing $fakebase = $GLOBALS['phpgw']-&gt;vfs-&gt;fakebase;
+right off the bat to keep things neater.</P>
 <H2><A NAME="ss4.1">4.1</A> <A HREF="vfs.html#toc4.1">What is it and how does it work?</A>
 </H2>
 
-<P>One of the design challenges for a Virtual File System is to try to figure
-out whether the calling application is referring to a file inside or outside
-the virtual root, and if inside, exactly where. To solve this problem, the
-phpGroupWare VFS uses RELATIVE defines that are used in bitmasks passed to
-each function. The result is that any set of different relativities can be
-used in combination with each other. Let's look at a few examples. Say you
-want to move "logo.png" from the user's home directory to the current directory.</P>
+<P>One of the design challenges for a Virtual File System is to
+try to figure out whether the calling application is referring to
+a file inside or outside the virtual root, and if inside, exactly
+where. To solve this problem, the phpGroupWare VFS uses RELATIVE
+defines that are used in bitmasks passed to each function. The result
+is that any set of different relativities can be used in combination
+with each other. Let's look at a few examples. Say you want to move
+'logo.png' from the user's home directory to the current directory.</P>
 
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;mv ("logo.png", "", array (RELATIVE_USER, RELATIVE_ALL));
+$GLOBALS['phpgw']-&gt;vfs-&gt;mv (array(
+    'from' =&gt; 'logo.png',
+    'to' =&gt; 'logo.png',
+    'relatives' =&gt; array(
+          RELATIVE_USER,
+          RELATIVE_ALL
+     )
+));
 </PRE>
 </P>
 <P>RELATIVE_USER means relative to the user's home directory. RELATIVE_ALL
-means relative to the current directory, as set by cd () and as reported by
-pwd (). So if the current directory was "$fakebase/my_group/project1",
+means relative to the current directory, as set by cd () and as reported
+by pwd (). So if the current directory was "$fakebase/my_group/project1",
 the call to mv () would be processed as:</P>
 <P>
 <PRE>
@@ -51,102 +59,140 @@ MOVE "$fakebase/jason/logo.png" TO "$fakebase/my_group/project1/logo.png"
 <P>and the actual file system call would be:</P>
 <P>
 <PRE>
-rename ("/var/www/phpgroupware/files/home/jason/logo.php", "/var/www/phpgroupware/files/home/my_group/project1/logo.png");
+rename ('/var/www/phpgroupware/files/home/jason/logo.php', '/var/www/phpgroupware/files/home/my_group/project1/logo.png');
 </PRE>
 </P>
-<P>Those used to the old VFS will note that you do not have to translate the
-path beforehand. Let's look at another example. Suppose you were moving an
-email attachment stored in phpGroupWare's temporary directory to the "attachments"
-directory within the user's home directory (we're assuming the attachments
-directory exists). Note that the temporary directory is <EM>outside</EM> the virtual
-root.</P>
+<P>Those used to the old VFS will note that you do not have to translate
+the path beforehand. Let's look at another example. Suppose you were
+moving an email attachment stored in phpGroupWare's temporary directory
+to the 'attachments' directory within the user's home directory (we're
+assuming the attachments directory exists). Note that the temporary
+directory is <EM>outside</EM> the virtual root.</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;mv ("$phpgw_info[server][temp_dir]/$randomdir/$randomfile", "attachments/actual_name.ext", array (RELATIVE_NONE|VFS_REAL, RELATIVE_USER));
+$GLOBALS['phpgw']-&gt;vfs-&gt;mv (array(
+     'from' =&gt; $GLOBALS['phpgw_info']['server']['temp_dir'] . '/' . $randomdir . '/' . $randomfile,
+     'to' =&gt; 'attachments/actual_name.ext',
+     'relatives' =&gt; array(
+          RELATIVE_NONE|VFS_REAL,
+          RELATIVE_USER
+     )
+));
 </PRE>
 </P>
-<P>$randomdir and $randomfile are what the directory and file
-might be called before they are given a proper name by the user, which is actual_name.ext
-in this example. RELATIVE_NONE is the define for using full path names. However,
-RELATIVE_NONE is still relative to the virtual root, so we pass along VFS_REAL
-as well, to say that the file is <EM>outside</EM> the virtual root, somewhere else in
-the file system. Once again, RELATIVE_USER means relative to the user's home
-directory. So the actual file system call might look like this (keep in mind
-that $randomdir and $randomfile are just random strings):</P>
+<P>$randomdir and $randomfile are what the directory
+and file might be called before they are given a proper name by the
+user, which is actual_name.ext in this example. RELATIVE_NONE is
+the define for using full path names. However, RELATIVE_NONE is still
+relative to the virtual root, so we pass along VFS_REAL as well,
+to say that the file is <EM>outside</EM> the virtual root, somewhere else
+in the file system. Once again, RELATIVE_USER means relative to the
+user's home directory. So the actual file system call might look
+like this (keep in mind that $randomdir and $randomfile
+are just random strings):</P>
 <P>
 <PRE>
-rename ("/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M", "/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext");
+rename ('/var/www/phpgroupware/tmp/0ak5adftgh7/jX42sC9M', '/var/www/phpgroupware/files/home/jason/attachments/actual_name.ext');
 </PRE>
 </P>
-<P>Of course you don't have to know that, nor should you be concerned with
-it; you can take it for granted that the VFS will translate the paths correctly.
-Let's take a look at one more example, this time using the RELATIVE_USER_APP
-define. RELATIVE_USER_APP is used to store quasi-hidden application files,
-similar to the Unix convention of ~/.appname. It simply appends .appname
-to the user's home directory. For example, if you were making an HTML editor
-application named htmledit, and wanted to keep a backup file in case something
-goes wrong, you would use RELATIVE_USER_APP to store it:</P>
+<P>Of course you don't have to know that, nor should you be concerned
+with it; you can take it for granted that the VFS will translate
+the paths correctly. Let's take a look at one more example, this
+time using the RELATIVE_USER_APP define. RELATIVE_USER_APP is used
+to store quasi-hidden application files, similar to the Unix convention
+of ~/.appname. It simply appends .appname to the user's home
+directory. For example, if you were making an HTML editor application
+named 'htmledit', and wanted to keep a backup file in case something
+goes wrong, you could use RELATIVE_USER_APP to store it:</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;write ("file.name~", array (RELATIVE_USER_APP), $contents);
+$GLOBALS['phpgw']-&gt;vfs-&gt;write (array(
+     'string' =&gt; 'file.name~',
+     'relatives' =&gt; array(
+          RELATIVE_USER_APP
+     ),
+     'content' =&gt; $contents
+));
 </PRE>
 </P>
-<P>This assumes that ~/.htmledit exists of course. The backup file "file.name~"
-would then be written in $fakebase/jason/.htmledit/file.name~.
-Note that storing files like this might not be as good of a solution as storing
-them in the temporary directory or in the database. But it is there in case
-you need it.</P>
+<P>This assumes that ~/.htmledit exists of course. The backup
+file "file.name~" would then be written in $fakebase/jason/.htmledit/file.name~.
+Note that storing files like this might not be as good of a solution
+as storing them in the temporary directory or in the database. But
+it is there in case you need it.</P>
 <H2><A NAME="sec:relatives_complete_list"></A> <A NAME="ss4.2">4.2</A> <A HREF="vfs.html#toc4.2">Complete List</A>
 </H2>
 
-<P>Here is the complete list of RELATIVE defines, and what they do:</P>
+<P>Here is the complete list of RELATIVE defines, and what they
+do:</P>
 <P>
 <DL>
-<DT><B>RELATIVE_ROOT</B><DD><P>Don't translate the path at all. Just prepends a /.
-You'll probably want to use RELATIVE_NONE though, which handles both virtual
-and real files.</P>
+<DT><B>RELATIVE_ROOT</B><DD><P>Don't translate the path at all. Just prepends
+a /. You'll probably want to use RELATIVE_NONE though, which handles
+both virtual and real files.</P>
 <DT><B>RELATIVE_USER</B><DD><P>User's home directory</P>
-<DT><B>RELATIVE_CURR_USER</B><DD><P>Current user's home directory. If the current
-directory is $fakebase/my_group/project1, this will return is $fakebase/my_group</P>
-<DT><B>RELATIVE_USER_APP</B><DD><P>Append .appname to the user's home directory, where
-appname is the current application's appname</P>
-<DT><B>RELATIVE_PATH</B><DD><P>DO NOT USE. Relative to the current directory, used
-in RELATIVE_ALL</P>
-<DT><B>RELATIVE_NONE</B><DD><P>Not relative to anything. Use this with VFS_REAL for
-files outside the virtual root. Note that using RELATIVE_NONE by itself still
-means relative to the virtual root</P>
-<DT><B>RELATIVE_CURRENT</B><DD><P>An alias for the currently set RELATIVE define,
-or RELATIVE_ALL if none is set (see the Defaults section)</P>
-<DT><B>VFS_REAL</B><DD><P>File is outside of the virtual root. Usually used with RELATIVE_NONE</P>
+<DT><B>RELATIVE_CURR_USER</B><DD><P>Current user's home directory. If the
+current directory is $fakebase/my_group/project1, this will
+return is $fakebase/my_group</P>
+<DT><B>RELATIVE_USER_APP</B><DD><P>Append .appname to the user's home directory,
+where appname is the current application's appname</P>
+<DT><B>RELATIVE_PATH</B><DD><P>DO NOT USE. Relative to the current directory,
+used in RELATIVE_ALL</P>
+<DT><B>RELATIVE_NONE</B><DD><P>Not relative to anything. Use this with VFS_REAL
+for files outside the virtual root. Note that using RELATIVE_NONE
+by itself still means relative to the virtual root</P>
+<DT><B>RELATIVE_CURRENT</B><DD><P>An alias for the currently set RELATIVE
+define, or RELATIVE_ALL if none is set (see the Defaults section)</P>
+<DT><B>VFS_REAL</B><DD><P>File is outside of the virtual root. Usually used
+with RELATIVE_NONE</P>
 <DT><B>RELATIVE_ALL</B><DD><P>Relative to the current directory. Use RELATIVE_ALL<EM></EM>instead of RELATIVE_PATH</P>
 </DL>
 </P>
 <H2><A NAME="sec:relatives_defaults"></A> <A NAME="ss4.3">4.3</A> <A HREF="vfs.html#toc4.3">Defaults</A>
 </H2>
 
-<P>You might be thinking to yourself that passing along RELATIVE defines with
-every VFS call is overkill, especially if your application always uses the
-same relativity. The default RELATIVE define for all VFS calls is RELATIVE_CURRENT.
-RELATIVE_CURRENT itself defaults to RELATIVE_ALL (relative to the current path),
-<EM>unless</EM> your application sets a specific relativity. If your application requires
-most of the work to be done outside of the virtual root, you may wish to set
-RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is the function
-to do this. For example:</P>
+<P>You might be thinking to yourself that passing along RELATIVE
+defines with every VFS call is overkill, especially if your application
+always uses the same relativity. The default RELATIVE define for
+all VFS calls is RELATIVE_CURRENT. RELATIVE_CURRENT itself defaults
+to RELATIVE_ALL (relative to the current path), <EM>unless</EM> your application
+sets a specific relativity. If your application requires most of
+the work to be done outside of the virtual root, you may wish to
+set RELATIVE_CURRENT to RELATIVE_NONE|VFS_REAL. set_relative () is
+the function to do this. For example:</P>
 <P>
 <PRE>
-$phpgw-&gt;vfs-&gt;set_relative (RELATIVE_NONE|VFS_REAL);
-$phpgw-&gt;vfs-&gt;read ("/etc/passwd");
-$phpgw-&gt;vfs-&gt;cp ("/usr/include/stdio.h", "/tmp/stdio.h");
-$phpgw-&gt;vfs-&gt;cp ("/usr/share/pixmaps/yes.xpm", "icons/yes.xpm", array (RELATIVE_CURRENT, RELATIVE_USER));
+$GLOBALS['phpgw']-&gt;vfs-&gt;set_relative (array(
+     'mask' =&gt; RELATIVE_NONE|VFS_REAL
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;read (array(
+     'string' =&gt; '/etc/passwd'
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/usr/include/stdio.h',
+     'to' =&gt; '/tmp/stdio.h'
+));
+
+$GLOBALS['phpgw']-&gt;vfs-&gt;cp (array(
+     'from' =&gt; '/usr/share/pixmaps/yes.xpm',
+     'to' =&gt; 'icons/yes.xpm',
+     'relatives' =&gt; array(
+          RELATIVE_CURRENT,
+          RELATIVE_USER
+     )
+));
 </PRE>
 </P>
-<P>You should notice that no relativity array is needed in the other calls
-that refer to files outside the virtual root, but one is needed for calls that
-include files inside the virtual root. Any RELATIVE define can be set as the
-default and works in the same fashion. To retrieve the currently set define,
-use get_relative (). Note that the relativity is reset after each page request;
-that is, it's good only for the life of the current page loading, and is not
-stored in session management.</P>
+<P>You should notice that no relativity array is needed in the other
+calls that refer to files outside the virtual root, but one is needed
+for calls that include files inside the virtual root. Any RELATIVE
+define can be set as the default and works in the same fashion. To
+retrieve the currently set define, use get_relative (). Note that
+the relativity is reset after each page request; that is, it's good
+only for the life of the current page loading, and is not stored
+in session management.</P>
 <HR>
 <A HREF="vfs-5.html">Next</A>
 <A HREF="vfs-3.html">Previous</A>
