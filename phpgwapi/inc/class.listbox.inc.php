@@ -71,17 +71,14 @@
 			{
 				for ($x = 0; $x < count($this->data); $x++)
 				{
-					$var = array
+					$var[] = array
 					(
 						'text'					=> $this->data[$x]['text'],
 						'link'					=> $this->data[$x]['link'],
 						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
 					);
-					$this->output['portal_row'] = array
-					(
-						'listbox'	=> $var
-					);
 				}
+				$this->output['listbox'] = $var;
 			}
 			$this->set_internal($extra_data);
 			return $this->draw_box();

@@ -16,7 +16,12 @@
  				<tr>
   					<td colspan="2">
    						<table cellpadding="0" cellspacing="0" width="{$inner_width}" class="portal">
-							<xsl:apply-templates select="portal_row"/>
+							<tr>
+								<td>
+									<xsl:apply-templates select="listbox"/>
+									<xsl:apply-templates select="extrabox"/>
+								</td>
+							</tr>
    						</table>
   					</td>
  				</tr>
@@ -33,14 +38,14 @@
 		</a>
 	</xsl:template>
 
-	<xsl:template match="portal_row">
+<!-- 	<xsl:template name="portal_row">
 		<tr>
 			<td>
 				<xsl:apply-templates select="listbox"/>
 				<xsl:apply-templates select="extrabox"/>
 			</td>
 		</tr>
-	</xsl:template>
+	</xsl:template> -->
 
 	<xsl:template match="listbox">
 		<xsl:variable name="link"><xsl:value-of select="link"/></xsl:variable>

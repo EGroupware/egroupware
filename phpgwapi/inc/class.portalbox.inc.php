@@ -117,7 +117,7 @@
 				$data = ' ';
 			}
 
-			$this->output['portal_row']['extrabox'] = array
+			$this->output['extrabox'] = array
 			(
 				'data' => $data
 			);
