@@ -752,6 +752,72 @@
        return "$h12:$min$sec$ampm";
     }
 
+
+		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
+		function create_emailpreferences()
+		{
+			global $phpgw_info;
+			
+			/* Add default preferences info */    
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["userid"]))
+			{
+				if ($phpgw_info["server"]["mail_login_type"] == "vmailmgr")
+				{
+					$phpgw_info["user"]["preferences"]["email"]["userid"] = $phpgw_info["user"]["userid"]
+						. "@" . $phpgw_info[server][mail_suffix];
+				}
+				else
+				{
+					$phpgw_info["user"]["preferences"]["email"]["userid"] = $phpgw_info["user"]["userid"];
+				}
+			}
+			/* Set Server Mail Type if not defined */
+			if (empty($phpgw_info["server"]["mail_server_type"]))
+			{
+				$phpgw_info["server"]["mail_server_type"] = "imap";
+			}
+
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["passwd"]))
+			{
+				$phpgw_info["user"]["preferences"]["email"]["passwd"] = $phpgw_info["user"]["passwd"];
+			}
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["address"]))
+			{
+				$phpgw_info["user"]["preferences"]["email"]["address"] = $phpgw_info["user"]["userid"]
+					. "@" . $phpgw_info["server"]["mail_suffix"];
+			}
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["mail_server"]))
+			{
+				$phpgw_info["user"]["preferences"]["email"]["mail_server"] = $phpgw_info["server"]["mail_server"];
+			}
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]))
+			{
+				$phpgw_info["user"]["preferences"]["email"]["mail_server_type"] = $phpgw_info["server"]["mail_server_type"];
+			}
+			if (!isset($phpgw_info["user"]["preferences"]["email"]["imap_server_type"]))
+			{
+				$phpgw_info["user"]["preferences"]["email"]["imap_server_type"] = $phpgw_info["server"]["imap_server_type"];
+			}
+
+			/* These sets the mail_port server variable */
+			if ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]=="imap")
+			{
+				$phpgw_info["user"]["preferences"]["email"]["mail_port"] = "143";
+			}
+			elseif ($phpgw_info["user"]["preferences"]["email"]["mail_server_type"]=="pop3")
+			{
+				$phpgw_info["user"]["preferences"]["email"]["mail_port"] = "110";
+			}
+
+			/* This is going to be used to switch to the nntp class */
+			if ($phpgw_info["flags"]["newsmode"])
+			{
+				$phpgw_info["user"]["preferences"]["email"]["mail_server_type"] = "nntp";
+			}		
+		}
+
+
+
     // This will be moved into the applications area.
     function check_code($code)
     {
