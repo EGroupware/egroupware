@@ -30,7 +30,7 @@
 				'app_title' => array('type' => 'varchar', 'precision' => 50),
 				'app_enabled' => array('type' => 'int', 'precision' => 4),
 				'app_order' => array('type' => 'int', 'precision' => 4),
-				'app_tables' => array('type' => 'varchar', 'precision' => 255),
+				'app_tables' => array('type' => 'text'),
 				'app_version' => array('type' => 'varchar', 'precision' => 20, 'nullable' => false, 'default' => '0.0')
 			),
 			'pk' => array('app_id'),
