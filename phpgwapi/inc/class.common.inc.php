@@ -1,16 +1,16 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare API - Commononly used functions                             *
+  * eGroupWare API - Commononly used functions                               *
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * and Mark Peters <skeeter@phpgroupware.org>                               *
   * and Lars Kneschke <lkneschke@linux-at-work.de>                           *
-  * Functions commonly used by phpGroupWare developers                       *
+  * Functions commonly used by eGroupWare developers                         *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
   * Copyright (C) 2003 Lars Kneschke                                         *
   * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org                                                *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -1411,7 +1411,8 @@
 					$format .= 'H:i';
 				}
 			}
-			if(PHP_OS == 'Windows' && (int)$t < 21600)
+                        if((PHP_OS == 'Windows'||PHP_OS == 'WINNT') && (int)$t < 21600)
+			/*if(PHP_OS == 'Windows' && (int)$t < 21600)*/
 			{
 				$t = 21600;
 			}
