@@ -166,5 +166,35 @@
 			}
 			return ($sortarray);
 		}
+
+		function filter_ldap ($ldap_fields,$filterfields,$DEBUG=0) {
+			$match = 0;
+			reset($filterfields);
+			for($i=0;$i<count($ldap_fields);$i++) {
+				while (list($col,$filt) = each($filterfields)) {
+					if($DEBUG) { echo '<br>Testing "'.$col.'" for "'.$filt.'"'."\n"; }
+					if ($ldap_fields[$i][$col][0] == $filt) {
+						if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched!'."\n"; }
+						$matched[$col][$i] = True;
+						$match++;
+					} else {
+						$matched[$col][$i] = False;
+						if($DEBUG)  { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' did not match!'."\n"; }
+						$match--;
+					}
+					if ($matched[$col][$i]) { $allmatched[$i] = True; }
+				}
+				reset($filterfields);
+				if ($allmatched[$i]) {
+					if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched!'."\n"; }
+					$new_ldap[$i] = $ldap_fields[$i];
+				}
+			}
+			if ($match) { if($DEBUG) { echo '<br'.$match.' total matches.'."\n"; } }
+			else        { if($DEBUG) { echo '<br>No matches :('."\n"; } }
+			$this->total_records = count($new_ldap);
+
+			return $new_ldap;
+		}
 	}
 ?>
