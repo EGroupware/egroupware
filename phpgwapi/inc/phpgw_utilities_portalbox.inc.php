@@ -8,6 +8,7 @@ class baseportalbox {
     var $outerbordercolor;
     var $outerborderwidth;
     var $titlebgcolor;
+    var $width;
     var $innerwidth;
     var $innerbgcolor;
 
@@ -72,6 +73,7 @@ class linkbox extends baseportalbox {
         $this->baseportalbox($title, $primary, $secondary, $tertiary);
         $this->setvar("outerwidth",300);
         $this->setvar("innerwidth",300);
+        $this->setvar("width",300);
     } 
     /* 
         This is the only method within the class. Quite simply, as you can see  
@@ -88,11 +90,11 @@ class linkbox extends baseportalbox {
         $p->set_block('portal_main','portal_linkbox_header','portal_linkbox','portal_linkbox_footer');
 
         $p->set_var('outer_border',$this->getvar('outerborderwidth'));
-        $p->set_var('outer_width',$this->getvar('outerwidth'));
+        $p->set_var('outer_width',$this->getvar('width'));
         $p->set_var('outer_bordercolor',$this->getvar('outerbordercolor'));
         $p->set_var('outer_bgcolor',$this->getvar('titlebgcolor'));
         $p->set_var('title',$this->getvar('title'));
-        $p->set_var('inner_width',$this->getvar('innerwidth'));
+        $p->set_var('inner_width',$this->getvar('width'));
         $p->set_var('inner_bgcolor',$this->getvar('innerbgcolor'));
         $p->parse('output','portal_linkbox_header',True);
         
