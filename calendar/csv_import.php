@@ -464,7 +464,7 @@
 					if (isset($values[$date]) && !is_numeric($date))
 					{
 						// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
-						$values[$date] = ereg_replace('([0-9]{2}).([0-9]{2}).([0-9]{4})','\3-\2-\1',$values[$date]);
+						$values[$date] = ereg_replace('([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})','\3-\2-\1',$values[$date]);
 						// remove fractures of seconds if present at the end of the string
 						if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
 						$values[$date] = strtotime($values[$date]);
