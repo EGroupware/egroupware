@@ -582,7 +582,7 @@ class vfs
 		}
 		else
 		{
-			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', directory='$p->fake_leading_dirs', name='$p->fake_name'", __LINE__, __FILE__);
+			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs', '$p->fake_name')", __LINE__, __FILE__);
 
 			$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
 			$this->correct_attributes ($p->fake_full_path, array (RELATIVE_NONE));
@@ -885,7 +885,7 @@ class vfs
 		{
 			if (!$this->file_exists ($p->fake_leading_dirs . "/" . $dir, array (RELATIVE_NONE)))
 			{
-				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs SET owner_id='$this->working_id', name='$p->fake_name', directory='$p->fake_leading_dirs'", __LINE__, __FILE__);
+				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, name='$p->fake_name', directory='$p->fake_leading_dirs')", __LINE__, __FILE__);
 
 				$this->set_attributes ($p->fake_full_path, array (RELATIVE_NONE), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
 
