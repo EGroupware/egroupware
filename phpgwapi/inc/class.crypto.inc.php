@@ -1,28 +1,28 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Crypto                                                *
-  * This file written by Joseph Engo <jengo@phpgroupware.org>                *
-  * Handles encrypting strings based on various encryption schemes           *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
-
+	/**************************************************************************\
+	* phpGroupWare API - Crypto							*
+	* This file written by Joseph Engo <jengo@phpgroupware.org>			*
+	* Handles encrypting strings based on various encryption schemes		*
+	* Copyright (C) 2000, 2001 Dan Kuykendall					*
+	* -------------------------------------------------------------------------			*
+	* This library is part of the phpGroupWare API					*
+	* http://www.phpgroupware.org/api							* 
+	* ------------------------------------------------------------------------ 			*
+	* This library is free software; you can redistribute it and/or modify it  		*
+	* under the terms of the GNU Lesser General Public License as published by 	*
+	* the Free Software Foundation; either version 2.1 of the License,			*
+	* or any later version.								*
+	* This library is distributed in the hope that it will be useful, but			*
+	* WITHOUT ANY WARRANTY; without even the implied warranty of		*
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	*
+	* See the GNU Lesser General Public License for more details.			*
+	* You should have received a copy of the GNU Lesser General Public License 	*
+	* along with this library; if not, write to the Free Software Foundation,  		*
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA			*
+	\**************************************************************************/
+	
+	/* $Id$ */
+	
 	class crypto
 	{
 		var $enabled = False;
@@ -41,7 +41,7 @@
 				$this->mcrypt_version = $GLOBALS['phpgw_info']['server']['versions']['mcrypt'];
 				if ($this->mcrypt_version == 'old')
 				{
-					$this->td = false;
+					$this->td = False;
 					if (phpversion() > '4.0.2pl1')
 					{
 						$keysize = mcrypt_get_key_size(MCRYPT_TRIPLEDES);
@@ -99,12 +99,13 @@
 
 		function encrypt($data)
 		{
-			$data = serialize($data);
-			$data = addslashes($data);
-
 			// Disable all encryption if the admin didn't set it up
 			if ($this->enabled)
 			{
+				// ONLY manipulate data if we are going to encrypt it
+				// question: why do we sreialize and add slashes before encrypting?? (ed: Angles)
+				$data = serialize($data);
+				$data = addslashes($data);
 				switch ($this->mcrypt_version)
 				{
 					// The old code, only works with mcrypt <= 2.2.x
@@ -124,7 +125,9 @@
 				return $encrypteddata;
 			}
 			else
-			{ // No mcrypt == insecure !
+			{ 
+				// No mcrypt == insecure !
+				// Data should be returned *unmolested* if encryption is not enabled
 				return $data;
 			}
 		}
@@ -147,12 +150,21 @@
 						$data = mdecrypt_generic($this->td, $data);
 						break;
 				}
+				// hey -- since the encrypt() function calls serialize and then addslashes,
+				// we should always do the reverse -- correct? (ed: Del)
+				$data = stripslashes($data);
+				$data = unserialize($data);
+				// question: was it necessary to serialize and addslashes *before* encryption in the first place? (ed: Angles)
 			}
 			else
 			{
-				$data = $encrypteddata;
+				// Data should be returned *unmolested* if encryption is not enabled
+				return $data;
 			}
-
+			/*
+			// this is apparently intended to allow encryption of objects
+			// at this point Dec 14, 2001, we simply need to handle strings correctly
+			// which was broken previously (ed: Angles)
 			if(!strpos(' '.$data,'O:8:"stdClass"'))
 			{
 				return unserialize($data);
@@ -162,6 +174,7 @@
 				$data = stripslashes($data);
 				return $data;
 			}
+			*/
 		}
 	} // class crypto
 ?>
