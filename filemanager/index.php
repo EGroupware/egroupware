@@ -1,6 +1,6 @@
 <?php
 
-if ($download || $op == "view")
+if ($download || $op == "view" || $op == "history")
 {
 	$noheader = True;
 }
@@ -179,7 +179,12 @@ if ($path != $homedir && $path != "/" && $path != $fakebase)
 	}
 }
 
-//echo $phpgw->vfs->make_link ("dir18", "/tmp/blah", array (RELATIVE_USER, RELATIVE_NONE|VFS_REAL));
+/* Update if they request it, or one out of 20 page loads */
+srand ((double) microtime() * 1000000);
+if ($update || rand (0, 19) == 4)
+{
+	$phpgw->vfs->update_real ($path, array (RELATIVE_NONE));
+}
 
 ###
 # Read in file info from database to use in the rest of the script
@@ -264,6 +269,46 @@ if ($op == "view" && $file)
 
 	header('Content-type: ' . $mime_type);
 	echo $phpgw->vfs->read ($file);
+	$phpgw->common->phpgw_exit ();
+}
+
+if ($op == "history" && $file)
+{
+	html_table_begin ();
+	html_table_row_begin ();
+	html_table_col_begin ();
+	html_text_bold ("Date");
+	html_table_col_end ();
+	html_table_col_begin ();
+	html_text_bold ("Version");
+	html_table_col_end ();
+	html_table_col_begin ();
+	html_text_bold ("Who");
+	html_table_col_end ();
+	html_table_col_begin ();
+	html_text_bold ("Operation");
+	html_table_col_end ();
+	html_table_row_end ();
+
+	$journal_array = $phpgw->vfs->get_journal ($file, array (RELATIVE_ALL));
+	while (list ($num, $journal_entry) = each ($journal_array))
+	{
+		html_table_row_begin ();
+		html_table_col_begin ();
+		html_text ($journal_entry["created"] . html_nbsp (3, 1));
+		html_table_col_end ();
+		html_table_col_begin ();
+		html_text ($journal_entry["version"] . html_nbsp (3, 1));
+		html_table_col_end ();
+		html_table_col_begin ();
+		html_text ($phpgw->accounts->id2name ($journal_entry["owner_id"]) . html_nbsp (3, 1));
+		html_table_col_end ();
+		html_table_col_begin ();
+		html_text ($journal_entry["comment"]);
+		html_table_col_end ();
+	}
+
+	html_table_end ();
 	$phpgw->common->phpgw_exit ();
 }
 
@@ -593,6 +638,17 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			}
 
 			###
+			# Version
+			###
+
+			if ($settings["version"])
+			{
+				html_table_col_begin ();
+				html_link ("$appname/index.php?op=history&file=$files[name]&path=$path", $files["version"], NULL, NULL, NULL, "_new");
+				html_table_col_end ();
+			}
+
+			###
 			# Deleteable (currently not used)
 			###
 
@@ -753,6 +809,9 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_form_input ("text", "createdir", NULL, 255, 15);
 			html_form_input ("submit", "newdir", "Create Folder");
 		}
+
+		html_break (1);
+		html_form_input ("submit", "update", "Update");
 
 		html_form_end ();
 
