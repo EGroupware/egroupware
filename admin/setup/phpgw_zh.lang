@@ -1,17 +1,17 @@
-%1 - %2 of %3 user accounts	admin	zh	%3个用户帐户中的%1—%2
+%1 - %2 of %3 user accounts	admin	zh	共有%3个用户帐户, 正显示其中的第%1～%2个
 %1 not found or not executable !!!	admin	zh	%1找不到或无法执行!!!
 (stored password will not be shown here)	admin	zh	(此处不显示保存过的密码)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<br><a href="setup/" target="setup">安装程序</a>来安装新的应用程序 [Manage Applications] !!!)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<br><a href="setup/" target="setup">安装程序</a>来安装新的应用程序!!!)
 accesslog and bruteforce defense	admin	zh	访问日志和字典攻击防御
 account active	admin	zh	启用帐户
 account has been created	common	zh	帐户已创建
 account has been deleted	common	zh	帐户已删除
 account has been updated	common	zh	帐户已更新
-account list	admin	zh	帐户列表
+account list	admin	zh	列举帐户
 account permissions	admin	zh	帐户权限
 account preferences	admin	zh	帐户个性化配置
-acl manager	admin	zh	ACL管理器
-acl rights	admin	zh	ACL权限
+acl manager	admin	zh	ACL权限管理
+acl rights	admin	zh	ACL权限管理
 action	admin	zh	操作
 add a category	admin	zh	添加类别
 add a group	admin	zh	添加组
@@ -29,11 +29,11 @@ add new application	admin	zh	添加新的应用程序
 add peer server	admin	zh	添加对等服务器
 add sub-category	admin	zh	添加子类别
 admin email	admin	zh	Email管理
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	向这些Email地址发送通告封禁 (以逗号分隔)，留空则不发送通告
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	封禁后，自动向这些Email地址发送通告(以逗号分隔)，留空则不发送通告
 admin name	admin	zh	名称管理
 administration	admin	zh	系统管理
 admins	admin	zh	系统管理
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	几次登录失败后，封禁账户(默认值3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zh	几次登录失败后，封禁账户?(默认值3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zh	几次登录失败后，封禁IP地址?
 all records and account information will be lost!	admin	zh	所有的记录和账户信息都将丢失!
 all users	admin	zh	所有用户
@@ -45,7 +45,7 @@ application	admin	zh	应用程序
 application name	admin	zh	应用程序名称
 application title	admin	zh	应用程序标题
 applications	admin	zh	应用程序
-applications list	admin	zh	应用程序列表
+applications list	admin	zh	列举应用程序
 apply	admin	zh	应用
 are you sure you want to delete the application %1 ?	admin	zh	确定要删除应用程序%1吗?
 are you sure you want to delete this account ?	admin	zh	确定要删除该账户吗?
@@ -68,14 +68,14 @@ bottom	admin	zh	底部
 calculate next run	admin	zh	计划下次运行
 can change password	admin	zh	允许更改密码
 cancel testjob!	admin	zh	取消测试任务!
-categories list	admin	zh	类别列表
+categories list	admin	zh	列举类别
 category %1 has been saved !	admin	zh	类别%1已保存!
-category list	admin	zh	类别列表
+category list	admin	zh	列举类别
 change acl rights	admin	zh	更改ACL权限
 change config settings	admin	zh	更改配置
 change main screen message	admin	zh	更改主页面信息
-check ip address of all sessions	admin	zh	检查所有会话的IP地址
-check items to <b>%1</b> to %2 for %3	admin	zh	Check items to <b>%1</b> to %2 for %3
+check ip address of all sessions	admin	zh	是否检查所有会话的IP地址
+check items to <b>%1</b> to %2 for %3	admin	zh	选中以下项目，以禁止用户%3相应的<b>%1</b>权限:
 country selection	admin	zh	选择国家/地区
 create group	admin	zh	创建组
 crontab only (recomended)	admin	zh	crontab only (recomended)
@@ -97,22 +97,22 @@ delete the group	admin	zh	删除该组
 delete this category	admin	zh	删除这个类别
 delete this group	admin	zh	删除这个组
 delete this user	admin	zh	删除这个用户
-deny access to access log	admin	zh	禁止对访问日志的访问
-deny access to application registery	admin	zh	禁止访问应用程序注册项
-deny access to applications	admin	zh	禁止访问应用程序
-deny access to asynchronous timed services	admin	zh	禁止访问异步定时服务
-deny access to current sessions	admin	zh	禁止访问当前会话
-deny access to error log	admin	zh	禁止访问错误日志
-deny access to global categories	admin	zh	禁止访问全局类别
-deny access to groups	admin	zh	禁止访问组
-deny access to mainscreen message	admin	zh	禁止访问主页面信息
-deny access to peer servers	admin	zh	禁止访问对等进程
-deny access to phpinfo	admin	zh	禁止访问PHP信息
-deny access to site configuration	admin	zh	禁止访问站点配置
-deny access to user accounts	admin	zh	禁止访问用户账户
-deny all users access to grant other users access to their entries ?	admin	zh	禁止用户访问他人账户?
+deny access to access log	admin	zh	访问日志ACL
+deny access to application registery	admin	zh	应用程序注册项ACL
+deny access to applications	admin	zh	应用程序ACL
+deny access to asynchronous timed services	admin	zh	异步定时服务ACL
+deny access to current sessions	admin	zh	当前会话ACL
+deny access to error log	admin	zh	错误日志ACL
+deny access to global categories	admin	zh	全局类别ACL
+deny access to groups	admin	zh	用户组ACL
+deny access to mainscreen message	admin	zh	主页面信息ACL
+deny access to peer servers	admin	zh	对等进程ACL
+deny access to phpinfo	admin	zh	系统环境信息ACL
+deny access to site configuration	admin	zh	全局配置ACL
+deny access to user accounts	admin	zh	用户账户ACL
+deny all users access to grant other users access to their entries ?	admin	zh	是否禁止用户授权他人访问自身数据?
 description can not exceed 255 characters in length !	admin	zh	说明的长度不能超过255个字符!
-disable "auto completion" of the login form	admin	zh	禁用登录框中的自动完成功能
+disable "auto completion" of the login form	admin	zh	是否禁用登录框的自动完成功能
 disabled (not recomended)	admin	zh	禁用(不推荐)
 display	admin	zh	显示
 do not delete the category and return back to the list	admin	zh	请勿删除该类别，返回列表
@@ -125,7 +125,7 @@ edit global category	admin	zh	编辑全局类别
 edit global category for %1	admin	zh	编辑全局类别%1为
 edit group	admin	zh	编辑组
 edit login screen message	admin	zh	编辑登录页面信息
-edit main screen message	admin	zh	编辑主页面信息
+edit main screen message	admin	zh	编辑首页信息
 edit peer server	admin	zh	编辑对等服务器
 edit table format	admin	zh	编辑表单格式
 edit this category	admin	zh	编辑该类别
@@ -133,6 +133,7 @@ edit this group	admin	zh	编辑该组
 edit this user	admin	zh	编辑该用户
 edit user	admin	zh	编辑用户
 edit user account	admin	zh	编辑用户账户
+email settings	admin	zh	EMail配置
 enable debug-messages	admin	zh	显示调试信息
 enabled - hidden from navbar	admin	zh	在工具中隐藏
 enter a description for the category	admin	zh	输入类别说明
@@ -169,16 +170,16 @@ group ?	admin	zh	组?
 group has been added	common	zh	组已添加
 group has been deleted	common	zh	组已删除
 group has been updated	common	zh	组已更新
-group list	admin	zh	组列表
+group list	admin	zh	列举组
 group manager	admin	zh	组管理
 group name	admin	zh	组名称
 hide php information	admin	zh	隐藏php信息
 home directory	admin	zh	主目录
 host information	admin	zh	主机信息
 hour<br>(0-23)	admin	zh	小时<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	访问日志中的条目保留多久后删除(默认值90天)?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	访问日志中的记录的存留期?(默认值90天)
 how many minutes should an account or ip be blocked (default 30) ?	admin	zh	账户和IP地址的封禁时间(默认值30分钟)
-idle	admin	zh	发呆
+idle	admin	zh	发呆时间
 if no acl records for user or any group the user is a member of	admin	zh	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	如果使用LDAP，是否需要管理主目录和登录shell的属性?
 inbound	admin	zh	入站
@@ -190,8 +191,8 @@ ip	admin	zh	IP地址
 jobs	admin	zh	任务
 kill	admin	zh	中止
 kill session	admin	zh	中止会话
-last %1 logins	admin	zh	最近%1次登录
-last %1 logins for %2	admin	zh	Last %1 logins for %2
+last %1 logins	admin	zh	最近有%1次登录
+last %1 logins for %2	admin	zh	%2最近有%1次登录
 last login	admin	zh	最近一次登录
 last login from	admin	zh	最近一次登录来自
 last time read	admin	zh	最近一次读取时间
@@ -205,16 +206,16 @@ ldap root password	admin	zh	LDAP系统管理员密码
 ldap rootdn	admin	zh	LDAP rootdn
 leave the category untouched and return back to the list	admin	zh	不更改类别，返回列表
 leave the group untouched and return back to the list	admin	zh	不更改组，返回列表
-list config settings	admin	zh	列出配置
+list config settings	admin	zh	查看配置
 list current sessions	admin	zh	列举当前会话
 list of current users	admin	zh	列举当前用户
 login history	admin	zh	登录历史记录
-login message	admin	zh	登录信息
+login message	admin	zh	更改登录页面信息
 login screen	admin	zh	登录页面
 login shell	admin	zh	登录shell
 login time	admin	zh	登录时间
 loginid	admin	zh	登录名
-main screen message	admin	zh	主页面信息
+main screen message	admin	zh	更改主页面信息
 manager	admin	zh	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	zh	账户id数最大值 (例如 65535或1000000)
 maximum entries in click path history	admin	zh	点击路径历史记录中的最大条目数
@@ -242,7 +243,7 @@ path information	admin	zh	路径信息
 peer server list	admin	zh	对等服务器列表
 peer servers	admin	zh	对等服务器
 percent of users that logged out	admin	zh	已注销用户的百分比例
-percent this user has logged out	admin	zh	Percent this user has logged out
+percent this user has logged out	admin	zh	该用户注销/登录次数的比率
 permissions	admin	zh	权限
 permissions this group has	admin	zh	该组权限
 phpinfo	admin	zh	系统环境信息
@@ -254,7 +255,7 @@ preferences	admin	zh	个性化配置
 primary Group	admin	zh	首选组
 re-enter password	admin	zh	重新输入密码
 read this list of methods.	admin	zh	读取方法列表.
-register application hooks	admin	zh	注册应用程序Hooks
+register application hooks	admin	zh	注册应用程序组件
 remove all users from this group	admin	zh	删除该组所有用户
 remove all users from this group ?	admin	zh	删除该组所有用户?
 return to admin mainscreen	admin	zh	返回系统管理主页面
@@ -282,14 +283,14 @@ server type(mode)	admin	zh	服务器类型(模式)
 server url	admin	zh	服务器网址
 server username	admin	zh	服务器用户名
 set preference values.	admin	zh	设置个性化配置值
-show 'powered by' logo on	admin	zh	在何处显示设计者徽标:
+show 'powered by' logo on	admin	zh	在何处显示软件内核信息:
 show access log	admin	zh	显示访问日志
 show current action	admin	zh	显示当前操作
 show error log	admin	zh	显示错误日志
-show phpinfo()	admin	zh	显示phpinfo()
+show phpinfo()	admin	zh	显示系统环境信息
 show session ip address	admin	zh	显示会话IP地址
 site	admin	zh	站点
-site configuration	admin	zh	站点配置
+site configuration	admin	zh	全局配置
 soap	admin	zh	SOAP
 sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被占用.
 sorry, the above users are still a member of the group %1	admin	zh	抱歉，以上用户也是%1组的成员
@@ -326,8 +327,8 @@ total records	admin	zh	记录总数
 trust level	admin	zh	信任级别
 trust relationship	admin	zh	信任关系
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	zh	在Windows系统下，当前只能使用后退模式。这意味着只在每个pageview之后检查任务!!!
-use cookies to pass sessionid	admin	zh	使用cookie传递会话标识
-use pure html compliant code (not fully working yet)	admin	zh	使用纯HTML兼容代码(目前仍未完全可用)
+use cookies to pass sessionid	admin	zh	是否使用cookie保存会话代号
+use pure html compliant code (not fully working yet)	admin	zh	是否使用纯HTML兼容代码(目前仍未完全可用)
 use theme	admin	zh	使用主题
 user accounts	admin	zh	用户帐户
 user data	admin	zh	用户数据
@@ -343,8 +344,8 @@ view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁?
 would you like phpgroupware to cache the phpgw info array ?	admin	zh	需要phpGroupWare缓存phpgw信息数组吗?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	zh	管理员登录时，是否检查phpGroupWare的新版本?
-would you like phpgroupware to check for new application versions when admins login ?	admin	zh	管理员登录时，是否检查应用程序的新版本?
+would you like egroupware to check for a new version<br>when admins login ?	admin	zh	管理员登录时，是否检查phpGroupWare的新版本?
+would you like egroupware to check for new application versions when admins login ?	admin	zh	管理员登录时，是否检查应用程序的新版本?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	登录时，是否自动加载新的语言文件?
 would you like to show each application's upgrade status ?	admin	zh	是否显示每个应用程序的升级情况?
 xml-rpc	admin	zh	XML-RPC

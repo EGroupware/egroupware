@@ -12,14 +12,14 @@ active	common	zh	启用
 add	common	zh	添加
 add %1 category for	common	zh	添加类别为
 add category	common	zh	添加类别
-add sub	common	zh	Add sub
+add sub	common	zh	添加子类别
 addressbook	common	zh	通讯录
 admin	common	zh	系统管理
 administration	common	zh	系统管理
 afghanistan	common	zh	阿富汗
 albania	common	zh	阿尔巴尼亚
 algeria	common	zh	阿尔及利亚
-all	common	zh	所有
+all	common	zh	全部
 american samoa	common	zh	东萨摩亚
 andorra	common	zh	安道尔共和国
 angola	common	zh	安哥拉
@@ -28,6 +28,7 @@ antarctica	common	zh	南极洲
 antigua and barbuda	common	zh	安提瓜和巴布达
 apply	common	zh	应用
 april	common	zh	四月
+are you sure you want to delete these entries ?	common	zh	确定要删除这些条目吗?
 are you sure you want to delete this entry ?	common	zh	确定要删除该条目吗?
 argentina	common	zh	阿根廷
 armenia	common	zh	亚美尼亚
@@ -36,7 +37,7 @@ august	common	zh	八月
 australia	common	zh	澳大利亚
 austria	common	zh	奥地利
 author	common	zh	作者
-autosave default category	common	zh	自动保存默认类别
+autosave default category	common	zh	自动保存为默认类别
 azerbaijan	common	zh	阿塞拜疆
 back	common	zh	返回
 bad login or password	common	zh	登录名或密码错误
@@ -51,7 +52,7 @@ belize	common	zh	伯利兹城
 benin	common	zh	贝宁湾
 bermuda	common	zh	百慕大群岛
 bhutan	common	zh	不丹
-blocked, too many attempts	common	zh	尝试次数过多，已封禁
+blocked, too many attempts	common	zh	尝试次数过多, 已封禁
 bolivia	common	zh	玻利维亚
 bosnia and herzegovina	common	zh	波黑
 botswana	common	zh	博茨瓦纳
@@ -68,7 +69,7 @@ canada	common	zh	加拿大
 cancel	common	zh	取消
 cape verde	common	zh	佛得角
 categories	common	zh	类别
-categories for	common	zh	类别为
+categories for	common	zh	编辑类别. 当前用户
 category	common	zh	类别
 category %1 has been added !	common	zh	类别%1已添加!
 category %1 has been updated !	common	zh	类别%1已更新!
@@ -108,13 +109,13 @@ czech republic	common	zh	捷克斯洛伐克共和国
 date	common	zh	日期
 date due	common	zh	到期日
 december	common	zh	十二月
-default category	common	zh	默认类别
+default category	common	zh	默认显示类别
 delete	common	zh	删除
 denmark	common	zh	丹麦
 description	common	zh	说明
 detail	common	zh	详细信息
 details	common	zh	详细信息
-disabled	common	zh	禁用
+disabled	common	zh	已禁用
 display monday first	common	zh	从星期一开始
 display sunday first	common	zh	从星期日开始
 djibouti	common	zh	吉布提
@@ -158,7 +159,7 @@ february	common	zh	二月
 fields	common	zh	字段
 fiji	common	zh	斐济
 files	common	zh	文件
-filter	common	zh	筛选
+filter	common	zh	范围
 finland	common	zh	芬兰
 first name	common	zh	名
 first name of the user, eg. "%1"	common	zh	该用户的名字，例如:"%1"
@@ -209,7 +210,7 @@ help	common	zh	帮助
 high	common	zh	高
 highest	common	zh	最高
 holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
-home	common	zh	主页面
+home	common	zh	首页
 home email	common	zh	家庭EMail地址
 honduras	common	zh	洪都拉斯
 hong kong	common	zh	香港
@@ -269,7 +270,7 @@ macedonia, the former yugoslav republic of	common	zh	马其顿王国
 madagascar	common	zh	马达加斯加岛
 mail domain, eg. "%1"	common	zh	邮件域，例如:"%1"
 main category	common	zh	主类别
-main screen	common	zh	主页面
+main screen	common	zh	首页
 maintainer	about	zh	维护人员
 malawi	common	zh	马拉维
 malaysia	common	zh	马来西亚
@@ -324,7 +325,7 @@ no history for this record	common	zh	该记录无历史记录
 no subject	common	zh	无主题
 none	common	zh	无
 norfolk island	common	zh	诺福克岛
-normal	common	zh	正常
+normal	common	zh	普通
 northern mariana islands	common	zh	北马里亚纳群岛
 norway	common	zh	挪威
 not assigned	common	zh	未指定
@@ -338,7 +339,7 @@ old value	common	zh	旧值
 oman	common	zh	阿曼
 on *nix systems please type: %1	common	zh	若使用UNIX类系统，请输入: %1
 only private	common	zh	仅私人
-only yours	common	zh	只有您
+only yours	common	zh	个人通讯录
 open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口
 original	common	zh	原来的
@@ -382,9 +383,9 @@ prev. year (hold for menu)	common	zh	去年(hold for menu)
 previous page	common	zh	前一页
 print	common	zh	打印
 priority	common	zh	优先级
-private	common	zh	私人
+private	common	zh	私有条目（他人无权访问）
 project	common	zh	项目
-public	common	zh	公共
+public	common	zh	所有已授权者皆可访问
 puerto rico	common	zh	波多黎各
 qatar	common	zh	卡塔尔
 read	common	zh	读取
@@ -410,7 +411,7 @@ saturday	common	zh	星期六
 saudi arabia	common	zh	沙特阿拉伯
 save	common	zh	保存
 search	common	zh	查找
-section	common	zh	节
+section	common	zh	更改范围
 select	common	zh	选择
 select category	common	zh	选择类别
 select date	common	zh	选择日期
@@ -429,8 +430,8 @@ setup	common	zh	安装程序
 seychelles	common	zh	塞舌尔
 show all	common	zh	全部显示
 show all categorys	common	zh	显示所有类别
-showing %1	common	zh	显示%1项
-showing %1 - %2 of %3	common	zh	显示%3项中的%1—%2
+showing %1	common	zh	共有%1项
+showing %1 - %2 of %3	common	zh	共有%3项，正显示中的第%1～%2项
 sierra leone	common	zh	塞拉利昂
 singapore	common	zh	新加坡
 slovakia	common	zh	斯洛伐克
@@ -472,7 +473,7 @@ thursday	common	zh	星期四
 time	common	zh	时间
 time zone	common	zh	时区
 time zone offset	common	zh	时差
-title	common	zh	头衔
+title	common	zh	名称
 to	common	zh	收件人
 to correct this error for the future you will need to properly set the	common	zh	今后要更正该错误，您需要正确设置
 to go back to the msg list, click <a href= %1 >here</a>	common	zh	点击<a href="%1">此处</a>返回邮件列表
@@ -527,7 +528,7 @@ which groups	common	zh	哪一个组
 wk	common	zh	星期
 work email	common	zh	工作EMail地址
 written by:	common	zh	作者:
-year	common	zh	年
+year	common	zh	年份
 yemen	common	zh	也门
 yes	common	zh	是
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码

@@ -5,7 +5,7 @@
 a template defines the layout of phpgroupware and it contains icons for each application.	preferences	zh	模板定义了phpGroupWare的布局方式以及每个应用程序的图标.
 a theme defines the colors and fonts used by the template.	preferences	zh	界面主题定义了模板使用的颜色和字体。
 acl grants have been updated	preferences	zh	ACL授权已更新
-any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh	此处定义了eGroupWare每页显示的条目数或行数。<br>该数值越大，浏览速度越快（无需多次跳页），但页面显示越慢。
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh	此处定义了phpGW每页显示的条目数或行数。<br>该数值越大，浏览速度越快（无需多次跳页），但页面显示越慢。
 are you sure you want to delete this category ?	preferences	zh	确定要删除该类别吗？
 change your password	preferences	zh	更改密码
 change your profile	preferences	zh	更改个人配置文件
