@@ -159,7 +159,6 @@
 			{
 				$data = $encrypteddata;
 			}
-			$data = stripslashes($data);
 
 			if(!strpos(' '.$data,'O:8:"stdClass"'))
 			{
@@ -167,6 +166,7 @@
 			}
 			else
 			{
+				$data = stripslashes($data);
 				return $data;
 			}
 		}
