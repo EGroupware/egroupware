@@ -55,7 +55,7 @@
 "  if (field.value != 'null') {\n".
 "   if (field.value.length == 0)\n".
 "    field.value = '%';\n".
-"   field.form.submit.click();\n".
+"   field.form.submit();\n".
 "  } else\n".
 "   field.value = ''\n".
 " }\n".
