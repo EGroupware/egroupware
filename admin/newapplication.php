@@ -65,7 +65,7 @@
 
   $selected[$n_app_status] = " selected";
   $status_html = '<option value="0"' . $selected[0] . '>' . lang("Disabled") . '</option>'
-               . '<option value="1"' . $selected[1] . '>' . lang("Enabled")  . '<option>'
+               . '<option value="1"' . $selected[1] . '>' . lang("Enabled")  . '</option>'
                . '<option value="2"' . $selected[2] . '>' . lang("Enabled - Hidden from navbar")  . '</option>';
   $phpgw->template->set_var("select_status",$status_html);
 
