@@ -20,6 +20,7 @@
 </STYLE>
 <script language="JavaScript">
 <!--
+{email_reload_js}
 function MM_preloadImages()
 {
     if (document.images)

@@ -37,6 +37,52 @@
 	{
 		$bodyheader .= ' topmargin="0" marginheight="0" marginwidth="0" leftmargin="0"';
 	}
+	
+	/*
+	@capability:  page autorefresh
+	@discussion: I know of 3 ways to get a page to reload, 2 of those ways are pretty much the same
+	(1) the http header 
+		Refresh: 5;
+	(2) the META http-equiv 
+		<META HTTP-EQUIV="Refresh" CONTENT="5">
+	both 1 and 2 have the same effect as hitting the "reload" button, which in *many* browsers will
+	force a re-download of all the images on the page, i.e. the browser will NOT use the cached images
+	(3) java script combo of "window.setTimeout" with "window.location"
+		window.setTimeout('window.location="http://example.com/phpgw/email/index.php"; ',1800000);
+	method 3 is the only one I know of that will use the images from the cache.
+	also, 3 takes a reload value in miliseconds, so a value of 180000 is really 3 minutes
+	ALSO, use if..then code to only auto-refresh certain pages, such as email/index.php
+	*/
+	//$auto_refresh_enabled = True;
+	$auto_refresh_enabled = False;
+	// initialize reload location to empty string
+	$reload_me = '';
+	if ($auto_refresh_enabled)
+	{
+		if (eregi("^.*email\/index\.php.*$",$GLOBALS['PHP_SELF']))
+		{
+			$reload_me = $GLOBALS['phpgw']->link('/email/index.php');
+		}
+		elseif (eregi("^.*\/home\.php.*$",$GLOBALS['PHP_SELF']))
+		{
+			$reload_me = $GLOBALS['phpgw']->link('/home.php');			
+		}
+	}
+	// make the JS command string if necessary
+	if (($auto_refresh_enabled)
+	&& ($reload_me != ''))
+	{
+		// set refresh time in miliseconds  (1000 = 1 sec)  (180000 = 180 sec = 3 minutes)
+		//  ( 240000 = 240 sec = 4 min)   (300000 = 5 min)   (600000 = 10 min)
+		$refresh_ms = '300000';
+		$email_reload_js = 
+			'window.setTimeout('."'".'window.location="'
+			.$reload_me.'"; '."'".','.$refresh_ms.');';
+	}
+	else
+	{
+		$email_reload_js = '';
+	}
 
 	$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
@@ -50,6 +96,7 @@
 		'css_alink'		=> $GLOBALS['phpgw_info']['theme']['alink'],
 		'css_vlink'		=> $GLOBALS['phpgw_info']['theme']['vlink'],
 		'css_hovlink'	=> $csshover,
+		'email_reload_js'	=> $email_reload_js,
 		'app_css'		=> $app_css
 	);
 	$tpl->set_var($var);
