@@ -2,7 +2,10 @@
 <form method="POST" action="{action_url}">
 <table border="0" align="center">
    <tr bgcolor="{th_bg}">
-    <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
+	   <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
+   </tr>
+   <tr bgcolor="{th_err}">
+    <td colspan="2">&nbsp;<b>{error}</b></font></td>
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
