@@ -244,7 +244,8 @@
       }
       $topath = $this->getabsolutepath($tofile);
       umask(000);
-      if (!$this->move_uploaded_file($fromfile, $topath)) {
+      //if (!$this->move_uploaded_file($fromfile, $topath)) {
+      if (!$this->mv($fromfile, $topath)) {
         return False;
       }else{
         return True;
