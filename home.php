@@ -118,7 +118,7 @@
 		}
 
 		if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-			$GLOBALS['phpgw_info']['user']['apps']['admin']) && 
+			$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
 			(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
 			$GLOBALS['phpgw_info']['server']['checkfornewversion']))
 		{
@@ -170,6 +170,10 @@
 				unset($_app_string);
 			}
 		}
+
+	if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) &&
+		 $GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
+   {
 ?>
 <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 	var NotifyWindow;
@@ -193,17 +197,11 @@
 </SCRIPT>
 
 <?php
-	echo '<p><table border="0" width="100%" align="center">';
-	//Uncomment the next line to enable the notify window.  It will not work until a notifywindow app is added.
-	echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
-
+		echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
+	}
 	$GLOBALS['phpgw']->common->hook('home',array('email','calendar','news','addressbook','squirrelmail'));
 
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
-?>
-<TR><TD></TD></TR>
-</TABLE>
-<?php
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
