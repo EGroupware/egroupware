@@ -11,8 +11,12 @@
 
   /* $Id$ */
 
-	$phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "notifywindow");
-	include("header.inc.php");
+	$phpgw_info['flags'] = array(
+		'noheader' => True,
+		'nonavbar' => True,
+		'currentapp' => 'notifywindow'
+	);
+	include('header.inc.php');
 ?>
 <html>
 <head>
@@ -28,11 +32,11 @@
 	//-->
 	</script>
 </head>
-<body bgcolor="<?php echo $phpgw_info["theme"]["bg_color"]; ?>" alink="blue" vlink="blue" link="blue">
+<body bgcolor="<?php echo $phpgw_info['theme']['bg_color']; ?>" alink="blue" vlink="blue" link="blue">
 <table>
-	<tr><td><a href="notify.php">Check Now</a></td></tr>
+	<tr><td><a href="<?php echo $phpgw->link('/notify.php'); ?>">Check Now</a></td></tr>
 <?php
-	$phpgw->common->hook("",array("email"));
+	$phpgw->common->hook('notifywindow',array('email'));
 ?>
 </table>
 </body>
