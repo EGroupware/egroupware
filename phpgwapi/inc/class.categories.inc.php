@@ -29,6 +29,7 @@
      var $app_name;
      var $cats;
      var $db;
+     var $total_records;
 
      function filter($type)
      {
@@ -58,9 +59,9 @@
 	else {
 	$phpgw->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name . "'" 
 			. "$filter $ordermethod" . " "
-	. $this->db->limit($start,$limit),__LINE__,__FILE__);
-	}                                                                                                             
-                                                                                                                   
+			. $this->db->limit($start,$limit),__LINE__,__FILE__);
+	}
+
 	    $i = 0;
 	    while ($phpgw->db->next_record()) {
 	    $cats[$i]['id']             = $phpgw->db->f('cat_id');
@@ -103,10 +104,11 @@
            $app_name   = $phpgw_info['flags']['currentapp'];
         }
 
-        $this->account_id = $account_id;
-        $this->app_name   = $app_name;
-        $this->db         = $phpgw->db;
-        $this->cats       = $this->return_array($type,$start,$limit,$query,$sort,$order);
+        $this->account_id	= $account_id;
+        $this->app_name		= $app_name;
+        $this->db		= $phpgw->db;
+	$this->total_records	= $this->db->num_rows();
+        $this->cats		= $this->return_array($type,$start,$limit,$query,$sort,$order);
      }
 
      // Return into a select box, list or other formats
@@ -114,6 +116,7 @@
      {
         global $phpgw;
         $filter = $this->filter($type);
+
 
         if ($format == 'select') {
            $this->db->query("select * from phpgw_categories where cat_appname='" . $this->app_name
