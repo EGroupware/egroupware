@@ -1,4 +1,5 @@
 %1 records imported	infolog	zt	%1 筆資料匯入
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	zt	讀取 %1 筆資料(尚未匯入，您可以回到 %2上一頁%3 並且取消匯入測試)
 %1 records read (not yet imported, you may go back and uncheck test import)	infolog	zt	%1 筆資料準備好了(還沒匯入，您必須回到%2上一頁%3並且取消"匯入測試"項目的勾選)
 - subprojects from	infolog	zt	- 附加專案
 0%	infolog	zt	0%
@@ -11,7 +12,7 @@
 70%	infolog	zt	70%
 80%	infolog	zt	80%
 90%	infolog	zt	90%
-<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	zt	
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	infolog	zt	<b>透過符號連結來附加檔案</b>取代原本上傳檔案的方式
 a short subject for the entry	infolog	zt	一個簡短的主題
 abort without deleting	infolog	zt	取消刪除
 accept	infolog	zt	確定
@@ -42,6 +43,8 @@ call	infolog	zt	呼叫
 cancel	infolog	zt	取消
 categories	infolog	zt	分類
 category	infolog	zt	類別
+change the status of an entry, eg. close it	infolog	zt	修改資料狀態，例如：關閉
+charset of file	infolog	zt	檔案字元編碼
 check to set startday	infolog	zt	設定開始日期
 click here to create the link	infolog	zt	點選這裡來建立連結
 click here to start the search	infolog	zt	點選這裡來開始搜尋
@@ -64,6 +67,7 @@ custom fields	infolog	zt	自訂欄位
 custom fields, typ and status	common	zt	自訂欄位、格式與狀態
 custom regarding	infolog	zt	自訂關於
 custom status for typ	infolog	zt	自訂格式的狀態
+customfields	infolog	zt	自定欄位
 datecreated	infolog	zt	建立日期
 dates, status, access	infolog	zt	日期、狀態、存取
 days	infolog	zt	日
@@ -71,6 +75,7 @@ default filter for infolog	infolog	zt	事件紀錄的預設過濾方式
 default status for a new log entry	infolog	zt	事件紀錄的預設狀態
 delegation	infolog	zt	授權
 delete	infolog	zt	刪除
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	zt	刪除所有附屬的
 delete the entry	infolog	zt	刪除這個事件
 delete this entry	infolog	zt	刪除這個事件
 deletes the selected typ	infolog	zt	刪除這個格式
@@ -87,8 +92,10 @@ duration	infolog	zt	進行期間
 each value is a line like <id>[=<label>]	infolog	zt	每個值都是這樣的線 <id>[=<label>]
 edit	infolog	zt	編輯
 edit or create categories for ingolog	infolog	zt	編輯或建立訊息紀錄的類別
+edit status	infolog	zt	編輯狀態
 edit the entry	infolog	zt	編輯這個事件
 edit this entry	infolog	zt	編輯這個事件
+empty for all	infolog	zt	全部空白
 enddate	infolog	zt	結束日期
 enddate can not be before startdate	infolog	zt	結束日期不應該在開始日期之前
 enter a custom contact, leave empty if linked entry should be used	infolog	zt	輸入一個自訂的聯絡人，如果連結的事件必須使用就請保持空白
@@ -105,6 +112,7 @@ from	infolog	zt	從
 high	infolog	zt	高
 id	infolog	zt	ID
 import	infolog	zt	匯入
+import next set	infolog	zt	匯入下一組
 info log	common	zt	事件紀錄簿
 infolog	common	zt	事件紀錄簿
 infolog - delete	infolog	zt	事件紀錄簿 - 刪除
@@ -113,6 +121,7 @@ infolog - import csv-file	infolog	zt	事件紀錄簿 - 匯入CSV檔案
 infolog - new	infolog	zt	事件紀錄簿 - 新增
 infolog - new subproject	infolog	zt	事件紀錄簿 - 新增附屬專案
 infolog - subprojects from	infolog	zt	事件紀錄簿 - 附屬專案自
+infolog list	infolog	zt	事件紀錄簿清單
 infolog preferences	common	zt	事件紀錄簿設定
 infolog-fieldname	infolog	zt	事件紀錄簿 - 欄位名稱
 invalid filename	infolog	zt	錯誤的檔案名稱
@@ -129,6 +138,7 @@ list no subs/childs	infolog	zt	不要列出附屬資訊
 longer textual description	infolog	zt	較長的原文描述
 low	infolog	zt	低
 max length of the input [, length of the inputfield (optional)]	infolog	zt	最大輸入長度[, 輸入欄位長度 (選填)]
+max number of entries to display on the main screen	infolog	zt	主要畫面顯示資料筆數上限
 name must not be empty !!!	infolog	zt	名稱不能空白！
 name of new type to create	infolog	zt	建立新的格式名稱
 new name	infolog	zt	新的名稱
@@ -142,12 +152,14 @@ normal	infolog	zt	一般
 not	infolog	zt	否
 not assigned	infolog	zt	不指定
 note	infolog	zt	記事
+number of records to read (%1)	infolog	zt	讀取的資料筆數(%1)
 number of records to read (<=200)	infolog	zt	讀取的資料筆數(<=200)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	zt	輸入欄位或是下拉式選單的數量
 offer	infolog	zt	提供
 ongoing	infolog	zt	不間斷的
 only the attachments	infolog	zt	只有附加檔案
 only the links	infolog	zt	只有連結
+only up to this number of entries are displayed on the main screen.	infolog	zt	主要視窗最多只會顯示這個數量的資料
 open	infolog	zt	開啟
 optional note to the link	infolog	zt	連結的附加說明
 order	infolog	zt	順序
@@ -160,8 +172,8 @@ owner	infolog	zt	擁有者
 owner responsible	infolog	zt	負責人
 path on (web-)serverside<br>eg. /var/samba/share	infolog	zt	伺服器(網站-)路徑<br>例如/var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	zt	使用者與群組檔案路徑必須在網站伺服器的網頁根目錄之外！
-pattern for search in addressbook	infolog	zt	
-pattern for search in projects	infolog	zt	在專案管理的搜尋模式
+pattern for search in addressbook	infolog	zt	搜尋通訊錄的條件
+pattern for search in projects	infolog	zt	搜尋專案的條件
 phone	infolog	zt	聯絡清單
 phone/email	infolog	zt	電話/Email
 phonecall	infolog	zt	聯絡清單
@@ -169,6 +181,7 @@ priority	infolog	zt	優先權
 private	infolog	zt	私人的
 project	infolog	zt	專案
 re:	infolog	zt	回覆：
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zt	
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zt	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zt	標註
 remove this link (not the entry itself)	infolog	zt	移除這個連結(不是它的資料)
@@ -193,12 +206,15 @@ should infolog use full names (surname and familyname) or just the loginnames.	i
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zt	這個事件只允許您以及您從ACL取得存取權限的人？
 show full usernames	infolog	zt	顯示完整的使用者姓名
 show in the infolog list	infolog	zt	在事件紀錄清單中顯示
+show list of upcoming entries	infolog	zt	顯示所有即將到來的記錄
 show open entries: tasks/calls/notes on main screen	infolog	zt	在主要畫面中顯示開啟的事件：工作/聯絡清單/記事
+small view	infolog	zt	縮小
 start a new search, cancel this link	infolog	zt	開啟一個新的搜尋並且取消這個連結
 startdate	infolog	zt	開始日期
 startdate enddate	infolog	zt	開始日期 結束日期
 startrecord	infolog	zt	開始紀錄
 status	infolog	zt	狀態
+status ...	infolog	zt	狀態...
 sub	infolog	zt	附屬
 subject	infolog	zt	主題
 task	infolog	zt	待辦事項
@@ -207,12 +223,14 @@ the name used internaly (<= 32 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	zt	給使用者的訊息
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zt	這是事件紀錄簿在您進入這個應用程式時使用的過濾方式，過濾方式將會限制實際瀏覽的事件。過濾方式可以決定您自己或是所有使用者"已經完成的"，"進行中"或是"未來的事件"
 til when should the todo or phonecall be finished	infolog	zt	待辦事項或是聯絡清單應該完成的時間
+to many might exceed your execution-time-limit	infolog	zt	超過了程式執行時間
 today	infolog	zt	今天
 todo	infolog	zt	待辦事項
 translation	infolog	zt	翻譯
 typ	infolog	zt	格式
 typ '%1' already exists !!!	infolog	zt	'%1' 格式已經存在！
 type	infolog	zt	格式
+type ...	infolog	zt	格式 ...
 type of the log-entry: note, phonecall or todo	infolog	zt	紀錄簿的格式：記事、聯絡清單或是待辦事項
 unlink	infolog	zt	刪除
 upcoming	infolog	zt	即將到來
@@ -221,6 +239,8 @@ urgent	infolog	zt	緊急的
 use button to search for address	infolog	zt	使用按鈕搜尋通訊錄
 use button to search for project	infolog	zt	使用按鈕搜尋專案
 valid path on clientside<br>eg. \\server\share or e:\	infolog	zt	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	zt	
+valid path on clientside<br>eg. servershare or e:	infolog	zt	
 values for selectbox	infolog	zt	選單的值
 view all subs of this entry	infolog	zt	顯示這個事件的所有附屬資訊
 view other subs	infolog	zt	顯示其他附屬資訊
