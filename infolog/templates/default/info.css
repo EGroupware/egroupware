@@ -1,0 +1,10 @@
+p,td { font-face: "Arial, Helvetica, sans-serif"; }
+.list { font-size:11pt; }
+.action { font-size:18pt; margin-bottom:0px; }
+.low,.pri_low_done { color:#606060; }
+.normal,.pri_normal_done { color:black }
+.high { color:#cc0000; } .high_done { color:#800000; }
+.urgent { color:#ff00ff; } .urgent_done { color:#800080; }
+.overdue { color:#cc0000; font-weight:bold; }
+.private { font-style:italic; }
+.note { color:#808080; font-style:italic; }

@@ -1,0 +1,56 @@
+# $Id$
+
+#DROP TABLE info;
+
+CREATE TABLE info (
+	info_id				int(11) unsigned PRIMARY KEY NOT NULL auto_increment,
+	info_type			enum('task','phone','note','confirm','reject','email','fax') NOT NULL,	# type of entry
+	info_addr_id		int(11) DEFAULT '0' NOT NULL,						# concerning address: e.g. call from or to (if applicable or 0)
+	info_proj_id		int(11) DEFAULT '0' NOT NULL,						# concerned project (if applicable or 0)
+	info_from			varchar(64),											# free text if no addr. or proj., e.g. name of person to call / who called
+	info_addr			varchar(64),											# type: call: nr to call. email: email-addr.
+	info_subject		varchar(64) NOT NULL,
+	info_des				text,														# long description of subject
+	info_owner			int(11) NOT NULL,										# creator of task, ...
+	info_responsible	int(11) DEFAULT '0' NOT NULL,						# 0 if owner, else person the task is delegated to
+	info_access			varchar(10) DEFAULT 'public',						# public or private (private should include responsible person)
+	info_cat				int(11) DEFAULT '0' NOT NULL,						# free cathegory
+	info_datecreated	int(11) DEFAULT '0' NOT NULL,						# date of creation
+	info_startdate		int(11) DEFAULT '0' NOT NULL,						# begin of task
+   info_enddate   	int(11) DEFAULT '0' NOT NULL,						# sheduled end of task
+	info_id_parent		int(11) DEFAULT '0' NOT NULL,						# id of parent-task or -call
+	info_pri				enum('urgent','high','normal','low') DEFAULT 'Normal',# priority of the task / call
+	info_time			int(11) DEFAULT '0' NOT NULL,						# time needed for the task
+	info_bill_cat		int(11) DEFAULT '0' NOT NULL,						# 0 == not billed
+	info_status			enum('offer','ongoing','call','will-call','done','billed') DEFAULT 'done', # offer means responsible person wanted/searched
+	info_confirm		enum('not','accept','finish','both') DEFAULT 'not'	# confirmation, not or when task is accepted or finished or on both
+);	
+
+# some test data: 
+# phone-calls	
+INSERT INTO info 	(info_type,info_addr_id,info_from,info_addr,info_subject,info_des,info_owner,info_responsible,info_access,info_pri,info_status) VALUES
+						('phone',0,'Hugo X.','+49 (631) 12345','Was steht an','...',599440,599441,'public','urgent','call'),
+						('phone',1,'','','Besprechungstermin','Wann treffen wir uns wegen',599441,599440,'public','normal','call');
+
+# notes
+INSERT INTO info 	(info_type,info_addr_id,info_from,info_subject,info_des,info_owner) VALUES
+						('note',0,'Hugo X.','Wie geht das','so und so',599440),
+						('note',1,'','zus‰tzliche Daten','1. + 2. + 3.',599441);
+						
+# tasks
+INSERT INTO info 	(info_type,info_addr_id,info_from,info_subject,info_des,info_owner,info_responsible,info_access,info_pri,info_status,info_confirm) VALUES
+						('task',0,'','Bauauftrag','wir brauche 10 Mohawks',599440,0,'public','low','offer','both'),
+						('task',2,'Ralf','Konzept vorlegen','Wann treffen wir uns wegen',599440,599441,'privat','high','ongoing','done');
+						
+# confirmation
+INSERT INTO info 	(info_type,info_id_parent,info_subject,info_des,info_owner,info_status,info_time) VALUES
+						('confirm',6,'war ne harte Nuﬂ','blah blah blah',599441,'done',10);
+						
+# email	
+INSERT INTO info 	(info_type,info_addr_id,info_from,info_addr,info_subject,info_des,info_owner,info_responsible,info_access,info_pri) VALUES
+						('email',0,'Ralf Becker','RalfBecker@outdoor-training.de','Was steht an','...',599440,0,'public','normal'),
+						('email',1,'Birgit Becker','BirgitBecker@outdoor-training.de','Besprechungstermin','Wann treffen wir uns wegen',599441,599440,'public','urgent');
+
+
+
+
