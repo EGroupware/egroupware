@@ -6,6 +6,10 @@
 
 	class bophpwebhosting
 	{
+		var $public_functions = array(
+			'delete'	=> True
+		);
+
 		var $so;
 		var $vfs;
 		var $rootdir;
@@ -18,6 +22,10 @@
 		var $homedir;
 		var $file_attributes;
 		var $help_info;
+
+		var $delete;
+		var $rename;
+		var $go;
 
 		var $download = Array();
 		var $fileman = Array();
@@ -41,7 +49,6 @@
 
 		function bophpwebhosting()
 		{
-//			error_reporting (4);
 			$this->vfs = CreateObject('phpgwapi.vfs');
 
 			$to_decode = Array(
@@ -55,28 +62,25 @@
 				'op',
 				'path',
 				'file',
+				'todir',
 				'sortby',
 				'fileman',
 				'messages',
 				'help_name',
 				'renamefiles',
 				'comment_files',
-				'show_upload_boxes'
+				'show_upload_boxes',
+				'submit',
+				'delete',
+				'go',
+				'rename'
 			);
 
 			$c_to_decode = count($to_decode);
 			for($i=0;$i<$c_to_decode;$i++)
-//			@reset($GLOBALS['HTTP_GET_VARS']);
-//			while(list($name,$data) = each($GLOBALS['HTTP_GET_VARS']))
 			{
 				$this->initialize_vars($to_decode[$i]);
 			}
-
-//			@reset($GLOBALS['HTTP_POST_VARS']);
-//			while(list($name,$data) = each($GLOBALS['HTTP_POST_VARS']))
-//			{
-//				$this->initialize_vars($name,$data);
-//			}
 
 			$this->rootdir = $this->vfs->basedir;
 			$this->fakebase = $this->vfs->fakebase;
@@ -106,6 +110,7 @@
 
 			$this->file_attributes = Array(
 				'name' => 'Filename',
+				'deletable' => 'Deletable',
 				'mime_type' => 'MIME Type',
 				'size' => 'Size',
 				'created' => 'Created',
@@ -208,7 +213,7 @@
 			# We determine if they're in their home directory or a group's directory,
 			# and set the VFS working_id appropriately
 			###
-			if((preg_match ('+^'.$this->fakebase.'\/(.*)(\/|$)+U',$this->path,$this->matches)) && $this->matches[1] != $this->userinfo['account_lid'])
+			if((preg_match('+^'.$this->fakebase.'\/(.*)(\/|$)+U',$this->path,$this->matches)) && $this->matches[1] != $this->userinfo['account_lid'])
 			{
 				$this->vfs->working_id = $GLOBALS['phpgw']->accounts->name2id($matches[1]);
 			}
@@ -216,20 +221,16 @@
 			{
 				$this->vfs->working_id = $this->userinfo['username'];
 			}
-
-//			$this->load_files();
-			
-			$this->load_help_info();
 		}
 
 		function initialize_vars($name)
 		{
 			$var = ($GLOBALS['HTTP_GET_VARS'][$name]?$GLOBALS['HTTP_GET_VARS'][$name]:'');
 			$var = ($GLOBALS['HTTP_POST_VARS'][$name]?$GLOBALS['HTTP_POST_VARS'][$name]:$var);
-//			if($var)
-//			{
-//				$this->$name = $var;
-//			}
+			if($this->debug)
+			{
+				echo '<!-- '.$name.' = '.$var.' -->'."\n";
+			}
 			if(is_array($this->$name) && $var)
 			{
 				$temp = Array();
@@ -245,7 +246,6 @@
 					}
 				}
 			}
-//			elseif(isset($this->$name) && $var)
 			elseif($var)
 			{
 				$temp = urldecode($var);
@@ -323,6 +323,54 @@
 			return $this->files_array;
 		}
 
+		function delete()
+		{
+			$numoffiles = count($this->fileman);
+			for($i=0;$i!=$numoffiles;$i++)
+			{
+				if ($this->fileman[$i])
+				{
+					$filesize = $this->vfs->get_size($this->path.SEP.$this->fileman[$i],Array(RELATIVE_USER_NONE));
+					if(!$this->vfs->delete($this->path.SEP.$this->fileman[$i],Array(RELATIVE_USER_NONE)))
+					{
+						$GLOBALS['phpgw']->common->error_list(Array('Could not delete '.$this->disppath.SEP.$this->fileman[$i]));
+					}
+				}
+			}
+			if(!$errors)
+			{
+				Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
+						Array(
+							'menuaction'	=> $this->appname.'.ui'.$this->appname.'.index',
+							'path'	=> $this->path
+						)
+					)
+				);
+			}
+			else
+			{
+				Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
+						Array(
+							'menuaction'	=> $this->appname.'.ui'.$this->appname.'.index',
+							'path'	=> $this->path,
+							'errors'	=> urlencode($errors)
+						)
+					)
+				);
+			}
+		}
+
+		function go()
+		{
+			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> $this->appname.'.ui'.$this->appname.'.index',
+						'path'	=> $this->todir
+					)
+				)
+			);
+		}
+
 		function load_help_info()
 		{
 			$this->help_info = Array(
@@ -359,7 +407,7 @@
 				array ("upload_file", "The full path of the local file to upload.  You can type it in or use the Browse.. button to select it.  The file will be uploaded to the current directory.  You cannot upload directories, only files."),
 				array ("upload_comment", "The inital comment to use for the newly uploaded file.  Totally optional and completely arbitrary.  You can [edit_comments|create or edit the comment] at any time in the future."),
 				array ("upload_files", "This will upload the files listed in the input boxes above, and store them in the current directory."),
-				array ("show_upload_fields", "This setting determines how many [upload_files|upload fields] will be shown at once.  You can change the default number that will be shown in the [preferences].")
+				array ("show_upload_fields", "This setting determines how many [upload_files|upload fields] will be shown at once.  You can change the default number that will be shown in the preferences.")
 			);
 		}
 
@@ -378,14 +426,12 @@
 
 			if($size<1024)
 			{
-				$rstring = $left.$size.'&nbsp;B&nbsp;&nbsp;'.$right;
+				return $left.$size.'&nbsp;B&nbsp;&nbsp;'.$right;
 			}
 			else
 			{
-				$rstring = $left.round($size/1024).'&nbsp;KB'.$right;
+				return $left.round($size/1024).'&nbsp;KB'.$right;
 			}
-			return $rstring;
-//			return($this->eor($rstring,$return));
 		}
 
 		###

@@ -5,6 +5,9 @@
 
 		var $public_functions = array(
 			'index'	=> True,
+			'action'	=> True,
+			'help'	=> True,
+			'history'	=> True,
 			'view'	=> True,
 			'view_file'	=> True
 		);
@@ -30,7 +33,7 @@
 
 		function load_header()
 		{
-			if(($this->bo->download && (count($this->bo->fileman) > 0)) || ($this->bo->op == 'view' && $this->bo->file) || ($this->bo->op == 'history' && $this->bo->file) || ($this->bo->op == 'help' && $this->bo->help_name))
+			if(($this->bo->download && (count($this->bo->fileman) > 0)) || ($this->bo->op == 'view' && $this->bo->file) || ($this->bo->op == 'history' && $this->bo->file) || ($this->bo->op == 'help' && $this->bo->help_name) || ($this->bo->delete && count($this->bo->fileman) > 0) || ($this->bo->go && isset($this->bo->todir)))
 			{
 			}
 			else
@@ -162,20 +165,64 @@
 			}
 		}
 
-		function build_help($help_option)
+		function action()
+		{
+			$actions = Array(
+				'delete'	=> lang('Delete'),
+				'go'	=> lang('Go To')
+			);
+			@reset($actions);
+			while(list($function,$text) = each($actions))
+			{
+				if(isset($this->bo->$function) && !empty($this->bo->$function) && trim($this->bo->$function) == $text)
+				{
+					if($this->bo->$function == 'go')
+					{
+						echo 'To Dir = '.$this->bo->todir.'<br>'."\n";
+					}
+					$this->bo->$function();
+				}
+			}
+		}
+
+		function help()
+		{
+			$this->bo->load_help_info();
+			@reset($this->bo->help_info);
+			while(list($num,$help_array) = each($this->bo->help_info))
+			{
+				if ($help_array[0] != $this->bo->help_name)
+				{
+					continue;
+				}
+
+				$help_array[1] = preg_replace("/\[(.*)\|(.*)\]/Ue","\$this->build_help('\\1','\\2')",$help_array[1]);
+				$help_array[1] = preg_replace("/\[(.*)\]/Ue","\$this->build_help('\\1','\\1')",$help_array[1]);
+
+				echo '<font size="+4">'."\n".ucwords(str_replace('_',' ',$help_array[0]))."\n".'</font></br>'."\n";
+				echo '<font size="+2">'."\n".$help_array[1].'</font>';
+			}
+			$GLOBALS['phpgw']->common->phpgw_exit ();
+		}
+
+		function build_help($help_option,$text='')
 		{
 			if($this->bo->settings['show_help'])
 			{
-				return '<font size="-2" color="maroon" >'."\n"
-					. '      <a href="'
+				$help = ($text?'':'<font size="-2" color="maroon" >'."\n");
+				$help .= '      <a href="'
 					. $GLOBALS['phpgw']->link('/index.php',
 						Array(
 							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.help',
 							'help_name'	=> urlencode($help_option),
+							'op'	=> 'help'
 						)
 					)
-					. '" target="_new">[?]</a>'."\n"
-					. '     </font>';
+					. '" target="_new">';
+				$help .= ($text?$text:'[?]');
+				$help .= '</a>';
+				$help .= ($text?'':"\n".'     </font>');
+				return $help;	
 			}
 			else
 			{
@@ -191,6 +238,17 @@
 		function link($array_params,$text)
 		{
 			return '<a href="'.$GLOBALS['phpgw']->link('/index.php',$array_params).'">'.$text.'</a>';
+		}
+
+		function build_upload_choices($number)
+		{
+			return $this->link(
+				Array(
+					'menuaction'	=> $GLOBALS['HTTP_GET_VARS']['menuaction'],
+					'path'	=> $this->bo->path,
+					'show_upload_boxes'	=> $number
+				),
+				$number).'&nbsp;&nbsp;';
 		}
 
 		function column_header($internal,$displayed,$link=True)
@@ -215,6 +273,341 @@
 			);
 		}
 
+		function display_buttons()
+		{
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'_buttons'	=> 'small_table.tpl'
+				)
+			);
+			$p->set_block('_buttons','table','table');
+			$p->set_block('_buttons','column_headers','column_headers');
+			$p->set_block('_buttons','column_headers_normal','column_headers_normal');
+			$p->set_block('_buttons','column_rows','column_rows');
+
+			$var = Array(
+				'table_extras'	=> '',
+				'tr_extras'	=> '',
+				'td_extras'	=> ' align="center" width="25%"'
+			);
+
+			$var['column_header']	= '<input type="submit" name="edit" value="     '.lang('Edit').'     ">'.$this->build_help('edit');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',False);
+
+			$var['column_header']	= '<input type="submit" name="rename" value="  '.lang('Rename').'  ">'.$this->build_help('rename');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+
+			$var['column_header']	= '<input type="submit" name="delete" value="     '.lang('Delete').'     ">'.$this->build_help('delete');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+
+			$var['column_header']	= '<input type="submit" name="edit_comments" value=" '.lang('Edit Comments').' ">'.$this->build_help('edit_comments');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+			$p->parse('list','column_rows',True);
+
+			$var['column_header']	= '<input type="submit" name="go" value="  '.lang('Go To').'  ">'.$this->build_help('go_to');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',False);
+
+			$var['column_header']	= '<input type="submit" name="copy" value=" '.lang('Copy To').' ">'.$this->build_help('copy_to');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+
+			$var['column_header']	= '<input type="submit" name="move" value=" '.lang('Move To').' ">'.$this->build_help('move_to');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+
+			###
+			# First we get the directories in their home directory
+			###
+
+			$dirs[] = Array(
+				'directory' => $this->bo->fakebase,
+				'name' => $this->bo->userinfo['account_lid']
+			);
+			$ls_array = $this->bo->vfs->ls($this->bo->homedir,Array(RELATIVE_NONE),True,'Directory');
+			while(list($num,$dir) = each($ls_array))
+			{
+				$dirs[] = $dir;
+			}
+
+			###
+			# Then we get the directories in their membership's home directories
+			###
+
+			reset($this->bo->memberships);
+			while(list($num,$group_array) = each($this->bo->memberships))
+			{
+				###
+				# Don't list directories for groups that don't have access
+				###
+
+				if(!$this->bo->membership_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
+				{
+					continue;
+				}
+
+				$dirs[] = Array(
+					'directory' => $this->bo->fakebase,
+					'name' => $group_array['account_name']
+				);
+
+				$ls_array = $this->bo->vfs->ls($this->bo->fakebase.SEP.$group_array['account_name'],Array(RELATIVE_NONE),True,'Directory');
+				while(list($num,$dir) = each($ls_array))
+				{
+					$dirs[] = $dir;
+				}
+			}
+
+			$dir_list = '';
+			reset($dirs);
+			while(list($num, $dir) = each($dirs))
+			{
+				if(!$dir['directory'])
+				{
+					continue;
+				}
+		
+				###
+				# So we don't display //
+				###
+
+				if($dir['directory'] != '/')
+				{
+					$dir['directory'] .= SEP;
+				}
+
+				$selected = '';
+				if($num == 0)
+				{
+					$selected = ' selected';
+				}
+
+				###
+				# No point in displaying the current directory, or a directory that doesn't exist
+				###
+			
+				if((($dir['directory'].$dir['name']) != $this->bo->path) && $this->bo->vfs->file_exists($dir['directory'].$dir['name'],Array(RELATIVE_NONE)))
+				{
+					$dir_list .= '<option value="'.urlencode($dir['directory'].$dir['name']).'"'.$selected.'>'.$dir['directory'].$dir['name'].'</option>';
+				}
+			}
+
+			$var['column_header']	= '<select name="todir">'.$dir_list.'</select>'.$this->build_help('directory_list');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+			$p->parse('list','column_rows',True);
+			$p->set_var('col_headers','');
+
+			$var = Array(
+				'tr_extras'	=> '',
+				'td_extras'	=> ' colspan="2" align="center" width="50%"'
+			);
+
+			if($this->bo->path != '/' && $this->bo->path != $this->bo->fakebase)
+			{
+				$var['column_header']	= '<input type="submit" name="download" value=" '.lang('Download').' ">'.$this->build_help('download');
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers',True);
+
+				$var['column_header']	= '&nbsp;&nbsp;&nbsp;<input type="text" name="createdir" maxlength="255" size="15">&nbsp;<input type="submit" name="newdir" value=" '.lang('Create Folder').' ">'.$this->build_help('create_folder');
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers',True);
+				$p->parse('list','column_rows',True);
+			}
+
+			$var['column_header']	= '<input type="submit" name="update" value="     '.lang('Update').'     ">'.$this->build_help('update');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',False);
+
+			if($this->bo->path != '/' && $this->bo->path != $this->bo->fakebase)
+			{
+				$var['column_header']	= '&nbsp;&nbsp;&nbsp;<input type="text" name="createfile" maxlength="255" size="15">&nbsp;<input type="submit" name="newfile" value="    '.lang('Create File').'    ">'.$this->build_help('create_file');
+			}
+			else
+			{
+				$var['column_header']	= '&nbsp;';
+			}
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',True);
+			$p->parse('list','column_rows',True);
+			$p->set_var('col_headers','');
+
+			if($this->bo->settings['show_command_line'])
+			{
+				$var = Array(
+					'tr_extras'	=> '',
+					'td_extras'	=> ' colspan="4" align="center" width="100%"',
+					'column_header'	=> '<input type="text" name="command_line" size="50">'.$this->build_help('command_line').'</br><input type="submit" name="execute" value="'.lang('Execute').'">'.$this->build_help('execute')
+				);
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers',True);
+				$p->parse('list','column_rows',True);
+				$p->set_var('col_headers','');
+			}
+			return $p->fp('output','table');
+		}
+
+		function display_summary_info($numoffiles,$usedspace)
+		{
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'_info'	=> 'small_table.tpl'
+				)
+			);
+			$p->set_block('_info','table','table');
+			$p->set_block('_info','column_headers','column_headers');
+			$p->set_block('_info','column_headers_normal','column_headers_normal');
+			$p->set_block('_info','column_rows','column_rows');
+			$this_homedir = ($this->bo->path == $this->bo->homedir || $this->bo->path == $this->bo->fakedir);
+			$info_columns = 4 + ($this_homedir?2:0);
+
+			$var = Array(
+				'table_extras'	=> ' cols="'.$info_columns.'"',
+				'tr_extras'	=> '',
+				'td_extras'	=> ' colspan="'.$info_columns.'" align="center" width="100%"',
+				'column_header'	=> $this->build_help('file_stats')
+			);
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers',False);
+			$p->parse('list','column_rows',True);
+			$p->set_var('col_headers','');
+
+			$var = Array(
+				'tr_extras'	=> '',
+				'td_extras'	=> ' align="right"'
+			);
+				
+			$var['column_header'] = '<b>'.lang('Files').'</b>:';
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',False);
+
+			$var['td_extras']	= ' align="left"';
+			$var['column_header'] = $numoffiles;
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',True);
+
+			$var['td_extras']	= ' align="right"';
+			$var['column_header'] = '<b>'.lang('Used Space').'</b>:';
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',True);
+
+			$var['td_extras']	= ' align="left"';
+			$var['column_header'] = $this->bo->borkb($usedspace);
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',True);
+
+			if($this_homedir)
+			{
+				$var['td_extras']	= ' align="right"';
+				$var['column_header'] = '<b>'.lang('Unused space').'</b>:';
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers_normal',True);
+
+				$var['td_extras']	= ' align="left"';
+				$var['column_header'] = $this->bo->borkb($this->bo->userinfo['hdspace'] - $usedspace);
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers_normal',True);
+			}
+
+			$p->parse('list','column_rows',True);
+			$p->set_var('col_headers','');
+
+			if($this_homedir)
+			{
+				$var['td_extras']	= ' colspan="'.($info_columns / 2).'" align="right" width="50%"';
+				$var['column_header'] = '<b>'.lang('Total Files').'</b>:';
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers_normal',False);
+
+				$var['td_extras']	= ' colspan="'.($info_columns / 2).'" align="left" width="50%"';
+				$var['column_header'] = count($this->bo->vfs->ls($this->bo->path,Array(RELATIVE_NONE)));
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers_normal',True);
+
+				$p->parse('list','column_rows',True);
+				$p->set_var('col_headers','');
+			}
+			return $p->fp('output','table');
+		}
+
+		function display_uploads()
+		{
+
+			$p = CreateObject('phpgwapi.Template',$this->template_dir);
+			$p->set_file(
+				Array(
+					'_uploads'	=> 'small_table.tpl'
+				)
+			);
+			$p->set_block('_uploads','table','table');
+			$p->set_block('_uploads','column_headers','column_headers');
+			$p->set_block('_uploads','column_headers_normal','column_headers_normal');
+			$p->set_block('_uploads','column_rows','column_rows');
+
+			$var = Array(
+				'table_extras'	=> ' cols="3"',
+				'tr_extras'	=> ''
+			);
+
+			$var['td_extras']	= ' align="right" width="45%"';
+			$var['column_header'] = '<b>'.lang('File').'</b>'.$this->build_help('upload_file');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',False);
+
+			$var['td_extras']	= ' align="center" width="10%"';
+			$var['column_header'] = '&nbsp;';
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',True);
+
+			$var['td_extras']	= ' align="left" width="45%"';
+			$var['column_header'] = '<b>'.lang('Comment').'</b>'.$this->build_help('upload_comment');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',True);
+
+			$p->parse('list','column_rows',True);
+
+			$input_file = '<input type="file" name="upload_file[]" maxlength="255">';
+			$input_comment = '<input type="text" name="upload_comment[]">';
+
+			$var['tr_extras'] = '';
+			$var['td_extras'] = ' colspan="3" align="center"';
+			$var['column_header'] = '<input type="hidden" name="show_upload_boxes" value="'.$this->bo->show_upload_boxes.'">'."\n".$input_file.$input_comment;
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',False);
+			$p->parse('list','column_rows',True);
+
+			for($i=1;$i<$this->bo->show_upload_boxes;$i++)
+			{
+				$var['column_header'] = $input_file.$input_comment;
+				$p->set_var($var);
+				$p->parse('col_headers','column_headers_normal',False);
+				$p->parse('list','column_rows',True);
+			}
+
+			$var['column_header'] = '<input type="submit" name="upload_files" value="'.lang('Upload Files').'">'.$this->build_help('upload_files');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',False);
+			$p->parse('list','column_rows',True);
+
+			$var['column_header'] = lang('Show').'&nbsp;&nbsp;'.$this->build_upload_choices(5).$this->build_upload_choices(10).$this->build_upload_choices(20).$this->build_upload_choices(30).lang('upload fields').$this->build_help('show_upload_fields');
+			$p->set_var($var);
+			$p->parse('col_headers','column_headers_normal',False);
+			$p->parse('list','column_rows',True);
+
+			return '<form action="'.$GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> $this->bo->appname.'.bo'.$this->bo->appname.'.upload',
+						'path'	=> $this->bo->path
+					)
+				).'" method="post" enctype="multipart/form-data">'."\n".$p->fp('output','table').'</form>'."\n";
+		}
+
 		function index()
 		{
 			$files_array = $this->bo->load_files();
@@ -230,14 +623,21 @@
 				);
 				$p->set_block('_index','index','index');
 				$p->set_block('_index','column_headers','column_headers');
+				$p->set_block('_index','column_headers_normal','column_headers_normal');
 				$p->set_block('_index','column_rows','column_rows');
 				
-				$tr = $this->nextmatchs->alternate_row_color($tr);
-				$p->set_var('tr_extras',' bgcolor="'.$tr.'" border="0"');
+				$GLOBLAS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
+				$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
 				$var = Array(
+					'form_action'	=> $GLOBALS['phpgw']->link('/index.php',
+							Array(
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.action',
+								'path'		=> urlencode($this->bo->path)
+							)
+						),
 					'img_up'	=> $this->link(Array(
 								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
-								'path'		=> $this->bo->lesspath
+								'path'		=> urlencode($this->bo->lesspath)
 							),
 						$this->image('folder_up.gif',lang('Up'))),
 					'help_up'	=> $this->build_help('up'),
@@ -263,8 +663,7 @@
 						$columns++;
 					}
 				}
-				$tr = $this->nextmatchs->alternate_row_color($tr);
-				$p->set_var('tr_extras',' bgcolor="'.$tr.'" border="0"');
+				$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
 				$p->parse('col_row','column_rows',True);
 
 				$p->set_var('colspan',$columns);
@@ -315,12 +714,12 @@
 						$p->set_var($var);
 						$p->parse('col_headers','column_headers',True);
 					}
-					$tr = $this->nextmatchs->alternate_row_color($tr);
-					$p->set_var('tr_extras',' bgcolor="'.$tr.'" border="0"');
+					$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
 					$p->parse('col_row','column_rows',True);
 					$p->set_var('col_headers','');
 				}
 
+				$usedspace = 0;
 				reset($files_array);
 				$numoffiles = count($files_array);
 				for($i=0;$i!=$numoffiles;$i++)
@@ -332,6 +731,8 @@
 					);
 					$p->set_var($var);
 					$p->parse('col_headers','column_headers');
+
+					$usedspace += $files['size'];
 
 					reset($this->bo->file_attributes);
 					while(list($internal,$displayed) = each($this->bo->file_attributes))
@@ -360,19 +761,22 @@
 											$var['column_header']	= $this->link(
 												Array(
 													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.view',
-//													'op'		=> 'view',
 													'path'		=> urlencode($this->bo->path),
 													'file'		=> urlencode($files['name'])
 												),
 												'<b>'.$files['name'].'</b>'
 											);
-//											$var['column_header']	= '<a href="'.$GLOBALS['phpgw']->link('/'.$this->bo->appname.'/view_file.php',
-//												Array(
-//													'path'		=> urlencode($this->bo->path),
-//													'file'		=> urlencode($files['name'])
-//												)
-//											).'"><b>'.$files['name'].'</b></a>';
 											break;
+									}
+									break;
+								case 'deletable':
+									if ($files['deleteable'] == 'N')
+									{
+										$var['column_header'] = $this->image('locked.gif','locked');
+									}
+									else
+									{
+										$var['column_header'] = '&nbsp;';
 									}
 									break;
 								case 'size':
@@ -427,12 +831,14 @@
 							$p->parse('col_headers','column_headers',True);
 						}
 					}
-					$tr = $this->nextmatchs->alternate_row_color($tr);
-					$p->set_var('tr_extras',' bgcolor="'.$tr.'" border="0"');
+					$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
 					$p->parse('col_row','column_rows',True);
 					$p->set_var('col_headers','');
 				}
-					
+
+				$p->set_var('buttons',$this->display_buttons());
+				$p->set_var('info',$this->display_summary_info($numoffiles,$usedspace));
+				$p->set_var('uploads',$this->display_uploads());
 
 				$p->pfp('output','index');
 			}
@@ -440,7 +846,6 @@
 
 		function view()
 		{
-
 			if($this->bo->vfs->file_exists($this->bo->path.'/'.$this->bo->file,Array(RELATIVE_NONE)))
 			{
 				$content_type = $this->bo->vfs->file_type($this->bo->path.$this->bo->dispsep.$this->bo->file,Array(RELATIVE_NONE));
@@ -498,6 +903,104 @@
 					. '  </td>'."\n"
 					. ' </tr>'."\n"
 					. '</table>'."\n";
+			}
+		}
+
+		function history()
+		{
+			$file = $this->bo->path.$this->bo->dispsep.$this->bo->file;
+			if($this->bo->vfs->file_exists($file,Array(RELATIVE_NONE)))
+			{
+				$col_headers = Array(
+					'Date'	=> 'created',
+					'Version'	=> 'version',
+					'Action Performed by'	=> 'owner_id',
+					'Operation'	=> 'comment'
+				);
+				$p = CreateObject('phpgwapi.Template',$this->template_dir);
+				$p->set_unknowns('remove');
+
+				$p->set_file(
+					Array(
+						'_history'	=> 'history.tpl'
+					)
+				);
+				$p->set_block('_history','history','history');
+				$p->set_block('_history','column_headers','column_headers');
+				$p->set_block('_history','column_rows','column_rows');
+
+				$var = Array(
+					'path'	=> $this->link(
+							Array(
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
+								'path'		=> urlencode($this->bo->path)
+							),
+							$this->bo->path
+						),
+					'filename'	=> $this->link(
+							Array(
+								'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.view',
+								'path'		=> urlencode($this->bo->path),
+								'file'		=> urlencode($this->bo->file)
+							),
+							$this->bo->file
+						)
+				);
+				$p->set_var($var);
+
+				$GLOBALS['tr_color'] = $GLOBALS['phpgw_info']['theme']['row_off'];
+				$var = Array(
+					'td_extras'	=> ''
+				);
+				@reset($col_headers);
+				while(list($label,$field)= each($col_headers))
+				{
+					$var['column_header'] = '<b>'.$label.'</b>';
+					$p->set_var($var);
+					$p->parse('col_headers','column_headers',True);
+				}
+				$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
+				$p->parse('col_row','column_rows',True);
+				$p->set_var('col_headers','');
+
+				$journal_array = $this->bo->vfs->get_journal($file,Array(RELATIVE_NONE));
+				while(list($num,$journal_entry) = each($journal_array))
+				{
+					@reset($col_headers);
+					while(list($label,$field)= each($col_headers))
+					{
+						switch($field)
+						{
+							case 'owner_id':
+								$var['column_header'] = '<font size="-2">'.$GLOBALS['phpgw']->accounts->id2name($journal_entry[$field]).'</font>';
+								break;
+							case 'created':
+								if($journal_entry[$field] && $journal_entry[$field] != '0000-00-00')
+								{
+									$year = substr($journal_entry[$field],0,4);
+									$month = substr($journal_entry[$field],5,2);
+									$day = substr($journal_entry[$field],8,2);
+									$datetime = mktime(0,0,0,$month,$day,$year);
+									$var['column_header'] = '<font size="-2">'.date($GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'],$datetime).'</font>';
+								}
+								else
+								{
+									$var['column_header'] = '<font size="-2">&nbsp;</font>';
+								}
+								break;
+							default:
+								$var['column_header'] = '<font size="-2">'.$journal_entry[$field].'</font>';
+								break;
+						}
+						$p->set_var($var);
+						$p->parse('col_headers','column_headers',True);
+					}
+					$p->set_var('tr_extras',' bgcolor="'.$this->nextmatchs->alternate_row_color().'" border="0"');
+					$p->parse('col_row','column_rows',True);
+					$p->set_var('col_headers','');
+				}
+				
+				$p->pfp('output','history');
 			}
 		}
 

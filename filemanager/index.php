@@ -1206,7 +1206,7 @@ if ($edit)
 		{
 			$fileman[$j];
 
-			$content = $$fileman[$j];
+			$content = $fileman[$j];
 			echo 'fileman['.$j.']: '.$fileman[$j].'<br><b>'.$content.'</b><br>';
 			continue;
 
