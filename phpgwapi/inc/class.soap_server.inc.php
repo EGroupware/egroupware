@@ -5,7 +5,7 @@
 
 class soap_server
 {
-	function soap_server($data,$serviceNow=False)
+	function soap_server($data='',$serviceNow=False)
 	{
 		// create empty dispatch map
 		$this->dispatch_map = array();
