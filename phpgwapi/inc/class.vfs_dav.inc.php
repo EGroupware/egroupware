@@ -2872,7 +2872,7 @@ $this->debug('ls:returning 3:');
 				)
 			);
 
-			if (is_dir ($p->real_full_path))
+			if ( $this->file_type(array('string' => $p->real_full_path, 'relatives' => array (RELATIVE_ROOT))) == 'Directory')
 			{
 				$mime_type = 'Directory';
 			}
@@ -2883,10 +2883,6 @@ $this->debug('ls:returning 3:');
 					)
 				);
 
-				if($mime_type)
-				{
-					$GLOBALS['phpgw']->db->query ("UPDATE phpgw_vfs SET mime_type='".$mime_type."' WHERE directory='".$p->fake_leading_dirs_clean."' AND name='".$p->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
-				}
 			}
 
 			$size = filesize ($p->real_full_path);
