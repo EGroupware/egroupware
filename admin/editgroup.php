@@ -98,7 +98,7 @@
 
      $t->set_var("group_name_value",$phpgw->db->f("group_name"));
 
-     $phpgw->db->query("select con from accounts where groups like '%,$group_id,%'");
+     $phpgw->db->query("select con from accounts where groups like '%,$group_id:%'");
 
      while ($phpgw->db->next_record()) {
         $selected_users[$phpgw->db->f("con")] = " selected";
