@@ -142,10 +142,15 @@
 			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND " 
 					. " $grant_cats $querymethod $filter $ordermethod";
 
-			$this->db2->query($sql,__LINE__,__FILE__);
-			$this->total_records = $this->db2->num_rows();
-			$this->db->query($sql. " " . $this->db->limit($start,$limit),__LINE__,__FILE__);
-			//echo '<b>TEST:</b>' . $sql;
+			if ($limit)
+			{
+			    $limitmethod = " " . $this->db->limit($start);
+			}
+
+			    $this->db2->query($sql,__LINE__,__FILE__);
+			    $this->total_records = $this->db2->num_rows();
+			    $this->db->query($sql . $limitmethod,__LINE__,__FILE__);
+			    //echo '<b>TEST:</b>' . $sql;
 
 			$i = 0;
 			while ($this->db->next_record())
@@ -238,7 +243,7 @@
 
 			if ($format == 'select')
 			{
-				$cats = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+				$cats = $this->return_array($type,$start,$limit = False,$query,$sort,$order,$public);
 
 				for ($i=0;$i<count($cats);$i++)
 				{
