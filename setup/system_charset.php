@@ -95,7 +95,7 @@
 			}
 			foreach($table_definitions as $table => $definition)
 			{
-				if ($diagnostics) { echo "<br>start converting table '$table' ... "; flush(); }
+				if ($diagnostics) { echo "<br>start converting table '$table' ... "; }
 				$db2->set_column_definitions($definitions['fd']);
 				$updates = 0;
 				$GLOBALS['phpgw_setup']->db->query("SELECT * FROM $table",__LINE__,__FILE__);
