@@ -218,7 +218,7 @@
 
      if ($phpgw_info["server"]["useframes"] != "never") {
         Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));
-        exit;
+        $phpgw->common->phpgw_exit();
      }
 
      Header("Location: " . $phpgw->link("index.php"));

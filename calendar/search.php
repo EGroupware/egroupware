@@ -30,7 +30,7 @@
     echo "<b>".lang("Error").":</b>";
     echo lang("You must enter one or more search keywords.");
     $phpgw->common->phpgw_footer();
-    exit;
+    $phpgw->common->phpgw_exit();
   }
   $matches = 0;
 
@@ -97,7 +97,7 @@
     echo "<b>".lang("Error").":</b>";
     echo $error;
     $phpgw->common->phpgw_footer();
-    exit;
+    $phpgw->common->phpgw_exit();
   }
 
   $phpgw->template->set_file(array("search_t"	 => "search.tpl",

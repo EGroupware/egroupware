@@ -18,7 +18,7 @@
 
   if ($id < 1) {
      echo lang("Invalid entry id.");
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   function add_day(&$repeat_days,$day) {

@@ -25,7 +25,7 @@
      } else {
         Header("Location: " . $phpgw->link("changetheme.php"));
      }
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   $dh = opendir($phpgw_info["server"]["server_root"] . "/phpgwapi/themes");

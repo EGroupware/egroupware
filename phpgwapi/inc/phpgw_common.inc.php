@@ -43,15 +43,6 @@
                                                        'gdm'      => True,
                                                        'named'    => True);
 
-  // This function is used if the developer wants to stop a running app in the middle of execution
-  // We may need to do some clean up before hand
-  function phpgw_exit()
-  {
-     global $phpgw;
-     
-     $phpgw->db->disconnect();
-     exit;
-  }
 
   // I had to create this has a wrapper, becuase the phpgw.inc.php files needs it before the classes
   // are finished loading (jengo)
@@ -102,6 +93,16 @@
    	}
 
    	return $ds;
+    }
+
+    // This function is used if the developer wants to stop a running app in the middle of execution
+    // We may need to do some clean up before hand
+    function phpgw_exit()
+    {
+       global $phpgw;
+       
+       $phpgw->db->disconnect();
+       exit;
     }
 
     function randomstring($size)

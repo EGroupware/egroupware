@@ -13,7 +13,7 @@
 
   if (isset($friendly) && $friendly){
      $phpgw->common->phpgw_footer();
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||

@@ -20,7 +20,7 @@
   include("../header.inc.php");
   if ($phpgw_info["user"]["permissions"]["anonymous"]) {
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/"));
-     exit;
+     $phpgw->common->phpgw_exit();
   }
 
   if ($submit) {

@@ -19,7 +19,7 @@
 
   if (!$phpgw->acl->check("changepassword", 1)){
     Header("Location: index.php");
-    exit;
+    $phpgw->common->phpgw_exit();
   }    
 
   if (! $submit) {
@@ -70,7 +70,7 @@
    if ($error) {
       $phpgw->common->navbar();
       echo "<p><br>$error</p>";
-      exit;
+      $phpgw->common->phpgw_exit();
    }
 
    if ($phpgw_info["server"]["auth_type"] == "sql") {
@@ -83,7 +83,7 @@
 
       if (! @ldap_bind($ldap, $phpgw_info["server"]["ldap_root_dn"], $phpgw_info["server"]["ldap_root_pw"])) {
          echo "<p><b>Error binding to LDAP server.  Check your config</b>";
-         exit;
+         $phpgw->common->phpgw_exit();
       }
 
       $entry["userpassword"] = $phpgw->common->encrypt_password($n_passwd);
