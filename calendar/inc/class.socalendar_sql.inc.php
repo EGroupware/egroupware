@@ -391,7 +391,7 @@ class socalendar_ extends socalendar__
 		$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
 		
 		$user_where = ' AND (phpgw_cal_user.cal_login in (';
-		if($owner_id)
+		if(is_array($owner_id) && count($owner_id))
 		{
 			$user_where .= implode(',',$owner_id);
 		}
