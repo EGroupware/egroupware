@@ -75,6 +75,7 @@ author	nntp	de	Autor
 auto generate activity id ?	projects	de	Aktivitäts-ID automatisch generieren?
 auto generate delivery id ?	projects	de	Lieferungs-ID automatisch generieren?
 auto generate invoice id ?	projects	de	Rechnungs-ID automatisch generieren?
+autosave default category	addressbook	de	Standard-Kategorie automatisch speichern
 available groups	nntp	de	verfügbare Gruppen
 bad login or password	login	de	Bad login or password
 base url	admin	de	Basis URL
@@ -168,6 +169,7 @@ december	common	de	Dezember
 default application	preferences	de	Standard-Anwendung
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
+default category	addressbook	de	Standard-Kategorie
 default sorting order	common	de	Standard-Sortierung
 delete	common	de	Löschen
 deliveries	projects	de	Lieferungen
@@ -224,8 +226,11 @@ error deleting x x directory	common	de	Fehler beim Löschen des Verzeichnisses %1
 error renaming x x directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1%2
 exit	filemanager	de	Exit
 export contacts	addressbook	de	Kontakte exportieren
+extra	addressbook	de	Extra
 fax	addressbook	de	Fax
 february	common	de	Februar
+fields	addressbook	de	Felder
+fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 file manager	common	de	Filemanager
 file_upload	filemanager	de	Datei Upload
 files	common	de	Dateien
@@ -426,6 +431,7 @@ opened by	tts	de	Angelegt von
 or: days from startdate:	todo	de	alternativ: Tage ab Startdatum
 or: select for today:	todo	de	alternativ: heute
 original	common	de	Original
+other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
 other phone	common	de	Tel sonst.
 overall	projects	de	Insgesamt
@@ -443,6 +449,7 @@ permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
 personal	addressbook	de	Persönlich
 personalized notes for	notes	de	Persönliche Notizen für
+phone numbers	addressbook	de	Telefonnummern
 php information	admin	de	PHP Informationen
 phpgroupware login	login	de	phpGroupWare Login
 phrase in english	transy	de	Phrase in English
