@@ -73,23 +73,19 @@ class db {
 		return $this->Query_ID;
 	}
 
-	function limit_query($Query_String, $_offset, $line = '', $file = '')
+	// public: perform a query with limited result set
+	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 	{
 		global $phpgw_info;
+
+		if (! $num_rows)
+		{
+			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
+		}
 
 		if ($this->Debug)
 		{
 			printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
-		}
-
-		if (is_array($_offset))
-		{
-			list($offset,$num_rows) = $_offset;
-		}
-		else
-		{
-			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-			$offset = $_offset;
 		}
 
 		$this->query($Query_String, $line, $file);

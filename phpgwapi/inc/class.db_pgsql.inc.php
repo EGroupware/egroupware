@@ -112,18 +112,13 @@ class db {
   }
 
 	// public: perform a query with limited result set
-	function limit_query($Query_String, $_offset, $line = '', $file = '')
+	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 	{
 		global $phpgw_info;
 
-		if (is_array($_offset))
-		{
-			list($offset,$num_rows) = $_offset;
-		}
-		else
+		if (! $num_rows)
 		{
 			$num_rows = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-			$offset = $_offset;
 		}
 
 		if ($offset == 0)
