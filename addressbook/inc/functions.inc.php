@@ -34,34 +34,25 @@
 	}
 
 	// Return a select form element with the categories option dialog in it
-	function cat_option($cat_id='',$name='ncat_id',$notall=False,$java=False) {
+	function cat_option($cat_id='',$notall=False,$java=True) {
 		global $phpgw_info;
 		if ($java) {
 			$jselect = " onChange=\"this.form.submit();\"";
-			$name='cat_id';
-			//$jsubopen  = "<noscript>";
-			//$jsubclose = "</noscript>";
 		}
 		// Setup all and none first
-		$cats_link  = "<select name=\"".$name."\"$jselect>";
+		$cats_link  = "\n<select name=\"cat_id\"$jselect>\n";
 		if (!$notall) {
-			$cats_link .= "<option value =\"all\"";
+			$cats_link .= "<option value=\"\"";
 			if ($cat_id=="all") {
 				$cats_link .= " selected";
 			}
-			$cats_link .= ">".lang("all");
+			$cats_link .= "></option>".lang("all")."\n";
 		}
-
-		$cats_link .= "<option value =\"0\"";
-		if (!$cat_id) {
-			$cats_link .= " selected";
-		}
-		$cats_link .= ">".lang("none");
 
 		// Get global and app-specific category listings
 		$cats       = CreateObject('phpgwapi.categories');
 		$cats_link .= $cats->formated_list('select','all',$cat_id,True);
-		$cats_link .= '</select>';
+		$cats_link .= '</select>'."\n";
 		return $cats_link;
 	}
 
@@ -264,7 +255,7 @@
 			$cat_id   = $fields["cat_id"];
 		}
 
-		$cats_link    = cat_option($cat_id,'ncat_id',True);
+		$cats_link    = cat_option($cat_id,True);
 
 		if ($access == 'private') {
 			$access_check = ' checked';

@@ -24,7 +24,6 @@
         <input type="hidden" name="filter" value="{filter}">
         <input type="hidden" name="query" value="{query}">
         <input type="hidden" name="start" value="{start}">
-        <input type="hidden" name="cat_id" value="{cat_id}">
         </FORM>
       </TD>
     </TR>
@@ -36,7 +35,6 @@
         <input type="hidden" name="filter" value="{filter}">
         <input type="hidden" name="query" value="{query}">
         <input type="hidden" name="start" value="{start}">
-        <input type="hidden" name="ncat_id" value="{cat_id}">
         <INPUT type="submit" name="Cancel" value="{lang_cancel}">
         </FORM>
       </TD>

@@ -24,7 +24,6 @@
               <input type="hidden" name="filter" value="{filter}">
               <input type="hidden" name="query" value="{query}">
               <input type="hidden" name="start" value="{start}">
-              <input type="hidden" name="ncat_id" value="{cat_id}">
               <input type="submit" name="Cancel" value="{lang_cancel}">
               </form>
               </td>

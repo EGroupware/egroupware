@@ -22,7 +22,6 @@
      <input type="hidden" name="filter" value="{filter}">
      <input type="hidden" name="start" value="{start}">
      <input type="hidden" name="fields" value="{copy_fields}">
-     <input type="hidden" name="cat_id" value="{cat_id}">
      <input type="submit" name="submit" value="{lang_copy}">
     </form>
    </TD>
@@ -33,7 +32,6 @@
      <input type="hidden" name="order" value="{order}">
      <input type="hidden" name="filter" value="{filter}">
      <input type="hidden" name="start" value="{start}">
-     <input type="hidden" name="cat_id" value="{cat_id}">
      <input type="submit" name="VCardform" value="{lang_vcard}">
     </form>
    </TD>
@@ -43,7 +41,6 @@
      <input type="hidden" name="order" value="{order}">
      <input type="hidden" name="filter" value="{filter}">
      <input type="hidden" name="start" value="{start}">
-     <input type="hidden" name="ncat_id" value="{cat_id}">
      <input type="submit" name="Doneform" value="{lang_done}">
     </form>
    </TD>

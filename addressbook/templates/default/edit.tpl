@@ -1,11 +1,11 @@
 
 <!-- BEGIN edit -->
+   <input type="hidden" name="ab_id" value="{ab_id}">
    <input type="hidden" name="sort" value="{sort}">
    <input type="hidden" name="order" value="{order}">
    <input type="hidden" name="filter" value="{filter}">
    <input type="hidden" name="query" value="{query}">
    <input type="hidden" name="start" value="{start}">
-   <input type="hidden" name="cat_id" value="{cat_id}">
    <TABLE border="0" cellPadding="1" cellSpacing="1" width="95%">
       <TBODY>
        <tr>
@@ -19,7 +19,6 @@
             <input type="hidden" name="filter" value="{filter}">
             <input type="hidden" name="query" value="{query}">
             <input type="hidden" name="start" value="{start}">
-            <input type="hidden" name="ncat_id" value="{cat_id}">
             <input type="submit" name="cancel" value="{lang_cancel}"></form>
               </TD>
           <TD align="right">
@@ -30,7 +29,6 @@
             <input type="hidden" name="filter" value="{filter}">
             <input type="hidden" name="query" value="{query}">
             <input type="hidden" name="start" value="{start}">
-            <input type="hidden" name="cat_id" value="{cat_id}">
             {delete_button}
            </form>
 	      </TD>

@@ -9,7 +9,6 @@
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
-         <input type="hidden" name="cat_id" value="{cat_id}">
         <input type="submit" name="Add" value="{lang_add}">
        </div>
      </td>
@@ -20,7 +19,6 @@
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
-         <input type="hidden" name="cat_id" value="{cat_id}">
         <input type="submit" name="AddVcard" value="{lang_addvcard}">
        </div>
      </td>
@@ -36,7 +34,6 @@
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
-         <input type="hidden" name="cat_id" value="{cat_id}">
          <input type="submit" name="Import" value="{lang_import}">
          </form>
        </div>
@@ -48,7 +45,6 @@
          <input type="hidden" name="order" value="{order}">
          <input type="hidden" name="filter" value="{filter}">
          <input type="hidden" name="start" value="{start}">
-         <input type="hidden" name="cat_id" value="{cat_id}">
          <input type="submit" name="Export" value="{lang_export}">
          </form>
        </div>
