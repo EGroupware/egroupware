@@ -83,7 +83,7 @@
 			// echo 'After SetVar Title = '.$this->getvar('title')."<br>\n";
 		}
 
-		function start_template($extra = False)
+		function start_template($extra = '')
 		{
 			if ($extra)
 			{
@@ -121,6 +121,15 @@
 			}
 
 			$this->output['extrabox'] = $data;
+		}
+
+		function set_xinternal($data='')
+		{
+			if($data=='' && !count($this->data))
+			{
+				$data = ' ';
+			}
+			$this->output['xextrabox'] = $data;
 		}
 
 		function draw_box()

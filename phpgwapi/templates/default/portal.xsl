@@ -24,6 +24,9 @@
 												<xsl:apply-templates select="listbox"/>
 											</ul>
 										</xsl:when>
+										<xsl:when test="extrabox">
+											<xsl:value-of disable-output-escaping="yes" select="extrabox"/>
+										</xsl:when>
 										<xsl:otherwise>
 											<xsl:call-template name="extrabox"/>
 										</xsl:otherwise>

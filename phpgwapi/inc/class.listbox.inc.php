@@ -66,6 +66,28 @@
 		*/
 		function draw($extra_data='')
 		{
+			$this->start_template();
+
+			if(count($this->data))
+			{
+				for ($x = 0; $x < count($this->data); $x++)
+				{
+					$var[] = array
+					(
+						'text'					=> $this->data[$x]['text'],
+						'link'					=> $this->data[$x]['link'],
+						'lang_link_statustext'	=> $this->data[$x]['lang_link_statustext']
+					);
+				}
+				$this->output['listbox'] = $var;
+			}
+
+			$this->set_internal($extra_data);
+			return $this->draw_box();
+		}
+
+		function xdraw($extra_data='')
+		{
 			if ($extra_data)
 			{
 				$this->start_template(True);
@@ -89,7 +111,7 @@
 				$this->output['listbox'] = $var;
 			}
 
-			$this->set_internal($extra_data);
+			$this->set_xinternal($extra_data);
 			return $this->draw_box();
 		}
 	}
