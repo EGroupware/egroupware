@@ -33,31 +33,6 @@
 		}
 				
 
-		function readProj($proj_id)
-		{
-			if ($proj_id) {
-				if (!is_object($this->projects)) {
-					$this->projects = createobject('projects.projects');
-				}            
-				if (list( $proj ) = $this->projects->read_single_project( $proj_id))
-					return $proj;
-			}
-			return False;         
-		}               
-
-		function readAddr($addr_id)
-		{
-			if ($addr_id) {
-				if (!is_object($this->contacts)) {
-					$this->contacts = createobject('phpgwapi.contacts');
-				}            
-				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
-					return $addr;
-			}
-			return False;                  
-		}      
-					
-		
 		function check_access( $info_id,$required_rights )
 		{
 			if ($info_id != $this->data['info_id'])      	// already loaded?
