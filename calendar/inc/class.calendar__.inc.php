@@ -200,7 +200,7 @@ class calendar__
 		{
 			$delete = True;
 			$new_part_count = count($new_event->participants);
-			for($i=0;$i<$new_part_count;$i++)
+			for($k=0;$k<$new_part_count;$k++)
 			{
 				if($new_event->participants[$k] == $old_event->participants[$i])
 				{
@@ -218,7 +218,8 @@ class calendar__
 		for($i=0;$i<$new_part_count;$i++)
 		{
 			$add = True;
-			for($k=0;$k<count($old_event->participants);$k++)
+			$old_part_count = count($old_event->participants);
+			for($k=0;$k<$old_part_count;$k++)
 			{
 				if($new_event->participants[$i] == $old_event->participants[$k])
 				{
