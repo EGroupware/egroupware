@@ -194,7 +194,6 @@
 	if (isset($GLOBALS['HTTP_POST_VARS']['passwd_type']) || $submit_x || $submit_y)
 //		 isset($GLOBALS['HTTP_POST_VARS']['passwd']) && $GLOBALS['HTTP_POST_VARS']['passwd']) // enable konqueror to login via Return
 	{
-Echo "Hallo Ralf 2";
 		if (getenv(REQUEST_METHOD) != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST'
 			&& !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
 		{
