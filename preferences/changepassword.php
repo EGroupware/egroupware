@@ -29,7 +29,7 @@
 	$phpgw->template->set_file(array(
 		'form' => 'changepassword.tpl'
 	));
-	$phpgw->template->set_var('lang_changepassword',lang('Change password'));
+	$phpgw->template->set_var('lang_changepassword',lang('Change your password'));
 	$phpgw->template->set_var('lang_enter_password',lang('Enter your new password'));
 	$phpgw->template->set_var('lang_reenter_password',lang('Re-enter your password'));
 	$phpgw->template->set_var('lang_change',lang('Change'));
