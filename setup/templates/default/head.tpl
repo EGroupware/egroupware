@@ -87,19 +87,25 @@
 									<tr> 
 										<td class="sideboxcontent" bgcolor="#efefef">
 											<table class="sideboxtext" cellspacing="0" cellpadding="0" width="100%" border="0">
-												<tbody><tr> 
+												<tbody>
+													<tr>
 														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
 														<td width="100%" height="20" align="left" valign="top"><a href="../home.php">Back to user login</a></td>
 													</tr>
-													<tr> 
-													<td valign="top" align="center"><font color="#ff9933">{logouticon}</font>&nbsp;</td>
-													<td width="100%" height="20" align="left" valign="top">{logoutbutton}</td>
-												</tr>												
-												<!--<tr> 
+													<tr>
+														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
+														<td width="100%" height="20" align="left" valign="top"><a href="check_install.php">Check Installation</a></td>
+													</tr>
+													<tr>
+														<td valign="top" align="center"><font color="#ff9933">{logouticon}</font>&nbsp;</td>
+														<td width="100%" height="20" align="left" valign="top">{logoutbutton}</td>
+													</tr>
+													<!--<tr>
 														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
 														<td width="100%" height="20" align="left" valign="top"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/about.php?app=eGroupWare">About </a></td>
 													</tr>-->
-													</tbody></table>
+												</tbody>
+											</table>
 										</td>
 									</tr>
 							</tbody></table>
