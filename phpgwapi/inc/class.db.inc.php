@@ -427,41 +427,45 @@
 			{
 				return False;
 			}
-			if ($this->Type == 'sapdb')
+			switch ($this->Type)
 			{
-				foreach($this->Record as $column => $value)
-				{
-					// add a lowercase version 
-					$this->Record[strtolower($column)] = $value;
-					// add a numeric version
-					$this->Record[] = $value;
-				}
-				if (!function_exists('array_change_key_case'))
-				{
-					define('CASE_LOWER',0);
-					define('CASE_UPPER',1);
-					function array_change_key_case($arr,$mode=CASE_LOWER)
+				case 'sapdb':
+				case 'maxdb':
+				case 'oracle':
+					foreach($this->Record as $column => $value)
 					{
-						foreach($arr as $key => $val)
-						{
-							$changed[$mode == CASE_LOWER ? strtolower($key) : strtoupper($key)] = $val;
-						}
-						return $changed;
+						// add a lowercase version 
+						$this->Record[strtolower($column)] = $value;
+						// add a numeric version
+						$this->Record[] = $value;
 					}
-				}
-				switch($fetch_mode)
-				{
-					case ADODB_FETCH_ASSOC:
-						$this->Record = array_change_key_case($this->Record);
-						break;
-					case ADODB_FETCH_NUM:
-						$this->Record = array_values($this->Record);
-						break;
-					default:
-						$this->Record = array_change_key_case($this->Record);
-						$this->Record += array_values($this->Record);
-						break;
-				}
+					if (!function_exists('array_change_key_case'))
+					{
+						define('CASE_LOWER',0);
+						define('CASE_UPPER',1);
+						function array_change_key_case($arr,$mode=CASE_LOWER)
+						{
+							foreach($arr as $key => $val)
+							{
+								$changed[$mode == CASE_LOWER ? strtolower($key) : strtoupper($key)] = $val;
+							}
+							return $changed;
+						}
+					}
+					switch($fetch_mode)
+					{
+						case ADODB_FETCH_ASSOC:
+							$this->Record = array_change_key_case($this->Record);
+							break;
+						case ADODB_FETCH_NUM:
+							$this->Record = array_values($this->Record);
+							break;
+						default:
+							$this->Record = array_change_key_case($this->Record);
+							$this->Record += array_values($this->Record);
+							break;
+					}
+					break;
 			}
 			return True;
 		}
@@ -820,9 +824,13 @@
 			{
 				foreach($tables as $table)
 				{
-					if ($this->Type == 'sapdb')
+					switch ($this->Type)
 					{
-						$table = strtolower($table);
+						case 'sapdb':
+						case 'maxdb':
+						case 'oracle':
+							$table = strtolower($table);
+							break;
 					}
 					$result[] = array(
 						'table_name'      => $table,
