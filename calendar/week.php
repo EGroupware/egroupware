@@ -55,47 +55,16 @@
 
   if(!isset($owner) || !$owner) {
     $owner = $phpgw_info['user']['account_id'];
+    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE;
   } else {
-    $grants = $phpgw->acl->get_location_list_for_id('calendar',PHPGW_ACL_READ,$owner);
-    $memberships = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
-    while($grants && $granted = each($grants)){
-      if($granted[1] == 'u_'.$phpgw_info['user']['account_id']){
-        $can_read = True;
-        break;
-      }else{
-        reset($memberships);
-        while($group = each($memberships)) {
-          if($granted[1] == 'g_'.$group[1]['account_id']){
-            $can_read = True;
-            break 2;
-          }
-        }
+    $grants = $phpgw->acl->get_grants('calendar');
+    if($grants[$owner])
+    {
+      $rights = $grants[$owner];
+      if (!($rights & PHPGW_ACL_READ))
+      {
+        $owner = $phpgw_info['user']['account_id'];
       }
-    }
-//    if(!$can_read){
-//      $my_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
-//      $their_groups = $phpgw->accounts->memberships($owner);
-//      for($j=0;$j<count($my_groups);$j++){
-//echo 'My Group ('.$my_groups[$j]['account_name'].') '.$my_groups[$j]['account_id']."<br>\n";
-//        if($can_read){ break; }
-//        for($k=0;$k<count($their_groups);$k++){
-//echo 'Their Group ('.$their_groups[$k]['account_name'].') '.$their_groups[$k]['account_id']."<br>\n";
-//          if($can_read){ break 2; }
-//          if($my_groups[$j] == $their_groups[$k]){
-//echo 'Match Group ('.$my_groups[$j]['account_name'].') '.$my_groups[$j]['account_id']."<br>\n";
-//            $users = $phpgw->acl->get_ids_for_location('g_'.$my_groups[$j]['account_id'],PHPGW_ACL_READ,'calendar');
-//            for($l=0;$l<count($users);$l++){
-//              if($users[$l] == $owner){
-//                $can_read = True;
-//                break 3;
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
-    if(!$can_read) {
-      $owner = $phpgw_info['user']['account_id'];
     }
   }
 

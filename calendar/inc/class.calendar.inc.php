@@ -19,9 +19,9 @@
 
   class calendar extends calendar_
   {
-    function calendar($p_friendly=False)
-    {
-      $this->calendar_($p_friendly);
-    }
+	function calendar($p_friendly=False)
+	{
+		$this->calendar_($p_friendly);
+	}
   }
 ?>
