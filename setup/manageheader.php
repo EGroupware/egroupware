@@ -3,6 +3,27 @@
   include("./inc/functions.inc.php");
   include("../version.inc.php");
 
+	function check_form_values()
+	{
+		global $setting, $phpgw_setup;
+		
+		if (! $setting['config_pass'])
+		{
+			$errors .= "<br>You didn't enter a config password";
+		}
+		if (! $setting['HEADER_ADMIN_PASSWORD'])
+		{
+			$errors .= "<br>You didn't enter a header admin password";
+		}
+
+		if ($errors)
+		{
+			$phpgw_setup->show_header("Error",True);
+			echo $errors;
+			exit;
+		}
+	}
+
   /* authentication phase */
   $phpgw_info["setup"]["stage"]["header"] = $phpgw_setup->check_header();
   switch($phpgw_info["setup"]["stage"]["header"]){
@@ -37,6 +58,7 @@
 
   switch($action){
     case "download":
+		check_form_values();
       include("./inc/phpgw_template.inc.php");
       $header_template = new Template("../");
       header("Content-disposition: attachment; filename=\"header.inc.php\"");
@@ -47,6 +69,7 @@
       echo $newheader;
       break;
     case "view":
+		check_form_values();
       include("./inc/phpgw_template.inc.php");
       $header_template = new Template("../");
       $phpgw_setup->show_header("Generated header.inc.php", False, "header");
@@ -63,6 +86,7 @@
       echo "</body></html>";
       break;
     case "write config":
+		check_form_values();
       include("./inc/phpgw_template.inc.php");
       $header_template = new Template("../");
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
