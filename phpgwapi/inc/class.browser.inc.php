@@ -35,7 +35,7 @@
 
 		function browser()
 		{
-			global $HTTP_USER_AGENT;
+			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 			/*
 				Determine browser and version
 			*/
@@ -56,21 +56,16 @@
 				$this->BROWSER_VER   = $log_version[1];
 				$this->BROWSER_AGENT = 'iCab';
 			} 
-			elseif(eregi('Netscape6/([0-9].[0-9a-zA-Z]{1,4})',$HTTP_USER_AGENT,$log_version)) 
+			elseif(ereg('Gecko',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER   = $log_version[1];
-				$this->BROWSER_AGENT = 'Netscape';
+				$this->BROWSER_AGENT = 'MOZILLA';
 			}
 			elseif(ereg('Konqueror/([0-9].[0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version) ||
 				ereg('Konqueror/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
 			{
 				$this->BROWSER_VER=$log_version[1];
 				$this->BROWSER_AGENT='Konqueror';
-			}
-			elseif(ereg('Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version))
-			{
-				$this->BROWSER_VER=$log_version[1];
-				$this->BROWSER_AGENT='MOZILLA';
 			}
 			else
 			{
@@ -257,9 +252,10 @@
 		// Echo content headers for file downloads
 		function content_header($fn='',$mime='',$length='',$nocache=True)
 		{
-			if(!$mime)
+			if($mime != 'text/plain')
 			{
-				$mime='application/octet-stream';
+				$mime_magic = createObject('phpgwapi.mime_magic');
+				$mime = $mime_magic->ext2mime($fn);
 			}
 			if($fn)
 			{
