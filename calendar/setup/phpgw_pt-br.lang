@@ -1,0 +1,53 @@
+(for weekly)	calendar	pt-br	(por semana)
+1 match found	calendar	pt-br	Encontrada 1 ocorrencia
+are you sure\nyou want to\ndelete this entry ?	calendar	pt-br	Tem certeza\nque quer apagar\nesta entrada ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	pt-br	Tem certeza\nvoce quer\napagar esta entrada ?\n\nIsto apagara a entrada\npara todos usuarios.
+brief description	calendar	pt-br	Curta Descricao
+calendar	common	pt-br	Calendario
+calendar - add	calendar	pt-br	Calendario - Adicionar
+calendar - edit	calendar	pt-br	Calendario - Editar
+daily	calendar	pt-br	Diaria
+days repeated	calendar	pt-br	Dias Repetidos
+description	calendar	pt-br	Descricao
+duration	calendar	pt-br	Duracao
+frequency	calendar	pt-br	Frequencia
+fri	calendar	pt-br	Sex
+full description	calendar	pt-br	Descricao  Completa
+generate printer-friendly version	calendar	pt-br	Gera versoes imprimiveis?!?
+go!	calendar	pt-br	Vai!
+minutes	calendar	pt-br	minutos
+mon	calendar	pt-br	Seg
+month	calendar	pt-br	Mes
+monthly (by date)	calendar	pt-br	mensal (pela data)
+monthly (by day)	calendar	pt-br	mensal (por dia)
+new entry	calendar	pt-br	Nova Entrada
+no matches found.	calendar	pt-br	Nenhuma ocorrencia encontrada.
+participants	calendar	pt-br	Participante
+printer friendly	calendar	pt-br	imprimivel
+repeat day	calendar	pt-br	Repeticao Diaria
+repeat end date	calendar	pt-br	Data final da repeticao
+repeat type	calendar	pt-br	Tipo de repeticao
+repetition	calendar	pt-br	Repeticao
+sat	calendar	pt-br	Sab
+search results	calendar	pt-br	Resultados da pesquisa
+sun	calendar	pt-br	Dom
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	pt-br	os seguintes conflitos com o horario sugerido:<ul>%1</ul>
+this month	calendar	pt-br	Este mes
+this week	calendar	pt-br	Esta Semana
+thu	calendar	pt-br	Qui
+today	calendar	pt-br	Hoje
+tue	calendar	pt-br	Ter
+use end date	calendar	pt-br	Usar data final
+view this entry	calendar	pt-br	Visualiza esta entrada
+wed	calendar	pt-br	Qua
+week	calendar	pt-br	Semana
+weekly	calendar	pt-br	semanal
+%1 matches found	calendar	pt-br	%1 ocorrencias encontradas
+year	calendar	pt-br	Ano
+yearly	calendar	pt-br	Anual
+you have 1 high priority event on your calendar today.	common	pt-br	Voce tem 1 evento com alta prioridade no seu calendario hoje.
+you have %1 high priority events on your calendar today.	common	pt-br	Voce tem %1 eventos com alta prioridade no seu calendario hoje.
+you have not entered a\nbrief description	calendar	pt-br	Voce nao digitou uma \nBreve Descricao
+you have not entered a\nvalid time of day.	calendar	pt-br	Voce nao digitou \num horario valido.
+you must enter one or more search keywords	calendar	pt-br	voce deve digitar uma ou mais palavras chave
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pt-br	Horiario Sugerido: <B> %1 - %2 </B> esta em conflito com as seguintes entradas no calendario:
