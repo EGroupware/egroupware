@@ -908,9 +908,9 @@
 					$this->loaddb();
 				}
 				/* Load up some configured values */
-				$this->db->query("SELECT config_name,config_value FROM phpgw_config ".
-					"WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%'",__LINE__,__FILE__);
-				while ($this->db->next_record())
+				$this->db->query("SELECT config_name,config_value FROM phpgw_config "
+					. "WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%'",__LINE__,__FILE__);
+				while($this->db->next_record())
 				{
 					$GLOBALS['phpgw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
 				}
@@ -987,9 +987,15 @@
 				$account = $GLOBALS['phpgw']->accounts->name2id($account);
 			}
 			$rights = (int)$rights;
-			if (!is_object($this->db)) $this->loaddb();
+			if(!is_object($this->db))
+			{
+				$this->loaddb();
+			}
 
-			if (!is_array($apps)) $apps = array($apps);
+			if(!is_array($apps))
+			{
+				$apps = array($apps);
+			}
 			foreach($apps as $app)
 			{
 				$this->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
