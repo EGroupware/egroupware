@@ -282,12 +282,7 @@ class db
 		if (!$result)
 			return -1;
 
-		$Record = @mssql_fetch_row(0);
-		@mssql_free_result($result);
-		if (!is_array($Record)) /* no identity? */
-			return -1;
-
-		return $Record[0];
+		return mssql_result($result, 0, 0);
 	}
 
 	function lock($table, $mode="write")
