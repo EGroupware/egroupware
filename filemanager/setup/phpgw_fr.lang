@@ -43,6 +43,7 @@ file names cannot contain \\ or /	phpwebhosting	fr	Les noms de fichier ne peuven
 file x already exists. please edit it or delete it first.	phpwebhosting	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
 file x could not be created.	phpwebhosting	fr	Le fichier %1 n'a pas pu être créé.
 files	phpwebhosting	fr	Fichiers
+filemanager	common	fr	Gestionnaire de fichiers
 folder	phpwebhosting	fr	Dossier
 go to	phpwebhosting	fr	Aller dans
 go to x	phpwebhosting	fr	Aller dans %1
@@ -59,7 +60,7 @@ moved x to x	phpwebhosting	fr	Déplacé %1 dans %2
 no version history for this file/directory	phpwebhosting	fr	pas d'historique de versions pour ce fichier/répertoire
 operation	phpwebhosting	fr	Opération
 owner	phpwebhosting	fr	Propriétaire
-phpwebhosting preferences	phpwebhosting	fr	Préférences PHPWebHosting
+filemanager preferences	filemanager	fr	Préférences du gestionnaire de fichiers
 preview of x	phpwebhosting	fr	Prévisualisation de %1
 preview x	phpwebhosting	fr	Prévisualisation %1
 rename	phpwebhosting	fr	Renommer
