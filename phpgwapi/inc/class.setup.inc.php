@@ -216,7 +216,7 @@
 		function clear_session_cache()
 		{
 			$tables = Array();
-			$tablenames = @$this->db->table_names();
+			$tablenames = $this->db->table_names();
 			while(list($key,$val) = @each($tablenames))
 			{
 				$tables[] = $val['table_name'];
