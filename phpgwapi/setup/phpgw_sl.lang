@@ -1,5 +1,5 @@
 %1 email addresses inserted	common	sl	Vnešenih %1 E-naslovov
-%1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1.
+%1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
 (shift-)click or drag to change value	jscalendar	sl	(Shift)-klik ali povleci-in-spusti za spremembo vrednosti.
 - click on any of the time parts to increase it	jscalendar	sl	- Kliknite na katerikoli del časa za njegovo povečanje.
@@ -21,7 +21,7 @@ _modify link...	htmlarea-ContextMenu	sl	_Spremeni povezavo...
 _remove link...	htmlarea-ContextMenu	sl	_Odstrani povezavo...
 _table properties...	htmlarea-ContextMenu	sl	_Lastnosti tabele...
 about	common	sl	Vizitka
-about %1	common	sl	Vizitka %1
+about %1	common	sl	Vizitka aplikacije %1
 about the calendar	jscalendar	sl	O koledarju
 about this editor	htmlarea	sl	O urejevalniku
 access	common	sl	Dostop
@@ -45,10 +45,10 @@ albania	common	sl	ALBANIJA
 algeria	common	sl	ALŽIRIJA
 align	htmlarea-TableOperations	sl	Poravnaj
 all	common	sl	Vse
-all fields	common	sl	Vsa polja
+all fields	common	sl	vsa polja
 all four sides	htmlarea-TableOperations	sl	Vse štiri strani
 all languages (incl. not listed ones)	common	sl	vsi jeziki (vključno s temi, ki jih ni na seznamu)
-alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,š,t,u,v,z,ž
+alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,š,t,u,v,w,x,y,z,ž
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
 american samoa	common	sl	AMERIŠKA SAMOA
 andorra	common	sl	ANDORA
@@ -57,7 +57,7 @@ anguilla	common	sl	ANGVILA
 antarctica	common	sl	ANTARKTIKA
 antigua and barbuda	common	sl	ANTIGVA IN BARBUDA
 apply	common	sl	Uporabi
-april	common	sl	April
+april	common	sl	april
 are you sure you want to delete these entries ?	common	sl	Ste prepričani, da želite izbrisati te vnose?
 are you sure you want to delete this entry ?	common	sl	Ste prepričani, da želite izbrisati ta vnos?
 argentina	common	sl	ARGENTINA
@@ -102,7 +102,7 @@ bottom	htmlarea-TableOperations	sl	Dno
 bouvet island	common	sl	OTOČJE BOUVET
 brazil	common	sl	BRAZILIJA
 british indian ocean territory	common	sl	BRITANSKO INDIJSKO OTOČJE
-brunei darussalam	common	sl	BRUNEJI
+brunei darussalam	common	sl	BRUNEJ
 bulgaria	common	sl	BOLGARIJA
 bulleted list	htmlarea	sl	Seznam alinej
 burkina faso	common	sl	BURKINA FASO
@@ -115,7 +115,7 @@ canada	common	sl	KANADA
 cancel	common	sl	Prekliči
 cannot replace %1 because it is a directory	common	sl	Ne morem nadomestiti %1, ker je mapa.
 cant open '%1' for %2	common	sl	Ne morem odpreti '%1' za '%2'
-cape verde	common	sl	CAPE VERDE
+cape verde	common	sl	KAPVERDSKO OTOČJE
 caption	htmlarea-TableOperations	sl	Zajem
 categories	common	sl	Kategorije
 categories for	common	sl	kategorije za
@@ -126,7 +126,7 @@ cayman islands	common	sl	KAJMANSKI OTOKI
 cc	common	sl	CC
 cell properties	htmlarea-TableOperations	sl	Lastnosti celice
 center	htmlarea-TableOperations	sl	Sredina
-central african republic	common	sl	CENTRALNOAFRIŠKA REPUBLIKA
+central african republic	common	sl	SREDNJEAFRIŠKA REPUBLIKA
 chad	common	sl	ČAD
 change	common	sl	Spremeni
 char	htmlarea-TableOperations	sl	Znak
@@ -193,7 +193,7 @@ delete the current row	htmlarea-ContextMenu	sl	Izbriši trenutno vrstico
 denmark	common	sl	DANSKA
 description	common	sl	Opis
 detail	common	sl	Podrobnost
-details	common	sl	Pordrobnosti
+details	common	sl	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte, ki popravi hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
 dictionary	htmlarea-SpellChecker	sl	Slovar
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
@@ -207,7 +207,7 @@ djibouti	common	sl	DŽIBUTI
 do you also want to delete all subcategories ?	common	sl	Ali želite izbrisati tudi podkategorije?
 doctype:	common	sl	DOCTYPE:
 document properties	common	sl	Lastnosti dokumenta
-document title:	common	sl	Naslov dokumenta
+document title:	common	sl	Naziv dokumenta
 domain	common	sl	Domena
 domain name for mail-address, eg. "%1"	common	sl	ime domene za E-naslov, npr. "%1"
 domestic	common	sl	Domač
@@ -225,7 +225,7 @@ edit category	common	sl	Popravi kategorijo
 egroupware api version %1	common	sl	eGroupWare API različica %1
 egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
 egypt	common	sl	EGIPT
-el salvador	common	sl	EL SALVADOR
+el salvador	common	sl	SALVADOR
 element...	htmlarea-ContextMenu	sl	Element...
 email	common	sl	E-pošta
 email-address of the user, eg. "%1"	common	sl	E-naslov uporabnika, npr. "%1"
@@ -245,8 +245,8 @@ error renaming %1 %2 directory	common	sl	Napaka ob preimenovanju %1 %2 mape
 estonia	common	sl	ESTONIJA
 ethiopia	common	sl	ETIOPIJA
 exact	common	sl	natančno
-falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE (MALVINI)
-faroe islands	common	sl	OTOČJE FAROE
+falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE
+faroe islands	common	sl	FERSKO OTOČJE
 fax number	common	sl	faks
 february	common	sl	Februar
 fg color	htmlarea-TableOperations	sl	Barva ospredja
@@ -296,17 +296,17 @@ group public	common	sl	Skupina 'javnost'
 groups	common	sl	Skupine
 groups with permission for %1	common	sl	Skupine z dovoljenjem za
 groups without permission for %1	common	sl	Skupine brez dovoljenja za
-guadeloupe	common	sl	GVADALUPA
-guam	common	sl	GVAM
+guadeloupe	common	sl	GUADALUPE
+guam	common	sl	GUAM
 guatemala	common	sl	GVATEMALA
 guinea	common	sl	GVINEJA
-guinea-bissau	common	sl	GVINEJA-BISSAU
+guinea-bissau	common	sl	GVINEJA-BISAO
 guyana	common	sl	GVAJANA
 haiti	common	sl	HAITI
 header admin login	common	sl	Prijava upravljalca glave
 header password	common	sl	Geslo upravljalca glave
 header username	common	sl	Uporabniško ime upravljalca glave
-heard island and mcdonald islands	common	sl	OTOK HERAD IN MCDONALDOVI OTOKI
+heard island and mcdonald islands	common	sl	OTOK HEARD IN MCDONALDOVI OTOKI
 height	htmlarea-TableOperations	sl	Višina
 help	common	sl	Pomoč
 help using editor	htmlarea	sl	Pomoč pri uporabi urejevalnika
@@ -383,9 +383,9 @@ kiribati	common	sl	KIRIBATI
 korea, democratic peoples republic of	common	sl	KOREJA, DEMOKRATIČNA REPUBLIKA
 korea, republic of	common	sl	KOREJA, REPUBLIKA
 kuwait	common	sl	KUVAJT
-kyrgyzstan	common	sl	KIRGISTAN
+kyrgyzstan	common	sl	KIRGIZISTAN
 language	common	sl	Jezik
-lao peoples democratic republic	common	sl	LAO, LJUDSKA DEMOKRATIČNA REPUBLIKA
+lao peoples democratic republic	common	sl	LAOS
 last name	common	sl	Priimek
 last name of the user, eg. "%1"	common	sl	priimek uporabnika, npr. "%1"
 last page	common	sl	Zadnja stran
@@ -397,7 +397,7 @@ lebanon	common	sl	LIBANON
 left	htmlarea-TableOperations	sl	Levo
 lesotho	common	sl	LESOTO
 liberia	common	sl	LIBERIJA
-libyan arab jamahiriya	common	sl	LIBIJSKA ARABSKA JAMAHIRIJA
+libyan arab jamahiriya	common	sl	LIBIJA
 license	common	sl	Licenca
 liechtenstein	common	sl	LICHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sl	Vrstica %1: '%2'<br><b>CSV podatki se ne ujemajo s številom stolpcev v tabeli %3==>zavrnjen</b>
@@ -415,8 +415,8 @@ lower latin letters	htmlarea-ListType	sl	Male latinske črke
 lower roman numbers	htmlarea-ListType	sl	Male rimske številke
 lowest	common	sl	Najnižje
 luxembourg	common	sl	LUKSEMBURG
-macau	common	sl	MAKU
-macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA, BIVŠA JUGOSLOVANSA REPUBLIKA
+macau	common	sl	MACAO
+macedonia, the former yugoslav republic of	common	sl	MAKEDONIJA
 madagascar	common	sl	MADAGASKAR
 mail domain, eg. "%1"	common	sl	E-poštna domena, npr. "%1"
 main category	common	sl	Glavna kategorija
@@ -443,14 +443,14 @@ menu	common	sl	Meni
 merge cells	htmlarea-TableOperations	sl	Združi celice
 message	common	sl	Sporočilo
 mexico	common	sl	MEHIKA
-micronesia, federated states of	common	sl	MIKRONEZIJA, ZDRUŽENE DRŽAVE
+micronesia, federated states of	common	sl	MIKRONEZIJA
 middle	htmlarea-TableOperations	sl	Sredina
 modify url	htmlarea-ContextMenu	sl	Spremeni URL
-moldova, republic of	common	sl	MOLDOVA
+moldova, republic of	common	sl	MOLDAVIJA
 monaco	common	sl	MONAKO
 monday	common	sl	Ponedeljek
 mongolia	common	sl	MONGOLIJA
-montserrat	common	sl	MONTSERRAT
+montserrat	common	sl	MONSERRAT
 morocco	common	sl	MAROKO
 mozambique	common	sl	MOZAMBIK
 multiple	common	sl	mnogokraten
@@ -475,7 +475,7 @@ next year (hold for menu)	jscalendar	sl	Naslednje leto (drži tipko za meni)
 nicaragua	common	sl	NIKARAGVA
 niger	common	sl	NIGER
 nigeria	common	sl	NIGERIJA
-niue	common	sl	NIVE
+niue	common	sl	NIUE
 no	common	sl	Ne
 no entries found, try again ...	common	sl	Ne najdem vnosov. Poskusite ponovno...
 no history for this record	common	sl	Ni zgodovine za ta zapis.
@@ -537,7 +537,7 @@ personal	common	sl	Zasebno
 peru	common	sl	PERU
 philippines	common	sl	FILIPINI
 phone number	common	sl	telefonska številka
-pitcairn	common	sl	PITCARIN
+pitcairn	common	sl	PITCAIRN
 pixels	htmlarea-TableOperations	sl	piksli
 please %1 by hand	common	sl	Prosim, ročno %1
 please click into some cell	htmlarea-TableOperations	sl	Kliknite v kakšno celico
@@ -568,7 +568,7 @@ priority	common	sl	Prioriteta
 private	common	sl	Zasebno
 project	common	sl	Projekt
 public	common	sl	javno
-puerto rico	common	sl	PUERTO RICO
+puerto rico	common	sl	PORTORIKO
 qatar	common	sl	KATAR
 re-check	htmlarea-SpellChecker	sl	Preveri
 read	common	sl	Beri
@@ -599,10 +599,10 @@ rules will appear between rows only	htmlarea-TableOperations	sl	Pravila se bodo 
 russian federation	common	sl	RUSKA FEDERACIJA
 rwanda	common	sl	RUANDA
 saint helena	common	sl	SVETA HELENA
-saint kitts and nevis	common	sl	SVETA KITTS IN NEVIS
+saint kitts and nevis	common	sl	SVETA KRIŠTOF IN NEVIS
 saint lucia	common	sl	SVETA LUCIJA
 saint pierre and miquelon	common	sl	SVETA PIERRE IN MIQUELON
-saint vincent and the grenadines	common	sl	SVETI VINCENT IN GRENADINES
+saint vincent and the grenadines	common	sl	SVETI VINCENT IN GRENADINE
 samoa	common	sl	SAMOA
 san marino	common	sl	SAN MARINO
 sao tome and principe	common	sl	SAO TOME IN PRINCIPE
@@ -651,10 +651,10 @@ sierra leone	common	sl	SIERRA LEONE
 singapore	common	sl	SINGAPUR
 slovakia	common	sl	SLOVAŠKA
 slovenia	common	sl	SLOVENIJA
-solomon islands	common	sl	SOLOMONOVI OTOKI
+solomon islands	common	sl	SOLOMONOVO OTOČJE
 somalia	common	sl	SOMALIJA
 sorry, your login has expired	login	sl	Oprostite, vaša prijava je potekla
-south africa	common	sl	JUŽNA AFRIKA
+south africa	common	sl	JUŽNOAFRIŠKA REPUBLIKA
 south georgia and the south sandwich islands	common	sl	JUŽNA GEORGIJA IN JUŽNO OTOČJE SANDWICH
 spacing	htmlarea-TableOperations	sl	Razmik
 spacing and padding	htmlarea-TableOperations	sl	Razmik in odmik
@@ -685,11 +685,11 @@ svalbard and jan mayen	common	sl	SVALBARD IN JAN MAJEN
 swaziland	common	sl	SVAZILAND
 sweden	common	sl	ŠVEDSKA
 switzerland	common	sl	ŠVICA
-syrian arab republic	common	sl	SIRIJA, ARABSKA REPUBLIKA
+syrian arab republic	common	sl	SIRIJA
 table properties	htmlarea-TableOperations	sl	Lastnosti tabele
 taiwan	common	sl	TAJVAN
 tajikistan	common	sl	TADŽIKISTAN
-tanzania, united republic of	common	sl	TANZANIJA, ZDRUŽENA REPUBLIKA
+tanzania, united republic of	common	sl	TANZANIJA
 text align	htmlarea-TableOperations	sl	Poravnaj besedilo
 text color:	common	sl	Barva besedila:
 thailand	common	sl	TAJSKA
@@ -712,7 +712,7 @@ time	common	sl	Čas
 time selection:	jscalendar	sl	Izbor časa:
 time zone	common	sl	Časovni pas
 time zone offset	common	sl	Odmik časovnega pasu
-title	common	sl	Naslov
+title	common	sl	Naziv
 to	common	sl	Prejemnik
 to correct this error for the future you will need to properly set the	common	sl	Za odpravo ponavljanja te napake bo potrebno pravilno nastaviti
 to go back to the msg list, click <a href= %1 >here</a>	common	sl	Da pridete nazaj na seznam sporočil, kliknite <a href="%1">tu</a>.
@@ -722,7 +722,7 @@ toggle first day of week	jscalendar	sl	Zamenjajte prvi dan v tednu
 toggle html source	htmlarea	sl	Prikaži HTML kodo
 togo	common	sl	TOGO
 tokelau	common	sl	TOKELAU
-tonga	common	sl	TONGO
+tonga	common	sl	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sl	Preveč neuspešnih poskusov prijave: %1 za uporabnika %2, %3 za IP %4.
 top	htmlarea-TableOperations	sl	Vrh
 total	common	sl	Skupaj
@@ -731,7 +731,7 @@ tuesday	common	sl	Četrtek
 tunisia	common	sl	TUNIZIJA
 turkey	common	sl	TURČIJA
 turkmenistan	common	sl	TURKMENISTAN
-turks and caicos islands	common	sl	TURKS IN CAICOS OTOKI
+turks and caicos islands	common	sl	TURKS IN CAICOS
 tuvalu	common	sl	TUVALU
 uganda	common	sl	UGANDA
 ukraine	common	sl	UKRAJINA
@@ -786,7 +786,7 @@ you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	s
 you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo!
 you are running a newer version of egroupware than your database is setup for	common	sl	Uporabljate novejšo različico egroupware, kot je nameščena v bazi podatkov.
 you have been successfully logged out	login	sl	Bili ste uspešno odjavljeni.
-you have not entered a title	common	sl	Niste vnesli naslova
+you have not entered a title	common	sl	Niste vnesli naziva
 you have not entered a valid date	common	sl	Niste vnesli veljavnega datuma
 you have not entered a valid time of day	common	sl	Niste vnesli veljavni čas
 you have not entered participants	common	sl	Niste vnesli udeležencev
@@ -802,4 +802,4 @@ your session could not be verified.	login	sl	Vaša seja ne more biti preverjena.
 your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
 yugoslavia	common	sl	JUGOSLAVIJA
 zambia	common	sl	ZAMBIJA
-zimbabwe	common	sl	ZIMBABWE
+zimbabwe	common	sl	ZIMBABVE
