@@ -156,23 +156,23 @@
 
 		/*!
 		@function htmlarea
-		@syntax htmlarea( $name,$content='',$width=False,$height=False )
+		@syntax htmlarea( $name,$content='',$style='width:100%; min-width:500px; height:300px;' )
 		@author ralfbecker
 		@abstract creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
 		@param $name string name and id of the input-field
 		@param $content string of the htmlarea (will be run through htmlspecialchars !!!), default ''
 		@param $style string inline styles, eg. dimension of textarea element
 		*/
-		function htmlarea($name,$content='',$style='width:100%; min-width:500px; height:300px;')
+		function htmlarea($name,$content='',$style='')
 		{
+			if (!$style) $style = 'width:100%; min-width:500px; height:300px;';
+
 			if (!is_object($GLOBALS['phpgw']->js))
 			{
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
 			if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'htmlarea'))
 			{
-
-								
 				$GLOBALS['phpgw']->js->validate_file('htmlarea','htmlarea');
 				$GLOBALS['phpgw']->js->validate_file('htmlarea','dialog');
 				$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
