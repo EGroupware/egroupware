@@ -198,7 +198,8 @@
 	$t->set_var("import_url",$phpgw->link("/addressbook/import.php",
 		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	$t->set_var("lang_export",lang("Export Contacts"));
-	$t->set_var("export_url",$phpgw->link("/addressbook/export.php"));
+	$t->set_var("export_url",$phpgw->link("/addressbook/export.php",
+		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	$t->set_var("start",$start);
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
