@@ -108,6 +108,17 @@
 		}
 	}
 
+	function addressbook_read_last_entry($fields) {
+		global $this,$rights;
+		if ($rights & PHPGW_ACL_READ) {
+			$entry = $this->read_last_entry($fields);
+			return $entry;
+		} else {
+			$rtrn = array("No access" => "No access");
+			return $rtrn;
+		}
+	}
+
 	function addressbook_add_entry($userid,$fields) {
 		global $this,$rights;
 		if ($rights & PHPGW_ACL_ADD) {
