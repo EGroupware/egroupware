@@ -23,15 +23,8 @@
   \**************************************************************************/
 
   /* $Id$ */
-  
-  class accounts_
-  {
-    var $db;
-    var $account_id;
-    var $data;
-    var $memberships = Array();
-    var $members;
-	// Dont know where to put this (seek3r)
+
+  	// Dont know where to put this (seek3r)
 	// This is where it belongs (jengo)
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
@@ -59,6 +52,14 @@
 		'gdm'      => True,
 		'named'    => True
 	);
+
+  class accounts_
+  {
+    var $db;
+    var $account_id;
+    var $data;
+    var $memberships = Array();
+    var $members;
 
     function accounts_()
     {

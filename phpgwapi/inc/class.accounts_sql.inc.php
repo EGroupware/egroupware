@@ -24,6 +24,8 @@
 
   /* $Id$ */
 
+  $phpgw_info["server"]["global_denied_users"] = array();
+
   class accounts_
   {
     var $db;
@@ -31,13 +33,6 @@
     var $data;
     var $memberships;
     var $members;
-
-	// Dont know where to put this (seek3r)
-	// This is where it belongs (jengo)
-	// This is where it ended up (milosch)
-	/* Since LDAP will return system accounts, there are a few we don't want to login. */
-	// it is here as an empty array to avoid some errors, hopefully
-	$phpgw_info["server"]["global_denied_users"] = array();
 
     function accounts()
     {
