@@ -76,28 +76,16 @@
 		*/
 		function set_cookiedomain()
 		{
-			$dom = $_SERVER['HTTP_HOST'];
-			if (preg_match("/^(.*):(.*)$/",$dom,$arr))
+			$this->cookie_domain = $_SERVER['HTTP_HOST'];
+
+			// remove port from HTTP_HOST
+			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
 			{
-				$dom = $arr[1];
+				$this->cookie_domain = $arr[1];
 			}
-			$parts = explode('.',$dom);
-			if (count($parts) > 2)
+			if (count(explode('.',$this->cookie_domain)) <= 1)
 			{
-				if (!ereg('[0-9]+',$parts[1]))
-				{
-					for($i=1;$i<count($parts);$i++)
-					{
-						$this->cookie_domain .= '.'.$parts[$i];
-					}
-				}
-				else
-				{
-					$this->cookie_domain = '';
-				}
-			}
-			else
-			{
+				// setcookie dont likes domains without dots, leaving it empty, gets setcookie to fill the domain in
 				$this->cookie_domain = '';
 			}
 		}
