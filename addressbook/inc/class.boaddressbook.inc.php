@@ -83,8 +83,8 @@
 			/* _debug_array($_POST); */
 			/* Might change this to '' at the end---> */
 			$_start   = get_var('start',array('POST','GET'));
-			$_query   = get_var('query',array('POST','GET'));
-			$_cquery  = get_var('cquery', array('GET','POST'));
+			$_query   = get_var('query',array('POST','GET'),'_UNSET_');
+			$_cquery  = get_var('cquery', array('GET','POST'),'_UNSET_');
 			$_sort    = get_var('sort',array('POST','GET'));
 			$_order   = get_var('order',array('POST','GET'));
 			$_filter  = get_var('filter',array('POST','GET'));
@@ -100,17 +100,15 @@
 			{
 				$this->limit  = $_limit;
 			}
-			if((empty($_query) && !empty($this->query)) || !empty($_query))
-			{
-				$this->query  = $_query;
-			}
 
-			if((empty($_cquery) && !empty($this->cquery)) || !empty($_cquery))
+			if($_query != '_UNSET_')
+			{
+				$this->query = $_query;
+			}
+			if($_cquery != '_UNSET_')
 			{
 				$this->cquery = $_cquery;
 			}
-
-//			$this->cquery = ((empty($_cquery) && !empty($this->cquery)) || !empty($_cquery)) ? $_cquery : $this->cquery;
 
 			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
