@@ -17,6 +17,11 @@
   $phpgw_info["flags"]["currentapp"] = "preferences";
   include("../header.inc.php");
 
+  if (!$phpgw->acl->check("changepassword", 1)){
+    Header("Location: index.php");
+    exit;
+  }    
+
   if (! $submit) {
      $phpgw->common->phpgw_header();
      $phpgw->common->navbar();
