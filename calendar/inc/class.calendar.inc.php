@@ -14,7 +14,7 @@
 
   /* $Id$ */
 
-if(extension_loaded("mcal") == False)
+if(extension_loaded('mcal') == False)
 {
 	define(RECUR_NONE,0);
 	define(RECUR_DAILY,1);
@@ -37,11 +37,12 @@ if(extension_loaded("mcal") == False)
 }
 
 CreateObject('calendar.calendar_item');
-$phpgw_info['server']['calendar_type'] = 'sql';
-if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded("mcal") == False)
+if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded('mcal') == False)
 {
 	$phpgw_info['server']['calendar_type'] = 'sql';
 }
+// The following line can be removed when vCalendar is implemented....
+$phpgw_info['server']['calendar_type'] = 'sql';
 include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
 
 class calendar extends calendar_
@@ -1304,13 +1305,12 @@ class calendar extends calendar_
 		{
 			$phpgw_info['user']['preferences']['calendar']['interval'] = 15;
 		}
-		$datetime = $this->gmtdate($date['raw']);
 		$increment = $phpgw_info['user']['preferences']['calendar']['interval'];
 		$interval = (int)(60 / $increment);
 
-		$str = '<center>'.$phpgw->common->show_date($datetime['raw'],'l, F d, Y').'<br>';
+		$str = '<center>'.$phpgw->common->show_date($date['raw'],'l, F d, Y').'<br>';
 		$str .= '<table width="85%" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">';
-		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$phpgw_info['server']['app_images'].'/pix.gif"></td></tr>';
+		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$this->image_dir.'/pix.gif"></td></tr>';
 		$str .= '<tr><td width="15%">Participant</td>';
 		for($i=0;$i<24;$i++)
 		{
@@ -1324,7 +1324,7 @@ class calendar extends calendar_
 							$k = ($i<=9?'0':substr($i,0,1));
 						}
 						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$datetime['year'].'&month='.$datetime['month'].'&day='.$datetime['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j<=9?'0':'').($increment * $j)."'; return true;\">";
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j<=9?'0':'').($increment * $j)."'; return true;\">";
 						$str .= $k.'</a></font></td>';
 						break;
 					case 1:
@@ -1333,19 +1333,19 @@ class calendar extends calendar_
 							$k = ($i<=9?substr($i,0,1):substr($i,1,2));
 						}
 						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$datetime['year'].'&month='.$datetime['month'].'&day='.$datetime['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
 						$str .= $k.'</a></font></td>';
 						break;
 					default:
 						$str .= '<td align="left" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
-						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$datetime['year'].'&month='.$datetime['month'].'&day='.$datetime['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
+						$str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
 						$str .= '&nbsp</a></font></td>';
 						break;
 				}
 			}
 		}
 		$str .= '</tr>';
-		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$phpgw_info['server']['app_images'].'/pix.gif"></td></tr>';
+		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$this->image_dir.'/pix.gif"></td></tr>';
 		if(!$endtime)
 		{
 			$endtime = $starttime;
@@ -1355,8 +1355,8 @@ class calendar extends calendar_
 			$this->read_repeated_events($participants[$i]);
 			$str .= '<tr>';
 			$str .= '<td width="15%">'.$phpgw->common->grab_owner_name($participants[$i]).'</td>';
-			$events = $this->get_sorted_by_date($datetime['raw'],$participants[$i]);
-			if(!$this->sorted_re)
+			$events = $this->get_sorted_by_date($date['raw'],$participants[$i]);
+			if($this->sorted_events_matching == False)
 			{
 				for($j=0;$j<24;$j++)
 				{
@@ -1378,7 +1378,7 @@ class calendar extends calendar_
 						$time_slice[$index]['description'] = '';
 					}
 				}
-				for($k=0;$k<$this->sorted_re;$k++)
+				for($k=0;$k<$this->sorted_events_matching;$k++)
 				{
 					$event = $events[$k];
 					$eventstart = $this->localdates($event->datetime);
@@ -1433,7 +1433,7 @@ class calendar extends calendar_
 								$index = ($hour + (($m * $increment) * 100));
 								$time_slice[$index]['marker'] = '-';
 								$time_slice[$index]['color'] = $phpgw_info['theme']['bg01'];
-								$time_slice[$index]['description'] = $this->is_private($event,$participants[$i]);
+								$time_slice[$index]['description'] = $this->is_private($event,$participants[$i],'title');
 							}
 						}
 					}
@@ -1449,7 +1449,7 @@ class calendar extends calendar_
 				}
 			}
 			$str .= '</tr>';
-			$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="#999999"><img src="'.$phpgw_info['server']['app_images'].'/pix.gif"></td></tr>';
+			$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="#999999"><img src="'.$this->image_dir.'/pix.gif"></td></tr>';
 		}
 		$str .= '</table></center>';
 		return $str;

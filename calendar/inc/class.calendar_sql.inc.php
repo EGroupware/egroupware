@@ -599,13 +599,17 @@ class calendar_
 			$num_rows = $this->stream->f(0);
 			if($num_rows == 0)
 			{
-				$this->stream->query('INSERT INTO calendar_entry_repeats(cal_id,cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
-					.'VALUES('.$event->id.",'".$event->rpt_type."',".$use_end.','.$end['raw'].",'$days',$freq)",__LINE__,__FILE__);
+				$this->stream->query('INSERT INTO calendar_entry_repeats(cal_id,'
+					.'cal_type,cal_use_end,cal_end,cal_days,cal_frequency) '
+					.'VALUES('.$event->id.",'".$event->rpt_type."',".$use_end.','
+					.$end['raw'].",'$days',$freq)",__LINE__,__FILE__);
 			}
 			else
 			{
-				$this->stream->query("UPDATE calendar_entry_repeats SET cal_type='".$event->rpt_type."', cal_use_end=".$use_end.', '
-					."cal_end='".$end['raw']."', cal_days='".$days."', cal_frequency=".$freq.' '
+				$this->stream->query('UPDATE calendar_entry_repeats '
+					."SET cal_type='".$event->rpt_type."', "
+					.'cal_use_end='.$use_end.", cal_end='".$end['raw']."', "
+					."cal_days='".$days."', cal_frequency=".$freq.' '
 					.'WHERE cal_id='.$event->id,__LINE__,__FILE__);
 			}
 		}

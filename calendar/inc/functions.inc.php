@@ -11,8 +11,11 @@
 
   /* $Id$ */
 
-	global $phpgw_info, $phpgw, $grants, $owner, $rights, $filter;
-	global $date, $year, $month, $day, $thisyear, $thismonth, $thisday;
+	if (floor($PHP_VERSION ) == 4)
+	{
+		global $phpgw_info, $phpgw, $grants, $owner, $rights, $filter;
+		global $date, $year, $month, $day, $thisyear, $thismonth, $thisday;
+	}
 
 	if(!isset($filter) || !$filter)
 	{
