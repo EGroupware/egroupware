@@ -40,54 +40,46 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			
-			if($GLOBALS['HTTP_POST_VARS']['account_id'])
-			{
-				$account_id = intval($GLOBALS['HTTP_POST_VARS']['account_id']);
-				$group_name = $GLOBALS['phpgw']->accounts->id2name($account_id);
+			$account_id = intval($GLOBALS['HTTP_POST_VARS']['account_id']);
 
-				$GLOBALS['phpgw']->db->lock(
-					Array(
-						'phpgw_accounts',
-						'phpgw_acl'
-					)
-				);
+			$GLOBALS['phpgw']->db->lock(
+				Array(
+					'phpgw_accounts',
+					'phpgw_acl'
+				)
+			);
 				
-				$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+			$old_group_list = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
 
-				@reset($old_group_list);
-				while($old_group_list && $id = each($old_group_list))
-				{
-					$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
-				}
+			@reset($old_group_list);
+			while($old_group_list && $id = each($old_group_list))
+			{
+				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
+			}
 
-				$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id,__LINE__,__FILE__);
-				$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
+			$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
 
-				if (! @rmdir($GLOBALS['phpgw_info']['server']['files_dir'].SEP.'groups'.SEP.$group_name))
-				{
-					$cd = 38;
-				}
-				else
-				{
-					$cd = 32;
-				}
-
-				$GLOBALS['phpgw']->db->unlock();
-
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
-						Array(
-							'menuaction'	=> 'admin.uiaccounts.list_groups',
-							'cd'	=> $cd
-						)
-					)
-				);
-				$GLOBALS['phpgw']->common->phpgw_exit();
+			if (! @rmdir($GLOBALS['phpgw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['phpgw']->accounts->id2name($account_id)))
+			{
+				$cd = 38;
 			}
 			else
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$cd = 32;
 			}
+
+			$GLOBALS['phpgw']->accounts->delete($account_id);
+
+			$GLOBALS['phpgw']->db->unlock();
+
+			Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',
+					Array(
+						'menuaction'	=> 'admin.uiaccounts.list_groups',
+						'cd'	=> $cd
+					)
+				)
+			);
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		function delete_user()
@@ -183,11 +175,14 @@
 					'phpgw_preferences',
 					'phpgw_sessions',
 					'phpgw_acl',
-					'phpgw_applications'
+					'phpgw_applications',
+					'phpgw_app_sessions',
+					'phpgw_hooks'
 				)
 			);
 
 			$group = CreateObject('phpgwapi.accounts',$group_info['account_id']);
+			$group->acct_type = 'g';
 			$account_info = array(
 				'account_type'      => 'g',
 				'account_lid'       => $group_info['account_name'],
@@ -201,7 +196,7 @@
 			$group->create($account_info);
 			$group_info['account_id'] = $GLOBALS['phpgw']->accounts->name2id($group_info['account_name']);
 
-			$apps = CreateObject('phpgwapi.applications',intval($group_id));
+			$apps = CreateObject('phpgwapi.applications',$group_info['account_id']);
 			$apps->update_data(Array());
 			reset($group_info['account_apps']);
 			while(list($app,$value) = each($group_info['account_apps']))
@@ -217,6 +212,10 @@
 			@reset($group_info['account_user']);
 			while(list($user_id,$dummy) = each($group_info['account_user']))
 			{
+				if(!$dummy)
+				{
+					continue;
+				}
 				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
 
 				$docommit = False;
@@ -236,6 +235,8 @@
 					$GLOBALS['pref']->save_repository();
 				}
 			}
+			
+			$acl->save_repository();
 			
 			$basedir = $phpgw_info['server']['files_dir'] . SEP . 'groups' . SEP;
 			$cd = 31;
@@ -291,7 +292,9 @@
 							'phpgw_preferences',
 							'phpgw_sessions',
 							'phpgw_acl',
-							'phpgw_applications'
+							'phpgw_applications',
+							'phpgw_app_sessions',
+							'phpgw_hooks'
 						)
 					);
 
@@ -329,14 +332,14 @@
 					if ($userData['account_permissions'])
 					{
 						@reset($userData['account_permissions']);
-						while ($app = each($userData['account_permissions']))
+						while (list($app,$turned_on) = each($userData['account_permissions']))
 						{
-							if ($app[1])
+							if ($turned_on)
 							{
-								$apps->add($app[0]);
-								if (!$apps_after[$app[0]])
+								$apps->add($app);
+								if (!$apps_after[$app])
 								{
-									$apps_after[] = $app[0];
+									$apps_after[] = $app;
 								}
 							}
 						}
@@ -444,7 +447,8 @@
 					'phpgw_applications',
 					'phpgw_hooks',
 					'phpgw_sessions',
-					'phpgw_acl'
+					'phpgw_acl',
+					'phpgw_app_sessions'
 				)
 			);
 
@@ -492,25 +496,31 @@
 
 			// Set group acl
 			$acl = CreateObject('phpgwapi.acl',$group_info['account_id']);
-			$acl->read_repository();
+//			$acl->read_repository();
 			$old_group_list = $acl->get_ids_for_location($group_info['account_id'],1,'phpgw_group');
 			@reset($old_group_list);
 			while($old_group_list && list($key,$user_id) = each($old_group_list))
 			{
-				$acl->delete_repository('phpgw_group',$account_id,$user_id);
+				$acl->delete_repository('phpgw_group',$group_info['account_id'],$user_id);
 				if(!$group_info['account_user'][$user_id])
 				{
 					// If the user is logged in, it will force a refresh of the session_info
 					$GLOBALS['phpgw']->db->query("update phpgw_sessions set session_action='' "
 						."where session_lid='" . $GLOBALS['phpgw']->accounts->id2name($user_id)
 						. '@' . $GLOBALS['phpgw_info']['user']['domain'] . "'",__LINE__,__FILE__);
-
 				}
 			}
+
+//			$acl->save_repository();
+//			$acl->read_repository();
 
 			@reset($group_info['account_user']);
 			while(list($user_id,$dummy) = each($group_info['account_user']))
 			{
+				if(!$dummy)
+				{
+					continue;
+				}
 				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
 				
 				// If the user is logged in, it will force a refresh of the session_info
@@ -805,8 +815,15 @@
 
 		function load_group_users($account_id)
 		{
-			$group_user = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
-			if (!$group_user) { $group_user = array(); }
+			$temp_user = $GLOBALS['phpgw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
+			if(!$temp_user)
+			{
+				return Array();
+			}
+			else
+			{
+				$group_user = $temp_user;
+			}
 			$account_user = Array();
 			while (list($key,$user) = each($group_user))
 			{

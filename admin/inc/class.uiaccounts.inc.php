@@ -44,10 +44,7 @@
 		function list_groups()
 		{
 
-			if(!$param_cd)
-			{
-				$cd = $param_cd;
-			}
+			$GLOBALS['cd'] = ($GLOBALS['HTTP_GET_VARS']['cd']?$GLOBALS['HTTP_GET_VARS']['cd']:0);
 			
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);
 			unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
@@ -395,7 +392,7 @@
 			else
 			{
 				$group_info = Array(
-					'account_id'		=> $GLOBALS['HTTP_GET_VARS']['account_id'],
+					'account_id'		=> intval($GLOBALS['HTTP_GET_VARS']['account_id']),
 					'account_name'	=> $GLOBALS['phpgw']->accounts->id2name($GLOBALS['HTTP_GET_VARS']['account_id']),
 					'account_user'	=> $this->bo->load_group_users($GLOBALS['HTTP_GET_VARS']['account_id']),
 					'account_apps'	=> $this->bo->load_group_apps($GLOBALS['HTTP_GET_VARS']['account_id'])
@@ -694,7 +691,7 @@
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%">'
 					.($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/preferences/acl_preferences.php','acl_app='.$app.'&owner='.$group_info['account_id'])
 					.'" target="_blank"><img src="'.$GLOBALS['phpgw']->common->image('admin','dot.gif').'" border="0" hspace="3" align="absmiddle" alt="'
-					.lang('Grant Access').'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'');
+					.lang('Grant Access').'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
 			if($i & 1)
 			{
