@@ -230,7 +230,7 @@
 
 				// The rest of this is used only for SQL->array
 				$colinfo = explode('(',$oProc->m_odb->f(1));
-				$prec = ereg_replace(')','',$colinfo[1]);
+				$prec = str_replace(')','',$colinfo[1]);
 				$scales = explode(',',$prec);
 				if ($scales[1])
 				{
