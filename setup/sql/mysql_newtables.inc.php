@@ -134,6 +134,7 @@
                     geo 			varchar(32),
 					url				varchar(128),
 					bday			varchar(32),
+					note			text,
                     a_tel 			varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
                     a_tel_work 		enum('n','y') NOT NULL,
                     a_tel_home 		enum('n','y') NOT NULL,
@@ -333,7 +334,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre13';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre14';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();
