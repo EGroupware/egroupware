@@ -2311,7 +2311,7 @@
 			}
 			$var[] = Array(
 				'field'	=>	lang('Participants'),
-				'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_matrix_users',array(),'calendar+',$size,False,'','',$users)
+				'data'	=> "\n   ".$GLOBALS['phpgw']->uiaccountsel->selection('participants[]','uicalendar_matrix_users',array($this->bo->owner),'calendar+',$size,False,'','',$users)
 			);
 
 			for($i=0;$i<count($var);$i++)
@@ -2348,7 +2348,7 @@
                                 // fetch participatns from get and post var
                                 $participants = get_var("participants", array("GET", "POST"));
                                 // Defined - into session - who participates
-                                $GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
+                                $GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";",(array)$participants));
                         }
 			$date["year"]   = get_var("year",  array("GET", "POST"));
                         $date["month"]  = get_var("month", array("GET", "POST"));
@@ -2393,7 +2393,8 @@
 			if ($this->always_app_header) $GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['calendar']['title'].' - '.lang('Matrixview');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
-			switch($_POST['matrixtype'])
+			$matrixtype = $_POST['oneday'] ? 'free/busy' : ($_POST['sevendays'] ? 'weekly' : $_POST['matrixtype']);
+			switch($matrixtype)
 			{
 				case 'free/busy':
 					$freetime = $GLOBALS['phpgw']->datetime->gmtdate(mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year));
@@ -2411,7 +2412,7 @@
 						Array(
 							'date'		=> sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day),
 							'showyear'	=> true,
-							'owners'	=> $participants
+							'owners'	=> $participants[0] ? $participants : $this->bo->owner,
 						)
 					);
 					break;
@@ -2421,20 +2422,17 @@
 			echo '  '.$this->html->input_hidden('year',$this->bo->year);
 			echo '  '.$this->html->input_hidden('month',$this->bo->month);
 			echo '  '.$this->html->input_hidden('day',$this->bo->day);
-			echo '  '.$this->html->input_hidden('matrixtype',$_POST['matrixtype']);
+			echo '  '.$this->html->input_hidden('matrixtype',$matrixtype);
 			echo '  '.$this->html->input_hidden('matrix', 1);
 			echo '  <input type="submit" name="refresh" value="'.lang('Refresh').'">'."\n";
 			echo ' </td><td>'."\n";
 			echo '  <input type="submit" name="cancel" value="'.lang('Cancel').'">'."\n";
 
                         // Seven days
-                        if( get_var("matrixtype", array("GET", "POST")) == "free/busy" )
-                        {
-                                if( !get_var("sevendays", array("GET", "POST")) )
-                                        echo '  <input type="submit" name="sevendays" value="'.lang('Show next seven days').'">'."\n";
-                                else
-                                        echo '  <input type="submit" name="oneday" value="'.lang('Show only one day').'">'."\n";
-                        }
+			if($matrixtype == 'free/busy')
+				echo '  <input type="submit" name="sevendays" value="'.lang('Show next seven days').'">'."\n";
+			else
+				echo '  <input type="submit" name="oneday" value="'.lang('Show only one day').'">'."\n";
 
 			echo ' </td></tr></table>'."\n";
 			echo '</form>'."\n";
