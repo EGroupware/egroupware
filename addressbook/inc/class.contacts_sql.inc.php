@@ -222,7 +222,7 @@
 				}
 			}
 
-			if ($query) { echo "DEBUG: Queries temporarily unavailable"; }
+			//if ($query) { echo "DEBUG: Queries temporarily unavailable"; }
 
 			// turn filter's a=b,c=d OR a=b into an array
 			if ($filter) {
@@ -382,11 +382,20 @@
 			if ($DEBUG && $filtertemp) {
 				echo "<br>DEBUG - Filtering with: #" . $filtertemp . "#";
 			}
-		
+			
+			if ($query) {
+				$squery = " AND (n_family like '"
+					. "%$query%' OR n_given like '%$query%' OR d_email like '%$query%' OR "
+					. "adr_street like '%$query%' OR adr_locality like '%$query%' OR adr_region "
+					. "like '%$query%' OR adr_postalcode like '%$query%' OR org_unit like "
+					. "'%$query%' OR adr_countryname like '%$query%' OR "
+					. "org_name like '%$query%')";
+			}
+			
 			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'. $std . ',' 
 				. $ext . ' FROM '.$this->std_table.' AS a, '
 				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
-				. $ordermethod;
+				. $squery . $ordermethod;
 
  			$this->db3->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db3->num_rows();
