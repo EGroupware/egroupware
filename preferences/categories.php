@@ -1,13 +1,13 @@
 <?php
 	/***************************************************************************\
-	* phpGroupWare - Categories													*
-	* http://www.phpgroupware.org												*
-	* Written by Bettina Gille [ceb@phpgroupware.org]							*
-	* -----------------------------------------------							*
-	* This program is free software; you can redistribute it and/or modify it	*
-	* under the terms of the GNU General Public License as published by the		*
-	* Free Software Foundation; either version 2 of the License, or (at your	*
-	* option) any later version.												*
+	* phpGroupWare - Categories                                                 *
+	* http://www.phpgroupware.org                                               *
+	* Written by Bettina Gille [ceb@phpgroupware.org]                           *
+	* -----------------------------------------------                           *
+	* This program is free software; you can redistribute it and/or modify it   *
+	* under the terms of the GNU General Public License as published by the     *
+	* Free Software Foundation; either version 2 of the License, or (at your    *
+	* option) any later version.                                                *
 	\***************************************************************************/
 
 	/* $Id$ */
@@ -56,7 +56,7 @@
 	$t->set_var('actionurl',$phpgw->link('/preferences/categories.php','cats_app=' . $cats_app . '&extra=' . $extra . '&cats_level=' . $cats_level
 										. '&global_cats=' . $global_cats));
 	$t->set_var('lang_done',lang('Done'));
-	$t->set_var('doneurl',$phpgw->link('/preferences/'));
+	$t->set_var('doneurl',$phpgw->link('/preferences/index.php'));
 
 	if (! $start) { $start = 0; }
 
