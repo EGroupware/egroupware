@@ -55,7 +55,7 @@
 					foreach ($value as $link)
 					{
 						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
-							htmlentities($this->link->title($link['app'],$link['id'])),
+							$tmpl->html->htmlspecialchars($this->link->title($link['app'],$link['id'])),
 							$this->link->view($link['app'],$link['id'],$link));
 					}
 				}
