@@ -62,11 +62,56 @@
 		function acl($account_id = '')
 		{
 			$this->db = $GLOBALS['phpgw']->db;
-			if($account_id != '')
+			if (!($this->account_id = intval($account_id)))
 			{
 				$this->account_id = get_account_id($account_id,$GLOBALS['phpgw_info']['user']['account_id']);
 			}
 		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			/*
+			  This handles introspection or discovery by the logged in client,
+			  in which case the input might be an array.  The server always calls
+			  this function to fill the server dispatch map using a string.
+			*/
+
+			if (is_array($_type))
+			{
+				$_type = $_type['type'] ? $_type['type'] : $_type[0];
+			}
+
+			switch($_type)
+			{
+				case 'xmlrpc':
+				$xml_functions = array(
+						'read_repository' => array(
+							'function'  => 'read_repository',
+							'signature' => array(array(xmlrpcStruct)),
+							'docstring' => lang('FIXME!')
+						),
+						'get_rights' => array(
+							'function'  => 'get_rights',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('FIXME!')
+
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
+ 		}
 
 		/**************************************************************************\
 		* These are the standard $this->account_id specific functions              *
@@ -83,6 +128,13 @@
 		*/
 		function read_repository()
 		{
+			// For some reason, calling this via XML-RPC doesn't call the constructor.
+			// Here is yet another work around(tm) (jengo)
+			if (! $this->account_id)
+			{
+				$this->acl();
+			}
+
 			$sql = 'select * from phpgw_acl where (acl_account in ('.$this->account_id.', 0'; 
 
 			$groups = $this->get_location_list_for_id('phpgw_group', 1, $this->account_id);
@@ -223,6 +275,14 @@
 		*/
 		function get_rights($location,$appname = False)
 		{
+			// For XML-RPC, change this once its working correctly for passing parameters (jengo)
+			if (is_array($location))
+			{
+				$a        = $location;
+				$location = $a['location'];
+				$appname  = $a['appname'];
+			}
+
 			if (count($this->data) == 0)
 			{
 				$this->read_repository();
@@ -251,6 +311,7 @@
 						{
 							return False;
 						}
+
 						$rights |= $this->data[$idx]['rights'];
 					}
 				}
