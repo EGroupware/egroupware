@@ -479,6 +479,10 @@ class ProcessManager extends BaseManager {
     $this->query($query);
     $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where wf_p_id=$pId";
     $this->query($query);
+
+	// Remove process instances
+	$query = "delete from ".GALAXIA_TABLE_PREFIX."instances where wf_p_id=$pId";
+    $this->query($query);
     
     // Remove the directory structure
     if (!empty($name) && is_dir(GALAXIA_PROCESSES.SEP."$name")) {
