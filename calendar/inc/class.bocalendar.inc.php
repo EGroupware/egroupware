@@ -182,7 +182,7 @@
 			$day = (isset($GLOBALS['HTTP_GET_VARS']['day'])?$GLOBALS['HTTP_GET_VARS']['day']:'');
 			$day = ($day=='' && isset($GLOBALS['HTTP_POST_VARS']['day'])?$GLOBALS['HTTP_POST_VARS']['day']:'');
 			
-			if(isset($date) && $date)
+			if(isset($date) && $date!='')
 			{
 				$this->year = intval(substr($date,0,4));
 				$this->month = intval(substr($date,4,2));
@@ -190,7 +190,7 @@
 			}
 			else
 			{
-				if(isset($year) && $year)
+				if(isset($year) && $year!='')
 				{
 					$this->year = $year;
 				}
@@ -198,7 +198,7 @@
 				{
 					$this->year = date('Y',time());
 				}
-				if(isset($month) && $month)
+				if(isset($month) && $month!='')
 				{
 					$this->month = $month;
 				}
@@ -206,7 +206,7 @@
 				{
 					$this->month = date('m',time());
 				}
-				if(isset($day) && $day)
+				if(isset($day) && $day!='')
 				{
 					$this->day = $day;
 				}

@@ -558,7 +558,9 @@
 							'action_url_button'	=> $this->page('edit','&cal_id='.$cal_id),
 							'action_text_button'	=> lang('Edit Single'),
 							'action_confirm_button'	=> '',
-							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'
+							'action_extra_field'	=> '<input type="hidden" name="edit_type" value="single">'."\n"
+								. '<input type="hidden" name="date" value="'.sprintf('%04d%02d%02d',$this->bo->year,$this->bo->month,$this->bo->day).'">'
+							
 						);
 						$p->set_var($var);
 						echo $p->fp('out','form_button');
