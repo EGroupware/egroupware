@@ -255,9 +255,9 @@
   $t->set_var("wphone",$wphone);
   $t->set_var("lang_pager",lang("Pager"));
   $t->set_var("pager",$pager);
-  $t->set_var("lang_mphone",lang("Mobile Phone"));
+  $t->set_var("lang_mphone",lang("Mobile"));
   $t->set_var("mphone",$mphone);
-  $t->set_var("lang_ophone",lang("Other Phone"));
+  $t->set_var("lang_ophone",lang("Other Number"));
   $t->set_var("ophone",$ophone);
   $t->set_var("lang_street",lang("Street"));
   $t->set_var("street",$street);
