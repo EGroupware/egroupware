@@ -395,3 +395,11 @@ infolog	setup	fr	InfoLog
 news_admin	setup	fr	News Admin
 phpldapadmin	setup	fr	PHPLdapAdmin
 projects	setup	fr	Gestionnaire de projets
+not set	setup	fr	pas défini
+this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractère.
+Current system-charset	setup	fr	Jeu de caractère courant
+Charset to convert to	setup	fr	Conversion vers
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractère en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues
+If you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fr	Si vous utilisez des langues qui appartiennent aux mêmes jeux de caractères (exemple: Europe de l'ouest), vous n'avez pas besoin de définir le jeu de caractère au niveau du système
+Change system-charset	setup	fr	Changement du jeu de caractère
+Convert	setup	fr	Convertir
