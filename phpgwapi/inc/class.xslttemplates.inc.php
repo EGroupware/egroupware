@@ -49,7 +49,7 @@
 			$this->rootdir = $this->prev_rootdir;
 		}
 
-		function add_file($filename,$root='',$time=1)
+		function add_file($filename,$rootdir='',$time=1)
 		{
 			if (!is_array($filename))
 			{
@@ -57,6 +57,7 @@
 				{
 					$rootdir=$this->rootdir;
 				}
+				
 				if (substr($filename, 0, 1) != '/')
 				{
 					$new_filename = $rootdir.'/'.$filename;
@@ -65,22 +66,25 @@
 				{
 					$new_filename = $filename;
 				}
+				
 				if ($this->print && $time!=2 && $time!=4)
 				{
 					$new_filename = $new_filename.'_print';
 				}
 
-
+//				echo 'Rootdir: '.$rootdir.'<br>'."\n".'Filename: '.$filename.'<br>'."\n".'New Filename: '.$new_filename.'<br>'."\n";
 				if (!file_exists($new_filename.'.xsl'))
 				{
 					switch($time)
 					{
 						case 2:
-							$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
-							$new_filename = $this->add_file($filename,$new_root,3);
+							$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$rootdir);
+							$this->add_file($filename,$new_root,3);
+							return;
 							break;
 						case 3:
-							$new_filename = $this->add_file($filename,$root,4);
+							$this->add_file($filename,$rootdir,4);
+							return;
 							break;
 						case 4:
 							$this->halt("filename: file $new_filename.xsl does not exist.");
@@ -88,16 +92,21 @@
 						default:
 							if (!$this->print)
 							{
-								$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
-								$new_filename = $this->add_file(str_replace($root.'/','',$new_filename),$new_root,4);
+								$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$rootdir);
+								$this->add_file($filename,$new_root,4);
+								return;
 							}
 							else
 							{
-								$new_filename = $this->add_file($filename,$root,2);
+								$this->add_file($filename,$rootdir,2);
+								return;
 							}
 					}
 				}
-				$this->xslfiles[$filename] = $new_filename.'.xsl';
+				else
+				{
+					$this->xslfiles[$filename] = $new_filename.'.xsl';
+				}
 			}
 			else
 			{
@@ -129,7 +138,7 @@
 			}
 			else
 			{
-				$this->xmlvar .= $xml;
+				$this->xmlvars .= $xml;
 			}
 		}
 
@@ -162,8 +171,10 @@
 				$this->xsldata .= '<xsl:template match="/">'."\n";
 				$this->xsldata .= "\t".'<xsl:apply-templates select="PHPGW"/>'."\n";
 				$this->xsldata .= '</xsl:template>'."\n";
-				while(list(,$xslfile) = each($this->xslfiles))
+				reset($this->xslfiles);
+				while(list($dummy,$xslfile) = each($this->xslfiles))
 				{
+//					echo 'XSLFILES: '.$dummy.'<br>'."\n".'XSL File: '.$xslfile.'<br>'."\n";
 					$fd = fopen ($xslfile, "r");
 					$this->xsldata .= fread($fd, filesize($xslfile));
 					fclose ($fd);
