@@ -590,9 +590,9 @@
 				)
 			);
 
-			if($this->bo->owner == $event['owner'])
+			if($this->bo->owner == $event['owner'] || $this->bo->member_of_group($this->bo->owner))
 			{
-				if ($this->bo->check_perms(PHPGW_ACL_EDIT))
+				if ($this->bo->check_perms(PHPGW_ACL_EDIT,$event['owner']))
 				{
 					if($event['recur_type'] != MCAL_RECUR_NONE)
 					{
@@ -637,7 +637,7 @@
 					echo $p->fp('out','form_button');
 				}
 
-				if ($this->bo->check_perms(PHPGW_ACL_DELETE))
+				if ($this->bo->check_perms(PHPGW_ACL_DELETE,$event['owner']))
 				{
 					if($event['recur_type'] != MCAL_RECUR_NONE)
 					{

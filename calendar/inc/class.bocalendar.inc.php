@@ -340,12 +340,13 @@
 			}
 		}
 
-		function member_of_group()
+		function member_of_group($owner=0)
 		{
-			$group_owners = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+			$owner = ($owner==0?$GLOBALS['phpgw_info']['user']['account_id']:$owner);
+			$group_owners = $GLOBALS['phpgw']->accounts->membership();
 			while($group_owners && list($index,$group_info) = each($group_owners))
 			{
-				if($this->owner = $group_info['account_id'])
+				if($this->owner == $group_info['account_id'])
 				{
 					return True;
 				}
