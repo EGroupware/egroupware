@@ -1,18 +1,19 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Calendar                                                    *
-  * http://www.egroupware.org                                                *
-  * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
-  *          http://www.radix.net/~cknudsen                                  *
-  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Calendar                                                    *
+	* http://www.egroupware.org                                                *
+	* Maintained and further developed by RalfBecker@outdoor-training.de       *
+	* Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
+	*          http://www.radix.net/~cknudsen                                  *
+	* Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	if(@$GLOBALS['phpgw_info']['server']['calendar_type'] == 'mcal' &&
 		extension_loaded('mcal') == False)

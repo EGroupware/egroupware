@@ -15,20 +15,20 @@
 		'phpgw_cal' => array(
 			'fd' => array(
 				'cal_id' => array('type' => 'auto','nullable' => False),
-				'uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'owner' => array('type' => 'int','precision' => '8','nullable' => False),
-				'category' => array('type' => 'varchar','precision' => '30','nullable' => True),
-				'groups' => array('type' => 'varchar','precision' => '255','nullable' => True),
-				'datetime' => array('type' => 'int','precision' => '8','nullable' => True),
-				'mdatetime' => array('type' => 'int','precision' => '8','nullable' => True),
-				'edatetime' => array('type' => 'int','precision' => '8','nullable' => True),
-				'priority' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '2'),
-				'cal_type' => array('type' => 'varchar','precision' => '10','nullable' => True),
-				'is_public' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '1'),
-				'title' => array('type' => 'varchar','precision' => '80','nullable' => False,'default' => '1'),
-				'description' => array('type' => 'text','nullable' => True),
-				'location' => array('type' => 'varchar','precision' => '255','nullable' => True),
-				'reference' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
+				'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'cal_owner' => array('type' => 'int','precision' => '8','nullable' => False),
+				'cal_category' => array('type' => 'varchar','precision' => '30'),
+				'cal_groups' => array('type' => 'varchar','precision' => '255'),
+				'cal_starttime' => array('type' => 'int','precision' => '8'),
+				'cal_modified' => array('type' => 'int','precision' => '8'),
+				'cal_endtime' => array('type' => 'int','precision' => '8'),
+				'cal_priority' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '2'),
+				'cal_type' => array('type' => 'varchar','precision' => '10'),
+				'cal_public' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '1'),
+				'cal_title' => array('type' => 'varchar','precision' => '80','nullable' => False,'default' => '1'),
+				'cal_description' => array('type' => 'text'),
+				'cal_location' => array('type' => 'varchar','precision' => '255'),
+				'cal_reference' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
 			),
 			'pk' => array('cal_id'),
 			'fk' => array(),
@@ -38,17 +38,17 @@
 		'phpgw_cal_holidays' => array(
 			'fd' => array(
 				'hol_id' => array('type' => 'auto','nullable' => False),
-				'locale' => array('type' => 'char','precision' => '2','nullable' => False),
-				'name' => array('type' => 'varchar','precision' => '50','nullable' => False),
-				'mday' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'month_num' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'occurence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'dow' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'observance_rule' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
+				'hol_locale' => array('type' => 'char','precision' => '2','nullable' => False),
+				'hol_name' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'hol_mday' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_month_num' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_occurence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_dow' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_observance_rule' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
 			),
 			'pk' => array('hol_id'),
 			'fk' => array(),
-			'ix' => array('locale'),
+			'ix' => array('hol_locale'),
 			'uc' => array()
 		),
 		'phpgw_cal_repeats' => array(
@@ -69,11 +69,11 @@
 		'phpgw_cal_user' => array(
 			'fd' => array(
 				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
-				'cal_login' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'cal_user_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
 				'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
-				'cal_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
+				'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
 			),
-			'pk' => array('cal_id','cal_login','cal_type'),
+			'pk' => array('cal_id','cal_user_id','cal_user_type'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()

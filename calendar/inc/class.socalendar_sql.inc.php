@@ -1,19 +1,19 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Calendar                                                    *
-  * http://www.eGroupWare.org                                                *
-  * Maintained and further developed by RalfBecker@outdoor-training.de       *
-  * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
-  *          http://www.radix.net/~cknudsen                                  *
-  * Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* eGroupWare - Calendar                                                    *
+	* http://www.eGroupWare.org                                                *
+	* Maintained and further developed by RalfBecker@outdoor-training.de       *
+	* Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
+	*          http://www.radix.net/~cknudsen                                  *
+	* Originaly modified by Mark Peters <skeeter@phpgroupware.org>             *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	
+	/* $Id$ */
 
 	if (@$GLOBALS['phpgw_info']['flags']['included_classes']['socalendar_'])
 	{
@@ -38,13 +38,23 @@
 				$GLOBALS['phpgw']->asyncservice = CreateObject('phpgwapi.asyncservice');
 			}
 			$this->async = &$GLOBALS['phpgw']->asyncservice;
+			
+			$this->table = 'phpgw_cal';
+			$this->all_tables = array(
+				'table'			=> $this->table,
+				'user_table'	=> ($this->user_table  = $this->table.'_user'),
+				'recur_table'	=> ($this->recur_table = $this->table.'_repeats'),
+				'extra_table'	=> ($this->extra_table = $this->table.'_extra'),
+			);
+			$this->db = $GLOBALS['phpgw']->db;
+			$this->db->set_app('calendar');
+			$this->stream = &$this->db;	// legacy support
 		}
 
 		function open($calendar='',$user='',$passwd='',$options='')
 		{
 			if($user=='')
 			{
-	//			settype($user,'integer');
 				$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
 			}
 			elseif(is_int($user))
@@ -55,9 +65,7 @@
 			{
 				$this->user = $GLOBALS['phpgw']->accounts->name2id($user);
 			}
-
-			$this->stream = $GLOBALS['phpgw']->db;
-			return $this->stream;
+			return $this->db;
 		}
 
 		function popen($calendar='',$user='',$passwd='',$options='')
@@ -67,7 +75,7 @@
 
 		function reopen($calendar,$options='')
 		{
-			return $this->stream;
+			return $this->db;
 		}
 
 		function close($options='')
@@ -87,18 +95,18 @@
 
 		function delete_calendar($calendar='')
 		{
-			$this->stream->query('SELECT cal_id FROM phpgw_cal WHERE owner='.(int)$calendar,__LINE__,__FILE__);
-			if($this->stream->num_rows())
+			$this->db->select($this->table,'cal_id',array('cal_owner' => $calendar),__LINE__,__FILE__);
+			if($this->db->num_rows())
 			{
-				while($this->stream->next_record())
+				while($this->db->next_record())
 				{
-					$this->delete_event((int)$this->stream->f('cal_id'));
+					$this->delete_event((int)$this->db->f('cal_id'));
 				}
 				$this->expunge();
 			}
-			$this->stream->lock(array('phpgw_cal_user'));
-			$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_login='.(int)$calendar,__LINE__,__FILE__);
-			$this->stream->unlock();
+			$this->db->lock(array($this->user_table));
+			$this->db->delete($this->user_table,array('cal_user_id' => $calendar),__LINE__,__FILE__);
+			$this->db->unlock();
 
 			return $calendar;
 		}
@@ -212,67 +220,63 @@
 
 		function fetch_event($event_id,$options='')
 		{
-			if(!isset($this->stream))
+			if(!isset($this->db))
 			{
 				return False;
 			}
+			$this->db->lock($this->all_tables);
 
-			$event_id = (int)$event_id;
+			$this->db->select($this->table,'*',array('cal_id'=>$event_id),__LINE__,__FILE__);
 
-			$this->stream->lock(array('phpgw_cal','phpgw_cal_user','phpgw_cal_repeats','phpgw_cal_extra'/* OLD-ALARM,'phpgw_cal_alarm'*/));
-
-			$this->stream->query('SELECT * FROM phpgw_cal WHERE cal_id='.$event_id,__LINE__,__FILE__);
-
-			if($this->stream->num_rows() > 0)
+			if($this->db->num_rows() > 0)
 			{
 				$this->event_init();
 
-				$this->stream->next_record();
+				$this->db->next_record();
 				// Load the calendar event data from the db into $event structure
 				// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
-				$this->add_attribute('owner',(int)$this->stream->f('owner'));
-				$this->add_attribute('id',(int)$this->stream->f('cal_id'));
-				$this->set_class((int)$this->stream->f('is_public'));
-				$this->set_category($this->stream->f('category'));
-				$this->set_title(stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('title'))));
-				$this->set_description(stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('description'))));
-				$this->add_attribute('uid',$GLOBALS['phpgw']->strip_html($this->stream->f('uid')));
-				$this->add_attribute('location',stripslashes($GLOBALS['phpgw']->strip_html($this->stream->f('location'))));
-				$this->add_attribute('reference',(int)$this->stream->f('reference'));
+				$this->add_attribute('owner',(int)$this->db->f('cal_owner'));
+				$this->add_attribute('id',(int)$this->db->f('cal_id'));
+				$this->set_class((int)$this->db->f('cal_public'));
+				$this->set_category($this->db->f('cal_category'));
+				$this->set_title(stripslashes($GLOBALS['phpgw']->strip_html($this->db->f('cal_title'))));
+				$this->set_description(stripslashes($GLOBALS['phpgw']->strip_html($this->db->f('cal_description'))));
+				$this->add_attribute('uid',$GLOBALS['phpgw']->strip_html($this->db->f('cal_uid')));
+				$this->add_attribute('location',stripslashes($GLOBALS['phpgw']->strip_html($this->db->f('cal_location'))));
+				$this->add_attribute('reference',(int)$this->db->f('cal_reference'));
 
 				// This is the preferred method once everything is normalized...
-				//$this->event->alarm = (int)$this->stream->f('alarm');
+				//$this->event->alarm = (int)$this->db->f('alarm');
 				// But until then, do it this way...
 				//Legacy Support (New)
 
-				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('datetime'));
+				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->db->f('cal_starttime'));
 				$this->set_start($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('mdatetime'));
+				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->db->f('cal_modified'));
 				$this->set_date('modtime',$datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
-				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->stream->f('edatetime'));
+				$datetime = $GLOBALS['phpgw']->datetime->localdates($this->db->f('cal_endtime'));
 				$this->set_end($datetime['year'],$datetime['month'],$datetime['day'],$datetime['hour'],$datetime['minute'],$datetime['second']);
 
 			//Legacy Support
-				$this->add_attribute('priority',(int)$this->stream->f('priority'));
-				if($this->stream->f('cal_group') || $this->stream->f('groups') != 'NULL')
+				$this->add_attribute('priority',(int)$this->db->f('cal_priority'));
+				if($this->db->f('cal_group') || $this->db->f('cal_groups') != 'NULL')
 				{
-					$groups = explode(',',$this->stream->f('groups'));
 					for($j=1;$j<count($groups) - 1;$j++)
 					{
 						$this->add_attribute('groups',$groups[$j],$j-1);
 					}
 				}
 
-				$this->stream->query('SELECT * FROM phpgw_cal_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
-				if($this->stream->num_rows())
+				$this->db->select($this->recur_table,'*',array('cal_id'=>$event_id),__LINE__,__FILE__);
+				if($this->db->num_rows())
 				{
-					$this->stream->next_record();
+					$this->db->next_record();
 
-					$this->add_attribute('recur_type',(int)$this->stream->f('recur_type'));
-					$this->add_attribute('recur_interval',(int)$this->stream->f('recur_interval'));
-					$enddate = $this->stream->f('recur_enddate');
+					$this->add_attribute('recur_type',(int)$this->db->f('recur_type'));
+					$this->add_attribute('recur_interval',(int)$this->db->f('recur_interval'));
+					$enddate = $this->db->f('recur_enddate');
 					if($enddate != 0 && $enddate != Null)
 					{
 						$datetime = $GLOBALS['phpgw']->datetime->localdates($enddate);
@@ -297,9 +301,9 @@
 					{
 						echo 'Event ID#'.$this->event['id'].' : Enddate = '.$enddate."<br>\n";
 					}
-					$this->add_attribute('recur_data',$this->stream->f('recur_data'));
+					$this->add_attribute('recur_data',$this->db->f('recur_data'));
 
-					$exception_list = $this->stream->f('recur_exception');
+					$exception_list = $this->db->f('recur_exception');
 					$exceptions = Array();
 					if(strpos(' '.$exception_list,','))
 					{
@@ -313,63 +317,35 @@
 				}
 
 			//Legacy Support
-				$this->stream->query('SELECT * FROM phpgw_cal_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
-				if($this->stream->num_rows())
+				$this->db->select($this->user_table,'*',array('cal_id'=>$event_id),__LINE__,__FILE__);
+				if($this->db->num_rows())
 				{
-					while($this->stream->next_record())
+					while($this->db->next_record())
 					{
-						if((int)$this->stream->f('cal_login') == (int)$this->user)
+						if((int)$this->db->f('cal_user_id') == (int)$this->user)
 						{
-							$this->add_attribute('users_status',$this->stream->f('cal_status'));
+							$this->add_attribute('users_status',$this->db->f('cal_status'));
 						}
-						$this->add_attribute('participants',$this->stream->f('cal_status'),(int)$this->stream->f('cal_login'));
+						$this->add_attribute('participants',$this->db->f('cal_status'),(int)$this->db->f('cal_user_id'));
 					}
 				}
 
 			// Custom fields
-				$this->stream->query('SELECT * FROM phpgw_cal_extra WHERE cal_id='.$event_id,__LINE__,__FILE__);
-				if($this->stream->num_rows())
+				$this->db->select($this->extra_table,'*',array('cal_id'=>$event_id),__LINE__,__FILE__);
+				if($this->db->num_rows())
 				{
-					while($this->stream->next_record())
+					while($this->db->next_record())
 					{
-						$this->add_attribute('#'.$this->stream->f('cal_extra_name'),$this->stream->f('cal_extra_value'));
+						$this->add_attribute('#'.$this->db->f('cal_extra_name'),$this->db->f('cal_extra_value'));
 					}
 				}
-
-	/* OLD-ALARM
-				if($this->event['reference'])
-				{
-					// What is event['reference']???
-					$alarm_cal_id = $event_id.','.$this->event['reference'];
-				}
-				else
-				{
-					$alarm_cal_id = $event_id;
-				}
-
-				//echo '<!-- cal_id='.$alarm_cal_id.' -->'."\n";
-				//$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id in ('.$alarm_cal_id.') AND cal_owner='.$this->user,__LINE__,__FILE__);
-				$this->stream->query('SELECT * FROM phpgw_cal_alarm WHERE cal_id='.$event_id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
-				if($this->stream->num_rows())
-				{
-					while($this->stream->next_record())
-					{
-						$this->event['alarm'][] = Array(
-							'id'		=> (int)$this->stream->f('alarm_id'),
-							'time'	=> (int)$this->stream->f('cal_time'),
-							'text'	=> $this->stream->f('cal_text'),
-							'enabled'	=> (int)$this->stream->f('alarm_enabled')
-						);
-					}
-				}
-	*/
 			}
 			else
 			{
 				$this->event = False;
 			}
 
-			$this->stream->unlock();
+			$this->db->unlock();
 
 			if ($this->event)
 			{
@@ -385,22 +361,22 @@
 
 		function list_events($startYear,$startMonth,$startDay,$endYear=0,$endMonth=0,$endDay=0,$extra='',$tz_offset=0,$owner_id=0)
 		{
-			if(!isset($this->stream))
+			if(!isset($this->db))
 			{
 				return False;
 			}
 
-			$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
-
-			$user_where = ' AND (phpgw_cal_user.cal_login in (';
+			$user_where = " AND ($this->user_table.cal_user_id IN (";
 			if(is_array($owner_id) && count($owner_id))
 			{
+				array_walk($owner_id,create_function('$key,&$val','$val = (int) $val;'));
 				$user_where .= implode(',',$owner_id);
 			}
 			else
 			{
-				$user_where .= $this->user;
+				$user_where .= (int)$this->user;
 			}
+/* why ???
 			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
 			@reset($member_groups);
 			while($member_groups != False && list($key,$group_info) = each($member_groups))
@@ -409,6 +385,7 @@
 			}
 			@reset($member);
 	//		$user_where .= ','.implode(',',$member);
+*/
 			$user_where .= ')) ';
 
 			if($this->debug)
@@ -416,25 +393,26 @@
 				echo '<!-- '.$user_where.' -->'."\n";
 			}
 
-			$startDate = 'AND ( ( (phpgw_cal.datetime >= '.$datetime.') ';
+			$datetime = mktime(0,0,0,$startMonth,$startDay,$startYear) - $tz_offset;
+			$startDate = "AND ( ( ($this->table.cal_starttime >= $datetime) ";
 
 			$enddate = '';
 			if($endYear != 0 && $endMonth != 0 && $endDay != 0)
 			{
 				$edatetime = mktime(23,59,59,(int)$endMonth,(int)$endDay,(int)$endYear) - $tz_offset;
-				$endDate .= 'AND (phpgw_cal.edatetime <= '.$edatetime.') ) '
-					. 'OR ( (phpgw_cal.datetime <= '.$datetime.') '
-					. 'AND (phpgw_cal.edatetime >= '.$edatetime.') ) '
-					. 'OR ( (phpgw_cal.datetime >= '.$datetime.') '
-					. 'AND (phpgw_cal.datetime <= '.$edatetime.') '
-					. 'AND (phpgw_cal.edatetime >= '.$edatetime.') ) '
-					. 'OR ( (phpgw_cal.datetime <= '.$datetime.') '
-					. 'AND (phpgw_cal.edatetime >= '.$datetime.') '
-					. 'AND (phpgw_cal.edatetime <= '.$edatetime.') ';
+				$endDate .= "AND ($this->table.cal_endtime <= $edatetime) ) "
+					. "OR ( ($this->table.cal_starttime <= $datetime) "
+					. "AND ($this->table.cal_endtime >= $edatetime) ) "
+					. "OR ( ($this->table.cal_starttime >= $datetime) "
+					. "AND ($this->table.cal_starttime <= $edatetime) "
+					. "AND ($this->table.cal_endtime >= $edatetime) ) "
+					. "OR ( ($this->table.cal_starttime <= $datetime) "
+					. "AND ($this->table.cal_endtime >= $datetime) "
+					. "AND ($this->table.cal_endtime <= $edatetime) ";
 			}
 			$endDate .= ') ) ';
 
-			$order_by = 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
+			$order_by = "ORDER BY $this->table.cal_starttime ASC, $this->table.cal_endtime ASC, $this->table.cal_priority ASC";
 			if($this->debug)
 			{
 				echo "SQL : ".$user_where.$startDate.$endDate.$extra."<br>\n";
@@ -485,22 +463,16 @@
 				return 1;
 			}
 			$this_event = $this->event;
-			$locks = Array(
-				'phpgw_cal',
-				'phpgw_cal_user',
-				'phpgw_cal_repeats',
-				'phpgw_cal_extra'
-	// OLD-ALARM			'phpgw_cal_alarm'
-			);
-			$this->stream->lock($locks);
+
+			$this->db->lock($this->all_tables);
 			foreach($this->deleted_events as $cal_id)
 			{
-				foreach ($locks as $table)
+				foreach ($this->all_tables as $table)
 				{
-					$this->stream->query('DELETE FROM '.$table.' WHERE cal_id='.$cal_id,__LINE__,__FILE__);
+					$this->db->delete($table,array('cal_id'=>$cal_id),__LINE__,__FILE__);
 				}
 			}
-			$this->stream->unlock();
+			$this->db->unlock();
 
 			foreach($this->deleted_events as $cal_id)
 			{
@@ -519,31 +491,27 @@
 			$from = $where = ' ';
 			if($search_repeats)
 			{
-				$from  = ', phpgw_cal_repeats ';
-				$where = 'AND (phpgw_cal_repeats.cal_id = phpgw_cal.cal_id) ';
+				$from  = ",$this->recur_table ";
+				$where = "AND ($this->recur_table.cal_id = $this->table.cal_id) ";
 			}
 			if($search_extra)
 			{
-				$from  .= 'LEFT JOIN phpgw_cal_extra ON phpgw_cal_extra.cal_id = phpgw_cal.cal_id ';
+				$from  .= "LEFT JOIN $this->extra_table ON $this->extra_table.cal_id = $this->table.cal_id ";
 			}
 
-			$sql = 'SELECT DISTINCT phpgw_cal.cal_id,'
-					. 'phpgw_cal.datetime,phpgw_cal.edatetime,'
-					. 'phpgw_cal.priority '
-					. 'FROM phpgw_cal_user, phpgw_cal'
-					. $from
-					. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
-					. $where . $extra;
+			$sql = "SELECT DISTINCT $this->table.cal_id,$this->table.cal_starttime,$this->table.cal_endtime,$this->table.cal_priority".
+				" FROM $this->user_table,$this->table$from".
+				" WHERE ($this->user_table.cal_id=$this->table.cal_id) $where $extra";
 
 			if($this->debug)
 			{
 				echo "FULL SQL : ".$sql."<br>\n";
 			}
 
-			$this->stream->query($sql,__LINE__,__FILE__);
+			$this->db->query($sql,__LINE__,__FILE__);
 
 			$retval = Array();
-			if($this->stream->num_rows() == 0)
+			if($this->db->num_rows() == 0)
 			{
 				if($this->debug)
 				{
@@ -552,9 +520,9 @@
 				return $retval;
 			}
 
-			while($this->stream->next_record())
+			while($this->db->next_record())
 			{
-				$retval[] = (int)$this->stream->f('cal_id');
+				$retval[] = (int)$this->db->f('cal_id');
 			}
 			if($this->debug)
 			{
@@ -574,144 +542,85 @@
 
 		function save_event(&$event)
 		{
-			$locks = Array(
-				'phpgw_cal',
-				'phpgw_cal_user',
-				'phpgw_cal_repeats',
-				'phpgw_cal_extra'
-	// OLD-ALARM			'phpgw_cal_alarm'
-			);
-			$this->stream->lock($locks);
+			$this->db->lock($this->all_tables);
 			if($event['id'] == 0)
 			{
-				$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
-					. "values('*new*','".$this->stream->db_addslashes($event['title'])
-					. "',".(int)$event['owner'].','.(int)$event['priority'].','.(int)$event['public'].",'"
-					. $event['category']."')",__LINE__,__FILE__);
-				$event['id'] = $this->stream->get_last_insert_id('phpgw_cal','cal_id');
-			}
-			$date = $this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset;
-			$enddate = $this->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset;
-			$today = time() - $GLOBALS['phpgw']->datetime->tz_offset;
+				$this->db->insert($this->table,array(
+					'cal_uid'		=> '*new*',
+					'cal_title'		=> $event['title'],
+					'cal_owner'		=> $event['owner'],
+					'cal_priority'	=> $event['priority'],
+					'cal_public'	=> $event['public'],
+					'cal_category'	=> $event['category']
+				),False,__LINE__,__FILE__);
 
-			if($event['recur_type'] != MCAL_RECUR_NONE)
-			{
-				$type = 'M';
+				$event['id'] = $this->db->get_last_insert_id($this->table,'cal_id');
 			}
-			else
-			{
-				$type = 'E';
-			}
-
 			// new event or new created referencing event
 			if (!$event['uid'] || $event['reference'] && strstr($event['uid'],'cal-'.$event['reference'].'-'))
 			{
 				$event['uid'] = $this->generate_uid($event);
 			}
-			$sql = 'UPDATE phpgw_cal SET '
-					. 'uid='.$this->stream->quote($event['uid']).','
-					. 'owner='.(int)$event['owner'].', '
-					. 'datetime='.(int)$date.', '
-					. 'mdatetime='.(int)$today.', '
-					. 'edatetime='.(int)$enddate.', '
-					. 'priority='.(int)$event['priority'].', '
-					. "category='".$this->stream->db_addslashes($event['category'])."', "
-					. "cal_type='".$this->stream->db_addslashes($type)."', "
-					. 'is_public='.(int)$event['public'].', '
-					. "title='".$this->stream->db_addslashes($event['title'])."', "
-					. "description='".$this->stream->db_addslashes($event['description'])."', "
-					. "location='".$this->stream->db_addslashes($event['location'])."', "
-					. ($event['groups']?"groups='".(count($event['groups'])>1?implode(',',$event['groups']):','.$event['groups'][0].',')."', ":'')
-					. 'reference='.(int)$event['reference'].' '
-					. 'WHERE cal_id='.(int)$event['id'];
+			$this->db->update($this->table,array(
+				'cal_uid'		=> $event['uid'],
+				'cal_owner' 	=> $event['owner'],
+				'cal_starttime'	=> $this->maketime($event['start']) - $GLOBALS['phpgw']->datetime->tz_offset,
+				'cal_modified'	=> time() - $GLOBALS['phpgw']->datetime->tz_offset,
+				'cal_endtime'	=> $this->maketime($event['end']) - $GLOBALS['phpgw']->datetime->tz_offset,
+				'cal_priority'	=> $event['priority'],
+				'cal_category'	=> $event['category'],
+				'cal_type'		=> $event['recur_type'] != MCAL_RECUR_NONE ? 'M' : 'E',
+				'cal_public'	=> $event['public'],
+				'cal_title'		=> $event['title'],
+				'cal_description'=> $event['description'],
+				'cal_location'	=> $event['location'],
+				'cal_groups'	=> count($event['groups']) ? ','.implode(',',$event['groups']).',' : '',
+				'cal_reference'	=> $event['reference'],
+			),array('cal_id' => $event['id']),__LINE__,__FILE__);
 
-			$this->stream->query($sql,__LINE__,__FILE__);
+			$this->db->delete($this->user_table,array('cal_id' => $event['id']),__LINE__,__FILE__);
 
-			$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.(int)$event['id'],__LINE__,__FILE__);
-
-			@reset($event['participants']);
-			while (list($key,$value) = @each($event['participants']))
+			foreach($event['participants'] as $uid => $status)
 			{
-				if((int)$key == $event['owner'])
-				{
-					$value = 'A';
-				}
-				$this->stream->query('INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) '
-					. 'VALUES('.(int)$event['id'].','.(int)$key.",'".$this->stream->db_addslashes($value)."')",__LINE__,__FILE__);
+				$this->db->insert($this->user_table,array(
+					'cal_id'		=> $event['id'],
+					'cal_user_id' 	=> $uid,
+					'cal_status'	=> (int)$uid == $event['owner'] ? 'A' : $status,
+				),False,__LINE__,__FILE__);
 			}
 
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				if($event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0)
-				{
-					$end = $this->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetime->tz_offset;
-				}
-				else
-				{
-					$end = 0;
-				}
-
-				$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.(int)$event['id'],__LINE__,__FILE__);
-				$this->stream->next_record();
-				$num_rows = $this->stream->f(0);
-				if($num_rows == 0)
-				{
-					$this->stream->query('INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_enddate,recur_data,recur_interval) '
-						.'VALUES('.(int)$event['id'].','.$event['recur_type'].','.(int)$end.','.$event['recur_data'].','.$event['recur_interval'].')',__LINE__,__FILE__);
-				}
-				else
-				{
-					$this->stream->query('UPDATE phpgw_cal_repeats '
-						. 'SET recur_type='.$event['recur_type'].', '
-						. 'recur_enddate='.(int)$end.', '
-						. 'recur_data='.$event['recur_data'].', '
-						. 'recur_interval='.$event['recur_interval'].', '
-						. "recur_exception='".(count($event['recur_exception'])>1?implode(',',$event['recur_exception']):(count($event['recur_exception'])==1?$event['recur_exception'][0]:''))."' "
-						. 'WHERE cal_id='.$event['id'],__LINE__,__FILE__);
-				}
+				$this->db->insert($this->recur_table,array(
+					'recure_type'	 => $event['recur_type'],
+					'recure_enddate' => $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0 ?
+						$this->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetime->tz_offset : 0,
+					'recur_data'	 => $event['recur_data'],
+					'recur_interval' => $event['recur_interval'],
+					'recur_exception'=> implode(',',$event['recur_exception']),
+				),array('cal_id' => $event['id']),__LINE__,__FILE__);
 			}
 			else
 			{
-				$this->stream->query('DELETE FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
+				$this->db->delete($this->recur_table,array('cal_id' => $event['id']),__LINE__,__FILE__);
 			}
 			// Custom fields
-			$this->stream->query('DELETE FROM phpgw_cal_extra WHERE cal_id='.$event['id'],__LINE__,__FILE__);
+			$this->db->delete($this->extra_table,array('cal_id' => $event['id']),__LINE__,__FILE__);
 
 			foreach($event as $name => $value)
 			{
 				if ($name[0] == '#' && strlen($value))
 				{
-					$this->stream->query('INSERT INTO phpgw_cal_extra (cal_id,cal_extra_name,cal_extra_value) '
-					. 'VALUES('.$event['id'].",'".addslashes(substr($name,1))."','".addslashes($value)."')",__LINE__,__FILE__);
+					$this->db->insert($this->extra_table,array(
+						'cal_id'			=> $event['id'],
+						'cal_extra_name'	=> substr($name,1),
+						'cal_extra_value'	=> $value,
+					),False,__LINE__,__FILE__);
 				}
 			}
-	/*
-			$alarmcount = count($event['alarm']);
-			if ($alarmcount > 1)
-			{
-				// this should never happen, $event['alarm'] should only be set
-				// if creating a new event and uicalendar only sets up 1 alarm
-				// the user must use "Alarm Management" to create/establish multiple
-				// alarms or to edit/change an alarm
-				echo '<!-- how did this happen, too many alarms -->'."\n";
-				$this->stream->unlock();
-				return True;
-			}
-
-			if ($alarmcount == 1)
-			{
-
-				list($key,$alarm) = @each($event['alarm']);
-
-				$this->stream->query('INSERT INTO phpgw_cal_alarm(cal_id,cal_owner,cal_time,cal_text,alarm_enabled) VALUES('.$event['id'].','.$event['owner'].','.$alarm['time'].",'".$alarm['text']."',".$alarm['enabled'].')',__LINE__,__FILE__);
-				$this->stream->query('SELECT LAST_INSERT_ID()');
-				$this->stream->next_record();
-				$alarm['id'] = $this->stream->f(0);
-			}
-	*/
 			print_debug('Event Saved: ID #',$event['id']);
 
-			$this->stream->unlock();
+			$this->db->unlock();
 
 			if (is_array($event['alarm']))
 			{
@@ -722,27 +631,12 @@
 			}
 			$GLOBALS['phpgw_info']['cal_new_event_id'] = $event['id'];
 			$this->event = $event;
+
 			return True;
 		}
 
 		function get_alarm($cal_id)
 		{
-	/* OLD-ALARM
-			$this->stream->query('SELECT cal_time, cal_text FROM phpgw_cal_alarm WHERE cal_id='.$id.' AND cal_owner='.$this->user,__LINE__,__FILE__);
-			if($this->stream->num_rows())
-			{
-				while($this->stream->next_record())
-				{
-					$alarm[$this->stream->f('cal_time')] = $this->stream->f('cal_text');
-				}
-				@reset($alarm);
-				return $alarm;
-			}
-			else
-			{
-				return False;
-			}
-	*/
 			$alarms = $this->read_alarms($cal_id);
 			$ret = False;
 
@@ -759,19 +653,19 @@
 		function set_status($id,$owner,$status)
 		{
 			$status_code_short = Array(
-				REJECTED =>	'R',
+				REJECTED 	=> 'R',
 				NO_RESPONSE	=> 'U',
-				TENTATIVE	=>	'T',
-				ACCEPTED	=>	'A'
+				TENTATIVE	=> 'T',
+				ACCEPTED	=> 'A'
 			);
 
-			$this->stream->query("UPDATE phpgw_cal_user SET cal_status='".$status_code_short[$status]."' WHERE cal_id=".$id." AND cal_login=".$owner,__LINE__,__FILE__);
-	/* OLD-ALARM
-			if ($status == 'R')
-			{
-				$this->stream->query('UPDATE phpgw_cal_alarm set alarm_enabled=0 where cal_id='.$id.' and cal_owner='.$owner,__LINE__,__FILE__);
-			}
-	*/
+			$this->db->query($this->user_table,array(
+				'cal_status'	=> $status_code_short[$status],
+			),array(
+				'cal_id'		=> $id,
+				'cal_user_id'	=> $owner,
+			),__LINE__,__FILE__);
+
 			return True;
 		}
 
@@ -780,14 +674,14 @@
 		function group_search($owner=0)
 		{
 			$owner = ($owner==$GLOBALS['phpgw_info']['user']['account_id']?0:$owner);
-			$groups = substr($GLOBALS['phpgw']->common->sql_search('phpgw_cal.groups',(int)$owner),4);
+			$groups = substr($GLOBALS['phpgw']->common->sql_search("$this->table.groups",(int)$owner),4);
 			if (!$groups)
 			{
 				return '';
 			}
 			else
 			{
-				return "(phpgw_cal.is_public=2 AND (". $groups .')) ';
+				return "($this->table.is_public=2 AND (". $groups .')) ';
 			}
 		}
 
@@ -813,25 +707,24 @@
 
 		function list_dirty_events($lastmod=-1,$repeats=false)
 		{
-			if(!isset($this->stream))
+			if(!isset($this->db))
 			{
 				return False;
 			}
 			$lastmod = (int)  $lastmod;
 			$repeats = (bool) $repeats;
 
-			$user_where = " AND phpgw_cal_user.cal_login = $this->user";
-
-			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
-			@reset($member_groups);
-			while($member_groups != False && list($key,$group_info) = each($member_groups))
+			$user_where = " AND $this->user_table.cal_user_id=".(int)$this->user;
+/* why not used ???
+			if ($member_groups = $GLOBALS['phpgw']->accounts->membership($this->user))
 			{
-				$member[] = $group_info['account_id'];
+				foreach($member_groups as $key => $group_info)
+				{
+					$member[] = $group_info['account_id'];
+				}
 			}
-			@reset($member);
-	//		$user_where .= ','.implode(',',$member);
-			//$user_where .= ')) ';
-
+			$user_where .= ','.implode(',',$member) . ')) ';
+*/
 			if($this->debug)
 			{
 				echo '<!-- '.$user_where.' -->'."\n";
@@ -839,28 +732,14 @@
 
 			if($lastmod > 0)
 			{
-				$wheremod = "AND mdatetime = $lastmod";
+				$wheremod = "AND $this->table.cal_modified=".(int)$lastmod;
 			}
 
-			$order_by = ' ORDER BY phpgw_cal.cal_id ASC';
+			$order_by = " ORDER BY $this->table.cal_id ASC";
 			if($this->debug)
 			{
 				echo "SQL : ".$user_where.$wheremod.$extra."<br>\n";
 			}
 			return $this->get_event_ids($repeats,$user_where.$wheremod.$extra.$order_by);
 		}
-
-	/* OLD-ALARM
-		function add_alarm($eventid,$alarm,$owner)
-		{
-			$this->stream->query('INSERT INTO phpgw_cal_alarm(cal_id,cal_owner,cal_time,cal_text,alarm_enabled) VALUES('.$eventid.','.$owner.','.$alarm['time'].",'".$alarm['text']."',1)",__LINE__,__FILE__);
-			$this->stream->query('SELECT LAST_INSERT_ID()');
-			$this->stream->next_record();
-			return($this->stream->f(0));
-		}
-		function delete_alarm($alarmid)
-		{
-			$this->stream->query('DELETE FROM phpgw_cal_alarm WHERE alarm_id='.$alarmid,__LINE__,__FILE__);
-		}
-	*/
 	}

@@ -1071,4 +1071,81 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
+
+	$test[] = '1.0.0';
+	function calendar_upgrade1_0_0()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','uid','cal_uid');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','owner','cal_owner');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','category','cal_category');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','groups','cal_groups');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','datetime','cal_starttime');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','mdatetime','cal_modified');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','edatetime','cal_endtime');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','priority','cal_priority');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','is_public','cal_public');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','title','cal_title');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','description','cal_description');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','location','cal_location');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal','reference','cal_reference');
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.001';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '1.0.0.001';
+	function calendar_upgrade1_0_0_001()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','locale','hol_locale');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','name','hol_name');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','mday','hol_mday');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','month_num','hol_month_num');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','occurence','hol_occurence');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','dow','hol_dow');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_holidays','observance_rule','hol_observance_rule');
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_holidays',array(
+			'fd' => array(
+				'hol_id' => array('type' => 'auto','nullable' => False),
+				'hol_locale' => array('type' => 'char','precision' => '2','nullable' => False),
+				'hol_name' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'hol_mday' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_month_num' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_occurence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_dow' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'hol_observance_rule' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0')
+			),
+			'pk' => array('hol_id'),
+			'fk' => array(),
+			'ix' => array('hol_locale'),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.002';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '1.0.0.002';
+	function calendar_upgrade1_0_0_002()
+	{
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_user','cal_login','cal_user_id');
+		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_cal_user','cal_type','cal_user_type');
+		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_cal_user',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'cal_user_id' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0'),
+				'cal_status' => array('type' => 'char','precision' => '1','default' => 'A'),
+				'cal_user_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'u')
+			),
+			'pk' => array('cal_id','cal_user_id','cal_user_type'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.0.003';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
 ?>
