@@ -231,6 +231,7 @@ monitor	email	en	Monitor
 monitor	nntp	en	Monitor
 monitor newsgroups	preferences	en	Monitor Newsgroups
 month	calendar	en	Month
+monthly	calendar	en	Monthly
 monthly (by date)	calendar	en	Monthly (by date)
 monthly (by day)	calendar	en	Monthly (by day)
 move selected messages into	email	en	Move Selected Messages into
@@ -429,7 +430,7 @@ wed	calendar	en	Wed
 wednesday	common	en	Wednesday
 week	calendar	en	Week
 weekday starts on	calendar	en	Weekday starts on
-weekly	calendar	en	weekly
+weekly	calendar	en	Weekly
 which groups	common	en	which groups
 which groups	todo	en	Which groups
 work day ends on	calendar	en	Work day ends on
