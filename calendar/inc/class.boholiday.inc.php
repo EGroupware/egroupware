@@ -434,5 +434,21 @@
 			return $this->cached_holidays;
 		}
 		/* End Calendar functions */
+
+		function check_admin()
+		{
+			global $phpgw, $phpgw_info;
+
+			$admin = False;
+			if(@$phpgw_info['user']['apps']['admin'])
+			{
+				$admin = True;
+			}
+				
+			if(!$admin)
+			{
+				Header('Location: ' . $phpgw->link('/index.php'));
+			}
+		}
 	}
 ?>

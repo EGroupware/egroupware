@@ -39,6 +39,7 @@
 			$phpgw->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 
 			$this->bo = CreateObject('calendar.boholiday');
+			$this->bo->check_admin();
 			$this->base_url = $this->bo->base_url;
 			$this->template_dir = $phpgw->common->get_tpl_dir('calendar');
 		}
@@ -46,7 +47,7 @@
 		function admin()
 		{
 			global $phpgw, $phpgw_info;
-			
+
 			unset($phpgw_info['flags']['noheader']);
 			unset($phpgw_info['flags']['nonavbar']);
 			$phpgw_info['flags']['noappfooter'] = True;
