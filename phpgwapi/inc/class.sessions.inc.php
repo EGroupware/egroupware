@@ -23,6 +23,13 @@
 
 	/* $Id$ */
 
+	/*
+	** Reserved session_flags
+	** A - anonymous session
+	** U - Force update of phpgw_info cache
+	** N - None, normal session
+	*/
+
 	class sessions
 	{
 		var $login;
@@ -30,12 +37,12 @@
 		var $account_id;
 		var $account_lid;
 		var $account_domain;
+		var $session_flags;
 		var $sessionid;
 		var $kp3;
 		var $data;
 		var $db;
 		var $db2;
-		var $variableNames;
 
 		/*************************************************************************\
 		* Constructor just loads up some defaults from cookies                    *
@@ -48,8 +55,6 @@
 			$this->db2       = $phpgw->db;
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
-			// this want work because of crypto not ready at this point
-			#$this->restore();
 		}
 
 		/*************************************************************************\
@@ -88,8 +93,10 @@
 			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$db->next_record();
 
+			$this->session_flags = $db->f('session_flags');
+
 			// This is going to be replace with the session_flag field       
-			if ($db->f('session_info') == '' || $db->f('session_info') == 'NULL')
+			if ($this->session_flags == 'U')
 			{
 /*        $this->account_lid = $db->f('session_lid');
           $phpgw_info['user']['sessionid']   = $this->sessionid;
@@ -123,6 +130,11 @@
 			$this->account_lid = $userid_array[0];
 			$this->update_dla();
 			$this->account_id = $phpgw->accounts->name2id($this->account_lid);
+
+			if (! $this->account_id)
+			{
+				return False;
+			}
 
 			if ($phpgw_info['server']['cache_phpgw_info'])
 			{
@@ -174,7 +186,7 @@
 			if (!isset($phpgw_info['server']['cron_apps']) || ! $phpgw_info['server']['cron_apps'])
 			{
 				$phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
-									 . "'",__LINE__,__FILE__);
+									 . "' and session_flags !='A'",__LINE__,__FILE__);
 			}
 		}
 
@@ -255,10 +267,19 @@
 
 			// If they are not useing cache, we need to store it somewhere
 			$this->appsession('password','phpgwapi',$this->passwd);
+			if ($phpgw->acl->check('anonymous',1,'phpgwapi'))
+			{
+				$session_flags = 'A';
+			}
+			else
+			{
+				$session_flags = 'N';
+			}
 
 			$phpgw->db->query("insert into phpgw_sessions values ('" . $this->sessionid
 								. "','".$login."','" . $this->getuser_ip() . "','"
-								. $now . "','" . $now . "','".$info_string."')",__LINE__,__FILE__);
+								. $now . "','" . $now . "','".$info_string."','" . $session_flags
+								. "')",__LINE__,__FILE__);
 
 			$phpgw->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
 								. "$login','" . $this->getuser_ip() . "','$now','') ",__LINE__,__FILE__);
@@ -365,10 +386,8 @@
 
 				// I added these into seperate steps for easier debugging
 				$data = $phpgw->db->f('content');
-				$data = $phpgw->crypto->decrypt($data);
-				# this is to much!! knecke
-				# please talk with me if you add it again
-				#$data = stripslashes($data);
+				$data = $phpgw->common->decrypt($data);
+				$data = stripslashes($data);
 
 				return $data;
 			} else {
@@ -381,14 +400,12 @@
 					// I added these into seperate steps for easier debugging
 					$data = serialize($data);
 					$data = $phpgw->crypto->encrypt($data);
-					$data = addslashes($data);
 
 					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
 					. "','".$location."','".$data."')",__LINE__,__FILE__);
 				} else {
 	 				$data = $phpgw->crypto->encrypt(serialize($data));
-					$data = addslashes($data);
 					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"
 					. "where sessionid = '".$this->sessionid."'"
 					. "and loginid = '".$this->account_id."' and app = '".$appname."'"
@@ -403,10 +420,8 @@
 		{
 			global $phpgw;
 			
-			$serializedData = $this->appsession('session');
-			#print "serializedData<br>$serializedData<br><br>";
+			$serializedData = $this->appsession();
 			$sessionData = unserialize($serializedData);
-			#print "sessionData<br>$sessionData<br><br>";
 			
 			if (is_array($sessionData))
 			{
@@ -425,23 +440,22 @@
 		function save()
 		{
 			global $phpgw;
-			
+				
 			if (is_array($this->variableNames))
 			{
 				reset($this->variableNames);
 				while(list($key, $value) = each($this->variableNames))
 				{
-					if ($value == "registered")
+					if ($value == 'registered')
 					{
 						global $$key;
 						$sessionData[$key] = $$key;
-						#print "save: ".$key." : ".$$key."<br>";
 					}
 				}
-				$this->appsession('session','',$sessionData);
+				$this->appsession($sessionData);
 			}
 		}
-		
+			
 		// create a list a variable names, wich data need's to be restored
 		function register($_variableName)
 		{

@@ -64,7 +64,7 @@
      }
      if (isset($phpgw_info["navbar"]["admin"]) && isset($phpgw_info["user"]["preferences"]["common"]["show_currentusers"])) {
         $db  = $phpgw->db;
-        $db->query("select count(*) from phpgw_sessions");
+        $db->query("select count(*) from phpgw_sessions where session_flags != 'A'");
         $db->next_record();
         $tpl->set_var("current_users",'<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"].'/admin/currentusers.php') . '">&nbsp;'
                                     . lang("Current users") . ': ' . $db->f(0) . '</a>');
