@@ -1,4 +1,5 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
+%1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!!!
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
@@ -14,6 +15,7 @@ account preferences	admin	de	Einstellungen der Benutzerkonten
 acl manager	admin	de	ACL-Manager
 acl rights	admin	de	ACL-Rechte
 action	admin	de	Aktion
+activate wsiwyg-editor	admin	de	WYSIWYG (formatierter Text) Editor aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
 add a new account.	admin	de	Neues Benutzerkonto anlegen
@@ -232,7 +234,6 @@ mode	admin	de	Modus
 month	admin	de	Monat
 never	admin	de	Nie
 new group name	admin	de	Neuer Gruppenname
-new password [ leave blank for no change	admin	de	
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
@@ -325,6 +326,7 @@ the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nic
 the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedesmal eine Mail wenn er aufgerufen wird.
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Der unten angezeigten Benutzer sind Mitglied der Gruppe %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	de	Es gibt bereits ein Gruppe mit diesem Namen. Benutzernamen dürfen nicht identisch mit Gruppennamen sein.
 they must be removed before you can continue	admin	de	Sie müssen zuvor aus dieser entfernt werden
 this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwednung benötigt ein Upgrade

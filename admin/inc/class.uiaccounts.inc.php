@@ -59,8 +59,8 @@
 			if(isset($_POST['query']))
 			{
 				// limit query to limit characters
-				if(eregi('^[a-z_0-9]+$',$_POST['query'])) 
-					$query = $_POST['query'];
+				if(eregi('^[a-z_0-9]+$',$_POST['query']))
+					$GLOBALS['query'] = $_POST['query'];
 			}
 			
 			if(isset($_POST['start']))
@@ -100,6 +100,8 @@
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['admin']['title'].' - '.
+				lang('User groups');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -112,24 +114,22 @@
 			$p->set_block('groups','row','row');
 			$p->set_block('groups','row_empty','row_empty');
 
-			if ($GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
+			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
-				$total = $GLOBALS['phpgw']->accounts->total;
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $GLOBALS['query']);
 			}
 			else
 			{
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order, $query, $total);
-				$total = $GLOBALS['phpgw']->accounts->total;
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('groups',$start,$sort, $order);
 			}
-
-			$url = $GLOBALS['phpgw']->link('/index.php');
+			$total = $GLOBALS['phpgw']->accounts->total;
 
 			$var = Array(
 				'th_bg'             => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'left_next_matchs'  => $this->nextmatchs->left('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
-				'right_next_matchs' => $this->nextmatchs->right('/admin/groups.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
-				'lang_groups'   => lang('user groups'),
+				'right_next_matchs' => $this->nextmatchs->right('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
+				'lang_groups' => lang('%1 - %2 of %3 user groups',$start+1,$start+count($account_info),$total),
+	//			'lang_groups'   => lang('user groups'),
 				'sort_name'     => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('name'),'menuaction=admin.uiaccounts.list_groups'),
 				'header_edit'   => lang('Edit'),
 				'header_delete' => lang('Delete')
@@ -158,7 +158,7 @@
 					$can_delete = True;
 				}
 
-				while (list($null,$account) = each($account_info))
+				foreach($account_info as $account)
 				{
 					$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 					$var = Array(
@@ -203,7 +203,7 @@
 
 			if (! $GLOBALS['phpgw']->acl->check('group_access',2,'admin'))
 			{
-				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query">');
+				$p->set_var('input_search',lang('Search') . '&nbsp;<input name="query" value="'.htmlspecialchars(stripslashes($GLOBALS['query'])).'">');
 			}
 
 			$p->pfp('out','list');
@@ -224,7 +224,7 @@
 			if(isset($_POST['query']))
 			{
 				// limit query to limit characters
-				if(eregi('^[a-z_0-9]+$',$_POST['query'])) 
+				if(eregi('^[a-z_0-9]+$',$_POST['query']))
 					$GLOBALS['query'] = $_POST['query'];
 			}
 			
@@ -267,6 +267,8 @@
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
+			$GLOBALS['phpgw_info']['flags']['app_header'] = $GLOBALS['phpgw_info']['apps']['admin']['title'].' - '.
+				lang('User accounts');
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
@@ -280,17 +282,16 @@
 			$p->set_block('accounts','row','row');
 			$p->set_block('accounts','row_empty','row_empty');
 
-			if ($GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
+			if (! $GLOBALS['phpgw']->acl->check('account_access',2,'admin'))
 			{
 				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$GLOBALS['query']);
-				$total = $GLOBALS['phpgw']->accounts->total;
 			}
 			else
 			{
-				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order,$GLOBALS['query']);
-				$total = $GLOBALS['phpgw']->accounts->total;
+				$account_info = $GLOBALS['phpgw']->accounts->get_list('accounts',$start,$sort,$order);
 			}
-			
+			$total = $GLOBALS['phpgw']->accounts->total;
+
 			$url = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
 
 			$var = Array(

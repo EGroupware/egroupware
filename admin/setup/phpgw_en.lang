@@ -1,4 +1,5 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
+%1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
@@ -13,6 +14,7 @@ account preferences	admin	en	Account Preferences
 acl manager	admin	en	ACL Manager
 acl rights	admin	en	ACL Rights
 action	admin	en	Action
+activate wsiwyg-editor	admin	en	activate WSIWYG-editor
 add a category	admin	en	add a category
 add a group	admin	en	add a group
 add a new account.	admin	en	Add a new account.
@@ -113,6 +115,7 @@ deny access to user accounts	admin	en	Deny access to user accounts
 deny all users access to grant other users access to their entries ?	admin	en	Deny all users access to grant other users access to their entries ?
 description can not exceed 255 characters in length !	admin	en	Description can not exceed 255 characters in length !
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
+disable wsiwyg-editor	admin	en	disable WSIWYG-editor
 disabled (not recomended)	admin	en	disabled (not recomended)
 display	admin	en	Display
 do not delete the category and return back to the list	admin	en	do NOT delete the category and return back to the list
@@ -318,6 +321,7 @@ the loginid can not be more then 8 characters	admin	en	The loginid can not be mo
 the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail everytime it is called.
 the two passwords are not the same	admin	en	The two passwords are not the same
 the users bellow are still members of group %1	admin	en	the users bellow are still members of group %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	en	There already is a group with this name. Userid's can not have the same name as a groupid
 they must be removed before you can continue	admin	en	They must be removed before you can continue
 this application is current	admin	en	This application is current
 this application requires an upgrade	admin	en	This application requires an upgrade
