@@ -510,7 +510,7 @@
 				reset($this->stock_contact_fields);
 				while(list($f,$x) = each($this->stock_contact_fields))
 				{
-					$sql .= " $f LIKE '%$query%' OR ";
+					$sql .= " UPPER($f) LIKE UPPER('%$query%') OR ";
 				}
 				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
 				unset($f); unset($x);
