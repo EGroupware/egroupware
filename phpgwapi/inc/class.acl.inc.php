@@ -379,6 +379,7 @@ It should use the values in the $this->data
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
+      	$rights = 0;
         $rights |= $this->db->f('acl_rights');
         if (!!($rights & $required) == True){
           $accounts[] = intval($this->db->f('acl_account'));
