@@ -17,7 +17,8 @@ class holidaycalc {
 
 	function calculate_date($holiday, &$holidays, $year, $datetime, &$i)
 	{
-		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+//		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+		if($holiday['day'] == 0 && $holiday['occurence'] != 0)
 		{
 			if($holiday['occurence'] != 99)
 			{
