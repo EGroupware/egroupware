@@ -27,7 +27,7 @@
      </TD>
     </TR>
     <TR bgcolor="#e6e6e6">
-     <TD valign="BASELINES">
+     <TD valign="BASELINE">
 
       <FORM method="post" action="{login_url}">
        <TABLE border="0" align="CENTER" bgcolor="#486591" width="100%" cellpadding="0" cellspacing="0">

@@ -27,7 +27,7 @@
      </TD>
     </TR>
     <TR bgcolor="#e6e6e6">
-     <TD valign="BASELINES">
+     <TD valign="BASELINE">
 
 		<FORM name="login" method="post" action="{login_url}">
 		<input type="hidden" name="passwd_type" value="text">
