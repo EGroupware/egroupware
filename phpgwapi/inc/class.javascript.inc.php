@@ -64,7 +64,7 @@
 		*/
 		function javascript()
 		{
-			$this->t = CreateObject('phpgwapi.Template', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir','phpgwapi'));
+			//$this->t = CreateObject('phpgwapi.Template', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir','phpgwapi'));
 			//not currently used, but will be soon - I hope :)
 		}
 
@@ -147,7 +147,7 @@
 		*/
 		function set_onload($code)
 		{
-			$this->body['onLoad'] = $code;
+			$this->body['onLoad'] .= $code;
 		}
 
 		/**
@@ -157,7 +157,7 @@
 		*/
 		function set_onunload($code)
 		{
-			$this->body['onUnload'] = $code;
+			$this->body['onUnload'] .= $code;
 		}
 
 		/**
