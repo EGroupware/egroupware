@@ -89,6 +89,8 @@
 
 		function import_new_attrib($buffer,$name,$value) {
 			//$value = str_replace("\n","<BR>",$value);
+			// chop leading space from value
+			$value = trim($value);
 			$value = str_replace("\r","",$value);
 			//echo '<br>'.$name.' => '.$value;
 			$this->currentrecord += array($name => $value);

@@ -163,6 +163,7 @@ objectClass: importPerson";
 				$this->givenName = $value;
 			}
 
+			$value = trim($value);
 			$value = str_replace("\n","",$value);
 			$name = str_replace("\n","",$name);
 			$value = str_replace("\r","",$value);

@@ -124,6 +124,7 @@
 	}
 
 		function import_new_attrib($buffer,$name,$value) {
+			$value = trim($value);
 			$value = str_replace("\n","",$value);
 			$value = str_replace("\r","",$value);
 			if ($value=="") { $value="NULL"; }
