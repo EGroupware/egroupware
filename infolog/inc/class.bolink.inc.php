@@ -227,6 +227,8 @@
 		*/
 		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
 		{
+			echo "<p>bolink::get_links(app='$app',id='$id',only_app='$only_app',order='$order')</p>\n";
+
 			if (is_array($id) || !$id)
 			{
 				$ids = array();
@@ -252,7 +254,7 @@
 			}
 			$ids = solink::get_links($app,$id,$only_app,$order);
 
-			if (empty($only_apps) || $only_apps == $this->vfs_appname ||
+			if (empty($only_app) || $only_apps == $this->vfs_appname ||
 			    ($only_app[0] == '!' && $only_app != '!'.$this->vfs_appname))
 			{
 				if ($vfs_ids = $this->list_attached($app,$id))
@@ -260,6 +262,8 @@
 					$ids += $vfs_ids;
 				}
 			}
+			echo "ids=<pre>"; print_r($ids); echo "</pre>\n";
+
 			return $ids;
 		}
 
