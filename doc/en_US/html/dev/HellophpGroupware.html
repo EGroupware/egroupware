@@ -1,0 +1,375 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Jean-Francois">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (WinNT; I) [Netscape]">
+   <title>Hello World - phpGroupware</title>
+</head>
+<body>
+
+<h1>
+Developping a Hello World application for phpGroupware</h1>
+Author : Jean-Francois Declercq&nbsp; (<A HREF="mailto:jef@jfdeclercq.com">jef@jfdeclercq.com</A>)
+<br>Where to find this information : <a href="http://www.jfdeclercq.com/search.php?query=phpgroupware">http://www.jfdeclercq.com/search?query=phpgroupware</a>
+<p>1. <a href="#1">Creating the basic directory structure</a>
+<br>2. <a href="#2">Wrinting the application</a>
+<br>2.1 <a href="#2.1">Writing the basic functionality</a>
+<br>2.2 <a href="#2.2">Writing the templates</a>
+<br>2.3 <a href="#2.3">Writing the main page</a>
+<br>3. <a href="#3">Installing the hello application</a>
+<br>4. <a href="#4">Conclusions</a>
+<br>5. <a href="#5.">What's next ?</a>
+<h1>
+<a NAME="1"></a>1. Creating the basic directory structure</h1>
+In the phpgroupware home directory, you have to respect&nbsp; a directory
+structure. We will create the following.
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td>|--hello&nbsp;
+<br>&nbsp; |--inc&nbsp;
+<br>&nbsp; |&nbsp;&nbsp; |--functions.inc.php
+<br>&nbsp; |--templates&nbsp;
+<br>&nbsp; |&nbsp;&nbsp; |--default
+<br>&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |--hello_form.tpl
+<br>&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp; |--hello_result.tpl
+<br>&nbsp; |--index.php</td>
+</tr>
+</table>
+
+<p>Create the hello, inc, templates and default directory. We will write
+the files in the next section.
+<h1>
+<a NAME="2"></a>2. Writing the application</h1>
+
+<h2>
+<a NAME="2.1"></a>2.1 Writing the basic functionality</h2>
+First, we will create function.inc.php that contains some functions that
+will be used&nbsp; by the page. We will create a function hello() that
+formats a string. <font size=-1>(Note that in the philosophy of phpGroupware
+we would&nbsp; write a Hello class that would contain that functionality...)</font>
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td><font face="Courier New,Courier"><font size=-1>&lt;?php</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; /**************************************************************************\</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * functions.inc.php&nbsp;
+for&nbsp; phpGroupWare - Hello World example</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * http://www.phpgroupware.org</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * This file has
+been written by J-F Declercq &lt;jef@jfdeclercq.com></font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * http://www.jfdeclercq.com&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * --------------------------------------------&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; This
+program is free software; you can redistribute it and/or modify it</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; under
+the terms of the GNU General Public License as published by the&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; Free
+Software Foundation; either version 2 of the License, or (at your&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; option)
+any later version.&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; \**************************************************************************/</font></font>
+<p><font face="Courier New,Courier"><font size=-1>&nbsp; /***************************************************************************\</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * Function hello&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * in - String
+: the text to hello()&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * returns - the
+string with 'Hello' before and ' !' after&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * note - Used
+by the hello phpgw app</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; \***************************************************************************/</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; function hello($string)</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; {</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp; return
+"Hello ".$string." !";</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; }</font></font>
+<br><font face="Courier New,Courier"><font size=-1>?></font></font></td>
+</tr>
+</table>
+
+<h2>
+<a NAME="2.2"></a>2.2 Writing the templates</h2>
+Write the templates for the page. The page will not contain HTML code.
+The templates allow to separate the presentation from the logic of the
+page. We will insert two templates on the page : the 'hello_result' template
+and the 'hello_form' template.
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td><font face="Courier New,Courier"><font size=-1>&lt;!-- hello_form.tpl
+template --></font></font>
+<br><font face="Courier New,Courier"><font size=-1>&lt;p>Type Here your
+text to hello()&lt;/p>&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&lt;form type="post"
+action="{hello_action}">&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; &lt;input
+type="text" name="input" value= "{hello_value}" ></font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; &lt;input
+type="submit" value="OK">&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&lt;/form></font></font></td>
+</tr>
+</table>
+
+<p>This template looks like this :
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td><!-- hello_result template -->
+<p>Type Here your text to hello()
+<br><form type="post" action="{hello_action}"><input type="text" name="input" value= "{hello_value}" ><input type="submit" value="OK"></form></td>
+</tr>
+</table>
+
+<p>The hello_result.tpl template allows you to display the parameter&nbsp;
+and the result of the hello() function.
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td><font face="Courier New,Courier"><font size=-1>&lt;!-- hello_result.tpl
+--></font></font>
+<br><font face="Courier New,Courier"><font size=-1>hello({hello_input})={hello_result}</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&lt;hr></font></font></td>
+</tr>
+</table>
+This template looks like this :
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td>hello({hello_input})={hello_result}
+<hr></td>
+</tr>
+</table>
+
+<p>You have to put these .tpl files&nbsp; in the /templates/default/ directory.
+<h2>
+<a NAME="2.3"></a>2.3 Write the main page</h2>
+Now we have to write hello/index.php : this is the main page of the hello
+world application. I hope the code is clear enough so you can understand
+without I have to explain. (read the comments...)
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td><font face="Courier New,Courier"><font size=-1>&lt;?php</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; /**************************************************************************\</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * index.php&nbsp;
+for&nbsp; phpGroupWare - Hello World example&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * http://www.phpgroupware.org&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * This file written
+by J-F Declercq &lt;jef@jfdeclercq.com>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * http://www.jfdeclercq.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * --------------------------------------------&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; This
+program is free software; you can redistribute it and/or modify it *</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; under
+the terms of the GNU General Public License as published by the&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; Free
+Software Foundation; either version 2 of the License, or (at your&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; *&nbsp; option)
+any later version.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+*</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; \**************************************************************************/</font></font><font face="Courier New,Courier"><font size=-1></font></font>
+<p><font face="Courier New,Courier"><font size=-1>&nbsp; /***************************************************************************\</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * This page allows
+you to call the hello() function.</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * The default
+text passed to hello() is 'World' and&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * hello('World')='Hello
+World !'.</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * The page uses
+a form to allow you to hello() other texts.</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * The form and
+the result of the function&nbsp; have been put in two different&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; * templates (hello_result.tpl
+and hello_form.tpl).</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp; \***************************************************************************/</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //set the
+phpgw flags</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $phpgw_info['flags']
+= array('currentapp' => 'hello',</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;
+'enable_nextmatchs_class' => True,</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;
+'enable_categories_class' => True);</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //include
+the header</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; include('../header.inc.php');</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; /** the
+default text to hello() is 'World'*/</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $default="World";</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; if ($input
+== "") { $input=$default; }&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //Compute
+hello()</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $result
+= hello($input);</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //Use templates</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //we will
+use two templates</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->set_file(array(&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp; 'result'
+=> 'hello_result.tpl',</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp; 'form'
+=> 'hello_form.tpl')</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; );</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //filling
+the first template</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->set_var('hello_input',htmlspecialchars($input));</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->set_var('hello_result',htmlspecialchars($result));&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //filling
+the second template</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->set_var('hello_action','/hello/index.php');</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->set_var('hello_value',htmlspecialchars($input));</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //parse
+and write out the templates</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //changing
+the order of the two lines will change the layout of the page !!</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //this
+is the power of the templates</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->pparse('out','result');</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $t->pparse('out','form');</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp;&nbsp;</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; //Insert
+the footer</font></font>
+<br><font face="Courier New,Courier"><font size=-1>&nbsp;&nbsp; $ph</font></font>pgw->common->phpgw_footer();&nbsp;
+<br>?></td>
+</tr>
+</table>
+
+<h1>
+<a NAME="3"></a>3. Installing the hello application</h1>
+After having the correct files and folders (by creating or unzipping) in
+you phpGroupware base directory, you have to register the hello application
+within phpGroupware using this command
+<table BORDER COLS=1 WIDTH="100%" >
+<tr>
+<td>insert into phpgw_applications (app_name, app_title, app_enabled) values
+('hello', 'Hello World for phpGroupware', 1);</td>
+</tr>
+</table>
+After that, using the admin user, you must grant access to the application
+to some user and log in as this user.
+<h1>
+<a NAME="4"></a>4. Conclusions</h1>
+Trough building this stupid hello world application we have been trough
+some but not all of the requirements of phpGroupware.
+<p>"These guidelines must be followed for any application that wants considered
+for inclusion into phpGroupWare deluxe"
+<table BORDER COLS=2 WIDTH="100%" >
+<tr>
+<td>It must run on PHP3 and PHP4.</td>
+
+<td>OK - I think it's ok (?) I'm not a king of php and I use PHP4.</td>
+</tr>
+
+<tr>
+<td>SQL statements must be compatible with both MySQL and PostgreSQL.&nbsp;</td>
+
+<td>OK - No SQL statement so far</td>
+</tr>
+
+<tr>
+<td>It must use our default header.inc.php include.&nbsp;</td>
+
+<td>OK - cfr index.php</td>
+</tr>
+
+<tr>
+<td>It must use our $phpgw_link($url) for all links (this is for session
+support).&nbsp;</td>
+
+<td>OK - cfr hello_form.tpl</td>
+</tr>
+
+<tr>
+<td>It must use ``post'' for forms.&nbsp;</td>
+
+<td>OK - cfr hello_form.tpl</td>
+</tr>
+
+<tr>
+<td>It must respect phpGW group rights and phpGW user permissions.&nbsp;</td>
+
+<td>KO - We didn't check that particular aspect. --> TODO</td>
+</tr>
+
+<tr>
+<td>It must use our directory structure, template support and lang (multi-language)
+support.&nbsp;</td>
+
+<td>KO - we didn't use the language aspects --> TODO</td>
+</tr>
+
+<tr>
+<td>Where possible it should run on both Unix and NT platforms.&nbsp;</td>
+
+<td>OK ? - Only tested on NT</td>
+</tr>
+</table>
+
+<p>hello isn't a phpGroupware deluxe application...&nbsp; The next evolution
+of hello will be to add a group right and a multi-language feature. See
+what's next.
+<p>phpGroupWare offers very interesting features for people wanting to
+write 100% web-based applications :
+<ul>
+<li>
+separation of logic and presentation by the use of templates</li>
+
+<li>
+internationalization</li>
+
+<li>
+security (at least at the highest level in this case - allow or deny the
+use of an application to a user)</li>
+
+<li>
+session management</li>
+</ul>
+
+<h1>
+<a NAME="5."></a>5. What's next</h1>
+So, other things I should cover in the next Hello World application :
+<ul>
+<li>
+check the complete set of standard files (header.inc.php, hook_preferences.inc.php,
+hook_admin.inc.php, footer.inc.php) and what they are for.</li>
+
+<li>
+code the functionality in OO - using a hello class (like in the evolution
+of hello world :-))</li>
+
+<li>
+develop a setup that would create, update, delete a hello world table in
+order to check how it works.</li>
+
+<li>
+integrate hello into the phpgroupware administration</li>
+
+<li>
+allow the user to have hello preferences</li>
+
+<li>
+allow the user to have hello in his language</li>
+
+<li>
+integrate hello with dedicated ACL and phpGroupware security</li>
+
+<li>
+Discover the way handlers work for blocks</li>
+
+<li>
+...</li>
+</ul>
+
+</body>
+</html>
