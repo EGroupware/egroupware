@@ -154,13 +154,35 @@
 				xml_parser_free($parser);
 				return $r;
 			}
-			// gotta get rid of headers here
-			if ((!$hdrfnd) && ereg("^(.*)\r\n\r\n",$data,$GLOBALS['_xh'][$parser]['ha']))
+
+			// if using HTTP, then gotta get rid of HTTP headers here
+			// and we store them in the 'ha' bit of our data array
+			if (ereg("^HTTP", $data))
 			{
-				$data = ereg_replace("^.*\r\n\r\n", "", $data);
-				$hdrfnd = 1;
+				$ar=explode("\r\n", $data);
+				$newdata = '';
+				$hdrfnd  = 0;
+				for ($i=0; $i<sizeof($ar); $i++)
+				{
+					if (!$hdrfnd)
+					{
+						if (strlen($ar[$i])>0)
+						{
+							$GLOBALS['_xh'][$parser]['ha'] .= $ar[$i]. "\r\n";
+						}
+						else
+						{
+							$hdrfnd=1;
+						}
+					}
+					else
+					{
+						$newdata.=$ar[$i] . "\r\n";
+					}
+				}
+				$data=$newdata;
 			}
-	
+
 			if (!xml_parse($parser, $data, sizeof($data)))
 			{
 				// thanks to Peter Kocks <peter.kocks@baygate.com>
