@@ -12,7 +12,6 @@
 	/* $Id$ */
 
 	$setup_info['preferences']['name']      = 'preferences';
-	$setup_info['preferences']['title']     = 'Preferences';
 	$setup_info['preferences']['version']   = '0.9.13.002';
 	$setup_info['preferences']['app_order'] = 1;
 	$setup_info['preferences']['tables']    = '';

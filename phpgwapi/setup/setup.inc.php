@@ -13,7 +13,6 @@
 
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
-	$setup_info['phpgwapi']['title']     = 'phpgwapi';
 	$setup_info['phpgwapi']['version']   = '0.9.15.006';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.22';
 	$setup_info['phpgwapi']['enable']    = 3;

@@ -50,7 +50,7 @@
 
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home')
 		{
-			$var['welcome_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
+			$var['welcome_img']	= $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
 			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
 		}
 		else
@@ -58,6 +58,7 @@
 			$var['welcome_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
 			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image('phpgwapi','welcome2');
 		}
+		$var['welcome_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','welcome2','_over');
 
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences')
 		{
@@ -69,11 +70,12 @@
 			$var['preferences_img'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
 			$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image('phpgwapi','preferences2');
 		}
+		$var['preferences_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','preferences2','_over');
 
 		$var['logout_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','log_out2');
 		$GLOBALS['phpgw_info']['flags']['preload_images'][] = $GLOBALS['phpgw']->common->image_on('phpgwapi','log_out2','_over');
+		$var['logout_img_hover'] = $GLOBALS['phpgw']->common->image_on('phpgwapi','log_out2','_over');
 
-		
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
 		{
 			$var['about_img'] = $GLOBALS['phpgw']->common->image('phpgwapi','question_mark2');
@@ -122,10 +124,10 @@
 		$applications = '';
 		while ($app = each($GLOBALS['phpgw_info']['navbar']))
 		{
-			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && !ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
+			if ($app[0] != 'home' && $app[0] != 'preferences' && $app[0] != 'about' && $app[0] != 'logout')
 			{
 				$title = '<img src="' . $app[1]['icon'] . '" alt="' . $app[1]['title'] . '" title="'
-					. lang($app[1]['title']) . '" border="0" name="' . str_replace('-','_',$app[0]) . '">';
+					. $app[1]['title'] . '" border="0" name="' . str_replace('-','_',$app[0]) . '">';
 				$img_src_over = $app[1]['icon_hover'];
 				$img_src_out = $app[1]['icon'];
 
