@@ -19,7 +19,7 @@
       echo "</pre></body></html>";
       break;
     case "write config":
-      if(!is_writeable ($server_root."/header.inc.php")){
+      if(!is_writeable ("../header.inc.php")){
         show_header("Error generating header.inc.php");
         echo "Could not open header.inc.php for writing!<br>\n";
         echo "Please check read/write permissions on directories or back up and use another option.<br>";
@@ -27,7 +27,7 @@
       }else{
         show_header("Saved header.inc.php");
         $newheader = generate_header();
-        $fsetup = fopen($server_root."/header.inc.php","w");
+        $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
         echo "Created header.inc.php!<br>";
@@ -174,7 +174,7 @@
       echo "<br>";
       echo "<form>";
     
-      if(is_writeable ($server_root."/header.inc.php")){
+      if(is_writeable ("../header.inc.php")){
         echo '<input type=submit name="action" value="write config">';
       }else{
         echo 'Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can ';
