@@ -21,12 +21,23 @@
 	);
 	include('./header.inc.php');
 
-	$deny_login = False;
+	$phpgw_info['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $phpgw_info['login_template_set'];
+	$tmpl = CreateObject('phpgwapi.Template', $phpgw_info['server']['template_dir']);
+
+	// This is used for system downtime, to prevent new logins.
+	if ($phpgw_info['server']['deny_all_logins'])
+	{
+		$tmpl->set_file(array(
+			'login_form'  => 'login_denylogin.tpl'
+		));
+		$tmpl->set_var('template_set','default');		
+		$tmpl->pfp('loginout','login_form');
+		exit;
+	}
 
 	// !! NOTE !!
 	// Do NOT and I repeat, do NOT touch ANYTHING to do with lang in this file.
 	// If there is a problem, tell me and I will fix it. (jengo)
-	
 
 /*
 	if ($code != 10 && $phpgw_info['server']['usecookies'] == False)
@@ -47,9 +58,6 @@
 	}
 */
 
-	$phpgw_info['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/default';
-	$tmpl = CreateObject('phpgwapi.Template', $phpgw_info['server']['template_dir']);
-
 	if (! $deny_login && ! $phpgw_info['server']['show_domain_selectbox'])
 	{
 		$tmpl->set_file(array('login_form'  => 'login.tpl'));
@@ -59,21 +67,6 @@
 	{
 		$tmpl->set_file(array('login_form'  => 'login_selectdomain.tpl'));
 		$tmpl->set_var('charset',lang('charset'));
-	}
-	else
-	{
-		$tmpl->set_file(array('login_form'  => 'login_denylogin.tpl'));
-	}
-
-	// When I am updating my server, I don't want people logging in a messing 
-	// things up.
-	function deny_login()
-	{
-		global $tmpl;
-
-		$tmpl->set_var('template_set','default');		
-		$tmpl->pfp('loginout','login_form');
-		exit;
 	}
 
 	function show_cookie()
@@ -112,11 +105,6 @@
 	}
 
 	/* Program starts here */
-
-	if ($deny_login)
-	{
-		deny_login();
-	}
   
 	if ($phpgw_info['server']['auth_type'] == 'http' && isset($PHP_AUTH_USER))
 	{
@@ -264,7 +252,7 @@
 	$tmpl->set_var('version',$phpgw_info['server']['versions']['phpgwapi']);
 	$tmpl->set_var('lang_password',lang('password'));
 	$tmpl->set_var('lang_login',lang('login'));
-	$tmpl->set_var('template_set','default');
+	$tmpl->set_var('template_set',$phpgw_info['login_template_set']);
 
 	$tmpl->pfp('loginout','login_form');
 ?>
