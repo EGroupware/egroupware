@@ -298,7 +298,7 @@
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
-		$phpgw->template = CreateObject("phpgwapi.Template", PHPGW_TEMPLATE_DIR);
+		$phpgw->template = CreateObject("phpgwapi.Template",$phpgw->common->get_tpl_dir($phpgw_info['flags']['currentapp']));
 
 		/*************************************************************************\
 		* These lines load up the themes                                          *
