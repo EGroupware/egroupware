@@ -882,7 +882,9 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 
-
+	/*
+	 * More eGroupWare 0.9.99 updates
+	 */
 
 	$test[] = '0.9.99.003';
 	function phpgwapi_upgrade0_9_99_003()
@@ -919,7 +921,6 @@
 			'precision' => '4'
 		));
 
-
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.004';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
@@ -932,8 +933,17 @@
 			'type' => 'longtext'
 		));
 
-
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.005';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '0.9.99.005';
+	function phpgwapi_upgrade0_9_99_005()
+	{
+		$GLOBALS['phpgw_setup']->db->query("UPDATE phpgw_languages SET available='Yes' WHERE lang_id='sl'");
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.006';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
 ?>
