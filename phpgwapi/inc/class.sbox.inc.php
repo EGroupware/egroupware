@@ -382,6 +382,17 @@
 			return '<select name="'.$name.'">'."\n".$out.'</select>'."\n";
 		}
 
+		function nr2weekday($selected = 0)
+		{
+			for($i=0;$i<count($this->weekdays);$i++)
+			{
+				if ($selected > 0 && $selected == $i)
+				{
+					return lang($this->weekdays[$i]);
+				}
+			}
+		}
+
 		function getMonthText($name, $selected=0)
 		{
 			$out = '';
