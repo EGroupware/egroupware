@@ -3,7 +3,7 @@
 	$setup_info['phpgwapi']['name']    = 'phpgwapi';
 	$setup_info['phpgwapi']['title']   = 'phpgwapi';
 	$setup_info['phpgwapi']['version'] = '0.9.13.001';
-	$setup_info['phpgwapi']['versions']['current_header'] = '1.14';
+	$setup_info['phpgwapi']['versions']['current_header'] = '1.15';
 //	$setup_info['phpgwapi']['app_order'] = '6';
 
 	/* The tables this app creates */
