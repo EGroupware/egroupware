@@ -42,7 +42,7 @@
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $phpgw->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+				. $phpgw->link('/.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
 		}
@@ -55,7 +55,7 @@
 		while(list($key,$val) = @each($bdays))
 		{
 			$tmp = '<a href="'
-				. $phpgw->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+				. $phpgw->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' .  $val['id']) . '">'
 				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
 			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . "</td></tr>\n";
 		}
