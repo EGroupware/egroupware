@@ -129,8 +129,8 @@
 
 		if ($phpgw_info['server']['versions']['phpgwapi'] > $apiversion)
 		{
-			echo '<p><b>' . lang('You are running a newer version of phpGroupWare then your database is setup for')
-				. '<br>' . lang('It is recommend that you run setup to upgrade your tables to the current version')
+			echo '<p><b>' . lang('You are running a newer version of phpGroupWare than your database is setup for') . '.'
+				. '<br>' . lang('It is recommended that you run setup to upgrade your tables to the current version') . '.'
 				. '</b>';
 		}
 
