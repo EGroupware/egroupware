@@ -40,7 +40,7 @@
 
 	if($GLOBALS['phpgw_info']['server']['auth_type'] != 'ldap')
 	{
-		$GLOBALS['phpgw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
+		$GLOBALS['phpgw']->template->set_var('sql_message',lang('note: This feature might *not* change your email password. This may '
 			. 'need to be done manually.'));
 	}
 
