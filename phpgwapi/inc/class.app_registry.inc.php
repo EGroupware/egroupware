@@ -219,7 +219,7 @@
 		{
 			if(is_object($this->is))
 			{
-				$application = $this->is->send('system.package_app_byid',$app_id,$this->is->server['server_url']);
+				$application = $this->is->send('system.package_app',$app_id,$this->is->server['server_url']);
 // comment from here down to stop the actual install
 				// This is where I need to install the application
 				$sep = filesystem_separator();

@@ -709,12 +709,12 @@
 		return ExecMethod('phpgwapi.app_registry.find_new_app',$app->scalarval());
 	}
 
-	$GLOBALS['_xmlrpcs_package_app_byid_sig'] = array(array(xmlrpcStruct,xmlrpcString));
-	$GLOBALS['_xmlrpcs_package_app_byid_doc'] = 'Package an application for transport back to the calling client';
-	function _xmlrpcs_package_app_byid($server,$m)
+	$GLOBALS['_xmlrpcs_package_app_sig'] = array(array(xmlrpcStruct,xmlrpcString));
+	$GLOBALS['_xmlrpcs_package_app_doc'] = 'Package an application for transport back to the calling client';
+	function _xmlrpcs_package_app($server,$m)
 	{
 		$app = $m->getParam(0);
-		return ExecMethod('phpgwapi.app_registry.package_app_byid',$app->scalarval());
+		return ExecMethod('phpgwapi.app_registry.package_app',$app->scalarval());
 	}
 
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
@@ -829,10 +829,10 @@
 			'signature' => $GLOBALS['_xmlrpcs_find_new_app_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_find_new_app_doc']
 		),
-		'system.package_app_byid' => array(
-			'function'  => '_xmlrpcs_package_app_byid',
-			'signature' => $GLOBALS['_xmlrpcs_package_app_byid_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_package_app_byid_doc']
+		'system.package_app' => array(
+			'function'  => '_xmlrpcs_package_app',
+			'signature' => $GLOBALS['_xmlrpcs_package_app_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_package_app_doc']
 		),
 		'system.login'  => array(
 			'function'  => '_xmlrpcs_login',
