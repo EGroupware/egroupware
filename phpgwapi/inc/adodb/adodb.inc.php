@@ -902,12 +902,14 @@
 	}	
 
 	/**
+	 * @param $table string name of the table, not needed by all databases (eg. mysql), default ''
+	 * @param $column string name of the column, not needed by all databases (eg. mysql), default ''
 	 * @return  the last inserted ID. Not all databases support this.
 	 */ 
-	function Insert_ID()
+	function Insert_ID($table='',$column='')
 	{
 		if ($this->_logsql && $this->lastInsID) return $this->lastInsID;
-		if ($this->hasInsertID) return $this->_insertid();
+		if ($this->hasInsertID) return $this->_insertid($table,$column);
 		if ($this->debug) {
 			ADOConnection::outp( '<p>Insert_ID error</p>');
 			adodb_backtrace();
@@ -925,7 +927,7 @@
 	function PO_Insert_ID($table="", $id="") 
 	{
 	   if ($this->hasInsertID){
-		   return $this->Insert_ID();
+		   return $this->Insert_ID($table,$id);
 	   } else {
 		   return $this->GetOne("SELECT MAX($id) FROM $table");
 	   }
