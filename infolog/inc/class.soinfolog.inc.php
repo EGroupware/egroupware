@@ -19,15 +19,16 @@
 		var $grants;
 		var $data = array( );
 		var $filters = array( );
+		var $user;
 		var $maybe_slashes = array (
 			'info_des'=>1,'info_subject'=>1,'info_from'=>1,'info_addr'=>1
 		);
 		function soinfolog( $info_id = 0)
 		{
-			global $phpgw;
-			$this->db     = $phpgw->db;
-			$this->grants = $phpgw->acl->get_grants('infolog');
-			
+			$this->db     = $GLOBALS['phpgw']->db;
+			$this->grants = $GLOBALS['phpgw']->acl->get_grants('infolog');
+			$this->user   = $GLOBALS['phpgw_info']['user']['account_id'];
+
 			$this->read( $info_id );
 		}
 				
@@ -59,7 +60,6 @@
 		
 		function check_access( $info_id,$required_rights )
 		{
-			global $phpgw_info;
 			if ($info_id != $this->data['info_id'])      	// already loaded?
 			{
 				// dont change our own internal data,
@@ -76,9 +76,8 @@
 				return False;
 			}
 			$owner = $info['info_owner'];
-			$user  = $phpgw_info['user']['account_id'];
 
-			$access_ok = $owner == $user ||                // user has all rights
+			$access_ok = $owner == $this->user ||                // user has all rights
 							 // ACL only on public entrys || $owner granted _PRIVATE
 							 !!($this->grants[$owner] & $required_rights) &&
 							 ($info['info_access'] == 'public' ||
@@ -95,8 +94,6 @@
 		//							(incl. those he is responsible for !!!)            
 		function aclFilter($filter = 'none')
 		{
-			global $phpgw_info;
-
 			ereg('.*(own|privat|all|none).*',$filter,$vars);
 			$filter = $vars[1];
 
@@ -124,14 +121,12 @@
 												 implode(',',$private_user_list).')';
 				}            
 			}
-			$user = $phpgw_info['user']['account_id'];
-			
-			$filtermethod = " (info_owner=$user"; // user has all rights
+			$filtermethod = " (info_owner=$this->user"; // user has all rights
 
 			// private: own entries plus the one user is responsible for 
 			if ($filter == 'private' || $filter == 'own')
 			{
-				$filtermethod .= " OR info_responsible=$user AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
+				$filtermethod .= " OR info_responsible=$this->user AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
 			else      				// none --> all entrys user has rights to see
 			{
@@ -182,9 +177,7 @@
 
 		function init()
 		{
-			global $phpgw_info;
-			
-			$this->data = array( 'info_owner' => $phpgw_info['user']['account_id'],
+			$this->data = array( 'info_owner' => $this->user,
 										'info_pri'    => 'normal' );
 		}      
 				
@@ -210,12 +203,9 @@
 		
 		function delete($info_id)  // did _not_ ensure ACL
 		{
-			global $phpgw_info;
-
 			$this->db->query("delete FROM phpgw_infolog where info_id='$info_id' or info_id_parent='"
-				. "$info_id' AND ((info_access='public' and info_owner != '"
-				. $phpgw_info['user']['account_id'] . "') or (info_owner='"
-				. $phpgw_info['user']['account_id'] . "'))" ,__LINE__,__FILE__);
+				. "$info_id' AND ((info_access='public' and info_owner != '$this->user')"
+				. " or (info_owner='$this->user'))" ,__LINE__,__FILE__);
 				
 			if ($this->data['info_id'] == $info_id)
 			{
@@ -245,16 +235,14 @@
 			if ($values['info_id'])
 			{
 				$query = "UPDATE phpgw_infolog SET $query where info_id='".$values['info_id']."'";
+				$this->db->query($query,__LINE__,__FILE__);         
 			}
 			else
 			{
 				$query = "INSERT INTO phpgw_infolog ($cols) VALUES ($vals)";
-				/*
-				 * need to set $this->data['info_id'] with assigned autoincrement id
-				 * now data will be rereaded
-				 */
+				$this->db->query($query,__LINE__,__FILE__);
+				$this->data['info_id']=$this->db->get_last_insert_id('phpgw_infolog','info_id');
 			}
-			$this->db->query($query,__LINE__,__FILE__);         
 		}
 
 		function anzSubs( $info_id )
