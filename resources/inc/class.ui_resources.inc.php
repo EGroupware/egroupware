@@ -27,7 +27,7 @@ class ui_resources
 	*/
 	function ui_resources()
 	{
-// 		print_r($GLOBALS['phpgw_info']); die();
+// 		print_r($GLOBALS['phpgw']); die();
 		$this->tmpl	= CreateObject('etemplate.etemplate','resources.show');
 		$this->bo	= CreateObject('resources.bo_resources');
 		
@@ -126,12 +126,15 @@ class ui_resources
 		{
 			$preserv = array('id' => $content);
 			$content = $this->bo->read($content);
+			$content['resource_picture'] = $GLOBALS['phpgw_info']['server']['webserver_url']. '/resources/pictures/'.$content['id'].'.jpg';
 		}
 		else
 		{
 			$content = array();
+			$content['resource_picture'] = 'generic.png';
 		}
-		$content['msg'] = $msg; 
+		$content['msg'] = $msg;
+		$preserv = $preserv + $content;
 		$this->tmpl->read('resources.edit');
 		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv);
 		
