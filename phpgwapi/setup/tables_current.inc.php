@@ -350,6 +350,22 @@
 			'ix' => array(),
 			'uc' => array()
 		)
-
 	);
+
+	/* Try to fix this unfortunate case for mysql 3.22.X in php4 at least */
+	if(floor(phpversion()) == 4 && @$GLOBALS['phpgw_setup']->db->Type == 'mysql')
+	{
+		$_ver_str = @mysql_get_server_info();
+		$_ver_arr = explode(".",$_ver_str);
+		$_ver = $_ver_arr[1];
+		if(intval($_ver) < 23)
+		{
+			$phpgw_baseline['phpgw_lang']['fd']['message_id'] = array(
+				'type'      => 'varchar',
+				'precision' => 150,
+				'nullable'  => false,
+				'default'   => ''
+			);
+		}
+	}
 ?>

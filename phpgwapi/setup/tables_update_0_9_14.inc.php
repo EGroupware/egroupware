@@ -364,6 +364,19 @@
 	$test[] = '0.9.13.015';
 	function phpgwapi_upgrade0_9_13_015()
 	{
+		/* Skip this for mysql 3.22.X in php4 at least */
+		if(floor(phpversion()) == 4 && @$GLOBALS['phpgw_setup']->db->Type == 'mysql')
+		{
+			$_ver_str = @mysql_get_server_info();
+			$_ver_arr = explode(".",$_ver_str);
+			$_ver = $_ver_arr[1];
+			if(intval($_ver) < 23)
+			{
+				$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.016';
+				return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+			}
+		}
+
 		$GLOBALS['phpgw_setup']->oProc->AlterColumn(
 			'lang',
 			'message_id',
