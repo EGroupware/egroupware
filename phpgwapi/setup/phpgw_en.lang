@@ -127,6 +127,7 @@ char	htmlarea-TableOperations	en	Char
 charset	common	en	iso-8859-1
 chec_k link...	htmlarea-ContextMenu	en	Chec_k Link...
 check installation	common	en	Check installation
+Check Now	common	en	Check Now
 chile	common	en	CHILE
 china	common	en	CHINA
 choose list style type (for ordered lists)	htmlarea-ListType	en	Choose list style type (for ordered lists)
