@@ -899,7 +899,7 @@
 		*/
 		  function hook_single($location = '', $appname = '')
   {
-     global $phpgw, $phpgw_info;
+     global $phpgw, $phpgw_info, $PHP_VERSION;
      if (! $appname) {
         $appname = $phpgw_info['flags']['currentapp'];
      }
