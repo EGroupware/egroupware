@@ -60,7 +60,7 @@
 				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'width'	=> '100%',
 				'outerborderwidth'	=> '0',
-				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler')
 			)
 		);
 
