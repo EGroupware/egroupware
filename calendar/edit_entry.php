@@ -125,7 +125,7 @@
     $phpgw->template->parse("output","list",True);
 
 // Time
-    $phpgw->template->set_var("field",lang("End Time"));
+    $phpgw->template->set_var("field",lang("Time"));
 
     $amsel = "checked"; $pmsel = "";
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
