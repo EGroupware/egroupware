@@ -23,3 +23,8 @@ This should be copied to /etc/openldap/schema and added to
 /etc/openldap/slapd.conf:
 
 include		/etc/openldap/schema/phpgwaccount.schema
+
+
+Other files:
+
+	phpgwcontact.schema		VERY new and unfinished contacts schema
