@@ -8,6 +8,7 @@ account preferences	common	it	Preferenze dell'account
 acl	common	it	ACL
 add category	common	it	Aggiungi una categoria
 add	common	it	Aggiungi
+add x category for	common	it	Aggiungi categoria %1 per
 admin	common	it	Amministrazione
 administration	common	it	Amministrazione
 all	common	it	Tutto
@@ -17,9 +18,12 @@ august	common	it	Agosto
 autosave default category	common	it	Categoria default di salvataggio automatico
 cancel	common	it	Cancella
 categories	common	it	Categorie
+categories for	common	it	Categorie per
 category	common	it	Categoria
 change	common	it	Cambia
 charset	common	it	iso-8859-1
+choose the category	common	it	Scegli una categoria
+choose the parent category	common	it	scegli la categoria padre
 clear	common	it	Pulisci
 clear form	common	it	Cancella il modulo
 copy	common	it	Copia
@@ -73,6 +77,7 @@ last page	common	it	ultima pagina
 login	common	it	Login
 logout	common	it	Logout
 low	common	it	Bassa
+main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
 manual	common	it	Manuale
 march	common	it	Marzo
@@ -85,6 +90,7 @@ monday	common	it	Lunedì
 monitor	common	it	Monitor
 name	common	it	Nome
 new entry added sucessfully	common	it	Nuovo appuntamento aggiunto con successo
+new main category	common	it	nuova categoria principale
 next	common	it	Avanti
 next page	common	it	prossima pagina
 no	common	it	No
@@ -98,6 +104,7 @@ on *nix systems please type: x	common	it	Nei sistemi *nix per favore digitare: %
 other	common	it	Altro
 other phone	common	it	Altro Telefono
 owner	common	it	Proprietario
+parent category	common	it	Categoria padre
 password	common	it	Password
 password has been updated	common	it	La password è stata aggiornata
 permissions to the files/users directory	common	it	permissi alla cartella file/utenti
@@ -170,3 +177,10 @@ your session could not be verified.	login	it	La tua sessione non può essere veri
 open notify window	common	it	Apri finestra di notifica
 from	common	it	Da
 size	common	it	Dimensione
+
+
+
+
+
+
+

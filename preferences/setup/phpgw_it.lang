@@ -1,12 +1,14 @@
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
-change your settings	preferences	it	Cambia i tuoi settaggi
+change your settings	preferences	it	Cambia le tue preferenze
+country selection	preferences	it	Selezione Nazione
 date format	preferences	it	Formato data
 default application	preferences	it	Applicazione preferita
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
+interface/template selection	preferences	it	Selezione Interfaccia/Aspetto
 language	preferences	it	Lingua
 max matchs per page	preferences	it	Numero massimo di risultati per pagina
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questo *non* cambia la vostra password di email. Questo deve essere fatto manualemnte.
@@ -16,7 +18,11 @@ select different theme	preferences	it	Seleziona un tema differente
 show current users on navigation bar	preferences	it	Mostra utenti attuali nella barra di navigazione
 show navigation bar as	preferences	it	Mostra la barra di navigazione come
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
+template selection	admin	it	Aspetto selezionabili
 text only	preferences	it	Solo Testo
 this server is located in the x timezone	preferences	it	 Questo server è situato nel fuso orario %1
 time format	preferences	it	Formato ora
+use selectbox	preferences	it	Usa men&ugrave;
+use text entry	preferences	it	Usa testo
 your current theme is: x	preferences	it	il tuo tema</b>
+

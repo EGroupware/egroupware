@@ -22,12 +22,14 @@ category name	admin	it	Nome categoria
 category x has been added !	admin	it	La categoria %1 è stata aggiunta !
 change main screen message	admin	it	Modifica messaggio della schermata principale
 city	admin	it	Città
+country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
 description	admin	it	Descrizione
 disabled	admin	it	Disabilitato
 display	admin	it	Visualizza
 edit application	admin	it	Modifica Applicazione
 edit group	admin	it	Modifica Gruppo
+edit login screen message	admin	it	Modifica il messaggio della schermata di login
 edit user account	admin	it	Modifica account dell'utente
 enabled	admin	it	Attivo
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
@@ -44,6 +46,7 @@ idle	admin	it	inattivo
 installed applications	admin	it	Applicazioni Installate
 ip	admin	it	IP
 kill	admin	it	Termina
+language	admin	it	Lingua
 last login	admin	it	ultimo login
 last login from	admin	it	ultimo login da
 last time read	admin	it	Ultima volta letto
@@ -51,11 +54,12 @@ last x logins	admin	it	Ultimi %1 login
 listings displayed	admin	it	Elementi Visualizzati
 list of current users	admin	it	lista utenti attivi
 loginid	admin	it	LoginID
-login screen	admin	it	Schermo di login
+login screen	admin	it	Schermata di login
 login shell	admin	it	Shell di login
 login time	admin	it	Ora Login
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
+message has been updated	admin	it	il messaggio &egrave; stato aggiornato
 metar	admin	it	Metar
 never	admin	it	Mai
 new group name	admin	it	Nome nuovo gruppo
@@ -70,6 +74,7 @@ re-enter password	admin	it	Reinserisci la password
 region	admin	it	Regione
 regions	admin	it	Regioni
 remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
+section	admin	it	Selezione
 select parent category	admin	it	Seleziona categoria superiore
 select permissions this group will have	admin	it	Seleziona i permessi che questo gruppo avrà
 select users for inclusion	admin	it	Seleziona utenti per l'inclusione
@@ -83,11 +88,13 @@ station	admin	it	Stazione
 stations	admin	it	Stazioni
 submit changes	admin	it	Invia Cambiamenti
 table	admin	it	Tabella
+template selection	admin	it	Aspetto selezionabili
 that category name has been used already !	admin	it	Quel nome di categoria &egrave; gi&agrave; stato usato !
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto
 the login and password can not be the same	admin	it	La login e la pasword non possono essere uguali
 they must be removed before you can continue	admin	it	Devono essere rimossi prima di proseguire
 total records	admin	it	Inserimenti totali
+update	admin	it	aggiorna
 user accounts	admin	it	Account utenti
 user groups	admin	it	Gruppi utenti
 view access log	admin	it	Visualizza elenco collegamenti
@@ -114,3 +121,4 @@ global comics	admin	it	Fumetti Disponibili
 reset comic data	admin	it	Cancella i dati sui Fumetti
 enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
 show 'powered by' logo on 	admin	it	Visualizza il logo 'creato con'
+
