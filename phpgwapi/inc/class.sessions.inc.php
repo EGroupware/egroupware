@@ -405,9 +405,8 @@
 //				$data = $phpgw->common->decrypt($data);
 //				$data = stripslashes($data);
 				$data = $phpgw->crypto->decrypt($data);
-				$data = unserialize($data);
+				return unserialize($data);
 
-				return $data;
 			} else {
 				$phpgw->db->query("select content from phpgw_app_sessions where "
 				. "sessionid = '".$this->sessionid."' and loginid = '".$this->account_id."'"
