@@ -40,4 +40,5 @@
   $db->query("DROP TABLE languages");
   $db->query("drop sequence categories_cat_id_seq");
   $db->query("DROP TABLE categories");
+  $db->query("DROP TABLE notes");
 ?>

@@ -313,6 +313,19 @@
          $currentver = "0.9.4pre1";
          update_version_table();
       }
+      if ($currentver == "0.9.4pre1") {
+        $sql = "CREATE TABLE notes (
+           accountid      int(11),
+           date           int(11),
+           note           text, 
+           noteid         int(20) auto_increment, 
+           PRIMARY KEY (noteid)
+        )";
+        $db->query($sql);
+        $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 1, 13, NULL, '".$phpgw_info["server"]["version"]."')");
+        $currentver = "0.9.4pre2";
+        update_version_table();
+      }
       echo "  <tr bgcolor=\"e6e6e6\">\n";
       echo "    <td>Upgrade from 0.9.3 to $currentver is completed.</td>\n";
       echo "  </tr>\n";

@@ -32,4 +32,5 @@
   $db->query("DROP TABLE languages");
   $db->query("DROP TABLE customers");
   $db->query("DROP TABLE categories");
+  $db->query("DROP TABLE notes");
 ?>

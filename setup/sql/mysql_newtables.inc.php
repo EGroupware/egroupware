@@ -278,7 +278,17 @@
      PRIMARY KEY (lang_id)
   )";
   $db->query($sql);
-  
+
+  $sql = "CREATE TABLE notes (
+     accountid      int(11),
+     date           int(11),
+     note           text, 
+     noteid         int(20) auto_increment, 
+     PRIMARY KEY (noteid)
+  )";
+  $db->query($sql);
+  $db->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('notes', 'Notes', 0, 13, NULL, '".$phpgw_info["server"]["version"]."')");
+
   $currentver = "0.9.3";
   update_version_table();
 ?>
