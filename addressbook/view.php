@@ -43,7 +43,12 @@
 	}
 
 	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
-	$t->set_file(array( "view"	=> "view.tpl"));
+	$t->set_file(array(
+		"view"	      => "view.tpl",
+		"view_header" => "view_header.tpl",
+		"view_row"    => "view_row.tpl",
+		"view_footer" => "view_footer.tpl"
+	));
 
 	while ($column = each($this->stock_contact_fields)) {
 		if (isset($phpgw_info["user"]["preferences"]["addressbook"][$column[0]]) &&
@@ -88,12 +93,11 @@
 		$access_check = lang('public');
 	}
 
-	$view_header  = "<p>&nbsp;<b>" . lang("Address book - view") . $noprefs . "</b><hr><p>";
-	$view_header .= '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
+	$t->set_var('lang_viewpref',lang("Address book - view") . $noprefs);
 
 	reset($columns_to_display);
 	while ($column = each($columns_to_display)) { // each entry column
-		$columns_html .= "<tr><td><b>" . display_name($colname[$column[0]]) . "</b>:</td>";
+		$t->set_var('display_col',display_name($colname[$column[0]]));
 		$ref=$data="";
 		$coldata = $fields[0][$column[0]];
 		// Some fields require special formatting.       
@@ -110,7 +114,8 @@
 		} else { // But these do not
 			$ref=""; $data=$coldata;
 		}
-		$columns_html .= "<td>" . $ref . $data . "</td>";
+		$t->set_var('ref_data',$ref . $data);
+		$t->parse("cols","view_row",True);
 	}
 
 	$cat = CreateObject('phpgwapi.categories');
@@ -125,14 +130,13 @@
 
 	if (!$catname) { $catname = lang('none'); }
 
-	$columns_html .= '<tr><td colspan="4">&nbsp;</td></tr>'
-		. '<tr><td><b>' . lang("Record owner") . '</b></td><td>'
-		. $phpgw->common->grab_owner_name($record_owner) . '</td></tr>'
-		. '<tr><td><b>' . lang("Record access") . '</b></td><td>'
-		. $access_check . '</b></td></tr>'
-		. '<tr><td><b>' . lang("Category") . '</b></td><td>'
-		. $catname . '</b></td></tr>'
-		. '</td></td></table>';
+	$t->set_var('lang_owner',lang("Record owner"));
+	$t->set_var('owner',$phpgw->common->grab_owner_name($record_owner));
+	$t->set_var('lang_access',lang("Record access"));
+	$t->set_var('access',$access_check);
+	$t->set_var('lang_category',lang("Category"));
+	$t->set_var('catname',$catname);
+	$t->set_var('columns',$columns_html);
 
 	$sfields = rawurlencode(serialize($fields[0]));
 
@@ -168,8 +172,10 @@
 	$t->set_var("filter",$filter);
 	$t->set_var("start",$start);
 	$t->set_var("cat_id",$cat_id);
-	$t->set_var("view_header",$view_header);
-	$t->set_var("cols",$columns_html);
+
+	$t->parse("header","view_header");
+	$t->parse("footer","view_footer");
+	
 	$t->set_var("lang_ok",lang("ok"));
 	$t->set_var("lang_done",lang("done"));
 	$t->set_var("lang_copy",lang("copy"));

@@ -1,11 +1,11 @@
 
 <!-- BEGIN view header -->
-{view_header}
+{header}
 <!-- END view header -->
 <!-- BEGIN view columns-->
 {cols}
 <!-- END view columns -->
-
+{footer}
 <!-- BEGIN view -->
  <TABLE border="0" cellpadding="1" cellspacing="1">
   <TR> 
