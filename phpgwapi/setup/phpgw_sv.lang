@@ -100,7 +100,7 @@ brazil	common	sv	BRASILIEN
 british indian ocean territory	common	sv	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	sv	BRUNEI DARUSSALAM
 bulgaria	common	sv	BULGARIEN
-bulleted list	htmlarea	sv	Punktad lista
+bulleted list	htmlarea	sv	Punktlista
 burkina faso	common	sv	BURKINA FASO
 burundi	common	sv	BURUNDI
 c_ell properties...	htmlarea-ContextMenu	sv	C_ellegenskaper
@@ -163,7 +163,7 @@ cuba	common	sv	KUBA
 currency	common	sv	Valuta
 current	common	sv	Aktuell
 current style	htmlarea	sv	Aktuell stil
-current url is	htmlarea-ContextMenu	sv	Aktueöö URL är
+current url is	htmlarea-ContextMenu	sv	Aktuell URL är
 current users	common	sv	Aktuella användare
 cut	htmlarea-ContextMenu	sv	Klipp ut
 cut selection	htmlarea	sv	Klipp ut vald
@@ -189,7 +189,7 @@ description	common	sv	Beskrivning
 detail	common	sv	Detalj
 details	common	sv	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Avaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
-dictionary	htmlarea-SpellChecker	sv	Lexikon
+dictionary	htmlarea-SpellChecker	sv	Ordlista
 disable internet explorer png-image-bugfix	common	sv	Inaktivera Internet Explorer png-bild-bugfix
 disable slider effects	common	sv	Inaktivera animerade effekter
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
@@ -241,12 +241,12 @@ falkland islands (malvinas)	common	sv	FALKLAND ÖARNA
 faroe islands	common	sv	FAROE ÖARNA
 fax number	common	sv	Faxnummer
 february	common	sv	Februari
-fg color	htmlarea-TableOperations	sv	Färg
+fg color	htmlarea-TableOperations	sv	Förgrundsfärg
 fields	common	sv	Fält
 fiji	common	sv	FUJI
 files	common	sv	Filer
 filter	common	sv	Filter
-finished list of mispelled words	htmlarea-SpellChecker	sv	Felstavade ord lista klar
+finished list of mispelled words	htmlarea-SpellChecker	sv	Lista över felstavade ord klar
 finland	common	sv	FINLAND
 first name	common	sv	Förnamn
 first name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
@@ -279,7 +279,7 @@ greece	common	sv	GREKLAND
 greenland	common	sv	GRÖNLAND
 grenada	common	sv	GRENADA
 group	common	sv	Grupp
-group access	common	sv	Grupp åtkomst
+group access	common	sv	Gruppåtkomst
 group has been added	common	sv	Grupp tillagd
 group has been deleted	common	sv	Grupp raderad
 group has been updated	common	sv	Grupp uppdaterad
@@ -367,7 +367,7 @@ justify left	common	sv	Vänsterjustera
 justify right	common	sv	Högerjustera
 kazakstan	common	sv	KAZAKSTAN
 kenya	common	sv	KENYA
-keywords	common	sv	Sökord
+keywords	common	sv	Nyckelord
 kiribati	common	sv	KIRIBATI
 korea, democratic peoples republic of	common	sv	KOREA, NORD
 korea, republic of	common	sv	KOREA, SYD
@@ -514,7 +514,7 @@ password has been updated	common	sv	Lösenordet uppdaterat
 paste	htmlarea-ContextMenu	sv	Kopiera
 paste from clipboard	htmlarea	sv	Kopiera från klippbok
 path	htmlarea	sv	Sökväg
-path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar och grupp filer måste vara utanför webbserverns dokument root!
+path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar- och gruppfiler måste vara utanför webbserverns dokument root!
 pattern for search in addressbook	common	sv	Sökmönster i Adressboken
 pattern for search in calendar	common	sv	Sökmönster i Kalendern
 pattern for search in projects	common	sv	Sökmönster i Projekt
