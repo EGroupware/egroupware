@@ -28,8 +28,9 @@
 	class translation
 	{
 		var $lang = array();
-		var $userlang   = '';
+		var $userlang   = 'en';
 		var $currentapp = '';
+		var $loaded = False;
 
 		/*!
 		 @function translation
@@ -43,13 +44,12 @@
 			{
 				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			}
-			else
-			{
-				$this->userlang = 'en';
-			}
 
 			$this->currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
+		}
 
+		function load_langs()
+		{
 			$sql = "SELECT message_id,content FROM phpgw_lang WHERE lang LIKE '" . $this->userlang
 				. "' AND (app_name LIKE '" . $this->currentapp
 				. "' OR app_name LIKE 'common' OR app_name LIKE 'all') ORDER BY app_name ";
@@ -75,6 +75,7 @@
 			/* Done stuffing the array.  If someone prefers to have $GLOBALS['lang'] set to this as before,
 			   it could be done here. - $GLOBALS['lang'] = $this->lang;
 			*/
+			$this->loaded = True;
 		}
 
 		/*!
@@ -92,7 +93,12 @@
 			$ret  = $key;
 			$_key = strtolower($key);
 
-			$ret = $this->lang[$_key] ? $this->lang[$_key] : $key . '*';
+			if(!@isset($this->lang[$_key]) && !$this->loaded)
+			{
+				$this->load_langs();
+			}
+
+			$ret = @isset($this->lang[$_key]) ? $this->lang[$_key] : $key . '*';
 
 			$ndx = 1;
 			while(list($key,$val) = each($vars))
