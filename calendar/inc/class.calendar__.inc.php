@@ -14,7 +14,7 @@
 
 	/* $Id$ */
 
-include(PHPGW_SERVER_ROOT.'/'.$phpgw_info['flags']['currentapp'].'/version.inc.php');
+include(PHPGW_SERVER_ROOT.'/calendar/version.inc.php');
 
 if(extension_loaded('mcal') == False)
 {
