@@ -204,7 +204,7 @@
 			return $this->db->f(0) > 0;
 		}
 
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status,$account_home='',$account_shell='')
+		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
 		{
           // $account_home and $account_shell not used here
 	      $this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
