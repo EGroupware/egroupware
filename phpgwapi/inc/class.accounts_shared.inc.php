@@ -109,7 +109,7 @@
 			for ($idx=0; $idx<count($security_equals); $idx++)
 			{
 				$name = $this->id2name(intval($security_equals[$idx]));
-				$this->members = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
+				$this->members[] = Array('account_id' => intval($security_equals[$idx]), 'account_name' => $name);
 			}
 
 			return $this->members;
