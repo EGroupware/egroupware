@@ -768,7 +768,8 @@
 				{
 					$label = lang($label);
 				}
-				if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '')
+				if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '' &&
+				    (($pos = strpos($accesskey,';')) === False || $pos > 5))
 				{
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$label = $this->html->label($label,$form_name,$accesskey[1]);

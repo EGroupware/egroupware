@@ -127,7 +127,8 @@ class html
 		{
 			$lang = lang($lang);
 		}
-		if (($accesskey = strstr($lang,'&')) && $accesskey[1] != ' ')
+		if (($accesskey = strstr($lang,'&')) && $accesskey[1] != ' ' &&
+			(($pos = strpos($accesskey,';')) === False || $pos > 5))
 		{
 			$lang_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$lang);
 			$lang = str_replace('&','',$lang);
