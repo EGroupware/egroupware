@@ -147,6 +147,7 @@
 					$sTranslated = "'type' => 'float', 'precision' => $iPrecision";
 					break;
 				case 'datetime':
+				case 'timestamp':
 					$sTranslated = "'type' => 'timestamp'";
 					break;
 				case 'varchar':
@@ -300,6 +301,7 @@
 					$default = '';
 					$nullcomma = '';
 				}
+				$default = ereg_replace("''","'",$default);
 
 				$this->sCol[] = "\t\t\t\t'" . $colname . "' => array(" . $type . ',' . $null . $nullcomma . $default . '),' . "\n";
 			}
