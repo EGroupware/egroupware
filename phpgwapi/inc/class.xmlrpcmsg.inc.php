@@ -118,6 +118,7 @@
 			$GLOBALS['_xh'][$parser]['isf'] = 0; 
 			$GLOBALS['_xh'][$parser]['ac']  = '';
 			$GLOBALS['_xh'][$parser]['qt']  = '';
+			$GLOBALS['_xh'][$parser]['ha']  = '';
 
 			xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
 			xml_set_element_handler($parser, 'xmlrpc_se', 'xmlrpc_ee');
