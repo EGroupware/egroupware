@@ -23,6 +23,7 @@
                 . "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
                 . "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
                 . "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
+                . "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
                 . "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
 
@@ -62,19 +63,28 @@
     $t->set_var('hidden_vars',$hidden_vars);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
     $t->set_var('doneurl',$phpgw->link('/preferences/categories.php'));
-    $t->set_var('title_categories',lang('Add category for'));
+    $t->set_var('title_categories',lang("Add $cats_app category for"));
     $t->set_var('actionurl',$phpgw->link('/preferences/addcategory.php'));
     $t->set_var('lang_parent',lang('Parent category'));
     $t->set_var('lang_select_parent',lang('Select parent category'));
     $t->set_var('lang_access',lang('Private'));
-    $t->set_var('lang_data',lang('Data'));
+
     if ($access) { $t->set_var('access', '<input type="checkbox" name="access" value="True" checked>'); }
     else { $t->set_var('access', '<input type="checkbox" name="access" value="True"'); }
     $t->set_var('lang_name',lang('Name'));
     $t->set_var('lang_descr',lang('Description'));
     $t->set_var('cat_name',$cat_name);
     $t->set_var('cat_description',$cat_description);
-    $t->set_var('cat_data',$cat_data);
+
+    if ($extra) {
+        $t->set_var('td_data','<input name="cat_data" size="50" value="' . $cat_data . '">');
+	$t->set_var('lang_data',lang($extra));
+    }
+    else {
+        $t->set_var('cat_data','');
+        $t->set_var('lang_data','');
+    }
+
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_reset',lang('Clear Form'));
     $t->set_var('lang_done',lang('Done'));

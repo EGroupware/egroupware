@@ -29,16 +29,17 @@
 			. "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
 			. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
 			. "<input type=\"hidden\" name=\"cats_app\" value=\"$cats_app\">\n"
+			. "<input type=\"hidden\" name=\"extra\" value=\"$extra\">\n"
 			. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n";
 
     $t->set_var('font',$phpgw_info["theme"]["font"]);
     $t->set_var('user_name',$phpgw_info["user"]["fullname"]);
-    $t->set_var('title_categories',lang('Categories for'));
+    $t->set_var('title_categories',lang('categories for'));
     $t->set_var('lang_action',lang('Category list'));
-    $t->set_var('add_action',$phpgw->link('/preferences/addcategory.php',"cats_app=$cats_app"));
+    $t->set_var('add_action',$phpgw->link('/preferences/addcategory.php',"cats_app=$cats_app&extra=$extra"));
     $t->set_var('lang_add',lang('Add'));
     $t->set_var('lang_search',lang('Search'));
-    $t->set_var('actionurl',$phpgw->link('/preferences/categories.php',"cats_app=$cats_app"));
+    $t->set_var('actionurl',$phpgw->link('/preferences/categories.php',"cats_app=$cats_app&extra=$extra"));
     $t->set_var('lang_done',lang('Done'));
     $t->set_var('doneurl',$phpgw->link('/preferences/'));
 
@@ -55,8 +56,8 @@
 
 //--------------------------------- nextmatch --------------------------------------------
 
-    $left = $phpgw->nextmatchs->left('/preferneces/categories.php',$start,$c->total_records,"&cats_app=$cats_app");
-    $right = $phpgw->nextmatchs->right('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app");
+    $left = $phpgw->nextmatchs->left('/preferneces/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
+    $right = $phpgw->nextmatchs->right('/preferences/categories.php',$start,$c->total_records,"&cats_app=$cats_app&extra=$extra");
     $t->set_var('left',$left);
     $t->set_var('right',$right);
 
@@ -70,9 +71,14 @@
 //------------------- list header variable template-declarations ------------------------- 
 
     $t->set_var('th_bg',$phpgw_info["theme"][th_bg]);
-    $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/preferences/categories.php',lang('Name'),"&cats_app=$cats_app"));
-    $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/preferences/categories.php',lang('Description'),"&cats_app=$cats_app"));
-    $t->set_var('sort_data',$phpgw->nextmatchs->show_sort_order($sort,'cat_data',$order,'/preferences/categories.php',lang('Data'),"&cats_app=$cats_app"));
+    $t->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'cat_name',$order,'/preferences/categories.php',lang('Name'),"&cats_app=$cats_app&extra=$extra"));
+    $t->set_var('sort_description',$phpgw->nextmatchs->show_sort_order($sort,'cat_description',$order,'/preferences/categories.php',lang('Description'),"&cats_app=$cats_app&extra=$extra"));
+    if ($extra) {
+	$t->set_var('sort_data','<td bgcolor="' . $phpgw_info["theme"][th_bg] . '"><font face="' . $phpgw_info["theme"]["font"] . '">'
+		    . $phpgw->nextmatchs->show_sort_order($sort,'cat_data',$order,'/preferences/categories.php',lang($extra),"&cats_app=$cats_app&extra=$extra") . '</td>');
+    }
+    else { $t->set_var('sort_data',''); }
+
     $t->set_var('lang_app',lang($cats_app));
     $t->set_var('lang_edit',lang('Edit'));
     $t->set_var('lang_delete',lang('Delete'));
@@ -92,8 +98,13 @@
     $descr = $phpgw->strip_html($categories[$i]['description']);
     if (! $descr) { $descr  = '&nbsp;'; }
 
+
+    if ($extra) {
     $data = $categories[$i]['data'];
     if (! $data) { $data  = '&nbsp;'; }
+    $t->set_var('td_data','<td><font face=' . $phpgw_info["theme"]["font"] . '>' . $data . '</font></td>');
+    }
+    else { $t->set_var('td_data',''); }
 
     if ($categories[$i]['parent'] == 0) {
     $name = '<font color=FF0000><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
@@ -104,14 +115,13 @@
 //-------------------------- template declaration for list records ---------------------------
 
     $t->set_var(array('name' => $name,
-                     'descr' => $descr,
-		      'data' => $data));
+                     'descr' => $descr));
 
 
     $t->set_var('app_url',$phpgw->link('/' . $phpgw_info['flags']['currentapp'] . '/index.php',"cat_id=$cat_id"));
 
     if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
-    $t->set_var('edit',$phpgw->link('/preferences/editcategory.php',"cat_id=$cat_id&cats_app=$cats_app"));
+    $t->set_var('edit',$phpgw->link('/preferences/editcategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra"));
     $t->set_var('lang_edit_entry',lang('Edit'));
     }
     else {
@@ -119,7 +129,7 @@
     $t->set_var('lang_edit_entry','&nbsp;');
     }
     if ($categories[$i]["owner"] == $phpgw_info["user"]["account_id"]) {
-    $t->set_var('delete',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id&cats_app=$cats_app"));
+    $t->set_var('delete',$phpgw->link('/preferences/deletecategory.php',"cat_id=$cat_id&cats_app=$cats_app&extra=$extra"));
     $t->set_var('lang_delete_entry',lang('Delete'));
     }
     else {

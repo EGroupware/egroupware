@@ -10,23 +10,23 @@
 <table border="0" width="80%" cellspacing="2" cellpadding="2"> 
   <form name="form" action="{actionurl}" method="POST">
     <tr>
-     <td><font face="{font}">{lang_parent}:</font></td>
+     <td><font face="{font}">{lang_parent}</font></td>
      <td><font face="{font}"><select name="cat_parent"><option value="">{lang_select_parent}</option>{category_list}</select></font></td>
     </tr>
     <tr>
-     <td><font face="{font}">{lang_name}:</font></td>
+     <td><font face="{font}">{lang_name}</font></td>
      <td><font face="{font}"><input name="cat_name" size="50" value="{cat_name}"></font></td>
     </tr>
     <tr>
-     <td><font face="{font}">{lang_descr}:</font></td>
+     <td><font face="{font}">{lang_descr}</font></td>
      <td colspan=2><font face="{font}"><textarea name="cat_description" rows="4" cols="50" wrap="virtual">{cat_description}</textarea></font></td>
     </tr>
     <tr>
-     <td><font face="{font}">{lang_data}:</font></td>
-     <td><font face="{font}"><input name="cat_data" size="50" value="{cat_data}"></font></td>
+     <td><font face="{font}">{lang_data}</font></td>
+     <td><font face="{font}">{td_data}</font></td>
     </tr>
     <tr>
-     <td><font face="{font}">{lang_access}:</font></td>
+     <td><font face="{font}">{lang_access}</font></td>
      <td colspan=2>{access}</td>
     </tr>
     </table>
