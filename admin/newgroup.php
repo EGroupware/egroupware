@@ -34,19 +34,18 @@
 
         $phpgw->db->query("INSERT INTO groups (group_name,group_apps) VALUES "
 				. "('$n_group','"
-				. $phpgw->groups->array_to_string("none",$n_group_permissions) . "') ");
+				. $phpgw->accounts->array_to_string("none",$n_group_permissions) . "') ");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
-	$phpgw->db->next_record();
+        $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT groups FROM accounts WHERE con=".$n_users[$i]);
-	   $phpgw->db->next_record();
+	      $phpgw->db->next_record();
            $user_groups = $phpgw->db->f("groups") . ",$group_con,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
-           $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con="
-			       . $n_users[$i]);
+           $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con='" . $n_users[$i] . "'");
         }
 
         $sep = $phpgw->common->filesystem_sepeartor();
@@ -97,8 +96,8 @@
      $user_list .= "<option value=\"" . $phpgw->db->f("con") . "\""
     	         . $selected_users[$phpgw->db->f("con")] . ">"
 	         . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
-								   		    $phpgw->db->f("firstname"),
-								   		    $phpgw->db->f("lastname")) . "</option>";
+								   	    $phpgw->db->f("firstname"),
+								   	    $phpgw->db->f("lastname")) . "</option>";
   }
   $t->set_var("user_list",$user_list);
 

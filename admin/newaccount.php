@@ -55,7 +55,7 @@
 
         while ($permission = each($new_permissions)) {
           if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-             $phpgw->permissions->add($permission[0]);
+             $phpgw->accounts->add_app($permission[0]);
           }
         }
         //$phpgw->permissions->add("hr");
@@ -66,8 +66,8 @@
           $sql = "insert into accounts (loginid,passwd,firstname,lastname,"
 	       . "permissions,groups,status,lastpasswd_change) values ('$n_loginid'"
 	       . ",'" . md5($n_passwd) . "','" . addslashes($n_firstname) . "','"
-	       . addslashes($n_lastname) . "','" . $phpgw->permissions->add_rebuild()
-	       . "','" . $phpgw->groups->array_to_string("none",$n_groups) . "','A',0)";
+	       . addslashes($n_lastname) . "','" . $phpgw->accounts->add_app("",True)
+	       . "','" . $phpgw->accounts->array_to_string("none",$n_groups) . "','A',0)";
 
           $phpgw->db->query($sql);
           $phpgw->db->unlock();

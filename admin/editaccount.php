@@ -63,13 +63,13 @@
 
         while ($permission = each($new_permissions)) {
           if ($phpgw_info["apps"][$permission[0]]["enabled"]) {
-             $phpgw->permissions->add($permission[0]);
+             $phpgw->accounts->add_app($permission[0]);
           }
         }
         //$phpgw->permissions->add("hr");
 
         if ($new_permissions["anonymous"] && ! $new_permissions["admin"])
-	   $phpgw->permissions->add("anonymous");
+	   $phpgw->accounts->add_app("anonymous");
 
         if (! $n_account_status)
            $n_account_status = "L";
@@ -99,7 +99,7 @@
 
         $phpgw->db->query("update accounts set firstname='" . addslashes($n_firstname) . "',"
 			   . " lastname='" . addslashes($n_lastname) . "', permissions='"
-	  		   . $phpgw->permissions->add_rebuild() . "', status='"
+	  		   . $phpgw->accounts->add_app("",True) . "', status='"
 			   . "$n_account_status', groups='"
 			   . $phpgw->groups->array_to_string("none",$n_groups)
 			   . "' where loginid='$n_loginid'");
@@ -113,11 +113,11 @@
   $phpgw->common->header();
   $phpgw->common->navbar();
 
+  $account_status = $phpgw->db->f("status");
+  $db_perms = $phpgw->accounts->read_apps($phpgw->db->f("loginid"));
+
   $phpgw->db->query("select * from accounts where con='$con'");
   $phpgw->db->next_record();
-
-  $account_status = $phpgw->db->f("status");
-  $db_perms = $phpgw->permissions->read_other($phpgw->db->f("loginid"));
   ?>
 
      <form method="POST" action="editaccount.php">
@@ -146,7 +146,7 @@
            <td><?php echo lang_common("Groups"); ?></td>
            <td><select name="n_groups[]" multiple size="5">
            <?php
-             $user_groups = $phpgw->groups->read_names($phpgw->db->f("loginid"));
+             $user_groups = $phpgw->accounts->read_group_names($phpgw->db->f("loginid"));
 
              $phpgw->db->query("select * from groups");
              while ($phpgw->db->next_record()) {

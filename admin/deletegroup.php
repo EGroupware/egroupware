@@ -47,9 +47,9 @@
         $phpgw->common->navbar();
 
         echo '<p><center>';
-	echo lang_admin("Sorry, the follow users are still a member of the group x",$group_name)
-	   . '<br>' . lang_admin("They must be removed before you can continue")
-	   . '</td></tr>';
+	   echo lang_admin("Sorry, the follow users are still a member of the group x",$group_name)
+	      . '<br>' . lang_admin("They must be removed before you can continue")
+	      . '</td></tr>';
 
         echo '<table border="0"><tr><td>';
 

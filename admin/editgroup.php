@@ -41,26 +41,24 @@
         $phpgw->db->lock(array("accounts","groups"));
 
         $phpgw->db->query("update groups set group_name='$n_group', group_apps='"
-				. $phpgw->groups->array_to_string("none",$n_group_permissions)
-				. "' where group_id='$group_id'");
+				    . $phpgw->accounts->array_to_string("none",$n_group_permissions)
+				    . "' where group_id='$group_id'");
         $phpgw->db->query("SELECT group_id FROM groups WHERE group_name='$n_group'");
-	$phpgw->db->next_record();
+	   $phpgw->db->next_record();
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
            $phpgw->db->query("SELECT groups FROM accounts WHERE con=".$n_users[$i]);
-	   $phpgw->db->next_record();
+	      $phpgw->db->next_record();
            $user_groups = $phpgw->db->f("groups") . ",$group_con,";
 
            $user_groups = ereg_replace(",,",",",$user_groups);
-           $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con="
-			       . $n_users[$i]);
+           $phpgw->db->query("UPDATE accounts SET groups='$user_groups' WHERE con='" . $n_users[$i] ."'");
         }
 
         $sep = $phpgw->common->filesystem_sepeartor();
 
-        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-		 . "groups" . $sep;
+        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep . "groups" . $sep;
 
         if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
 	   $cd = 39;
@@ -105,7 +103,7 @@
         $selected_users[$phpgw->db->f("con")] = " selected";
      }
 
-     $gp = $phpgw->groups->read_apps($group_id);
+     $gp = $phpgw->accounts->read_group_apps($group_id);
 
      for ($i=0; $i<count($gp); $i++) {
         $selected_permissions[$gp[$i]] = " selected";
@@ -136,10 +134,10 @@
 	  	  . "status != 'L' ORDER BY lastname,firstname,loginid asc");
   while ($phpgw->db->next_record()) {
      $user_list .= "<option value=\"" . $phpgw->db->f("con") . "\""
-    	         . $selected_users[$phpgw->db->f("con")] . ">"
-	         . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
-								   		    $phpgw->db->f("firstname"),
-								   		    $phpgw->db->f("lastname")) . "</option>";
+    	            . $selected_users[$phpgw->db->f("con")] . ">"
+	            . $phpgw->common->display_fullname($phpgw->db->f("loginid"),
+								   		  $phpgw->db->f("firstname"),
+								   		  $phpgw->db->f("lastname")) . "</option>";
   }
   $t->set_var("user_list",$user_list);
 
