@@ -186,7 +186,7 @@ function string_encode ($string, $return = False)
 		reset ($matches);
 		while (list (,$match_array) = each ($matches))
 		{
-			$var_encoded = rawurlencode (base64_encode ($match_array[1]));
+			$var_encoded = base64_encode ($match_array[1]);
 			$rstring = str_replace ($match_array[0], '=' . $var_encoded . $match_array[2], $rstring);
 		}
 	}
