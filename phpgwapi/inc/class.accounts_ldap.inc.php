@@ -300,6 +300,8 @@
 			$entry["objectclass"][4]	= 'shadowAccount';
 
 			if ($allValues[0]["dn"]) {
+				// This should keep the password from being overwritten here ?
+				unset($entry["userpassword"]);
 				ldap_modify($ds, $allValues[0]["dn"], $entry);
 			} else {
 				$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
