@@ -47,6 +47,11 @@
         $i++;
      }
   }
+  
+  if ($phpgw->db->f("ab_notes")) {
+     $columns_to_display[$i]["field_name"]  = "Notes";
+     $columns_to_display[$i]["field_value"] = $phpgw->db->f("ab_notes");
+  }
 
   echo '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
   for ($i=0;$i<200;) {		// The $i<200 is only used for a brake

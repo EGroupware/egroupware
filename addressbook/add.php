@@ -31,7 +31,7 @@
   } else if (! $submit && ! $add_email) {
      form("","add.php","Add","","","");
   } else {
-     if ($bday_month == "" && $bday_day == "" && $bday_year == "") {
+     if (! $bday_month && ! $bday_day && ! $bday_year) {
         $bday = "";
      } else {
         $bday = "$bday_month/$bday_day/$bday_year";

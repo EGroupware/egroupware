@@ -59,7 +59,12 @@
      form("","edit.php","Edit",$fields);
 
   } else {
-    $bday = $bday_month . "/" . $bday_day . "/" . $bday_year;
+     if (! $bday_month && ! $bday_day && ! $bday_year) {
+        $bday = "";
+     } else {
+        $bday = "$bday_month/$bday_day/$bday_year";
+     }
+     
     if ($access != "private" && $access != "public") {
        $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
