@@ -39,7 +39,7 @@
 		$phpgw->preferences->read_repository($phpgw_info['user']['account_id']);
 
 		$i=0;$j=0;
-		while (list($col,$descr) = each($phpgw_info["user"]["preferences"]["addressbook"]))
+		while (list($col,$descr) = @each($phpgw_info["user"]["preferences"]["addressbook"]))
 		{
 			if ( substr($col,0,6) == 'extra_' )
 			{
