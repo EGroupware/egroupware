@@ -211,6 +211,11 @@
 			{
 				return '';
 			}
+			// REMOVE-IF-ONLY-ADODB
+			if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
+			{
+				return addslashes($str);
+			}
 			// the substring is needed as the string is already in quotes
 			return substr($this->Link_ID->quote($str),1,-1);
 		}
@@ -372,7 +377,8 @@
 		*/
 		function transaction_begin()
 		{
-			return $this->Link_ID->BeginTrans();
+			//return $this->Link_ID->BeginTrans();
+			return $this->Link_ID->StartTrans();
 		}
 
 		/**
@@ -382,7 +388,8 @@
 		*/
 		function transaction_commit()
 		{
-			return $this->Link_ID->CommitTrans();
+			//return $this->Link_ID->CommitTrans();
+			return $this->Link_ID->CompleteTrans();
 		}
 
 		/**
@@ -392,7 +399,8 @@
 		*/
 		function transaction_abort()
 		{
-			return $this->Link_ID->RollbackTrans();
+			//return $this->Link_ID->RollbackTrans();
+			return $this->Link_ID->FailTrans();
 		}
 
 		/**
@@ -740,6 +748,7 @@
 		}
 	}
 
+	// REMOVE-IF-ONLY-ADODB
 	if (!@$GLOBALS['phpgw_info']['server']['use_adodb'])
 	{
 		include(PHPGW_API_INC.'/class.db_'.$GLOBALS['phpgw_info']['server']['db_type'].'.inc.php');
