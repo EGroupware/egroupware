@@ -807,7 +807,8 @@
 					if (!empty($multiple) && 0+$multiple <= 0)
 					{
 						$sels[''] = $multiple < 0 ? 'all' : $multiple;
-						if ((int)$cell['no_lang'] < 2)
+						// extra-option: no_lang=0 gets translated later and no_lang=1 gets translated too (now), only no_lang>1 gets not translated
+						if ((int)$cell['no_lang'] == 1)
 						{
 							$sels[''] = lang($sels['']);
 						}
