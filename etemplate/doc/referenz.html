@@ -35,6 +35,7 @@ an eTemplate from the example app in the <a href="etemplate.html">Tutorial</a>
 <a href="show.gif">show-function</a>):</p>
 <pre>
 &lt;?xml version="1.0"?>
+<span>&lt;!-- $Id$ --></span>
 &lt;overlay>
   &lt;grid id="et_media.edit" template="" lang="" group="" version="" width="100%">
     &lt;columns>
@@ -456,7 +457,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Template</b></td>
-	<td>&lt;grid/></td>
+	<td>&lt;grid id="app.name" content="subarr"/></td>
 	<td>yes</td>
 	<td>template</td>
 	<td>
@@ -470,7 +471,7 @@ implement only a subset of XUL. Here are the main differences:</p>
 </tr>
 <tr>
 	<td><b>Image</b></td>
-	<td>&lt;image/></td>
+	<td>&lt;image src="foo.gif" id="app.class.method"/></td>
 	<td>yes</td>
 	<td>image</td>
 	<td>
@@ -483,10 +484,17 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td><b>Selectbox</b></td>
 	<td>
 		&lt;menulist><br>
-		&nbsp; &lt;menupopup/><br>
+		&nbsp; &lt;menupopup id="name" options="Select one"/><br>
 		&lt;/menulist><p>
 		<i>multiselect: <b>options</b> > 1</i><br>
-		&lt;listbox rows="#"/>
+		&lt;listbox rows="#"/><p>
+		<i>Examples for predefined selectboxes</i>:<p>
+		&lt;listbox type="select-cat" rows="5"/><p>
+		&lt;menulist><br>
+		&nbsp; &lt;menupopup type="select-account" options="All,both,2"/><br>
+		&lt;/menulist><p>
+
+
 	</td>
 	<td>yes</td>
 	<td>select</td>
@@ -500,23 +508,29 @@ implement only a subset of XUL. Here are the main differences:</p>
 		</ol>
 		<b>Options</b> <i>in the editor</i>: if set and > 1 the selectbox is a multiselection with options number of lines<p>
 		xml: <b>rows</b>: <i>only for &lt;listbox></i>: number of rows to show<p>
+		xml <b>options</b>: <i>only for &lt;menupopup/></i>: textual label for a first Row, e.g. 'All' or 'None'
+			(id will be ''), additional attr see sub-types<p>
 		xml: <b>type</b>: can be set to get several predefined select-contents, in that case you dont need to set
-			the content as descripted above: <br>
-			<b>select-cat</b>: Select a phpgw category, options can be set to -1 to get an additional 'All'<br>
+			the content as descripted above (if set it too its in front of the predefined rows): <br>
+			<b>select-cat</b>: Select a phpgw category<br>
 			<b>select-account</b>: Select a user and/or group, determined by the options-field:
-				'accounts' (default), 'groups', 'both'<br>
+				,{accounts(default)|groups|both},{0(only lid)|1(only names/default)|2(both)}<br>
 			<b>select-percent, select-priority, select-access, select-country, select-state</b>: as you expect
-				by the name
+				by the name<br>
+			<b>select-year, select-month, select-day</b>: options for year: ,start,end (start and end can be a number of
+				years from now or if > 100 a absolut year)
 </tr>
 <tr>
 	<td><b>Tabs</b></td>
 	<td>
-		&lt;tabbox><br>
+		&lt;tabbox id="name"><br>
 		&nbsp; &lt;tabs><br>
-		&nbsp; &nbsp; &lt;tab/><br>
+		&nbsp; &nbsp; &lt;tab label="Tab 1" statustext="Help"/><br>
+		&nbsp; &nbsp; ...<br>
 		&nbsp; &lt;/tabs><br>
 		&nbsp; &lt;tabpanels><br>
-		&nbsp; &nbsp; &lt;grid/><br>
+		&nbsp; &nbsp; &lt;grid id="app.name.tab1"/><br>
+		&nbsp; &nbsp; ...<br>
 		&nbsp; &lt;/tabpanels><br>
 		&lt;/tabbox>
 	</td>
@@ -527,9 +541,111 @@ implement only a subset of XUL. Here are the main differences:</p>
 		The tab-widget is implemented as an extension, as html does not have a tab-widget.<p>
 		The following fields / attributes are in the Editor and internaly in the class separeted by '|', in the
 		xml/xul-file the are attributes of each tab- or grid-tag:<br>
-		<b>Label</b> xml: <b>label</b>: the labels of the tabs<br>
+		<b>Label</b> xml: <b>label</b>: the labels of the tabs eg. 'Tab 1|Tab 2|Tab 3'<br>
 		<b>Help</b> xml: <b>statustext</b>: of the tabs<br>
-		<b>Name</b> xml: <b>id</b>: the names/ids of the eTemplates/grid's to fill the bodies of the tabs
+		<b>Name</b> xml: <b>id</b>: the names/ids of the eTemplates/grid's to fill the bodies of the tabs<p>
+		<b>Demo</b>: <i>There is a demo availible</i>: load 'etemplate.tab_widget.test' into the eTemplate editor and
+		run it with show.
+	</td>
+</tr>
+<tr>
+	<td><b>NextMatch</b></td>
+	<td>
+		&lt;nextmatch options="notes.index.rows" id="nm"/>
+	</td>
+	<td>yes</td>
+	<td>tab</td>
+	<td>
+		<b>shows a table with some selectboxes, a search-field and arrows to scroll the table</b><br>
+		The nextmatch-widget is implemented as an extension.<p>
+		<b>Options</b> xml: <b>options</b>: name of the template to display the rows<br>
+		<b>Name</b> xml: <b>id</b>: index into the content-array, it need to be pre-set with some information
+		for the nextmatch widget and it returns its content with it:
+	</td>
+<tr>
+	<td colspan="5">
+<pre>
+$content[$id] = array(		<span>// I = value set by the app, 0 = value on return / output, </span>
+	'get_rows'     =>	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
+	'filter_label' =>	<span>// I  label for filter    (optional)</span>
+	'filter_help'  =>	<span>// I  help-msg for filter (optional)</span>
+	'no_filter2'   => True	<span>// I  disable the 2. filter (params are the same as for filter)</span>
+	'template'     =>	<span>// I  template to use for the rows, if not set via options</span>
+	'start'        =>	<span>// IO position in list</span>
+	'cat_id'       =>	<span>// IO category, if not 'no_cat' => True</span>
+	'search'       =>	<span>// IO search pattern</span>
+	'filter'       =>	<span>// IO filter, if not 'no_filter' => True</span>
+	'rows'         =>	<span>//  O content set by callback</span>
+	'total'        =>	<span>//  O the total number of entries</span>
+);
+
+<span>/*
+ * example: the get_rows function from notes.bo.get_rows (has to be in public_functions !)
+ */</span>
+function get_rows($query,&$rows,&$readonlys)
+{
+	$rows = $this->read($query['start'],$query['search'],$query['filter'],$query['cat_id']);
+	if (!is_array($rows))
+	{
+		$rows = array( );
+	}
+	else
+	{
+		array_unshift($rows,0); each($rows);	<span>// first entry is not used !!!</span>
+	}
+	$readonlys = array( );	<span>// set readonlys to enable/disable our edit/delete-buttons</span>
+	while (list($n,$note) = each($rows))
+	{
+		if (!$this->check_perms($this->grants[$note['owner_id']],PHPGW_ACL_EDIT))
+		{
+			$readonlys["edit[$note[id]]"] = True;
+		}
+		if (!$this->check_perms($this->grants[$note['owner_id']],PHPGW_ACL_DELETE))
+		{
+			$readonlys["delete[$note[id]]"] = True;
+		}
+	}
+	return $this->total_records;
+}
+
+<span>/*
+ * Example how the nextmatch-widget is used in notes.ui.index:
+ */</span>
+function index($content = 0)
+{
+	if (!is_array($content))
+	{
+		$content = array('nm' => $this->session_data); <span>// restore settings from the session</span>
+	}
+	if (isset($content['nm']['rows']))		<span>// one of the buttons in the rows is pressed</span>
+	{
+		$this->session_data = $values['nm'];	<span>// save the settings in the session</span>
+		unset($this->session_data['rows']);	<span>// we dont want to save the content of the rows</span>
+		$this->save_sessiondata();
+
+		if (isset($values['nm']['rows']['edit']))
+		{
+			list($id) = each($values['nm']['rows']['edit']);
+			return $this->edit($id);
+		}
+		elseif (isset($values['nm']['rows']['delete']))
+		{
+			list($id) = each($values['nm']['rows']['delete']);
+			return $this->delete($id);
+		}
+	}
+	$values['nm']['options-filter'] = array (	<span>// set up the data for our filter</span>
+		'all'			=> 'Show all',
+		'public'		=> 'Only yours',
+		'private'	=> 'Private'
+	);
+	$values['nm']['get_rows'] = 'notes.bo.get_rows';
+	$values['nm']['no_filter2'] = True;		<span>// disable the 2. filter</span>
+
+	$this->tpl->read('notes.index');
+	$this->tpl->exec('notes.ui.index',$values);
+}
+</pre>
 	</td>
 </tr>
 </table>
