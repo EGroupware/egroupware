@@ -105,16 +105,14 @@ function CreateObject($class,
  */
 function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 {
-	 /* Need to make sure this is working against a single dimensional object */
-	//	$GLOBALS['phpgw']->log->write(array('text'=>'D-Debug, dbg: %1','p1'=>'This method was run: '.$method,'file'=>__FILE__,'line'=>__LINE__));
+	/* Need to make sure this is working against a single dimensional object */
 	$partscount = substr_count($method, '.');
 	if ($partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $method);
 		if (!is_object($GLOBALS[$classname]))
 		{
-
-			if ($classparams != '_UNDEF_' && $classparams != True)
+			if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
 			{
 				$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
 			}
@@ -124,7 +122,7 @@ function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 			}
 		}
 
-		if ($functionparams != '_UNDEF_' && $functionparams != True)
+		if ($functionparams != '_UNDEF_' && ($functionparams || $functionparams != 'True'))
 		{
 			return $GLOBALS[$classname]->$functionname($functionparams);
 		}
@@ -133,7 +131,7 @@ function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 			return $GLOBALS[$classname]->$functionname();
 		}
 	}
- /* if the $method includes a parent class (multi-dimensional) then we have to work from it */	
+	/* if the $method includes a parent class (multi-dimensional) then we have to work from it */	
 	elseif ($partscount >= 3)
 	{
 		$GLOBALS['methodparts'] = explode(".", $method);
@@ -141,8 +139,8 @@ function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 		$appname = $GLOBALS['methodparts'][0];		
 		$classname = $GLOBALS['methodparts'][$classpartnum];
 		$functionname = $GLOBALS['methodparts'][$partscount];
-  /* Now I clear these out of the array so that I can do a proper */
-  /* loop and build the $parentobject */
+		/* Now I clear these out of the array so that I can do a proper */
+		/* loop and build the $parentobject */
 		unset ($GLOBALS['methodparts'][0]);
 		unset ($GLOBALS['methodparts'][$classpartnum]);
 		unset ($GLOBALS['methodparts'][$partscount]);
@@ -164,7 +162,7 @@ function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 		eval ('$isobject = is_object('.$parentobject.'->'.$classname.');');
 		if (!$isobject)
 		{
-			if ($classparams != '_UNDEF_')
+			if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
 			{
 				if (is_string($classparams))
 				{
@@ -181,7 +179,7 @@ function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classp
 			}
 		}
 
-		if ($functionparams != '_UNDEF_')
+		if ($functionparams != '_UNDEF_' && ($functionparams || $functionparams != 'True'))
 		{
 			eval('$returnval = '.$parentobject.'->'.$classname.'->'.$functionname.'('.$functionparams.');');
 			return $returnval;
