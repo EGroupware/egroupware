@@ -11,7 +11,7 @@ action	admin	pl	Czynno¶æ
 add a new account.	admin	pl	Dodaj nowe konto.
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pl	Dodaj automatyczne stworzonych u¿ytkowników do tej grupy ('Domy¶lna' bêdzie u¿yta je¶li pole bêdzie puste.)
 add global category	admin	pl	Dodaj kategoriê globaln±
-add global category for x	admin	pl	Dodaj globaln± kategorie dla %1
+add global category for %1	admin	pl	Dodaj globaln± kategorie dla %1
 add new account	admin	pl	Dodaj nowe konto
 add new application	admin	pl	Dodaj now± aplikacjê
 add peer server	admin	pl	Dodaj serwer równorzêdny
@@ -75,7 +75,7 @@ edit application	admin	pl	Edycja aplikacji
 edit custom fields	admin	pl	Edycja pól u¿ytkownika
 edit cvs repository list	admin	pl	Edycja listy repozytoriów CVS
 edit global category	admin	pl	Edycja kategorii globalnej
-edit global category for x	admin	pl	Edycja kategorii globalnej dla %
+edit global category for %1	admin	pl	Edycja kategorii globalnej dla %1
 edit group	admin	pl	Edycja grupy
 edit login screen message	admin	pl	Edycja wiadomo¶ci ekranu logowania
 edit main screen message	admin	pl	Edycja wiadomo¶ci na stronie g³ównej
@@ -132,8 +132,8 @@ language	admin	pl	Jêzyk
 last login	admin	pl	Ostatnie logowanie
 last login from	admin	pl	Ostatnie logowanie z
 last time read	admin	pl	Data ostatniego odczytu
-last x logins	admin	pl	Ostanie %1 logowañ
-last x logins for x	admin	pl	Ostatnie %1 logowañ %2
+last %1 logins	admin	pl	Ostanie %1 logowañ
+last %1 logins for %2	admin	pl	Ostatnie %1 logowañ %2
 ldap accounts context	admin	pl	
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pl	
 ldap default shell (e.g. /bin/bash)	admin	pl	
@@ -212,8 +212,8 @@ server password	admin	pl	Has³o na serwerze
 server type(mode)	admin	pl	Typ serwera (tryb)
 server url	admin	pl	Adres URL serwera
 server username	admin	pl	Nazwa u¿ytkownika na serwerze
-server x has been added	admin	pl	Dodano serwer %1
-server x has been updated	admin	pl	Zaktualizowano serwer %1
+server %1 has been added	admin	pl	Dodano serwer %1
+server %1 has been updated	admin	pl	Zaktualizowano serwer %1
 set preference values.	admin	pl	Wprowad¼ warto¶ci ustawieñ
 show 'powered by' logo on	admin	pl	Wy¶wietl logo 'powered by'
 show \'powered by\' logo on	admin	pl	Wy¶wietl logo ,,powered by\'\'
@@ -221,7 +221,7 @@ site	admin	pl	Serwis
 site configuration	admin	pl	Konfiguracja serwisu
 sorry, that group name has already been taken.	admin	pl	Nazwa grupy jest ju¿ u¿ywana
 sorry, that group name has already been taking.	admin	pl	Taka nazwa grupy ju¿ istnieje
-sorry, the follow users are still a member of the group x	admin	pl	Przykro mi, nastêpuj±cy u¿ytkownicy s± wci±¿ cz³onkami grupy %1
+sorry, the follow users are still a member of the group %1	admin	pl	Przykro mi, nastêpuj±cy u¿ytkownicy s± wci±¿ cz³onkami grupy %1
 ssl	admin	pl	SSL
 standard	admin	pl	standardowe
 station	admin	pl	Stacja

@@ -95,8 +95,8 @@ kill	admin	fi	Keskeytä
 last login	admin	fi	kirjautunut viimeksi
 last login from	admin	fi	kirjautunut viimeksi osoitteesta
 last time read	admin	fi	Luettu viimeksi
-last x logins	admin	fi	Viimeiset %1 kirjautumista
-last x logins for x	admin	fi	Viimeiset %1 kirjautumista käyttäjälle %2
+last %1 logins	admin	fi	Viimeiset %1 kirjautumista
+last %1 logins for %2	admin	fi	Viimeiset %1 kirjautumista käyttäjälle %2
 ldap accounts context	admin	fi	LDAP -tunnusten konteksti
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
 ldap default shell (e.g. /bin/bash)	admin	fi	LDAP oletus-shell (esim. /bin/bash)
@@ -149,8 +149,8 @@ server name	admin	fi	Palvelimen nimi
 server password	admin	fi	Palvelimen salasana
 server type(mode)	admin	fi	Palvelimen tyyppi(moodi)
 server url	admin	fi	Palvelimen URL
-server x has been added	admin	fi	Palvelin %1 lisätty
-server x has been updated	admin	fi	Palvelin %1 päivitetty
+server %1 has been added	admin	fi	Palvelin %1 lisätty
+server %1 has been updated	admin	fi	Palvelin %1 päivitetty
 server username	admin	fi	Palvelimen käyttäjätunnus
 set preference values.	admin	fi	Tee asetukset.
 show 'powered by' logo on	admin	fi	'Tämä on' -logon paikka
@@ -158,7 +158,7 @@ site	admin	fi	Palvelu
 site configuration	admin	fi	Palvelun asetukset
 sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, that group name has already been taking.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
-sorry, the follow users are still a member of the group x	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
+sorry, the follow users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1
 status	admin	fi	Tila
 (stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei näytetä)
 submit changes	admin	fi	Lähetä muutokset

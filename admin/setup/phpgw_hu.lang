@@ -24,7 +24,7 @@ installed applications	common	hu	Telepített alkalmazások
 ip	admin	hu	IP
 kill	admin	hu	Kitiltás
 last time read	admin	hu	Utolsó olvasás idõpontja
-last x logins	admin	hu	Utolsó %1 bejelentkezés
+last %1 logins	admin	hu	Utolsó %1 bejelentkezés
 list of current users	admin	hu	aktuális felhasználók listája
 login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
@@ -40,7 +40,7 @@ select permissions this group will have	admin	hu	Válassza ki milyen jogosultságo
 select users for inclusion	admin	hu	Felhasználók kiválasztása
 site	admin	hu	Oldal
 sorry, that group name has already been taking.	admin	hu	Sajnos ez a csoportnév már foglalt.
-sorry, the follow users are still a member of the group x	admin	hu	A következõ felhasználók már a(z) %1 csoport tagjai
+sorry, the follow users are still a member of the group %1	admin	hu	A következõ felhasználók már a(z) %1 csoport tagjai
 status	admin	hu	Status
 submit changes	admin	hu	Változások elküldése
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt

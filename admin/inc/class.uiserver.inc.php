@@ -229,11 +229,11 @@
 			{
 				if($GLOBALS['HTTP_GET_VARS']['server_id'])
 				{
-					$GLOBALS['phpgw']->template->set_var('message',lang('Server x has been updated',$GLOBALS['HTTP_POST_VARS']['server_name']));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Server %1 has been updated',$GLOBALS['HTTP_POST_VARS']['server_name']));
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('message',lang('Server x has been added',$GLOBALS['HTTP_POST_VARS']['server_name']));
+					$GLOBALS['phpgw']->template->set_var('message',lang('Server %1 has been added',$GLOBALS['HTTP_POST_VARS']['server_name']));
 				}
 			}
 			if ((!$GLOBALS['HTTP_POST_VARS']['submit']) && (!$error) && (!$errorcount))

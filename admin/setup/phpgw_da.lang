@@ -24,7 +24,7 @@ installed applications	common	da	Installerede applikationer
 ip	admin	da	IP
 kill	admin	da	Fjern
 last time read	admin	da	Sidst læst
-last x logins	admin	da	Sidste %1 log ind
+last %1 logins	admin	da	Sidste %1 log ind
 list of current users	admin	da	Liste over nuværende brugere
 login time	admin	da	Log ind tid
 loginid	admin	da	Login ID
@@ -40,7 +40,7 @@ select permissions this group will have	admin	da	Vælg de rettigheder, denne grup
 select users for inclusion	admin	da	Vælg brugere som tilføjes
 site	admin	da	Site
 sorry, that group name has already been taking.	admin	da	Dette gruppenavn bliver desværre allerede brugt.
-sorry, the follow users are still a member of the group x	admin	da	Kan ikke, følgende brugere er stadig medlemmer af gruppe %1
+sorry, the follow users are still a member of the group %1	admin	da	Kan ikke, følgende brugere er stadig medlemmer af gruppe %1
 status	admin	da	Status
 submit changes	admin	da	Postér ændringer
 that loginid has already been taken	admin	da	Dette log ind ID er allerede brugt

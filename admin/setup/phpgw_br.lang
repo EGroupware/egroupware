@@ -13,7 +13,7 @@ idle	admin	br	inativo
 ip	admin	br	IP
 kill	admin	br	Matar
 last time read	admin	br	Ultima Leitura
-last x logins	admin	br	Ultimo %1 login
+last %1 logins	admin	br	Ultimo %1 login
 list of current users	admin	br	Lista de usuarios correntes
 login time	admin	br	Hora do Login
 loginid	admin	br	Identificativo Login

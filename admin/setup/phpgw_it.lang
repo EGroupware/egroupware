@@ -19,7 +19,7 @@ are you sure you want to delete this group ?	admin	it	Sei sicuro di voler cancel
 are you sure you want to kill this session ?	admin	it	Sei sicuro di voler terminare questa sessione ?
 category description	admin	it	Descrizione categoria
 category name	admin	it	Nome categoria
-category x has been added !	admin	it	La categoria %1 è stata aggiunta !
+category %1 has been added !	admin	it	La categoria %1 è stata aggiunta !
 change main screen message	admin	it	Modifica messaggio della schermata principale
 city	admin	it	Città
 country selection	admin	it	Selezione Nazione
@@ -50,7 +50,7 @@ language	admin	it	Lingua
 last login	admin	it	ultimo login
 last login from	admin	it	ultimo login da
 last time read	admin	it	Ultima volta letto
-last x logins	admin	it	Ultimi %1 login
+last %1 logins	admin	it	Ultimi %1 login
 listings displayed	admin	it	Elementi Visualizzati
 list of current users	admin	it	lista utenti attivi
 loginid	admin	it	LoginID
@@ -83,7 +83,7 @@ site	admin	it	Sito
 site configuration	admin	it	Configurazione per tutto il Sito
 sorry, that group name has already been taking. admin	it Peccato, quel nome di gruppo &egrave; gi&agrave; stato
 preso.
-sorry, the follow users are still a member of the group x	admin	it	Peccato, i seguenti utenti sono ancora membri del gruppo %1
+sorry, the follow users are still a member of the group %1	admin	it	Peccato, i seguenti utenti sono ancora membri del gruppo %1
 station	admin	it	Stazione
 stations	admin	it	Stazioni
 submit changes	admin	it	Invia Cambiamenti

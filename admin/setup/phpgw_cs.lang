@@ -13,7 +13,7 @@ idle	admin	cs	Èekající
 ip	admin	cs	IP - adresa
 kill	admin	cs	Zru¹it
 last time read	admin	cs	Poslednì pøeèteno
-last x logins	admin	cs	Posledních %1 pøihlá¹ení
+last %1 logins	admin	cs	Posledních %1 pøihlá¹ení
 list of current users	admin	cs	Seznam souèasných u¾ivatelù
 login time	admin	cs	Èas pøihlá¹ení
 loginid	admin	cs	U¾ivatelské jméno
@@ -25,7 +25,7 @@ permissions	admin	cs	Povolení
 re-enter password	admin	cs	Opakuj heslo
 select users for inclusion	admin	cs	Vyberte u¾ivatele, kteøí budou pøidáni
 site	admin	cs	Sí»
-sorry, the follow users are still a member of the group x	admin	cs	Je mi líto, tito u¾ivatelé jsou stále èleny skupiny 
+sorry, the follow users are still a member of the group %1	admin	cs	Je mi líto, tito u¾ivatelé jsou stále èleny skupiny %1
 that loginid has already been taken	admin	cs	Toto u¾ivatelské jméno ji¾ bylo pou¾ito
 the login and password can not be the same	admin	cs	Heslo a u¾ivatelské jméno nemù¾e být stejné
 the two passwords are not the same	admin	cs	Zadaná hesla nejsou stejná

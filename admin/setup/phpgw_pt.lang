@@ -10,7 +10,7 @@ action	admin	pt	Ação
 add a new account.	admin	pt	Adicionar nova conta.
 add auto-created users to this group ('Default' will be attempted if this is empty.)	admin	pt	Adicionar usuários criados automaticamente para este grupo ('Default' será tentado se este campo estiver vazio.)
 add global category	admin	pt	Adicionar categoria global
-add global category for x	admin	pt	Adicionar categoria global para %1
+add global category for %1	admin	pt	Adicionar categoria global para %1
 add new account	admin	pt	Adicionar nova conta
 add new application	admin	pt	Adicionar nova aplicação
 add peer server	admin	pt	Adicionar servidor remoto
@@ -56,7 +56,7 @@ display	admin	pt	Visualizar
 do you also want to delete all global subcategories ?	admin	pt	Deseja também remover todas subcategorias globais ?
 edit application	admin	pt	Editar aplicação
 edit global category	admin	pt	Editar categoria global
-edit global category for x	admin	pt	Editar categoria global para %1
+edit global category for %1	admin	pt	Editar categoria global para %1
 edit group	admin	pt	Editar Grupo
 edit login screen message	admin	pt	Editar mensagem da tela de conexão
 edit main screen message	admin	pt	Editar mensagem da tela inicial
@@ -98,8 +98,8 @@ kill	admin	pt	Terminar
 last login	admin	pt	última conexão
 last login from	admin	pt	última conexão de
 last time read	admin	pt	Última vez lido
-last x logins	admin	pt	Últimas %1 conexões
-last x logins for x	admin	pt	Últimas %1 conexões para %2
+last %1 logins	admin	pt	Últimas %1 conexões
+last %1 logins for %2	admin	pt	Últimas %1 conexões para %2
 ldap accounts context	admin	pt	contexto de contas LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
 ldap default shell (e.g. /bin/bash)	admin	pt	shell padrão LDAP (Exemplo: /bin/bash)
@@ -154,15 +154,15 @@ server password	admin	pt	Senha do servidor
 server type(mode)	admin	pt	Tipo de servidor (modo)
 server url	admin	pt	URL do servidor
 server username	admin	pt	Usuário do servidor
-server x has been added	admin	pt	Servdor %1 foi adicionado
-server x has been updated	admin	pt	Servidor %1 foi atualizado
+server %1 has been added	admin	pt	Servdor %1 foi adicionado
+server %1 has been updated	admin	pt	Servidor %1 foi atualizado
 set preference values.	admin	pt	Definir preferências.
 show 'powered by' logo on	admin	pt	Área para exibição da logomarca do phpGroupWare
 site	admin	pt	Site
 site configuration	admin	pt	Configuração do servidor
 sorry, that group name has already been taken.	admin	pt	Este nome de grupo já está em uso.
 sorry, that group name has already been taking.	admin	pt	Desculpe, este grupo já existe
-sorry, the follow users are still a member of the group x	admin	pt	Desculpe, os seguintes usuários ainda são membros do grupo %1
+sorry, the follow users are still a member of the group %1	admin	pt	Desculpe, os seguintes usuários ainda são membros do grupo %1
 status	admin	pt	Status
 (stored password will not be shown here)	admin	pt	(Senha salva não será exibida aqui)
 submit changes	admin	pt	Enviar alterações

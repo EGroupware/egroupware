@@ -14,7 +14,7 @@ idle	admin	ko	idle
 ip	admin	ko	IP
 kill	admin	ko	종료
 last time read	admin	ko	마지막 읽은 시각
-last x logins	admin	ko	Last %1 logins
+last %1 logins	admin	ko	Last %1 logins
 list of current users	admin	ko	현재 사용자 목록
 login time	admin	ko	접속 시간
 loginid	admin	ko	접속ID

@@ -13,7 +13,7 @@ action	admin	de	Aktion
 add a new account.	admin	de	Neues Konto anlegen
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	de	Automatisch erzeuge Benutzer in diese Gruppe aufnehmen ('Default' wird versucht wenn sie hier nichts eintragen.)
 add global category	admin	de	Globale Kategorie hinzuf&uuml;gen
-add global category for x	admin	de	Globale Kategorie f&uuml;r %1 hinzuf&uuml;gen
+add global category for %1	admin	de	Globale Kategorie f&uuml;r %1 hinzuf&uuml;gen
 add new account	admin	de	Neues Konto hinzuf&uuml;gen
 add new application	admin	de	Neue Anwendung hinzufügen
 add peer server	admin	de	Peer Server hinzufügen
@@ -69,7 +69,7 @@ display	admin	de	Anzeigen
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen ?
 edit application	admin	de	Anwendung bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
-edit global category for x	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
+edit global category for %1	admin	de	Globale Kategorie f&uuml;r %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
 edit login screen message	admin	de	Nachricht der Login Seite bearbeiten
 edit main screen message	admin	de	Nachricht der Startseite bearbeiten

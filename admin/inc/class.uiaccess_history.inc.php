@@ -68,7 +68,7 @@
 			}
 			else
 			{
-				$var['lang_last_x_logins'] = lang('Last x logins',$total_records);
+				$var['lang_last_x_logins'] = lang('Last %1 logins',$total_records);
 			}
 
 			$this->template->set_var($var);

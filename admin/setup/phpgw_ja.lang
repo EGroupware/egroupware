@@ -94,7 +94,7 @@ language	admin	ja	言語
 last login	admin	ja	最終ログイン
 last login from	admin	ja	最終ログインIP
 last time read	admin	ja	Last Time Read
-last x logins	admin	ja	過去 %1 のログイン
+last %1 logins	admin	ja	過去 %1 のログイン
 list config settings	admin	ja	環境設定項目の表示
 list current sessions	admin	ja	セッション参照項目全体
 list of current users	admin	ja	ログイン中ユーザ一覧
@@ -151,7 +151,7 @@ site	admin	ja	Site
 site configuration	admin	ja	サイト環境設定
 soap	admin	ja	SOAP
 sorry, that group name has already been taking.	admin	ja	グループ名は既に存在します。
-sorry, the follow users are still a member of the group x	admin	ja	%1 がグループのメンバーになっています。
+sorry, the follow users are still a member of the group %1	admin	ja	%1 がグループのメンバーになっています。
 ssl	admin	ja	SSL
 station	admin	ja	位置
 stations	admin	ja	位置

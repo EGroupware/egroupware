@@ -26,7 +26,7 @@ installed applications	common	sv	Installerade applicationer
 ip	admin	sv	IP
 kill	admin	sv	Avsluta
 last time read	admin	sv	Läst sista gång
-last x logins	admin	sv	Sista %1 logins
+last %1 logins	admin	sv	Sista %1 logins
 list of current users	admin	sv	lista över nuvarande användare
 login time	admin	sv	Login Tid
 loginid	admin	sv	LoginID
@@ -43,7 +43,7 @@ select permissions this group will have	admin	sv	Välj rättigheter för denna grup
 select users for inclusion	admin	sv	Välj gruppmedlemmar
 site	admin	sv	Site
 sorry, that group name has already been taking.	admin	sv	Ursäkta, men gruppnamnet är upptaget
-sorry, the follow users are still a member of the group x	admin	sv	Ursäkta men följande användare är medlem av grupp %1
+sorry, the follow users are still a member of the group %1	admin	sv	Ursäkta men följande användare är medlem av grupp %1
 status	admin	sv	Status
 submit changes	admin	sv	Verkställ ändring
 that loginid has already been taken	admin	sv	Den loginID är upptagen

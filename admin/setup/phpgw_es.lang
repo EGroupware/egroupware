@@ -107,8 +107,8 @@ kill	admin	es	Matar
 last login	admin	es	Ultimo ingreso
 last login from	admin	es	Ultimo ingreso desde
 last time read	admin	es	Ultima lectura
-last x logins	admin	es	Ultimos %1 ingresos
-last x logins for x	admin	es	Ultimos %1 ingresos de %2
+last %1 logins	admin	es	Ultimos %1 ingresos
+last %1 logins for %2	admin	es	Ultimos %1 ingresos de %2
 ldap accounts context	admin	es	Contexto de las cuentas LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	es	Prefijo del directorio de inicio LDAP por defecto (ejemplo /directorio/usuario)
 ldap default shell (e.g. /bin/bash)	admin	es	Shell LDAP por defecto (ej. /bin/bash)
@@ -170,7 +170,7 @@ site	admin	es	Sitios
 site configuration	admin	es	Configuracion del Sitio
 site links	admin	es	Enlaces a Sitios
 sorry, that group name has already been taken.	admin	es	Este nombre de grupo ya esta siendo utilizado.
-sorry, the follow users are still a member of the group x	admin	es	Los siguientes usuarios aun son miembros del grupo %1
+sorry, the follow users are still a member of the group %1	admin	es	Los siguientes usuarios aun son miembros del grupo %1
 status	admin	es	Estado
 (stored password will not be shown here)	admin	es	(claves guardadas no seran mostradas aqui)
 submit changes	admin	es	Enviar Cambios

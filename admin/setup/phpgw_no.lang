@@ -13,7 +13,7 @@ idle	admin	no	idle
 ip	admin	no	IP
 kill	admin	no	Avslutt
 last time read	admin	no	Lest siste gang
-last x logins	admin	no	Siste %1 logins
+last %1 logins	admin	no	Siste %1 logins
 list of current users	admin	no	liste over brukere
 login time	admin	no	Login Tid
 loginid	admin	no	LoginID

@@ -24,7 +24,7 @@ installed applications	common	nl	Geinstalleerde toepassingen
 ip	admin	nl	IP
 kill	admin	nl	Beeindigen
 last time read	admin	nl	Laatste keer gelezen
-last x logins	admin	nl	Laatste %1 logins
+last %1 logins	admin	nl	Laatste %1 logins
 list of current users	admin	nl	Lijst van huidige gebruikers
 login time	admin	nl	Logintijd
 loginid	admin	nl	LoginID
@@ -40,7 +40,7 @@ select permissions this group will have	admin	nl	Selecteer de rechten die deze g
 select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
 site	admin	nl	Site
 sorry, that group name has already been taking.	admin	nl	Sorry, die groepsnaam is al in gebruik
-sorry, the follow users are still a member of the group x	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
+sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
 status	admin	nl	status
 submit changes	admin	nl	Wijzigingen toepassen
 that loginid has already been taken	admin	nl	Die loginid is al in gebruik

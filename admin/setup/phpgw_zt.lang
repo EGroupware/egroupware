@@ -69,7 +69,7 @@ kill	admin	zt	終止
 last login	admin	zt	上次登入時間
 last login from	admin	zt	上次登入來源
 last time read	admin	zt	上次讀取時間
-last x logins	admin	zt	最後 %1 次登入
+last %1 logins	admin	zt	最後 %1 次登入
 ldap accounts context	admin	zt	LDAP 使用者帳號內容
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zt	LDAP 預設家目錄前置目錄﹝如：/home/username 的前置目錄為 /home﹞
 ldap default shell (e.g. /bin/bash)	admin	zt	LDAP 預設登入命令處理器﹝如：/bin/bash﹞
@@ -109,7 +109,7 @@ show 'powered by' logo on	admin	zt	顯示「powered by」圖示位置
 site	admin	zt	網站
 site configuration	admin	zt	網站設定
 sorry, that group name has already been taking.	admin	zt	很抱歉，該群組名稱已被使用了
-sorry, the follow users are still a member of the group x	admin	zt	很抱歉，下列使用者仍然屬於群組 %1
+sorry, the follow users are still a member of the group %1	admin	zt	很抱歉，下列使用者仍然屬於群組 %1
 submit changes	admin	zt	送出更新資料
 template selection	admin	zt	選擇畫面配置
 text entry	admin	zt	文字資料
