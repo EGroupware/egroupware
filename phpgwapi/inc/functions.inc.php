@@ -61,7 +61,7 @@
 		}
 		if ($p1 == '_UNDEF_')
 		{
-			$ret = eval("\$obj = new \$classname;  if(is_object(\$obj)) { return True; };");
+			eval("\$obj = new \$classname;");
 		}
 		else
 		{
@@ -80,18 +80,11 @@
 				}
 				$i++;
 			}
-			$code = substr($code,0,-1) . "); if(is_object(\$obj)) { return True; };";
-			$ret = eval($code);
+			$code = substr($code,0,-1) . ");";
+			eval($code);
 		}
 		error_reporting(E_ERROR | E_WARNING | E_PARSE);
-		if($ret)
-		{
-			return $obj;
-		}
-		else
-		{
-			return False;
-		}
+		return $obj;
 	}
 	/*!
 	@function lang
