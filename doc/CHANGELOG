@@ -6,6 +6,7 @@
 	   - Added error checking for creating/editing an account with no permissions.
 	   - Fixed a db->unlock() issue in editaccount.php
 	   - Fixed a few $phpgw_flags out of place.
+	   - Fixed a problem with attachments not handled properly
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly

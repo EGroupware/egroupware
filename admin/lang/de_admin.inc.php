@@ -48,6 +48,9 @@
        case "edit group":		$s = "Gruppe editieren";	break;
        case "submit changes":		$s = "&Auml;nderungen Speichern";	break;
 
+       case "you must add at least 1 permission to this account":
+	$s = "Sie m&uuml;ssen diesem Konto mindestens eine Berechtigung zuteilen";	break;
+
        case "permissions this group has":
 	$s = "Zugriffsrechte f&uuml;r diese Gruppe";					break;
 
