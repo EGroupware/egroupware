@@ -230,16 +230,17 @@
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
-	$GLOBALS['phpgw']->log          = CreateObject('phpgwapi.errorlog');
-	$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
-	$GLOBALS['phpgw']->common       = CreateObject('phpgwapi.common');
-	$GLOBALS['phpgw']->hooks        = CreateObject('phpgwapi.hooks');
-	$GLOBALS['phpgw']->auth         = CreateObject('phpgwapi.auth');
-	$GLOBALS['phpgw']->accounts     = CreateObject('phpgwapi.accounts');
-	$GLOBALS['phpgw']->acl          = CreateObject('phpgwapi.acl');
-	$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions',$domain_names);
-	$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
-	$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
+	$GLOBALS['phpgw']->log			= CreateObject('phpgwapi.errorlog');
+	$GLOBALS['phpgw']->translation  	= CreateObject('phpgwapi.translation');
+	$GLOBALS['phpgw']->common       	= CreateObject('phpgwapi.common');
+	$GLOBALS['phpgw']->hooks        	= CreateObject('phpgwapi.hooks');
+	$GLOBALS['phpgw']->auth         	= CreateObject('phpgwapi.auth');
+	$GLOBALS['phpgw']->accounts     	= CreateObject('phpgwapi.accounts');
+	$GLOBALS['phpgw']->acl          	= CreateObject('phpgwapi.acl');
+	$GLOBALS['phpgw']->session      	= CreateObject('phpgwapi.sessions',$domain_names);
+	$GLOBALS['phpgw']->preferences  	= CreateObject('phpgwapi.preferences');
+	$GLOBALS['phpgw']->applications 	= CreateObject('phpgwapi.applications');
+	$GLOBALS['phpgw']->contenthistory	= CreateObject('phpgwapi.contenthistory');
 	print_debug('main class loaded', 'messageonly','api');
 	if (! isset($GLOBALS['phpgw_info']['flags']['included_classes']['error']) ||
 		! $GLOBALS['phpgw_info']['flags']['included_classes']['error'])
