@@ -18,7 +18,14 @@
   $phpgw_info["server"]["api_dir"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
 
   function setup_header($title = "",$nologoutbutton = False) {
-    global $phpgw_info, $PHP_SELF;
+    global $phpgw_info, $PHP_SELF, $dontshowtheheaderagain;
+
+    // Ok, so it isn't the greatest idea, but it works for now.  Setup needs to be rewritten.
+    if ($dontshowtheheaderagain) {
+       return False;
+    }
+
+    $dontshowtheheaderagain = True;
     ?>
     
     <head>
