@@ -46,10 +46,10 @@
      {
         global $phpgw, $phpgw_info;
 
-       $this->db = $phpgw->db;
+        $this->db = $phpgw->db;
 
         $this->account_id = $phpgw_info["user"]["account_id"];
-	// rework the following to be a simple sed style creation
+        // rework the following to be a simple sed style creation
         $this->stock_contact_fields = array("FN"              => "FN",        //'firstname lastname'
                                             "SOUND"           => "SOUND",
                                             "ORG_Name"        => "ORG.Name",  //company
@@ -73,28 +73,28 @@
                                             "TZ"              => "TZ",
                                             "GEO"             => "GEO",
                                             "A_TEL"           => "A.TEL",
-					    "A_TEL_Work"      => "A.TEL.Work",   //yn
+                                            "A_TEL_Work"      => "A.TEL.Work",   //yn
                                             "A_TEL_Home"      => "A.TEL.Home",   //yn
                                             "A_TEL_Voice"     => "A.TEL.Voice",  //yn
                                             "A_TEL_Msg"       => "A.TEL.Msg",    //yn
                                             "A_TEL_Fax"       => "A.TEL.Fax",    //yn
                                             "A_TEL_Prefer"    => "A.TEL.Prefer", //yn
                                             "B_TEL"           => "B.TEL",
-					    "B_TEL_Work"      => "B.TEL.Work",   //yn
+                                            "B_TEL_Work"      => "B.TEL.Work",   //yn
                                             "B_TEL_Home"      => "B.TEL.Home",   //yn
                                             "B_TEL_Voice"     => "B.TEL.Voice",  //yn
                                             "B_TEL_Msg"       => "B.TEL.Msg",    //yn
                                             "B_TEL_Fax"       => "B.TEL.Fax",    //yn
                                             "B_TEL_Prefer"    => "B.TEL.Prefer", //yn
                                             "C_TEL"           => "C.TEL",
-					    "C_TEL_Work"      => "C.TEL.Work",   //yn
+                                            "C_TEL_Work"      => "C.TEL.Work",   //yn
                                             "C_TEL_Home"      => "C.TEL.Home",   //yn
                                             "C_TEL_Voice"     => "C.TEL.Voice",  //yn
                                             "C_TEL_Msg"       => "C.TEL.Msg",    //yn
                                             "C_TEL_Fax"       => "C.TEL.Fax",    //yn
                                             "C_TEL_Prefer"    => "C.TEL.Prefer", //yn
                                             "D_EMAIL"         => "D.EMAIL",
-					    "D_EMAILTYPE"     => "D.EMAILTYPE",   //'INTERNET','CompuServe',etc...
+                                            "D_EMAILTYPE"     => "D.EMAILTYPE",   //'INTERNET','CompuServe',etc...
                                             "D_EMAIL_Work"    => "D.EMAIL.Work",  //yn
                                             "D_EMAIL_Home"    => "D.EMAIL.Home",  //yn
                                             );
@@ -117,9 +117,9 @@
 
      function read_single_entry($id,$fields) // send this the id and whatever fields you want to see
      {
-        list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
-        if (count($ab_fieldnames)) {
-           $t_fields = "," . implode(",",$ab_fieldnames);
+        list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+        if (count($stock_fieldnames)) {
+           $t_fields = "," . implode(",",$stock_fieldnames);
            if ($t_fields == ",") {
               unset($t_fields);
            }
@@ -134,8 +134,8 @@
 	$return_fields[0]["lid"]    = $this->db->f("lid"); // lid for group/account records
 	$return_fields[0]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
         $return_fields[0]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
-        if (gettype($ab_fieldnames) == "array") {
-          while (list($f_name) = each($ab_fieldnames)) {
+        if (gettype($stock_fieldnames) == "array") {
+          while (list($f_name) = each($stock_fieldnames)) {
             $return_fields[0][$f_name] = $this->db->f($f_name);
           }
         }
@@ -165,9 +165,9 @@
            $ordermethod = "order by N_Family,N_Given,D_EMAIL $sort";
         }
 
-        list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
-        if (count($ab_fieldnames)) {
-           $t_fields = "," . implode(",",$ab_fieldnames);
+        list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+        if (count($stock_fieldnames)) {
+           $t_fields = "," . implode(",",$stock_fieldnames);
            if ($t_fields == ",") {
               unset($t_fields);
            }
@@ -204,11 +204,11 @@
 	   $return_fields[$i]["lid"]    = $this->db->f("lid"); // lid for group/account records
 	   $return_fields[$i]["tid"]    = $this->db->f("tid"); // type id (g/u) for groups/accounts
            $return_fields[$i]["owner"]  = $this->db->f("owner"); // id of owner/parent for the record
-           if (gettype($ab_fieldnames) == "array") {
-              while (list($f_name) = each($ab_fieldnames)) {
+           if (gettype($stock_fieldnames) == "array") {
+              while (list($f_name) = each($stock_fieldnames)) {
                  $return_fields[$i][$f_name] = $this->db->f($f_name);
               }
-              reset($ab_fieldnames);
+              reset($stock_fieldnames);
            }
 
            $this->db2->query("select contact_name,contact_value from addressbook_extra where contact_id='"
@@ -228,13 +228,13 @@
 
      function add($owner,$fields)
      {
-        list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
+        list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
         //$this->db->lock(array("contacts"));
         $this->db->query("insert into addressbook (owner,"
                        . implode(",",$this->stock_contact_fields)
                        . ") values ('$owner','"
-                       . implode("','",$this->loop_addslashes($ab_fields)) . "')",__LINE__,__FILE__);
+                       . implode("','",$this->loop_addslashes($stock_fields)) . "')",__LINE__,__FILE__);
 
         $this->db->query("select max(id) from addressbook",__LINE__,__FILE__);
         $this->db->next_record();
@@ -278,10 +278,10 @@
            return False;
         }
 
-        list($ab_fields,$ab_fieldnames,$extra_fields) = $this->split_ab_and_extras($fields);
-        if (count($ab_fields)) {
-           while (list($ab_fieldname) = each($ab_fieldnames)) {
-              $ta[] = $ab_fieldname . "='" . addslashes($ab_fields[$ab_fieldname]) . "'";
+        list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+        if (count($stock_fields)) {
+           while (list($stock_fieldname) = each($stock_fieldnames)) {
+              $ta[] = $stock_fieldname . "='" . addslashes($stock_fields[$stock_fieldname]) . "'";
            }
            $fields_s = "," . implode(",",$ta);
            if ($field_s == ",") {

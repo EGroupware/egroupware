@@ -25,7 +25,7 @@
 
 
   /*
-     phpgw_contacts (
+     addressbook_extra (
        contact_id          int,
        contact_owner       int,
        contact_name        varchar(255),
@@ -38,10 +38,10 @@
      var $db;
      var $account_id;
      var $stock_contact_fields;     // This is an array of all the fields in the addressbook
-     var $email_types;
-     var $total_records;
+     var $email_types;              // VCard email type array
+     var $total_records;            // This will contain numrows for data retrieved
 
-     function split_ab_and_extras($fields)
+     function split_stock_and_extras($fields)
      {
         while (list($field,$value) = each($fields)) {
            // Depending on how the array was build, this is needed.
@@ -50,13 +50,13 @@
               $field = $value;
            }
            if ($this->stock_contact_fields[$field]) {
-              $ab_fields[$field]     = $value;
-              $ab_fieldnames[$field] = $field;
+              $stock_fields[$field]     = $value;
+              $stock_fieldnames[$field] = $field;
            } else {
               $extra_fields[$field] = $value;
            }
         }
-        return array($ab_fields,$ab_fieldnames,$extra_fields);
+        return array($stock_fields,$stock_fieldnames,$extra_fields);
      }
 
      function loop_addslashes($fields)
