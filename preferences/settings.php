@@ -240,26 +240,6 @@
 
          if ($phpgw_info["user"]["apps"]["headlines"]) {
 ?>
-            <tr>
-             <td><?php echo lang("select headline news sites"); ?>:</td>
-<?php
-	     echo "<td><select name=\"headlines[]\" multiple size=5>\n";
-
-               $phpgw->db->query("select * from users_headlines where owner='"
-				           . $phpgw_info["user"]["userid"] . "'");
-	       while ($phpgw->db->next_record())
-		 $users_headlines[$phpgw->db->f("site")] = " selected";
-
-
-	       $phpgw->db->query("SELECT con,display FROM news_site ORDER BY display asc");
-	       while ($phpgw->db->next_record()) {
-                 echo "<option value=\"" . $phpgw->db->f("con") . "\""
-                    . $users_headlines[$phpgw->db->f("con")] . ">"
-			. $phpgw->db->f("display") . "</option>";
-	       }
-               echo "</select></td>\n";
-?>
-            </tr>             
 <?php
           }
 ?>
