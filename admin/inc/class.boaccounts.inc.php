@@ -98,6 +98,7 @@
 			while($old_group_list && $id = each($old_group_list))
 			{
 				$GLOBALS['phpgw']->acl->delete_repository('phpgw_group',$account_id,intval($id[1]));
+				$GLOBALS['phpgw']->sessions->delete_cache(intval($id[1]));
 			}
 
 			$GLOBALS['phpgw']->acl->delete_repository('%%','run',$account_id);
