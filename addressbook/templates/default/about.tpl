@@ -1,7 +1,7 @@
 <table border="0" width="100%">
  <tr>
   <td align="left">
-   <a href="{url}" target="_new"><img src="{image}" border="0"></a>
+   <a href="{url}"><img src="{image}" border="0" alt="{alt}"></a>
   </td>
  </tr>
  <tr>

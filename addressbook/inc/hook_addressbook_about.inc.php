@@ -32,10 +32,11 @@
 
 		$tpl->set_file(array("body" => "about.tpl"));
 
-		$tpl->set_var("about_addressbook",'This is the phpgroupware core addressbook application.  It makes use of the phpgroupware contacts class to store and retrieve contact information via SQL or LDAP.');
+		$tpl->set_var("about_addressbook",'Addressbook is the phpgroupware default contact application.  It makes use of the phpgroupware contacts class to store and retrieve contact information via SQL or LDAP.');
 
 		$tpl->set_var("url",$phpgw->link('/addressbook'));
 		$tpl->set_var("image",$imgpath);
+		$tpl->set_var("alt",lang('addressbook'));
 		$tpl->set_var("version",$version);
 		$tpl->set_var("agent",$agent);
 		$tpl->set_var("platform",$os);
