@@ -29,19 +29,19 @@
 	{
 		function check_perms($has, $needed)
 		{
-			return (!!($has & $needed) == True);
+			return(!!($has & $needed) == True);
 		}
 
 		function split_stock_and_extras($fields)
 		{
-			while (list($field,$value) = @each($fields))
+			while(list($field,$value) = @each($fields))
 			{
 				/* Depending on how the array was built, this is needed. */
-				if (gettype($value) == 'integer')
+				if(is_int($value))
 				{
 					$value = $field;
 				}
-				if ($this->stock_contact_fields[$field])
+				if($this->stock_contact_fields[$field])
 				{
 					$stock_fields[$field]     = $value;
 					$stock_fieldnames[$field] = $this->stock_contact_fields[$field];
@@ -57,7 +57,7 @@
 		function loop_addslashes($fields)
 		{
 			$absf = $this->stock_contact_fields;
-			while ($t = each($absf))
+			while($t = each($absf))
 			{
 				$ta[] = $this->db->db_addslashes($fields[$t[0]]);
 			}
@@ -68,9 +68,9 @@
 		/* This will take an array or integer */
 		function delete($id)
 		{
-			if (gettype($id) == 'array')
+			if(is_array($id))
 			{
-				while (list($null,$t_id) = each($id))
+				while(list($null,$t_id) = each($id))
 				{
 					$this->delete_($t_id);
 				}
@@ -83,23 +83,29 @@
 
 		function asc_sort($a,$b)
 		{
-			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0;
-			return ($a[1]>$b[1])?1:-1;
+			echo "<br>A:'" . $a . "' B:'" . $b;
+			if($a[1] == $b[1])
+			{
+				return 0;
+			}
+			return ($a[1]>$b[1]) ? 1 : -1;
 		}
 
 		function desc_sort($a,$b)
 		{
-			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1]) return 0;
-			return ($a[1]<$b[1])?1:-1;
+			echo "<br>A:'" . $a . "' B:'" . $b;
+			if($a[1]==$b[1])
+			{
+				return 0;
+			}
+			return ($a[1]<$b[1]) ? 1 : -1;
 		}
 
 		/*
 		comesafter ($s1, $s2)
 		Returns 1 if $s1 comes after $s2 alphabetically, 0 if not.
 		*/
-		function comesafter ($s1, $s2)
+		function comesafter($s1, $s2)
 		{
 			/*
 			We don't want to overstep the bounds of one of the strings and segfault,
@@ -107,17 +113,17 @@
 			*/
 			$order = 1;
 
-			if ( (strlen($s1) == 0) )
+			if( (strlen($s1) == 0) )
 			{
 				return 0;
 			}
 
-			if ( (strlen($s2) == 0) )
+			if( (strlen($s2) == 0) )
 			{
 				return 1;
 			}
 
-			if (strlen ($s1) > strlen ($s2))
+			if(strlen ($s1) > strlen ($s2))
 			{
 				$temp = $s1;
 				$s1 = $s2;
@@ -125,17 +131,22 @@
 				$order = 0;
 			}
 
-			for ($index = 0; $index < strlen ($s1); $index++)
+			for($index = 0; $index < strlen ($s1); $index++)
 			{
 				/* $s1 comes after $s2 */
-				if (strtolower($s1[$index]) > strtolower($s2[$index])) { return ($order); }
-
+				if(strtolower($s1[$index]) > strtolower($s2[$index]))
+				{
+					return ($order);
+				}
 				/* $s1 comes before $s2 */
-				if (strtolower($s1[$index]) < strtolower($s2[$index])) { return (1 - $order); }
+				if(strtolower($s1[$index]) < strtolower($s2[$index]))
+				{
+					return (1 - $order);
+				}
 			}
 				/* Special case in which $s1 is a substring of $s2 */
 
-			return ($order);
+			return($order);
 		}
 
 		/*
@@ -146,16 +157,16 @@
 		* case of a user array this is the username; with the group array it is the group name.
 		* asortby
 		*/
-		function asortbyindex ($sortarray, $index)
+		function asortbyindex($sortarray, $index)
 		{
 			$lastindex = count($sortarray) - 2;
-			for ($subindex = 0; $subindex < $lastindex; $subindex++)
+			for($subindex = 0; $subindex < $lastindex; $subindex++)
 			{
 				$lastiteration = $lastindex - $subindex;
-				for ($iteration = 0; $iteration < $lastiteration; $iteration++)
+				for($iteration = 0; $iteration < $lastiteration; $iteration++)
 				{
 					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index]))
+					if($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index]))
 					{
 						$temp = $sortarray[$iteration];
 						$sortarray[$iteration] = $sortarray[$iteration + 1];
@@ -166,16 +177,16 @@
 			return ($sortarray);
 		}
 
-		function arsortbyindex ($sortarray, $index)
+		function arsortbyindex($sortarray, $index)
 		{
 			$lastindex = count($sortarray) - 1;
-			for ($subindex = $lastindex; $subindex > 0; $subindex--)
+			for($subindex = $lastindex; $subindex > 0; $subindex--)
 			{
 				$lastiteration = $lastindex - $subindex;
-				for ($iteration = $lastiteration; $iteration > 0; $iteration--)
+				for($iteration = $lastiteration; $iteration > 0; $iteration--)
 				{
 					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index]))
+					if($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index]))
 					{
 						$temp = $sortarray[$iteration];
 						$sortarray[$iteration] = $sortarray[$iteration - 1];
@@ -186,7 +197,7 @@
 			return ($sortarray);
 		}
 
-		function filter_ldap ($ldap_fields,$filterfields,$DEBUG=0)
+		function filter_ldap($ldap_fields,$filterfields,$DEBUG=0)
 		{
 			$match = 0;
 			if($DEBUG) { echo '<br>'; }
@@ -194,20 +205,20 @@
 			{
 				$yes = True;
 
-				if ($ldap_fields[$i]['uidnumber'][0])
+				if($ldap_fields[$i]['uidnumber'][0])
 				{
 					reset($filterfields);
-					while (list($col,$filt) = each($filterfields))
+					while(list($col,$filt) = each($filterfields))
 					{
-						if ($col == 'phpgwcontactcatid')
+						if($col == 'phpgwcontactcatid')
 						{
 							$colarray = explode(',',$ldap_fields[$i][$col][0]);
-							if ($colarray[1])
+							if($colarray[1])
 							{
 								while(list($key,$val) = each ($colarray))
 								{
 									if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$val.'"'; }
-									if ($val == $filt)
+									if($val == $filt)
 									{
 										if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 										$yes &= True;
@@ -219,7 +230,7 @@
 							else
 							{
 								if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-								if ($ldap_fields[$i][$col][0] == $filt)
+								if($ldap_fields[$i][$col][0] == $filt)
 								{
 									if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 									$yes &= True;
@@ -230,13 +241,13 @@
 									if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
 									$yes &= False;
 									$match--;
-								}							
+								}
 							}
 						}
 						else
 						{
 							if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-							if ($ldap_fields[$i][$col][0] == $filt)
+							if($ldap_fields[$i][$col][0] == $filt)
 							{
 								if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
 								$yes &= True;
@@ -251,7 +262,7 @@
 						}
 					}
 
-					if ($yes)
+					if($yes)
 					{
 						if($DEBUG) { echo $ldap_fields[$i]['uidnumber'][0].' matched all!'.'<br>'; }
 						$new_ldap[] = $ldap_fields[$i];
@@ -285,33 +296,33 @@
 
 			$fields = array
 			(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'org_unit'				=> 'org_unit',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname'
+				'n_given'             => 'n_given',
+				'n_family'            => 'n_family',
+				'title'               => 'title',
+				'org_name'            => 'org_name',
+				'org_unit'            => 'org_unit',
+				'adr_one_street'      => 'adr_one_street',
+				'adr_one_locality'    => 'adr_one_locality',
+				'adr_one_postalcode'  => 'adr_one_postalcode',
+				'adr_one_region'      => 'adr_one_region',
+				'adr_one_countryname' => 'adr_one_countryname',
+				'adr_two_street'      => 'adr_two_street',
+				'adr_two_locality'    => 'adr_two_locality',
+				'adr_two_postalcode'  => 'adr_two_postalcode',
+				'adr_two_region'      => 'adr_two_region',
+				'adr_two_countryname' => 'adr_two_countryname'
 			);
 
 			$address = $this->read_single_entry($id,$fields);
 
-			if ($address[0]['title'])
+			if($address[0]['title'])
 			{
 				$title = $address[0]['title'] . '&nbsp;';
 			}
 
-			if ($business)
+			if($business)
 			{
-				if ($address[0]['org_name'])
+				if($address[0]['org_name'])
 				{
 					$company = $address[0]['org_name'];
 				}
@@ -336,12 +347,12 @@
 				$country = $address[0]['adr_two_countryname'];
 			}
 
-			if (! $country)
+			if(!$country)
 			{
 				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'format_' . strtolower($country) . '.tpl'))
+			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'format_' . strtolower($country) . '.tpl'))
 			{
 				$a = $t->set_file(array('address_format' => 'format_' . strtolower($country) . '.tpl'));
 			}
@@ -350,7 +361,7 @@
 				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
 			}
 
-			if (!$afont)
+			if(!$afont)
 			{
 				$afont = $GLOBALS['phpgw_info']['theme']['font'];
 			}
@@ -364,7 +375,7 @@
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
 
-			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
 				$countryname = $s->get_full_name($country);
 				$a .= $t->set_var('country',lang($countryname));
@@ -381,39 +392,39 @@
 
 			$fields = array
 			(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'org_unit'				=> 'org_unit',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'tel_work'				=> 'tel_work',
-				'tel_fax'				=> 'tel_fax',
-				'email'					=> 'email',
-				'url'					=> 'url',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname',
-				'tel_home'				=> 'tel_home',
-				'email_home'			=> 'email_home'
+				'n_given'             => 'n_given',
+				'n_family'            => 'n_family',
+				'title'               => 'title',
+				'org_name'            => 'org_name',
+				'org_unit'            => 'org_unit',
+				'adr_one_street'      => 'adr_one_street',
+				'adr_one_locality'    => 'adr_one_locality',
+				'adr_one_postalcode'  => 'adr_one_postalcode',
+				'adr_one_region'      => 'adr_one_region',
+				'tel_work'            => 'tel_work',
+				'tel_fax'             => 'tel_fax',
+				'email'               => 'email',
+				'url'                 => 'url',
+				'adr_one_countryname' => 'adr_one_countryname',
+				'adr_two_street'      => 'adr_two_street',
+				'adr_two_locality'    => 'adr_two_locality',
+				'adr_two_postalcode'  => 'adr_two_postalcode',
+				'adr_two_region'      => 'adr_two_region',
+				'adr_two_countryname' => 'adr_two_countryname',
+				'tel_home'            => 'tel_home',
+				'email_home'          => 'email_home'
 			);
 
 			$address = $this->read_single_entry($id,$fields);
 
-			if ($address[0]['title'])
+			if($address[0]['title'])
 			{
 				$title = $address[0]['title'] . '&nbsp;';
 			}
 
-			if ($business)
+			if($business)
 			{
-				if ($address[0]['org_name'])
+				if($address[0]['org_name'])
 				{
 					$company = $address[0]['org_name'];
 				}
@@ -422,32 +433,32 @@
 					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
 				}
 
-				$street		= $address[0]['adr_one_street'];
-				$city		= $address[0]['adr_one_locality'];
-				$zip		= $address[0]['adr_one_postalcode'];
-				$state		= $address[0]['adr_one_region'];
-				$country	= $address[0]['adr_one_countryname'];
-				$tel		= $address[0]['tel_work'];
-				$email		= $address[0]['email'];
+				$street  = $address[0]['adr_one_street'];
+				$city    = $address[0]['adr_one_locality'];
+				$zip     = $address[0]['adr_one_postalcode'];
+				$state   = $address[0]['adr_one_region'];
+				$country = $address[0]['adr_one_countryname'];
+				$tel     = $address[0]['tel_work'];
+				$email   = $address[0]['email'];
 			}
 			else
 			{
-				$company	= $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
-				$street		= $address[0]['adr_two_street'];
-				$city		= $address[0]['adr_two_locality'];
-				$zip		= $address[0]['adr_two_postalcode'];
-				$state		= $address[0]['adr_two_region'];
-				$country	= $address[0]['adr_two_countryname'];
-				$tel		= $address[0]['tel_home'];
-				$email		= $address[0]['email_home'];
+				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				$street  = $address[0]['adr_two_street'];
+				$city    = $address[0]['adr_two_locality'];
+				$zip     = $address[0]['adr_two_postalcode'];
+				$state   = $address[0]['adr_two_region'];
+				$country = $address[0]['adr_two_countryname'];
+				$tel     = $address[0]['tel_home'];
+				$email   = $address[0]['email_home'];
 			}
 
-			if (! $country)
+			if(!$country)
 			{
 				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
+			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
 			{
 				$a = $t->set_file(array('address_format' => 'full_format_' . strtolower($country) . '.tpl'));
 			}
@@ -456,7 +467,7 @@
 				$a = $t->set_file(array('address_format' => 'full_format_us.tpl'));
 			}
 
-			if (!$afont)
+			if(!$afont)
 			{
 				$afont = $GLOBALS['phpgw_info']['theme']['font'];
 			}
@@ -478,7 +489,7 @@
 			$a .= $t->set_var('fax',$address[0]['tel_fax']);
 			$a .= $t->set_var('url',$address[0]['url']);
 
-			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
 				$countryname = $s->get_full_name($country);
 				$a .= $t->set_var('country',lang($countryname));
@@ -495,32 +506,32 @@
 
 			$fields = array
 			(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname'
+				'n_given'             => 'n_given',
+				'n_family'            => 'n_family',
+				'title'               => 'title',
+				'org_name'            => 'org_name',
+				'adr_one_street'      => 'adr_one_street',
+				'adr_one_locality'    => 'adr_one_locality',
+				'adr_one_postalcode'  => 'adr_one_postalcode',
+				'adr_one_region'      => 'adr_one_region',
+				'adr_one_countryname' => 'adr_one_countryname',
+				'adr_two_street'      => 'adr_two_street',
+				'adr_two_locality'    => 'adr_two_locality',
+				'adr_two_postalcode'  => 'adr_two_postalcode',
+				'adr_two_region'      => 'adr_two_region',
+				'adr_two_countryname' => 'adr_two_countryname'
 			);
 
 			$address = $this->read_single_entry($id,$fields);
 
-			if ($address[0]['title'])
+			if($address[0]['title'])
 			{
 				$title = $address[0]['title'] . '&nbsp;';
 			}
 
-			if ($business)
+			if($business)
 			{
-				if ($address[0]['org_name'])
+				if($address[0]['org_name'])
 				{
 					$company = $address[0]['org_name'];
 				}
@@ -545,12 +556,12 @@
 				$country = $address[0]['adr_two_countryname'];
 			}
 
-			if (! $country)
+			if(!$country)
 			{
 				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
+			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
 			{
 				$a = $t->set_file(array('address_format' => 'line_format_' . strtolower($country) . '.tpl'));
 			}
@@ -559,7 +570,7 @@
 				$a = $t->set_file(array('address_format' => 'line_format_us.tpl'));
 			}
 
-			if (!$afont)
+			if(!$afont)
 			{
 				$afont = $GLOBALS['phpgw_info']['theme']['font'];
 			}
@@ -572,7 +583,7 @@
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
 
-			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
 				$countryname = $s->get_full_name($country);
 				$a .= $t->set_var('country','&nbsp;°&nbsp;' . lang($countryname));

@@ -170,14 +170,17 @@
 		/* send this the id and whatever fields you want to see */
 		function read_single_entry($id,$fields = '')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
+			if(!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if (count($stock_fieldnames))
+			if(count($stock_fieldnames))
 			{
 				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				if($t_fields == ",")
 				{
 					unset($t_fields);
 				}
@@ -192,7 +195,7 @@
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
-			if (gettype($stock_fieldnames) == 'array')
+			if(is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
@@ -201,29 +204,29 @@
 			}
 
 			/* Setup address type fields */
-			if ($return_fields[0]['adr_one_type'])
+			if($return_fields[0]['adr_one_type'])
 			{
 				$one_type = $return_fields[0]['adr_one_type'];
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				while(list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($return_fields[0]["adr_two_type"])
+			if($return_fields[0]["adr_two_type"])
 			{
 				$two_type = $return_fields[0]['adr_two_type'];
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				while(list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
-			while ($this->db->next_record())
+			while($this->db->next_record())
 			{
-				if ($extra_fields[$this->db->f('contact_name')])
+				if($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -233,21 +236,27 @@
 
 		function read_last_entry($fields = '')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
+			if(!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
 				$this->split_stock_and_extras($fields);
 
-			if (count($stock_fieldnames))
+			if(count($stock_fieldnames))
 			{
 				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				if($t_fields == ",")
 				{
 					unset($t_fields);
 				}
 			}
 
 			$id = $this->nextid;
-			if ($id == -1) { $id = 1; }
+			if($id == -1)
+			{
+				$id = 1;
+			}
 
 			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -259,7 +268,7 @@
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
 
-			if (gettype($stock_fieldnames) == 'array')
+			if(is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
@@ -268,29 +277,29 @@
 			}
 
 			/* Setup address type fields */
-			if ($return_fields[0]['adr_one_type'])
+			if($return_fields[0]['adr_one_type'])
 			{
 				$one_type = $return_fields[0]['adr_one_type'];
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				while(list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($return_fields[0]['adr_two_type'])
+			if($return_fields[0]['adr_two_type'])
 			{
 				$two_type = $return_fields[0]['adr_two_type'];
 				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				while(list($name,$val) = each($this->adr_types))
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
-			while ($this->db->next_record())
+			while($this->db->next_record())
 			{
-				if ($extra_fields[$this->db->f('contact_name')])
+				if($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -301,30 +310,42 @@
 		/* send this the range, query, sort, order and whatever fields you want to see */
 		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='')
 		{
-			if(!$start)  { $start  = 0; }
-			if(!$limit)  { $limit  = 0; }
-			if(!$filter) { $filter = 'tid=n'; }
+			if(!$start)
+			{
+				$start  = 0;
+			}
+			if(!$limit)
+			{
+				$limit  = 0;
+			}
+			if(!$filter)
+			{
+				$filter = 'tid=n';
+			}
 
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
+			if(!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
 			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			$filterfields = array();
 			/* turn filter's a=b,c=d OR a=b into an array */
-			if ($filter)
+			if($filter)
 			{
-				if ($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
+				if($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
 				$filterarray = split(',',$filter);
-				if ($filterarray[1])
+				if($filterarray[1])
 				{
 					$i=0;
-					for ($i=0;$i<count($filterarray);$i++)
+					for($i=0;$i<count($filterarray);$i++)
 					{
 						list($name,$value) = split("=",$filterarray[$i]);
-						if ($name)
+						if($name)
 						{
-							if ($DEBUG) { echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#'; }
+							if($DEBUG) { echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#'; }
 							$filterfields[$this->non_contact_fields[$name]] = $value;
 						}
 					}
@@ -332,7 +353,7 @@
 				else
 				{
 					list($name,$value) = split('=',$filter);
-					if ($DEBUG)
+					if($DEBUG)
 					{
 						echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#';
 					}
@@ -342,48 +363,52 @@
 			else
 			{
 				$filterfields += array('phpgwcontacttypeid' => 'n');
-				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwcontacttypeid=n#"; }
-			}	
+				if($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwcontacttypeid=n#"; }
+			}
 
-			if (is_array($this->grants))
+			if(is_array($this->grants))
 			{
 				/* this was not listing private entries when show all was selected */
 				/* $filterfields += array('phpgwcontactaccess' => 'public'); */
 				$grants = $this->grants;
-				while (list($user) = each($grants))
+				while(list($user) = each($grants))
 				{
-					if ($DEBUG) { echo '<br>DEBUG - Grant from owner: '.$user; }
+					if($DEBUG) { echo '<br>DEBUG - Grant from owner: '.$user; }
 					$filterfields += array('phpgwcontactowner' => $user);
 				}
 			}
 			/*
-			if ($DEBUG) {
+			if($DEBUG)
+			{
 				while(list($name,$value) = each($filterfields)) {
 					echo "<br>DEBUG - Filter strings: #".$name.",".$value."#";
 				}
 			}
 			*/
 
-			if (!$sort) { $sort = 'ASC';  }
+			if(!$sort)
+			{
+				$sort = 'ASC';
+			}
 
-			if (!$order)
+			if(!$order)
 			{
 				$order = 'n_family';
 			}
 
-			if ($DEBUG && $order)
+			if($DEBUG && $order)
 			{
 				echo "<br>DEBUG - ORDER by $order";
 			}
 
-			if ($query)
+			if($query)
 			{
 				$ldap_fields = array();
 				$total = 0;
 
 				reset($this->stock_contact_fields);
 				$lquery = '(&(|'; /* $lquery = '(|'; */
-				while (list($name,$value) = each($this->stock_contact_fields) )
+				while(list($name,$value) = each($this->stock_contact_fields) )
 				{
 					$lquery .= '(' . $value . '=*' . $query . '*)';
 				}
@@ -399,7 +424,7 @@
 				$total = $total + ldap_count_entries($this->ldap, $sri);
 				/* _debug_array($ldap_fields);exit; */
 
-				if ($filterfields)
+				if($filterfields)
 				{
 					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
 				}
@@ -413,14 +438,14 @@
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				$this->total_records = ldap_count_entries($this->ldap, $sri);
 
-				if ($filterfields)
+				if($filterfields)
 				{
 					$ldap_fields = $this->filter_ldap($ldap_fields,$filterfields,$DEBUG);
 				}
 			}
 
 			/* Use shared sorting routines, based on sort and order */
-			if ($sort == 'ASC')
+			if($sort == 'ASC')
 			{
 				$ldap_fields = $this->asortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
 			}
@@ -434,11 +459,11 @@
 			The export feature, for example, does not limit rows.
 			This way, it can retrieve all rows at once.
 			*/
-			if ($start && $limit)
+			if($start && $limit)
 			{
 				$limit = $start + $limit;
 			}
-			elseif ($start && !$limit)
+			elseif($start && !$limit)
 			{
 				$limit = $start;
 			}
@@ -455,9 +480,9 @@
 
 			@reset($ldap_fields);
 			$j=0;
-			for ($i=$start;$i<$limit;$i++)
+			for($i=$start;$i<$limit;$i++)
 			{
-				if ($i<$this->total_records && $ldap_fields[$i]['uid'][0])
+				if($i<$this->total_records && $ldap_fields[$i]['uid'][0])
 				{
 					$return_fields[$j]['id']     = $ldap_fields[$i]['uidnumber'][0];
 					$return_fields[$j]['lid']    = $ldap_fields[$i]['uid'][0];
@@ -466,10 +491,10 @@
 					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
 					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatId'][0];
 
-					if (gettype($stock_fieldnames) == 'array')
+					if(is_array($stock_fieldnames))
 					{
 						reset($stock_fieldnames);
-						while (list($f_name,$f_value) = each($stock_fieldnames))
+						while(list($f_name,$f_value) = each($stock_fieldnames))
 						{
 							$return_fields[$j][$f_name] = $ldap_fields[$i][$f_value][0];
 						}
@@ -477,9 +502,9 @@
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 						. $ldap_fields[$i]['id'] . "'",__LINE__,__FILE__);
-					while ($this->db->next_record())
+					while($this->db->next_record())
 					{
-						if ($extra_fields[$this->db->f('contact_name')])
+						if($extra_fields[$this->db->f('contact_name')])
 						{
 							$return_fields[$j][$this->db->f('contact_name')] = $this->db->f('contact_value');
 						}
@@ -509,12 +534,12 @@
 			$free = 0;
 			$this->nextid = $GLOBALS['phpgw']->common->last_id('contacts');
 			/* Loop until we find a free id */
-			while (!$free)
+			while(!$free)
 			{
 				$ldap_fields = '';
 				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$this->nextid);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
-				if ($ldap_fields[0]['dn'][0])
+				if($ldap_fields[0]['dn'][0])
 				{
 					$this->nextid = $GLOBALS['phpgw']->common->next_id('contacts');
 				}
@@ -525,11 +550,11 @@
 			}
 
 			$ldap_fields = '';
-			if (gettype($stock_fieldnames) == 'array')
+			if(is_array($stock_fieldnames))
 			{
 				while(list($name,$value)=each($stock_fieldnames))
 				{
-					if ($stock_fields[$name] != '')
+					if($stock_fields[$name] != '')
 					{
 						$ldap_fields[$value] = $stock_fields[$name];
 					}
@@ -537,25 +562,25 @@
 			}
 
 			$time = gettimeofday();
-			$ldap_fields['uid'] = time().$time['usec'].':'.$ldap_fields['givenname'];
+			$ldap_fields['uid'] = time() . $time['usec'] . ':' . $ldap_fields['givenname'];
 
 			$dn = 'uid=' . $ldap_fields['uid'].',' . $GLOBALS['phpgw_info']['server']['ldap_contact_context'];
-			$ldap_fields['phpgwcontacttypeid']    = $tid;
-			$ldap_fields['phpgwcontactowner']     = $owner;
-			$ldap_fields['phpgwcontactaccess']    = $access;
-			$ldap_fields['phpgwcontactcatid']     = $cat_id ? $cat_id : '0';
-			$ldap_fields['uidnumber']      = $this->nextid;
-			/* $ldap_fields['objectclass'][0] = 'person'; */
-			$ldap_fields['objectclass'][0] = 'organizationalPerson';
-			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
-			$ldap_fields['objectclass'][2] = 'phpgwContact';
+			$ldap_fields['phpgwcontacttypeid'] = $tid;
+			$ldap_fields['phpgwcontactowner']  = $owner;
+			$ldap_fields['phpgwcontactaccess'] = $access;
+			$ldap_fields['phpgwcontactcatid']  = $cat_id ? $cat_id : '0';
+			$ldap_fields['uidnumber']          = $this->nextid;
+			/* $ldap_fields['objectclass'][0]  = 'person'; */
+			$ldap_fields['objectclass'][0]     = 'organizationalPerson';
+			$ldap_fields['objectclass'][1]     = 'inetOrgPerson';
+			$ldap_fields['objectclass'][2]     = 'phpgwContact';
 
 			/* _debug_array($ldap_fields); */
 			$err = ldap_add($this->ldap, $dn, $ldap_fields);
 
-			if (count($extra_fields))
+			if(count($extra_fields))
 			{
-				while (list($name,$value) = each($extra_fields))
+				while(list($name,$value) = each($extra_fields))
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('".$this->nextid."','" . $this->account_id . "','"
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
@@ -567,7 +592,7 @@
 		function field_exists($id,$field_name)
 		{
 			$this->db->query("select count(*) from $this->ext_table where contact_id='$id' and contact_name='"
-			. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
 		}
@@ -575,20 +600,20 @@
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
 			$this->db->query("insert into $this->ext_table values ($id,'$owner','" . addslashes($field_name)
-			. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
+				. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
 			$this->db->query("delete from $this->ext_table where contact_id='$id' and contact_name='"
-			. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access='private',$cat_id='0',$tid='n')
 		{
 			$nonfields = $this->non_contact_fields;
 
-			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
@@ -597,11 +622,11 @@
 			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			if ($ldap_fields[0]['dn'])
+			if($ldap_fields[0]['dn'])
 			{
 				$dn = $ldap_fields[0]['dn'];
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
-				if (gettype($stock_fieldnames) == 'array')
+				if(is_array($stock_fieldnames))
 				{
 					/*
 					Check each value, add our extra attributes if they are missing, and
@@ -609,11 +634,11 @@
 					*/
 					/* Verify uidnumber */
 					$stock_fields['id']   = $id;
-					if (empty($ldap_fields[0]['uidnumber']))
+					if(empty($ldap_fields[0]['uidnumber']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('uidnumber'  => $stock_fields['uidnumber']));
 					}
-					elseif (!$ldap_fields[0]['uidnumber'])
+					elseif(!$ldap_fields[0]['uidnumber'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('uidnumber' => $stock_fields['uidnumber']));
 					}
@@ -621,17 +646,17 @@
 					/* Verify uid */
 					$uids = split(',',$dn);
 					$stock_fields['lid'] = $uids[0];
-					if (empty($ldap_fields[0]['uid']))
+					if(empty($ldap_fields[0]['uid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('uid'  => $stock_fields['lid']));
 					}
-					elseif (!$ldap_fields[0]['uid'])
+					elseif(!$ldap_fields[0]['uid'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('uid' => $stock_fields['lid']));
 					}
 
 					/* Verify objectclasses are there */
-					if (empty($ldap_fields[0]['objectclass']))
+					if(empty($ldap_fields[0]['objectclass']))
 					{
 						/* $stock_fields['objectclass'][0] = 'person'; */
 						$stock_fields['objectclass'][0] = 'organizationalPerson';
@@ -639,7 +664,7 @@
 						$stock_fields['objectclass'][2] = 'phpgwContact';
 						$err = ldap_modify($this->ldap,$dn,array('objectclass'  => $stock_fields['objectclass']));
 					}
-					elseif (!$ldap_fields[0]['objectclass'])
+					elseif(!$ldap_fields[0]['objectclass'])
 					{
 						/* $stock_fields['objectclass'][0] = 'person'; */
 						$stock_fields['objectclass'][0] = 'organizationalPerson';
@@ -650,64 +675,64 @@
 
 					/* Verify owner */
 					$stock_fields['owner']  = $owner;
-					if (empty($ldap_fields[0]['phpgwcontactowner']))
+					if(empty($ldap_fields[0]['phpgwcontactowner']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner'  => $stock_fields['owner']));
 					}
-					elseif (!$ldap_fields[0]['phpgwcontactowner'])
+					elseif(!$ldap_fields[0]['phpgwcontactowner'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactowner' => $stock_fields['owner']));
 					}
 
 					/* Verify access */
 					$stock_fields['access'] = $access;
-					if (empty($ldap_fields[0]['phpgwcontactaccess']))
+					if(empty($ldap_fields[0]['phpgwcontactaccess']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactaccess'  => $stock_fields['access']));
 					}
-					elseif (!$ldap_fields[0]['phpgwcontactaccess'])
+					elseif(!$ldap_fields[0]['phpgwcontactaccess'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactaccess' => $stock_fields['access']));
 					}
 
 					/* Verify cat_id */
 					$stock_fields['cat_id']  = $cat_id ? $cat_id : ' ';
-					if (empty($ldap_fields[0]['phpgwcontactcatid']))
+					if(empty($ldap_fields[0]['phpgwcontactcatid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactcatid'  => $stock_fields['cat_id']));
 					}
-					elseif (!$ldap_fields[0]['phpgwcontactcatid'])
+					elseif(!$ldap_fields[0]['phpgwcontactcatid'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontactcatid' => $stock_fields['cat_id']));
 					}
 
 					/* Verify tid */
 					$stock_fields['tid'] = $tid;
-					if (empty($ldap_fields[0]['phpgwcontacttypeid']))
+					if(empty($ldap_fields[0]['phpgwcontacttypeid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontacttypeid'  => $stock_fields['tid']));
 					}
-					elseif (!$ldap_fields[0]['phpgwcontacttypeid'])
+					elseif(!$ldap_fields[0]['phpgwcontacttypeid'])
 					{
 						$err = ldap_mod_add($this->ldap,$dn,array('phpgwcontacttypeid' => $stock_fields['tid']));
 					}
 
 					/* OK, just mod the data already */
 					$allfields = $stock_fieldnames + $nonfields;
-					while ( list($fname,$fvalue) = each($allfields) )
+					while(list($fname,$fvalue) = each($allfields))
 					{
 						/* if ($ldap_fields[0][$fvalue]) */
-						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
+						if($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							/* echo "<br>".$fname." => ".$fvalue." was there"; */
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
-						elseif (!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
+						elseif(!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
 							/* echo "<br>".$fname." not there - '".$fvalue."'"; */
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
-						elseif ($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
+						elseif($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
 						{
 							/*
 							echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
@@ -721,19 +746,19 @@
 					}
 				}
 
-				while (list($x_name,$x_value) = each($extra_fields))
+				while(list($x_name,$x_value) = each($extra_fields))
 				{
-					if ($this->field_exists($id,$x_name))
+					if($this->field_exists($id,$x_name))
 					{
-						if (! $x_value)
+						if(!$x_value)
 						{
 							$this->delete_single_extra_field($id,$x_name);
 						}
 						else
 						{
 							$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
-							. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
-							. "' AND contact_id='$id'",__LINE__,__FILE__);
+								. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
+								. "' AND contact_id='$id'",__LINE__,__FILE__);
 						}
 					}
 					else
@@ -751,7 +776,7 @@
 		/* Used by admin to change ownership on account delete */
 		function change_owner($old_owner='',$new_owner='')
 		{
-			if (!($new_owner && $old_owner))
+			if(!($new_owner && $old_owner))
 			{
 				return False;
 			}
@@ -760,7 +785,7 @@
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = '';
-			while (list($null,$entry) = each($ldap_fields))
+			while(list($null,$entry) = each($ldap_fields))
 			{
 				$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner' => $new_owner));
 			}
@@ -772,7 +797,7 @@
 		/* This is where the real work of delete() is done, shared class file contains calling function */
 		function delete_($id)
 		{
-			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
@@ -780,12 +805,12 @@
 			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
-			if ($ldap_fields[0]['dn'])
+			if($ldap_fields[0]['dn'])
 			{
 				$err = ldap_delete($this->ldap,$ldap_fields[0]['dn']);
 
 				$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_owner='"
-				. $this->account_id . "'",__LINE__,__FILE__);
+					. $this->account_id . "'",__LINE__,__FILE__);
 			}
 			else
 			{
@@ -796,18 +821,18 @@
 		// This is for the admin script deleteaccount.php
 		function delete_all($owner=0)
 		{
-			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
 
-			if ($owner)
+			if($owner)
 			{
 				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$owner);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = '';
-				while (list($null,$entry) =  each($ldap_fields))
+				while(list($null,$entry) =  each($ldap_fields))
 				{
 					$err = ldap_delete($this->ldap,$entry['dn']);
 				}
