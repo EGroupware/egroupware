@@ -20,13 +20,12 @@
      $api_only = True;
   }
   
-  $tpl = new Template($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
-                    . $phpgw_info["server"]["template_set"]);
+  $tpl = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('phpgwapi'));
   $tpl->set_file(array("phpgw_about"         => "about.tpl",
                        "phpgw_about_unknown" => "about_unknown.tpl"                                 
                       ));
 
-  $tpl->set_var("webserver_url",$phpgw_info["server"]["webserver_url"]);
+  $tpl->set_var("webserver_url",$phpgw->common->get_image_path('phpgwapi'));
   $tpl->set_var("phpgw_version","phpGroupWare API version " . $phpgw_info["server"]["versions"]["phpgwapi"]);
   if ($included) {
      $tpl->set_var("phpgw_app_about",about_app("",""));

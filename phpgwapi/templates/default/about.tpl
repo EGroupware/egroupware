@@ -1,7 +1,7 @@
 <table border="0" width="100%">
  <tr>
   <td align="left">
-   <a href="http://www.phpgroupware.org" target="_new"><img src="{webserver_url}/phpGroupWare.jpg" border="0"></a>
+   <a href="http://www.phpgroupware.org" target="_new"><img src="{webserver_url}/logo.gif" border="0"></a>
   </td>
  </tr>
  <tr>
