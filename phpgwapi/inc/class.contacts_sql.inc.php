@@ -5,9 +5,9 @@
   *   and Miles Lott <milosch@phpgroupware.org>                              *
   * View and manipulate contact records using SQL                            *
   * Copyright (C) 2001 Joseph Engo                                           *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.phpgroupware.org/api                                          *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -63,22 +63,22 @@
 			'org_unit'            => 'org_unit',
 			'title'               => 'title',
 			'adr_one_street'      => 'adr_one_street',
-			'adr_one_locality'    => 'adr_one_locality', 
-			'adr_one_region'      => 'adr_one_region', 
+			'adr_one_locality'    => 'adr_one_locality',
+			'adr_one_region'      => 'adr_one_region',
 			'adr_one_postalcode'  => 'adr_one_postalcode',
 			'adr_one_countryname' => 'adr_one_countryname',
 			'adr_one_type'        => 'adr_one_type',
 			'label'               => 'label',
 			'adr_two_street'      => 'adr_two_street',
-			'adr_two_locality'    => 'adr_two_locality', 
-			'adr_two_region'      => 'adr_two_region', 
+			'adr_two_locality'    => 'adr_two_locality',
+			'adr_two_region'      => 'adr_two_region',
 			'adr_two_postalcode'  => 'adr_two_postalcode',
 			'adr_two_countryname' => 'adr_two_countryname',
 			'adr_two_type'        => 'adr_two_type',
 			'tel_work'            => 'tel_work',
 			'tel_home'            => 'tel_home',
 			'tel_voice'           => 'tel_voice',
-			'tel_fax'             => 'tel_fax', 
+			'tel_fax'             => 'tel_fax',
 			'tel_msg'             => 'tel_msg',
 			'tel_cell'            => 'tel_cell',
 			'tel_pager'           => 'tel_pager',
@@ -179,7 +179,7 @@
 				}
 			}
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='". (int)$id . "'");
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id=" . (int)$id);
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -216,7 +216,7 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . (int)$this->db->f('id') . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id=" . (int)$this->db->f('id'),__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				if ($extra_fields[$this->db->f('contact_name')])
@@ -247,7 +247,7 @@
 
 			$id = $this->db->f(0);
 
-			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='" . (int)$id . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id=" . (int)$id,__LINE__,__FILE__);
 			$this->db->next_record();
 
 			$return_fields[0]['id']     = $this->db->f('id');
@@ -284,7 +284,7 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id=" . (int)$this->db->f('id'),__LINE__,__FILE__);
 			while ($this->db->next_record())
 			{
 				if ($extra_fields[$this->db->f('contact_name')])
@@ -394,7 +394,7 @@
 				}
 				$filterlist = substr($filterlist,0,-1);
 				$filterlist = str_replace(';',' AND ',$filterlist);
-				
+
 				if ($DEBUG)
 				{
 					echo '<br>DEBUG - Filter output string: #'.$filterlist.'#';
@@ -470,7 +470,7 @@
 			{
 				echo "<br>DEBUG - $ordermethod";
 			}
-			
+
 			if($lastmod >= 0 && $fwhere)
 			{
 				$fwhere .= " AND last_mod > $lastmod ";
@@ -518,7 +518,7 @@
 					$sqlcount .= " UPPER($f) LIKE UPPER('%$query%') OR ";
 				}
 				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
-				$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod; 
+				$sqlcount = substr($sqlcount,0,-3) . ') ' . $fand . $filtermethod;
 				unset($f); unset($x);
 			}
 			else
@@ -583,8 +583,8 @@
 					}
 					reset($stock_fieldnames);
 				}
-				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
-					. $this->db->f('id') . "'" .$filterextra,__LINE__,__FILE__);
+				$db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id="
+					. (int)$this->db->f('id') . $filterextra,__LINE__,__FILE__);
 				while($db2->next_record())
 				{
 					if($extra_fields[$db2->f('contact_name')])
@@ -622,7 +622,7 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			//this is added here so it is never tainted
-			$this->stock_contact_fields['last_mod'] = 'last_mod'; 
+			$this->stock_contact_fields['last_mod'] = 'last_mod';
 			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
 
 			$sql = 'INSERT INTO ' . $this->std_table . " (owner,access,cat_id,tid," . $lid[0]
@@ -638,7 +638,7 @@
 			{
 				foreach($extra_fields as $name => $value)
 				{
-					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $owner . "','"
+					$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'" . $owner . "','"
 						. $this->db->db_addslashes($name) . "','" . $this->db->db_addslashes($value) . "')",__LINE__,__FILE__);
 				}
 			}
@@ -647,7 +647,7 @@
 
 		function field_exists($id,$field_name)
 		{
-			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
+			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id=" . (int)$id . " AND contact_name='"
 				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
@@ -655,13 +655,13 @@
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("INSERT INTO $this->ext_table VALUES ($id,'$owner','" . $this->db->db_addslashes($field_name)
+			$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'$owner','" . $this->db->db_addslashes($field_name)
 				. "','" . $this->db->db_addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
-			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
+			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id=" . (int)$id . " AND contact_name='"
 				. $this->db->db_addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
@@ -718,7 +718,7 @@
 					{
 						$this->db->query("UPDATE $this->ext_table SET contact_value='" . $this->db->db_addslashes($x_value)
 							. "',contact_owner=$owner WHERE contact_name='" . $this->db->db_addslashes($x_name)
-							. "' AND contact_id=$id",__LINE__,__FILE__);
+							. "' AND contact_id=" . (int)$id,__LINE__,__FILE__);
 					}
 				}
 				elseif($x_value)	// dont write emtpy extra-fields
@@ -745,8 +745,8 @@
 		/* This is where the real work of delete() is done, shared class file contains calling function */
 		function delete_($id)
 		{
-			$this->db->query("DELETE FROM $this->std_table WHERE id='$id'",__LINE__,__FILE__);
-			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id'",__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->std_table WHERE id=" . (int)$id,__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id=" . (int)$id,__LINE__,__FILE__);
 		}
 
 		/* This is for the admin script deleteaccount.php */

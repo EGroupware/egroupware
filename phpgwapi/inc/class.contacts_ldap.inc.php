@@ -3,9 +3,9 @@
   * phpGroupWare API - Accounts manager for LDAP                             *
   * This file written by Miles Lott <milosch@phpgroupware.org>               *
   * View and manipulate contact records using LDAP                           *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.phpgroupware.org/api                                          *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -67,16 +67,16 @@
 			'title'               => 'title',
 
 			'adr_one_street'      => 'street',
-			'adr_one_locality'    => 'l', 
-			'adr_one_region'      => 'st', 
+			'adr_one_locality'    => 'l',
+			'adr_one_region'      => 'st',
 			'adr_one_postalcode'  => 'postalcode',
 			'adr_one_countryname' => 'co',
 			'adr_one_type'        => 'phpgwadronetype',
 			'label'               => 'phpgwaddresslabel',
 
 			'adr_two_street'      => 'phpgwadrtwostreet',
-			'adr_two_locality'    => 'phpgwadrtwolocality', 
-			'adr_two_region'      => 'phpgwadrtworegion', 
+			'adr_two_locality'    => 'phpgwadrtwolocality',
+			'adr_two_region'      => 'phpgwadrtworegion',
 			'adr_two_postalcode'  => 'phpgwadrtwopostalcode',
 			'adr_two_countryname' => 'phpgwadrtwocountryname',
 			'adr_two_type'        => 'phpgwadrtwotype',
@@ -84,7 +84,7 @@
 			'tel_work'            => 'telephonenumber',
 			'tel_home'            => 'homephone',
 			'tel_voice'           => 'phpgwvoicetelephonenumber',
-			'tel_fax'             => 'facsimiletelephonenumber', 
+			'tel_fax'             => 'facsimiletelephonenumber',
 			'tel_msg'             => 'phpgwmsgtelephonenumber',
 			'tel_cell'            => 'phpgwcelltelephonenumber',
 			'tel_pager'           => 'phpgwpagertelephonenumber',
@@ -185,7 +185,7 @@
 				}
 			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
@@ -221,7 +221,8 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
+				. (int)$id . "'",__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
 				if($extra_fields[$this->db->f('contact_name')])
@@ -250,9 +251,12 @@
 			}
 
 			$id = $this->nextid;
-			if ($id == -1) { $id = 1; }
+			if($id == -1)
+			{
+				$id = 1;
+			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
@@ -289,7 +293,7 @@
 				}
 			}
 
-			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . (int)$id . "'",__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
 				if($extra_fields[$this->db->f('contact_name')])
@@ -412,7 +416,7 @@
 				// this was very slow
 				#reset($this->stock_contact_fields);
 				#$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
-				
+
 				// don't search about any fields any more
 				$search_filter = array(
 					'fn'		=> 'cn',
@@ -758,7 +762,7 @@
 
 		function field_exists($id,$field_name)
 		{
-			$this->db->query("select count(*) from $this->ext_table where contact_id='$id' and contact_name='"
+			$this->db->query("SELECT COUNT(*) FROM $this->ext_table where contact_id='" . (int)$id . "' AND contact_name='"
 			. addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
@@ -766,14 +770,14 @@
 
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
-			$this->db->query("insert into $this->ext_table values ($id,'$owner','" . addslashes($field_name)
-			. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
+			$this->db->query("INSERT INTO $this->ext_table VALUES (" . (int)$id . ",'$owner','" . addslashes($field_name)
+				. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
-			$this->db->query("delete from $this->ext_table where contact_id='$id' and contact_name='"
-			. addslashes($field_name) . "'",__LINE__,__FILE__);
+			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='" . (int)$id . "' AND contact_name='"
+				. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access='private',$cat_id='0',$tid='n')
@@ -786,7 +790,7 @@
 			}
 
 			/* First make sure that id number exists */
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			if ($ldap_fields[0]['dn'])
@@ -927,7 +931,7 @@
 						{
 							$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
 								. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
-								. "' AND contact_id='$id'",__LINE__,__FILE__);
+								. "' AND contact_id='" . (int)$id . "'",__LINE__,__FILE__);
 						}
 					}
 					else
@@ -978,7 +982,7 @@
 			{
 				$err = ldap_delete($this->ldap,$ldap_fields[0]['dn']);
 
-				$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_owner='"
+				$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='" . (int)$id . "' AND contact_owner='"
 					. $this->account_id . "'",__LINE__,__FILE__);
 			}
 			else
