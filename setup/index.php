@@ -307,18 +307,28 @@
 						lang('LDAP account import/export'),
 						'POST','ldap.php',
 						'submit',lang('Configure Now'),
-						'');
-					$link_make_accts = '&nbsp';
+						''
+					);
 				}
 				else
 				{
 					$btn_config_ldap = '';
+				}
+				$phpgw_setup->db->query("select config_value FROM phpgw_config WHERE config_name='webserver_url'");
+				$phpgw_setup->db->next_record();
+				if ($phpgw_setup->db->f(0))
+				{
 					$link_make_accts = $phpgw_setup->make_href_link_simple(
 						'<br>',
 						'setup_demo.php',
 						lang('Click Here'),
 						lang('to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>')
+						. ' ' . lang('(account deletion in SQL Only)')
 					);
+				}
+				else
+				{
+					$link_make_accts = '&nbsp;';
 				}
 			}
 			else
