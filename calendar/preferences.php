@@ -15,17 +15,18 @@
   include("../header.inc.php");
 
   if ($submit) {
-     $phpgw->preferences->change("calendar","weekdaystarts");
-     $phpgw->preferences->change("calendar","workdaystarts");
-     $phpgw->preferences->change("calendar","workdayends");
-     $phpgw->preferences->change("calendar","defaultcalendar");
-     $phpgw->preferences->change("calendar","defaultfilter");
+     $phpgw->preferences->read_repository();
+     $phpgw->preferences->add("calendar","weekdaystarts");
+     $phpgw->preferences->add("calendar","workdaystarts");
+     $phpgw->preferences->add("calendar","workdayends");
+     $phpgw->preferences->add("calendar","defaultcalendar");
+     $phpgw->preferences->add("calendar","defaultfilter");
      if ($mainscreen_showevents) {
-        $phpgw->preferences->change("calendar","mainscreen_showevents");
+        $phpgw->preferences->add("calendar","mainscreen_showevents");
      } else {
         $phpgw->preferences->delete("calendar","mainscreen_showevents");
      }
-     $phpgw->preferences->commit();
+     $phpgw->preferences->save_repository();
      
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
      $phpgw->common->phpgw_exit();
