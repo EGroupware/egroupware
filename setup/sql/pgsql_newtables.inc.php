@@ -151,7 +151,7 @@
                     c_tel_msg           boolean DEFAULT 'n' NOT NULL,
                     c_tel_fax           boolean DEFAULT 'n' NOT NULL,
                     c_tel_prefer        boolean DEFAULT 'n' NOT NULL,
-                    d_emailtype         text check(status in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
+                    d_emailtype         text check(d_emailtype in('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX')) DEFAULT 'INTERNET' NOT NULL,
                     d_email             varchar(64),
                     d_email_work        boolean DEFAULT 'n' NOT NULL,
                     d_email_home        boolean DEFAULT 'n' NOT NULL,
