@@ -275,11 +275,17 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1)
 	###
 	$href = preg_replace ("/%2F/", "/", $href);
 	$text = trim ($text);
-/*
-	$rstring = "<a href=$href>$text</a>";
-*/
-	$href = $sep . $href;
-	$address = $phpgw->link ($href);
+
+	/* Auto-detect and don't disturb absolute links */
+	if (!preg_match ("|^http(.{0,1})://|", $href))
+	{
+		$href = $sep . $href;
+		$address = $phpgw->link ($href);
+	}
+	else
+	{
+		$address = $href;
+	}
 	$rstring = "<a href=$address>$text</a>";
 	return (eor ($rstring, $return));
 }
@@ -310,6 +316,15 @@ function html_table_begin ($width = NULL, $border = NULL, $cellspacing = NULL, $
 		$rules = "rules=$rules";
 
 	$rstring = "<table $width $border $cellspacing $cellpadding $rules $string>";
+	return (eor ($rstring, $return));
+}
+
+function html_link_email ($address = NULL, $text = NULL, $return = 0, $encode = 1)
+{
+	if ($encode)
+		$href = string_encode ($href, 1);
+
+	$rstring = "<a href=mailto:$address>$text</a>";
 	return (eor ($rstring, $return));
 }
 
