@@ -13,11 +13,11 @@
 	</td>
 </tr>
 <tr bgcolor="#e6e6e6">
-	<td {td_align}>
+	<td {td_align} rowspan="2">
 		{select_box_desc}
 		<form method="POST" action="lang.php">
 		{hidden_var1}
-		<select name="lang_selected[]" multiple size="10">
+		<select name="lang_selected[]" multiple size="25">
 		{select_box_langs}
 		</select>
 	</td>
@@ -35,6 +35,11 @@
 		&nbsp;{blurb_addmissing}
 	</td>
 	<!-- END B_choose_method -->
+</tr>
+<tr bgcolor="#e6e6e6">
+	<td>
+		<input type="checkbox" name="debug" value="1"> {lang_debug}
+	</td>
 </tr>
 </table>
 

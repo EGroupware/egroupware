@@ -33,8 +33,12 @@
 		$GLOBALS['phpgw_setup']->translation->setup_translation_sql();
 		$GLOBALS['phpgw_setup']->translation->sql->install_langs(@$_POST['lang_selected'],@$_POST['upgrademethod']);
 
-		Header('Location: index.php');
-		exit;
+		
+		if( !$GLOBALS['phpgw_setup']->translation->sql->line_rejected )
+		{
+			Header('Location: index.php');
+			exit;
+		}
 	}
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
@@ -84,11 +88,27 @@
 		$setup_tpl->set_var('blurb_addonlynew',$blurb_addonlynew);
 		$setup_tpl->set_var('blurb_addmissing',$blurb_addmissing);
 		$setup_tpl->set_var('blurb_dumpold',$blurb_dumpold);
+		$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 		$setup_tpl->parse('V_choose_method','B_choose_method');
 	}
 	else
 	{
 		$setup_tpl->set_var('V_choose_method','');
+	}
+
+	// Rejected Lines
+	if($_POST['debug'] && count($GLOBALS['phpgw_setup']->translation->sql->line_rejected))
+	{
+		$str = '';
+		foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
+		{
+			$_f_buffer = split("[/\\]", $badline['appfile']);
+			$str .= lang('Application: %1, File: %2, Line: "%3"','<b>'.$_f_buffer[count($_f_buffer)-3].'</b>',
+				'<b>'.$_f_buffer[count($_f_buffer)-1].'</b>',$badline['line'])."<br>\n";
+		}
+		$setup_tpl->set_var('V_alert_word', lang('Rejected lines'));
+		$setup_tpl->set_var('V_alert_msg', $str);
+		$alert = TRUE;
 	}
 
 	$setup_tpl->set_var('stage_title',$stage_title);
@@ -105,5 +125,9 @@
 
 	$GLOBALS['phpgw_setup']->html->show_header("$stage_title",False,'config',$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $phpgw_domain[$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')');
 	$setup_tpl->pparse('out','T_lang_main');
+	
+	if($alert)
+		$setup_tpl->pparse('out','T_alert_msg');
+		
 	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

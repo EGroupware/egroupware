@@ -33,6 +33,7 @@ application management	setup	de	Verwaltung der Anwendungen
 application name and status	setup	de	Name und Status der Anwendung
 application name and status information	setup	de	Name und Status Information der Anwendung
 application title	setup	de	Titel der Anwendung
+application: %1, file: %2, line: "%3"	setup	de	Anwendung: %1, Datei: %2, Zeile: "%3"
 are you sure you want to delete your existing tables and data?	setup	de	Sind Sie sicher, dass Sie Ihre bestehenden Tabellen und Daten löschen wollen?
 are you sure?	setup	de	SIND SIE SICHER?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
@@ -64,6 +65,7 @@ cannot create the header.inc.php due to file permission restrictions.<br> instea
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	ISO-8859-1
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	de	Dieser Test kann nur durchgeführt werden, wenn der Aufruf über den Webserver erfolgt, da Benutzer-Id und -name des Webservers nicht bekannt sind.
 check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
@@ -307,6 +309,7 @@ really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallie
 recommended: filesystem	setup	de	Empfohlen: Dateisystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), eGroupWare benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
 registered	setup	de	registriert
+rejected lines	setup	de	Zurückgewiesende Zeilen
 remove	setup	de	Entfernen
 remove all	setup	de	Alle Entfernen
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
