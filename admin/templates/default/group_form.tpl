@@ -30,14 +30,21 @@
 
        <tr>
         <td>{lang_permissions}</td>
-        <td><table width="100%" border="0" cols="6">
+        <td>
+         <table width="100%" border="0" cols="6">
          {permissions_list}
-        </table></td>
+         </table>
+        </td>
        </tr>
 
        <tr>
-        <td colspan="2" align="center">
+        <td colspan="2" align="left">
          <input type="submit" name="submit" value="{lang_submit_button}">
+        </td>
+        </form>
+        <form method="POST" action="{cancel_action}">
+        <td align="left">
+         <input type="submit" name="cancel" value="{lang_cancel}">
         </td>
        </tr>
       </form>

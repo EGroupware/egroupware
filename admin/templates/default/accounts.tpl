@@ -34,10 +34,15 @@
       {input_add}
       </form>
      </td>
-     <td align="right">
+     <td align="center">
       <form method="POST" action="{accounts_url}">
        {input_search}
       </form>
+     </td>
+     <td align="right">
+      <form method="POST" action="{doneurl}">
+       <input type="submit" name="done" value="{lang_done}">
+       </form>
      </td>
     </tr>
    </table>

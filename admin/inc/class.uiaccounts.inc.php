@@ -89,7 +89,9 @@
 				'lang_groups'   => lang('user groups'),
 				'sort_name'     => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('name'),'menuaction=admin.uiaccounts.list_groups'),
 				'header_edit'   => lang('Edit'),
-				'header_delete' => lang('Delete')
+				'header_delete' => lang('Delete'),
+				'lang_done'     => lang('Done'),
+				'doneurl'       => $GLOBALS['phpgw']->link('/admin/index.php')
 			);
 			$p->set_var($var);
 
@@ -223,7 +225,9 @@
 				'lang_view'    => lang('view'),
 				'actionurl'    => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.add_user'),
 				'accounts_url' => $url,
-				'lang_search'  => lang('search')
+				'lang_search'  => lang('search'),
+				'lang_done'    => lang('Done'),
+				'doneurl'      => $GLOBALS['phpgw']->link('/admin/index.php')
 			);
 			$p->set_var($var);
 
@@ -750,6 +754,7 @@
 
 			$var = Array(
 				'form_action'       => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.boaccounts.'.($group_info['account_id']?'edit':'add').'_group'),
+				'cancel_action'     => $GLOBALS['phpgw']->link('/admin/index.php'),
 				'hidden_vars'       => '<input type="hidden" name="account_id" value="' . $group_info['account_id'] . '">',
 				'lang_group_name'   => lang('group name'),
 				'group_name_value'  => $group_info['account_name'],
@@ -757,7 +762,8 @@
 				'error'             => (!$_errors?'':'<center>'.$GLOBALS['phpgw']->common->error_list($_errors).'</center>'),
 				'select_size'       => ($account_num < 5?$account_num:5),
 				'user_list'         => $user_list,
-				'lang_permissions'  => lang('Permissions this group has')
+				'lang_permissions'  => lang('Permissions this group has'),
+				'lang_cancel'       => lang('Cancel')
 			);
 			$p->set_var($var);
 
@@ -906,6 +912,7 @@
 
 			$var = Array(
 				'form_action'    => $GLOBALS['phpgw']->link('/index.php',$page_params),
+				'cancel_action'  => $GLOBALS['phpgw']->link('/admin/index.php'),
 				'error_messages' => (!$_errors?'':'<center>'.$GLOBALS['phpgw']->common->error_list($_errors).'</center>'),
 				'th_bg'          => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'tr_color1'      => $GLOBALS['phpgw_info']['theme']['row_on'],
@@ -919,7 +926,8 @@
 				'lang_groups'    => lang('Groups'),
 				'lang_expires'   => lang('Expires'),
 				'lang_firstname' => lang('First Name'),
-				'lang_button'    => ($_account_id?lang('Save'):lang('Add'))
+				'lang_button'    => ($_account_id?lang('Save'):lang('Add')),
+				'lang_cancel'    => lang('Cancel')
 			/* 'lang_file_space' => lang('File Space') */
 			);
 			$t->set_var($var);
