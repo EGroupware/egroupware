@@ -75,6 +75,7 @@ class vfs
 	var $working_id;
 	var $working_lid;
 	var $attributes;
+	var $override_acl;
 
 	/*!
 	@function vfs
@@ -90,6 +91,7 @@ class vfs
 		$this->working_id = $phpgw_info["user"]["account_id"];
 		$this->working_lid = $phpgw->accounts->id2name ($this->working_id);
 		$this->now = date ("Y-m-d");
+		$this->override_acl = 0;
 
 		/* File/dir attributes, each corresponding to a database field.  Useful for use in loops */
 		$this->attributes = array ("file_id", "owner_id", "createdby_id", "modifiedby_id", "created", "modified", "size", "mime_type", "deleteable", "comment", "app", "directory", "name");
@@ -465,6 +467,12 @@ class vfs
 	{
 		global $phpgw, $phpgw_info;
 
+		/* Accommodate special situations */
+		if ($this->override_acl)
+		{
+			return True;
+		}
+
 		$account_id = $phpgw_info["user"]["account_id"];
 		$account_lid = $phpgw->accounts->id2name ($phpgw_info["user"]["account_id"]);
 
@@ -537,7 +545,13 @@ class vfs
 			}
 		}
 
+		if (!$group_id)
+		{
+			$group_id = $this->account_id;
+		}
+
 		$acl = CreateObject ("phpgwapi.acl", $group_id);
+		$acl->account_id = $group_id;
 		$acl->read_repository ();
 
 		$rights = $acl->get_rights ($account_id);
@@ -1141,7 +1155,7 @@ class vfs
 			{
 				$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, name, directory) VALUES ($this->working_id, '$p->fake_name_clean', '$p->fake_leading_dirs_clean')", __LINE__, __FILE__);
 
-				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => '', deleteable => "Y", "app" => $currentapp));
+				$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "size" => 1024, "mime_type" => "Directory", "created" => $this->now, "modified" => "NULL", deleteable => "Y", "app" => $currentapp));
 
 				$this->correct_attributes ($p->fake_full_path, array ($p->mask));
 			}
@@ -1246,16 +1260,16 @@ class vfs
 
 		$p = $this->path_parts ($string, array ($relatives[0]));
 
-		if ($p->fake_leading_dirs != $fakebase && $p->fake_leading_dirs != "/")
+		if ($p->fake_leading_dirs != $this->fakebase && $p->fake_leading_dirs != "/")
 		{
 			$ls_array = $this->ls ($p->fake_leading_dirs, array ($p->mask), False, False, True);
 			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $ls_array[0]["owner_id"]));
 
 			return True;
 		}
-		elseif (preg_match ("+^$fakebase\/(.*)$+U", $p->fake_full_path, $matches))
+		elseif (preg_match ("+^$this->fakebase\/(.*)$+U", $p->fake_full_path, $matches))
 		{
-			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $matches[1]));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $phpgw->accounts->name2id ($matches[1])));
 
 			return True;
 		}
