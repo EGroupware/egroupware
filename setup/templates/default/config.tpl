@@ -271,21 +271,26 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_LDAP_search_filter_for_accounts,_default:_"(uid=%user)",_%domain=eGW-domain}:</td>
+    <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="40"></td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_LDAP_groups_context}:</td>
     <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40"></td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_LDAP_rootdn}:</td>
+   <tr class="row_on">
+    <td>{lang_LDAP_rootdn} {lang_(searching_accounts_and_changing_passwords)}:</td>
     <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_LDAP_root_password}:</td>
     <td><input name="newsettings[ldap_root_pw]" type="password" value="{value_ldap_root_pw}"></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_LDAP_encryption_type}:</td>
     <td>
      <select name="newsettings[ldap_encryption_type]">
@@ -294,7 +299,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
      <td>{lang_Enable_LDAP_Version_3}:</td>
      <td>
       <select name="newsettings[ldap_version3]">
@@ -304,7 +309,7 @@
      </td>
     </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 

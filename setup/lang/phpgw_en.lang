@@ -1,5 +1,6 @@
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
+(searching accounts and changing passwords)	setup	en	(searching accounts and changing passwords)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	en	*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	en	*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!
 00 (disable)	setup	en	00 (disable / recomended)
@@ -223,6 +224,7 @@ ldap import users	setup	en	LDAP import users
 ldap modify	setup	en	LDAP Modify
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	en	Login to mysql -
 logout	setup	en	Logout

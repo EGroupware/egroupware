@@ -1,5 +1,6 @@
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
+(searching accounts and changing passwords)	setup	de	Benutzerkonten suchen und Passwörter ändern)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN)!!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGroupWare vollständig/fehlerfrei ausführen zu können!!!
 00 (disable)	setup	de	00 (abgeschaltet/empfohlen)
@@ -226,6 +227,7 @@ ldap import users	setup	de	LDAP-Benutzer importieren
 ldap modify	setup	de	LDAP Ändern
 ldap root password	setup	de	LDAP-Root-Passwort
 ldap rootdn	setup	de	LDAP rootdn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	de	mysql aufrufen -
 logout	setup	de	Abmelden
