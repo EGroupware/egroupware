@@ -113,7 +113,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title'] . '&nbsp;' . lang('global categories'));
+				$this->template->set_var('title_categories',lang($GLOBALS['appname']) . '&nbsp;' . lang('global categories'));
 			}
 			else
 			{
@@ -254,7 +254,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('Add global category for x',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',lang('Add global category for x',lang($GLOBALS['appname'])));
 			}
 			else
 			{
@@ -365,7 +365,7 @@
 
 			if ($GLOBALS['appname'])
 			{
-				$this->template->set_var('title_categories',lang('Edit global category for x',$GLOBALS['phpgw_info']['apps'][$GLOBALS['appname']]['title']));
+				$this->template->set_var('title_categories',lang('Edit global category for x',lang($GLOBALS['appname'])));
 			}
 			else
 			{
