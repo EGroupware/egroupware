@@ -21,6 +21,7 @@
 	/*!
 	@class uilink
 	@author ralfbecker
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - HTML UI layer
 	@discussion This class is the UI to show/modify the links
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
@@ -31,7 +32,7 @@
 	{
 		function uilink( )
 		{
-			bolink( );									// call constructor of derived class
+			$this->bolink( );							// call constructor of derived class
 			$this->public_functions += array(	// extend public_functions
 				'getEntry' => True,
 				'show'     => True
@@ -43,10 +44,42 @@
 		@syntax getEntry( $name )
 		@author ralfbecker
 		@abstract HTML UI to query user for one side of a link: an entry of a supported app
+		@param $name base-name of the input-fields
+		@result html for query
 		*/
-		function getEntry()
+		function getEntry($name)
 		{
-      }
+			$value = get_var($name,array('POST'));
+			if (!is_array($value))
+			{
+				$value = array();
+			}
+			echo "<p>$name = "; _debug_array($value);
+			if ($value['search'] && count($ids = $this->query($value['app'],$value['query'])))
+			{
+				$value = array(
+					'app' => $value['app'],
+					'options-id' => $ids,
+					'remark' => ''
+				);
+				$etemplate = CreateObject('etemplate.etemplate','infolog.linkto_widget.create');
+				$html = CreateObject('infolog.html');
+				$out = $etemplate->show($value,'','',$name)."\n".$html->input_hidden($name.'[app]',$value['app']);
+			}
+			else
+			{
+				$value = array(
+					'app' => $value['app'],
+					'options-app' => $this->app_list(),
+					'query' => '',
+					'msg' => $value['search'] ? 'Nothing found - try again!!!' : ''
+				);
+				$etemplate = CreateObject('etemplate.etemplate','infolog.linkto_widget.search');
+				$out = $etemplate->show($value,'','',$name);
+			}
+			$out = str_replace('[]','',$out);
+			return eregi_replace('[</]*table[^>]*>','',$out);
+		}
 
 		/*!
 		@function show
