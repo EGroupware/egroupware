@@ -49,7 +49,7 @@
 	}
 
 	if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-	if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Field '$field_name' has been updated !")); }
+	if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang("Field x has been updated !", $field_name)); }
 	if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
 
 	if ($submit)
