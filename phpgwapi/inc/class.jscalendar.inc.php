@@ -53,7 +53,7 @@
 		@param $helpmsg a helpmessage for the statusline of the browser
 		@param $options any other options to the inputfield
 		*/
-		function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='')
+		function input($name,$date,$year=0,$month=0,$day=0,$helpmsg='',$options='',$jsreturn=false)
 		{
 			//echo "<p>jscalendar::input(name='$name', date='$date'='".date('Y-m-d',$date)."', year='$year', month='$month', day='$day')</p>\n";
 
@@ -80,6 +80,17 @@
 			{
 				$options .= " onFocus=\"self.status='".addslashes($helpmsg)."'; return true;\"" .
 				" onBlur=\"self.status=''; return true;\"";
+			}
+			
+			if ($jsreturn)
+			{
+				$return_array = array(
+					'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/><img id="'.$name.'-trigger" src="'.$GLOBALS['phpgw']->common->find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>',
+					'js'   => 'Calendar.setup({inputField : "'.$name.'",button: "'.$name.'-trigger"	});'
+					);
+					
+				return $return_array;
+				
 			}
 			return
 '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.$date.'"'.$options.'/>
