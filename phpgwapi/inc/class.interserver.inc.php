@@ -308,15 +308,14 @@
 
 		function _send_soap_($method_name, $args, $url, $debug=True)
 		{
-		//	$method_name = str_replace('.','_',$method_name);
+			$method_name = str_replace('.','_',$method_name);
 			list($uri,$hostpart) = $this->_split_url($url);
-			$this->build_request($args);
-			/*
-			if(gettype($args) != 'array')
+
+			if(!$args)
 			{
-				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
+				$arr = '';
 			}
-			else
+			elseif(is_array($args))
 			{
 				while(list($key,$val) = @each($args))
 				{
@@ -334,18 +333,18 @@
 						$ele[] = CreateObject('phpgwapi.soapval',$key, 'string',$val);
 					}
 				}
-				if($complex)
-				{
-					$arr[] = CreateObject('phpgwapi.soapval','','struct',$ele);
-					$ele = $arr;
-				}
+				$arr[] = CreateObject('phpgwapi.soapval','','struct',$ele);
 			}
-			*/
+			else
+			{
+				$arr[] = CreateObject('phpgwapi.soapval','','string',$args);
+			}
+			$this->request = $arr;
+
 			$soap_message = CreateObject('phpgwapi.soapmsg',$method_name,$this->request);
 			$soap = CreateObject('phpgwapi.soap_client',$uri,$hostpart);
 			$soap->username = $this->sessionid;
 			$soap->password = $this->kp3;
-			/* _debug_array($soap_message); */
 			if($r = $soap->send($soap_message,$method_name))
 			{
 				_debug_array(htmlentities($soap->outgoing_payload));
