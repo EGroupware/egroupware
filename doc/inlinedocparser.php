@@ -155,7 +155,7 @@
 
 	while (list($p,$fn) = each($files))
 	{
-		$matches = $elements = $data = $class = array();
+		$matches = $elements = $data = $class = $startstop = array();
 		$string = $t = $out = $xkey = $new = '';
 		//$string = $t = $out = $class = $xkey = $new = '';
 		$file = '../'.$app.'/inc/' . $fn;
