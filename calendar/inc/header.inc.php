@@ -1,5 +1,7 @@
 <?php
-  if (! $phpgw_info["flags"]["nocalendarheader"]) {
+
+  if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||
+      !$phpgw_info["flags"]["nocalendarheader"]) {
      ?>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -25,7 +27,9 @@
   <td align="right">
    <form action="<?php echo $phpgw->link("search.php"); ?>" method="POST">
     <input type="hidden" name="from" value="<?php echo $PHP_SELF; ?>">
+    <?php if(isset($date) && $date) { ?>
     <input type="hidden" name="date" value="<?php echo $date; ?>">
+    <?php } ?>
     <input type="hidden" name="month" value="<?php echo $thismonth; ?>">
     <input type="hidden" name="day" value="<?php echo $thisday; ?>">
     <input type="hidden" name="year" value="<?php echo $thisyear; ?>">

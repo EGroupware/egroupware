@@ -14,40 +14,39 @@
 
   /* $Id$ */
 
-  if ($friendly) {
+  if (isset($friendly) && $friendly){
      $phpgw_info["flags"]["noheader"] = True;
+  } else {
+     $friendly = 0;
   }
 
   $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
-  if (strlen($date) > 0) {
+
+  if (isset($date) && strlen($date) > 0) {
      $thisyear = substr($date, 0, 4);
      $thismonth = substr($date, 4, 2);
      $thisday = substr($date, 6, 2);
   } else {
-     if ($day == 0)
-        $thisday = date("d");
+     if (!isset($day) || !$day)
+        $thisday = $phpgw->calendar->today["day"];
      else
         $thisday = $day;
-     if ($month == 0)
-        $thismonth = date("m");
+     if (!isset($month) || !$month)
+        $thismonth = $phpgw->calendar->today["month"];
      else
         $thismonth = $month;
-     if ($year == 0)
-        $thisyear = date("Y");
+     if (!isset($year) || !$year)
+        $thisyear = $phpgw->calendar->today["year"];
      else
         $thisyear = $year;
   }
 
-  $next = mktime(2,0,0,$thismonth + 1,1,$thisyear);
-  $nextyear = date("Y", $next);
-  $nextmonth = date("m", $next);
-  $nextdate = date("Ymd");
+  $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
+//  $nextdate = date("Ymd");
 
-  $prev = mktime(2,0,0,$thismonth - 1,1,$thisyear);
-  $prevyear = date("Y",$prev);
-  $prevmonth = date("m",$prev);
-  $prevdate = date("Ymd");
+  $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
+//  $prevdate = date("Ymd");
 
   if ($friendly) {
      echo "<body bgcolor=\"".$phpgw_info["theme"][bg_color]."\">";
@@ -69,10 +68,10 @@
 <table border="0" width="100%">
 <tr>
 <?php
-  if (! $friendly) {
+//  if (! $friendly) {
      echo "<td align=\"left\">";
-     display_small_month($prevmonth,$prevyear,True);
-  }
+     echo $phpgw->calendar->display_small_month($prev["month"],$prev["year"],True,"edit_entry.php");
+//  }
 ?>
 
 <td align="middle"><font size="+2" color="#000000"><B>
@@ -88,86 +87,24 @@
 ?>
 </font></td>
 <?php
-  if (! $friendly) {
+//  if (! $friendly) {
      echo "<td align=\"right\">";
-     display_small_month($nextmonth,$nextyear,True);
-  }
+     echo $phpgw->calendar->display_small_month($next["month"],$next["year"],True,"edit_entry.php");
+//  }
 ?>
 </tr>
 </table>
-
-<table width="100%" border="0" bordercolor="#FFFFFF" cellspacing="2" cellpadding="2">
-
-<tr>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sun"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Mon"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Tue"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Wed"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Thu"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Fri"); ?></font></th>
-<th width="14%" bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>"><font color="<?php echo $phpgw_info["theme"]["th_text"]; ?>"><?php echo lang("Sat"); ?></font></th>
-</tr>
-
 <?php
+  echo $phpgw->calendar->display_large_month($thismonth,$thisyear,True,"edit_entry.php");
+
   /* Pre-Load the repeated events for quckier access */
   $repeated_events = read_repeated_events();
-
-  // We add 2 hours on to the time so that the switch to DST doesn't
-  // throw us off.  So, all our dates are 2AM for that day.
-  // $sun = get_sunday_before($thisyear,$thismonth,1) + 7200;
-  $sun = get_sunday_before($thisyear,$thismonth,1) + 7200;
-  // generate values for first day and last day of month
-  $monthstart = mktime(2,0,0,$thismonth,1,$thisyear);
-  $monthend = mktime(2,0,0,$thismonth + 1,0,$thisyear);
-
-  // debugging
-  //echo "<P>sun = "	    . date("D, m-d-Y", $sun)	    . "<BR>";
-  //echo "<P>monthstart = " . date("D, m-d-Y", $monthstart) . "<BR>";
-  //echo "<P>monthend = "   . date("D, m-d-Y", $monthend)   . "<BR>";
-
-  $today = mktime(2,0,0,date("m"),date("d"),date("Y"));
-
-  for ($i = $sun; date("Ymd",$i) <= date("Ymd",$monthend); $i += (24 * 3600 * 7) ) {
-    $cellcolor = $phpgw->nextmatchs->alternate_row_color($cellcolor);
-
-    echo "<tr>\n";
-    for ($j = 0; $j < 7; $j++) {
-      $date = $i + ($j * 24 * 3600);
-      if (date("Ymd",$date) >= date("Ymd",$monthstart) &&
-         date("Ymd",$date) <= date("Ymd",$monthend)) {
-         echo "<td valign=\"top\" width=\"75\" height=\"75\"";
-         if (date("Ymd",$date) == date("Ymd",$today)) {
-            echo " bgcolor=\"".$phpgw_info["theme"]["cal_today"]."\">";
-         } else {
-            echo " bgcolor=\"$cellcolor\">";
-         }
-
-         print_date_entries($date,$friendly,$phpgw_info["user"]["sessionid"]);
-
-         $thirsday=$i+24*3600*4;
-         if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Sunday" && $j == 0) {
-            echo "<font size=\"-2\"><a href=\"".$phpgw->link("week.php","date=".date("Ymd",$date))."\">week " .(int)((date("z",$thirsday)+7)/7) . "</a></font>";
-         }
-         if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday" && $j == 1) {
-            echo "<font size=\"-2\"><a href=\"".$phpgw->link("week.php","date=" . date("Ymd",$date)) . "\">week " . (int)((date("z",$thirsday)+7)/7) . "</a></font>";
-         }
-
-         echo "</td>\n";
-      } else {
-         echo "<td></td>\n";
-      }
-    }
-    print "</tr>\n";
-  }
-
 ?>
-
-</table>
 <p>
 <p>
 
 <?php
-  if (! $friendly) {
+  if (!$friendly) {
      $param = "";
      if ($thisyear)
         $param .= "year=$thisyear&month=$thismonth&";

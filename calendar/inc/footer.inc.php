@@ -11,12 +11,13 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
-  if ($friendly) {
-     include($phpgw_info["server"]["api_dir"]."/footer.inc.php");
+  if (isset($friendly) && $friendly){
+     $phpgw->common->phpgw_footer();
      exit;
   }
 
-  if (! $phpgw_info["flags"]["nocalendarfooter"]) {
+  if (!isset($phpgw_info["flags"]["nocalendarheader"]) ||
+      !$phpgw_info["flags"]["nocalendarheader"]) {
      ?>
        <BR CLEAR="all">
        <HR CLEAR="all">

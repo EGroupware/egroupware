@@ -204,13 +204,13 @@
     $thismonth = substr($date, 4, 2);
 
     for ($i=0; $i < count($repeated_events); $i++ ) {
-        $start = date_to_epoch($repeated_events[$i][cal_date]);
-        $end   = date_to_epoch($repeated_events[$i][cal_end]);
+        $start = date_to_epoch($repeated_events[$i]["cal_date"]);
+        $end   = date_to_epoch($repeated_events[$i]["cal_end"]);
 
-	$freq = $repeated_events[$i][cal_frequency];
+	$freq = $repeated_events[$i]["cal_frequency"];
 	// only repeat after the beginning, and if there is an end
 	// before the end
-	if ($repeated_events[$i][cal_end] && date("Ymd",$date) > date("Ymd",$end) )
+	if ($repeated_events[$i]["cal_end"] && date("Ymd",$date) > date("Ymd",$end) )
 	   continue;
 
 	if (date("Ymd",$date) < date("Ymd",$start)) 
@@ -218,14 +218,14 @@
 
 	$id = $repeated_events[$i][cal_id];
 
-	if ($repeated_events[$i][cal_type] == 'daily') {
+	if ($repeated_events[$i]["cal_type"] == 'daily') {
 	   if ( (floor(($date - $start)/86400)%$freq) )
 	      continue;
-           link_to_entry( $id, "rpt.gif", $repeated_events[$i][cal_description]);
-	   echo $repeated_events[$i][cal_name] . "<br>";
-	} else if ($repeated_events[$i][cal_type] == 'weekly') {
+           link_to_entry( $id, "rpt.gif", $repeated_events[$i]["cal_description"]);
+	   echo $repeated_events[$i]["cal_name"] . "<br>";
+	} else if ($repeated_events[$i]["cal_type"] == 'weekly') {
 	   $dow = date("w", $date);
-	   $isDay = substr($repeated_events[$i][cal_days], $dow, 1);
+	   $isDay = substr($repeated_events[$i]["cal_days"], $dow, 1);
 
 	   /*if ( (floor($diff/86400)%$freq) ) // Whats this for ?
 	   **   continue;
@@ -234,10 +234,10 @@
 	   if (floor(($date - $start)/604800)%$freq)
 	      continue;
 	   if (strcmp($isDay,"y") == 0) {
-	      link_to_entry($id, "rpt.gif", $repeated_events[$i][cal_description]);
-	      echo $repeated_events[$i][cal_name] . "<br>";
+	      link_to_entry($id, "rpt.gif", $repeated_events[$i]["cal_description"]);
+	      echo $repeated_events[$i]["cal_name"] . "<br>";
 	   }
-	} else if ($repeated_events[$i][cal_type] == 'monthlyByDay') {
+	} else if ($repeated_events[$i]["cal_type"] == 'monthlyByDay') {
 	   $dowS = date("w", $start);
 	   $dayS = floor(date("d", $start)/7);
 	   $mthS = date("m", $start);
@@ -250,10 +250,10 @@
 	      continue;
 
 	   if (($dowS == $dow) && ($day == $dayS)) {
-	      link_to_entry($id, "rpt.gif", $repeated_events[$i][cal_description]);
-	      echo $repeated_events[$i][cal_name] . "<br>";
+	      link_to_entry($id, "rpt.gif", $repeated_events[$i]["cal_description"]);
+	      echo $repeated_events[$i]["cal_name"] . "<br>";
 	   }
-	} else if ($repeated_events[$i][cal_type] == 'monthlyByDate') {
+	} else if ($repeated_events[$i]["cal_type"] == 'monthlyByDate') {
 	   $mthS = date("m", $start);
 	   $yrS  = date("Y", $start);
 	   $mth  = date("m", $date);
@@ -261,17 +261,17 @@
 	   if ((($yr - $yrS)*12 + $mth - $mthS) % $freq)
 	      continue;
 	   if (date("d", $date) == date("d", $start)) {
-	      link_to_entry($id, "rpt.gif", $repeated_events[$i][cal_description]);
-	      echo $repeated_events[$i][cal_name] . "<br>";
+	      link_to_entry($id, "rpt.gif", $repeated_events[$i]["cal_description"]);
+	      echo $repeated_events[$i]["cal_name"] . "<br>";
 	   }
-	} else if ($repeated_events[$i][cal_type] == 'yearly') {
+	} else if ($repeated_events[$i]["cal_type"] == 'yearly') {
 	   $yrS = date("Y", $start);
 	   $yr  = date("Y", $date);
 	   if (($yr - $yrS)%$freq)
 	      continue;
 	   if (date("dm", $date) == date("dm", $start)) {
-	      link_to_entry($id, "rpt.gif", $repeated_events[$i][cal_description]);
-	      echo $repeated_events[$i][cal_name] . "<br>";
+	      link_to_entry($id, "rpt.gif", $repeated_events[$i]["cal_description"]);
+	      echo $repeated_events[$i]["cal_name"] . "<br>";
 	   }
 	} else {
 	// unknown rpt type - because of all our else ifs
