@@ -14,7 +14,12 @@
 
   /* $Id$ */
 
-  $phpgw_info['flags'] = array('currentapp' => 'calendar', 'enable_nextmatchs_class' => True);
+  $phpgw_flags = Array (
+  						'currentapp'				=> 'calendar',
+  						'enable_nextmatchs_class'	=> True
+  );
+
+  $phpgw_info['flags'] = $phpgw_flags;
 
   if (isset($friendly) && $friendly)
   {
