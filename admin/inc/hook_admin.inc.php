@@ -13,7 +13,7 @@
 
 	if (! $GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
 	{
-		$file['Site Configuration']         = $GLOBALS['phpgw']->link('/admin/config.php','appname=admin');
+		$file['Site Configuration']         = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('peer_server_access',1,'admin'))
