@@ -112,20 +112,49 @@
 			if(isset($order))   { $this->order  = $order;  }
 			if(isset($filter))  { $this->filter = $filter; }
 			if(isset($fcat_id)) { $this->cat_id = $fcat_id; }
+		}
 
-			/* Preliminary xml function exposure */
-			$this->xml_functions = array(
-				'read_entry' => array(
-					'function'  => 'read_entry',
-					'signature' => array(array($xmlrpcStruct)),
-					'docstring' => lang('Read a single entry by passing the id and fieldlist.')
-				),
-				'read_entries' => array(
-					'function'  => 'read_entries',
-					'signature' => array(array($xmlrpcStruct)),
-					'docstring' => lang('Read a list of entries.')
-				)
-			);
+		function list_methods($_type='xmlrpc')
+		{
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'read_entry' => array(
+							'function'  => 'read_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
+						),
+						'add_entry' => array(
+							'function'  => 'add_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Add a single entry by passing the fields.')
+						),
+						'update_entry' => array(
+							'function'  => 'update_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Update a single entry by passing the fields.')
+						),
+						'delete_entry' => array(
+							'function'  => 'delete_entry',
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'docstring' => lang('Delete a single entry by passing the id.')
+						),
+						'read_entries' => array(
+							'function'  => 'read_entries',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a list of entries.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
+			}
 		}
 
 		function save_sessiondata($data)

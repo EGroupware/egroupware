@@ -43,30 +43,20 @@
 					}
 				}
 			}
-			$this->rights = $rights;
-			$this->grants = $grants;
-			$this->owner  = $owner;
-		}
-
-		function makeobj()
-		{
-			if (!is_object($this->contacts))
-			{
-				$this->contacts = CreateObject('phpgwapi.contacts');
-			}
-			return;
+			$this->rights   = $rights;
+			$this->grants   = $grants;
+			$this->owner    = $owner;
+			$this->contacts = CreateObject('phpgwapi.contacts');
 		}
 
 		function read_entries($start,$offset,$qcols,$query,$qfilter,$sort,$order)
 		{
-			$this->makeobj();
 			$readrights = $this->rights & PHPGW_ACL_READ;
 			return $this->contacts->read($start,$offset,$qcols,$query,$qfilter,$sort,$order,$readrights);
 		}
 
 		function read_entry($id,$fields)
 		{
-			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_single_entry($id,$fields);
@@ -80,21 +70,19 @@
 
 		function read_last_entry($fields)
 		{
-			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_READ)
 			{
 				return $this->contacts->read_last_entry($fields);
 			}
 			else
 			{
-				$rtrn = array('No access' => 'No access');
+				$rtrn = array(0 => array('No access' => 'No access'));
 				return $rtrn;
 			}
 		}
 
 		function add_entry($fields)
 		{
-			$this->makeobj();
 			$fields['tid'] = trim($fields['tid']);
 			if(empty($fields['tid']))
 			{
@@ -109,15 +97,13 @@
 
 		function get_lastid()
 		{
-			$this->makeobj();
 		 	$entry = $this->contacts->read_last_entry();
-			$ab_id = $entry[0]['id'];
-			return $ab_id;
+			$id = $entry[0]['id'];
+			return $id;
 		}
 
 		function update_entry($fields)
 		{
-			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_EDIT)
 			{
 				$this->contacts->update($fields['ab_id'],$fields['owner'],$fields,$fields['access'],$fields['cat_id']);
@@ -127,7 +113,6 @@
 
 		function delete_entry($data)
 		{
-			$this->makeobj();
 			if ($this->rights & PHPGW_ACL_DELETE)
 			{
 				$this->contacts->delete($data['id']);
