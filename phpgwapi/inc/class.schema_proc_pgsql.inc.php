@@ -611,7 +611,9 @@
 			$pkeys = $oProc->m_odb->pkey_columns($sOldTableName);
 			if(!in_array($sOldTableName . '_pkey',$indexes) && !isset($pkeys[0]))	// no idea how this can happen
 			{
-				$oProc->m_odb->query("ALTER TABLE " . $sOldTableName . " DROP CONSTRAINT " . $sOldTableName . "_pkey",__LINE__,__FILE__);
+				// this happens if the table has no primary key --> nothing to do
+				// trying to drop the (not existing) constrain results in an error
+				//$oProc->m_odb->query("ALTER TABLE " . $sOldTableName . " DROP CONSTRAINT " . $sOldTableName . "_pkey",__LINE__,__FILE__);
 			}
 			else	// rename the index
 			{
