@@ -72,6 +72,18 @@
 	define('DEBUG_DATATYPES',  True);
 	define('DEBUG_LEVEL',  3);
 	define('DEBUG_OUTPUT', 2); /* 1 = screen,  2 = DB (not supported with PHP3). For both use 3. */
+	define('DEBUG_TIMER', False);
+
+	function perfgetmicrotime()
+	{
+		list($usec, $sec) = explode(' ',microtime());
+		return ((float)$usec + (float)$sec);
+	}
+
+	if (DEBUG_TIMER)
+	{
+		$GLOBALS['debug_timer_start'] = perfgetmicrotime();
+	}
 
 	/**************************************************************************\
 	* Do not edit these lines                                                  *
