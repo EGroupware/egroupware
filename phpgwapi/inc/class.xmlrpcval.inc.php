@@ -294,7 +294,7 @@
 
 		function arraymem($m)
 		{
-			$nv=$this->me['array'][$m];
+			$nv=@$this->me['array'][$m];
 			return $nv;
 		}
 
