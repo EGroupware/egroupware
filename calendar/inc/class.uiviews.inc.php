@@ -684,7 +684,7 @@ class uiviews extends uical
 <meta http-equiv="content-type" content="text/html; charset=<?php echo $GLOBALS['phpgw']->translation->charset(); ?>">
 <meta http-equiv="refresh" content="1; URL=<?php echo $_SERVER['PHP_SELF'].'?'.($_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'].'&':'').'windowInnerWidth=Off'; ?>">
 </head>
-<body onLoad="location = location + (location.search.length ? '&' : '?') + 'windowInnerWidth=' + (window.innerWidth ? window.innerWidth : document.body.offsetWidth);">
+<body onLoad="location = location + (location.search.length ? '&' : '?') + 'windowInnerWidth=' + (window.innerWidth ? window.innerWidth : document.body.clientWidth);">
 <noscript>
 <p><?php echo lang('Determining window width ...'); ?></p>
 <p><?php echo lang('Needs javascript to be enabled !!!'); ?></p>
@@ -706,7 +706,7 @@ class uiviews extends uical
 			$GLOBALS['phpgw_info']['flags']['java_script'] = '
 <script type="text/javascript">
 function reload_inner_width() {
-	var width = window.innerWidth ? window.innerWidth : document.body.offsetWidth;
+	var width = window.innerWidth ? window.innerWidth : document.body.clientWidth;
 	if (location.search.indexOf("windowInnerWidth=") < 0)
 	{
 		location = location+(location.search.length ? "&" : "?")+"windowInnerWidth="+width;
@@ -724,7 +724,19 @@ function reload_inner_width() {
 				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['phpgw']->js->set_onresize('reload_inner_width();');
-			$GLOBALS['phpgw']->js->set_onload('if ('.$width.'!=(window.innerWidth ? window.innerWidth : document.body.offsetWidth)) reload_inner_width();');
+			
+			// need to be instanciated here, as the constructor is not yet finished
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$GLOBALS['phpgw']->js->set_onresize('reload_inner_width();');
+			// dont check for MS IE the window-width on load, as some versions report constantly changing sizes
+			if ($GLOBALS['phpgw']->html->user_agent != 'msie') 
+			{
+				//$GLOBALS['phpgw']->js->set_onload('if ('.$width.'!=(window.innerWidth ? window.innerWidth : document.body.clientWidth)) reload_inner_width();');
+				$GLOBALS['phpgw']->js->set_onload('if ('.$width.'!=window.innerWidth) reload_inner_width();');
+			}
 		}
 		else
 		{
