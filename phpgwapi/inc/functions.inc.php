@@ -285,34 +285,17 @@
 		$phpgw->preferences->verify_basic_settings();
 	
 		/********* Optional classes, which can be disabled for performance increases *********/
-		if ($phpgw_info["flags"]["enable_categories_class"]) {
-			$phpgw->categories = CreateObject("phpgwapi.categories");
+		while ($name = each($phpgw_info['flags']))
+		{
+			if (ereg('enable_',$name[0]))
+			{
+				$enable_class = ereg_replace('enable_','',$name[0]);
+				$enable_class = ereg_replace('_class','',$enable_class);
+				eval('$phpgw->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
+			}
 		}
-	
-		if ($phpgw_info["flags"]["enable_network_class"]) {
-			$phpgw->network = CreateObject("phpgwapi.network");
-		}
-		
-		if ($phpgw_info["flags"]["enable_send_class"]) {
-			$phpgw->send = CreateObject("phpgwapi.send");
-		}
- 
-		if ($phpgw_info["flags"]["enable_nextmatchs_class"]) {
-			$phpgw->nextmatchs = CreateObject("phpgwapi.nextmatchs");
-		}
-		
-		if ($phpgw_info["flags"]["enable_utilities_class"]) {
-			$phpgw->utilities = CreateObject("phpgwapi.utilities");
-			$phpgw->utilities->utilities_();
-		}
- 
-		if ($phpgw_info["flags"]["enable_vfs_class"]) {
-			$phpgw->vfs = CreateObject("phpgwapi.vfs");
-		}
-
-		if ($phpgw_info["flags"]["enable_browser_class"]) {
-			$phpgw->browser = CreateObject("phpgwapi.browser");
-		}
+		unset($enable_class);
+		reset($phpgw_info['flags']);
 
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
