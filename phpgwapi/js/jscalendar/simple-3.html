@@ -18,6 +18,10 @@
        adding a calendar a matter of 1 or 2 lines of code. -->
   <script type="text/javascript" src="calendar-setup.js"></script>
 
+    <style type="text/css">
+      .special { background-color: #000; color: #fff; }
+    </style>
+
 </head>
 
 <body>
@@ -47,6 +51,19 @@
 id="calendar-container"></div>
 
 <script type="text/javascript">
+  var SPECIAL_DAYS = {
+    0 : [ 13, 24 ],		// special days in January
+    2 : [ 1, 6, 8, 12, 18 ],	// special days in March
+    8 : [ 21, 11 ]		// special days in September
+  };
+
+  function dateIsSpecial(year, month, day) {
+    var m = SPECIAL_DAYS[month];
+    if (!m) return false;
+    for (var i in m) if (m[i] == day) return true;
+    return false;
+  };
+
   function dateChanged(calendar) {
     // Beware that this function is called even if the end-user only
     // changed the month/year.  In order to determine if a date was
@@ -64,7 +81,12 @@ id="calendar-container"></div>
   Calendar.setup(
     {
       flat         : "calendar-container", // ID of the parent element
-      flatCallback : dateChanged           // our callback function
+      flatCallback : dateChanged,          // our callback function
+      dateStatusFunc : function(date, y, m, d) {
+                         if (dateIsSpecial(y, m, d)) return "special";
+                         else return false; // other dates are enabled
+                         // return true if you want to disable other dates
+                       }
     }
   );
 </script>

@@ -1,13 +1,14 @@
 // ** I18N
 Calendar._DN = new Array
-("Duminicã",
+("DuminicÄƒ",
  "Luni",
- "Marþi",
+ "MarÅ£i",
  "Miercuri",
  "Joi",
  "Vineri",
- "Sâmbãtã",
- "Duminicã");
+ "SÃ¢mbÄƒtÄƒ",
+ "DuminicÄƒ");
+Calendar._SDN_len = 2;
 Calendar._MN = new Array
 ("Ianuarie",
  "Februarie",
@@ -24,22 +25,41 @@ Calendar._MN = new Array
 
 // tooltips
 Calendar._TT = {};
-Calendar._TT["TOGGLE"] = "Schimbã prima zi din sãptãmânã";
+
+Calendar._TT["INFO"] = "Despre calendar";
+
+Calendar._TT["ABOUT"] =
+"DHTML Date/Time Selector\n" +
+"(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
+"Pentru ultima versiune vizitaÅ£i: http://dynarch.com/mishoo/calendar.epl\n" +
+"Distribuit sub GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
+"\n\n" +
+"SelecÅ£ia datei:\n" +
+"- FolosiÅ£i butoanele \xab, \xbb pentru a selecta anul\n" +
+"- FolosiÅ£i butoanele " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " pentru a selecta luna\n" +
+"- TineÅ£i butonul mouse-ului apÄƒsat pentru selecÅ£ie mai rapidÄƒ.";
+Calendar._TT["ABOUT_TIME"] = "\n\n" +
+"SelecÅ£ia orei:\n" +
+"- Click pe ora sau minut pentru a mÄƒri valoarea cu 1\n" +
+"- Sau Shift-Click pentru a micÅŸora valoarea cu 1\n" +
+"- Sau Click ÅŸi drag pentru a selecta mai repede.";
+
 Calendar._TT["PREV_YEAR"] = "Anul precedent (lung pt menu)";
-Calendar._TT["PREV_MONTH"] = "Luna precedentã (lung pt menu)";
+Calendar._TT["PREV_MONTH"] = "Luna precedentÄƒ (lung pt menu)";
 Calendar._TT["GO_TODAY"] = "Data de azi";
-Calendar._TT["NEXT_MONTH"] = "Luna urmãtoare (lung pt menu)";
-Calendar._TT["NEXT_YEAR"] = "Anul urmãtor (lung pt menu)";
-Calendar._TT["SEL_DATE"] = "Selecteazã data";
-Calendar._TT["DRAG_TO_MOVE"] = "Trage pentru a miºca";
-Calendar._TT["PART_TODAY"] = " (astãzi)";
+Calendar._TT["NEXT_MONTH"] = "Luna urmÄƒtoare (lung pt menu)";
+Calendar._TT["NEXT_YEAR"] = "Anul urmÄƒtor (lung pt menu)";
+Calendar._TT["SEL_DATE"] = "SelecteazÄƒ data";
+Calendar._TT["DRAG_TO_MOVE"] = "Trage pentru a miÅŸca";
+Calendar._TT["PART_TODAY"] = " (astÄƒzi)";
 Calendar._TT["MON_FIRST"] = "Prima zi -> Luni";
-Calendar._TT["SUN_FIRST"] = "Prima zi -> Duminicã";
-Calendar._TT["CLOSE"] = "Închide";
-Calendar._TT["TODAY"] = "Astãzi";
+Calendar._TT["SUN_FIRST"] = "Prima zi -> DuminicÄƒ";
+Calendar._TT["CLOSE"] = "ÃŽnchide";
+Calendar._TT["TODAY"] = "AstÄƒzi";
+Calendar._TT["TIME_PART"] = "(Shift-)Click sau drag pentru a selecta";
 
 // date formats
-Calendar._TT["DEF_DATE_FORMAT"] = "dd-mm-y";
-Calendar._TT["TT_DATE_FORMAT"] = "D, d M";
+Calendar._TT["DEF_DATE_FORMAT"] = "%d-%m-%Y";
+Calendar._TT["TT_DATE_FORMAT"] = "%A, %d %B";
 
-Calendar._TT["WK"] = "wk";
+Calendar._TT["WK"] = "spt";

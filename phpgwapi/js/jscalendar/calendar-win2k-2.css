@@ -37,6 +37,10 @@
   border-left: 1px solid #fff;
 }
 
+.calendar .nav {
+  background: transparent url(menuarrow.gif) no-repeat 100% 100%;
+}
+
 .calendar thead .title { /* This holds the current "month, year" */
   font-weight: bold;
   padding: 1px;
@@ -69,7 +73,7 @@
   border-bottom: 2px solid #000;
   border-left: 2px solid #fff;
   padding: 0px;
-  background: #e4d8e0;
+  background-color: #e4d8e0;
 }
 
 .calendar thead .active { /* Active (pressed) buttons in header */
@@ -78,7 +82,7 @@
   border-right: 1px solid #fff;
   border-bottom: 1px solid #fff;
   border-left: 1px solid #000;
-  background: #c4b8c0;
+  background-color: #c4b8c0;
 }
 
 /* The body part -- contains all the days in month. */
@@ -197,9 +201,14 @@
   padding: 1px;
 }
 
-.combo .label {
+.combo .label,
+.combo .label-IEfix {
   text-align: center;
   padding: 1px;
+}
+
+.combo .label-IEfix {
+  width: 4em;
 }
 
 .combo .active {
@@ -214,4 +223,41 @@
 .combo .hilite {
   background: #408;
   color: #fea;
+}
+
+.calendar td.time {
+  border-top: 1px solid #000;
+  padding: 1px 0px;
+  text-align: center;
+  background-color: #f4f0e8;
+}
+
+.calendar td.time .hour,
+.calendar td.time .minute,
+.calendar td.time .ampm {
+  padding: 0px 3px 0px 4px;
+  border: 1px solid #889;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.calendar td.time .ampm {
+  text-align: center;
+}
+
+.calendar td.time .colon {
+  padding: 0px 2px 0px 3px;
+  font-weight: bold;
+}
+
+.calendar td.time span.hilite {
+  border-color: #000;
+  background-color: #766;
+  color: #fff;
+}
+
+.calendar td.time span.active {
+  border-color: #f00;
+  background-color: #000;
+  color: #0f0;
 }

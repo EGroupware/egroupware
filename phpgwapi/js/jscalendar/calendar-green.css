@@ -21,6 +21,10 @@ div.calendar { position: relative; }
   font-size: 90%;
 }
 
+.calendar .nav {
+  background: #676 url(menuarrow.gif) no-repeat 100% 100%;
+}
+
 .calendar thead .title { /* This holds the current "month, year" */
   font-weight: bold;      /* Pressing it will take you to the current date */
   text-align: center;
@@ -44,14 +48,14 @@ div.calendar { position: relative; }
 }
 
 .calendar thead .hilite { /* How do the buttons in header appear when hover */
-  background: #afa;
+  background-color: #afa;
   color: #000;
   border: 1px solid #084;
   padding: 1px;
 }
 
 .calendar thead .active { /* Active (pressed) buttons in header */
-  background: #7c7;
+  background-color: #7c7;
   padding: 2px 0px 0px 2px;
 }
 
@@ -70,7 +74,7 @@ div.calendar { position: relative; }
 
 .calendar table .wn {
   padding: 2px 3px 2px 2px;
-  border-right: 1px solid #000;
+  border-right: 1px solid #8a8;
   background: #dfb;
 }
 
@@ -158,9 +162,14 @@ div.calendar { position: relative; }
   font-size: smaller;
 }
 
-.combo .label {
-  width: 100%;
+.combo .label,
+.combo .label-IEfix {
   text-align: center;
+  padding: 1px;
+}
+
+.combo .label-IEfix {
+  width: 4em;
 }
 
 .combo .hilite {
@@ -172,4 +181,41 @@ div.calendar { position: relative; }
   border-bottom: 1px solid #6a4;
   background: #efe;
   font-weight: bold;
+}
+
+.calendar td.time {
+  border-top: 1px solid #8a8;
+  padding: 1px 0px;
+  text-align: center;
+  background-color: #dfb;
+}
+
+.calendar td.time .hour,
+.calendar td.time .minute,
+.calendar td.time .ampm {
+  padding: 0px 3px 0px 4px;
+  border: 1px solid #898;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.calendar td.time .ampm {
+  text-align: center;
+}
+
+.calendar td.time .colon {
+  padding: 0px 2px 0px 3px;
+  font-weight: bold;
+}
+
+.calendar td.time span.hilite {
+  border-color: #000;
+  background-color: #686;
+  color: #fff;
+}
+
+.calendar td.time span.active {
+  border-color: #f00;
+  background-color: #000;
+  color: #0f0;
 }

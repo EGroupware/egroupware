@@ -2,17 +2,13 @@ The DHTML Calendar
 -------------------
 
   Author: Mihai Bazon, <mishoo@infoiasi.ro>
-          http://students.infoiasi.ro/~mishoo
+          http://dynarch.com/mishoo/
 
   This program is free software published under the
-  GNU Lesser General Public License.
+  terms of the GNU Lesser General Public License.
 
   For the entire license text please refer to
-  http://www.gnu.org/licenses/lgpl
-
-  An additional restriction is that you are not allowed
-  to remove the comment note present at the beginning of
-  the script.
+  http://www.gnu.org/licenses/lgpl.html
 
 Contents
 ---------
@@ -31,5 +27,5 @@ Homepage
   For details and latest versions please refer to calendar
   homepage, located on my website:
 
-    http://students.infoiasi.ro/~mishoo/site/calendar.epl
+    http://dynarch.com/mishoo/calendar.epl
 

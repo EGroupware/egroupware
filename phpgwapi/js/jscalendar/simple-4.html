@@ -1,7 +1,6 @@
 <html style="background-color: buttonface; color: buttontext;">
 
 <head>
-<meta http-equiv="content-type" content="text/xml; charset=utf-8" />
 
 <title>Simple calendar setups [popup calendar]</title>
 
@@ -18,9 +17,96 @@
        adding a calendar a matter of 1 or 2 lines of code. -->
   <script type="text/javascript" src="calendar-setup.js"></script>
 
+<script language="JavaScript">
+function rightAlign(div,offset){
+  if(typeof div=='string'){div=document.getElementById(div)}
+  if(isNaN(offset)){offset=0}
+    div.style.left=document.body.clientWidth-parseInt(div.offsetWidth)+offset;
+}
+function stretchRight(div,offset){
+  if(typeof div=='string'){div=document.getElementById(div)}
+  if(isNaN(offset)){offset=0}
+  if(document.body.clientWidth-parseInt(div.offsetLeft)+offset>=0){
+    div.style.width=document.body.clientWidth-parseInt(div.offsetLeft)+offset;
+  }
+}
+function stretchBottom(div,offset){
+  if(typeof div=='string'){div=document.getElementById(div)}
+  if(isNaN(offset)){offset=0}
+  if(document.body.clientHeight-parseInt(div.offsetTop)+offset>=0){
+    div.style.height=document.body.clientHeight-parseInt(div.offsetTop)+offset;
+  }
+}
+function toggleHelp(){
+  dh=document.getElementById('divHelp');
+  if(dh.style.visibility=='visible'){
+    dh.style.visibility='hidden';
+    stretchRight('divMenu');
+    stretchRight('divContent');
+  }else{
+    rightAlign('divHelp');
+    stretchRight('divMenu',-200);
+    stretchRight('divContent',-200);
+    dh.style.visibility='visible';
+  }
+  var txt = "<table>";
+  var object = document.getElementById("divContent");
+  for (var i in object) {
+    switch (typeof object[i]) {
+      case "string":
+      case "number":
+        if (i != "innerHTML")
+          txt += "<tr><td>" + i + "</td><td>" + object[i] + "</td></tr>";
+	break;
+    }
+  }
+  dh.innerHTML = txt + "</table>";
+}
+function adjustDivs(){
+  dh=document.getElementById('divHelp');
+  if(dh.style.visibility=='visible'){
+    rightAlign('divHelp');
+    stretchRight('divMenu',-200);
+    stretchRight('divContent',-200);
+  }else{
+    stretchRight('divMenu');
+    stretchRight('divContent');
+  }
+  stretchBottom('divContent');
+}
+</script>
+
+<style>
+#divContent{
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:auto;
+  top: 30px;
+}
+#divMenu{
+  position: absolute;
+  left:0px;
+  top:0px;
+  text-align: right;
+  background-color: #cccccc;
+  width:100%;
+  height:30px;
+}
+#divHelp{
+  position:absolute;
+  width:200px;
+  height:100%;
+  background-color:#ffffcc;
+  visibility:hidden;
+}
+</style>
+
 </head>
 
-<body>
+<body scroll=no leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 onload="adjustDivs()" onresize="adjustDivs()">
+  <div id="divMenu"><a href="javascript:void(0)" onclick="toggleHelp();return false">Toggle console</a></div>
+  <div id="divContent">
 
 <h2>DHTML Calendar &mdash; for the impatient</h2>
 
@@ -235,7 +321,10 @@ Sundays).</p>
                             }
     });
 </script>
+</div>
+<div id="divHelp">
 
+</div>
 
 </body>
 </html>
