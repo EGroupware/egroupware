@@ -44,7 +44,7 @@
   }
 
   $phpgw->common->phpgw_header();
-  $phpgw->common->navbar();
+  echo parse_navbar();
 
   if ($totalerrors) {  
      echo "<p><center>" . $phpgw->common->error_list($errors) . "</center>";
