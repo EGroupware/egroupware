@@ -101,7 +101,6 @@
 	{
 	/* Need to make sure this is working against a single dimensional object */
 	$partscount = substr_count($object, '.');
-	echo 'partscount = '.$partscount;
 	if ($partscount == 2)
 	{
 		list($appname,$classname,$functionname) = explode(".", $object);
