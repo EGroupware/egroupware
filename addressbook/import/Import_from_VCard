@@ -29,25 +29,18 @@
 		var $id;
 		var $type = 'vcard';
 
-		var $import = array(
-			"n"        => "n",
-			"sound"    => "sound",
-			"bday"     => "bday",
-			"note"     => "note",
-			"tz"       => "tz",
-			"geo"      => "geo",
-			"url"      => "url",
-			"pubkey"   => "pubkey",
-			"org"      => "org",
-			"title"    => "title",
-			"adr"      => "adr",
-			"label"    => "label",
-			"tel"      => "tel",
-			"email"    => "email"
-		);
+		// These will hold the class objects
+		var $contacts = '';
+		var $vcard = '';
+
+		// This will be populated via the vcard->import var
+		var $import = array();
 
 		function import_start_file($buffer,$j="",$k="") {
 			$this->id = 0;
+			$this->contacts = CreateObject("phpgwapi.contacts");
+			$this->vcard = CreateObject("phpgwapi.vcard");
+			$this->import = $this->vcard->import;
 			return $buffer;
 		}
 
@@ -80,16 +73,13 @@
 		function import_end_file($buffer) {
 			global $phpgw,$phpgw_info;
 
-			$contacts = CreateObject("phpgwapi.contacts");
-			$vcard    = CreateObject("phpgwapi.vcard");
-
 			for ($i=1;$i<=count($buffer);$i++) {
 				// Send the entire array to the vcard class in function.
 				// It will parse the vcard fields and clean the array of extra
 				// bogus values that get stuffed in.
-				$entry = $vcard->in($buffer[$i]);
+				$entry = $this->vcard->in($buffer[$i]);
 				// Now actually add the new entry
-				$contacts->add($phpgw_info["user"]["account_id"],$entry);
+				$this->contacts->add($phpgw_info["user"]["account_id"],$entry);
 			}
 			$num = $i - 1;
 			return "Successfully imported $num records into your addressbook.";
