@@ -680,6 +680,7 @@
 			echo parse_navbar();
 
 			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
 			while(list($x,$y) = @each($custom))
 			{
 				$customfields[$y['name']] = $y['title'];
@@ -740,6 +741,7 @@
 
 			/* Read in user custom fields, if any */
 			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
 			while(list($x,$y) = @each($custom))
 			{
 				$customfields[$y['name']] = $y['title'];
@@ -853,6 +855,7 @@
 			$this->template->set_block('view_t','view_buttons','view_buttons');
 
 			$custom = $this->fields->read_custom_fields();
+			$customfields = array();
 			while(list($x,$y) = @each($custom))
 			{
 				$customfields[$y['name']] = $y['title'];
