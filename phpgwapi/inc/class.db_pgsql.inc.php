@@ -63,7 +63,7 @@
 					. $this->ifadd($this->Host, 'host=')
 					. $this->ifadd($this->Port, 'port=')
 					. $this->ifadd($this->User, 'user=')
-					. $this->ifadd($this->Password, 'password=');
+					. $this->ifadd("'".$this->Password."'", 'password=');
 				if ($this->use_pconnect)
 				{
 					$this->Link_ID=pg_pconnect($cstr);
