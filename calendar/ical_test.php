@@ -13,20 +13,30 @@
   \**************************************************************************/
 
 	/* $Id$ */
-	$phpgw_info['flags']['currentapp'] = 'calendar';
+	$phpgw_flags = Array(
+		'currentapp'					=>	'calendar',
+		'noappheader'					=>	True,
+		'noappfooter'					=>	True
+	);
+	$phpgw_info['flags'] = $phpgw_flags;
 	include('../header.inc.php');
 
+echo "Start Time : ".$phpgw->common->show_date()."<br>\n";
 	@set_time_limit(0);
 
-	$icsfile=PHPGW_APP_INC.'/small_test.ics';
-	$fp=fopen($icsfile,'r');
+	$icsfile=PHPGW_APP_INC.'/events.ics';
+	$fp=fopen($icsfile,'rt');
 	$contents = explode("\n",fread($fp, filesize($icsfile)));
 	fclose($fp);
 
-	$vcal = CreateObject('calendar.vCalendar');
+//	$vcal = CreateObject('calendar.vCalendar');
 
-	$vcalendar = $vcal->read($contents);
+//	$vcalendar = $vcal->read($contents);
 
+//	echo "function_exists = ".function_exists("\$vcalendar->read()")."<br>\n";
+
+	$vcalendar = ExecObject('calendar.vCalendar.read',$contents,2,'');
+	
 	echo "Product ID = ".$vcalendar->prodid->value."<br>\n";
 	echo "Method = ".$vcalendar->method->value."<br>\n";
 	echo "Version = ".$vcalendar->version->value."<br>\n";
@@ -81,7 +91,7 @@
 			echo "Location = ".$vcalendar->event[$i]->location->value."<br>\n";
 		}
 		echo "Sequence = ".$vcalendar->event[$i]->sequence."<br>\n";
-		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[$i]->dtstart->hour,$vcalendar->event[$i]->dtstart->min,$vcalendar->event[$i]->dtstart->sec,$vcalendar->event[$i]->dtstart->month,$vcalendar->event[$i]->dtstart->mday,$vcalendar->event[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
+		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->event[$i]->dtstart->value->hour,$vcalendar->event[$i]->dtstart->value->min,$vcalendar->event[$i]->dtstart->value->sec,$vcalendar->event[$i]->dtstart->value->month,$vcalendar->event[$i]->dtstart->value->mday,$vcalendar->event[$i]->dtstart->value->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
 		if($vcalendar->event[$i]->dtstart->tzid)
 		{
 			echo "Date Start TZID : ".$vcalendar->event[$i]->dtstart->tzid."<br>\n";
@@ -113,12 +123,21 @@
 			echo "Attendee[$j] Role    = ".$vcal->switch_role($vcalendar->event[$i]->attendee[$j]->role)."<br>\n";
 			echo "Attendee[$j] RSVP    = ".$vcal->switch_rsvp($vcalendar->event[$i]->attendee[$j]->rsvp)."<br>\n";
 //			echo "Attendee[$j] RSVP    = ".$vcalendar->event[$i]->attendee[$j]->rsvp."<br>\n";
+			if($vcalendar->event[$i]->attendee[$j]->x_type)
+			{
+				for($k=0;$k<count($vcalendar->event[$i]->attendee[$j]->x_type);$k++)
+				{
+					echo "Attendee[$j] (X-".$vcalendar->event[$i]->attendee[$j]->x_type[$k]->name.") = ".$vcalendar->event[$i]->attendee[$j]->x_type[$k]->value."<br>\n";
+				}
+			}
 			if($vcalendar->event[$i]->attendee[$j]->delegated_from->user && $vcalendar->event[$i]->attendee[$j]->delegated_from->host)
 			{
 				echo "Attendee[$j] DELEGATED_FROM = ".$vcalendar->event[$i]->attendee[$j]->delegated_from->user.'@'.$vcalendar->event[$i]->attendee[$j]->delegated_from->host."<br>\n";
 			}
 		}
 	}
+
+/*
 	for($i=0;$i<count($vcalendar->todo);$i++)
 	{
 		echo "<br>\nTODO<br>\n";
@@ -139,7 +158,7 @@
 			echo "Location = ".$vcalendar->todo[$i]->location->value."<br>\n";
 		}
 		echo "Sequence = ".$vcalendar->todo[$i]->sequence."<br>\n";	
-		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->todo[$i]->dtstart->hour,$vcalendar->todo[$i]->dtstart->min,$vcalendar->todo[$i]->dtstart->sec,$vcalendar->todo[$i]->dtstart->month,$vcalendar->todo[$i]->dtstart->mday,$vcalendar->todo[$i]->dtstart->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
+		echo "Date Start : ".$phpgw->common->show_date(mktime($vcalendar->todo[$i]->dtstart->value->hour,$vcalendar->todo[$i]->dtstart->value->min,$vcalendar->todo[$i]->dtstart->value->sec,$vcalendar->todo[$i]->dtstart->value->month,$vcalendar->todo[$i]->dtstart->value->mday,$vcalendar->todo[$i]->dtstart->value->year) - $phpgw->calendar->datatime->tz_offset)."<br>\n";
 		echo "Class = ".$vcalendar->todo[$i]->class->value."<br>\n";
 	}
 
@@ -148,5 +167,7 @@
 	$vcal->set_var($vcalendar->prodid,'value','-//phpGroupWare//phpGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($phpgw_info['user']['preferences']['common']['lang']));
 	echo "<br><br><br>\n";
 	echo nl2br($vcal->build_vcal($vcalendar));
+*/
+echo "End Time : ".$phpgw->common->show_date()."<br>\n";
 	$phpgw->common->phpgw_footer();
 ?>

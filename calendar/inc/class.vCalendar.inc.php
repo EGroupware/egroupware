@@ -194,6 +194,54 @@ class class_todo
 	var $x_type = Array();
 }
 
+class class_journal
+{
+	var $type;
+	var $class;
+	var $created;
+	var $description;
+	var $dtstamp;
+	var $dtstart;
+	var $last_modified;
+	var $organizer;
+	var $recurrence_id;
+	var $sequence;
+	var $status;
+	var $summary;
+	var $uid;
+	var $url;
+	var $attach;
+	var $attendee;
+	var $categories;
+	var $comment;
+	var $contact;
+	var $exdate;
+	var $exrule;
+	var $rdate;
+	var $related_to;
+	var $request_status;
+	var $rrule;
+	var $x_type = Array();
+}
+
+class class_freebusy
+{
+	var $type;
+	var $attandee;
+	var $comment;
+	var $contact;
+	var $dtend;
+	var $dtstamp;
+	var $dtstart;
+	var $duration;
+	var $freebusy;
+	var $organizer;
+	var $request_status;
+	var $uid;
+	var $url;
+	var $x_type = Array();	
+}
+
 class class_datetime
 {
 	var $year;
@@ -202,8 +250,11 @@ class class_datetime
 	var $hour;
 	var $min;
 	var $sec;
+}
+
+class class_date_time
+{
 	var $tzid;
-	var $date;
 	var $value;
 	var $allday = False;
 	var $x_type = Array();
@@ -261,48 +312,6 @@ class class_alarm
 	var $x_type = Array();
 }
 
-class vCalendar_item
-{
-	var $alarm = Array();
-	var $attach;
-	var $attendee = Array();
-	var $calscale;
-	var $categories;
-	var $comment;
-	var $completed;
-	var $class;
-	var $created;
-	var $description;
-	var $dtend;
-	var $dtstamp;
-	var $dtstart;
-	var $due;
-	var $duration;
-	var $freebusy;
-	var $geo;
-	var $last_modified;
-	var $location;
-	var $organizer;
-	var $percent_complete;
-	var $priority;
-	var $rdate;
-	var $resources;
-	var $request_status;
-	var $rrule;
-	var $sequence;
-	var $status;
-	var $summary;
-	var $transp;
-	var $type;
-	var $tzdata = Array();
-	var $tzid;
-	var $tzname;
-	var $tzoffsetto;
-	var $tzoffsetfrom;
-	var $uid;
-	var $x_type = Array();
-}
-
 class vCal
 {
 	var $prodid;
@@ -319,13 +328,15 @@ class vCal
 class vCalendar
 {
 	var $vcal;
+	var $line = 0;
 	var $event = Array();
 	var $todo = Array();
 	var $journal = Array();
 	var $freebusy = Array();
 	var $timezone = Array();
 	var $property = Array();
-	var $parameter= Array();
+	var $parameter = Array();
+	var $debug_str = True;
 
 	/*
 	 * Base Functions
@@ -399,7 +410,7 @@ class vCalendar
 				),
 				'vjournal'		=> Array(
 					'state'		=> 'optional',
-					'multiples'	=> False
+					'multiples'	=> True
 				)
 			),
 			'class'			=> Array(
@@ -462,6 +473,14 @@ class vCalendar
 				'type'		=> 'text',
 				'to_text'	=> True,
 				'vevent'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> True
 				)
@@ -553,6 +572,10 @@ class vCalendar
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
 				'vtodo'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
@@ -569,19 +592,19 @@ class vCalendar
 			'duration'		=> Array(
 				'type'		=> 'duration',
 				'to_text'	=> False,
+				'valarm'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
 				'vevent'	=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vtodo'		=> Array(
+				'vfreebusy'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vjournal'		=> Array(
-					'state'		=> 'optional',
-					'multiples'	=> True
-				),
-				'valarm'		=> Array(
+				'vtodo'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				)
@@ -590,6 +613,10 @@ class vCalendar
 				'type'		=> 'date-time',
 				'to_text'	=> False,
 				'vevent'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> True
 				),
@@ -602,6 +629,10 @@ class vCalendar
 				'type'		=> 'recur',
 				'to_text'	=> False,
 				'vevent'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
+				),
+				'vjournal'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> True
 				),
@@ -733,6 +764,10 @@ class vCalendar
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> False
+				),
 				'vtodo'	=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
@@ -744,6 +779,10 @@ class vCalendar
 				'vevent'	=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
+					'multiples'	=> True
 				),
 				'vtodo'		=> Array(
 					'state'		=> 'optional',
@@ -763,11 +802,11 @@ class vCalendar
 				),
 				'vjournal'		=> Array(
 					'state'		=> 'optional',
-					'multiples'	=> False
+					'multiples'	=> True
 				),
 				'vfreebusy'		=> Array(
 					'state'		=> 'optional',
-					'multiples'	=> False
+					'multiples'	=> True
 				)
 			),
 			'resources'		=> Array(
@@ -813,11 +852,11 @@ class vCalendar
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vtodo'		=> Array(
+				'vjournal'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vjournal'		=> Array(
+				'vtodo'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				)
@@ -829,11 +868,11 @@ class vCalendar
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vtodo'		=> Array(
+				'vjournal'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				),
-				'vjournal'		=> Array(
+				'vtodo'		=> Array(
 					'state'		=> 'optional',
 					'multiples'	=> False
 				)
@@ -933,7 +972,7 @@ class vCalendar
 					'state'		=> 'required',
 					'multiples'	=> False
 				),
-				'vtodo'		=> Array(
+				'vfreebusy'		=> Array(
 					'state'		=> 'required',
 					'multiples'	=> False
 				),
@@ -941,7 +980,7 @@ class vCalendar
 					'state'		=> 'required',
 					'multiples'	=> False
 				),
-				'vfreebusy'		=> Array(
+				'vtodo'		=> Array(
 					'state'		=> 'required',
 					'multiples'	=> False
 				)
@@ -951,6 +990,14 @@ class vCalendar
 				'to_text'	=> True,
 				'vevent'	=> Array(
 					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vfreebusy'		=> Array(
+					'state'		=> 'required',
+					'multiples'	=> False
+				),
+				'vjournal'		=> Array(
+					'state'		=> 'optional',
 					'multiples'	=> False
 				),
 				'vtodo'	=> Array(
@@ -1380,21 +1427,23 @@ class vCalendar
 		$event->$type = $value;
 	}
 
-	function unfold(&$vcal_text,$current_line)
+	function read_line_unfold($vcal_text)
 	{
-		$next_line = $current_line;
-
-		while(ereg("^[ \t]",substr($vcal_text[$next_line + 1],0,1)))
+		if($this->line < count($vcal_text))
 		{
-			$vcal_text[$current_line] = str_replace("\r\n",'',$vcal_text[$current_line]);
-			$vcal_text[$current_line] .= substr($vcal_text[$next_line + 1],1);
-			$i = $next_line + 1;
-			while($i + 1 <= count($vcal_text))
+			$str = str_replace("\r\n",'',$vcal_text[$this->line]);
+			$this->line = $this->line + 1;
+			while(ereg("^[[:space:]]",$vcal_text[$this->line]))
 			{
-				$vcal_text[$i] = $vcal_text[$i + 1];
-				$i++;
+				$str .= substr(str_replace("\r\n",'',$vcal_text[$this->line]),1);
+				$this->line = $this->line + 1;
 			}
-//			$next_line++;
+//			$this->debug("LINE : ".$str);
+			return $str;
+		}
+		else
+		{
+			return False;
 		}
 	}
 
@@ -1408,68 +1457,48 @@ class vCalendar
 		return str_replace('"','',$str);
 	}
 
-	function split_param(&$return_value,$str,$check_equal)
+	function explode_param($str,$check_equal)
 	{
-		if($check_equal)
-		{
-			$str_len = strlen($str);
-			$i = 0;
-			$found = False;
-			while($i < $str_len)
-			{
-				$char = substr($str,$i,1);
-				if(ereg("^[\=\:]",$char))
-				{
-					$found = True;
-					$ret_str = substr($str,0,$i);
-					$return_value[] = $ret_str;
-					$ret_array = $this->explode_param(substr($str,$i + 1),'"',False);
-					while(list($key,$value) = each($ret_array))
-					{
-						$return_value[] = $value;
-					}
-					$i = $str_len;
-				}
-				$i++;
-			}
-			if(!$found)
-			{
-				$return_value[] = $str;
-			}
-		}
-		else
-		{
-			$return_value[] = rawurldecode($str);
-		}
-	}
+		$results = Array();
 
-	function explode_param($str,$enclosure,$check_equal)
-	{
-		$enclosure_found = 0;
-		$start = 0;
-		$return_value = Array();
-		$str_len = strlen($str);
-		for($i=0;$i<$str_len;$i++)
+// [(X\-)?([[:alnum:]])*]=
+		$alnum_regexp = '[:alnum:]';
+		$space_regexp = '[:space:]';
+		$extra_regexp = '([ \)\(\/\@\-]|((\:\/\/)?))';
+// This works good...
+		$param_regexp = '((X-)?['.$alnum_regexp.']*)';
+		$quote_regexp = '(\")?';
+		$end_regexp = '[\;\:]|$';
+// Left Side (WORKS)
+		$regexp_param = '('.$param_regexp.'=)';
+//		$regexp_param = '('.$param_regexp.'=['.$alnum_regexp.']'.$end_regexp.')';
+// Right Side (WORKS minus last char)
+//		$regexp_param = '(=('.$quote_regexp.'(['.$alnum_regexp.$space_regexp.'\(\@\/\-\)])+)'.$quote_regexp.'))';
+//		$regexp_param = '('.$param_regexp.'=('.$quote_regexp.'(['.$alnum_regexp.$space_regexp.'\(\-\)\.@/ (\:\/\/)*(\:[0-9])*])*)'.$quote_regexp.')*)';
+//		$regexp_param = '('.$param_regexp.'=('.$quote_regexp.'(['.$alnum_regexp.$space_regexp.$extra_regexp.'(\:[0-9])*])*)'.$quote_regexp.')*)';
+		$this->debug('REGEXP : '.$regexp_param);
+		while(ereg($regexp_param,$str,$temp) && $str)
 		{
-			$char = substr($str,$i,1);
-			if($char == $enclosure)
+			$this->debug('Param = '.$temp[1]);
+			$str=str_replace($temp[1],'',$str);
+			if(strpos(' '.$temp[1],'='))
 			{
-				$enclosure_found = (~ $enclosure_found);
+				$var = explode('=',$temp[1]);
+				$results[] = $var[0];
+				$results[] = $var[1];
 			}
-			elseif(ereg("^[\;\:]",$char))
+			else
 			{
-				if(! $enclosure_found)
-				{
-					$this->split_param($return_value,substr($str,$start,($i - $start)),$check_equal);
-					$start = $i + 1;
-				}
+				$results[] = $temp[1];
 			}
 		}
-		if(! $enclosure_found)
+
+		if($str)
 		{
-			$this->split_param($return_value,substr($str,$start,($i - $start)),$check_equal);
+			$results[] = $str;
 		}
-		return $return_value;
+		reset($results);
+		return $results;
 	}
 
 	function from_text($str)
@@ -1538,70 +1567,9 @@ class vCalendar
 	 * Parse Functions
 	 */
 
-	function parse_datetime($value)
-	{
-		$dtime = new class_datetime;
-		if(strpos($value,':'))
-		{
-			$pos = explode(':',$value);
-			$value = $pos[1];
-		}
-		$this->set_var($dtime,'year',intval(substr($value,0,4)));
-		$this->set_var($dtime,'month',intval(substr($value,4,2)));
-		$this->set_var($dtime,'mday',intval(substr($value,6,2)));
-		if(substr($value,8,1) == 'T')
-		{
-			$this->set_var($dtime,'hour',intval(substr($value,9,2)));
-			$this->set_var($dtime,'min',intval(substr($value,11,2)));
-			$this->set_var($dtime,'sec',intval(substr($value,13,2)));
-			if(strlen($value) > 14)
-			{
-				if(substr($value,14,1) != 'Z')
-				{
-				
-				}
-			}
-			else
-			{
-				/*
-				 * The time provided by the vCal is considered local time.
-				 *
-				 * The implementor will need to consider how to convert that time to UTC.
-				 */
-			}
-		}
-		else
-		{
-			$this->set_var($dtime,'hour',0);
-			$this->set_var($dtime,'min',0);
-			$this->set_var($dtime,'sec',0);
-		}
-		if($pos[0])
-		{
-			$return_value = $this->explode_param($pos[0],'"',True);
-			if(count($return_value) > 0)
-			{
-				for($i=0;$i<count($return_value);$i=$i + 2)
-				{
-					$value = $return_value[$i];
-					$param = $this->strip_quotes($return_value[$i+1]);
-					if(substr($value,0,2) != 'X-')
-					{
-						$this->set_var($dtime,$value,$param);
-					}
-					else
-					{
-						$this->parse_xtype($dtime,$value,$param);
-					}
-				}
-			}
-		}		
-		return $dtime;		
-	}
-
 	function parse_geo(&$event,$value)
 	{
-		$return_value = $this->explode_param($value,'"',True);
+		$return_value = $this->explode_param($value,True);
 		if(count($return_value) == 2)
 		{
 			$event->lat = $return_value[0];
@@ -1620,7 +1588,7 @@ class vCalendar
 
 	function parse_parameters(&$event,$majortype,$value)
 	{
-		$return_value = $this->explode_param($value,'"',True);
+		$return_value = $this->explode_param($value,True);
 		if(count($return_value) > 0)
 		{
 			for($i=0;$i<count($return_value);$i=$i + 2)
@@ -1637,19 +1605,19 @@ class vCalendar
 					$param = str_replace('-','_',strtolower($name));
 					if(!isset($this->parameter[$param]))
 					{
-						if($majortype == 'attendee' || $majortype == 'organizer')
-						{
-							$param = 'mailto';
-							$value = $name;
-							$name = $param;
-						}
-						else
-						{
+//						if($majortype == 'attendee' || $majortype == 'organizer')
+//						{
+//							$param = 'mailto';
+//							$value = $name;
+//							$name = $param;
+//						}
+//						else
+//						{
 							$param = 'value';
-						}
+//						}
 					}
 				}
-//	echo "name : $name : Param = $param<br>\n";
+				$this->debug('name : '.$name.' : Param = '.$param);
 				if(@$this->parameter[$param]['properties'][$majortype])
 				{
 					switch(@$this->parameter[$param]['type'])
@@ -1678,7 +1646,11 @@ class vCalendar
 							$this->set_var($event,$name,intval($value));
 							break;
 						case 'value':
-							if($name <> "\\n")
+							if(@$this->property[$majortype]['type'] == 'date-time')
+							{
+								$this->set_var($event,$param,$this->switch_date($name));
+							}
+							elseif($name <> "\\n")
 							{
 								$this->set_var($event,$param,$name);
 							}
@@ -1693,19 +1665,21 @@ class vCalendar
 		}
 	}
 
-	function parse_recurrence(&$event,$value)
+	function parse(&$event,$majortype,$value,$class)
 	{
-		$return_value = $this->explode_param($value,'"',True);
-		if(count($return_value) > 0)
+		$var = new $class;
+		$this->parse_parameters($var,$majortype,$value);
+		if($multiples)
 		{
-			for($i=0;$i<count($return_value);$i=$i + 2)
-			{
-				$type[0] = $return_value[$i];
-				$type[1] = $this->strip_quotes($return_value[$i+1]);
-				$this->set_var($event,strtolower($type[0]),$type[1]);
-			}
+			$event->{$majortype}[] = $var;
 		}
+		else
+		{
+			$this->set_var($event,$majortype,$var);
+		}
+		unset($var);
 	}
+
 
 	/*
 	 * Build-Card Functions
@@ -1722,7 +1696,7 @@ class vCalendar
 		return $this->fold('X-'.$x_type->name.$seperator.$quote.$x_type->value.$quote);
 	}
 
-	function build_cal_address($event,$property)
+	function build_parameters($event,$property)
 	{
 		$str = '';
 		$include_mailto = False;
@@ -1844,29 +1818,29 @@ class vCalendar
 		return $str;
 	}
 
-	function build_recur($event)
-	{
-		$var = Array(
-			'freq',
-			'count',
-			'wkst',
-			'byday'
-		);
-		for($i=0;$i<count($var);$i++)
-		{
-			iF(!empty($event->{$var[$i]}))
-			{
-				$str[] = strtoupper($var[$i]).'='.$event->{$var[$i]};
-			}
-		}
-		$recur = ':'.implode($str,';');
-		return $recur;
-	}
+//	function build_recur($event)
+//	{
+//		$var = Array(
+//			'freq',
+//			'count',
+//			'wkst',
+//			'byday'
+//		);
+//		for($i=0;$i<count($var);$i++)
+//		{
+//			iF(!empty($event->{$var[$i]}))
+//			{
+//				$str[] = strtoupper($var[$i]).'='.$event->{$var[$i]};
+//			}
+//		}
+//		$recur = ':'.implode($str,';');
+//		return $recur;
+//	}
 
-	function build_datetime($event)
-	{
-		return ':'.date('Ymd\THms\Z',mktime($event->hour,$event->min,$event->sec,$event->month,$event->mday,$event->year));
-	}
+//	function build_datetime($event)
+//	{
+//		return ':'.date('Ymd\THms\Z',mktime($event->hour,$event->min,$event->sec,$event->month,$event->mday,$event->year));
+//	}
 
 	function build_card_internals($ical_item,$event)
 	{
@@ -1889,14 +1863,12 @@ class vCalendar
 						{
 							for($i=0;$i<count($event->$value);$i++)
 							{
-//								$str .= $this->fold(strtoupper($value).$this->build_datetime($event->{$value}[$i]));
-								$str .= $this->fold(strtoupper($value).$this->build_cal_address($event->{$value}[$i],$value));
+								$str .= $this->fold(strtoupper($value).$this->build_parameters($event->{$value}[$i],$value));
 							}
 						}
 						else
 						{
-//							$str .= $this->fold(strtoupper($value).$this->build_datetime($event->$value));
-							$str .= $this->fold(strtoupper($value).$this->build_cal_address($event->$value,$value));
+							$str .= $this->fold(strtoupper($value).$this->build_parameters($event->$value,$value));
 						}
 					}
 					elseif($value == 'dtstamp' || $value == 'created')
@@ -1909,7 +1881,7 @@ class vCalendar
 					{
 						for($i=0;$i<count($event->$value);$i++)
 						{
-							$str .= $this->fold(strtoupper($value).$this->build_text($event->{$value}[$i],$to_text));
+							$str .= $this->fold(strtoupper($value).$this->build_parameters($event->{$value}[$i],$to_text));
 						}
 					}
 					break;
@@ -1920,12 +1892,12 @@ class vCalendar
 						{
 							for($i=0;$i<count($event->$value);$i++)
 							{
-								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_recur($event->{$value}[$i]));
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event->{$value}[$i]));
 							}
 						}
 						else
 						{
-							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_recur($event->$value));
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event->$value));
 						}
 					}
 					break;
@@ -1956,14 +1928,12 @@ class vCalendar
 						{
 							for($i=0;$i<count($event->$value);$i++)
 							{
-//								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->{$value}[$i],$to_text));
-								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_cal_address($event->{$value}[$i],$value));
+								$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event->{$value}[$i],$value));
 							}
 						}
 						else
 						{
-//							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_text($event->$value,$to_text));
-							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_cal_address($event->$value,$value));
+							$str .= $this->fold(strtoupper(str_replace('_','-',$value)).$this->build_parameters($event->$value,$value));
 						}
 					}
 					break;
@@ -1972,7 +1942,7 @@ class vCalendar
 					{
 						for($j=0;$j<count($event->$value);$j++)
 						{
-							$temp_output = $this->build_cal_address($event->{$value}[$j],$value);
+							$temp_output = $this->build_parameters($event->{$value}[$j],$value);
 							if($temp_output)
 							{
 								$str .= $this->fold(strtoupper($value).$temp_output);
@@ -2108,22 +2078,22 @@ class vCalendar
 		if(is_string($var))
 		{
 			$dtime = new class_datetime;
-			if(strpos($value,':'))
+			if(strpos($var,':'))
 			{
-				$pos = explode(':',$value);
-				$value = $pos[1];
+				$pos = explode(':',$var);
+				$var = $pos[1];
 			}
-			$this->set_var($dtime,'year',intval(substr($value,0,4)));
-			$this->set_var($dtime,'month',intval(substr($value,4,2)));
-			$this->set_var($dtime,'mday',intval(substr($value,6,2)));
-			if(substr($value,8,1) == 'T')
+			$this->set_var($dtime,'year',intval(substr($var,0,4)));
+			$this->set_var($dtime,'month',intval(substr($var,4,2)));
+			$this->set_var($dtime,'mday',intval(substr($var,6,2)));
+			if(substr($var,8,1) == 'T')
 			{
-				$this->set_var($dtime,'hour',intval(substr($value,9,2)));
-				$this->set_var($dtime,'min',intval(substr($value,11,2)));
-				$this->set_var($dtime,'sec',intval(substr($value,13,2)));
-				if(strlen($value) > 14)
+				$this->set_var($dtime,'hour',intval(substr($var,9,2)));
+				$this->set_var($dtime,'min',intval(substr($var,11,2)));
+				$this->set_var($dtime,'sec',intval(substr($var,13,2)));
+				if(strlen($var) > 14)
 				{
-					if(substr($value,14,1) != 'Z')
+					if(substr($var,14,1) != 'Z')
 					{
 					}
 				}
@@ -2622,53 +2592,26 @@ class vCalendar
 
 	function read($vcal_text)
 	{
-		$i = 0;
+
 		$mode = 'none';
-		$standard = Array();
-		$max_lines = count($vcal_text);
-		while($i < $max_lines)
+		$text = $this->read_line_unfold($vcal_text);
+		while($text)
 		{
 //			if(strlen($vcal_text[$i]) > 75)
 //			{
 //				continue;
 //			}
 
-			$this->unfold($vcal_text,$i);
-			$max_lines = count($vcal_text);
-			
-			$vcal_text[$i] = str_replace("\r\n",'',$vcal_text[$i]);
-
-//	echo "TEXT : ".$vcal_text[$i]."<br>\n";
+//			$this->debug('TEXT : '.$text);
 //	flush();
-			// Example #1
-			//vcal_text[$i] = 'BEGIN:VCALENDAR'
-			
-			// Example #2
-			//vcal_text[$i] = 'METHOD:REQUEST'
-			
-			// Example #3
-			//vcal_text[$i] = 'ATTENDEE;CN="John Doe";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:john.doe@somewhere.com'
 
-			// Example #4
-			//vcal_text[$i] = 'ORGANIZER;DIR="ldap://host.com:6666/o=eDABC%20Industries,c=3DUS??(cn=3DBJim%20Dolittle)":MAILTO:John.Doe@somewhere.com'
-
-			// Example #5
-			//vcal_text[$i] = 'DTSTART:20010302T150000Z'
-
-			// Example #6
-			//vcal_text[$i] = 'UID:040000008200E00074C5B7101A82E0080000000040A12C0042A2C0010000000000000000100'
-			//vcal_text[$i+1] = ' 000009BDFF7C7650ED5118DD700805FA71291'
-
-			// When unfolded becomes,
-			//vcal_text[$i] = 'UID:040000008200E00074C5B7101A82E0080000000040A12C0042A2C0010000000000000000100000009BDFF7C7650ED5118DD700805FA71291'
-
-			$colon = strpos($vcal_text[$i],':');
+			$colon = strpos($text,':');
 			if($colon == 0)
 			{
 				$colon = 65535;
 			}
 
-			$semi_colon = strpos($vcal_text[$i],';');
+			$semi_colon = strpos($text,';');
 			if($semi_colon == 0)
 			{
 				$semi_colon = 65535;
@@ -2681,9 +2624,8 @@ class vCalendar
 			else
 			{
 				$min_value = min($colon,$semi_colon);
-				$majortype = str_replace('-','_',strtolower(substr($vcal_text[$i],0,$min_value)));
-				$vcal_text[$i] = chop(substr($vcal_text[$i],$min_value + 1));
-				$value = $vcal_text[$i];
+				$majortype = str_replace('-','_',strtolower(substr($text,0,$min_value)));
+				$value = chop(substr($text,$min_value + 1));
 			}
 			
 			if($mode != 'none' && ($majortype != 'begin' && $majortype != 'end'))
@@ -2712,249 +2654,199 @@ class vCalendar
 				$state = 'required';
 			}
 
-			if($state == 'optional' || $state == 'required')
+			if($majortype == 'begin')
 			{
-				if($majortype == 'begin')
+				$tmode = $mode;
+				$mode = strtolower($value);
+				switch(strtolower($value))
 				{
-					switch(strtolower($value))
-					{
-						case 'daylight':
-							$mode = 'daylight';
-							$t_event = new class_timezone;
+					case 'daylight':
+						$t_event = new class_timezone;
+						$t_event = $event;
+						unset($event);
+						$event = new class_tzprop;
+						break;
+					case 'standard':
+						$t_event = new class_timezone;
+						$t_event = $event;
+						unset($event);
+						break;
+					case 'valarm':
+						if($mode == 'vevent' || $mode == 'vtodo')
+						{
 							$t_event = $event;
 							unset($event);
-							$event = new class_tzprop;
-							$event->type = strtolower($value);
-							break;
-						case 'standard':
-							$mode = 'standard';
-							$t_event = new class_timezone;
-							$t_event = $event;
-							unset($event);
-							$event = new class_tzprop;
-							$event->type = strtolower($value);
-							break;
-						case 'valarm':
-							if($mode == 'vevent' || $mode == 'vtodo')
-							{
-								$mode = 'valarm';
-								$t_event = $event;
-								unset($event);
-								$event = new class_alarm;
-								$event->type = strtolower($value);
-							}
-							break;
-						case 'vcalendar':
-							$vcal = $this->new_vcal();
-							break;
-						case 'vevent':
-							$mode = 'vevent';
-							$event = new class_event;
-							$event->type = strtolower($value);
-							break;
-						case 'vfreebusy':
-							$mode = 'vfreebusy';
-							$event = new vCalendar_item;
-							$event->type = strtolower($value);
-							break;
-						case 'vjournal':
-							$mode = 'vjournal';
-							$event = new vCalendar_item;
-							$event->type = strtolower($value);
-							break;
-						case 'vtimezone':
-							$mode = 'vtimezone';
-							$event = new class_timezone;
-							$event->type = strtolower($value);
-							break;
-						case 'vtodo':
-							$mode = 'vtodo';
-							$event = new class_todo;
-							$event->type = strtolower($value);
-							break;
-					}
-				}
-				elseif($majortype == 'end')
-				{
-					$mode = 'none';
-					switch(strtolower($value))
-					{
-						case 'daylight':
-							$tzdata[] = $event;
-							unset($event);
-							$event = $t_event;
-							unset($t_event);
-							$mode = 'vtimezone';
-							break;
-						case 'standard':
-							$tzdata[] = $event;
-							unset($event);
-							$event = $t_event;
-							unset($t_event);
-							$mode = 'vtimezone';
-							break;
-						case 'valarm':
-							$alarm[] = $event;
-							unset($event);
-							$event = $t_event;
-							unset($t_event);
+							$event = new class_alarm;
+						}
+						else
+						{
 							$mode = $tmode;
-							break;
-						case 'vevent':
-							if(!empty($alarm))
-							{
-								$event->alarm = $alarm;
-								unset($alarm);
-							}
-							$this->event[] = $event;
-							unset($event);
-							break;
-						case 'vfreebusy':
-							$this->freebusy[] = $event;
-							unset($event);
-							break;
-						case 'vjournal':
-							$this->journal[] = $event;
-							unset($event);
-							break;
-						case 'vtimezone':
-							if(!empty($tzdata))
-							{
-								$event->tzdata = $tzdata;
-								unset($tzdata);
-							}
-							$this->timezone[] = $event;
-							unset($event);
-							break;
-						case 'vtodo':
-							if(!empty($alarm))
-							{
-								$event->alarm = $alarm;
-								unset($alarm);
-							}
-							$this->todo[] = $event;
-							unset($event);
-							break;
-						case 'vcalendar':
-							$this->vcal = $vcal;
-							$this->vcal->event = $this->event;
-							$this->vcal->freebusy = $this->freebusy;
-							$this->vcal->journal = $this->journal;
-							$this->vcal->timezone = $this->timezone;
-							$this->vcal->todo = $this->todo;
-							break 2;
-					}
+						}
+						break;
+					case 'vcalendar':
+						$vcal = $this->new_vcal();
+						break;
+					case 'vevent':
+						$event = new class_event;
+						break;
+					case 'vfreebusy':
+						$event = new class_freebusy;
+						break;
+					case 'vjournal':
+						$event = new class_journal;
+						break;
+					case 'vtimezone':
+						$event = new class_timezone;
+						break;
+					case 'vtodo':
+						$event = new class_todo;
+						break;
 				}
-				elseif($majortype == 'prodid' || $majortype == 'version' || $majortype == 'method' || $majortype == 'calscale')
+				$event->type = strtolower($value);
+			}
+			elseif($majortype == 'end')
+			{
+				$mode = 'none';
+				switch(strtolower($value))
 				{
-					$this->parse_parameters($vcal->$majortype,$majortype,$this->from_text($value));
-					
-				}
-				else
-				{
-					if($do_to_text)
-					{
-						$value = $this->from_text($value);
-					}
-					switch($type)
-					{
-						case 'text':
-							$text_class = new class_text;
-							$this->parse_parameters($text_class,$majortype,$value);
-							if($multiples)
-							{
-								$event->{$majortype}[] = $text_class;
-							}
-							else
-							{
-								$this->set_var($event,$majortype,$text_class);
-							}
-							unset($text_class);
-							break;
-						case 'integer':
-							if($multiples)
-							{
-								$event->{$majortype}[] = intval($value);
-							}
-							else
-							{
-								$this->set_var($event,$majortype,intval($value));
-							}
-							break;
-						case 'date-time':
-							$date_class = $this->parse_datetime($value);
-							if($multiples)
-							{
-								$event->{$majortype}[] = $date_class;
-							}
-							else
-							{
-								$this->set_var($event,$majortype,$date_class);
-							}
-							unset($date_class);
-							break;
-						case 'float':
-							$event->$majortype = new class_geo;
-							$this->parse_geo($event->$majortype,$value);
-							break;
-						case 'utc-offset':
-							$this->set_var($event,$majortype,intval($value));
-							break;
-						case 'cal-address':
-							$address = new class_address;
-							$this->parse_parameters($address,$majortype,$value);
-							if($multiples)
-							{
-								$event->{$majortype}[] = $address;
-							}
-							else
-							{
-								$this->set_var($event,$majortype,$address);
-							}
-							unset($address);
-							break;
-						case 'recur':
-							$recur = new class_recur;
-							$this->parse_parameters($recur,$majortype,$value);
-							if($multiples)
-							{
-								$event->{$majortype}[] = $recur;
-							}
-							else
-							{
-								$this->set_var($event,$majortype,$recur);
-							}
-							unset($recur);
-							break;
-						case 'uri':
-							$new_var = new class_text;
-							$this->parse_parameters($new_var,$majortype,$value);
-							if($multiples)
-							{
-								switch($mode)
-								{
-									case 'valarm':
-										$alarm->attach[] = $new_var;
-										break;
-									default:
-										$event->{$majortype}[] = $new_var;
-										break;
-								}
-							}
-							else
-							{
-								$event->{$majortype} = $new_var;
-							}
-							unset($new_var);
-							break;
-						case 'xtype':
-							$this->parse_xtype($event,$majortype,$value);
-							break;
-
-					}
+					case 'daylight':
+						$tzdata[] = $event;
+						unset($event);
+						$event = $t_event;
+						unset($t_event);
+						$mode = 'vtimezone';
+						break;
+					case 'standard':
+						$tzdata[] = $event;
+						unset($event);
+						$event = $t_event;
+						unset($t_event);
+						$mode = 'vtimezone';
+						break;
+					case 'valarm':
+						$alarm[] = $event;
+						unset($event);
+						$event = $t_event;
+						unset($t_event);
+						$mode = $tmode;
+						break;
+					case 'vevent':
+						if(!empty($alarm))
+						{
+							$event->alarm = $alarm;
+							unset($alarm);
+						}
+						$this->event[] = $event;
+						unset($event);
+						break;
+					case 'vfreebusy':
+						$this->freebusy[] = $event;
+						unset($event);
+						break;
+					case 'vjournal':
+						$this->journal[] = $event;
+						unset($event);
+						break;
+					case 'vtimezone':
+						if(!empty($tzdata))
+						{
+							$event->tzdata = $tzdata;
+							unset($tzdata);
+						}
+						$this->timezone[] = $event;
+						unset($event);
+						break;
+					case 'vtodo':
+						if(!empty($alarm))
+						{
+							$event->alarm = $alarm;
+							unset($alarm);
+						}
+						$this->todo[] = $event;
+						unset($event);
+						break;
+					case 'vcalendar':
+						$this->vcal = $vcal;
+						$this->vcal->event = $this->event;
+						$this->vcal->freebusy = $this->freebusy;
+						$this->vcal->journal = $this->journal;
+						$this->vcal->timezone = $this->timezone;
+						$this->vcal->todo = $this->todo;
+						break 2;
 				}
 			}
-			$i++;
+			elseif($majortype == 'prodid' || $majortype == 'version' || $majortype == 'method' || $majortype == 'calscale')
+			{
+				$this->parse_parameters($vcal->$majortype,$majortype,$this->from_text($value));
+			}
+			elseif($state == 'optional' || $state == 'required')
+			{
+				if($do_to_text)
+				{
+					$value = $this->from_text($value);
+				}
+				switch($type)
+				{
+					case 'text':
+						$class = 'class_text';
+						$this->parse($event,$majortype,$value,$class);
+						break;
+					case 'integer':
+						if($multiples)
+						{
+							$event->{$majortype}[] = intval($value);
+						}
+						else
+						{
+							$this->set_var($event,$majortype,intval($value));
+						}
+						break;
+					case 'date-time':
+						$class = 'class_date_time';
+						$this->parse($event,$majortype,$value,$class);
+						break;
+					case 'float':
+						$event->$majortype = new class_geo;
+						$this->parse_geo($event->$majortype,$value);
+						break;
+					case 'utc-offset':
+						$this->set_var($event,$majortype,intval($value));
+						break;
+					case 'cal-address':
+						$class = 'class_address';
+						$this->parse($event,$majortype,$value,$class);
+						break;
+					case 'recur':
+						$class = 'class_recur';
+						$this->parse($event,$majortype,$value,$class);
+						break;
+					case 'uri':
+						$new_var = new class_text;
+						$this->parse_parameters($new_var,$majortype,$value);
+						if($multiples)
+						{
+							switch($mode)
+							{
+								case 'valarm':
+									$alarm->attach[] = $new_var;
+									break;
+								default:
+									$event->{$majortype}[] = $new_var;
+									break;
+							}
+						}
+						else
+						{
+							$event->{$majortype} = $new_var;
+						}
+						unset($new_var);
+						break;
+					case 'xtype':
+						$this->parse_xtype($event,$majortype,$value);
+						break;
+				}
+			}
+			$text = $this->read_line_unfold($vcal_text);
 		}
 		return $this->vcal;
 	}
@@ -2983,13 +2875,21 @@ class vCalendar
 					$str .= $this->build_card_internals('v'.$vtype,$vcal->{$vtype}[$i]);
 					$str .= 'END:V'.strtoupper($vtype)."\r\n";
 				}
-//				echo "STR #$i : $str<br>\n";
+				$this->debug('STR #'.$i.' : '.$str);
 //				flush();
 			}
 		}
 		$str .= 'END:VCALENDAR'."\r\n";
 
 		return $str;
+	}
+
+	function debug($str='')
+	{
+		if($this->debug_str)
+		{
+			echo $str."<br>\n";
+		}
 	}
 }
 ?>
