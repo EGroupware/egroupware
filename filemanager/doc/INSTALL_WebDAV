@@ -60,17 +60,86 @@ To install:
 		/var/files/
 		/var/files/home/
 
-4/	(OPTIONAL) Ideally you want some kind of authentication on the WebDAV
-	repository, so that users accessing it directly still need their egroupware
-	password.
+4/ 	You now want some kind of authentication on the WebDAV repository, so that 
+	users accessing it directly still need their egroupware	password.  By default 
+	there is no security through Apache's WebDAV module and anyone could access
+	your files.
+
 	To enable authentication you must use a third-party Apache authentication
 	module.  Which you use depends on how you have setup authentication in
 	phpGroupWare - for instance if you use an SQL DB (the default) then set up
 	mod_auth_pgsql (http://www.giuseppetanzilli.it/mod_auth_pgsql/) or
 	mod_auth_mysql (http://modauthmysql.sourceforge.net/)
-	An example .htaccess file is included for postgresql - mysql would be
-	similar. Your file repository also needs to be configured to allow
-	phpGroupWare to write .htaccess files (the setup in (3) will allow this)
 
-	Note that using an Apache module for authentication is not strictly
-	required in order to use WebDAV within phpGroupWare.
+	An example .htaccess file for your repository's root
+	(e.g. /var/files) when using mod_auth_mysql would be:
+
+		Options None
+		DirectoryIndex index.html
+		RemoveHandler cgi-script .cgi .pl
+		RemoveType application/x-httpd-php .php .php3
+		RemoveType application/x-httpd-php-source .phps
+
+		AuthMySQL_Host localhost
+		AuthMySQL_User <mysql user>
+		AuthMySQL_Password <mysql password>
+		Auth_MySQL_DB <mysql egroupware database>
+
+		AuthMySQL_Password_Table phpgw_accounts
+		AuthMySQL_Username_Field account_lid
+		AuthMySQL_Password_Field account_pwd
+
+		Auth_MySQL_Encryption_Types PHP_MD5
+
+		AuthName "V-Manager"
+		AuthType Basic
+		require valid-user
+
+	eGroupWare's WebDAV vfs class has some suppose for adding
+	.htaccess files when creating new directories but does not do
+	so when creating a new directory for a new user so you will
+	need to do this by hand or modify the vfs_dav class.  The .htaccess
+	file would look like "require user boab"
+
+	Filemanager also support group directories.  Unfortunatly
+	mod_auth_mysql does not easily support authentication on these and you
+	have to modify it's source with the following patch:
+
+--- mod_auth_mysql.c-orig       2004-05-24 23:51:55.000000000 +0100
++++ mod_auth_mysql.c    2004-05-24 23:52:08.000000000 +0100
+@@ -862,8 +862,11 @@
+ #endif
+
+        query = ap_pstrcat(r->pool,"select count(*) from ", auth_table,
+-       " where ", auth_user_field, "='", esc_user, "'",
+-       " and FIND_IN_SET('", esc_group, "',", auth_group_field,")", auth_group_clause, NULL);
++                          " AS groups, ", auth_table, " AS users, phpgw_acl AS acl",
++                          " where users.", auth_user_field, "='", esc_user, "'", " AND groups.account_type='g'",
++                          " AND users.account_type='u' AND groups.account_id=acl.acl_location AND users.account_id=acl.acl_account",
++                          " AND groups.", auth_group_field, "='", esc_group, "'", NULL);
++       //         " and FIND_IN_SET('", esc_group, "',", auth_group_field,")", auth_group_clause, NULL);
+
+        ap_log_error(APLOG_MARK, APLOG_NOERRNO | APLOG_DEBUG, r->server,
+                "Group query created; [%s]", query);
+
+	Recompile (if building from Debian source packages:
+	dpkg-buildpackage -rfakeroot -uc -b), then add this to your
+	root .htaccess file:
+
+		AuthMySQL_Group_Table phpgw_accounts
+		Auth_MySQL_Group_Field account_lid
+
+	And finally make the group directories by hand: 
+
+		mkdir home/Admins; mkdir home/Default
+
+	and each directory's .htaccess file by hand:
+
+		require group Admins
+
+TODO:
+
+Create group directories automaticly
+Create .htaccess file for group directories automaticly
+Create .htaccess files for new user directories automaticly
+Only list group directories to which the user has access
