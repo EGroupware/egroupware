@@ -15,7 +15,7 @@
   // NOTE: This entire file needs to be rewritten.  There is a great deal of code not being used
   //       anymore. This should also be converted to templates while where at it (jengo)
 
-  $abc = array('company'   => 'company',	// AddressBook Columns and their descriptions
+/*  $abc = array('company'   => 'company',	// AddressBook Columns and their descriptions
                'firstname' => 'first name',
                'lastname'  => 'last name',
                'email'     => 'email',
@@ -33,34 +33,31 @@
                'bday'      => 'birthday',
                'url'       => 'URL'
               );
-
+*/
   function form($format,$action,$title,$fields) { // used for add/edit
     global $phpgw, $phpgw_info;
      
     $t = new Template($phpgw_info["server"]["app_tpl"]);
     $t->set_file(array( "form"	=> "form.tpl"));
 
-    $email        = $fields["email"];
-    $firstname    = $fields["firstname"];
-    $lastname     = $fields["lastname"];
-    $title        = $fields["title"];
-    $hphone       = $fields["hphone"];
-    $wphone       = $fields["wphone"];
-    $fax          = $fields["fax"];
+    $email        = $fields["D.EMAIL"];
+    $firstname    = $fields["N_Given"];
+    $lastname     = $fields["N_Family"];
+    $title        = $fields["TITLE"];
+    $hphone       = $fields["A_TEL"];
+    $wphone       = $fields["B_TEL"];
+    $fax          = $fields["C_TEL"];
     $pager        = $fields["pager"];
     $mphone       = $fields["mphone"];
     $ophone       = $fields["ophone"];
-    $street       = $fields["street"];
+    $street       = $fields["ADR_Street"];
     $address2     = $fields["address2"];
-    $city         = $fields["city"];
-    $state        = $fields["state"];
-    $zip          = $fields["zip"];
+    $city         = $fields["ADR_Locality"];
+    $state        = $fields["ADR_Region"];
+    $zip          = $fields["ADR_PostalCode"];
     $bday         = $fields["bday"];
     $notes        = $fields["notes"];
-    $access       = $fields["access"];
-    $company      = $fields["company"];
-    $company_id   = $fields["company_id"];
-    $company_name = $fields["company"];
+    $company      = $fields["ORG_Name"];
     $url          = $fields["url"];
 
     if ($format != "view") {
