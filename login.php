@@ -84,7 +84,7 @@
   if ($deny_login) {
      deny_login();
   }
-
+  
   if (isset($submit) && $submit) {
     if (getenv(REQUEST_METHOD) != "POST") {
        Header("Location: ".$phpgw->link("","code=5"));
@@ -99,13 +99,8 @@
 
   } else {
     if (isset($last_loginid) && $last_loginid) {
-       $phpgw->db->query("select account_id from accounts where account_lid='$last_loginid'");
-       $phpgw->db->next_record();
-    
-       $phpgw->db->query("select preference_value from preferences where preference_owner='" . $phpgw->db->f("account_id") . "' "
-                       . "and preference_name='lang'");
-       $phpgw->db->next_record();
-       $phpgw_info["user"]["preferences"]["common"]["lang"] = $phpgw->db->f("preference_value");
+       $phpgw->preferences->read_preferences("common",$last_loginid); 
+       #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
        $phpgw->translation->add_app("login");
     }
   }

@@ -233,8 +233,8 @@ only yours	common	de	nur eigene
 other number	addressbook	de	andere Nr.
 pager	addressbook	de	Pager
 participants	calendar	de	Teilnehmer
-password	login	de	Password
 password	common	de	Passwort
+password	login	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
 percent of users that logged out	admin	de	Prozent der User, die sich korrekt ausgelogged haben
 permissions	admin	de	Zugriffsrechte
@@ -354,7 +354,7 @@ use cookies	login	de	Cookies benutzen
 use end date	calendar	de	Enddatum benutzen
 user accounts	admin	de	Benutzerkonten
 user groups	admin	de	Benutzergruppen
-username	login	de	Username
+username	login	de	Benutzername
 users	common	de	Benutzer
 usersfile_perm_error	filemanager	de	Um diesen Fehler zu beheben, m&uuml;ssen Sie die zugriffsrechte zum files/users Verzeichnis korrekt setzen.<BR> Bei *nix Systemen geben Sie dazu ein: chmod 707
 view	common	de	Anzeigen
@@ -382,7 +382,7 @@ you are required to change your password during your first login	common	de	Bitte
 you are required to change your password durring your first login	common	de	Sie m&uuml;ssen Ihr Passwort bei Ihrem ersten Login &auml;ndern
 you have 1 high priority event on your calendar today.	common	de	Sie haben einen Eintrag mit hoher Priorit&auml;l f&uuml;r heute in Ihrem Kalender.
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!
-you have been successfully logged out	login	de	Sie wurden erfolgreich ausgelogged
+you have been successfully logged out	login	de	Sie wurden erfolgreich abgemeldet
 you have entered an invailed date	todo	de	Sie haben ein ung&uuml;ltiges Datum angegeben
 you have not entered a\nbrief description	calendar	de	Sie haben keine a\nKurzbeschreibung eingegeben
 you have not entered a\nvalid time of day.	calendar	de	Sie haben keine a\ng&uuml;ltige Tageszeit eingegeben.
