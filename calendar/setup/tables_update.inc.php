@@ -229,26 +229,28 @@
 		}
 
 // calendar_entry => phpgw_cal
-		$oProc->CreateTable('phpgw_cal', array(
-			'fd' => array(
-				'cal_id' => array('type' => 'auto', 'nullable' => False),
-				'owner' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
-				'category' => array('type' => 'int', 'precision' => 8, 'default' => '0', 'nullable' => False),
-				'groups' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
-				'datetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
-				'mdatetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
-				'edatetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
-				'priority' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '2'),
-				'cal_type' => array('type' => 'varchar', 'precision' => 10, 'nullable' => True),
-				'is_public' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '1'),
-				'title' => array('type' => 'varchar', 'precision' => 80, 'nullable' => False, 'default' => '1'),
-				'description' => array('type' => 'text', 'nullable' => True)
-			),
-			'pk' => array('cal_id'),
-			'fk' => array(),
-			'ix' => array(),
-			'uc' => array()
-		));
+		$oProc->CreateTable(
+			'phpgw_cal', array(
+				'fd' => array(
+					'cal_id' => array('type' => 'auto', 'nullable' => False),
+					'owner' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+					'category' => array('type' => 'int', 'precision' => 8, 'default' => '0', 'nullable' => False),
+					'groups' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
+					'datetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
+					'mdatetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
+					'edatetime' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
+					'priority' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '2'),
+					'cal_type' => array('type' => 'varchar', 'precision' => 10, 'nullable' => True),
+					'is_public' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '1'),
+					'title' => array('type' => 'varchar', 'precision' => 80, 'nullable' => False, 'default' => '1'),
+					'description' => array('type' => 'text', 'nullable' => True)
+				),
+				'pk' => array('cal_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
 
 		$oProc->m_odb->query('SELECT * FROM calendar_entry',__LINE__,__FILE__);
 		while($oProc->m_odb->next_record())
@@ -379,7 +381,7 @@
 	$test[] = '0.9.11.004';
 	function calendar_upgrade0_9_11_004()
 	{
-		global $setup_info
+		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.005';
 		return True;
 	}
@@ -387,7 +389,7 @@
 	$test[] = '0.9.11.005';
 	function calendar_upgrade0_9_11_005()
 	{
-		global $setup_info
+		global $setup_info;
 		$setup_info['calendar']['currentver'] = '0.9.11.006';
 		return True;
 	}
