@@ -14,14 +14,23 @@
 
     $types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 
-		if(!$app)
+		if($app)
+		{
+				if (!preg_match("/^[a-zA-Z0-9-_]+$/i",$app))
+				{
+						echo 'Invalid application<br>';
+						exit;
+				}
+		}
+		else
 		{
 				$app = 'phpgwapi';
 		}
 		
     if ($fn)
     {
-				if (preg_match("/^class\.[a-zA-Z0-9]\.inc\.php+$/i",$fn)){
+				if (preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$fn))
+				{
 						$files[] = $fn;
 				}
 				else
@@ -46,11 +55,9 @@
 
 				while(list($key, $value) = each($files))
 				{
-						//echo '$key = '.$key.' and $value = '.$value.'<br>';
-						if (!preg_match("/^class\.(.*)\.inc\.php+$/",$value))
+						if (!preg_match("/^class\.([a-zA-Z0-9-_]*)\.inc\.php+$/",$value))
 						{
 								unset($files[$key]);
-								//echo '#'.$key.' is bad, and should be unset<br>';
 						}
 				}
  
