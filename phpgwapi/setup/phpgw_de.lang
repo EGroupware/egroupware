@@ -117,6 +117,7 @@ first name	common	de	Vorname
 firstname	common	de	Vorname
 friday	common	de	Freitag
 ftp	common	de	FTP
+germany	common	de	DEUTSCHLAND
 global	common	de	Global
 global public	common	de	Global Public
 grant access	common	de	Zugriff gew&auml;hren
@@ -149,7 +150,7 @@ new main category	common	de	neue Hauptkategorie
 no	common	de	Nein
 no matchs found	common	de	Keine Treffer gefunden.
 no subject	common	de	Kein Betreff
-none	common	de	Keiner
+none	common	de	Keine
 notes	common	de	Notizen
 note	common	de	Notiz
 november	common	de	November
@@ -195,7 +196,6 @@ title	common	de	Titel
 total	common	de	Total
 tuesday	common	de	Dienstag
 update	common	de	Aktualisieren
-updated	common	de	Updated
 url	common	de	URL
 user	common	de	Benutzer
 username	common	de	Benutzername
