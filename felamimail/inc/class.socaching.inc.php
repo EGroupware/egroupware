@@ -108,7 +108,7 @@
 			if ($filter) $where[] = $filter;
 				
 			$this->db->select($this->cache_table,'uid,date,subject,sender_name,sender_address,to_name,to_address,size,attachments',
-				$where,__LINE__,__FILE__,$_firstMessage,$this->getSortSQL($_sort),False,$_numberOfMessages);
+				$where,__LINE__,__FILE__,$_firstMessage?$_firstMessage-1:False,$this->getSortSQL($_sort),False,$_numberOfMessages);
 				
 			while($this->db->next_record())
 			{
