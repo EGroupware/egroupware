@@ -8,29 +8,11 @@
   if ( $phpgw_info["setup"]["stage"]["header"] == 2){
       $phpgw_setup->show_header("Please set your header admin password",True);
   }elseif ( $phpgw_info["setup"]["stage"]["header"] == 10){
-    if (!$phpgw_setup->auth("Config")){
+    if (!$phpgw_setup->auth("Header")){
       $phpgw_setup->show_header("Please login",True);
       $phpgw_setup->login_form();
       exit;
-    }else{ /* authentication settled. Moving to the database portion. */
-      $phpgw_setup->loaddb();
     }
-  }
-
-  $phpgw_setup->check_header();
-  if ( $phpgw_info["setup"]["stage"] >= 1.4){
-    if (!$phpgw_setup->header_auth()){
-      $phpgw_setup->show_header("Please login",True);
-      $phpgw_setup->loginForm($login_msg);
-      exit;
-    }else{ /* authentication settled. Moving to the database portion. */
-      $phpgw_setup->loaddb();
-    }
-  }else{
-        $phpgw_setup->show_header("Please login",True);
-      $phpgw_setup->loginForm($login_msg);
-      exit;
-
   }
 
   switch($action){
@@ -43,7 +25,7 @@
       echo $newheader;
       break;
     case "view":
-      $phpgw_setup->show_header("Generated header.inc.php");
+      $phpgw_setup->show_header("Generated header.inc.php", False, "header");
       echo "<br>Save this text as contents of your header.inc.php<br><hr>";
       $newheader = $phpgw_setup->generate_header();
       echo "<pre>";
@@ -52,21 +34,21 @@
       break;
     case "write config":
       if(is_writeable ("../header.inc.php")|| (!file_exists ("../header.inc.php") && is_writeable ("../"))){
-        $phpgw_setup->show_header("Saved header.inc.php");
+        $phpgw_setup->show_header("Saved header.inc.php", False, "header");
         $newheader = $phpgw_setup->generate_header();
         $fsetup = fopen("../header.inc.php","w");
         fwrite($fsetup,$newheader);
         fclose($fsetup);
         echo "Created header.inc.php!<br>";
       }else{
-        $phpgw_setup->show_header("Error generating header.inc.php");
+        $phpgw_setup->show_header("Error generating header.inc.php", False, "header");
         echo "Could not open header.inc.php for writing!<br>\n";
         echo "Please check read/write permissions on directories or back up and use another option.<br>";
         echo "</td></tr></table></body></html>";
       }
       break;
     default:
-      $phpgw_setup->show_header("Create/Edit your header.inc.php");
+      $phpgw_setup->show_header("Create/Edit your header.inc.php", False, "header");
       echo '<table>
           <tr bgcolor="486591"><th colspan=2><font color="fefefe"> Analysis </font></th></tr>
           <tr><td colspan=2>';
