@@ -92,7 +92,7 @@
 
 	if ($matches == 1)
 	{
-		$quantity = '1 match found.';
+		$quantity = lang('1 match found').'.';
 	}
 	elseif ($matches > 0)
 	{

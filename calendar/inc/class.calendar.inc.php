@@ -181,16 +181,16 @@ class calendar extends calendar_
 		switch ($status_short)
 		{
 			case 'A':
-				$status = 'Accepted';
+				$status = lang('Accepted');
 				break;
 			case 'R':
-				$status = 'Rejected';
+				$status = lang('Rejected');
 				break;
 			case 'T':
-				$status = 'Tentative';
+				$status = lang('Tentative');
 				break;
 			case 'U':
-				$status = 'No Response';
+				$status = lang('No Response');
 				break;
 		}
 		return $status;
@@ -1503,7 +1503,7 @@ class calendar extends calendar_
 		{
 			$repeat_days .= ', ';
 		}
-		$repeat_days .= $day;
+		$repeat_days .= $day.' ';
 	}
 
 	function view_event($event)
@@ -1659,7 +1659,7 @@ class calendar extends calendar_
 		$p->parse('output','list',True);
 
 // Repeated Events
-		$str = $event->rpt_type;
+		$str = lang($event->rpt_type);
 		if($event->recur_type <> RECUR_NONE)
 		{
 			$str .= ' (';
@@ -1674,33 +1674,43 @@ class calendar extends calendar_
 			if($event->recur_type == RECUR_WEEKLY || $event->recur_type == RECUR_DAILY)
 			{
 				$repeat_days = '';
-				if (!!($event->recur_data & M_SUNDAY) == True)
+				if($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Sunday')
 				{
-					$this->view_add_day(lang('Sunday '),$repeat_days);
+					if (!!($event->recur_data & M_SUNDAY) == True)
+					{
+						$this->view_add_day(lang('Sunday'),$repeat_days);
+					}
 				}
 				if (!!($event->recur_data & M_MONDAY) == True)
 				{
-					$this->view_add_day(lang('Monday '),$repeat_days);
+					$this->view_add_day(lang('Monday'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_TUESDAY) == True)
 				{
-					$this->view_add_day(lang('Tuesay '),$repeat_days);
+					$this->view_add_day(lang('Tuesay'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_WEDNESDAY) == True)
 				{
-					$this->view_add_day(lang('Wednesday '),$repeat_days);
+					$this->view_add_day(lang('Wednesday'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_THURSDAY) == True)
 				{
-					$this->view_add_day(lang('Thursday '),$repeat_days);
+					$this->view_add_day(lang('Thursday'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_FRIDAY) == True)
 				{
-					$this->view_add_day(lang('Friday '),$repeat_days);
+					$this->view_add_day(lang('Friday'),$repeat_days);
 				}
 				if (!!($event->recur_data & M_SATURDAY) == True)
 				{
-					$this->view_add_day(lang('Saturday '),$repeat_days);
+					$this->view_add_day(lang('Saturday'),$repeat_days);
+				}
+				if($phpgw_info['user']['preferences']['calendar']['weekdaystarts'] == 'Monday')
+				{
+					if (!!($event->recur_data & M_SUNDAY) == True)
+					{
+						$this->view_add_day(lang('Sunday'),$repeat_days);
+					}
 				}
 				if($repeat_days <> '')
 				{
@@ -1774,10 +1784,12 @@ class calendar extends calendar_
 		$increment = $phpgw_info['user']['preferences']['calendar']['interval'];
 		$interval = (int)(60 / $increment);
 
-		$str = '<center>'.$phpgw->common->show_date($date['raw'],'l, F d, Y').'<br>';
+		$str = '<center>'.lang($phpgw->common->show_date($date['raw'],'l'));
+		$str .= ', '.lang($phpgw->common->show_date($date['raw'],'F'));
+		$str .= ' '.$phpgw->common->show_date($date['raw'],'d, Y').'<br>';
 		$str .= '<table width="85%" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">';
 		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$this->image_dir.'/pix.gif"></td></tr>';
-		$str .= '<tr><td width="15%">Participant</td>';
+		$str .= '<tr><td width="15%">'.lang('Participant').'</td>';
 		for($i=0;$i<24;$i++)
 		{
 			for($j=0;$j<$interval;$j++)

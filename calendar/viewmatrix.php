@@ -86,7 +86,7 @@
 	{
 		echo '  <input type="hidden" name="filter" value="'.$filter.'">'."\n";
 	}
-	echo '  <input type="submit" value="Refresh">'."\n";
+	echo '  <input type="submit" value="'.lang('refresh').'">'."\n";
 	echo ' </form>'."\n";
 	echo '</center>'."\n";
 

@@ -1,6 +1,7 @@
 1 match found	calendar	en	1 match found
 1 message has been deleted	email	en	1 message has been deleted
-a	calendar	en	
+a	calendar	en	a
+accepted	calendar	en	Accepted
 access	common	en	Access
 access not permitted	common	en	Access not permitted
 access type	common	en	Access type
@@ -389,6 +390,7 @@ no	common	en	No
 no_file_name	filemanager	en	No filename was specified
 no matches found.	calendar	en	No matches found.
 no matchs found	admin	en	No matchs found
+no repsonse	calendar	en	No Response
 none	common	en	None
 non-standard	email	en	Non-Standard
 normal	common	en	Normal
@@ -416,6 +418,7 @@ pager	addressbook	en	Pager
 parcel	addressbook	en	Parcel
 parent category	common	en	Parent Category
 parent project	todo	en	parent project
+particpant	calendar	en	Participant
 participants	calendar	en	Participants
 password	common	en	Password
 password has been updated	common	en	Password has been updated
@@ -461,10 +464,12 @@ record owner	addressbook	en	Record owner
 re-edit event	calendar	en	Re-Edit Event
 re-enter password	admin	en	Re-enter password
 re-enter your password	preferences	en	Re-Enter your password
+refresh	calendar	en	Refresh
 region	admin	en	Region
 regions	admin	en	Regions
 regions	weather	en	Regions
 region	weather	en	Region
+rejected	calendar	en	Rejected
 remove all users from this group	admin	en	Remove all users from this group
 rename	common	en	Rename
 rename_to	filemanager	en	Rename to
@@ -546,6 +551,7 @@ switch to	bookkeeping	en	Switch to
 table	admin	en	Table
 tables	weather	en	Tables
 target language	transy	en	Target Language
+tentative	calendar	en	Tentative
 text only	preferences	en	Text only
 that category name has been used already !	admin	en	That category name has been used already !
 that loginid has already been taken	admin	en	That loginid has already been taken
