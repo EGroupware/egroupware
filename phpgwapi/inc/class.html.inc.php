@@ -150,29 +150,29 @@ class html
 		}
 		if ((int)$multiple > 0)
 		{
-			$options .= ' multiple size="'.(int)$multiple.'"';
+			$options .= ' multiple="1" size="'.(int)$multiple.'"';
 			if (substr($name,-2) != '[]')
 			{
-			$name .= '[]';
+				$name .= '[]';
 			}
 		}
 		$out = "<select name=\"$name\" $options>\n";
 
-			if (is_array($key))
-			{
-			$key = implode(',',$key);
-			}
-			foreach($arr as $k => $text)
-			{
+		if (!is_array($key))
+		{
+			$key = explode(',',$key);
+		}
+		foreach($arr as $k => $text)
+		{
 			$out .= '<option value="'.$this->htmlspecialchars($k).'"';
 
-			if("$k" == "$key" || strstr(",$key,",",$k,"))
+			if(in_array($k,$key))
 			{
 				$out .= ' selected="1"';
 			}
 			$out .= ">" . ($no_lang || $text == '' ? $text : lang($text)) . "</option>\n";
-			}
-			$out .= "</select>\n";
+		}
+		$out .= "</select>\n";
 
 		return $out;
 	}
