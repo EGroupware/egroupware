@@ -377,7 +377,7 @@
 		$_ver_str = @mysql_get_server_info();
 		$_ver_arr = explode(".",$_ver_str);
 		$_ver = $_ver_arr[1];
-		if(intval($_ver) < 23)
+		if((int)$_ver < 23)
 		{
 			$phpgw_baseline['lang']['fd']['message_id'] = array(
 				'type'      => 'varchar',

@@ -377,7 +377,7 @@
 			$_ver_str = @mysql_get_server_info();
 			$_ver_arr = explode(".",$_ver_str);
 			$_ver = $_ver_arr[1];
-			if(intval($_ver) < 23)
+			if((int)$_ver < 23)
 			{
 				$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.13.016';
 				return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -647,7 +647,7 @@
 		$GLOBALS['phpgw_setup']->oProc->query("SELECT * FROM old_preferences");
 		while ($GLOBALS['phpgw_setup']->oProc->next_record())
 		{
-			$owner = intval($GLOBALS['phpgw_setup']->oProc->f('preference_owner'));
+			$owner = (int)$GLOBALS['phpgw_setup']->oProc->f('preference_owner');
 			$prefs = unserialize($GLOBALS['phpgw_setup']->oProc->f('preference_value'));
 
 			if (is_array($prefs))

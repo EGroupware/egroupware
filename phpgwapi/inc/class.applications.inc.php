@@ -292,8 +292,8 @@
 						'name'    => $this->db->f('app_name'),
 						'enabled' => True,
 						'status'  => $this->db->f('app_enabled'),
-						'id'      => intval($this->db->f('app_id')),
-						'order'   => intval($this->db->f('app_order')),
+						'id'      => (int)$this->db->f('app_id'),
+						'order'   => (int)$this->db->f('app_order'),
 						'version' => $this->db->f('app_version')
 					);
 				}
@@ -324,7 +324,7 @@
 		{
 			foreach($GLOBALS['phpgw_info']['apps'] as $appname => $app)
 			{
-				if(intval($app['id']) == intval($id))
+				if((int)$app['id'] == (int)$id)
 				{
 					return $appname;
 				}

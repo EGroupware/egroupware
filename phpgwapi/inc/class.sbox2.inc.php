@@ -135,7 +135,7 @@
 			{
 				$this->bocal = createobject('calendar.bocalendar');
 			}
-			if (!is_array($event) && (int) $event > 0)
+			if (!is_array($event) && (int)$event > 0)
 			{
 				$event = $this->bocal->read_entry($event);
 			}
@@ -271,13 +271,13 @@
 			return $this->getId($name,$title,lang('Pattern for Search in Addressbook'),$id_name,$content,lang('use Button to search for Address'),$multiple);
 		}
 
-		function addr2email( $addr,$home='' )
+		function addr2email($addr,$home='')
 		{
 			if (!is_array($addr))
 			{
 				$home = substr($addr,-1) == 'h';
 				$contacts = createobject('phpgwapi.contacts');
-				list( $addr ) = $contacts->read_single_entry( intval($addr) );
+				list($addr) = $contacts->read_single_entry((int)$addr);
 			}
 			if ($home)
 			{

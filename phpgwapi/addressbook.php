@@ -47,9 +47,9 @@
 		'lang_to_title' => lang('Select all %1 %2 for %3')
 	));
 
-	$start  = intval(get_var('start',array('POST','GET'),0));
+	$start  = (int)get_var('start',array('POST','GET'),0);
 	$filter = get_var('filter',array('POST','GET'),'none');
-	$cat_id = intval(get_var('cat_id',array('POST','GET'),0));
+	$cat_id = (int)get_var('cat_id',array('POST','GET'),0);
 	$query  = get_var('query',array('POST','GET'));
 	$sort   = get_var('sort',array('POST','GET'));
 	$order  = get_var('order',array('POST','GET'));
@@ -305,7 +305,7 @@
 		if ($inserted || $inserted === 0)
 		{
 			$GLOBALS['phpgw']->template->set_var('message','<b>'.
-				lang('%1 email addresses inserted',intval($_GET['inserted'])).'</b>');
+				lang('%1 email addresses inserted',(int)$_GET['inserted']).'</b>');
 		}
 		$GLOBALS['phpgw']->template->parse('out','addressbook_list_t',True);
 		$GLOBALS['phpgw']->template->p('out');
