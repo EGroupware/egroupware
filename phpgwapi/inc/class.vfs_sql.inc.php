@@ -902,7 +902,7 @@
 			{
 				if ($fp = fopen ($p->real_full_path, 'wb'))
 				{
-					fwrite ($fp, $data['content'], strlen ($data['content']));
+					fwrite ($fp, $data['content']);
 					fclose ($fp);
 					$write_ok = 1;
 				}
