@@ -26,6 +26,7 @@
 	/*!
 	@class vfs
 	@author ralfbecker
+	@author ralfbecker
 	@abstract Virtual File System
 	@description Authors: Zone
 	*/
@@ -56,6 +57,7 @@
 
 	/*!
 	@class path_class
+	@author ralfbecker
 	@author ralfbecker
 	@abstract helper class for path_parts
 	*/

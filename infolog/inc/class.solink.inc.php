@@ -15,6 +15,7 @@
 	/*!
 	@class solink
 	@author ralfbecker
+	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - DB layer
 	@discussion This class is to access the links in the DB
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
