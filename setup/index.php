@@ -219,6 +219,7 @@
 			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
 			$setup_tpl->set_var('backupwarn',lang('backupwarn'));
+			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
 			$setup_tpl->set_var('goto',lang('Go to'));
 			$setup_tpl->set_var('configuration',lang('configuration'));
