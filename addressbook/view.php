@@ -197,15 +197,31 @@
 	// Following cleans up view_row, since we were only using it to fill {cols}
 	$t->set_var('view_row','');
 
-	$cat = CreateObject('phpgwapi.categories');
-	$catinfo = $cat->return_single($fields[0]['cat_id']);
-	$catname = $catinfo[0]['name'];
-	if ($fields[0]['cat_id']) { $cat_id = $fields[0]['cat_id']; }
+	$fields['cat_id'] = is_array($cat_id) ? implode(',',$cat_id) : $cat_id;
 
-	$cat->app_name = 'phpgw';
-	$catinfo  = $cat->return_single($fields[0]['cat_id']);
-	$catname .= $catinfo[0]['name'];
-	if ($fields[0]['cat_id']) { $cat_id = $fields[0]['cat_id']; }
+	$cat = CreateObject('phpgwapi.categories');
+	$cats = explode(',',$fields[0]['cat_id']);
+	if ($cats[1])
+	{
+		while (list($key,$thiscat) = each($cats))
+		{
+			$catinfo = $cat->return_single($thiscat);
+			$catname .= $catinfo[0]['name'] . '; ';
+		}
+		if (!$cat_id)
+		{
+			$cat_id = $cats[0];
+		}
+	}
+	else
+	{
+		$catinfo = $cat->return_single($fields[0]['cat_id']);
+		$catname = $catinfo[0]['name'];
+		if (!$cat_id)
+		{
+			$cat_id = $fields[0]['cat_id'];
+		}
+	}
 
 	if (!$catname) { $catname = lang('none'); }
 
