@@ -277,12 +277,9 @@ function validate_and_submit() {
     if ($participants[$phpgw->db->f("account_lid")])
        echo " selected";
 
-    // Change this to use accounts->display_full_name()
-    if (! $phpgw->db->f("account_lastname"))
-       echo ">" . $phpgw->db->f("account_loginid");
-    else
-       echo ">" . $phpgw->db->f("account_lastname") . ", " . $phpgw->db->f("account_firstname");
-
+    echo ">" . $phpgw->common->display_fullname($phpgw->db->f("account_lid"),
+    											$phpgw->db->f("account_firstname"),
+    											$phpgw->db->f("account_lastname"));
     echo "</option>\n";
   }
 

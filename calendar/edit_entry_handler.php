@@ -165,7 +165,6 @@ if (! $error) {
   $phpgw->db->query("SELECT MAX(cal_id) FROM webcal_entry");
   $phpgw->db->next_record();
   $id = $phpgw->db->f(0);
-
   
   while ($participant = each($participants)) {
       $phpgw->db->query("INSERT INTO webcal_entry_user (cal_id,cal_login,cal_status ) "
@@ -196,11 +195,11 @@ if (! $error) {
      }
 
      $phpgw->db->query("insert into webcal_entry_repeats (cal_id,cal_type,"
-	         . "cal_end,cal_days,cal_frequency) values($id,'$rpt_type',"
-	         . "$end,'$days',$freq)");
+	                 . "cal_end,cal_days,cal_frequency) values($id,'$rpt_type',"
+	                 . "$end,'$days',$freq)");
   }
   $phpgw->db->query("insert into webcal_entry_groups values ($id,'"
-	      . $phpgw->accounts->array_to_string($access,$n_groups) . "') ");
+	              . $phpgw->accounts->array_to_string($access,$n_groups) . "') ");
 
   
   Header("Location: ".$phpgw->link("index.php","year=$year&month=$month&cd=14"));
@@ -215,7 +214,6 @@ $phpgw->common->phpgw_header();
 <?php
   $time = sprintf("%d:%02d",$hour,$minute);
   echo lang("Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:", display_time($time),display_time(add_duration($time,$duration))); ?>
-
 ?>
 
 <UL>
