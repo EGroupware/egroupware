@@ -105,27 +105,27 @@
 		$offset = 30;
 	}
 
-	// Set qfilter to display entries where tid is blank,
+	// Set qfilter to display entries where tid=n (normal contact entry),
 	//   else they may be accounts, etc.
 	if (!$filter) { $filter = "none"; }
 
 	if ($filter == "none") {
 		if ($cat_id == "all") {
-			$qfilter  = 'tid=';
+			$qfilter  = 'tid=n';
 		} else {
-			$qfilter  = 'tid=,cat_id='.$cat_id;
+			$qfilter  = 'tid=n,cat_id='.$cat_id;
 		}
 	} elseif($filter == "private") {
 		if ($cat_id == "all") {
-			$qfilter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=';
+			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"];
 		} else {
-			$qfilter  = 'owner='.$phpgw_info["user"]["account_id"].',tid=,cat_id='.$cat_id;
+			$qfilter  = 'tid=n,owner='.$phpgw_info["user"]["account_id"].',cat_id='.$cat_id;
 		}
 	} else {
 		if ($cat_id == "all") {
-			$qfilter = 'tid=,owner='.$filter;
+			$qfilter = 'tid=n,owner='.$filter;
 		} else {
-			$qfilter = 'tid=,owner='.$filter.'cat_id='.$cat_id;
+			$qfilter = 'tid=n,owner='.$filter.'cat_id='.$cat_id;
 		}
 	}
 
