@@ -31,6 +31,7 @@ SpellChecker.I18N = {
 	"Replace all"                           : "Replace all",
 	"Replace with"                          : "Replace with",
 	"Replace"                               : "Replace",
+	"Revert"                                : "Revert",
 	"SC-spell-check"                        : "Spell-check",
 	"Suggestions"                           : "Suggestions",
 	"pliz weit ;-)"                         : "pliz weit ;-)"

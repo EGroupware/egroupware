@@ -1,8 +1,7 @@
 // I18N constants
 
 // LANG: "el", ENCODING: UTF-8 | ISO-8859-7
-// Author: Dimitris Glezos <dimitris@glezos.com>
-
+// Author: Dimitris Glezos, dimitris@glezos.com
 
 TableOperations.I18N = {
 	"Align":					  "Στοίχηση",

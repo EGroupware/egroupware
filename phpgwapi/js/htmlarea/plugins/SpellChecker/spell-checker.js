@@ -1,14 +1,10 @@
 // Spell Checker Plugin for HTMLArea-3.0
-// Implementation by Mihai Bazon.  Sponsored by www.americanbible.org
+// Sponsored by www.americanbible.org
+// Implementation by Mihai Bazon, http://dynarch.com/mishoo/
 //
-// htmlArea v3.0 - Copyright (c) 2002 interactivetools.com, inc.
+// (c) dynarch.com 2003.
+// Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
-//
-// A free WYSIWYG editor replacement for <textarea> fields.
-// For full source code and docs, visit http://www.interactivetools.com/
-//
-// Version 3.0 developed by Mihai Bazon for InteractiveTools.
-//   http://dynarch.com/mishoo
 //
 // $Id$
 
@@ -68,10 +64,10 @@ SpellChecker.prototype.buttonPress = function(editor, id) {
 		if (HTMLArea.is_ie) {
 			win = window.open(uiurl, "SC_spell_checker",
 					  "toolbar=no,location=no,directories=no,status=no,menubar=no," +
-					  "scrollbars=no,resizable=yes,width=600,height=400");
+					  "scrollbars=no,resizable=yes,width=600,height=450");
 		} else {
 			win = window.open(uiurl, "SC_spell_checker",
-					  "toolbar=no,menubar=no,personalbar=no,width=600,height=400," +
+					  "toolbar=no,menubar=no,personalbar=no,width=600,height=450," +
 					  "scrollbars=no,resizable=yes");
 		}
 		win.focus();

@@ -22,11 +22,12 @@ function Dialog(url, action, init) {
 };
 
 Dialog._parentEvent = function(ev) {
+	setTimeout( function() { if (Dialog._modal && !Dialog._modal.closed) { Dialog._modal.focus() } }, 50);
 	if (Dialog._modal && !Dialog._modal.closed) {
-		Dialog._modal.focus();
 		HTMLArea._stopEvent(ev);
 	}
 };
+
 
 // should be a function, the return handler of the currently opened dialog.
 Dialog._return = null;
@@ -40,7 +41,7 @@ Dialog._arguments = null;
 Dialog._geckoOpenModal = function(url, action, init) {
 	var dlg = window.open(url, "hadialog",
 			      "toolbar=no,menubar=no,personalbar=no,width=10,height=10," +
-			      "scrollbars=no,resizable=yes");
+			      "scrollbars=no,resizable=yes,modal=yes,dependable=yes");
 	Dialog._modal = dlg;
 	Dialog._arguments = init;
 
