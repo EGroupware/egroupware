@@ -15,6 +15,9 @@
 //var isNS4 = false;
 //var isNS6 = false;
 // constructor
+
+var IEzindexworkaround=false; // set this true to enable the IE z-index bugfix
+
 function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 {
 
@@ -148,16 +151,17 @@ function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 	ypSlideOutMenu.showMenu = function(id)
 	{
 		//temporarly hide all selectboxes to fix IE bug with z-index  
-		if(document.all)
+		if(IEzindexworkaround && document.all)
 		{
 			for (var i=0; i<document.all.length; i++) {
 				o = document.all(i)
 					if (o.type == 'select-one' || o.type == 'select-multiple') {
-						// todo: add check for select in div?
-						if (o.style) o.style.display = 'none';
+						if (o.style) o.style.display = 'none';// todo: add check for select in div?
 					}
 			}
 		}
+
+
 		ypSlideOutMenu.ShowL(id+'Container');
 
 	}
