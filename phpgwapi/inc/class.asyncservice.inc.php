@@ -1,11 +1,11 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare API - Timed Asynchron Services for phpGroupWare             *
+	* phpGroupWare API - Timed Asynchron Services for eGroupWare               *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* Class for creating cron-job like timed calls of phpGroupWare methods     *
+	* Class for creating cron-job like timed calls of eGroupWare methods       *
 	* -------------------------------------------------------------------------*
-	* This library is part of the phpGroupWare API                             *
-	* http://www.phpgroupware.org/                                             *
+	* This library is part of the eGroupWare API                               *
+	* http://www.eGroupWare.org                                                *
 	* ------------------------------------------------------------------------ *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -19,8 +19,8 @@
 	@class asyncservice
 	@author Ralf Becker
 	@copyright GPL - GNU General Public License
-	@abstract The class implements a general phpGW service to execute callbacks at a given time.
-	@discussion see http://www.phpgroupware.org/wiki/TimedAsyncServices
+	@abstract The class implements a general eGW service to execute callbacks at a given time.
+	@discussion see http://www.egroupware.org/wiki/TimedAsyncServices
 	*/
 	class asyncservice
 	{
@@ -561,7 +561,7 @@
 					$this->$name = $path;	// a reasonable default for *nix
 					if (!is_executable($this->$name))
 					{
-						if ($fd = popen('/bin/sh -c "which '.$name.'"','r'))
+						if ($fd = popen('/bin/sh -c "type -p '.$name.'"','r'))
 						{
 							$this->$name = fgets($fd,256);
 							@pclose($fd);
