@@ -523,14 +523,26 @@
 		global $phpgw_info;
 
 		$i=0;
+
+//		while($i < count($varray)) {
+//			echo '<br>'.$varray[$i].' %% '.$varray[$i+1];
+//			$i++;$i++;
+//		}
+//		exit;
 		// incremented by 2
 		while($i < count($varray)) {
 			$k = explode(";",$varray[$i]); // Key
 			$v = explode(";",$varray[$i+1]); // Values
 			for($h=0;$h<count($k);$h++) {
+				// Cleanup groupings
+				$k[$h] = ereg_replace("a\.",'',$k[$h]);
+				$k[$h] = ereg_replace("b\.",'',$k[$h]);
+				$k[$h] = ereg_replace("c\.",'',$k[$h]);
+				$k[$h] = ereg_replace("d\.",'',$k[$h]);
+				//echo '<br>kh="'.$k[$h].'",v0="'.$v[0].'",v1="'.$v[1].'",v2="'.$v[2].'",v3="'.$v[3].'",v4="'.$v[4].'",v5="'.$v[5].'",v6="'.$v[6].'",v7="'.$v[7].'"';
 				switch($k[$h]) {
 					case "fn":
-						$formattedname = $v[0];
+						$fn = $v[0];
 						break;
 					case "n":
 						$lastname  = $v[0];
@@ -550,80 +562,178 @@
 							$url = 'http://' . $url;
 						}
 						break;
-					case "adr": // This one is real ugly. :(
-						$street   = $v[2];
-						$address2 = $v[1] . " " . $v[0];
-						$city     = $v[3];
-						$state    = $v[4];
-						$zip      = $v[5];
-						$country  = $v[6];
+					case "label":
+						$label = $v[0];
 						break;
-					case "tel": // Check to see if there another phone entry.
-						if(!ereg("home",$varray[$i])  && !ereg("work",$varray[$i]) &&
-							!ereg("fax",$varray[$i])   && !ereg("cell",$varray[$i]) &&
-							!ereg("pager",$varray[$i]) && !ereg("bbs",$varray[$i])  &&
-							!ereg("modem",$varray[$i]) && !ereg("car",$varray[$i])  &&
-							!ereg("isdn",$varray[$i])  && !ereg("video",$varray[$i]) ) {
-							// There isn't a seperate home entry.
-							// Use this number.
-							$hphone = $v[0];
+					case "adr": // This one is real ugly. Still! :(
+						if(!$street) {
+							$street   = $v[2];
+							$address2 = $v[1] . " " . $v[0];
+							$city     = $v[3];
+							$state    = $v[4];
+							$zip      = $v[5];
+							$country  = $v[6];
+							if (strstr($k[$h+1],"intl")) { $adronetype .= "INTL;"; }
+							if (strstr($k[$h+1],"dom"))  { $adronetype .= "DOM;"; }
+						} else {
+							$hstreet   = $v[2];
+							$hcity     = $v[3];
+							$hstate    = $v[4];
+							$hzip      = $v[5];
+							$hcountry  = $v[6];
+							if (strstr($k[$h+1],"intl")) { $adrtwotype .= "INTL;"; }
+							if (strstr($k[$h+1],"dom"))  { $adrtwotype .= "DOM;"; }
 						}
 						break;
-					case "home":
-						$hphone = $v[0];
-						break;
-					case "work":
-						$wphone = $v[0];
-						break;
-					case "fax":
-						$fax = $v[0];
-						break;
-					case "pager":
-						$pager = $v[0];
-						break;
-					case "cell":
-						$mphone = $v[0];
-						break;
-					case "pref":
-						$notes .= "Preferred phone number is ";
-						$notes .= $v[0] . "\n";
-						break;
-					case "msg":
-						$notes .= "Messaging service on number "; 
-						$notes .= $v[0] . "\n";
-						break;
-					case "bbs":
-						$notes .= "BBS phone number ";
-						$notes .= $v[0] . "\n";
-						break;
-					case "modem":
-						$notes .= "Modem phone number ";
-						$notes .= $v[0] . "\n";
-						break;
-					case "car":
-						$notes .= "Car phone number ";
-						$notes .= $v[0] . "\n";
-						break;
-					case "isdn":
-						$notes .= "ISDN number ";
-						$notes .= $v[0] . "\n";
-						break;
-					case "video":
-						$notes .= "Video phone number ";
-						$notes .= $v[0] . "\n";
+					case "tel":
+						switch ($k[$h+1]) {
+							case "work":
+								$wphone = $v[0];
+								break;
+							case "home":
+								$hphone = $v[0];
+								break;
+							case "cell":
+								$mphone = $v[0];
+								break;
+							case "pager":
+								$pager = $v[0];
+								break;
+							case "fax":
+								$fax = $v[0];
+								break;
+							case "msg":
+								$msgphone = $v[0];
+								break;
+							case "bbs":
+								$bbsphone = $v[0];
+								break;
+							case "modem":
+								$modem = $v[0];
+								break;
+							case "car":
+								$carphone = $v[0];
+								break;
+							case "isdn":
+								$isdn = $v[0];
+								break;
+							case "video":
+								$vidphone = $v[0];
+								break;
+							case "pref":
+								switch ($k[$h+2]) {
+									case "work":
+										$tel_prefer .= "work;";
+										$wphone = $v[0];
+										break;
+									case "home":
+										$tel_prefer .= "home;";
+										$hphone = $v[0];
+										break;
+									case "cell":
+										$tel_prefer .= "cell;";
+										$mphone = $v[0];
+										break;
+									case "pager":
+										$tel_prefer .= "pager;";
+										$pager = $v[0];
+										break;
+									case "fax":
+										$tel_prefer .= "fax;";
+										$fax = $v[0];
+										break;
+									case "msg":
+										$tel_prefer .= "msg;";
+										$msgphone = $v[0];
+										break;
+									case "bbs":
+										$tel_prefer .= "bbs;";
+										$bbsphone = $v[0];
+										break;
+									case "modem":
+										$tel_prefer .= "modem;";
+										$modem = $v[0];
+										break;
+									case "car":
+										$tel_prefer .= "car;";
+										$carphone = $v[0];
+										break;
+									case "isdn":
+										$tel_prefer .= "isdn;";
+										$isdn = $v[0];
+										break;
+									case "video":
+										$tel_prefer .= "video;";
+										$vidphone = $v[0];
+										break;
+								}
+							default:
+								$whphone = $v[0];
+								break;
+						}
 						break;
 					case "email":
-						if(!ereg("internet",$varray[$i])) {
-							$email = $v[0];
+						if (empty($email)) { $email = $v[0]; }
+						else              { $hemail = $v[0]; }
+						switch ($k[$h+1]) {
+							case "compuserve":
+								if (!$adronetype) { $emailtype="CompuServe"; }
+								else              { $hemailtype="CompuServe"; }
+								break;
+							case "aol":
+								if (!$adronetype) { $emailtype="AOL"; }
+								else              { $hemailtype="AOL"; }
+								break;
+							case "prodigy":
+								if (!$adronetype) { $emailtype="Prodigy"; }
+								else              { $hemailtype="Prodigy"; }
+								break;
+							case "eworld":
+								if (!$adronetype) { $emailtype="eWorld"; }
+								else              { $hemailtype="eWorld"; }
+								break;
+							case "applelink":
+								if (!$adronetype) { $emailtype="AppleLink"; }
+								else              { $hemailtype="AppleLink"; }
+								break;
+							case "appletalk":
+								if (!$adronetype) { $emailtype="AppleTalk"; }
+								else              { $hemailtype="AppleTalk"; }
+								break;
+							case "powershare":
+								if (!$adronetype) { $emailtype="PowerShare"; }
+								else              { $hemailtype="PowerShare"; }
+								break;
+							case "ibmmail":
+								if (!$adronetype) { $emailtype="IBMMail"; }
+								else              { $hemailtype="IBMMail"; }
+								break;
+							case "attmail":
+								if (!$adronetype) { $emailtype="ATTMail"; }
+								else              { $hemailtype="ATTMail"; }
+								break;
+							case "mcimail":
+								if (!$adronetype) { $emailtype="MCIMail"; }
+								else              { $hemailtype="MCIMail"; }
+								break;
+							case "x.400":
+								if (!$adronetype) { $emailtype="X.400"; }
+								else              { $hemailtype="X.400"; }
+								break;
+							case "tlx":
+								if (!$adronetype) { $emailtype="TLX"; }
+								else              { $hemailtype="TLX"; }
+								break;
+							default:
+								if (!$adronetype) { $emailtype="INTERNET"; }
+								else              { $hemailtype="INTERNET"; }
+								break;
 						}
-						break;
-					case "internet":
-						$email = $v[0];
 						break;
 					case "title":
 						$title = $v[0];
 						break;
-						case "org":
+					case "org":
 						$company = $v[0];
 						if(count($v) > 1) {
 							$notes .= $v[0] . "\n";
@@ -632,35 +742,83 @@
 							}
 						}
 						break;
-					default: // Throw most other things into notes.
+					default:
 						break;
 				} // switch
 			} // for
 			$i++;
 		} // All of the values that are getting filled are.
 
-		$fields["owner"]              = $phpgw_info["user"]["account_id"];
-		$fields["n_given"]            = addslashes($firstname);
-		$fields["n_family"]           = addslashes($lastname);
-		$fields["fn"]                 = addslashes($firstname . " " . $lastname);
-		$fields["title"]              = addslashes($title);
-		$fields["d_email"]            = addslashes($email);
-		$fields["tel_work"]           = addslashes($wphone);
-		$fields["tel_home"]           = addslashes($hphone);
-		$fields["tel_fax"]            = addslashes($fax);
-		$fields["tel_pager"]          = addslashes($pager);
-		$fields["tel_cell"]           = addslashes($mphone);
-		$fields["tel_msg"]            = addslashes($ophone);
-		$fields["adr_one_street"]     = addslashes($street);
-		$fields["address2"]           = addslashes($address2);
-		$fields["adr_one_locality"]   = addslashes($city);
-		$fields["adr_one_region"]     = addslashes($state);
-		$fields["adr_one_postalcode"] = addslashes($zip);
-		$fields["bday"]               = addslashes($bday);
-		$fields["url"]                = $url;
-		$fields["note"]               = addslashes($notes);
-		$fields["org_name"]           = addslashes($company);
+		$fields["tel_prefer"]          = substr($tel_prefer,0,-1);
+		$fields["owner"]               = $phpgw_info["user"]["account_id"];
+		$fields["n_given"]             = addslashes($firstname);
+		$fields["n_family"]            = addslashes($lastname);
+		$fields["fn"]                  = addslashes($firstname . " " . $lastname);
+		$fields["title"]               = addslashes($title);
+		$fields["email"]               = addslashes($email);
+		$fields["email_type"]          = $emailtype;
+		$fields["hemail"]              = addslashes($hemail);
+		$fields["hemail_type"]         = $hemailtype;
+		$fields["tel_work"]            = addslashes($wphone);
+		$fields["tel_home"]            = addslashes($hphone);
+		$fields["tel_fax"]             = addslashes($fax);
+		$fields["tel_pager"]           = addslashes($pager);
+		$fields["tel_cell"]            = addslashes($mphone);
+		$fields["tel_msg"]             = addslashes($ophone);
+		$fields["tel_car"]             = addslashes($carphone);
+		$fields["tel_modem"]           = addslashes($modem);
+		$fields["tel_bbs"]             = addslashes($bbsphone);
+		$fields["tel_isdn"]            = addslashes($isdn);
+		$fields["tel_video"]           = addslashes($vidphone);
+		$fields["adr_one_street"]      = addslashes($street);
+		$fields["address2"]            = addslashes($address2);
+		$fields["adr_one_locality"]    = addslashes($city);
+		$fields["adr_one_region"]      = addslashes($state);
+		$fields["adr_one_postalcode"]  = addslashes($zip);
+		$fields["adr_one_countryname"] = addslashes($country);
+		$fields["adr_one_type"]        = substr($adronetype,0,-1);
+		$fields["adr_two_street"]      = addslashes($hstreet);
+		$fields["adr_two_locality"]    = addslashes($hcity);
+		$fields["adr_two_region"]      = addslashes($hstate);
+		$fields["adr_two_postalcode"]  = addslashes($hzip);
+		$fields["adr_two_countryname"] = addslashes($hcountry);
+		$fields["adr_two_type"]        = substr($adrtwotype,0,-1);
+		$fields["bday"]                = addslashes($bday);
+		$fields["url"]                 = $url;
+		$fields["note"]                = addslashes($notes);
+		$fields["org_name"]            = addslashes($company);
 
+		/*
+		echo '<br>tel_prefer: '.$fields["tel_prefer"];
+		echo '<br>owner: '.$fields["owner"];
+		echo '<br>firstname: '.$fields["n_given"];
+		echo '<br>lastname: '.$fields["n_family"];
+		echo '<br>full name: '.$fields["fn"];
+		echo '<br>title: '.$fields["title"];
+		echo '<br>email: '.$fields["email"];
+		echo '<br>work#: '.$fields["tel_work"];
+		echo '<br>home#: '.$fields["tel_home"];
+		echo '<br>fax#: '.$fields["tel_fax"];
+		echo '<br>pager#: '.$fields["tel_pager"];
+		echo '<br>cell#: '.$fields["tel_cell"];
+		echo '<br>msg#: '.$fields["tel_msg"];
+		echo '<br>car#: '.$fields["tel_car"];
+		echo '<br>modem# '.$fields["tel_modem"];
+		echo '<br>bbs#: '.$fields["tel_bbs"];
+		echo '<br>isdn#: '.$fields["tel_isdn"];
+		echo '<br>video#: '.$fields["tel_video"];
+		echo '<br>street: '.$fields["adr_one_street"];
+		echo '<br>addr2: '.$fields["address2"];
+		echo '<br>city: '.$fields["adr_one_locality"];
+		echo '<br>state: '.$fields["adr_one_region"];
+		echo '<br>zip: '.$fields["adr_one_postalcode"];
+		echo '<br>adronetype: '.$fields["adr_one_type"];
+		echo '<br>bday: '.$fields["bday"];
+		echo '<br>url: '.$fields["url"];
+		echo '<br>note: '.$fields["note"];
+		echo '<br>company: '.$fields["org_name"];
+		exit;
+		*/
 		$this = CreateObject("phpgwapi.contacts");
 		$this->add($phpgw_info["user"]["account_id"],$fields);
 	}
