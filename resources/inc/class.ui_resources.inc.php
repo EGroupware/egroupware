@@ -40,6 +40,7 @@ class ui_resources
 	/*!
 		@function index
 		@abstract main resources list.
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param array $content content from eTemplate callback
 		
 		FIXME don't translate cats in nextmach
@@ -88,6 +89,7 @@ class ui_resources
 	/*!
 		@function edit
 		@abstract invokes add or edit dialog for resources
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param mixed $content int for resource_id to edit ( 0 for new ). array if callback from dialog.
 		@param string $msg message to display on top of dialog
 	*/

@@ -21,8 +21,8 @@ class so_resources
 	/*!
 	@function search
 	@abstract searches db for rows matching searchcriteria and categories
+	@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 	@discussion '*' is replaced with sql-wildcard '%'
-
 	@param array $criteria array of key => value for search. (or'ed together)
 	@param array $cats array of cat_id => cat_name to be searched
 	@param &array $data reference of data array with cols to return in first row ( key => '')
@@ -70,6 +70,7 @@ class so_resources
 	/*!
 		@function get_value
 		@abstract gets the value of $key from resource of $id
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param string $key key of value to get
 		@param int $id resource id
 		@return mixed value of key and resource, false if key or id not found.
@@ -88,6 +89,7 @@ class so_resources
 	/*!
 		@function read
 		@abstract reads a resource exept binary datas
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param int $id resource id
 		@return array with key => value or false if not found
 	*/
@@ -113,6 +115,7 @@ class so_resources
 	/*!
 		@function save
 		@abstract saves a resource including binary datas
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param array $resource key => value 
 		@return mixed id of resource if all right, false if fale
 	*/

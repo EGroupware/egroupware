@@ -15,10 +15,6 @@
 	
 class bo_resources
 {
-	/*var $public_functions = array
-	(
-		'get_rows'	=> True
-	);*/
 	var $vfs_basedir = '/resources/';
 	var $pictures_dir = '/resources/pictures/';
 	var $thumbs_dir = '/resources/pictures/thumbs/';
@@ -59,7 +55,6 @@ class bo_resources
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		
 		$nr = $this->so->search($criteria,$cats,&$rows,$order_by,$offset=$query['start'],$num_rows=0);
-// 		print_r($rows);die();
 		foreach($rows as $num => $resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],PHPGW_ACL_EDIT))
@@ -82,6 +77,7 @@ class bo_resources
 	/*!
 		@function read
 		@abstract reads a resource exept binary datas
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param int $id resource id
 		@return array with key => value or false if not found or allowed
 	*/
@@ -93,12 +89,13 @@ class bo_resources
 			echo lang('Notify your administrator to correct this situation') . '<br>';
 			return false;
 		}
-		return /* all exept pictures(blobs) */$this->so->read($id);
+		return $this->so->read($id);
 	}
 	
 	/*!
 		@function save
 		@abstract saves a resource. pictures are saved in vfs
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param array $resource array with key => value of all needed datas
 		@return string msg if somthing went wrong; nothing if all right
 	*/
@@ -115,19 +112,45 @@ class bo_resources
 			$resource['id'] = $this->so->save($resource);
 		}
 
-		if($resource['own_file']['size']>0 && ($resource['picture_src']=='own_src' || sizeof($resource['picture_src'])<1))
+		switch ($resource['picture_src'])
 		{
-			$resource['picture_src'] = 'own_src';
-			$msg = $this->save_picture($resource['own_file'],$resource['id']);
-			if($msg)
-			{
-				return $msg;
-			}
+			case 'own_src':
+				$vfs_data = array('string' => $this->pictures_dir.$resource['id'].'.jpg','relatives' => array(RELATIVE_ROOT));
+				if($resource['own_file']['size'] > 0)
+				{
+					$msg = $this->save_picture($resource['own_file'],$resource['id']);
+					break;
+				}
+				elseif($this->vfs->file_exists($vfs_data))
+				{
+					break;
+				}
+				$resource['picture_src'] = 'cat_src';
+			case 'cat_src':
+				break;
+			case 'gen_src':
+				break;
+			default:
+				if($resource['own_file']['size'] > 0)
+				{
+					$resource['picture_src'] = 'own_src';
+					$msg = $this->save_picture($resource['own_file'],$resource['id']);
+				}
+				else
+				{
+					$resource['picture_src'] = 'cat_src';
+				}
+		}
+		// somthing went wrong on saving own picture
+		if($msg)
+		{
+			return $msg;
 		}
 		
-		if($resource['picture_src'] == 'gen_src')
+		// delete old pictures
+		if($resource['picture_src'] != 'own_src')
 		{
-			// welches bild? --> picture_src = dateiname
+			$this->remove_picture($resource['id']);
 		}
 		
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
@@ -141,6 +164,7 @@ class bo_resources
 	/*!
 		@function save_picture
 		@abstract resizes and saves an pictures in vfs
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param array $file array with key => value
 		@param int $resource_id
 		@return mixed string with msg if somthing went wrong; nothing if all right
@@ -239,6 +263,7 @@ class bo_resources
 	/*!
 		@function get_picture
 		@abstact get resource picture either from vfs or from symlink
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
 		@param int $id id of resource
 		@param string $src can be: own_src, gen_src, cat_scr
 		@param bool $size false = thumb, true = full pic
@@ -255,13 +280,37 @@ class bo_resources
 			case 'cat_src':
 				list($picture) = $this->cats->return_single($this->so->get_value('cat_id',$id));
 				$picture = unserialize($picture['data']);
-				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
-				break;
+				if($picture['icon'])
+				{
+					$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/images/'.$picture['icon'];
+					break;
+				}
 			case 'gen_src':
 			default :
-				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->resource_icons.'generic.png';
+				$picture = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->resource_icons;
+				$picture .= strstr($scr,'.') ? $scr : 'generic.png';
 		}
 		return $picture;
+	}
+	
+	/*!
+		@fuction remove_picture
+		@abstract removes picture from vfs
+		@autor Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+		@param int $id id of resource
+		@return bool succsess or not
+	*/
+	function remove_picture($id)
+	{
+		$vfs_data = array('string' => $this->pictures_dir.$id.'.jpg','relatives' => array(RELATIVE_ROOT));
+		$this->vfs->override_acl = 1;
+		if($this->vfs->file_exists($vfs_data))
+		{
+			$this->vfs->rm($vfs_data);
+			$vfs_data['string'] = $this->thumbs_dir.$id.'.jpg';
+			$this->vfs->rm($vfs_data);
+		}
+		$this->vfs->override_acl = 0;
 	}
 }
 
