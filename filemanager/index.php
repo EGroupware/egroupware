@@ -3,10 +3,18 @@
 $phpgw_info["flags"] = array("currentapp" => "phpwebhosting",
 				"noheader" => False,
 				"noappheader" => False,
-				"enable_vfs_class" => True);
-include("../header.inc.php");
+				"enable_vfs_class" => True,
+				"enable_browser_class" => True);
+include ("../header.inc.php");
 
 error_reporting (4);
+
+if ($download && $fileman[0])
+{
+	$phpgw->browser->content_header ($fileman[0]);
+	echo $phpgw->vfs->read ($path/$fileman[0]);
+	$phpgw->common->phpgw_exit ();
+}
 
 ###
 # Page to process users
@@ -29,15 +37,6 @@ $homedir = "$fakebase/$userinfo[account_lid]";
 
 $phpwh_debug = 0;
 
-/* This doesn't work yet
-if ($download && $fileman[0])
-{
-	$phpgw->browser->content_header ($fn);
-	echo $phpgw->vfs->read ($path/$fileman[0]);
-	$phpgw->common->phpgw_exit ();
-}
-*/
-
 ###
 # Default is to sort by name
 ###
@@ -48,6 +47,11 @@ if (!$sortby)
 ###
 # Some hacks to set and display directory paths correctly
 ###
+
+if ($go)
+{
+	$path = $todir;
+}
 
 if (!$path)
 {
@@ -621,6 +625,10 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		html_form_input ("submit", "move", "Move to:");
 		html_form_select_begin ("todir");
 
+		html_form_input ("submit", "go", "Go to:");
+
+		html_break (1);
+
 		###
 		# First we get the directories in their home directory
 		###
@@ -749,6 +757,11 @@ if ($edit)
 	# If $edit is "Edit", we do nothing, and let the for loop take over
 	###
 
+	if ($edit_file)
+	{
+		$$edit_file = stripslashes ($$edit_file);
+	}
+
 	if ($edit_preview)
 	{
 		$edit_file_decoded = string_decode ($edit_file, 1);
@@ -819,10 +832,21 @@ if ($edit)
 	for ($j = 0; $j != $numoffiles; $j++)
 	{
 		$fileman_decoded = string_decode ($fileman[$j], 1);
+
+		###
+		# If we're in preview or save mode, we only show the file
+		# being previewed or saved
+		###
+
+		if ($edit_file && ($fileman_decoded != $edit_file))
+		{
+			continue;
+		}
+
 		if ($content = $phpgw->vfs->read ($fileman_decoded))
 		{
 			if ($edit_file)
-				$content = $$edit_file;
+				$content = stripslashes ($$edit_file);
 
 			html_table_begin ("100%");
 			html_form_begin ("$appname/index.php?path=$path");
