@@ -167,7 +167,7 @@
 				{
 					list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 					list($do_id) = @each($do_id);
-					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
+					echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
 					switch($do)
 					{
 						case 'edit':
@@ -243,13 +243,14 @@
 
 		/*!
 		@function edit
-		@syntax edit( $content=0,$action='',$action_id=0,$type='' )
+		@syntax edit( $content=0,$action='',$action_id=0,$type='',$referer='' )
 		@author ralfbecker
 		@abstract Edit/Create an InfoLog Entry
 		@param $content   Content from the eTemplate Exec call or info_id on inital call
 		@param $action    Name of an app of 'sp' for a infolog-sub
 		@param $action_id Id of app-entry to which a link is created
 		@param $type      Type of log-entry: note,todo,task
+		@param $referer   array with param/get-vars of the refering page
 		*/
 		function edit($content = 0,$action = '',$action_id=0,$type='',$referer='')
 		{
@@ -367,6 +368,16 @@
 				switch ($action)
 				{
 					case 'sp':
+						$links = $this->bo->link->get_links('infolog',$parent['info_id'],'!'.$this->bo->link->vfs_appname);
+						foreach($links as $link)
+						{
+							$link_id = $this->link->link('infolog',$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+							
+							if ($parent['info_link_id'] == $link['link_id'])
+							{
+								$content['info_link_id'] = $link_id;
+							}
+						}
 						break;
 					case 'addressbook':
 					case 'projects':
