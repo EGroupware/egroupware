@@ -310,7 +310,7 @@
 		function fetch_current_stream_event()
 		{
 			$this->event = mcal_fetch_current_stream_event($this->stream);
-			return $this->event
+			return $this->event;
 		}
 
 		function add_attribute($attribute,$value)
