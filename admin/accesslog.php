@@ -15,11 +15,8 @@
   $phpgw_info["flags"] = array("currentapp" => "admin", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
 
-  $phpgw->template->set_file(array( "header"	=> "accesslog.tpl",
-			  "row"		=> "accesslog.tpl",
-			  "footer"	=> "accesslog.tpl" ));
-
-  $phpgw->template->set_block("header","row","footer");
+  $phpgw->template->set_file(array("list" => "accesslog.tpl",
+                                   "row"  => "accesslog_row.tpl"));
 
   $show_maxlog = 30;
 
@@ -32,10 +29,8 @@
   $phpgw->template->set_var("lang_logout",lang("Logout"));
   $phpgw->template->set_var("lang_total",lang("Total"));
 
-  $phpgw->template->parse("out","header");
-
   $phpgw->db->query("select loginid,ip,li,lo from access_log order by li desc "
-	         . "limit $show_maxlog");
+                  . "limit $show_maxlog");
   while ($phpgw->db->next_record()) {
 
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -69,18 +64,20 @@
        $lo = "&nbsp;";
     }
 
-    $phpgw->template->set_var("row_loginid",$phpgw->db->f("loginid"));
+    if (ereg("@",$phpgw->db->f("loginid"))) {
+       $t = split("@",$phpgw->db->f("loginid"));
+       $loginid = $t[0];
+    } else {
+       $loginid = $phpgw->db->f("loginid");
+    }
+
+    $phpgw->template->set_var("row_loginid",$loginid);
     $phpgw->template->set_var("row_ip",$phpgw->db->f("ip"));
     $phpgw->template->set_var("row_li",$li);
     $phpgw->template->set_var("row_lo",$lo);
     $phpgw->template->set_var("row_total",$total);
 
-    if ($phpgw->db->num_rows() == 1) {
-       $phpgw->template->set_var("output","");
-    }
-    if ($phpgw->db->num_rows() != ++$i) {
-       $phpgw->template->parse("output","row",True);
-    }
+    $phpgw->template->parse("rows","row",True);
   }
 
   $phpgw->db->query("select count(*) from access_log");
@@ -97,6 +94,7 @@
   $phpgw->template->set_var("footer_total",lang("Total records") . ": $total");
   $phpgw->template->set_var("lang_percent",lang("Percent of users that logged out") . ": $percent%");
 
-  $phpgw->template->pparse("out","footer");
+  $phpgw->template->pparse("out","list");
 
   $phpgw->common->phpgw_footer();
+?>

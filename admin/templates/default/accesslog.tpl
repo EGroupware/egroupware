@@ -1,4 +1,4 @@
-<!-- BEGIN header -->
+<!-- BEGIN list -->
   <p>
   <table border="0" align="center" width="75%">
    <tr>
@@ -13,21 +13,9 @@
     <td>{lang_logout}</td>
     <td>{lang_total}</td>
    </tr>
-<!-- END header -->
 
-{output}
+   {rows}
 
-<!-- BEGIN row -->
-   <tr bgcolor="{tr_color}">
-    <td>{row_loginid}</td>
-    <td>{row_ip}</td>
-    <td>{row_li}</td>
-    <td>{row_lo}</td>
-    <td>{row_total}</td>
-   </tr>
-<!-- END row -->
-
-<!-- BEGIN footer -->
    <tr bgcolor="{bg_color}">
     <td colspan=5 align=left>{footer_total}</td>
    </tr>
@@ -36,4 +24,4 @@
     <td colspan=5 align=left>{lang_percent}</td>
    </tr>
   </table>
-<!-- END footer -->
+<!-- END list -->
