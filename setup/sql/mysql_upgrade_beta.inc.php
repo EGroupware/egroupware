@@ -753,6 +753,21 @@
     $currentver = "0.9.8pre4";
   }
 
+  $test[] = "0.9.8pre4";
+  function upgrade0_9_8pre4(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+
+    $sql = "create table phpgw_hooks (
+              hook_id       int not null auto_increment,
+              hook_appname  varchar(255),
+              hook_location varchar(255),
+              hook_filename varchar(255),
+              primary key hook_id (hook_id)
+            );";
+    $db->query($sql);  
+    $currentver = "0.9.8pre5";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($currentver == $value) {
