@@ -1,7 +1,7 @@
 <?php
 
 /**
-  V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.54 5 Nov 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -93,10 +93,10 @@ class ADODB2_mysql extends ADODB_DataDict {
 		case 'L': return 'TINYINT';
 		
 		case 'R':
+		case 'I4':
 		case 'I': return 'INTEGER';
 		case 'I1': return 'TINYINT';
 		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';	// MEDIUMINT is actualy a I3
 		case 'I8': return 'BIGINT';
 		
 		case 'F': return 'DOUBLE';
@@ -157,6 +157,8 @@ class ADODB2_mysql extends ADODB_DataDict {
 		
 		if (isset($idxoptions['FULLTEXT'])) {
 			$unique = ' FULLTEXT';
+			// fulltext indexes are only allowed for MyISAM tables (changing MyISAM tables to MyISAM does no harm)
+			$sql[] = "ALTER TABLE $tabname TYPE=MyISAM";
 		} elseif (isset($idxoptions['UNIQUE'])) {
 			$unique = ' UNIQUE';
 		} else {
