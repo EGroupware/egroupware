@@ -1,0 +1,159 @@
+%1 records imported	addressbook	zh	已导入%1条记录
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	已读取%1条记录(但尚未导入，您可以进入%2，返回%3，并且清除"测试导入"复选框)
+(e.g. 1969)	addressbook	zh	(例如:1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>操作失败! 必须选择转换类型. </b>请重试.
+@-eval() is only availible to admins!!!	addressbook	zh	只有管理员可调用@-eval()!!!
+actions	addressbook	zh	操作
+add a single entry by passing the fields.	addressbook	zh	通过传递字段来添加条目.
+add custom field	addressbook	zh	添加自定义字段
+address book	common	zh	通讯录
+address book - vcard in	addressbook	zh	通讯录—从vCard导入
+address book - view	addressbook	zh	通讯录—查看联系人
+address line 2	addressbook	zh	地址2
+address line 3	addressbook	zh	地址3
+address type	addressbook	zh	地址类型
+addressbook	common	zh	通讯录
+addressbook preferences	addressbook	zh	首选项
+addressbook-fieldname	addressbook	zh	通讯录—字段名
+addvcard	addressbook	zh	从vCard导入
+alt. csv import	addressbook	zh	从CSV文件导入
+are you sure you want to delete this field?	addressbook	zh	确定要删除该字段吗？
+bbs phone	addressbook	zh	BBS电话
+birthday	common	zh	生日
+birthdays	common	zh	生日
+blank	addressbook	zh	空白
+business	common	zh	商务
+business address type	addressbook	zh	地址类型
+business city	addressbook	zh	城市
+business country	addressbook	zh	国家/地区
+business email	addressbook	zh	EMail
+business email type	addressbook	zh	EMail类型
+business fax	addressbook	zh	传真
+business phone	addressbook	zh	电话
+business state	addressbook	zh	省/自治区
+business street	addressbook	zh	街道
+business zip code	addressbook	zh	邮政编码
+car phone	addressbook	zh	车载电话
+cell phone	addressbook	zh	手机
+charset of file	addressbook	zh	文件编码
+city	common	zh	城市
+company	common	zh	公司
+company name	common	zh	公司名称
+configuration	common	zh	全局配置
+contact	common	zh	联系人
+contact application	admin	zh	联系人应用程序
+contact settings	admin	zh	联系人配置
+copied by %1, from record #%2.	addressbook	zh	(该联系人信息来源于第%2条记录)
+country	common	zh	国家/地区
+csv-fieldname	addressbook	zh	CSV—字段名
+csv-filename	addressbook	zh	CSV—文件名
+custom	addressbook	zh	自定义
+custom fields	addressbook	zh	自定义字段
+debug output in browser	addressbook	zh	显示调试信息
+default filter	addressbook	zh	默认显示范围
+delete a single entry by passing the id.	addressbook	zh	通过传递ID来删除单个条目.
+department	common	zh	部门
+domestic	addressbook	zh	国内
+download	addressbook	zh	下载
+download export file (uncheck to debug output in browser)	addressbook	zh	下载导出的文件 (要在浏览器中显示导出结果，请勿选中该项)
+edit custom field	addressbook	zh	编辑自定义字段
+edit custom fields	admin	zh	自定义字段
+empty for all	addressbook	zh	全部清空
+enter the path to the exported file here	addressbook	zh	请输入上一步操作所导出文件的位置:
+export contacts	addressbook	zh	导出通讯录
+export file name	addressbook	zh	导出文件名称
+export from addressbook	addressbook	zh	导出通讯录
+extra	addressbook	zh	附加的
+fax	addressbook	zh	传真
+fax number	common	zh	传真号
+field %1 has been added !	addressbook	zh	字段%1已加入!
+field %1 has been updated !	addressbook	zh	字段%1已更新!
+field name	addressbook	zh	字段名
+fields to show in address list	addressbook	zh	请选择联系人列表中的可见字段
+fieldseparator	addressbook	zh	字段分隔符
+full name	addressbook	zh	姓名
+geo	addressbook	zh	GEO
+global categories	addressbook	zh	全局类别
+grant addressbook access	common	zh	授权访问
+home address type	addressbook	zh	地址类型
+home city	addressbook	zh	城市
+home country	addressbook	zh	国家/地区
+home email	addressbook	zh	EMail
+home email type	addressbook	zh	EMail类型
+home phone	addressbook	zh	电话
+home state	addressbook	zh	省/自治区
+home street	addressbook	zh	街道
+home zip code	addressbook	zh	邮政编码
+import	addressbook	zh	导入
+import contacts	addressbook	zh	导入通讯录
+import csv-file into addressbook	addressbook	zh	从CSV文件导入
+import file	addressbook	zh	导入文件
+import from ldif, csv, or vcard	addressbook	zh	导入其他软件的通讯录
+import from outlook	addressbook	zh	从Outlook导入
+import next set	addressbook	zh	导入下一个集合
+import_instructions	addressbook	zh	请按照下列方法导出其他软件的通讯录, 以便导入eGroupWare中:<p>在Netscape中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以LDIF格式存放.<p>在Outlook中, 选定将要导出的联系人文件夹, 选定<b>文件菜单</b>的<b>导入和导出</b>项, 导出的文件将以CSV格式存放.<p>在Palm Desktop 4.0或更高版本中, 打开通讯录, 选定<b>文件</b>菜单的<b>导出</b>项, 导出的文件将以VCard格式存放.<p>Palm Desktop 4.0 或是更新的版本，在瀏覽通訊錄資料時在<b>檔案</b>功能選擇 <b>匯出</b>，匯出的資料是 VCard 格式。
+international	addressbook	zt	國際
+isdn phone	addressbook	zt	ISDN電話
+label	addressbook	zt	概述
+ldap context for contacts	admin	zt	聯絡人之LDAP context
+ldap host for contacts	admin	zt	聯絡人之LDAP host
+ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
+ldap root pw for contacts	admin	zt	聯絡人之LDAP root 密碼
+ldif	addressbook	zt	LDIF
+line 2	addressbook	zt	第2行
+mark records as private	addressbook	zt	標示為私人記錄
+message phone	addressbook	zt	留言電話
+middle name	addressbook	zt	中間欄位
+mobile	addressbook	zt	行動電話
+mobile phone	addressbook	zt	行動電話
+modem phone	addressbook	zt	撥接電話
+no vcard	addressbook	zt	沒有VCard
+number of records to read (%1)	addressbook	zt	讀取記錄號碼(%1)
+number of records to read (<=200)	addressbook	zt	讀取的資料筆數(<=200)
+other number	addressbook	zt	其他號碼
+other phone	addressbook	zt	其他電話
+pager	common	zt	呼叫器
+parcel	addressbook	zt	兼職
+phone number	common	zt	電話號碼
+phone numbers	common	zt	電話號碼
+please enter a name for that field !	addressbook	zt	請輸入欄位名稱！
+postal	common	zt	郵政信箱
+pref	addressbook	zh	设为首选
+prefix	addressbook	zh	称谓
+public key	addressbook	zh	公钥
+read a list of entries.	addressbook	zh	读取条目列表.
+read a single entry by passing the id and fieldlist.	addressbook	zh	Read a single entry by passing the id and fieldlist.
+record access	addressbook	zh	谁可访问？
+record owner	addressbook	zh	所有者
+retrieve contacts	admin	zh	取位置:
+select all	addressbook	zh	全选
+select the type of conversion	addressbook	zh	请选择转换类型
+select the type of conversion:	addressbook	zh	请选择转换类型:
+select where you want to store	admin	zh	请选择通讯录的存
+show birthday reminders on main screen	addressbook	zh	在首页上显示生日提醒
+startrecord	addressbook	zh	起始记录
+state	common	zh	省/自治区
+street	common	zh	街道
+successfully imported %1 records into your addressbook.	addressbook	zh	已成功地将%1条记录导入您的通讯录.
+suffix	addressbook	zh	后缀
+test import (show importable records <u>only</u> in browser)	addressbook	zh	导入测试(<u>仅</u> 仅显示可导入记录)
+that field name has been used already !	addressbook	zh	该字段名已被占用!
+this person's first name was not in the address book.	addressbook	zh	通讯录中无此人名.
+this person's last name was not in the address book.	addressbook	zh	通讯录中无此姓氏.
+to many might exceed your execution-time-limit	addressbook	zh	to many might exceed your execution-time-limit
+today is %1's birthday!	common	zh	今天是%1的生日!
+tomorrow is %1's birthday.	common	zh	明天是%1的生日。
+translation	addressbook	zh	翻译
+update a single entry by passing the fields.	addressbook	zh	通过传递字段来更新单个条目.
+use country list	addressbook	zh	使用“国家/地区”列表
+vcard	common	zh	保存为vCard
+vcards require a first name entry.	addressbook	zh	vCards必须包含“名字”条目.
+vcards require a last name entry.	addressbook	zh	Vcards必须包含“姓”条目.
+video phone	addressbook	zh	可视电话
+voice phone	addressbook	zh	语音电话
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh	警告!! 仅当您不使用联系信息来进行账户存储时，LDAP才是有效的！
+work phone	addressbook	zh	工作电话
+you must select a vcard. (*.vcf)	addressbook	zh	必须选择一个vCard. (*.vcf)
+you must select at least 1 column to display	addressbook	zh	至少必须选择一列以显示
+zip code	common	zh	邮政编码
+zip_note	addressbook	zh	<p><b>注意:</b> 该文件可以是.csv文件, .vcf文件或.ldif文件的压缩包, 但每次只能导入一种类型.
