@@ -66,6 +66,7 @@
 	$co_modules[] = 'setup';
 	$co_modules[] = 'squirrelmail';
 	$co_modules[] = 'stocks';
+	$co_modules[] = 'syncml-server';
 	$co_modules[] = 'todo';
 	$co_modules[] = 'transy';
 	$co_modules[] = 'tts';
