@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'disable_Template_class' => True,
 		'currentapp' => 'login',
 		'noheader'   => True
