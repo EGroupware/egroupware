@@ -739,7 +739,7 @@
 					{
 						if (!is_numeric($user))
 						{
-							$user = name2id($user,'account_email');
+							$user = $GLOBALS['phpgw']->accounts->name2id($user,'account_email');
 						}
 						$l_participants[] = $user /*.$data['status']*/;
 					}
