@@ -67,7 +67,7 @@
 	else
 	{
 		// allow caching by browser
-		session_cache_limiter(PHP_VERSION >= 4.2 ? 'private_no_expire' : 'privat');
+		session_cache_limiter(PHP_VERSION >= 4.2 ? 'private_no_expire' : 'private');
 	}
 
 	/* debugging settings */
