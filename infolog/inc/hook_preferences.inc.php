@@ -13,14 +13,8 @@
 	/* $Id$ */
 
 {
-// Only Modify the $file and $title variables.....
-	$file = array(
-		'Preferences'     => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname),
-		'Grant Access'    => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-		'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
-	);
-//Do not modify below this line
-	display_section($appname,lang($appname),$file);	// leave 2. $appname for compatibilty with .14
+	// for compatibility and convinience, can go soon
+	ExecMethod('infolog.admin_prefs_sidebox_hooks.all_hooks','preferences');
 }
 
 ?>

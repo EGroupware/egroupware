@@ -47,11 +47,10 @@
 		<a href="http://www.egroupware.org/wiki/InfoLog" target="_blank">InfoLog page in our Wiki</a>.';
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['infolog']['hooks'][] = 'preferences';
+	$setup_info['infolog']['hooks']['preferences'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 	$setup_info['infolog']['hooks'][] = 'settings';
-	$setup_info['infolog']['hooks'][] = 'admin';
+	$setup_info['infolog']['hooks']['admin'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 	$setup_info['infolog']['hooks'][] = 'deleteaccount';
-	$setup_info['infolog']['hooks'][] = 'about';
 	$setup_info['infolog']['hooks'][] = 'home';
 	$setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.uiinfolog.hook_view';
 	$setup_info['infolog']['hooks']['projects_view']    = 'infolog.uiinfolog.hook_view';
@@ -59,6 +58,7 @@
 	$setup_info['infolog']['hooks']['infolog']          = 'infolog.uiinfolog.hook_view';
 	$setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
 	$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
+	$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
