@@ -42,14 +42,14 @@
 
 	$phpgw->db->query("SELECT group_apps FROM groups WHERE group_id=".$group_id,__FILE__,__LINE__);
 	$phpgw->db->next_record();
-	$apps_before = $phpgw->db->f("group_apps")
+	$apps_before = $phpgw->db->f("group_apps");
         $phpgw->accounts->add_app($n_group_permissions);
 	$apps_after = $phpgw->accounts->add_app("",True);
 
 	if($apps_before <> $apps_after) {
 	  $after_apps = explode(":",$apps_after);
 	  for ($i=1;$i<=count($after_apps);$i++) {
-	    if (!strpos(" ".$apps_before." ",$after_apps) {
+	    if (!strpos(" ".$apps_before." ",$after_apps)) {
 	      $new_apps[] = $after_apps;
 	    }
 	  }
@@ -75,9 +75,9 @@
 	       if(is_array($phpgw_newuser)) unset($phpgw_newuser);
 	       $phpgw->db->query("SELECT preference_value FROM preferences WHERE preference_owner=".$n_users[$i],__FILE__,__LINE__);
 	       $phpgw->db->next_record();
-	       $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value");
+	       $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
 	     } else {
-	       $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"]
+	       $phpgw_newuser["user"]["preferences"] = $phpgw_info["user"]["preferences"];
 	     }
 	     $docommit = False;
 	     for ($j=0;$j<count($new_apps);$j++) {

@@ -59,8 +59,8 @@
         $phpgw->db->query("SELECT preference_owner, preference_value FROM preferences");
 	if($phpgw->db->num_rows()) {
 	  while($phpgw->db->next_record()) {
-	    if($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"] {
-	      $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value");
+	    if($phpgw->db->f("preference_owner") != $phpgw_info["user"]["account_id"]) {
+	      $phpgw_newuser["user"]["preferences"] = unserialize($phpgw->db->f("preference_value"));
 	      $phpgw->common->hook_single("add_def_pref", $n_app_name);
 	      $phpgw->preferences->commit_user($phpgw->db->f("preference_owner"));
 	    } else {
