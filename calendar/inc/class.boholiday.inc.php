@@ -48,16 +48,12 @@
 		{
 			$this->so = CreateObject('calendar.soholiday');
 
-			if(isset($GLOBALS['start']))  { $this->start = intval($GLOBALS['start']); } else { $this->start = 0; }
-
-			if(isset($GLOBALS['query']))  { $this->query = $GLOBALS['query'];      }
-
-			if(isset($GLOBALS['sort']))   { $this->sort = $GLOBALS['sort'];        }
-
-			if(isset($GLOBALS['order']))  { $this->order = $GLOBALS['order'];      }
-
-			$this->id   = get_var('id',array('POST','GET'));
-			$this->year = get_var('year',array('POST','GET'),date('Y'));
+			$this->start  = intval(get_var('start',array('POST','GET')));
+			$this->query  = get_var('query',array('POST','GET'));
+			$this->sort   = get_var('sort',array('POST','GET'));
+			$this->order  = get_var('order',array('POST','GET'));
+			$this->id     = get_var('id',array('POST','GET'));
+			$this->year   = get_var('year',array('POST','GET'),date('Y'));
 			$this->locale = get_var('locale',array('POST','GET'));
 			if ($this->locale)
 			{
@@ -137,7 +133,7 @@
 
 		function accept_holiday()
 		{
-			$send_back_to = str_replace('submitlocale','holiday_admin',$GLOBALS['HTTP_REFERER']);
+			$send_back_to = str_replace('submitlocale','holiday_admin',$_SERVER['HTTP_REFERER']);
 			if(!@$this->locales[0])
 			{
 				Header('Location: '.$send_back_to);
@@ -145,13 +141,13 @@
 
 			$send_back_to = str_replace('&locale='.$this->locales[0],'',$send_back_to);
 			$file = './holidays.'.$this->locales[0];
-			if(!file_exists($file) && count($GLOBALS['HTTP_POST_VARS']['name']))
+			if(!file_exists($file) && count($_POST['name']))
 			{
-				$c_holidays = count($GLOBALS['HTTP_POST_VARS']['name']);
+				$c_holidays = count($_POST['name']);
 				$fp = fopen($file,'w');
 				for($i=0;$i<$c_holidays;$i++)
 				{
-					fwrite($fp,$this->locales[0]."\t".$GLOBALS['HTTP_POST_VARS']['name'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['day'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['month'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['occurence'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['dow'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['observance'][$i]."\n");
+					fwrite($fp,$this->locales[0]."\t".$_POST['name'][$i]."\t".$_POST['day'][$i]."\t".$_POST['month'][$i]."\t".$_POST['occurence'][$i]."\t".$_POST['dow'][$i]."\t".$_POST['observance'][$i]."\n");
 				}
 				fclose($fp);
 			}
@@ -233,7 +229,7 @@
 				@set_time_limit(0);
 
 				/* get the file that contains the calendar events for your locale */
-				/* "http://www.phpgroupware.org/cal/holidays.US";                 */
+				/* "http://www.egroupware.org/cal/holidays.US";                 */
 				$network = CreateObject('phpgwapi.network');
 				if(isset($GLOBALS['phpgw_info']['server']['holidays_url_path']) && $GLOBALS['phpgw_info']['server']['holidays_url_path'] != 'localhost')
 				{
@@ -295,9 +291,9 @@
 
 		function add()
 		{
-			if(@$GLOBALS['HTTP_POST_VARS']['submit'])
+			if(@$_POST['submit'])
 			{
-				$holiday = $GLOBALS['HTTP_POST_VARS']['holiday'];
+				$holiday = $_POST['holiday'];
 
 				if(empty($holiday['mday']))
 				{

@@ -145,24 +145,29 @@
 			$p->set_block('locale','row_empty','row_empty');
 			$p->set_block('locale','back_button_form','back_button_form');
 
-			$html = CreateObject('calendar.html');
+			if (!is_object($GLOBALS['phpgw']->html))
+			{
+				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+			}
+			$html = &$GLOBALS['phpgw']->html;
 			$year_form = str_replace('<option value=""></option>','',$html->form($html->sbox_submit($this->sb->getYears('year',$this->bo->year),true),array(),
 				$this->base_url,Array('menuaction'=>'calendar.uiholiday.edit_locale','locale'=>$this->bo->locales[0])));
 			unset($html);
 
 			$holidays = $this->bo->get_holiday_list();
+			$total = count($holidays);
 
 			$var = Array(
-				'th_bg'			=> $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'left_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->left('/index.php',$this->bo->start,$this->bo->total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
-				'right_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->right('/index.php',$this->bo->start,$this->bo->total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
-				'center'					=> '<td align="right">'.lang('Holidays').' ('.$this->bo->locales[0].')</td><td align="left">'.$year_form.'</td>',
-				'sort_name'				=> $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->bo->sort,'name',$this->bo->order,'/index.php',lang('Holiday'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
-				'header_edit'			=> lang('Edit'),
+				'th_bg'				=> $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'left_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->left('/index.php',$this->bo->start,$total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
+				'right_next_matchs'	=> $GLOBALS['phpgw']->nextmatchs->right('/index.php',$this->bo->start,$total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
+				'center'			=> '<td align="right">'.lang('Holidays').' ('.$this->bo->locales[0].')</td><td align="left">'.$year_form.'</td>',
+				'sort_name'			=> $GLOBALS['phpgw']->nextmatchs->show_sort_order($this->bo->sort,'name',$this->bo->order,'/index.php',lang('Holiday'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
+				'header_edit'		=> lang('Edit'),
 				'header_delete'		=> lang('Delete'),
-				'header_rule'        => '<td>'.$GLOBALS['phpgw']->nextmatchs->show_sort_order($this->bo->sort,'month_num,mday',$this->bo->order,'/index.php',lang('Rule'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year).'</td>',
-				'header_extra'       => lang('Copy'),
-				'extra_width'        => 'width="5%"'
+				'header_rule'		=> '<td>'.$GLOBALS['phpgw']->nextmatchs->show_sort_order($this->bo->sort,'month_num,mday',$this->bo->order,'/index.php',lang('Rule'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year).'</td>',
+				'header_extra'		=> lang('Copy'),
+				'extra_width'		=> 'width="5%"'
 			);
 
 			$p->set_var($var);
@@ -175,7 +180,9 @@
 			else
 			{
 				$maxmatchs = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-				for($i=$this->bo->start; $i < count($holidays) && $i < $this->bo->start+$maxmatchs; $i++)
+				$end = min($total,$this->bo->start+$maxmatchs);
+				$p->set_var('rows',lang('showing %1 - %2 of %3',1+$this->bo->start,$end,$total));
+				for($i=$this->bo->start; $i < $end; $i++)
 				{
 					$tr_color = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($tr_color);
 					if (!$holidays[$i]['name'])
