@@ -16,7 +16,7 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.001" width="100%">
+	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.002" width="100%">
 		<columns>
 			<column width="100"/>
 			<column/>
@@ -37,10 +37,10 @@
 				<description span="all" value="Links"/>
 			</row>
 			<row class="row">
-				<linkto span="all" id="info_id"/>
+				<link-to span="all" id="link_to"/>
 			</row>
-			<row class="row" valign="top" height="200">
-				<linklist span="all" id="info_id"/>
+			<row class="row_off" valign="top" height="112">
+				<link-list span="all" id="link_to"/>
 			</row>
 		</rows>
 	</grid>
@@ -74,7 +74,7 @@
 					<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
 				</menulist>
 			</row>
-			<row class="row" height="200">
+			<row class="row" height="120">
 				<description span="all"/>
 			</row>
 		</rows>
@@ -88,14 +88,11 @@
 		</columns>
 		<rows>
 			<row>
-				<description span="3" value="InfoLog -" id="subtitle"/>
+				<description options="b" span="3" class="headertext" id="appheader"/>
 				<button label="Categories" align="right" id="cats" statustext="Edit or create categories for IngoLog"/>
 			</row>
 			<row>
 				<hrule span="all"/>
-			</row>
-			<row>
-				<description span="all"/>
 			</row>
 			<row class="th">
 				<description value="Type"/>
@@ -115,7 +112,7 @@
 			</row>
 			<row class="row">
 				<description value="Regarding"/>
-				<description span="all" id="linked"/>
+				<description span="all"/>
 			</row>
 			<row class="row">
 				<description value="Subject"/>
@@ -129,9 +126,9 @@
 						<tab label="Delegation" statustext="responsible user, priority, ..."/>
 					</tabs>
 					<tabpanels>
-						<grid id="description"/>
-						<grid id="links"/>
-						<grid id="delegation"/>
+						<grid id="infolog.edit.description"/>
+						<grid id="infolog.edit.links"/>
+						<grid id="infolog.edit.delegation"/>
 					</tabpanels>
 				</tabbox>
 			</row>
@@ -167,5 +164,8 @@
 				<button label="Delete" align="right" id="delete" statustext="delete this entry"/>
 			</row>
 		</rows>
+		<styles>
+			.headertext { color: black; font-size: 120%; }
+		</styles>
 	</grid>
 </overlay>
