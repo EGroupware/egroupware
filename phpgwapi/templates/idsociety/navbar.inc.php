@@ -139,7 +139,7 @@
 		$tpl->set_var($var);
 		$tpl->pfp('out','navbar');
 		// If the application has a header include, we now include it
-		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && $GLOBALS['menuaction'])
+		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'] && $GLOBALS['HTTP_GET_VARS']['menuaction'])
 		{
 			if (is_array($GLOBALS['obj']->public_functions) && $GLOBALS['obj']->public_functions['header'])
 			{
