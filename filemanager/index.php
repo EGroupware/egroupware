@@ -179,22 +179,35 @@ if ($phpwh_debug)
 }
 
 ###
-# Get their memberships to be used throughout the script
+# Get their readable groups to be used throughout the script
 ###
 
-$memberships = $GLOBALS['phpgw']->accounts->membership ($GLOBALS['userinfo']['username']);
+$groups = array ();
 
-if (!is_array ($memberships))
+$groups = $GLOBALS['phpgw']->accounts->get_list ('groups');
+
+$readable_groups = array ();
+
+while (list ($num, $account) = each ($groups))
 {
-	$memberships = array ();
+	if ($GLOBALS['phpgw']->vfs->acl_check (array (
+			'owner_id' => $account['account_id'],
+			'operation' => PHPGW_ACL_READ
+		))
+	)
+	{
+		$readable_groups[$account['account_lid']] = Array('account_id' => $account['account_id'], 'account_name' => $account['account_lid']);
+	}
 }
 
-while (list ($num, $group_array) = each ($memberships))
-{
-	$membership_id = $GLOBALS['phpgw']->accounts->name2id ($group_array['account_name']);
+$groups_applications = array ();
 
-	$group_applications = CreateObject('phpgwapi.applications', $membership_id);
-	$membership_applications[$group_array['account_name']] = $group_applications->read_account_specific ();
+while (list ($num, $group_array) = each ($readable_groups))
+{
+	$group_id = $GLOBALS['phpgw']->accounts->name2id ($group_array['account_name']);
+
+	$applications = CreateObject('phpgwapi.applications', $group_id);
+	$groups_applications[$group_array['account_name']] = $applications->read_account_specific ();
 }
 
 ###
@@ -278,6 +291,20 @@ if ($update || rand (0, 19) == 4)
 }
 
 ###
+# Check available permissions for $path, so we can disable unusable operations in user interface
+###
+
+if ($GLOBALS['phpgw']->vfs->acl_check (array (
+        'string'        => $path,
+        'relatives' => array (RELATIVE_NONE),
+        'operation' => PHPGW_ACL_ADD
+        ))
+)
+{
+	$can_add = True;
+}
+
+###
 # Default is to sort by name
 ###
 
@@ -325,14 +352,14 @@ if ($path == $GLOBALS['fakebase'])
 //	$files_array = $ls_array;
 //	$numoffiles = count($ls_array);
 
-	reset ($memberships);
-	while (list ($num, $group_array) = each ($memberships))
+	reset ($readable_groups);
+	while (list ($num, $group_array) = each ($readable_groups))
 	{
 		###
 		# If the group doesn't have access to this app, we don't show it
 		###
 
-		if (!$membership_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
+		if (!$groups_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
 		{
 			continue;
 		}
@@ -1044,7 +1071,6 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		{
 			html_form_input ('submit', 'copy', lang('Copy to:'));
 			html_help_link ('copy_to');
-
 			html_form_input ('submit', 'move', lang('Move to:'));
 			html_help_link ('move_to');
 		}
@@ -1075,17 +1101,17 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 
 
 		###
-		# Then we get the directories in their membership's home directories
+		# Then we get the directories in their readable groups' home directories
 		###
 
-		reset ($memberships);
-		while (list ($num, $group_array) = each ($memberships))
+		reset ($readable_groups);
+		while (list ($num, $group_array) = each ($readable_groups))
 		{
 			###
 			# Don't list directories for groups that don't have access
 			###
 
-			if (!$membership_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
+			if (!$groups_applications[$group_array['account_name']][$GLOBALS['appname']]['enabled'])
 			{
 				continue;
 			}
@@ -1148,16 +1174,19 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 			html_help_link ('download');
 			html_nbsp (3);
 
-			html_form_input ('text', 'createdir', NULL, 255, 15);
-			html_form_input ('submit', 'newdir', lang('Create Folder'));
-			html_help_link ('create_folder');
+			if ($can_add)
+			{
+				html_form_input ('text', 'createdir', NULL, 255, 15);
+				html_form_input ('submit', 'newdir', lang('Create Folder'));
+				html_help_link ('create_folder');
+			}
 		}
 
 		html_break (1);
 		html_form_input ('submit', 'update', lang('Update'));
 		html_help_link ('update');
 
-		if ($path != '/' && $path != $GLOBALS['fakebase'])
+		if ($path != '/' && $path != $GLOBALS['fakebase'] && $can_add)
 		{
 			html_nbsp (3);
 			html_form_input ('text', 'createfile', NULL, 255, 15);
@@ -1210,7 +1239,7 @@ if (!$op && !$delete && !$createdir && !$renamefiles && !$move && !$copy && !$ed
 		# Show file upload boxes. Note the last argument to html ().  Repeats $show_upload_boxes times
 		###
 
-		if ($path != '/' && $path != $GLOBALS['fakebase'])
+		if ($path != '/' && $path != $GLOBALS['fakebase'] && $can_add)
 		{
 			html_break (2);
 			html_form_begin ($GLOBALS['appname'].'/index.php?op=upload&path='.$path, 'post', 'multipart/form-data');

@@ -149,7 +149,7 @@
 			}
 			else
 			{
-				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE (link_directory IS NOT NULL or link_directory != '') AND (lilnk_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+				$query = $GLOBALS['phpgw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE (link_directory IS NOT NULL or link_directory != '') AND (link_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
 			}
 
 
@@ -1067,8 +1067,12 @@
 		/*!
 		@function acl_check
 		@abstract Check ACL access to $file for $GLOBALS['phpgw_info']["user"]["account_id"];
+		@discussion To check the access for a file or directory, pass 'string'/'relatives'/'must_exist'.
+				To check the access to another user or group, pass 'owner_id'.
+				If 'owner_id' is present, we bypass checks on 'string'/'relatives'/'must_exist'
 		@param string File to check access of
 		@param relatives Standard relativity array
+		@param owner_id Owner id to check access of (see discussion above)
 		@param operation Operation to check access to.  In the form of a PHPGW_ACL defines bitmask.  Default is read
 		@param must_exist Boolean.  Set to True if 'string' must exist.  Otherwise, we check the parent directory as well
 		@result Boolean.  True if access is ok, False otherwise
@@ -1095,87 +1099,97 @@
 				return True;
 			}
 
-			$p = $this->path_parts (array(
-					'string'	=> $data['string'],
-					'relatives'	=> array ($data['relatives'][0])
-				)
-			);
-
-			/* Temporary, until we get symlink type files set up */
-			if ($p->outside)
+			if (!$data['owner_id'])
 			{
-				return True;
-			}
-
-			/* If the file doesn't exist, we get ownership from the parent directory */
-			if (!$this->file_exists (array(
-					'string'	=> $p->fake_full_path,
-					'relatives'	=> array ($p->mask)
-				))
-			)
-			{
-				if ($data['must_exist'])
-				{
-					return False;
-				}
-
-				$data['string'] = $p->fake_leading_dirs;
-				$p2 = $this->path_parts (array(
+				$p = $this->path_parts (array(
 						'string'	=> $data['string'],
-						'relatives'	=> array ($p->mask)
+						'relatives'	=> array ($data['relatives'][0])
 					)
 				);
 
+				/* Temporary, until we get symlink type files set up */
+				if ($p->outside)
+				{
+					return True;
+				}
+
+				/* Read access is always allowed here, but nothing else is */
+				if ($data['string'] == '/' || $data['string'] == $this->fakebase)
+				{
+					if ($data['operation'] == PHPGW_ACL_READ)
+					{
+						return True;
+					}
+					else
+					{
+						return False;
+					}
+				}
+
+				/* If the file doesn't exist, we get ownership from the parent directory */
 				if (!$this->file_exists (array(
-						'string'	=> $data['string'],
+						'string'	=> $p->fake_full_path,
 						'relatives'	=> array ($p->mask)
 					))
 				)
 				{
-					return False;
-				}
-			}
-			else
-			{
-				$p2 = $p;
-			}
+					if ($data['must_exist'])
+					{
+						return False;
+					}
 
-			/* Read access is always allowed here, but nothing else is */
-			if ($data['string'] == '/' || $data['string'] == $this->fakebase)
-			{
-				if ($data['operation'] == PHPGW_ACL_READ)
-				{
-					return True;
+					$data['string'] = $p->fake_leading_dirs;
+					$p2 = $this->path_parts (array(
+							'string'	=> $data['string'],
+							'relatives'	=> array ($p->mask)
+						)
+					);
+
+					if (!$this->file_exists (array(
+							'string'	=> $data['string'],
+							'relatives'	=> array ($p->mask)
+						))
+					)
+					{
+						return False;
+					}
 				}
 				else
 				{
-					return False;
+					$p2 = $p;
 				}
+
+				/*
+				   We don't use ls () to get owner_id as we normally would,
+				   because ls () calls acl_check (), which would create an infinite loop
+				*/
+				$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='".$p2->fake_leading_dirs_clean."' AND name='".$p2->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
+				$GLOBALS['phpgw']->db->next_record ();
+
+				$owner_id = $GLOBALS['phpgw']->db->Record['owner_id'];
+			}
+			else
+			{
+				$owner_id = $data['owner_id'];
 			}
 
-			/*
-			   We don't use ls () to get owner_id as we normally would,
-			   because ls () calls acl_check (), which would create an infinite loop
-			*/
-			$query = $GLOBALS['phpgw']->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='".$p2->fake_leading_dirs_clean."' AND name='".$p2->fake_name_clean."'" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__, __FILE__);
-			$GLOBALS['phpgw']->db->next_record ();
-			$group_id = $GLOBALS['phpgw']->db->Record['owner_id'];
+			$user_id = $GLOBALS['phpgw_info']['user']['account_id'];
 
 			/* They always have access to their own files */
-			if ($group_id == $GLOBALS['phpgw_info']['user']['account_id'])
+			if ($owner_id == $user_id)
 			{
 				return True;
 			}
 
-			/* Check if they're in the group.  If so, they have access */
-			$memberships = $GLOBALS['phpgw']->accounts->membership ($GLOBALS['phpgw_info']['user']['account_id']);
+			/* Check if they're in the group */
+			$memberships = $GLOBALS['phpgw']->accounts->membership ($user_id);
 
 			if (is_array ($memberships))
 			{
-				@reset ($memberships);
-				while (list ($num, $group_array) = @each ($memberships))
+				reset ($memberships);
+				while (list ($num, $group_array) = each ($memberships))
 				{
-					if ($group_id == $GLOBALS['phpgw']->accounts->name2id ($group_array['account_name']))
+					if ($owner_id == $group_array['account_id'])
 					{
 						$group_ok = 1;
 						break;
@@ -1183,26 +1197,38 @@
 				}
 			}
 
-			if (!$group_id)
+			$acl = CreateObject ('phpgwapi.acl', $owner_id);
+			$acl->account_id = $owner_id;
+			$acl->read_repository ();
+
+			$rights = $acl->get_rights ($user_id);
+
+			/* Add privileges from the groups this user belongs to */
+			if (is_array ($memberships))
 			{
-				if (!$group_id = $this->account_id)
+				reset ($memberships);
+				while (list ($num, $group_array) = each ($memberships))
 				{
-					$group_id = 0;
+					$rights |= $acl->get_rights ($group_array['account_id']);
 				}
 			}
 
-			$acl = CreateObject ('phpgwapi.acl', $group_id);
-			$acl->account_id = $group_id;
-			$acl->read_repository ();
-
-			$rights = $acl->get_rights ($account_id);
 			if ($rights & $data['operation'])
 			{
 				return True;
 			}
 			elseif (!$rights && $group_ok)
 			{
-				return True;
+				$conf = CreateObject('phpgwapi.config', 'phpgwapi');
+				$conf->read_repository();
+				if ($conf->config_data['acl_default'] == 'grant')
+				{
+					return True;
+				}
+				else
+				{
+					return False;
+				}
 			}
 			else
 			{
@@ -3343,7 +3369,7 @@
 			return $data;
 		}
 
-		/* This fetchs all available file system information for $string (not using the database) */
+		/* This fetchs all available file system information for string (not using the database) */
 		function get_real_info ($data)
 		{
 			if (!is_array ($data))
