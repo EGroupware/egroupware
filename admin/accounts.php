@@ -34,10 +34,11 @@
 	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 	$p->set_file(array(
-		'list'       => 'accounts.tpl',
-		'row'        => 'accounts_row.tpl',
-		'empty_row'  => 'accounts_row_empty.tpl'
+		'accounts'   => 'accounts.tpl',
 	));
+	$p->set_block('accounts','list','list');
+	$p->set_block('accounts','row','row');
+	$p->set_block('accounts','row_empty','row_empty');
 
 	$total = account_total($query);
 

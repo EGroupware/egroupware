@@ -1,7 +1,7 @@
 <!-- BEGIN list -->
 <p>
  <table border="0" width="70%" align="center">
-  <tr bgcolor="{th_bg}">
+  <tr>
    <td align="left">{left_next_matchs}</td>
    <td align="center">{lang_user_accounts}</td>
    <td align="right">{right_next_matchs}</td>
@@ -40,3 +40,20 @@
   </table>
 
 <!-- END list -->
+
+<!-- BEGIN row -->
+   <tr bgcolor="{tr_color}">
+    <td>{row_loginid}</td>
+    <td>{row_lastname}</td>
+    <td>{row_firstname}</td>
+    <td width="5%">{row_edit}</td>
+    <td width="5%">{row_delete}</td>
+    <td width="5%">{row_view}</td>
+   </tr>
+<!-- END row -->
+
+<!-- BEGIN row_empty -->
+   <tr>
+    <td colspan="5" align="center">{message}</td>
+   </tr>
+<!-- END row_empty -->
