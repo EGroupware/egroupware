@@ -497,8 +497,9 @@
 			// and we don't want $buffer['BEGIN'] etc...
 			$contacts = CreateObject('phpgwapi.contacts');
 			while (list($fname,$fvalue) = each($contacts->stock_contact_fields)) {
-				if($buffer[$fvalue]) {
-					$entry[$fvalue] = $buffer[$fvalue];
+				if($buffer[$fname]) {
+					$entry[$fname] = $buffer[$fname];
+					//echo '<br>'.$fname.' = "'.$entry[$fname].'"'."\n";
 				}
 			}
 			return $entry;
