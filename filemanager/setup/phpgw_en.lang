@@ -1,6 +1,7 @@
 %1 already exists as a file	filemanager	en	%1 already exists as a file
 application	filemanager	en	Application
 back to file manager	filemanager	en	Back to file manager
+cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
 cannot replace %1 because it is a directory	filemanager	en	Cannot replace %1 because it is a directory
 command sucessfully run	filemanager	en	Command sucessfully run
@@ -10,16 +11,19 @@ copied %1 to %2	filemanager	en	Copied %1 to %2
 copy to	filemanager	en	Copy To
 copy to:	filemanager	en	Copy to:
 could not copy %1 to %2	filemanager	en	Could not copy %1 to %2
+could not copy file because no destination directory is given	filemanager	en	Could not copy file because no destination directory is given
 could not create %1	filemanager	en	Could not create %1
 could not create directory %1	filemanager	en	Could not create directory %1
 could not delete %1	filemanager	en	Could not delete %1
 could not move %1 to %2	filemanager	en	Could not move %1 to %2
+could not move file because no destination directory is given	filemanager	en	Could not move file because no destination directory is given
 could not rename %1 to %2	filemanager	en	Could not rename %1 to %2
 could not save %1	filemanager	en	Could not save %1
 create file	filemanager	en	Create File
 create folder	filemanager	en	Create Folder
 created	filemanager	en	Created
 created %1	filemanager	en	Created %1
+created %1,%2	filemanager	en	Created %1,%2
 created by	filemanager	en	Created by
 created directory %1	filemanager	en	Created directory %1
 date	filemanager	en	Date
@@ -37,6 +41,7 @@ edit comments	filemanager	en	Edit comments
 error running command	filemanager	en	Error running command
 execute	filemanager	en	Execute
 failed to create directory	filemanager	en	failed to create directory
+fake base dir did not exist, egroupware created a new one.	filemanager	en	Fake Base Dir did not exist, eGroupWare created a new one.
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
@@ -48,12 +53,15 @@ filemanager preferences	filemanager	en	FileManager preferences
 files	filemanager	en	Files
 files in this directory	filemanager	en	Files in this directory
 folder	filemanager	en	Folder
+folder up	filemanager	en	Folder Up
+go home	filemanager	en	go home
 go to	filemanager	en	Go To
 go to %1	filemanager	en	Go to %1
 go to your home directory	filemanager	en	Go to your home directory
 go to:	filemanager	en	Go to:
 go up	filemanager	en	go up
 home	filemanager	en	Home
+location	filemanager	en	Location
 locked	filemanager	en	Locked
 mime type	filemanager	en	MIME Type
 modified	filemanager	en	Modified
@@ -66,6 +74,7 @@ no version history for this file/directory	filemanager	en	No version history for
 operation	filemanager	en	Operation
 other settings	filemanager	en	Other settings
 owner	filemanager	en	Owner
+please select a file to delete.	filemanager	en	Please select a file to delete.
 preview %1	filemanager	en	Preview %1
 preview of %1	filemanager	en	Preview of %1
 quick jump to	filemanager	en	Quick jump to
@@ -74,7 +83,9 @@ rename	filemanager	en	Rename
 renamed %1 to %2	filemanager	en	Renamed %1 to %2
 replaced %1	filemanager	en	Replaced %1
 save %1	filemanager	en	Save %1
+save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing
 save all	filemanager	en	Save all
+save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
 show	filemanager	en	Show
 show ..	filemanager	en	Show ..
@@ -83,6 +94,7 @@ show command line (experimental. dangerous.)	filemanager	en	Show command line (E
 show help	filemanager	en	Show help
 size	filemanager	en	Size
 sort by:	filemanager	en	Sort by:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	en	The future filemanager, now for TESTING PURPOSES ONLY, please send bugreports
 total files	filemanager	en	Total Files
 unknown mime-type defaults to text/plain when viewing	filemanager	en	Unknown MIME-type defaults to text/plain when viewing
 unused space	filemanager	en	Unused space
@@ -92,6 +104,7 @@ updated comment for %1	filemanager	en	Updated comment for %1
 upload	filemanager	en	Upload
 upload fields	filemanager	en	upload fields
 upload files	filemanager	en	Upload files
+use new experimental filemanager?	filemanager	en	Use new experimental Filemanager?
 used space	filemanager	en	Used Space
 users	filemanager	en	Users
 version	filemanager	en	Version
@@ -99,3 +112,4 @@ view documents in new window	filemanager	en	View documents in new window
 view documents on server (if available)	filemanager	en	View documents on server (if available)
 who	filemanager	en	Who
 you do not have access to %1	filemanager	en	You do not have access to %1
+your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, eGroupWare created a new one.
