@@ -161,11 +161,18 @@
 		function name2id($account_lid)
 		{
 			global $phpgw, $phpgw_info;
+			static $name_list;
+
+			if($name_list[$account_lid])
+			{
+				return $name_list[$account_lid];
+			}
 
 			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
+				$name_list[$account_lid] = $this->db->f('account_id');
 				return $this->db->f('account_id');
 			}
 			else
@@ -177,11 +184,18 @@
 		function id2name($account_id)
 		{
 			global $phpgw, $phpgw_info;
+			static $id_list;
 
+			if($id_list[$account_id])
+			{
+				return $id_list[$account_id];
+			}				
+	
 			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
 			if($this->db->num_rows())
 			{
 				$this->db->next_record();
+				$id_list[$account_id] = $this->db->f('account_lid');
 				return $this->db->f('account_lid');
 			}
 			else
