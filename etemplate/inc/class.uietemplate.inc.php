@@ -776,7 +776,7 @@
 			}
 			if ($extra_label && ($label != '' || $html == ''))
 			{
-				if (strlen($label) > 1 && !$cell['no_lang'])
+				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label))
 				{
 					$label = lang($label);
 				}
