@@ -1,18 +1,27 @@
-<b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>typ konwersji <none> nie zosta³ znaleziony.</b> Proszê wybraæ typ konwersji z listy
-add custom field	addressbook	pl	Dodaj pole u¿ytkownika
-address book	common	pl	Ksi±¿ka adresowa
-address book - vcard in	addressbook	pl	Wczytanie kartek elektronicznych do ksi±zki adresowej
-address book - view	addressbook	pl	Przegl±d ksi±¿ki adresowej
+%1 records imported	addressbook	pl	Zaimportowano %1 rekordw
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pl	Wczytano %1 rekordw (nie zaimportowano, %2wr%3 i skasuj zaznaczenje prbnego import)
+(e.g. 1969)	addressbook	pl	(np. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>Nie zlokalizowano trybu konwersji typu &lt;aden&gt;.</b> Prosze wybra typ trybu konwersji z listy
+<b>no conversion type <none> could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>typ konwersji <none> nie zosta znaleziony.</b> Prosz wybra typ konwersji z listy
+@-eval() is only availible to admins!!!	addressbook	pl	@-eval() jest dostpne wycznie dla administratorw !!!
+actions	addressbook	pl	Polecenia
+add a single entry by passing the fields.	addressbook	pl	Dodaj pojedyczy wpis za pomoc prekazania pl
+add custom field	addressbook	pl	Dodaj pole uytkownika
+address book	common	pl	Ksika adresowa
+address book - vcard in	addressbook	pl	Wczytanie kartek elektronicznych do ksizki adresowej
+address book - view	addressbook	pl	Przegld ksiki adresowej
 address line 2	addressbook	pl	Wiersz adresu nr 2
 address line 3	addressbook	pl	Wiersz adresu nr 3
 address type	addressbook	pl	Typ adresu
-addressbook	common	pl	Ksi±¿ka adresowa
-addressbook preferences	addressbook	pl	Ustawienia ksi±¿ki adresowej
-addvcard	addressbook	pl	Dodaj kartkê elektroniczn±
+addressbook	common	pl	Ksika adresowa
+addressbook preferences	addressbook	pl	Ustawienia ksiki adresowej
+addressbook-fieldname	addressbook	pl	Nazwa pola adresowego
+addvcard	addressbook	pl	Dodaj kartk elektroniczn
 alt. csv import	addressbook	pl	Alt. CSV Import
-are you sure you want to delete this field?	addressbook	pl	Czy na pewno skasowaæ to pole?
+are you sure you want to delete this field?	addressbook	pl	Czy na pewno skasowa to pole?
 bbs phone	addressbook	pl	Telefon BBS
 birthday	common	pl	Urodziny
+birthdays	common	pl	Urodziny
 blank	addressbook	pl	Puste
 business	common	pl	Firma
 business address type	addressbook	pl	Typ adresu firmowego
@@ -22,38 +31,52 @@ business email	addressbook	pl	E-mail
 business email type	addressbook	pl	Typ adresu e-mail
 business fax	addressbook	pl	Numer faksu
 business phone	addressbook	pl	Numer telefonu
-business state	addressbook	pl	Województwo
+business state	addressbook	pl	Wojewdztwo
 business street	addressbook	pl	Ulica
 business zip code	addressbook	pl	Kod pocztowy
 car phone	addressbook	pl	Telefon w samochodzie
-cell phone	addressbook	pl	Telefon komórkowy
-city	common	pl	Miejscowo¶æ
+cell phone	addressbook	pl	Telefon komrkowy
+charset of file	addressbook	pl	
+city	common	pl	Miejscowo
 company	common	pl	Firma
 company name	common	pl	Nazwa firmy
+configuration	common	pl	Konfiguracja
 contact	common	pl	Kontakt
 contact application	admin	pl	Aplikacja kontaktowa
 contact settings	admin	pl	Ustawienia kontaktu
+copied by %1, from record #%2.	addressbook	pl	Skopiowane przez %1, z rekordu # %2
 country	common	pl	Kraj
-custom	addressbook	pl	U¿ytkownika
-custom field	addressbook	pl	Pole u¿ytkownika
-custom fields	addressbook	pl	Pola u¿ytkownika
-default filter	addressbook	pl	Filtr domy¶lny
+csv-fieldname	addressbook	pl	Nazwa pola CSV
+csv-filename	addressbook	pl	Nazwa pliku CSV
+custom	addressbook	pl	Uytkownika
+custom field	addressbook	pl	Pole uytkownika
+custom fields	addressbook	pl	Pola uytkownika
+debug output in browser	addressbook	pl	
+default filter	addressbook	pl	Filtr domylny
+delete a single entry by passing the id.	addressbook	pl	
 department	common	pl	Departament
 domestic	addressbook	pl	Domowy
-edit custom field	addressbook	pl	Edytuj pole u¿ytkownika
-edit custom fields	admin	pl	Edytuj pola u¿ytkownika
+download	addressbook	pl	Pobierz
+download export file (uncheck to debug output in browser)	addressbook	pl	Zapisz plik na dysku (jeeli nie zaznaczysz, wynik bedzie pokazany wycznie w oknie przegldarki)
+edit custom field	addressbook	pl	Edytuj pole uytkownika
+edit custom fields	admin	pl	Edytuj pola uytkownika
+empty for all	addressbook	pl	puste dla wszystkich
+enter the path to the exported file here	addressbook	pl	Podaj cieszke do wyexportowanego pliku tutaj
 export contacts	addressbook	pl	Eksportuj kontakty
 export file name	addressbook	pl	Nazwa pliku
-export from addressbook	addressbook	pl	Eksport z ksi±¿ki adresowej
+export from addressbook	addressbook	pl	Eksport z ksiki adresowej
 extra	addressbook	pl	Dodatkowe
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
+field %1 has been added !	addressbook	pl	Pole %1 zostao dodane !
+field %1 has been updated !	addressbook	pl	Pole %1 zostao zaktualizowane !
 field name	addressbook	pl	Nazwa pola
-field %1 has been added !	addressbook	pl	Pole %1 zosta³o dodane !
-fields to show in address list	addressbook	pl	Pola pokazywane na li¶cie adresów
-full name	addressbook	pl	Pe³na nazwa
+fields to show in address list	addressbook	pl	Pola pokazywane na licie adresw
+fieldseparator	addressbook	pl	Separator pl
+full name	addressbook	pl	Pena nazwa
 geo	addressbook	pl	GEO
-grant addressbook access	common	pl	Nadaj prawa dostêpu do ksi±¿ki adresowej
+global categories	addressbook	pl	Kategorie globalne
+grant addressbook access	common	pl	Nadaj prawa dostpu do ksiki adresowej
 home	addressbook	pl	Dom
 home address type	addressbook	pl	Typ adresu
 home city	addressbook	pl	Miasto zamieszkania
@@ -61,55 +84,85 @@ home country	addressbook	pl	Kraj zamieszkania
 home email	addressbook	pl	E-mail domowy
 home email type	addressbook	pl	Typ domowego e-mail
 home phone	addressbook	pl	Telefon domowy
-home state	addressbook	pl	Województwo
+home state	addressbook	pl	Wojewdztwo
 home street	addressbook	pl	Ulica
 home zip code	addressbook	pl	Kod pocztowy
+import	addressbook	pl	Importuj
 import contacts	addressbook	pl	Importuj kontakty
+import csv-file into addressbook	addressbook	pl	Importuj plik CSV do ksiki adresowej
 import file	addressbook	pl	Plik importu
 import from ldif, csv, or vcard	addressbook	pl	Import z LDIF, CSV lub VCard
 import from outlook	addressbook	pl	Importuj z programu Outlook
-international	addressbook	pl	Miêdzynarodowy
+import next set	addressbook	pl	Importuj nastpny set
+import_instructions	addressbook	pl	
+international	addressbook	pl	Midzynarodowy
 isdn phone	addressbook	pl	Telefon ISDN
 label	addressbook	pl	Etykieta
-ldap context for contacts	admin	pl	Kontekst LDAP dla kontaktów
-ldap host for contacts	admin	pl	Serwer LDAP dla kontaktów
-ldap root dn for contacts	admin	pl	LDAP root dn dla kontaktów
-ldap root pw for contacts	admin	pl	LDAP root pw dla kontaktów
+ldap context for contacts	admin	pl	Kontekst LDAP dla kontaktw
+ldap host for contacts	admin	pl	Serwer LDAP dla kontaktw
+ldap root dn for contacts	admin	pl	LDAP root dn dla kontaktw
+ldap root pw for contacts	admin	pl	LDAP root pw dla kontaktw
+ldif	addressbook	pl	LDIF
 line 2	addressbook	pl	Wiersz 2
+list all categories	addressbook	pl	Wywietl wszystkie kategorie
+list all customfields	addressbook	pl	
+mark records as private	addressbook	pl	Zaznacz rekordy jako prywatne
 message phone	addressbook	pl	Automatyczna sekretarka
-middle name	addressbook	pl	Drugie imiê
-mobile	addressbook	pl	Komórka
-mobile phone	addressbook	pl	Komórka
+middle name	addressbook	pl	Drugie imi
+mobile	addressbook	pl	Komrka
+mobile phone	addressbook	pl	Komrka
 modem phone	addressbook	pl	Numer modemu
 no vcard	addressbook	pl	Bez kartki elektronicznej
+number of records to read (%1)	addressbook	pl	Liczba rekordw do wczytania (%1)
 other number	addressbook	pl	Inny numer
 other phone	addressbook	pl	Inny telefon
 pager	common	pl	Pager
 parcel	addressbook	pl	Paczka
 phone number	common	pl	Numer telefonu
-phone numbers	common	pl	Numery telefonów
+phone numbers	common	pl	Numery telefonw
+please enter a name for that field !	addressbook	pl	Prosze podaj nazwe tego pola !
 postal	common	pl	Kod pocztowy
+pref	addressbook	pl	pref
 prefix	addressbook	pl	Prefiks (Pan/Pani)
 public key	addressbook	pl	Klucz publiczny
-record access	addressbook	pl	Dostêp do rekordu
-record owner	addressbook	pl	W³a¶ciciel rekordu
-retrieve contacts	admin	pl	Znajd¼ kontakty
-select where you want to store	admin	pl	Wybierz gdzie zapamiêtaæ
-show birthday reminders on main screen	addressbook	pl	Pokazuj przypomnienia o urodzinach na g³ównym ekranie
-state	common	pl	Województwo
+read a list / search for entries.	addressbook	pl	
+read a list of entries.	addressbook	pl	Wczytaj list wpisw
+read a single entry by passing the id and fieldlist.	addressbook	pl	
+record access	addressbook	pl	Dostp do rekordu
+record owner	addressbook	pl	Waciciel rekordu
+retrieve contacts	admin	pl	Znajd kontakty
+select all	addressbook	pl	Zaznacz wszystkie
+select the type of conversion	addressbook	pl	Wybierz typ konwersji
+select the type of conversion:	addressbook	pl	Wybierz typ konwersji
+select where you want to store	admin	pl	Wybierz gdzie zapamita
+show	addressbook	pl	Poka
+show birthday reminders on main screen	addressbook	pl	Pokazuj przypomnienia o urodzinach na gwnym ekranie
+startrecord	addressbook	pl	Rekord pocztkowy
+state	common	pl	Wojewdztwo
 street	common	pl	Ulica
-successfully imported %1 records into your addressbook.	addressbook	pl	Zaimportowano %1 rekordów do ksi±¿ki adresowej.
+successfully imported %1 records into your addressbook.	addressbook	pl	Zaimportowano %1 rekordw do ksiki adresowej.
 suffix	addressbook	pl	Sufiks
-this person's first name was not in the address book.	addressbook	pl	Ksi±¿ka adresowa nie zawiera imienia tej osoby
-this person\'s first name was not in the address book.	addressbook	pl	Ta osoba nie posiada imienia w ksi±¿ce adresowej
-today is %1's birthday!	common	pl	Dzi¶ s± urodziny %1
-tomorrow is %1's birthday.	common	pl	Jutro s± urodziny  %1
+test import (show importable records <u>only</u> in browser)	addressbook	pl	
+that field name has been used already !	addressbook	pl	Ta nazwa pola bya ju uyta gdzie indziej !
+this person's first name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera imienia tej osoby
+this person's last name was not in the address book.	addressbook	pl	Ksika adresowa nie zawiera nazwiska tej osoby
+this person\'s first name was not in the address book.	addressbook	pl	Ta osoba nie posiada imienia w ksice adresowej
+to many might exceed your execution-time-limit	addressbook	pl	
+today is %1's birthday!	common	pl	Dzi s urodziny %1
+tomorrow is %1's birthday.	common	pl	Jutro s urodziny  %1
+translation	addressbook	pl	Tumacznie
+update a single entry by passing the fields.	addressbook	pl	
 url	addressbook	pl	URL
-use country list	addressbook	pl	We¼ listê krajów
-vcard	common	pl	Kartka elektroniczna
-vcards require a first name entry.	addressbook	pl	Kartki elektroniczne  wymagaj± podania imienia.
+use country list	addressbook	pl	We list krajw
+vcard	common	pl	Kartka elektroniczna (VCard)
+vcards require a first name entry.	addressbook	pl	Kartki elektroniczne  wymagaj podania imienia.
+vcards require a last name entry.	addressbook	pl	Kartki elektroniczne  wymagaj podania nazwiska
 video phone	addressbook	pl	Wideo telefon
-voice phone	addressbook	pl	Telefon g³osowy
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! LDAP mo¿na u¿ywaæ gdy NIE u¿ywa siê kontaktów do przechowywania kont!
+voice phone	addressbook	pl	Telefon gosowy
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! LDAP mona uywa gdy NIE uywa si kontaktw do przechowywania kont!
 work phone	addressbook	pl	Telefon do pracy
+write (update or add) a single entry by passing the fields.	addressbook	pl	
+you must select a vcard. (*.vcf)	addressbook	pl	Musisz wybra kartke adresow (*.vcf)
+you must select at least 1 column to display	addressbook	pl	Musz wybra przynajmnie jedn kolumne do wywietlenia
 zip code	common	pl	Kod pocztowy
+zip_note	addressbook	pl	<p><b>Uwaga:</b>Plik moe by typu zip i zawiera kolekcje plikw typu .csv,.vcf lub .ldif. Mimo to prosze nie miesza plikw rnego typu do jednego archiwalnego.
