@@ -3,13 +3,16 @@
 %1 records imported	calendar	pl	Zaimportowano %1 rekordów
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; mo¿esz siê cofn±c i odznaczyæ Import Testowy)
 (for weekly)	calendar	pl	(dla tygodniowego)
+(i/v)cal	calendar	pl	(i/v)Kal
 1 match found	calendar	pl	Znaleziono 1 zgodny
 a	calendar	pl	a
 accept	calendar	pl	Akceptuj
 accepted	calendar	pl	Zaakceptowano
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pl	Akcja która spowodowa³a powiadomienie: Dodano, Anulowano, Zakceptowano, Odrzucono...
+add a single entry by passing the fields.	calendar	pl	Dodaj pojedyñczy wpis przez przechodzenie po polach
 add alarm	calendar	pl	Dodaj alarm
 add contact	calendar	pl	Dodaj kontakt
+add or update a single entry by passing the fields.	calendar	pl	Dodaj lub popraw pojedyñczy wpis przez przechodzenie po polach
 added	calendar	pl	Dodano
 address book	calendar	pl	Adresy, Kontakty
 alarm	calendar	pl	Alarm
@@ -23,10 +26,12 @@ are you sure you want to delete this holiday ?	calendar	pl	Na pewno chcesz usun±
 are you sure\nyou want to\ndelete these alarms?	calendar	pl	Na pewno chcesz usun±æ \nte alarmy?
 are you sure\nyou want to\ndelete this entry ?	calendar	pl	Na pewno\nchcesz\nusun±æ ten wpis?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	pl	Na pewno\nchcesz\nusun±æ ten wpis?\n\nWpis zostanie usuniêty\ndla wszystkich u¿ytkowników.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	pl	Na pewno\nchcesz\nusun±æ ten pojedyñczy wpis?\n\nWpis zostanie usuniêty\ndla wszystkich u¿ytkowników.
 before the event	calendar	pl	przed zdarzeniem
 brief description	calendar	pl	Krótki opis
 business	calendar	pl	Biznes
 calendar	common	pl	Kalendarz
+calendar - [iv]cal importer	calendar	pl	Import kalendarza
 calendar - add	calendar	pl	Dodaj do kalendarza
 calendar - edit	calendar	pl	Edycja kalendarza
 calendar event	calendar	pl	Zdarzenia kalendarza
@@ -35,12 +40,16 @@ calendar preferences	calendar	pl	Preferencje kalendarza
 calendar settings	admin	pl	Ustawienia kalendarza
 calendar-fieldname	calendar	pl	Kalendarz-Nazwapola
 canceled	calendar	pl	Anulowany
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	pl	Zmieñ wszystkie wydarzenia z $params['old_owner'] na $params['new_owner'].
 change status	calendar	pl	Zmieñ status
+charset of file	calendar	pl	Kodowanie pliku
 click %1here%2 to return to the calendar.	calendar	pl	Kliknij %1tutaj%2 aby wróciæ do Kalendarza
 configuration	calendar	pl	Konfiguracja
 countries	calendar	pl	Kraje
 country	calendar	pl	Kraj
 created by	calendar	pl	Utworzony przez
+csv-fieldname	calendar	pl	Nazwa pola CSV
+csv-filename	calendar	pl	Nazwa pliku CSV
 custom fields	calendar	pl	Pola w³asne
 custom fields and sorting	common	pl	Pola w³asne i sortowanie
 daily	calendar	pl	Codziennie
@@ -52,11 +61,16 @@ default appointment length (in minutes)	calendar	pl	domy¶lna d³ugo¶æ spotkania (
 default calendar filter	calendar	pl	Domy¶lny filtr kalendarza
 default calendar view	calendar	pl	Domy¶lny uk³ad kalendarza
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pl	Domy¶lna d³ugo¶æ nowo dodawanych zdarzeñ. D³ugo¶æ podaj w minutach.
+defines the size in minutes of the lines in the day view.	calendar	pl	Definiuje rozmiar w minutach na liniach w widoku dnia
+delete a single entry by passing the id.	calendar	pl	Usuñ pojedyñczy wpis przez przechodzenie po ID
+delete an entire users calendar.	calendar	pl	Usuñ ca³y kalendarz u¿ytkownika
 delete selected contacts	calendar	pl	Skasuj wybrane kontakty
 delete series	calendar	pl	Skasuj seriê
 delete single	calendar	pl	Skasuj pojedynczy
 deleted	calendar	pl	Usuniêto
 description	calendar	pl	Opis
+disable	calendar	pl	Wy³±cz
+disabled	calendar	pl	wy³±czony
 display interval in day view	calendar	pl	Przedzia³ wy¶wietlania w Widoku Dziennym
 display mini calendars when printing	calendar	pl	Wy¶wietlaæ mini kaledarz przy wydruku?
 display status of events	calendar	pl	Wy¶wietl status zdarzeñ
@@ -70,11 +84,24 @@ edit series	calendar	pl	Edytuj seriê
 edit single	calendar	pl	Edytuj pojedynczy
 email notification	calendar	pl	Powiadomienie email
 email notification for %1	calendar	pl	Powiadomienie email dla %1
+empty for all	calendar	pl	pusty dla wszystkich
+enable	calendar	pl	W³±cz
+enabled	calendar	pl	w³±czony
 end date/time	calendar	pl	Data/godzina zakoñczenia
+enddate	calendar	pl	Data zakoñczenia
+ends	calendar	pl	koñczy siê
+enter output filename: ( .vcs appended )	calendar	pl	Wpisz nazwê pliku wyj¶cia: ( .vcs dodane )
+event details follow	calendar	pl	Detale Wydarzenia Nastêpuj±
 exceptions	calendar	pl	Wyj±tki
 export	calendar	pl	Eksport
+export a list of entries in ical format.	calendar	pl	Eksport listy wpisów w formacie iCal
 extended	calendar	pl	Rozszerzone
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pl	Rozszerzone uaktualnienia zawsze zawieraj± kompletne dane o wpisach. iCal-e mog± byæ importowane przez ró¿ne inne programy - kalendarze.
+external participants	calendar	pl	Zewnêtrzni uczestnicy
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	pl	Wys³anie wiadomo¶ci nieudane do '%1' #%2 subject='%3', sender='%4' !!!
+fieldseparator	calendar	pl	Odzielnik pola
 firstname of person to notify	calendar	pl	Imiê osoby do powiadomienia
+format of event updates	calendar	pl	Format uaktualnieñ wydarzeñ
 fr	calendar	pl	Pt
 free/busy	calendar	pl	Wolny/Zajêty
 frequency	calendar	pl	Czêsto¶æ powtarzania
@@ -199,6 +226,7 @@ to-firstname	calendar	pl	Do-imie
 to-fullname	calendar	pl	Do-imienazwisko
 to-lastname	calendar	pl	Do-nazwisko
 today	calendar	pl	Dzisiaj
+translation	calendar	pl	T³umaczenie
 tu	calendar	pl	Wt
 tue	calendar	pl	Wto
 updated	calendar	pl	Uaktualniony
@@ -213,6 +241,7 @@ weekview	calendar	pl	Widok tygodniowy
 when creating new events default set to private	calendar	pl	Ustawiæ nowe zdarzenia jako prywatne?
 work day ends on	calendar	pl	Koniec dnia o
 work day starts on	calendar	pl	Pocz±tek dnia o
+workdayends	calendar	pl	koniec dnia
 year	calendar	pl	Rok
 yearly	calendar	pl	Roczny
 yearview	calendar	pl	Widok roczny
@@ -227,6 +256,7 @@ you have not entered a title	calendar	pl	Nie poda³e¶/a¶ tytu³u
 you have not entered a valid date	calendar	pl	Nie poda³e¶/a¶ poprawnej daty
 you have not entered participants	calendar	pl	Nie poda³e¶/a¶ uczestników
 you must enter one or more search keywords	calendar	pl	Musisz podaæ jedno lub wiêcej s³ów kluczowych
+you need to set either a day or a occurence !!!	calendar	pl	Musisz ustawiæ dzieñ lub pojawienie siê!!!
 your meeting scheduled for %1 has been canceled	calendar	pl	Twoje spotkanie zaplanowane na %1 zosta³o odwo³ane
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pl	Twoje spotkanie zaplanowane na %1 zosta³o przesuniête na %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pl	Twój zaproponowany czas <B> %1 - %2 </B> jest w konflikcie z nastêpuj±cymi wpisami w kalendarzu:
