@@ -156,9 +156,9 @@
 			$GLOBALS['phpgw']->template->parse('fheaderhandle','fheader');
 
 			$addr_names = $GLOBALS['phpgw']->contacts->stock_contact_fields + array(
-				'cat_id' => 'Categories: @cat_id(Cat1,Cat2)',
-				'access' => 'Access: public,private',
-				'owner'  => 'Owner: defaults to user',
+				'cat_id' => 'Categories: id\'s or names, comma separated list',
+				'access' => 'Access: public, private',
+				'owner'  => 'Owner: user-id/-name, defaults to user',
 				'address2' => 'address line 2',
 				'address3' => 'address line 3',
 			 	'ophone'   => 'Other Phone'
@@ -203,7 +203,7 @@
 					$GLOBALS['phpgw']->template->set_var('trans','');
 					$GLOBALS['phpgw']->template->set_var('addr_fields',$addr_name_options);
 				}
-				$GLOBALS['phpgw']->template->parse('fieldshandle','fields',True); 
+				$GLOBALS['phpgw']->template->parse('fieldshandle','fields',True);
 			}
 			$GLOBALS['phpgw']->template->set_var('lang_start',lang('Startrecord'));
 			$GLOBALS['phpgw']->template->set_var('start',get_var('start',array('POST'),1));
@@ -403,6 +403,20 @@
 				}
 				$empty = !count($values);
 
+				// convert the category name to an id
+				if ($values['cat_id'] && !is_numeric($values['cat_id']) && $values['cat_id'][0] != ',')
+				{
+					$values['cat_id'] = cat_id($values['cat_id']);
+				}
+
+				// convert user-names to user-id's
+				foreach(array('owner') as $user)
+				{
+					if (isset($values[$user]) && !is_numeric($user))
+					{
+						$values[$user] = $GLOBALS['phpgw']->accounts->name2id($values[$user]);
+					}
+				}
 				if (is_array($auto_fn))	// autocreate full name
 				{
 					reset($auto_fn);
