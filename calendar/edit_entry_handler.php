@@ -274,7 +274,7 @@
 			'action_url_button'	=> $phpgw->link('/calendar/edit_entry_handler.php','readsess='.$event->id.'&year='.$event->start->year.'&month='.$event->start->month.'&day='.$event->start->mday),
 			'action_text_button'	=> lang('Ignore Conflict'),
 			'action_confirm_button'	=> '',
-			'action_extra_field	=> ''
+			'action_extra_field'	=> ''
 		);
 		$p->set_var($var);
 
