@@ -106,7 +106,7 @@ enter your new password	preferences	de	Neues Passwort eingeben
 entry has been deleted sucessfully	common	de	Eintrag erfolgreich gel&ouml;scht
 entry updated sucessfully	common	de	Eintrag erfolgreich aktualisiert
 error	common	de	Fehler
-error creating x x directory	common	de	 
+error creating x x directory	common	de	
 error deleting x x directory	common	de	%1%2"
 error renaming x x directory	common	de	%1%2"
 err_saving_file	filemanager	de	Fehler beim Schreiben der Datei
@@ -306,6 +306,7 @@ sunday	common	de	Sonntag
 switch current folder to	email	de	Wechseln zum Ordner
 th	calendar	de	Do
 that loginid has already been taken	admin	de	Diese LoginID ist bereits vergeben
+that pharse already exists	common	de	Diese Wortfolge existiert bereits
 that site has already been entered	admin	de	Diese Site wurde bereits eingegeben
 the following conflicts with the suggested time:<ul>x</ul>	calendar	de	Es gibt folgende &Uuml;berschneidungen mit dem angegebenen Termin:<ul>%1</ul>
 the login and password can not be the same	admin	de	Login und Passwort d&uuml;rfen nicht identisch sein
@@ -373,6 +374,7 @@ year	calendar	de	Jahr
 yearly	calendar	de	J&auml;hrlich
 yes	filemanager	de	Ja
 yes	common	de	Ja
+you are required to change your password during your first login	common	de	Bitte ändern Sie ihr Passwort!
 you are required to change your password durring your first login	common	de	Sie m&uuml;ssen Ihr Passwort bei Ihrem ersten Login &auml;ndern
 you have 1 high priority event on your calendar today.	common	de	Sie haben einen Eintrag mit hoher Priorit&auml;l f&uuml;r heute in Ihrem Kalender.
 you have 1 new message!	common	de	Sie haben eine neue Nachricht!
