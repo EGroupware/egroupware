@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<overlay>
+  <grid id="etemplate.xslt_widget.test" template="" lang="" group="" version="">
+    <columns>
+      <column/>
+    </columns>
+    <rows>
+      <row>
+        <xslt options="etemplate.test" class="test" label="Test" id="test" statustext="This is a help message"/>
+      </row>
+    </rows>
+  </grid>
+</overlay>

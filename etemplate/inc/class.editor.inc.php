@@ -455,8 +455,8 @@
 			{
 				$file .= '.' . $this->etemplate->lang;
 			}
-			$old_file = $file . '.old.xul';
-			$file .= '.xul';
+			$old_file = $file . '.old.xet';
+			$file .= '.xet';
 			if (file_exists($file))
 			{
 				rename($file,$old_file);
