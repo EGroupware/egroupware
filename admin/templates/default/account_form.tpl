@@ -13,24 +13,24 @@
           <tr class="th">
             <td colspan="4"><b>{lang_action}</b></td>
           </tr>
-          <tr class="tr_color1">
+          <tr class="row_on">
            <td width="25%">{lang_loginid}</td>
            <td width="25%">{account_lid}&nbsp;</td>
            <td width="25%">{lang_account_active}:</td>
            <td width="25%">{account_status}</td>
           </tr>
-          <tr class="tr_color2">
+          <tr class="row_off">
            <td>{lang_firstname}</td>
            <td>{account_firstname}&nbsp;</td>
            <td>{lang_lastname}</td>
            <td>{account_lastname}&nbsp;</td>
           </tr>
           {password_fields}
-          <tr class="tr_color2">
+          <tr class="row_on">
            <td>{lang_groups}</td>
            <td colspan="3">{groups_select}&nbsp;</td>
           </tr>
-          <tr class="tr_color1">
+          <tr class="row_off">
            <td>{lang_expires}</td>
            <td colspan="3">{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;{never_expires}</td>
           </tr>
@@ -45,7 +45,7 @@
 <!-- END form -->
 
 <!-- BEGIN form_passwordinfo -->
-    <tr class="tr_color1">
+    <tr class="row_on">
      <td>{lang_password}</td>
      <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
      <td>{lang_reenter_password}</td>
@@ -54,7 +54,7 @@
 <!-- END form_passwordinfo -->
 
 <!-- BEGIN form_buttons_ -->
-    <tr class="tr_color2">
+    <tr>
      <td colspan="2" align="left"><input type="submit" name="submit" value="{lang_button}"></td>
     </form>
     <form method="POST" action="{cancel_action}">
@@ -63,7 +63,7 @@
 <!-- END form_buttons_ -->
 
 <!-- BEGIN form_logininfo -->
-    <tr class="tr_color1">
+    <tr class="row_on">
      <td>{lang_lastlogin}</td>
      <td>{account_lastlogin}</td>
 
