@@ -147,7 +147,10 @@
 					return True;
 			}
 			list($app,$class,$method) = explode('.',$value['get_rows']);
-			$obj = CreateObject($app.'.'.$class);
+			if ($app && $class)
+			{
+				$obj =& CreateObject($app.'.'.$class);
+			}
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
 				$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
