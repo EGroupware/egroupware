@@ -224,7 +224,7 @@
 			$this->fk = array();
 			$this->ix = array();
 			$this->uc = array();
-			
+
 			/* Field, Type, Null, Key, Default, Extra */
 			$oProc->m_odb->query("describe $sTableName");
 			while ($oProc->m_odb->next_record())
@@ -283,6 +283,7 @@
 					$type = "'type' => 'auto'";
 				}
 				$this->sCol[] = "\t\t\t\t'" . $oProc->m_odb->f(0)."' => array(" . $type . ',' . $null . $nullcomma . $default . '),' . "\n";
+/*
 				if ($oProc->m_odb->f(3) == 'PRI')
 				{
 					$this->pk[] = $oProc->m_odb->f(0);
@@ -291,16 +292,59 @@
 				{
 					$this->uc[] = $oProc->m_odb->f(0);
 				}
-				/* Hmmm, MUL could also mean unique, or not... */
+				// index over multiple columns
 				if ($oProc->m_odb->f(3) == 'MUL')
 				{
 					$this->ix[] = $oProc->m_odb->f(0);
 				}
+*/
 			}
+			$this->_GetIndices($oProc,$sTableName,$this->pk,$this->ix,$this->uc,$this->fk);
+
 			/* ugly as heck, but is here to chop the trailing comma on the last element (for php3) */
 			$this->sCol[count($this->sCol) - 1] = substr($this->sCol[count($this->sCol) - 1],0,-2) . "\n";
 
 			return false;
+		}
+
+		function _GetIndices($oProc,$sTableName,&$aPk,&$aIx,&$aUc,&$aFk)
+		{
+			$aPk = $aIx = $aUc = $aFk = array();
+			$seq = $ix = $uc = 0;
+
+			$oProc->m_odb->query("show index from $sTableName");
+			while ($oProc->m_odb->next_record())
+			{
+				if ($seq >= $oProc->m_odb->f('Seq_in_index'))	// new index started
+				{
+					$$type += 1;
+				}
+				if ($oProc->m_odb->f('Key_name') == 'PRIMARY')	// pk
+				{
+					$aPk[] = $oProc->m_odb->f('Column_name');
+					$type = 'pk';
+				}
+				elseif ($oProc->m_odb->f('Non_unique'))	// ix
+				{
+					$aIx[$ix][] = $oProc->m_odb->f('Column_name');
+					$type = 'ix';
+					if ($oProc->m_odb->f('Comment') == 'FULLTEXT')
+					{
+						$aIx[$ix]['options'] = array('mysql' => 'FULLTEXT');
+					}
+					elseif (intval($oProc->m_odb->f('Sub_part')))
+					{
+						$aIx[$ix]['options'] = array('mysql' => intval($oProc->m_odb->f('Sub_part')));
+					}
+				}
+				else	// uc
+				{
+					$aUc[$uc][] = $oProc->m_odb->f('Column_name');
+					$type = 'uc';
+				}
+				$seq = $oProc->m_odb->f('Seq_in_index');
+			}
+			//echo "Indices from $sTableName<pre>pk=".print_r($aPk,True)."\nix=".print_r($aIx,True)."\nuc=".print_r($aUc,True)."</pre>\n";
 		}
 
 		function DropTable($oProc, &$aTables, $sTableName)
