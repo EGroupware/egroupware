@@ -849,7 +849,7 @@
 						. $GLOBALS['phpgw']->common->display_fullname($ac_name[$ac_id]['lid'],$ac_name[$ac_id]['firstname'],$ac_name[$ac_id]['lastname'])
 						. '</option>'."\n";
 				}
-				$account_num = count($group_info['account_user']);
+				$account_num = max(count($group_info['account_user']),5);
 				$p->set_var('select_size',($account_num < 25?$account_num:25));
 				$p->set_var('user_list',$user_list);
 				$p->fp('accounts','popwin',True);
