@@ -266,7 +266,7 @@
     if ($format == "view")
        echo "<tr><td><font size=\"-1\">" . lang("Created by") . ":</font></td>"
 	  . "<td colspan=\"3\"><font size=\"-1\">"
-	  . grab_owner_name($fields[owner]);
+	  . grab_owner_name($fields["owner"]);
    
   ?></font>
     </td>

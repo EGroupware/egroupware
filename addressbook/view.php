@@ -53,7 +53,6 @@
 
   $owner = $phpgw->db->f("ab_owner");
   $ab_id = $phpgw->db->f("ab_id");
-
   form("view","","View",$fields);
 ?>
     <TABLE border=0 cellPadding=0 cellSpacing=0 width="95%">
