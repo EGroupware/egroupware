@@ -1,4 +1,4 @@
-<!-- BEGIN head --><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
@@ -31,5 +31,5 @@ function MM_preloadImages()
 {java_script}
 <TITLE>{website_title}</TITLE>
 </HEAD>
-<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END head -->
-<BODY {body_tags} 
+<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there -->
+<BODY {body_tags}
