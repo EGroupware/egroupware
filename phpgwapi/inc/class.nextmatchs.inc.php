@@ -28,6 +28,20 @@
 		*/
 	class nextmatchs
 	{
+		function nextmatchs()
+		{
+			global $phpgw_info;
+
+			if ($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
+			{
+				$this->maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+			}
+			else
+			{
+				$this->maxmatchs = 15;
+			}
+		}
+
 		/*!
 		@function set_icon
 		@abstract ?
@@ -134,7 +148,8 @@
 				'link' => 'nextmatchs_link.tpl'
 			));
 
-			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+//			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+			$maxmatchs = $this->maxmatchs;
 
 			if (($start != 0) && ($start > $maxmatchs))
 			{
@@ -185,7 +200,8 @@
 			$tpl->set_file(array(
 				'link' => 'nextmatchs_link.tpl'
 			));
-			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+//			$maxmatchs = intval($phpgw_info['user']['preferences']['common']['maxmatchs']);
+			$maxmatchs = $this->maxmatchs;
 
 			if (($total > $maxmatchs) && ($total > $start + $maxmatchs))
 			{
@@ -443,14 +459,7 @@
 		{
 			global $phpgw_info, $start;
 
-			if ($phpgw_info['user']['preferences']['common']['maxmatchs'] && $phpgw_info['user']['preferences']['common']['maxmatchs'] > 0)
-			{
-				$limit = $phpgw_info['user']['preferences']['common']['maxmatchs'];
-			}
-			else
-			{
-				$limit = 15;
-			}
+			$limit = $this->maxmatchs;
 
 			if ($total_records > $limit)
 			{
