@@ -78,8 +78,11 @@ class class_datetime
 	var $hour;
 	var $min;
 	var $sec;
+	var $tzid;
 	var $date;
+	var $value;
 	var $allday = False;
+	var $x_type = Array();
 }
 
 class class_geo
@@ -831,21 +834,41 @@ class vCalendar
 			$pos = explode(':',$value);
 			$value = $pos[1];
 		}
-		$dtime->year = intval(substr($value,0,4));
-		$dtime->month = intval(substr($value,4,2));
-		$dtime->mday = intval(substr($value,6,2));
+		$this->set_var($dtime,'year',intval(substr($value,0,4)));
+		$this->set_var($dtime,'month',intval(substr($value,4,2)));
+		$this->set_var($dtime,'mday',intval(substr($value,6,2)));
 		if(substr($value,8,1) == 'T')
 		{
-			$dtime->hour = intval(substr($value,9,2));
-			$dtime->min = intval(substr($value,11,2));
-			$dtime->sec = intval(substr($value,13,2));
+			$this->set_var($dtime,'hour',intval(substr($value,9,2)));
+			$this->set_var($dtime,'min',intval(substr($value,11,2)));
+			$this->set_var($dtime,'sec',intval(substr($value,13,2)));
 		}
 		else
 		{
-			$dtime->hour = 0;
-			$dtime->min = 0;
-			$dtime->sec = 0;
+			$this->set_var($dtime,'hour',0);
+			$this->set_var($dtime,'min',0);
+			$this->set_var($dtime,'sec',0);
 		}
+		if($pos[0])
+		{
+			$return_value = $this->explode_param($pos[0],'"',True);
+			if(count($return_value) > 0)
+			{
+				for($i=0;$i<count($return_value);$i=$i + 2)
+				{
+					$value = $return_value[$i];
+					$param = $this->strip_quotes($return_value[$i+1]);
+					if(substr($value,0,2) != 'X-')
+					{
+						$this->set_var($dtime,$value,$param);
+					}
+					else
+					{
+						$this->parse_xtype($dtime,$value,$param);
+					}
+				}
+			}
+		}		
 		return $dtime;		
 	}
 
@@ -972,7 +995,7 @@ class vCalendar
 			{
 				$type[0] = $return_value[$i];
 				$type[1] = $this->strip_quotes($return_value[$i+1]);
-				$this->set_var($event,$type[0],$type[1]);
+				$this->set_var($event,strtolower($type[0]),$type[1]);
 			}
 		}
 	}
