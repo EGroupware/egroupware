@@ -168,8 +168,8 @@
 		{
 			if($GLOBALS['phpgw_info']['server']['calendar_type'] == 'sql')
 			{
-				$this->so->cal->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
-				$this->so->cal->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
+				$this->cal->stream->query('UPDATE phpgw_cal SET owner='.$new_owner.' WHERE owner='.$account_id,__LINE__,__FILE__);
+				$this->cal->stream->query('UPDATE phpgw_cal_user SET cal_login='.$new_owner.' WHERE cal_login='.$account_id);
 			}
 		}
 
