@@ -1,160 +1,276 @@
-A:link 
+/*
+	StyleSheet coding standards:
+
+	1. use lowercase if possible
+
+	2. format styles like this:
+	
+		body
+		{
+			font-size: 12px;
+			font-family: Verdana, Arial, Helvetica, sans-serif
+		}
+
+	3. existing html elements on top of the document, then all self defined .classes and at last all self defined #id's.
+
+	4. close every property with ; also the last one.
+*/
+
+body 
 {
-	COLOR: #006699; 
-	TEXT-DECORATION: none
+	background-image:url(../images/body-background.png);
+	font-size: 11px; 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	padding:14px;
 }
 
-A:visited 
+a:link
 {
-	COLOR: #006699; 
-	TEXT-DECORATION: none
+	color: #006699; 
+	text-decoration: none;
 }
 
-A:hover 
+a:visited 
 {
-	COLOR: #ff9933; TEXT-DECORATION: underline
+	color: #006699; 
+	text-decoration: none;
 }
 
-A:active 
+a:hover 
 {
-	COLOR: #006699; 
-	TEXT-DECORATION: underline
+	color: #ff9933;
+	text-decoration: underline;
 }
 
-INPUT 
+a:active 
 {
-	FONT-SIZE: 12px; 
-	COLOR: #006699; 
-	FONT-FAMILY: Arial, Helvetica, sans-serif
+	color: #006699; 
+	text-decoration: underline;
 }
 
-SELECT 
+input,button
 {
-	FONT-SIZE: 12px; 
-	COLOR: #006699; 
-	FONT-FAMILY: Arial, Helvetica, sans-serif
+	font-size: 11px; 
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px #bbbbbb solid;
 }
 
-BODY 
+input[type=submit],input[type=button],button
 {
-	FONT-SIZE: 12px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	cursor: pointer; 
+	cursor: hand;
 }
 
-FORM 
+select 
 {
-	FONT-SIZE: 12px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	font-size: 11px; 
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	border: 1px #bbbbbb solid;
 }
 
-TABLE 
+td
 {
-	FONT-SIZE: 12px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	font-size: 11px;
+/*	padding-top:1px;
+	padding-bottom:1px;*/
 }
 
-.sideboxcontent 
+.divSidebox 
 {
-	PADDING-RIGHT: 5px; 
-	PADDING-LEFT: 5px; 
-	FONT-SIZE: 12px; 
-	PADDING-BOTTOM: 5px; 
-	WIDTH: 160px; 
-	COLOR: #000000; 
-	LINE-HEIGHT: 20px; 
-	PADDING-TOP: 5px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	position:relative;
+	width: 160px; 
+	border-right: #9c9c9c 1px solid; 
+	border-top: #9c9c9c 1px solid; 
+	border-left: #9c9c9c 1px solid; 
+	border-bottom: #9c9c9c 1px solid
 }
 
-.mainnote 
+.divSideboxHeader 
 {
-	FONT-SIZE: 12px; 
-	COLOR: #006699; 
-	FONT-FAMILY: Arial, Helvetica, sans-serif
+	text-align:center;
+	background-color:#dddddd;
+	height:12px;
+	padding-top:2px;
+	font-size:10px;
+	color:#666666;
 }
 
-.articlecontent 
+a.divSideboxEntry, .divSideboxEntry
 {
-	PADDING-RIGHT: 10px; 
-	PADDING-LEFT: 10px; 
-	FONT-SIZE: 12px; 
-	PADDING-BOTTOM: 10px; 
-	COLOR: #000000; 
-	LINE-HEIGHT: 20px; 
-	PADDING-TOP: 10px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	text-align:left;
+	height:16px;
+	background-color:#eeeeee;
 }
 
-.sideboxtext 
+a.appTitles,.appTitles
 {
-	FONT-SIZE: 12px; 
-	LINE-HEIGHT: 18px; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+	font-size: 10px; 
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
 }
 
-.toppannel 
+a.textSidebox
 {
-	BACKGROUND-IMAGE: url(../images/panel.png); 
-	BACKGROUND-REPEAT: repeat-x
+	font-size: 10px; 
+	border-top: #aaaaaa 0px none;
 }
 
-.copyright 
+.textSidebox
 {
+	font-size: 10px; 
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+	border-top: #aaaaaa 1px solid;
+	
+}
+
+.sideboxSpace
+{
+	height:9px;
+}
+
+.greyLine
+{
+	margin:1px;
+	border-top-color:#7e7e7e;
+	border-top-width:1px;
+	border-top-style:solid;
+	height:1px;
+}
+
+#divMain
+{
+	background-color:white;
+	margin-top: 5px;
+	padding:9px;
+	border-color:#7e7e7e;
+	border-width:1px;
+	border-style:solid;
+}
+
+#divLogo
+{
+	position:absolute;
+	left:20px;
+	top:14px;
+	z-index:51;
+}
+
+#divAppIconBar
+{
+	background-color:white;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	background-image: url(../images/background-icon-bar.png); 
+	background-repeat: repeat-x
+}
+
+#divAppTextBar
+{
+	background-color:white;
+}
+
+#divStatusBar
+{
+	background-color:white;
+	height:15px;
+	padding-left:170px;
+	margin-top: 13px;
+/*	margin-bottom: 2px;*/
+}
+
+#divSubContainer
+{
+}
+
+#tdSidebox
+{
+	width:170px;
+	background-color:white;
+}
+
+#tdAppbox
+{
+	background-color:white;
+	padding-left:9px;
+	width: 100%;
+}
+#divSideboxContainer
+{
+	position:relative;
+	width:150px;
+	top:0px;
+	left:0px;
+	background-color:white;
+	border-color:red;
+	border-width:1px;
+	border-style:solid;
+	z-index:40;
+}
+
+#divAppboxHeader
+{
+	width:100%;
+	background-image:url(../images/appbox-header-background.png);
+	background-repeat: repeat-x;
+	height:36px;
+	line-height:28px;
+	text-align:center;
+/*	padding-top:7px;*/
+	padding-bottom:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#666666;
+	border-top-color:#9c9c9c;
+	border-top-width:1px;
+	border-top-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+}
+
+#divAppbox
+{
+	width:100%;
+	background-color:#f7f7f7;
+	padding:5px;
+	border-bottom-color:#9c9c9c;
+	border-bottom-width:1px;
+	border-bottom-style:solid;
+	border-left-color:#9c9c9c;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-right-color:#9c9c9c;
+	border-right-width:1px;
+	border-right-style:solid;
+}
+
+#user_info
+{
+
+
+}
+
+#admin_info
+{
+	position:relative;
+	text-align:right;
+}
+
+#divPoweredBy 
+{
+	bottom:14px;
 	font-size: 9px;
 	color: #000000;
+	text-align:center;
+	width:99%;
 }
 
-.title 
-{
-	PADDING-LEFT: 5px; 
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: 12px; 
-	COLOR: #000000; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-
-.box 
-{
-	BORDER-RIGHT: #98aab1 1px solid; 
-	BORDER-TOP: #98aab1 1px solid; 
-	BORDER-LEFT: #98aab1 1px solid; 
-	BORDER-BOTTOM: #98aab1 1px solid
-}
-
-.content 
-{
-	FONT-SIZE: 12px; 
-	COLOR: #000000; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-
-.sideboxtitle 
-{
-	BACKGROUND-POSITION: center 50%; 
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: 12px; 
-	BACKGROUND-IMAGE: url(../images/boxbg.gif); 
-	COLOR: #000000; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
-}
-
-.sidebox 
-{
-	BORDER-RIGHT: #98aab1 1px solid; 
-	BORDER-TOP: #98aab1 1px solid; 
-	BORDER-LEFT: #98aab1 1px solid; 
-	WIDTH: 160px; 
-	BORDER-BOTTOM: #98aab1 1px solid
-}
-
-.articletitle 
-{
-	FONT-WEIGHT: bold; 
-	FONT-SIZE: 12px; 
-	BACKGROUND-IMAGE: url(../images/greypanel.gif); 
-	COLOR: #000000; 
-	TEXT-INDENT: 5pt; 
-	BACKGROUND-REPEAT: repeat-x; 
-	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; 
-	HEIGHT: 20px
-}

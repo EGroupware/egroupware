@@ -1,131 +1,124 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
+<!-- BEGIN head -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="nl" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!--
+		HTML Coding Standards;
 
-<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
-<META NAME="description" CONTENT="eGroupWare">
-<META NAME="keywords" CONTENT="eGroupWare">
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Cache-control" CONTENT="no-cache">
-<META HTTP-EQUIV="content-type" CONTENT="text/html;charset={lang_charset}">
-<link href="templates/default/css/idots.css" type="text/css" rel="StyleSheet">
+		1. use lowercase is possible, because of xhtml validation
+		2. make your template validate either html 4.01 or xhtml 1
+		3. make your application validat both if possible
+		4. always use "" when possible (please help me I don't know the English word)
+		5. use png-graphics if possible, but keep in ming IE has a transparency bug when it renders png's
+
+		-->
+
+		<!-- LAY-OUT BUGS 
+		
+		1. in IE no link cursor is displayd when for png's that link
+		2. tabs are ugly in preferences
+		3. spacers inside sidebox
+
+		-->
+		<title>eGroupWare Setup - {lang_setup} {configdomain}</title>
+		<meta http-equiv="content-type" content="text/html; charset={charset}" />
+		<meta name="keywords" content="egroupware" />
+		<meta name="description" content="egroupware" />
+		<meta name="keywords" content="egroupware" />
+		<meta name="copyright" content="egroupware http://www.egroupware.org (c) 2003" />
+		<meta name="language" content="en" />
+		<meta name="author" content="egroupware http://www.egroupware.org" />
+		<meta name="robots" content="none" />
+		<link rel="icon" href="../phpgwapi/templates/default/images/favicon.ico" type="image/x-ico" />
+		<link rel="shortcut icon" href="../phpgwapi/templates/default/images/favicon.ico" />
+		<link href="../phpgwapi/templates/idots/css/idots.css" type="text/css" rel="stylesheet" />
+		<!--
+		{css}
+		-->
 
 		<style type="text/css">
-  <!--
-  .row_on { color: #000000; background-color: #eeeeee; }
-  .row_off { color: #000000; background-color: #E8F0F0; }
-  .th 
-  { 
-  	color: #000000; 
-  	background-color: #cccccc; 
-  }
+			<!--
+			.row_on { color: #000000; background-color: #eeeeee; }
+			.row_off { color: #000000; background-color: #e8f0f0; }
+			.th 
+			{ 
+			  color: #000000; 
+			  background-color: #cccccc; 
+			}
 
-  -->
-  </style>
-<title>eGroupWare {lang_setup} {page_title}</title>
-</head>
+			-->	
+		</style>
+		
+		<!--{java_script}-->
+		
+		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
+		<!--[if gte ie 5.5000]>
+		<script src="../phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
+		</script>
+		<![endif]-->
 
-	<body bgcolor="#e5e5e5" alink="red" link="blue" vlink="blue">
-<!--<table width="100%" border="0" cellspacing="0" cellpadding="2">
-				<tr class="banner">
-					<td align="left">
-						&nbsp;eGroupWare version {pgw_ver} {lang_setup} {configdomain}
-					</td>
-					<td align="right">{logoutbutton}</td>
+	</head>
+	<body>
+
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo-setup.png" border="0" alt="egroupware"/></a></div>
+
+<div id="divMain">
+	<div id="divAppIconBar">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="180" valign="top" align="left"><img src="../phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="100%"><img src="../phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
+						</tr>
+						<tr>
+							<td width="100%">&nbsp;</td>
+						</tr>
+					</table>
+
+				</td>
+				<td width="1" valign="top" align="right"><img src="../phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+			</tr>
+		</table>
+	</div>
+<!--	<div id="divstatusbar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td align="left" id="user_info">{user_info}</td><td align="right" id="admin_info">{current_users}</td></tr></table></div>-->
+	<div id="divSubContainer">
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<!-- sidebox column -->
+				<td id="tdSidebox" valign="top">
+					
+					
+					<div class="divSidebox">
+						<div class="divSideboxHeader"><span>setup main menu</span></div>
+						<div>
+							<table width="100%" cellspacing="0" cellpadding="0">
+					
+								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="../home.php">back to user login</a></td>
+								</tr>
+
+								<tr class="divSideboxEntry">
+					<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><a class="textsidebox" href="check_install.php">check installation</a></td>
 				</tr>
-				</table>-->
-								<table class="box" height="90%" cellspacing="0" cellpadding="1" width="100%" bgcolor="#ffffff" border="0">
-<tbody><tr> 
-		<td valign="top"> 
-			<table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff" border="0">
-				<tbody><tr> 
-						<td width="185" rowspan="2" align="center" valign="top" class="toppannel"><a href="http://www.eGroupWare.org" target="_blank"><img src="templates/default/images/setup-anim.gif" alt="logo" border="0" title="www.eGroupWare.org"></a></td>
-						<td colspan="2" valign="top" style="background-image:url(templates/default/images/panel.png);background-repeat: repeat-x;"> 
-							<table width="100%" border="0" cellpadding="0" cellspacing="0"  bgcolor="#ffffff" style="background-image:url(templates/default/images/panel.png);background-repeat: repeat-x;">
-								<tbody><tr valign="middle"> 
-										
-										
-										<!-- If there are no icons -->
-										<td width="100%"><img src="templates/default/images/spacer.gif" width="100%" height="60" alt=""></td>
-									
 
-										<!-- else the icons -->
+								<tr class="divSideboxEntry">
+							<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox"><!--<a class="textsidebox" href="check_install.php">check installation</a>-->{logoutbutton}</td>
+						</tr>
+									</table>	
+						</div>
+					</div>
+					<div class="sideboxSpace"></div>
 
-										<!--		<td align="center"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/admin/index.php"><img src="images/navbar_003.png" alt="Admin" title="Admin" border="0" height="60"></a></td><td align="center"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/calendar/index.php"><img src="images/navbar.png" alt="Calendar" title="Calendar" border="0" height="60"></a></td><td align="center"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/addressbook/index.php"><img src="images/navbar_002.png" alt="Addressbook" title="Addressbook" border="0" height="60"></a></td><td align="center"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/jinn/index.php"><img src="images/navbar_004.png" alt="jinn" title="jinn" border="0" height="60"></a></td>
-										<td width="1%"></td>-->
+				</td>
+				<!-- end sidebox column -->
 
-									</tr>
-									<tr valign="top" bgcolor="#ffffff">
-										<td width="100%">&nbsp;</td>
+				<!-- applicationbox column -->
+				<td id="tdAppbox" valign="top">
+				<div id="divAppboxHeader">{lang_setup} {configdomain}</div>
+				<div id="divAppbox">
 
-										<!-- the icons texts -->
-										<!--								<td align="center" class="mainnote"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/admin/index.php">Admin</a></td><td align="center" class="mainnote"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/calendar/index.php">Calendar</a></td><td align="center" class="mainnote"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/addressbook/index.php">Addressbook</a></td><td align="center" class="mainnote"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/jinn/index.php">jinn</a></td>
-										<td width="1%" colspan="100"></td>-->
-									</tr>
-						</tbody></table></td>
-						<td width="15" rowspan="2" valign="top" class="toppannel"></td>
-					</tr>
-					<tr>
-						<td align="left" valign="top" class="mainnote">&nbsp;</td>
-						<td align="right" valign="top" class="mainnote">&nbsp;</td>
-					</tr>
-					<tr>
-						<td align="left" valign="top" class="mainnote">&nbsp;</td>
-						<td align="right" valign="top" class="mainnote"><!--<font color=red>Setup adminisator not logged in</font>--></td>
-					</tr>
-			</tbody></table>
-			<table cellspacing="0" cellpadding="0" width="100%" border="0">
-				<tbody><tr valign="top"> 
-						<td width="15"></td>
-						<td valign="top" width="1">
-
-							<!-- start blocks -->
-							<table class="sidebox" cellspacing="1" cellpadding="0" width="100%" border="0">
-								<tbody><tr> 
-										<td class="sideboxtitle" align="center" height="28">General Menu</td>
-									</tr>
-									<tr> 
-										<td class="sideboxcontent" bgcolor="#efefef">
-											<table class="sideboxtext" cellspacing="0" cellpadding="0" width="100%" border="0">
-												<tbody>
-													<tr>
-														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
-														<td width="100%" height="20" align="left" valign="top"><a href="../home.php">Back to user login</a></td>
-													</tr>
-													<tr>
-														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
-														<td width="100%" height="20" align="left" valign="top"><a href="check_install.php">Check Installation</a></td>
-													</tr>
-													<tr>
-														<td valign="top" align="center"><font color="#ff9933">{logouticon}</font>&nbsp;</td>
-														<td width="100%" height="20" align="left" valign="top">{logoutbutton}</td>
-													</tr>
-													<!--<tr>
-														<td valign="top" align="center"><font color="#ff9933">*</font>&nbsp;</td>
-														<td width="100%" height="20" align="left" valign="top"><a href="http://vlinder.rsm.lingewoud.nl/groupwork/horssen.groupwork.nl/egroupware/about.php?app=eGroupWare">About </a></td>
-													</tr>-->
-												</tbody>
-											</table>
-										</td>
-									</tr>
-							</tbody></table>
-							<br>	
-							<br>
-						</td>
-						<td width="15"><img src="templates/default/images/spacer.gif" width="15" alt=""></td>
-						<td>
-
-										<table cellspacing="0" cellpadding="0" width="100%" border="0">
-<tbody><tr> 
-		<td valign="top" height="100%"> 
-			<table align="center" class="box" cellspacing="1" cellpadding="0" width="100%" border="0">
-				<tbody><tr> 
-						<td height="23" colspan="2" align="center" class="articletitle">{lang_setup} {configdomain}</td>
-					</tr>
-					<tr align="center"> 
-						<td height="20" colspan="2" bgcolor="#efefef" class="mainnote">
-							<br>
-							<br>
 
 <!-- end head.tpl -->
 
