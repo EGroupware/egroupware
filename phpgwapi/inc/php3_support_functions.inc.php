@@ -3,7 +3,7 @@
 	 /**************************************************************************\
 	 * phpGroupWare API - PHP3 Compatibility layer                              *
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	 * Has repliations of PHP4 only functions to allow for transparent PHP3     *
+	 * Has replications of PHP4 only functions to allow for transparent PHP3    *
 	 * compatibility                                                            *
 	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	 * -------------------------------------------------------------------------*
@@ -41,6 +41,45 @@
 		else
 		{
 			return False ;
+		}
+	}
+
+/*
+	function array_reverse ($array, $preserve_keys = FALSE)
+	{
+		for(list($key,$value) = @end($array); list($key,$value) = @prev($array); )
+		{
+			$temp_array[$key] = $value;
+		}
+		return $temp_array;
+	}
+*/
+	
+	function array_search ($needle, $haystack, $strict = FALSE)
+	{
+		@reset($haystack);
+		while(list($key,$value) = each($haystack))
+		{
+			if ($haystack[$key]==$needle && (!$strict || gettype($haystack[$key]==gettype($needle)))
+			{
+				return $key;
+			}
+		}
+		return FALSE; 
+	}
+
+	function in_array ($needle, $haystack, $strict = FALSE)
+	{
+		if(is_array ($haystack) && count($haystack))
+		{
+			for(@reset($haystack); $x=each($haystack); )
+			{
+				if($needle==$x[1] && (!$strict || gettype($needle)==gettype($x[1])))
+				{
+					return TRUE;
+				}
+			}
+			return FALSE; 
 		}
 	}
 ?>
