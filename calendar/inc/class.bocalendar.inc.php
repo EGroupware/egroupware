@@ -2122,7 +2122,8 @@
 						continue;	// fetch recuring events only in 2. loop
 					}
 					$startdate = (int)(date('Ymd',$this->maketime($event['start'])));
-					$enddate = (int)(date('Ymd',$this->maketime($event['end'])));
+					// maketime($event['end'][)-1 to allow events to end on a full hour/day without the need to enter it as minute=59
+					$enddate = (int)(date('Ymd',$this->maketime($event['end'])-1));
 					$this->cached_events[$startdate][] = $event;
 					if($startdate != $enddate)
 					{
