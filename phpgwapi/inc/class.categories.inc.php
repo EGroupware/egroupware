@@ -355,16 +355,17 @@
 		@param $selected - cat_id or array with cat_id values 
 		@result $s array - populated with categories
 		*/
-		function formatted_list($format,$type,$selected = '',$public = False,$site_link = 'site')
+		function formatted_list($format,$type = 'all',$selected = '',$public = False,$site_link = 'site')
 		{
 			return $this->formated_list($format,$type,$selected,$public,$site_link);
 		}
-		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
+
+		function formated_list($format,$type = 'all',$selected = '',$public = False,$site_link = 'site')
 		{
 			if(is_array($format))
 			{
 				$temp_format = $format['format'];
-				$type = $format['type'];
+				$type = (isset($format['type'])?$format['type']:'all');
 				$selected = (isset($format['selected'])?$format['selected']:'');
 				$public = (isset($format['public'])?$format['public']:False);
 				$site_link = (isset($format['site_link'])?$format['site_link']:'site');
@@ -553,10 +554,11 @@
 			}
 			switch($item)
 			{
-				case 'name':  $value = 'cat_name'; break;
-				case 'owner': $value = 'cat_owner'; break;
-				case 'main':  $value = 'cat_main'; break;
-				case 'level': $value = 'cat_level'; break;
+				case 'name':	$value = 'cat_name'; break;
+				case 'owner':	$value = 'cat_owner'; break;
+				case 'main':	$value = 'cat_main'; break;
+				case 'level':	$value = 'cat_level'; break;
+				case 'data':	$value = 'cat_data'; break;	
 			}
 
 			$this->db->query("SELECT $value FROM phpgw_categories WHERE cat_id='" . $cat_id . "'",__LINE__,__FILE__);
