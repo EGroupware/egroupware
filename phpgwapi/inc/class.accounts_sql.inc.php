@@ -314,6 +314,7 @@
 				{
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
 						. $defaultgroupid . ", " . $accountid . ", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
 				}
 				else
 				{
