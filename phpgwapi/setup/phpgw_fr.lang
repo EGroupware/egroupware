@@ -9,7 +9,7 @@ account active	common	fr	Compte actif
 account has been created	common	fr	Le compte a &eacute;t&eacute; cr&eacute;&eacute;
 account has been deleted	common	fr	Le compte a &eacute;t&eacute; supprim&eacute;
 account has been updated	common	fr	Le compte a &eacute;t&eacute; mis &agrave; jour
-account preferences	common	fr	Pref&eacute;rences de compte
+account preferences	common	fr	Pr&eacute;f&eacute;rences de compte
 active	common	fr	Actif
 add	common	fr	Ajouter
 add a single phrase	common	fr	Ajouter une seule ligne
@@ -217,7 +217,7 @@ please select a message first	common	fr	Veuillez d'abord selectionner un message
 please x by hand	common	fr	veuillez %1 a la main
 please, select a new theme	common	fr	Choisissez un nouveau theme
 powered by phpgroupware version x	common	fr	Utilise <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-preferences	common	fr	Pr&eacute;faeacute;rences
+preferences	common	fr	Pr&eacute;f&eacute;rences
 previous	common	fr	Pr&eacute;c&eacute;dent
 previous page	common	fr	page pr&eacute;c&eacute;dente
 print	common	fr	Imprimer
