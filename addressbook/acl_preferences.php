@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare - Addressbook                                               *
+  * phpGroupWare - Calendar                                                  *
   * http://www.phpgroupware.org                                              *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
@@ -12,22 +12,17 @@
   /* $Id$ */
 
   $phpgw_info["flags"] = array("currentapp" => "addressbook", "enable_nextmatchs_class" => True, "noappheader" => True, "noappfooter" => True);
-
-//  if(isset($submit) && $submit) {
-//    $phpgw_info["flags"]["noheader"] = True;
-//    $phpgw_info["flags"]["nonavbar"] = True;
-//  }
-  
   include("../header.inc.php");
 
   function display_row($bg_color,$label,$id,$name) {
     global $p;
     global $phpgw;
     global $phpgw_info;
+    global $acl;
     
     $p->set_var('row_color',$bg_color);
     $p->set_var('user',$name);
-    $rights = $phpgw->acl->get_rights($label.$id,$phpgw_info["flags"]["currentapp"]);
+    $rights = $acl->get_rights($label.$id,$phpgw_info["flags"]["currentapp"]);
     $p->set_var('read',$label.$phpgw_info["flags"]["currentapp"].'['.$id.']['.PHPGW_ACL_READ.']');
     if ($rights & PHPGW_ACL_READ) {
       $p->set_var('read_selected',' checked');
@@ -55,11 +50,17 @@
     $p->parse('row','acl_row',True);
   }
 
+  if(!isset($owner) || !$phpgw_info["user"]["apps"]["admin"]) {
+    $owner = $phpgw_info["user"]["account_id"];
+  }
+  $groups = $phpgw->accounts->memberships($owner);
+  $acl = CreateObject('phpgwapi.acl',intval($owner));
+  $acl->read_repository();
+  
   if ($submit) {
-
     $to_remove = unserialize(urldecode($processed));
     for($i=0;$i<count($to_remove);$i++) {
-      $phpgw->acl->delete($phpgw_info["flags"]["currentapp"],$to_remove[$i],$phpgw_info["user"]["account_id"],'u');
+      $acl->delete($phpgw_info["flags"]["currentapp"],$to_remove[$i]);
     }
 // Group records
     $group_variable = 'g_'.$phpgw_info["flags"]["currentapp"];
@@ -67,10 +68,10 @@
     @reset($$group_variable);
     while(list($group_id,$acllist) = each($$group_variable)) {
       $totalacl = 0;
-      while(list($acl,$permission) = each($acllist)) {
-        $totalacl += $acl;
+      while(list($right,$permission) = each($acllist)) {
+        $totalacl += $right;
       }
-      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
+      $acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$totalacl);
     }
 
 // User records
@@ -79,21 +80,17 @@
     @reset($$user_variable);
     while(list($user_id,$acllist) = each($$user_variable)) {
       $totalacl = 0;
-      while(list($acl,$permission) = each($acllist)) {
-        $totalacl += $acl;
+      while(list($right,$permission) = each($acllist)) {
+        $totalacl += $right;
       }
-      $phpgw->acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$phpgw_info["user"]["account_id"],'u',$totalacl);
+      $acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$totalacl);
     }
-     
-//     header("Location: ".$phpgw->link($phpgw_info["server"]["webserver_url"]."/preferences/index.php"));
-//     $phpgw->common->phpgw_exit();
   }
 
-  $groups = $phpgw->accounts->read_group_names($phpgw->info["user"]["account_id"]);
   $processed = Array();
 
   $total = 0;
-  
+
   if(!isset($start)) {
     $start = 0;
   }
@@ -122,9 +119,9 @@
   if(!isset($totalentries)) {
     $totalentries = count($groups);
     $db = $phpgw->db;
-    $db->query("SELECT count(*) FROM accounts");
+    $db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u'");
     $db->next_record();
-    $totalentries += $db->f(0);
+    $totalentries += intval($db->f(0));
   }
 
   $p = CreateObject('phpgwapi.Template',$phpgw_info["server"]["app_tpl"]);
@@ -132,7 +129,8 @@
                      'row_colspan' => 'preference_colspan.tpl',
                      'acl_row' => 'preference_acl_row.tpl'));
 
-  $p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
+//  $p->set_var('errors','<p><center><b>This does nothing at this time!<br>Strictly as a template for use!</b></center>');
+  $p->set_var('errors','');
   $p->set_var('title','<p><b>'.lang($phpgw_info["flags"]["currentapp"]." preferences").' - '.lang("acl").':</b><hr><p>');
 
   $p->set_var('action_url',$phpgw->link(''));
@@ -144,7 +142,8 @@
                       . '     <input type="hidden" name="maxm" value="'.$maxm.'">'."\n"
                       . '     <input type="hidden" name="totalentries" value="'.$totalentries.'">'."\n"
                       . '     <input type="hidden" name="start" value="'.$start.'">'."\n"
-                      . '     <input type="hidden" name="query" value="'.$query.'">'."\n";
+                      . '     <input type="hidden" name="query" value="'.$query.'">'."\n"
+                      . '     <input type="hidden" name="owner" value="'.$owner.'">'."\n";
   $p->set_var('common_hidden_vars_form',$common_hidden_vars);
   
   if(isset($query_result) && $query_result)
@@ -160,18 +159,20 @@
     $p->set_var('string',lang('Groups'));
     $p->parse('row','row_colspan',True);
 
-    while(list(,$group) = each($groups)) {
+    reset($groups);
+    for($k=0;$k<count($groups);$k++) {
+      $group = $groups[$k];
       $go = True;
       if($query) {
-        if(!strpos(' '.$group[1].' ',$query)) {
+        if(!strpos(' '.$group["account_id"].' ',$query)) {
           $go = False;
         }
       }
       if($go) {
         $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-        display_row($tr_color,'g_',$group[0],$group[1]);
+        display_row($tr_color,'g_',$group["account_id"],$group["account_name"]);
         $s_groups++;
-        $processed[] = 'g_'.$group[0];
+        $processed[] = 'g_'.$group["account_id"];
         $total++;
         if($total == $maxm) break;
       }
@@ -183,7 +184,7 @@
       $db = $phpgw->db;
     }
   
-    $db->query("select account_id, account_firstname, account_lastname, account_lid from accounts ORDER BY account_lastname, account_firstname, account_lid ".$db->limit(intval($s_users),$maxm),__LINE__,__FILE__);
+    $db->query("select account_id, account_firstname, account_lastname, account_lid FROM phpgw_accounts WHERE account_type='u' ORDER BY account_lastname, account_firstname, account_lid ".$db->limit(intval($s_users),$maxm),__LINE__,__FILE__);
     $users = $db->num_rows();
     if($total <> $maxm) {
       if($users) {
@@ -212,7 +213,7 @@
     }
   }
 
-  $extra_parms = "&s_users=".$s_users."&s_groups=".$s_groups."&maxm=".$maxm."&totalentries=".$totalentries."&total=".($start + $total);
+  $extra_parms = "&s_users=".$s_users."&s_groups=".$s_groups."&maxm=".$maxm."&totalentries=".$totalentries."&total=".($start + $total)."&owner=".$owner;
   
   $p->set_var("nml",$phpgw->nextmatchs->left("",$start,$totalentries,$extra_parms));
   $p->set_var("nmr",$phpgw->nextmatchs->right("",$start,$totalentries,$extra_parms));
