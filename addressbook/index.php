@@ -73,7 +73,11 @@
 	}
 
 	if (!$columns_to_display ) {
-		$columns_to_display = array("n_given","n_family","org_name");
+		$columns_to_display = array(
+			"n_given" => "n_given",
+			"n_family" => "n_family",
+			"org_name" => "org_name"
+		);
 		$noprefs=lang("Please set your preferences for this app");
 	}
 	$qcols = $columns_to_display;# + array("access");
