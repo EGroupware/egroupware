@@ -344,6 +344,7 @@
 			{
 				print '</tr>';
 				$tropen = 0;
+				//$curcol = 1;
 			}
 			if(!$tropen)
 			{
@@ -358,9 +359,14 @@
 			if(($thisd!=2 || ($thisd==2&&$lastd==2)) && $tropen)
 			{
 				print '</tr>';
+				$tropen = 0;
+				$lastd = 0;
 				$curcol = 1;
+			} 
+			else 
+			{
+				$lastd = $thisd;
 			}
-			$lastd = $thisd;
 			$neworder[] = $appname;
 		}
 		$done[$appname] = 1;
@@ -380,6 +386,7 @@
 		}
 		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
 	}
+	//_debug_array($GLOBALS['phpgw_info']['user']['preferences']);
 
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
