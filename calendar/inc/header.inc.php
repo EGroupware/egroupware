@@ -1,4 +1,17 @@
 <?php
+  /**************************************************************************\
+  * phpGroupWare - Calendar                                                  *
+  * http://www.phpgroupware.org                                              *
+  * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
+  *          http://www.radix.net/~cknudsen                                  *
+  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
   /* $Id$ */
 
   if (floor($PHP_VERSION ) == 4) {
@@ -80,8 +93,7 @@
 <?php } ?>
 <?php if(isset($matrixtype) && $matrixtype) { ?>
     <input type="hidden" name="matrixtype" value="<?php echo $matrixtype; ?>">
-<?php } ?>
-<?php
+<?php }
     if(isset($participants) && $participants) {
       for ($i=0;$i<count($participants);$i++) {
 	echo "<input type=\"hidden\" name=\"participants[]\" value=\"".$participants[$i]."\">";
@@ -117,6 +129,4 @@
   </form>
  </tr>
 </table>
-<?php
-    flush();
-?>
+<?php flush(); ?>

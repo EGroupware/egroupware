@@ -4,6 +4,7 @@
   * http://www.phpgroupware.org                                              *
   * Based on Webcalendar by Craig Knudsen <cknudsen@radix.net>               *
   *          http://www.radix.net/~cknudsen                                  *
+  * Modified by Mark Peters <skeeter@phpgroupware.org>                       *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
