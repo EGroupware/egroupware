@@ -22,6 +22,9 @@
   $phpgw_info["flags"]["currentapp"] = "calendar";
   include("../header.inc.php");
 
+  if(!isset($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"]))
+    $phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] = "Sunday";
+
   if (isset($date) && strlen($date) > 0) {
      $thisyear  = substr($date, 0, 4);
      $thismonth = substr($date, 4, 2);
@@ -47,8 +50,13 @@
   $nextmonth = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
   $prevmonth = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
 
-  $sun = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + 7200);
-  $sat = $phpgw->calendar->splitdate($sun["raw"] + 604800);
+  if($phpgw_info["user"]["preferences"]["calednar"]["workweekstarts"] == "Sunday") {
+    $start = 7200;
+  } else {
+    $start = 93600;
+  }
+  $first = $phpgw->calendar->splitdate($phpgw->calendar->get_sunday_before($thisyear, $thismonth, $thisday) + $start);
+  $last = $phpgw->calendar->splitdate($first["raw"] + 518400);
 
   if ($friendly) {
      echo "<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">";
@@ -81,11 +89,11 @@
 ?>
 <font size="+2" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>"><b>
 <?php
-  echo lang(strftime("%B",$sun["raw"]))." ".$sun["day"];
-  if($sun["month"] <> $sat["month"] && $sun["year"] <> $sat["year"]) echo ", ".$sun["year"];
+  echo lang(strftime("%B",$first["raw"]))." ".$first["day"];
+  if($first["month"] <> $last["month"] && $first["year"] <> $last["year"]) echo ", ".$first["year"];
   echo " - ";
-  if($sun["month"] <> $sat["month"])  echo lang(strftime("%B",$sat["raw"]))." ";
-  echo $sat["day"].", ".$sat["year"];
+  if($first["month"] <> $last["month"])  echo lang(strftime("%B",$last["raw"]))." ";
+  echo $last["day"].", ".$last["year"];
 ?>
 </b></font>
 <font size="+1" color="<?php echo $phpgw_info["theme"]["bg_text"]; ?>">
