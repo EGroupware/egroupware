@@ -1,6 +1,6 @@
+%1 disabled	etemplate	de	%1 deaktiviert
 %1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
-%1 disabled	etemplate	de	%1 deaktiviert
 %1 needed	etemplate	de	%1 benötigt
 %1 notranslation	etemplate	de	%1 nicht übersetzen
 %1 onchange	etemplate	de	%1 onChange
@@ -22,7 +22,7 @@ border	etemplate	de	Rand
 border-line-thickness for the table-tag	etemplate	de	Randbreite (border) für die Tabelle
 can have special sql-value null	etemplate	de	darf speziellen SQL Wert NULL annehmen
 cancel	etemplate	de	Abbruch
-category	etemplate	de	Kategori
+category	etemplate	de	Kategorie
 cellpadding for the table-tag	etemplate	de	Innenabstand (cellpadding) der Tabelle
 cells	etemplate	de	Zellen
 cellspacing for the table-tag	etemplate	de	Zellenabstand (cellspacing) der Tabelle
@@ -51,6 +51,7 @@ db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
 delete	etemplate	de	Löschen
+delete a single entry by passing the id.	etemplate	de	
 delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
 delete column	etemplate	de	Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
@@ -132,7 +133,8 @@ last	etemplate	de	Letzte
 left	etemplate	de	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
 link	etemplate	de	Verknüpfung
-linklist	etemplate	de	ListeVerknüpfungen
+linklist	etemplate	de	VerknüpfungListe
+linkstring	etemplate	de	VerküpfungZeichenkette
 linkto	etemplate	de	VerküpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 minute	etemplate	de	Minute
@@ -147,6 +149,7 @@ new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
+no file	etemplate	de	keine Datei
 no filename given or selected via browse...	etemplate	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
 nothing found - try again !!!	etemplate	de	Nichts gefunden - nochmal versuchen !!!
 nullable	etemplate	de	Nullable
@@ -165,6 +168,8 @@ primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
 radiobutton	etemplate	de	Radioknopf
 read	etemplate	de	Lesen
+read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
+read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch übergabe seiner Id und Feldliste.
 read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
@@ -231,6 +236,7 @@ type of the column	etemplate	de	Typ der Spalte
 type of the field (select label if field should be empty)	etemplate	de	Type des Feldes (Beschriftung auswählen wenn Feld leer sein soll)
 unique	etemplate	de	Unique
 unlink	etemplate	de	Lösen
+update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
 update from version '%1' to	etemplate	de	Update von Version '%1' auf
 upload	etemplate	de	Hochladen
 value	etemplate	de	Wert

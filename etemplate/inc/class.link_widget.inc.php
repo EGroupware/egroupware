@@ -15,10 +15,11 @@
 	/*!
 	@class link_widget
 	@author ralfbecker
-	@abstract link-to:   widget that enable you to make a link to an other entry of a link-aware app
-	@abstract link-list: widget that shows the links to an entry and a Unlink Button for each entry
+	@abstract link-to:   Widget to create links to an other entries of link-aware apps
+	@abstract link-list: Widget to shows the links to an entry and a Unlink Button for each link
+	@abstract link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no
-	@discussion render-function.
+		render-function.
 	*/
 	class link_widget
 	{
@@ -27,8 +28,9 @@
 			'post_process' => True
 		);
 		var $human_name = array(	// this are the names for the editor
-			'link-to'   => 'LinkTo',
-			'link-list' => 'LinkList'
+			'link-to'     => 'LinkTo',
+			'link-list'   => 'LinkList',
+			'link-string' => 'LinkString'
 		);
 		var $debug = False;
 
@@ -39,6 +41,24 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			if ($cell['type'] == 'link-string')
+			{
+				$str = '';
+				if (is_array($value))
+				{
+					foreach ($value as $link)
+					{
+						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
+							htmlentities($this->link->title($link['app'],$link['id'])),
+							$this->link->view($link['app'],$link['id'],$link));
+					}
+				}
+				$cell['type'] = 'html';
+				$cell['readonly'] = True;	// is allways readonly
+				$value = $str;
+
+				return True;
+			}
 			if (!is_array($value))
 			{
 				$value = array(

@@ -14,7 +14,7 @@ body { background-color: white; color: black; }
 </head>
 <body>
 <h1>eTemplate-Referenz - Templates and Dialog-Editor for phpGroupware</h1>
-<h3>by Ralf Becker <a href="mailto:RalfBecker@outdoor-training.de">RalfBecker@outdoor-training.de</a></h3>
+<h3>by Ralf Becker <a href="#" onClick="document.location='mai'+'lto:RalfBecker'+unescape('%40')+'outdoor-training'+unescape('%2E')+'de'; return false;">RalfBecker AT outdoor-training DOT de</a></h3>
 <p>A referenz documentation about the new eTemplates and the <a href="#referenz">syntax and parameters</a>
 of the several widgets.</p>
 <hr>
@@ -213,6 +213,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		This attribute controls certain aspects of the different widgets. It's meaning and xml / xul-values
 		are document with the widgets.
+		If the options-string starts with a '@' it is replaced by the value of the content-array at this
+		index (with the '@'-removed).
 	</td>
 </tr>
 <tr>
@@ -659,16 +661,22 @@ implement only a subset of XUL. Here are the main differences:</p>
 <tr>
 	<td colspan="5">
 <pre>
-$content[$id] = array(		<span>// I = value set by the app, 0 = value on return / output, </span>
+$content[$id] = array(		<span>// I = value set by the app, 0 = value on return / output</span>
 	'get_rows'     =>	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
 	'filter_label' =>	<span>// I  label for filter    (optional)</span>
 	'filter_help'  =>	<span>// I  help-msg for filter (optional)</span>
+	'no_filter'    => True	<span>// I  disable the 1. filter</span>
 	'no_filter2'   => True	<span>// I  disable the 2. filter (params are the same as for filter)</span>
+	'no_cat'       => True	<span>// I  disable the cat-selectbox</span>
 	'template'     =>	<span>// I  template to use for the rows, if not set via options</span>
+	'header_left'  =>	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
+	'header_right' =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
+	'bottom_too'   => True	<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
 	'start'        =>	<span>// IO position in list</span>
 	'cat_id'       =>	<span>// IO category, if not 'no_cat' => True</span>
 	'search'       =>	<span>// IO search pattern</span>
 	'filter'       =>	<span>// IO filter, if not 'no_filter' => True</span>
+	'filter2'      =>	<span>// IO filter2, if not 'no_filter2' => True</span>
 	'rows'         =>	<span>//  O content set by callback</span>
 	'total'        =>	<span>//  O the total number of entries</span>
 );
@@ -742,7 +750,41 @@ function index($content = 0)
 </pre>
 	</td>
 </tr>
+<tr>
+	<td><b>LinkWidgets</b></td>
+	<td>
+		&lt;link type="link-to" id="name"/><p>
+		&lt;link type="link-list" id="name"/><p>
+		&lt;link type="link-string" id="name"/><p>
+	</td>
+	<td>no</td>
+	<td>link-to<p>link-list<p>link-string</td>
+	<td>
+		These widget are the UI-part of the link-class ({bo|so}link) in InfoLog and maybe the API soon.<p>
+		<b>link-to</b><br>
+		Widget to make a links to other entries of link-aware apps and to attach files.<p>
+		<b>link-list</b><br>
+		Widget to shows the links to an entry and a Unlink Button for each link. <p>
+		<i><u>Note</u>:</i> Both Widgets can be used on the same template with the <u>same</u> name. They share
+		the content of that variable, which contains just the id of the entry in the current app.<p>
+		
+		<b>link-string</b><br>
+		Comma-separated list of link-titles with a link to its view-method, value is like the return 
+		of bolink::get_links().
+	</td>
+</tr>
 </table>
+<h3>One remark about cross-site-scripting</h3>
+The following eTemplate Widgets are parsing its content before displaying through <b>htmlentities()</b> to
+correctly display the content and to gard against malecious data (like scripts etc.):
+<ul>
+	<li>Label
+	<li>Text, Textarea
+	<li>Integer, Float
+	<li>SelectBoxes (it's options-strings)
+	<li>LinkWidgets: link-to, link-list, link-string
+</ul>
+This is done in most cases by the underlaying html-class and not direct in eTemplate.
 <p>
 <hr>
 <a name="extensions">
@@ -751,9 +793,10 @@ function index($content = 0)
 eTemplates to define the UI of the new widget and are stored in the eTemplate's inc-dir or the inc-dir of a
 phpGroupWare application. The editor and the etemplate-class autoload the existing extensions.</p>
 
-<i>I will made more documentation about the interface availible soon.</i>
+<i>I will made more documentation about the interface availible soon. For now have a look for the source 
+of the existing extensions.</i>
 
-<h2>please <a href="mailto:RalfBecker@outdoor-training.de">contact me</a> if you have further questions or comments about the eTemplates</h2>
+<h2>please <a href="#" onClick="document.location='mai'+'lto:RalfBecker'+unescape('%40')+'outdoor-training'+unescape('%2E')+'de'; return false;">contact me</a> if you have further questions or comments about the eTemplates</h2>
 
 </body>
 </html>

@@ -500,7 +500,13 @@
 				$ext_type = $type;
 				$extra_label = $this->extensionPreProcess($ext_type,$form_name,$value,$cell,$readonlys[$name]);
 
+				$readonly = $readonly || $cell['readonly'];	// might be set be extension
 				$this->set_array($content,$name,$value);
+			}
+			$cell_options = $cell['size'];
+			if ($cell_options[0] == '@')
+			{
+				$cell_options = $this->get_array($content,substr($cell_options,1));
 			}
 			$label = $this->expand_name($cell['label'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			$help = $cell['help'];
@@ -535,7 +541,7 @@
 				case 'label':		//  size: [[b]old][[i]talic][,link]
 					if (is_array($value))
 						break;
-					list($style,$extra_link) = explode(',',$cell['size']);
+					list($style,$extra_link) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br(htmlentities($value));
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
@@ -543,15 +549,15 @@
 					$html .= $value;
 					break;
 				case 'html':
-					$extra_link = $cell['size'];
+					$extra_link = $cell_options;
 					$html .= $value;
 					break;
 				case 'int':		// size: [min][,[max][,len]]
 				case 'float':
-					list($min,$max,$cell['size']) = explode(',',$cell['size']);
-					if ($cell['size'] == '')
+					list($min,$max,$cell_options) = explode(',',$cell_options);
+					if ($cell_options == '')
 					{
-						$cell['size'] = $cell['type'] == 'int' ? 5 : 8;
+						$cell_options = $cell['type'] == 'int' ? 5 : 8;
 					}
 					// fall-through
 				case 'text':		// size: [length][,maxLength]
@@ -562,20 +568,20 @@
 					else
 					{
 						$html .= $this->html->input($form_name,$value,'',
-							$options.$this->html->formatOptions($cell['size'],'SIZE,MAXLENGTH'));
+							$options.$this->html->formatOptions($cell_options,'SIZE,MAXLENGTH'));
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					$html .= $this->html->textarea($form_name,$value,
-						$options.$this->html->formatOptions($cell['size'],'ROWS,COLS'));
+						$options.$this->html->formatOptions($cell_options,'ROWS,COLS'));
 					if (!$readonly)
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'checkbox':
-					if (!empty($cell['size']))
+					if (!empty($cell_options))
 					{
-						list($true_val,$false_val,$ro_true,$ro_false) = explode(',',$cell['size']);
+						list($true_val,$false_val,$ro_true,$ro_false) = explode(',',$cell_options);
 						$value = $value == $true_val;
 					}
 					else
@@ -596,12 +602,12 @@
 						$html .= $this->html->input($form_name,'1','CHECKBOX',$options);
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = array(
 							'type' => $cell['type'],
-							'values' => $cell['size']
+							'values' => $cell_options
 						);
 					}
 					break;
 				case 'radio':		// size: value if checked
-					$set_val = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+					$set_val = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
 					if ($value == $set_val)
 					{
@@ -635,7 +641,7 @@
 					}
 					else
 					{
-						list($img,$ro_img) = explode(',',$cell['size']);
+						list($img,$ro_img) = explode(',',$cell_options);
 						if (!empty($img))
 						{
 							$options .= ' TITLE="'.(strlen($label)<=1||$cell['no_lang']?$label:lang($label)).'"';
@@ -649,7 +655,7 @@
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 					break;
 				case 'hrule':
-					$html .= $this->html->hr($cell['size']);
+					$html .= $this->html->hr($cell_options);
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if (is_object($cell['name']))
@@ -680,7 +686,7 @@
 					{
 						echo "<p>show_cell::template(tpl=$this->name,name=$cell[name]): $obj_read</p>\n";
 					}
-					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell['size'] != '')
+					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell_options != '')
 					{
 						if ($span == '' && isset($content[$idx]['span']))
 						{	// this allows a colspan in autorepeated cells like the editor
@@ -706,7 +712,7 @@
 					break;
 				case 'select':	// size:[linesOnMultiselect]
 					$sels = array();
-					list($multiple) = explode(',',$cell['size']);
+					list($multiple) = explode(',',$cell_options);
 					if (!empty($multiple) && 0+$multiple <= 0)
 					{
 						$sels[''] = $multiple < 0 ? lang('all') : lang($multiple);
@@ -760,7 +766,7 @@
 					$image = $this->html->image(substr($this->name,0,strpos($this->name,'.')),
 						$image,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,'BORDER="0"');
 					$html .= $image;
-					$extra_link = $cell['size'];
+					$extra_link = $cell_options;
 					$extra_label = False;
 					break;
 				case 'file':
@@ -776,7 +782,7 @@
 					$box_row = 1;
 					$box_col = 'A';
 					$box_anz = 0;
-					for ($n = 1; $n <= $cell['size']; ++$n)
+					for ($n = 1; $n <= $cell_options; ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
 						if ($h != '' && $h != '&nbsp;')
@@ -804,14 +810,14 @@
 					if ($box_anz > 1)	// a single cell is NOT placed into a table
 					{
 						$html = "\n\n<!-- BEGIN $cell[type] -->\n\n".
-							$this->html->table($rows,$this->html->formatOptions($cell['size'],',CELLPADDING,CELLSPACING').
-							($cell['align'] ? ' WIDTH="100%"' : '')).	// alignment only works if table has full width
+							$this->html->table($rows,$this->html->formatOptions($cell_options,',CELLPADDING,CELLSPACING').
+							($cell['align'] && $type == 'vbox' ? ' WIDTH="100%"' : '')).	// alignment only works if table has full width
 							"\n\n<!-- END $cell[type] -->\n\n";
 					}
 					break;
 				case 'deck':
-					for ($n = 1; $n <= $cell['size'] && (empty($value) || $value != $cell[$n]['name']); ++$n) ;
-					if ($n > $cell['size'])
+					for ($n = 1; $n <= $cell_options && (empty($value) || $value != $cell[$n]['name']); ++$n) ;
+					if ($n > $cell_options)
 					{
 						$value = $cell[1]['name'];
 					}
@@ -823,10 +829,10 @@
 					{
 						$s_height = "height: $s_height".(substr($s_height,-1) != '%' ? 'px' : '').';';
 					}
-					for ($n = 1; $n <= $cell['size']; ++$n)
+					for ($n = 1; $n <= $cell_options; ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul);
-						$vis = !empty($value) && $value == $cell['size'][$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
+						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
 						list (,$cl) = explode(',',$cell[$n]['span']);
 						$html .= $this->html->div($h,$this->html->formatOptions(array(
 							$cl.($cl ? ' ':'').'tab_body',

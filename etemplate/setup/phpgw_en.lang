@@ -1,6 +1,6 @@
+%1 disabled	etemplate	en	%1 disabled
 %1 etemplates deleted	etemplate	en	%1 eTemplates deleted
 %1 etemplates found	etemplate	en	%1 eTemplates found
-%1 disabled	etemplate	en	%1 disabled
 %1 needed	etemplate	en	%1 needed
 %1 notranslation	etemplate	en	%1 NoTranslation
 %1 onchange	etemplate	en	%1 onChange
@@ -134,6 +134,7 @@ left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	en	Link
 linklist	etemplate	en	LinkList
+linkstring	etemplate	en	LinkString
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
 minute	etemplate	en	Minute

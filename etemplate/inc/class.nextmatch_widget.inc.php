@@ -70,9 +70,19 @@
 				 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
 				 ($value['no_filter2'] || !$value['filter2'] || $value['filter2'] == 'none'))
 			{											// disable whole nextmatch line if no scrolling necessary
-				$cell['size'] = $cell['name'].'[rows]';
-				$cell['obj'] = &$value['template'];
-				$cell['name'] = $value['template']->name;
+				if ($value['header_left'] || $value['header_right'])
+				{
+					$nextmatch = new etemplate('etemplate.nextmatch_widget.header_only');
+					$cell['size'] = $cell['name'];
+					$cell['obj'] = &$nextmatch;
+					$cell['name'] = $nextmatch->name;
+				}
+				else
+				{
+					$cell['size'] = $cell['name'].'[rows]';
+					$cell['obj'] = &$value['template'];
+					$cell['name'] = $value['template']->name;
+				}
 			}
 			else
 			{
@@ -107,6 +117,8 @@
 
 			// save values in persistent extension_data to be able use it in post_process
 			$extension_data = $value;
+			
+			$value['bottom'] = $value;	// copy the values for the bottom-bar
 
 			return False;	// NO extra Label
 		}
@@ -120,6 +132,26 @@
 			$loop = False;
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 
+			if (is_array($value['bottom']))			// we have a second bottom-bar
+			{
+				$inputs = array('search','cat_id','filter','filter2');
+				foreach($inputs as $name)
+				{
+					if (isset($value['bottom'][$name]) && $value['bottom'][$name] != $old_value[$name])
+					{
+						$value[$name] = $value['bottom'][$name];
+					}
+				}
+				$buttons = array('start_search','first','left','right','last');
+				foreach($buttons as $name)
+				{
+					if (isset($value['bottom'][$name]) && $value['bottom'][$name])
+					{
+						$value[$name] = $value['bottom'][$name];
+					}
+				}
+				unset($value['bottom']);
+			}
 			if ($value['start_search'] ||
 			    isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
 			    $old_value['filter'] != '' && isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
