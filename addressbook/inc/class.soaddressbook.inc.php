@@ -59,11 +59,11 @@
 			}
 		}
 
-		function add_entry($userid,$fields,$access='',$cat_id='',$tid='n')
+		function add_entry($userid,$fields)
 		{
 			if ($this->rights & PHPGW_ACL_ADD)
 			{
-				$this->contacts->add($userid,$fields,$access,$cat_id,$tid);
+				$this->contacts->add($userid,$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
 			}
 			return;
 		}
@@ -75,11 +75,11 @@
 			return $ab_id;
 		}
 
-		function update_entry($id,$userid,$fields,$access,$cat_id)
+		function update_entry($userid,$fields)
 		{
 			if ($this->rights & PHPGW_ACL_EDIT)
 			{
-				$this->contacts->update($id,$userid,$fields,$access,$cat_id);
+				$this->contacts->update($fields['ab_id'],$userid,$fields,$fields['access'],$fields['cat_id']);
 			}
 			return;
 		}
