@@ -600,7 +600,7 @@ class socalendar_ extends socalendar__
 			}
 			$this->stream->query('INSERT INTO phpgw_cal(uid,title,owner,priority,is_public,category) '
 				. "values('".$event['uid']."','".$this->stream->db_addslashes($event['title'])
-				. "',".$event['owner'].','.$event['priority'].','.$event['public'].",'"
+				. "',".intval($event['owner']).','.intval($event['priority']).','.intval($event['public']).",'"
 				. $event['category']."')",__LINE__,__FILE__);
 			$event['id'] = $this->stream->get_last_insert_id('phpgw_cal','cal_id');
 		}
@@ -619,24 +619,24 @@ class socalendar_ extends socalendar__
 		}
 
 		$sql = 'UPDATE phpgw_cal SET '
-				. 'owner='.$event['owner'].', '
-				. 'datetime='.$date.', '
-				. 'mdatetime='.$today.', '
-				. 'edatetime='.$enddate.', '
-				. 'priority='.$event['priority'].', '
-				. "category='".$event['category']."', "
-				. "cal_type='".$type."', "
-				. 'is_public='.$event['public'].', '
+				. 'owner='.intval($event['owner']).', '
+				. 'datetime='.intval($date).', '
+				. 'mdatetime='.intval($today).', '
+				. 'edatetime='.intval($enddate).', '
+				. 'priority='.intval($event['priority']).', '
+				. "category='".$this->stream->db_addslashes($event['category'])."', "
+				. "cal_type='".$this->stream->db_addslashes($type)."', "
+				. 'is_public='.intval($event['public']).', '
 				. "title='".$this->stream->db_addslashes($event['title'])."', "
 				. "description='".$this->stream->db_addslashes($event['description'])."', "
 				. "location='".$this->stream->db_addslashes($event['location'])."', "
 				. ($event['groups']?"groups='".(count($event['groups'])>1?implode(',',$event['groups']):','.$event['groups'][0].',')."', ":'')
-				. 'reference='.$event['reference'].' '
-				. 'WHERE cal_id='.$event['id'];
+				. 'reference='.intval($event['reference']).' '
+				. 'WHERE cal_id='.intval($event['id']);
 				
 		$this->stream->query($sql,__LINE__,__FILE__);
 		
-		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.$event['id'],__LINE__,__FILE__);
+		$this->stream->query('DELETE FROM phpgw_cal_user WHERE cal_id='.intval($event['id']),__LINE__,__FILE__);
 
 		@reset($event['participants']);
 		while (list($key,$value) = @each($event['participants']))
@@ -646,7 +646,7 @@ class socalendar_ extends socalendar__
 				$value = 'A';
 			}
 			$this->stream->query('INSERT INTO phpgw_cal_user(cal_id,cal_login,cal_status) '
-				. 'VALUES('.$event['id'].','.intval($key).",'".$value."')",__LINE__,__FILE__);
+				. 'VALUES('.intval($event['id']).','.intval($key).",'".$this->stream->db_addslashes($value)."')",__LINE__,__FILE__);
 		}
 
 		if($event['recur_type'] != MCAL_RECUR_NONE)
@@ -660,19 +660,19 @@ class socalendar_ extends socalendar__
 				$end = 0;
 			}
 
-			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.$event['id'],__LINE__,__FILE__);
+			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.intval($event['id']),__LINE__,__FILE__);
 			$this->stream->next_record();
 			$num_rows = $this->stream->f(0);
 			if($num_rows == 0)
 			{
 				$this->stream->query('INSERT INTO phpgw_cal_repeats(cal_id,recur_type,recur_enddate,recur_data,recur_interval) '
-					.'VALUES('.$event['id'].','.$event['recur_type'].','.$end.','.$event['recur_data'].','.$event['recur_interval'].')',__LINE__,__FILE__);
+					.'VALUES('.intval($event['id']).','.$event['recur_type'].','.intval($end).','.$event['recur_data'].','.$event['recur_interval'].')',__LINE__,__FILE__);
 			}
 			else
 			{
 				$this->stream->query('UPDATE phpgw_cal_repeats '
 					. 'SET recur_type='.$event['recur_type'].', '
-					. 'recur_enddate='.$end.', '
+					. 'recur_enddate='.intval($end).', '
 					. 'recur_data='.$event['recur_data'].', '
 					. 'recur_interval='.$event['recur_interval'].', '
 					. "recur_exception='".(count($event['recur_exception'])>1?implode(',',$event['recur_exception']):(count($event['recur_exception'])==1?$event['recur_exception'][0]:''))."' "

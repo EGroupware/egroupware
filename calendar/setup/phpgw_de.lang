@@ -42,6 +42,7 @@ calendar-fieldname	calendar	de	Kalender Feldname
 canceled	calendar	de	Abgesagt
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	de	Ändere alle Termine für $params['old_owner'] auf $params['new_owner'].
 change status	calendar	de	Zusage ändern
+charset of file	calendar	de	Zeichensatz der Datei
 choose the category	calendar	de	Kategorie auswählen
 click %1here%2 to return to the calendar.	calendar	de	%1Hier%2 klicken um zum Kalender zurück zu kehren.
 configuration	calendar	de	Konfiguration
@@ -87,6 +88,7 @@ edit series	calendar	de	Serie bearbeiten
 edit single	calendar	de	Einzel bearbeiten
 email notification	calendar	de	Benachrichtigung per Email
 email notification for %1	calendar	de	Benachrichtigung per Email für %1
+empty for all	calendar	de	leer für alle
 enable	calendar	de	Einschalten
 enabled	calendar	de	eingeschaltet
 end date/time	calendar	de	Enddatum/-zeit
@@ -131,7 +133,7 @@ ical / rfc2445	calendar	de	iCal / RFC2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	de	Wenn ausgewählt werden Feiertage die auf ein Wochenende fallen, am drauffolgenden Montag nachgeholt.
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
-import csv-file into calendar	calendar	de	CSV-Datei in den Kalender importieren
+import csv-file	calendar	de	CSV-Datei importieren
 interval	calendar	de	Interval
 intervals in day view	calendar	de	Zeitintervalle in der Tagesansicht
 intervals per day in planner view	calendar	de	Zeitintervalle pro Tag in der Planeransicht
@@ -169,7 +171,7 @@ notification messages for your alarms	calendar	de	Benachrichtigungstext für ihre
 notification messages for your responses	calendar	de	Benachrichtigungstext für ihre Antworten
 number of intervals per day in planner view	calendar	de	Anzahl Intervale pro Tag im Planer
 number of months	calendar	de	Anzahl Monate
-number of records to read (<=200)	calendar	de	Anzeil Datensätze zu lesen (<= 200)
+number of records to read (%1)	calendar	de	Anzeil Datensätze zu lesen (%1)
 observance rule	calendar	de	Observance Rule
 occurence	calendar	de	Wiederholung
 old startdate	calendar	de	Altes Startdatum
@@ -293,6 +295,7 @@ thu	calendar	de	Do
 title	calendar	de	Titel
 title of the event	calendar	de	Titel des Termin
 title-row	calendar	de	Titelzeile
+to many might exceed your execution-time-limit	calendar	de	zu viele können ihre Laufzeitbeschränkung überschreiten
 to-firstname	calendar	de	An-Vorname
 to-fullname	calendar	de	An-Name
 to-lastname	calendar	de	An-Nachname

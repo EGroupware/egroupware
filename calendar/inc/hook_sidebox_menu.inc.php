@@ -56,6 +56,7 @@
 			'Configuration'=>$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
 			'Custom Fields'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicustom_fields.index'),
 			'Holiday Management'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiholiday.admin'),
+			'Import CSV-File' => $GLOBALS['phpgw']->link('/calendar/csv_import.php'),
 			'Global Categories' =>$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=calendar'),
 		);
 		display_sidebox($appname,$menu_title,$file);

@@ -41,6 +41,7 @@ calendar-fieldname	calendar	en	Calendar-Fieldname
 canceled	calendar	en	Canceled
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	en	Change all events for $params['old_owner'] to $params['new_owner'].
 change status	calendar	en	Change Status
+charset of file	calendar	en	Charset of file
 click %1here%2 to return to the calendar.	calendar	en	Click %1here%2 to return to the calendar.
 configuration	calendar	en	Configuration
 countries	calendar	en	Countries
@@ -81,6 +82,7 @@ edit series	calendar	en	Edit Series
 edit single	calendar	en	Edit Single
 email notification	calendar	en	Email Notification
 email notification for %1	calendar	en	Email Notification for %1
+empty for all	calendar	en	empty for all
 enable	calendar	en	Enable
 enabled	calendar	en	enabled
 end date/time	calendar	en	End Date/Time
@@ -124,7 +126,7 @@ ical / rfc2445	calendar	en	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	en	If checked holidays falling on a weekend, are taken on the monday after.
 ignore conflict	calendar	en	Ignore Conflict
 import	calendar	en	Import
-import csv-file into calendar	calendar	en	Import CSV-File into Calendar
+import csv-file	calendar	en	Import CSV-File
 interval	calendar	en	Interval
 intervals in day view	calendar	en	Intervals in day view
 intervals per day in planner view	calendar	en	Intervals per day in planner view
@@ -158,7 +160,7 @@ notification messages for your alarms	calendar	en	Notification messages for your
 notification messages for your responses	calendar	en	Notification messages for your responses
 number of intervals per day in planner view	calendar	en	Number of Intervals per Day in Planner View
 number of months	calendar	en	Number of months
-number of records to read (<=200)	calendar	en	Number of records to read (<=200)
+number of records to read (%1)	calendar	en	Number of records to read (%1)
 observance rule	calendar	en	Observance Rule
 occurence	calendar	en	Occurence
 old startdate	calendar	en	Old Startdate
@@ -264,6 +266,7 @@ thu	calendar	en	Thu
 title	calendar	en	Title
 title of the event	calendar	en	Title of the event
 title-row	calendar	en	Title-row
+to many might exceed your execution-time-limit	calendar	en	to many might exceed your execution-time-limit
 to-firstname	calendar	en	To-Firstname
 to-fullname	calendar	en	To-Fullname
 to-lastname	calendar	en	To-Lastname
