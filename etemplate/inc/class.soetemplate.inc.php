@@ -69,6 +69,7 @@
 		/*!
 		@function soetemplate
 		@abstract constructor of the class
+		@syntax soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=2,$cols=2)
 		@param as read
 		*/
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=2,$cols=2)
@@ -89,6 +90,7 @@
 		/*!
 		@function num2chrs
 		@abstract generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
+		@syntax num2chrs($num)
 		@param $num index to generate name from 1 => 'A'
 		@result the name
 		*/
@@ -108,6 +110,7 @@
 		/*!
 		@function empty_cell
 		@abstracts constructor for a new / empty cell (nothing fancy so far)
+		@syntax empty_cell()
 		@result the cell
 		*/
 		function empty_cell()
@@ -118,6 +121,7 @@
 		/*!
 		@function set_rows_cols()
 		@abstract initialises rows & cols from the size of the data-array
+		@syntax set_rows_cols()
 		*/
 		function set_rows_cols()
 		{
@@ -128,6 +132,7 @@
 		/*!
 		@function init
 		@abstract initialises all internal data-structures of the eTemplate and sets the keys
+		@syntax init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		@param $name name of the eTemplate or array with the keys or all data
 		@param $template,$lang,$group,$version see class
 		@param $rows,$cols initial size of the template
@@ -170,6 +175,7 @@
 		/*!
 		@function read
 		@abstract Reads an eTemplate from the database
+		@syntax read($name,$template='default',$lang='default',$group=0,$version='')
 		@param as discripted with the class, with the following exeptions
 		@param $template as '' loads the prefered template 'default' loads the default one '' in the db
 		@param $lang as '' loads the pref. lang 'default' loads the default one '' in the db
@@ -245,6 +251,7 @@
 		/*!
 		@function readfile
 		@abstract Reads an eTemplate from the filesystem, the keys are already set by init in read
+		@syntax readfile()
 		@result True if a template is found, else False
 		*/
 		function readfile()
@@ -380,6 +387,7 @@
 		/*!
 		@function db2obj
 		@abstract copies all cols into the obj and unserializes the data-array
+		@syntax db2obj()
 		*/
 		function db2obj()
 		{
@@ -446,6 +454,7 @@
 		/*!
 		@function as_array
 		@abstract returns obj-data as array
+		@syntax as_array($data_too=0)
 		@param $data_too 0 = no data array, 1 = data array too, 2 = serialize data array
 		@result the array
 		*/
@@ -473,6 +482,7 @@
 		/*!
 		@function save
 		@abstract saves eTemplate-object to db, can be used as saveAs by giving keys as params
+		@syntax save($name='',$template='.',$lang='.',$group='',$version='.')
 		@params keys see class
 		@result the number of affected rows, 1 should be ok, 0 somethings wrong
 		*/
@@ -559,6 +569,7 @@
 		/*!
 		@function delete
 		@abstract Deletes the eTemplate from the db, object itself is unchanged
+		@syntax delete()
 		@result the number of affected rows, 1 should be ok, 0 somethings wrong
 		*/
 		function delete()
@@ -575,6 +586,7 @@
 		/*!
 		@function dump2setup
 		@abstract dumps all eTemplates to <app>/setup/etemplates.inc.php for distribution
+		@syntax dump2setup($app)
 		@param $app app- or template-name
 		@result the number of templates dumped as message
 		*/
@@ -637,6 +649,7 @@
 		@function getToTranslate
 		@abstract extracts all texts: labels and helptexts from an eTemplate-object
 		@discussion some extensions use a '|' to squezze multiple texts in a label or help field
+		@syntax getToTranslate()
 		@result array with messages as key AND value
 		*/
 		function getToTranslate()
@@ -665,6 +678,7 @@
 		/*!
 		@function getToTranslateApp
 		@abstract Read all eTemplates of an app an extracts the texts to an array
+		@syntax getToTranslateApp($app)
 		@param $app name of the app
 		@result the array with texts
 		*/
@@ -693,6 +707,7 @@
 		/*!
 		@function writeLangFile
 		@abstract Write new lang-file using the existing one and all text from the eTemplates
+		@syntax writeLangFile($app,$lang='en',$additional='')
 		@param $app app- or template-name
 		@param $lang language the messages in the template are, defaults to 'en'
 		@param $additional extra texts to translate, if you pass here an array with all messages and
@@ -768,6 +783,7 @@
 		/*!
 		@function import_dump
 		@abstract Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
+		@syntax import_dump($app)
 		@param $app app name
 		@result message with number of templates imported
 		*/
@@ -797,6 +813,7 @@
 		@abstract test if new template-import necessary for app and does the import
 		@discussion Get called on every read of a eTemplate, caches the result in phpgw_info.
 		@discussion The timestamp of the last import for app gets written into the db.
+		@syntax test_import($app)
 		@param $app app- or template-name
 		*/
 		function test_import($app)	// should be done from the setup-App

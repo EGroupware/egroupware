@@ -140,6 +140,7 @@
 		@discussion $col$row: '@0','A0',... '@1','A1','B1',... '@2','A2','B2',... for both rows and cells.
 		@discussion In general everything expand_names can generate is ok - see there.
 		@discussion As you usually have col- and row-headers, data-cells start with '1' or 'A' !!!
+		@syntax autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False)
 		@param $cell array with data of cell: name, type, size, ...
 		@param $c,$r col/row index starting from 0
 		@param &$idx returns the index in $content and $readonlys (NOT $sel_options !!!)
@@ -186,6 +187,12 @@
 			return $Ok;
 		}
 
+		/*!
+		@function appsession_id
+		@syntax appsession_id( )
+		@author ralfbecker
+		@abstract creates a new appsession-id via microtime()
+		*/
 		function appsession_id()
 		{
 			list($msec,$sec) = explode(' ',microtime());
@@ -347,6 +354,7 @@
 		/*
 		@function haveExtension
 		@syntax haveExtension($type)
+		@author ralfbecker
 		@abstract checks if extension is loaded and load it if it isnt
 		*/
 		{
@@ -364,6 +372,7 @@
 		@param &$value value of the extensions content(-array)
 		@param &$readonlys value of the extensions readonly-setting(-array)
 		@abstract executes the pre_process-function of the extension $cell[]type]
+		@author ralfbecker
 		*/
 		{
 			if (!$this->haveExtension($type))
@@ -382,6 +391,7 @@
 		@param $name form-name of this widget/field (used as a unique index into extension_data)
 		@param &$value value of the extensions content(-array)
 		@abstract executes the post_process-function of the extension $cell[type]
+		@author ralfbecker
 		*/
 		{
 			if (!$this->haveExtension($type,'post_process'))
@@ -398,6 +408,7 @@
 		@function extensionRender
 		@syntax extensionRender(&$cell,$form_name,&$value,$readonly)
 		@abstract executes the render-function of the extension $cell[type]
+		@author ralfbecker
 		*/
 		{
 			if (!$this->haveExtension($type,'render'))
@@ -413,6 +424,7 @@
 		@syntax isset_array( $arr,$idx )
 		@author ralfbecker
 		@abstract checks if idx, which may contain ONE subindex is set in array
+		@author ralfbecker
 		*/
 		function isset_array($arr,$idx)
 		{
@@ -423,6 +435,14 @@
 			return isset($arr[$idx]);
 		}
 
+		/*!
+		@function set_array
+		@syntax set_array( &$arr,$idx,$val )
+		@author ralfbecker
+		@abstract sets $arr[$idx] = $val
+		@discussion This works for non-trival indexes like 'a[b][c]' too: $arr['a']['b']['c'] = $val;
+		@author ralfbecker
+		*/
 		function set_array(&$arr,$idx,$val)
 		{
 			if (!is_array($arr))
@@ -438,6 +458,15 @@
 			$pos = $val;
 		}
 
+		/*!
+		@function get_array
+		@syntax get_array( &$arr,$idx )
+		@author ralfbecker
+		@abstract return a var-param to $arr[$idx]
+		@example $sub = get_array($arr,'a[b]'); $sub = 'c'; is equivalent to $arr['a']['b'] = 'c';
+		@discussion This works for non-trival indexes like 'a[b][c]' too: it returns &$arr[a][b][c]
+		@author ralfbecker
+		*/
 		function &get_array(&$arr,$idx)
 		{
 			if (!is_array($arr))
@@ -457,6 +486,15 @@
 			return $pos;
 		}
 
+		/*!
+		@function unset_array
+		@syntax unset_array( &$arr,$idx )
+		@author ralfbecker
+		@abstract unsets $arr[$idx]
+		@example unset_array($arr,'a[b]'); is equivalent to unset($arr['a']['b']);
+		@discussion This works for non-trival indexes like 'a[b][c]' too
+		@author ralfbecker
+		*/
 		function unset_array(&$arr,$idx)
 		{
 			if (!is_array($arr))
