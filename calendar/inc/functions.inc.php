@@ -1065,7 +1065,7 @@
                                . $phpgw_info["server"]["template_set"] . "/images/");
       $p->set_var('bgcolor',$phpgw_info["theme"]["bg_color"]);
       $p->set_var('bgcolor1',$phpgw_info["theme"]["bg_color"]);
-      $p->set_var('month','<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','month=' . date('m',$date["raw"])) . '" class="minicalendar">' . lang($phpgw->common->show_date($date["raw"],'F')).' '.$year) . '</a>';
+      $p->set_var('month','<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','month=' . date('m',$date["raw"]).'&year=' . date('Y',$date["raw"])) . '" class="minicalendar">' . lang($phpgw->common->show_date($date["raw"],'F')).' '.$year) . '</a>';
       $p->set_var('prevmonth',$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','date='.$month_ago));
       $p->set_var('nextmonth',$phpgw->link($phpgw_info["server"]["webserver_url"].'/calendar/index.php','date='.$month_ahead));
 
