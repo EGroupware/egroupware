@@ -49,9 +49,9 @@
 		 * root:     template directory.
 		 * unknowns: how to handle unknown variables.
 		 */
-		function Template($root = '.', $unknowns = 'remove', $print = False)
+		function Template($root = '.', $unknowns = 'remove')
 		{
-			if ($print)
+			if(@isset($GLOBALS['phpgw_info']['flags']['printview']) && $GLOBALS['phpgw_info']['flags']['printview'] == True)
 			{
 				$this->print = True;
 			}
@@ -62,6 +62,20 @@
 				$this->set_file('common', 'common.tpl');
 			}
 
+			/* This covers setting the theme values so that each app doesnt have to */
+			$theme_data = $GLOBALS['phpgw_info']['theme'];
+			unset($theme_data['css']);
+			$this->set_var($theme_data);
+			unset($theme_data);
+			$this->update_css();
+
+			/* Now move on to loading up the requested template set */
+			$this->set_root($root);
+			$this->set_unknowns($unknowns);
+		}
+		
+		function update_css()
+		{
 			if(@is_array($GLOBALS['phpgw_info']['theme']['css']))
 			{
 				reset($GLOBALS['phpgw_info']['theme']['css']);
@@ -74,12 +88,8 @@
 				//$css_string .= '</STYLE>'."\n";
 				$this->set_var('phpgw_css',$css_string);
 			}
-
-			/* Now move on to loading up the requested template set */
-			$this->set_root($root);
-			$this->set_unknowns($unknowns);
 		}
-
+		
 		/* public: setroot(pathname $root)
 		 * root:   new template directory.
 		 */

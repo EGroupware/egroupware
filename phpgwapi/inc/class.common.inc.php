@@ -967,6 +967,92 @@
 		}
 
 		/*!
+		@function msgbox
+		@abstract Generate a consistant msgbox for app apps to use
+		@discussion makes it easier and more consistant to generate message boxes
+		*/
+
+		function msgbox($text='',$type=True,$output='return')
+		{
+			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
+			{
+				$text = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
+				unset($GLOBALS['phpgw_info']['flags']['msgbox_data']);
+			}
+			elseif($text=='')
+			{
+				return;
+			}
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_start');
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_row');
+			$GLOBALS['phpgw']->template->set_block('common','msgbox_end');
+			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_start');
+			
+			if (is_array($text))
+			{
+				reset($text);
+				$row = 1;
+				while (list($key,$value) = each($text))
+				{
+					if ($value == True)
+					{
+						$type_img = 'good';
+						$type_img_alt = 'O';
+					}
+					else
+					{
+						$type_img = 'bad';
+						$type_img_alt = 'X';
+					}
+					if ($row == 1)
+					{
+						$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
+						$row = 2;
+					}
+					else
+					{
+						$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_off']);
+						$row = 1;
+					}
+
+					$GLOBALS['phpgw']->template->set_var('msgbox_text',$key);
+					$GLOBALS['phpgw']->template->set_var('msgbox_img',$type_img);
+					$GLOBALS['phpgw']->template->set_var('msgbox_img_alt',$type_img_alt);
+					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
+				}
+			}
+			else
+			{
+				if ($type == True)
+				{
+					$type_img = 'good';
+					$type_img_alt = 'O';
+				}
+				else
+				{
+					$type_img = 'bad';
+					$type_img_alt = 'X';
+				}
+				$GLOBALS['phpgw']->template->set_var('msgbox_row_color',$GLOBALS['phpgw_info']['theme']['row_on']);
+				$GLOBALS['phpgw']->template->set_var('msgbox_text',$text);
+				$GLOBALS['phpgw']->template->set_var('msgbox_img',$type_img);
+				$GLOBALS['phpgw']->template->set_var('msgbox_img_alt',$type_img_alt);
+				$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
+			}
+			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_end',True);
+
+			if($output == 'out')
+			{
+				$GLOBALS['phpgw']->template->pfp('out', 'msgbox');
+				return;
+			}
+			else /* covers the default of 'return' */
+			{
+				return $GLOBALS['phpgw']->template->varvals['msgbox'];
+			}
+		}
+		
+		/*!
 		@function navbar
 		@abstract Build the application navigation bar based on user's accessible applications
 		@discussion *someone wanna add some detail here*
@@ -1100,8 +1186,8 @@
 			//}
 			if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && !@$GLOBALS['phpgw_info']['flags']['nonavbar'])
 			{
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
 				$GLOBALS['phpgw']->hooks->process('after_navbar');
-				//echo '<table><tr><td>msgbox goes here</td></tr></table>';
 			}
 		}
 

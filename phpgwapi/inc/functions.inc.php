@@ -440,11 +440,10 @@
 				(@$GLOBALS['phpgw_info']['flags']['admin_only'] &&
 				! $GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
-				$GLOBALS['phpgw']->common->phpgw_header(False, False);
-
 				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
-				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
+				$GLOBALS['phpgw']->common->phpgw_header();
 				$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
