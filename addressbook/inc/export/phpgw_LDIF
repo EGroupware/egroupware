@@ -1,0 +1,171 @@
+<?php
+// This file defines a set of functions and an associative array.
+// The key of the array corresponds to a header in the source
+// export file and the value of the array item will be used in
+// the creation of the output file.
+//
+// The array need not be in any order and any fields not defined will
+// not be transferred.  If the val='+', the value will be appended to
+// the previous field and any text after the '+' will be appended 
+// before the value.  For example, the following would add a comma and
+// a space between LastName and FirstName and store it in FullName:
+//
+//	array("LastName" => "FullName","FirstName" => "+, ");
+//
+// Also start with a '#' symbol and a comma separated list will be
+// turned into a number of the same entries.
+
+	class export_conv
+	{
+		var $currentrecord = array(); //used for buffering to allow uid lines to go first
+		var $id;
+		//list of all id's
+		var $ids = array();
+		var $type = 'ldif';
+
+		var $export = array(
+			'id'                  => 'uidnumber',
+			'lid'                 => 'uid',
+			'tid'                 => 'phpgwcontacttype',
+			'owner'               => 'phpgwcontactowner',
+			'access'              => 'phpgwcontactaccess',
+			'fn'                  => 'cn',        // 'prefix given middle family suffix'
+			'n_given'             => 'givenname',   // firstname
+			'n_family'            => 'sn',  // lastname
+			'n_middle'            => 'phpgwmiddlename',
+			'n_prefix'            => 'phpgwprefix',
+			'n_suffix'            => 'phpgwsuffix',
+			'sound'               => 'phpgwaudio',
+			'bday'                => 'phpgwbirthday',
+			'note'                => 'description',
+			'tz'                  => 'phpgwtz',
+			'geo'                 => 'phpgwgeo',
+			'url'                 => 'phpgwurl',
+			'pubkey'              => 'phpgwpublickey',
+
+			'org_name'            => 'o',  // company
+			'org_unit'            => 'ou',  // division
+			'title'               => 'title',
+
+			'adr_one_street'      => 'streetaddress',
+			'adr_one_locality'    => 'locality', 
+			'adr_one_region'      => 'st', 
+			'adr_one_postalcode'  => 'postalcode',
+			'adr_one_countryname' => 'co',
+			'adr_one_type'        => 'phpgwadronetype', // address is domestic/intl/postal/parcel/work/home
+			'label'               => 'phpgwaddresslabel', // address label
+
+			'adr_two_street'      => 'phpgwadrtwostreet',
+			'adr_two_locality'    => 'phpgwadrtwolocality', 
+			'adr_two_region'      => 'phpgwadrtworegion', 
+			'adr_two_postalcode'  => 'phpgwadrtwopostalcode',
+			'adr_two_countryname' => 'phpgwadrtwocountryname',
+			'adr_two_type'        => 'phpgwadrtwotype', // address is domestic/intl/postal/parcel/work/home
+
+			'tel_work'            => 'telephonenumber',
+			'tel_home'            => 'homephone',
+			'tel_voice'           => 'phpgwvoicetelephonenumber',
+			'tel_fax'             => 'facsimiletelephonenumber', 
+			'tel_msg'             => 'phpgwmsgtelephonenumber',
+			'tel_cell'            => 'phpgwcelltelephonenumber',
+			'tel_pager'           => 'phpgwpagertelephonenumber',
+			'tel_bbs'             => 'phpgwbbstelephonenumber',
+			'tel_modem'           => 'phpgwmodemtelephonenumber',
+			'tel_car'             => 'phpgwmobiletelephonenumber',
+			'tel_isdn'            => 'phpgwisdnphonenumber',
+			'tel_video'           => 'phpgwvideophonenumber',
+			'tel_prefer'          => 'phpgwpreferphone', // home, work, voice, etc
+			'email'               => 'mail',
+			'email_type'          => 'phpgwmailtype', //'INTERNET','CompuServe',etc...
+			'email_home'          => 'phpgwmailhome',
+			'email_home_type'     => 'phpgwmailhometype' //'INTERNET','CompuServe',etc...
+		);
+
+		// This will store the contacts object
+		var $contacts = '';
+
+		// Read full list of user's contacts only to get id's for each
+		function export_start_file($buffer,$ncat_id='')
+		{
+			$this->id=-1;
+			if ($ncat_id) { $filter = 'tid=n,cat_id='.$ncat_id; }
+			else          { $filter = 'tid=n'; }
+			$this->contacts = CreateObject('phpgwapi.contacts');
+
+			$tmp = $this->contacts->read('','',array('id'=>'id'),'',$filter);
+			for ($i=0;$i<count($tmp);$i++)
+			{
+				$this->ids[$i] = $tmp[$i]['id'];
+			}
+			// $ids is now an array of all id's for this user, e.g. $ids[0] = 21, etc...
+			// $buffer is still empty
+			return $buffer;
+		}
+
+		// Read each entry
+		function export_start_record($buffer)
+		{
+			$this->id++;
+			$top = $this->contacts->read_single_entry($this->ids[$this->id],$this->qfields);
+			$this->currentrecord = $top[0];
+			return $buffer;
+		}
+
+		// Read each attribute, populate buffer
+		// name/value are the fields from the export array above
+		function export_new_attrib($buffer,$name,$value)
+		{
+			if ($this->export[$name] && ($value != '') )
+			{
+				$buffer[$this->id][$this->export[$name]] = $value;
+				//echo '<br>'.$this->id.' - '.$this->export[$name].': '.$buffer[$this->id][$this->export[$name]];
+			}
+			return $buffer;
+		}
+
+		// Tack on some extra values
+		function export_end_record($buffer)
+		{
+			global $phpgw_info;
+			if ($phpgw_info['server']['ldap_contact_context'])
+			{
+				$context = $phpgw_info['server']['ldap_contact_context'];
+			}
+			$time = gettimeofday();
+			$cn = ereg_replace(',','',$buffer[$this->id]['cn']);
+			$buffer[$this->id]['dn']  = 'uid='.time().$time['usec'].':'.$cn.','.$context;
+			$buffer[$this->id]['uid'] = time().$time['usec'];
+			if ($buffer[$this->id]['cn'])
+			{
+				$buffer[$this->id]['uid'] .= ':'.$buffer[$this->id]['cn'];
+			}
+			$buffer[$this->id]['description'] = ereg_replace("\r\n",';',$buffer[$this->id]['description']);
+			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
+			return $buffer;
+		}
+
+		function export_end_file($buffer) {
+			reset($this->ids);
+			for ($i=0;$i<count($this->ids);$i++)
+			{
+				$entries .= 'dn: '.$buffer[$i]['dn'] . "\n";
+				reset($this->export);
+				while (list($name,$value)=each($this->export))
+				{
+					if (($value != 'dn') && !empty($buffer[$i][$value]))
+					{
+						$tmp = ereg_replace(',','',$buffer[$i][$value]);
+						$entries .= $value . ': ' . $tmp . "\n";
+					}
+				}
+				$entries .= 'objectClass: person' . "\n";
+				$entries .= 'objectClass: organizationalPerson' . "\n";
+				$entries .= 'objectClass: inetOrgPerson' . "\n";
+				$entries .= 'objectClass: phpgwContact' . "\n";
+				$entries .= "\n";
+			}
+			$buffer = $entries;
+			return $buffer;
+		}
+	}
+?>
