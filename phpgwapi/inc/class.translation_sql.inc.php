@@ -415,9 +415,13 @@
 							{
 								$line = eregi_replace("\t+", "\t", $line);
 								$_f_buffer = split("\t", $line);
-								if( count($_f_buffer) > 4 )
+
+								# Bad Line
+								if( count($_f_buffer) != 4 )
 								{
-									$this->line_rejected[] = Array("appfile" => $appfile, "line" => $line);
+									$line_display = eregi_replace("\t", "<font color='red'><b>\\t</b></font>", $line);
+									$line_display = eregi_replace("\n", "<font color='red'><b>\\n</b></font>", $line_display);
+									$this->line_rejected[] = Array("appfile" => $appfile, "line" => $line_display);
 								}
 								
 								// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
