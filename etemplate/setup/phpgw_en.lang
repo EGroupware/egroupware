@@ -1,4 +1,5 @@
 	etemplate	en	
+%d etemplates found	etemplate	en	%d eTemplates found
 %s disabled	etemplate	en	%s Disabled
 %s needed	etemplate	en	%s needed
 %s no transl.	etemplate	en	%s No Transl.
@@ -41,6 +42,7 @@ default	etemplate	en	Default
 delete	etemplate	en	Delete
 delete column	etemplate	en	Delete Column
 delete template	etemplate	en	Delete Template
+delete this etemplate	etemplate	en	delete this eTemplate
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
 deletes the etemplate	etemplate	en	deletes the eTemplate
@@ -58,6 +60,7 @@ edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
 editable templates - db-tools	etemplate	en	Editable Templates - DB-Tools
 editable templates - delete template	etemplate	en	Editable Templates - Delete Template
 editable templates - editor	etemplate	en	Editable Templates - Editor
+editable templates - search	etemplate	en	Editable Templates - Search
 editable templates - show template	etemplate	en	Editable Templates - Show Template
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
@@ -68,6 +71,7 @@ error: while saveing !!!	etemplate	en	Error: while saveing !!!
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
+extensions loaded:	etemplate	en	Extensions loaded:
 familyname	etemplate	en	Familyname
 fax	etemplate	en	Fax
 faxnumber	etemplate	en	Faxnumber
@@ -104,6 +108,7 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	en	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+load this template into the editor	etemplate	en	load this template into the editor
 month	etemplate	en	Month
 name	etemplate	en	Name
 name of other table where column is a key from	etemplate	en	name of other table where column is a key from
@@ -141,6 +146,7 @@ save the template under the above keys (name, ...), change them for a saveas	ete
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
 scale	etemplate	en	Scale
 scale for float	etemplate	en	scale for float
+search	etemplate	en	Search
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
 select an application	etemplate	en	Select an application
@@ -162,6 +168,7 @@ shows/displays the template for testing, does not save it before	etemplate	en	sh
 size	etemplate	en	Size
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
+start new search for the above pattern	etemplate	en	start new search for the above pattern
 street	etemplate	en	Street
 submitbutton	etemplate	en	Submitbutton
 surname	etemplate	en	Surname
@@ -173,7 +180,7 @@ template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
-textfeld: 	etemplate	en	Textfeld:
+textfeld:	etemplate	en	Textfeld:
 this is a datefield	etemplate	en	This is a DateField
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
@@ -193,7 +200,8 @@ width, height, border	etemplate	en	Width, Height, Border
 width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
 width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
-width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
+width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag),	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
+width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag), 
 work	etemplate	en	Work
 work address	etemplate	en	work address
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php

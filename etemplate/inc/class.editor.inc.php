@@ -23,7 +23,8 @@
 			'saved'     => 'Template saved',
 			'error_writing' => 'Error: while saveing !!!',
 			'other_version' => 'only an other Version found !!!',
-			'ext_loaded' => 'Extensions loaded: '
+			'ext_loaded' => 'Extensions loaded:',
+			'x_found'    => '%d eTemplates found'
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -69,7 +70,7 @@
 				$this->extensions = $this->scan_for_extensions();
 				if (count($this->extensions))
 				{
-					$msg .= $this->messages['ext_loaded'] . implode(', ',$this->extensions);
+					$msg .= $this->messages['ext_loaded'] . ' ' . implode(', ',$this->extensions);
 					$msg_ext_loaded = True;
 				}
 			}
@@ -80,7 +81,7 @@
 				$extensions = $this->scan_for_extensions($app);
 				if (count($extensions))
 				{
-					$msg .= (!$msg_ext_loaded?$this->messages['ext_loaded']:', ') . implode(', ',$extensions);
+					$msg .= (!$msg_ext_loaded?$this->messages['ext_loaded'].' ':', ') . implode(', ',$extensions);
 					$this->extensions += $extensions;
 				}
 				$this->extensions['**loaded**'][$app] = True;
@@ -303,10 +304,21 @@
 				if (!$this->etemplate->read($content))
 				{
 					$content['version'] = '';	// trying it without version
-					$msg = $this->messages['other_version'];
-					if (!$this->etemplate->read($content))
+					if ($this->etemplate->read($content))
 					{
-						$msg = $this->messages['not_found'];
+						$msg = $this->messages['other_version'];
+					}
+					else
+					{
+						$result = $this->etemplate->search($content);
+						if (count($result) > 1)
+						{
+							return $this->list_result(array('result' => $result));
+						}
+						elseif (!count($result) || $this->etemplate->read($result[0]))
+						{
+							$msg = $this->messages['not_found'];
+						}
 					}
 				}
 			}
@@ -349,6 +361,10 @@
 
 		function delete($post_vars='',$back = 'edit')
 		{
+			if ($this->debug)
+			{
+				echo "delete(back='$back') cont = "; _debug_array($post_vars);
+			}
 			if (!$post_vars)
 			{
 				$post_vars = array();
@@ -363,14 +379,29 @@
 				{
 					$read_ok = $this->etemplate->delete();
 				}
-				$this->edit($this->messages[$read_ok ? 'deleted' : 'not_found']);
+				$msg = $this->messages[$read_ok ? 'deleted' : 'not_found'];
+
+				if ($post_vars['back'] == 'list_result')
+				{
+					$this->list_result($post_vars['preserv'],$msg);
+				}
+				else
+				{
+					$this->edit($msg);
+				}
 				return;
 			}
 			if (isset($post_vars['no']))	// Back to ...
 			{
-				if (($back = $post_vars['back']) != 'show')
+				switch ($back = $post_vars['back'])
 				{
-					$back = 'edit';
+					case 'list_result':
+						$this->$back($post_vars['preserv']);
+						return;
+					case 'show':
+						break;
+					default:
+						$back = 'edit';
 				}
 				$this->$back();
 				return;
@@ -380,11 +411,68 @@
 				$this->edit($this->messages['not_found']);
 				return;
 			}
-			$content = $this->etemplate->as_array() + array('back' => $back);
+			$content = $this->etemplate->as_array();
 
 			$delete = new etemplate('etemplate.editor.delete');
+			$delete->exec('etemplate.editor.delete',$content,array(),array(),$content+ array(
+				'back' => $back,
+				'preserv' => $post_vars['preserv']
+			),'');
+		}
 
-			$delete->exec('etemplate.editor.delete',$content,array(),array(),$content,'');
+		function list_result($cont='',$msg='')
+		{
+			if ($this->debug)
+			{
+				echo "<p>etemplate.editor.list_result: cont="; _debug_array($cont);
+			}
+			if (!$cont || !is_array($cont))
+			{
+				return $this->edit('error');
+			}
+         if (!isset($cont['result']) || isset($cont['search']))
+			{
+				$cont['result'] = $this->etemplate->search($cont);
+			}
+			$result = $cont['result'];
+
+			if (isset($cont['delete']))
+			{
+				list($delete) = each($cont['delete']);
+				$read = $result[$delete-1];
+				$this->etemplate->read($read['et_name'],$read['et_template'],$read['et_lang'],$read['group'],$read['et_version']);
+				unset($cont['delete']);
+				unset($cont['result']);
+				$this->delete(array('preserv' => $cont),'list_result');
+				return;
+			}
+			if (isset($cont['read']))
+			{
+				list($read) = each($cont['read']);
+				$read = $result[$read-1];
+				$this->etemplate->read($read['et_name'],$read['et_template'],$read['et_lang'],$read['group'],$read['et_version']);
+				$this->edit();
+				return;
+			}
+			if (!$msg)
+			{
+				$msg = sprintf($this->messages['x_found'],count($result));
+			}
+			unset($cont['result']);
+			if (!isset($cont['name']))
+			{
+				$cont += $this->etemplate->as_array();
+			}
+			$content = $cont + array('msg' => $msg);
+
+			reset($result);
+			for ($row=1; list(,$param) = each($result); ++$row)
+			{
+				$content[$row] = $param;
+			}
+			$list_result = new etemplate('etemplate.editor.list_result');
+			//$list_result->debug=1;
+			$list_result->exec('etemplate.editor.list_result',$content,'','',array('result' => $result),'');
 		}
 
 		function show($post_vars='')

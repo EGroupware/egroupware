@@ -35,6 +35,7 @@
 		var $public_functions = array(
 			'init'	=> True,
 			'read'	=> True,
+			'search'	=> True,
 			'save'	=> True,
 			'delete'	=> True,
 			'dump2setup'	=> True,
@@ -204,6 +205,60 @@
 			$this->db2obj();
 
 			return True;
+		}
+
+		/*!
+		@function search
+		@syntax search($name,$template='default',$lang='default',$group=0,$version='')
+		@author ralfbecker
+		@abstract Lists the eTemplates matching the given criteria
+		@param as discripted with the class, with the following exeptions
+		@param $template as '' loads the prefered template 'default' loads the default one '' in the db
+		@param $lang as '' loads the pref. lang 'default' loads the default one '' in the db
+		@param $group is NOT used / implemented yet
+		@result array of arrays with the template-params
+		*/
+		function search($name,$template='default',$lang='default',$group=0,$version='')
+		{
+			if ($this->name)
+			{
+				$this->test_import($this->name);	// import updates in setup-dir
+			}
+			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
+			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
+
+			if (is_array($name))
+			{
+				$template = $name['template'];
+				$lang = $name['lang'];
+				$group = $name['group'];
+				$version = $name['version'];
+				$name = $name['name'];
+			}
+			$sql = "SELECT et_name,et_template,et_lang,et_group,et_version FROM $this->db_name WHERE et_name LIKE '$name%'";
+
+			if ($template != '' && $template != 'default')
+			{
+				$sql .= " AND et_template LIKE '$template%'";
+			}
+			if ($lang != '' && $lang != 'default')
+			{
+				$sql .= " AND et_lang LIKE '$lang%'";
+			}
+			if ($this->version != '')
+			{
+				$sql .= " AND et_version LIKE '$version%'";
+			}
+			$sql .= " ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC";
+
+			$this->db->query($sql,__LINE__,__FILE__);
+
+			$result = array();
+			while ($this->db->next_record())
+			{
+				$result[] = $this->db->Record;
+			}
+			return $result;
 		}
 
 		/*!
