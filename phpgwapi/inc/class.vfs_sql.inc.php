@@ -947,11 +947,12 @@
 		{
 			if (!is_array ($relatives))
 			{
+				settype($relatives,'array');
 				$relatives = array (RELATIVE_CURRENT);
 			}
 
 			/* Accommodate special situations */
-			if ($this->override_acl)
+			if ($this->override_acl || $relatives[0] == RELATIVE_USER_APP)
 			{
 				return True;
 			}
