@@ -151,7 +151,7 @@
 				{
 					$this->projects = createobject('projects.boprojects');
 				}
-				if (is_object($this->projects) && (list( $proj ) = $this->projects->read_single_project( $proj_id)))
+				if (is_object($this->projects) && ($proj = $this->projects->read_single_project( $proj_id)))
 				{
 					return $proj;
 				}

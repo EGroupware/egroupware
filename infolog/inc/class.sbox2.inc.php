@@ -373,13 +373,12 @@
 					$content = array();
 					while ($projs && list( $key,$proj ) = each( $projs ))
 					{
-						$content[$proj['id']] = $proj['title'];
+						$content[$proj['project_id']] = $proj['title'];
 					}
 				}
 				else
 				{
-					list( $proj ) = $projects->read_single_project( $id_name );
-					if (count($proj))
+					if ($proj = $projects->read_single_project( $id_name ))
 					{
 						$content = $proj['title'];
 						// $customer_id = $proj['customer'];

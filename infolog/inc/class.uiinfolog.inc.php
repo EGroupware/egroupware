@@ -128,10 +128,19 @@
 			if (($action_id != ($proj_id = $info['info_proj_id']) || $action != 'proj') &&
 			    $proj = $this->bo->readProj($proj_id))
 			{
-				$subject .= $this->html->bold($this->html->a_href($proj['title'],
-									'/index.php',$this->menuaction()+
-								 	array( 'filter' => $filter,'action' => 'proj',
-											 'action_id' => $proj_id )));
+				$subject .= $this->html->bold($this->html->a_href($proj['title'],'/index.php',
+					file_exists(PHPGW_SERVER_ROOT.'/projects') &&
+						$GLOBALS['phpgw_info']['user']['apps']['projects']['enabled'] ?
+					array(
+						'menuaction' => 'projects.uiprojects.view_project',
+						'action' => 'mains',
+						'project_it' => $proj_id
+					) : $this->menuaction() + array(
+						'filter' => $filter,
+						'action' => 'proj',
+						'action_id' => $proj_id
+					)
+				));
 			}
 			if (($action_id != ($addr_id = $info['info_addr_id']) || $action != 'addr') &&
 				 $addr = $this->bo->readAddr($addr_id))

@@ -17,9 +17,9 @@
 
 	$phpgw->translation->add_app('infolog');
 
-	//echo "<p>hook_projects_view(id=$id)</p>";
+	//echo "<p>hook_projects_view($GLOBALS['project_id'])</p>";
 
 	$infolog = CreateObject('infolog.uiinfolog');
-	$infolog->get_list(True,'proj',$GLOBALS['id']);
+	$infolog->get_list(True,'proj',$GLOBALS['project_id']);
 
 	$phpgw_info['flags']['currentapp'] = $save_app; 
