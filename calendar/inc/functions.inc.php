@@ -1148,7 +1148,7 @@
 	  $this->rowspan_arr[$ind] = $this->rowspan;
       }
       $this->hour_arr[$ind] .= "] ";
-      $this->hour_arr[$ind] .= "<img src=\"".$phpgw_info["server"]["webserver_url"]."/calendar/templates/default/images/circle.gif\" border=0 alt=\"" . $event->description . "\"></a>";
+      $this->hour_arr[$ind] .= "<img src=\"".$phpgw->common->get_image_path('calendar')."/circle.gif\" border=0 alt=\"" . $event->description . "\"></a>";
       if ($event->priority == 3)
 	$this->hour_arr[$ind] .= "<font color=\"CC0000\">";
       $this->hour_arr[$ind] .= $event->name;
@@ -1164,9 +1164,13 @@
 
       $this->read_repeated_events($owner);
 
-      $str = "";
+	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
+	  $p->set_unknowns("remove");
+      $p->set_file(array('day_cal' => 'day_cal.tpl',
+      					 'day_row_99' => 'day_row_99.tpl',
+      					 'day_row' => 'day_row.tpl'));
+      $p->set_block('day_cal','day_row_99','day_row');
 
-      $str .= "<table border=\"0\" width=\"100%\" cellspacing=\"1\" cellpadding=\"2\" border=\"0\">";
 
       if (! $phpgw_info["user"]["preferences"]["calendar"]["workdaystarts"] &&
           ! $phpgw_info["user"]["preferences"]["calendar"]["workdayends"]) {
@@ -1186,8 +1190,8 @@
       } else {
        $event = new calendar_item;
        for($i=0;$i<count($events);$i++) {
-	  $event = $events[$i];
-	  if($event) $this->html_for_event_day_at_a_glance($event);
+         $event = $events[$i];
+         if($event) $this->html_for_event_day_at_a_glance($event);
         }
       }
 
@@ -1197,67 +1201,68 @@
       $this->rowspan = 0;
       $this->last_row = -1;
       for ($i=0;$i<24;$i++) {
-	if(isset($this->rowspan_arr[$i])) $r = $this->rowspan_arr[$i]; else $r = 0;
-	if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
-	if ($this->rowspan > 1) {
-	  if (strlen($h)) {
-	    $this->hour_arr[$this->last_row] .= $this->hour_arr[$i];
-	    $this->hour_arr[$i] = "";
-	    $this->rowspan_arr[$i] = 0;
-	  }
-	  $this->rowspan--;
-	} elseif ($r > 1) {
-	  $this->rowspan = $this->rowspan_arr[$i];
-	  $this->last_row = $i;
-	}
+        if(isset($this->rowspan_arr[$i])) $r = $this->rowspan_arr[$i]; else $r = 0;
+        if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
+        if ($this->rowspan > 1) {
+          if (strlen($h)) {
+            $this->hour_arr[$this->last_row] .= $this->hour_arr[$i];
+            $this->hour_arr[$i] = "";
+            $this->rowspan_arr[$i] = 0;
+          }
+          $this->rowspan--;
+        } elseif ($r > 1) {
+          $this->rowspan = $this->rowspan_arr[$i];
+          $this->last_row = $i;
+        }
       }
       if (isset($this->hour_arr[99]) && strlen($this->hour_arr[99])) {
-	$str .= "<tr><td bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">"
-	      . "&nbsp;</td><td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]
-	      ."\">".$this->hour_arr[99]."</td></tr>\n";
+        $p->set_var('bgcolor1',$phpgw_info["theme"]["cal_dayview"]);
+        $p->set_var('text',$this->hour_arr[99]);
+        $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+        $p->set_var('time','&nbsp;');
+        $p->parse('row','day_row',True);
       }
       $this->rowspan = 0;
+      $p->set_var('bgcolor1',$phpgw_info["theme"]["cal_dayview"]);
+      $p->set_var('font_color',$phpgw_info["theme"]["bg_text"]);
       for ($i=$this->first_hour;$i<=$this->last_hour;$i++) {
-	if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
-	$time = $this->build_time_for_display($i * 10000);
-	$str .= "<tr><th width=\"14%\" bgcolor=\""
-	      . $phpgw_info["theme"]["bg_color"]."\"><font color=\""
-	      . $phpgw_info["theme"]["bg_text"]."\">";
-
-	// tooley: the hour - 36400 is a HACK for improper storage of hour allows
-	// in user preference land.
-	if(!$this->printer_friendly) {
-	  $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$date["year"]
-		. "&month=".$date["month"]."&day=".$date["day"]
-		. "&hour=".substr($time,0,strpos($time,":"))
-		. "&minute=".substr($time,strpos($time,":")+1,2))."\">";
-	}
-	$str .= $time;
-	if(!$this->printer_friendly) {
-	  $str .= "</a>";
-	}
-	$str .= "</font></th>";
-	if ($this->rowspan > 1) {
-	  // this might mean there's an overlap, or it could mean one event
-	  // ends at 11:15 and another starts at 11:30.
-	  if (strlen($h))
-	    $str .= "<td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">".$this->hour_arr[$i]."</td></tr>\n";
-	  $this->rowspan--;
-	} else {
-	  if (!strlen($h))
-	    $str .= "<td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">&nbsp;</td></tr>\n";
-	  else {
-	    $this->rowspan = isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0;
-	    if ($this->rowspan > 1)
-	      $str .= "<td valign=\"top\" bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\" rowspan=\"".$this->rowspan."\">"
-		    . $this->hour_arr[$i]."</td></tr>\n";
-	    else
-	      $str .= "<td bgcolor=\"".$phpgw_info["theme"]["cal_dayview"]."\">".$this->hour_arr[$i]."</td></tr>\n";
-	  }
-	}
+        $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
+        if(isset($this->hour_arr[$i])) $h = $this->hour_arr[$i]; else $h = "";
+        $time = $this->build_time_for_display($i * 10000);
+        $p->set_var('extras','');
+        $p->set_var('event','&nbsp');
+        if ($this->rowspan > 1) {
+          // this might mean there's an overlap, or it could mean one event
+          // ends at 11:15 and another starts at 11:30.
+          if (strlen($h))
+            $p->set_var('event',$this->hour_arr[$i]);
+          $this->rowspan--;
+        } else {
+          if (strlen($h)) {
+            $this->rowspan = isset($this->rowspan_arr[$i])?$this->rowspan_arr[$i]:0;
+            if ($this->rowspan > 1) {
+              $p->set_var('extras','valign="top" rowspan="'.$this->rowspan.'"');
+              $p->set_var('event',$this->hour_arr[$i]);
+            } else {
+              $p->set_var('event',$this->hour_arr[$i]);
+            }
+          }
+        }
+        $p->set_var('open_link','');
+        $p->set_var('close_link','');
+        if(!$this->printer_friendly) {
+          $p->set_var('open_link','<a href="'.$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/edit_entry.php","year=".$date["year"]
+                . "&month=".$date["month"]."&day=".$date["day"]
+                . "&hour=".substr($time,0,strpos($time,":"))
+                . "&minute=".substr($time,strpos($time,":")+1,2)).'">');
+        }
+        $p->set_var('time',$time);
+        if(!$this->printer_friendly) {
+          $p->set_var('close_link','</a>');
+        }
+        $p->parse('row','day_row',True);
       }	// end for
-      $str .= "</table>";
-      return $str;
+      return $p->pparse('output','day_cal');
     }	// end function
 
     function prep($calid) {
