@@ -52,16 +52,29 @@
 	method 3 is the only one I know of that will use the images from the cache.
 	also, 3 takes a reload value in miliseconds, so a value of 180000 is really 3 minutes
 	ALSO, use if..then code to only auto-refresh certain pages, such as email/index.php
+	@author Angles Nov 28, 2001
 	*/
-	//$auto_refresh_enabled = True;
-	$auto_refresh_enabled = False;
+	$auto_refresh_enabled = True;
+	//$auto_refresh_enabled = False;
 	// initialize reload location to empty string
 	$reload_me = '';
 	if ($auto_refresh_enabled)
 	{
-		if (eregi("^.*email\/index\.php.*$",$GLOBALS['PHP_SELF']))
+		if ((stristr($GLOBALS['PHP_SELF'], '/email/index.php'))
+		||  (	((isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			&& (stristr($GLOBALS['HTTP_GET_VARS']['menuaction'], 'email.uiindex.index')))
+		    )
+		)
 		{
-			$reload_me = $GLOBALS['phpgw']->link('/email/index.php');
+			if ((isset($GLOBALS['phpgw_info']['flags']['email_refresh_uri']))
+			&& ($GLOBALS['phpgw_info']['flags']['email_refresh_uri'] != ''))
+			{
+				$reload_me = $GLOBALS['phpgw']->link('/index.php',$GLOBALS['phpgw_info']['flags']['email_refresh_uri']);
+			}
+			else
+			{
+				$reload_me = $GLOBALS['phpgw']->link('/email/index.php');
+			}
 		}
 		elseif (eregi("^.*\/home\.php.*$",$GLOBALS['PHP_SELF']))
 		{
@@ -74,7 +87,7 @@
 	{
 		// set refresh time in miliseconds  (1000 = 1 sec)  (180000 = 180 sec = 3 minutes)
 		//  ( 240000 = 240 sec = 4 min)   (300000 = 5 min)   (600000 = 10 min)
-		$refresh_ms = '300000';
+		$refresh_ms = '240000';
 		$email_reload_js = 
 			'window.setTimeout('."'".'window.location="'
 			.$reload_me.'"; '."'".','.$refresh_ms.');';
