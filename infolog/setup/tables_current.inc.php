@@ -12,10 +12,10 @@
   /* $Id$ */
 
 	$phpgw_baseline = array(
-		'infolog' => array(
+		'phpgw_infolog' => array(
 			'fd' => array(
 				'info_id' => array('type' => 'auto', 'nullable' => false),
-				'info_type' => array('type' => 'enum', 
+				'info_type' => array('type' => 'varchar', 'precision' => 25), 
 				'info_id_parent' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
 				'info_owner' => array('type' => 'varchar', 'precision' => 25),
 				'info_access' => array('type' => 'varchar', 'precision' => 10),
@@ -31,6 +31,6 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
-		),
+		)
 	);
 ?>

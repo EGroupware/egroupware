@@ -1,9 +1,31 @@
 <?php
-	$setup_info['infolog']['name'] = 'Info Log';
+	/**************************************************************************\
+	* phpGroupWare - Bookmarks                                                 *
+	* http://www.phpgroupware.org                                              *
+	* Based on Bookmarker Copyright (C) 1998  Padraic Renaghan                 *
+	*                     http://www.renaghan.com/bookmarker                   *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+
+	/* $Id$ */
+
+	$setup_info['infolog']['name'] = 'infolog';
+	$setup_info['infolog']['title'] = 'Info Log';
 	$setup_info['infolog']['version'] = '0.9.11';
-	$setup_info['infolog']['app_order'] = 1;
-	$setup_info['infolog']['tables'] = 'phpgw_infolog';
-	$hooks = Array();
-	$hooks_string = implode (',', $hooks);
-	$setup_info['infolog']['hooks'] = $hooks_string;
+	$setup_info['infolog']['app_order'] = 20;
+	$setup_info['infolog']['tables'] = array('phpgw_infolog');
+
+	/* The hooks this app includes, needed for hooks registration */
+	$setup_info['infolog']['hooks'][] = 'preferences';
+	$setup_info['infolog']['hooks'][] = 'admin';
+
+	/* Dependacies for this app to work */
+	$setup_info['infolog']['depends'][] = array(
+		 'appname' => 'phpgwapi',
+		 'versions' => Array('0.9.10', '0.9.11' , '0.9.12', '0.9.13')
+	);
 ?>
