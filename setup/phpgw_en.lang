@@ -565,6 +565,7 @@ submit	common	en	Submit
 subproject description	todo	en	Sub-project description
 sub	todo	en	sub
 su	calendar	en	Su
+successfully imported x records into your addressbook.	addressbook	en	Successfully imported %1 records into your addressbook.
 suffix	addressbook	en	Suffix
 sun	calendar	en	Sun
 sunday	common	en	Sunday
