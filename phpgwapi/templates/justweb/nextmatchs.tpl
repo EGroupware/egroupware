@@ -48,7 +48,7 @@
 
 <!-- BEGIN link -->
    <td width="2%" align="{align}" valign="top">
-    <table border="0" cellspacing="0" cellpadding="0">
+    <table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
      <tr>
       <td align="{align}">
        <img src="{img}" border="{border}" width="12" height="12" alt="{label}">
