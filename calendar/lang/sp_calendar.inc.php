@@ -50,6 +50,13 @@
        case "thu":        $s = "Jue";        break;
        case "fri":        $s = "Vie";        break;
        case "sat":        $s = "Sab";        break;
+       case "su":        $s = "Do";        break;
+       case "mo":        $s = "L";        break;
+       case "tu":        $s = "M";        break;
+       case "we":        $s = "Mi";        break;
+       case "th":        $s = "J";        break;
+       case "fr":        $s = "V";        break;
+       case "sa":        $s = "Sa";        break;
        case "search results":  $s = "Resultados de la busqueda";  break;
        case "no matches found.":$s = "No se encontraron coincidencias.";break;
        case "1 match found":  $s = "1 coincidencia encontrada";  break;
@@ -67,14 +74,13 @@
        case "the following conflicts with the suggested time:<ul>x</ul>":
   $s = "Los siguientes conflictos con las horas sugeridas:<ul>$m1</ul>";  break;
 
-       case "Your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:":
+       case "your suggested time of <B> x - x </B> conflicts with the following existing calendar entries:":
   $s = "Sus horas sugeridas de <B> $m1 - $m2 </B> estan en conflicto con las siguientes entradas en el calendario:";  break;
 
        case "you must enter one or more search keywords":
   $s = "Ud. debe entrar una o mas claves de busqueda";  break;
 
-       case "are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.":
-  $s = "Esta seguro\\nde querer\\nborrar esta entrarda ?\\n\\nEsto borrara\\nla entrada para todos los usuarios.";  break;
+       case "are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.":     $s = "Esta seguro\\nde querer\\nborrar esta entrarda ?\\n\\nEsto borrara\\nla entrada para todos los usuarios.";  break;
 
        case "":    $s = "";  break;
        case "":    $s = "";  break;

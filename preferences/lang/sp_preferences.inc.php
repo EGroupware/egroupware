@@ -19,6 +19,9 @@
        case "time format":  $s = "Formato hora";      break;
        case "language":    $s = "Lenguaje";      break;
 
+       case "default sorting order":  $s = "Orden por defecto";  break;
+       case "default application":    $s = "Aplicación por defecto";  break;
+
        case "show text on navigation icons":
   $s = "Mostrar descripción sobre los iconos";      break;
 
@@ -58,6 +61,9 @@
        case "change your settings":
   $s = "Cambie sus Seteos";    break;
 
+       case "change your profile":
+  $s = "Cambiar su perfil";    break;
+
        case "enter your new password":
   $s = "Entre su nueva contraseña";    break;
 
@@ -78,6 +84,10 @@
 
        case "note: this feature does *not* change your email password. this will need to be done manually.":
   $s = "Nota: Esta opcion no cambia la contraseña de su email. Esto deberá ser hecho manualmente.";  break;
+
+       case "monitor newsgroups":
+  $s = "Monitor Grupos de Noticias";  break;
+
 
        default: $s = "<b>*</b> ". $message;
     }

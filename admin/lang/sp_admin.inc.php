@@ -28,16 +28,54 @@
        case "listings displayed":  $s = "Listings Mostrados";    break;
        case "news type":    $s = "Tipo de Noticias";      break;
        case "user groups":    $s = "Grupos de usuarios";      break;
-       case "headline sites":  $s = "Headline Sitios";    break;
+       case "headline sites":  $s = "Sitios encabezados de noticias";    break;
+       case "network news":  $s = "Red de noticias";    break;
        case "site":        $s = "Sitios";        break;
        case "view sessions":  $s = "Ver sesiones";    break;
        case "view access log":  $s = "Ver log de acceso";    break;
        case "active":      $s = "Activo";        break;
        case "disabled":      $s = "Deshabilitado";      break;
        case "last time read":  $s = "Ultima lectura";    break;
-       case "manager":      $s = "Manager";    break;
+       case "permissions":    $s = "Permisos";      break;
+       case "title":      $s = "Titulo";        break;
+       case "enabled":      $s = "Habilitado";        break;
+       case "applications":    $s = "Aplicaciones";    break;
+       case "edit group":    $s = "Editar Grupo";      break;
 
-       case "are you sure you want to delete this group ?":
+       case "installed applications":
+  $s = "Aplicaciones Instaladas";            break;
+
+       case "remove all users from this group":
+  $s = "Borrar todos los usuarios de este grupo";      break;
+
+       case "permissions this group has":
+  $s = "Permisos que tiene este grupo";          break;
+
+       case "select permissions this group will have":
+  $s = "Selecciones los permisos que tendra este grupo";    break;
+
+       case "sorry, that group name has already been taking.":
+  $s = "Este nombre de grupo ya esta siendo utilizado.";  break;
+
+       case "add new application":
+  $s = "Agregar nueva aplicación";            break;
+
+       case "application name":
+  $s = "Nombre de la aplicación";            break;
+
+       case "application title":
+  $s = "Titulo de la aplicación";            break;
+
+       case "edit application":
+  $s = "Editar aplicatión";            break;
+
+       case "you must enter an application name and title.":
+  $s = "Debe entrar un nombre y titulo para la aplicación.";  break;
+
+       case "are you sure you want to delete this application ?":
+  $s = "Seguro de querer borrar esta aplicación ?";  break;
+
+        case "are you sure you want to delete this group ?":
   $s = "Esta seguro de querer borrar este grupo ?"; break;
 
        case "are you sure you want to kill this session ?":
@@ -51,9 +89,6 @@
 
        case "are you sure you want to delete this news site ?":
   $s = "Esta seguro de querer borrar este sitio de noticias ?";    break;
-
-       case "* make sure that you remove users from this group before you delete it.":
-  $s = "* Asegurese de remover todos los usuarios de este grupo antes de borrarlo.";  break;
 
        case "percent of users that logged out":
   $s = "Porcentaje de usuarios que se desloguearon";      break;
@@ -92,7 +127,14 @@
   $s = "Este sitio ya fue entrado";      break;
 
        case "select users for inclusion":
-        $s = "Seleccionar usuarios para inclución";  break;
+  $s = "Seleccionar usuarios para inclución";  break;
+
+       case "sorry, the follow users are still a member of the group x":
+  $s = "Los siguientes usuarios aun son miembros del grupo $m1";  break;
+
+       case "they must be removed before you can continue":
+  $s = "Estos deben ser removidos para poder continuar";  break;
+
 
        default: $s = "<b>*</b> ". $message;
     }

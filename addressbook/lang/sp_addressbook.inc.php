@@ -6,9 +6,10 @@
 
     switch($message)
     {
+       case "address book":     $s = "Libreta de direcciones";    break;
        case "last name":        $s = "Apellido";       break;
        case "first name":       $s = "Nombre";      break;
-       case "E-Mail":           $s = "E-Mail";          break;
+       case "e-mail":           $s = "E-Mail";          break;
        case "home phone":       $s = "Tel.Particular";      break;
        case "fax":              $s = "Fax";             break;
        case "work phone":       $s = "Tel.Trabajo";      break;
@@ -21,6 +22,7 @@
        case "state":            $s = "Estado";           break;
        case "zip code":         $s = "Codigo Postal";        break;
        case "notes":            $s = "Notas";           break;
+       case "company name":    $s = "Compania";  break;
 
        default: $s = "<b>*</b> ". $message;
     }
