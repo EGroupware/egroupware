@@ -1,0 +1,413 @@
+00 (disable)	setup	hu	00 (letilt / ajánlott)
+13 (ntp)	setup	hu	
+80 (http)	setup	hu	
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	hu	
+actions	setup	hu	Cselekvések
+add a domain	setup	hu	Egy tartomány hozzáadása
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	hu	Autómatikusan létrehozott felhasználó hozzáasása ehez a csoporthoz (A 'Default' lesz megpróbálva ha ez üres.)
+additional settings	setup	hu	További beállítások
+admin first name	setup	hu	Admin kereszt neve
+admin last name	setup	hu	Admin vezeték neve
+admin password	setup	hu	Admin jelszó
+admin password to header manager	setup	hu	Admin jelszó a fejléc kezeléshez
+admin user for header manager	setup	hu	
+admin username	setup	hu	
+admins	setup	hu	
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	hu	
+all core tables and the admin and preferences applications	setup	hu	
+all users	setup	hu	
+analysis	setup	hu	
+app details	setup	hu	
+app install/remove/upgrade	setup	hu	
+app process	setup	hu	
+application data	setup	hu	
+application list	setup	hu	
+application management	setup	hu	
+application name and status	setup	hu	
+application name and status information	setup	hu	
+application title	setup	hu	
+are you sure you want to delete your existing tables and data?	setup	hu	
+are you sure?	setup	hu	
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	hu	
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	hu	
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	hu	
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	hu	
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	hu	
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	hu	
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	hu	
+authentication / accounts	setup	hu	
+auto create account records for authenticated users	setup	hu	
+auto-created user accounts expire	setup	hu	
+available version	setup	hu	
+back to the previous screen	setup	hu	
+back to user login	setup	hu	
+backupwarn	setup	hu	
+because an application it depends upon was upgraded	setup	hu	
+because it depends upon	setup	hu	
+because it is not a user application, or access is controlled via acl	setup	hu	
+because it requires manual table installation, <br>or the table definition was incorrect	setup	hu	
+because it was manually disabled	setup	hu	
+because of a failed upgrade or install	setup	hu	
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	hu	
+because the enable flag for this app is set to 0, or is undefined	setup	hu	
+bottom	setup	hu	
+cancel	setup	hu	
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	hu	
+change system-charset	setup	hu	
+charset	setup	hu	
+charset to convert to	setup	hu	
+check installation	setup	hu	
+check ip address of all sessions	setup	hu	
+checking the egroupware installation	setup	hu	
+click <a href="index.php">here</a> to return to setup.	setup	hu	
+click here	setup	hu	
+completed	setup	hu	
+config password	setup	hu	
+config username	setup	hu	
+configuration	setup	hu	
+configuration completed	setup	hu	
+configuration password	setup	hu	
+configuration user	setup	hu	
+configure now	setup	hu	
+continue	setup	hu	
+continue to the header admin	setup	hu	
+convert	setup	hu	
+could not open header.inc.php for writing!	setup	hu	
+country selection	setup	hu	
+create	setup	hu	
+create database	setup	hu	
+create demo accounts	setup	hu	
+create one now	setup	hu	
+create the empty database -	setup	hu	
+create the empty database and grant user permissions -	setup	hu	
+create your header.inc.php	setup	hu	
+created	setup	hu	
+creating tables	setup	hu	
+current system-charset	setup	hu	
+current system-charset is %1, click %2here%3 to change it.	setup	hu	
+current version	setup	hu	
+currently installed languages: %1 <br>	setup	hu	
+database successfully converted from '%1' to '%2'	setup	hu	
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	hu	
+db host	setup	hu	
+db name	setup	hu	
+db password	setup	hu	
+db port	setup	hu	
+db root password	setup	hu	
+db root username	setup	hu	
+db type	setup	hu	
+db user	setup	hu	
+default file system space per user/group ?	setup	hu	
+delete	setup	hu	
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	hu	
+delete all my tables and data	setup	hu	
+delete all old languages and install new ones	setup	hu	
+deleting tables	setup	hu	
+demo server setup	setup	hu	
+deny access	setup	hu	
+deny all users access to grant other users access to their entries ?	setup	hu	
+dependency failure	setup	hu	
+deregistered	setup	hu	
+details for admin account	setup	hu	
+developers' table schema toy	setup	hu	
+did not find any valid db support!	setup	hu	
+do you want persistent connections (higher performance, but consumes more resources)	setup	hu	
+do you want to manage homedirectory and loginshell attributes?	setup	hu	
+domain	setup	hu	
+domain select box on login	setup	hu	
+dont touch my data	setup	hu	
+download	setup	hu	
+edit current configuration	setup	hu	
+edit your existing header.inc.php	setup	hu	
+edit your header.inc.php	setup	hu	
+egroupware administration manual	setup	hu	
+enable for extra debug-messages	setup	hu	
+enable ldap version 3	setup	hu	
+enable mcrypt	setup	hu	
+enter some random text for app session encryption	setup	hu	
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	hu	
+enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	hu	
+enter the full path for users and group files.<br>examples: /files, e:files	setup	hu	
+enter the hostname of the machine on which this server is running	setup	hu	
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	hu	
+enter the site password for peer servers	setup	hu	
+enter the site username for peer servers	setup	hu	
+enter the title for your site	setup	hu	
+enter your default ftp server	setup	hu	
+enter your http proxy server	setup	hu	
+enter your http proxy server password	setup	hu	
+enter your http proxy server port	setup	hu	
+enter your http proxy server username	setup	hu	
+export egroupware accounts from sql to ldap	setup	hu	
+export has been completed!  you will need to set the user passwords manually.	setup	hu	
+export sql users to ldap	setup	hu	
+file	setup	hu	
+file type, size, version, etc.	setup	hu	
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	hu	
+force selectbox	setup	hu	
+found existing configuration file. loading settings from the file...	setup	hu	
+go back	setup	hu	
+go to	setup	hu	
+grant access	setup	hu	
+has a version mismatch	setup	hu	
+header admin login	setup	hu	
+header password	setup	hu	
+header username	setup	hu	
+historylog removed	setup	hu	
+hooks deregistered	setup	hu	
+hooks registered	setup	hu	
+host information	setup	hu	
+hostname/ip of database server	setup	hu	
+however, the application is otherwise installed	setup	hu	
+however, the application may still work	setup	hu	
+if no acl records for user or any group the user is a member of	setup	hu	
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	hu	
+if using ldap	setup	hu	
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	hu	
+if you did not receive any errors, your applications have been	setup	hu	
+if you did not receive any errors, your tables have been	setup	hu	
+if you running this the first time, don't forget to manualy %1 !!!	setup	hu	
+image type selection order	setup	hu	
+import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	hu	
+import has been completed!	setup	hu	
+import ldap users/groups	setup	hu	
+importing old settings into the new format....	setup	hu	
+include root (this should be the same as server root unless you know what you are doing)	setup	hu	
+insanity	setup	hu	
+install	setup	hu	
+install all	setup	hu	
+install applications	setup	hu	
+install language	setup	hu	
+installed	setup	hu	
+instructions for creating the database in %1:	setup	hu	
+invalid ip address	setup	hu	
+invalid password	setup	hu	
+is broken	setup	hu	
+is disabled	setup	hu	
+ldap account import/export	setup	hu	
+ldap accounts configuration	setup	hu	
+ldap accounts context	setup	hu	
+ldap config	setup	hu	
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	hu	
+ldap default shell (e.g. /bin/bash)	setup	hu	
+ldap encryption type	setup	hu	
+ldap export users	setup	hu	
+ldap groups context	setup	hu	
+ldap host	setup	hu	
+ldap import users	setup	hu	
+ldap modify	setup	hu	
+ldap root password	setup	hu	
+ldap rootdn	setup	hu	
+limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	hu	
+login to mysql -	setup	hu	
+logout	setup	hu	
+makesure	setup	hu	
+manage applications	setup	hu	
+manage languages	setup	hu	
+maximum account id (e.g. 65535 or 1000000)	setup	hu	
+may be broken	setup	hu	
+mcrypt algorithm (default tripledes)	setup	hu	
+mcrypt initialization vector	setup	hu	
+mcrypt mode (default cbc)	setup	hu	
+mcrypt settings (requires mcrypt php extension)	setup	hu	
+mcrypt version	setup	hu	
+minimum account id (e.g. 500 or 100, etc.)	setup	hu	
+modifications have been completed!	setup	hu	
+modify	setup	hu	
+modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	hu	
+multi-language support setup	setup	hu	
+name of database	setup	hu	
+name of db user egroupware uses to connect	setup	hu	
+never	setup	hu	
+new	setup	hu	
+no	setup	hu	
+no algorithms available	setup	hu	
+no microsoft sql server support found. disabling	setup	hu	
+no modes available	setup	hu	
+no mysql support found. disabling	setup	hu	
+no oracle-db support found. disabling	setup	hu	
+no postgresql support found. disabling	setup	hu	
+no xml support found. disabling	setup	hu	
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	hu	
+not complete	setup	hu	
+not completed	setup	hu	
+not ready for this stage yet	setup	hu	
+not set	setup	hu	
+note: you will be able to customize this later	setup	hu	
+now guessing better values for defaults...	setup	hu	
+ok	setup	hu	
+once the database is setup correctly	setup	hu	
+one month	setup	hu	
+one week	setup	hu	
+only add languages that are not in the database already	setup	hu	
+only add new phrases	setup	hu	
+or	setup	hu	
+or http://webdav.domain.com (webdav)	setup	hu	
+or we can attempt to create the database for you:	setup	hu	
+password needed for configuration	setup	hu	
+password of db user	setup	hu	
+passwords did not match, please re-enter	setup	hu	
+path information	setup	hu	
+path to user and group files has to be outside of the webservers document-root!!!	setup	hu	
+persistent connections	setup	hu	
+please check for sql scripts within the application's directory	setup	hu	
+please check read/write permissions on directories, or back up and use another option.	setup	hu	
+please configure egroupware for your environment	setup	hu	
+please consult the %1.	setup	hu	
+please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	hu	
+please install	setup	hu	
+please login	setup	hu	
+please login to egroupware and run the admin application for additional site configuration	setup	hu	
+please wait...	setup	hu	
+possible reasons	setup	hu	
+possible solutions	setup	hu	
+post-install dependency failure	setup	hu	
+potential problem	setup	hu	
+preferences	setup	hu	
+problem resolution	setup	hu	
+process	setup	hu	
+re-check my database	setup	hu	
+re-check my installation	setup	hu	
+re-enter password	setup	hu	
+read translations from	setup	hu	
+really uninstall all applications	setup	hu	
+recommended: filesystem	setup	hu	
+registered	setup	hu	
+remove	setup	hu	
+remove all	setup	hu	
+requires reinstall or manual repair	setup	hu	
+requires upgrade	setup	hu	
+resolve	setup	hu	
+return to setup	setup	hu	
+sample configuration not found. using built in defaults	setup	hu	
+save	setup	hu	
+save this text as contents of your header.inc.php	setup	hu	
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	hu	
+select one...	setup	hu	
+select the default applications to which your users will have access	setup	hu	
+select the desired action(s) from the available choices	setup	hu	
+select to download file	setup	hu	
+select where you want to store/retrieve file contents	setup	hu	
+select where you want to store/retrieve filesystem information	setup	hu	
+select where you want to store/retrieve user accounts	setup	hu	
+select which group(s) will be exported (group membership will be maintained)	setup	hu	
+select which group(s) will be imported (group membership will be maintained)	setup	hu	
+select which group(s) will be modified (group membership will be maintained)	setup	hu	
+select which languages you would like to use	setup	hu	
+select which method of upgrade you would like to do	setup	hu	
+select which type of authentication you are using	setup	hu	
+select which user(s) will also have admin privileges	setup	hu	
+select which user(s) will be exported	setup	hu	
+select which user(s) will be imported	setup	hu	
+select which user(s) will be modified	setup	hu	
+select which user(s) will have admin privileges	setup	hu	
+select your old version	setup	hu	
+selectbox	setup	hu	
+server root	setup	hu	
+sessions type	setup	hu	
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	hu	
+settings	setup	hu	
+setup	setup	hu	
+setup demo accounts in ldap	setup	hu	
+setup main menu	setup	hu	
+setup the database	setup	hu	
+setup/config admin login	setup	hu	
+show 'powered by' logo on	setup	hu	
+some or all of its tables are missing	setup	hu	
+sql encryption type	setup	hu	
+start the postmaster	setup	hu	
+status	setup	hu	
+step 1 - simple application management	setup	hu	
+step 2 - configuration	setup	hu	
+step 3 - language management	setup	hu	
+step 4 - advanced application management	setup	hu	
+table change messages	setup	hu	
+tables dropped	setup	hu	
+tables installed, unless there are errors printed above	setup	hu	
+tables upgraded	setup	hu	
+target version	setup	hu	
+tcp port number of database server	setup	hu	
+text entry	setup	hu	
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	hu	
+the file	setup	hu	
+the table definition was correct, and the tables were installed	setup	hu	
+the tables	setup	hu	
+there was a problem trying to connect to your ldap server. <br>	setup	hu	
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	hu	
+this has to be outside the webservers document-root!!!	setup	hu	
+this program will convert your database to a new system-charset.	setup	hu	
+this program will help you upgrade or install different languages for egroupware	setup	hu	
+this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	hu	
+this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	hu	
+this section will help you setup your ldap accounts for use with egroupware	setup	hu	
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	hu	
+this stage is completed<br>	setup	hu	
+to a version it does not know about	setup	hu	
+to setup 1 admin account and 3 demo accounts.	setup	hu	
+top	setup	hu	
+translations added	setup	hu	
+translations removed	setup	hu	
+translations upgraded	setup	hu	
+try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	hu	
+two weeks	setup	hu	
+uninstall	setup	hu	
+uninstall all applications	setup	hu	
+uninstalled	setup	hu	
+upgrade	setup	hu	
+upgrade all	setup	hu	
+upgraded	setup	hu	
+upgrading tables	setup	hu	
+use cookies to pass sessionid	setup	hu	
+use pure html compliant code (not fully working yet)	setup	hu	
+user account prefix	setup	hu	
+usernames are casesensitive	setup	hu	
+users choice	setup	hu	
+utf-8 (unicode)	setup	hu	
+version mismatch	setup	hu	
+view	setup	hu	
+warning!	setup	hu	
+we can proceed	setup	hu	
+we will automatically update your tables/records to %1	setup	hu	
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	hu	
+which database type do you want to use with egroupware?	setup	hu	
+would you like egroupware to cache the phpgw info array ?	setup	hu	
+would you like egroupware to check for a new version<br>when admins login ?	setup	hu	
+would you like to show each application's upgrade status ?	setup	hu	
+write config	setup	hu	
+yes	setup	hu	
+you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	hu	
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	hu	
+you appear to be running version %1 of egroupware	setup	hu	
+you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	hu	
+you appear to be using php3. disabling php4 sessions support	setup	hu	
+you appear to be using php4. enabling php4 sessions support	setup	hu	
+you appear to have microsoft sql server support enabled	setup	hu	
+you appear to have mysql support enabled	setup	hu	
+you appear to have oracle support enabled	setup	hu	
+you appear to have oracle v8 (oci) support enabled	setup	hu	
+you appear to have postgresql support enabled	setup	hu	
+you appear to have xml support enabled	setup	hu	
+you are ready for this stage, but this stage is not yet written.<br>	setup	hu	
+you didn't enter a config password for domain %1	setup	hu	
+you didn't enter a config username for domain %1	setup	hu	
+you didn't enter a header admin password	setup	hu	
+you didn't enter a header admin username	setup	hu	
+you do not have any languages installed. please install one now <br>	setup	hu	
+you have not created your header.inc.php yet!<br> you can create it now.	setup	hu	
+you have successfully logged out	setup	hu	
+you must enter a username for the admin	setup	hu	
+you need to add some domains to your header.inc.php.	setup	hu	
+you need to select your current charset!	setup	hu	
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	hu	
+you're using an old configuration file format...	setup	hu	
+you're using an old header.inc.php version...	setup	hu	
+your applications are current	setup	hu	
+your database does not exist	setup	hu	
+your database is not working!	setup	hu	
+your database is working, but you dont have any applications installed	setup	hu	
+your header admin password is not set. please set it now!	setup	hu	
+your header.inc.php needs upgrading.	setup	hu	
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	hu	
+your tables are current	setup	hu	
+your tables may be altered and you may lose data	setup	hu	
+your tables will be dropped and you will lose data	setup	hu	
