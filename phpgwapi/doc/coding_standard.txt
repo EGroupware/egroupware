@@ -57,9 +57,7 @@
 	{
 		function print_to_screen()
 		{
-			global phpgw, phpgw_info;
-
-			if ($var == 'example')
+			if($var == 'example')
 			{
 				echo 'This is only an example';
 			}
@@ -72,13 +70,22 @@
 
 11) Associative arrays must be written in the following manner:
 
-	$array = array
-	(
-		'var'	=> 'value',
-		'var2'	=> 'value2'
+	$array = array(
+		'var'  => 'value',
+		'var2' => 'value2'
 	);
 
-	Note that tabs are preferred around the '=>'.
+	OR:
+
+	$array = array
+	(
+		'var'  => 'value',
+		'var2' => 'value2'
+	);
+
+	Note that spaces are preferred around the '=>'.  This is because only tabs
+	on the left side are guaranteed to line up correctly using different
+	tabstops.
 
 12) Use the long format for <?php.  Do NOT use <?.
 
@@ -102,4 +109,18 @@ if ($a)
 
 14) Use lower case for variable and function names.  No stubbly-case (mixed-case) code.
 
-15) Thanks for following these rules :)
+15) (int)$var is preferred vs. intval($var).  Also, is_int()/is_string()/is_array()
+  should be used instead of gettype() where possible.
+
+16) Use the api function, copyobj($oldobject,$newobject), instead of
+  $newobject = $oldobject.  This is for performance when using php5.
+
+17) Try to avoid creating new objects when the api-created ones will work.
+  This is a performance issue.  You might also be able to use copyobj() and then
+  call the constructor of the class if another version of the object exists
+  already.
+
+18) Do not use, e.g., global $var; unless absolutely necessary.  Please
+consider developing with register_globals=off to understand why.
+
+19) Thanks for following these rules :)
