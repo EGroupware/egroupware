@@ -1,8 +1,13 @@
+
+
 (for weekly)	calendar	sv	(för veckovis)
 1 match found	calendar	sv	1 träff hittad
-access	common	sv	Access
-access type	common	sv	Access type
-access type	todo	sv	Access typ
+1 message has been deleted	email	sv	1 meddelande har raderats
+a	calendar	sv	a
+about x	common	sv	Om %1
+access	common	sv	Åtkomst
+access type	common	sv	Åtkomst typ
+access type	todo	sv	Åtkomst typ
 account active	admin	sv	Account aktiv
 account has been created	common	sv	Kontot har blivit skapat
 account has been deleted	common	sv	Kontot har blivit borttaget
@@ -11,119 +16,172 @@ account preferences	common	sv	Konto inställningar
 account_permissions	admin	sv	Applikations rättigheter
 active	admin	sv	Aktiv
 add	common	sv	Lägg till
+add a single pharse	transy	sv	Lägg till en enkel fras
+add a single phrase	transy	sv	Lägg till enkel fras
+add new account	admin	sv	Lägg till nytt konto
 add new application	admin	sv	Lägg till ny application
+add new pharse	transy	sv	Lägg till ny fras
+add new phrase	transy	sv	Lägg till ny fras
+add to addressbook	email	sv	Lägg till i adressbok
+address book	addressbook	sv	Adress bok
 address book	common	sv	Adress Bok
-address book	addressbook	sv	Adress Bok
+address book - view	addressbook	sv	Adress bok - visa
 addressbook	common	sv	Adressbok
+addressbook preferences	common	sv	Adressbok inställningar
+addsub	todo	sv	Addsub
+addvcard	common	sv	Lägg till Vkort
 admin	common	sv	Admin
 administration	common	sv	Administration
+all	calendar	sv	Alla
+all	transy	sv	Alla
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 anonymous user	admin	sv	Anonym användare
+any	transy	sv	Någon
+application	transy	sv	Applikation
 application name	admin	sv	Applications namn
 application title	admin	sv	Applications titel
 applications	admin	sv	Applikationer
 april	common	sv	April
 are you sure you want to delete this account ?	admin	sv	Är du säker på att du vill ta bort detta account?
+are you sure you want to delete this application ?	admin	sv	Är det säkert du vill ta bort denna applikation ?
 are you sure you want to delete this entry	todo	sv	Är du säker på att du vill ta bort denna entry?
 are you sure you want to delete this entry ?	common	sv	Är du säker att du vill radera denna entry ?
 are you sure you want to delete this group ?	admin	sv	Är det säkert du vill ta bort denna gruppen?
 are you sure you want to delete this news site ?	admin	sv	Är du säker på att du vill ta bort denna nyhets siten?
 are you sure you want to kill this session ?	admin	sv	Är du säker på att du vill avsluta denna sessionen?
-are you sure\nyou want to\ndelete this entry ?	calendar	sv	Är du säker på att\ndu vill\nta bort denna?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	sv	Är du säker på att\ndu vill\nta bort denna entry ?\n\nDetta vill ta bort\ndenna entry för alla användare.
+are you sure\\\\\\\\nyou want to\\\\\\\\ndelete this entry ?	calendar	sv	Är du säker på attndu villnta bort denna?
+are you sure\\\\\\\\nyou want to\\\\\\\\ndelete this entry ?\\\\\\\\n\\\\\\\\nthis will delete\\\\\\\\nthis entry for all users.	calendar	sv	Är du säker på attndu villnta bort denna entry ?nnDetta vill ta bortndenna entry för alla användare.
+are you sure\\\\nyou want to\\\\ndelete this entry ?	calendar	sv	Är du säker\\\\natt du vill\\\\ntabort denna post?
+are you sure\\\\nyou want to\\\\ndelete this entry ?\\\\n\\\\nthis will delete\\\\nthis entry for all users.	calendar	sv	Är du säker\\\\natt du vill\\\\ntabort denna post?\\\\n\\\\nDetta tar bort den\\\\nför alla användare.
+are you sure\\nyou want to\\ndelete this entry ?	calendar	sv	Är du säker\\natt du vill\\\\nradera denna post?
+are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.	calendar	sv	Är du säker\\\\natt du vill\\\\nradera denna post?\\\\n\\\\nDetta tar bort\\\\ndenna post för alla\\\\nanvändare.
 august	common	sv	Augusti
 author	nntp	sv	Författare
 available groups	nntp	sv	Tillgängliga grupper
 bad login or password	login	sv	Ogiltigt login eller lösenord
 base url	admin	sv	Bas URL
-birthday	common	sv	Födelsedag
 birthday	addressbook	sv	Födelsedag
+birthday	common	sv	Födelsedag
 book marks	common	sv	Bokmärken
 bookmarks	common	sv	Bookmarks
 brief description	calendar	sv	Kort beskrivning
 calendar	common	sv	kalender
 calendar - add	calendar	sv	Kalender - Lägg till
 calendar - edit	calendar	sv	Kalender - Edit
-calendar preferences	calendar	sv	Kalender inställningar
-calendar preferences	preferences	sv	Kalender inställningar
+calendar preferences	common	sv	Kalender inställningar
 cancel	common	sv	Avbryt
 cancel	filemanager	sv	Avbryt
 cannot display the requested article from this newsgroup	nntp	sv	Kan inte visa den efterfrågade artikeln från denna nyhetsgruppen
+cc	email	sv	CC
 change	common	sv	Ändra
+change main screen message	admin	sv	Ändra huvudskärms meddelande
 change your password	preferences	sv	Ändra ditt lösenord
 change your profile	preferences	sv	Ändra din profil
 change your settings	preferences	sv	Ändra dina inställningar
 charset	common	sv	iso-8859-1
 chat	common	sv	Chat
-city	common	sv	Stad
 city	addressbook	sv	Stad
-clear	common	sv	Clear
-clear form	common	sv	Rensa Form
-clear form	todo	sv	Rensa innehåll
-clipboard_contents	filemanager	sv	Clipboard Innehåll
+city	common	sv	Stad
+clear	common	sv	Rensa
+clear form	common	sv	Rensa formulär
+clear form	todo	sv	Rensa formulär
+clipboard_contents	filemanager	sv	Urklipps Innehåll
 company	common	sv	Företag
 company name	addressbook	sv	Företags namn
 completed	todo	sv	färdig
+compose	email	sv	Skriva
 copy	common	sv	Kopiera
 copy	filemanager	sv	Kopiera
 copy_as	filemanager	sv	Kopiera som
 create	common	sv	Skapa
 create	filemanager	sv	Skapa
 create group	admin	sv	Skapa Grupp
+create lang.sql file	transy	sv	Skapa lang.sql fil
+create new langague set	transy	sv	Skapa ny språk uppsättning
+create new language set	transy	sv	Skapa ny språkuppsättning
 created by	common	sv	Skapat av
 created by	todo	sv	Skapat av
 current users	common	sv	Nuvarande användare
 current_file	filemanager	sv	Nuvarande File
 daily	calendar	sv	Daglig
+daily matrix view	calendar	sv	Daglig matris vy
 date	common	sv	Datum
+date	email	sv	Datum
 date	nntp	sv	Datum
 date due	todo	sv	Färdig till
 date format	preferences	sv	Datum format
+days datedue	todo	sv	dagar till slutdatum
 days repeated	calendar	sv	dagar repeterade
 december	common	sv	December
 default application	preferences	sv	Standard application
+default sorting order	email	sv	Normal sorterings ordning
 default sorting order	preferences	sv	Standard sorterings ordning
 delete	common	sv	Ta bort
-delete	filemanager	sv	Radera
+delete	email	sv	Ta bort
+delete	filemanager	sv	Ta bort
 description	calendar	sv	Beskrivning
 disabled	admin	sv	Deaktivera
 display	admin	sv	Visa
-done	common	sv	Färdig
-download	filemanager	sv	Download
+display missing pharases in lang set	transy	sv	Visa saknade fraser i språkuppsättning
+display missing phrases in lang set	transy	sv	Visa saknade fraser i en språkuppsättning
 do_delete	filemanager	sv	Radera nu
+done	common	sv	Färdig
+download	filemanager	sv	Ladda ner
 duration	calendar	sv	Varaktighet
-e-mail	common	sv	E-Post
 e-mail	addressbook	sv	E-Post
+e-mail	common	sv	E-Post
+e-mail preferences	common	sv	E-Post intällningar
 edit	common	sv	Editera
-edit	filemanager	sv	Redigera
+edit	filemanager	sv	Editera
+edit application	admin	sv	Editera applikation
+edit group	admin	sv	Editera Grupp
 email	common	sv	E-Post
+email	email	sv	E-Post
+email account name	email	sv	EPost Konto namn
+email address	email	sv	EPost Adress
+email password	email	sv	EPost Lösenord
+email signature	email	sv	E-Post signatur
 email signature	preferences	sv	E-Post signatur
 enabled	admin	sv	Aktiv
+enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navbar
+end date/time	calendar	sv	Slut Datum/tid
 enter your new password	preferences	sv	Skriv in ditt nya lösenord
 entry has been deleted sucessfully	common	sv	Entry har blivit borttaget
 entry updated sucessfully	common	sv	Entry är uppdaterad
-error	common	sv	Fel
 err_saving_file	filemanager	sv	Fel vid lagring av fil till disk
+error	common	sv	Fel
+error creating x x directory	common	sv	Fel vid skapande %1%2 bibliotek
+error deleting x x directory	common	sv	Fel vid borttagning %1%2 bibliotek
+error renaming x x directory	common	sv	Fel vid namnbyte %1%2 bibliotek
 exit	common	sv	Avsluta
-exit	filemanager	sv	Avsluta
-fax	common	sv	Fax nummer
+exit	filemanager	sv	Avbryt
 fax	addressbook	sv	Telefax
+fax	common	sv	Fax nummer
 february	common	sv	Februari
 file manager	common	sv	Fil manager
-files	filemanager	sv	Filer
 file_upload	filemanager	sv	File Upload
+files	email	sv	Filer
+files	filemanager	sv	Filer
 filter	common	sv	Filter
-first name	common	sv	Förnamn
 first name	addressbook	sv	Förnamn
+first name	common	sv	Förnamn
 first page	common	sv	första sidan
+folder	email	sv	Mapp
+forum	common	sv	Forum
+forward	email	sv	Vidarebefodra
 fr	calendar	sv	Fr
+free/busy	calendar	sv	Ledig/Upptagen
 frequency	calendar	sv	Hur ofta
 fri	calendar	sv	Fre
 friday	common	sv	Fredag
+from	email	sv	Från
 ftp	common	sv	FTP
 full description	calendar	sv	Full beskrivning
+generate new lang.sql file	transy	sv	Generera ny lang.sql fil
 generate printer-friendly version	calendar	sv	Gör en printer-vänlig verision
 global public	common	sv	Global Public
+global public and group public	calendar	sv	Globalt publikt och Grupp publikt
+global public only	calendar	sv	Endast Globalt publikt
 go!	calendar	sv	Go!
 group access	common	sv	Grupp Access
 group has been added	common	sv	Grupp har lagts till
@@ -131,17 +189,29 @@ group has been deleted	common	sv	Grupp har tagits bort
 group has been updated	common	sv	Grupp har uppdaterats
 group name	admin	sv	Grupp Namn
 group public	common	sv	Grupp Public
+group public only	calendar	sv	Endast grupp publikt
+group_files	filemanager	sv	grupp filer
 groups	common	sv	Grupper
 groupsfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/group directory.<BR> På *nix system normalt skriv: chmod 707
-group_files	filemanager	sv	grupp filer
 headline sites	admin	sv	Headline Sites
 headlines	common	sv	Headlines
 help	common	sv	Hjälp
 high	common	sv	Hög
 home	common	sv	Hem
+home phone	addressbook	sv	Hemtelefon
 home phone	common	sv	Hemma telefon
+human resources	common	sv	Mänskliga resurser
+i participate	calendar	sv	Jag deltar
 idle	admin	sv	idle
+if applicable	email	sv	Om Tillämpligt
+ignore conflict	calendar	sv	Ignorera konflikt
+image	email	sv	Bild
+imap server type	email	sv	IMAP Server typ
+import file	addressbook	sv	Importera Fil
+import from outlook	addressbook	sv	Importera från OutLook
+import lang set	transy	sv	Importera språkuppsättning
 installed applications	admin	sv	Installerade applicationer
+inventory	common	sv	Inventarium
 ip	admin	sv	IP
 it has been more then x days since you changed your password	common	sv	Det er mer än %1 dagar sedan du ändrade ditt lösenord
 january	common	sv	Januari
@@ -149,27 +219,32 @@ july	common	sv	Juli
 june	common	sv	Juni
 kill	admin	sv	Avsluta
 language	preferences	sv	Språk
-last name	common	sv	Efternamn
 last name	addressbook	sv	Efternamn
+last name	common	sv	Efternamn
 last page	common	sv	sista sidan
 last time read	admin	sv	Läst sista gång
 last updated	todo	sv	Sist uppdaterat
 last x logins	admin	sv	Sista %1 logins
+line 2	addressbook	sv	Linje 2
 line 2	common	sv	Andra raden
 list of current users	admin	sv	lista över nuvarande användare
 listings displayed	admin	sv	Visade lister
 login	common	sv	Login
-login	login	sv	Login
 login time	admin	sv	Login Tid
 loginid	admin	sv	LoginID
 logout	common	sv	Logout
 low	common	sv	Låg
+mail server	email	sv	Mail Server
+mail server type	email	sv	Mail Server typ
 manager	admin	sv	Manager
 march	common	sv	Mars
 max matchs per page	preferences	sv	Max träffar per sida
 may	common	sv	Maj
 medium	common	sv	Medium
+message	email	sv	Meddelande
+message	transy	sv	Meddelande
 message x	nntp	sv	Meddelande %1
+messages	email	sv	Meddelanden
 minutes	calendar	sv	minuter
 minutes between reloads	admin	sv	Minuter mellan uppdatering
 mo	calendar	sv	Må
@@ -177,65 +252,98 @@ mobile	addressbook	sv	Mobil
 mobile phone	common	sv	Mobil nummer
 mon	calendar	sv	Mån
 monday	common	sv	Måndag
-monitor	nntp	sv	Monitor
+monitor	email	sv	Kontrollera
+monitor	nntp	sv	Kontrollera
 month	calendar	sv	Månad
+monthly	calendar	sv	Månadsvis
 monthly (by date)	calendar	sv	Månatligt (efter datum)
 monthly (by day)	calendar	sv	Månatligt (efter dag)
+move selected messages into	email	sv	Flytta valda meddelande till
 name	common	sv	Namn
 network news	admin	sv	Network News
-new entry	calendar	sv	Ny Entry
+new entry	calendar	sv	Ny Post
 new entry added sucessfully	common	sv	Ny entry har lagts till
 new group name	admin	sv	Nytt grupp namn
+new message	email	sv	Nytt meddelande
+new password [ leave blank for no change	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
 new password [ leave blank for no change ]	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
+new pharse has been added	common	sv	Ny fras har lagts till
+new pharse has been added	transy	sv	Ny fras har lagts till
+new phrase has been added	common	sv	Ny fras har lagts till
+new phrase has been added	transy	sv	Ny fras har lagts till
+new_file	filemanager	sv	Ny Fil
 news file	admin	sv	Nyhets Fil
 news headlines	common	sv	Nyhets headlines
 news reader	common	sv	Nyhets Läsare
 news type	admin	sv	Nyhets Typ
 newsgroups	nntp	sv	Nyhetsgrupper
-new_file	filemanager	sv	Ny Fil
+next	email	sv	Nästa
 next	nntp	sv	Nästa
 next page	common	sv	nästa sida
 nntp	common	sv	NNTP
 no	common	sv	Nej
 no	filemanager	sv	Nej
 no matches found.	calendar	sv	Ingen träff hittad.
+no subject	email	sv	Inget Subjekt
+no_file_name	filemanager	sv	Inget filnamn blev specifierat
+non-standard	email	sv	inte standard
 none	calendar	sv	Ingen
 normal	common	sv	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Note: Denna funktionen ändrar *inte* ditt epost lösenord. Detta måste göras manuellt.
 notes	addressbook	sv	Annat
 november	common	sv	November
-no_file_name	filemanager	sv	Inget filnamn blev specifierat
 october	common	sv	Oktober
 ok	common	sv	OK
+on *nix systems please type: x	common	sv	Skriv %1 på *nix system
 only yours	common	sv	endast dina
+original	transy	sv	Orginal
 other number	addressbook	sv	Annat Nummer
 other phone	common	sv	Annat nummer
-pager	common	sv	Personsökare
 pager	addressbook	sv	Personsökare
+pager	common	sv	Personsökare
 participants	calendar	sv	Deltagare
 password	common	sv	Lösenord
-password	login	sv	Lösenord
 password has been updated	common	sv	Lösenord har blivit uppdaterat
 percent of users that logged out	admin	sv	Procent av användare som loggat ut
+permissions	admin	sv	Rättigheter
 permissions this group has	admin	sv	Tillåtna applicationer för denna gruppen
+permissions to the files/users directory	common	sv	rättigheter på files/users bibliotek
+pharse in english	transy	sv	Fras på Engelska
+pharse in new langague	transy	sv	Fras på det nya språket
+phrase in english	transy	sv	Fras på Engelska
+phrase in new language	transy	sv	Fras på det nya språket
+please select a message first	email	sv	Vänligen välj ett meddelande först
+please x by hand	common	sv	Var vänlig %1 för hand
 please, select a new theme	preferences	sv	Vänligen välj ett nytt tema
 powered by phpgroupware version x	common	sv	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
 preferences	common	sv	Inställningar
+previous	email	sv	Föregående
 previous page	common	sv	Föregående sida
 print	common	sv	Skriv ut
 printer friendly	calendar	sv	Printer Vänlig
 priority	common	sv	Prioritet
 private	common	sv	Privat
+private and global public	calendar	sv	Privat och globalt publikt
+private and group public	calendar	sv	Privat och Grupp publikt
+private only	calendar	sv	Endast privat
 private_files	filemanager	sv	Privata filer
+project description	todo	sv	Projekt beskrivning
+re-edit event	calendar	sv	Ändra händelse
 re-enter password	admin	sv	Skriv in lösenord igen
 re-enter your password	preferences	sv	Skriv in ditt lösenord igen
+record access	addressbook	sv	Uppgifts åtkomst
+record owner	addressbook	sv	Uppgifts ägare
+remove all users from this group	admin	sv	Ta bort alla användare från denna grupp
 rename	common	sv	Ändra namn
 rename	filemanager	sv	Döp om
 rename_to	filemanager	sv	Döp om till
 repeat day	calendar	sv	Repetera dag
 repeat end date	calendar	sv	Repetera slutdatum
 repeat type	calendar	sv	Repetera type
+repeating event information	calendar	sv	Repetera händelse information
 repetition	calendar	sv	Repetition
+reply	email	sv	Svara
+reply all	email	sv	Svara alla
 sa	calendar	sv	Lö
 sat	calendar	sv	Lör
 saturday	common	sv	Lördag
@@ -243,46 +351,69 @@ save	common	sv	Spara
 save	filemanager	sv	Spara
 search	common	sv	Sök
 search results	calendar	sv	Sök resultat
+section	email	sv	Sektion
 select addressbook columns to display	addressbook	sv	Välj kolumner som skall visas i adressboken
+select application	transy	sv	Välj applikation
 select columns to display	preferences	sv	Välj vilka kolumner som skall visas
 select different theme	preferences	sv	Välj annat tema
 select headline news sites	preferences	sv	Välj Headline News sites
+select langague to generate for	transy	sv	Välj språk att generera för
+select language to generate for	transy	sv	Välj språk att generera för
+select permissions this group will have	admin	sv	Välj rättigheter för denna grupp
 select users for inclusion	admin	sv	Välj gruppmedlemmar
+select which application for this pharse	transy	sv	välj vilken applikation för denna fras
+select which application for this phrase	transy	sv	Välj applikation för denna fras
+select which langauge for this pharse	transy	sv	välj vilket språk för denna fras
+select which language for this phrase	transy	sv	Välj vilket språk för denna fras
+send	email	sv	Sänd
+send deleted messages to the trash	email	sv	Sänd borttagna meddelande till papperkorgen
 september	common	sv	September
 session has been killed	common	sv	Session har blivit avslutad
 show all	common	sv	visa alla
 show all groups	nntp	sv	Visa alla grupper
+show birthday reminders on main screen	addressbook	sv	Visa födelsedags notis på huvudskärm
 show birthday reminders on main screen	preferences	sv	Visa födelsedags påminnelse på huvudskärmen
 show current users on navigation bar	preferences	sv	Visa nuvarande användare i navigation bar
 show groups containing	nntp	sv	Visa grupper som innehåller
 show high priority events on main screen	calendar	sv	Visa högprioritets händelser på huvudskärmen
 show high priority events on main screen	preferences	sv	Visa högprioritets händelse på huvudskärmen
+show new messages on main screen	email	sv	Visa nya meddelande på huvud skärmen
 show new messages on main screen	preferences	sv	Visa nya meddelande på huvudskärmen
 show text on navigation icons	preferences	sv	Visa text på navigations ikoner
 showing x	common	sv	visar %1
 showing x - x of x	common	sv	visar %1 - %2 av %3
 site	admin	sv	Site
+size	email	sv	Storlek
+sorry, that group name has already been taking.	admin	sv	Ursäkta, men gruppnamnet är upptaget
+sorry, the follow users are still a member of the group x	admin	sv	Ursäkta men följande användare är medlem av grupp %1
 sorry, there was a problem processing your request.	common	sv	Beklagar, det var problem att utföra din önskan.
 sorry, your login has expired	login	sv	Beklagar, din login har utgått
+source language	transy	sv	Käll språk
 specify_file_name	filemanager	sv	Du måste specifiera ett namn på filen du vill spara
-state	common	sv	Stat
+start date/time	calendar	sv	Start Datum/Tid
 state	addressbook	sv	Stat
+state	common	sv	Stat
+status	admin	sv	Status
 status	todo	sv	Status
-street	common	sv	Gata
 street	addressbook	sv	Gata
+street	common	sv	Gata
 su	calendar	sv	Sö
+subject	email	sv	Subjekt
 subject	nntp	sv	Subjekt
 submit	common	sv	Utför
 submit changes	admin	sv	Verkställ ändring
 sun	calendar	sv	Sön
 sunday	common	sv	Söndag
+switch current folder to	email	sv	Skifta nuvarande mapp till
+target language	transy	sv	Mål språk
 th	calendar	sv	To
 that loginid has already been taken	admin	sv	Den loginID är upptagen
 that site has already been entered	admin	sv	Den siten har redan blivit inlaggd
 the following conflicts with the suggested time:<ul>x</ul>	calendar	sv	Följande kommer i konflikt med den föreslagna tiden:<ul>%1</ul>
 the login and password can not be the same	admin	sv	Login och lösenord kan inte vara lika
 the two passwords are not the same	admin	sv	Lösenorden är inte identiska
-the two passwords are not the same	preferences	sv	Lösenorden stämmer inte överens
+they must be removed before you can continue	admin	sv	De måste tas bort innan du kan fortsätta
+this folder is empty	email	sv	Denna map är tom
 this month	calendar	sv	Denna månaden
 this server is located in the x timezone	preferences	sv	 Denna server är placerad i %1 tidszone
 this week	calendar	sv	Denna veckan
@@ -292,35 +423,48 @@ thursday	common	sv	Torsdag
 time	common	sv	Tid
 time format	preferences	sv	Tids format
 time zone offset	preferences	sv	Tids-Zone offset
-title	common	sv	Titel
+title	addressbook	sv	Titel
+title	admin	sv	Titel
+to	email	sv	Till
+to correct this error for the future you will need to properly set the	common	sv	För att framgent rätta till detta problem måste du riktigt sätta
 today	calendar	sv	I dag
 today is x's birthday!	common	sv	I dag har %1 födelsedag!
 todo	todo	sv	Att göra
-todo list	common	sv	Att göra Lista
+todo list	common	sv	Att göra lista
 todo list	todo	sv	Att göra lista
 todo list - add	todo	sv	Att göra lista - lägg till
 todo list - edit	todo	sv	Att göra lista - edit
 tommorow is x's birthday.	common	sv	I morgon är det %1's födelsedag.
 total	common	sv	Total
-total records	admin	sv	Fullständig förteckning 
+total records	admin	sv	Fullständig förteckning
+translation	transy	sv	Översättning
+translation management	common	sv	Översättnings hanteraren
 trouble ticket system	common	sv	Trouble Ticket System
 tu	calendar	sv	Ti
 tue	calendar	sv	Tis
 tuesday	common	sv	Tisdag
+undisclosed recipients	email	sv	Okänd mottagare
+undisclosed sender	email	sv	Okänd Sändare
 update	nntp	sv	Uppdatera
 updated	common	sv	Uppdaterat
 upload	filemanager	sv	Upload
 urgency	todo	sv	Prioritet
+url	addressbook	sv	URL
 use cookies	login	sv	Använd cookies
+use custom settings	email	sv	Använd egna inställningar
 use end date	calendar	sv	Använd slutdatum
 user accounts	admin	sv	Användar konton
 user groups	admin	sv	Användar Grupper
 username	login	sv	Användarnamn
+users	common	sv	användare
 usersfile_perm_error	filemanager	sv	För att rätta till detta felet måste du ändra rättigheterna på filer/users directory.<BR> På *nix system normalt skriv: chmod 707
+vcard	common	sv	VKort
 view	common	sv	Visa
 view access log	admin	sv	Visa Access Log
 view sessions	admin	sv	Visa sessions
-view this entry	calendar	sv	Visa denna entry
+view this entry	calendar	sv	Visa denna post
+view/edit/delete all pharses	transy	sv	Visa/ändra/ta bort alla fraser
+view/edit/delete all phrases	transy	sv	Visa/editera/radera alla fraser
 we	calendar	sv	On
 wed	calendar	sv	Ons
 wednesday	common	sv	Onsdag
@@ -328,31 +472,39 @@ week	calendar	sv	Vecka
 weekday starts on	calendar	sv	Första veckodag är
 weekday starts on	preferences	sv	Vecka börjar på
 weekly	calendar	sv	Veckovis
-which groups	common	sv	Vilka grupper
-which groups	todo	sv	Vilka grupper
+which groups	common	sv	vilken grupp
+which groups	todo	sv	Vilken grupp
 work day ends on	calendar	sv	Arbetsdagen slutar
 work day ends on	preferences	sv	Arbetsdag slutar kl:
 work day starts on	calendar	sv	Arbetsdagen börjar
 work day starts on	preferences	sv	Arbetsdag börjar kl:
+work phone	addressbook	sv	Arbetstelefon
 work phone	common	sv	Arbets telefon
 x matches found	calendar	sv	%1 träffar hittade
+x messages have been deleted	email	sv	%1 meddelande har raderats
 year	calendar	sv	År
 yearly	calendar	sv	Årligen
 yes	common	sv	Ja
 yes	filemanager	sv	Ja
+you are required to change your password durring your first login	common	sv	Du måste byta lösenord vid din första inloggning
 you have 1 high priority event on your calendar today.	common	sv	Du har 1 högprioritets händelse i din kalender i dag.
 you have 1 new message!	common	sv	Du har 1 nytt meddelande!
 you have been successfully logged out	login	sv	Du har nu loggat ut
 you have entered an invailed date	todo	sv	du har skrivit in ett ogiltigt datum
-you have not entered a\nbrief description	calendar	sv	Du har inte skrivit in en\nkort beskrivning
-you have not entered a\nvalid time of day.	calendar	sv	Du har inte skrivit in en\ngiltig tid.
+you have not entered a\\\\\\\\nbrief description	calendar	sv	Du har inte skrivit in ennkort beskrivning
+you have not entered a\\\\\\\\nvalid time of day.	calendar	sv	Du har inte skrivit in enngiltig tid.
+you have not entered a\\\\nbrief description	calendar	sv	Du har inte gett\\\\nnågon beskrivning
+you have not entered a\\\\nvalid time of day.	calendar	sv	Du har inte angett\\\\nnågon giltig tid på dagen.
+you have not entered a\\nbrief description	calendar	sv	Du har inte skrivit\\\\nen beskrivning.
+you have not entered a\\nvalid time of day.	calendar	sv	Du har inte angivit\\\\nen giltig tid.
 you have x high priority events on your calendar today.	common	sv	Du har %1 högprioritets händelse i din kalender i dag.
 you have x new messages!	common	sv	Du har %1 nya meddelanden!
+you must add at least 1 permission to this account	admin	sv	Du måste ge minst 1 rättighet till detta konto
 you must enter a base url	admin	sv	Du måste skriva in en bas url
 you must enter a display	admin	sv	Du måste skriva in en display
 you must enter a news url	admin	sv	Du måste skriva in en nyhets url
 you must enter a password	admin	sv	Du måste skriva in ett lösenord
-you must enter a password	preferences	sv	Du måste skriva in ett lösenord
+you must enter an application name and title.	admin	sv	Du måste skriva in namn och titel för applikation
 you must enter one or more search keywords	calendar	sv	Du måste skriva in ett eller flera sökord
 you must enter the number of listings display	admin	sv	Du måste skriva in antalet rader att visa
 you must enter the number of minutes between reload	admin	sv	Du måste skriva in antalet minuter mellan uppdatering
@@ -364,5 +516,5 @@ your search returned 1 match	common	sv	din sökning gav 1 träff
 your search returned x matchs	common	sv	din sökning gav %1 träffar
 your settings have been updated	common	sv	Dina innställningar har blivit uppdaterade
 your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	sv	Din föreslagna tid av <B> %1 - %2 </B> är i konflikt med de följande kalender entries:
-zip code	common	sv	Postnummer
 zip code	addressbook	sv	Postnummer
+zip code	common	sv	Postnummer
