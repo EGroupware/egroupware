@@ -260,9 +260,13 @@
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$session = $this->read_session($sessionid);
-			//echo "<p>session::verify(id='$sessionid'): \n"; print_r($session); echo "</p>\n";
-
+			$session = $this->read_session();
+			//echo "<pre>session::verify(id='$sessionid'): \n".print_r($session,True)."</pre>\n";
+			/*
+			$fp = fopen('/tmp/session_verify','a+');
+			fwrite($fp,"session::verify(id='$sessionid'): \n".print_r($session,True)."\n\n");
+			fclose($fp);
+			*/
 			if ($session['session_dla'] <= (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout']))
 			{
 				$this->clean_sessions();
@@ -523,7 +527,7 @@
 			}
 			$GLOBALS['phpgw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['phpgw']->accounts->accounts($this->account_id);
-			$this->sessionid = md5($GLOBALS['phpgw']->common->randomstring(15));
+			$this->sessionid = $this->new_session_id();
 			$this->kp3       = md5($GLOBALS['phpgw']->common->randomstring(15));
 
 			if ($GLOBALS['phpgw_info']['server']['usecookies'])
@@ -688,7 +692,7 @@
 			$this->sessionid = $sessionid;
 			$this->kp3       = $kp3;
 
-			$session = $this->read_session($this->sessionid);
+			$session = $this->read_session();
 			$this->session_flags = $session['session_flags'];
 
 			list($this->account_lid,$this->account_domain) = explode('@', $session['session_lid']);
@@ -1203,10 +1207,11 @@
 		/**
 		* Load user's session information
 		*
-		* @param string $sessionid user's session id string
+		* The sessionid of the session to read is passed in the class-var $this->sessionid
+		*
 		* @return mixed the session data
 		*/
-		function read_session($sessionid)
+		function read_session()
 		{}
 
 		/**
@@ -1222,6 +1227,14 @@
 		*/
 
 		function set_cookie_params($domain)
+		{}
+
+		/**
+		* Create a new session id
+		*
+		* @return string a new session id
+		*/
+		function new_session_id()
 		{}
 
 		/**

@@ -30,7 +30,7 @@
 			$this->sessions_();
 		}
 		
-		function read_session($sessionid)
+		function read_session()
 		{
 			$this->db->query("SELECT * FROM phpgw_sessions WHERE session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
 			$this->db->next_record();
@@ -50,6 +50,11 @@
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
 			$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['phpgw_info']['server']['sessions_timeout'])
 				. "'",__LINE__,__FILE__);
+		}
+
+		function new_session_id()
+		{
+			return md5($GLOBALS['phpgw']->common->randomstring(15));
 		}
 
 		function register_session($login,$user_ip,$now,$session_flags)

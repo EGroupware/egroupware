@@ -34,8 +34,9 @@
 			define('PHPGW_PHPSESSID', ini_get('session.name'));
 		}
 		
-		function read_session($sessionid)
+		function read_session()
 		{
+			session_id($this->sessionid);
 			session_start();
 			return $GLOBALS['phpgw_session'] = $_SESSION['phpgw_session'];
 		}
@@ -45,9 +46,16 @@
 			session_set_cookie_params(0,'/',$domain);
 		}
 
-		function register_session($login,$user_ip,$now,$session_flags)
+		function new_session_id()
 		{
 			session_start();
+
+			return session_id();
+		}
+
+		function register_session($login,$user_ip,$now,$session_flags)
+		{
+			// session_start() is now called in new_session_id() !!!
 
 			$GLOBALS['phpgw_session']['session_id'] = $this->sessionid;
 			$GLOBALS['phpgw_session']['session_lid'] = $login;
