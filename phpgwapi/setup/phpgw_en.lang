@@ -67,6 +67,7 @@ change	common	en	Change
 charset	common	en	iso-8859-1
 chile	common	en	CHILE
 china	common	en	CHINA
+choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
 christmas island	common	en	CHRISTMAS ISLAND
 clear	common	en	Clear
@@ -166,6 +167,7 @@ guyana	common	en	GUYANA
 haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	en	Help
+high	common	en	High
 holy see (vatican city state)	common	en	HOLY SEE (VATICAN CITY STATE)
 home	common	en	Home
 honduras	common	en	HONDURAS
@@ -206,6 +208,7 @@ liechtenstein	common	en	LIECHTENSTEIN
 lithuania	common	en	LITHUANIA
 login	common	en	Login
 logout	common	en	Logout
+low	common	en	Low
 luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
@@ -256,6 +259,7 @@ no	common	en	No
 no subject	common	en	No Subject
 none	common	en	None
 norfolk island	common	en	NORFOLK ISLAND
+normal	common	en	Normal
 northern mariana islands	common	en	NORTHERN MARIANA ISLANDS
 norway	common	en	NORWAY
 note	common	en	Note

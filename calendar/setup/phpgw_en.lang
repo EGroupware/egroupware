@@ -49,6 +49,7 @@ has been canceled	calendar	en	has been canceled
 has been rescheduled to	calendar	en	has been rescheduled to
 i participate	calendar	en	I Participate
 import	calendar	en	Import
+interval	calendar	en	Interval
 load [iv]cal	calendar	en	Load [iv]Cal
 location	calendar	en	Location
 minutes	calendar	en	minutes
