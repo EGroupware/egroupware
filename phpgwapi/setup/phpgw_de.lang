@@ -1,6 +1,5 @@
 access	common	de	Zugriff
 access not permitted	common	de	Zugriff verweigert
-access type	common	de	Zugriffstyp
 acl	common	de	ACL
 active	common	de	Aktiv
 add	common	de	Hinzufügen
@@ -21,7 +20,6 @@ category x has been added !	common	de	Kategorie %1 wurde hinzugef&uuml;gt !
 category x has been updated !	common	de	Kategorie %1 wurde &uuml;berarbeitet !
 change	common	de	Ändern
 charset	common	de	iso-8859-1
-choose a category	common	de	W&auml;hlen einer Kategorie
 choose the parent category	common	de	W&auml;hlen der &uuml;bergeordneten Kategorie
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
@@ -48,8 +46,6 @@ email	common	de	E-Mail
 enabled	common	de	Verf&uuml;gbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
-entry has been deleted sucessfully	common	de	Eintrag erfolgreich gelöscht
-entry updated sucessfully	common	de	Eintrag erfolgreich aktualisiert
 error	common	de	Fehler
 february	common	de	Februar
 files	common	de	Dateien
@@ -86,7 +82,6 @@ medium	common	de	Mittel
 message	common	de	Nachricht
 monday	common	de	Montag
 name	common	de	Name
-new entry added sucessfully	common	de	Neuer Eintrag erfolgreich hinzugefügt
 new main category	common	de	neue Hauptkategorie
 no	common	de	Nein
 no matchs found	common	de	Keine Treffer gefunden.
@@ -103,7 +98,6 @@ overview	common	de	&Uuml;berblick
 owner	common	de	Besitzer
 parent category	common	de	&Uuml;bergeordnete Kategorie
 password	common	de	Passwort
-password has been updated	common	de	Passwort wurde aktualisiert
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
 please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Applikation!
 powered by phpgroupware version x	common	de	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
@@ -120,10 +114,8 @@ select category	common	de	Kategorie auswählen
 september 	common	de	September
 session has been killed	common	de	Session wurde gelöscht
 show all	common	de	alle anzeigen
-show new messages on main screen	common	de	Neue Nachrichten auf der Startseite anzeigen
 showing x	common	de	%1 Einträge
 showing x - x of x	common	de	%1 Einträge - %2 von %3
-sorry, there was a problem processing your request.	common	de	Sorry, es gab ein Problem bei der Bearbeitung Ihrer Anfrage.
 start date	common	de	Startdatum
 start time	common	de	Startzeit
 status	common	de	Status
@@ -149,13 +141,10 @@ wednesday	common	de	Mittwoch
 which groups	common	de	Welche Gruppen
 written by:	common	de	Geschrieben von:
 yes	common	de	ja
-you are required to change your password during your first login	common	de	Das Passwort muß beim ersten Login geändert werden!
 you have selected an invalid date	common	en	Sie haben ein ung&uuml;ltiges Datum gew&auml;hlt !
 you have selected an invalid main category	common	de	Sie haben eine ung&uuml;ltige Hauptkategorie gew&auml;hlt !
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your search returned x matchs	common	de	Ihre Suche ergab %1 Treffer
-your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 bad login or password	login	de	Bad login or password
-sorry, your login has expired	login	de	Sorry - Login abgelaufen
 you have been successfully logged out	login	de	Abmeldung erfolgreich
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.

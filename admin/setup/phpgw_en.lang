@@ -70,7 +70,8 @@ that loginid has already been taken	admin	en	That loginid has already been taken
 the login and password can not be the same	admin	en	The login and password can not be the same
 the two passwords are not the same	admin	en	The two passwords are not the same
 they must be removed before you can continue	admin	en	They must be removed before you can continue
-This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category	admin	en	This category is currently being used by applications as a parent category.<br>You will need to remove the subcategories before you can delete the parent category !
+This category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
+You will need to remove the subcategories before you can delete the parent category	admin	en	You will need to remove the subcategories before you can delete the parent category !
 total records	admin	en	Total records
 user accounts	admin	en	User accounts
 user groups	admin	en	User groups

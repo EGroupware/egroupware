@@ -1,6 +1,5 @@
 access	common	en	Access
 access not permitted	common	en	Access not permitted
-access type	common	en	Access type
 acl	common	en	ACL
 active	common	en	Active
 add	common	en	Add
@@ -21,7 +20,6 @@ category x has been added !	common	en	Category %1 has been added !
 category x has been updated !	common	en	Category %1 has been updated !
 change	common	en	Change
 charset	common	en	iso-8859-1
-choose a category	common	en	Choose a category
 choose the parent category	common	en	Choose the parent category
 clear	common	en	Clear
 clear form	common	en	Clear Form
@@ -49,8 +47,6 @@ email	common	en	E-Mail
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
-entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
-entry updated sucessfully	common	en	Entry updated sucessfully
 error	common	en	Error
 february	common	en	February
 fields	common	en	Fields
@@ -71,7 +67,6 @@ help	common	en	Help
 high	common	en	High
 home	common	en	Home
 it has been more then x days since you changed your password	common	en	It has been more then %1 days since you changed your password
-it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version
 january	common	en	January
 july	common	en	July
 june	common	en	June
@@ -89,7 +84,6 @@ medium	common	en	Medium
 message	common	en	Message
 monday	common	en	Monday
 name	common	en	Name
-new entry added sucessfully	common	en	New entry added sucessfully
 new main category	common	en	New main category
 next	common	en	Next
 no	common	en	No
@@ -107,12 +101,10 @@ overview	common	en	Overview
 owner	common	en	Owner
 parent category	common	en	Parent Category
 password	common	en	Password
-password has been updated	common	en	Password has been updated
 personal	common	en	Personal
 please enter a name	common	en	Please enter a name !
 please set your preferences for this application	common	en	Please set your preferences for this application
 powered by phpgroupware version x	common	en	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-prefer	common	en	Prefer
 preferences	common	en	Preferences
 print	common	en	Print
 priority	common	en	Priority
@@ -129,7 +121,6 @@ session has been killed	common	en	Session has been killed
 show all	common	en	show all
 showing x	common	en	showing %1
 showing x - x of x	common	en	showing %1 - %2 of %3
-sorry, there was a problem processing your request.	common	en	Sorry, there was a problem processing your request.
 start date	common	en	Start date
 start time	common	en	Start time
 status	common	en	Status
@@ -154,16 +145,11 @@ wednesday	common	en	Wednesday
 which groups	common	en	Which groups
 written by:	common	en	Written by:
 yes	common	en	Yes
-you are required to change your password during your first login	common	en	You are required to change your password during your first login
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
-you must enter a password	common	en	You must enter a password
 your search returned 1 match	common	en	your search returned 1 match
 your search returned x matchs	common	en	your search returned %1 matches
-your settings have been updated	common	en	Your settings have been Updated
 bad login or password	login	en	Bad login or password
-sorry, your login has expired	login	en	Sorry, your login has expired
 username	login	en	Username
-you are running a newer version of phpGroupWare than your database is setup for	common	en	You are running a newer version of phpGroupWare than your database is setup for
 you have been successfully logged out	login	en	You have been successfully logged out
 your session could not be verified.	login	en	Your session could not be verified.
