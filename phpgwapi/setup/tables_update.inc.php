@@ -1253,7 +1253,7 @@
 			'phpgw_nextid', array(
 				'fd' => array(
 					'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => False),
-					'id' => array('type' => 'int', 'precision' => 4),
+					'id' => array('type' => 'int', 'precision' => 4)
 				),
 				'pk' => array(),
 				'fk' => array(),
@@ -1471,7 +1471,7 @@
 	}
 
 	$test[] = '0.9.11.011';
-	function upgrade0_9_11_011()
+	function phpgwapi_upgrade0_9_11_011()
 	{
 		global $setup_info;
 
