@@ -45,6 +45,9 @@
        case "installed applications":
 	$s = "Installed applications";						break;
 
+       case "remove all users from this group":
+	$s = "Remove all users from this group";			break;
+
        case "permissions this group has":
 	$s = "Permissions this group has";					break;
 

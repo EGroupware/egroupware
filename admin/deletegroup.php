@@ -27,8 +27,11 @@
         }
 
         while ($user = each($groups)) {
-          $user[1] = ereg_replace(",$group_id,",",",$user[1]);
-          $phpgw->db->query("update accounts set groups='$user[1]' where con='$user[0]'");
+          $user_[1] = ereg_replace(",$group_id,",",",$user[1]);
+          if ($user_[1] == ",") {
+             $user_[1] = "";
+          }
+          $phpgw->db->query("update accounts set groups='$user_[1]' where con='$user[0]'");
         }
         $confirm = True;
      }

@@ -62,7 +62,7 @@
         $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
 		 . "groups" . $sep;
 
-        if (! rename($basedir . $group_name,$basedir . $n_group)) {
+        if (! @rename($basedir . $old_group_name, $basedir . $n_group)) {
 	   $cd = 39;
         } else {
            $cd = 33;
