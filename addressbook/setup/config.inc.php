@@ -8,7 +8,7 @@
    </tr>
    <tr bgcolor="e6e6e6">
     <td>Contact application:</td>
-    <? if (!$current_config["contact_application"]) { $current_config["contact_application"] = "addressbook"; } ?>
+    <?php if (!$current_config["contact_application"]) { $current_config["contact_application"] = "addressbook"; } ?>
     <td><input name="newsettings[contact_application]" value="<?php echo $current_config["contact_application"]; ?>"></td>
    </tr>
    <?php $selected[$current_config["contact_repository"]] = " selected"; ?>
@@ -23,7 +23,7 @@
    </tr>
    <tr bgcolor="e6e6e6">
     <td>LDAP host for contacts:</td>
-    <? if (!$current_config["ldap_contact_host"]) { $current_config["ldap_contact_host"] = $current_config["ldap_host"]; } ?>
+    <?php if (!$current_config["ldap_contact_host"]) { $current_config["ldap_contact_host"] = $current_config["ldap_host"]; } ?>
     <td><input name="newsettings[ldap_contact_host]" value="<?php echo $current_config["ldap_contact_host"]; ?>"></td>
    </tr>
    <tr bgcolor="e6e6e6">
@@ -32,11 +32,11 @@
    </tr>
   <tr bgcolor="e6e6e6">
    <td>LDAP root dn for contacts:</td>
-   <? if (!$current_config["ldap_contact_dn"]) { $current_config["ldap_contact_dn"] = $current_config["ldap_root_dn"]; } ?>
+   <?php if (!$current_config["ldap_contact_dn"]) { $current_config["ldap_contact_dn"] = $current_config["ldap_root_dn"]; } ?>
    <td><input name="newsettings[ldap_contact_dn]" value="<?php echo $current_config["ldap_contact_dn"]; ?>"></td>
   </tr>
   <tr bgcolor="e6e6e6">
    <td>LDAP root pw for contacts:</td>
-   <? if (!$current_config["ldap_contact_pw"]) { $current_config["ldap_contact_pw"] = $current_config["ldap_root_pw"]; } ?>
+   <?php if (!$current_config["ldap_contact_pw"]) { $current_config["ldap_contact_pw"] = $current_config["ldap_root_pw"]; } ?>
    <td><input name="newsettings[ldap_contact_pw]" type="password" value="<?php echo $current_config["ldap_contact_pw"]; ?>"></td>
   </tr>

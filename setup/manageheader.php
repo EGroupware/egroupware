@@ -201,7 +201,7 @@
       ?>
       </td></tr>
       <tr bgcolor=486591><th colspan=2><font color="fefefe">Settings</font></th></tr>
-      <form action="<? echo $PHP_SELF ?>"  method=post>
+      <form action="<?php echo $PHP_SELF ?>"  method=post>
       <input type=hidden name="setting[write_config]" value=true>
         <tr><td colspan=2><b>Server Root</b><br><input type=text name="setting[server_root]" size=80 value="<? echo $phpgw_info["server"]["server_root"] ?>"></td></tr>
         <tr><td colspan=2><b>Include Root (this should be the same as Server Root unless you know what you are doing)</b><br><input type=text name="setting[include_root]" size=80 value="<? echo $phpgw_info["server"]["include_root"] ?>"></td></tr>
@@ -212,7 +212,7 @@
         <tr><td><b>DB User</b><br><input type=text name="setting[db_user]" value="<? echo $phpgw_info["server"]["db_user"] ?>"></td><td>Name of DB User as phpgroupware has to connect as</td></tr>
         <tr><td><b>DB Password</b><br><input type=text name="setting[db_pass]" value="<? echo $phpgw_info["server"]["db_pass"] ?>"></td><td>Password of DB User</td></tr>
         <tr><td><b>DB Type</b><br><select name="setting[db_type]">
-      <?
+      <?php
         $selected = "";
         $found_dbtype = false;
         while(list($k,$v) = each($supported_db)) {
@@ -234,10 +234,10 @@
         <? if($phpgw_info["server"]["mcrypt_enabled"] == True) { ?>
         <option value=True selected>True
         <option value=False>False
-        <? } else { ?>
+        <?php } else { ?>
         <option value=True>True
         <option value=False selected>False     
-        <? } ?>
+        <?php } ?>
         </select>
         </td></tr>
         <tr><td><b>MCrypt version</b><br><input type=text name="setting[mcrypt_version]" value="<? echo $phpgw_info["server"]["versions"]["mcrypt"] ?>"></td><td>Set this to "old" for versions < 2.4, otherwise the exact mcrypt version you use</td></tr>
@@ -249,7 +249,7 @@
          </select></td><td></td>
         </tr>
        </table>
-      <?
+      <?php
       if(!$found_dbtype) {
         echo "<br><font color=red>Warning!<br>The db_type in defaults (".$phpgw_info["server"]["db_type"].") is not supported on this server. using first supported type.</font>";
       }
