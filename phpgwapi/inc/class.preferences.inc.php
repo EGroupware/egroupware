@@ -199,6 +199,15 @@
 			return $temp_data;
 		}
 
+		function create_defaults($account_id)
+		{
+			$this->db->query("select * from phpgw_preferences where preference_owner='-2'",__LINE__,__FILE__);
+			$this->db->next_record();
+
+			$this->db->query("insert into phpgw_preferences values ('$account_id','"
+				. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
+		}
+
 		/*!
 		@function update_data
 		@abstract update the preferences array

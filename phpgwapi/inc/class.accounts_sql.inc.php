@@ -259,10 +259,13 @@
 		function create($account_info)
 		{
 			$this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['account_lid']
-				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
-				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "','" . $account_info['account_expires']
-				. "')",__LINE__,__FILE__);
+				. "account_firstname, account_lastname, account_status, account_expires) values ('"
+				. $account_info['account_lid'] . "','" . $account_info['account_type'] . "','"
+				. md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
+				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status']
+				. "','" . $account_info['account_expires'] . "')",__LINE__,__FILE__);
+
+			$GLOBALS['phpgw']->preferences->create_defaults($this->name2id($account_info['account_lid']));
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -282,15 +285,14 @@
 				'account_status'    => $account_status,
 				'account_expires'   => mktime(2,0,0,date('n',$expiredate), intval(date('d',$expiredate)), date('Y',$expiredate))
 			);
+
+			$this->db->transaction_begin();
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
 
-			$this->db->transaction_begin();
 			if ($default_prefs == False)
 			{
-				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
-/*				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}'; */
-				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$defaultprefs')");
+				$GLOBALS['phpgw']->preferences->create_defaults($accountid);
 			}
 
 			if ($default_acls == False)
@@ -298,18 +300,23 @@
 				$default_group_lid = $GLOBALS['phpgw_info']['server']['default_group_lid'];
 				$default_group_id  = $this->name2id($default_group_lid);
 				$defaultgroupid = $default_group_id ? $default_group_id : $this->name2id('Default');
-				if($defaultgroupid)
+				if ($defaultgroupid)
 				{
 					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
 						. $defaultgroupid . ", " . $accountid . ", 1)",__LINE__,__FILE__);
 				}
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				else
+				{
+					// If they don't have a default group, they need some sort of permissions.
+					// This generally doesn't / shouldn't happen, but will (jengo)
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('addressbook', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('filemanager', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('calendar', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('email', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('notes', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('todo', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+				}
 			}
 			$this->db->transaction_commit();
 			return $accountid;
