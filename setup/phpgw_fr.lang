@@ -1,425 +1,717 @@
-(for weekly)	all	fr	(pour hebdomadaire)
-1 match found	all	fr	1 r&eacute;sultat trouv&eacute;
-1 message has been deleted	all	fr	1 message a été effacé
-a	all	fr	A
-access	all	fr	Acc&egrave;s
-access type	all	fr	Type d'acc&egrave;s
-account active	all	fr	Compte actif
-account has been created	all	fr	Le compte a &eacute;t&eacute; cr&eacute;&eacute;
-account has been deleted	all	fr	Le compte a &eacute;t&eacute; supprim&eacute;
-account has been updated	all	fr	Le compte a &eacute;t&eacute; mis &agrave; jour
-account preferences	all	fr	Pref&eacute;rences de compte
-active	all	fr	Actif
-add	all	fr	Ajouter
-add a single phrase	all	fr	Ajouter une seule ligne
-add new account	all	fr	Ajouter un nouveau compte
-add new application	all	fr	Ajouter une nouvelle application
-add new phrase	all	fr	Ajouter une nouvelle phrase
-add to addressbook	all	fr	Ajouter au carnet d'adresses
-address book	all	fr	Carnet d'adresse
-address book - view	all	fr	Carnet d'adresses - voir
-addressbook	all	fr	Carnet d'adresses
-addressbook preferences	all	fr	Pref&eacute;rences du carnet d'adresses
-addsub	all	fr	AjouterSoustraire
-admin	all	fr	Admin
-administration	all	fr	Administration
-all	all	fr	Tous
-all records and account information will be lost!	all	fr	Tous les enregistrements et le compte vont &ecirc;tre perdus !
-anonymous user	all	fr	Utilisateur anonyme
-any	all	fr	N'importe quel
-application	all	fr	Application
-application name	all	fr	Nom d'application
-application title	all	fr	Titre d'application
-applications	all	fr	Applications
-april	all	fr	Avril
-are you sure you want to delete this account ?	all	fr	Voulez-vous vraiment supprimer ce compte ?
-are you sure you want to delete this application ?	all	fr	Etes vous sur de vouloir effacer cette application ?
-are you sure you want to delete this entry	all	fr	&Ecirc;tes-vous certain de vouloir supprimer cette entr&eacute;e ?
-are you sure you want to delete this entry ?	all	fr	Etes vous certain de vouloir supprimer cette entr&eacute;e ?
-are you sure you want to delete this group ?	all	fr	Voulez-vous vraiment supprimer ce groupe ?
-are you sure you want to delete this news site ?	all	fr	Voulez-vous vraiment supprimer ce site de news ?
-are you sure you want to kill this session ?	all	fr	Voulez-vous vraiment tuer cette session ?
-are you sure\nyou want to\ndelete this entry ?	all	fr	&ecirc;tes vous certain\nde vouloir\nsupprimer cette entr&eacute; ?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	all	fr	&Eacute;tes vous certain\nde vouloir\nsupprimer cette entr&eacute;e ?\n\nCeci d&eacute;truira\ncette entr&eacute;e pour tous les utilisateurs.
-august	all	fr	Au&ucirc;t
-author	all	fr	Auteur
-available groups	all	fr	Groups disponibles
-bad login or password	all	fr	Mauvais login ou mot de passe
-base url	all	fr	URL de base
-birthday	all	fr	Anniversaire
-book marks	all	fr	Signets
-bookmarks	all	fr	Signet
-brief description	all	fr	Description R&eacute;sum&eacute;
-calendar	all	fr	Calendrier
-calendar - add	all	fr	Calendrier - Ajout
-calendar - edit	all	fr	Calendrier - Edition
-calendar preferences	all	fr	Pref&eacute;rences de calendrier
-cancel	all	fr	Annuler
-cc	all	fr	CC
-change	all	fr	Changer
-change your password	all	fr	Modifez votre mot de passe
-change your profile	all	fr	Changer votre profile
-change your settings	all	fr	Modifiez vos pr&eacute;f&eacute;rences
-charset	all	fr	iso-8859-1
-chat	all	fr	Chat
-city	all	fr	Ville
-clear	all	fr	Effacer
-clear form	all	fr	Effarcer le Formulaire
-clipboard_contents	all	fr	Contenus du presse-papier
-company name	all	fr	Nom d'entreprise
-completed	all	fr	Termin&eacute;
-compose	all	fr	Composer
-copy	all	fr	Copier
-copy_as	all	fr	Copier vers
-create	all	fr	Cr&eacute;er
-create group	all	fr	Cr&eacute;er un groupe
-create lang.sql file	all	fr	Cr&eacute;er le fichier lang.sql
-create new language set	all	fr	Cr&eacute;er nouvelle table de langue
-created by	all	fr	Cr&eacute;&eacute; Par
-current users	all	fr	Utilisateurs courants
-current_file	all	fr	Fichier courant
-daily	all	fr	Quotidien
-date	all	fr	Date
-date due	all	fr	Date butoir
-date format	all	fr	Format de date
-days datedue	all	fr	Application par defaut
-days repeated	all	fr	Jours r&eacute;p&eacute;t&eacute;s
-december	all	fr	D&eacute;cembre
-default application	all	fr	Application par defaut
-default sorting order	all	fr	Ordre de tri par defaut
-delete	all	fr	Supprimer
-description	all	fr	Description
-disabled	all	fr	D&eacute;sactiv&eacute;
-display	all	fr	Afficher
-display missing phrases in lang set	all	fr	Afficher les phrases manquantes dans la table de langage
-done	all	fr	Fait
-download	all	fr	T&eacutel&eacute;charger
-do_delete	all	fr	Supprimer
-duration	all	fr	Dur&eacute;e
-e-mail	all	fr	E-Mail
-e-mail preferences	all	fr	Pref&eacute;rences E-mail
-edit	all	fr	Editer
-edit application	all	fr	Editer l'applcation
-edit group	all	fr	Editer groupe
-email	all	fr	E-Mail
-email account name	all	fr	Nom de compte e-mail
-email address	all	fr	Adresse e-mail
-email password	all	fr	Mot de passe e-mail
-email signature	all	fr	Signature E-Mail
-enabled	all	fr	Activ&eacute;
-enabled - hidden from navbar	all	fr	Activ&eacute; - cach&eacute; de la barre de navigation
-enter your new password	all	fr	Entrer votre mot de passe
-entry has been deleted sucessfully	all	fr	Entr&eacute;e supprim&eacute;e avec succ&egrave;s
-entry updated sucessfully	all	fr	Entr&eacute;e mise &agrave; jour avec succ&egrave;s
-error	all	fr	Erreur
-error creating x x directory	all	fr	Erreur pendant la cr&eacute;ation du r&eacute;pertoire %1 %2
-error deleting x x directory	all	fr	Erreur pendant la destruction du r&eacute;pertoire %1 %2
-error renaming x x directory	all	fr	Erreur pendant le renommage du r&eacute;pertoire %1 %2
-err_saving_file	all	fr	Erreur en sauvant sur le disque
-exit	all	fr	Sortir
-fax	all	fr	Fax
-february	all	fr	F&eacute;vrier
-file manager	all	fr	Gestionnaire de fichiers
-files	all	fr	Fichiers
-file_upload	all	fr	Upload du fichier
-filter	all	fr	Filtrer
-first name	all	fr	Pr&eacute;nom
-first page	all	fr	premi&egrave;re page
-folder	all	fr	Dossier
-forum	all	fr	Forum
-forward	all	fr	Transf&eacute;rer
-fr	all	fr	V
-frequency	all	fr	Fr&eacute;quence
-fri	all	fr	Ven
-friday	all	fr	Vendredi
-from	all	fr	De
-ftp	all	fr	FTP
-full description	all	fr	Description Compl&egrave;te
-generate new lang.sql file	all	fr	G&eacute;n&eacute;rer un nouveau fichier lang.sql
-generate printer-friendly version	all	fr	G&eacute;n&eacute;rer une version imprimable
-global public	all	fr	Publique
-go!	all	fr	Go!
-group access	all	fr	Acc&egrave;s par groupe
-group has been added	all	fr	Le groupe a &eacute;t&eacute; ajout&eacute;
-group has been deleted	all	fr	Le groupe a &eacute;t&eacute; supprim&eacute;
-group has been updated	all	fr	Le groupe a &eacute;t&eacute;Group mis &agrave; jour
-group name	all	fr	Nom de groupe
-group public	all	fr	Publique par groupe
-groups	all	fr	Groupes
-groupsfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/groups.<BR> Sur un system *nix tappez: chmod 770
-group_files	all	fr	Fichiers de groupe
-headline sites	all	fr	Sites d'Headline
-headlines	all	fr	Headlines
-help	all	fr	Aide
-high	all	fr	Haut
-home	all	fr	Home
-home phone	all	fr	T&eacute;l&eacute;phone Personnel
-human resources	all	fr	Ressources humaines
-idle	all	fr	inactivit&eacute;
-if applicable	all	fr	Si applicable
-ignore conflict	all	fr	Ignorer Conflit
-image	all	fr	Image
-imap server type	all	fr	Type de Serveur IMAP
-import lang set	all	fr	Importer table de langage
-installed applications	all	fr	Applications installées
-inventory	all	fr	Inventaire
-ip	all	fr	IP
-it has been more then x days since you changed your password	all	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
-january	all	fr	Janvier
-july	all	fr	Juillet
-june	all	fr	Juin
-kill	all	fr	Tuer
-language	all	fr	Langage
-last name	all	fr	Nom
-last page	all	fr	derni&egrave;re page
-last time read	all	fr	Heure de derni&egrave;re lecture
-last updated	all	fr	Modifi&eacute; en dernier
-last x logins	all	fr	Les %1 derniers logins
-line 2	all	fr	ligne 2
-list of current users	all	fr	liste des utilisateurs connect&eacute;s en ce moment
-listings displayed	all	fr	Affichage en listing
-login	all	fr	Login
-login time	all	fr	Heure d'entr&eacute;e
-loginid	all	fr	LoginID
-logout	all	fr	Logout
-low	all	fr	Faible
-mail server	all	fr	Serveur Mail
-mail server type	all	fr	Type de Serveur Mail
-manager	all	fr	Manager
-march	all	fr	Mars
-max matchs per page	all	fr	Nombre max d'entit&eacute;s par page
-may	all	fr	Mai
-medium	all	fr	Moyen
-message	all	fr	Message
-message x	all	fr	Message %1
-messages	all	fr	Messages
-minutes	all	fr	Minutes
-minutes between reloads	all	fr	Minutes entre chaque recharge
-mo	all	fr	L
-mobile	all	fr	T&eacute;l&eacute;phone Portable
-mon	all	fr	Lun
-monday	all	fr	Lundi
-monitor	all	fr	Monitorer
-monitor newsgroups	all	fr	Surveiller les newsgroups
-month	all	fr	Mois
-monthly (by date)	all	fr	Mensuel (par date)
-monthly (by day)	all	fr	Mensuel (par jour)
-move selected messages into	all	fr	D&eacute;placer Les Messages Selectionn&eacute;s Dans
-name	all	fr	Nom
-network news	all	fr	Nouvelles reseau
-new entry	all	fr	Nouvelle entr&eacute;e
-new entry added sucessfully	all	fr	Nouvelle entr&eacute;e ajout&eacute;e avec succ&egrave;s
-new group name	all	fr	Nouveau nom de groupe
-new message	all	fr	Nouveau message
-new password [ leave blank for no change	all	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
-new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laissez vide pour ne rien changer ]
-new phrase has been added	all	fr	Une nouvelle phrase a &eacute;t&eacute; rajoutée
-news file	all	fr	Fichier de News
-news headlines	all	fr	News headlines
-news reader	all	fr	Lecteur de News
-news type	all	fr	Type de News
-newsgroups	all	fr	Newsgroups
-new_file	all	fr	Nouveau fichier
-next	all	fr	Suivant
-next page	all	fr	Page suivante
-nntp	all	fr	NNTP
-no	all	fr	Non
-no matches found.	all	fr	Aucune correspondance trouv&eacute;e.
-no subject	all	fr	Pas De Sujet
-non-standard	all	fr	Non standard
-none	all	fr	Aucun
-normal	all	fr	Normal
-note: this feature does *not* change your email password. this will need to be done manually.	all	fr	Note: Ceci ne change pas le mot de passe de votre email. Ceci doit &ecirc;tre fait manuellement.
-notes	all	fr	Notes
-november	all	fr	Novembre
-no_file_name	all	fr	Aucun nom de fichier sp&eacute;cifi&eacute;
-october	all	fr	Octobre
-ok	all	fr	OK
-on *nix systems please type: x	all	fr	Sur les systemes *nix tapez: %1
-only yours	all	fr	seulement les votres
-original	all	fr	original
-other number	all	fr	Autre num&eacute;ro
-pager	all	fr	Pager
-participants	all	fr	Participants
-password	all	fr	Mot de passe
-password has been updated	all	fr	Le mot de passe a &eacute;t&eacute; mis &agrave; jour avec succ&egrave;s
-percent of users that logged out	all	fr	Pourcentage d'utilisateurs qui se sont d&eacute;logu&eacute;s
-permissions	all	fr	Permissions
-permissions this group has	all	fr	Permissions de ce groupe
-permissions to the files/users directory	all	fr	Permissions pour le repertoire fichiers/utilisateurs
-phrase in english	all	fr	Phrase en anglais
-phrase in new language	all	fr	Phrase dans une nouvelle langue
-phpgroupware login	all	fr	login phpGroupWare
-please select a message first	all	fr	Veuillez d'abord selectionner un message
-please x by hand	all	fr	veuillez %1 a la main
-please, select a new theme	all	fr	Choisissez un nouveau theme
-powered by phpgroupware version	common	fr	Propuls&eacute; par phpGroupWare version
-powered by phpgroupware version x	all	fr	Utilise <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-preferences	all	fr	Pr&eacute;faeacute;rences
-previous	all	fr	Pr&eacute;c&eacute;dent
-previous page	all	fr	page pr&eacute;c&eacute;dente
-print	all	fr	Imprimer
-printer friendly	all	fr	Version imprimable
-priority	all	fr	Priorit&eacute;
-private	all	fr	Priv&eacute;
-private_files	all	fr	Fichiers priv&eacutes;s
-project description	all	fr	Descripition du projet
-re-edit event	all	fr	Re-Editer L'Evenement
-re-enter password	all	fr	Re-saisissez le mot de passe
-re-enter your password	all	fr	Re-rentrer votre mot de passe
-record access	all	fr	Acces a l'enrengistrement
-record owner	all	fr	Proprietaire de l'enrengistrement
-remove all users from this group	all	fr	Retirer tous les utilisateurs de ce groupe
-rename	all	fr	Renommer
-rename_to	all	fr	Renomer vers
-repeat day	all	fr	Jour de r&eacute;p&eacute;tition
-repeat end date	all	fr	Date de fin de r&eacute;p&eacute;tition
-repeat type	all	fr	Type de r&eacute;p&eacute;tition
-repetition	all	fr	R&eacute;p&eacute;tition
-reply	all	fr	R&eacute;pondre
-reply all	all	fr	R&eacute;pondre &agrave; tous
-sa	all	fr	S
-sat	all	fr	Sam
-saturday	all	fr	Samedi
-save	all	fr	Sauver
-search	all	fr	Chercher
-search results	all	fr	R&eacute;sultats de la recherche
-section	all	fr	Section
-select application	all	fr	selectionner l'apllication
-select different theme	all	fr	Choisissez un theme diff&eacute;rent
-select headline news sites	all	fr	Choisissez les site d'Headlines
-select language to generate for	all	fr	Selectionner la langue a utiliser
-select permissions this group will have	all	fr	Selectionner les permissions qu'aura ce groupe
-select users for inclusion	all	fr	Selectionner les utilisateurs pour inclusion
-select which application for this phrase	all	fr	Selectionner l'application pour cette phrase
-select which language for this phrase	all	fr	Selectionner la langue pour cette phrase
-send	all	fr	Envoyer
-send deleted messages to the trash	all	fr	Messages a effacer envoyés a la corbeille
-september	all	fr	Septembre
-session has been killed	all	fr	La session a &eacute;t&eacute; tu&eacute;e
-show all	all	fr	Montrer tout
-show all groups	all	fr	Montrer tous les groupes
-show birthday reminders on main screen	all	fr	Montrer les anniversaires sur la page d'accueil
-show current users on navigation bar	all	fr	Montrer les utlisteurs connect&eacute;s sur la barre de navigation
-show groups containing	all	fr	Monter les groupes contenant
-show high priority events on main screen	all	fr	Montrer les &eacute;v&eacute;nements de haute priorit&eacute; sur la page d'accueil
-show new messages on main screen	all	fr	Montrer les nouveaux messages sur la page d'accueil
-show text on navigation icons	all	fr	Montrer le texte sur les icones de navigation
-showing x	all	fr	%1 &eacute;l&eacute;ments
-showing x - x of x	all	fr	&eacute;l&eacute;ments %1 - %2 de %3
-site	all	fr	Site
-size	all	fr	Taille
-sorry, that group name has already been taking.	all	fr	Desolé, ce nom de groupe est déja pris
-sorry, the follow users are still a member of the group x	all	fr	Desolé, les utilisateurs qui suivent sont encore membres du groupe %1
-sorry, there was a problem processing your request.	all	fr	D&eacute;sol&eacute;, il y a eut un probl&egrave;me lors du traitement de votre requ&ecirc;te.
-sorry, your login has expired	all	fr	D&eacute;sol&eacute;, votre login a expir&eacute;
-source language	all	fr	Langage Source
-specify_file_name	all	fr	Vous devez donner un nom au fichier que vous d&eacute;sirez cr&eacute;er
-state	all	fr	Etat
-status	all	fr	&Eacute;tat
-street	all	fr	Rue
-su	all	fr	D
-subject	all	fr	Sujet
-submit	all	fr	Envoyer
-submit changes	all	fr	Soumettre modifications
-sun	all	fr	Dim
-sunday	all	fr	Dimanche
-switch current folder to	all	fr	Changer Le Dossier Courant Vers
-target language	all	fr	Langage Cible
-th	all	fr	J
-that loginid has already been taken	all	fr	Ce login est d&eacute;j&agrave; utlis&eacute;
-that site has already been entered	all	fr	Ce site a d&eacute;j&agrave; &eacute;t&eacute; entr&eacute;
-the following conflicts with the suggested time:<ul>x</ul>	all	fr	Les entr&eacute;es suivantes entrent en conflit avec l'heure propos&eacute;e :<ul>%1</ul>
-the login and password can not be the same	all	fr	Le login et le mot de passe ne peuvent pas &ecirc;tre identiques
-the two passwords are not the same	all	fr	Les deux mots de passe ne sont pas identiques
-they must be removed before you can continue	all	fr	Ils doivent être enlevés avant de continuer
-this folder is empty	all	fr	Ce dossier est vide
-this month	all	fr	Ce mois
-this server is located in the x timezone	all	fr	Ce serveur est situ&eacute dans la zone de temps %1
-this week	all	fr	Cette semaine
-threads	all	fr	Threads
-thu	all	fr	Jeu
-thursday	all	fr	Jeudi
-time	all	fr	Heure
-time format	all	fr	Format d'heure
-time zone offset	all	fr	D&eacute;calage de la zone horaire
-title	all	fr	Titre
-to	all	fr	A
-to correct this error for the future you will need to properly set the	all	fr	Pour corriger cette erreur vous devriez dans le future mettre correctement le
-today	all	fr	Aujourd'hui
-today is x's birthday!	all	fr	Aujourd'hui, c'est l'anniversaire de %1 !
-todo	all	fr	t&acirc;ches
-todo list	all	fr	Liste de t&acirc;ches
-todo list - add	all	fr	Liste de t&acirc;ches - ajouter
-todo list - edit	all	fr	Liste de t&acirc;ches - &eacute;diter
-tomorrow is x's birthday.	all	fr	Demain, c'est l'anniversaire de %1.
-total	all	fr	Total
-total records	all	fr	Nombre total d'enregistrements
-translation	all	fr	Traduction
-translation management	all	fr	Direction de Traduction
-trouble ticket system	all	fr	Trouble Ticket System
-tu	all	fr	M
-tue	all	fr	Mar
-tuesday	all	fr	Mardi
-undisclosed recipients	all	fr	Undisclosed Recipients
-undisclosed sender	all	fr	Undisclosed Sender
-update	all	fr	Mettre &agrave; jour
-updated	all	fr	Mis &agrave; jour
-upload	all	fr	Upload
-urgency	all	fr	Priorit&eacute;
-url	all	fr	Url
-use cookies	all	fr	Utiliser les cookies
-use custom settings	all	fr	Utiliser les parametres personels
-use end date	all	fr	Utiliser la date de fin
-user accounts	all	fr	Comptes utilisateurs
-user groups	all	fr	Groupes d'utilisateurs
-username	all	fr	Nom d'utilisateur
-users	all	fr	Utilisateurs
-usersfile_perm_error	all	fr	Pour corriger cette erreur, il faut que vous donniez les bonnes permissions au repertoire files/users/.<BR> Sur un system *nix tappez: chmod 770
-view	all	fr	Voir
-view access log	all	fr	Voir les log d'acc&egrave;s
-view sessions	all	fr	Voir les sessions
-view this entry	all	fr	Voir cette entr&eacute;e
-view/edit/delete all phrases	all	fr	Voir/editer/effacer toutes les phrases
-we	all	fr	Me
-wed	all	fr	Mer
-wednesday	all	fr	Mercredi
-week	all	fr	Semaine
-weekday starts on	all	fr	Le premier jour de la semaine est
-weekly	all	fr	Hebdomadaire
-which groups	all	fr	Quels groupes
-work day ends on	all	fr	La journ&eacute;e de travaille finit &agrave;
-work day starts on	all	fr	La journ&eacute;e de travaille commence &agrave;
-work phone	all	fr	T&eacute;l&eacute;phone Professionnel
-x matches found	all	fr	%1 r&eacute;sultats trouv&eacute;
-x messages have been deleted	all	fr	%1 messages ont &eacute;t&eacute;s effac&eacute;s
-year	all	fr	Ann&eacute;e
-yearly	all	fr	Annuel
-yes	all	fr	Oui
-you are required to change your password during your first login	all	fr	Vous devez changer votre mot de passe a votre premiere connection
-you have 1 high priority event on your calendar today.	all	fr	Vous avez un &eacute;v&eacute;nement de haute priorit&eacute; dans votre calendrier.
-you have 1 new message!	all	fr	Vous avez un nouveau message !
-you have been successfully logged out	all	fr	Vous avez &eacute;t&eacute; d&eacute;logu&eacute; avec succ&egrave;
-you have entered an invailed date	all	fr	vous avez entr&eacute; une date invalide
-you have not entered a\nbrief description	all	fr	Vous n'avez pas saisi\nde Description R&eacute;sum&eacute;
-you have not entered a\nvalid time of day.	all	fr	Vous n'avez pas saisi\nune heure valide.
-you have x high priority events on your calendar today.	all	fr	Vous avez %1 &eacute;v&eacute;nements de haute priorit&eacute; dans votre calendrier.
-you have x new messages!	all	fr	Vous avez %1 nouveaux messages!
-you must add at least 1 permission to this account	all	fr	Vous devez ajouter au moins une permission a ce compte
-you must enter a base url	all	fr	Vous devez entrer une URL de base
-you must enter a display	all	fr	Vous devez entrer un affichage
-you must enter a news url	all	fr	Vous devez entrer une URL de news
-you must enter a password	all	fr	Vous devez entrer un mot de passe
-you must enter an application name and title.	all	fr	vous devez entrer un nom d'application et de titre
-you must enter one or more search keywords	all	fr	Vous devez entrer au moins un mot clef pour la recherche
-you must enter the number of listings display	all	fr	Vous devez entrer le nombre d'entit&eacute;s affich&eacute; dans chaque listing
-you must enter the number of minutes between reload	all	fr	Vous devez entrer un le nombre de minutes entre chaque recharge
-you must select a file type	all	fr	Vous devez entrer un type de fichier
-your current theme is: x	all	fr	</b>
-your message has been sent	all	fr	Votre message a &eacute;t&eacute; envoy&eacute;
-your search returned 1 match	all	fr	Votre recherche a retourn&eacute;e un r&eacute;sultat
-your search returned x matchs	all	fr	Votre recherche a retourn&eacute;e %1 r&eacutes;sultats
-your session could not be verified.	all	fr	Votre session ne peut etre verifi&eacute;e.
-your settings have been updated	all	fr	Vos pr&eacute;f&eacute;rences ont &eacute;t&eacute; mises &agrave; jour
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	all	fr	La plage horaire <B> %1 - %2 </B> que vous proposez entre en conflit avec les entr&eacute;es suivantes du calendrier :
-zip code	all	fr	Code Postal
+1 match found	calendar	fr	1 correspondance trouvée
+1 message has been deleted	email	fr	1 message a été effacé
+a	calendar	fr	un
+accept	calendar	fr	Accepte
+accepted	calendar	fr	Accepté
+access	common	fr	Accès
+access not permitted	common	fr	Accès non autorisé
+access type	common	fr	Type d'accès
+account active	admin	fr	Compte actif
+account has been created	common	fr	Le compte a été créé
+account has been deleted	common	fr	Le compte a été effacé
+account has been updated	common	fr	Le compte a été mis à jour
+account permissions	admin	fr	Permissions du compte
+account preferences	common	fr	Préférences du compte
+acl	common	fr	ACL
+action	admin	fr	Action
+active	common	fr	Actif
+add a note for	notes	fr	Ajouter une note pour
+add a note for x	notes	fr	Ajouter une note pour %1
+add a single phrase	transy	fr	Ajouter une seule phrase
+add	bookkeeping	fr	Ajouter
+add category	common	fr	Ajouter une catégorie
+add	common	fr	Ajouter
+add_expense	bookkeeping	fr	Ajouter une dépense
+add global category	admin	fr	Ajouter une catégorie globale
+add_income	bookkeeping	fr	Ajouter une recette
+add new account	admin	fr	Ajouter un nouveau compte
+add new application	admin	fr	Ajouter une nouvelle application
+add new phrase	transy	fr	Ajouter une nouvelle phrase
+add new ticket	tts	fr	Ajouter un nouveau ticket
+add note	notes	fr	Ajouter une nouvelle note
+add x category for	common	fr	Ajouter %1 catégorie pour
+address book	common	fr	Carnet d'adresses
+addressbook	common	fr	Carnet d'adresses
+addressbook preferences	common	fr	Préférences du carnet d'adresses
+address book - view	addressbook	fr	Carnet d'adresses - Voir
+address line 2	addressbook	fr	Adresse ligne 2
+address line 3	addressbook	fr	Adresse ligne 3
+address type	addressbook	fr	Type d'adresse
+addsub	todo	fr	Ajouter sous
+add sub	todo	fr	Ajouter sous
+add ticket	tts	fr	Ajouter un ticket
+add to addressbook	email	fr	Ajouter au carnet d'adresses
+addvcard	common	fr	Ajouter une VCard
+admin	bookkeeping	fr	Admin
+admin	common	fr	Admin
+administration	common	fr	Administration
+all	common	fr	Tout
+all day	calendar	fr	Journée entière
+allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
+all records and account information will be lost!	admin	fr	Tous les enregistrements et informations du compte seront perdus!
+amount	bookkeeping	fr	Montant
+anonymous user	admin	fr	Utilisateur anonyme
+any	transy	fr	N'importe quel
+application name	admin	fr	Nom d'application
+applications	admin	fr	Applications
+application title	admin	fr	Titre d'application
+application	transy	fr	Application
+april	common	fr	Avril
+are you sure\nyou want to\ndelete this entry ?	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	fr	Etes-vous sûr\nde vouloir\neffacer cette entrée ?\n\nCeci va effacer\ncette entrée pour tous les utilisateurs.
+are you sure you want to delete this account ?	admin	fr	Etes-vous sûr de vouloir effacer ce compte ?
+are you sure you want to delete this application ?	admin	fr	Etes-vous sûr de vouloir effacer cette application ?
+are you sure you want to delete this entry ?	common	fr	Etes-vous sûr de vouloir effacer cette entrée ?
+are you sure you want to delete this entry	todo	fr	Etes-vous sûr de vouloir effacer cette entrée ?
+are you sure you want to delete this group ?	admin	fr	Etes-vous sûr de vouloir effacer ce groupe ?
+are you sure you want to delete this holiday ?	calendar	fr	Etes-vous sûr de vouloir effacer ces vacances ?
+are you sure you want to delete this news site ?	admin	fr	Etes-vous sûr de vouloir effacer ce site de news ?
+are you sure you want to delete this note ?	notes	fr	Etes-vous sûr de vouloir effacer cette note ?
+are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir tuer cette session ?
+arial	notes	fr	Arial
+assign to	tts	fr	Assigner à
+august	common	fr	Août
+author	nntp	fr	Auteur
+autosave default category	common	fr	Catégorie par défaut d'auto-sauvegarde
+available groups	nntp	fr	Groupes disponibles
+bad login or password	login	fr	Mauvais login ou mot de passe
+base url	admin	fr	URL de Base
+bbs phone	addressbook	fr	Téléphone BBS
+birthday	addressbook	fr	Anniversaire
+bookkeeping admins	common	fr	Admins de la comptabilité
+bookkeeping	common	fr	Comptabilité
+book marks	common	fr	Marqueurs
+bookmarks	common	fr	Marqueurs
+brief description	calendar	fr	Brève description
+business city	common	fr	Ville travail
+business	common	fr	Travail
+business address type	addressbook	fr	Type d'adresse travail
+business country	common	fr	Pays travail
+business email	common	fr	EMail travail
+business email type	common	fr	Type d'EMail travail
+business fax	common	fr	Fax travail
+business phone	common	fr	Téléphone travail
+business state	common	fr	Région travail
+business street	common	fr	Rue travail
+business zip code	common	fr	Code postal travail
+calendar - add	calendar	fr	Calendrier - Ajouter
+calendar	common	fr	calendrier
+calendar - edit	calendar	fr	Calendrier - Editer
+calendar preferences	common	fr	Préférences calendrier
+cancel	common	fr	Annuler
+cannot display the requested article from the requested newsgroup	nntp	fr	Ne peut afficher l'article demandé du newsgroup demandé
+car phone	addressbook	fr	Téléphone voiture
+categories	common	fr	Catégories
+categories for	common	fr	Catégories pour
+category	common	fr	Catégorie
+category description	admin	fr	Description Catégorie
+category name	admin	fr	Nom Catégorie
+category x has been added !	common	fr	Catégorie %1 a été ajoutée !
+category x has been updated !	common	fr	Catégorie %1 a été mise à jour !
+cc	email	fr	CC
+cell phone	addressbook	fr	Téléphone portable
+center	weather	fr	Centrer
+change	common	fr	Changer
+change main screen message	admin	fr	Changer le message de l'écran principal
+change your password	preferences	fr	Changer votre mot de passe
+change your profile	preferences	fr	Changer votre profil
+change your settings	preferences	fr	Changer vos réglages
+charset	common	fr	iso-8859-1
+chat	common	fr	Chat
+choose a font	notes	fr	Choisissez une fonte
+choose a category	common	fr	Choisissez une catégorie
+choose the category	common	fr	Choisissez la catégorie
+choose the font size	notes	fr	Choisissez la taille de la fonte
+city	addressbook	fr	Ville
+city	admin	fr	Ville
+city	weather	fr	Ville
+clear	common	fr	Vider
+clear form	common	fr	Vider l'écran
+clipboard_contents	filemanager	fr	Contenu du presse-papiers
+common	transy	fr	Commun
+company	common	fr	Société
+company name	addressbook	fr	Nom de la société
+completed	todo	fr	Completé
+compose	email	fr	Composer
+contact	common	fr	Contact
+copy_as	filemanager	fr	Copier comme
+copy	common	fr	Copier
+country	addressbook	fr	Pays
+country	weather	fr	Temps dans le pays
+courier new	notes	fr	Courier New
+create	common	fr	Créer
+created by	common	fr	Crée par
+create group	admin	fr	Créer groupe
+create lang.sql file	transy	fr	Créer le fichier lang.sql
+create new language set	transy	fr	Créer le jeu de langage
+currency	common	fr	Devise
+current_file	filemanager	fr	Fichier actuel
+current users	common	fr	Utilisateurs actuels
+custom	common	fr	Personnalisé
+custom email settings	email	fr	Réglages d'EMail personnalisés
+custom fields	addressbook	fr	Champs personnalisés
+daily	calendar	fr	Journalier
+daily matrix view	calendar	fr	Vue journalière de la matrice
+date	bookkeeping	fr	Date
+date	common	fr	Date
+date due	common	fr	Date voulue
+date format	preferences	fr	Format de la date
+days datedue	todo	fr	Jours de la date voulue
+days repeated	calendar	fr	Jours répétés
+december	common	fr	Decembre
+default application	preferences	fr	Application par défaut
+default calendar filter	calendar	fr	Filtre de calendrier par défaut
+default calendar view	calendar	fr	Vue du calendrier par défaut
+default sorting order	email	fr	Ordre d'affichage par défaut
+delete	bookkeeping	fr	Effacer
+delete	common	fr	Effacer
+department	addressbook	fr	Département
+description	common	fr	Description
+detail	tts	fr	Détail
+disabled	admin	fr	Désactivé
+display	admin	fr	Afficher
+display mini calendars when printing	calendar	fr	Afficher mini calendriers à l'impression
+display missing phrases in lang set	transy	fr	Afficher les phrases qui manquent dans le jeu de langage
+display note for	notes	fr	Afficher la note pour
+display status of events	calendar	fr	Afficher le statut des évènements
+do_delete	filemanager	fr	Effacer
+do_delete x	filemanager	fr	Effacer %1
+domestic	common	fr	Domestique
+done	common	fr	Fait
+download	filemanager	fr	Download
+duration	calendar	fr	Durée
+edit application	admin	fr	Editer l'application
+edit	bookkeeping	fr	Editer
+edit	common	fr	Editer
+edit category	common	fr	Editer la catégorie
+edit categories	common	fr	Editer les catégories
+edit custom fields	preferences	fr	Editer les champs personnalisés
+edit_expense	bookkeeping	fr	Editer la dépense
+edit group	admin	fr	Editer le groupe
+edit_income	bookkeeping	fr	Editer la recette
+edit note for	notes	fr	Editer la note pour
+edit user account	admin	fr	Editer le compte de l'utilisateur
+edit x category for	common	fr	Editer %1 catégorie pour
+email account name	email	fr	Nom de compte EMail
+email address	email	fr	Adresse EMail
+e-mail	common	fr	EMail
+email	common	fr	EMail
+email password	email	fr	Mot de passe EMail
+e-mail preferences	common	fr	Préférences EMail
+email signature	email	fr	Signature EMail
+email type	common	fr	Type d'EMail
+enabled	admin	fr	Activé
+enabled - hidden from navbar	admin	fr	Activé - Caché de la barre de navigation
+enabled	weather	fr	Activé
+end date/time	calendar	fr	Date/Heure de fin
+end date	common	fr	Date de fin
+end time	common	fr	Heure de fin
+ends	calendar	fr	Finit
+enter your new password	preferences	fr	Entrez votre nouveau mot de passe
+entries	bookkeeping	fr	Entrées
+entry has been deleted sucessfully	common	fr	L'entrée a été supprimée avec succès
+entry updated sucessfully	common	fr	L'entrée a été mise à jour avec succès
+error	common	fr	Erreur
+error creating x x directory	common	fr	Erreur lors de la création du répertoire %1%2
+error deleting x x directory	common	fr	Erreur lors de l'effacement du répertoire %1%2
+error renaming x x directory	common	fr	Erreur lors du renommage du répertoire %1%2
+err_saving_file	filemanager	fr	Erreur lors de la sauvegarde du fichier sur le disque
+exit	common	fr	Sortie
+extra	common	fr	Extra
+expense	bookkeeping	fr	Dépense
+expenses	bookkeeping	fr	Dépenses
+export contacts	addressbook	fr	Exporter les contacts
+failed to find your station	weather	fr	Echec lors de la recherche de votre station
+fax	addressbook	fr	Fax
+february	common	fr	Février
+fields	common	fr	Champs
+fields to show in address list	addressbook	fr	Champs à montrer dans la liste des adresses
+file manager	common	fr	Gestionnaire de fichiers
+files	common	fr	Fichiers
+file_upload	filemanager	fr	Upload de fichier
+filter	common	fr	Filtre
+firstname	bookkeeping	fr	Prénom
+first name	common	fr	Prénom
+first page	common	fr	Première page
+folder	email	fr	Dossier
+forecast	admin	fr	Prévision
+forecasts	weather	fr	Prévisions
+forecast	weather	fr	Prévision
+forecast zone	admin	fr	Zone de prévision
+forum	common	fr	Forum
+forward	email	fr	Transférer
+(for weekly)	calendar	fr	(Pour hebdomadaire)
+fr	calendar	fr	F
+free/busy	calendar	fr	Libre/occupé
+frequency	calendar	fr	Fréquence
+fri	calendar	fr	Ven
+friday	common	fr	Vendredi
+from	email	fr	De
+ftp	common	fr	FTP
+full description	calendar	fr	Description complète
+full name	addressbook	fr	Nom complet
+fzone	admin	fr	FZone
+fzone	weather	fr	FZone
+generate new lang.sql file	transy	fr	Générer un nouveau fichier lang.sql
+generate printer-friendly version	calendar	fr	Générer une version imprimable
+geo	addressbook	fr	GEO
+georgia	notes	fr	Géorgie
+global categories	admin	fr	Catégories globales
+global	common	fr	Global
+global public and group public	calendar	fr	Public global et groupe public
+global public	common	fr	Public global
+global public only	calendar	fr	Public global seulement
+global	weather	fr	Global
+go!	calendar	fr	Go!
+grant addressbook access	common	fr	Autoriser l'accès au carnet d'adresses
+grant calendar access	common	fr	Autoriser l'accès au calendrier
+grant todo access	common	fr	Autoriser l'accès aux tâches
+group access	common	fr	Accès de groupe
+group	common	fr	Groupe
+group_files	filemanager	fr	Fichiers de groupe
+group has been added	common	fr	Le groupe a été ajouté
+group has been deleted	common	fr	Le groupe a été effacé
+group has been updated	common	fr	Le groupe a été mis à jour
+group name	admin	fr	Nom du groupe
+group public	common	fr	Groupe public
+group public only	calendar	fr	Groupe public seulement
+groups	common	fr	Groupes
+groupsfile_perm_error	filemanager	fr	Pour corriger cette erreur vous devez mettre les bonnes permissions aux fichiers/répertoires.<BR> Sur les systèmes *nix taper: chmod 770
+headline preferences	common	fr	Préférences des infos
+headlines	common	fr	Infos
+headline sites	admin	fr	Sites d'infos
+help	common	fr	Aide
+helvetica	notes	fr	Helvetica
+hide php information	admin	fr	Cacher les informations sur PHP
+high	common	fr	Haut
+home city	addressbook	fr	Ville maison
+home	common	fr	Maison
+home address type	addressbook	fr	Type d'adresse maison
+home country	addressbook	fr	Pays maison
+home directory	admin	fr	Répertoire maison
+home email	addressbook	fr	EMail maison
+home email type	addressbook	fr	Type d'EMail maison
+home phone	addressbook	fr	Téléphone maison
+home state	addressbook	fr	Région maison
+home street	addressbook	fr	Rue maison
+home zip code	addressbook	fr	Code postal maison
+human resources	common	fr	Ressources humaines
+icons and text	preferences	fr	Icones et texte
+icons only	preferences	fr	Icones seulement
+id	admin	fr	ID
+idle	admin	fr	Disponible
+id	weather	fr	ID
+if applicable	email	fr	Si applicable
+ignore conflict	calendar	fr	Ignorer le conflit
+image	email	fr	Image
+imap server type	email	fr	Type de serveur IMAP
+import contacts	addressbook	fr	Importer les contacts
+import file	addressbook	fr	Importer le fichier
+import from outlook	addressbook	fr	Importer depuis Outlook
+import lang set	transy	fr	Importer le jeu de langage
+income	bookkeeping	fr	Revenu
+installed applications	admin	fr	Applications installées
+interface/template selection	preferences	fr	Selection de l'interface/template
+international	common	fr	International
+inventory	common	fr	Inventaire
+ip	admin	fr	IP
+i participate	calendar	fr	Je participe
+isdn phone	addressbook	fr	Téléphone RNIS
+it has been more then x days since you changed your password	common	fr	Cela fait plus de %1 jours que vous avez changé de mot de passe
+january	common	fr	Janvier
+july	common	fr	Juillet
+june	common	fr	Juin
+kill	admin	fr	Tuer
+label	addressbook	fr	Label
+language	preferences	fr	Langue
+large	notes	fr	Large
+last login	admin	fr	Dernière connection
+last login from	admin	fr	Dernière connection depuis
+lastname	bookkeeping	fr	Nom de famille
+last name	common	fr	Nom de famille
+last page	common	fr	Dernière page
+last time read	admin	fr	Dernière lecture
+last updated	todo	fr	Dernière mise à jour
+last x logins	admin	fr	Dernières %1 connections
+line 2	addressbook	fr	Ligne 2
+links	weather	fr	Liens
+listings displayed	admin	fr	Listings affichés
+list of current users	admin	fr	Liste d'utilisateurs actuels
+logging	bookkeeping	fr	Connecte
+login	common	fr	Login
+loginid	admin	fr	LoginID
+loginid	bookkeeping	fr	LoginID
+login screen	admin	fr	Ecran de login
+login shell	admin	fr	Shell de login
+login time	admin	fr	Heure de login
+logout	common	fr	Logout
+low	common	fr	Bas
+mail folder(uw-maildir)	email	fr	Répertoire de mail (uw-maildir)
+mail server	email	fr	Serveur de mail
+mail server type	email	fr	Type de serveur de mail
+main screen	common	fr	Ecran principal
+main screen message	admin	fr	Message de l'écran principal
+manager	admin	fr	Gestionnaire
+manual	common	fr	Manuel
+march	common	fr	Mars
+max matchs per page	preferences	fr	Occurences max par page
+may	common	fr	Mai
+medium	common	fr	Moyen
+message	common	fr	Message
+message phone	addressbook	fr	Téléphone de message
+messages	email	fr	Messages
+message x	nntp	fr	Message %1
+metar	admin	fr	Metar
+metar	weather	fr	Metar
+middle name	addressbook	fr	Deuxième prénom
+minutes between reloads	admin	fr	Minutes entre les rechargements
+minutes	calendar	fr	minutes
+mobile	addressbook	fr	Portable
+mobile phone	common	fr	Numéro de portable
+mo	calendar	fr	M
+modem phone	common	fr	Numéro de modem
+mon	calendar	fr	Lun
+monday	common	fr	Lundi
+monitor	common	fr	Moniteur
+monitor newsgroups	preferences	fr	Moniteur des Newsgroups
+month	calendar	fr	Mois
+monthly (by date)	calendar	fr	Mensuel (par date)
+monthly (by day)	calendar	fr	Mensuel (par jour)
+monthly	calendar	fr	Mensuel
+move selected messages into	email	fr	Déplacer les messages choisis dans
+name	common	fr	Nom
+network news	admin	fr	Infos réseau
+new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
+new entry	calendar	fr	Nouvelle entrée
+new_file	filemanager	fr	Nouveau fichier
+new group name	admin	fr	Nouveau nom de groupe
+new message	email	fr	Nouveau message
+new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour ne pas le changer ]
+new phrase has been added	transy	fr	La nouvelle phrase a été ajoutée
+news file	admin	fr	Fichier de News
+newsgroups	common	fr	Newsgroups
+news headlines	common	fr	Titres de News
+news reader	common	fr	Lecteur de News
+news type	admin	fr	Type de News
+new ticket	tts	fr	Nouveau ticket
+next	common	fr	Suivant
+next page	common	fr	Page suivante
+nntp	common	fr	NNTP
+no	common	fr	Non
+<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list	addressbook	fr	<b>Aucun  type de conversion &lt;none&gt; n'a pu être trouvé.</b>  S'il vous plaît choisissez un type de conversion depuis la liste
+no_file_name	filemanager	fr	Aucun fichier n'a été spécifié
+no matches found.	calendar	fr	Aucune occurence trouvée.
+no matchs found	admin	fr	Aucune occurence trouvée
+no repsonse	calendar	fr	Pas de réponse
+none	common	fr	Aucun
+non-standard	email	fr	Non-Standard
+normal	common	fr	Normal
+no subject	common	fr	Pas de sujet
+no response	calendar	fr	Pas de réponse
+not applicable	weather	fr	Pas applicable
+note has been added for x !	notes	fr	La note a été ajoutée pour %1 !
+note has been updated for x !	notes	fr	La note a été mise à jour pour %1 !
+notes	common	fr	Notes
+notes categories	common	fr	Catégories de notes
+notes list	notes	fr	Liste de notes
+notes preferences	common	fr	Préférences de notes
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: Cette fonctionnalité ne change *pas* votre mot de passe d'EMail. Ceci devra être fait manuellement.
+no tickets found	tts	fr	Aucun ticket trouvé.
+november	common	fr	Novembre
+observations	weather	fr	Observations
+october	common	fr	Octobre
+ok	common	fr	OK
+only yours	common	fr	Seulement les vôtres
+on *nix systems please type: x	common	fr	Sur les systèmes *nix veuillez taper: %1
+or: days from startdate:	todo	fr	ou: jours depuis la date de départ:
+original	transy	fr	Original
+or: select for today:	todo	fr	ou: selectionner pour aujourd'hui:
+other	common	fr	Autre
+other number	addressbook	fr	Autre nombre
+other phone	common	fr	Autre téléphone
+owner	common	fr	Propriétaire
+pager	addressbook	fr	Pager
+parcel	addressbook	fr	Paquet
+parent category	common	fr	Catégorie parente
+parent project	todo	fr	Projet parent
+participant	calendar	fr	Participant
+participants	calendar	fr	Participants
+participates	calendar	fr	Participe
+password	common	fr	Mot de passe
+password has been updated	common	fr	Le mot de passe a été mis à jour
+percent of users that logged out	admin	fr	Pourcentage d'utilisateurs qui se sont déconnectés
+permissions	admin	fr	Permissions
+permissions this group has	admin	fr	Permissions accordées à ce groupe
+permissions to the files/users directory	common	fr	Permissions sur le répertoire des fichiers/utilisateurs
+personal	common	fr	Personnel
+personalized notes for	notes	fr	Notes personnalisées pour
+phone numbers	addressbook	fr	Numéros de téléphone
+phpgroupware login	login	fr	phpGroupWare login
+php information	admin	fr	Informations PHP
+phrase in english	transy	fr	Phrase en Anglais
+phrase in new language	transy	fr	Phrase dans la nouvelle langue
+please enter a name for that category !	admin	fr	Entrez un nom pour cette catégorie, s'il vous plaît !
+please select a message first	email	fr	Sélectionez d'abord un message, s'il vous plaît
+please, select a new theme	preferences	fr	Sélectionnez un nouveau thème, s'il vous plaît
+please set your preferences for this app	common	fr	Réglez vos préférences pour cette application, s'il vous plaît
+please x by hand	common	fr	%1 à la main, s'il vous plaît
+postal	addressbook	fr	Postal
+powered by phpgroupware version x	common	fr	Fonctionnant avec <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
+pref	common	fr	pref
+prefer	common	fr	Préfère
+preferences	common	fr	Préférences
+prefix	addressbook	fr	Préfixe
+previous	email	fr	Précédent
+previous page	common	fr	Page précédente
+print	common	fr	Imprimer
+printer friendly	calendar	fr	Imprimable
+priority	common	fr	Priorité
+private and global public	calendar	fr	Public privé et global
+private and group public	calendar	fr	Public privé et groupe
+private	common	fr	Privé
+private_files	filemanager	fr	Fichiers privés
+private only	calendar	fr	Privé seulement
+proceed	bookkeeping	fr	Continuer
+project description	todo	fr	Description du projet
+public	common	fr	public
+public key	addressbook	fr	Clé publique
+read	common	fr	Lire
+recent	weather	fr	Récent
+record access	addressbook	fr	Enregistrer l'accès
+record owner	addressbook	fr	Enregistrer le propriétaire
+re-edit event	calendar	fr	Rééditer l'évènement
+re-enter password	admin	fr	Rentrez le mot de passe
+re-enter your password	preferences	fr	Rentrez votre mot de passe
+refresh	calendar	fr	Rafraîchir
+region	admin	fr	Région
+regions	admin	fr	Régions
+regions	weather	fr	Régions
+region	weather	fr	Région
+reject	calendar	fr	Rejette
+rejected	calendar	fr	Rejeté
+remove all users from this group	admin	fr	Enlever tous les utilisateurs de ce groupe
+rename	common	fr	Renommer
+rename_to	filemanager	fr	Renommer en
+repeat day	calendar	fr	Jour de répétition
+repeat end date	calendar	fr	Date de fin de répétition
+repeating event information	calendar	fr	Informations d'évènement répétitif
+repeat type	calendar	fr	Type de répétition
+repetition	calendar	fr	Répétition
+reply all	email	fr	Répondre à tous
+reply	email	fr	Répondre
+replyto	email	fr	Répondre à
+reports	bookkeeping	fr	Rapports
+sa	calendar	fr	Sa
+sat	calendar	fr	Sam
+saturday	common	fr	Samedi
+save	common	fr	Sauvegarder
+scheduling conflict	calendar	fr	Conflit de planification
+search	common	fr	Chercher
+search results	calendar	fr	Résultats de recherche
+section	email	fr	Section
+select application	transy	fr	Choisissez l'application
+select category	common	fr	Choisissez la catégorie
+select different theme	preferences	fr	Choisissez un thème différent
+select headline news sites	common	fr	Choisissez les sites d'infos
+select language to generate for	transy	fr	Choisissez la langue à générer
+select parent category	common	fr	Choisissez la catégorie parente
+select permissions this group will have	admin	fr	Choisissez les permissions que ce groupe va avoir
+select users for inclusion	admin	fr	Choisissez les utilisateurs à inclure
+select which application for this phrase	transy	fr	Choisissez quelle application pour cette phrase
+select which language for this phrase	transy	fr	Choisissez quel langue pour cette phrase
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	fr	Choisissez à quel endroit cette application devrait apparaître dans la navbar, du plus bas (gauche) au plus haut (droite)
+send deleted messages to the trash	email	fr	Envoyer les messages effacés dans la corbeille
+send	email	fr	Envoyer
+send updates via email	common	fr	Envoyer les mises à jour par EMail
+send/Receive updates via email	calendar	fr	Envoyer/recevoir les mises à jour par EMail
+september	common	fr	Septembre
+session has been killed	common	fr	La session a été tuée
+show all	common	fr	Montrer tout
+show all groups	nntp	fr	Montrer tous les groupes
+show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
+show current users on navigation bar	preferences	fr	Montrer les utilisateurs actuels sur la barre de navigation
+show day view on main screen	calendar	fr	Montrer la vue du jour sur la page principale
+show groups containing	nntp	fr	Montrer les groupes contenant
+show high priority events on main screen	calendar	fr	Montrer les évènements prioritaires sur la page principale
+showing x	common	fr	Montre %1
+showing # x of x	weather	fr	Montre # %1 sur %2
+showing x - x of x	common	fr	Montre %1 - %2 sur %3
+show navigation bar as	preferences	fr	Montrer la barre de navigation comme
+show new messages on main screen	email	fr	Montrer les nouveaux messages sur la page principale
+show sender's email address with name	email	fr	Montrer l'adresse EMail de l'envoyeur avec le nom
+show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
+site	admin	fr	Site
+size	email	fr	Taille
+small	notes	fr	Petit
+sorry, that group name has already been taking.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
+sorry, the follow users are still a member of the group x	admin	fr	Désolé, les utilisateurs suivants sont encore membres du groupe %1
+sorry, the owner has just deleted this event	calendar	fr	Désolé, le propriétaire vient juste d'effacer cet évènement
+sorry, there was a problem processing your request.	common	fr	Désolé, il y a eu un problème d'exécution de votre requête.
+sorry, your login has expired	login	fr	Désolé, votre login a expiré
+source language	transy	fr	Langue source
+specify_file_name	filemanager	fr	Vous devez spécifier un nom pour le fichier que vous voulez créer
+start date/time	calendar	fr	Date/heure de début
+start date	common	fr	Date de début
+start time	common	fr	Heure de début
+state	addressbook	fr	Région
+state	weather	fr	Région
+Station	admin	fr	Station
+stations	admin	fr	Stations
+stations	weather	fr	Stations
+station	weather	fr	Station
+statistics	bookkeeping	fr	Statistiques
+status	common	fr	Etat
+street	addressbook	fr	Rue
+subject	common	fr	Sujet
+submit changes	admin	fr	Soumettre les changements
+submit	common	fr	Soumettre
+subproject description	todo	fr	Description du sous-projet
+sub	todo	fr	sous
+su	calendar	fr	So
+successfully imported x records into your addressbook.	addressbook	fr	Importé avec succès %1 enregistrements dans votre carnet d'adresses.
+suffix	addressbook	fr	Suffixe
+sun	calendar	fr	Dim
+sunday	common	fr	Dimanche
+switch current folder to	email	fr	Changer de dossier courant vers
+switch to	bookkeeping	fr	Changer vers
+table	admin	fr	Table
+tables	weather	fr	Tables
+target language	transy	fr	Langue cible
+tentative	calendar	fr	Tentative
+text only	preferences	fr	Texte seulement
+that category name has been used already !	admin	fr	Ce nom de catégorie a déjà été utilisé !
+that loginid has already been taken	admin	fr	Ce loginID a déjà été utilisé
+that phrase already exists	common	fr	Cette phrase existe déjà
+that site has already been entered	admin	fr	Ce site a déjà été entré
+th	calendar	fr	T
+the following conflicts with the suggested time:<ul>x</ul>	calendar	fr	L'élément suivant entre en conflit avec l'heure suggérée:<ul>%1</ul>
+the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
+there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	fr	Il y a eu une erreur en essayant de se connecter à votre serveur de mail.<br>S'il vous plaît, vérifiez votre nom et mot de passe, ou contactez votre administrateur.
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	fr	Il y a eu une erreur en essayant de se connecter à votre serveur de News.<br>S'il vous plaît, contactez votre administrateur pour vérifier le nom du serveur de News, votre nom ou mot de passe.
+the two passwords are not the same	common	fr	Les deux mots de passe ne sont pas les mêmes
+theme (colors/fonts) selection	preferences	fr	Sélection du thème (couleurs/fontes)
+they must be removed before you can continue	admin	fr	Ils doivent être enlevés avant que vous puissiez continuer
+this folder is empty	email	fr	Ce dossier est vide
+this month	calendar	fr	Ce mois
+this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses
+this server is located in the x timezone	preferences	fr	 Ce serveur est situé dans la timezone %1
+this week	calendar	fr	Cette semaine
+this year	calendar	fr	Cette année
+threads	nntp	fr	Threads
+thu	calendar	fr	Jeu
+thursday	common	fr	Jeudi
+tickets open x	tts	fr	Tickets ouverts %1
+tickets total x	tts	fr	Tickets totaux %1
+time	common	fr	Heure
+time created	notes	fr	Heure créé
+time format	preferences	fr	Format d'heure
+times new roman	notes	fr	Times New Roman
+time zone	common	fr	Timezone
+time zone offset	common	fr	Offset de Time zone
+title	common	fr	Titre
+to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur pour le futur vous allez devoir régler correctement le
+today	calendar	fr	Aujourd'hui
+today is x's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
+todo categories	common	fr	Catégories A faire
+todo list - add sub-project	todo	fr	Liste A faire - ajouter un sous-projet
+todo list - add	todo	fr	Liste A faire - ajouter
+todo list	common	fr	Liste A faire
+todo list - edit	todo	fr	Liste A faire - éditer
+todo preferences	common	fr	Préférences A faire
+todo	common	fr	A faire
+to	email	fr	A
+tomorrow is x's birthday.	common	fr	Demain c'est l'anniversaire de %1.
+total	common	fr	Total
+total records	admin	fr	Nombre total d'enregistrements
+translation management	common	fr	Gestion de la traduction
+translation	transy	fr	Traduction
+trouble ticket system	common	fr	Système d'incidents
+tu	calendar	fr	M
+tue	calendar	fr	Mar
+tuesday	common	fr	Mardi
+undisclosed recipients	email	fr	Destinataires cachés
+undisclosed sender	email	fr	Envoyeur caché
+updated	common	fr	Mis à jour
+update	nntp	fr	Mise à jour
+upload	filemanager	fr	Upload
+urgency	todo	fr	Urgence
+url	addressbook	fr	URL
+use cookies	login	fr	Utiliser les cookies
+use custom settings	email	fr	Utiliser les réglages personnalisés
+use end date	calendar	fr	Utiliser la date de fin
+user accounts	admin	fr	Comptes utilisateurs
+user groups	admin	fr	Groupes d'utilisateurs
+username	login	fr	Nom d'utilisateur
+user	common	fr	Utilisateur
+users	common	fr	Utilisateurs
+usersfile_perm_error	filemanager	fr	Pour corriger cette erreur vous allez devoir mettre les bonnes permissions sur le répertoire des fichiers/utilisateurs.<BR> Sur les systèmes *nix veuillez taper: chmod 707
+vcard	common	fr	VCard
+vcards require a first name entry.	addressbook	fr	Les VCards nécessitent une entrée Prénom.
+verdana	notes	fr	Verdana
+very large	notes	fr	Très grand
+very small	notes	fr	Très petit
+video phone	addressbook	fr	Téléphone Vidéo
+view access log	admin	fr	Voir les logs d'accès
+view all tickets	tts	fr	Voir tous les tickets
+view	bookkeeping	fr	Voir
+view	common	fr	Voir
+view/edit/delete all phrases	transy	fr	Voir/éditer/effacer toutes les phrases
+view_expense	bookkeeping	fr	Voir la dépense
+view_income	bookkeeping	fr	Voir la recette
+view matrix of actual month	todo	fr	Voir la matrice du mois actuel
+view only open tickets	tts	fr	Voir seulement les tickets ouverts
+view sessions	admin	fr	Voir les sessions
+view this entry	calendar	fr	Voir cette entrée
+voice phone	addressbook	fr	Téléphone vocal
+weather center	admin	fr	Centre météorologique
+weather center	preferences	fr	Centre météorologique
+weather	preferences	fr	Météo
+weather	weather	fr	Météo
+we	calendar	fr	M
+wed	calendar	fr	Mer
+wednesday	common	fr	Mercredi
+week	calendar	fr	Semaine
+weekday starts on	calendar	fr	La semaine démarre le
+weekly	calendar	fr	Hebdomadaire
+when creating new events default set to private	calendar	fr	A la création de nouveaux évènements mettre par défaut en privé
+which groups	common	fr	Quels groupes
+work day ends on	calendar	fr	Jour de travail finit le
+work day starts on	calendar	fr	Jour de travail démarre le
+work phone	addressbook	fr	Téléphone travail
+x matches found	calendar	fr	%1 occurences trouvées
+x messages have been deleted	email	fr	%1 messages ont été effacés
+year	calendar	fr	Année
+yearly	calendar	fr	Annuel
+yes	common	fr	Oui
+you are required to change your password during your first login	common	fr	Vous devez changer votre mot de passe à la première connection
+you have 1 high priority event on your calendar today.	common	fr	Vous avez 1 évènement de haute priorité sur votre calendrier aujourd'hui.
+you have 1 new message!	common	fr	Vous avez 1 nouveau message!
+you have been successfully logged out	login	fr	Vous avez été déconnecté avec succès
+you have entered an invailed date	todo	fr	Vous avez entré une date incorrecte
+you have messages!	common	fr	Vous avez des messages!
+you have no new messages	common	fr	Vous n'avez pas de nouveaux messages
+you have not entered a valid date	calendar	fr	Vous n'avez pas entré une date correcte
+you have not entered a title	calendar	fr	Vous n'avez pas entré de titre
+you have not entered a valid time of day	calendar	fr	Vous n'avez pas entré une heure de la journée correcte
+you have x high priority events on your calendar today.	common	fr	Vous avez %1 évènements de haute priorité sur votre calendrier aujourd'hui.
+you have x new messages!	common	fr	Vous avez %1 nouveaux messages!
+you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins une permission ou groupe à ce compte
+you must enter a base url	admin	fr	Vous devez entrer une URL de base
+you must enter a display	admin	fr	Vous devez entrer un écran
+you must enter an application name and title.	admin	fr	Vous devez entrer un nom d'application et titre.
+you must enter a news url	admin	fr	Vous devez entrer une URL de News
+you must enter a password	common	fr	Vous devez entrer un mot de passe
+you must enter one or more search keywords	calendar	fr	Vous devez entrer un ou plusieurs mots clés de recherche
+you must enter the number of listings display	admin	fr	Vous devez entrer le nombre d'éléments à afficher
+you must enter the number of minutes between reload	admin	fr	Vous devez entrer le nombre de minutes entre les rechargements
+you must select a file type	admin	fr	Vous devez choisir un type de fichier
+your current theme is: x	preferences	fr	Voter thème courant est: x
+your message has been sent	common	fr	Votre message a été envoyé
+your search returned 1 match	common	fr	Votre recherche a renvoyé une correspondance
+your search returned x matchs	common	fr	Votre recherche a renvoyé %1 correspondances
+your session could not be verified.	login	fr	Votre session n'a pas pu être vérifiée.
+your settings have been updated	common	fr	Vos réglages ont été mis à jour
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	fr	L'heure que vous avez suggéré <B> %1 - %2 </B> entre en conflit avec les entrés suivantes du calendrier:
+zip code	addressbook	fr	Code postal
+zone	admin	fr	Zone
+zone	weather	fr	Zone
