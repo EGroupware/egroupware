@@ -80,7 +80,7 @@
 
 			$this->data['lastlogin']         = $allValues[0]['phpgwaccountlastlogin'][0];
 			$this->data['lastloginfrom']     = $allValues[0]['phpgwaccountlastloginfrom'][0];
-			$this->data['lastpasswd_change'] = $allValues[0]['phpgwlastpasswdchange'][0];
+			$this->data['lastpasswd_change'] = @$allValues[0]['phpgwlastpasswdchange'][0];
 			$this->data['status']            = trim($allValues[0]['phpgwaccountstatus'][0]);
 			$this->data['type']              = $allValues[0]['phpgwaccounttype'][0];
 			$this->data['expires']           = $allValues[0]['phpgwaccountexpires'][0];
