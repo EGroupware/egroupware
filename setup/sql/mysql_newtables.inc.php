@@ -158,7 +158,8 @@
     todo_pri     int(11),
     todo_status  int(11),
     todo_datecreated  int(11),
-    todo_datedue int(11),
+    todo_startdate int(11),
+    todo_enddate int(11),
     PRIMARY KEY (todo_id)
   )";
   $db->query($sql);  

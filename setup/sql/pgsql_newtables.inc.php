@@ -137,7 +137,8 @@
     todo_pri	int,
     todo_status	int,
     todo_datecreated	int,
-    todo_datedue	int
+    todo_startdate	int,
+    todo_enddate int
   )";
   $db->query($sql);
 
