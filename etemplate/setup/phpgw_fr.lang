@@ -73,6 +73,7 @@ delete whole column (can not be undone!!!)	etemplate	fr	Effacer la colonne entiè
 deletes the above spez. etemplate from the database, can not be undone	etemplate	fr	Efface le eTemplate spécifié ci-dessus de la base de données, ne peut PAS être annulé
 deletes the etemplate spez. above	etemplate	fr	fface le eTemplate spécifié ci-dessus
 deletes this column	etemplate	fr	Efface cette colonne
+deletes this index	etemplate	fr	Efface cet index
 discard changes	etemplate	fr	Annuler les changements
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché en face de l'entrée our l'entrée est insérée pour un '%s' dans le label (le label du Boutonsoumettre ou le nom du fichierimage)
 displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
