@@ -59,14 +59,14 @@
 				unset($country);
 				unset($this->country_array['  ']);
 				// try to translate them and sort alphabetic
-				foreach($this->countrys as $k => $name)
+				foreach($this->country_array as $k => $name)
 				{
 					if (($translated = lang($name)) != $name.'*')
 					{
-						$this->countrys[$k] = $translated;
+						$this->country_array[$k] = $translated;
 					}
 				}
-				asort($this->countrys);
+				asort($this->country_array);
 			}
 		}
 
