@@ -588,7 +588,20 @@
 	/* Just a wrapper to my new print_r() function I added to the php3 support file.  Seek3r */
 	function _debug_array($array)
 	{
+		$four = False;
+		if(@floor(phpversion()) == 4)
+		{
+			$four = True;
+		}
+		if($four)
+		{
+			echo '<pre>';
+		}
 		print_r($array);
+		if($four)
+		{
+			echo '</pre>';
+		}
 	}
 
 	/*!
