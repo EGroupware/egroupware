@@ -274,7 +274,9 @@
 				// uncomment this to really see what the server's getting!
 				// xmlrpc_debugmsg($plist);
 				// now to deal with the method
-				$methName = $GLOBALS['_xh'][$parser]['method'];
+				$methName  = $GLOBALS['_xh'][$parser]['method'];
+				$_methName = $GLOBALS['_xh'][$parser]['method'];
+
 				if (ereg("^system\.", $methName))
 				{
 					$dmap = $GLOBALS['_xmlrpcs_dmap'];
@@ -285,9 +287,10 @@
 					$dmap = $this->dmap;
 					$sysCall=0;
 				}
-				if(!isset($dmap[$methName]['function']))
+
+				if (!isset($dmap[$methName]['function']))
 				{
-					if($this->authed)
+					if ($this->authed)
 					{
 						/* phpgw mod - fetch the (bo) class methods to create the dmap */
 						$method = $methName;
@@ -295,7 +298,7 @@
 						$methName = $tmp[2];
 						$service  = $tmp[1];
 						$class    = $tmp[0];
-						if(ereg('^service',$method))
+						if (ereg('^service',$method))
 						{
 							$t = 'phpgwapi.' . $class . '.exec';
 							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
@@ -309,6 +312,7 @@
 						/* _debug_array($this->dmap);exit; */
 					}
 				}
+
 				if (isset($dmap[$methName]['function']))
 				{
 					// dispatch if exists
@@ -327,7 +331,7 @@
 						}
 						else
 						{
-							if(function_exists($dmap[$methName]['function']))
+							if (function_exists($dmap[$methName]['function']))
 							{
 								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
 								$code = ereg_replace(',,',",'',",$code);
@@ -347,13 +351,14 @@
 								// _debug_array($params);
 								$this->reqtoarray($params);
 								//_debug_array($this->req_array);
-								if(ereg('^service',$method))
+								if (ereg('^service',$method))
 								{
 									$res = ExecMethod('phpgwapi.service.exec',array($service,$methName,$this->req_array));
 								}
 								else
 								{
-									$res = ExecMethod($method,$this->req_array);
+									list($s,$c,$m) = explode('.',$_methName);
+									$res = ExecMethod($s . '.' . $c . '.' . $dmap[$methName]['function'],$this->req_array);
 								}
 								/* $res = ExecMethod($method,$params); */
 								/* _debug_array($res);exit; */
