@@ -1280,20 +1280,29 @@
 		# Handle Moving Files and Directories
 		function moveTo()
 		{
-			while(list($num, $file) = each($this->fileman))
+			if(!$this->todir)
 			{
-				if($this->bo->vfs->mv(array(
-					'from'	=> $file,
-					'to'	=> $this->todir . '/' . $file,
-					'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
-				)))
+				$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move file because no destination directory is given ', $this->disppath.'/'.$file)));
+
+			}
+			else
+			{
+
+				while(list($num, $file) = each($this->fileman))
 				{
-					$moved++;
-					$this->messages[]=lang('Moved %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
-				}
-				else
-				{
-					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+					if($this->bo->vfs->mv(array(
+						'from'	=> $file,
+						'to'	=> $this->todir . '/' . $file,
+						'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
+					)))
+					{
+						$moved++;
+						$this->messages[]=lang('Moved %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
+					}
+					else
+					{
+						$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+					}
 				}
 			}
 
@@ -1309,23 +1318,30 @@
 		// Handle Copying of Files and Directories
 		function copyTo()
 		{
-			while(list($num, $file) = each($this->fileman))
+			if(!$this->todir)
 			{
-				if($this->bo->vfs->cp(array(
-					'from'	=> $file,
-					'to'	=> $this->todir . '/' . $file,
-					'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
-				)))
+				$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not copy file because no destination directory is given ', $this->disppath.'/'.$file)));
+
+			}
+			else
+			{
+				while(list($num, $file) = each($this->fileman))
 				{
-					$copied++;
-					$this->message .= lang('Copied %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
-				}
-				else
-				{
-					$this->message .= $GLOBALS['phpgw']->common->error_list(array(lang('Could not copy %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+					if($this->bo->vfs->cp(array(
+						'from'	=> $file,
+						'to'	=> $this->todir . '/' . $file,
+						'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
+					)))
+					{
+						$copied++;
+						$this->message .= lang('Copied %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file);
+					}
+					else
+					{
+						$this->message .= $GLOBALS['phpgw']->common->error_list(array(lang('Could not copy %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+					}
 				}
 			}
-
 			if($copied)
 			{
 				$x=0;
