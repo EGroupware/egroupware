@@ -123,6 +123,7 @@
 		'lastname'  => lang('Lastname').', '.lang('Firstname'),
 		'username'  => lang('username'),
 		'firstall'  => lang('Firstname').' '.lang('Lastname').' ['.lang('username').']',
+		'lastall'   => lang('Lastname').', '.lang('Firstname').' ['.lang('username').']',
 		'all'       => '['.lang('username').'] '.lang('Lastname').', '.lang('Firstname')
 	);
 	create_select_box('How do you like to display accounts','account_display',$account_display,
