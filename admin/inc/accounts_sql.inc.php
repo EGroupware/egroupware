@@ -170,23 +170,11 @@
      $phpgw->db->next_record();
      $lid = $phpgw->db->f(0);
 
-     $i = 0;
-     $phpgw->db->query("select cal_id from webcal_entry where cal_create_by='$account_id'");
-     while ($phpgw->db->next_record()) {
-       $cal_id[$i] = $phpgw->db->f("cal_id");
-       echo "<br>" . $phpgw->db->f("cal_id");
-       $i++;
-     }
+     $table_locks = array('preferences','todo','addressbook','accounts');
 
-     $table_locks = array('preferences','todo','addressbook','accounts',
-                          'webcal_entry','webcal_entry_user','webcal_entry_repeats',
-                          'webcal_entry_groups');
+     $phpgw->calendar->delete($lid);
+
      $phpgw->db->lock($table_locks);
-
-     for ($i=0; $i<count($cal_id); $i++) {
-        $phpgw->db->query("delete from webcal_entry_repeats where cal_id='".$cal_id[$i]."'");
-        $phpgw->db->query("delete from webcal_entry_groups where cal_id='".$cal_id[$i]."'");
-     }
 
      $phpgw->db->query("delete from webcal_entry where cal_create_by='".$account_id."'");
      $phpgw->db->query("delete from webcal_entry_user where cal_login='".$account_id."'");

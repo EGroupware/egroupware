@@ -18,6 +18,7 @@
   }
 
   $phpgw_info["flags"]["currentapp"] = "admin";
+  $phpgw_info["flags"]["enable_calendar_class"] = True;
   include("../header.inc.php");
   include($phpgw_info["server"]["server_root"] . "/admin/inc/accounts_"
         . $phpgw_info["server"]["account_repository"] . ".inc.php");
@@ -67,7 +68,7 @@
        </tr>
        <tr colspan=2>
         <td align=center>
-         <?php echo lang("All records and account information will be lost!"); ?>
+         <?php echo "<font color=\"red\"><blink>".lang("All records and account information will be lost!")."</blink></font>"; ?>
         </td>
        </tr>
        <tr>
