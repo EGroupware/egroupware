@@ -88,8 +88,10 @@ import	addressbook	fr	Importer
 import contacts	addressbook	fr	Importer les contacts
 import csv-file into addressbook	addressbook	fr	Importer le fichier CSV dans le carnet d'adresses
 import file	addressbook	fr	Importer le fichier
+import from	addressbook	fr	Importer depuis
 import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou VCard
 import from outlook	addressbook	fr	Importer depuis Outlook
+import multiple vcard	addressbook	fr	Importation VCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
 import_instructions	addressbook	fr	Dans Netscqpe, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format VCard.
 international	addressbook	fr	International
@@ -101,12 +103,16 @@ ldap root dn for contacts	admin	fr	Racine LDAP dn pour les contacts
 ldap root pw for contacts	admin	fr	Racine LDAP pw pour les contacts
 ldif	addressbook	fr	LDIF
 line 2	addressbook	fr	Ligne 2
+list all categories	addressbook	fr	Lister toutes les catégories
+list all customfields	addressbook	fr	Lister tous les champs spécifiques
+load vcard	addressbook	fr	Charger VCard
 mark records as private	addressbook	fr	Marquer l´enregistrement comme privé
 message phone	addressbook	fr	Message téléphonique
 middle name	addressbook	fr	Deuxième prénom
 mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
+multiple vcard	addressbook	fr	VCard Multiples
 no vcard	addressbook	fr	Pas de VCard
 number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
 number of records to read (<=200)	addressbook	fr	Nombre d'enregistrements à lire (<=200)
@@ -121,6 +127,7 @@ postal	common	fr	Postal
 pref	addressbook	fr	pref
 prefix	addressbook	fr	Préfixe
 public key	addressbook	fr	Clé publique
+read a list / search for entries.	addressbook	fr	Lire une liste / rechercher des entrées.
 read a list of entries.	addressbook	fr	Lire une liste d'entrées.
 read a single entry by passing the id and fieldlist.	addressbook	fr	Lire une seule entrée en passant l'ID et la liste des champs.
 record access	addressbook	fr	Enregistrer l'accès
@@ -130,6 +137,7 @@ select all	addressbook	fr	Sélectionner tout
 select the type of conversion	addressbook	fr	Sélectionner le type de convertion
 select the type of conversion:	addressbook	fr	Sélectionner le type de convertion:
 select where you want to store	admin	fr	Choisissez où vous voulez stocker
+show	addressbook	fr	Montre
 show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
 startrecord	addressbook	fr	Enregistrement de départ
 state	common	fr	Région
@@ -154,6 +162,7 @@ video phone	addressbook	fr	Téléphone vidéo
 voice phone	addressbook	fr	Téléphone vocal
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	Attention!! LDAP est valide seulement si vous n'utilisez pas les contacts pour le stockage des comptes!
 work phone	addressbook	fr	Téléphone (bureau)
+write (update or add) a single entry by passing the fields.	addressbook	fr	Ecrire (mise à jour ou ajout) une entrée en passant les champs.
 you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
 zip code	common	fr	Code postal
