@@ -1,9 +1,9 @@
 <!-- $Id$ -->
 
 	<xsl:template name="filter_select">
-		<xsl:variable name="select_action"><xsl:value-of select="select_action"/></xsl:variable>
+		<xsl:variable name="select_url"><xsl:value-of select="select_url"/></xsl:variable>
 		<xsl:variable name="lang_submit"><xsl:value-of select="lang_submit"/></xsl:variable>
-		<form method="post" action="{$select_action}">
+		<form method="post" action="{$select_url}">
 			<select name="filter" onChange="this.form.submit()" onMouseout="window.status='';return true;">
 				<xsl:attribute name="onMouseover">
 					<xsl:text>window.status='</xsl:text>

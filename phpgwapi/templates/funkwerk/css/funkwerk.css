@@ -39,7 +39,7 @@ td.left
 	color: #FFFFFF;
 }
 
-.admin_info
+.admin_info,a:link.admin_info,a:active.admin_info,a:visited.admin_info,a:hover.admin_info
 {
 	background-color: #0000A0;
 	color: #FFFFFF;
@@ -78,7 +78,7 @@ a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.t
 	color: #FFFFFF;
 }
 
-.row_on,.th_bright
+.row_on,.th_bright,.app_header
 {
 	background-color: #ADADAD;
 }
@@ -93,7 +93,7 @@ a:hover.top_menu,a:link.top_menu_selected,a:active.top_menu_selected,a:visited.t
 	background-color: #FFFFFF;
 }
 
-.th,.app_header,td.app_header
+.th
 {
 	background-color: #FFE000;
 }

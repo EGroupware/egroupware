@@ -7,8 +7,29 @@
 	<xsl:template match="delete">
 			<table cellpadding="2" cellspacing="2" align="center">
 				<tr>
+					<td align="center" colspan="2"><xsl:value-of select="lang_error_msg"/></td>
+				</tr>
+				<tr>
 					<td align="center" colspan="2"><xsl:value-of select="lang_confirm_msg"/></td>
 				</tr>
+				<xsl:choose>
+					<xsl:when test="subs = 'yes'">
+						<tr>
+							<td align="center" colspan="2">
+								<table>
+									<tr>
+										<td><input type="radio" name="subs" value="move"/></td>
+										<td><xsl:value-of select="lang_sub_select_move"/></td>
+									</tr>
+									<tr>
+										<td><input type="radio" name="subs" value="drop"/></td>
+										<td><xsl:value-of select="lang_sub_select_drop"/></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</xsl:when>
+				</xsl:choose>
 				<tr>
 					<td>
 						<xsl:variable name="delete_url"><xsl:value-of select="delete_url"/></xsl:variable>

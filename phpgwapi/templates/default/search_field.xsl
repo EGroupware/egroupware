@@ -1,10 +1,10 @@
 <!-- $Id$ -->
 
 	<xsl:template name="search_field">
-		<xsl:variable name="search_url"><xsl:value-of select="search_url"/></xsl:variable>
+		<xsl:variable name="select_url"><xsl:value-of select="select_url"/></xsl:variable>
 		<xsl:variable name="query"><xsl:value-of select="query"/></xsl:variable>
 		<xsl:variable name="lang_search"><xsl:value-of select="lang_search"/></xsl:variable>
-			<form method="post" action="{$search_url}">
+			<form method="post" action="{$select_url}">
 				<input type="text" name="query" value="{$query}" onMouseout="window.status='';return true;">
 					<xsl:attribute name="onMouseover">
 						<xsl:text>window.status='</xsl:text>

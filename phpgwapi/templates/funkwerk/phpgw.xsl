@@ -37,16 +37,6 @@
 				<title><xsl:value-of select="website_title"/></title>
 				<link rel="stylesheet" type="text/css" href="{$phpgw_css_file}"/>
 				<link rel="stylesheet" type="text/css" href="{$theme_css_file}"/>
-				<xsl:value-of disable-output-escaping="yes" select="java_script"/>
-				<xsl:choose>
-					<xsl:when test="app_css">
-						<style type="text/css">
-							<xsl:text>&lt;!--</xsl:text>
-								<xsl:value-of disable-output-escaping="yes" select="app_css"/>
-							<xsl:text>--></xsl:text>
-						</style>
-					</xsl:when>
-				</xsl:choose>
 			</head>
 			<body>
 				<!-- BEGIN top_part -->
@@ -57,7 +47,7 @@
 						<xsl:choose>
 							<xsl:when test="current_users">
 								<xsl:variable name="url_current_users"><xsl:value-of select="url_current_users"/></xsl:variable>
-								<td class="admin_info" valign="bottom"><a href="{$url_current_users}">[<xsl:value-of select="current_users"/>]</a></td>
+								<td class="admin_info" valign="bottom"><a href="{$url_current_users}" class="admin_info">[<xsl:value-of select="current_users"/>]</a></td>
 							</xsl:when>
 							<xsl:otherwise>
 								<td class="admin_info"/>
@@ -84,29 +74,27 @@
 				<!-- END top_part -->
 				<table width="100%" height="100%" cellspacing="0" cellpadding="0">
 					<tr valign="top" width="100%">
-						<td width="17%" rowspan="2">
+						<td width="131">
 						<!-- BEGIN left_part -->
-							<table valign="top" cellpadding="2" cellspacing="2">
+							<table valign="top" cellpadding="2" cellspacing="2" width="131">
 								<xsl:apply-templates select="applications"/>
-								<tr>
-									<td/>
-								</tr>
 							</table>
 						<!-- END left_part -->
 						</td>
-						<!-- BEGIN app_header -->
-						<td height="15" colspan="2">
-							<xsl:choose>
-								<xsl:when test="app_header">
-									<xsl:attribute name="class">app_header</xsl:attribute>
-									<xsl:value-of disable-output-escaping="yes" select="app_header"/>
-								</xsl:when>
-							</xsl:choose>
-						</td>
-						<!-- END app_header -->
-					</tr>
-					<tr valign="top">
-						<td height="100%" width="80%" valign="top" align="center">
+						<td height="100%" width="100%" valign="top" align="center">
+							<table valign="top" cellpadding="2" cellspacing="2" width="100%">
+								<tr>
+									<td>
+										<xsl:choose>
+											<xsl:when test="app_header">
+												<xsl:attribute name="class">app_header</xsl:attribute>
+												<xsl:value-of disable-output-escaping="yes" select="app_header"/>
+											</xsl:when>
+										</xsl:choose>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
 							<xsl:choose>
 								<xsl:when test="msgbox_data">
 									<xsl:call-template name="msgbox"/>
@@ -135,6 +123,9 @@
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>
 								</xsl:otherwise>
 							</xsl:choose>
+									</td>
+								</tr>
+							</table>
 						</td>
 						<td width="3%"/>
 					</tr>

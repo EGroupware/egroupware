@@ -110,7 +110,7 @@ table.login
 	background: url(../../default/images/bg_filler.png);
 }
 
-.user_info,.admin_info,.small_text
+.small_text
 {
 	font-size: 85%;
 }
@@ -124,11 +124,4 @@ table.login
 .th_text,.app_header,.th
 {
 	font-weight: bold;
-}
-
-.app_header
-{
-	padding: 5px;
-	padding-bottom: 0px;
-	text-align: center;
 }
