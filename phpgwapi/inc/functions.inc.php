@@ -306,7 +306,7 @@
 				}
 			}
 			// this removes the sessiondata if its saved in the URL
-			$query = preg_replace('/[&]?sessionid=[^&]+&kp3=[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
+			$query = preg_replace('/[&]?sessionid(=|%3D)[^&]+&kp3(=|%3D)[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
 			Header('Location: '.$GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=10&phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : '')));
 			exit;
 		}
