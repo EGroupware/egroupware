@@ -42,6 +42,15 @@
 
 		var $soap_functions = array();
 
+		var $install_file = True;
+//		var $install_file = False;
+
+		var $write_file = True;
+//		var $write_file = False;
+
+//		var $debug = True;
+		var $debug = False;
+
 		var $db;
 		var $is;
 		var $client;
@@ -215,45 +224,110 @@
 			}
 		}
 
+		function create_file($basedir,$sep,$filename,$file_content)
+		{
+			// This will be dangerous to do
+			$directory = dirname($filename);
+			if($this->debug)
+			{
+				echo 'Checking filename: '.$filename.'<br>'."\n".'Directory part: '.$directory.'<br>'."\n";
+			}
+			$ind_dir = explode('/',$directory);
+			$long_dir = '';
+			$new_base = $basedir;
+			for($i=0;$i<count($ind_dir);$i++)
+			{
+				@chdir($new_base);
+				if($this->debug)
+				{
+					echo 'Changing directory to :'.$new_base.'<br>'."\n";
+				}
+				$long_dir .= ($long_dir?$sep:'').$ind_dir[$i];
+				if(!is_dir($ind_dir[$i]))
+				{
+					@mkdir($ind_dir[$i],0770);
+					if($this->debug)
+					{
+						echo 'Creating Directory: '.$ind_dir[$i].'<br>'."\n";
+					}
+					clearstatcache();
+				}
+				$new_base .= $sep.$ind_dir[$i];
+			}
+			if($this->write_file)
+			{
+				@chdir($basedir);
+				$fp=fopen($basedir.$sep.$filename,'wb');
+				fwrite($fp,base64_decode($file_content));
+				fclose($fp);
+				if($this->debug)
+				{
+					echo 'Creating file: '.$basedir.$sep.$filename.'<br>'."\n";
+				}
+			}
+			if($this->debug)
+			{
+				echo '<br>'."\n";
+			}
+		}
+
+		function delete_dir($directory,$sep)
+		{
+			$d = dir($directory);
+			$dir_path = Array();
+			while($entry = $d->read())
+			{
+				$new_filename = $directory.$sep.$entry;
+				if(is_file($new_filename))
+				{
+					unlink($new_filename);
+				}
+				elseif(is_dir($new_filename))
+				{
+					if($entry != '.' && $entry != '..')
+					{
+						$dir_path[] = $new_filename;
+					}
+				}
+			}
+			$d->close();
+			@reset($dir_path);
+			while($dir_path && list($dummy,$dir) = each($dir_path))
+			{
+				$this->delete_dir($dir,$sep);
+			}
+			rmdir($directory);
+		}
+
 		function request_packaged_app($app_id)
 		{
 			if(is_object($this->is))
 			{
-				$application = $this->is->send('system.package_app',$app_id,$this->is->server['server_url']);
-// comment from here down to stop the actual install
-/*
-				// This is where I need to install the application
-				$sep = filesystem_separator();
-				@reset($application);
-				list($appid,$app_info) = each($application);
-				$app_name = $app_info['name'];
-
-				$basedir = PHPGW_SERVER_ROOT.$sep.$app_name;
-				@mkdir($basedir);
-
-				while($application && list($filename,$file_content) = each($application))
+				$application = $this->is->send('system.package_app',$app_id,$this->is->server['server_url'],False);
+				
+				if(is_array($application) && $this->install_file)
 				{
-					$long_filename = $basedir.$sep.$filename;
-					// This will be dangerous to do
-					$directory = dirname($long_filename);
-					if(!is_dir($directory))
+					// This is where I need to install the application
+					$sep = filesystem_separator();
+					@reset($application);
+					list($appid,$app_info) = each($application);
+					$app_name = $app_info['name'];
+
+					$basedir = PHPGW_SERVER_ROOT.$sep.$app_name;
+
+					$this->delete_dir($basedir,$sep);
+					
+					@mkdir($basedir,0770);
+					if($this->debug)
 					{
-						$long_dir = $long_filename;
-						$pos_slash = pos(' '.$long_dir,$sep)
-						while($pos_slash)
-						{
-							$short_dir = substr($long_dir,0,$pos_slash - 1);
-							$long_dir = str_replace($short_dir.$sep,'',$long_dir);
-							@mkdir($short_dir,770);
-							$pos_slash = pos(' '.$long_dir,$sep)
-						}
+						echo 'Creating Directory: '.$basedir.'<br>'."\n";
 					}
-					$fp=fopen($long_filename,'wb');
-					fwrite($fp,base64_decode($file_content));
-					fclose($fp);
+
+					while(list($filename,$file_content) = each($application))
+					{
+						$this->create_file($basedir,$sep,$filename,$file_content);
+					}
 				}
-*/
-// Comment above to stop the actual install
 				@reset($application);
 				return $application;
 			}
@@ -408,9 +482,10 @@
 			$this->dir_file = Array();
 			$this->db->next_record();
 			$app_name = $this->db->f('app_name');
-			$this->dir_file[$this->db->f('app_id')] = CreateObject('phpgwapi.xmlrpcval',
+			$app_id = $this->db->f('app_id');
+			$this->dir_file[$app_id] = CreateObject('phpgwapi.xmlrpcval',
 				Array(
-					'id'      => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_id'),'int'),
+					'id'      => CreateObject('phpgwapi.xmlrpcval',$app_id,'int'),
 					'name'    => CreateObject('phpgwapi.xmlrpcval',$app_name,'string'),
 					'title'   => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_title'),'string'),
 					'version' => CreateObject('phpgwapi.xmlrpcval',$this->db->f('app_version'),'string'),
