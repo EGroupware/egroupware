@@ -11,12 +11,12 @@
 	
   /* $Id$ */
 
-	$test[] = "0.9.1";
+	$test[] = '0.9.1';
 	function phpgwapi_upgrade0_9_1()
 	{
 		global $phpgw_info, $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->AlterColumn("access_log", "lo", array("type" => "varchar", "precision" => 255));
+		$phpgw_setup->oProc->AlterColumn('access_log', 'lo', array('type' => 'varchar', 'precision' => 255));
 
 		$phpgw_setup->oProc->query("update lang set lang='da' where lang='dk'");
 		$phpgw_setup->oProc->query("update lang set lang='ko' where lang='kr'");
@@ -29,7 +29,7 @@
 		$phpgw_setup->oProc->query("update preferences set preference_name='ko' where preference_name='kr'");
 
 		//install weather support
-		$phpgw_setup->oProc->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info["server"]["version"]."')");
+		$phpgw_setup->oProc->query("insert into applications (app_name, app_title, app_enabled, app_order, app_tables, app_version) values ('weather', 'Weather', 1, 12, NULL, '".$phpgw_info['server']['version']."')");
 		$phpgw_setup->oProc->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'weather','Weather','en','weather')");
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.2';
@@ -55,10 +55,10 @@
 			}
 		}
 
-		$phpgw_setup->oProc->AlterColumn($table, $field, array("type" => "int", "precision" => 4, "nullable" => false, "default" => 0));
+		$phpgw_setup->oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
 	}
 
-	$test[] = "0.9.2";
+	$test[] = '0.9.2';
 	function phpgwapi_upgrade0_9_2()
 	{
 		global $setup_info;
@@ -67,7 +67,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.3pre1";
+	$test[] = '0.9.3pre1';
 	function phpgwapi_upgrade0_9_3pre1()
 	{
 		global $setup_info;
@@ -77,7 +77,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre2";
+	$test[] = '0.9.3pre2';
 	function phpgwapi_upgrade0_9_3pre2()
 	{
 		global $setup_info;
@@ -87,7 +87,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre3";
+	$test[] = '0.9.3pre3';
 	function phpgwapi_upgrade0_9_3pre3()
 	{
 		global $setup_info;
@@ -97,7 +97,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre4";
+	$test[] = '0.9.3pre4';
 	function phpgwapi_upgrade0_9_3pre4()
 	{
 		global $setup_info, $phpgw_setup;
@@ -109,7 +109,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre5";
+	$test[] = '0.9.3pre5';
 	function phpgwapi_upgrade0_9_3pre5()
 	{
 		global $setup_info, $phpgw_setup;
@@ -135,7 +135,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre6";
+	$test[] = '0.9.3pre6';
 	function phpgwapi_upgrade0_9_3pre6()
 	{
 		global $setup_info, $phpgw_setup;
@@ -149,7 +149,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre7";
+	$test[] = '0.9.3pre7';
 	function phpgwapi_upgrade0_9_3pre7()
 	{
 		global $setup_info, $phpgw_setup;
@@ -167,139 +167,139 @@
 			)
 		);
 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AF','Afrikaans','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AM','Amharic','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AR','Arabic','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AS','Assamese','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AY','Aymara','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AZ','Azerbaijani','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BA','Bashkir','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BE','Byelorussian','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BG','Bulgarian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BH','Bihari','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BI','Bislama','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BN','Bengali / Bangla','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BO','Tibetan','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BR','Breton','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CA','Catalan','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CO','Corsican','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CS','Czech','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CY','Welsh','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DA','Danish','Yes')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DE','German','Yes')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DZ','Bhutani','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EL','Greek','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EN','English / American','Yes')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EO','Esperanto','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ES','Spanish','Yes')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ET','Estonian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EU','Basque','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FA','Persian','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FI','Finnish','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FJ','Fiji','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FO','Faeroese','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FR','French','Yes')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FY','Frisian','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GA','Irish','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GD','Gaelic / Scots Gaelic','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GL','Galician','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GN','Guarani','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GU','Gujarati','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HA','Hausa','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HI','Hindi','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HR','Croatian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HU','Hungarian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HY','Armenian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IA','Interlingua','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IE','Interlingue','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IK','Inupiak','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IN','Indonesian','No')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IS','Icelandic','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IT','Italian','Yes')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IW','Hebrew','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JA','Japanese','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JI','Yiddish','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JW','Javanese','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KA','Georgian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KK','Kazakh','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KL','Greenlandic','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KM','Cambodian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KN','Kannada','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KO','Korean','Yes')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KS','Kashmiri','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KU','Kurdish','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KY','Kirghiz','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LA','Latin','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LN','Lingala','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LO','Laothian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LT','Lithuanian','No')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LV','Latvian / Lettish','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MG','Malagasy','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MI','Maori','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MK','Macedonian','No')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ML','Malayalam','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MN','Mongolian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MO','Moldavian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MR','Marathi','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MS','Malay','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MT','Maltese','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MY','Burmese','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NA','Nauru','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NE','Nepali','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NL','Dutch','Yes')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NO','Norwegian','Yes')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OC','Occitan','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OM','Oromo / Afan','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OR','Oriya','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PA','Punjabi','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PL','Polish','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PS','Pashto / Pushto','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PT','Portuguese','Yes')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('QU','Quechua','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RM','Rhaeto-Romance','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RN','Kirundi','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RO','Romanian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RU','Russian','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RW','Kinyarwanda','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SA','Sanskrit','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SD','Sindhi','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SG','Sangro','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SH','Serbo-Croatian','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SI','Singhalese','No')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SK','Slovak','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SL','Slovenian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SM','Samoan','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SN','Shona','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SO','Somali','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SQ','Albanian','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SR','Serbian','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SS','Siswati','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ST','Sesotho','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SU','Sudanese','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SV','Swedish','Yes')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SW','Swahili','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TA','Tamil','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TE','Tegulu','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TG','Tajik','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TH','Thai','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TI','Tigrinya','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TK','Turkmen','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TL','Tagalog','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TN','Setswana','No')");    
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TO','Tonga','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TR','Turkish','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TS','Tsonga','No')");      
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TT','Tatar','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TW','Twi','No')"); 
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UK','Ukrainian','No')");   
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UR','Urdu','No')");        
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UZ','Uzbek','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('VI','Vietnamese','No')");  
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('VO','Volapuk','No')");     
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('WO','Wolof','No')");       
-		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('XH','Xhosa','No')");       
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AF','Afrikaans','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AM','Amharic','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AR','Arabic','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AS','Assamese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AY','Aymara','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('AZ','Azerbaijani','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BA','Bashkir','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BE','Byelorussian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BG','Bulgarian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BH','Bihari','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BI','Bislama','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BN','Bengali / Bangla','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BO','Tibetan','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('BR','Breton','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CA','Catalan','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CO','Corsican','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CS','Czech','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('CY','Welsh','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DA','Danish','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DE','German','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('DZ','Bhutani','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EL','Greek','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EN','English / American','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EO','Esperanto','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ES','Spanish','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ET','Estonian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('EU','Basque','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FA','Persian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FI','Finnish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FJ','Fiji','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FO','Faeroese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FR','French','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('FY','Frisian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GA','Irish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GD','Gaelic / Scots Gaelic','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GL','Galician','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GN','Guarani','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('GU','Gujarati','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HA','Hausa','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HI','Hindi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HR','Croatian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HU','Hungarian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('HY','Armenian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IA','Interlingua','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IE','Interlingue','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IK','Inupiak','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IN','Indonesian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IS','Icelandic','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IT','Italian','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('IW','Hebrew','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JA','Japanese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JI','Yiddish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('JW','Javanese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KA','Georgian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KK','Kazakh','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KL','Greenlandic','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KM','Cambodian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KN','Kannada','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KO','Korean','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KS','Kashmiri','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KU','Kurdish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('KY','Kirghiz','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LA','Latin','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LN','Lingala','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LO','Laothian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LT','Lithuanian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('LV','Latvian / Lettish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MG','Malagasy','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MI','Maori','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MK','Macedonian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ML','Malayalam','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MN','Mongolian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MO','Moldavian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MR','Marathi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MS','Malay','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MT','Maltese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('MY','Burmese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NA','Nauru','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NE','Nepali','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NL','Dutch','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('NO','Norwegian','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OC','Occitan','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OM','Oromo / Afan','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('OR','Oriya','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PA','Punjabi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PL','Polish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PS','Pashto / Pushto','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('PT','Portuguese','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('QU','Quechua','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RM','Rhaeto-Romance','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RN','Kirundi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RO','Romanian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RU','Russian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('RW','Kinyarwanda','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SA','Sanskrit','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SD','Sindhi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SG','Sangro','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SH','Serbo-Croatian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SI','Singhalese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SK','Slovak','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SL','Slovenian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SM','Samoan','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SN','Shona','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SO','Somali','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SQ','Albanian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SR','Serbian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SS','Siswati','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ST','Sesotho','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SU','Sudanese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SV','Swedish','Yes')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('SW','Swahili','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TA','Tamil','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TE','Tegulu','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TG','Tajik','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TH','Thai','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TI','Tigrinya','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TK','Turkmen','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TL','Tagalog','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TN','Setswana','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TO','Tonga','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TR','Turkish','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TS','Tsonga','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TT','Tatar','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('TW','Twi','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UK','Ukrainian','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UR','Urdu','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('UZ','Uzbek','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('VI','Vietnamese','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('VO','Volapuk','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('WO','Wolof','No')");
+		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('XH','Xhosa','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('YO','Yoruba','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZH','Chinese','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ZU','Zulu','No')");
@@ -309,7 +309,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.3pre8";
+	$test[] = '0.9.3pre8';
 	function phpgwapi_upgrade0_9_3pre8()
 	{
 		global $setup_info, $phpgw_setup;
@@ -317,7 +317,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.3pre9";
+	$test[] = '0.9.3pre9';
 	function phpgwapi_upgrade0_9_3pre9()
 	{
 		global $setup_info, $phpgw_setup;
@@ -325,7 +325,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.3pre10";
+	$test[] = '0.9.3pre10';
 	function phpgwapi_upgrade0_9_3pre10()
 	{
 		global $setup_info, $phpgw_setup;
@@ -333,7 +333,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.3";
+	$test[] = '0.9.3';
 	function phpgwapi_upgrade0_9_3()
 	{
 		global $setup_info, $phpgw_setup;
@@ -341,7 +341,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.4pre1";
+	$test[] = '0.9.4pre1';
 	function phpgwapi_upgrade0_9_4pre1()
 	{
 		global $setup_info, $phpgw_setup;
@@ -349,7 +349,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.4pre2";
+	$test[] = '0.9.4pre2';
 	function phpgwapi_upgrade0_9_4pre2()
 	{
 		global $setup_info, $phpgw_setup;
@@ -357,7 +357,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.4pre3";
+	$test[] = '0.9.4pre3';
 	function phpgwapi_upgrade0_9_4pre3()
 	{
 		global $setup_info, $phpgw_setup;
@@ -366,19 +366,19 @@
 		//return True;
 	}
 
-	$test[] = "0.9.4pre4";
+	$test[] = '0.9.4pre4';
 	function phpgwapi_upgrade0_9_4pre4()
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->AlterColumn("sessions", "session_lid", array("type" => "varchar", "precision" => 255));
+		$phpgw_setup->oProc->AlterColumn('sessions', 'session_lid', array('type' => 'varchar', 'precision' => 255));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.4pre5';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
 
-	$test[] = "0.9.4pre5";
+	$test[] = '0.9.4pre5';
 	function phpgwapi_upgrade0_9_4pre5()
 	{
 		global $setup_info, $phpgw_setup;
@@ -387,12 +387,12 @@
 		//return True;
 	}
 
-	$test[] = "0.9.4";
+	$test[] = '0.9.4';
 	function phpgwapi_upgrade0_9_4()
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->query("delete from languages");
+		$phpgw_setup->oProc->query('delete from languages');
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");
 		@$phpgw_setup->oProc->query("INSERT INTO languages (lang_id, lang_name, available) values ('af','Afrikaans','No')");
@@ -535,68 +535,68 @@
 		//return True;
 	}
 
-	$test[] = "0.9.5pre1";
+	$test[] = '0.9.5pre1';
 	function phpgwapi_upgrade0_9_5pre1()
 	{
 		global $phpgw_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->DropTable("sessions");
-		$phpgw_setup->oProc->CreateTable("phpgw_sessions", array(
-				"fd" => array(
-					"session_id" => array("type" => "varchar", "precision" => 255, "nullable" => false),
-					"session_lid" => array("type" => "varchar", "precision" => 255),
-					"session_pwd" => array("type" => "varchar", "precision" => 255),
-					"session_ip" => array("type" => "varchar", "precision" => 255),
-					"session_logintime" => array("type" => "int", "precision" => 4),
-					"session_dla" => array("type" => "int", "precision" => 4)
+		$phpgw_setup->oProc->DropTable('sessions');
+		$phpgw_setup->oProc->CreateTable('phpgw_sessions', array(
+				'fd' => array(
+					'session_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
+					'session_lid' => array('type' => 'varchar', 'precision' => 255),
+					'session_pwd' => array('type' => 'varchar', 'precision' => 255),
+					'session_ip' => array('type' => 'varchar', 'precision' => 255),
+					'session_logintime' => array('type' => 'int', 'precision' => 4),
+					'session_dla' => array('type' => 'int', 'precision' => 4)
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array("session_id")
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array('session_id')
 			));
 
-		$phpgw_setup->oProc->CreateTable("phpgw_acl", array(
-				"fd" => array(
-					"acl_appname" => array("type" => "varchar", "precision" => 50),
-					"acl_location" => array("type" => "varchar", "precision" => 255),
-					"acl_account" => array("type" => "int", "precision" => 4),
-					"acl_account_type" => array("type" => "char", "precision" => 1),
-					"acl_rights" => array("type" => "int", "precision" => 4)
+		$phpgw_setup->oProc->CreateTable('phpgw_acl', array(
+				'fd' => array(
+					'acl_appname' => array('type' => 'varchar', 'precision' => 50),
+					'acl_location' => array('type' => 'varchar', 'precision' => 255),
+					'acl_account' => array('type' => 'int', 'precision' => 4),
+					'acl_account_type' => array('type' => 'char', 'precision' => 1),
+					'acl_rights' => array('type' => 'int', 'precision' => 4)
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			));
 
-		$phpgw_setup->oProc->DropTable("app_sessions");
-		$phpgw_setup->oProc->CreateTable("phpgw_app_sessions", array(
-				"fd" => array(
-					"sessionid" => array("type" => "varchar", "precision" => 255, "nullable" => false),
-					"loginid" => array("type" => "varchar", "precision" => 20),
-					"app" => array("type" => "varchar", "precision" => 20),
-					"content" => array("type" => "text")
+		$phpgw_setup->oProc->DropTable('app_sessions');
+		$phpgw_setup->oProc->CreateTable('phpgw_app_sessions', array(
+				'fd' => array(
+					'sessionid' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
+					'loginid' => array('type' => 'varchar', 'precision' => 20),
+					'app' => array('type' => 'varchar', 'precision' => 20),
+					'content' => array('type' => 'text')
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			));
 
-		$phpgw_setup->oProc->DropTable("access_log");
-		$phpgw_setup->oProc->CreateTable("phpgw_access_log", array(
-				"fd" => array(
-					"sessionid" => array("type" => "varchar", "precision" => 255),
-					"loginid" => array("type" => "varchar", "precision" => 30),
-					"ip" => array("type" => "varchar", "precision" => 30),
-					"li" => array("type" => "int", "precision" => 4),
-					"lo" => array("type" => "varchar", "precision" => 255)
+		$phpgw_setup->oProc->DropTable('access_log');
+		$phpgw_setup->oProc->CreateTable('phpgw_access_log', array(
+				'fd' => array(
+					'sessionid' => array('type' => 'varchar', 'precision' => 255),
+					'loginid' => array('type' => 'varchar', 'precision' => 30),
+					'ip' => array('type' => 'varchar', 'precision' => 30),
+					'li' => array('type' => 'int', 'precision' => 4),
+					'lo' => array('type' => 'varchar', 'precision' => 255)
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			));
 		
 		$setup_info['phpgwapi']['currentver'] = '0.9.5pre2';
@@ -604,7 +604,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.5pre2";
+	$test[] = '0.9.5pre2';
 	function phpgwapi_upgrade0_9_5pre2()
 	{
 		global $setup_info;
@@ -613,7 +613,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.5";
+	$test[] = '0.9.5';
 	function phpgwapi_upgrade0_9_5()
 	{
 		global $setup_info;
@@ -622,7 +622,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.6";
+	$test[] = '0.9.6';
 	function phpgwapi_upgrade0_9_6()
 	{
 		global $setup_info;
@@ -631,7 +631,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.7pre1";
+	$test[] = '0.9.7pre1';
 	function phpgwapi_upgrade0_9_7pre1()
 	{
 		global $setup_info;
@@ -639,7 +639,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
-	$test[] = "0.9.7pre2";
+	$test[] = '0.9.7pre2';
 	function phpgwapi_upgrade0_9_7pre2()
 	{
 		global $setup_info;
@@ -648,7 +648,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.7pre3";
+	$test[] = '0.9.7pre3';
 	function phpgwapi_upgrade0_9_7pre3()
 	{
 		global $setup_info;
@@ -657,7 +657,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.7";
+	$test[] = '0.9.7';
 	function phpgwapi_upgrade0_9_7()
 	{
 		global $setup_info;
@@ -666,7 +666,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.8pre1";
+	$test[] = '0.9.8pre1';
 	function phpgwapi_upgrade0_9_8pre1()
 	{
 		global $setup_info, $phpgw_setup;
@@ -675,19 +675,19 @@
 		$t = array();
 		while ($phpgw_setup->oProc->next_record())
 		{
-			$t[$phpgw_setup->oProc->f("preference_owner")][$phpgw_setup->oProc->f("preference_appname")][$phpgw_setup->oProc->f("preference_var")] = $phpgw_setup->oProc->f("preference_value");
+			$t[$phpgw_setup->oProc->f('preference_owner')][$phpgw_setup->oProc->f('preference_appname')][$phpgw_setup->oProc->f('preference_var')] = $phpgw_setup->oProc->f('preference_value');
 		}
 
-		$phpgw_setup->oProc->DropTable("preferences");
-		$phpgw_setup->oProc->CreateTable("preferences", array(
-				"fd" => array(
-					"preference_owner" => array("type" => "int", "precision" => 4, "nullable" => false),
-					"preference_value" => array("type" => "text")
+		$phpgw_setup->oProc->DropTable('preferences');
+		$phpgw_setup->oProc->CreateTable('preferences', array(
+				'fd' => array(
+					'preference_owner' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
+					'preference_value' => array('type' => 'text')
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array()
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			));
 
 		while ($tt = each($t))
@@ -700,7 +700,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.8pre2";
+	$test[] = '0.9.8pre2';
 	function phpgwapi_upgrade0_9_8pre2()
 	{
 		global $setup_info, $phpgw_setup;
@@ -709,26 +709,26 @@
 		//return True;
 	}
 
-	$test[] = "0.9.8pre3";
+	$test[] = '0.9.8pre3';
 	function phpgwapi_upgrade0_9_8pre3()
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->DropTable("phpgw_sessions");
+		$phpgw_setup->oProc->DropTable('phpgw_sessions');
 		$phpgw_setup->oProc->CreateTable(
-			"phpgw_sessions", array(
-				"fd" => array(
-					"session_id" => array("type" => "varchar", "precision" => 255, "nullable" => false),
-					"session_lid" => array("type" => "varchar", "precision" => 255),
-					"session_ip" => array("type" => "varchar", "precision" => 255),
-					"session_logintime" => array("type" => "int", "precision" => 4),
-					"session_dla" => array("type" => "int", "precision" => 4),
-					"session_info" => array("type" => "text")
+			'phpgw_sessions', array(
+				'fd' => array(
+					'session_id' => array('type' => 'varchar', 'precision' => 255, 'nullable' => false),
+					'session_lid' => array('type' => 'varchar', 'precision' => 255),
+					'session_ip' => array('type' => 'varchar', 'precision' => 255),
+					'session_logintime' => array('type' => 'int', 'precision' => 4),
+					'session_dla' => array('type' => 'int', 'precision' => 4),
+					'session_info' => array('type' => 'text')
 				),
-				"pk" => array(),
-				"ix" => array(),
-				"fk" => array(),
-				"uc" => array("session_id")
+				'pk' => array(),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array('session_id')
 			)
 		);
 
@@ -737,7 +737,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.8pre4";
+	$test[] = '0.9.8pre4';
 	function phpgwapi_upgrade0_9_8pre4()
 	{
 		global $setup_info, $phpgw_setup;
@@ -762,7 +762,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.8pre5";
+	$test[] = '0.9.8pre5';
 	function phpgwapi_upgrade0_9_8pre5()
 	{
 		global $setup_info, $phpgw_setup;
@@ -782,10 +782,10 @@
 					'cat_description' => array('type' => 'varchar', 'precision'  => 255, 'nullable' => false),
 					'cat_data' =>    array('type' => 'text')
 				),
-					'pk' => array('cat_id'),
-					'ix' => array(),
-					'fk' => array(),
-					'uc' => array()
+				'pk' => array('cat_id'),
+				'ix' => array(),
+				'fk' => array(),
+				'uc' => array()
 			)
 		);
 
@@ -794,7 +794,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.9pre1";
+	$test[] = '0.9.9pre1';
 	function phpgwapi_upgrade0_9_9pre1()
 	{
 		global $setup_info;
@@ -803,7 +803,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.9";
+	$test[] = '0.9.9';
 	function phpgwapi_upgrade0_9_9()
 	{
 		global $setup_info, $phpgw_setup;
@@ -815,7 +815,7 @@
 		{
 			while($phpgw_setup->oProc->next_record())
 			{
-				$apps_perms = explode(":",$phpgw_setup->oProc->f("account_permissions"));
+				$apps_perms = explode(":",$phpgw_setup->oProc->f('account_permissions'));
 				for($i=1;$i<count($apps_perms)-1;$i++)
 				{
 					if ($apps_perms[$i] != "")
@@ -834,10 +834,10 @@
 		{
 			while($phpgw_setup->oProc->next_record())
 			{
-				$apps_perms = explode(":",$phpgw_setup->oProc->f("group_apps"));
+				$apps_perms = explode(":",$phpgw_setup->oProc->f('group_apps'));
 				for($i=1;$i<count($apps_perms)-1;$i++)
 				{
-					if ($apps_perms[$i] != "")
+					if ($apps_perms[$i] != '')
 					{
 						$sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
 						$sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->oProc->f("group_id").", 'g', 1)";
@@ -853,7 +853,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre1";
+	$test[] = '0.9.10pre1';
 	function phpgwapi_upgrade0_9_10pre1()
 	{
 		global $setup_info, $phpgw_setup;
@@ -865,7 +865,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre2";
+	$test[] = '0.9.10pre2';
 	function phpgwapi_upgrade0_9_10pre2()
 	{
 		global $setup_info, $phpgw_setup;
@@ -877,10 +877,10 @@
 		{
 			while($phpgw_setup->oProc->next_record())
 			{
-				$gl = explode(",",$phpgw_setup->oProc->f("account_groups"));
+				$gl = explode(',',$phpgw_setup->oProc->f('account_groups'));
 				for ($i=1; $i<(count($gl)-1); $i++)
 				{
-					$ga = explode(":",$gl[$i]);
+					$ga = explode(':',$gl[$i]);
 					$sql = "INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
 					$sql .= " VALUES('phpgw_group', '".$ga[0]."', ".$phpgw_setup->oProc->f("account_id").", 'u', 1)";
 					$db2->query($sql ,__LINE__,__FILE__);
@@ -894,7 +894,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre3";
+	$test[] = '0.9.10pre3';
 	function phpgwapi_upgrade0_9_10pre3()
 	{
 		global $setup_info, $phpgw_setup;
@@ -977,7 +977,7 @@
 		}
 	}
 
-	$test[] = "0.9.10pre4";
+	$test[] = '0.9.10pre4';
 	function phpgwapi_upgrade0_9_10pre4()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1008,9 +1008,9 @@
 		$phpgw_setup->oProc->query("SELECT group_id, group_name FROM groups",__LINE__,__FILE__);
 		while($phpgw_setup->oProc->next_record())
 		{
-			$old_group_id = $phpgw_setup->oProc->f("group_id");
-			$old_group_name = $phpgw_setup->oProc->f("group_name");
-			$group_name = $phpgw_setup->oProc->f("group_name");
+			$old_group_id = $phpgw_setup->oProc->f('group_id');
+			$old_group_name = $phpgw_setup->oProc->f('group_name');
+			$group_name = $phpgw_setup->oProc->f('group_name');
 			while(1)
 			{
 				$new_group_id = mt_rand ($max_group_id, 60000);
@@ -1020,7 +1020,7 @@
 			$db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_lid='$group_name'",__LINE__,__FILE__);
 			if($db2->num_rows())
 			{
-				$group_name .= "_group";
+				$group_name .= '_group';
 			}
 			$db2->query("INSERT INTO phpgw_accounts(account_id, account_lid, account_pwd, "
 				."account_firstname, account_lastname, account_lastlogin, "
@@ -1075,17 +1075,17 @@
 			}
 		}
 
-		$setup_info["phpgwapi"]["currentver"] = "0.9.10pre5";
+		$setup_info['phpgwapi']['currentver'] = '0.9.10pre5';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
 	}
  
-	$test[] = "0.9.10pre5";
+	$test[] = '0.9.10pre5';
 	function phpgwapi_upgrade0_9_10pre5()
 	{
 		global $setup_info, $phpgw_setup;
 
-		// This is only temp data, so we can kill it.
+		/* This is only temp data, so we can kill it. */
 		$phpgw_setup->oProc->DropTable('phpgw_app_sessions');
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_app_sessions', array(
@@ -1108,7 +1108,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre6";
+	$test[] = '0.9.10pre6';
 	function phpgwapi_upgrade0_9_10pre6()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1120,7 +1120,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre7";
+	$test[] = '0.9.10pre7';
 	function phpgwapi_upgrade0_9_10pre7()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1132,7 +1132,7 @@
 		//return True;
 	}
 
-	$test[] = "0.9.10pre8";
+	$test[] = '0.9.10pre8';
 	function phpgwapi_upgrade0_9_10pre8()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1977,8 +1977,8 @@
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.006';
 		return $setup_info['phpgwapi']['currentver'];
 	}
-// begin j3rry
-	$test[] = '0.9.13.006';  // version number?
+
+	$test[] = '0.9.13.006';
 	function phpgwapi_upgrade0_9_13_006()
 	{
 		global $setup_info, $phpgw_setup;
@@ -1986,12 +1986,12 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_log', array(
 				'fd' => array(
-					'log_id' 	=> array('type' => 'auto', 		'precision' => 4,	'nullable' => False),
-					'log_date' 	=> array('type' => 'timestamp',	'nullable' => False),
-					'log_user' 	=> array('type' => 'int',  		'precision' => 4,	'nullable' => False),
-					'log_app' 	=> array('type' => 'varchar', 	'precision' => 50,	'nullable' => False),
-					'log_severity' 	=> array('type' => 'char', 	'precision' => 1,	'nullable' => False)
-			    	),
+					'log_id' 	=> array('type' => 'auto',      'precision' => 4,  'nullable' => False),
+					'log_date' 	=> array('type' => 'timestamp', 'nullable' => False),
+					'log_user' 	=> array('type' => 'int',       'precision' => 4,  'nullable' => False),
+					'log_app' 	=> array('type' => 'varchar',   'precision' => 50, 'nullable' => False),
+					'log_severity' 	=> array('type' => 'char',  'precision' => 1,  'nullable' => False)
+				),
 				'pk' => array('log_id'),
 				'fk' => array(),
 				'ix' => array(),
@@ -2002,16 +2002,16 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_log_msg', array(
 				'fd' => array(
-					'log_msg_log_id' 	=> array('type' => 'auto', 		'precision' => 4,	'nullable' => False),
-					'log_msg_seq_no'	=> array('type' => 'int',  		'precision' => 4,	'nullable' => False),
+					'log_msg_log_id' 	=> array('type' => 'auto',      'precision' => 4,  'nullable' => False),
+					'log_msg_seq_no'	=> array('type' => 'int',       'precision' => 4,  'nullable' => False),
 					'log_msg_date'		=> array('type' => 'timestamp',	'nullable' => False),
-					'log_msg_tx_fid'	=> array('type' => 'varchar',	'precision' => 4,	'nullable' => True),
-					'log_msg_tx_id'		=> array('type' => 'varchar',	'precision' => 4,	'nullable' => True),
-					'log_msg_severity'	=> array('type' => 'char', 		'precision' => 1,	'nullable' => False),
-					'log_msg_code' 		=> array('type' => 'varchar', 	'precision' => 30,	'nullable' => False),
-					'log_msg_msg' 		=> array('type' => 'text', 							'nullable' => False),
-					'log_msg_parms'		=> array('type' => 'text', 							'nullable' => False)
-			    	),
+					'log_msg_tx_fid'	=> array('type' => 'varchar',   'precision' => 4,  'nullable' => True),
+					'log_msg_tx_id'		=> array('type' => 'varchar',   'precision' => 4,  'nullable' => True),
+					'log_msg_severity'	=> array('type' => 'char',      'precision' => 1,  'nullable' => False),
+					'log_msg_code' 		=> array('type' => 'varchar',   'precision' => 30, 'nullable' => False),
+					'log_msg_msg' 		=> array('type' => 'text', 'nullable' => False),
+					'log_msg_parms'		=> array('type' => 'text', 'nullable' => False)
+			 	),
 				'pk' => array('log_msg_log_id', 'log_msg_seq_no'),
 				'fk' => array(),
 				'ix' => array(),
@@ -2034,7 +2034,7 @@
 		return $setup_info['phpgwapi']['currentver'];
 	}
 
-	$test[] = '0.9.13.008';  
+	$test[] = '0.9.13.008';
 	function phpgwapi_upgrade0_9_13_008()
 	{
 		global $setup_info, $phpgw_setup;
@@ -2086,6 +2086,41 @@
 		$phpgw_setup->oProc->AlterColumn('phpgw_sessions','session_lid',array('type' => 'varchar', 'precision' => 255, 'nullable'=> False));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.011';
+		return $setup_info['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.13.011';
+	function phpgwapi_upgrade0_9_13_011()
+	{
+		global $setup_info, $phpgw_setup;
+
+		$phpgw_setup->oProc->CreateTable(
+			'phpgw_vfs', array(
+				'fd' => array(
+					'file_id' => array('type' => 'auto','nullable' => False),
+					'owner_id' => array('type' => 'int', 'precision' => 4,'nullable' => False),
+					'createdby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
+					'modifiedby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
+					'created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
+					'modified' => array('type' => 'date','nullable' => True),
+					'size' => array('type' => 'int', 'precision' => 4,'nullable' => True),
+					'mime_type' => array('type' => 'varchar', 'precision' => 150,'nullable' => True),
+					'deleteable' => array('type' => 'char', 'precision' => 1,'nullable' => True,'default' => 'Y'),
+					'comment' => array('type' => 'text','nullable' => True),
+					'app' => array('type' => 'varchar', 'precision' => 25,'nullable' => True),
+					'directory' => array('type' => 'text','nullable' => True),
+					'name' => array('type' => 'text','nullable' => False),
+					'link_directory' => array('type' => 'text','nullable' => True),
+					'link_name' => array('type' => 'text','nullable' => True),
+					'version' => array('type' => 'varchar', 'precision' => 30,'nullable' => False,'default' => '0.0.0.0')
+				),
+				'pk' => array('file_id'),
+				'fk' => array(),
+				'ix' => array(),
+				'uc' => array()
+			)
+		);
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.012';
 		return $setup_info['phpgwapi']['currentver'];
 	}
 ?>
