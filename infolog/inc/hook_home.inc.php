@@ -11,19 +11,17 @@
 
 	/* $Id$ */
 
-	global $phpgw_info,$phpgw;
-
-	if ($phpgw_info['user']['preferences']['infolog']['homeShowEvents'])
+	if ($GLOBALS['phpgw_info']['user']['preferences']['infolog']['homeShowEvents'])
 	{
-		$save_app = $phpgw_info['flags']['currentapp']; 
-		$phpgw_info['flags']['currentapp'] = 'infolog'; 
+		$save_app = $GLOBALS['phpgw_info']['flags']['currentapp']; 
+		$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog'; 
 
-		$phpgw->translation->add_app('infolog');
+		$GLOBALS['phpgw']->translation->add_app('infolog');
 
 		global $filter;
 		$filter = 'own+open+today';
 		$infolog = CreateObject('infolog.uiinfolog');
 		$infolog->get_list(True);
 
-		$phpgw_info['flags']['currentapp'] = $save_app; 
+		$GLOBALS['phpgw_info']['flags']['currentapp'] = $save_app; 
 	}
