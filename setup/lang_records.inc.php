@@ -10,6 +10,7 @@
   \**************************************************************************/
 
   /* $Id$ */
+  $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'charset','common','en','iso-8859-1')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'low','common','en','Low')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'forum','common','en','Forum')");
   $db->query("INSERT INTO lang (message_id, app_name, lang, content) VALUES( 'normal','common','en','Normal')");

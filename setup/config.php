@@ -197,11 +197,6 @@
    </tr>
 
    <tr bgcolor="e6e6e6">
-    <td>Enter your default character set:<br>Don't change unless you know what you are doing.</td>
-    <td><input name="newsettings[charset]" value="<?php echo $current_config["charset"]; ?>"></td>
-   </tr>
-
-   <tr bgcolor="e6e6e6">
     <td>Enter your default FTP server.</td>
     <td><input name="newsettings[default_ftp_server]" value="<?php echo $current_config["default_ftp_server"]; ?>"></td>
    </tr>
