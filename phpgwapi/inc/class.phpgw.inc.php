@@ -57,7 +57,7 @@
 		// You could redirect them to login.php with code 2 or use the default
 		// I recommend using the default until all of the bugs are worked out.
 
-		function phpgw()
+		function phpgw_()
 		{
 			global $phpgw_info, $sessionid, $login;
 			/************************************************************************\

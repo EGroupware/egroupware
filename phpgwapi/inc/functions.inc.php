@@ -1,5 +1,5 @@
 <?php
-$debugme = "on";
+//$debugme = "on";
 	/**************************************************************************\
 	* phpGroupWare API - phpgwapi loader                                       *
 	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
@@ -150,7 +150,7 @@ print_debug('sane environment');
 	}
 	unset ($domain); // we kill this to save memory
 
-print_debug('sane environment');
+print_debug('domain: '.$phpgw_info["user"]["domain"]);
 
 //dont know where to put this (seek3r)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
@@ -183,7 +183,7 @@ print_debug('sane environment');
 	\****************************************************************************/
 	/* Load main class */
 	$phpgw = CreateObject("phpgwapi.phpgw");
-	
+	$phpgw->phpgw_();	
 print_debug('main class loaded');
 
 	/* Fill phpgw_info["server"] array */
@@ -224,7 +224,7 @@ print_debug('main class loaded');
 		 exit;
 		}
 
-		/* A few hacker proof constants that will be used throught the program */
+		/* A few hacker resistant constants that will be used throught the program */
 
 		define("PHPGW_TEMPLATE_DIR",$phpgw->common->get_tpl_dir("phpgwapi"));
 		define("PHPGW_IMAGES_DIR", $phpgw->common->get_image_path("phpgwapi"));
