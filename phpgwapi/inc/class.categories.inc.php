@@ -231,15 +231,10 @@
 		@param $selected ?
 		@result $s array - populated with categories
 		*/
-		function formated_list($format,$type,$selected = '',$public = False)
+		function formated_list($format,$type,$selected = '',$public = False,$site_link = 'site')
 		{
 			global $phpgw;
 			$filter = $this->filter($type);
-
-			if ($public)
-			{
-				$public_cats = " OR cat_appname='phpgw' ";
-			}
 
 			if ($format == 'select')
 			{
@@ -253,7 +248,7 @@
 						$s .= ' selected';
 					}
 					$s .= '>' . $phpgw->strip_html($cats[$i]['name']);
-					if ($cats[$i]['app_name'] == 'phpgw') 
+					if ($cats[$i]['app_name'] == 'phpgw')
 					{
 					$s .=  '&lt;' . lang('Global') . '&gt;';
 					}
@@ -261,6 +256,28 @@
 				}
 				return $s;
 			}
+
+                        if ($format == 'list')
+                        {
+                                $space = '&nbsp;&nbsp;';
+
+                                $cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
+
+                                $s  = '<table border="0" cellpadding="0" cellspacing="0">' . "\n";
+
+                                for ($i=0;$i<count($cats);$i++)
+                                {
+                                    $spaceset = str_repeat($space,$cats[$i]['level']);
+
+                                    $s .= "<tr>\n";
+                                    $s .= '<td height="25">' . $spaceset . '<a href="' . $phpgw->link($site_link,'cat_id=' . $cats[$i]['id']) . '">' . $phpgw->strip_html($cats[$i]['name']) . '</a></td>' . "\n";
+				    $s .= '</tr>' . "\n";
+                                }
+
+                                $s .= '</table>' . "\n";
+
+                        return $s;
+                        }
 		}
 		/*!
 		@function add
