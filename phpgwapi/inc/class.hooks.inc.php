@@ -77,6 +77,11 @@
 			foreach($order as $appname)
 			{
 				$results[$appname] = $this->single($args,$appname,$no_permission_check);
+
+				if (!isset($results[$appname]))	// happens if the methode hook has no return-value
+				{
+					$results[$appname] = False;
+				}
 			}
 
 			/* Then add the rest */
