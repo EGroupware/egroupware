@@ -91,13 +91,12 @@
    // Since they are logged in, we need to change the password in sessions
    // in case they decied to check there mail.   
    $phpgw->db->query("update phpgw_sessions set session_pwd='" . $phpgw->common->encrypt($n_passwd)
-	               . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
+ 	               . "' where session_lid='" . $phpgw_info["user"]["userid"] . "'");
 
    // Update there last password change
    $phpgw->db->query("update accounts set account_lastpwd_change='" . time() . "' where account_id='"
-   				. $phpgw_info["user"]["account_id"] . "'");
+   			    	. $phpgw_info["user"]["account_id"] . "'");
 
-   Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
-	. "/preferences/","cd=18"));
+   Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/","cd=18"));
 }
 ?>
