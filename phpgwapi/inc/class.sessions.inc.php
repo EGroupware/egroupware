@@ -50,8 +50,8 @@
 		{
 			$this->db        = $GLOBALS['phpgw']->db;
 			$this->db2       = $GLOBALS['phpgw']->db;
-			$this->sessionid = $GLOBALS['sessionid'];
-			$this->kp3       = $GLOBALS['kp3'];
+			$this->sessionid = (isset($GLOBALS['HTTP_GET_VARS']['sessionid'])?$GLOBALS['HTTP_GET_VARS']['sessionid']:(isset($GLOBALS['HTTP_COOKIE_VARS']['sessionid'])?$GLOBALS['HTTP_COOKIE_VARS']['sessionid']:''));
+			$this->kp3       = (isset($GLOBALS['HTTP_GET_VARS']['kp3'])?$GLOBALS['HTTP_GET_VARS']['kp3']:(isset($GLOBALS['HTTP_COOKIE_VARS']['kp3'])?$GLOBALS['HTTP_COOKIE_VARS']['kp3']:''));
 		}
 
 		/*************************************************************************\
@@ -193,8 +193,6 @@
 
 		function create($login,$passwd)
 		{
-			global $PHP_SELF;
-
 			$this->login  = $login;
 			$this->passwd = $passwd;
 			$this->clean_sessions();
@@ -286,7 +284,7 @@
 			$GLOBALS['phpgw']->db->transaction_begin();
 			$GLOBALS['phpgw']->db->query("insert into phpgw_sessions values ('" . $this->sessionid
 								. "','".$login."','" . $user_ip . "','"
-								. $now . "','" . $now . "','" . $PHP_SELF . "','" . $session_flags
+								. $now . "','" . $now . "','" . $GLOBALS['PHP_SELF'] . "','" . $session_flags
 								. "')",__LINE__,__FILE__);
 
 			$GLOBALS['phpgw']->db->query("insert into phpgw_access_log values ('" . $this->sessionid . "','"
@@ -398,7 +396,7 @@
 
 		function create_server($login,$passwd)
 		{
-			$phpgw->interserver = CreateObject('phpgwapi.interserver');
+			$GLOBALS['phpgw']->interserver = CreateObject('phpgwapi.interserver');
 			$this->login  = $login;
 			$this->passwd = $passwd;
 			$this->clean_sessions();
@@ -440,7 +438,7 @@
 			$GLOBALS['phpgw']->common->iv  = $GLOBALS['phpgw_info']['server']['mcrypt_iv'];
 			$cryptovars[0] = $GLOBALS['phpgw']->common->key;
 			$cryptovars[1] = $GLOBALS['phpgw']->common->iv;
-			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+			$GLOBALS['phpgw']->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
 
 			//$this->read_repositories(False);
 
@@ -471,9 +469,9 @@
 		// This will update the DateLastActive column, so the login does not expire
 		function update_dla()
 		{
-			if ($GLOBALS['menuaction'])
+			if (isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
 			{
-				$action = $GLOBALS['menuaction'];			
+				$action = $GLOBALS['HTTP_GET_VARS']['menuaction'];			
 			}
 			else
 			{
@@ -714,7 +712,7 @@
 		\*************************************************************************/
 		function link($url, $extravars = '')
 		{
-			global $usercookie, $PHP_SELF;
+			global $usercookie;
 
 			$kp3 = $GLOBALS['HTTP_GET_VARS']['kp3'] ? $GLOBALS['HTTP_GET_VARS']['kp3'] : $GLOBALS['HTTP_COOKIE_VARS']['kp3'];
 
@@ -731,12 +729,12 @@
 
 /*			if (! $url && (PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WIN32' || PHP_OS == 'WIN16'))
 			{
-				$exe = strpos($PHP_SELF,'php.exe');
+				$exe = strpos($GLOBALS['PHP_SELF'],'php.exe');
 				if ($exe != false) {
 					$exe += 7; // strlen('php.exe')
-					$url_root = split ('/', $phpgw_info['server']['webserver_url']);
+					$url_root = split ('/', $GLOBALS['phpgw_info']['server']['webserver_url']);
 					$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
-					$url .= substr($PHP_SELF,$exe,strlen($PHP_SELF)-$exe);
+					$url .= substr($PHP_SELF,$exe,strlen($GLOBALS['PHP_SELF'])-$exe);
 				}
 			}
 */
@@ -747,13 +745,13 @@
 
 /*			if (! $url)
 			{
-				$url_root = split ('/', $phpgw_info['server']['webserver_url']);
+				$url_root = split ('/', $GLOBALS['phpgw_info']['server']['webserver_url']);
 				// Some hosting providers have their paths screwy.
 				//	 If the value from $PHP_SELF is not what you expect, you can use this to patch it
 				//	 It will need to be adjusted to your specific problem tho.
 				//
-				//$patched_php_self = str_replace('/php4/php/phpgroupware', '/phpgroupware', $PHP_SELF);
-				$patched_php_self = $PHP_SELF;
+				//$patched_php_self = str_replace('/php4/php/phpgroupware', '/phpgroupware', $GLOBALS['PHP_SELF']);
+				$patched_php_self = $GLOBALS['PHP_SELF'];
 				$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
 			}
 */
