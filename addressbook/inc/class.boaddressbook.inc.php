@@ -76,6 +76,7 @@
 			}
 			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
 			/* Might change this to '' at the end---> */
+			$start   = $GLOBALS['start'];
 			$query   = $GLOBALS['query'];
 			$sort    = $GLOBALS['sort'];
 			$order   = $GLOBALS['order'];
