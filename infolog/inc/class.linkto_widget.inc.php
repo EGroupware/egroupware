@@ -15,7 +15,6 @@
 	/*!
 	@class linkto_widget
 	@author ralfbecker
-	@author ralfbecker
 	@abstract widget that enable you to make a link to an other entry of a link-aware app
 	@discussion This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
@@ -36,7 +35,7 @@
 		{
 			$search = $value['search'] ? 1 : 0;
 			$create = $value['create'] ? 1 : 0;
-			echo "<p>linkto_widget.preprocess: query='$value[query]',app='$value[app]',search=$search,create=$create</p>\n";
+			//echo "<p>linkto_widget.preprocess: query='$value[query]',app='$value[app]',search=$search,create=$create</p>\n";
 
 			if ($search && count($ids = $this->link->query($value['app'],$value['query'])))
 			{
@@ -76,15 +75,17 @@
 			$create = $value['create'] ? 1 : 0;
 			list($value['app']) = @$value['app'];	// no multiselection
 			list($value['id'])  = @$value['id'];
-			echo "<p>linkto_widget.postprocess: query='$value[query]',app='$value[app]',id='$value[id]', search=$search,create=$create</p>\n";
-
-			$templ->loop = $search;
+			//echo "<p>linkto_widget.postprocess: query='$value[query]',app='$value[app]',id='$value[id]', search=$search,create=$create</p>\n";
 
 			if ($create)
 			{
 				$value = array_merge($value,$GLOBALS['phpgw_info']['etemplate']['extension_data']['linkto_widget'][$cell['name']]);
-				// make the link
-				echo "<p>linkto($value[app],$value[id],'$value[remark]')</p>\n";
+				if ($value['to_app'])						// make the link
+				{
+					$this->link->link($value['to_app'],$value['to_id'],$value['app'],$value['id'],$value['remark']);
+					echo "<p>linkto($value[app],$value[id],'$value[remark]')</p>\n";
+				}
 			}
+			$templ->loop = $search || $create;
 		}
 	}

@@ -21,7 +21,6 @@
 	/*!
 	@class bolink
 	@author ralfbecker
-	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - BO layer
 	@discussion This class is the BO-layer of the links
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
@@ -78,7 +77,120 @@
 			$this->public_functions += array(	// extend the public_functions of solink
 				'query' => True,
 				'title' => True,
+				'view'  => True
 			);
+		}
+
+		/*!
+		@function link
+		@syntax link(  $app1,$id1,$app2,$id2='',$remark='',$user=0  )
+		@author ralfbecker
+		@abstract creats a link between $app1,$id1 and $app2,$id2 - $id1 does NOT need to exist yet
+		@param $app1 app of $id1
+		@param $id1 id of item to linkto or 0 if item not yet created or array with links of not created item
+		@param $app2 app of 2.linkend or array with links ($id2 not used)
+		@param $remark Remark to be saved with the link (defaults to '')
+		@param $owner Owner of the link (defaults to user)
+		@discussion Does NOT check if link already exists
+		@result db-errno or -1 (for param-error) or 0 for success
+		@result if $id1==0 or already an array: $id1 is array with links
+		*/
+		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0 )
+		{
+			if ($this->debug)
+			{
+				echo "<p>bolink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
+			}
+			if (!$app1 || !$app2 || !$id1 && isarray($id2) || $app1 == $app2 && $id1 == $id2)
+			{
+				return -1;
+			}
+			if (is_array($id1) || !$id1)		// create link only in $id1 array
+			{
+				if (!is_array($id1))
+				{
+					$id1 = array( );
+				}
+				$id1["$app2:$id2"] = array(
+					'app' => $app2,
+					'id'  => $id2,
+					'remark' => $remark,
+					'owner'  => $owner,
+					'link_id' => "$app2:$id2"
+				);
+				return 0;
+			}
+			if (is_array($app2) && !$id2)
+			{
+				reset($app2);
+				$err = 0;
+				while (!$err && list(,$link) = each($app2))
+				{
+					$err = solink::link($app1,$id1,$link['app'],$link['id'],$link['remark'],$link['owner']);
+				}
+				return $err;
+			}
+			return solink::link($app1,$id1,$app2,$id2,$remark,$owner);
+		}
+
+		/*!
+		@function get_links
+		@syntax get_links(  $app,$id,$only_app='',$only_name='',$order='link_lastmod DESC'  )
+		@author ralfbecker
+		@abstract returns array of links to $app,$id (reimplemented to deal with not yet created items)
+		@param $id id of entry in $app or array of links if entry not yet created
+		@param $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+		@param $order defaults to newest links first
+		@result array of links or empty array if no matching links found
+		*/
+		function get_links( $app,$id,$only_app='',$order='link_lastmod DESC' )
+		{
+			if (is_array($id) || !$id)
+			{
+				$ids = array();
+				if (is_array($id))
+				{
+					if ($not_only = $only_app[0])
+					{
+						$only_app = substr(1,$only_app);
+					}
+					reset($id);
+					while (list($key,$link) = each($id))
+					{
+						if ($only_app && $not_only == ($link['app'] == $only_app))
+						{
+							continue;
+						}
+						$ids[$key] = $link;
+					}
+				}
+				return $ids;
+			}
+			return solink::get_links($app,$id,$only_app,$order);
+		}
+
+		/*!
+      @function unlink
+      @syntax unlink( $link_id,$app='',$id='',$owner='' )
+      @author ralfbecker
+		@abstract Remove link with $link_id or all links matching given $app,$id
+		@param $link_id link-id to remove if > 0
+		@param $app,$id,$owner if $link_id <= 0: removes all links matching the non-empty params
+		@discussion Note: if $link_id != '' and $id is an array: unlink removes links from that array only
+		@discussion       unlink has to be called with &$id so see the result !!!
+		@result the number of links deleted
+		*/
+		function unlink($link_id,$app='',$id='',$owner='')
+		{
+			if ($link_id > 0 || !is_array($id))
+			{
+				return solink::unlink($link_id,$app,$id,$owner);
+			}
+			$result = isset($id[$link_id]);
+
+			unset($id[$link_id]);
+
+			return $result;
 		}
 
 		/*!
@@ -101,7 +213,7 @@
 
 		function check_method($method,&$class,&$func)
 		{
-			// Idea: check if method exist and cache the class 
+			// Idea: check if method exist and cache the class
 		}
 
 		/*!
@@ -118,8 +230,11 @@
 				return array();
 			}
 			$method = $reg['query'];
-			echo "<p>bolink.query('$app','$pattern') => '$method'</p>\n";
 
+			if ($this->debug)
+			{
+				echo "<p>bolink.query('$app','$pattern') => '$method'</p>\n";
+			}
 			return strchr($method,'.') ? ExecMethod($method,$pattern) : $this->$method($pattern);
 		}
 
@@ -132,13 +247,44 @@
 		*/
 		function title($app,$id)
 		{
-			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !is_set($reg['title']))
+			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['title']))
 			{
 				return array();
 			}
 			$method = $reg['title'];
 
-			return strchr($method,'.') ? ExecuteMethod($method,$id) : $this->$method($id);
+			return strchr($method,'.') ? ExecMethod($method,$id) : $this->$method($id);
+		}
+
+		/*!
+		@function view
+		@syntax view( $app,$id )
+		@author ralfbecker
+		@abstract view entry $id of $app
+		@result array with name-value pairs for link to view-methode of $app to view $id
+		*/
+		function view($app,$id)
+		{
+			if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['view']) || !isset($reg['view_id']))
+			{
+				return array();
+			}
+			$view = $reg['view'];
+
+			$names = explode(':',$reg['view_id']);
+			if (count($names) > 1)
+			{
+				$id = explode(':',$id);
+				while (list($n,$name) = each($names))
+				{
+					$view[$name] = $id[$n];
+				}
+			}
+			else
+			{
+				$view[$reg['view_id']] = $id;
+			}
+			return $view;
 		}
 
 		/*!

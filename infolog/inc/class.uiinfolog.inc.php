@@ -711,21 +711,11 @@
 				return;
 			}
 
+			$app2var = array('addressbook' => 'id_addr','projects' => 'id_project','calendar' => 'id_event' );
 			$linkto = get_var('linkto',Array('POST'));
-			if (is_array($linkto) && $linkto['create'])
+			if (is_array($linkto) && $linkto['create'] && ($var = $app2var[$linkto['app']]))
 			{
-				switch ($linkto['app'])
-				{
-					case 'addressbook':
-						$id_addr = $linkto['id'];
-						break;
-					case 'projects':
-						$id_project = $linkto['id'];
-						break;
-					case 'calendar':
-						$id_event = $linkto['id'];
-						break;
-				}
+				$$var = $linkto['id'];
 			}
 			// check wether to write dates or not
 			if ($selfortoday)
@@ -897,8 +887,8 @@
 			$GLOBALS['phpgw']->template->set_file(array('info_edit_t' => 'form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('info_edit_t','info_edit');
 
-			$GLOBALS['phpgw']->template->set_var('linkto',$this->link->getEntry('linkto'));
-
+			$GLOBALS['phpgw']->template->set_var('linkto',$this->link->getEntry('linkto','infolog',&$info_id).
+			                                              $this->link->showLinks('links','infolog',$info_id));
 			if (is_array($error))
 			{
 				$GLOBALS['phpgw']->template->set_var('error_list',$GLOBALS['phpgw']->common->error_list($error));

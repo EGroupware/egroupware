@@ -15,7 +15,6 @@
 	/*!
 	@class solink
 	@author ralfbecker
-	@author ralfbecker
 	@abstract generalized linking between entries of phpGroupware apps - DB layer
 	@discussion This class is to access the links in the DB
 	@discussion Links have to ends each pointing to an entry, an entry is a double:
@@ -31,7 +30,7 @@
 			'unlink'    => True,
 			'chown'     => True
 		);
-		var $db,$db2;
+		var $db;
 		var $user;
 		var $db_name = 'phpgw_links';
 		var $debug = 0;
@@ -50,9 +49,9 @@
 
 		/*!
 		@function link
-		@syntax link(  $app1,$name1,$id1,$app2,$name2,$id2,$remark='',$user=0  )
+		@syntax link(  $app1,$id1,$app2,$id2,$remark='',$user=0  )
 		@author ralfbecker
-		@abstract creats a link between $app1,$name1,$id1 and $app2,$name2,$id2
+		@abstract creats a link between $app1,$id1 and $app2,$id2
 		@param $remark Remark to be saved with the link (defaults to '')
 		@param $owner Owner of the link (defaults to user)
 		@discussion Does NOT check if link already exists
@@ -61,8 +60,9 @@
 		function link( $app1,$id1,$app2,$id2,$remark='',$owner=0 )
 		{
 			if ($this->debug)
-				echo "<p>solink.link($app1,$id1,$app2,$id2,'$remark',$owner)</p>\n";
-
+			{
+				echo "<p>solink.link('$app1',$id1,'$app2',$id2,'$remark',$owner)</p>\n";
+			}
 			if ($app1 == $app2 && $id1 == $id2 ||
 			    $id1 == '' || $id2 == '' || $app1 == '' || $app2 == '')
 			{
@@ -89,10 +89,10 @@
 
 		/*!
 		@function get_links
-		@syntax get_links(  $app,$name,$id,$only_app='',$only_name='',$order='link_lastmod DESC'  )
+		@syntax get_links(  $app,$id,$only_app='',$only_name='',$order='link_lastmod DESC'  )
 		@author ralfbecker
-		@abstract returns array of links to $app,$name,$id
-		@param $only_app if set return only links from $only_app (eg. only addressbook-entries)
+		@abstract returns array of links to $app,$id
+		@param $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 		@param $order defaults to newest links first
 		@result array of links or empty array if no matching links found
 		*/
@@ -111,6 +111,10 @@
 			}
 			$this->db->query($sql);
 
+			if ($not_only = $only_app[0] == '!')
+			{
+				$only_app = substr($only_app,1);
+			}
 			while ($this->db->next_record())
 			{
 				$row = $this->db->Record;
@@ -129,7 +133,7 @@
 						'id'   => stripslashes($row['link_id1'])
 					);
 				}
-				if ($only_app != '' && $link['app'] != $only_app)
+				if ($only_app && $not_only == ($link['app'] == $only_app))
 				{
 					continue;
 				}
