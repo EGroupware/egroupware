@@ -65,6 +65,22 @@
 		}
 
 		/*!
+		@function get_var
+		@abstract Fetch commonly-used GP(C) vars
+		@discussion This calls get_var() from functions.inc.php
+		*/
+		function get_var()
+		{
+			return array(
+				get_var('filter',array('GLOBAL','POST','GET')),
+				get_var('qfield',array('GLOBAL','POST','GET')),
+				get_var('start',array('GLOBAL','POST','GET')),
+				get_var('order',array('GLOBAL','POST','GET')),
+				get_var('sort',array('GLOBAL','POST','GET'))
+			);
+		}
+
+		/*!
 		@function set_icon
 		@abstract ?
 		@param $align ?
@@ -173,9 +189,10 @@
 		@param $filter_obj ?
 		@param $showsearch ?
 		*/
-		function show_tpl($sn,$localstart,$total,$extra, $twidth, $bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
+		function show_tpl($sn,$localstart,$total,$extra,$twidth,$bgtheme,$search_obj=0,$filter_obj=1,$showsearch=1,$yours=0,$cat_id=0,$cat_field='fcat_id')
 		{
-			global $filter, $qfield, $start, $order, $sort;
+			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
+
 			$start = $localstart;
 
 			$cats = CreateObject('phpgwapi.categories');
@@ -275,7 +292,7 @@
 		*/
 		function left($scriptname,$start,$total,$extradata = '')
 		{
-			global $filter, $qfield, $order, $sort;
+			list($filter,$qfield,$NULL,$order,$sort) = $this->get_var();
 
 			$extravars = Array(
 				'order'   => $order,
@@ -288,7 +305,7 @@
 			$extravars = $this->split_extras($extravars,$extradata);
 			$ret_str = '';
 
-			if (($start != 0) &&
+			if(($start != 0) &&
 				($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
@@ -299,10 +316,10 @@
 				$ret_str .= $this->set_icon('left','first-grey.gif',lang('First page'));
 			}
 
-			if ($start != 0)
+			if($start != 0)
 			{
 				// Changing the sorting order screaws up the starting number
-				if (($start - $this->maxmatches) < 0)
+				if(($start - $this->maxmatches) < 0)
 				{
 					$extravars['start'] = 0;
 				}
@@ -329,7 +346,7 @@
 		*/
 		function right($scriptname,$start,$total,$extradata = '')
 		{
-			global $filter, $qfield, $order, $sort;
+			list($filter,$qfield,$NULL,$order,$sort) = $this->get_var();
 
 			$extravars = Array(
 				'order'   => $order,
@@ -343,7 +360,7 @@
 
 			$ret_str = '';
 
-			if (($total > $this->maxmatches) &&
+			if(($total > $this->maxmatches) &&
 				($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
@@ -354,7 +371,7 @@
 				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
 			}
 
-			if (($start != $total - $this->maxmatches) &&
+			if(($start != $total - $this->maxmatches) &&
 				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
@@ -374,7 +391,7 @@
 		*/
 		function search_filter($search_obj=0,$filter_obj=1,$yours=0,$link='',$extra='')
 		{
-			global $filter, $qfield, $start, $order, $sort;
+			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
 
 			$start = $localstart;
 			$var = array(
@@ -400,7 +417,7 @@
 		*/
 		function cats_search_filter($search_obj=0,$filter_obj=1,$yours=0,$cat_id=0,$cat_field='fcat_id',$link='',$extra='')
 		{
-			global $filter, $qfield, $start, $order, $sort;
+			list($filter,$qfield,$start,$order,$sort) = $this->get_var();
 
 			$start = $localstart;
 			$cats  = CreateObject('phpgwapi.categories');
@@ -432,7 +449,7 @@
 		*/
 		function search($search_obj=0)
 		{
-			if (is_array($search_obj))
+			if(is_array($search_obj))
 			{
 				$params		= $search_obj;
 				$_query		= stripslashes($params['query']);
@@ -445,7 +462,7 @@
 
 			// If the place a in there search, it will mess everything up
 			// Our only option is to remove it
-			if (ereg('"',$_query))
+			if(ereg('"',$_query))
 			{
 				$_query = ereg_replace('"','',$_query);
 			}
@@ -488,15 +505,15 @@
 		*/
 		function searchby($search_obj)
 		{
-			global $qfield;
+			$qfield = $GLOBALS['HTTP_POST_VARS']['qfield'] ? $GLOBALS['HTTP_POST_VARS']['qfield'] : $GLOBALS['HTTP_GET_VARS']['qfield'];
 
 			$str = '';
-			if (is_array($search_obj))
+			if(is_array($search_obj))
 			{
 				$indexlimit = count($search_obj);
-				for ($index=0; $index<$indexlimit; $index++)
+				for($index=0; $index<$indexlimit; $index++)
 				{
-					if ($qfield == '')
+					if($qfield == '')
 					{
 						$qfield = $search_obj[$index][0];
 					}
@@ -514,25 +531,25 @@
 		*/
 		function filter($filter_obj,$yours=0)
 		{
-			if (is_array($yours))
+			if(is_array($yours))
 			{
-				$params	= $yours;
-				$filter	= $params['filter'];
-				$yours	= $params['yours'];
+				$params = $yours;
+				$filter = $params['filter'];
+				$yours  = $params['yours'];
 			}
 			else
 			{
 				$filter = $GLOBALS['HTTP_POST_VARS']['filter'] ? $GLOBALS['HTTP_POST_VARS']['filter'] : $GLOBALS['HTTP_GET_VARS']['filter'];
 			}
 
-			if (is_long($filter_obj))
+			if(is_long($filter_obj))
 			{
-				if ($filter_obj == 1)
+				if($filter_obj == 1)
 				{
 					//  $user_groups = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
 					$indexlimit = count($user_groups);
 
-					if ($yours)
+					if($yours)
 					{
 						$filter_obj = array(
 							array('none',lang('Show all')),
@@ -547,7 +564,7 @@
 							array('private',lang('private'))
 						);
 					}
-					for ($index=0; $index<$indexlimit; $index++)
+					for($index=0; $index<$indexlimit; $index++)
 					{
 						$filter_obj[2+$index][0] = $user_groups[$index]['account_id'];
 						$filter_obj[2+$index][1] = 'Group - ' . $user_groups[$index]['account_name'];
@@ -555,14 +572,14 @@
 				}
 			}
 
-			if (is_array($filter_obj))
+			if(is_array($filter_obj))
 			{
 				$str = '';
 				$indexlimit = count($filter_obj);
 
-				for ($index=0; $index<$indexlimit; $index++)
+				for($index=0; $index<$indexlimit; $index++)
 				{
-					if ($filter == '')
+					if($filter == '')
 					{
 						$filter = $filter_obj[$index][0];
 					}
@@ -584,13 +601,12 @@
 		*/
 		function alternate_row_color($currentcolor = '')
 		{
-			if (! $currentcolor)
+			if(!$currentcolor)
 			{
-				global $tr_color;
-				$currentcolor = $tr_color;
+				$currentcolor = $GLOBALS['tr_color'];
 			}
 
-			if ($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
+			if($currentcolor == $GLOBALS['phpgw_info']['theme']['row_on'])
 			{
 				$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
 			}
@@ -623,16 +639,17 @@
 		@param $program ?
 		@param $text ?
 		@param $extra default ''
+		@param $build_an_href default True
 		*/
-		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
+		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_an_href=True)
 		{
-			global $filter, $qfield, $start;
+			list($filter,$qfield,$start,$NULL1,$NULL) = $this->get_var();
 
-			if (($order == $var) && ($sort == 'ASC'))
+			if(($order == $var) && ($sort == 'ASC'))
 			{
 				$sort = 'DESC';
 			}
-			elseif (($order == $var) && ($sort == 'DESC'))
+			elseif(($order == $var) && ($sort == 'DESC'))
 			{
 				$sort = 'ASC';
 			}
@@ -641,7 +658,7 @@
 				$sort = 'ASC';
 			}
 
-			if (is_array($extra))
+			if(is_array($extra))
 			{
 				$extra = $this->extras_to_string($extra);
 			}
@@ -650,7 +667,7 @@
 
 			$link = ($this->action?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
-			if ($build_a_href)
+			if($build_an_href)
 			{
 				return '<a href="' . $link . '">' . $text . '</a>';
 			}
@@ -662,9 +679,9 @@
 
 		function show_hits($total_records='',$start=0)
 		{
-			if ($total_records > $this->maxmatches)
+			if($total_records > $this->maxmatches)
 			{
-				if ($start + $this->maxmatches > $total_records)
+				if($start + $this->maxmatches > $total_records)
 				{
 					$end = $total_records;
 				}
@@ -693,18 +710,18 @@
 		*/
 		function show_sort_order_imap($old_sort,$new_sort,$default_order,$order,$program,$text,$extra='')
 		{
-			if (is_array($extra))
+			if(is_array($extra))
 			{
 				$extra = $this->extras_to_string($extra);
 			}
-			if ($old_sort == $new_sort)
+			if($old_sort == $new_sort)
 			{
 				// alternate order, like on outkrook, click on present sorting reverses order
-				if ((int)$order == 1)
+				if((int)$order == 1)
 				{
 					$our_order = 0;
 				}
-				elseif ((int)$order == 0)
+				elseif((int)$order == 0)
 				{
 					$our_order = 1;
 				}
@@ -757,7 +774,7 @@
 			$out_vars['total'] = $feed_vars['total'];
 			
 			// first page
-			if (($feed_vars['start'] != 0) &&
+			if(($feed_vars['start'] != 0) &&
 				($feed_vars['start'] > $this->maxmatches))
 			{
 				$out_vars['start'] = 0;
@@ -768,10 +785,10 @@
 				$return_array['first_page']= $this->set_icon_imap('left','first-grey.gif',lang('First page'));
 			}
 			// previous page
-			if ($feed_vars['start'] != 0)
+			if($feed_vars['start'] != 0)
 			{
 				// Changing the sorting order screaws up the starting number
-				if (($feed_vars['start'] - $this->maxmatches) < 0)
+				if(($feed_vars['start'] - $this->maxmatches) < 0)
 				{
 					$out_vars['start'] = 0;
 				}
@@ -790,7 +807,7 @@
 			// things that might change
 			$out_vars['start'] = $feed_vars['start'];
 			// next page
-			if (($feed_vars['total'] > $this->maxmatches) &&
+			if(($feed_vars['total'] > $this->maxmatches) &&
 				($feed_vars['total'] > $feed_vars['start'] + $this->maxmatches))
 			{
 				$out_vars['start'] = ($feed_vars['start'] + $this->maxmatches);
@@ -801,7 +818,7 @@
 				$return_array['next_page'] = $this->set_icon_imap('right','right-grey.gif',lang('Next page'));
 			}
 			// last page
-			if (($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches) &&
+			if(($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches) &&
 				(($feed_vars['total'] - $this->maxmatches) > ($feed_vars['start'] + $this->maxmatches)))
 			{
 				$out_vars['start'] = ($feed_vars['total'] - $this->maxmatches);
@@ -813,7 +830,7 @@
 			}
 			return $return_array;
 		}
-		
+
 		/*!
 		@function set_link_imap
 		@abstract ?
@@ -828,7 +845,7 @@
 			$image_part = '<img src="'.$img_full.'" border="0" alt="'.$alt_text.'" width="12" height="12">';
 			return '<a href="'.$out_vars['common_uri'].'&start='.$out_vars['start'].'">'.$image_part.'</a>';
 		}
-		
+
 		function set_icon_imap($align,$img,$alt_text)
 		{
 			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
