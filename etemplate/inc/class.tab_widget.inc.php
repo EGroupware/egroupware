@@ -89,10 +89,13 @@
 
 			$tab_widget = new etemplate('etemplate.tab_widget');
 			$tab_widget->set_cell_attribute('@tabs','obj',$tabs);
-			if ($tmpl->tpls_in_file > 1)
-				$tab_widget->set_cell_attribute('@body','obj',new etemplate($selected_tab,$tmpl->as_array()));
-			else
-				$tab_widget->set_cell_attribute('@body','name',$selected_tab);
+			
+			$stab = new etemplate($selected_tab,$tmpl->as_array());
+			$options = array_pad(explode(',',$stab->size),3,'');
+			$options[3] = ($options[3]!= '' ? $options[3].' ':'') . 'tab_body';
+         $stab->size = implode(',',$options);
+			$tab_widget->set_cell_attribute('@body','obj',$stab);
+			$tab_widget->set_cell_attribute('@body','name',$selected_tab);
 
 			$cell['type'] = 'template';
 			$cell['obj'] = &$tab_widget;
