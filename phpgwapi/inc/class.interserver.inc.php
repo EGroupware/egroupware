@@ -128,17 +128,9 @@
 
 		function _send_xmlrpc_ssl($method_name, $args, $url, $debug=True)
 		{
-			if(!function_exists(curl_init))
-			{
-				$this->debug('No curl functions available - use of ssl is invalid',$debug);
-				return False;
-			}
-			/* curl Method borrowed from:
-			  http://sourceforge.net/tracker/index.php?func=detail&aid=427359&group_id=23199&atid=377731
-			*/
 			list($uri,$hostpart) = $this->_split_url($url . $this->urlparts['xmlrpc']);
-			$this->debug("opening curl to $url", $debug);
-
+			$hostpart = ereg_replace('https://','',$hostpart);
+			$hostpart = ereg_replace('http://','',$hostpart);
 			if(gettype($args) != 'array')
 			{
 				$arr[] = CreateObject('phpgwapi.xmlrpcval',$args,'string');
@@ -147,51 +139,29 @@
 			{
 				while(list($key,$val) = @each($args))
 				{
-					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val,'string');
+					$arr[] = CreateObject('phpgwapi.xmlrpcval',$val, 'string');
 				}
 			}
-			$f = CreateObject('phpgwapi.xmlrpcmsg',$method_name,$arr);
-			$content_len = strlen($f->serialize());
-
-			$cliversion = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
-			$http_request = 'POST ' . $uri . ' HTTP/1.0' . "\r\n"
-				. 'User-Agent: phpGroupware/' . $cliversion . '(PHP) ' . "\r\n"
-				. 'X-PHPGW-Server: ' . $GLOBALS['HTTP_HOST'] . ' ' . "\r\n"
-				. 'X-PHPGW-Version: ' . $cliversion . "\r\n"
-				. 'Content-Type: text/xml' . "\r\n"
-				. 'Content-Length: ' . $content_len . "\r\n\r\n"
-				. $f->serialize();
-
-			$this->debug("sending http request:</h3><xmp>\n" . $http_request . "\n</xmp>", $debug);
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL,$hostpart);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_request);
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			$response_buf = curl_exec($ch);
-			curl_close($ch);
-
-			$this->debug("got response:</h3>.<xmp>\n$response_buf\n</xmp>\n", $debug);
-
-			$retval = '';
-			if (strlen($response_buf))
+			$f = CreateObject('phpgwapi.xmlrpcmsg', $method_name, $arr,'struct');
+			$this->debug("<pre>" . htmlentities($f->serialize()) . "</pre>\n",$debug);
+			$c = CreateObject('phpgwapi.xmlrpc_client',$this->urlparts['xmlrpc'], $hostpart, 80);
+			$c->setDebug(1);
+			$r = $c->send($f,0,True);
+			if (!$r)
 			{
-				$xml_begin = substr($response_buf, strpos($response_buf, "<?xml"));
-				if (strlen($xml_begin))
-				{
-					$retval = xmlrpc_decode($xml_begin);
-				}
-				else
-				{
-					$this->debug('Error: no xml start found from'.$hostpart.'!');
-				}
+				$this->debug('send failed');
+			}
+			$v = $r->value();
+			if (!$r->faultCode())
+			{
+				$this->debug('<hr>I got this value back<br><pre>' . htmlentities($r->serialize()) . '</pre><hr>',$debug);
 			}
 			else
 			{
-				$this->debug('Error: no response from '.$hostpart.'!');
+				$this->debug('Fault Code: ' . $r->faultCode() . ' Reason "' . $r->faultString() . '"<br>',$debug);
 			}
-			$this->result = $retval;
+
+			$this->result = xmlrpc_decode($v);
 			return $this->result;
 		}
 

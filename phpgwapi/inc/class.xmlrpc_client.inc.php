@@ -54,16 +54,29 @@
 			$this->password = $p;
 		}
 
-		function send($msg, $timeout=0)
+		function send($msg, $timeout=0, $ssl=False)
 		{
 			// where msg is an xmlrpcmsg
-			$msg->debug=$this->debug;
-			return $this->sendPayloadHTTP10(
-				$msg,
-				$this->server, $this->port,
-				$timeout, $this->username, 
-				$this->password
-			);
+			$msg->debug = $this->debug;
+
+			if($ssl)
+			{
+				return $this->ssl_sendPayloadHTTP10(
+					$msg,
+					$this->server, $this->port,
+					$timeout, $this->username, 
+					$this->password
+				);
+			}
+			else
+			{
+				return $this->sendPayloadHTTP10(
+					$msg,
+					$this->server, $this->port,
+					$timeout, $this->username, 
+					$this->password
+				);
+			}
 		}
 
 		function sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username="", $password="")
@@ -112,5 +125,52 @@
 			fclose($fp);
 			return $resp;
 		}
+
+		function ssl_sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username='', $password='')
+		{
+			if(!function_exists(curl_init))
+			{
+				$this->errstr = 'No curl functions available - use of ssl is invalid';
+				return False;
+			}
+			/* curl Method borrowed from:
+			  http://sourceforge.net/tracker/index.php?func=detail&aid=427359&group_id=23199&atid=377731
+			*/
+
+			// Only create the payload if it was not created previously
+			if(empty($msg->payload))
+			{
+				$msg->createPayload();
+			}
+		
+			// thanks to Grant Rauscher <grant7@firstworld.net>
+			// for this
+			$credentials = '';
+			if ($username!='')
+			{
+				$credentials = "Authorization: Basic " . base64_encode($username . ':' . $password) . "\r\n";
+			}
+
+			$op = "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
+				. "Host: ". $this->server . "\r\n"
+				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
+				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. $credentials
+				. "Content-Type: text/xml\r\nContent-Length: "
+				. strlen($msg->payload) . "\r\n\r\n"
+				. $msg->payload;
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL,$this->server);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $op);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			$response_buf = curl_exec($ch);
+			curl_close($ch);
+
+			$resp = $msg->parseResponse($response_buf);
+			return $resp;
+		}
+
 	}
 ?>
