@@ -66,6 +66,7 @@ birthday	addressbook	en	Birthday
 book marks	common	en	Book marks
 bookmarks	common	en	Bookmarks
 brief description	calendar	en	Brief Description
+business	common	en	Business
 business city	addressbook	en	Business City
 business country	addressbook	en	Business Country
 business email	addressbook	en	Business EMail
@@ -340,6 +341,7 @@ percent of users that logged out	admin	en	Percent of users that logged out
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 permissions to the files/users directory	common	en	permissions to the files/users directory
+personal	common	en	Personal
 personalized notes for    notes    en       Personalized notes for  
 phpgroupware login	login	en	phpGroupWare login
 phrase in english	transy	en	Phrase in English
