@@ -36,7 +36,9 @@
 	$GLOBALS['phpgw']->template->set_block('import','ffooter','ffooterhandle');
 	$GLOBALS['phpgw']->template->set_block('import','imported','importedhandle');
 
-	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
+//	$csvfile  = isset($_POST['csvfile']) ? $_POST['csvfile'] : $_FILES['csvfile']['tmp_name'];
+//	Possible fix for security issue.
+	$csvfile = $_FILES['csvfile']['tmp_name'];
 
 	if(($_POST['action'] == 'download' || $_POST['action'] == 'continue') && (!$_POST['fieldsep'] || !$csvfile || !($fp=fopen($csvfile,'rb'))))
 	{
