@@ -1,27 +1,27 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare API - Commononly used functions                             *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * and Mark Peters <skeeter@phpgroupware.org>                               *
-  * Commononly used functions by phpGroupWare developers                     *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* phpGroupWare API - Commononly used functions                             *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* and Mark Peters <skeeter@phpgroupware.org>                               *
+	* Commononly used functions by phpGroupWare developers                     *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org                                                *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
 	/* $Id$ */
 
@@ -45,6 +45,7 @@
 	{
 		var $tz_offset;
 		var $days = Array();
+		var $days_short = Array();
 		var $gmtnow = 0;
 		var $users_localtime;
 		var $cv_gmtdate;
@@ -225,6 +226,15 @@
 						5 => 'Thu',
 						6 => 'Fri'
 					);
+					$this->days_short = Array(
+						0 => 'Sa',
+						1 => 'Su',
+						2 => 'Mo',
+						3 => 'Tu',
+						4 => 'We',
+						5 => 'Th',
+						6 => 'Fr'
+					);
 					switch($weekday)
 					{
 						case 0:
@@ -247,6 +257,15 @@
 						4 => 'Fri',
 						5 => 'Sat',
 						6 => 'Sun'
+					);
+					$this->days_short = Array(
+						0 => 'Mo',
+						1 => 'Tu',
+						2 => 'We',
+						3 => 'Th',
+						4 => 'Fr',
+						5 => 'Sa',
+						6 => 'Su'
 					);
 					switch($weekday)
 					{
@@ -271,6 +290,15 @@
 						4 => 'Thu',
 						5 => 'Fri',
 						6 => 'Sat'
+					);
+					$this->days_short = Array(
+						0 => 'Su',
+						1 => 'Mo',
+						2 => 'Tu',
+						3 => 'We',
+						4 => 'Th',
+						5 => 'Fr',
+						6 => 'Sa'
 					);
 					$sday = mktime(2,0,0,$month,$day - $weekday,$year);
 					break;
