@@ -643,6 +643,27 @@
 			}
 		}
 
+		function show_hits($total_records='',$start=0)
+		{
+			if ($total_records > $this->maxmatches)
+			{
+				if ($start + $this->maxmatches > $total_records)
+				{
+					$end = $total_records;
+				}
+				else
+				{
+					$end = $start + $this->maxmatches;
+				}
+				return lang('showing x - x of x',($start + 1),$end,$total_records);
+			}
+			else
+			{
+				return lang('showing x',$total_records);
+			}
+		}
+
+
 		/*!
 		@function show_sort_order_imap
 		@abstract ?
@@ -689,24 +710,116 @@
 			return '<a href="' .$link .'">' .$text .'</a>';
 		}
 
-		function show_hits($total_records='',$start=0)
+
+		/*!
+		@function nav_left_right_imap
+		@abstract same code as left and right (as of Dec 07, 2001) except all combined into one function
+		@param feed_vars : array with these elements: <br>
+			start 
+			total 
+			cmd_prefix 
+			cmd_suffix
+		@return array, combination of functions left and right above, with these elements:
+			first_page
+			prev_page
+			next_page
+			last_page
+		@author: jengo, some changes by Angles
+		*/
+		function nav_left_right_imap($feed_vars)
 		{
-			if ($total_records > $this->maxmatches)
+			$return_array = Array(
+				'first_page'	=> '',
+				'prev_page'	=> '',
+				'next_page'	=> '',
+				'last_page'	=> ''
+			);
+			$out_vars = array();
+			// things that might change
+			$out_vars['start'] = $feed_vars['start'];
+			// things that stay the same
+			$out_vars['total'] = $feed_vars['total'];
+			$out_vars['cmd_prefix'] = $feed_vars['cmd_prefix'];
+			$out_vars['cmd_suffix'] = $feed_vars['cmd_suffix'];
+			
+			// first page
+			if (($feed_vars['start'] != 0)
+			&& ($feed_vars['start'] > $this->maxmatches))
 			{
-				if ($start + $this->maxmatches > $total_records)
-				{
-					$end = $total_records;
-				}
-				else
-				{
-					$end = $start + $this->maxmatches;
-				}
-				return lang('showing x - x of x',($start + 1),$end,$total_records);
+				$out_vars['start'] = 0;
+				$return_array['first_page'] = $this->set_link_imap('left','first.gif',lang('First page'),$out_vars);
 			}
 			else
 			{
-				return lang('showing x',$total_records);
+				$return_array['first_page'] = $this->set_icon_imap('left','first-grey.gif',lang('First page'));
 			}
+			// previous page
+			if ($feed_vars['start'] != 0)
+			{
+				// Changing the sorting order screaws up the starting number
+				if (($feed_vars['start'] - $this->maxmatches) < 0)
+				{
+					$out_vars['start'] = 0;
+				}
+				else
+				{
+					$out_vars['start'] = ($feed_vars['start'] - $this->maxmatches);
+				}
+				$return_array['prev_page'] = $this->set_link_imap('left','left.gif',lang('Previous page'),$out_vars);
+			}
+			else
+			{
+				$return_array['prev_page'] = $this->set_icon_imap('left','left-grey.gif',lang('Previous page'));
+			}
+			
+			// re-initialize the out_vars
+			// things that might change
+			$out_vars['start'] = $feed_vars['start'];
+			// next page
+			if (($feed_vars['total'] > $this->maxmatches)
+			&& ($feed_vars['total'] > $feed_vars['start'] + $this->maxmatches))
+			{
+				$out_vars['start'] = ($feed_vars['start'] + $this->maxmatches);
+				$return_array['next_page'] = $this->set_link_imap('right','right.gif',lang('Next page'),$out_vars);
+			}
+			else
+			{
+				$return_array['next_page'] = $this->set_icon_imap('right','right-grey.gif',lang('Next page'));
+			}
+			// last page
+			if (($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches)
+			&& (($feed_vars['total'] - $this->maxmatches) > ($feed_vars['start'] + $this->maxmatches)))
+			{
+				$out_vars['start'] = ($feed_vars['total'] - $this->maxmatches);
+				$return_array['last_page'] = $this->set_link_imap('right','last.gif',lang('Last page'),$out_vars);
+			}
+			else
+			{
+				$return_array['last_page'] = $this->set_icon_imap('right','last-grey.gif',lang('Last page'));
+			}
+			return $return_array;
 		}
+	
+		/*!
+		@function set_link_imap
+		@abstract ?
+		@param $img_src ?
+		@param $label ?
+		@param $link ?
+		@param $extravars ?
+		*/
+		function set_link_imap($align,$img,$alt_text,$out_vars)
+		{
+			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
+			$js_cmd = $out_vars['cmd_prefix'].$out_vars['start'].$out_vars['cmd_suffix'];
+			return '<img src="'.$img_full.'" border="0" alt="'.$alt_text.'" width="12" height="12" onclick="'.$js_cmd.'">'."\r\n";
+		}
+		
+		function set_icon_imap($align,$img,$alt_text)
+		{
+			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
+			return '<img src="'.$img_full.'" border="0" width="12" height="12" alt="'.$alt_text.'">'."\r\n";
+		}
+
 	} // End of nextmatchs class
 ?>
