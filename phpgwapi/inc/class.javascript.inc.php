@@ -130,11 +130,12 @@
 						{
 							if(!empty($files) && is_array($files))
 							{
-								foreach($files as $file => $ignored)
+								print_r($files);
+								foreach($files as $file => $browser)
 								{
 									$links .= '<script type="text/javascript" src="'
 								 	. $GLOBALS['phpgw_info']['server']['webserver_url']
-								 	. "/$app/js/$pkg/$file" . '.js">'
+								 	. "/$app/js/$pkg/$browser/$file" . '.js">'
 								 	. "</script>\n";
 								}
 							}
@@ -203,20 +204,44 @@
 		* @param string $package package to be included
 		* @param string $file file to be included - no ".js" on the end
 		* @param string $app application directory to search - default = phpgwapi
+		* @param bool   $browser insert specific browser javascript.
+	    *
+		* @discuss The browser specific option loads the file which is in the correct
+		*          browser folder. Supported folder are those supported by class.browser.inc.php
+		*
 		* @returns bool was the file found?
 		*/
-		function validate_file($package, $file, $app='phpgwapi')
+		function validate_file($package, $file, $app='phpgwapi', $browser=true)
 		{
-			if(is_readable(PHPGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package .SEP. $file . '.js'))
+			if ($browser)
 			{
-				$this->files[$app][$package][$file] = $file;
+				$browser_folder = strtolower(ExecMethod('phpgwapi.browser.get_agent'));
+			}
+			else
+			{
+				$browser_folder = '.'; 
+			}
+			
+			if(is_readable(PHPGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package . SEP . $browser_folder . SEP . $file . '.js'))
+			{
+				$this->files[$app][$package][$file] = $browser_folder;
+				return True;
+			}
+			elseif (is_readable(PHPGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package . SEP . $file . '.js'))
+			{
+				$this->files[$app][$package][$file] = '.';
 				return True;
 			}
 			elseif($app != 'phpgwapi')
 			{
-				if(is_readable(PHPGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $file . '.js'))
+				if(is_readable(PHPGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $browser_folder . SEP . $file . '.js'))
 				{
-					$this->files['phpgwapi'][$package][$file] = $file;
+					$this->files['phpgwapi'][$package][$file] = $browser_folder;
+					return True;
+				}
+				elseif(is_readable(PHPGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $file . '.js'))
+				{
+					$this->files['phpgwapi'][$package][$file] = '.';
 					return True;
 				}
 				return False;
