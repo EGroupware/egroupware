@@ -117,6 +117,8 @@
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
   $tmpl->set_var("lang_username",lang("username"));
+  $tmpl->set_var("lang_phpgw_login","phpGroupWare login");
+  $tmpl->set_var("version",$phpgw_info["server"]["version"]);
   $tmpl->set_var("lang_password",lang("password"));
   $tmpl->set_var("lang_login",lang("login"));
 
