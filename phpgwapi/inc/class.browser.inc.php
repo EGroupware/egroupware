@@ -252,11 +252,11 @@
 		// Echo content headers for file downloads
 		function content_header($fn='',$mime='',$length='',$nocache=True)
 		{
-			// if no mine-type is given or it's the default binary-type, guess it from the extension
+			// if no mime-type is given or it's the default binary-type, guess it from the extension
 			if(empty($mime) || $mime == 'application/octet-stream')
 			{
 				$mime_magic = createObject('phpgwapi.mime_magic');
-				$mime = $mime_magic->filename2mine($fn);
+				$mime = $mime_magic->filename2mime($fn);
 			}
 			if($fn)
 			{

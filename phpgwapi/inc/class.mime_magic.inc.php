@@ -87,7 +87,7 @@
 		
 		/**
 		* Attempt to convert a filename to a MIME type, based on the
-		* global Horde and application specific config files.
+		* global and application specific config files.
 		*
 		* Unlike ext2mime, this function will return
 		* 'application/octet-stream' for any unknown or empty extension
@@ -99,7 +99,7 @@
 		* @return string  The MIME type of the filename.
 		* @author skwashd - changed it to make it work with file.tar.gz etc
 		*/
-		function filename2mine($filename)
+		function filename2mime($filename)
 		{
 			$fn_parts = explode('.', $filename);
 			if (is_array($fn_parts))
@@ -107,6 +107,12 @@
 				return $this->ext2mime($fn_parts[count($fn_parts)-1]);
 			}
 			return 'application/octet-stream';
+		}
+
+		/* temporary fix for apps using the old name */
+		function filename2mine($filename)
+		{
+			return $this->filename2mime($filename);
 		}
 		
 		/**
