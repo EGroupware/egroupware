@@ -130,6 +130,16 @@ class calendar__
 				$event_id = $old_event->id;
 				$msgtype = '"calendar";';
 				break;
+			case MSG_TENTATIVE:
+				$action = 'Tentative';
+				$event_id = $old_event->id;
+				$msgtype = '"calendar";';
+				break;
+			case MSG_ACCEPTED:
+				$action = 'Tentative';
+				$event_id = $old_event->id;
+				$msgtype = '"calendar";';
+				break;
 		}
 
 		if($old_event != False)
@@ -158,6 +168,8 @@ class calendar__
 				$phpgw_info['user']['preferences']['common']['tz_offset'] = $part_prefs['common']['tz_offset'];
 				$phpgw_info['user']['preferences']['common']['timeformat'] = $part_prefs['common']['timeformat'];
 				$phpgw_info['user']['preferences']['common']['dateformat'] = $part_prefs['common']['dateformat'];
+				
+				$new_tz_offset = ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 
 				if($old_event != False)
 				{
@@ -184,8 +196,10 @@ class calendar__
 						$body = 'You have a meeting scheduled for '.$new_event_date;
 						break;
 					case MSG_REJECTED:
+					case MSG_TENTATIVE:
+					case MSG_ACCEPTED:
 						$action_date = $old_event_date;
-						$body = 'On '.$phpgw->common->show_date(time() - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']))).' '.$phpgw->common->grab_owner_name($phpgw_info['user']['account_id']).' REJECTED your meeting request for '.$old_event_date;
+						$body = 'On '.$phpgw->common->show_date(time() - $new_tz_offset).' '.$phpgw->common->grab_owner_name($phpgw_info['user']['account_id']).' '.$action.' your meeting request for '.$old_event_date;
 						break;
 				}
 				$subject = 'Calendar Event ('.$action.') #'.$event_id.': '.$action_date.' (L)';
