@@ -63,17 +63,15 @@
 
 		function open_port($server,$port,$timeout=15)
 		{
-			global $phpgw_info;
-	
 			switch($port)
 			{
 				case 80:
 				case 443:
-					if((isset($phpgw_info['server']['httpproxy_server']) && $phpgw_info['server']['httpproxy_server']) &&
-						(isset($phpgw_info['server']['httpproxy_port']) && $phpgw_info['server']['httpproxy_port']))
+					if((isset($GLOBALS['phpgw_info']['server']['httpproxy_server']) && $GLOBALS['phpgw_info']['server']['httpproxy_server']) &&
+						(isset($GLOBALS['phpgw_info']['server']['httpproxy_port']) && $GLOBALS['phpgw_info']['server']['httpproxy_port']))
 					{
-						$server = $phpgw_info['server']['httpproxy_server'];
-						$port   = (int)$phpgw_info['server']['httpproxy_port'];
+						$server = $GLOBALS['phpgw_info']['server']['httpproxy_server'];
+						$port   = (int)$GLOBALS['phpgw_info']['server']['httpproxy_port'];
 					}
 					break;
 			}
@@ -182,12 +180,10 @@
 		// return contents of a web url as an array or false if timeout
 		function gethttpsocketfile($file)
 		{
-			global $phpgw_info;
-	
 			$server = str_replace('http://','',$file);
 			$file = strstr($server,'/');
 			$server = str_replace($file,'',$server);
-			if ($phpgw_info['server']['httpproxy_server'])
+			if ($GLOBALS['phpgw_info']['server']['httpproxy_server'])
 			{
 				if ($this->open_port($server,80, 15))
 				{
