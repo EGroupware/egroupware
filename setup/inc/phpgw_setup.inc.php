@@ -275,6 +275,28 @@
         return 10;
       }
     }
+
+    function get_template_list(){
+      global $phpgw_info;
+      $d = dir($phpgw_info["server"]["server_root"]."/phpgwapi/templates");
+      $list["user_choice"]["name"] = "user_choice";
+      $list["user_choice"]["title"] = "Users Choice";
+      while($entry=$d->read()) {
+        if ($entry != "CVS" && $entry != "." && $entry != ".."){
+          $list[$entry]["name"] = $entry;
+          $f = $phpgw_info["server"]["server_root"]."/phpgwapi/templates/details.inc.php";
+          if (file_exists ($f)){
+            include($f);
+            $list[$entry]["title"] = "Use ".$phpgw_info["template"][$entry]["title"]."interface";
+          }else{
+            $list[$entry]["title"] = $entry;
+          }
+        }
+      }
+      $d->close();
+      reset ($list);
+      return $list;
+    }
   
     function app_setups($appname = ""){
       global $phpgw_info;

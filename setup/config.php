@@ -293,6 +293,29 @@
    </tr>
    <?php $selected = array(); ?>
 
+   <?php $selected[$current_config["template_set"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Interface/Template Selection:<br> (if user choice, and they dont make a selection, then classic will be used)</td>
+    <td>
+     <select name="newsettings[template_set]">
+    <?php
+      $templates = $phpgw_setup->get_template_list();
+      while (list ($key, $value) = each ($templates)){
+        echo '<option value="'.$key.'" '.$selected[$key].'>'.$templates[$key]["title"].'</option>';
+//        echo '<option value="'.$key.'">'.$templates[$key]["title"].'</option>';
+/*
+        echo "key= ".$key."<br>";
+        echo "value= ".$value."<br>";
+        echo "selected[value]= ".$selected[$key]."<br>";
+        echo "title= ".$templates[$key]["title"]."<br>";
+*/
+      }
+    ?>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
    <?php $selected[$current_config["useframes"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
     <td>Frame support:</td>
