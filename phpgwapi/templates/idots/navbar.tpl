@@ -1,5 +1,5 @@
 <!-- BEGIN navbar_header -->
-<div id="divLogo"><a href="http://{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="eGroupWare"/></a></div>
+<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="eGroupWare"/></a></div>
 
 {app_extra_icons_div}
 

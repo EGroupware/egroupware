@@ -13,7 +13,7 @@
 </HEAD>
 
 <body bgcolor="#{bg_color}">
-<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
+<a href="{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
 <p>&nbsp;</p>
 <center>{lang_message}</center>
 <p>&nbsp;</p>

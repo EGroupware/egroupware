@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<meta name="description" content="phpGroupWare">
+<meta name="AUTHOR" content="eGroupWare http://www.egroupware.org">
+<meta name="description" content="eGroupWare">
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-<meta name="keywords" content="phpGroupWare login screen">
+<meta name="keywords" content="eGroupWare login screen">
 <style type="text/css">
   a { text-decoration:none; }
   A:link{ text-decoration:none; color: #336699; }
@@ -21,7 +21,7 @@
 <!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END Head -->
 <body bgcolor="#cccccc" alink="#ff0000" link="#336699" vlink="#336699">
 
-<a href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare" border="0"></a>
+<a href="http://www.egroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="eGroupWare" border="0"></a>
 <p>&nbsp;</p>
 <center>{lang_message}</center>
 <p>&nbsp;</p>
@@ -31,7 +31,7 @@
   <td>
    <table border="0" width="100%" cellpadding="2" cellspacing="1">
  <tr bgcolor="#525252">
-  <td align="left" valign="middle">&nbsp;phpGroupWare</td>
+  <td align="left" valign="middle">&nbsp;eGroupWare</td>
  </tr>
  <tr>
   <td valign="baseline">

@@ -4,10 +4,10 @@
 <HEAD>
 
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<META NAME="description" CONTENT="phpGroupWare login screen">
+<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
+<META NAME="description" CONTENT="eGroupWare login screen">
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-<META NAME="keywords" CONTENT="phpGroupWare login screen">
+<META NAME="keywords" CONTENT="eGroupWare login screen">
 <STYLE type="text/css">
 <!--
 	A:link          { color:#FFFFFF; text-decoration:none; }
@@ -96,7 +96,7 @@ target="_lawde">http://linux-at-work.de</a>
         </TR>
         <TR bgcolor="#1559a9">
          <TD colspan="2" align="RIGHT">
-          <font color="000000" size="-1">basierend auf PHPGroupware {version}</font>
+          <font color="000000" size="-1">basierend auf eGroupware {version}</font>
          </TD>
         </TR>       
        </TABLE>

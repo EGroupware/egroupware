@@ -11,7 +11,7 @@
 </HEAD>
 <BODY bgcolor="#FFFFFF">
 <br>
-<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
+<a href="{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 <FORM name="login_form" method="post" action="{login_url}">

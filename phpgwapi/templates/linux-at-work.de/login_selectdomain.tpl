@@ -4,15 +4,15 @@
 <HEAD>
 
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<META NAME="description" CONTENT="phpGroupWare login screen">
-<META NAME="keywords" CONTENT="phpGroupWare login screen">
+<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
+<META NAME="description" CONTENT="eGroupWare login screen">
+<META NAME="keywords" CONTENT="eGroupWare login screen">
 
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
 <BODY bgcolor="#FFFFFF">
- <A href="http://www.phpgroupware.org"><img src="phpGroupWare.jpg" alt="phpGroupWare" border="0"></a>
+ <A href="http://www.egroupware.org"><img src="eGroupWare.jpg" alt="eGroupWare" border="0"></a>
 <p>&nbsp;</p>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>

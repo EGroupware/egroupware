@@ -4,9 +4,9 @@
 <HEAD>
 
 <META http-equiv="Content-Type" content="text/html; charset={charset}">
-<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
-<META NAME="description" CONTENT="phpGroupWare login screen">
-<META NAME="keywords" CONTENT="phpGroupWare login screen">
+<META name="AUTHOR" content="eGroupWare http://www.egroupware.org">
+<META NAME="description" CONTENT="eGroupWare login screen">
+<META NAME="keywords" CONTENT="eGroupWare login screen">
 
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
@@ -22,7 +22,7 @@
    <TABLE border="0" width="100%" bgcolor="#486591" cellpadding="2" cellspacing="1">
     <TR bgcolor="#486591">
      <TD align="LEFT" valign="MIDDLE">
-      <A href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare"  border="0"></a>
+      <A href="http://www.egroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="eGroupWare"  border="0"></a>
      </TD>
     </TR>
     <TR bgcolor="#e6e6e6">

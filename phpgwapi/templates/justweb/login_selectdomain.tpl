@@ -5,7 +5,7 @@
 </head>
 
 <body bgcolor="#FFFFFF">
- <a href="http://www.phpgroupware.org"><img src="phpGroupWare.jpg" alt="phpGroupWare" border="0"></a>
+ <a href="http://www.egroupware.org"><img src="eGroupWare.jpg" alt="eGroupWare" border="0"></a>
 <p>&nbsp;</p>
 <center>{lang_message}</center>
 <p>&nbsp;</p>

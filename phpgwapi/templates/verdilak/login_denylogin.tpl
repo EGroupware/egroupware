@@ -1,7 +1,7 @@
 
 <!-- BEGIN form -->
 <BODY bgcolor="#FFFFFF">
-<A href="http://www.phpgroupware.org"><img src="phpGroupWare.jpg" alt="phpGroupWare" border="0"></a>
+<A href="http://www.egroupware.org"><img src="eGroupWare.jpg" alt="eGroupWare" border="0"></a>
 
 <TABLE border="0" height="94%" width="100%">
  <TR>

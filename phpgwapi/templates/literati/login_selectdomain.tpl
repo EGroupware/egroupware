@@ -10,7 +10,7 @@
 </HEAD>
 <BODY bgcolor="#FFFFFF">
 <br>
-<a href="http://{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
+<a href="{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 <TABLE class=sidebox cellSpacing=1 cellPadding=0  border=0  align=center>
