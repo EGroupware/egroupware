@@ -54,7 +54,7 @@
 	// These need to be added still
 	$file['View Access Log']            = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
 	$file['View Error Log']             = $GLOBALS['phpgw']->link('/admin/log.php');
-	$file['phpInfo']                    = $GLOBALS['phpgw']->link('/admin/phpinfo.php');
+	$file['phpInfo']                    = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
 
 	//Do not modify below this line
 	display_section('admin','admin',$file);

@@ -12,12 +12,13 @@
 	/* $Id$ */
 
 	$phpgw_info['flags'] = array(
-		'currentapp' => 'admin',
-		'enable_nextmatchs_class' => True
+		'noheader'   => True,
+		'nonavbar'   => True,
+		'currentapp' => 'admin'
 	);
 	include('../header.inc.php');
 
 	phpinfo();
 
-	$phpgw->common->phpgw_footer();
+//	$phpgw->common->phpgw_footer();
 ?>
