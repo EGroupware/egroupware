@@ -21,7 +21,6 @@
 			'delete_entry' => True,
 			'update'       => True,
 			'preferences'  => True,
-			'assoc_array'	=> True,
 			'store_to_cache'	=> True
 		);
 
