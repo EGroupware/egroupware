@@ -17,23 +17,24 @@
 
 	$pref_tpl = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$pref_tpl->set_file(array(
-		'T_icon_cell' => 'index_icon_cell.tpl',
-		'T_link_cell' => 'index_link_cell.tpl',	
-		'index_out' => 'index.tpl',
+		'T_index_out' => 'index.tpl',
 	));
+
+	$pref_tpl->set_block('T_index_out','B_icon_cell','V_icon_cell');
+	$pref_tpl->set_block('T_index_out','B_link_cell','V_link_cell');
 
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='')
 	{
 		global $phpgw,$phpgw_info, $loopnum, $pref_tpl;
 		
-		$pref_tpl->set_var('icon_backcolor',$phpgw_info["theme"]["row_off"]);
-		$pref_tpl->set_var('link_backcolor',$phpgw_info["theme"]["row_off"]);
+		$pref_tpl->set_var('icon_backcolor',$phpgw_info['theme']['row_off']);
+		$pref_tpl->set_var('link_backcolor',$phpgw_info['theme']['row_off']);
 		$pref_tpl->set_var('app_name',lang($name));
 		$pref_tpl->set_var('app_icon',$icon);
 		if ($icon)
 		{
-			$pref_tpl->parse('V_icon_cell','T_icon_cell');
+			$pref_tpl->parse('V_icon_cell','B_icon_cell');
 		}
 		else
 		{
@@ -58,14 +59,14 @@
 
 		$pref_tpl->set_var('pref_link',$pref_link);
 		$pref_tpl->set_var('pref_text',$pref_text);		
-		$pref_tpl->parse('V_link_cell','T_link_cell',True);
+		$pref_tpl->parse('V_link_cell','B_link_cell',True);
 		$loopnum = $loopnum + 1;
 	} 
 
 	function section_end()
 	{
 		global $phpgw,$phpgw_info, $pref_tpl;
-		$pref_tpl->pparse('out','index_out');
+		$pref_tpl->pparse('out','T_index_out');
 		$pref_tpl->set_var('V_icon_cell','');
 		$pref_tpl->set_var('V_link_cell','');
 	}
