@@ -150,6 +150,24 @@
 		}
 
 		/*!
+		@function htmlarea_avalible
+		@author ralfbecker
+		@abstract Checks if HTMLarea (or an other richtext editor) is availible for the used browser
+		*/
+		function htmlarea_availible()
+		{
+			switch($this->user_agent)
+			{
+				case 'msie':
+					return $this->ua_version >= 5.5;
+				case 'mozilla':
+					return $this->ua_version >= 1.3;
+				default:
+					return False;
+			}
+		}
+
+		/*!
 		@function htmlarea
 		@syntax htmlarea( $name,$content='',$style='width:100%; min-width:500px; height:300px;' )
 		@author ralfbecker
