@@ -36,8 +36,10 @@
 			   'license'    => lang('License')
 			);
 
+			$applink=$GLOBALS['phpgw']->link('/'.$app);
+			
 			$s = "<table width='70%' cellpadding='4'>\n<tr>
-				  <td align='left'><img src='$icon' alt=\"$info[title]\" /></td><td align='left'><h2>$info[title]</h2></td></tr>"; 
+				  <td align='left'><a href=\"$applink\" title=\"".lang('Go back to the application %1',$info['title'])."\"><img src=\"$icon\" alt=\"$info[title]\" border=\"0\" /></a></td><td align=\"left\"><h2>$info[title]</h2></td></tr>"; 
 
 			   if ($info['description'])
 			   {
