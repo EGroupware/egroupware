@@ -256,7 +256,7 @@
     $db->query("alter table $table change $field $field int(11) NOT NULL");
   }
 
-  function v0_9_2to0_9_3pre5(){
+  function v0_9_2to0_9_3pre6(){
     global $currentver, $phpgw_info, $db;
     $didupgrade = True;
 
