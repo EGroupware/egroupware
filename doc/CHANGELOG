@@ -17,6 +17,8 @@
         - Merged in update for french
         - Merged in update for Spanish
           Thanks gmartine
+	- Merged in patch for calendar for year view
+	  Thanks bwulf
         
 [0.9.6] - Fix user permissions where not being checked properly.
 

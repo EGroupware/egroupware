@@ -49,6 +49,11 @@
    </a>
   </td>
   <td width="2%" align="left">
+   <a href="<?php echo $phpgw->link("year.php","day=".$phpgw->calendar->today["day"]."&month=".$phpgw->calendar->today["month"]."&year=".$phpgw->calendar->today["year"]); ?>">
+    <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/year.gif" alt="<?php echo lang("This year"); ?>" border="0">
+   </a>
+  </td>
+  <td width="2%" align="left">
    <a href="<?php echo $phpgw->link("matrixselect.php","day=".$phpgw->calendar->today["day"]."&month=".$phpgw->calendar->today["month"]."&year=".$phpgw->calendar->today["year"]); ?>">
     <img src="<?php echo $phpgw_info["server"]["app_images"]; ?>/view.gif" alt="<?php echo lang("Daily Matrix View"); ?>" border="0">
    </a>
