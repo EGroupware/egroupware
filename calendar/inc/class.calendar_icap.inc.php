@@ -20,7 +20,7 @@ class calendar_ extends calendar__
 
 		if($user=='')
 		{
-			$this->user = $phpgw_info['user']['account_lid'];
+			$user = $phpgw_info['user']['account_lid'];
 		}
 		elseif(is_int($user)) 
 		{
