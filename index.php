@@ -30,9 +30,9 @@
   $phpgw->common->phpgw_header();
   $phpgw->common->navbar();
 
-  $phpgw->common->read_preferences($phpgw_info["user"]["loginid"],"addressbook",True);
-  $phpgw->common->read_preferences($phpgw_info["user"]["loginid"],"email",True);
-  $phpgw->common->read_preferences($phpgw_info["user"]["loginid"],"calendar",True);
+  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"addressbook",True);
+  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"email",True);
+  $phpgw->common->read_preferences($phpgw_info["user"]["userid"],"calendar",True);
 
   if ($phpgw_info["user"]["permissions"]["admin"] && $phpgw_info["server"]["checkfornewversion"]) {
      $phpgw->network->set_addcrlf(False);
@@ -54,7 +54,7 @@
      }
   }
 
-  echo '<TABLE border="0">';
+  echo '<p><TABLE border="0">';
 ?>
  <script langague="JavaScript">
     function opennotifywindow()
@@ -94,26 +94,22 @@
     echo "<!-- Mailox info -->\n";
   }
 
-  if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
-     echo "addressbook pereferences";
-  }
-
   if ($phpgw_info["user"]["apps"]["addressbook"]
   && $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) {
     echo "<!-- Birthday info -->\n";
-    $phpgw->db->query("select DISTINCT firstname,lastname from addressbook where "
-      . "bday like '" . $phpgw->common->show_date(time(),"n/d")
-      . "/%' and (owner='" . $phpgw_info["user"]["userid"] . "' or access='"
-      . "public')");
+    $phpgw->db->query("select DISTINCT ab_firstname,ab_lastname from addressbook where "
+      . "ab_bday like '" . $phpgw->common->show_date(time(),"n/d")
+      . "/%' and (ab_owner='" . $phpgw_info["user"]["userid"] . "' or ab_access='"
+      . "ab_public')");
       while ($phpgw->db->next_record()) {
-        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("firstname") . " "
-	  . $phpgw->db->f("lastname")) . "</td></tr>\n";
+        echo "<tr><td>" . lang("Today is x's birthday!", $phpgw->db->f("ab_firstname") . " "
+	  . $phpgw->db->f("ab_lastname")) . "</td></tr>\n";
       }
       $tommorow = $phpgw->common->show_date(mktime(0,0,0,
       $phpgw->common->show_date(time(),"m"),
       $phpgw->common->show_date(time(),"d")+1,
       $phpgw->common->show_date(time(),"Y")),"n/d" );
-      $phpgw->db->query("select firstname,lastname from addressbook where "
+      $phpgw->db->query("select ab_firstname,ab_lastname from addressbook where "
                       . "ab_bday like '$tommorow/%' and (ab_owner='"
                       . $phpgw_info["user"]["userid"] . "' or ab_access='public')");
       while ($phpgw->db->next_record()) {
