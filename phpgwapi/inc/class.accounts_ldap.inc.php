@@ -352,7 +352,7 @@
 			$entry["objectclass"][3]	= 'posixAccount';
 			$entry["objectclass"][4]	= 'shadowAccount';
 
-			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
+			if ($phpgw_info["server"]["ldap_extra_attributes"] && $account_type != 'g') {
 				if ($account_home)
 				{
 					$entry["homedirectory"]     = $account_home;
