@@ -1230,7 +1230,7 @@
         $p->set_var('text',$this->hour_arr[99]);
         $p->set_var('bgcolor',$phpgw->nextmatchs->alternate_row_color());
         $p->set_var('time','&nbsp;');
-        $p->parse('mini_week','day_row_99',False);
+        $p->parse('monthweek_day','day_row_99',False);
         $p->parse('row','mini_week',True);
       }
       $this->rowspan = 0;
