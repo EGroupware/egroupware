@@ -195,7 +195,7 @@
           echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Analysis</b></font></td>\n";
           echo "  </tr>\n";
           echo "  <tr bgcolor=\"e6e6e6\">\n";
-          echo "    <td>Your database is to date with version $oldversion.<br>\n";
+          echo "    <td>Your database is up to date with version $oldversion.<br>\n";
           echo "    <a href=\"config.php\">Click here</a> to configure the environment.</td>\n";
           echo "  </tr>\n";
           echo "</table>\n";
