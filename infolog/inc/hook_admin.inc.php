@@ -13,12 +13,12 @@
 	{
 		$file = Array
 		(
-			'Site configuration' => $GLOBALS['phpgw']->link('/index.php',array('menuaction' => 'infolog.uiinfolog.admin' )),
-			'Global Categories'  => $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True'),
-			'CSV-Import' => $GLOBALS['phpgw']->link('/infolog/csv_import.php')
+			'Site configuration'	=> $GLOBALS['phpgw']->link('/index.php',array('menuaction' => 'infolog.uiinfolog.admin' )),
+			'Global Categories'		=> $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index&appname=' . $appname . '&global_cats=True'),
+			'CSV-Import'			=> $GLOBALS['phpgw']->link('/infolog/csv_import.php')
 		);
 
 //Do not modify below this line
-		display_section($appname,lang($appname),$file);	// please not 2. appname is for .14 compatibilty
+		$GLOBALS['phpgw']->common->display_mainscreen($appname,$file);
 	}
 ?>
