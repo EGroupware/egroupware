@@ -349,7 +349,8 @@
 			$timeout = 5;
 
 			// now we try to open the socket and check, if any smtp server responds
-			$socket = fsockopen($GLOBALS['phpgw_info']['server']['smtp_server'],$GLOBALS['phpgw_info']['server']['smtp_port'],$errcode,$errmsg,$timeout);
+			$smtp_port = $GLOBALS['phpgw_info']['server']['smtp_port'] ? $GLOBALS['phpgw_info']['server']['smtp_port'] : 25;
+			$socket = fsockopen($GLOBALS['phpgw_info']['server']['smtp_server'],$smtp_port,$errcode,$errmsg,$timeout);
 			if (!$socket)
 			{
 				$this->err['code'] = '420';
