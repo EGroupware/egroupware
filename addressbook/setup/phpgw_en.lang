@@ -13,6 +13,7 @@ country	addressbook	en	Country
 custom fields	addressbook	en	Custom Fields
 department	addressbook	en	Department
 export contacts	addressbook	en	Export Contacts
+export file name	addressbook	en	Export file name
 fax	addressbook	en	Fax
 fields to show in address list	addressbook	en	Fields to show in address list
 full name	addressbook	en	Full Name

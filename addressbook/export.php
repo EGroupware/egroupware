@@ -84,8 +84,16 @@
 	{
 		if ($conv_type == 'none')
 		{
+			$phpgw_info['flags']['noheader'] = False;
+			$phpgw_info['flags']['noheader'] = True;
+			$phpgw->common->phpgw_header();
+			echo parse_navbar();
 			echo lang('<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list');
-			$download = 'off';
+			echo '&nbsp<a href="'.$phpgw->link('/addressbook/export.php',
+				"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id")
+				. '">'.lang('OK').'</a>';
+			$phpgw->common->phpgw_footer();
+			$phpgw->common->phpgw_exit();
 		}
 		else
 		{
@@ -142,7 +150,7 @@
 		if ( ($download == 'on') || ($o->type == 'pdb') )
 		{
 			// filename, default application/octet-stream, length of file, default nocache True
-			$phpgw->browser->content_header($tsvfilename,'',strlen($buffer));
+			$phpgw->browser->content_header($tsvfilename,'application/octet-stream',strlen($buffer));
 			echo $buffer;
 		}
 		else
