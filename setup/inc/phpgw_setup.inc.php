@@ -38,42 +38,42 @@
     {
      	global $phpgw_info, $phpgw_domain, $PHP_SELF;
 
-      echo "<p><body bgcolor='#ffffff'>\n";
-      echo "<table border=\"0\" align=\"center\">\n";
-      if ($phpgw_info["setup"]["stage"]["header"] == "10"){
-        echo "  <tr bgcolor=\"486591\">\n";
-        echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Setup/Config Admin Login</b></font></td>\n";
-        echo "  </tr>\n";
-        echo "   <tr bgcolor='#e6e6e6'><td colspan='2'><font color='#ff0000'>".$phpgw_info["setup"]["ConfigLoginMSG"]."</font></td></tr>\n";
-        echo "  <tr bgcolor=\"e6e6e6\">\n";
-        echo "    <td><form action='index.php' method='POST'>\n";
+      echo '<p><body bgcolor="#ffffff">'."\n";
+      echo '<table border="0" align="center">'."\n";
+      if ($phpgw_info['setup']['stage']['header'] == '10'){
+        echo '  <tr bgcolor="#486591">'."\n";
+        echo '    <td colspan="2"><font color="#fefefe">&nbsp;<b>Setup/Config Admin Login</b></font></td>'."\n";
+        echo '  </tr>'."\n";
+        echo '   <tr bgcolor="#e6e6e6"><td colspan="2"><font color="#ff0000">'.$phpgw_info['setup']['ConfigLoginMSG'].'</font></td></tr>'."\n";
+        echo '  <tr bgcolor="#e6e6e6">'."\n";
+        echo '    <td><form action="index.php" method="POST" name="config">'."\n";
         if (count($phpgw_domain) > 1){
-          echo "      <table><tr><td>Domain: </td><td><input type=\"text\" name=\"FormDomain\" value=\"\"></td></tr>\n";
-          echo "      <tr><td>Password: </td><td><input type=\"password\" name=\"FormPW\" value=\"\"></td></tr></table>\n";
+          echo '      <table><tr><td>Domain: </td><td><input type="text" name="FormDomain" value=""></td></tr>'."\n";
+          echo '      <tr><td>Password: </td><td><input type="password" name="FormPW" value=""></td></tr></table>'."\n";
         }else{
           reset($phpgw_domain);
           $default_domain = each($phpgw_domain);
-          echo "      <input type=\"password\" name=\"FormPW\" value=\"\">\n";
-          echo "      <input type=\"hidden\" name=\"FormDomain\" value=\"".$default_domain[0]."\">\n";
+          echo '      <input type="password" name="FormPW" value="">'."\n";
+          echo '      <input type="hidden" name="FormDomain" value="'.$default_domain[0].'">'."\n";
         }
-        echo "      <input type=\"submit\" name=\"ConfigLogin\" value=\"Login\">\n";
-        echo "    </form></td>\n";
-        echo "  </tr>\n";
+        echo '      <input type="submit" name="ConfigLogin" value="Login">'."\n";
+        echo '    </form></td>'."\n";
+        echo '  </tr>'."\n";
       }
 
-      echo "  <tr bgcolor=\"486591\">\n";
-      echo "    <td colspan=\"2\"><font color=\"fefefe\">&nbsp;<b>Header Admin Login</b></font></td>\n";
-      echo "  </tr>\n";
-      echo "   <tr bgcolor=\"#e6e6e6\"><td colspan=\"2\"><font color=\"#ff0000\">".$phpgw_info["setup"]["HeaderLoginMSG"]."</font></td></tr>\n";
-      echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td><form action=\"manageheader.php\" method=\"POST\">\n";
-      echo "      <input type=\"password\" name=\"FormPW\" value=\"\">\n";
-      echo "      <input type=\"submit\" name=\"HeaderLogin\" value=\"Login\">\n";
-      echo "    </form></td>\n";
-      echo "  </tr>\n";
+      echo '  <tr bgcolor="#486591">'."\n";
+      echo '    <td colspan="2"><font color="#fefefe">&nbsp;<b>Header Admin Login</b></font></td>'."\n";
+      echo '  </tr>'."\n";
+      echo '   <tr bgcolor="#e6e6e6"><td colspan="2"><font color="#ff0000">'.$phpgw_info['setup']['HeaderLoginMSG'].'</font></td></tr>'."\n";
+      echo '  <tr bgcolor="#e6e6e6">'."\n";
+      echo '    <td><form action="manageheader.php" method="POST" name="admin">'."\n";
+      echo '      <input type="password" name="FormPW" value="">'."\n";
+      echo '      <input type="submit" name="HeaderLogin" value="Login">'."\n";
+      echo '    </form></td>'."\n";
+      echo '  </tr>'."\n";
   
-      echo "</table>\n";
-   	  echo "</body></html>\n";
+      echo '</table>'."\n";
+   	  echo '</body></html>'."\n";
     }
   
     function check_header()
