@@ -1,4 +1,4 @@
-	etemplate	en
+	etemplate	en	
 %s disabled	etemplate	en	%s Disabled
 %s needed	etemplate	en	%s needed
 %s no transl.	etemplate	en	%s No Transl.
@@ -14,14 +14,20 @@ align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
+birtday	etemplate	en	Birtday
+birthday	etemplate	en	Birthday
 can have special sql-value null	etemplate	en	can have special SQL-value NULL
+cancel	etemplate	en	Cancel
+cancel, discarding changes	etemplate	en	Cancel, discarding changes
 center	etemplate	en	Center
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
+city	etemplate	en	City
 class	etemplate	en	class
 class, valign	etemplate	en	class, Valign
 columnname	etemplate	en	ColumnName
+companyname	etemplate	en	Companyname
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	en	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
@@ -62,8 +68,13 @@ error: while saveing !!!	etemplate	en	Error: while saveing !!!
 etemplate editor	etemplate	en	eTemplate Editor
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
+familyname	etemplate	en	Familyname
+fax	etemplate	en	Fax
+faxnumber	etemplate	en	Faxnumber
 floating point	etemplate	en	Floating Point
 foreign key	etemplate	en	Foreign Key
+founded	etemplate	en	Founded
+free note-text	etemplate	en	free note-text
 group/-user	etemplate	en	Group/-User
 height	etemplate	en	Height
 height of row (in percent or pixel)	etemplate	en	height of row (in percent or pixel)
@@ -101,6 +112,7 @@ name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 no	etemplate	en	No
+note	etemplate	en	Note
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
@@ -108,6 +120,8 @@ only an other version found !!!	etemplate	en	only an other Version found !!!
 precision	etemplate	en	Precision
 primary key	etemplate	en	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	en	Primary key for the table, gets automaticaly indexed
+privat	etemplate	en	Privat
+privat address	etemplate	en	privat address
 prozente	etemplate	en	Prozente
 put a date in here	etemplate	en	Put a date in here
 put a percentage here	etemplate	en	put a percentage here
@@ -121,6 +135,7 @@ remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 save	etemplate	en	Save
+save changes	etemplate	en	Save changes
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 save the template under the above keys (name, ...), change them for a saveas	etemplate	en	save the template under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
@@ -147,14 +162,18 @@ shows/displays the template for testing, does not save it before	etemplate	en	sh
 size	etemplate	en	Size
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
+street	etemplate	en	Street
 submitbutton	etemplate	en	Submitbutton
+surname	etemplate	en	Surname
 tablename	etemplate	en	TableName
+telefon	etemplate	en	Telefon
+telefonnumber	etemplate	en	Telefonnumber
 template	etemplate	en	Template
 template deleted	etemplate	en	Template deleted
 template saved	etemplate	en	Template saved
 text	etemplate	en	Text
 textarea	etemplate	en	Textarea
-textfeld: 	etemplate	en	Textfeld: 
+textfeld: 	etemplate	en	Textfeld:
 this is a datefield	etemplate	en	This is a DateField
 to start the db-tools	etemplate	en	to start the DB-Tools
 to start the etemplate editor	etemplate	en	to start the eTemplate editor
@@ -166,6 +185,7 @@ update from version '%s' to	etemplate	en	Update from Version '%s' to
 value	etemplate	en	Value
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
+when was the company founded	etemplate	en	when was the company founded
 width	etemplate	en	Width
 width of column (in percent or pixel)	etemplate	en	width of column (in percent or pixel)
 width, height and border-line-thickness of the table / template	etemplate	en	width, height and border-line-thickness of the table / template
@@ -173,10 +193,14 @@ width, height, border	etemplate	en	Width, Height, Border
 width, height, border, class, cellspacing, cellpadding	etemplate	en	Width, Height, Border, class, Cellspacing, Cellpadding
 width, height, border, class, spacing, padding	etemplate	en	Width, Height, Border, class, Spacing, Padding
 width, height, border-line-thickness of the table / template and css-class name (for table tag)	etemplate	en	width, height, border-line-thickness of the table / template and CSS-class name (for TABLE tag)
-width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag), 
+width, height, border-line-thickness, css-class name, celspaceing, cellpadding (for table tag), 	etemplate	en	width, height, border-line-thickness, CSS-class name, Celspaceing, Cellpadding (for TABLE tag),
+work	etemplate	en	Work
+work address	etemplate	en	work address
 write <app>/setup/tables_current.inc.php	etemplate	en	Write <app>/setup/tables_current.inc.php
 write langfile	etemplate	en	Write Langfile
 write tables	etemplate	en	Write Tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	en	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
 year	etemplate	en	Year
 yes	etemplate	en	Yes
+you can enter some free text here.	etemplate	en	You can enter some free text here.
+zip code	etemplate	en	ZIP Code

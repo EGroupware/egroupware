@@ -15,6 +15,7 @@
 	/*!
 	@class tab_widget
 	@abstract widget that shows one row of tabs and an other row with the eTemplate of the selected tab
+	@note see the example in 'etemplate.tab_widget.test' (use show to view it)
 	@note This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
 	*/
 	class tab_widget
@@ -29,30 +30,25 @@
 		{
 		}
 
-		function pre_process(&$cell,&$value,&$parent)
+		function pre_process(&$cell,&$value,&$templ)
 		{
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
 			$names = explode('|',$cell['name']);
 
-			$cell['type'] = 'template';
-			$templ = new etemplate();
+			$tabs = new etemplate();
 			$tab = new etemplate('etemplate.tab_widget.tab');
 			$tab_active = new etemplate('etemplate.tab_widget.tab_active');
 
-			$templ->init('*** generated tab_widget','','',0,'',0,0);	// make an empty template
+			$tabs->init('*** generated tabs','','',0,'',0,0);	// make an empty template
 
-			$tabs = array();	// generate the tabs row
+			$tab_row = array();	// generate the tab row
 			while (list($k,$name) = each($names))
 			{
-				$tcell = $templ->empty_cell();
-/*				$tcell['name'] = "_tab_widget[$name]";
-				$tcell['type'] = 'button';
-				$tcell['label'] = $labels[$k];
-				$tcell['help'] = $helps[$k];
-*/				if (is_array($value['_tab_widget']) && isset($value['_tab_widget'][$name]))
+				$tcell = $tabs->empty_cell();
+				if (is_array($value['_tab_widget']) && isset($value['_tab_widget'][$name]))
 				{
-//					$tcell['span'] = ',nmh';	// set tab as selected
+					// save selected tab in persistent extension_data to use it in post_process
 					$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $name;
 					$tcell['name'] = $tab_active;
 				}
@@ -63,46 +59,36 @@
 				$tcell['type'] = 'template';
 				$tcell['size'] = "_tab_widget[$name]";
 				$value['_tab_widget'][$name] = array(
-					'name'  => "_tab_widget[$name]",
+					'name'  => $name,
 					'label' => $labels[$k],
 					'help'  => $helps[$k]
 				);
-				$tabs[$templ->num2chrs($k)] = $tcell;
+				$tab_row[$tabs->num2chrs($k)] = $tcell;
 			}
 			// add one empty cell to take all the space of the row
-			$tabs[$k = $templ->num2chrs(sizeof($tabs))] = $templ->empty_cell();
-			$templ->data[0][$k] = '99%'; // width
+			$tab_row[$k = $tabs->num2chrs(sizeof($tab_row))] = $tabs->empty_cell();
+			$tabs->data[0][$k] = '99%'; // width
+			$tabs->data[0]['c1'] = ',bottom';
 
 			if (!isset($selected_tab))
 			{
-				//$tabs['A']['span'] = ',nmh';
-				$tabs['A']['name'] = $tab_active;
+				$tab_row['A']['name'] = $tab_active;
 				$GLOBALS['phpgw_info']['etemplate']['extension_data']['tab_widget'][$cell['name']] = $selected_tab = $names[0];
 			}
-			$templ->data[1] = $tabs;
+			$tabs->data[1] = $tab_row;
+			$tabs->rows = 1;
+			$tabs->cols = sizeof($tab_row);
+			$tabs->size = ',,,,0';
 
-			$tcell = $templ->empty_cell(); 	// make the tabwidget-header
-			$tcell['label'] = ' ';
-			$tcell['span'] = 'all';
-			$templ->data[2]['A'] = $tcell;
-			$templ->data[0]['c2'] = 'nmh';
-
-			$tcell = $templ->empty_cell(); 	// make the tabwidget-body
-			$tcell['type'] = 'template';
-			$tcell['name'] = $selected_tab;
-			$tcell['span'] = 'all';
-			$templ->data[3]['A'] = $tcell;
-
-			$templ->rows = 3;
-			$templ->cols = sizeof($tabs);
-
-			$templ->size = ',,,,0';
+			$tab_widget = new etemplate('etemplate.tab_widget');
+			$tab_widget->set_cell_attribute('@tabs','name',$tabs);
+			$tab_widget->set_cell_attribute('@body','name',$selected_tab);
 
 			$cell['type'] = 'template';
-			$cell['name'] = $templ;
+			$cell['name'] = $tab_widget;
 			$cell['label'] = $cell['help'] = '';
 
-			return False;	// extra Label NOT ok
+			return False;	// NO extra Label
 		}
 
 		function post_process(&$cell,&$value,&$templ)
