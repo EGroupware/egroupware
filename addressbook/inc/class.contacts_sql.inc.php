@@ -367,7 +367,12 @@
 			}
 			$tempcreate = substr($tempcreate,0,-1) . ")";
 			//echo $tempcreate;
-			$this->db->query("DROP TABLE IF EXISTS $tmp_table");
+
+			if ($phpgw_info["server"]["db_type"]=="mysql") {
+				$ifexists = "IF EXISTS";
+			}
+			
+			$this->db->query("DROP TABLE $ifexists $tmp_table");
 			$this->db->query($tempcreate);
 
 			for ($i=0;$i<count($tempinsert);$i++) {
@@ -435,7 +440,7 @@
 				}
 				$i++;
 			}
-			$this->db->query("DROP TABLE IF EXISTS $tmp_table");
+			$this->db->query("DROP TABLE $tmp_table");
 			return $return_fields;
 		}
 
