@@ -22,42 +22,40 @@
 	$tmp_app_inc = PHPGW_APP_INC;
 	define('PHPGW_APP_INC',$phpgw->common->get_inc_dir('addressbook'));
 
-	if ($phpgw_info["user"]["apps"]["addressbook"]
-		&& $phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"])
+	if ($phpgw_info['user']['apps']['addressbook']
+		&& $phpgw_info['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
 	{
 		echo "\n<!-- Birthday info -->\n";
 
 		$c = CreateObject('phpgwapi.contacts');
 		$qfields = array(
-			"n_given"  => "n_given",
-			"n_family" => "n_family",
-			"bday"     => "bday"
+			'n_given'  => 'n_given',
+			'n_family' => 'n_family',
+			'bday'     => 'bday'
 		);
 		$now = time() - ((60 * 60) * intval($phpgw_info['user']['preferences']['common']['tz_offset']));
 		$today = $phpgw->common->show_date($now,'n/d/');
-//		echo $today."\n";
 
-		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$phpgw_info["user"]["account_id"]);
+		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$phpgw_info['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$tmp = "<a href=\""
-				. $phpgw->link("/addressbook/view.php","ab_id=" .  $val["id"]) . "\">"
-				. $val["n_given"] . " " . $val["n_family"]."</a>";
-			echo "<tr><td align=\"left\">" . lang("Today is x's birthday!", $tmp) . "</td></tr>\n";
+			$tmp = '<a href="'
+				. $phpgw->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
+			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . '</td></tr>' . "\n";
 		}
 
 		$tomorrow = $phpgw->common->show_date($now + 86400,'n/d/');
-//		echo $tomorrow."\n";
 
-		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$phpgw_info["user"]["account_id"]);
+		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$phpgw_info['user']['account_id']);
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$tmp = "<a href=\""
-				. $phpgw->link("/addressbook/view.php","ab_id=" .  $val["id"]) . "\">"
-				. $val["n_given"] . " " . $val["n_family"]."</a>";
-			echo "<tr><td align=\"left\">" . lang("Tomorrow is x's birthday.", $tmp) . "</td></tr>\n";
+			$tmp = '<a href="'
+				. $phpgw->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
+			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . '</td></tr>' . "\n";
 		}
 		echo "\n<!-- Birthday info -->\n";
 	}
