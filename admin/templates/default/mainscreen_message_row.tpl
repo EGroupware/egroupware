@@ -1,6 +1,7 @@
 
 <!-- BEGIN row -->
-  <tr>
-   <td align="center" bgcolor="{tr_color}">{value}</td>
+  <tr bgcolor="{tr_color}">
+   <td>{label}</td>
+   <td align="center">{value}</td>
   </tr>
 <!-- END row -->

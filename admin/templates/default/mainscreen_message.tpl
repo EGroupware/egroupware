@@ -1,16 +1,15 @@
 
 <!-- BEGIN form -->
-<p><b>{header_lang}</b><hr><p>
+<p><b>{header_lang}</b><hr>
+
+{error_message}<p>
 
 <form method="POST" action="{form_action}">
- <table border="0" align="center">
-  <tr>
-   <td bgcolor="{th_bg}">&nbsp;</td>
-  </tr>
-  {rows}
- </table>
-</form>  
- 
+ <table border="0" align="center" width="60%">
 
+  {rows}
+
+ </table>
+</form>
 <!-- END form -->
  

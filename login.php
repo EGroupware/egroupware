@@ -94,36 +94,21 @@
     }
 
   } else {
+    // !!! DONT CHANGE THESE LINES !!!
+    // If there is something wrong with this code TELL ME!
+    // Commenting out the code will not fix it. (jengo)
     if (isset($last_loginid)) {
-//       $phpgw->preferences->read_preferences("common",$last_loginid); 
+       $phpgw->preferences->read_preferences("common",$last_loginid); 
        #print "LANG:".$phpgw_info["user"]["preferences"]["common"]["lang"]."<br>";
-//       $phpgw->translation->add_app("login");
+       $phpgw->translation->add_app("login");
+       $phpgw->translation->add_app("loginscreen");
+       if (lang("loginscreen_message") != "loginscreen_message*") {
+          $tmpl->set_var("lang_message",lang("loginscreen_message"));
+       }
+    } else {
+       $tmpl->set_var("lang_message","");
     }
   }
-/*  This has been put on hold until 0.9.4pre1, we have a different method of doing it (jengo)
-  if ($phpgw_info["server"]["multiable_domains"]) {
-     $tmpl->set_var("lang_domain","Domain");
-     if ($phpgw_info["server"]["multiable_domains_use_select_box"]) {
-        $domains_select = '<select name="domain">';
-     
-        $phpgw->db->query("select domain_id,domain_name from domains where domain_status='Active' "
-        				. "order by domain_name");
-        while ($phpgw->db->next_record()) {
-          $domains_select .= '<option value="' . $phpgw->db->f("domain_id") . '">'
-          				 . $phpgw->db->f("domain_name") . '</option>';
-        }
-        $domains_select .= "</select>";
-        $tmpl->set_var("domain_input",$domains_select);
-        $tmpl->parse("domain_row_out","domain_row");
-     } else {
-        $tmpl->set_var("domain_input",'<input name="domain">');
-        $tmpl->parse("domain_row_out","domain_row");     
-     }
-  } else {
-     $tmpl->set_var("domain_row","");
-     $tmpl->parse("null","domain_row");
-  }
-*/
 
   if(!isset($cd) || !$cd) $cd="";
   
