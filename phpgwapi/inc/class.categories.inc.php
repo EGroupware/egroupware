@@ -93,7 +93,7 @@
 		{
 			if ($public)
 			{
-				$public_cats = " OR cat_appname='phpgw' ";
+				$public_cats	= " OR cat_appname='phpgw'";
 			}
 
 			$filter = $this->filter($type);
@@ -111,6 +111,7 @@
 			{
 				$ordermethod = ' ORDER BY cat_main, cat_level, cat_name ASC';
 			}
+
 
 			if (is_array($this->grants))
 			{
@@ -137,8 +138,8 @@
 				$querymethod = " AND (cat_name LIKE '%$query%' OR cat_description LIKE '%$query%') ";
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "'" . $public_cats . ")" . $parent_filter . " AND"
-					. $grant_cats . $querymethod . $filter;
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' AND" . $grant_cats . $public_cats . ")"
+					. $parent_filter . $querymethod . $filter;
 
 			$this->db2->query($sql,__LINE__,__FILE__);
 
