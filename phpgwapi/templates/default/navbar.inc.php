@@ -94,7 +94,7 @@
      if ($phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"]) {
 
      }
-     return $tpl->fp("out","navbar"));
+     return $tpl->fp("out","navbar");
   }
 
   function parse_navbar_end()
@@ -110,6 +110,6 @@
         $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
         $tpl->set_var("msg",$msg);
         $tpl->set_var("version",$phpgw_info["server"]["versions"]["phpgwapi"]);
-        $tpl->pfp("out","footer"));
+        $tpl->pfp("out","footer");
      }
   }
