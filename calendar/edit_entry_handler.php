@@ -134,22 +134,22 @@
 		
 		switch($recur_type)
 		{
-			case RECUR_NONE:
+			case MCAL_RECUR_NONE:
 				$phpgw->calendar->set_recur_none();
 				break;
-			case RECUR_DAILY:
+			case MCAL_RECUR_DAILY:
 				$phpgw->calendar->set_recur_daily($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
-			case RECUR_WEEKLY:
+			case MCAL_RECUR_WEEKLY:
 				$phpgw->calendar->set_recur_weekly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval,$recur_data);
 				break;
-			case RECUR_MONTHLY_MDAY:
+			case MCAL_RECUR_MONTHLY_MDAY:
 				$phpgw->calendar->set_recur_monthly_mday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
-			case RECUR_MONTHLY_WDAY:
+			case MCAL_RECUR_MONTHLY_WDAY:
 				$phpgw->calendar->set_recur_monthly_wday($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
-			case RECUR_YEARLY:
+			case MCAL_RECUR_YEARLY:
 				$phpgw->calendar->set_recur_yearly($recur_enddate[year],$recur_enddate[month],$recur_enddate[mday],$recur_interval);
 				break;
 		}
@@ -179,42 +179,45 @@
 			}
 		}
 
-//		$participants = Array();
+		@reset($part);
 		while(list($key,$value) = each($part))
 		{
 			$phpgw->calendar->add_attribute('participants['.$key.']','U');
 		}
 
-//		reset($participants);
-//		$phpgw->calendar->add_attribute('participants',$participants);
 		$phpgw->calendar->add_attribute('priority',$priority);
 		$event = $phpgw->calendar->event;
 
 		$phpgw->session->appsession('entry','calendar',$event);
 		
 		$datetime_check = validate($event);
-		
+
+		if($datetime_check)
+		{
+			Header('Location: '.$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&cd='.$datetime_check));
+		}
+
 		$start = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $phpgw->calendar->datetime->tz_offset;
 		$end = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $phpgw->calendar->datetime->tz_offset;
 
 		$overlapping_events = $phpgw->calendar->overlap($start,$end,$event->participants,$event->owner,$event->id);
+
 	}
 	else
 	{
 		$phpgw->calendar->open('INBOX',intval($owner),'');
 		$phpgw->calendar->event_init();
-		
-		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',serialize($phpgw->session->appsession('entry','calendar'))));
+		$event = unserialize(str_replace('O:8:"stdClass"','O:13:"calendar_time"',$phpgw->session->appsession('entry','calendar')));
 		$phpgw->calendar->event = $event;
 		$datetime_check = validate($event);
+		if($datetime_check)
+		{
+			Header('Location: '.$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&cd='.$datetime_check));
+		}
 	}
 
-	if($datetime_check)
-	{
-		Header('Location: '.$phpgw->link('/calendar/edit_entry.php','readsess='.$event->id.'&cd='.$datetime_check));
-	}
-	elseif($overlapping_events)
-	{
+	if(count($overlapping_events) > 0 && $overlapping_events != False)
+	{	
 		$phpgw->common->phpgw_header();
 		echo parse_navbar();
 
