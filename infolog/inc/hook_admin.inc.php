@@ -19,6 +19,13 @@
 		);
 
 //Do not modify below this line
-		$GLOBALS['phpgw']->common->display_mainscreen($appname,$file);
+		if ($GLOBALS['phpgw']->common->public_functions['display_mainscreen'])
+		{
+			$GLOBALS['phpgw']->common->display_mainscreen($appname,$file);
+		}
+		else
+		{
+			display_section($appname,lang($appname),$file);	// for .14/6
+		}
 	}
 ?>
