@@ -28,7 +28,10 @@
 	{
 		function translate($key, $vars=false ) 
 		{
-			if ( ! $vars ) $vars = array();
+			if (!$vars)
+			{
+				$vars = array();
+			}
 			$ret = $key;
 			// check also if $GLOBALS['lang'] is a array
 			// php-nuke and postnuke are using $GLOBALS['lang'] too
