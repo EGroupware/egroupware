@@ -1032,9 +1032,10 @@
 			{
 				$appname = $phpgw_info['flags']['currentapp'];
 			}
+			$SEP = filesystem_separator();
 
 			/* First include the ordered apps hook file */
-			$f = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . 'hook_' . $location . '.inc.php';
+			$f = PHPGW_SERVER_ROOT . $SEP . $appname . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
 			if (file_exists($f) &&
 				( $phpgw_info['user']['apps'][$appname] || ( ($location == 'config') && $appname) ) )
 			{
@@ -1056,9 +1057,10 @@
 			global $phpgw, $phpgw_info;
 			$count = 0;
 			reset($phpgw_info['user']['apps']);
+			$SEP = filesystem_separator();
 			while ($permission = each($phpgw_info['user']['apps']))
 			{
-				$f = PHPGW_SERVER_ROOT . SEP . $permission[0] . SEP . 'inc' . SEP . 'hook_' . $location . '.inc.php';
+				$f = PHPGW_SERVER_ROOT . $SEP . $permission[0] . $SEP . 'inc' . $SEP . 'hook_' . $location . '.inc.php';
 	
 				if (file_exists($f))
 				{
