@@ -145,6 +145,7 @@
 					else
 					{
 						// attribute was in LDAP, modify it
+						//echo $val.' ';
 						ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
 					}
 				}
@@ -431,9 +432,10 @@
 					$tmpentry["objectclass"][0] = 'top';
 					$tmpentry["objectclass"][1] = 'person';
 					$tmpentry["objectclass"][2] = 'organizationalPerson';
-					$tmpentry["objectclass"][3] = 'account';
-					$tmpentry["objectclass"][4] = 'posixAccount';
-					$tmpentry["objectclass"][5] = 'shadowAccount';
+					$tmpentry["objectclass"][3] = 'inetOrgPerson';
+					$tmpentry["objectclass"][4] = 'account';
+					$tmpentry["objectclass"][5] = 'posixAccount';
+					$tmpentry["objectclass"][6] = 'shadowAccount';
 				}
 
 				ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
@@ -450,9 +452,10 @@
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'person';
 					$entry["objectclass"][2] = 'organizationalPerson';
-					$entry["objectclass"][3] = 'account';
-					$entry["objectclass"][4] = 'posixAccount';
-					$entry["objectclass"][5] = 'shadowAccount';
+					$entry["objectclass"][3] = 'inetOrgPerson';
+					$entry["objectclass"][4] = 'account';
+					$entry["objectclass"][5] = 'posixAccount';
+					$entry["objectclass"][6] = 'shadowAccount';
 				}
 
 				ldap_add($ds, $dn, $entry);
