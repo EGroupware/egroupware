@@ -26,18 +26,24 @@
 
 	class auth
 	{
+		var $previous_login = -1;
+
 		function authenticate($username, $passwd)
 		{
 			global $phpgw_info, $phpgw, $PHP_AUTH_USER;
 
-			if (isset($PHP_AUTH_USER)) {
+			if (isset($PHP_AUTH_USER))
+			{
 				return True;
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
 
-		function change_password($old_passwd, $new_passwd) {
+		function change_password($old_passwd, $new_passwd)
+		{
 			global $phpgw_info, $phpgw;
 			return False;
 		}
@@ -47,7 +53,9 @@
 		{
 			global $phpgw;
 
-			$account_id = get_account_id($account_id);
+			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$phpgw->db->next_record();
+			$this->previous_login = $phpgw->db->f('account_lastlogin');
 
 			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()

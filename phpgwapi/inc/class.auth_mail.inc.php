@@ -75,9 +75,9 @@
 		{
 			global $phpgw;
 
-			$db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$db->next_record();
-			$this->previous_login = $db->f('account_lastlogin');
+			$phpgw->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
+			$phpgw->db->next_record();
+			$this->previous_login = $phpgw->db->f('account_lastlogin');
 
 			$phpgw->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
