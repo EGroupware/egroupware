@@ -35,13 +35,13 @@
 		'phpgw_cal_holidays' => array(
 			'fd' => array(
 				'hol_id' => array('type' => 'auto','nullable' => False),
-				'locale' => array('type' => 'char', 'precision' => 2,'nullable' => False),
-				'name' => array('type' => 'varchar', 'precision' => 50,'nullable' => False),
-				'mday' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'month_num' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'occurence' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'dow' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'observance_rule' => array('type' => 'int', 'precision' => 8,'nullable' => False)
+				'locale' => array('type' => 'char', 'precision' => 2, 'nullable' => False),
+				'name' => array('type' => 'varchar', 'precision' => 50, 'nullable' => False),
+				'mday' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '0'),
+				'month_num' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '0'),
+				'occurence' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '0'),
+				'dow' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '0'),
+				'observance_rule' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' => '0')
 			),
 			'pk' => array('hol_id'),
 			'fk' => array(),
@@ -50,12 +50,12 @@
 		),
 		'phpgw_cal_repeats' => array(
 			'fd' => array(
-				'cal_id' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'recur_type' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'recur_use_end' => array('type' => 'int', 'precision' => 8,'nullable' => True),
-				'recur_enddate' => array('type' => 'int', 'precision' => 8,'nullable' => True),
-				'recur_interval' => array('type' => 'int', 'precision' => 8,'nullable' => True,'default' => '1'),
-				'recur_data' => array('type' => 'int', 'precision' => 8,'nullable' => True,'default' => '1')
+				'cal_id' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+				'recur_type' => array('type' => 'int', 'precision' => 8, 'nullable' => False),
+				'recur_use_end' => array('type' => 'int', 'precision' => 8, 'nullable' => True, 'default' => '0'),
+				'recur_enddate' => array('type' => 'int', 'precision' => 8, 'nullable' => True),
+				'recur_interval' => array('type' => 'int', 'precision' => 8, 'nullable' => True, 'default' => '1'),
+				'recur_data' => array('type' => 'int', 'precision' => 8, 'nullable' => True, 'default' => '1')
 			),
 			'pk' => array(),
 			'fk' => array(),
@@ -64,9 +64,9 @@
 		),
 		'phpgw_cal_user' => array(
 			'fd' => array(
-				'cal_id' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'cal_login' => array('type' => 'int', 'precision' => 8,'nullable' => False),
-				'cal_status' => array('type' => 'char', 'precision' => 1,'nullable' => True,'default' => 'A')
+				'cal_id' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' = > '0'),
+				'cal_login' => array('type' => 'int', 'precision' => 8, 'nullable' => False, 'default' = > '0'),
+				'cal_status' => array('type' => 'char', 'precision' => 1, 'nullable' => True, 'default' => 'A')
 			),
 			'pk' => array('cal_id','cal_login'),
 			'fk' => array(),
