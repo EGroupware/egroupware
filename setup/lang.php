@@ -91,7 +91,7 @@
 
   } else {
     if (! $included) {
-       $phpgw_setup->setup_header();
+       $phpgw_setup->show_header();
 ?>
   <p><table border="0" align="center" width="<?php echo ($newinstall?"60%":"80%"); ?>">
    <tr bgcolor="486591">

@@ -108,7 +108,7 @@
   
   // Add a check to see if there is no users in LDAP, if not create a default user.
 
-  $phpgw_setup->setup_header();
+  $phpgw_setup->show_header();
   
   if ($error) {
      echo "<br><center><b>Error:</b> $error</center>";
