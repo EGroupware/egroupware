@@ -26,7 +26,7 @@
 		var $holiday_color;
 		
 		var $debug = False;
-		var $debug = True;
+//		var $debug = True;
 
 		var $cat_id;
 		var $tz_offset;
@@ -3670,7 +3670,7 @@
 
 			if($this->debug)
 			{
-				$this->_debug_array($daily);
+				_debug_array($daily);
 			}
 			
 			return $daily;
