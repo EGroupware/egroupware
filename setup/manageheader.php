@@ -26,20 +26,18 @@
 
 	function check_form_values()
 	{
-		global $setting, $phpgw_setup;
-
-		if (! $setting['config_pass'])
+		if (! $GLOBALS['HTTP_POST_VARS']['setting']['config_pass'])
 		{
 			$errors .= "<br>You didn't enter a config password";
 		}
-		if (! $setting['HEADER_ADMIN_PASSWORD'])
+		if (! $GLOBALS['HTTP_POST_VARS']['setting']['HEADER_ADMIN_PASSWORD'])
 		{
 			$errors .= "<br>You didn't enter a header admin password";
 		}
 
 		if ($errors)
 		{
-			$phpgw_setup->show_header('Error',True);
+			$GLOBALS['phpgw_setup']->show_header('Error',True);
 			echo $errors;
 			exit;
 		}
@@ -96,11 +94,11 @@
 			break;
 	}
 
-	switch($action)
+	switch($HTTP_POST_VARS['action'])
 	{
 		case 'download':
 			check_form_values();
-			$header_template = new Template('../');
+			$header_template = CreateObject('phpgwapi.Template','../');
 			header('Content-disposition: attachment; filename="header.inc.php"');
 			header('Content-type: application/octet-stream');
 			header('Pragma: no-cache');
@@ -110,7 +108,7 @@
 			break;
 		case 'view':
 			check_form_values();
-			$header_template = new Template('../');
+			$header_template = CreateObject('phpgwapi.Template','../');
 			$phpgw_setup->show_header('Generated header.inc.php', False, 'header');
 			echo '<br>Save this text as contents of your header.inc.php<br><hr>';
 			$newheader = $phpgw_setup->generate_header();
@@ -126,7 +124,7 @@
 			break;
 		case 'write config':
 			check_form_values();
-			$header_template = new Template('../');
+			$header_template = CreateObject('phpgwapi.Template','../');
 			if(is_writeable ('../header.inc.php')|| (!file_exists ('../header.inc.php') && is_writeable ('../')))
 			{
 				$newheader = $phpgw_setup->generate_header();

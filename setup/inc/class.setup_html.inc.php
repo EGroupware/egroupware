@@ -19,14 +19,14 @@
 		*/	
 		function generate_header()
 		{
-			global $setting, $phpgw_setup, $phpgw_info, $header_template;
+			$setting = $GLOBALS['HTTP_POST_VARS']['setting'];
 
-			$header_template->set_file(array('header' => 'header.inc.php.template'));
-			while(list($k,$v) = each($setting))
+			$GLOBALS['header_template']->set_file(array('header' => 'header.inc.php.template'));
+			while(list($k,$v) = @each($setting))
 			{
-				$header_template->set_var(strtoupper($k),$v);
+				$GLOBALS['header_template']->set_var(strtoupper($k),$v);
 			}
-			return $header_template->parse('out','header');
+			return $GLOBALS['header_template']->parse('out','header');
 		}
 
 		function setup_tpl_dir($app_name='setup')
