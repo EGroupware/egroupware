@@ -141,7 +141,7 @@
       return;
     }
     
-    function count_entries() {
+    function count_entries($query,$filter,$filtermethod) {
       global $phpgw,$phpgw_info;
       if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
         $phpgw->db->query("SELECT count(*) "
@@ -199,7 +199,7 @@
       }
 
       if ($query) {
-        $this->searchreturn=$this->count_entries();
+        $this->searchreturn=$this->count_entries($query,$filter,$filtermethod);
       } else {
         $this->searchreturn="";
         $phpgw->db->query("select count(*) from addressbook where $filtermethod",__LINE__,__FILE__);
