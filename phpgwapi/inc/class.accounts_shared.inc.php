@@ -41,7 +41,10 @@
 
 			$this->db = $phpgw->db;
 
-			$this->account_id = get_account_id($account_id);
+			if($account_id != '')
+			{
+				$this->account_id = get_account_id($account_id);
+			}
 		}
 
 		function read()
