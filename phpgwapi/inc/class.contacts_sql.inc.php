@@ -380,6 +380,10 @@
 								{
 									$filterlist .= $name."=".$value.";";
 								}
+								elseif ($value == "!''")	// check for not empty
+								{
+									$filterlist .= $name."!='';";
+								}
 								else
 								{
 									$filterlist .= $name."='".$value."';";
@@ -478,7 +482,7 @@
 				$fwhere = " WHERE last_mod > $lastmod ";
 			}
 
-			if ($DEBUG && $last_mod_filter && fwhere)
+			if ($DEBUG && $last_mod_filter && $fwhere)
 			{
 				echo "<br>DEBUG - last_mod_filter added to fwhere: $fwhere";
 			}
