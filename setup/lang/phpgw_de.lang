@@ -1,11 +1,11 @@
-%1 does not exist !!!	setup	de	%1 existiert nicht !!!
-%1 is %2%3 !!!	setup	de	%1 ist %2%3 !!!
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGW vollständig / fehlerfrei ausführen zu können !!!
-00 (disable)	setup	de	00 (abgeschaltet / empfohlen)
+%1 does not exist !!!	setup	de	%1 existiert nicht!!!
+%1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN)!!!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGroupWare vollständig/fehlerfrei ausführen zu können!!!
+00 (disable)	setup	de	00 (abgeschaltet/empfohlen)
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest.
+<b>this will create 1 admin account and 3 demo accounts</b><br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br>Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 add a domain	setup	de	Eine Domain hinzufügen
@@ -14,16 +14,16 @@ additional settings	setup	de	Zusätzliche Einstellungen
 admin first name	setup	de	Admin-Vorname
 admin last name	setup	de	Admin-Nachname
 admin password	setup	de	Admin-Passwort
-admin password to header manager	setup	de	Admin-Passwort für Header-Manager
-admin user for header manager	setup	de	Admin-Benutzer für Header-Manager
+admin password to header manager	setup	de	Admin-Passwort für Headerverwaltung
+admin user for header manager	setup	de	Admin-Benutzer für Headerverwaltung
 admin username	setup	de	Admin-Benutzername
 admins	setup	de	Administratoren
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen als header.inc.php speichern. Danach auf "Weiter" klicken.
-all applications	setup	de	Alle Applikationen
+all applications	setup	de	Alle Anwendungen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all users	setup	de	Alle Benutzer
 analysis	setup	de	Analyse
-and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten !!!
+and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung
 app install/remove/upgrade	setup	de	Anwendung installierenn/entfernen/aktualisieren
 app process	setup	de	Anwendung bearbeiten
@@ -358,7 +358,7 @@ step %1 - language management	setup	de	Schritt %1 - Verwaltung der Sprachen
 step %1 - simple application management	setup	de	Schritt %1 - Einfache Verwaltung der Anwendungen
 table change messages	setup	de	Tabellen&auml;nderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
-tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig; oben sind Fehlermelungen zu sehen
+tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig;er oben sind Fehlermelungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
 tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers

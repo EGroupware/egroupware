@@ -155,9 +155,9 @@ denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
 details	common	de	Details
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfixe Scripts für Internet Explorer 5.5 und höher, zum darstellen von transparenten PNG Bildern abschalten.?
-disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG Bilder Bugfix abschalten
-disable slider effects	common	de	Schwebeeffekte des Navigations Menüs abschalten
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Ausführen des Bugfix-Scripts für Internet Explorer 5.5 und höher, zum Darstellen von transparenten PNG-Bildern abschalten?
+disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
+disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des navigations Menüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
 disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
@@ -194,7 +194,7 @@ equatorial guinea	common	de	EQUATORIAL GUINEA
 eritrea	common	de	ERITREA
 error	common	de	Fehler
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
-error deleting %1 %2 directory	common	de	Fehler beim L.schen des Verzeichnisses %1 %2
+error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
 error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
 ethiopia	common	de	ETHIOPIEN
@@ -504,7 +504,7 @@ seychelles	common	de	SEYCHELLEN
 show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show menu	common	de	Menü anzeigen
-show page generation time	common	de	Zeit zum erstellen der Seite anzeigen
+show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
 show_more_apps	common	de	Mehr Applikationen anzeigen
 showing %1	common	de	%1 Einträge
