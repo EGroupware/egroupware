@@ -12,7 +12,7 @@
   /* $Id$ */
 
   function v0_9_1to0_9_2(){
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
     $didupgrade = True;
     if ($currentver == "0.9.1"){
 
@@ -60,12 +60,12 @@
     $db->query("select distinct($field) from $table");
     if ($db->num_rows()) {
       while($db->next_record()) {
-	$owner[count($owner)] = $db->f($field);
+	      $owner[count($owner)] = $db->f($field);
       }
       for($i=0;$i<count($owner);$i++) {
         $db->query("select account_id from accounts where account_lid='".$owner[$i]."'");
-	$db->next_record();
-	$db->query("update $table set $field=".$db->f("account_id")." where $field='".$owner[$i]."'");
+	      $db->next_record();
+	      $db->query("update $table set $field=".$db->f("account_id")." where $field='".$owner[$i]."'");
       }
     }
     $db->query("alter table $table change $field $field int(11) NOT NULL");
@@ -73,7 +73,7 @@
 
   function v0_9_2to0_9_3()
   {
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
     if ($currentver == "0.9.2" || ereg ("^0\.9\.3pre", $currentver)){
@@ -299,13 +299,13 @@
 
       
     echo "  <tr bgcolor=\"e6e6e6\">\n";
-    echo "    <td>Upgrade from 0.9.2 to $currentver is completed.</td>\n";
+    echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
     echo "  </tr>\n";
     }
   }
 
   function v0_9_3to0_9_4(){
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
 
     // The 0.9.3pre1 is only temp until release
     if ($currentver == "0.9.3" || ereg ("^0\.9\.4pre", $currentver)){
@@ -359,12 +359,12 @@
         update_version_table();
       }
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.3 to $currentver is completed.</td>\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
   function v0_9_4to0_9_5(){
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
 
     // The 0.9.4pre1 is only temp until release
     if ($currentver == "0.9.4" || ereg ("^0\.9\.5pre", $currentver)){
@@ -556,25 +556,25 @@
       }
 
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.4 to $currentver is completed.</td>\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
 
   function v0_9_5to0_9_6()
   {
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
 
     $currentver = "0.9.6";
     update_version_table();
 
     echo "  <tr bgcolor=\"e6e6e6\">\n";
-    echo "    <td>Upgrade from 0.9.5 to $currentver is completed.</td>\n";
+    echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
     echo "  </tr>\n";
   }
 
   function v0_9_6to0_9_7(){
-    global $currentver, $phpgw_info, $db;
+    global $currentver, $oldversion, $phpgw_info, $db;
 
     if ($currentver == "0.9.6" || ereg ("^0\.9\.7pre", $currentver)){
       if ($currentver == "0.9.6") {
@@ -593,7 +593,80 @@
       }
 
       echo "  <tr bgcolor=\"e6e6e6\">\n";
-      echo "    <td>Upgrade from 0.9.6 to $currentver is completed.</td>\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+    }
+  }
+
+  function v0_9_7to0_9_8(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+
+    if ($currentver == "0.9.7" || ereg ("^0\.9\.8pre", $currentver)){
+      if ($currentver == "0.9.7") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.8pre1";
+        update_version_table();
+      }
+      if ($currentver == "0.9.8pre1") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.8pre2";
+        update_version_table();
+      }
+
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+    }
+  }
+  function v0_9_8to0_9_9(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+
+    if ($currentver == "0.9.8" || ereg ("^0\.9\.9pre", $currentver)){
+      if ($currentver == "0.9.8") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.9pre1";
+        update_version_table();
+      }
+      if ($currentver == "0.9.9pre1") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.9pre2";
+        update_version_table();
+      }
+
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
+      echo "  </tr>\n";
+    }
+  }
+  function v0_9_9to0_9_10(){
+    global $currentver, $oldversion, $phpgw_info, $db;
+
+    if ($currentver == "0.9.9" || ereg ("^0\.9\.10pre", $currentver)){
+      if ($currentver == "0.9.9") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.10pre1";
+        update_version_table();
+      }
+      if ($currentver == "0.9.10pre1") {
+        // upgrade code starts here
+
+        // upgrade code ends here
+        $currentver = "0.9.10pre2";
+        update_version_table();
+      }
+
+      echo "  <tr bgcolor=\"e6e6e6\">\n";
+      echo "    <td>Upgrade from $oldversion to $currentver is completed.</td>\n";
       echo "  </tr>\n";
     }
   }
@@ -604,4 +677,7 @@
   v0_9_4to0_9_5();
   v0_9_5to0_9_6();
   v0_9_6to0_9_7();
+  v0_9_7to0_9_8();
+  v0_9_8to0_9_9();
+  v0_9_9to0_9_10();
 ?>
