@@ -877,7 +877,7 @@
 			{
 				$imagedir_olddefault = '/'.$appname.'/images';
 				$imagedir_default    = '/'.$appname.'/templates/default/images';
-				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
+				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'].'/images';
 
 				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
