@@ -18,8 +18,6 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
 
-$debugme = "on";
-
   $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
   
   function is_odd($n)
@@ -37,20 +35,19 @@ $debugme = "on";
   }
 
   if ($submit) {
-     $phpgw->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=$group_id",__LINE__,__FILE__);
-     $phpgw->db->next_record();
+     $old_group_name = $phpgw->accounts->id2name($group_id);
 
-     $old_group_name = $phpgw->db->f("account_lid");
+     if($n_group != $old_group_name) {
+       $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='" . $n_group . "'",__LINE__,__FILE__);
+       $phpgw->db->next_record();
 
-     $phpgw->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='" . $n_group . "'",__LINE__,__FILE__);
-     $phpgw->db->next_record();
-
-     if ($phpgw->db->f(0) != 0 && $n_group != $old_group_name) {
-        $error = lang("Sorry, that group name has already been taking.");
+       if ($phpgw->db->f(0) == 2) {
+         $error = lang("Sorry, that group name has already been taking.");
+       }
      }
 
      if (! $error) {
-        $phpgw->db->lock(array('phpgw_accounts','preferences','config','applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
+        $phpgw->db->lock(array('phpgw_accounts','preferences','phpgw_config','phpgw_applications','phpgw_hooks','phpgw_sessions','phpgw_acl'));
         $apps = CreateObject('phpgwapi.applications',intval($group_id));
         $apps_before = $apps->read_account_specific();
         $apps->update_data(Array());
@@ -79,12 +76,9 @@ $debugme = "on";
         for ($i=0; $i<count($n_users);$i++) {
           $acl->add_repository('phpgw_group',$group_id,$n_users[$i],1);
 
-          $phpgw->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=".$n_users[$i],__LINE__,__FILE__);
-          $phpgw->db->next_record();
-          $acccount_lid = $phpgw->db->f('account_lid');
-          
           // If the user is logged in, it will force a refresh of the session_info
-          $phpgw->db->query("update phpgw_sessions set session_info='' where session_lid='$account_lid@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
+          $phpgw->db->query("update phpgw_sessions set session_info='' "
+                            ."where session_lid='" . $phpgw->accounts->id2name(intval($n_users[$i])) . "@" . $phpgw_info["user"]["domain"] . "'",__LINE__,__FILE__);
 
           // The following sets any default preferences needed for new applications..
           // This is smart enough to know if previous preferences were selected, use them.

@@ -62,7 +62,7 @@
      }
   }
 
-  $phpgw_setup->db->query("select app_name,app_title from applications where app_enabled != '0' and "
+  $phpgw_setup->db->query("select app_name,app_title from phpgw_applications where app_enabled != '0' and "
            . "app_name != 'admin'",__LINE__,__FILE__);
   while ($phpgw_setup->db->next_record()) {
      $apps[$phpgw_setup->db->f("app_name")] = $phpgw_setup->db->f("app_title");

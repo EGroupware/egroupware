@@ -16,25 +16,27 @@
   include("../header.inc.php");
   include(PHPGW_APP_INC . "/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
-  $phpgw->template->set_file(array("list" => "accounts.tpl",
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+  
+  $p->set_file(array("list" => "accounts.tpl",
               			         "row"  => "accounts_row.tpl"));
 
   $total = account_total();
 
-  $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
-  $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
+  $p->set_var("bg_color",$phpgw_info["theme"]["bg_color"]);
+  $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
-  $phpgw->template->set_var("left_next_matchs",$phpgw->nextmatchs->left("accounts.php",$start,$total));
-  $phpgw->template->set_var("lang_user_accounts",lang("user accounts"));
-  $phpgw->template->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$total));
+  $p->set_var("left_next_matchs",$phpgw->nextmatchs->left("accounts.php",$start,$total));
+  $p->set_var("lang_user_accounts",lang("user accounts"));
+  $p->set_var("right_next_matchs",$phpgw->nextmatchs->right("accounts.php",$start,$total));
 
-  $phpgw->template->set_var("lang_loginid",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"accounts.php",lang("LoginID")));
-  $phpgw->template->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"account_lastname",$order,"accounts.php",lang("last name")));
-  $phpgw->template->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"account_firstname",$order,"accounts.php",lang("first name")));
+  $p->set_var("lang_loginid",$phpgw->nextmatchs->show_sort_order($sort,"account_lid",$order,"accounts.php",lang("LoginID")));
+  $p->set_var("lang_lastname",$phpgw->nextmatchs->show_sort_order($sort,"account_lastname",$order,"accounts.php",lang("last name")));
+  $p->set_var("lang_firstname",$phpgw->nextmatchs->show_sort_order($sort,"account_firstname",$order,"accounts.php",lang("first name")));
 
-  $phpgw->template->set_var("lang_edit",lang("Edit"));
-  $phpgw->template->set_var("lang_delete",lang("Delete"));
-  $phpgw->template->set_var("lang_view",lang("View"));
+  $p->set_var("lang_edit",lang("Edit"));
+  $p->set_var("lang_delete",lang("Delete"));
+  $p->set_var("lang_view",lang("View"));
 
   $account_info = account_read($method,$start,$sort,$order);
 
@@ -51,7 +53,7 @@
     $loginid    = $account["account_lid"];
 
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    $phpgw->template->set_var("tr_color",$tr_color);
+    $p->set_var("tr_color",$tr_color);
 
 //    $lastname  = $account["account_lastname"];
 //    $firstname = $account["account_firstname"];
@@ -59,30 +61,30 @@
     if (! $lastname)  $lastname  = '&nbsp;';
     if (! $firstname) $firstname = '&nbsp;';
 
-    $phpgw->template->set_var("row_loginid",$loginid);
-    $phpgw->template->set_var("row_firstname",$firstname);
-    $phpgw->template->set_var("row_lastname",$lastname);
-    $phpgw->template->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
+    $p->set_var("row_loginid",$loginid);
+    $p->set_var("row_firstname",$firstname);
+    $p->set_var("row_lastname",$lastname);
+    $p->set_var("row_edit",'<a href="'.$phpgw->link("editaccount.php","account_id="
        				     . $account_id) . '"> ' . lang("Edit") . ' </a>');
 
     if ($phpgw_info["user"]["userid"] != $account["account_lid"]) {
-       $phpgw->template->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
+       $p->set_var("row_delete",'<a href="' . $phpgw->link("deleteaccount.php",'account_id='
       						. $account_id) . '"> '.lang("Delete").' </a>');
     } else {
-       $phpgw->template->set_var("row_delete","&nbsp;");
+       $p->set_var("row_delete","&nbsp;");
     }
 
-    $phpgw->template->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
+    $p->set_var("row_view",'<a href="' . $phpgw->link("viewaccount.php", "account_id="
    				         . $account_id) . '"> ' . lang("View") . ' </a>');
 
-    $phpgw->template->parse("rows","row",True);
+    $p->parse("rows","row",True);
   }
 
-  $phpgw->template->set_var("actionurl",$phpgw->link("newaccount.php"));
-  $phpgw->template->set_var("lang_add",lang("add"));
-  $phpgw->template->set_var("lang_search",lang("search"));
+  $p->set_var("actionurl",$phpgw->link("newaccount.php"));
+  $p->set_var("lang_add",lang("add"));
+  $p->set_var("lang_search",lang("search"));
 
-  $phpgw->template->pparse("out","list");
+  $p->pparse("out","list");
 
   account_close();
   $phpgw->common->phpgw_footer();
