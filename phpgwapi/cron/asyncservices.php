@@ -37,7 +37,7 @@
 		fclose($f);
 	}
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp' => 'login',
 		'noapi'      => True		// this stops header.inc.php to include phpgwapi/inc/function.inc.php
 	);
@@ -53,10 +53,10 @@
 		exit(1);
 	}
 	include($path_to_egroupware.'/header.inc.php');
-	unset($GLOBALS['phpgw_info']['flags']['noapi']);
+	unset($GLOBALS['egw_info']['flags']['noapi']);
 
-	$db_type = $GLOBALS['phpgw_domain'][$_GET['domain']]['db_type'];
-	if (!isset($GLOBALS['phpgw_domain'][$_GET['domain']]) || empty($db_type))
+	$db_type = $GLOBALS['egw_domain'][$_GET['domain']]['db_type'];
+	if (!isset($GLOBALS['egw_domain'][$_GET['domain']]) || empty($db_type))
 	{
 		echo $msg = "asyncservice.php: Domain '$_GET[domain]' is not configured or renamed, exiting !!!\n";
 		if (defined('ASYNC_LOG'))
@@ -67,28 +67,7 @@
 		}
 		exit(1);
 	}
-	// some constanst for pre php4.3
-	if (!defined('PHP_SHLIB_SUFFIX'))
-	{
-		define('PHP_SHLIB_SUFFIX',strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ? 'dll' : 'so');
-	}
-	if (!defined('PHP_SHLIB_PREFIX'))
-	{
-		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
-	}
-	$db_extension = PHP_SHLIB_PREFIX.$db_type.'.'.PHP_SHLIB_SUFFIX;
-	if (!extension_loaded($db_type) && !dl($db_extension))
-	{
-		echo $msg = "asyncservice.php: Extension '$db_type' is not loaded and can't be loaded via dl('$db_extension') !!!\n";
-		if (defined('ASYNC_LOG'))
-		{
-			$f = fopen(ASYNC_LOG,'a+');
-			fwrite($f,$msg);
-			fclose($f);
-		}
-	}
-
-	$GLOBALS['phpgw_info']['server']['sessions_type'] = 'db';	// no php4-sessions availible for cgi
+	$GLOBALS['egw_info']['server']['sessions_type'] = 'db';	// no php4-sessions availible for cgi
 
 	include(PHPGW_API_INC.'/functions.inc.php');
 
@@ -104,4 +83,4 @@
 		fwrite($f,$msg);
 		fclose($f);
 	}
-	$GLOBALS['phpgw']->common->phpgw_exit();
+	$GLOBALS['egw']->common->phpgw_exit();
