@@ -133,9 +133,7 @@
 
 		function accept_holiday()
 		{
-			global $HTTP_POST_VARS, $HTTP_REFERER;
-			
-			$send_back_to = str_replace('submitlocale','holiday_admin',$HTTP_REFERER);
+			$send_back_to = str_replace('submitlocale','holiday_admin',$GLOBALS['HTTP_REFERER']);
 			if(!@$this->locales[0])
 			{
 				Header('Location: '.$send_back_to);
@@ -143,13 +141,13 @@
 
 			$send_back_to = str_replace('&locale='.$this->locales[0],'',$send_back_to);
 			$file = './holidays.'.$this->locales[0];
-			if(!file_exists($file) && count($HTTP_POST_VARS['name']))
+			if(!file_exists($file) && count($GLOBALS['HTTP_POST_VARS']['name']))
 			{
-				$c_holidays = count($HTTP_POST_VARS['name']);
+				$c_holidays = count($GLOBALS['HTTP_POST_VARS']['name']);
 				$fp = fopen($file,'w');
 				for($i=0;$i<$c_holidays;$i++)
 				{
-					fwrite($fp,$this->locales[0]."\t".$HTTP_POST_VARS['name'][$i]."\t".$HTTP_POST_VARS['day'][$i]."\t".$HTTP_POST_VARS['month'][$i]."\t".$HTTP_POST_VARS['occurence'][$i]."\t".$HTTP_POST_VARS['dow'][$i]."\t".$HTTP_POST_VARS['observance'][$i]."\n");
+					fwrite($fp,$this->locales[0]."\t".$GLOBALS['HTTP_POST_VARS']['name'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['day'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['month'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['occurence'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['dow'][$i]."\t".$GLOBALS['HTTP_POST_VARS']['observance'][$i]."\n");
 				}
 				fclose($fp);
 			}
@@ -287,25 +285,23 @@
 
 		function add()
 		{
-			global $HTTP_POST_VARS;
-			
-			if(@$HTTP_POST_VARS['submit'])
+			if(@$GLOBALS['HTTP_POST_VARS']['submit'])
 			{
-				if(empty($HTTP_POST_VARS['holiday']['mday']))
+				if(empty($GLOBALS['HTTP_POST_VARS']['holiday']['mday']))
 				{
-					$HTTP_POST_VARS['holiday']['mday'] = 0;
+					$GLOBALS['HTTP_POST_VARS']['holiday']['mday'] = 0;
 				}
 				if(!isset($this->bo->locales[0]) || $this->bo->locales[0]=='')
 				{
-					$this->bo->locales[0] = $HTTP_POST_VARS['holiday']['locale'];
+					$this->bo->locales[0] = $GLOBALS['HTTP_POST_VARS']['holiday']['locale'];
 				}
-				elseif(!isset($HTTP_POST_VARS['holiday']['locale']) || $HTTP_POST_VARS['holiday']['locale']=='')
+				elseif(!isset($GLOBALS['HTTP_POST_VARS']['holiday']['locale']) || $GLOBALS['HTTP_POST_VARS']['holiday']['locale']=='')
 				{
-					$HTTP_POST_VARS['holiday']['locale'] = $this->bo->locales[0];
+					$GLOBALS['HTTP_POST_VARS']['holiday']['locale'] = $this->bo->locales[0];
 				}
-				if(!isset($HTTP_POST_VARS['holiday']['hol_id']))
+				if(!isset($GLOBALS['HTTP_POST_VARS']['holiday']['hol_id']))
 				{
-					$HTTP_POST_VARS['holiday']['hol_id'] = $this->bo->id;
+					$GLOBALS['HTTP_POST_VARS']['holiday']['hol_id'] = $this->bo->id;
 				}
 		
 	// Still need to put some validation in here.....
@@ -313,11 +309,11 @@
 				$this->ui = CreateObject('calendar.uiholiday');
 				if (is_array($errors))
 				{
-					$this->ui->add($errors,$HTTP_POST_VARS['holiday']);
+					$this->ui->add($errors,$GLOBALS['HTTP_POST_VARS']['holiday']);
 				}
 				else
 				{
-					$this->so->save_holiday($HTTP_POST_VARS['holiday']);
+					$this->so->save_holiday($GLOBALS['HTTP_POST_VARS']['holiday']);
 					$this->ui->edit_locale();
 				}
 			}
@@ -371,15 +367,22 @@
 			for($i=0;$i<count($holidays);$i++)
 			{
 				$c = $i;
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
-				$holidaycalc = CreateObject('calendar.holidaycalc');
+				if($i == 0 || $holidays[$i]['locale'] != $holidays[$i - 1]['locale'])
+				{
+					if(is_object($holidaycalc))
+					{
+						unset($holidaycalc);
+					}
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['country'] = $holidays[$i]['locale'];
+					$holidaycalc = CreateObject('calendar.holidaycalc');
+				}
 				$holidays[$i]['date'] = $holidaycalc->calculate_date($holidays[$i], $holidays, $this->year, $datetime, $c);
-				unset($holidaycalc);
 				if($c != $i)
 				{
 					$i = $c;
 				}
 			}
+			unset($holidaycalc);
 			unset($datetime);
 			$this->holidays = $this->sort_holidays_by_date($holidays);
 			$this->cached_holidays = $this->set_holidays_to_date($this->holidays);
