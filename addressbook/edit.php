@@ -131,6 +131,7 @@
 			eval("if (\$name\) { \$cust \.= \$\$name; }");
 			if ($cust) { $fields[$name] = $cust; }
 		}
+
 		$fields["ophone"]               = $ophone;
 		$fields["tz"]					= $timezone;
 		$fields["bday"]					= $bday;

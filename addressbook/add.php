@@ -94,7 +94,7 @@
 		$fields["tel_fax"]				= $fax;
 		$fields["tel_pager"]			= $pager;
 		$fields["tel_cell"]				= $mphone;
-		$fields["tel_msg"]				= $ophone;
+		$fields["tel_msg"]				= $msgphone;
 		$fields["adr_one_street"]		= $bstreet;
 		$fields["adr_one_locality"]		= $bcity;
 		$fields["adr_one_region"]		= $bstate;
@@ -133,6 +133,7 @@
 			if ($cust) { $fields[$name] = $cust; }
 		}
 
+		$fields["ophone"]               = $ophone;
 		$fields["tz"]					= $timezone;
 		$fields["bday"]					= $bday;
 		$fields["url"]					= $url;
