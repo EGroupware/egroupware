@@ -57,36 +57,37 @@
       $access = $phpgw->accounts->array_to_string($access,$n_groups);
     }
 
-    $fields["ORG_Name"]        = $company;
-    $fields["ORG_Unit"]        = $department;
-    $fields["N_Given"]         = $firstname;
-    $fields["N_Family"]        = $lastname;
-    $fields["N_Middle"]        = $middle;
-    $fields["N_Prefix"]        = $prefix;
-    $fields["N_Suffix"]        = $suffix;
+    $fields["org_name"]        = $company;
+    $fields["org_unit"]        = $department;
+    $fields["n_given"]         = $firstname;
+    $fields["n_family"]        = $lastname;
+    $fields["n_middle"]        = $middle;
+    $fields["n_prefix"]        = $prefix;
+    $fields["n_suffix"]        = $suffix;
     if ($prefix) { $pspc = " "; }
     if ($middle) { $mspc = " "; }
     if ($suffix) { $sspc = " "; }
-    $fields["FN"]              = $prefix . $pspc  . $firstname . $mspc . $middle . $mspc . $lastname . $sspc . $suffix;
-    $fields["D_EMAIL"]         = $email;
-    $fields["D_EMAILTYPE"]     = $email_type;
-    $fields["TITLE"]           = $title;
-    $fields["A_TEL"]           = $wphone;
-    $fields["B_TEL"]           = $hphone;
-    $fields["C_TEL"]           = $fax;
+    $fields["fn"]              = $prefix . $pspc  . $firstname . $mspc . $middle . $mspc . $lastname . $sspc . $suffix;
+    $fields["d_email"]         = $email;
+    $fields["d_emailtype"]     = $email_type;
+    $fields["title"]           = $title;
+    $fields["a_tel"]           = $wphone;
+    $fields["b_tel"]           = $hphone;
+    $fields["c_tel"]           = $fax;
     $fields["pager"]           = $pager;
     $fields["mphone"]          = $mphone;
     $fields["ophone"]          = $ophone;
-    $fields["ADR_Street"]      = $street;
+    $fields["adr_street"]      = $street;
     $fields["address2"]        = $address2;
-    $fields["ADR_Locality"]    = $city;
-    $fields["ADR_Region"]      = $state;
-    $fields["ADR_PostalCode"]  = $zip;
-    $fields["ADR_CountryName"] = $country;
-    $fields["TZ"]              = $timezone;
+    $fields["adr_locality"]    = $city;
+    $fields["adr_region"]      = $state;
+    $fields["adr_postalcode"]  = $zip;
+    $fields["adr_countryname"] = $country;
+    $fields["tz"]              = $timezone;
     $fields["bday"]            = $bday;
     $fields["url"]             = $url;
     $fields["notes"]           = $notes;
+    $fields["access"]          = $access;
 
     $this->update($ab_id,$phpgw_info["user"]["account_id"],$fields);
     

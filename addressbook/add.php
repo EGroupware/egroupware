@@ -49,29 +49,39 @@
         $url = "";
      }
 
-     $fields["ORG_Name"]       = $company;
-     $fields["N_Given"]        = $firstname;
-     $fields["N_Family"]       = $lastname;
-     $fields["D_EMAIL"]        = $email;
-     $fields["D_EMAILTYPE"]    = $email_type;
-     $fields["TITLE"]          = $title;
-     $fields["A_TEL"]          = $wphone;
-     $fields["B_TEL"]          = $hphone;
-     $fields["C_TEL"]          = $fax;
-     $fields["pager"]          = $pager;
-     $fields["mphone"]         = $mphone;
-     $fields["ophone"]         = $ophone;
-     $fields["ADR_Street"]     = $street;
-     $fields["address2"]       = $address2;
-     $fields["ADR_Locality"]   = $city;
-     $fields["ADR_Region"]     = $state;
-     $fields["ADR_PostalCode"] = $zip;
-     $fields["ADR_Country"]    = $country;
-     $fields["bday"]           = $bday;
-     $fields["url"]            = $url;
-     $fields["notes"]          = $notes;
+     $fields["org_name"]        = $company;
+     $fields["org_unit"]        = $department;
+     $fields["n_given"]         = $firstname;
+     $fields["n_family"]        = $lastname;
+     $fields["n_middle"]        = $middle;
+     $fields["n_prefix"]        = $prefix;
+     $fields["n_suffix"]        = $suffix;
+     if ($prefix) { $pspc = " "; }
+     if ($middle) { $mspc = " "; }
+     if ($suffix) { $sspc = " "; }
+     $fields["fn"]              = $prefix . $pspc  . $firstname . $mspc . $middle . $mspc . $lastname . $sspc . $suffix;
+     $fields["d_email"]         = $email;
+     $fields["d_emailtype"]     = $email_type;
+     $fields["title"]           = $title;
+     $fields["a_tel"]           = $wphone;
+     $fields["b_tel"]           = $hphone;
+     $fields["c_tel"]           = $fax;
+     $fields["pager"]           = $pager;
+     $fields["mphone"]          = $mphone;
+     $fields["ophone"]          = $ophone;
+     $fields["adr_street"]      = $street;
+     $fields["address2"]        = $address2;
+     $fields["adr_locality"]    = $city;
+     $fields["adr_region"]      = $state;
+     $fields["adr_postalcode"]  = $zip;
+     $fields["adr_Countryname"] = $country;
+     $fields["tz"]              = $timezone;
+     $fields["bday"]            = $bday;
+     $fields["url"]             = $url;
+     $fields["notes"]           = $notes;
+     $fields["access"]          = $access;
 
-     $this->add($phpgw_info["user"]["account_id"],$access,$fields);
+     $this->add($phpgw_info["user"]["account_id"],$fields);
 
      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/",
             "cd=14"));
