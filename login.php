@@ -140,10 +140,12 @@
 				$passwd = $HTTP_SERVER_VARS["SSL_CLIENT_S_DN"];
 			}
 		}
-		unset ($key,$val,$sslattributes);
+		unset($key);
+		unset($val);
+		unset($sslattributes);
 	}
 
-	if (isset($submit) && $submit)
+	if (isset($submit) && $submit || $submit_x || $submit_y)
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS["SSL_CLIENT_S_DN"]))
 		{
