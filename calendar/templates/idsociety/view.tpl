@@ -13,8 +13,6 @@
 
 <!-- BEGIN view_end -->
 </table>
-<p>
-{edit_button}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{delete_button}
 </center>
 <!-- END view_end -->
 

@@ -881,7 +881,7 @@ class calendar extends calendar_
 		$lr_events = CreateObject('calendar.calendar_item');
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
-		$p->set_unknowns('remove');
+		$p->set_unknowns('keep');
 		
 		$templates = Array (
 			'month_header'		=> 'month_header.tpl',
@@ -1078,7 +1078,7 @@ class calendar extends calendar_
 		global $phpgw, $phpgw_info;
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
-		$p->set_unknowns('remove');
+		$p->set_unknowns('keep');
 
 		$templates = Array(
 			'month'			=>	'month.tpl',
@@ -1144,7 +1144,7 @@ class calendar extends calendar_
 		$this->read_repeated_events($owner);
 		
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
-		$p->set_unknowns('remove');
+		$p->set_unknowns('keep');
 
 		$templates = Array(
 			'month'			=>	'month.tpl',
@@ -1270,7 +1270,7 @@ class calendar extends calendar_
 		$this->read_repeated_events($this->owner);
 
 		$p = CreateObject('phpgwapi.Template',$this->template_dir);
-		$p->set_unknowns('remove');
+		$p->set_unknowns('keep');
 
 		$templates = Array(
 			'day_cal'			=>	'day_cal.tpl',
@@ -1528,6 +1528,7 @@ class calendar extends calendar_
   
 		$p = CreateObject('phpgwapi.Template',$phpgw->calendar->template_dir);
 
+		$p->set_unknowns('keep');
 		$templates = Array(
   			'view_begin'	=> 'view.tpl',
   			'list'			=> 'list.tpl',

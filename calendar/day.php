@@ -62,7 +62,7 @@
 	}
 
 	$now	= $phpgw->calendar->makegmttime(0, 0, 0, $thismonth, $thisday, $thisyear);
-
+	$now['raw'] += $phpgw->calendar->tz_offset;
 	$m = mktime(0,0,0,$thismonth,1,$thisyear);
 	
 	$var = Array(

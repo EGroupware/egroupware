@@ -874,8 +874,8 @@ class calendar_ extends calendar__
 				. 'cal_priority='.$event->priority.', '
 				. "cal_type='".$type."', "
 				. "cal_access='".$event->access."', "
-				. "cal_name='".$event->name."', "
-				. "cal_description='".$event->description."' "
+				. "cal_name='".addslashes($event->name)."', "
+				. "cal_description='".addslashes($event->description)."' "
 				. 'WHERE cal_id='.$event->id;
 				
 		$this->stream->query($sql,__LINE__,__FILE__);
