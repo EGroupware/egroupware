@@ -2,6 +2,7 @@
 	function var2xml($name, $data)
 	{
 		$doc = new xmltool();
+		$doc->indentstring = '';
 		return $doc->import_var($name,$data,True,True);
 	}
 
@@ -18,7 +19,7 @@
 		/* for nodes */
 		var $attributes = Array();
 		var $comments = Array();
-		var $indentstring = "  ";
+		var $indentstring = "\t";
 		
 		/* start the class as either a root or a node */
 		function xmltool ($node_type = 'root', $name='')
