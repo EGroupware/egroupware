@@ -53,7 +53,7 @@
 		}
 		include(PHPGW_INCLUDE_ROOT.'/calendar/inc/hook_home_'.$_page.'.inc.php');
 		
-		$title = '<font color="#FFFFFF">'.lang('Calendar').'</font>';
+		$title = lang('Calendar');
 		
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
@@ -63,8 +63,7 @@
 				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'width'	=> '100%',
 				'outerborderwidth'	=> '0',
-				'header_background_image'	=> 
-					$GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/default','bg_filler')
 			)
 		);
 
