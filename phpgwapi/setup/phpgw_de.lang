@@ -113,6 +113,7 @@ do you want to move all subcategories one level down ?	common	de	M&ouml;chten Si
 djibouti	common	de	DJIBOUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 domain	common	de	Domain
+domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, zB. "%1"
 domestic	common	de	Inland
 dominica	common	de	DOMINICA
 dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
@@ -250,7 +251,6 @@ luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
-mail domain, eg. "%1"	common	de	Mail Domain, zB. "%1"
 main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 maintainer	about	de	Maintainer

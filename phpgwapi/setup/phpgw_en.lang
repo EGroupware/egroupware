@@ -115,6 +115,7 @@ do you want to delete all subcategories ?	common	en	Do you want to delete all su
 do you want to move all subcategories one level down ?	common	en	Do you want to move all subcategories one level down ?
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
 domain	common	en	Domain
+domain name for mail-address, eg. "%1"	common	en	domain name for mail-address, eg. "%1"
 domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
@@ -233,7 +234,6 @@ last name	common	en	Last name
 last page	common	en	Last page
 last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
 last page	common	en	Last page
->>>>>>> 1.38.2.14.2.5
 lastname	common	en	Lastname
 latvia	common	en	LATVIA
 lebanon	common	en	LEBANON
@@ -253,7 +253,6 @@ luxembourg	common	en	LUXEMBOURG
 macau	common	en	MACAU
 macedonia, the former yugoslav republic of	common	en	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	en	MADAGASCAR
-mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	about	en	Maintainer

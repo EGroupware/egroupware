@@ -144,22 +144,22 @@
 				'username'  => $fname.' '.$lname,
 				'firstname' => $fname,
 				'lastname'  => $lname,
-				'maildomain'=> $GLOBALS['phpgw_info']['server']['mail_suffix'],
+				'domain'    => $GLOBALS['phpgw_info']['server']['mail_suffix'],
 				'email'     => $this->email_address($this->account_id),
 				'date'      => $GLOBALS['phpgw']->common->show_date('',$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
-			);
-			$this->vars = array(	// langs have to be in common !!!
-				'username'  => lang('name of the user, eg. "%1"',$this->values['username']),
-				'firstname' => lang('first name of the user, eg. "%1"',$this->values['firstname']),
-				'lastname'  => lang('last name of the user, eg. "%1"',$this->values['lastname']),
-				'maildomain'=> lang('mail domain, eg. "%1"',$this->values['maildomain']),
-				'email'     => lang('email-address of the user, eg. "%1"',$this->values['email']),
-				'date'      => lang('todays date, eg. "%1"',$this->values['date']),
 			);
 			// do this first, as it might be already contain some substitues
 			//
 			$this->values['email'] = $this->parse_notify($this->values['email']);
 
+			$this->vars = array(	// langs have to be in common !!!
+				'username'  => lang('name of the user, eg. "%1"',$this->values['username']),
+				'firstname' => lang('first name of the user, eg. "%1"',$this->values['firstname']),
+				'lastname'  => lang('last name of the user, eg. "%1"',$this->values['lastname']),
+				'domain'    => lang('domain name for mail-address, eg. "%1"',$this->values['domain']),
+				'email'     => lang('email-address of the user, eg. "%1"',$this->values['email']),
+				'date'      => lang('todays date, eg. "%1"',$this->values['date']),
+			);
 			// do the substituetion in the effective prefs (data)
 			//
 			foreach($this->data as $app => $data)
