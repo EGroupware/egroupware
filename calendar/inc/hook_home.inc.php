@@ -28,7 +28,7 @@
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$date = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
-		$extra_data = "\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
+		$extra_data = "\n".'<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
 			. $cal->mini_calendar(
 				Array(
 					'day'		=> $cal->bo->day,
@@ -38,14 +38,14 @@
 				)
 			).'</td><td align="center"><table border="0" width="100%" cellspacing="0" cellpadding="0">'
 			. '<tr><td align="center">'.lang($GLOBALS['phpgw']->common->show_date($time,'F')).' '.$cal->bo->day.', '
-			.$cal->bo->year.'</tr></td><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
+			.$cal->bo->year.'</td></tr><tr><td bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_text']
 			.'" valign="top">'.$cal->print_day(
 				Array(
 					'year'	=> $cal->bo->year,
 					'month'	=> $cal->bo->month,
 					'day'		=> $cal->bo->day
 				)
-			).'</td></tr></table>'."\n".'</table>'."\n";
+			).'</td></tr></table>'."\n".'</td>'."\n".'</tr>'."\n".'</table>'."\n".'</td>'."\n";
 			
 		$title = '<font color="#FFFFFF">'.lang('Calendar').'</font>';
 		
@@ -61,12 +61,13 @@
 			)
 		);
 
+		$app_id = $GLOBALS['phpgw']->applications->name2id('calendar');
 		$var = Array(
-			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
-			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
-			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
-			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar'),
-			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> 'calendar')
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq'])
 		);
 
 		while(list($key,$value) = each($var))
@@ -74,7 +75,9 @@
 			$portalbox->set_controls($key,$value);
 		}
 
-		echo '<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($extra_data)."\n".'<!-- END Calendar info -->'."\n";
+		$portalbox->data = Array();
+
+		echo "\n".'<!-- BEGIN Calendar info -->'."\n".$portalbox->draw($extra_data)."\n".'<!-- END Calendar info -->'."\n";
 		unset($cal);
 	} 
 	flush();
