@@ -343,9 +343,7 @@ class calendar_ extends calendar__
 				. $repeats_from
 				. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
 				. $repeats_where . $extra;
-
 		$this->stream->query($sql,__LINE__,__FILE__);
-		
 		if($this->stream->num_rows() == 0)
 		{
 			return False;
@@ -356,7 +354,6 @@ class calendar_ extends calendar__
 		{
 			$retval[] = intval($this->stream->f('cal_id'));
 		}
-
 		return $retval;
 	}
 
@@ -383,6 +380,7 @@ class calendar_ extends calendar__
 		$date = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) - $this->datetime->tz_offset;
 		$enddate = mktime($event->end->hour,$event->end->min,$event->end->sec,$event->end->month,$event->end->mday,$event->end->year) - $this->datetime->tz_offset;
 		$today = time() - $this->datetime->tz_offset;
+//		$today = time();
 
 		if($event->recur_type != MCAL_RECUR_NONE)
 		{
@@ -435,7 +433,7 @@ class calendar_ extends calendar__
 			}
 			else
 			{
-				$end = '0';
+				$end = 0;
 			}
 
 			$this->stream->query('SELECT count(cal_id) FROM phpgw_cal_repeats WHERE cal_id='.$event->id,__LINE__,__FILE__);
