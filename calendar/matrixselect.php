@@ -48,7 +48,6 @@
 
   $phpgw->template->set_block("matrix_query_begin","list","matrix_query_end","form_button");
 
-//  $phpgw->template->set_var("bg_color",$phpgw_info["theme"]["bg_text"]);
   $phpgw->template->set_var("matrix_action",lang("Daily Matrix View"));
   $phpgw->template->set_var("action_url",$phpgw->link("timematrix.php"));
 
@@ -106,7 +105,12 @@
   $phpgw->template->set_var("data",$str);
   $phpgw->template->parse("output","list",True);
 
-  $phpgw->template->set_var("submit_button",lang("Submit"));
+  $phpgw->template->set_var("action_url_button","");
+  $phpgw->template->set_var("action_text_button",lang("Submit"));
+  $phpgw->template->set_var("action_confirm_button","onClick=\"document.matrixform.submit();\"");
+
+  $phpgw->template->parse("submit_button","form_button");
+
 
   $phpgw->template->set_var("action_url_button","");
   $phpgw->template->set_var("action_text_button",lang("Cancel"));

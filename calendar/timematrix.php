@@ -39,5 +39,14 @@
   $date = $thisyear.$thismonth.$thisday;
 
   echo $phpgw->calendar->timematrix($phpgw->calendar->date_to_epoch($date),0,0,$participants);
+  echo "<center>";
+  echo "<form action=\"".$phpgw->link("timematrix.php")."\" method=\"post\" name=\"matrixform\" target=\"timematrix\">";
+  echo "<input type=\"hidden\" name=\"date\" value=\"".$date."\">";
+  for ($i=0;$i<count($participants);$i++)
+    echo "<input type=\"hidden\" name=\"participants[]\" value=\"".$participants[$i]."\">";
+  echo "<input type=\"submit\" value=\"Refresh\">";
+  echo "</form>";
+  echo "</center>";
+
   $phpgw->common->phpgw_footer();
 ?>
