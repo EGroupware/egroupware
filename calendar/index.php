@@ -66,10 +66,9 @@
 <table border="0" width="100%">
 <tr>
 <?php
-//  if (! $friendly) {
-     echo "<td align=\"left\">";
-     echo $phpgw->calendar->display_small_month($prev["month"],$prev["year"],True,"edit_entry.php");
-//  }
+  echo "<td align=\"left\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$prev["month"],$prev["year"],"edit_entry.php");
+  echo "</td>";
 ?>
 
 <td align="middle"><font size="+2" color="#000000"><B>
@@ -85,10 +84,9 @@
 ?>
 </font></td>
 <?php
-//  if (! $friendly) {
-     echo "<td align=\"right\">";
-     echo $phpgw->calendar->display_small_month($next["month"],$next["year"],True,"edit_entry.php");
-//  }
+  echo "<td align=\"right\">";
+  echo $phpgw->calendar->pretty_small_calendar($thisday,$next["month"],$next["year"],"edit_entry.php");
+  echo "</td>";
 ?>
 </tr>
 </table>
