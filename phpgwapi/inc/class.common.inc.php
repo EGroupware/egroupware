@@ -1259,7 +1259,7 @@
        echo '</pre>';
     }    
 
-    // This will return a value for the next id an app may need to insert values into ldap.
+    // This will return a value for the next id an app/class may need to insert values into ldap.
 		/*!
 		@function next_id
 		@abstract return the next higher value for an integer, and increment it in the db.
@@ -1287,5 +1287,31 @@
 		}
 
 		return intval($id);
+	}
+
+    // This will return a value for the last id entered, which an app may need to check
+	// values for ldap.
+		/*!
+		@function last_id
+		@abstract return the current id in the next_id table for a particular app/class.
+		*/
+	function last_id($appname)
+	{
+		global $phpgw;
+
+		if (!$appname) {
+			return -1;
+		}
+
+		$phpgw->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'");
+		while( $phpgw->db->next_record() ) {
+			$id = $phpgw->db->f("id");
+		}
+
+		if (empty($id) || !$id) {
+			return -1;
+		} else {
+			return intval($id);
+		}
 	}
   }//end common class
