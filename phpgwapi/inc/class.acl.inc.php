@@ -25,6 +25,14 @@
   
   class acl
   {
+     var $db;
+
+     function acl()
+     {
+        global $phpgw;
+        $this->db = $phpgw->db;
+     }
+
     /* This is a new class. These are sample table entries
        insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) 
                          values('filemanager', 'create', 1, 'u', 4);
@@ -38,6 +46,8 @@
           
     function check($location, $required, $appname = False){
       global $phpgw, $phpgw_info;
+//      $this->db = $phpgw->db;
+
       if ($appname == False){
         $appname = $phpgw_info["flags"]["currentapp"];
       }
@@ -56,11 +66,11 @@
       }
       $sql .= ")))";
       $rights = 0;
-      $phpgw->db->query($sql ,__LINE__,__FILE__);
-      if ($phpgw->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ return True; }
-      while ($phpgw->db->next_record()) {
-        if ($phpgw->db->f("acl_rights") == 0){ return False; }
-        $rights |= $phpgw->db->f("acl_rights");
+      $this->db->query($sql ,__LINE__,__FILE__);
+      if ($this->db->num_rows() == 0 && $phpgw_info["server"]["acl_default"] != "deny"){ return True; }
+      while ($this->db->next_record()) {
+        if ($this->db->f("acl_rights") == 0){ return False; }
+        $rights |= $this->db->f("acl_rights");
       }
       return !!($rights & $required);
     }
@@ -68,7 +78,7 @@
     function add($app, $location, $id, $id_type, $rights){
       $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
       $sql .= " values('".$app."', '".$location."', ".$id.", '".$id_type."', ".$rights.")";
-      $phpgw->db->query($sql ,__LINE__,__FILE__);
+      $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
 
@@ -76,7 +86,7 @@
       $sql = "delete from phpgw_acl where acl_appname='".$app."'";
       $sql .= " and acl_location ='".$location."' and ";
       $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id.")";
-      $phpgw->db->query($sql ,__LINE__,__FILE__);
+      $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
 

@@ -300,6 +300,13 @@ class nextmatchs
     return $tr_color;
   }
 
+  // If you are using the common bgcolor="{tr_color}"
+  // This function is a little cleanier approch
+  function template_alternate_row_color(&$tpl)
+  {
+     $tpl->set_var("tr_color",$this->alternate_row_color());
+  }
+
   function show_sort_order($sort,$var,$order,$program,$text,$extra="")
   {
     global $phpgw, $filter, $qfield, $start, $query;

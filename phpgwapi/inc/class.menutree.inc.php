@@ -25,6 +25,14 @@
   /*********************************************/
 
 class menutree {
+  var $read_from_file;          // You can send the tree info from a string or file
+  var $root_level_value;        // This is what the top level name or image will be
+
+  function menutree()
+  {
+     $this->read_from_file = True;
+  }
+
   function showtree($treefile, $expandlevels="", $num_menus = 50, $invisible_menus = Null){
     global $phpgw_info, $phpgw;
     
@@ -53,22 +61,36 @@ class menutree {
   
     $maxlevel=0;
     $cnt=0;
-    
-    $fd = fopen($treefile, "r");
-    if ($fd==0) die("menutree.inc : Unable to open file ".$treefile);
-    while ($buffer = fgets($fd, 4096)) {
-      $tree[$cnt][0]=strspn($buffer,".");
-      $tmp=rtrim(substr($buffer,$tree[$cnt][0]));
-      $node=explode("|",$tmp); 
-      $tree[$cnt][1]=$node[0];
-      $tree[$cnt][2]=$node[1];
-      $tree[$cnt][3]=$node[2];
-      $tree[$cnt][4]=0;
-      if ($tree[$cnt][0] > $maxlevel) $maxlevel=$tree[$cnt][0];    
-      $cnt++;
+
+    if ($this->read_from_file) {    
+       $fd = fopen($treefile, "r");
+       if ($fd==0) die("menutree.inc : Unable to open file ".$treefile);
+       while ($buffer = fgets($fd, 4096)) {
+          $tree[$cnt][0]=strspn($buffer,".");
+          $tmp=rtrim(substr($buffer,$tree[$cnt][0]));
+          $node=explode("|",$tmp); 
+          $tree[$cnt][1]=$node[0];
+          $tree[$cnt][2]=$node[1];
+          $tree[$cnt][3]=$node[2];
+          $tree[$cnt][4]=0;
+          if ($tree[$cnt][0] > $maxlevel) $maxlevel=$tree[$cnt][0];    
+          $cnt++;
+       }
+       fclose($fd);
+    } else {
+       $ta = explode("\n",$treefile);
+       while (list($null,$buffer) = each($ta)) {
+          $tree[$cnt][0]=strspn($buffer,".");
+          $tmp=rtrim(substr($buffer,$tree[$cnt][0]));
+          $node=explode("|",$tmp); 
+          $tree[$cnt][1]=$node[0];
+          $tree[$cnt][2]=$node[1];
+          $tree[$cnt][3]=$node[2];
+          $tree[$cnt][4]=0;
+          if ($tree[$cnt][0] > $maxlevel) $maxlevel=$tree[$cnt][0];    
+          $cnt++;
+       }
     }
-    fclose($fd);
-  
     for ($i=0; $i<count($tree); $i++) {
        $expand[$i]=0;
        $visible[$i]=0;
@@ -196,8 +218,8 @@ class menutree {
         /****************************************/
         if($cnt==0) {
           $str = "<table cellspacing=0 cellpadding=0 border=0 cols=".($maxlevel+3)." width=".($maxlevel*16+100).">\n";
-          $str .= "<a href=\"".$phpgw->link("index.php",$params)."\" target=_parent><img src=\"templates/default/images/docs.gif\" border=\"0\"></a>\n";
-          $str .= "<tr>";
+          $str .= '<a href="' . $phpgw->link("index.php",$params) . '" target="_parent">' . $this->root_level_value . '</a>';
+          $str .= "\n<tr>";
           for ($i=0; $i<$maxlevel; $i++) $str .= "<td width=16></td>";
           $str .= "<td width=100></td></tr>\n";
         }
@@ -213,9 +235,9 @@ class menutree {
         $i=0;
         while ($i<$tree[$cnt][0]-1) {
           if ($levels[$i]==1)
-              $str .= "<td><img src=\"".$img_line."\"></td>";
+              $str .= '<td><img src="' . $img_line . '" alt="|"></td>';
           else
-              $str .= "<td><img src=\"".$img_spc."\"></td>";
+              $str .= '<td><img src="' . $img_spc . '" alt=" "></td>';
           $i++;
         }
         
@@ -223,10 +245,10 @@ class menutree {
         /* corner at end of subtree or t-split  */
         /****************************************/         
         if ($tree[$cnt][4]==1) {
-          $str .= "<td><img src=\"".$img_end."\"></td>";
+          $str .= '<td><img src="' . $img_end . '" alt="\"></td>';
           $levels[$tree[$cnt][0]-1]=0;
         } else {
-          $str .= "<td><img src=\"".$img_split."\"></td>";                  
+          $str .= '<td><img src="' . $img_split . '" alt="|-"></td>';
           $levels[$tree[$cnt][0]-1]=1;    
         } 
         
@@ -236,15 +258,15 @@ class menutree {
         if ($tree[$cnt+1][0]>$tree[$cnt][0]) {
           
           if ($expand[$cnt]==0)
-              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_expand."\" border=no></a></td>";
+              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_expand."\" border=no alt=\"+\"></a></td>";
           else
-              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_collapse."\" border=no></a></td>";         
+              $str .= "<td><a href=\"".$phpgw->link($script,$params)."\"><img src=\"".$img_collapse."\" border=no alt=\"-\"></a></td>";         
         } else {
           /*************************/
           /* Tree Leaf             */
           /*************************/
   
-          $str .= "<td><img src=\"".$img_leaf."\"></td>";         
+          $str .= '<td><img src="' . $img_leaf . '" alt="o"></td>';         
         }
         
         /****************************************/

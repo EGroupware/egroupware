@@ -29,7 +29,36 @@
      var $app_name;
      var $cats;
      var $db;
-     
+
+     function filter($type)
+     {
+        switch ($type)
+        {
+           case "subs":  $s = " and cat_parent != '0'"; break;
+           case "mains": $s = " and cat_parent = '0'"; break;
+        }
+        return $s;
+     }
+
+     function return_array($type = "all")
+     {
+        $filter = $this->filter($type);
+
+        $this->db->query("select * from phpgw_categories where cat_owner='"
+                       . $this->account_id . "' and cat_appname='"
+                       . $this->app_name . "' $filter",__LINE__,__FILE__);
+        $i = 0;
+        while ($this->db->next_record()) {
+           $cats[$i]["id"]          = $this->db->f("cat_id");
+           $cats[$i]["parent"]      = $this->db->f("cat_parent");
+           $cats[$i]["name"]        = $this->db->f("cat_name");
+           $cats[$i]["description"] = $this->db->f("cat_description");
+           $cats[$i]["data"]        = $this->db->f("cat_data");
+           $i++;
+        }
+        return $cats;
+     }
+
      function categories($account_id = "",$app_name = "")
      {
         global $phpgw, $phpgw_info;
@@ -44,35 +73,25 @@
         $this->account_id = $account_id;
         $this->app_name   = $app_name;
         $this->db         = $phpgw->db;
-
-        $this->db->query("select * from phpgw_categories where cat_owner='$account_id' and cat_appname='"
-                       . "$app_name'",__LINE__,__FILE__);
-        while ($this->db->next_record()) {
-           $this->cats[]["id"]          = $this->db->f("cat_id");
-           $this->cats[]["parent"]      = $this->db->f("cat_parent");
-           $this->cats[]["name"]        = $this->db->f("cat_name");
-           $this->cats[]["description"] = $this->db->f("cat_description");
-           $this->cats[]["data"]        = $this->db->f("cat_data");
-        }
+        $this->cats       = $this->return_array();
      }
 
      // Return into a select box, list or other formats
-     function formated_list($format,$type)
+     function formated_list($format,$type,$selected = "")
      {
         global $phpgw;
-
-        switch ($type)
-        {
-          case "onlymains":   $method = "and cat_parent='0'";   break;
-          case "onlysubs":    $method = "and cat_parent !='0'"; break;
-        }
+        $filter = $this->filter($type);
 
         if ($format == "select") {
            $this->db->query("select * from phpgw_categories where cat_owner='" . $this->account_id
-                           . "' $method",__LINE__,__FILE__);
+                           . "' $filter",__LINE__,__FILE__);
            while ($this->db->next_record()) {
-              $s .= '<option value="' . $this->db->f("cat_id") . '">'
-                  . $phpgw->strip_html($this->db->f("cat_name")) . '</option>';
+              $s .= '<option value="' . $this->db->f("cat_id") . '"';
+              if ($this->db->f("cat_id") == $selected) {
+                 $s .= " selected";
+              }
+              $s .= '>' . $phpgw->strip_html($this->db->f("cat_name"))
+                  . '</option>';
            }
            return $s;
         }
@@ -101,5 +120,28 @@
                         . $this->account_id . "' and cat_id='$cat_id'",__LINE__,__FILE__);
      }
 
+     function return_name($cat_id)
+     {
+         $this->db->query("select cat_name from phpgw_categories where cat_id='"
+                        . "$cat_id'",__LINE__,__FILE__);
+         $this->db->next_record();
+         return $this->db->f("cat_name");
+     }
+
+     function exists($type,$cat_name)
+     {
+        $filter = $this->filter($type);
+
+        $this->db->query("select count(*) from phpgw_categories where cat_name='"
+                       . addslashes($cat_name) . "' and cat_owner='"
+                       . $this->account_id . "' and cat_appname='"
+                       . $this->appname . "' $filter",__LINE__,__FILE__);
+        $this->db->next_record();
+        if ($this->db->f(0)) {
+           return True;
+        } else {
+           return False;
+        }
+     }
   }
 ?>
