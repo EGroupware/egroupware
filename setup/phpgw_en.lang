@@ -125,6 +125,7 @@ email password	email	en	Email Password
 email signature	email	en	E-Mail signature
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
+end date	todo	en	End Date
 end date/time	calendar	en	End Date/Time
 enter your new password	preferences	en	Enter your new password
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
@@ -356,6 +357,7 @@ sorry, there was a problem processing your request.	common	en	Sorry, there was a
 sorry, your login has expired	login	en	Sorry, your login has expired
 source language	transy	en	Source Language
 specify_file_name	filemanager	en	You must specify a name for the file you wish to create
+start date	todo	en	Start Date
 start date/time	calendar	en	Start Date/Time
 state	addressbook	en	State
 status	todo	en	Status
@@ -426,6 +428,7 @@ usersfile_perm_error	filemanager	en	To correct this error you will need to prope
 vcard	common	en	VCard
 view	common	en	View
 view access log	admin	en	View Access Log
+view matrix of actual month	todo	en	View Matrix of actual Month
 view sessions	admin	en	View sessions
 view this entry	calendar	en	View this entry
 view/edit/delete all phrases	transy	en	View/edit/delete all phrases
