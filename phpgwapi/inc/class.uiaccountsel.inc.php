@@ -314,6 +314,7 @@
 				'element_id' => $element_id,
 				'single'     => $single,
 				'query_type' => $query_type,
+				'query' 		 => $query,
 			);
 
 // -------------- list header variable template-declaration ------------------------
