@@ -207,8 +207,18 @@
             return 4;
           }
         }else{
-          $phpgw_info["setup"]["header_msg"] = "Stage 1 (Tables appear to be pre-beta)";
-          return 2;
+          $this->db->query("select * from applications");
+          while (@$this->db->next_record()) {
+             if ($this->db->f("app_name") == "admin"){$phpgw_info["setup"]["oldver"]["phpgwapi"] = $this->db->f("app_version");}
+             $phpgw_info["setup"]["oldver"][$this->db->f("app_name")] = $this->db->f("app_version");
+             $phpgw_info["setup"][$this->db->f("app_name")]["title"] = $this->db->f("app_title");
+          }
+          if ($phpgw_info["setup"]["oldver"]["phpgwapi"] != $phpgw_info["server"]["versions"]["phpgwapi"]){
+          		return 4;
+          } else {
+          		$phpgw_info["setup"]["header_msg"] = "Stage 1 (Tables appear to be pre-beta)";
+          		return 2;
+          }
         }
       }else{
         /* no tables, so checking if we can create them */
