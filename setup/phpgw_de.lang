@@ -88,7 +88,7 @@ create lang.sql file	transy	de	Erstelle lang.sql Datei (Export)
 create new language set	transy	de	Neues Sprachset anlegen
 created by	common	de	Erstellt von
 currency	common	de	Währung
-current users	common	de	Gegenwärtige Userzahl
+current users	common	de	Derzeit angemeldete Benutzer
 current_file	filemanager	de	Aktuelle Datei
 daily	calendar	de	Täglich
 date	common	de	Datum
@@ -279,7 +279,7 @@ pager 	addressbook	de	Pager
 participants	calendar	de	Teilnehmer
 password	common	de	Passwort
 password has been updated	common	de	Passwort wurde aktualisiert
-percent of users that logged out	admin	de	Prozent der User, die sich korrekt ausgelogged haben
+percent of users that logged out	admin	de	Prozent der User, die sich korrekt abgemeldet haben
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 permissions to the files/users directory	common	de	Zugriffsrechte für die Dateien/Benutzer-Verzeichnisse
@@ -486,3 +486,5 @@ notes list	notes	de	Notizliste
 add note	notes	de	Notiz hinzuf&uuml;gen
 add a note for	notes	de	Notiz hinzuf&uuml;gen f&uuml;r
 there was an error trying to connect to your mail server.<br>please, check your username and password, or contact your admin.	email	de	Die Verbindung zum Mailserver ist leider fehlgeschlagen.<br>Bitte prüfen sie Ihren Usernamen und Ihr Passwort, oder setzen Sie sich mit Ihrem Administrator in Verbindung.
+action	admin	de	Aktion
+allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
