@@ -165,7 +165,7 @@
 						{
 							case 'vbox':
 							case 'hbox':
-							case 'stack':
+							case 'deck':
 								$cell['cell_tpl'] = '.vbox';
 								break;
 						}
@@ -243,7 +243,7 @@
 				{
 					case 'vbox':
 					case 'hbox':
-					case 'stack':
+					case 'deck':
 						if ($cell['size'] < 2)
 						{
 							$cell['size'] = 2;
@@ -443,7 +443,7 @@
 				{
 					$this->etemplate->modified = time();
 				}
-				$ok = $this->etemplate->save($content['name'],$content['template'],$content['lang'],$content['group'],$content['version']);
+				$ok = $this->etemplate->save(trim($content['name']),trim($content['template']),trim($content['lang']),intval($content['group']),trim($content['version']));
 				$msg = $this->messages[$ok ? 'saved' : 'error_writing'];
 			}
 			elseif ($content['show'])
