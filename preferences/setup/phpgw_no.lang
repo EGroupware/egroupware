@@ -48,7 +48,7 @@ popup with search	preferences	no	Sprett-opp meny for søking
 re-enter your password	preferences	no	Skriv inn ditt passord igjen
 select different theme	preferences	no	Velg en annen mail
 select one	preferences	no	Velg en
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	no	Velg ønsket språk.<br>Noen språk mangler enkelte oversettinger, og du vil isåfall blir presentert med den engelsk utgaven.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	no	Velg ønsket språk.<br>Noen språk mangler enkelte oversettinger, og du vil isåfall blir presentert med den engelsk utgaven.
 selectbox	preferences	no	Valgboks
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	no	Sett denne slik du ønsker. Av sikkerhetshensyn bør du ikke vise brukernavnet ditt offentlig.
 should the number of active sessions be displayed for you all the time.	preferences	no	Skal antall aktive sesjoner vises kontinuerlig?

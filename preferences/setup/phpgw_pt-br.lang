@@ -49,7 +49,7 @@ popup with search	preferences	pt-br	Janela  instantânea com busca
 re-enter your password	preferences	pt-br	Digite sua senha novamente
 select different theme	preferences	pt-br	Selecione um tema diferente
 select one	preferences	pt-br	Selecione um
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do eGroupWare.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do eGroupWare.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
 selectbox	preferences	pt-br	Caixa de seleção
 selectbox with primary group and search	preferences	pt-br	Caixa de seleção com grupo principal e busca
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pt-br	Selecione isto caso queira. Por razões de segurança, você pode não querer mostrar seu nome de usuário publicamente.

@@ -46,7 +46,7 @@ popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
 select different theme	preferences	nl	Selecteer een ander thema
 select one	preferences	nl	Selecteer één
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in eGroupWare. <br/>Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in eGroupWare. <br/>Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
 selectbox	preferences	nl	Selectbox
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	nl	Stel dit in naar uw voorkeuren. Voor veiligheidsredenen, wilt u eventueel niet uw gebruikersnaam publiekelijk weergeven.
 should the number of active sessions be displayed for you all the time.	preferences	nl	Moet het aantal actieve sessies altijd aan u worden weergegeven?

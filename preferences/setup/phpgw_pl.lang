@@ -48,7 +48,7 @@ select different theme	preferences	pl	Wybierz inny temat
 select displayed stocks	preferences	pl	Wybór wy¶wietlanych spó³ek
 select headlines to display	preferences	pl	Wybór serwisów wiadomo¶ci
 select one	preferences	pl	Wybierz jeden
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz jêzyk tekstów i komunikatów wewn±trz eGroupWare.<br>Niektóre jêzyki nie zawieraj± wszelkich komunikatów. W takich wypadkach wy¶wietlane bêd± komunikaty w jêzyku angielskim.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pl	Wybierz jêzyk tekstów i komunikatów wewn±trz eGroupWare.<br>Niektóre jêzyki nie zawieraj± wszelkich komunikatów. W takich wypadkach wy¶wietlane bêd± komunikaty w jêzyku angielskim.
 selectbox	preferences	pl	Box z wyborem
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	pl	Ustaw to wed³ug w³asnych upodobañ. Ze wzglêdów na bezpieczeñstwo twoich danych ewentualnie nie chcia³by¶ wy¶wietlaæ twojej nazwy u¿ytkownika w publiczno¶ci.
 should the number of active sessions be displayed for you all the time.	preferences	pl	Wy¶wietlaæ liczbe sesji aktywnych.

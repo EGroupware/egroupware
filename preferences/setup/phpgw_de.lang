@@ -51,7 +51,7 @@ popup with search	preferences	de	Popup mit Suche
 re-enter your password	preferences	de	Neues Passwort wiederholen
 select different theme	preferences	de	anderes Schema wählen
 select one	preferences	de	Bitte wählen
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der eGroupWare.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der eGroupWare.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 selectbox	preferences	de	Auswahlfeld
 selectbox with primary group and search	preferences	de	Auswahlfeld mit primärer Gruppe und Suche
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	de	Stellen Sie das nach Ihren Vorlieben ein. Aus Sicherheitsgründen sollte der Benutzername nicht in der Öffentlichkeit gezeigt werden.

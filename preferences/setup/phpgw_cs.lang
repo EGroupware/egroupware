@@ -50,7 +50,7 @@ popup with search	preferences	cs	Vyhledáváním
 re-enter your password	preferences	cs	Opakujte va¹e heslo
 select different theme	preferences	cs	Zmìnit barevné téma
 select one	preferences	cs	Zvolte jeden
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Zvolte jazyk pro zobrazení textù.<br>V nìkterých jazycích nemusí být pøelo¾eny v¹echny texty, v takovém pøípadì se text zobrazí anglicky.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Zvolte jazyk pro zobrazení textù.<br>V nìkterých jazycích nemusí být pøelo¾eny v¹echny texty, v takovém pøípadì se text zobrazí anglicky.
 selectbox	preferences	cs	Výbìrem
 selectbox with primary group and search	preferences	cs	Výbìrem s výchozí skupinou a hledáním
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	cs	Nastavte dle libosti. Z bezpeènostních dùvodù se nedoporuèuje veøejnì zobrazovat pøihla¹ovací jméno.

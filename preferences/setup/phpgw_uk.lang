@@ -43,7 +43,7 @@ popup with search	preferences	uk	Вспливаюче вікно з пошуко
 re-enter your password	preferences	uk	Введіть пароль ще раз
 select different theme	preferences	uk	Виберіть іншу тему
 select one	preferences	uk	Виберіть одне
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	uk	Виберіть мову текстів та повідомлень в eGroupWare.<br>Деякі мови можуть не мати всіх повідомлень, в такому випадку Ви будете бачити повідомлення англійською мовою з зірочкою в кінці повідомлення.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	uk	Виберіть мову текстів та повідомлень в eGroupWare.<br>Деякі мови можуть не мати всіх повідомлень, в такому випадку Ви будете бачити повідомлення англійською мовою з зірочкою в кінці повідомлення.
 selectbox	preferences	uk	Перелік вибору
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	uk	Встановіть як Вам хочеться. С точки зору безпеки, Ви можете не хотіти публікувати Ваше ім'я.
 should the number of active sessions be displayed for you all the time.	preferences	uk	Чи завжди показувати вам кількість активних сессій.

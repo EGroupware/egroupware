@@ -43,7 +43,7 @@ popup with search	preferences	da	Popup vindue med søg
 re-enter your password	preferences	da	Indtast Din adgangskode igen
 select different theme	preferences	da	Vælg et andet tema
 select one	preferences	da	Vælg en
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	da	Vælg sproget på tekst og meddelser inden i eGroupWare.<br>Nogle sprog er måske ikke fuld ud oversat, i sådanne et tilfælde vil den blive vist på Engelsk.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	da	Vælg sproget på tekst og meddelser inden i eGroupWare.<br>Nogle sprog er måske ikke fuld ud oversat, i sådanne et tilfælde vil den blive vist på Engelsk.
 selectbox	preferences	da	Udvælgelses Vindue
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	da	Sæt dette efter din smag. For sikkerhedsgrunde, vil du måkse ikke vise dine brugernavne frem i offentligheden
 should the number of active sessions be displayed for you all the time.	preferences	da	Skal antal aktive brugere vises til dig hele tiden?

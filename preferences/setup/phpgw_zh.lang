@@ -46,7 +46,7 @@ popup with search	preferences	zh	查找时弹出窗口
 re-enter your password	preferences	zh	重新输入密码
 select different theme	preferences	zh	选择不同的界面主题
 select one	preferences	zh	选择
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	在phpGroupWare中使用何种语言显示文字和信息. <br>若指定非英语语种, 部分信息可能无法正常显示, 而默认显示为英文. 
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	在eGroupWare中使用何种语言显示文字和信息. <br>若指定非英语语种, 部分信息可能无法正常显示, 而默认显示为英文. 
 selectbox	preferences	zh	选择框
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	zh	该选项视情况而定. 出于安全性考虑, 通常选择不显示登录名. 
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目. 

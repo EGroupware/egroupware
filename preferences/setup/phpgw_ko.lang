@@ -49,7 +49,7 @@ popup with search	preferences	ko	팝업으로 검색
 re-enter your password	preferences	ko	새로운 암호 확인
 select different theme	preferences	ko	테마 바꾸기
 select one	preferences	ko	하나를 선택
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	eGroupWare의 문장과 메세지의 언어를 선택하세요.<br>특정 언어는 모든 메세지를 포함하고 있지 않아서 영어로 보입니다.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	eGroupWare의 문장과 메세지의 언어를 선택하세요.<br>특정 언어는 모든 메세지를 포함하고 있지 않아서 영어로 보입니다.
 selectbox	preferences	ko	선택상자
 selectbox with primary group and search	preferences	ko	첫번째 그룹과 검색창이 있는 선택상자
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	ko	마음에 들면 설정하세요. 보안상이유로는 사용자이름을 모두에게 보이고 싶지 않을수도 있습니다

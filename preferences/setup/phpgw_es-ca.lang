@@ -45,7 +45,7 @@ popup with search	preferences	es-ca	Finestra emergent amb recerca
 re-enter your password	preferences	es-ca	Torneu a entrar la vostra contrasenya
 select different theme	preferences	es-ca	Trieu un Tema diferent
 select one	preferences	es-ca	Trieu un
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-ca	Trieu l'idioma de missatges i text a eGroupWare.<br>Alguns idiomes potser no tenen tots els missatges traduïts, en aquest cas la resta la podeu veure en Anglès.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-ca	Trieu l'idioma de missatges i text a eGroupWare.<br>Alguns idiomes potser no tenen tots els missatges traduïts, en aquest cas la resta la podeu veure en Anglès.
 selectbox	preferences	es-ca	Llista desplegable
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-ca	Establiu el valor per el vostre enllaç. Per raons de seguretat, potser no voleu mostrar el vostre Nom d'Usurari en public.
 should the number of active sessions be displayed for you all the time.	preferences	es-ca	Voleu mostrar el nombre de sessions actives sempre ?

@@ -43,7 +43,7 @@ popup with search	preferences	fi	Haun ponnahdusikkuna
 re-enter your password	preferences	fi	Kirjoita salasana uudelleen
 select different theme	preferences	fi	Valitse toinen teema
 select one	preferences	fi	Valitse
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fi	Valitse tekstien ja viestien kieli eGroupWaressa.<br>Kaikkia tekstej‰ ei ole v‰ltt‰m‰tt‰ k‰‰nnetty, jolloin ne n‰ytet‰‰n englanniksi.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fi	Valitse tekstien ja viestien kieli eGroupWaressa.<br>Kaikkia tekstej‰ ei ole v‰ltt‰m‰tt‰ k‰‰nnetty, jolloin ne n‰ytet‰‰n englanniksi.
 selectbox	preferences	fi	Valintaruutu
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fi	M‰‰rittele t‰m‰ haluamallasi tavalla. Et v‰ltt‰m‰tt‰ halua n‰ytt‰‰ k‰ytt‰j‰tunnusta tietoturvasyist‰.
 should the number of active sessions be displayed for you all the time.	preferences	fi	N‰ytet‰‰nkˆ aktiivisten istuntojen m‰‰r‰ koko ajan.

@@ -46,7 +46,7 @@ popup with search	preferences	zt	跳出搜尋
 re-enter your password	preferences	zt	重新輸入您的密碼
 select different theme	preferences	zt	選擇不同的畫面配置
 select one	preferences	zt	請選擇
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zt	選擇eGroupWare的語言<br>部分語言尚未完成翻譯，您會看到英文的敘述
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zt	選擇eGroupWare的語言<br>部分語言尚未完成翻譯，您會看到英文的敘述
 selectbox	preferences	zt	下拉選單
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	zt	設定您希望顯示的部份，基於隱私的理由，您也許不希望在公開區域顯示您的帳號。
 should the number of active sessions be displayed for you all the time.	preferences	zt	連線編號是否需要全部顯示。

@@ -48,7 +48,7 @@ popup with search	preferences	es-es	Ventana emergente con búsqueda
 re-enter your password	preferences	es-es	Re-Ingrese su contraseña
 select different theme	preferences	es-es	Seleccione un tema diferente
 select one	preferences	es-es	Seleccione uno
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en eGroupWare.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en eGroupWare.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
 selectbox	preferences	es-es	Cuadro de selección
 selectbox with primary group and search	preferences	es-es	Cuadro de selección con grupo principal y búsqueda
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-es	Ponga esto a su gusto. Por razones de seguridad, puede no querer mostrar su usuario en público.

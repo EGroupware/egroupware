@@ -47,7 +47,7 @@ popup with search	preferences	it	Popup con ricerca
 re-enter your password	preferences	it	Reinserisci la password
 select different theme	preferences	it	Seleziona un tema differente
 select one	preferences	it	Seleziona uno
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di eGroupWare.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di eGroupWare.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
 selectbox	preferences	it	Casella di selezione
 selectbox with primary group and search	preferences	it	Casella di selezione con gruppo primario e ricerca
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	it	Impostalo come preferisci. Per ragioni di sicurezza, puoi forzare di non visualizzare la tua Username in pubblico.

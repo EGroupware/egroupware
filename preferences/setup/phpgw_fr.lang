@@ -41,7 +41,7 @@ popup with search	preferences	fr	Ouvrir une fenêtre Popup avec la recherche
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 select different theme	preferences	fr	Choisissez un thème différent
 select one	preferences	fr	Choisissez un
-select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans phpGroupWare.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
+select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans eGroupWare.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
 selectbox	preferences	fr	Boîte de sélection
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fr	Réglez ceci à votre convenance. Pour des raisons de sécurité, vous pouvez préférer ne pas montrer votre nom d'utilisateur en public.
 should the number of active sessions be displayed for you all the time.	preferences	fr	Le nombre de sessions actives doit-il vous être affiché tout le temps.
