@@ -1828,24 +1828,49 @@
 			{
 				return False;
 			}
-
-			$syear = $params['syear'];
-			$smonth = $params['smonth'];
-			$sday = $params['sday'];
-			$eyear = (isset($params['eyear'])?$params['eyear']:0);
-			$emonth = (isset($params['emonth'])?$params['emonth']:0);
-			$eday = (isset($params['eday'])?$params['eday']:0);
-			$owner_id = (isset($params['owner'])?$params['owner']:0);
-			if($owner_id==0 && $this->is_group)
+			if (isset($params['start']) && ($datearr = $this->iso86012date($params['start'])))
 			{
-				unset($owner_id);
-				$owner_id = $this->g_owner;
-				if($this->debug)
+				$syear = $datearr['year'];
+				$smonth = $datearr['month'];
+				$sday = $datearr['mday'];
+				$params['xmlrpc'] = True;
+			}
+			else
+			{
+				$syear = $params['syear'];
+				$smonth = $params['smonth'];
+				$sday = $params['sday'];
+			}
+			if (isset($params['end']) && ($datearr = $this->iso86012date($params['end'])))
+			{
+				$eyear = $datearr['year'];
+				$emonth = $datearr['month'];
+				$eday = $datearr['mday'];
+				$params['xmlrpc'] = True;
+			}
+			else
+			{
+				$eyear = (isset($params['eyear'])?$params['eyear']:0);
+				$emonth = (isset($params['emonth'])?$params['emonth']:0);
+				$eday = (isset($params['eday'])?$params['eday']:0);
+			}
+			if (!isset($params['owner']) && @$params['xmlrpc'])
+			{
+				$owner_id = $GLOBALS['phpgw_info']['user']['user_id'];
+			}
+			else
+			{
+				$owner_id = (isset($params['owner'])?$params['owner']:0);
+				if($owner_id==0 && $this->is_group)
 				{
-					echo '<!-- owner_id in ('.implode(',',$owner_id).') -->'."\n";
+					unset($owner_id);
+					$owner_id = $this->g_owner;
+					if($this->debug)
+					{
+						echo '<!-- owner_id in ('.implode(',',$owner_id).') -->'."\n";
+					}
 				}
 			}
-			
 			if(!$eyear && !$emonth && !$eday)
 			{
 				$edate = mktime(23,59,59,$smonth + 1,$sday + 1,$syear);
@@ -1874,7 +1899,7 @@
 				}
 				$edate = mktime(23,59,59,$emonth,$eday,$eyear);
 			}
-			
+			//echo "<p>bocalendar::store_to_cache(".print_r($params,True).") syear=$syear, smonth=$smonth, sday=$sday, eyear=$eyear, emonth=$emonth, eday=$eday, xmlrpc='$param[xmlrpc]'</p>\n";
 			if($this->debug)
 			{
 				echo '<!-- Start Date : '.sprintf("%04d%02d%02d",$syear,$smonth,$sday).' -->'."\n";
@@ -1908,6 +1933,7 @@
 				return;
 			}
 
+			$cache_start = intval(sprintf("%04d%02d%02d",$syear,$smonth,$sday));
 			if($c_cached_ids)
 			{
 				for($i=0;$i<$c_cached_ids;$i++)
@@ -1940,6 +1966,10 @@
 								}
 								$this->cached_events[$j][] = $event;
 							}
+							if ($j >= $cache_start && (@$params['no_doubles'] || @$params['xmlrpc']))
+							{
+								break;	// add event only once on it's startdate
+							}
 						}
 					}
 				}
@@ -1956,13 +1986,10 @@
 						echo '<!-- Cached Events ID: '.$cached_event_ids_repeating[$i].' ('.sprintf("%04d%02d%02d",$this->repeating_events[$i]['start']['year'],$this->repeating_events[$i]['start']['month'],$this->repeating_events[$i]['start']['mday']).') -->'."\n";
 					}
 				}
-//				$edate -= $GLOBALS['phpgw']->datetime->tz_offset;
-//				for($date=mktime(0,0,0,$smonth,$sday,$syear) - $GLOBALS['phpgw']->datetime->tz_offset;$date<=$edate;$date += 86400)
 				for($date=mktime(0,0,0,$smonth,$sday,$syear);$date<=$edate;$date += 86400)
 				{
 					if($this->debug)
 					{
-//						$search_date = $GLOBALS['phpgw']->common->show_date($date,'Ymd');
 						$search_date = date('Ymd',$date);
 						echo '<!-- Calling check_repeating_events('.$search_date.') -->'."\n";
 					}
@@ -1982,11 +2009,108 @@
 			{
 				if(is_array($this->cached_events[$j]))
 				{
-					$retval[$j] = $this->cached_events[$j];
+					if ($params['xmlrpc'])
+					{
+						foreach($this->cached_events[$j] as $event)
+						{
+							$retval[] = $this->xmlrpc_prepare($event);
+						}
+					}
+					else
+					{
+						$retval[$j] = $this->cached_events[$j];
+					}
 				}
 			}
+			//echo "store_to_cache(".print_r($params,True).")=<pre>".print_r($retval,True)."</pre>\n";
 			return $retval;
-//			return $this->cached_events;
+		}
+
+		function xmlrpc_prepare(&$event)
+		{
+			foreach(array('start','end','modtime','recur_enddate') as $name)
+			{
+				if (isset($event[$name]))
+				{
+					$event[$name] = $this->date2iso8601($event[$name]);
+				}
+			}
+			if (is_array($event['recur_exception']))
+			{
+				foreach($event['recur_exception'] as $key => $timestamp)
+				{
+					$event['recur_exception'][$key] = $this->date2iso8601($timestamp);
+				}
+			}
+			static $user_cache = array();
+
+			if (!is_object($GLOBALS['phpgw']->perferences))
+			{
+				$GLOBALS['phpgw']->perferences = CreateObject('phpgwapi.preferences');
+			}
+			foreach($event['participants'] as $user_id => $status)
+			{
+				if (!isset($user_cache[$user_id]))
+				{
+					$user_cache[$user_id] = array(
+						'name'   => $GLOBALS['phpgw']->common->grab_owner_name($user_id),
+						'email'  => $GLOBALS['phpgw']->perferences->email_address($user_id)
+					);
+				}
+				$event['participants'][$user_id] = $user_cache[$user_id] + array(
+					'status' => $status,
+				);
+			}
+			if (is_array($event['alarm']))
+			{
+				foreach($event['alarm'] as $id => $alarm)
+				{
+					$event['alarm'][$id]['time'] = $this->date2iso8601($alarm['time']);
+					if ($alarm['owner'] != $GLOBALS['phpgw_info']['user']['account_id'])
+					{
+						unset($event['alarm'][$id]);
+					}
+				}
+			}
+			if (!is_object($GLOBALS['phpgw']->categories))
+			{
+				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+			}
+			$cats = explode(',',$event['category']);
+			$event['category'] = array();
+			foreach($cats as $cat)
+			{
+				if ($cat)
+				{
+					$event['category'][$cat] = $GLOBALS['phpgw']->categories->id2name($cat);
+				}
+			}
+			return $event;
+		}
+
+		function date2iso8601($date)
+		{
+			if (!is_array($date))
+			{
+				return date('Y-m-d\TH:i:s',$date);
+			}
+			return sprintf('%04d-%02d-%02dT%02d:%02d:%02d',
+				$date['year'],$date['month'],$date['mday'],
+				$date['hour'],$date['min'],$date['sec']);
+		}
+
+		function iso86012date($isodate,$timestamp=False)
+		{
+			if (($arr = split('[-:T]',$isodate)) && count($arr) == 6)
+			{
+				foreach(array('year','month','mday','hour','min','sec') as $n => $name)
+				{
+					$date[$name] = intval($arr[$n]);
+				}
+				return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
+					$date['month'],$date['mday'],$date['year']) : $date;
+			}
+			return False;
 		}
 
 		/* Begin Appsession Data */
