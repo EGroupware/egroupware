@@ -250,7 +250,7 @@
 					$s .= '>' . $phpgw->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
 					{
-					$s .=  '&lt;' . lang('Global') . '&gt;';
+					$s .= '&lt;' . lang('Global') . '&gt;';
 					}
 					$s .=  '</option>';
 				}
@@ -447,19 +447,18 @@
 
 		    if ($cat_name)
 		    {
-			$cat_exists = " AND cat_name='" . addslashes($cat_name) . "' "; 
+			$cat_exists = " cat_name='" . addslashes($cat_name) . "' "; 
 		    }
 		    if ($cat_id)
 		    {
-                        $cat_exists = " AND cat_parent='$cat_id' ";
+                        $cat_exists = " cat_parent='$cat_id' ";
 		    }
 		    if ($cat_name && $cat_id)
 		    {
-			$cat_exists = " AND cat_name='" . addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
+			$cat_exists = " cat_name='" . addslashes($cat_name) . "' AND cat_id != '$cat_id' ";
 		    }
 
-                    $this->db->query("select count(*) from phpgw_categories where cat_appname='"
-                       . $this->app_name . "' $cat_exists $filter",__LINE__,__FILE__);
+                    $this->db->query("select count(*) from phpgw_categories where $cat_exists $filter",__LINE__,__FILE__);
 
 		    $this->db->next_record();
 
