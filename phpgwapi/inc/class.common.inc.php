@@ -264,25 +264,32 @@
       return $s;    
     }
 
-    // Look at the note towards the top of this file (jengo)
-    function filesystem_separator()
-    {
-       return filesystem_separator();
-    }
+		// Look at the note towards the top of this file (jengo)
+		function filesystem_separator()
+		{
+			return filesystem_separator();
+		}
+
 		/*!
 		@function error_list
-		@abstract ???
-		@param $error ???
+		@abstract This is used for reporting errors in a nice format.
+		@param $error - array of errors
 		*/
-    function error_list($error)
-    {
-       $html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang('error') . '</b>: </td><td align="left">' . $error[0] . '</td></tr>';
+		function error_list($errors)
+		{
+			if (! is_array($errors))
+			{
+				return False;
+			}
 
-       for ($i=1; $i<count($error); $i++) {
-          $html_error .= '<tr><td>&nbsp;</td><td align="left">' . $error[$i] . '</td></tr>';
-       }
-       return $html_error . '</table>';
-    }
+			$html_error = '<table border="0" width="50%"><tr><td align="right"><b>' . lang('error')
+							. '</b>: </td><td align="left">' . $errors[0] . '</td></tr>';
+			for ($i=1; $i<count($errors); $i++)
+			{
+				$html_error .= '<tr><td>&nbsp;</td><td align="left">' . $errors[$i] . '</td></tr>';
+			}
+			return $html_error . '</table>';
+		}
 
 		/*!
 		@function check_owner
