@@ -397,7 +397,7 @@
 					)
 				),
 				'freebusy' => Array(
-					'type'		=> 'freebusy',
+					'type'		=> 'text',
 					'to_text'	=> False,
 					'vfreebusy' => Array(
 						'state'		=> 'optional',
@@ -987,6 +987,14 @@
 						'attach'	=> True
 					)
 				),
+				'freebusy' => Array(
+					'type'		=> 'text',
+					'quoted'	=> False,
+					'to_text'	=> False,
+					'properties' => Array(
+						'freebusy'	=> True
+					)
+				),
 				'freq' => Array(
 					'type'		=> 'function',
 					'function'	=> 'switch_freq',
@@ -1325,6 +1333,12 @@
 			return str_replace('=','=3D',str_replace(' ','%20',$str));
 		}
 
+		/**
+		 * Searches all parameters allowed for a certain property
+		 *
+		 * @param string $property, every key from the $this->property
+		 * @return array with allowed parameters (keys from $this->parameters which list $property under 'properties'
+		 */
 		function find_parameters($property)
 		{
 			static  $cached_returns;
@@ -1399,7 +1413,7 @@
 
 		function parse_parameters(&$event,$majortype,$value)
 		{
-			if(!ereg('[\=\;]',$value))
+			if(!ereg('[\=\;]',$value) || $majortype == 'url')
 			{
 				$return_value[] = Array(
 					'param'	=> $majortype,
@@ -1471,9 +1485,13 @@
 						}
 					}
 				}
+				// hack to write freebusy as value (freebusy:<value>) and not as param (freebusy:freebusy=<value>)
+				if ($name == 'freebusy') $name = 'value';
+
 				$this->debug('name : '.$name.' : Param = '.$param);
 				if(@$this->parameter[$param]['properties'][$majortype])
 				{
+					
 					switch(@$this->parameter[$param]['type'])
 					{
 						case 'dir':
@@ -1503,6 +1521,10 @@
 							if(@$this->property[$majortype]['type'] == 'date-time')
 							{
 								$this->set_var($event,$param,$this->switch_date($name));
+							}
+							elseif($majortype == 'url')
+							{
+								$this->set_var($event,$param,$value);
 							}
 							elseif($value <> "\\n" && $value)
 							{
@@ -1574,7 +1596,6 @@
 			$include_mailto = False;
 			$include_datetime = False;
 			$param = $this->find_parameters($property);
-
 			if($property == 'exdate')
 			{
 				while(list($key,$value) = each($event))
@@ -1713,12 +1734,10 @@
 
 		function build_card_internals($ical_item,$event)
 		{
-			$prop = $this->find_properties($ical_item);
-			reset($prop);
-			while(list($dumb_key,$key) = each($prop))
+			foreach($this->find_properties($ical_item) as $value)
 			{
-				$value  = $key;
-				$varray = $this->property[$key];
+				$varray = $this->property[$value];
+
 				$type   = $varray['type'];
 				$to_text = $varray['to_text'];
 				$state  = @$varray[$ical_item]['state'];
@@ -2568,7 +2587,7 @@
 				{
 					unset($dur);
 
-					// Split «DURATION»
+					// Split ï¿½DURATIONï¿½
 					list($_f_['day_raw'], $_f_['time_raw']) = split('T', substr($value, 1, strlen($value)-1));
 
 					/* Datecode */
@@ -3324,18 +3343,15 @@
 			$event_id = $params['l_event_id'] ? $params['l_event_id'] : $_GET['cal_id'];
 			$this->chunk_split = $params['chunk_split'];
 			$method = $params['method'] ? $params['method'] : 'publish';
-			$vtype = $params['vtype'] ? $params['vtype'] : 'event';
 
 			$string_array = Array(
 				'summary'		=> 'description',
 				'location'		=> 'location',
-				'description'	=> 'title',
-				'uid'		=> 'uid'
+				'uid'			=> 'uid'
 			);
 
 			$cats = CreateObject('phpgwapi.categories');
 
-			include(PHPGW_SERVER_ROOT.'/calendar/setup/setup.inc.php');
 			if(!is_array($event_id))
 			{
 				$ids[] = $event_id;
@@ -3347,7 +3363,7 @@
 
 			$ical = $this->new_ical();
 
-			$this->set_var($ical['prodid'],'value','-//eGroupWare//eGroupWare '.$setup_info['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
+			$this->set_var($ical['prodid'],'value','-//eGroupWare//eGroupWare '.$GLOBALS['phpgw_info']['apps']['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
 			$this->set_var($ical['version'],'value','1.0');
 			$this->set_var($ical['method'],'value',strtoupper($method));
 
@@ -3441,8 +3457,7 @@
 
 						$owner_status = $this->switch_partstat((int)$this->switch_phpgw_status($event['participants'][$part]));
 
-						$mail_prefs = $GLOBALS['phpgw']->preferences->create_email_preferences($part);
-						$mailto = $mail_prefs['email']['address'];
+						$mailto = $GLOBALS['phpgw']->accounts->id2name($part,'account_email');
 
 						$str = 'CN="'.$name.'";PARTSTAT='.$owner_status.':'.$mailto;
 						if($part == $event['owner'])
@@ -3549,7 +3564,7 @@
 				$ical_events[] = $ical_event;
 			}
 
-			$ical[$vtype] = $ical_events;
+			$ical['event'] = $ical_events;
 
 			// iCals are by default utf-8
 			return $GLOBALS['phpgw']->translation->convert($this->build_ical($ical),$GLOBALS['phpgw']->translation->charset(),'utf-8');
@@ -3558,6 +3573,8 @@
 		function freebusy($params=False)
 		{
 			if (!$params) $params = $_GET;
+			$this->chunk_split = $params['chunk_split'];
+			$method = $params['method'] ? $params['method'] : 'publish';
 			$user  = is_numeric($params['user']) ? (int) $params['user'] : $GLOBALS['phpgw']->accounts->name2id($params['user']);
 			$start = isset($params['start']) ? $params['start'] : date('Ymd');
 			$end   = isset($params['end']) ? $params['end'] : (date('Y')+1).date('md');
@@ -3574,21 +3591,56 @@
 				'no_doubles' => True,	// report events only on the startday
 			));
 			if (!is_array($events_per_day)) $events_per_day = array();
-			$ids = array();
+			
+			$browser = CreateObject('phpgwapi.browser');
+			$browser->content_header($GLOBALS['phpgw']->accounts->id2name($user).'.ifb','text/calendar');
+
+			$ical = $this->new_ical();
+			$this->set_var($ical['prodid'],'value','-//eGroupWare//eGroupWare '.$GLOBALS['phpgw_info']['apps']['calendar']['version'].' MIMEDIR//'.strtoupper($GLOBALS['phpgw_info']['user']['preferences']['common']['lang']));
+			$this->set_var($ical['version'],'value','1.0');
+			$this->set_var($ical['method'],'value',strtoupper($method));
+
+			$ical_freebusy = array();
+			
+			$mailto = $GLOBALS['phpgw']->accounts->id2name($user,'account_email');
+			$name = $GLOBALS['phpgw']->common->grab_owner_name($user);
+
+			$str = 'CN="'.$name.'";MAILTO='.$mailto;
+			$this->parse_value($ical_freebusy,'organizer',$str,'vfreebusy');
+			
+			$freebusy_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$GLOBALS['phpgw_info']['user']['account_lid']/* not sure if this should be in the file .'&password='.$GLOBALS['phpgw_info']['user']['preferences']['calendar']['freebusy_pw']*/;
+			if ($freebusy_url[0] == '/')
+			{
+				$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
+			}
+			$this->parse_value($ical_freebusy,'url',$freebusy_url,'vfreebusy');
+
+			$this->parse_value($ical_freebusy,'dtstart',$start.'T000000Z','vfreebusy');
+			$this->parse_value($ical_freebusy,'dtend',$end.'T000000Z','vfreebusy');
+
+			// $event has times in user's time zone, so have to adjust them to GMT, which is used by ical
+			// To do that one must substract the users time zone difference with the server and then substract the server's time zone difference with GMT
+			$gmt_offset = date('O');  // server's offset to GMT
+			$offset = ((int)(substr($gmt_offset, 0, 3)) + $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']) * 60 + (int)(substr($gmt_offset, 3, 2));
+
 			foreach($events_per_day as $day => $events)
 			{
 				foreach($events as $event)
 				{
-					$ids[] = $event;
+					$event['start']['min']   -= $offset;
+					$event['end']['min']     -= $offset;
+			
+					$dtstart_mktime = $this->bo->so->maketime($event['start']);
+					$dtend_mktime = $this->bo->so->maketime($event['end']);
+					$this->parse_value($ical_freebusy,'freebusy',date('Ymd\THis\Z',$dtstart_mktime).'/'.date('Ymd\THis\Z',$dtend_mktime),'vfreebusy');
 				}
 			}
-			$browser = CreateObject('phpgwapi.browser');
-			$browser->content_header($GLOBALS['phpgw']->accounts->id2name($user).'.ifb','text/calendar');
 
-			echo $this->export(array(
-				'vtype'      => 'freebusy',
-				'l_event_id' => $ids,
-			));
+			$ical['freebusy'][0] =& $ical_freebusy;
+			//_debug_array($ical);
+
+			// iCals are by default utf-8
+			echo $GLOBALS['phpgw']->translation->convert($this->build_ical($ical),$GLOBALS['phpgw']->translation->charset(),'utf-8');
 		}
 
 		function debug($str='')
