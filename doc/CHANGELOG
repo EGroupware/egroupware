@@ -19,6 +19,12 @@
 	      - Started adding support for Oracle databases (Not working yet)
 	      - Added new layout for admin and preferences sections.
 	      - Fixed acounts not using link() properly and kicking admin out of searchs.
+	      - Removed globalconfig.inc.php and moved it into the database.  Theres now a nice new
+	        setup program.
+	      - Updated docs a great deal.
+	      - Group public items should now be working.
+
+	      - A bunch of other minor bug fixes.
 
 [09072000] - Added print icon that allows you to print out a page without having
 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>

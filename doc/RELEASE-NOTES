@@ -1,14 +1,8 @@
-This release requires you to resubmit all of your user accounts.  The format of the groups field
-has changed.
+This version is our first beta version.  This means that the API is now stable enough to use for add on apps.
+There will be bugs, but the structure should change very much from this point on.
 
-The inventory program has a new field called mstock.
+This version contains a great deal of database changes.  We applogize for so many changes, but it is required
+to make things work correctly and to start rolling in support for Oracle.
 
-There is a new translation support system, you need to add the lang table
-The sql commands to do so can be found at the end of the create_table script
-You also need to dump in the new doc/lang.sql file
-
-on MySQL
-$ mysql phpgroupware -u username -p < doc/lang.sql</tt>
-
-on postgresql
-$ psql -d phpgroupware -U username < doc/lang.sql</tt>
+You will need to run the new phpgroupware/setup/index.php program.  Right now its kind of limited, but 
+in the future it might auto update database tables.

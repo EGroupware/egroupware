@@ -11,11 +11,6 @@ insert into config (config_name, config_value) values ('encryptkey', 'change thi
 insert into config (config_name, config_value) values ('site_title', 'phpGroupWare');
 insert into config (config_name, config_value) values ('hostname', 'local.machine.name');
 insert into config (config_name, config_value) values ('webserver_url', '/phpgroupware');
-insert into config (config_name, config_value) values ('db_host', 'localhost');
-insert into config (config_name, config_value) values ('db_name', 'phpGroupWare_dev');
-insert into config (config_name, config_value) values ('db_user', 'phpgroupware');
-insert into config (config_name, config_value) values ('db_pass', 'phpgr0upwar3');
-insert into config (config_name, config_value) values ('db_type', 'mysql');
 insert into config (config_name, config_value) values ('auth_type', 'sql');
 insert into config (config_name, config_value) values ('ldap_host', 'localhost');
 insert into config (config_name, config_value) values ('ldap_context', 'o=phpGroupWare');
