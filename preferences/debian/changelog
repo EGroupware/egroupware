@@ -1,0 +1,6 @@
+phpgroupware-preferences (0.9.14-0.RC3.3) unstable; urgency=low
+
+  * New release.
+  	- Source is now splitted into modules.
+
+ -- Luca - De Whiskey's - De Vitis <luca@debian.org>  Mon, 21 May 2001 15:00:56 +0200

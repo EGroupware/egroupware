@@ -1,0 +1,15 @@
+Source: phpgroupware-calendar
+Section: web
+Priority: optional
+Maintainer: Luca - De Whiskey's - De Vitis <luca@debian.org>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.5.2
+
+Package: phpgroupware-calendar
+Section: web
+Architecture: all
+Depends: phpgroupware (>= ${Source-Version}), php3-pgsql | php3-cgi-pgsql | php4-pgsql | php3-mysql | php3-cgi-mysql | php4-mysql
+Description: The phpGroupWare calendar management module
+ This phpGroupWare module provides a calendar scheduling module with
+ alerts for high priority events.
+

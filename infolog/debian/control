@@ -1,0 +1,15 @@
+Source: phpgroupware-infolog
+Section: web
+Priority: optional
+Maintainer: Luca - De Whiskey's - De Vitis <luca@debian.org>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.5.2
+
+Package: phpgroupware-infolog
+Section: web
+Architecture: all
+Depends: phpgroupware (>= ${Source-Version}), php3-pgsql | php3-cgi-pgsql | php4-pgsql | php3-mysql | php3-cgi-mysql | php4-mysql
+Description: The phpGroupWare infolog applcation
+ This phpGroupWare module allows to track ongoing and previous support
+ requests, phone calls, and other customer relations.
+

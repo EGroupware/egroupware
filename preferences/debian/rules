@@ -1,0 +1,74 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper. 
+# GNU copyright 1997 by Joey Hess.
+#
+# This version is for a hypothetical package that builds an
+# architecture-dependant package, as well as an architecture-independent
+# package.
+
+# Uncomment this to turn on verbose mode. 
+#export DH_VERBOSE=1
+
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=3
+
+APP = preferences
+PACKAGE = debian/phpgroupware-$(APP)/usr/share/phpgroupware/$(APP)
+PACKAGEDOC = debian/phpgroupware-$(APP)/usr/share/doc/phpgroupware-$(APP)
+
+COPYRIGHT = -iname copyright\* -or -iname license
+CHANGELOG = -iname change\*
+INSTALL = -iname install
+FINDOPT = -type f -not \( -path \*CVS\* -or -path \*debian\* -or -name .cvsignore \)
+SPECIAL = -size 0 -or $(INSTALL) -or $(CHANGELOG) -or $(COPYRIGHT) -or -name \*.sgml
+STAMPS = -name configure-stamp -or -name build-stamp
+APPFILES = -not \( -path \*doc\* -or -path \. -or -name '*.pl' -or -name '*.py' -or $(STAMPS) \)
+DOCFILES = -not \( $(SPECIAL) \)
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# No configuration needed.
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+	# Here should go the commands necessary to build the sgml documentation...
+	touch build-stamp
+
+clean:
+	dh_testdir
+	rm -f build-stamp configure-stamp
+	rm -f debian/.builded
+	rm -f debian/files
+	# Here should go the commands to clean the builded sgml documents.
+	dh_clean
+
+install: build
+	dh_testdir
+
+	# Install $(APP) files in $(PACKAGE)
+	find $(FINDOPT) $(APPFILES) \
+		-exec install -D --mode=644 {} $(PACKAGE)/{} \;
+	
+	# Install $(APP) doc files in $(PACKAGEDOC)
+	cd doc ;\
+		find $(FINDOPT) $(DOCFILES) \
+			-exec install -D --mode=644 {} ../$(PACKAGEDOC)/{} \;
+	
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb | tee debian/.builded
+
+binary: binary-indep
+.PHONY: build clean binary-indep binary-arch binary install configure
