@@ -23,7 +23,11 @@
   include("../header.inc.php");
 
   $newpage = $phpgw_info["user"]["preferences"]["calendar"]["defaultcalendar"];
-  if ($namepage=="index.php") $newpage = "month.php";
+  if ($namepage=="index.php") {
+    $newpage = "month.php";
+    $phpgw->preferences->change("calendar","defaultcalendar","month.php");
+    $phpgw->preferences->commit();
+  }
 
   Header("Location: ".$newpage."?".$QUERY_STRING);
   $phpgw->common->phpgw_exit();
