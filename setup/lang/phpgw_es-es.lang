@@ -98,7 +98,7 @@ db type	setup	es-es	Tipo de base de datos
 db user	setup	es-es	Usuario de la base de datos
 default file system space per user/group ?	setup	es-es	¿Espacio predeterminado en el sistema por usuario o grupo?
 delete	setup	es-es	Borrar
-delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	es-es	¿Borrar todas las cuentas SQL existentes, ACLs y preferencias? (normalmente no es necesario)
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	es-es	¿Borrar todas las cuentas SQL existentes, ACLs y preferencias? (normalmente no es necesario)
 delete all my tables and data	setup	es-es	Elimine todas mis tablas e información
 delete all old languages and install new ones	setup	es-es	Elimine todos los idiomas antigüos e instale los nuevos
 deleting tables	setup	es-es	Eliminando Tablas

@@ -48,7 +48,7 @@
 
 		$setup_tpl->set_var('action_url','setup_demo.php');
 		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
-		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normaly not necessary)?'));
+		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?'));
 
 		$setup_tpl->set_var('detailadmin',lang('Details for Admin account'));
 		$setup_tpl->set_var('adminusername',lang('Admin username'));
@@ -87,7 +87,7 @@
 		/* Begin transaction for acl, etc */
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 
-		if ($_POST['delete_all'])
+		if($_POST['delete_all'])
 		{
 			/* Now, clear out existing tables */
 			$GLOBALS['phpgw_setup']->db->query('DELETE FROM phpgw_accounts');

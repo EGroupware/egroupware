@@ -101,7 +101,7 @@ db type	setup	de	Datenbank Type
 db user	setup	de	Datenbank Benutzer
 default file system space per user/group ?	setup	de	Vorgabewert Festplatenplatz pro Benutzer / Gruppe ?
 delete	setup	de	Löschen
-delete all existing sql accounts, groups, acls and preferences (normaly not necessary)?	setup	de	Alle existierende SQL Benutzer, Gruppen, ACLs und Einstellungen löschen (normal nicht nötig)?
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	de	Alle existierende SQL Benutzer, Gruppen, ACLs und Einstellungen löschen (normal nicht nötig)?
 delete all my tables and data	setup	de	Alle meine Tabellen und Daten löschen
 delete all old languages and install new ones	setup	de	Alle installierten Sprachen löschen und neu installieren
 deleting tables	setup	de	Lösche Tabellen
