@@ -51,6 +51,7 @@ editable templates - show template	etemplate	en	Editable Templates - Show Templa
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	en	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
+enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: while saveing !!!	etemplate	en	Error: while saveing !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
@@ -93,6 +94,7 @@ name of other table where column is a key from	etemplate	en	name of other table 
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	en	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
+navbar.gif	etemplate	en	navbar.gif
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 new table created	etemplate	en	New table created
 no	etemplate	en	No
@@ -157,6 +159,7 @@ type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
 unique	etemplate	en	Unique
+update from version '%s' to	etemplate	en	Update from Version '%s' to
 value	etemplate	en	Value
 version	etemplate	en	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	en	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)

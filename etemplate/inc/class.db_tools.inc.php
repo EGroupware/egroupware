@@ -50,6 +50,19 @@
 			'timestamp'	=> 'timestamp',
 			'varchar'	=> 'varchar'
 		);
+		var $setup_header = '<?php
+  /**************************************************************************\\
+  * phpGroupWare - Setup                                                     *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \\**************************************************************************/
+
+  /* $Id$ */
+';
 
 		/*!
 		@function db_tools()
@@ -106,6 +119,7 @@
 				{
 					return;
 				}
+				$this->renames = array();
 			}
 			if (!$this->app)
 			{
@@ -132,17 +146,21 @@
 			}
 			if (isset($content['write_tables']))
 			{
-				$msg .= $this->messages[$this->write($this->app,$this->data) ?
-					'writen' : 'error_writing'];
+				if ($this->needs_save('',$this->app,$this->table,$this->data[$posted_table]))
+				{
+					return;
+				}
+				$msg .= $this->messages[$this->write($this->app,$this->data) ? 'writen' : 'error_writing'];
 			}
 			elseif (isset($content['delete']))
 			{
 				list($col) = each($content['delete']);
 
-				reset($this->data[$posted_table]['fd']);
-				while ($col-- > 0 && list($key,$data) = each($this->data[$posted_table]['fd'])) ;
+				@reset($this->data[$posted_table]['fd']);
+				while ($col-- > 0 && list($key,$data) = @each($this->data[$posted_table]['fd'])) ;
 
 				unset($this->data[$posted_table]['fd'][$key]);
+				$this->changes[$posted_table][$key] = '**deleted**';
 			}
 			elseif (isset($content['add_column']))
 			{
@@ -219,7 +237,7 @@
 				echo 'editor.edit: content ='; _debug_array($content);
 			}
 			$this->editor->exec('etemplate.db_tools.edit',$content,$sel_options,$no_button,
-				array('posted_table' => $this->table,'posted_app' => $this->app));
+				array('posted_table' => $this->table,'posted_app' => $this->app,'changes' => $this->changes));
 		}
 
 		/*!
@@ -241,10 +259,15 @@
 					$this->table = $cont['table'];
 					$this->read($this->app,$this->data);
 					$this->data[$this->table] = $cont['edited_table'];
-					$this->write($this->app,$this->data);
+					$this->changes = $cont['changes'];
+					if ($cont['new_version'])
+					{
+						$this->update($this->app,$this->data,$cont['new_version']);
+					}
 					$msg .= $this->messages[$this->write($this->app,$this->data) ?
 						'writen' : 'error_writing'];
 				}
+				$this->changes = array();
 				// return to edit with everything set, so the user gets the table he asked for
 				$this->edit(array(
 					'app' => $cont['new_app'],
@@ -270,15 +293,24 @@
 			}
 			$content = array(
 				'app' => $posted_app,
-				'table' => $posted_table
+				'table' => $posted_table,
+				'version' => $this->setup_version($posted_app)
 			);
 			$preserv = $content + array(
 				'new_app' => $new_app,
 				'new_table' => $new_table,
-				'edited_table' => $edited_table
+				'edited_table' => $edited_table,
+				'changes' => $this->changes
 			);
+			$content['new_version'] = $content['version'];
+
 			$tmpl = new etemplate('etemplate.db-tools.ask_save');
 
+			if (!file_exists(PHPGW_SERVER_ROOT."/$posted_app/setup/tables_current.inc.php"))
+			{
+				$tmpl->disable_cells('version');
+				$tmpl->disable_cells('new_version');
+			}
 			$tmpl->exec('etemplate.db_tools.needs_save',$content,array(),array(),$preserv);
 
 			return True;	// dont continue in edit
@@ -323,6 +355,13 @@
 		*/
 		function content2table($content)
 		{
+			if (!is_array($this->data))
+			{
+				$this->read($content['posted_app'],$this->data);
+			}
+			$old_cols = $this->data[$posted_table = $content['posted_table']]['fd'];
+			$this->changes = $content['changes'];
+
 			$table = array();
 			$table['fd'] = array();	// do it in the default order of tables_*
 			$table['pk'] = array();
@@ -332,8 +371,17 @@
 			for (reset($content),$n = 1; isset($content["Row$n"]); ++$n)
 			{
 				$col = $content["Row$n"];
+
+				while ((list($old_name,$old_col) = @each($old_cols)) &&
+				       $this->changes[$posted_table][$old_name] == '**deleted**') ;
+
 				if (($name = $col['name']) != '')		// ignoring lines without column-name
 				{
+					if ($col['name'] != $old_name && $n <= count($old_cols))	// column renamed --> remeber it
+					{
+						$this->changes[$posted_table][$old_name] = $col['name'];
+						//echo "<p>content2table: $posted_table.$old_name renamed to $col[name]</p>\n";
+					}
 					while (list($prop,$val) = each($col))
 					{
 						switch ($prop)
@@ -369,6 +417,7 @@
 			if ($this->debug >= 2)
 			{
 				echo "<p>content2table: table ="; _debug_array($table);
+				echo "<p>changes = "; _debug_array($this->changes);
 			}
 			return $table;
 		}
@@ -483,7 +532,7 @@
 			}
 			if (!$header)
 			{
-				$header = "<?php\n\n";
+				$header = $this->setup_header . "\n\n";
 			}
 			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
@@ -497,6 +546,206 @@
 			fclose($f);
 
 			return True;
+		}
+
+		/*!
+		@function setup_version($app,$new = '')
+		@abstract reads and updates the version in file $app/setup/setup.inc.php if $new != ''
+		@return the version or False if the file could not be read or written
+		*/
+		function setup_version($app,$new = '')
+		{
+			//echo "<p>etemplate.db_tools.setup_version('$app','$new')</p>\n";
+
+			$file = PHPGW_SERVER_ROOT."/$app/setup/setup.inc.php";
+			if (file_exists($file))
+			{
+				include($file);
+			}
+			if (!is_array($setup_info[$app]) || !isset($setup_info[$app]['version']))
+			{
+				return False;
+			}
+			if ($new == '' || $setup_info[$app]['version'] == $new)
+			{
+				return $setup_info[$app]['version'];
+			}
+			if (!($f = fopen($file,'r')))
+			{
+				return False;
+			}
+			$fcontent = fread($f,filesize($file));
+			fclose ($f);
+
+			if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+			{
+				rename($file,PHPGW_SERVER_ROOT."/$app/setup/setup.old.inc.php");
+			}
+			$fnew = eregi_replace("(.*\\$"."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*')[^']*('.*)","\\1$new"."\\2",$fcontent);
+
+			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
+			{
+				return False;
+			}
+			fwrite($f,$fnew);
+			fclose($f);
+
+			return $new;
+		}
+
+		/*!
+		@function update($app,$current,$version)
+		@abstract updates file /$app/setup/tables_update.inc.php to reflect changes in $current
+		@param $app app-name
+		@param $current new tabledefinitions
+		@param $version new version
+		@return True if file writen else False
+		*/
+		function update($app,$current,$version)
+		{
+			//echo "<p>etemplate.db_tools.update('$app',...,'$version')</p>\n";
+
+			if (!is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+			{
+				return False;
+			}
+			$file_baseline = PHPGW_SERVER_ROOT."/$app/setup/tables_baseline.inc.php";
+			$file_current  = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
+			$file_update   = PHPGW_SERVER_ROOT."/$app/setup/tables_update.inc.php";
+
+			if (!file_exists($file_baseline) && !copy($file_current,$file_baseline))
+			{
+				//echo "<p>Can't copy $file_current to $file_baseline !!!</p>\n";
+				return False;
+			}
+			$old_version = $this->setup_version($app);
+			$old_version_ = str_replace('.','_',$old_version);
+
+			if (file_exists($file_update))
+			{
+				$f = fopen($file_update,'r');
+				$update = fread($f,filesize($file_update));
+				$update = str_replace('?>','',$update);
+				fclose($f);
+				rename($file_update,PHPGW_SERVER_ROOT."/$app/setup/tables_update.old.inc.php");
+			}
+			else
+			{
+				$update = $this->setup_header;
+			}
+			$update .= "
+	\$test[] = '$old_version';
+	function $app"."_upgrade$old_version_()
+	{\n";
+
+			$update .= $this->update_schema($app,$current);
+
+			$update .= "\n
+		\$GLOBALS['setup_info']['$app']['currentver'] = '$version';
+		return \$GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+?".">\n";
+			if (!($f = fopen($file_update,'w')))
+			{
+				//echo "<p>Cant open '$update' for writing !!!</p>\n";
+				return False;
+			}
+			fwrite($f,$update);
+			fclose($f);
+
+			$this->setup_version($app,$version);
+
+			return True;
+		}
+
+		function remove_from_array(&$arr,$value)
+		{
+			reset($arr);
+			while (list($key,$val) = each($arr))
+			{
+				if ($val == $value)
+				{
+					unset($arr[$key]);
+				}
+			}
+		}
+
+		function update_schema($app,$current)
+		{
+			$this->read($app,$old);
+
+			reset($old);
+			while (list($name,$table_def) = each($old))
+			{
+				if (!isset($current[$name]))	// table $name droped
+				{
+					$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->DropTable('$name');\n";
+				}
+				else
+				{
+					reset($table_def['fd']);
+					while(list($col,$col_def) = each($table_def['fd']))
+					{
+						if (!isset($current[$name]['fd'][$col]))	// column $col droped
+						{
+							if (!isset($this->changes[$name][$col]) || $this->changes[$name][$col] == '**deleted**')
+							{
+								$new_table_def = $table_def;
+								unset($new_table_def['fd'][$col]);
+								$this->remove_from_array($new_table_def['pk'],$col);
+								$this->remove_from_array($new_table_def['fk'],$col);
+								$this->remove_from_array($new_table_def['ix'],$col);
+								$this->remove_from_array($new_table_def['uc'],$col);
+								$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->DropColumn('$name',";
+								$update .= $this->write_array($new_table_def,2).",'$col');\n";
+							}
+							else	// column $col renamed
+							{
+								$new_col = $this->changes[$name][$col];
+								$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->RenameColumn('$name','$col','$new_col');\n";
+							}
+						}
+					}
+					@reset($this->changes[$name]);
+					while (list($col,$new_col) = @each($this->changes[$name]))
+					{
+						if ($new_col != '**deleted**')
+						{
+							$old[$name]['fd'][$new_col] = $old[$name]['fd'][$col];	// to be able to detect further changes of the definition
+							unset($old[$name]['fd'][$col]);
+						}
+					}
+				}
+			}
+			reset($current);
+			while(list($name,$table_def) = each($current))
+			{
+				if (!isset($old[$name]))	// table $name added
+				{
+					$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->CreateTable('$name',";
+					$update .= $this->write_array($table_def,2).");\n";
+				}
+				else
+				{
+					$old_norm = $this->normalize($old[$name]);
+					$new_norm = $this->normalize($table_def);
+					reset($table_def['fd']);
+					while (list($col,$col_def) = each($table_def['fd']))
+					{
+						if (($add = !isset($old[$name]['fd'][$col])) ||	// column $col added
+							 serialize($old_norm['fd'][$col]) != serialize($new_norm['fd'][$col])) // column definition altered
+						{
+							$update .= "\t\t$"."GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
+							$update .= $this->write_array($col_def,2) . ");\n";
+						}
+					}
+				}
+			}
+			if ($this->debug)
+			{
+				echo "<p>update_schema($app, ...) =<br><pre>$update</pre>)</p>\n";
+			}
+			return $update;
 		}
 
 		/*!
