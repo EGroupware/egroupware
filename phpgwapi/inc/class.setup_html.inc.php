@@ -133,8 +133,8 @@
 		function login_form()
 		{
 			/* begin use TEMPLATE login_main.tpl */
-			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
-			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('ConfigLoginMSG',@$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG']);
+			$GLOBALS['setup_tpl']->set_var('HeaderLoginMSG',@$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG']);
 
 			if ($GLOBALS['phpgw_info']['setup']['stage']['header'] == '10')
 			{

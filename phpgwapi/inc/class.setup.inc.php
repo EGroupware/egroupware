@@ -110,7 +110,7 @@
 			elseif(!empty($ConfigLogin) && $auth_type == 'Config')
 			{
 				/* config login */
-				if($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'])
+				if($FormPW == @$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'])
 				{
 					setcookie('ConfigPW',"$FormPW","$expire");
 					setcookie('ConfigDomain',"$FormDomain","$expire");
@@ -215,6 +215,7 @@
 		*/
 		function clear_session_cache()
 		{
+			$tables = Array();
 			$tablenames = @$this->db->table_names();
 			while(list($key,$val) = @each($tablenames))
 			{

@@ -40,6 +40,7 @@
 
 		function get_db_versions($setup_info='')
 		{
+			$tname = Array();
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 			$tables = $GLOBALS['phpgw_setup']->db->table_names();
 			while(list($key,$val) = @each($tables))
