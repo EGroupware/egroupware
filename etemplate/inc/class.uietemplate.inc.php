@@ -543,7 +543,7 @@
 						break;
 					list($style,$extra_link) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
-					$value = nl2br(htmlentities($value));
+					$value = nl2br(htmlspecialchars($value));
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
@@ -563,7 +563,7 @@
 				case 'text':		// size: [length][,maxLength]
 					if ($readonly)
 					{
-						$html .= $this->html->bold(htmlentities($value));
+						$html .= $this->html->bold(htmlspecialchars($value));
 					}
 					else
 					{
