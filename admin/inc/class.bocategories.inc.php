@@ -138,14 +138,7 @@
 
 		function formatted_list($data)
 		{
-			if ($data['globals'])
-			{
-				return $this->cats->formated_list($data['select'],$data['all'],$data['parent'],True);
-			}
-			else
-			{
-				return $this->cats->formated_list($data['select'],$data['all'],$data['parent']);
-			}
+			return $this->cats->formatted_list($data);
 		}
 
 		function delete($data)

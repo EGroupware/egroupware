@@ -289,7 +289,7 @@
 				$parent = $values['parent'];
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list(array('format'	=> 'select',
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
 																									'type'		=> 'all',
 																									'selected'	=> $parent,
 																									'globals'	=> $global_cats)));
@@ -372,10 +372,10 @@
 
 			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats['name']));
 			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats['descr']));
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array('select'	=> 'select',
-																									'all'	=> 'all',
-																								'parent'	=> $cats['parent'],
-																							'global_cats'	=> $global_cats)));
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
+																										'type'	=> 'all',
+																									'selected'	=> $cats['parent'],
+																									'globals'	=> $global_cats)));
 			$GLOBALS['phpgw']->template->parse('buttons','edit');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','form');
 		}

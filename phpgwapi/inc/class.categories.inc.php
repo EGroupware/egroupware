@@ -326,9 +326,9 @@
 		@param $id integer id of category
 		@result $cats  array populated with
 		*/
-		function return_single($id = '')
+		function return_single($cat_id = '')
 		{
-			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($id),__LINE__,__FILE__);
+			$this->db->query('SELECT * FROM phpgw_categories WHERE cat_id=' . intval($cat_id),__LINE__,__FILE__);
 
 			list($cat) = $this->db2cats();
 
@@ -336,7 +336,7 @@
 		}
 
 		/*!
-		@function formated_list
+		@function formatted_list
 		@abstract return into a select box, list or other formats
 		@param $format currently only supports select (select box)
 		@param $type string - subs or mains
@@ -344,12 +344,8 @@
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $s array - populated with categories
 		*/
-		function formatted_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
-		{
-			return $this->formated_list($format,$type,$selected,$globals,$site_link);
-		}
 
-		function formated_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
+		function formatted_list($format,$type = 'all',$selected = '',$globals = False,$site_link = 'site')
 		{
 			if(is_array($format))
 			{

@@ -341,9 +341,9 @@
 			}
 
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
-																								'type'		=> $type,
-																								'selected'	=> $parent,
-																								'globals'	=> $global_cats)));
+																										'type'	=> $type,
+																									'selected'	=> $parent,
+																									'globals'	=> $global_cats)));
 			$GLOBALS['phpgw']->template->set_var('cat_name',$values['name']);
 			$GLOBALS['phpgw']->template->set_var('cat_description',$values['descr']);
 
@@ -455,7 +455,10 @@
 				$type = 'mains';
 			}
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formated_list('select',$type,$cats['parent'],$global_cats));
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->cats->formatted_list(array('format'	=> 'select',
+																										'type'	=> $type,
+																									'selected'	=> $cats['parent'],
+																									'globals'	=> $global_cats)));
 
 			$GLOBALS['phpgw']->template->set_var('access',$cats['access'] == 'private'?' checked':'');
 

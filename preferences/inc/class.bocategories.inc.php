@@ -119,9 +119,9 @@
 			return $this->cats->exists($data);
 		}
 
-		function formatted_list($format,$type,$cat_parent,$global_cats)
+		function formatted_list($data)
 		{
-			return $this->cats->formated_list($format,$type,$cat_parent,$global_cats);
+			return $this->cats->formatted_list($data);
 		}
 
 		function delete($data)
