@@ -316,6 +316,38 @@
 		{
 			return $this->set_cell_attribute($name,'disabled',True);
 		}
+		
+		/*!
+		@function disable_row
+		@syntax disable_row( $n,$enable=False )
+		@author ralfbecker
+		@abstract disables row $n
+		@param $n is numerical row-number starting with 1 (!) 
+		@param $enable can be used to re-enable a row if set to True
+		*/
+		function disable_row($n,$enable=False)
+		{
+			list($height) = explode(',',$this->data[0]["h$n"]);
+			$this->data[0]["h$n"] = $height.($enable?'':',1');
+		}
+
+		/*!
+		@function disable_column
+		@syntax disable_column( $c,$enable=False )
+		@author ralfbecker
+		@abstract disables column $c
+		@param $c is numerical column-number starting with 1 (!), or the char-code starting with 'A'
+		@param $enable can be used to re-enable a column if set to True
+		*/
+		function disable_column($c,$enable=False)
+		{
+			if (is_numeric($c))
+			{
+				$c = $this->num2chars($c);
+			}
+			list($height) = explode(',',$this->data[0][$c]);
+			$this->data[0][$c] = $height.($enable?'':',1');
+		}
 
 		/*!
 		@function loadExtension
