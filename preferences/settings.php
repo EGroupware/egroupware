@@ -34,6 +34,8 @@
         </td>
        </tr>
 
+      
+       <?php if ($phpgw_info["server"]["template_set"] == "user_choice"){ ?>
        <tr>
          <?php $selected[$phpgw_info["user"]["preferences"]["common"]["template_set"]] = " selected"; ?>
         <td>Interface/Template Selection:<br></td>
@@ -48,7 +50,7 @@
          </select>
         </td>
        </tr>
-
+      <?php } ?>
        <tr>
         <td><?php echo lang("Show navigation bar as"); ?>: </td>
         <td>
