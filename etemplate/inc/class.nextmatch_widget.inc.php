@@ -320,21 +320,25 @@
 			elseif ($value['first'])
 			{
 				$value['start'] = 0;
+				unset($value['first']);
 				$loop = True;
 			}
 			elseif ($value['left'])
 			{
 				$value['start'] = $old_value['start'] - $max;
+				unset($value['left']);
 				$loop = True;
 			}
 			elseif ($value['right'])
 			{
 				$value['start'] = $old_value['start'] + $max;
+				unset($value['right']);
 				$loop = True;
 			}
 			elseif ($value['last'])
 			{
 				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
+				unset($value['last']);
 				$loop = True;
 			}
 			elseif ($nm_global['order'])
