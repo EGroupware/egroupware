@@ -239,20 +239,19 @@
 	$users = Array();
 	for($i=0;$i<count($accounts);$i++)
 	{
-	   $user = $accounts[$i];
-		if($user != $owner && !isset($users[$user]))
+		if($accounts[$i] != $owner && !isset($users[$accounts[$i]]))
 		{
-			$users[$user] = $phpgw->common->grab_owner_name($user);
-			if($phpgw->accounts->get_type($user) == 'g')
+			$users[$user] = $phpgw->common->grab_owner_name($accounts[$i]);
+			if($phpgw->accounts->get_type($accounts[$i]) == 'g')
 			{
-				$group_members = $phpgw->acl->get_ids_for_location($user,1,'phpgw_group');
+				$group_members = $phpgw->acl->get_ids_for_location($accounts[$i],1,'phpgw_group');
 				if($group_members != False)
 				{
 					for($j=0;$j<count($group_members);$j++)
 					{
-						if($group_members[$j] != $owner && !isset($users[$group_members[$j]]))
+						if(intval($group_members[$j]) != $owner && !isset($users[intval($group_members[$j])]))
 						{
-							$users[$group_members[$j]] = $phpgw->common->grab_owner_name($group_members[$j]);
+							$users[intval($group_members[$j])] = $phpgw->common->grab_owner_name(intval($group_members[$j]));
 						}
 					}
 				}
@@ -260,18 +259,6 @@
 		}
 	}
 
-//	if ($num_users > 50)
-//	{
-//		$size = 15;
-//	}
-//	elseif ($num_users > 5)
-//	{
-//		$size = 5;
-//	}
-//	else
-//	{
-//		$size = $num_users;
-//	}
 	$str = "\n".'   <select name="participants[]" multiple size="5">'."\n";
 	for ($l=0;$l<count($event->participants);$l++)
 	{
@@ -280,11 +267,13 @@
     
 	@asort($users);
 	@reset($users);
+	$user = Array();
 	while ($user = each($users))
 	{
-		if($user[0] != $owner && $phpgw->accounts->exists(intval($user[0])) == True)
+		$userid = intval($user[0]);
+		if($userid != $owner && $phpgw->accounts->exists($userid) == True)
 		{
-			$str .= '    <option value="' . $user[0] . '"'.$parts[$user[0]].'>('.$phpgw->accounts->get_type($user[0]).') '.$user[1].'</option>'."\n";
+			$str .= '    <option value="' . $userid . '"'.$parts[$userid].'>('.$phpgw->accounts->get_type($userid).') '.$user[1].'</option>'."\n";
 		}
 	}
 	$str .= '   </select>';
