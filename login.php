@@ -120,7 +120,7 @@
      unset($domain_select);      // For security ... just in case
      while ($domain = each($phpgw_domain)) {
         $domain_select .= '<option value="' . $domain[0] . '"';
-        if ($domain[0] == "last_domain") {
+        if ($domain[0] == $last_domain) {
            $domain_select .= " selected";
         }
         $domain_select .= '>' . $domain[0] . '</option>';
