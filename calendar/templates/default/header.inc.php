@@ -117,7 +117,7 @@
 			'form_name'	=> 'cat_id',
 			'title'	=> lang('Category'),
 			'hidden_vars'	=> $base_hidden_vars,
-			'form_options'	=> '<option value="0">All</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
+			'form_options'	=> '<option value="0">'.lang('All').'</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
