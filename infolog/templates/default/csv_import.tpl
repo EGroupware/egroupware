@@ -7,6 +7,12 @@
 				<td>{lang_fieldsep}</td>
 				<td><input name="fieldsep" size=1 value="{fieldsep}"></td>
 			</tr>
+			<tr>
+				<td>{lang_charset}</td>
+				<td>
+			{select_charset}
+				</td>
+			</tr>
 			<tr><td>&nbsp;</td>
 				<td><INPUT NAME="convert" TYPE="submit" VALUE="{submit}"></TD>
 			</TR>
@@ -30,15 +36,15 @@
 
 <!-- BEGIN ffooter -->
 			<tr>
-				<td rowspan=2 valign="middle"><br><INPUT NAME="convert" TYPE="submit" VALUE="{submit}"></TD>
-				<td colspan=2><br>
+				<td rowspan="2" valign="middle" nowrap><br>{submit}</TD>
+				<td colspan="2"><br>
 					{lang_start} <INPUT name="start" type="text" size="5" value="{start}"> &nbsp; &nbsp;
 					{lang_max} <INPUT name="max" type="text" size="3" value="{max}"><td>
 			</tr>
 			<tr>
-				<td><INPUT name="debug" type="checkbox" value="1" checked> {lang_debug}</td>
+				<td colspan="2"><INPUT name="debug" type="checkbox" value="1"{debug}> {lang_debug}</td>
 			</TR>
-			<tr><td colspan=3>&nbsp;<p>
+			<tr><td colspan="3">&nbsp;<p>
 				{help_on_trans}
 			</td></tr>
 <!-- END ffooter -->

@@ -193,7 +193,7 @@
 			$this->so->delete($info_id);
 		}
 
-		function write($values,$check_defaults=True)
+		function write($values,$check_defaults=True,$touch_modified=True)
 		{
 			while (list($key,$val) = each($values))
 			{
@@ -227,9 +227,14 @@
 			{
 				$values['info_from'] = $this->link_id2from($values);
 			}
-			$values['info_datemodified'] = time();
-			$values['info_modifier'] = $this->so->user;
-
+			if ($touch_modified || !$values['info_datemodified'])
+			{
+				$values['info_datemodified'] = time();
+			}
+			if ($touch_modified || !$values['info_modifier'])
+			{
+				$values['info_modifier'] = $this->so->user;
+			}
 			return $this->so->write($values);
 		}
 

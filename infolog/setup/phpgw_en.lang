@@ -1,5 +1,5 @@
 %1 records imported	infolog	en	%1 records imported
-%1 records read (not yet imported, you may go back and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 - subprojects from	infolog	en	- Subprojects from
 0%	infolog	en	0%
 10%	infolog	en	10%
@@ -42,6 +42,7 @@ call	infolog	en	call
 cancel	infolog	en	Cancel
 categories	infolog	en	Categories
 category	infolog	en	Category
+charset of file	infolog	en	Charset of file
 check to set startday	infolog	en	check to set startday
 click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
@@ -89,6 +90,7 @@ edit	infolog	en	Edit
 edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
+empty for all	infolog	en	empty for all
 enddate	infolog	en	Enddate
 enddate can not be before startdate	infolog	en	Enddate can not be before startdate
 enter a custom contact, leave empty if linked entry should be used	infolog	en	enter a custom contact, leave empty if linked entry should be used
@@ -105,6 +107,7 @@ from	infolog	en	From
 high	infolog	en	high
 id	infolog	en	Id
 import	infolog	en	Import
+import next set	infolog	en	import next set
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
 infolog - delete	infolog	en	Info Log - Delete
@@ -142,7 +145,7 @@ normal	infolog	en	normal
 not	infolog	en	not
 not assigned	infolog	en	not assigned
 note	infolog	en	Note
-number of records to read (<=200)	infolog	en	Number of records to read (<=200)
+number of records to read (%1)	infolog	en	Number of records to read (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	en	number of row for a multiline inputfield or line of a multi-select-box
 offer	infolog	en	offer
 ongoing	infolog	en	ongoing
@@ -207,6 +210,7 @@ the name used internaly (<= 32 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	en	the text displayed to the user
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	en	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phonecall be finished
+to many might exceed your execution-time-limit	infolog	en	to many might exceed your execution-time-limit
 today	infolog	en	Today
 todo	infolog	en	ToDo
 translation	infolog	en	Translation
