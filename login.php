@@ -22,6 +22,11 @@
   include($phpgw_info["server"]["include_root"] . "/lang/" . "en" . "_login.inc.php");
   include($phpgw_info["server"]["api_dir"] . "/phpgw_template.inc.php");
 
+  if ($code != 10 && $phpgw_info["server"]["usecookies"] == False) {
+    Setcookie("sessionid");
+    Setcookie("kp3");
+  }
+
   $deny_login = False; 
 
   $tmpl = new Template($phpgw_info["server"]["template_dir"]);
@@ -44,9 +49,12 @@
   function show_cookie()
   {
     global $phpgw_info, $code, $lastloginid, $login;
-
-    if ($code != 5) {
-       return $lastloginid;
+    /* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
+    if ($code != 5 && $phpgw_info["server"]["usecookies"] == True){
+      if (!empty($login)) {
+        SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
+      }
+      return $lastloginid;
     }
   }
 
