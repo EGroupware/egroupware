@@ -44,7 +44,6 @@
   @$phpgw_setup->db->query("DROP TABLE calendar_entry");
   @$phpgw_setup->db->query("DROP TABLE calendar_entry_user");
   @$phpgw_setup->db->query("DROP TABLE calendar_entry_repeats");
-  $phpgw_setup->db->query("DROP TABLE phpgw_infolog");
 
 	/* Legacy tables */
 
@@ -55,5 +54,4 @@
   $phpgw_setup->db->query("DROP TABLE preferences");
   $phpgw_setup->db->query("DROP TABLE addressbook");
   $phpgw_setup->db->query("DROP TABLE todo");
-  $phpgw_setup->db->query("DROP TABLE infolog");
 ?>

@@ -58,7 +58,4 @@
 
   $phpgw_setup->db->query("DROP TABLE phpgw_notes");
   $phpgw_setup->db->query("DROP sequence phpgw_notes_note_id_seq");
-
-  $phpgw_setup->db->query("DROP TABLE phpgw_infolog");
-  $phpgw_setup->db->query("DROP sequence phpgw_infolog_info_id_seq");
 ?>
