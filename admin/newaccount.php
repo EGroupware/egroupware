@@ -74,7 +74,7 @@
           $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
 	           . "users" . $sep;
 
-          if (!mkdir($basedir . $n_loginid, 0707)) {
+          if (! @mkdir($basedir . $n_loginid, 0707)) {
              $cd = 36;
           } else {
              $cd = 28;

@@ -90,7 +90,7 @@
   	   $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
 		    . "users" . $sep;
 
-   	   if (! rename($basedir . $lid, $basedir . $n_loginid)) {
+   	   if (! @rename($basedir . $lid, $basedir . $n_loginid)) {
 	      $cd = 35;
            }
         }
