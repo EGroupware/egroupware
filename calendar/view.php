@@ -16,15 +16,6 @@
 
   $phpgw_flags["currentapp"] = "calendar";
   include("../header.inc.php");
-  // This will take the loginid and convert it into firstname and lastname.
-  // This function will be moved out of here someday and be used through out
-  // the program.
-  function convert_login_name($db,$l)
-  {
-    $db->query("select firstname,lastname from accounts where loginid='$l'");
-    $db->next_record();
-    return array($db->f("firstname"),$db->f("lastname"));
-  }
 
   function grab_group($db,$id)
   {
@@ -123,12 +114,7 @@
 <?php
   echo "<tr><TD VALIGN=\"top\"><b>" . lang_common("Created by") . ":</B></TD>\n";
 
-  // Isn't there a function somewhere to do this ??
-  list($fn,$ln) = convert_login_name($phpgw->db,$phpgw->db->f(0));
-  if ($fn && $ln)
-     echo "<td>$fn $ln</td></tr>\n";
-  else
-     echo "<td>" . $phpgw->db->f(0) . "</TD></TR>\n";
+  echo "<td>" . $phpgw_info["user"]["fullname"] . "</td></tr>\n";
 ?>
 <tr>
   <TD VALIGN="top"><b><?php echo lang_common("Updated"); ?>:</B></TD>
@@ -137,9 +123,12 @@
 </TR>
 
 <?php
-  $cal_groups = $phpgw->groups->convert_string_to_names(grab_group($phpgw->db,$id));
+  $cal_groups_temp = $phpgw->accounts->read_group_names($id);
+  for($i = 0; $i < count($cal_groups_temp); $i++) {
+    $cal_groups .= $cal_groups_temp[$i][1] . "<br>\n";
+  }
   if ($cal_groups)
-     echo "<tr><td><b>" . lang_common("Groups") . ":</b></td><td>$cal_groups</td></tr>";
+     echo "<tr><td><b>" . lang_common("Groups") . ":</b></td><td>".$cal_groups."</td></tr>";
 ?>
 
 <tr>
