@@ -41,6 +41,7 @@
 	 * 	'filter2_no_lang'=> True// I  set no_lang for filter2 (=dont translate the options)
 	 * 	'rows'           =>		//  O content set by callback
 	 * 	'total'          =>		//  O the total number of entries
+	 * 	'sel_options'    =>		//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
 	 * );
 	 * @package etemplate
 	 * @subpackage extensions
@@ -149,7 +150,14 @@
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			if ($app && $class)
 			{
-				$obj =& CreateObject($app.'.'.$class);
+				if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
+				{
+					$obj =& $GLOBALS[$class];
+				}
+				else
+				{
+					$obj =& CreateObject($app.'.'.$class);
+				}
 			}
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
@@ -158,6 +166,13 @@
 			else
 			{
 				$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+				
+				// allow the get_rows function to override / set sel_options
+				if (isset($value['rows']['sel_options']) && is_array($value['rows']['sel_options']))
+				{
+					$tmpl->sel_options = array_merge($tmpl->sel_options,$value['rows']['sel_options']);
+					unset($value['rows']['sel_options']);
+				}
 			}
 			if ($value['start'] > $total)
 			{
@@ -175,7 +190,7 @@
 			}
 			if (!is_object($value['template']))
 			{
-				$value['template'] = new etemplate($value['template'],$tmpl->as_array());
+				$value['template'] =& new etemplate($value['template'],$tmpl->as_array());
 			}
 			if ($total < 1)
 			{

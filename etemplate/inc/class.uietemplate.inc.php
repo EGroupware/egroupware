@@ -345,6 +345,9 @@
 			{
 				$sel_options = array();
 			}
+			// make it globaly availible for show_cell and show_grid
+			$this->sel_options =& $sel_options;
+
 			if (!$readonlys)
 			{
 				$readonlys = array();
@@ -369,7 +372,7 @@
 			$path = '/';
 			foreach ($this->children as $n => $child)
 			{
-				$html .= $this->show_cell($child,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$nul,$path.$n);
+				$html .= $this->show_cell($child,$content,$readonlys,$cname,$show_c,$show_row,$nul,$nul,$path.$n);
 			}
 			return $html."<!-- END eTemplate $this->name -->\n\n";
 		}
@@ -386,7 +389,6 @@
 		 * @internal
 		 * @param array $grid representing a grid
 		 * @param array $content with content for the cells, keys are the names given in the cells/form elements
-		 * @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
 		 * @param array $readonlys with names of cells/form-elements to be not allowed to change
 		 * 		This is to facilitate complex ACL's which denies access on field-level !!!
 		 * @param string $cname basename of names for form-elements, means index in $_POST
@@ -396,12 +398,8 @@
 		 * @param string $path path in the widget tree
 		 * @return string the generated HTML
 		 */
-		function show_grid(&$grid,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0,$path='')
+		function show_grid(&$grid,$content,$readonlys='',$cname='',$show_c=0,$show_row=0,$path='')
 		{
-			if (!$sel_options)
-			{
-				$sel_options = array();
-			}
 			if (!$readonlys)
 			{
 				$readonlys = array();
@@ -506,7 +504,7 @@
 					{
 						continue;	// col is disabled
 					}
-					$row_data[$col] = $this->show_cell($cell,$content,$sel_options,$readonlys,$cname,$c,$r,$span,$cl,$path.'/'.$r_key.$c_key);
+					$row_data[$col] = $this->show_cell($cell,$content,$readonlys,$cname,$c,$r,$span,$cl,$path.'/'.$r_key.$c_key);
 
 					if ($row_data[$col] == '' && $this->rows == 1)
 					{
@@ -592,7 +590,6 @@
 		 * @internal
 		 * @param array $cell with data of the cell: name, type, ...
 		 * @param array $content with content for the cells, keys are the names given in the cells/form elements
-		 * @param array $sel_options with options for the selectboxes, keys are the name of the selectbox
 		 * @param array $readonlys with names of cells/form-elements to be not allowed to change
 		 * 		This is to facilitate complex ACL's which denies access on field-level !!!
 		 * @param string $cname basename of names for form-elements, means index in $_POST
@@ -604,7 +601,7 @@
 		 * @param string $path path in the widget tree
 		 * @return string the generated HTML
 		*/
-		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
+		function show_cell($cell,$content,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
 		{
 			if ($this->debug && (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type']))
 			{
@@ -896,7 +893,7 @@
 					{
 						$cname .= $cname == '' ? $name : '['.str_replace('[','][',str_replace(']','',$name)).']';
 					}
-					$html .= $this->show_grid($cell,$name ? $value : $content,$sel_options,$readonlys,$cname,$show_c,$show_row,$path);
+					$html .= $this->show_grid($cell,$name ? $value : $content,$readonlys,$cname,$show_c,$show_row,$path);
 					break;
 				case 'template':	// size: index in content-array (if not full content is past further on)
 					if (is_object($cell['name']))
@@ -963,7 +960,7 @@
 					{
 						$cell['obj']->onclick_proxy = $this->onclick_proxy ? $this->onclick_proxy : $this->name.':'.$path;
 					}
-					$html = $cell['obj']->show($content,$sel_options,$readonlys,$cname,$show_c,$show_row);
+					$html = $cell['obj']->show($content,$this->sel_options,$readonlys,$cname,$show_c,$show_row);
 					break;
 				case 'select':	// size:[linesOnMultiselect|emptyLabel]
 					$sels = array();
@@ -974,7 +971,7 @@
 						// extra-option: no_lang=0 gets translated later and no_lang=1 gets translated too (now), only no_lang>1 gets not translated
 						if ((int)$cell['no_lang'] == 1)
 						{
-							$sels[''] = lang($sels['']);
+							$sels[''] = substr($sels[''],-3) == '...' ? lang(substr($sels[''],0,-3)).'...' : lang($sels['']);
 						}
 						$multiple = 0;
 					}
@@ -994,9 +991,9 @@
 							$sels += $cell['sel_options'];
 						}
 					}
-					if (isset($sel_options[$name]) && is_array($sel_options[$name]))
+					if (isset($this->sel_options[$name]) && is_array($this->sel_options[$name]))
 					{
-						$sels += $sel_options[$name];
+						$sels += $this->sel_options[$name];
 					}
 					else
 					{
@@ -1004,13 +1001,13 @@
 						if (count($name_parts))
 						{
 							$org_name = $name_parts[count($name_parts)-1];
-							if (isset($sel_options[$org_name]) && is_array($sel_options[$org_name]))
+							if (isset($this->sel_options[$org_name]) && is_array($this->sel_options[$org_name]))
 							{
-								$sels += $sel_options[$org_name];
+								$sels += $this->sel_options[$org_name];
 							}
-							elseif (isset($sel_options[$name_parts[0]]) && is_array($sel_options[$name_parts[0]]))
+							elseif (isset($this->sel_options[$name_parts[0]]) && is_array($this->sel_options[$name_parts[0]]))
 							{
-								$sels += $sel_options[$name_parts[0]];
+								$sels += $this->sel_options[$name_parts[0]];
 							}
 						}
 					}
@@ -1081,7 +1078,7 @@
 					if (!$orient) $orient = $type == 'hbox' ? 'horizontal' : ($type == 'box' ? false : 'vertical');
 					for ($n = 1; $n <= (int) $num; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
+						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
 						if ($h != '' && $h != '&nbsp;')
 						{
 							if ($orient != 'horizontal')
@@ -1153,7 +1150,7 @@
 					}
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$sel_options,$readonlys,$cname,$show_c,$show_row,$path.'/'.$n);
+						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$path.'/'.$n);
 						$vis = !empty($value) && $value == $cell_options[$n]['name'] || $n == 1 && $first ? 'visible' : 'hidden';
 						list (,$cl) = explode(',',$cell[$n]['span']);
 						$html .= $this->html->div($h,$this->html->formatOptions(array(
