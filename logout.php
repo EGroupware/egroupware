@@ -46,7 +46,7 @@
 	}
 	else
 	{
-		if(is_object($GLOBALS['phpgw']->log)
+		if(is_object($GLOBALS['phpgw']->log))
 		{
 			$GLOBALS['phpgw']->log->write(array(
 				'text' => 'W-VerifySession, could not verify session during logout',
