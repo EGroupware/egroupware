@@ -1,187 +1,428 @@
 access	common	it	Accesso
 access not permitted	common	it	Accesso non permesso
-access type	common	it	Tipo di accesso
-account has been created	common	it	L'account &eacute; stato creato
-account has been deleted	common	it	L'account &eacute; stato cancellato
-account has been updated	common	it	L'account &eacute; stato aggiornato
-account preferences	common	it	Preferenze dell'account
 acl	common	it	ACL
-add category	common	it	Aggiungi una categoria
+active	common	it	Attivo
 add	common	it	Aggiungi
+add category	common	it	Aggiungi una categoria
 add x category for	common	it	Aggiungi categoria %1 per
+add sub	common	it	Aggiungi Sub
 admin	common	it	Amministrazione
 administration	common	it	Amministrazione
+afghanistan	common	it	AFGHANISTAN
+albania	common	it	ALBANIA
+algeria	common	it	ALGERIA
 all	common	it	Tutto
+american samoa	common	it	AMERICAN SAMOA
+andorra	common	it	ANDORRA
+angola	common	it	ANGOLA
+anguilla	common	it	ANGUILLA
+antarctica	common	it	ANTARTICO
+antigua and barbuda	common	it	ANTIGUA E BARBUDA
 april	common	it	Aprile
-are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa note ?
+are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa nota?
+argentina	common	it	ARGENTINA
+armenia	common	it	ARMENIA
+aruba	common	it	ARUBA
 august	common	it	Agosto
-autosave default category	common	it	Categoria default di salvataggio automatico
+australia	common	it	AUSTRALIA
+austria	common	it	AUSTRIA
+author	common	it	Autore
+autosave default category	common	it	Categoria default per il salvataggio automatico
+azerbaijan	common	it	AZERBAIJAN
+back	common	it	Indietro
+bad login or password	login	it	Nome utente o password sbagliati
+bahamas	common	it	BAHAMAS
+bahrain	common	it	BAHRAIN
+bangladesh	common	it	BANGLADESH
+barbados	common	it	BARBADOS
+based on	common	it	Basato su
+belarus	common	it	BELARUS
+belgium	common	it	BELGIO
+belize	common	it	BELIZE
+benin	common	it	BENIN
+bermuda	common	it	BERMUDA
+bhutan	common	it	BHUTAN
+bolivia	common	it	BOLIVIA
+bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
+botswana	common	it	BOTSWANA
+bouvet island	common	it	BOUVET ISLAND
+brazil	common	it	BRASILE
+british indian ocean territory	common	it	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	it	BRUNEI DARUSSALAM
+bulgaria	common	it	BULGARIA
+burkina faso	common	it	BURKINA FASO
+burundi	common	it	BURUNDI
+cambodia	common	it	CAMBODIA
+cameroon	common	it	CAMEROON
+canada	common	it	CANADA
 cancel	common	it	Cancella
+cape verde	common	it	CAPO VERDE
 categories	common	it	Categorie
 categories for	common	it	Categorie per
 category	common	it	Categoria
+category x has been added !	common	it	La categoria %1 &egrave; stata aggiunta!
+category x has been updated !	common	it	La categoria %1 &egrave; stata aggiornata!
+cayman islands	common	it	ISOLE CAYMAN
+central african republic	common	it	REPUBBLICA CENTRO AFRICANA
+chad	common	it	CHAD
 change	common	it	Cambia
 charset	common	it	iso-8859-1
+chile	common	it	CILE
+china	common	it	CINA
 choose the category	common	it	Scegli una categoria
 choose the parent category	common	it	scegli la categoria padre
+christmas island	common	it	ISOLA DI NATALE
 clear	common	it	Pulisci
 clear form	common	it	Cancella il modulo
+cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
+colombia	common	it	COLOMBIA
+comoros	common	it	COMORE
+congo	common	it	CONGO
+congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
+cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
-create	common	it	Create
+costa rica	common	it	COSTA RICA
+cote d ivoire	common	it	COSTA D'AVORIO
+create	common	it	Crea
 created by	common	it	Creato da
+croatia	common	it	CROAZIA
+cuba	common	it	CUBA
 currency	common	it	Valuta
+current	common	it	Attuale
 current users	common	it	Utenti attivi
-custom	common	it	Personalizza
+cyprus	common	it	CIPRO
+czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
+date due	common	it	Data richiesta
 december	common	it	Dicembre
+default category	common	it	Categoria Predefinita
 delete	common	it	Elimina
-domestic	common	it	Locale
+denmark	common	it	DANIMARCA
+description	common	it	Descrizione
+detail	common	it	Dettaglio
+details	common	it	Dettagli
+disabled	common	it	Disabilitato
+djibouti	common	it	DJIBOUTI
+do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sottocategorie?
+dominica	common	it	DOMINICA
+dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
+e-mail	common	it	E-Mail
+east timor	common	it	TIMOR EST
+ecuador	common	it	EQUADOR
 edit	common	it	Modifica
 edit category	common	it	Modifica Categoria
 edit categories	common	it	Modifica Categorie
-e-mail	common	it	Email
-email	common	it	Email
+edit x category for	common	it	Modifica %1 categorie per
+egypt	common	it	EGITTO
+el salvador	common	it	EL SALVADOR
+email	common	it	E-Mail
+enabled	common	it	Abilitato
+end date	common	it	Data Fine
 end time	common	it	Ora Fine
-entry has been deleted sucessfully	common	it	La scrittura è stata cancellata correttamente
-entry updated sucessfully	common	it	La scrittura è stata aggiornata correttamente
+entry has been deleted sucessfully	common	it	L'annotazione è stata cancellata correttamente
+entry updated sucessfully	common	it	L'annotazione è stata aggiornata correttamente
+equatorial guinea	common	it	GUINEA EQUATORIALE
+eritrea	common	it	ERITREA
 error	common	it	Errore
-exit	common	it	Uscita
-extra	common	it	Extra
+error creating x x directory	common	it	Errore durante la creazione della directory %1%2
+error deleting x x directory	common	it	Errore durante l'eliminazione della directory %1%2
+error renaming x x directory	common	it	Errore durante la rinomina della directory %1%2
+estonia	common	it	ESTONIA
+ethiopia	common	it	ETIOPIA
+falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
+faroe islands	common	it	ISOLE FAROE
 february	common	it	Febbraio
 fields	common	it	Campi
+fiji	common	it	FIJI
 files	common	it	File
 filter	common	it	Filtro
+finland	common	it	FINLANDIA
 first name	common	it	Nome
+firstname	common	it	Nome
+force selectbox	common	it	Forza Menu a discesa
+france	common	it	FRANCIA
+french guiana	common	it	GUIANA FRANCESE
+french polynesia	common	it	POLINESIA FRANCESE
+french southern territories	common	it	FRENCH SOUTHERN TERRITORIES
 friday	common	it	Venerdì
 ftp	common	it	FTP
+gabon	common	it	GABON
+gambia	common	it	GAMBIA
+georgia	common	it	GEORGIA
+germany	common	it	GERMANIA
+ghana	common	it	GHANA
+gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
-group access	common	it	Accesso Gruppo
+grant access	common	it	Permetti Accesso
+greece	common	it	GRECIA
+greenland	common	it	GROENLANDIA
+grenada	common	it	GRENADA
 group	common	it	Gruppo
-group has been added	common	it	Il gruppo è stato aggiunto
-group has been deleted	common	it	Il gruppo è stato cancellato
-group has been updated	common	it	Il gruppo è stato aggiornato
+group access	common	it	Accesso Gruppo
 group public	common	it	Gruppo Pubblico
 groups	common	it	Gruppi
+guadeloupe	common	it	GUADALUPA
+guam	common	it	GUAM
+guatemala	common	it	GUATEMALA
+guinea	common	it	GUINEA
+guinea-bissau	common	it	GUINEA-BISSAU
+guyana	common	it	GUIANA
+haiti	common	it	HAITI
+heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
 help	common	it	Aiuto
 high	common	it	Alta
-home	common	it	Pagina Principale
-international	common	it	Internazionale
+highest	common	it	Più Alta
+holy see (vatican city state)	common	it	SANTA SEDE (STATO DI CITT&Agrave; DEL VATICANO)
+home	common	it	Home
+honduras	common	it	HONDURAS
+hong kong	common	it	HONG KONG
+hungary	common	it	UNGHERIA
+iceland	common	it	ISLANDA
+india	common	it	INDIA
+indonesia	common	it	INDONESIA
+iran, islamic republic of	common	it	IRAN, REPUBBLICA ISLAMICA DELL
+iraq	common	it	IRAQ
+ireland	common	it	IRLANDA
+israel	common	it	ISRAELE
 it has been more then x days since you changed your password	common	it	Sono passati più di %1 da quando hai cambiato la password
+it is recommended that you run setup to upgrade your tables to the current version	common	it	&Egrave; raccomandato eseguire il setup per aggiornare le tabelle alla versione attuale.
+italy	common	it	ITALIA
+jamaica	common	it	GIAMAICA
 january	common	it	Gennaio
+japan	common	it	GIAPPONE
+jordan	common	it	GIORDANIA
 july	common	it	Luglio
 june	common	it	Giugno
+kazakstan	common	it	KAZAKISTAN
+kenya	common	it	KENIA
+kiribati	common	it	KIRIBATI
+korea, democratic peoples republic of	common	it	KOREA, REPUBBLICA POPOLARE
+korea, republic of	common	it	KOREA, REPUBBLICA
+kuwait	common	it	KUWAIT
+kyrgyzstan	common	it	KYRGYZSTAN
+language	common	it	Lingua
+lao peoples democratic republic	common	it	REPUBBLICA DEMOCRATICA POPOLARE DEL LAOS
 last name	common	it	Cognome
-last page	common	it	ultima pagina
+lastname	common	it	Cognome
+latvia	common	it	LATVIA
+lebanon	common	it	LIBANO
+lesotho	common	it	LESOTHO
+liberia	common	it	LIBERIA
+libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
+liechtenstein	common	it	LIECHTENSTEIN
+list	common	it	Lista
+lithuania	common	it	LITUANIA
 login	common	it	Login
 logout	common	it	Logout
 low	common	it	Bassa
+lowest	common	it	Più Bassa
+luxembourg	common	it	LUSSEMBURGO
+macau	common	it	MACAO
+macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA DI YUGOSLAVIA
+madagascar	common	it	MADAGASCAR
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
+malawi	common	it	MALAWI
+malaysia	common	it	MALESIA
+maldives	common	it	MALDIVE
+mali	common	it	MALI
+malta	common	it	MALTA
 manual	common	it	Manuale
 march	common	it	Marzo
+marshall islands	common	it	ISOLE MARSHALL
+martinique	common	it	MARTINICA
+mauritania	common	it	MAURITANIA
+mauritius	common	it	MAURITIUS
 may	common	it	Maggio
-medium	common	it	Medio
+mayotte	common	it	MAYOTTE
+medium	common	it	Media
 message	common	it	Messaggio
-mobile phone	common	it	Telefono cellulare
-modem phone	common	it	telefono Modem
+mexico	common	it	MESSICO
+micronesia, federated states of	common	it	MICRONESIA, STATI FEDERATI DELLA
+moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
+monaco	common	it	MONACO
 monday	common	it	Lunedì
-monitor	common	it	Monitor
+mongolia	common	it	MONGOLIA
+montserrat	common	it	MONTSERRAT
+morocco	common	it	MAROCCO
+mozambique	common	it	MOZAMBICO
+myanmar	common	it	MYANMAR
 name	common	it	Nome
+namibia	common	it	NAMIBIA
+nauru	common	it	NAURU
+nepal	common	it	NEPAL
+netherlands	common	it	OLANDA
+netherlands antilles	common	it	ANTILLE OLANDESI
+new caledonia	common	it	NUOVA CALEDONIA
 new entry added sucessfully	common	it	Nuovo appuntamento aggiunto con successo
-new main category	common	it	nuova categoria principale
+new main category	common	it	Nuova categoria principale
+new zealand	common	it	NUOVA ZELANDA
 next	common	it	Avanti
-next page	common	it	prossima pagina
+nicaragua	common	it	NICARAGUA
+niger	common	it	NIGER
+nigeria	common	it	NIGERIA
+niue	common	it	NIUE
 no	common	it	No
+no subject	common	it	Nessun Oggetto
+none	common	it	Nessuno
+norfolk island	common	it	ISOLE NORFOLK
 normal	common	it	Normale
+northern mariana islands	common	it	ISOLE NORTHERN MARIANA
+norway	common	it	NORVEGIA
+note	common	it	Nota
 notes	common	it	Note
+notify window	common	it	Finestra di Notifica
 november	common	it	Novembre
 october	common	it	Ottobre
 ok	common	it	OK
+oman	common	it	OMAN
 only yours	common	it	solo tuoi
-on *nix systems please type: x	common	it	Nei sistemi *nix per favore digitare: %1
+open notify window	common	it	Apri finestra di Notifica
 original	common	it	Originale
 other	common	it	Altro
-other phone	common	it	Altro Telefono
+overview	common	it	Overview
 owner	common	it	Proprietario
+pakistan	common	it	PAKISTAN
+palau	common	it	PALAU
+palestinian territory, occupied	common	it	PALESTINA, TERRITORI OCCUPATI DELLA
+panama	common	it	PANAMA
+papua new guinea	common	it	PAPUA NUOVA GUINEA
+paraguay	common	it	PARAGUAY
 parent category	common	it	Categoria padre
 password	common	it	Password
 password has been updated	common	it	La password è stata aggiornata
-permissions to the files/users directory	common	it	permissi alla cartella file/utenti
 personal	common	it	Personale
+peru	common	it	PERU
+philippines	common	it	FILIPPINE
+pitcairn	common	it	PITCAIRN
+please enter a name	common	it	Per favore inserisci un nome!
+please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please set your preferences for this app	common	it	Per favore specifica le tue preferenze per questa applicazione
-please x by hand	common	it	Please %1 by hand
+poland	common	it	POLONIA
+portugal	common	it	PORTOGALLO
 powered by phpgroupware version x	common	it	Creato con <a href="http://www.phpgroupware.org">phpGroupWare</a> versione %1
-pref	common	it	pref
-prefer	common	it	Prefer
 preferences	common	it	Preferenze
-previous page	common	it	Pagina precedente
 print	common	it	Stampa
 priority	common	it	Priorità
 private	common	it	Privato
+public	common	it	pubblico
+puerto rico	common	it	PUERTO RICO
+qatar	common	it	QATAR
 read	common	it	Leggi
 rename	common	it	Rinomina
+reunion	common	it	REUNION
+romania	common	it	ROMANIA
+russian federation	common	it	FEDERAZIONE RUSSA
+rwanda	common	it	RUANDA
+saint helena	common	it	SANT'ELENA
+saint kitts and nevis	common	it	SAINT KITTS E NEVIS
+saint lucia	common	it	SANTA LUCIA
+saint pierre and miquelon	common	it	SAINT PIERRE E MIQUELON
+saint vincent and the grenadines	common	it	SAINT VINCENT E LE GRENADINES
+samoa	common	it	SAMOA
+san marino	common	it	SAN MARINO
+sao tome and principe	common	it	SAO TOME E PRINCIPE
 saturday	common	it	Sabato
+saudi arabia	common	it	ARABIA SAUDITA
 save	common	it	Salva
 search	common	it	Cerca
+section	common	it	Sezione
 select category	common	it	Seleziona categoria
-select headline news sites	common	it	Seleziona siti di NEWS
-send updates via email	common	it	Invia aggiornamenti via email
+senegal	common	it	SENEGAL
 september	common	it	Settembre
 session has been killed	common	it	La sessione è stata terminata
+seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 showing x	common	it	visualizzati %1
 showing x - x of x	common	it	visualizzo %1 - %2 di %3
-sorry, there was a problem processing your request.	common	it	Peccato, c'è stato un problema nel processare la tua richiesta.
+sierra leone	common	it	SIERRA LEONE
+singapore	common	it	SINGAPORE
+slovakia	common	it	SLOVACCHIA
+slovenia	common	it	SLOVENIA
+solomon islands	common	it	ISOLE DI SOLOMONE
+somalia	common	it	SOMALIA
+sorry, your login has expired	login	it	Spiacente, il tuo login è scaduto
+south africa	common	it	SUD AFRICA
+south georgia and the south sandwich islands	common	it	SUD GEORGIA E LE ISOLE SUD SANDWICH
+spain	common	it	SPGNA
+sri lanka	common	it	SRI LANKA
+start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
-status	common	it	Stato
+status	common	it	Status
 subject	common	it	Oggetto
 submit	common	it	Invia
+sudan	common	it	SUDAN
 sunday	common	it	Domenica
-the two passwords are not the same	common	it	Le due password non sono identiche
+suriname	common	it	SURINAME
+svalbard and jan mayen	common	it	SVALBARD E JAN MAYEN
+swaziland	common	it	SWAZILAND
+sweden	common	it	SVEZIA
+switzerland	common	it	SVIZZERA
+syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
+taiwan, province of china	common	it	TAIWAN, PROVINCIA DELLA CINA
+tajikistan	common	it	TAJIKISTAN
+tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
+thailand	common	it	TAILANDIA
+the api is current	common	it	L'API è aggiornata
+the api requires an upgrade	common	it	L'API necessita di un aggiornamento
+the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
+this application is current	common	it	Questa applicazione è aggiornata
+this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
+this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
 time	common	it	Ora
 time zone	common	it	Fuso orario
-time zone offset	common	it	differenza di fuso orario
+time zone offset	common	it	Differenza di fuso orario
 title	common	it	Titolo
-to correct this error for the future you will need to properly set the	common	it	Per correggere questo errore in futuro occorre settare in maniera corretta
+togo	common	it	TOGO
+tokelau	common	it	TOKELAU
+tonga	common	it	TONGA
 total	common	it	Totale
+trinidad and tobago	common	it	TRINIDAD E TOBAGO
 tuesday	common	it	Martedì
-updated	common	it	Aggiornato
-users	common	it	utenti
+tunisia	common	it	TUNISIA
+turkey	common	it	TURCHIA
+turkmenistan	common	it	TURKMENISTAN
+turks and caicos islands	common	it	ISOLE TURKS E CAICOS
+tuvalu	common	it	TUVALU
+uganda	common	it	UGANDA
+ukraine	common	it	UCRAINA
+united arab emirates	common	it	EMIRATI ARABI UNITI
+united kingdom	common	it	REGNO UNITO
+united states	common	it	STATI UNITI
+united states minor outlying islands	common	it	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	it	Sconosciuto
+update	common	it	Aggiorna
+url	common	it	URL
+uruguay	common	it	URUGUAY
+user	common	it	Utente
+username	common	it	Username
+users	common	it	Utenti
+users choice	common	it	Scelta Utente
+uzbekistan	common	it	UZBEKISTAN
+vanuatu	common	it	VANUATU
+venezuela	common	it	VENEZUELA
+viet nam	common	it	VIET NAM
 view	common	it	Visualizza
+virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
+virgin islands, u.s.	common	it	ISOLE VERGINI, U.S.
+wallis and futuna	common	it	WALLIS E FUTUNA
 wednesday	common	it	Mercoledì
+western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
+written by:	common	it	Scritto da:
+yemen	common	it	YEMEN
 yes	common	it	Sì
-you are required to change your password during your first login	common	it	Devi cambiare la tua password durante la tua prima sessione
-you have 1 new message!	common	it	hai un nuovo messaggio!
-you have messages!	common	it	Hai nuovi messaggi
-you have no new messages	common	it	Non hai nuovi messaggi
-you have x new messages!	common	it	Hai %1 nuovi messaggi!
-you must enter a password	common	it	Devi inserire una nuova password
-your message has been sent	common	it	Il tuo messaggio è stato spedito
+you are running a newer version of phpGroupWare than your database is setup for	common	it	Stai utilizzando una versione più recente di phpGroupWare rispetto a quella per cui il tuo database è stato installato.
+you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
+you have selected an invalid date	common	it	Hai selezionato una data non valida!
+you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 your search returned 1 match	common	it	la tua ricerca ha restituito un risultato
-your search returned x matchs	common	it	your search returned %1 matches
-your settings have been updated	common	it	I tuoi settaggi sono aggiornati
-week	common	it	settimana
-participates	common	it	partecipa
-start date 	common	it	Data Inizio
-end date	common	it	Data Fine
-bad login or password	login	it	Login o password sbagliate
-phpgroupware login	login	it	login phpGroupWare
-sorry, your login has expired	login	it	Peccato, il tuo login è scaduto
-use cookies	login	it	usa i cookie
-username	login	it	Nome utente
-you have been successfully logged out	login	it	Sei uscito dal sistema con successo
+your search returned x matchs	common	it	la tua ricerca ha resttuito %1 risultati
 your session could not be verified.	login	it	La tua sessione non può essere verificata.
-open notify window	common	it	Apri finestra di notifica
-from	common	it	Da
-size	common	it	Dimensione
-
-
-
-
-
-
-
+your settings have been updated	common	it	I tuoi settaggi sono aggiornati
+yugoslavia	common	it	YUGOSLAVIA
+zambia	common	it	ZAMBIA
+zimbabwe	common	it	ZIMBABWE
