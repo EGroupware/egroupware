@@ -168,16 +168,18 @@
 		}
 
 		/* send this the id and whatever fields you want to see */
-		function read_single_entry($id,$fields = '')
+		function read_single_entry($id,$fields='')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			list($stock_fields,$stock_fieldnames,$extra_fields) =
-				$this->split_stock_and_extras($fields);
-
-			if (count($stock_fieldnames))
+			if(!$fields || empty($fields))
 			{
-				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				$fields = $this->stock_contact_fields;
+			}
+			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
+
+			if(count($stock_fieldnames))
+			{
+				$t_fields = ',' . implode(',',$stock_fieldnames);
+				if($t_fields == ',')
 				{
 					unset($t_fields);
 				}
@@ -192,9 +194,10 @@
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
+			$return_fields[0]['rights'] = (int)$this->grants[$return_fields[0]['owner']];
 			if(@is_array($stock_fieldnames))
 			{
-				while(list($name,$value)=each($stock_fieldnames))
+				foreach($stock_fieldnames as $name => $value)
 				{
 					$return_fields[0][$name] = utf8_decode($ldap_fields[0][$value][0]);
 				}
@@ -204,26 +207,24 @@
 			if ($return_fields[0]['adr_one_type'])
 			{
 				$one_type = $return_fields[0]['adr_one_type'];
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($return_fields[0]["adr_two_type"])
+			if($return_fields[0]['adr_two_type'])
 			{
 				$two_type = $return_fields[0]['adr_two_type'];
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
-			while ($this->db->next_record())
+			while($this->db->next_record())
 			{
-				if ($extra_fields[$this->db->f('contact_name')])
+				if($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -233,9 +234,11 @@
 
 		function read_last_entry($fields = '')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			list($stock_fields,$stock_fieldnames,$extra_fields) =
-				$this->split_stock_and_extras($fields);
+			if (!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
+			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			if (count($stock_fieldnames))
 			{
@@ -258,39 +261,38 @@
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
 			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
+			$return_fields[0]['rights'] = (int)$this->grants[$return_fields[0]['owner']];
 
 			if(@is_array($stock_fieldnames))
 			{
-				while(list($name,$value)=each($stock_fieldnames))
+				foreach($stock_fieldnames as $name => $value)
 				{
 					$return_fields[0][$name] = utf8_decode($ldap_fields[0][$value][0]);
 				}
 			}
 
 			/* Setup address type fields */
-			if ($return_fields[0]['adr_one_type'])
+			if($return_fields[0]['adr_one_type'])
 			{
 				$one_type = $return_fields[0]['adr_one_type'];
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($return_fields[0]['adr_two_type'])
+			if($return_fields[0]['adr_two_type'])
 			{
 				$two_type = $return_fields[0]['adr_two_type'];
-				reset($this->adr_types);
-				while (list($name,$val) = each($this->adr_types))
+				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
 				}
 			}
 
 			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $id . "'",__LINE__,__FILE__);
-			while ($this->db->next_record())
+			while($this->db->next_record())
 			{
-				if ($extra_fields[$this->db->f('contact_name')])
+				if($extra_fields[$this->db->f('contact_name')])
 				{
 					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
@@ -305,7 +307,10 @@
 			if(!$limit)  { $limit  = 0; }
 			if(!$filter) { $filter = 'tid=n'; }
 
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
+			if(!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
 			$DEBUG = 0;
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
@@ -345,16 +350,14 @@
 				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwcontacttypeid=n#"; }
 			}
 
-
-		/*
+			/*
 			need some way of using the lastmod arg in the filter like this:
 			if($lastmod >= 0)
 			{
 				$filterfields += array('last_mod'	=> (int)$lastmod;
 			}
 			or maybe not like this - i am not sure what i am doing :)
-		*/
-	
+			*/
 
 			if(@is_array($this->grants))
 			{
@@ -404,7 +407,7 @@
 				$myfilter = $this->makefilter($filterfields,$search_filter,"$cquery*",$DEBUG);
 			}
 			elseif($query)
-			{	
+			{
 				// the old code was searching about all fields
 				// this was very slow
 				#reset($this->stock_contact_fields);
@@ -482,15 +485,14 @@
 					$return_fields[$j]['owner']  = $ldap_fields[$i]['phpgwcontactowner'][0];
 					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
 					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatid'][0];
+					$return_fields[$j]['rights'] = (int)$this->grants[$return_fields[$j]['owner']];
 
 					if(@is_array($stock_fieldnames))
 					{
-						reset($stock_fieldnames);
-						while (list($f_name,$f_value) = each($stock_fieldnames))
+						foreach($stock_fieldnames as $f_name => $f_value)
 						{
 							$return_fields[$j][$f_name] = utf8_decode($ldap_fields[$i][$f_value][0]);
 						}
-						reset($stock_fieldnames);
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
 						. (int)$ldap_fields[$i]['uidnumber'] . "'",__LINE__,__FILE__);
@@ -518,8 +520,7 @@
 			if(@is_array($extra))
 			{
 				if($DEBUG) { echo '<br>Searching...'; }
-				reset($extra);
-				while(list($name,$value) = each($extra))
+				foreach($extra as $name => $value)
 				{
 					$qarray[] = array($value => $query);
 				}
@@ -536,11 +537,11 @@
 			$oquery = '(|';
 			$hasor = False;
 
-			while(list($name,$value) = @each($qarray))
+			foreach($qarray as $name => $value)
 			{
 				if(@is_array($value))
 				{
-					while(list($x,$y) = each($value))
+					foreach($value as $x => $y)
 					{
 						if($y == '*')
 						{
@@ -550,7 +551,7 @@
 						elseif(@is_array($y))
 						{
 							/* This was most likely created from acl grants in read() above */
-							while(list($a,$b) = each($y))
+							foreach($y as $a => $b)
 							{
 								$tmp .= '(' . $a . '=' . $b . ')';
 							}
@@ -655,7 +656,7 @@
 			$ldap_fields = '';
 			if(@is_array($stock_fieldnames))
 			{
-				while(list($name,$value)=each($stock_fieldnames))
+				foreach($stock_fieldnames as $name => $value)
 				{
 					if ($stock_fields[$name] != '')
 					{
@@ -694,7 +695,7 @@
 
 			if(count($extra_fields))
 			{
-				while (list($name,$value) = each($extra_fields))
+				foreach($extra_fields as $name => $value)
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('".$this->nextid."','" . $this->account_id . "','"
 						. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
@@ -885,20 +886,20 @@
 
 					/* OK, just mod the data already */
 					$allfields = $stock_fieldnames + $nonfields;
-					while ( list($fname,$fvalue) = each($allfields) )
+					foreach($allfields as $fname => $fvalue)
 					{
 						/* if ($ldap_fields[0][$fvalue]) */
-						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
+						if($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							/* echo "<br>".$fname." => ".$fvalue." was there"; */
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
 						}
-						elseif (!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
+						elseif(!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
 							/* echo "<br>".$fname." not there - '".$fvalue."'"; */
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
 						}
-						elseif ($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
+						elseif($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
 						{
 							/*
 							echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
@@ -914,19 +915,19 @@
 
 				//something here to update the last_mod from $GLOBALS['phpgw']->datetime->gmtnow
 
-				while (list($x_name,$x_value) = each($extra_fields))
+				foreach($extra_fields as $x_name => $x_value)
 				{
-					if ($this->field_exists($id,$x_name))
+					if($this->field_exists($id,$x_name))
 					{
-						if (! $x_value)
+						if(!$x_value)
 						{
 							$this->delete_single_extra_field($id,$x_name);
 						}
 						else
 						{
 							$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
-							. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
-							. "' AND contact_id='$id'",__LINE__,__FILE__);
+								. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
+								. "' AND contact_id='$id'",__LINE__,__FILE__);
 						}
 					}
 					else
@@ -944,7 +945,7 @@
 		/* Used by admin to change ownership on account delete */
 		function change_owner($old_owner='',$new_owner='')
 		{
-			if (!($new_owner && $old_owner))
+			if(!($new_owner && $old_owner))
 			{
 				return False;
 			}
@@ -953,9 +954,9 @@
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = '';
-			while (list($null,$entry) = each($ldap_fields))
+			foreach($ldap_fields as $nul => $entry)
 			{
-				$err = ldap_modify($this->ldap,$dn,array('phpgwcontactowner' => $new_owner));
+				$err = ldap_modify($this->ldap,$entry['dn'],array('phpgwcontactowner' => $new_owner));
 			}
 
 			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$owner",__LINE__,__FILE__);
@@ -965,7 +966,7 @@
 		/* This is where the real work of delete() is done, shared class file contains calling function */
 		function delete_($id)
 		{
-			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
@@ -978,7 +979,7 @@
 				$err = ldap_delete($this->ldap,$ldap_fields[0]['dn']);
 
 				$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_owner='"
-				. $this->account_id . "'",__LINE__,__FILE__);
+					. $this->account_id . "'",__LINE__,__FILE__);
 			}
 			else
 			{
@@ -1000,7 +1001,7 @@
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = '';
-				while (list($null,$entry) =  each($ldap_fields))
+				foreach($ldap_fields as $nul => $entry)
 				{
 					$err = ldap_delete($this->ldap,$entry['dn']);
 				}

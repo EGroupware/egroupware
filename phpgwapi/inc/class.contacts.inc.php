@@ -83,55 +83,6 @@
 			return $ret;
 		}
 
-		/*!
-		@function read_single_entry
-		@abstract reads one entry, reimplemented here to add the users rights / grants of the owner
-		@syntax read_single_entry($id,$fields='')
-		@param $id integer id of the contact
-		@param $fields array fields to read or False for all
-		*/
-		function read_single_entry($id,$fields='')
-		{
-			if(@is_array($fields))
-			{
-				$fields['owner'] = 'owner';	// we need the owner to set the rights
-			}
-			if ($entry = contacts_::read_single_entry($id,$fields))
-			{
-				$entry[0]['rights'] = (int)$this->grants[$entry[0]['owner']];
-			}
-			return $entry;
-		}
-
-		/*!
-		@function read_single_entry
-		@abstract reads/searches for entrys, reimplemented here to add the users rights / grants of the owner
-		@syntax read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1)
-		@param $start integer first entry to read
-		@param $limit integer number of entrys to read, 0 for all
-		@param $fields array fields to read or False for all
-		@param $query string free query pattern
-		@param $filter string eg. tid=n or access=public
-		@param $sort string after which column/field to sort
-		@param $order string sort-order DESC=descending, ASC=ascending
-		@param $lastmod integer get only fields modified since, -1=for all
-		*/
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
-		{
-			if(@is_array($fields))
-			{
-				$fields['owner'] = 'owner';	// we need the owner to set the rights
-			}
-			if($entries = contacts_::read($start,$limit,$fields,$query,$filter,$sort,$order,$lastmod,$cquery))
-			{
-				foreach($entries as $nr => $entry)
-				{
-					$entries[$nr]['rights'] = (int)$this->grants[$entry['owner']];
-				}
-			}
-			return $entries;
-		}
-
 		function split_stock_and_extras($fields)
 		{
 			settype($fields, 'array');
@@ -292,99 +243,6 @@
 			return ($sortarray);
 		}
 
-		/* This function is deprecated, fortunately. */
-		function filter_ldap($ldap_fields,$filterfields,$DEBUG=0)
-		{
-			$match = 0;
-			if($DEBUG) { echo '<br>'; }
-			for($i=0;$i<count($ldap_fields);$i++)
-			{
-				$yes = True;
-
-				if ($ldap_fields[$i]['uidnumber'][0])
-				{
-					reset($filterfields);
-					while (list($col,$filt) = each($filterfields))
-					{
-						if ($col == 'phpgwcontactcatid')
-						{
-							$colarray = explode(',',$ldap_fields[$i][$col][0]);
-							if ($colarray[1])
-							{
-								while(list($key,$val) = each ($colarray))
-								{
-									if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$val.'"'; }
-									if ($val == $filt)
-									{
-										if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
-										$yes &= True;
-										$match++;
-										break;
-									}
-								}
-							}
-							else
-							{
-								if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-								if ($ldap_fields[$i][$col][0] == $filt)
-								{
-									if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
-									$yes &= True;
-									$match++;
-								}
-								else
-								{
-									if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
-									$yes &= False;
-									$match--;
-								}
-							}
-						}
-						else
-						{
-							if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-							if ($ldap_fields[$i][$col][0] == $filt)
-							{
-								if($DEBUG) { echo ', and number '.$ldap_fields[$i]['uidnumber'][0].' matched.'.'&nbsp;&nbsp;'; }
-								$yes &= True;
-								$match++;
-							}
-							else
-							{
-								if($DEBUG) { echo ', but number '.$ldap_fields[$i]['uidnumber'][0].' did not match.'.'&nbsp;&nbsp;'; }
-								$yes &= False;
-								$match--;
-							}
-						}
-					}
-
-					if ($yes)
-					{
-						if($DEBUG) { echo $ldap_fields[$i]['uidnumber'][0].' matched all!'.'<br>'; }
-						$new_ldap[] = $ldap_fields[$i];
-					}
-					else
-					{
-						if($DEBUG) { echo $ldap_fields[$i]['uidnumber'][0].' did not match all.'.'<br>'; }
-					}
-				}
-			}
-			if($DEBUG)
-			{
-				if($match)
-				{
-					echo '<br>'.$match.' total matches.'."\n";
-				}
-				else
-				{
-					echo '<br>No matches :('."\n";
-				}
-			}
-			$this->total_records = count($new_ldap);
-
-			return $new_ldap;
-		}
-
 		function formatted_address($id, $business = True, $afont = '', $asize = '2')
 		{
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
@@ -489,8 +347,7 @@
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
 
-			$fields = array
-			(
+			$fields = array(
 				'n_given'				=> 'n_given',
 				'n_family'				=> 'n_family',
 				'title'					=> 'title',
@@ -520,14 +377,14 @@
 				$address[$k] = $GLOBALS['phpgw']->strip_html($val);
 			}
 
-			if ($address['title'])
+			if($address['title'])
 			{
 				$title = $address['title'] . '&nbsp;';
 			}
 
-			if ($business)
+			if($business)
 			{
-				if ($address['org_name'])
+				if($address['org_name'])
 				{
 					$company = $address['org_name'];
 				}
@@ -556,12 +413,12 @@
 				$email		= $address['email_home'];
 			}
 
-			if (! $country)
+			if(!$country)
 			{
 				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
+			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
 			{
 				$a = $t->set_file(array('address_format' => 'full_format_' . strtolower($country) . '.tpl'));
 			}
@@ -570,7 +427,7 @@
 				$a = $t->set_file(array('address_format' => 'full_format_us.tpl'));
 			}
 
-			if (!$afont)
+			if(!$afont)
 			{
 				$afont = $GLOBALS['phpgw_info']['theme']['font'];
 			}
@@ -592,7 +449,7 @@
 			$a .= $t->set_var('fax',$address['tel_fax']);
 			$a .= $t->set_var('url',$address['url']);
 
-			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
 				$countryname = $s->get_full_name($country);
 				$a .= $t->set_var('country',lang($countryname));
@@ -607,8 +464,7 @@
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
 
-			$fields = array
-			(
+			$fields = array(
 				'n_given'				=> 'n_given',
 				'n_family'				=> 'n_family',
 				'title'					=> 'title',
@@ -631,14 +487,14 @@
 				$address[$k] = $GLOBALS['phpgw']->strip_html($val);
 			}
 
-			if ($address['title'])
+			if($address['title'])
 			{
 				$title = $address['title'] . '&nbsp;';
 			}
 
-			if ($business)
+			if($business)
 			{
-				if ($address['org_name'])
+				if($address['org_name'])
 				{
 					$company = $address['org_name'];
 				}
@@ -663,12 +519,12 @@
 				$country = $address['adr_two_countryname'];
 			}
 
-			if (! $country)
+			if(!$country)
 			{
 				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
 			}
 
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
+			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
 			{
 				$a = $t->set_file(array('address_format' => 'line_format_' . strtolower($country) . '.tpl'));
 			}
@@ -677,7 +533,7 @@
 				$a = $t->set_file(array('address_format' => 'line_format_us.tpl'));
 			}
 
-			if (!$afont)
+			if(!$afont)
 			{
 				$afont = $GLOBALS['phpgw_info']['theme']['font'];
 			}
@@ -690,7 +546,7 @@
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
 
-			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			if($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
 			{
 				$countryname = $s->get_full_name($country);
 				$a .= $t->set_var('country','&nbsp;°&nbsp;' . lang($countryname));

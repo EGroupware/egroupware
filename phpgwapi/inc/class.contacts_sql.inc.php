@@ -164,9 +164,11 @@
 		/* send this the id and whatever fields you want to see */
 		function read_single_entry($id,$fields='')
 		{
-			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
-			list($stock_fields,$stock_fieldnames,$extra_fields) =
-				$this->split_stock_and_extras($fields);
+			if (!$fields || empty($fields))
+			{
+				$fields = $this->stock_contact_fields;
+			}
+			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			if (count($stock_fieldnames))
 			{
@@ -186,10 +188,10 @@
 			$return_fields[0]['owner']  = $this->db->f('owner');
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
+			$return_fields[0]['rights'] = (int)$this->grants[$this->db->f('owner')];
 
 			if(@is_array($stock_fieldnames))
 			{
-//				while (list($f_name) = each($stock_fieldnames))
 				foreach($stock_fieldnames as $f_name)
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
@@ -200,8 +202,6 @@
 			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
-//				reset($this->adr_types);
-//				while (list($name,$val) = each($this->adr_types))
 				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
@@ -210,8 +210,6 @@
 			if ($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
-//				reset($this->adr_types);
-//				while (list($name,$val) = each($this->adr_types))
 				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
@@ -258,10 +256,10 @@
 			$return_fields[0]['owner']  = $this->db->f('owner');
 			$return_fields[0]['access'] = $this->db->f('access');
 			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
+			$return_fields[0]['rights'] = (int)$this->grants[$this->db->f('owner')];
 
 			if (@is_array($stock_fieldnames))
 			{
-//				while (list($f_name) = each($stock_fieldnames))
 				foreach($stock_fieldnames as $f_name)
 				{
 					$return_fields[0][$f_name] = $this->db->f($f_name);
@@ -269,21 +267,17 @@
 			}
 
 			/* Setup address type fields for ui forms display */
-			if ($this->db->f('adr_one_type'))
+			if($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
-//				reset($this->adr_types);
-//				while (list($name,$val) = each($this->adr_types))
 				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
 				}
 			}
-			if ($this->db->f('adr_two_type'))
+			if($this->db->f('adr_two_type'))
 			{
 				$two_type = $this->db->f('adr_two_type');
-//				reset($this->adr_types);
-//				while (list($name,$val) = each($this->adr_types))
 				foreach($this->adr_types as $name => $val)
 				{
 					eval("if (strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
@@ -353,8 +347,6 @@
 
 				/* now check each element of the array and convert into SQL for queries below */
 				$i = 0;
-//				reset($filterfields);
-//				while (list($name,$value) = each($filterfields))
 				foreach($filterfields as $name => $value)
 				{
 					if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 2: #'.$name.'# => #'.$value.'#'; }
@@ -362,7 +354,6 @@
 					if ($name && empty($value))
 					{
 						if ($DEBUG) { echo '<br>DEBUG - filter field "'.$name.'" is empty (NULL)'; }
-//						while (list($fname,$fvalue)=each($check_stock))
 						foreach($check_stock as $fname => $fvalue)
 						{
 							if($fvalue == $name)
@@ -375,8 +366,6 @@
 					}
 					elseif($name && $value)
 					{
-//						reset($check_stock);
-//						while (list($fname,$fvalue)=each($check_stock))
 						foreach($check_stock as $fname => $fvalue)
 						{
 							if($fvalue == $name)
@@ -448,8 +437,7 @@
 			if(@is_array($this->grants))
 			{
 				$grants = $this->grants;
-//				while (list($user) = each($grants))
-				foreach($grants as $user)
+				foreach($grants as $user => $_right)
 				{
 					$public_user_list[] = $user;
 				}
@@ -578,17 +566,17 @@
 			$i = 0;
 			while($this->db->next_record())
 			{
-				$return_fields[$i]['id']     = $this->db->f('id');
-				$return_fields[$i]['lid']    = $this->db->f('lid');
-				$return_fields[$i]['tid']    = $this->db->f('tid');
-				$return_fields[$i]['owner']  = $this->db->f('owner');
-				$return_fields[$i]['access'] = $this->db->f('access');
-				$return_fields[$i]['cat_id'] = $this->db->f('cat_id');
-				$return_fields[$i]['last_mod']	= $this->db->f('last_mod');
+				$return_fields[$i]['id']       = $this->db->f('id');
+				$return_fields[$i]['lid']      = $this->db->f('lid');
+				$return_fields[$i]['tid']      = $this->db->f('tid');
+				$return_fields[$i]['owner']    = $this->db->f('owner');
+				$return_fields[$i]['access']   = $this->db->f('access');
+				$return_fields[$i]['cat_id']   = $this->db->f('cat_id');
+				$return_fields[$i]['last_mod'] = $this->db->f('last_mod');
+				$return_fields[$i]['rights']   = (int)$this->grants[$this->db->f('owner')];
 
 				if(@is_array($stock_fieldnames))
 				{
-//					while(list($f_name) = each($stock_fieldnames))
 					foreach($stock_fieldnames as $f_name)
 					{
 						$return_fields[$i][$f_name] = $this->db->f($f_name);
@@ -648,7 +636,6 @@
 
 			if(count($extra_fields))
 			{
-//				while (list($name,$value) = each($extra_fields))
 				foreach($extra_fields as $name => $value)
 				{
 					$this->db->query("INSERT INTO $this->ext_table VALUES ('$id','" . $owner . "','"
@@ -719,7 +706,6 @@
 				$this->db->query($sql="UPDATE $this->std_table SET $fields_s WHERE "
 					. "id=$id",__LINE__,__FILE__);
 			}
-//			while (list($x_name,$x_value) = @each($extra_fields))
 			foreach($extra_fields as $x_name => $x_value)
 			{
 				if ($this->field_exists($id,$x_name))
