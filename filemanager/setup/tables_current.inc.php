@@ -23,7 +23,7 @@
 				'owner_id' => array('type' => 'int', 'precision' => 4,'nullable' => False),
 				'createdby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
 				'modifiedby_id' => array('type' => 'int', 'precision' => 4,'nullable' => True),
-				'created' => array('type' => 'date','nullable' => False,'default' => '0000-00-00'),
+				'created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
 				'modified' => array('type' => 'date','nullable' => True),
 				'size' => array('type' => 'int', 'precision' => 4,'nullable' => True),
 				'mime_type' => array('type' => 'varchar', 'precision' => 150,'nullable' => True),
