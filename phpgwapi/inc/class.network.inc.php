@@ -239,6 +239,7 @@
 			{
 				if($this->open_port($server, 80, 15))
 				{
+					$lines = array();
 					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n".$auth."\r\n\r\n"))
 					{
 						return 0;
