@@ -182,6 +182,7 @@
 	else
 	{
 		$event = $phpgw->session->appsession('entry','calendar');
+		$phpgw->calendar->event = $event;
 	}
 
 	if($datetime_check)
