@@ -221,32 +221,41 @@
 				 $phpgw_info["user"]["preferences"] = array();
 			}
 			/* This takes care of new users who dont have proper default prefs setup */
-			if (! $phpgw_info["flags"]["nocommon_preferences"]) {
-				if (! $phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
+			if (!isset($phpgw_info['flags']['nocommon_preferences']) || 
+			    !$phpgw_info["flags"]["nocommon_preferences"]) {
+				$preferences_update = False;
+				if (!isset($phpgw_info['user']['preferences']['common']['maxmatchs']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["maxmatchs"]) {
 					$this->add("common","maxmatchs",15);
 					$preferences_update = True;
 				}
-				if (! $phpgw_info["user"]["preferences"]["common"]["theme"]) {
+				if (!isset($phpgw_info['user']['preferences']['common']['theme']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["theme"]) {
 					$this->add("common","theme","default");
 					$preferences_update = True;
 				}
-				if (! $phpgw_info["user"]["preferences"]["common"]["template_set"]) {
+				if (!isset($phpgw_info['user']['preferences']['common']['template_set']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["template_set"]) {
 					$this->add("common","template_set","default");
 					$preferences_update = True;
 				}
-				if (! $phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
+				if (!isset($phpgw_info['user']['preferences']['common']['dateformat']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["dateformat"]) {
 					$this->add("common","dateformat","m/d/Y");
 					$preferences_update = True;
 				}
-				if (! $phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
+				if (!isset($phpgw_info['user']['preferences']['common']['timeformat']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["timeformat"]) {
 					$this->add("common","timeformat",12);
 					$preferences_update = True;
 				}
-				if (! $phpgw_info["user"]["preferences"]["common"]["lang"]) {
+				if (!isset($phpgw_info['user']['preferences']['common']['lang']) || 
+				    !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
 					$this->add("common","lang",$phpgw->common->getPreferredLanguage());
 					$preferences_update = True;
 				}
-				if ($preferences_update) {
+				if ($preferences_update)
+				{
 					$this->save_repository();
 				}
 				unset($preferences_update);

@@ -540,6 +540,7 @@
 				else
 				{
 					$rights = 0;
+					$apps[$db2->f('acl_appname')] = 0;
 				}
 				$rights |= $db2->f('acl_rights');
 				$apps[$db2->f('acl_appname')] |= $rights;

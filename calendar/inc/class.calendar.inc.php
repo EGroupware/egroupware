@@ -15,7 +15,9 @@
   /* $Id$ */
 
 CreateObject('calendar.calendar_item');
-if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded('mcal') == False)
+if(isset($phpgw_info['server']['calendar_type']) &&
+	$phpgw_info['server']['calendar_type'] == 'mcal' &&
+	extension_loaded('mcal') == False)
 {
 	$phpgw_info['server']['calendar_type'] = 'sql';
 }

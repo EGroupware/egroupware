@@ -60,7 +60,8 @@
 		function read_repository()
 		{
 			global $phpgw, $phpgw_info;
-			if (gettype($phpgw_info['apps']) != 'array')
+			if (!isset($phpgw_info['apps']) ||
+			    gettype($phpgw_info['apps']) != 'array')
 			{
 				$this->read_installed_apps();
 			}
@@ -71,7 +72,7 @@
 			while ($app = each($phpgw_info['apps']))
 			{
 //				$check = $phpgw->acl->check('run',1,$app[0]);
-				$check = $apps[$app[0]];
+				$check = (isset($apps[$app[0]])?$apps[$app[0]]:False);
 				if ($check)
 				{
 					$this->data[$app[0]] = array(

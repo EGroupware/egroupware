@@ -23,12 +23,7 @@
 
 		$tpl->set_var('img_root',$phpgw_info['server']['webserver_url'] . '/phpgwapi/templates/verdilak/images');
 		$tpl->set_var('table_bg_color',$phpgw_info['theme']['navbar_bg']);
-
-		if ($phpgw_info['flags']['navbar_target'])
-		{
-			$target = ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
-		}
-
+		$applications = '';
 		while ($app = each($phpgw_info['navbar']))
 		{
 			if ($app[1]['title'] != 'Home' && $app[1]['title'] != 'preferences' && ! ereg('About',$app[1]['title']) && $app[1]['title'] != 'Logout')
@@ -43,13 +38,19 @@
 				{
 					$title .= '<br>' . lang($app[1]['title']);
 				}
-				$applications .= '<br><a href="' . $app[1]['url'] . '"' . $target . '>' . $title . '</a>';
+				$applications .= '<br><a href="' . $app[1]['url'] . '"';
+				if (isset($phpgw_info['flags']['navbar_target']) &&
+				    $phpgw_info['flags']['navbar_target'])
+				{
+					$applications .= ' target="' . $phpgw_info['flags']['navbar_target'] . '"';
+				}
+				$applications .= '>' . $title . '</a>';
 				unset($title);
 			}
 		}
 		$tpl->set_var('applications',$applications);
 
-		if ($phpgw_info['theme']['special_logo'])
+		if (isset($phpgw_info['theme']['special_logo']))
 		{
 			$tpl->set_var('logo',$phpgw_info['theme']['special_logo']);
 		}

@@ -403,7 +403,9 @@
 		/*************************************************************************\
 		* If they are using frames, we need to set some variables                 *
 		\*************************************************************************/
-		if (($phpgw_info["user"]["preferences"]["common"]["useframes"] && $phpgw_info["server"]["useframes"] == "allowed")
+		if (((isset($phpgw_info['user']['preferences']['common']['useframes']) &&
+		      $phpgw_info["user"]["preferences"]["common"]["useframes"]) && 
+		     $phpgw_info["server"]["useframes"] == "allowed")
 		|| ($phpgw_info["server"]["useframes"] == "always")) {
 			$phpgw_info["flags"]["navbar_target"] = "phpgw_body";
 		}

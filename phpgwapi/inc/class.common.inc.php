@@ -800,7 +800,10 @@
 			$this->navbar(False);
 			include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $phpgw_info['server']['template_set']
                                  . '/navbar.inc.php');
-			if ((! isset($phpgw_info['flags']['nonavbar']) || ! $phpgw_info['flags']['nonavbar']) && ! $phpgw_info['flags']['navbar_target'])
+			if ((!isset($phpgw_info['flags']['nonavbar']) || 
+			     !$phpgw_info['flags']['nonavbar']) && 
+			    (!isset($phpgw_info['flags']['navbar_target']) ||
+			     !$phpgw_info['flags']['navbar_target']))
 			{
 				echo parse_navbar();
 			}
@@ -1165,7 +1168,8 @@
 			}
 
 			/* This is going to be used to switch to the nntp class */
-			if ($phpgw_info['flags']['newsmode'])
+			if (isset($phpgw_info['flags']['newsmode']) &&
+			    $phpgw_info['flags']['newsmode'])
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
