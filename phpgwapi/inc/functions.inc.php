@@ -24,7 +24,7 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-	
+
 	/****************************************************************************\
 	* Direct functions, which are not part of the API class                      *
 	* because they are require to be availble at the lowest level.               *
@@ -40,55 +40,47 @@
 	@param $classname name of class
 	@param $p1-$p16 class parameters (all optional)
 	*/
-	function CreateObject($class,
-		$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
+function CreateObject($class,
+	$p1='_UNDEF_',$p2='_UNDEF_',$p3='_UNDEF_',$p4='_UNDEF_',
 		$p5='_UNDEF_',$p6='_UNDEF_',$p7='_UNDEF_',$p8='_UNDEF_',
 		$p9='_UNDEF_',$p10='_UNDEF_',$p11='_UNDEF_',$p12='_UNDEF_',
 		$p13='_UNDEF_',$p14='_UNDEF_',$p15='_UNDEF_',$p16='_UNDEF_')
+{
+	/*		error_reporting(0);		*/
+	list($appname,$classname) = explode(".", $class);
+	if (!isset($GLOBALS['phpgw_info']['flags']['included_classes'][$classname]) ||
+			!$GLOBALS['phpgw_info']['flags']['included_classes'][$classname])
 	{
-		global $phpgw, $phpgw_info, $phpgw_domain;
-
-/*		error_reporting(0);		*/
-
-/*
-		$classpart = explode (".", $class);
-		$appname   = $classpart[0];
-		$classname = $classpart[1];
-*/
-		list($appname,$classname) = explode(".", $class);
-		if (!isset($phpgw_info['flags']['included_classes'][$classname]) ||
-			!$phpgw_info['flags']['included_classes'][$classname])
-		{
-			$phpgw_info['flags']['included_classes'][$classname] = True;   
-			include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
-		}
-		if ($p1 == '_UNDEF_')
-		{
-			eval("\$obj = new \$classname;");
-		}
-		else
-		{
-			$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
-			$i = 1;
-			$code = "\$obj = new \$classname(";
-			while (list($x,$test) = each($input))
-			{
-				if ($test == '_UNDEF_' || $i == 17)
-				{
-					break;
-				}
-				else
-				{
-					$code .= "\$p" . $i . ',';
-				}
-				$i++;
-			}
-			$code = substr($code,0,-1) . ");";
-			eval($code);
-		}
-/*		error_reporting(E_ERROR | E_WARNING | E_PARSE);	*/
-		return $obj;
+		$GLOBALS['phpgw_info']['flags']['included_classes'][$classname] = True;   
+		include(PHPGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 	}
+	if ($p1 == '_UNDEF_')
+	{
+		eval('$obj = new '.$classname.';');
+	}
+	else
+	{
+		$input = array($p1,$p2,$p3,$p4,$p5,$p6,$p7,$p8,$p9,$p10,$p11,$p12,$p13,$p14,$p15,$p16);
+		$i = 1;
+		$code = '$obj = new '.$classname.'(';
+		while (list($x,$test) = each($input))
+		{
+			if ($test == '_UNDEF_' || $i == 17)
+			{
+				break;
+			}
+			else
+			{
+				$code .= '$p' . $i . ',';
+			}
+			$i++;
+		}
+		$code = substr($code,0,-1) . ');';
+		eval($code);
+	}
+/*		error_reporting(E_ERROR | E_WARNING | E_PARSE);	*/
+	return $obj;
+}
 
 	/*!
 	@function ExecObject
@@ -103,53 +95,58 @@
 	@param $loglevel developers choice of logging level
 	@param $classparams params to be sent to the contructor
 	*/
-	function ExecObject($object, $functionparams, $loglevel, $classparams)
+function ExecObject($object, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
+{
+	list($appname,$classname,$functionname) = explode(".", $object);
+	if ($appname == 'phpgw')
 	{
-		global $GLOBAL;
-/*
-		$objparts = explode (".", $object);
-		$appname = $objparts[0];
-		$classname = $objparts[1];
-		$functionname = $objparts[2];
-*/
-		list($appname,$classname,$functionname) = explode(".", $object);
-		$code = 'global $'.$classname.';';
-		eval($code);
-		if (!is_object($$classname))
-		{
-			$classname = CreateObject($appname.'.'.$classname);
-			$code = '$'.$classname.' = CreateObject('.$appname.'.'.$classname.')';
-			/*	$code = '$'.$classname.' = new '.$classname.';'; */
-			eval($code);
-		}
-		${$GLOBAL[$classname]}->${$functionname};
+		$appname == 'phpgwapi';
 	}
+
+	if (!is_object($GLOBALS[$classname]))
+	{
+		if ($classparams != '_UNDEF_')
+		{
+			$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
+		}
+		else
+		{
+			$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
+		}
+	}
+
+	if ($functionparams != '_UNDEF_')
+	{
+		return $GLOBALS[$classname]->$functionname($functionparams);
+	}
+	else
+	{
+		return $GLOBALS[$classname]->$functionname();
+	}
+}
 
 	/*!
 	@function lang
 	@abstract function to handle multilanguage support
 	*/
-	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
+function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
+{
+	if(gettype($m1) == 'array')
 	{
-		global $phpgw;
-
-		if(gettype($m1) == 'array')
-		{
-			$vars = $m1;
-		}
-		else
-		{
-			$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
-		}
-		$value = $phpgw->translation->translate("$key",$vars);
-		return $value;
+		$vars = $m1;
 	}
+	else
+	{
+		$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
+	}
+	$value = $GLOBALS['phpgw']->translation->translate("$key",$vars);
+	return $value;
+}
 
 	/* Just a temp wrapper. ###DELETE_ME#### (Seek3r) */
 	function check_code($code)
 	{
-		 global $phpgw;
-		 return $phpgw->common->check_code($code);
+	return $GLOBALS['phpgw']->common->check_code($code);
 	}
 
 	/*!
@@ -166,9 +163,7 @@
 	*/
 	function get_account_id($account_id = '',$default_id = '')
 	{
-		global $phpgw, $phpgw_info;
-
-		if (gettype($account_id) == 'integer')
+	if (gettype($account_id) == 'integer')
 		{
 			return $account_id;
 		}
@@ -176,23 +171,23 @@
 		{
 			if ($default_id == '')
 			{
-				return (isset($phpgw_info['user']['account_id'])?$phpgw_info['user']['account_id']:0);
+			return (isset($GLOBALS['phpgw_info']['user']['account_id'])?$GLOBALS['phpgw_info']['user']['account_id']:0);
 			}
 			elseif (gettype($default_id) == 'string')
 			{
-				return $phpgw->accounts->name2id($default_id);
+			return $GLOBALS['phpgw']->accounts->name2id($default_id);
 			}
 			return intval($default_id);
 		}
 		elseif (gettype($account_id) == 'string')
 		{
-			if($phpgw->accounts->exists(intval($account_id)) == True)
+		if($GLOBALS['phpgw']->accounts->exists(intval($account_id)) == True)
 			{
 				return intval($account_id);
 			}
 			else
 			{
-				return $phpgw->accounts->name2id($account_id);
+			return $GLOBALS['phpgw']->accounts->name2id($account_id);
 			}
 		}
 	}
@@ -228,8 +223,7 @@
 
 	function print_debug($text='')
 	{
-		global $debugme;
-		if (isset($debugme) && $debugme == 'on') { echo 'debug: '.$text.'<br>'; }
+	if (isset($GLOBALS['debugme']) && $GLOBALS['debugme'] == 'on') { echo 'debug: '.$text.'<br>'; }
 	}
 
 //	print_debug('core functions are done');
@@ -238,17 +232,17 @@
 	\****************************************************************************/
 //	error_reporting(7);
 	/* Make sure the header.inc.php is current. */
-	if ($phpgw_info['server']['versions']['header'] < $phpgw_info['server']['versions']['current_header'])
+if ($GLOBALS['phpgw_info']['server']['versions']['header'] < $GLOBALS['phpgw_info']['server']['versions']['current_header'])
 	{
 		echo '<center><b>You need to port your settings to the new header.inc.php version.</b></center>';
 		exit;
 	}
 
 	/* Make sure the developer is following the rules. */
-	if (!isset($phpgw_info['flags']['currentapp']))
+if (!isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 	{
-		echo "<b>!!! YOU DO NOT HAVE YOUR \$phpgw_info[\"flags\"][\"currentapp\"] SET !!!";
-		echo "<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>";
+	echo '<b>!!! YOU DO NOT HAVE YOUR $phpgw_info["flags"]["currentapp"] SET !!!';
+	echo '<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';
 	}
 
 	magic_quotes_runtime(false);
@@ -259,20 +253,20 @@
 	\****************************************************************************/
 
 	/* make them fix their header */
-	if (!isset($phpgw_domain))
+if (!isset($GLOBALS['phpgw_domain']))
 	{
 		 echo '<center><b>The administrator must upgrade the header.inc.php file before you can continue.</b></center>';
 		 exit;
 	}
-	reset($phpgw_domain);
-	$default_domain = each($phpgw_domain);
-	$phpgw_info['server']['default_domain'] = $default_domain[0];
+reset($GLOBALS['phpgw_domain']);
+$default_domain = each($GLOBALS['phpgw_domain']);
+$GLOBALS['phpgw_info']['server']['default_domain'] = $default_domain[0];
 	unset ($default_domain); // we kill this for security reasons
 
 	/* This code will handle virtdomains so that is a user logins with user@domain.com, it will switch into virtualization mode. */
 	if (isset($domain))
 	{
-		$phpgw_info['user']['domain'] = $domain;
+	$GLOBALS['phpgw_info']['user']['domain'] = $domain;
 	}
 	elseif (isset($login) && isset($logindomain))
 	{
@@ -280,7 +274,7 @@
 		{
 			$login = $login."@".$logindomain;
 		}
-		$phpgw_info['user']['domain'] = $logindomain;
+	$GLOBALS['phpgw_info']['user']['domain'] = $logindomain;
 		unset ($logindomain);
 	}
 	elseif (isset($login) && !isset($logindomain))
@@ -288,111 +282,111 @@
 		if (ereg ("\@", $login))
 		{
 			$login_array = explode("@", $login);
-			$phpgw_info['user']['domain'] = $login_array[1];
+		$GLOBALS['phpgw_info']['user']['domain'] = $login_array[1];
 		}
 		else
 		{
-			$phpgw_info['user']['domain'] = $phpgw_info['server']['default_domain'];
-			$login = $login . '@' . $phpgw_info['user']['domain'];
+		$GLOBALS['phpgw_info']['user']['domain'] = $GLOBALS['phpgw_info']['server']['default_domain'];
+		$login = $login . '@' . $GLOBALS['phpgw_info']['user']['domain'];
 		}
 	}
 
-	if (@isset($phpgw_domain[$phpgw_info['user']['domain']]))
+if (@isset($GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]))
 	{
-		$phpgw_info['server']['db_host'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_host'];
-		$phpgw_info['server']['db_name'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_name'];
-		$phpgw_info['server']['db_user'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_user'];
-		$phpgw_info['server']['db_pass'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_pass'];
-		$phpgw_info['server']['db_type'] = $phpgw_domain[$phpgw_info['user']['domain']]['db_type'];
+	$GLOBALS['phpgw_info']['server']['db_host'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]['db_host'];
+	$GLOBALS['phpgw_info']['server']['db_name'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]['db_name'];
+	$GLOBALS['phpgw_info']['server']['db_user'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]['db_user'];
+	$GLOBALS['phpgw_info']['server']['db_pass'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]['db_pass'];
+	$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['user']['domain']]['db_type'];
 	}
 	else
 	{
-		$phpgw_info['server']['db_host'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_host'];
-		$phpgw_info['server']['db_name'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_name'];
-		$phpgw_info['server']['db_user'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_user'];
-		$phpgw_info['server']['db_pass'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_pass'];
-		$phpgw_info['server']['db_type'] = $phpgw_domain[$phpgw_info['server']['default_domain']]['db_type'];
+	$GLOBALS['phpgw_info']['server']['db_host'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_host'];
+	$GLOBALS['phpgw_info']['server']['db_name'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_name'];
+	$GLOBALS['phpgw_info']['server']['db_user'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_user'];
+	$GLOBALS['phpgw_info']['server']['db_pass'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_pass'];
+	$GLOBALS['phpgw_info']['server']['db_type'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['db_type'];
 	}
 
-	if ($phpgw_info['flags']['currentapp'] != 'login' && ! $phpgw_info['server']['show_domain_selectbox'])
+if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
-		unset ($phpgw_domain); // we kill this for security reasons  
+	unset ($GLOBALS['phpgw_domain']); // we kill this for security reasons  
 	}
 	unset ($domain); // we kill this to save memory
 
-	@print_debug('domain: '.$phpgw_info['user']['domain']);
+@print_debug('domain: '.$GLOBALS['phpgw_info']['user']['domain']);
 
 	/****************************************************************************\
 	* These lines load up the API, fill up the $phpgw_info array, etc            *
 	\****************************************************************************/
 	/* Load main class */
-	$phpgw = CreateObject('phpgwapi.phpgw');
+$GLOBALS['phpgw'] = CreateObject('phpgwapi.phpgw');
 	/************************************************************************\
 	* Load up the main instance of the db class.                             *
 	\************************************************************************/
-	$phpgw->db           = CreateObject('phpgwapi.db');
-	$phpgw->db->Host     = $phpgw_info['server']['db_host'];
-	$phpgw->db->Type     = $phpgw_info['server']['db_type'];
-	$phpgw->db->Database = $phpgw_info['server']['db_name'];
-	$phpgw->db->User     = $phpgw_info['server']['db_user'];
-	$phpgw->db->Password = $phpgw_info['server']['db_pass'];
-	if ($phpgw->debug)
+$GLOBALS['phpgw']->db           = CreateObject('phpgwapi.db');
+$GLOBALS['phpgw']->db->Host     = $GLOBALS['phpgw_info']['server']['db_host'];
+$GLOBALS['phpgw']->db->Type     = $GLOBALS['phpgw_info']['server']['db_type'];
+$GLOBALS['phpgw']->db->Database = $GLOBALS['phpgw_info']['server']['db_name'];
+$GLOBALS['phpgw']->db->User     = $GLOBALS['phpgw_info']['server']['db_user'];
+$GLOBALS['phpgw']->db->Password = $GLOBALS['phpgw_info']['server']['db_pass'];
+if ($GLOBALS['phpgw']->debug)
 	{
-		 $phpgw->db->Debug = 1;
+	$GLOBALS['phpgw']->db->Debug = 1;
 	}
 
-	$phpgw->db->Halt_On_Error = 'no';
-	@$phpgw->db->query("select count(*) from phpgw_config");
-	if (! @$phpgw->db->next_record())
+$GLOBALS['phpgw']->db->Halt_On_Error = 'no';
+@$GLOBALS['phpgw']->db->query("select count(*) from phpgw_config");
+if (! @$GLOBALS['phpgw']->db->next_record())
 	{
 		$setup_dir = ereg_replace($PHP_SELF,'index.php','setup/');
 		echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
 			.'phpGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
 		exit;
 	}
-	$phpgw->db->Halt_On_Error = 'yes';
+$GLOBALS['phpgw']->db->Halt_On_Error = 'yes';
 
 	/* Fill phpgw_info["server"] array */
 // An Attempt to speed things up using cache premise
-	$phpgw->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
-	if ($phpgw->db->num_rows())
+$GLOBALS['phpgw']->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='cache_phpgw_info'",__LINE__,__FILE__);
+if ($GLOBALS['phpgw']->db->num_rows())
 	{
-		$phpgw->db->next_record();
-		$phpgw_info['server']['cache_phpgw_info'] = stripslashes($phpgw->db->f('config_value'));
+	$GLOBALS['phpgw']->db->next_record();
+	$GLOBALS['phpgw_info']['server']['cache_phpgw_info'] = stripslashes($GLOBALS['phpgw']->db->f('config_value'));
 	}
 
 	$cache_query = "select content from phpgw_app_sessions where"
 		." sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
-		
-	$phpgw->db->query($cache_query,__LINE__,__FILE__);
-	$server_info_cache = $phpgw->db->num_rows();
-	
-	if(@$phpgw_info['server']['cache_phpgw_info'] && $server_info_cache)
+
+$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
+$server_info_cache = $GLOBALS['phpgw']->db->num_rows();
+
+if(@$GLOBALS['phpgw_info']['server']['cache_phpgw_info'] && $server_info_cache)
 	{
-		$phpgw->db->next_record();
-		$phpgw_info['server'] = unserialize(stripslashes($phpgw->db->f('content')));
+	$GLOBALS['phpgw']->db->next_record();
+	$GLOBALS['phpgw_info']['server'] = unserialize(stripslashes($GLOBALS['phpgw']->db->f('content')));
 	}
 	else
 	{	
-		$phpgw->db->query("select * from phpgw_config WHERE config_app='phpgwapi'",__LINE__,__FILE__);
-		while ($phpgw->db->next_record())
+	$GLOBALS['phpgw']->db->query("select * from phpgw_config WHERE config_app='phpgwapi'",__LINE__,__FILE__);
+	while ($GLOBALS['phpgw']->db->next_record())
 		{
-			$phpgw_info['server'][$phpgw->db->f('config_name')] = stripslashes($phpgw->db->f('config_value'));
+		$GLOBALS['phpgw_info']['server'][$GLOBALS['phpgw']->db->f('config_name')] = stripslashes($GLOBALS['phpgw']->db->f('config_value'));
 		}
 
-		if($phpgw_info['server']['cache_phpgw_info'])
+	if($GLOBALS['phpgw_info']['server']['cache_phpgw_info'])
 		{
 			if($server_info_cache)
 			{
-				$cache_query = "UPDATE phpgw_app_sessions set content='".addslashes(serialize($phpgw_info['server']))."'"
+			$cache_query = "UPDATE phpgw_app_sessions set content='".addslashes(serialize($GLOBALS['phpgw_info']['server']))."'"
 					." WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'";
 			}
 			else
 			{
 				$cache_query = 'INSERT INTO phpgw_app_sessions(sessionid,loginid,app,location,content) VALUES('
-					. "'0','0','phpgwapi','config','".addslashes(serialize($phpgw_info['server']))."')";
+				. "'0','0','phpgwapi','config','".addslashes(serialize($GLOBALS['phpgw_info']['server']))."')";
 			}
-			$phpgw->db->query($cache_query,__LINE__,__FILE__);
+		$GLOBALS['phpgw']->db->query($cache_query,__LINE__,__FILE__);
 		}
 	}
 	unset($cache_query);
@@ -400,16 +394,16 @@
 	/************************************************************************\
 	* Required classes                                                       *
 	\************************************************************************/
-	$phpgw->common       = CreateObject('phpgwapi.common');
-	$phpgw->hooks        = CreateObject('phpgwapi.hooks');
-	$phpgw->auth         = CreateObject('phpgwapi.auth');
-	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
-	$phpgw->acl          = CreateObject('phpgwapi.acl');
-	$phpgw->session      = CreateObject('phpgwapi.sessions');
-	$phpgw->preferences  = CreateObject('phpgwapi.preferences');
-	$phpgw->applications = CreateObject('phpgwapi.applications');
-	$phpgw->translation  = CreateObject('phpgwapi.translation');
-//	$phpgw->datetime = CreateObject('phpgwapi.datetime');
+$GLOBALS['phpgw']->common       = CreateObject('phpgwapi.common');
+$GLOBALS['phpgw']->hooks        = CreateObject('phpgwapi.hooks');
+$GLOBALS['phpgw']->auth         = CreateObject('phpgwapi.auth');
+$GLOBALS['phpgw']->accounts     = CreateObject('phpgwapi.accounts');
+$GLOBALS['phpgw']->acl          = CreateObject('phpgwapi.acl');
+$GLOBALS['phpgw']->session      = CreateObject('phpgwapi.sessions');
+$GLOBALS['phpgw']->preferences  = CreateObject('phpgwapi.preferences');
+$GLOBALS['phpgw']->applications = CreateObject('phpgwapi.applications');
+$GLOBALS['phpgw']->translation  = CreateObject('phpgwapi.translation');
+//	$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 	print_debug('main class loaded');
 
 	/****************************************************************************\
@@ -421,16 +415,16 @@
 	/****************************************************************************\
 	* Stuff to use if logging in or logging out                                  *
 	\****************************************************************************/
-	if ($phpgw_info['flags']['currentapp'] == 'login' || $phpgw_info['flags']['currentapp'] == 'logout')
+if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'logout')
 	{
-		if ($phpgw_info['flags']['currentapp'] == 'login')
+	if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
 		{
 			if (@$login != '')
 			{
 				$login_array = explode("@",$login);
-				$login_id = $phpgw->accounts->name2id($login_array[0]);
-				$phpgw->accounts->accounts($login_id);
-				$phpgw->preferences->preferences($login_id);
+			$login_id = $GLOBALS['phpgw']->accounts->name2id($login_array[0]);
+			$GLOBALS['phpgw']->accounts->accounts($login_id);
+			$GLOBALS['phpgw']->preferences->preferences($login_id);
 			}
 		}
 		/****************************************************************************\
@@ -440,21 +434,21 @@
 	}
 	else
 	{
-		if (! $phpgw->session->verify())
+	if (! $GLOBALS['phpgw']->session->verify())
 		{
-			Header('Location: ' . $phpgw->redirect($phpgw->session->link('/login.php','cd=10')));
+		Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','cd=10')));
 			exit;
 		}
 
 		/* A few hacker resistant constants that will be used throught the program */
-		define('PHPGW_TEMPLATE_DIR',$phpgw->common->get_tpl_dir('phpgwapi'));
-		define('PHPGW_IMAGES_DIR', $phpgw->common->get_image_path('phpgwapi'));
-		define('PHPGW_IMAGES_FILEDIR', $phpgw->common->get_image_dir('phpgwapi'));
-		define('PHPGW_APP_ROOT', $phpgw->common->get_app_dir());
-		define('PHPGW_APP_INC', $phpgw->common->get_inc_dir());
-		define('PHPGW_APP_TPL', $phpgw->common->get_tpl_dir());
-		define('PHPGW_IMAGES', $phpgw->common->get_image_path());
-		define('PHPGW_APP_IMAGES_DIR', $phpgw->common->get_image_dir());
+	define('PHPGW_TEMPLATE_DIR',$GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
+	define('PHPGW_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_path('phpgwapi'));
+	define('PHPGW_IMAGES_FILEDIR', $GLOBALS['phpgw']->common->get_image_dir('phpgwapi'));
+	define('PHPGW_APP_ROOT', $GLOBALS['phpgw']->common->get_app_dir());
+	define('PHPGW_APP_INC', $GLOBALS['phpgw']->common->get_inc_dir());
+	define('PHPGW_APP_TPL', $GLOBALS['phpgw']->common->get_tpl_dir());
+	define('PHPGW_IMAGES', $GLOBALS['phpgw']->common->get_image_path());
+	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir());
 
 		define('PHPGW_ACL_READ',1);
 		define('PHPGW_ACL_ADD',2);
@@ -463,55 +457,55 @@
 		define('PHPGW_ACL_PRIVATE',16);
 
 		/********* This sets the user variables *********/
-		$phpgw_info['user']['private_dir'] = $phpgw_info['server']['files_dir']
-											. '/users/'.$phpgw_info['user']['userid'];
+	$GLOBALS['phpgw_info']['user']['private_dir'] = $GLOBALS['phpgw_info']['server']['files_dir']
+		. '/users/'.$GLOBALS['phpgw_info']['user']['userid'];
 
 		/* This will make sure that a user has the basic default prefs. If not it will add them */
-		$phpgw->preferences->verify_basic_settings();
+	$GLOBALS['phpgw']->preferences->verify_basic_settings();
 
 		/********* Optional classes, which can be disabled for performance increases *********/
-		while ($phpgw_class_name = each($phpgw_info['flags']))
+	while ($phpgw_class_name = each($GLOBALS['phpgw_info']['flags']))
 		{
 			if (ereg('enable_',$phpgw_class_name[0]))
 			{
 				$enable_class = str_replace('enable_','',$phpgw_class_name[0]);
 				$enable_class = str_replace('_class','',$enable_class);
-				eval('$phpgw->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
+			eval('$GLOBALS["phpgw"]->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
 			}
 		}
 		unset($enable_class);
-		reset($phpgw_info['flags']);
+	reset($GLOBALS['phpgw_info']['flags']);
 
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
-		if(!@$phpgw_info['flags']['disable_Template_class'])
+	if(!@$GLOBALS['phpgw_info']['flags']['disable_Template_class'])
 		{
-			$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 		}
 
 		/*************************************************************************\
 		* These lines load up the themes                                          *
 		\*************************************************************************/
-		if (! $phpgw_info['user']['preferences']['common']['theme'])
+	if (! $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])
 		{
-			if ($phpgw_info['server']['template_set'] == 'user_choice')
+		if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
 			{
-				$phpgw_info['user']['preferences']['common']['theme'] = 'default';
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
 			}
 			else
 			{
-				$phpgw_info['user']['preferences']['common']['theme'] = $phpgw_info['server']['template_set'];
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
 			}
 		}
 
-		if ($phpgw_info['server']['force_theme'] == 'user_choice')
+	if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
 		{
-			$theme_to_load = (isset($phpgw_info['user']['preferences']['common']['theme'])?$phpgw_info['user']['preferences']['common']['theme']:'default');
+		$theme_to_load = (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])?$GLOBALS['phpgw_info']['user']['preferences']['common']['theme']:'default');
 		}
 		else
 		{
-			$theme_to_load = (isset($phpgw_info['server']['force_theme'])?$phpgw_info['server']['force_theme']:'default');
+		$theme_to_load = (isset($GLOBALS['phpgw_info']['server']['force_theme'])?$GLOBALS['phpgw_info']['server']['force_theme']:'default');
 		}
 
 		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme'))
@@ -534,41 +528,41 @@
 		/*************************************************************************\
 		* If they are using frames, we need to set some variables                 *
 		\*************************************************************************/
-		if (((isset($phpgw_info['user']['preferences']['common']['useframes']) &&
-			$phpgw_info['user']['preferences']['common']['useframes']) && 
-			$phpgw_info['server']['useframes'] == 'allowed') ||
-			($phpgw_info['server']['useframes'] == 'always'))
+	if (((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
+					$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) && 
+				$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
+			($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 		{
-			$phpgw_info['flags']['navbar_target'] = 'phpgw_body';
+		$GLOBALS['phpgw_info']['flags']['navbar_target'] = 'phpgw_body';
 		}
 
 		/*************************************************************************\
 		* Verify that the users session is still active otherwise kick them out   *
 		\*************************************************************************/
-		if ($phpgw_info['flags']['currentapp'] != 'home' &&
-			$phpgw_info['flags']['currentapp'] != 'preferences' &&
-			$phpgw_info['flags']['currentapp'] != 'about')
+	if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences' &&
+			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
 		{
 			// This will need to use ACL in the future
-			if (! $phpgw_info['user']['apps'][$phpgw_info['flags']['currentapp']] || (@$phpgw_info['flags']['admin_only'] && ! $phpgw_info['user']['apps']['admin']))
+		if (! $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']] || (@$GLOBALS['phpgw_info']['flags']['admin_only'] && ! $GLOBALS['phpgw_info']['user']['apps']['admin']))
 			{
-				$phpgw->common->phpgw_header();
-				if ($phpgw_info['flags']['noheader'])
+			$GLOBALS['phpgw']->common->phpgw_header();
+			if ($GLOBALS['phpgw_info']['flags']['noheader'])
 				{
 					echo parse_navbar();
 				}
 
 				echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
-				$phpgw->common->phpgw_exit(True);
+			$GLOBALS['phpgw']->common->phpgw_exit(True);
 			}
 		}
 
 		/*************************************************************************\
 		* Load the header unless the developer turns it off                       *
 		\*************************************************************************/
-		if (!@$phpgw_info['flags']['noheader'])
+	if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
 		{
-			$phpgw->common->phpgw_header();
+		$GLOBALS['phpgw']->common->phpgw_header();
 		}
 
 		/*************************************************************************\
@@ -579,8 +573,8 @@
 		{
 			include(PHPGW_APP_INC . '/functions.inc.php');
 		}
-		if (!@$phpgw_info['flags']['noheader'] && 
-			 !@$phpgw_info['flags']['noappheader'] &&
+	if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && 
+			!@$GLOBALS['phpgw_info']['flags']['noappheader'] &&
 		    file_exists(PHPGW_APP_INC . '/header.inc.php') && !isset($menuaction))
 		{
 			include(PHPGW_APP_INC . '/header.inc.php');
@@ -588,4 +582,3 @@
 	}
 
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
-

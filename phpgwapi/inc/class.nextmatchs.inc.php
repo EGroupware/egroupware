@@ -31,7 +31,7 @@
 		var $maxmatches;
 		var $action;
 		var $template;
-		
+
 		function nextmatchs()
 		{
 			global $phpgw_info, $menuaction;
@@ -76,11 +76,7 @@
 
 			switch(strtolower($phpgw_info['user']['account_lid']))
 			{
-				case 'seek3r':
-					srand($time());
-					$border = rand(1,200);
-					break;
-				case 'ceb':
+			case 'ceb':
 					$border = 2;
 					break;
 				default:
@@ -114,7 +110,7 @@
 
 			return $phpgw->link('/index.php','menuaction='.$this->action.$extravars);
 		}
-		
+
 		/*!
 		@function set_link
 		@abstract ?
@@ -243,7 +239,7 @@
 		function left($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-			
+
 			$extravars = Array(
 				'order'	=> $order,
 				'filter'	=> $filter,
@@ -255,7 +251,7 @@
 			$extravars = $this->split_extras($extravars,$extradata);
 
 			$ret_str = '';
-			
+
 			if (($start != 0) && ($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
@@ -287,7 +283,7 @@
 
 			return $ret_str;
 		} /* left() */
-		
+
 		/*!
 		@function right
 		@abstract ?
@@ -299,7 +295,7 @@
 		function right($scriptname,$start,$total,$extradata = '')
 		{
 			global $filter, $qfield, $order, $sort, $query, $phpgw_info, $phpgw;
-			
+
 			$extravars = Array(
 				'order'	=> $order,
 				'filter'	=> $filter,
@@ -334,7 +330,7 @@
 
 			return $ret_str;
 		} /* right() */
-		
+
 		/*!
 		@function search
 		@abstract ?
@@ -430,7 +426,7 @@
 				{
 //					$user_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
 					$indexlimit = count($user_groups);
-					
+
 					if ($yours)
 					{
 						$filter_obj = array(array('none',lang('Show all')),
@@ -512,7 +508,7 @@
 		{
 			$tpl->set_var('tr_color',$this->alternate_row_color());
 		}
-		
+
 		/*!
 		@function show_sort_order
 		@abstract ?
