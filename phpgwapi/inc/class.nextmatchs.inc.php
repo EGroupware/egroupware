@@ -178,11 +178,14 @@
 				'lang_select'   => lang('Select'),
 				'cat_field'     => $cat_field,
 				'categories'    => $GLOBALS['phpgw']->categories->formated_list('select','all',$cat_id,'True'),
-				'filter_value'  => $this->_filter,
-				'qfield'        => $this->_qfield,
-				'start_value'   => (int)$localstart,
-				'order_value'   => $this->_order,
-				'sort_value'    => $this->_sort,
+				'hidden'       => $GLOBALS['phpgw']->html->input_hidden(array(
+					'filter' => $this->_filter,
+					'qfield' => $this->_qfield,
+					'start'  => (int)$localstart,
+					'order'  => $this->_order,
+					'sort'   => $this->_sort,
+					'query'  => $GLOBALS['query'],
+				)),
 				'query_value'   => $GLOBALS['phpgw']->html->htmlspecialchars($GLOBALS['query']),
 				'table_width'   => $twidth,
 				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
@@ -329,12 +332,12 @@
 				'form_action'  => ($this->_menuaction?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
 				'th_bg'        => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'hidden'       => $GLOBALS['phpgw']->html->input_hidden(array(
-					'filter_value' => $this->_filter,
-					'qfield_value' => $this->_qfield,
-					'start_value'  => 0,
-					'order_value'  => $this->_order,
-					'sort_value'   => $this->_sort,
-					'query_value'  => $GLOBALS['query'],
+					'filter' => $this->_filter,
+					'qfield' => $this->_qfield,
+					'start'  => 0,
+					'order'  => $this->_order,
+					'sort'   => $this->_sort,
+					'query'  => $GLOBALS['query'],
 				)),
 				'search'       => $this->search($search_obj),
 				'filter'       => ($filter_obj?$this->filter($filter_obj,$yours):'')
@@ -362,12 +365,12 @@
 				'cat_field'     => $cat_field,
 				'categories'    => $GLOBALS['phpgw']->categories->formated_list('select','all',(int)$cat_id,'True'),
 				'hidden'       => $GLOBALS['phpgw']->html->input_hidden(array(
-					'filter_value' => $this->_filter,
-					'qfield_value' => $this->_qfield,
-					'start_value'  => 0,
-					'order_value'  => $this->_order,
-					'sort_value'   => $this->_sort,
-					'query_value'  => $GLOBALS['query'],
+					'filter' => $this->_filter,
+					'qfield' => $this->_qfield,
+					'start'  => 0,
+					'order'  => $this->_order,
+					'sort'   => $this->_sort,
+					'query'  => $GLOBALS['query'],
 				)),
 				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
 				'search'        => $this->search($search_obj),
@@ -456,7 +459,7 @@
 					{
 						$this->_qfield = $search_obj[$index][0];
 					}
-					$str .= '<option value="' . $search_obj[$index][0] . '"' . ($qfield == $search_obj[$index][0]?' selected':'') . '>' . lang($search_obj[$index][1]) . '</option>';
+					$str .= '<option value="' . $search_obj[$index][0] . '"' . ($this->_qfield == $search_obj[$index][0]?' selected':'') . '>' . lang($search_obj[$index][1]) . '</option>';
 				}
 				$str = '<select name="qfield">' . $str . '</select>' . "\n";
 			}
@@ -661,7 +664,7 @@
 				$extra = $this->extras_to_string($extra);
 			}
 
-			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$this->_filter.'&this->_qfield='.$qfield.'&start='.$this->_start.'&query='.urlencode(stripslashes(@$GLOBALS['query'])).$extra;
+			$extravar = 'order='.$var.'&sort='.$sort.'&filter='.$this->_filter.'&qfield='.$this->_qfield.'&start='.$this->_start.'&query='.urlencode(stripslashes(@$GLOBALS['query'])).$extra;
 
 			$link = ($this->_menuaction?$this->page($extravar):$GLOBALS['phpgw']->link($program,$extravar));
 
