@@ -14,7 +14,10 @@
             <OL>
             <LI>In Outlook, select your Contacts folder, select <b>Import 
               and Export...</b> from the <b>File</b> 
-              menu and export your contacts into a comma separated text file.<P></LI>
+              menu and export your contacts into a comma separated text file.
+			  <P>Or, in Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.
+			  The file exported will be in LDIF format.<P>
+			</LI>
             <LI>Enter the path to the exported file here:
               <INPUT NAME="tsvfile" SIZE=48 TYPE="file" VALUE="{tsvfilename}"><P></LI>
             <LI>Select the type of conversion (Import types will perform an actual import.  Debug will display output in browser or via a download.):<BR>
@@ -23,8 +26,6 @@
 	    {conv}
             </SELECT><P></LI>
             <LI><INPUT NAME="download" TYPE="checkbox" VALUE="{debug}" CHECKED>Debug output in browser (Uncheck to download output.)</LI>
-            <LI>Use this basedn (LDAP)<BR><INPUT NAME="basedn" TYPE="text" VALUE="{basedn}" SIZE="48"></LI>
-            <LI>Use this context for storing Contacts (LDAP)<BR><INPUT NAME="context" TYPE="text" VALUE="{context}" SIZE="48"></LI>
             <LI><INPUT NAME="convert" TYPE="submit" VALUE="{download}"></LI>
             </OL>
             </FORM></TD>

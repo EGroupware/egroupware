@@ -27,6 +27,7 @@
 	{
 		var $currentrecord = array(); //used for buffering to allow uid lines to go first
 		var $id;
+		var $type = 'csv';
 
 		var $import = array(
 			"Title" => "title", 

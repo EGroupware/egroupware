@@ -25,6 +25,7 @@
 
 	class import_conv
 	{
+		var $type = '';
 		var $basedn;
 		var $contactsdn;
 

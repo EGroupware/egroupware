@@ -53,11 +53,12 @@
 		$t->set_var("cancel_url",$phpgw->link("/addressbook/index.php"));
 		$t->set_var("navbar_bg",$phpgw_info["theme"]["navbar_bg"]);
 		$t->set_var("navbar_text",$phpgw_info["theme"]["navbar_text"]);
-		$t->set_var("import_text",lang("Import from Outlook"));
+		$t->set_var("import_text",lang("Import from Outlook (CSV) or Netscape (LDIF)"));
 		$t->set_var("action_url",$phpgw->link("/addressbook/import.php"));
 		$t->set_var("tsvfilename","");
 		$t->set_var("conv",$conv);
 		$t->set_var("debug",lang("Debug output in browser"));
+		$t->set_var("filetype",lang("LDIF"));
 		$t->set_var("basedn",$basedn);
 		$t->set_var("context",$context);
 		$t->set_var("download",lang("Submit"));
@@ -73,20 +74,42 @@
 		$o = new import_conv;
 		$buffer = $o->import_start_file($buffer,$basedn,$context);
 		$fp=fopen($tsvfile,"r");
-		while ($data = fgetcsv($fp,8000,",")) {
-			$num = count($data);
-			$row++;
-			if ($row == 1) {
-				$header = $data;
-			} else {
-				$buffer = $o->import_start_record($buffer);
-				for ($c=0; $c<$num; $c++ ) {
-					//Send name/value pairs along with the buffer
-					if ($o->import[$header[$c]]!="" && $data[$c]!="") {
-						$buffer = $o->import_new_attrib($buffer, $o->import[$header[$c]],$data[$c]);
+		if ($o->type != 'ldif') {
+			while ($data = fgetcsv($fp,8000,",")) {
+				$num = count($data);
+				$row++;
+				if ($row == 1) {
+					$header = $data;
+				} else {
+					$buffer = $o->import_start_record($buffer);
+					for ($c=0; $c<$num; $c++ ) {
+						//Send name/value pairs along with the buffer
+						if ($o->import[$header[$c]]!="" && $data[$c]!="") {
+							$buffer = $o->import_new_attrib($buffer, $o->import[$header[$c]],$data[$c]);
+						}
 					}
+					$buffer = $o->import_end_record($buffer,$private);
 				}
-				$buffer = $o->import_end_record($buffer,$private);
+			}
+		} else {
+			while ($data = fgets($fp,8000)) {
+				list($name,$value) = split(':', $data);
+				if (substr($name,0,2) == 'dn') {
+					$buffer = $o->import_start_record($buffer);
+				}
+				if ($name && $value) {
+					$test = split(',mail=',$value);
+					if ($test[1]) {
+						$name = "mail";
+						$value = $test[1];
+					}
+					//echo '<br>'.$j.': '.$name.' => '.$value;
+					if ($o->import[$name] != "" && $value != "") {
+						$buffer = $o->import_new_attrib($buffer, $o->import[$name],$value);
+					}
+				} else {
+					$buffer = $o->import_end_record($buffer,$private);
+				}
 			}
 		}
 
