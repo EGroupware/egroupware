@@ -144,11 +144,6 @@
       echo "<!-- Birthday info -->\n";
   }
 
-  // Reaccuring events have not been added yet and this needs to be updated
-  // to handle global public and group events.
-
-
-  // This is disbaled until I can convert the calendar over
   if ($phpgw_info["user"]["apps"]["calendar"]
   && $phpgw_info["user"]["preferences"]["calendar"]["mainscreen_showevents"]) {
     echo "<!-- Calendar info -->\n";
