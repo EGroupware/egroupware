@@ -57,8 +57,8 @@
 						$groups_select .= " selected";
 					}
 				}
+				$groups_select .= ">" . $accounts[$i]["account_lid"] . "</option>\n";
 			}
-			$groups_select .= ">" . $accounts[$i]["account_lid"] . "</option>\n";
 		}
 		$groups_select .= "</select>";
 		$t->set_var("groups_select",$groups_select);
