@@ -50,7 +50,8 @@ filemanager preferences	filemanager	de	DateiManager Einstellungen
 files	filemanager	de	Dateien
 files is this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder	filemanager	de	Verzeichnisse
-go home	filemanager	de	
+folder up	filemanager	de	Ein Verzeichnis nach oben
+go home	filemanager	de	Zum Heimverzeichnis wechseln
 go to	filemanager	de	Gehe zu
 go to %1	filemanager	de	Gehe zu %1
 go to your home directory	filemanager	de	Gehe zu ihrem Home-Verzeichnis
@@ -69,6 +70,7 @@ no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis v
 no version history for this file/directory	filemanager	de	Keine Versionshistorie für dies Datei / Verzeichnis
 operation	filemanager	de	Operation
 owner	filemanager	de	Eigentümer
+please select a file to delete.	filemanager	de	Bitte wählen Sie die Datei aus welche Sie löschen möchten
 preferences old	preferences	de	Alte Einstellungen
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
@@ -77,7 +79,7 @@ rename	filemanager	de	Umbenennen
 renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 replaced %1	filemanager	de	%1 ersetzt
 save %1	filemanager	de	%1 speichern
-save %1, and go back to file listing	filemanager	de	
+save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Übersicht wechseln
 save all	filemanager	de	Alles speichern
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
