@@ -11,117 +11,117 @@
   \**************************************************************************/
   /* $Id$ */
 
-    if (! $cat_id)
-    {
-        Header('Location: ' . $phpgw->link('/admin/categories.php',"sort=$sort&order=$order&query=$query&start=$start"
-                        . "&filter=$filter"));
-    }
-
-    $phpgw_info['flags']['currentapp'] = 'admin';
-    include('../header.inc.php');
-
-    $t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-    $t->set_file(array('form' => 'category_form.tpl'));
-    $t->set_block('form','add','addhandle');
-    $t->set_block('form','edit','edithandle');
-
-    $c = CreateObject('phpgwapi.categories');
-    $c->app_name = 'phpgw';
-
-    $hidden_vars = "<input type=\"hidden\" name=\"sort\" value=\"$sort\">\n"
-		. "<input type=\"hidden\" name=\"order\" value=\"$order\">\n"
-		. "<input type=\"hidden\" name=\"query\" value=\"$query\">\n"
-		. "<input type=\"hidden\" name=\"start\" value=\"$start\">\n"
-		. "<input type=\"hidden\" name=\"filter\" value=\"$filter\">\n"
-		. "<input type=\"hidden\" name=\"cat_id\" value=\"$cat_id\">\n";
-
-    if ($submit)
-    {
-	$errorcount = 0;
-
-	if (!$cat_name)
+	if (! $cat_id)
 	{
-	    $error[$errorcount++] = lang('Please enter a name for that category !');
+		Header('Location: ' . $phpgw->link('/admin/categories.php',"sort=$sort&order=$order&query=$query&start=$start"
+											. "&filter=$filter"));
 	}
 
-	if (!$error)
-	{
-	    if (!$cat_parent)
-	    {
-		$exists = $c->exists('appandmains',$cat_name,$cat_id);
-	    }
-	    else
-	    {
-		$exists = $c->exists('appandsubs',$cat_name,$cat_id);
-	    }
+	$phpgw_info['flags']['currentapp'] = 'admin';
+	include('../header.inc.php');
 
-	    if ($exists == True)
-	    {
-		$error[$errorcount++] = lang('That category name has been used already !');
-	    }
+	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$t->set_file(array('form' => 'category_form.tpl'));
+	$t->set_block('form','add','addhandle');
+	$t->set_block('form','edit','edithandle');
+
+	$c = CreateObject('phpgwapi.categories');
+	$c->app_name = 'phpgw';
+
+	$hidden_vars = '<input type="hidden" name="sort" value="' . $sort . '">' . "\n"
+				. '<input type="hidden" name="order" value="' . $order . '">' . "\n"
+				. '<input type="hidden" name="query" value="' . $query . '">' . "\n"
+				. '<input type="hidden" name="start" value="' . $start . '">' . "\n"
+				. '<input type="hidden" name="filter" value="' . $filter . '">' . "\n"
+				. '<input type="hidden" name="cat_id" value="' . $cat_id . '">' . "\n";
+
+	if ($submit)
+	{
+		$errorcount = 0;
+
+		if (!$cat_name)
+		{
+			$error[$errorcount++] = lang('Please enter a name for that category !');
+		}
+
+		if (!$error)
+		{
+			if (!$cat_parent)
+			{
+				$exists = $c->exists('appandmains',$cat_name,$cat_id);
+			}
+			else
+			{
+				$exists = $c->exists('appandsubs',$cat_name,$cat_id);
+			}
+
+			if ($exists == True)
+			{
+				$error[$errorcount++] = lang('That category name has been used already !');
+			}
+		}
+
+		if ($cat_main && $cat_parent)
+		{
+			$main = $c->return_main($cat_parent);
+			if ($main != $cat_main)
+			{
+				$error[$errorcount++] = lang('You selected an invalid main category !');
+			}
+		}
+
+		$cat_name = addslashes($cat_name);
+		$cat_description = addslashes($cat_description);
+		$cat_access = 'public';
+
+		if (! $error)
+		{
+			$c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access,$cat_main);
+		}
 	}
 
-	if ($cat_main && $cat_parent)
+	if ($errorcount)
 	{
-	    $main = $c->return_main($cat_parent);
-	    if ($main != $cat_main)
-	    {
-		$error[$errorcount++] = lang('You selected an invalid main category !');
-	    }
+		$t->set_var('message',$phpgw->common->error_list($error));
 	}
 
-	$cat_name = addslashes($cat_name);
-	$cat_description = addslashes($cat_description);
-	$cat_access = 'public';
-
-	if (! $error)
+	if (($submit) && (! $error) && (! $errorcount))
 	{
-	    $c->edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data,$cat_access,$cat_main);
+		$t->set_var('message',lang('Category x has been updated !',$cat_name));
 	}
-    }
 
-    if ($errorcount)
-    {
-	$t->set_var('message',$phpgw->common->error_list($error));
-    }
+	if ((! $submit) && (! $error) && (! $errorcount))
+	{
+		$t->set_var('message','');
+	}
 
-    if (($submit) && (! $error) && (! $errorcount))
-    {
-	$t->set_var('message',lang('Category x has been updated !',$cat_name));
-    }
+	$cats = $c->return_single($cat_id);
 
-    if ((! $submit) && (! $error) && (! $errorcount))
-    {
-	$t->set_var('message','');
-    }
+	$t->set_var('title_categories',lang('Edit global category'));
+	$t->set_var('lang_parent',lang('Parent category'));
+	$t->set_var('lang_select_parent',lang('Select parent category'));
+	$t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
+	$t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+	$t->set_var('doneurl',$phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
+	$t->set_var('hidden_vars',$hidden_vars);
+	$t->set_var('lang_name',lang('Category name'));
+	$t->set_var('lang_descr',lang('Category description'));
+	$t->set_var('lang_done',lang('Done'));
+	$t->set_var('lang_edit',lang('Edit'));
+	$t->set_var('lang_delete',lang('Delete'));
+	$t->set_var('lang_main',lang('Main category'));
+	$t->set_var('lang_new_main',lang('New main category'));
+	$t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main']));
 
-    $cats = $c->return_single($cat_id);
+	$cat_id = $cats[0]['id'];
+	$t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
+	$t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
+	$t->set_var('category_list',$c->formated_list('select','all',$cats[0]['parent']));
 
-    $t->set_var('title_categories',lang('Edit global category'));
-    $t->set_var('lang_parent',lang('Parent category'));
-    $t->set_var('lang_select_parent',lang('Select parent category'));
-    $t->set_var('actionurl',$phpgw->link('/admin/editcategory.php'));
-    $t->set_var('deleteurl',$phpgw->link('/admin/deletecategory.php',"cat_id=$cat_id&start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
-    $t->set_var('doneurl',$phpgw->link('/admin/categories.php',"start=$start&query=$query&sort=$sort&order=$order&filter=$filter"));
-    $t->set_var('hidden_vars',$hidden_vars);
-    $t->set_var('lang_name',lang('Category name'));
-    $t->set_var('lang_descr',lang('Category description'));
-    $t->set_var('lang_done',lang('Done'));
-    $t->set_var('lang_edit',lang('Edit'));
-    $t->set_var('lang_delete',lang('Delete'));
-    $t->set_var('lang_main',lang('Main category'));
-    $t->set_var('lang_new_main',lang('New main category'));
-    $t->set_var('main_category_list',$c->formated_list('select','mains',$cats[0]['main']));
+	$t->set_var('edithandle','');
+	$t->set_var('addhandle','');
+	$t->pparse('out','form');
+	$t->pparse('edithandle','edit');
 
-    $cat_id = $cats[0]['id'];
-    $t->set_var('cat_name',$phpgw->strip_html($cats[0]['name']));
-    $t->set_var('cat_description',$phpgw->strip_html($cats[0]['description']));
-    $t->set_var('category_list',$c->formated_list('select','all',$cats[0]['parent']));
-
-    $t->set_var('edithandle','');
-    $t->set_var('addhandle','');
-    $t->pparse('out','form');
-    $t->pparse('edithandle','edit');
-
-    $phpgw->common->phpgw_footer();
+	$phpgw->common->phpgw_footer();
 ?>
