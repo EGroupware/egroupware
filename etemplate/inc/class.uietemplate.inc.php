@@ -66,10 +66,8 @@
 		*/
 		function location($vars='')
 		{
-			Header('Location: ' . $this->html->link(is_array($vars) ? '/index.php' : $vars,
-				is_array($vars) ? $vars : ''));
-
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['phpgw']->redirect_link(is_array($vars) ? '/index.php' : $vars,
+				is_array($vars) ? $vars : '');
 		}
 
 		/*!
@@ -110,18 +108,29 @@
 			{
 				$changes = array();
 			}
+			if (isset($content['app_header']))
+			{
+				$GLOBALS['phpgw_info']['flags']['app_header'] = $content['app_header'];
+			}
+			$html = '';
 			if ($this->stable)
 			{
 				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
 				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'])
 				{
+					$GLOBALS['phpgw_info']['flags']['java_script'] = $this->include_java_script(2);
 					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+				else
+				{
+					$html = $this->include_java_script(2);	// better than nothing
 				}
 			}
 			else
 			{
 				$hooked = $GLOBALS['phpgw']->xslttpl->get_var('phpgw');
 				$hooked = $hooked['body_data'];
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $this->include_java_script(2)));
 			}
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
@@ -132,7 +141,7 @@
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
 			$html .= ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
-				$this->html->form($this->include_java_script() .
+				$this->html->form($this->include_java_script(1).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id,
 						'etemplate_exec_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
@@ -1014,11 +1023,13 @@
 		@syntax include_java_script(  )
 		@author ralfbecker
 		@abstract returns the javascript to be included by exec
+		@param $what &1 = returns the test, note: has to be included in the body, not the header\
+			&2 = returns the common functions, best to be included in the header
 		*/
-		function include_java_script()
+		function include_java_script($what = 3)
 		{
 			// this is to test if javascript is enabled
-			if (!isset($GLOBALS['phpgw_info']['etemplate']['java_script']))
+			if ($what & 1 && !isset($GLOBALS['phpgw_info']['etemplate']['java_script']))
 			{
 				$js = '<script language="javascript">
 document.write(\''.str_replace("\n",'',$this->html->input_hidden('java_script','1')).'\');
@@ -1030,7 +1041,7 @@ if (document.getElementById) {
 			}
 
 			// here are going all the necesarry functions if javascript is enabled
-			if ($this->java_script(True))
+			if ($what & 2 && $this->java_script(True))
 			{
 				$js .= "<script language=\"JavaScript\">
 function set_element(form,name,value)
