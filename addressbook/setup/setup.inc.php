@@ -23,12 +23,15 @@
 	$setup_info['addressbook']['license']  = 'GPL';
 	$setup_info['addressbook']['description'] =
 		'Contact manager with Vcard support.<br>
-		Addressbook is the phpgroupware default contact application. <br>
-		It makes use of the phpgroupware contacts class to store and retrieve 
-		contact information via SQL or LDAP.';
+		 Always have your address book available for updates or look ups from anywhere. <br>
+		 Share address book contact information with others. <br>
+		 Link contacts to calendar events or infolog entires like phonecalls.<br> 
+		 Addressbook is the eGroupWare default contact application. <br>
+		 It makes use of the eGroupWare contacts class to store and retrieve 
+		 contact information via SQL or LDAP.';
 
-	$setup_info['addressbook']['maintainer'] = 'phpGroupWare coreteam';
-	$setup_info['addressbook']['maintainer_email'] = 'phpgroupware-developers@gnu.org';
+	$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
+	$setup_info['addressbook']['maintainer_email'] = 'milosch@users.sourceforge.net';
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks'][] = 'admin';
