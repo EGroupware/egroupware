@@ -47,7 +47,8 @@
 		}
 		else
 		{
-			header('HTTP/1.0 404 Not found');
+			// redirect to the login-page, better then giving an empty page
+			$GLOBALS['phpgw']->redirect('login.php');
 		}
 		exit;
 	}
