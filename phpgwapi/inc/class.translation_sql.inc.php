@@ -208,7 +208,7 @@
 		{
 			if (!is_array($this->langs))
 			{
-				$this->db->query("SELECT DISTINCT l.lang,ln.lang_name FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id",__LINE__,__FILE__);
+				$this->db->query("SELECT DISTINCT l.lang,lx.lang_name FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
 					return False;
@@ -234,7 +234,7 @@
 		{
 			if (!is_array($this->charsets))
 			{
-				$this->db->query("SELECT DISTINCT l.lang,ln.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages ln WHERE l.lang = ln.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
+				$this->db->query("SELECT DISTINCT l.lang,lx.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
 					return False;
@@ -351,7 +351,7 @@
 		function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
 		{
 			@set_time_limit(0);	// we might need some time
-
+			//echo "<p>translation_sql::install_langs(".print_r($langs,true).",'$upgrademthod','$only_app')</p>\n";
 			if (!isset($GLOBALS['phpgw_info']['server']) && $upgrademethod != 'dumpold')
 			{
 				$this->db->query("SELECT * FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
@@ -406,7 +406,7 @@
 					foreach($apps as $app)
 					{
 						$appfile = PHPGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
-						//echo '<br>Checking in: ' . $app['name'];
+						//echo '<br>Checking in: ' . $app;
 						if($GLOBALS['phpgw_setup']->app_registered($app) && file_exists($appfile))
 						{
 							//echo '<br>Including: ' . $appfile;
