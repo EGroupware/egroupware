@@ -29,7 +29,14 @@
 		$date = $phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
 		echo "\n".'<tr valign="top"><td><table border="0" cols="3"><tr><td align="center" width="35%" valign="top"><!-- BEGIN Calendar info -->'."\n"
-			. $cal->mini_calendar($cal->bo->day,$cal->bo->month,$cal->bo->year,'day').'</td><td align="center">'
+			. $cal->mini_calendar(
+				Array(
+					'day'	=> $cal->bo->day,
+					'month'	=> $cal->bo->month,
+					'year'	=> $cal->bo->year,
+					'link'	=> 'day'
+				)
+			).'</td><td align="center">'
 			. '<table border="0" width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">'
 			. lang($phpgw->common->show_date(time()-((60*60)*intval($phpgw_info['user']['preferences']['common']['tz_offset'])),'F')).' '.$cal->bo->day.', '.$cal->bo->year.'</tr></td>'
 			. '<tr><td bgcolor="'.$phpgw_info['theme']['bg_text'].'" valign="top">'

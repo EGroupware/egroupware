@@ -87,19 +87,39 @@
 
 		/* Public functions */
 
-		function mini_calendar($day,$month,$year,$link='',$buttons="none",$outside_month=True)
+		function mini_calendar($params)
 		{
 			global $GLOBALS;
 
+			if(!is_array($params))
+			{
+				return;
+			}
+
+			if(!isset($params['link']))
+			{
+				$params['link'] = '';
+			}
+
+			if(!isset($params['buttons']))
+			{
+				$params['button'] = 'none';
+			}
+
+			if(!isset($params['outside_month']))
+			{
+				$params['outside_month'] = True;
+			}
+
 			$this->bo->read_holidays();
 
-			$date = $this->bo->datetime->makegmttime(0,0,0,$month,$day,$year);
-			$month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
-			$month_ahead = intval(date('Ymd',mktime(0,0,0,$month + 1,$day,$year)));
-			$monthstart = intval(date('Ymd',mktime(0,0,0,$month,1,$year)));
-			$monthend = intval(date('Ymd',mktime(0,0,0,$month + 1,0,$year)));
+			$date = $this->bo->datetime->makegmttime(0,0,0,$params['month'],$params['day'],$params['year']);
+			$month_ago = intval(date('Ymd',mktime(0,0,0,$params['month'] - 1,$params['day'],$params['year'])));
+			$month_ahead = intval(date('Ymd',mktime(0,0,0,$params['month'] + 1,$params['day'],$params['year'])));
+			$monthstart = intval(date('Ymd',mktime(0,0,0,$params['month'],1,$params['year'])));
+			$monthend = intval(date('Ymd',mktime(0,0,0,$params['month'] + 1,0,$params['year'])));
 
-			$weekstarttime = $this->bo->datetime->get_weekday_start($year,$month,1);
+			$weekstarttime = $this->bo->datetime->get_weekday_start($params['year'],$params['month'],1);
 
 			$p = CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_unknowns('remove');
@@ -133,7 +153,7 @@
 
 			$p->set_var($var);
 
-			switch(strtolower($buttons))
+			switch(strtolower($params['buttons']))
 			{
 				case 'right':
 					$var = Array(
@@ -186,11 +206,11 @@
 					$month = intval(substr($date,4,2));
 					$day = intval(substr($date,6,2));
 					$str = '';
-					if(($date >= $monthstart && $date <= $monthend) || $outside_month == True)
+					if(($date >= $monthstart && $date <= $monthend) || $params['outside_month'] == True)
 					{
-						if(!$this->bo->printer_friendly)
+						if(!$this->bo->printer_friendly && $params['link'])
 						{
-							$str = '<a href="'.$this->page($link,'&date='.$date).'" class="'.$day_params['class'].'">'.$day.'</a>';
+							$str = '<a href="'.$this->page($params['link'],'&date='.$date).'" class="'.$day_params['class'].'">'.$day.'</a>';
 						}
 						else
 						{
@@ -230,6 +250,31 @@
 
 			$m = mktime(0,0,0,$this->bo->month,1,$this->bo->year);
 
+			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			{
+				$minical_prev = $this->mini_calendar(
+					Array(
+						'day'	=> 1,
+						'month'	=> $this->bo->month - 1,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day'
+					)
+				);
+				$minical_next = $this->mini_calendar(
+					Array(
+						'day'	=> 1,
+						'month'	=> $this->bo->month + 1,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day'
+					)
+				);
+			}
+			else
+			{
+				$minical_prev = '';
+				$minical_next = '';
+			}
+
 			if (!$this->bo->printer_friendly)
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -240,23 +285,11 @@
 				$printer = '';
 				$param = '&year='.$this->bo->year.'&month='.$this->bo->month.'&friendly=1';
 				$print = '<a href="'.$this->page('month'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
-				$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
-				$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
 			}
 			else
 			{
 				$printer = '<body bgcolor="'.$phpgw_info['theme']['bg_color'].'">';
 				$print =	'';
-				if(@$this->bo->prefs['calendar']['display_minicals'])
-				{
-					$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
-					$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
-				}
-				else
-				{
-					$minical_prev = '';
-					$minical_next = '';
-				}
 				$phpgw_info['flags']['nofooter'] = True;
 			}
 
@@ -292,6 +325,46 @@
 			$next = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day + 7,$this->bo->year);
 			$prev = $this->bo->datetime->makegmttime(0,0,0,$this->bo->month,$this->bo->day - 7,$this->bo->year);
 
+			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			{
+				$minical_this = $this->mini_calendar(
+					Array(
+						'day'	=> $this->bo->day,
+						'month'	=> $this->bo->month,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day',
+						'butons'	=> 'none',
+						'outside_month'	=> False
+					)
+				);
+				$minical_prev = $this->mini_calendar(
+					Array(
+						'day'	=> $this->bo->day,
+						'month'	=> $this->bo->month - 1,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day',
+						'butons'	=> 'left',
+						'outside_month'	=> False
+					)
+				);
+				$minical_next = $this->mini_calendar(
+					Array(
+						'day'	=> $this->bo->day,
+						'month'	=> $this->bo->month + 1,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day',
+						'butons'	=> 'right',
+						'outside_month'	=> False
+					)
+				);
+			}
+			else
+			{
+				$minical_this = '';
+				$minical_prev = '';
+				$minical_next = '';
+			}
+			
 			if (!$this->bo->printer_friendly)
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -301,9 +374,6 @@
 				$prev_week_link = '<a href="'.$this->page('week','&date='.$prev['full']).'">&lt;&lt;</a>';
 				$next_week_link = '<a href="'.$this->page('week','&date='.$next['full']).'">&gt;&gt;</a>';
 				$print = '<a href="'.$this->page('week','&friendly=1')."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
-				$minical_this = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day','none',False);
-				$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day','left',False);
-				$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day','right',False);
 			}
 			else
 			{
@@ -311,18 +381,6 @@
 				$prev_week_link = '&lt;&lt;';
 				$next_week_link = '&gt;&gt;';
 				$print =	'';
-				if(@$this->bo->prefs['calendar']['display_minicals'])
-				{
-					$minical_this = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
-					$minical_prev = $this->mini_calendar(1,$this->bo->month - 1,$this->bo->year,'day');
-					$minical_next = $this->mini_calendar(1,$this->bo->month + 1,$this->bo->year,'day');
-				}
-				else
-				{
-					$minical_this = '';
-					$minical_prev = '';
-					$minical_next = '';
-				}
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 			}
 
@@ -337,12 +395,12 @@
 				'username'					=>	$GLOBALS['phpgw']->common->grab_owner_name($this->bo->owner),
 				'small_calendar_next'	=>	$minical_next,
 				'week_display'				=>	$this->display_weekly(
-														Array(
-															'date'		=> sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day),
-															'showyear'	=> true,
-															'owners'		=> $this->bo->owner
-														)
-													),
+					Array(
+						'date'		=> sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day),
+						'showyear'	=> true,
+						'owners'		=> $this->bo->owner
+					)
+				),
 				'print'						=>	$print
 			);
 
@@ -403,7 +461,17 @@
 
 			for($i=1;$i<=12;$i++)
 			{
-				$p->set_var('mini_month',$this->mini_calendar(1,$i,$this->bo->year,$link,'none',False));
+				$p->set_var('mini_month',$this->mini_calendar(
+						Array(
+							'day'	=> 1,
+							'month'	=> $i,
+							'year'	=> $this->bo->year,
+							'link'	=> $link,
+							'buttons'	=> 'none',
+							'outside_month'	=> False
+						)
+					)
+				);
 				$p->parse('row','month',True);
 				$p->set_var('mini_month','');
 				if(($i % 3) == 0)
@@ -736,6 +804,22 @@
 			
 			$this->bo->read_holidays();
 			
+			if (!$this->bo->printer_firendly || ($this->bo->printer_friendly && @$this->bo->prefs['calendar']['display_minicals']))
+			{
+				$minical = $this->mini_calendar(
+					Array(
+						'day'	=> $this->bo->day,
+						'month'	=> $this->bo->month,
+						'year'	=> $this->bo->year,
+						'link'	=> 'day'
+					)
+				);
+			}
+			else
+			{
+				$minical = '';
+			}
+			
 			if (!$this->bo->printer_friendly)
 			{
 				unset($GLOBALS['phpgw_info']['flags']['noheader']);
@@ -744,21 +828,12 @@
 				$printer = '';
 				$param = '&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day).'&friendly=1';
 				$print = '<a href="'.$this->page('day'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
-				$minical = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
 			}
 			else
 			{
 				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
 				$printer = '<body bgcolor="'.$GLOBALS['phpgw_info']['theme']['bg_color'].'">';
 				$print =	'';
-				if($this->bo->prefs['calendar']['display_minicals'] == 'Y' || $this->bo->prefs['calendar']['display_minicals'])
-				{
-					$minical = $this->mini_calendar($this->bo->day,$this->bo->month,$this->bo->year,'day');
-				}
-				else
-				{
-					$minical = '';
-				}
 			}
 
 			$now	= $this->bo->datetime->makegmttime(0, 0, 0, $this->bo->month, $this->bo->day, $this->bo->year);
@@ -1400,7 +1475,15 @@
 					$GLOBALS['phpgw']->preferences->save_repository();
 				}
 			}
-			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$GLOBALS['phpgw_info']['flags']['currentapp'].'.ui'.$GLOBALS['phpgw_info']['flags']['currentapp'].'.'.$page.$params);
+			if($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home')
+			{
+				$page_app = 'calendar';
+			}
+			else
+			{
+				$page_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			}
+			return $GLOBALS['phpgw']->link('/index.php','menuaction='.$page_app.'.ui'.$page_app.'.'.$page.$params);
 		}
 
 		function header()
@@ -2322,6 +2405,13 @@
 				$this->bo->prefs['calendar']['workdayends'] = 16;
 			}
 
+			if(!isset($this->bo->prefs['calendar']['interval']))
+			{
+				$GLOBALS['phpgw']->preferences->add('calendar','interval',60);
+				$GLOBALS['phpgw']->preferences->save_repository();
+				$this->bo->prefs['calendar']['interval'] = 60;
+			}
+
 			if($this->debug)
 			{
 				echo "Interval set to : ".intval($this->bo->prefs['calendar']['interval'])."<br>\n";
@@ -2423,7 +2513,7 @@
 						$rowspan = intval(($endtime - $starttime) / (60 * intval($this->bo->prefs['calendar']['interval'])));
 						$mins = (int)((($endtime - $starttime) / 60) % 60);
 			
-						if ($mins <> 0 && $mins < intval(60 / intval($this->bo->prefs['calendar']['interval'])))
+						if(($mins <> 0 && $mins <= intval(60 / intval($this->bo->prefs['calendar']['interval']))) || ($mins == 0 && date('i',$endtime) > intval($this->bo->prefs['calendar']['interval'])))
 						{
 							$rowspan += 1;
 						}
