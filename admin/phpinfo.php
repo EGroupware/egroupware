@@ -11,13 +11,13 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags'] = array(
+	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'admin'
 	);
 	include('../header.inc.php');
-	
+
 	if ($GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
 	{
 		$GLOBALS['phpgw']->redirect_link('/index.php');
@@ -29,8 +29,7 @@
 		echo 'PHPaccelerator enabled:</br>'."\n";
 		echo 'PHPaccelerator Version: '.$GLOBALS['_PHPA']['VERSION'].'</br></p>'."\n";
 	}
-	
-	phpinfo();
 
+	phpinfo();
 //	$phpgw->common->phpgw_footer();
 ?>
