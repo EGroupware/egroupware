@@ -1,26 +1,26 @@
 (stored password will not be shown here)	admin	pl	(Przechowywane has³o nie bêdzie wy¶wietlane tutaj)
-account active	admin	pl	Konto aktywne?
+account active	admin	pl	Konto aktywne
 account has been created	common	pl	Konto zosta³o utworzone
 account has been deleted	common	pl	Konto zosta³o usuniête
 account has been updated	common	pl	Konto zosta³o zaktualizowane
 account permissions	admin	pl	Prawa do konta
-account preferences	admin	pl	Preferencje konta
-acl manager	admin	pl	Manager ACL
+account preferences	admin	pl	Ustawienia konta
+acl manager	admin	pl	Mened¿er ACL
 acl rights	admin	pl	Prawa ACL
 action	admin	pl	Czynno¶æ
-add a new account.	admin	pl	Dodaj nowe konto
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pl	
+add a new account.	admin	pl	Dodaj nowe konto.
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pl	Dodaj automatyczne stworzonych u¿ytkowników do tej grupy ('Domy¶lna' bêdzie u¿yta je¶li pole bêdzie puste.)
 add global category	admin	pl	Dodaj kategoriê globaln±
 add global category for x	admin	pl	Dodaj globaln± kategorie dla %1
 add new account	admin	pl	Dodaj nowe konto
 add new application	admin	pl	Dodaj now± aplikacjê
 add peer server	admin	pl	Dodaj serwer równorzêdny
-admin email	admin	pl	Adres e-mail administratora
-admin name	admin	pl	Nazwa administratora
-adminemail	admin	pl	Adres administratora
+admin email	admin	pl	E-mail administratora
+admin name	admin	pl	Nazwisko administratora
+adminemail	admin	pl	E-mail administratora
 administration	admin	pl	Administracja
-adminname	admin	pl	Nazwa administratora
-admins	admin	pl	Zarz±dzaj±cy
+adminname	admin	pl	Nazwisko administratora
+admins	admin	pl	Administratorzy
 all records and account information will be lost!	admin	pl	Wszystkie rekordy i informacje konta zostan± usuniête!
 all users	admin	pl	Wszyscy u¿ytkownicy
 allow anonymous access to this app	admin	pl	Dostêp do aplikacji dla anonimowych u¿ytkowników
@@ -35,12 +35,12 @@ are you sure you want to delete this group ?	admin	pl	Na pewno chcesz usun±æ gru
 are you sure you want to delete this news site ?	admin	pl	Na pewno chcesz usun±æ serwis wiadomo¶ci?
 are you sure you want to delete this server?	admin	pl	Na pewno chcesz usun±æ serwer?
 are you sure you want to kill this session ?	admin	pl	Na pewno zabiæ sesjê?
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pl	
-authentication / accounts	admin	pl	Autentykacja / Konta
-auto create account records for authenticated users	admin	pl	
+attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	admin	pl	Spróbuj u¿yæ w³a¶ciwy typ mime dla FTP zamiast domy¶lnego 'application/octet-stream'
+authentication / accounts	admin	pl	Uwierzytelnianie / Konta
+auto create account records for authenticated users	admin	pl	Automatycznie stwórz zapisy kont dla uwierzytelnionych u¿ytkowników
 base url	admin	pl	Adres domowy URL
-bi-dir passthrough	admin	pl	
-bi-directional	admin	pl	
+bi-dir passthrough	admin	pl	Przep³yw dwukierunkowy
+bi-directional	admin	pl	Dwukierunkowy
 bottom	admin	pl	u do³u
 calendar holiday management	admin	pl	Zarz±dzanie ¶wiêtami
 category description	admin	pl	Opis kategorii
@@ -53,8 +53,8 @@ countries	admin	pl	Kraje
 country selection	admin	pl	Wybór kraju
 create group	admin	pl	Utwórz grupê
 cvs	admin	pl	cvs
-default file system space per user	admin	pl	
-default file system space per user/group ?	admin	pl	
+default file system space per user	admin	pl	Domy¶lny rozmiar plików na u¿ytkownika
+default file system space per user/group ?	admin	pl	Domy¶lny rozmiar plików na u¿ytkownika/grupê ?
 delete all records	admin	pl	Usuñ wszystkie rekordy
 deny access to application registery	admin	pl	Odmów dostêpu do
 deny access to applications	admin	pl	Odmów dostêpu do aplikacji
@@ -89,8 +89,8 @@ enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pl	Pod
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pl	Podaj pe³n± ¶ie¿kê do plików u¿ytkowników i grup.<br>Na przyk³ad: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portala phpGroupWare's URL.<br>Na przyk³ad: http://www.domain.com/phpgroupware &nbsp; or &nbsp;/phpgroupware<br><b>Bez koñcz±cego ciacha (,,/'')</b>
-enter the site password for peer servers	admin	pl	
-enter the site username for peer servers	admin	pl	
+enter the site password for peer servers	admin	pl	Wprowad¼ has³o serwisu dla  serwerów równorzêdnych (peer servers)
+enter the site username for peer servers	admin	pl	Wprowad¼ nazwê u¿ytkownika serwisu dla serwerów równorzêdnych (peer servers)
 enter the title for your site	admin	pl	Nazwa Twojego portala
 enter your default ftp server	admin	pl	Domy¶lny serwer FTP
 enter your default mail domain ( from: user@domain )	admin	pl	Podaj nazwê swojej domeny (u¿ytkownik@domena)
@@ -111,18 +111,18 @@ group ?	admin	pl	grupa?
 group has been added	common	pl	Dodano grupê
 group has been deleted	common	pl	Usuniêto grupê
 group has been updated	common	pl	Zaktualizowano grupê
-group manager	admin	pl	Manager grupy
+group manager	admin	pl	Mened¿er grupy
 group name	admin	pl	Nazwa grupy
 headline sites	admin	pl	Serwisy wiadomo¶ci
 hide php information	admin	pl	Ukryj informacje o PHP
 home directory	admin	pl	Katalog domowy
-host information	admin	pl	
+host information	admin	pl	Informacja o stacji roboczej
 id	admin	pl	ID
 idle	admin	pl	Czas ja³owy
 if no acl records for user or any group the user is a member of	admin	pl	
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	
 imap mail server hostname or ip address	admin	pl	IMAP serwera nazwê hosta lub adres IP
-inbound	admin	pl	
+inbound	admin	pl	do wewn±trz
 installed applications	common	pl	Zainstalowane aplikacje
 interface	admin	pl	Interfejs
 ip	admin	pl	IP
@@ -152,7 +152,7 @@ loginid	admin	pl	ID Loginu
 mail server login type	admin	pl	Rodzaj logowania do serwera pocztowego
 mail settings	admin	pl	Konfiguracja poczty
 main screen message	admin	pl	Wiadomo¶æ na stronie g³ównej
-manager	admin	pl	Manager
+manager	admin	pl	Mened¿er
 maximum account id (e.g. 65535 or 1000000)	admin	pl	Maksymalny ID konta (np: 65535 lub 100000)
 message has been updated	admin	pl	Zaktualizowano wiadomo¶æ
 metar regions	admin	pl	Regiony
@@ -161,7 +161,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	pl	Minimalny ID konta (np:500 l
 minutes between reloads	admin	pl	Minut pomiêdzy od¶wie¿eniem
 mode	admin	pl	Tryb
 never	admin	pl	Nigdy
-new group name	admin	pl	Nazwa grupy
+new group name	admin	pl	Nowa nazwa grupy
 new password [ leave blank for no change	admin	pl	Nowe has³o (Pozostaw puste je¶li bez zmian)
 new password [ leave blank for no change 	admin	pl	
 new password [ leave blank for no change ]	admin	pl	Nowe has³o (Pozostaw puste je¶li bez zmian)
@@ -170,10 +170,10 @@ news type	admin	pl	Typ wiadomo¶ci
 no login history exists for this user	admin	pl	Nie ma historii logowania dla tego u¿ytkownika
 no matches found	admin	pl	Nie znaleziono zgodnych
 no matchs found	admin	pl	Nie znaleziono zgodnych
-outbound	admin	pl	
-passthrough	admin	pl	
-path information	admin	pl	
-peer servers	admin	pl	Serwer równorzêdny
+outbound	admin	pl	na zewn±trz
+passthrough	admin	pl	przep³yw
+path information	admin	pl	Informacja o ¶cie¿ce
+peer servers	admin	pl	Serwery równorzêdne (peer servers)
 percent of users that logged out	admin	pl	Procent wylogowanych u¿ytkowników
 percent this user has logged out	admin	pl	Procent wylogowañ tego u¿ytkownika
 permissions	admin	pl	Prawa
@@ -184,7 +184,7 @@ phpsysinfo	admin	pl	Informacja o systemie
 please enter a name	admin	pl	Proszê podaæ nazwê
 please enter a name for that category !	admin	pl	Proszê podaæ nazwê kategorii!
 please enter a name for that server !	admin	pl	Proszê podaæ nazwê dla serwera
-please run setup to become current	admin	pl	
+please run setup to become current	admin	pl	Uruchom instalacjê (setup) aby uaktualniæ konfiguracjê
 preferences	admin	pl	Preferencje
 program locations	admin	pl	Lokalizacja programów
 project administration	admin	pl	Zarz±dzanie projektem
@@ -201,7 +201,7 @@ security	admin	pl	Zabezpieczenie
 select group managers	admin	pl	Wybierz managera grupy
 select permissions this group will have	admin	pl	Wybór praw dla grupy
 select users for inclusion	admin	pl	U¿ytkownicy w grupie
-select where you want to store/retrieve filesystem information	admin	pl	
+select where you want to store/retrieve filesystem information	admin	pl	Wybierz gdzie chcesz przechowywaæ informacje o systemie plików
 select where you want to store/retrieve user accounts	admin	pl	Wybierz gdzie chcesz przechowywaæ konta u¿ytkowników
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	pl	Wybierz pozycjê aplikacji w menu, od lewej (najmniejsza) do prawej (najwiêksza warto¶æ)
 select your mail server type	admin	pl	Wybierz typ swojego serwera pocztowego
@@ -214,7 +214,7 @@ server url	admin	pl	Adres URL serwera
 server username	admin	pl	Nazwa u¿ytkownika na serwerze
 server x has been added	admin	pl	Dodano serwer %1
 server x has been updated	admin	pl	Zaktualizowano serwer %1
-set preference values.	admin	pl	
+set preference values.	admin	pl	Wprowad¼ warto¶ci ustawieñ
 show 'powered by' logo on	admin	pl	Wy¶wietl logo 'powered by'
 show \'powered by\' logo on	admin	pl	Wy¶wietl logo ,,powered by\'\'
 site	admin	pl	Serwis
@@ -232,7 +232,7 @@ table	admin	pl	Tabela
 template selection	admin	pl	Wybór szablonu
 text entry	admin	pl	Wpisywanie tekstu
 that application name already exists.	admin	pl	Podana nazwa aplikacji ju¿ istnieje
-that application order must be a number.	admin	pl	
+that application order must be a number.	admin	pl	Numer porz±dkowy aplikacji musi byæ liczb±
 that category name has been used already !	admin	pl	Ta nazwa kategorii ju¿ istnieje
 that loginid has already been taken	admin	pl	Takie ID loginu ju¿ istnieje
 that name has been used already	admin	pl	Taka nazwa jest ju¿ u¿yta
@@ -241,24 +241,24 @@ that site has already been entered	admin	pl	Ten serwis jest ju¿ wpisany
 the api is current	admin	pl	Wersja API jest aktualna
 the api requires an upgrade	admin	pl	Wersja API wymaga aktualizacji
 the login and password can not be the same	admin	pl	Nazwa logowania i has³o nie mog± byæ identyczne
-the loginid can not be more then 8 characters	admin	pl	
+the loginid can not be more then 8 characters	admin	pl	Identyfikator logowania (loginid) nie mo¿e byæ d³u¿szy ni¿ 8 znaków
 the two passwords are not the same	admin	pl	Oba has³a nie s± identyczne
-they must be removed before you can continue	admin	pl	
+they must be removed before you can continue	admin	pl	Musz± byæ usuniête zanim bêdzie mo¿na kontynuowaæ
 this application is current	admin	pl	Wersja aplikacji jest aktualna
 this application requires an upgrade	admin	pl	Wersja aplikacji wymaga aktualizacji
-this category is currently being used by applications as a parent category	admin	pl	
+this category is currently being used by applications as a parent category	admin	pl	Ta kategoria jest obecnie u¿ywana przez aplikacje jako kategoria nadrzêdna
 top	admin	pl	u góry
 total records	admin	pl	Wszystkich rekordów
-trust level	admin	pl	
-trust relationship	admin	pl	
+trust level	admin	pl	Poziom zaufania
+trust relationship	admin	pl	Relacja zaufania (bezpieczeñstwa)
 update	admin	pl	Aktualizuj
-use cookies to pass sessionid	admin	pl	
-use pure html compliant code (not fully working yet)	admin	pl	
-use theme	admin	pl	
+use cookies to pass sessionid	admin	pl	U¿ywaj ciasteczek do przekazywania identyfikatora sesji
+use pure html compliant code (not fully working yet)	admin	pl	U¿ywaj kodu zgodnego z czystym HTML (nie w pe³ni opracowane)
+use theme	admin	pl	U¿ywaj tematu
 user accounts	admin	pl	Konta u¿ytkowników
 user data	admin	pl	Dane u¿ytkownika
 user groups	admin	pl	Grupy u¿ytkowników
-userdata	admin	pl	
+userdata	admin	pl	Dane u¿ytkownika
 view access log	admin	pl	Wy¶wietl dziennik
 view error log	admin	pl	Poka¿ dziennik b³êdów
 view sessions	admin	pl	Poka¿ sesjê
@@ -268,7 +268,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 weather	admin	pl	Pogoda
 weather center	admin	pl	Centrum pogodowe
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przej±æ wszystkie rekordy usuwanego u¿ytkownika?
-would you like phpgroupware to cache the phpgw info array ?	admin	pl	
+would you like phpgroupWare to cache the phpgw info array ?	admin	pl	Czy przechowywaæ tablicê informacyjn± phpGW w pamiêci ?
 would you like phpgroupware to check for a new version<br>when admins login ?	admin	pl	Chcesz sprawdzaæ czy s± nowe wersje<br>gdy zaloguje siê administrator?
 would you like to show each application's upgrade status ?	admin	pl	Chcesz wy¶wietlaæ status aktualizacji dla ka¿dej aplikacji?
 you have entered an invalid expiration date	admin	pl	Poda³e¶ niew³a¶ciw± datê wyga¶niêcia
@@ -281,5 +281,5 @@ you must enter an application name.	admin	pl	Musisz podaæ nazwê aplikacji
 you must enter an application title.	admin	pl	Musisz podaæ tytu³ aplikacji
 you must enter the number of listings display	admin	pl	Musisz podaæ liczbê wy¶wietlanych wierszy
 you must select a file type	admin	pl	Musisz wybraæ typ pliku
-you will need to remove the subcategories before you can delete this category	admin	pl	
+you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ podkategorie przed skasowaniem tej kategorii !
 zone	admin	pl	Strefa

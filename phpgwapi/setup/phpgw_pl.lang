@@ -6,20 +6,20 @@ add	common	pl	Dodaj
 add category	common	pl	Dodaj kategoriê
 add sub	common	pl	Dodaj podrz.
 add x category for	common	pl	Dodaj kategoriê %1 dla
-admin	common	pl	Admininistracja
+admin	common	pl	Administrator
 administration	common	pl	Administracja
 afghanistan	common	pl	AFGANISTAN
 albania	common	pl	ALBANIA
 algeria	common	pl	ALGIERIA
 all	common	pl	Wszystko
-american samoa	common	pl	AMERICAN SAMOA
+american samoa	common	pl	SAMOA AMERYKAÑSKIE
 andorra	common	pl	ANDORA
 angola	common	pl	ANGOLA
 anguilla	common	pl	ANGUILLA
 antarctica	common	pl	ANTARKTYKA
 antigua and barbuda	common	pl	ANTIGUA I BARBUDA
 april	common	pl	Kwiecieñ
-are you sure you want to delete this entry ?	common	pl	Na pewno usun±æ ten wpis?
+are you sure you want to delete this entry ?	common	pl	Czy na pewno usun±æ ten wpis?
 argentina	common	pl	ARGENTYNA
 armenia	common	pl	ARMENIA
 aruba	common	pl	ARUBA
@@ -30,9 +30,9 @@ author	common	pl	Autor
 autosave default category	common	pl	Automatyczny zapis domy¶lnej kategorii
 azerbaijan	common	pl	AZERBEJD¯AN
 back	common	pl	Powrót
-bad login or password	login	pl	Z³y login lub has³o
-bahamas	common	pl	BAHAMA
-bahrain	common	pl	BAHRAIN
+bad login or password	login	pl	B³êdna nazwa u¿ytkownika lub has³o
+bahamas	common	pl	BAHAMY
+bahrain	common	pl	BAHRAJN
 bangladesh	common	pl	BANGLADESZ
 barbados	common	pl	BARBADOS
 belarus	common	pl	BIA£ORU¦
@@ -44,10 +44,10 @@ bhutan	common	pl	BHUTAN
 bolivia	common	pl	BOLIWIA
 bosnia and herzegovina	common	pl	BO¦NIA I HERCEGOWINA
 botswana	common	pl	BOTSWANA
-bouvet island	common	pl	BOUVET ISLAND
+bouvet island	common	pl	WYSPA BOUVETA
 brazil	common	pl	BRAZYLIA
-british indian ocean territory	common	pl	BRITISH INDIAN OCEAN TERRITORY
-brunei darussalam	common	pl	BRUNEI DARUSSALAM
+british indian ocean territory	common	pl	BRYTYJSKIE TERYTORIUM OCEANU INDYJSKIEGO
+brunei darussalam	common	pl	BRUNEI
 bulgaria	common	pl	BU£GARIA
 burkina faso	common	pl	BURKINA FASO
 burundi	common	pl	BURUNDI
@@ -55,73 +55,73 @@ cambodia	common	pl	KAMBOD¯A
 cameroon	common	pl	KAMERUN
 canada	common	pl	KANADA
 cancel	common	pl	Anuluj
-cape verde	common	pl	CAPE VERDE
+cape verde	common	pl	REPUBLIKA ZIELONEGO PRZYL¡DKA
 categories	common	pl	Kategorie
 categories for	common	pl	kategorie dla
 category	common	pl	Kategoria
-category x has been added !	common	pl	Dodano kategoriê %1
-category x has been updated !	common	pl	Zaktualizowano kategoriê %1
-cayman islands	common	pl	CAYMAN ISLANDS
-central african republic	common	pl	CENTRAL AFRICAN REPUBLIC
+category x has been added !	common	pl	Kategoria %1 zosta³a dodana !
+category x has been updated !	common	pl	Kategoria %1 zosta³a uaktualniona !
+cayman islands	common	pl	KAJMANY
+central african republic	common	pl	REPUBLIKA ¦RODKOWOAFRYKANSKA
 chad	common	pl	CZAD
-change	common	pl	Zmiana
+change	common	pl	Zmieñ
 charset	common	pl	iso-8859-2
 chile	common	pl	CHILE
 china	common	pl	CHINY
 choose the category	common	pl	Wybierz kategoriê
-choose the parent category	common	pl	Wybierz kategoriê g³ówn±
-christmas island	common	pl	CHRISTMAS ISLAND
+choose the parent category	common	pl	Wybierz kategoriê nadrzêdn±
+christmas island	common	pl	WYSPA BO¯EGO NARODZENIA
 clear	common	pl	Wyczy¶æ
 clear form	common	pl	Wyczy¶æ formularz
-cocos (keeling) islands	common	pl	COCOS (KEELING) ISLANDS
+cocos (keeling) islands	common	pl	WYSPY KOKOSOWE
 colombia	common	pl	KOLUMBIA
-comoros	common	pl	COMOROS
+comoros	common	pl	KOMORY
 congo	common	pl	KONGO
-congo, the democratic republic of the	common	pl	KONGO, THE DEMOCRATIC REPUBLIC OF\n THE
+congo, the democratic republic of the	common	pl	REPUBLIKA DEMOKRATYCZNA KONGA
 cook islands	common	pl	WYSPY COOKA
 copy	common	pl	Kopiuj
 costa rica	common	pl	KOSTARYKA
-cote d ivoire	common	pl	COTE D IVOIRE
+cote d ivoire	common	pl	WYBRZE¯E KO¦CI S£ONIOWEJ
 create	common	pl	Utwórz
 created by	common	pl	Utworzone przez
 croatia	common	pl	CHORWACJA
 cuba	common	pl	KUBA
 currency	common	pl	Waluta
-current	common	pl	Aktualny
-current users	common	pl	Aktywnych u¿ytkowników
+current	common	pl	Bie¿±cy
+current users	common	pl	Bie¿±cy u¿ytkownicy
 cyprus	common	pl	CYPR
-czech republic	common	pl	CZECHY
+czech republic	common	pl	REPUBLIKA CZESKA
 date	common	pl	Data
-date due	common	pl	Termin wykonania
+date due	common	pl	Data wymagalno¶ci
 december	common	pl	Grudzieñ
 default category	common	pl	Kategoria domy¶lna
 delete	common	pl	Usuñ
 denmark	common	pl	DANIA
 description	common	pl	Opis
-detail	common	pl	
-details	common	pl	
-disabled	common	pl	Nieaktywna
-djibouti	common	pl	D¯IBUTTI
-do you also want to delete all subcategories ?	common	pl	Chcesz równie¿ usun±æ wszystkie podkategorie?
+detail	common	pl	Opis szczegó³owy
+details	common	pl	Opis szczegó³owy
+disabled	common	pl	Zablokowany
+djibouti	common	pl	D¯IBUTI
+do you also want to delete all subcategories ?	common	pl	Czy chcesz równie¿ usun±æ wszystkie podkategorie?
 dominica	common	pl	DOMINIKA
-dominican republic	common	pl	REPUBLIKA DOMINIKANY
+dominican republic	common	pl	DOMINIKANA
 done	common	pl	Gotowe
 e-mail	common	pl	E-mail
 east timor	common	pl	TIMOR WSCHODNI
 ecuador	common	pl	EKWADOR
-edit	common	pl	Edycja
-edit categories	common	pl	Edycja kategorii
-edit category	common	pl	Edycja kategorii
-edit x category for	common	pl	Edycja kategorii %1 dla
+edit	common	pl	Edytuj
+edit categories	common	pl	Edytuj kategorie
+edit category	common	pl	Edytuj kategoriê
+edit x category for	common	pl	Edytuj kategoriê %1 dla
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
-enabled	common	pl	Aktywna
-end date	common	pl	Zakoñczenie
-end time	common	pl	Zakoñczenie
-entry has been deleted sucessfully	common	pl	Wpis zosta³ pomy¶lnie usuniety
-entry updated sucessfully	common	pl	Wpis zaktualizowano pomy¶lnie
-equatorial guinea	common	pl	EQUATORIAL GUINEA
+enabled	common	pl	Aktywny
+end date	common	pl	Data koñcowa
+end time	common	pl	Czas koñcowy
+entry has been deleted sucessfully	common	pl	Dane zosta³y usuniête
+entry updated sucessfully	common	pl	Dane zosta³y uaktualnione
+equatorial guinea	common	pl	GWINEA RÓWNIKOWA
 eritrea	common	pl	ERYTREA
 error	common	pl	B³±d
 error creating x x directory	common	pl	B³±t podczas tworzenia katalogu %1%2
@@ -130,7 +130,7 @@ error renaming x x directory	common	pl	B³±d podczas zmiany nazwy katalogu %1%2
 estonia	common	pl	ESTONIA
 ethiopia	common	pl	ETIOPIA
 falkland islands (malvinas)	common	pl	FALKLANDY (MALWINY)
-faroe islands	common	pl	FAROE ISLANDS
+faroe islands	common	pl	WYSPY FAROE
 february	common	pl	Luty
 fields	common	pl	Pola
 fiji	common	pl	FID¯I
@@ -143,38 +143,38 @@ force selectbox	common	pl	Wymu¶ wybór z listy
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
 french polynesia	common	pl	POLINEZJA FRANCUSKA
-french southern territories	common	pl	FRANCUSKIE PO£UDNIOWE TERYTOTIUM
+french southern territories	common	pl	FRANCUSKIE TERYTORIA PO£UDNIOWE
 friday	common	pl	Pi±tek
 ftp	common	pl	FTP
 gabon	common	pl	GABON
 gambia	common	pl	GAMBIA
-georgia	common	pl	Georgia
+georgia	common	pl	GRUZJA
 germany	common	pl	NIEMCY
 ghana	common	pl	GHANA
 gibraltar	common	pl	GIBRALTAR
 global	common	pl	Globalne
-global public	common	pl	Globalnie Publiczne
-grant access	common	pl	
+global public	common	pl	Globalny publiczny
+grant access	common	pl	Przyznaj dostêp
 greece	common	pl	GRECJA
 greenland	common	pl	GRENLANDIA
 grenada	common	pl	GRENADA
 group	common	pl	Grupa
 group access	common	pl	Dostêp grupy
-group public	common	pl	Grupowo publiczne
+group public	common	pl	Grupowy publiczny
 groups	common	pl	Grupy
-guadeloupe	common	pl	GUADELUPA
-guam	common	pl	GUAM
+guadeloupe	common	pl	GWADELUPA
+guam	common	pl	WYSPY GUAM
 guatemala	common	pl	GWATEMALA
 guinea	common	pl	GWINEA
-guinea-bissau	common	pl	GUINEA-BISSAU
+guinea-bissau	common	pl	GWINEA-BISSAU
 guyana	common	pl	GUJANA
 haiti	common	pl	HAITI
-heard island and mcdonald islands	common	pl	WYSPY HEARD I MCDONALD
+heard island and mcdonald islands	common	pl	WYSPY HEARDA I MCDONALDA
 help	common	pl	Pomoc
 high	common	pl	Wysoki
 highest	common	pl	Najwy¿szy
-holy see (vatican city state)	common	pl	HOLY SEE (VATICAN CITY STATE)
-home	common	pl	Strona g³ówna
+holy see (vatican city state)	common	pl	PAÑSTWO WATYKAN
+home	common	pl	Powrót na stronê g³ówn±
 honduras	common	pl	HONDURAS
 hong kong	common	pl	HONG KONG
 hungary	common	pl	WÊGRY
@@ -185,7 +185,7 @@ iran, islamic republic of	common	pl	IRAN
 iraq	common	pl	IRAK
 ireland	common	pl	IRLANDIA
 israel	common	pl	IZRAEL
-it has been more then x days since you changed your password	common	pl	Minê³o %1 dni od chwili zmiany twojego has³a
+it has been more then x days since you changed your password	common	pl	Up³ynê³o ponad %1 dni od momentu zmiany has³a
 it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca siê uruchomienie instalatora do uaktualnienia tabel do bie¿±cej wersji
 italy	common	pl	W£OCHY
 jamaica	common	pl	JAMAJKA
@@ -196,9 +196,10 @@ july	common	pl	Lipiec
 june	common	pl	Czerwiec
 kazakstan	common	pl	KAZACHSTAN
 kenya	common	pl	KENIA
+keywords	common	pl	S³owa kluczowe
 kiribati	common	pl	KIRIBATI
 korea, democratic peoples republic of	common	pl	KOREAÑSKA REPUBLIA LUDOWO-DEMOKRATYCZNA
-korea, republic of	common	pl	KOREA
+korea, republic of	common	pl	KOREA PO£UDNIOWA
 kuwait	common	pl	KUWEJT
 kyrgyzstan	common	pl	KIRGISTAN
 language	common	pl	Jêzyk
@@ -223,39 +224,40 @@ macedonia, the former yugoslav republic of	common	pl	MACEDONIA
 madagascar	common	pl	MADAGASKAR
 main category	common	pl	Kategoria g³ówna
 main screen	common	pl	Strona g³ówna
-malawi	common	pl	
-malaysia	common	pl	
-maldives	common	pl	
+malawi	common	pl	MALAWI
+malaysia	common	pl	MALEZJA
+maldives	common	pl	MALEDIWY
 mali	common	pl	MALI
 malta	common	pl	MALTA
 manual	common	pl	Podrêcznik
 march	common	pl	Marzec
-marshall islands	common	pl	
+marshall islands	common	pl	WYSPY MARSHALLA
 martinique	common	pl	MARTYNIKA
 mauritania	common	pl	MAURETANIA
 mauritius	common	pl	MAURITIUS
 may	common	pl	Maj
-mayotte	common	pl	
-medium	common	pl	Normalna
-message	common	pl	Wiadomo¶æ
+mayotte	common	pl	MAYOTTE
+medium	common	pl	¦redni
+message	common	pl	Komunikat
 mexico	common	pl	MEKSYK
-micronesia, federated states of	common	pl	
-moldova, republic of	common	pl	
-monaco	common	pl	MONACO
+micronesia, federated states of	common	pl	MIKRONEZJA
+moldova, republic of	common	pl	MO£DAWIA
+monaco	common	pl	MONAKO
 monday	common	pl	Poniedzia³ek
 mongolia	common	pl	MONGOLIA
-montserrat	common	pl	
+montserrat	common	pl	MONTSERRAT
 morocco	common	pl	MAROKO
 mozambique	common	pl	MOZAMBIK
-myanmar	common	pl	
+myanmar	common	pl	MYANMAR
 name	common	pl	Nazwa
 namibia	common	pl	NAMIBIA
-nauru	common	pl	
+nauru	common	pl	NAURU
 nepal	common	pl	NEPAL
 netherlands	common	pl	HOLANDIA
 netherlands antilles	common	pl	ANTYLE HOLENDERSKIE
+never	common	pl	Nigdy
 new caledonia	common	pl	NOWA KALEDONIA
-new entry added sucessfully	common	pl	Dodano pomy¶lnie nowy wpis
+new entry added sucessfully	common	pl	Nowy wpis zosta³ dodany
 new main category	common	pl	Nowa kategoria g³ówna
 new value	common	pl	Nowa warto¶æ
 new zealand	common	pl	NOWA ZELANDIA
@@ -263,17 +265,17 @@ next	common	pl	Nastêpny
 nicaragua	common	pl	NIKARAGUA
 niger	common	pl	NIGER
 nigeria	common	pl	NIGERIA
-niue	common	pl	
+niue	common	pl	NIUE
 no	common	pl	Nie
-no history for this record	common	pl	
+no history for this record	common	pl	Brak historii dla tego zapisu
 no subject	common	pl	Bez tematu
-none	common	pl	Brak
-norfolk island	common	pl	
-normal	common	pl	¦redni
-northern mariana islands	common	pl	
+none	common	pl	¯aden
+norfolk island	common	pl	WYSPA NORFOLK
+normal	common	pl	Normalny
+northern mariana islands	common	pl	PÓ£NOCNE WYSPY MARIANA
 norway	common	pl	NORWEGIA
 note	common	pl	Uwaga
-notes	common	pl	Notatnik
+notes	common	pl	Uwagi
 notify window	common	pl	Okno powiadamiania
 november	common	pl	Listopad
 october	common	pl	Pa¼dziernik
@@ -281,13 +283,13 @@ ok	common	pl	OK
 old value	common	pl	Poprzednia warto¶æ
 oman	common	pl	OMAN
 only yours	common	pl	Tylko twoje
-open notify window	common	pl	Otwórz okno komunikatów
-original	common	pl	Orygina³
+open notify window	common	pl	Otwórz okno powiadamiania
+original	common	pl	Oryginalny
 other	common	pl	Inne
-overview	common	pl	Opis
+overview	common	pl	Przegl±d
 owner	common	pl	W³a¶ciciel
 pakistan	common	pl	PAKISTAN
-palau	common	pl	
+palau	common	pl	PALAU
 palestinian territory, occupied	common	pl	PALESTYNA
 panama	common	pl	PANAMA
 papua new guinea	common	pl	PAPUA NOWA GWINEA
@@ -295,85 +297,90 @@ paraguay	common	pl	PARAGWAJ
 parent category	common	pl	Kategoria nadrzêdna
 password	common	pl	Has³o
 password has been updated	common	pl	Has³o zosta³o zaktualizowane
-personal	common	pl	Dane osobowe
+personal	common	pl	Osobisty
 peru	common	pl	PERU
 philippines	common	pl	FILIPINY
-pitcairn	common	pl	
+pitcairn	common	pl	PITCAIRN
 please enter a name	common	pl	Proszê podaæ nazwê
-please run setup to become current	common	pl	
-please set your preferences for this application	common	pl	Proszê ustawiæ swoje preferencje dla tej aplikacji
+please run setup to become current	common	pl	Proszê uruchom instalacjê (setup) w celu uaktualnienia
+please set your global preferences	common	pl	Proszê wprowadziæ swoje globalne preferencje !
+please set your preferences for this application	common	pl	Proszê wprowadziæ ustawienia dla tej aplikacji
 poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
-powered by phpgroupware version x	common	pl	Powered by <a href=http://www.phpgroupware.org>phpGroupWare</a> wersja %1
+powered by phpgroupware version x	common	pl	Dzia³a na <a href="http://www.phpgroupware.org">phpGroupWare</a> wersja %1
 preferences	common	pl	Ustawienia
 print	common	pl	Drukuj
 priority	common	pl	Priorytet
-private	common	pl	Prywatne
+private	common	pl	Prywatny
 public	common	pl	Publiczny
-puerto rico	common	pl	PUERTO RICO
+puerto rico	common	pl	PORTORYKO
 qatar	common	pl	KATAR
 read	common	pl	Czytaj
+reject	common	pl	Odrzuæ
 rename	common	pl	Zmieñ nazwê
-reunion	common	pl	
+reunion	common	pl	REUNION
 romania	common	pl	RUMUNIA
 russian federation	common	pl	ROSJA
 rwanda	common	pl	RWANDA
-saint helena	common	pl	¦WIÊTA HELENA
-saint kitts and nevis	common	pl	
-saint lucia	common	pl	
-saint pierre and miquelon	common	pl	
-saint vincent and the grenadines	common	pl	
+saint helena	common	pl	WYSPY ¦W. HELENY
+saint kitts and nevis	common	pl	SAINT KITTS AND NEVIS
+saint lucia	common	pl	SAINT LUCIA
+saint pierre and miquelon	common	pl	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	pl	SAINT VINCENT AND THE GRENADINES
 samoa	common	pl	SAMOA
 san marino	common	pl	SAN MARINO
-sao tome and principe	common	pl	
+sao tome and principe	common	pl	SAO TOME AND PRINCIPE
 saturday	common	pl	Sobota
 saudi arabia	common	pl	ARABIA SAUDYJSKA
 save	common	pl	Zapisz
 search	common	pl	Szukaj
-section	common	pl	
+section	common	pl	Sekcja
 select category	common	pl	Wybierz kategoriê
+send	common	pl	Wy¶lij
 senegal	common	pl	SENEGAL
 september	common	pl	Wrzesieñ
-session has been killed	common	pl	Sesja zosta³a zabita
+server name	common	pl	Nazwa serwera
+server x has been added	common	pl	Serwer %1 zosta³ dodany
+session has been killed	common	pl	Sesja zosta³a zamkniêta
 seychelles	common	pl	SESZELE
 show all	common	pl	Poka¿ wszystko
 showing x	common	pl	Wy¶wietlono %1
 showing x - x of x	common	pl	Wy¶wietlanie %1 - %2 z %3
 sierra leone	common	pl	SIERRA LEONE
-singapore	common	pl	SINGAPURE
+singapore	common	pl	SINGAPUR
 slovakia	common	pl	S£OWACJA
 slovenia	common	pl	S£OWENIA
 solomon islands	common	pl	WYSPY SALOMONA
 somalia	common	pl	SOMALIA
 sorry, your login has expired	login	pl	Twoje konto wygas³o
-south africa	common	pl	AFRYKA PO£UDNIOWA
-south georgia and the south sandwich islands	common	pl	
+south africa	common	pl	REPUBLIKA PO£UDNIOWEJ AFRYKI
+south georgia and the south sandwich islands	common	pl	PO£UDNIOWA GEORGIA I PO£UDNIOWE WYSPY SANDWICH
 spain	common	pl	HISZPANIA
 sri lanka	common	pl	SRI LANKA
-start date	common	pl	Pocz±tek
-start time	common	pl	Pocz±tek
+start date	common	pl	Data pocz±tkowa
+start time	common	pl	Czas pocz±tkowy
 status	common	pl	Status
 subject	common	pl	Temat
-submit	common	pl	OK
+submit	common	pl	Wprowad¼
 sudan	common	pl	SUDAN
 sunday	common	pl	Niedziela
 suriname	common	pl	SURINAM
-svalbard and jan mayen	common	pl	
-swaziland	common	pl	
+svalbard and jan mayen	common	pl	SVALBARD AND JAN MAYEN
+swaziland	common	pl	SUAZILAND
 sweden	common	pl	SZWECJA
-switzerland	common	pl	SZWAJCARIA
+switzerland	common	pl	SZWARCARIA
 syrian arab republic	common	pl	SYRIA
-taiwan, province of china	common	pl	TAJWAN
+taiwan, province of china	common	pl	TAJWAN, PROWINCJA CHIÑSKA
 tajikistan	common	pl	TAD¯YKISTAN
 tanzania, united republic of	common	pl	TANZANIA
 thailand	common	pl	TAJLANDIA
 the api is current	common	pl	API jest aktualne
 the api requires an upgrade	common	pl	API wymaga aktualizacji
-the following applications require upgrades	common	pl	Aplikacje wymagaj±ce aktualizacji
+the following applications require upgrades	common	pl	Nastêpuj±ce aplikacje wymagaj± upgrade'u
 the mail server returned	common	pl	Serwer pocztowy zwróci³
 this application is current	common	pl	Wersja aplikacji jest aktualna
 this application requires an upgrade	common	pl	Aplikacja wymaga aktualizacji
-this name has been used already	common	pl	Nazwa jest ju¿ u¿ywana
+this name has been used already	common	pl	Ta nazwa zosta³a ju¿ u¿yta
 thursday	common	pl	Czwartek
 time	common	pl	Czas
 time zone	common	pl	Strefa czasowa
@@ -381,23 +388,23 @@ time zone offset	common	pl	Przesuniêcie strefy czasowej
 title	common	pl	Tytu³
 to go back to the msg list, click <a href= x >here</a>	common	pl	Aby wróciæ do listy wiadomo¶ci, kliknij <a href="%1">tutaj</a>
 togo	common	pl	TOGO
-tokelau	common	pl	
-tonga	common	pl	
-total	common	pl	Suma
+tokelau	common	pl	TOKELAU
+tonga	common	pl	TONGA
+total	common	pl	Ogó³em
 trinidad and tobago	common	pl	TRINIDAD I TOBAGO
 tuesday	common	pl	Wtorek
 tunisia	common	pl	TUNEZJA
 turkey	common	pl	TURCJA
 turkmenistan	common	pl	TURKMENISTAN
-turks and caicos islands	common	pl	
-tuvalu	common	pl	
+turks and caicos islands	common	pl	TURKS AND CAICOS ISLANDS
+tuvalu	common	pl	TUVALU
 uganda	common	pl	UGANDA
 ukraine	common	pl	UKRAINA
 united arab emirates	common	pl	ZJEDNOCZONE EMIRATY ARABSKIE
 united kingdom	common	pl	WIELKA BRYTANIA
 united states	common	pl	STANY ZJEDNOCZONE
-united states minor outlying islands	common	pl	
-unknown	common	pl	Nieznane
+united states minor outlying islands	common	pl	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	pl	Nieznany
 update	common	pl	Aktualizuj
 url	common	pl	Adres URL
 uruguay	common	pl	URUGWAJ
@@ -406,29 +413,30 @@ username	common	pl	Nazwa u¿ytkownika
 users	common	pl	U¿ytkownicy
 users choice	common	pl	Wybieraj± u¿ytkownicy
 uzbekistan	common	pl	UZBEKISTAN
-vanuatu	common	pl	
+vanuatu	common	pl	VANUATU
 venezuela	common	pl	WENEZUELA
 viet nam	common	pl	WIETNAM
-view	common	pl	Widok
-virgin islands, british	common	pl	WYSPY DZIEWICZE, BRYTYJSKIE
-virgin islands, u.s.	common	pl	WYSPY DZIEWICZE, USA
-wallis and futuna	common	pl	
+view	common	pl	Przegl±daj
+virgin islands, british	common	pl	BRYTYJSKIE WYSPY DZIEWICZE
+virgin islands, u.s.	common	pl	AMERYKAÑSKIE WYSPY DZIEWICZE
+wallis and futuna	common	pl	WALLIS AND FUTUNA
 wednesday	common	pl	¦roda
 welcome	common	pl	Strona g³ówna
-western sahara	common	pl	ZACHODNIA SAHARA
+western sahara	common	pl	SAHARA ZACHODNIA
 which groups	common	pl	Która grupa
-written by:	common	pl	Napisany przez
+written by:	common	pl	Napisany przez:
+year	common	pl	Rok
 yemen	common	pl	JEMEN
 yes	common	pl	Tak
 you are running a newer version of phpgroupware than your database is setup for	common	pl	Uruchomi³e¶ nowsz± wersjê phpGroupWare ni¿ zainstalowana baza danych
 you have been successfully logged out	login	pl	Zosta³e¶ pomy¶lnie wylogowany
-you have selected an invalid date	common	pl	Wybra³e¶ niepoprawn± datê
+you have selected an invalid date	common	pl	Wybra³e¶ nieprawid³ow± datê
 you have selected an invalid main category	common	pl	Wybra³e¶ niew³a¶ciw± kategoriê g³ówn±
-your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomo¶æ <b>nie</b> zosta³a wys³ana<br>
-your search returned 1 match	common	pl	Poszukiwanie zwróci³o 1 zgodny
-your search returned x matchs	common	pl	Poszukiwanie zwróci³o %1 zgodnych
-your session could not be verified.	login	pl	Twoja sesja nie zosta³a zweryfikowana
-your settings have been updated	common	pl	Twoja konfiguracja zosta³a zaktualizowana
+your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomo¶æ <b>nie</b> zosta³a wys³ana!<br>
+your search returned 1 match	common	pl	wyszukiwanie zwróci³o 1 trafienie
+your search returned x matchs	common	pl	wyszukiwanie zwróci³o %1 trafieñ
+your session could not be verified.	login	pl	Nie mo¿na zweryfikowaæ sesji.
+your settings have been updated	common	pl	Twoje ustawienia zosta³y uaktualnione
 yugoslavia	common	pl	JUGOS£AWIA
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE

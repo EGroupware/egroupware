@@ -1,39 +1,38 @@
-change your password	preferences	pl	Zmiana has³a
+change your password	preferences	pl	Zmieñ swoje has³o
 change your profile	preferences	pl	Zmieñ swój profil
-change your settings	preferences	pl	Zmiana ustawieñ
+change your settings	preferences	pl	ZmieN swoje ustawienia
 date format	preferences	pl	Format daty
 default application	preferences	pl	Domy¶lna aplikacja
-default preferences	preferences	pl	Domy¶lne
-edit custom fields	preferences	pl	Edycja pól u¿ytkownika
-enter your new password	preferences	pl	Nowe has³o
-forced preferences	preferences	pl	Wymuszone
-grant access	preferences	pl	Prawa dostêpu
+default preferences	preferences	pl	Domy¶lne ustawienia
+edit custom fields	preferences	pl	Edytuj pola u¿ytkownika
+enter your new password	preferences	pl	Wprowad¼ swoje nowe has³o
+forced preferences	preferences	pl	Wymuszone ustawienia
+grant access	preferences	pl	Nadaj prawa dostêpu
 icons and text	preferences	pl	Ikony i tekst
-icons only	preferences	pl	Ikony
-interface/template selection	preferences	pl	Wybór tematu interfejsu
+icons only	preferences	pl	Tylko ikony
+interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 inv	preferences	pl	Fakturacja
 language	preferences	pl	Jêzyk
-max matches per page	preferences	pl	Maks. liczba wierszy na stronê
-max matchs per page	preferences	pl	Rekordów/stronê
+max matches per page	preferences	pl	Maksymalna liczba trafieñ na stronie
 monitor newsgroups	preferences	pl	Monitor grup dyskusyjnych
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia has³a do twojej skrzyniki pocztowej! musisz to wykonaæ rêcznie.
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia has³a do twojej skrzyniki pocztowej! Nale¿y to zrobiæ rêcznie.
 please, select a new theme	preferences	pl	Proszê wybraæ nowy temat
-re-enter your password	preferences	pl	Powtórz has³o
+re-enter your password	preferences	pl	Wpisz has³o ponownie
 select different theme	preferences	pl	Wybierz inny temat
 select displayed stocks	preferences	pl	Wybór wy¶wietlanych spó³ek
 select headlines to display	preferences	pl	Wybór serwisów wiadomo¶ci
-select one	preferences	pl	Wybierz jedn±
+select one	preferences	pl	Wybierz jeden
 show current users on navigation bar	preferences	pl	Wy¶wietlaj liczbê u¿ytkowników
-show navigation bar as	preferences	pl	Poka¿ pasek jako
-show text on navigation icons	preferences	pl	Wy¶wietl tekst na ikonach
-text only	preferences	pl	Tekst
-the two passwords are not the same	preferences	pl	Podane has³o nie s± identyczne
-theme (colors/fonts) selection	preferences	pl	Wybór kolorystyki interfejsu
-this server is located in the x timezone	preferences	pl	Serwer znajduje siê w strefie czasowej %1
+show navigation bar as	preferences	pl	Poka¿ pasek nawigacji jako
+show text on navigation icons	preferences	pl	Poka¿ tekst na ikonach nawigacji
+text only	preferences	pl	Tylko tekst
+theme (colors/fonts) selection	preferences	pl	Wybór tematu (kolory/czcionki)
+the two passwords are not the same	preferences	pl	Te dwa has³a nie s± identyczne
+this server is located in the x timezone	preferences	pl	Ten serwer znajduje siê w strefie czasowej %1
 time format	preferences	pl	Format czasu
-weather	preferences	pl	Pogoda
 weather center	preferences	pl	Centrum pogodowe
-weather preferences	preferences	pl	Preferencje
-you must enter a password	preferences	pl	Musisz podaæ has³o
-your current theme is: x	preferences	pl	</b>
-your preferences	preferences	pl	Twoje preferencje
+weather	preferences	pl	Pogoda
+weather preferences	preferences	pl	Ustawienia pogody
+you must enter a password	preferences	pl	Musisz wprowadziæ has³o
+your current theme is: x	preferences	pl	Twój bie¿±cy temat to: %1
+your preferences	preferences	pl	Twoje ustawienia
