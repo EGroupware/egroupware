@@ -17,7 +17,7 @@ CREATE TABLE phpgw_vfs (
   PRIMARY KEY (file_id)
 );
 
-INSERT INTO phpgw_vfs VALUES (1,0,0,NULL,NULL,NULL,NULL,'Directory','Y',NULL,'phpwebhosting','/','');
-INSERT INTO phpgw_vfs VALUES (1,0,0,NULL,NULL,NULL,NULL,'Directory','Y',NULL,'phpwebhosting','/','home');;
+INSERT INTO phpgw_vfs VALUES (1,0,0,NULL,'2000-01-01',NULL,NULL,'Directory','Y',NULL,'phpwebhosting','/','');
+INSERT INTO phpgw_vfs VALUES (2,0,0,NULL,'2000-01-01',NULL,NULL,'Directory','Y',NULL,'phpwebhosting','/','home');
 
 COMMIT;
