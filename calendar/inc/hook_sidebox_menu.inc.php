@@ -26,14 +26,14 @@
 	$menu_title = $GLOBALS['phpgw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 	$file = Array(
 		'New Entry'   => $GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.add'),
-		'_NewLine_'=>'', // give a newline
+		'_NewLine_', // give a newline
 		'Today'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.day'),
 		'This week'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.week'),
 		'This month'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.month'),
 		'This year'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.year'),
-		'_NewLine_'=>'', // give a newline
 		'Group Planner'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.planner'),
 		'Daily Matrix View'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.matrixselect'),
+		'_NewLine_', // give a newline
 		'Import'=>$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uiicalendar.import')
 	);
 	display_sidebox($appname,$menu_title,$file);
