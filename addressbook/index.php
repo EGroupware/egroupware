@@ -97,7 +97,7 @@
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     $t->set_var(row_tr_color,$tr_color);
     $myid    = $entries[$i]["id"];
-    $myowner = $entries[$i]["uid"];
+    $myowner = $entries[$i]["owner"];
 
     while ($column = each($columns_to_display)) { // each entry column
       $ref=$data="";
@@ -127,7 +127,7 @@
       . "$filter&query=$query&sort=$sort"));
     $t->set_var(row_vcard_link,$phpgw->link("vcardout.php","ab_id=$myid&start=$start&order=$order&filter="
       .  "$filter&query=$query&sort=$sort"));
-    $t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"ab_id="
+    $t->set_var(row_edit_link,$phpgw->common->check_owner($myowner,"edit.php",lang("edit"),"id="
       .$myid."&start=".$start."&sort=".$sort."&order=".$order."&query=".$query."&sort=".$sort));
 
     $t->parse("rows","row",True);
