@@ -1,134 +1,569 @@
+%1 email addresses inserted	common	nl	%1 emailadres ingevoerd
+about %1	common	nl	Over %1
 access	common	nl	Toegang
+access not permitted	common	nl	Toegang geweigerd
 access type	common	nl	Toegangstype
 account has been created	common	nl	Account is aangemaakt
 account has been deleted	common	nl	Account is verwijderd
 account has been updated	common	nl	Account is bijgewerkt
+account is expired	common	nl	Account is verlopen
 account preferences	common	nl	Account voorkeuren
+acl	common	nl	ACL
+action	common	nl	Actie
+active	common	nl	Actief
 add	common	nl	Toevoegen
-admin	common	nl	admin
-administration	common	nl	Administratie
+add %1 category for	common	nl	%1 Categorie toevoegen voor
+add category	common	nl	Categorie toevoegen
+add sub	common	nl	Sub toevoegen
+addressbook	common	nl	Adresboek
+admin	common	nl	Beheer
+administration	common	nl	Beheer
+afghanistan	common	nl	
+albania	common	nl	
+algeria	common	nl	
+all	common	nl	Alles
+american samoa	common	nl	
+andorra	common	nl	ANDORRA
+angola	common	nl	ANGOLA
+anguilla	common	nl	
+antarctica	common	nl	
+antigua and barbuda	common	nl	
+apply	common	nl	
 april	common	nl	April
 are you sure you want to delete this entry ?	common	nl	Weet u zeker dat u dit item wilt verwijderen?
+argentina	common	nl	
+armenia	common	nl	
+aruba	common	nl	ARUBA
 august	common	nl	Augustus
+australia	common	nl	
+austria	common	nl	
+author	common	nl	Schrijver
+autosave default category	common	nl	
+azerbaijan	common	nl	
+back	common	nl	Terug
+bad login or password	common	nl	Onjuiste gebruikersnaam of wachtwoord
+bahamas	common	nl	
+bahrain	common	nl	
+bangladesh	common	nl	BANGLADESH
+barbados	common	nl	
+bcc	common	nl	Bcc
+belarus	common	nl	
+belgium	common	nl	
+belize	common	nl	
+benin	common	nl	
+bermuda	common	nl	
+bhutan	common	nl	
+blocked, too many attempts	common	nl	Geblokkeerd, te veel pogingen
+bolivia	common	nl	
+bosnia and herzegovina	common	nl	
+botswana	common	nl	
+bouvet island	common	nl	
+brazil	common	nl	
+british indian ocean territory	common	nl	
+brunei darussalam	common	nl	
+bulgaria	common	nl	
+burkina faso	common	nl	
+burundi	common	nl	
+cambodia	common	nl	
+cameroon	common	nl	
+canada	common	nl	
 cancel	common	nl	Annuleren
+cape verde	common	nl	
+categories	common	nl	Categoriën
+categories for	common	nl	categoriën voor
+category	common	nl	Categorie
+category %1 has been added !	common	nl	Categorie %1 is toegevoegd
+category %1 has been updated !	common	nl	Categorie %1 is bijgewerkt
+cayman islands	common	nl	
+cc	common	nl	Cc
+central african republic	common	nl	
+chad	common	nl	
 change	common	nl	Veranderen
 charset	common	nl	iso-8859-1
+chile	common	nl	
+china	common	nl	
+choose the category	common	nl	Kies de categorie
+choose the parent category	common	nl	
+christmas island	common	nl	
 clear	common	nl	Wissen
 clear form	common	nl	Formulier wissen
+close	common	nl	Sluiten
+cocos (keeling) islands	common	nl	
+colombia	common	nl	COLOMBIA
 comments	common	nl	Opmerkingen
-copy	common	nl	Kopieren
+comoros	common	nl	
+company	common	nl	Bedrijf
+congo	common	nl	KONGO
+congo, the democratic republic of the	common	nl	
+cook islands	common	nl	
+copy	common	nl	Kopiëren
+costa rica	common	nl	
+cote d ivoire	common	nl	IVOORKUST
 create	common	nl	Maken
 created by	common	nl	Gemaakt door
+croatia	common	nl	
+cuba	common	nl	
+currency	common	nl	Munteenheid
+current	common	nl	Huidig
 current users	common	nl	huidig aantal gebruikers
-date	common	nl	datum
+cyprus	common	nl	
+czech republic	common	nl	
+date	common	nl	Datum
+date due	common	nl	
 date hired	common	nl	Datum in dienst
 december	common	nl	December
+default category	common	nl	Standaard Categorie
 delete	common	nl	Verwijderen
+denmark	common	nl	DENEMARKEN
+description	common	nl	Beschrijving
+detail	common	nl	Detail
+details	common	nl	Details
+disabled	common	nl	Uitgeschakeld
+display monday first	common	nl	Begin de week maandag
+display sunday first	common	nl	Begin de week zondag
+djibouti	common	nl	
+do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategoriën wissen
+domain	common	nl	Domein
+domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
+domestic	common	nl	
+dominica	common	nl	
+dominican republic	common	nl	
 done	common	nl	Gereed
-e-mail	common	nl	E-mail
+drag to move	common	nl	Sleep om te verplaatsen
+e-mail	common	nl	Email
+east timor	common	nl	
+ecuador	common	nl	
 edit	common	nl	Bewerken
-email	common	nl	E-mail
+edit %1 category for	common	nl	Bewerk %1 categorie voor
+edit categories	common	nl	Categoriën bewerken
+edit category	common	nl	Bewerk categorie
+egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
+egypt	common	nl	EGYPTE
+el salvador	common	nl	
+email	common	nl	Email
+email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv. "%1"
+enabled	common	nl	Geactiveerd
+end date	common	nl	Einddatum
+end time	common	nl	Eindtijd
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry updated sucessfully	common	nl	Item succesvol bijgewerkt
+equatorial guinea	common	nl	
+eritrea	common	nl	ERITREA
 error	common	nl	Fout
+error creating %1 %2 directory	common	nl	Error tijdens het creëren van %1 %2 directory
+error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory
+error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
+estonia	common	nl	
+ethiopia	common	nl	
 exit	common	nl	Einde
+falkland islands (malvinas)	common	nl	
+faroe islands	common	nl	
+fax number	common	nl	Faxnummer
 february	common	nl	Februari
-files	common	nl	Bestands
+fields	common	nl	Velden
+fiji	common	nl	
+files	common	nl	Bestanden
 filter	common	nl	Filter
+finland	common	nl	FINLAND
 first name	common	nl	Voornaam
+first name of the user, eg. "%1"	common	nl	Voornaam van de gebruiker, bijv. "%1"
+first page	common	nl	Eerste pagina
+firstname	common	nl	Voornaam
+fixme!	common	nl	FIXME!
+force selectbox	common	nl	Forceer Selectbox
+france	common	nl	
+french guiana	common	nl	
+french polynesia	common	nl	
+french southern territories	common	nl	
 friday	common	nl	Vrijdag
 ftp	common	nl	FTP
+fullname	common	nl	Voornaam
+gabon	common	nl	GABON
+gambia	common	nl	
+general menu	common	nl	Algemeen menu
+georgia	common	nl	
+germany	common	nl	DUITSLAND
+ghana	common	nl	
+gibraltar	common	nl	GIBRALTAR
+global	common	nl	Globale
 global public	common	nl	Toegang Openbaar
+go today	common	nl	Ga naar vandaag
+grant access	common	nl	Geef toegang
+greece	common	nl	GRIEKENLAND
+greenland	common	nl	GROENLAND
+grenada	common	nl	
+group	common	nl	Groep
 group access	common	nl	Groepstoegang
 group has been added	common	nl	Groep is toegevoegd
 group has been deleted	common	nl	Groep is verwijderd
 group has been updated	common	nl	Groep is bijgewerkt
+group name	common	nl	groepsnaam
 group public	common	nl	Toegang voor groep
 groups	common	nl	Groepen
+groups with permission for %1	common	nl	Groepen met toegangsrechten voor %1
+groups without permission for %1	common	nl	Groepen zonder toegangsrechten voor %1
+guadeloupe	common	nl	
+guam	common	nl	
+guatemala	common	nl	
+guinea	common	nl	
+guinea-bissau	common	nl	
+guyana	common	nl	
+haiti	common	nl	
+heard island and mcdonald islands	common	nl	
 help	common	nl	Help
 high	common	nl	Hoog
+highest	common	nl	Hoogste
+holy see (vatican city state)	common	nl	
 home	common	nl	Start
+home email	common	nl	email thuis
+honduras	common	nl	
+hong kong	common	nl	
+hungary	common	nl	
+iceland	common	nl	IJSLAND
+india	common	nl	INDIA
+indonesia	common	nl	
+insert all %1 addresses of the %2 contacts in %3	common	nl	Voer alle %1 adressen in van de %2 contacten in %3
+international	common	nl	Internationaal
+invalid ip address	common	nl	Ongeldig IPadres
+invalid password	common	nl	Ongeldig wachtwoord
+iran, islamic republic of	common	nl	
+iraq	common	nl	IIRAK
+ireland	common	nl	IERLAND
+israel	common	nl	
 it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd
+it is recommended that you run setup to upgrade your tables to the current version	common	nl	
+italy	common	nl	
+jamaica	common	nl	JAMAICA
 january	common	nl	Januari
+japan	common	nl	JAPAN
+jordan	common	nl	
 july	common	nl	Juli
 june	common	nl	Juni
+kazakstan	common	nl	
+kenya	common	nl	KENIA
+keywords	common	nl	
+kiribati	common	nl	
+korea, democratic peoples republic of	common	nl	
+korea, republic of	common	nl	
+kuwait	common	nl	
+kyrgyzstan	common	nl	
+language	common	nl	Taal
+lao peoples democratic republic	common	nl	
 last name	common	nl	Achternaam
+last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1"
 last page	common	nl	laaste pagina
+lastname	common	nl	Achternaam
+latvia	common	nl	
+lebanon	common	nl	
+lesotho	common	nl	
+liberia	common	nl	LIBERIE
+libyan arab jamahiriya	common	nl	
+license	phpgwapi	nl	Licentie
+liechtenstein	common	nl	LIECHTENSTEIN
+list	common	nl	Lijst
+lithuania	common	nl	
+local	common	nl	Lokaal
 location	common	nl	Locatie
 login	common	nl	Aanmelden
+loginid	common	nl	Loginnaam
 logout	common	nl	Afmelden
 low	common	nl	Laag
+lowest	common	nl	Laagste
+luxembourg	common	nl	LUXEMBURG
+macau	common	nl	
+macedonia, the former yugoslav republic of	common	nl	
+madagascar	common	nl	
+mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
+main category	common	nl	Hoofdcategorie
+main screen	common	nl	Hoofdscherm
+maintainer	phpgwapi	nl	
+malawi	common	nl	
+malaysia	common	nl	
+maldives	common	nl	
+mali	common	nl	
+malta	common	nl	MALTA
+manual	common	nl	Handleiding
 march	common	nl	Maart
+marshall islands	common	nl	
+martinique	common	nl	
+mauritania	common	nl	
+mauritius	common	nl	
 may	common	nl	Mei
+mayotte	common	nl	
 medium	common	nl	Gemiddeld
+menu	common	nl	Menu
+message	common	nl	Bericht
+mexico	common	nl	MEXICO
+micronesia, federated states of	common	nl	
 mobile	common	nl	Mobiel
+moldova, republic of	common	nl	
+monaco	common	nl	MONACO
 monday	common	nl	Maandag
+mongolia	common	nl	
+montserrat	common	nl	
+morocco	common	nl	
+mozambique	common	nl	MOZAMBIQUE
+myanmar	common	nl	
 name	common	nl	Naam
+name of the user, eg. "%1"	common	nl	naam van de gebruiker, bijv. "%1"
+namibia	common	nl	
+nauru	common	nl	
+nepal	common	nl	NEPAL
+netherlands	common	nl	NEDERLAND
+netherlands antilles	common	nl	DE NEDERLANDSE ANTILLEN
+never	common	nl	Nooit
+new caledonia	common	nl	
 new entry added sucessfully	common	nl	Nieuw item succesvol toegevoegd
+new main category	common	nl	Nieuwe hoofdcategorie
 new phrase has been added	common	nl	Nieuwe zin is toegevoegd
+new value	common	nl	Nieuwe waarde
+new zealand	common	nl	NIEUW ZEELAND
+next	common	nl	Volgende
+next month (hold for menu)	common	nl	
 next page	common	nl	volgende pagina
+next year (hold for menu)	common	nl	
+nicaragua	common	nl	
+niger	common	nl	
+nigeria	common	nl	
+niue	common	nl	
 no	common	nl	Nee
+no entries found, try again ...	common	nl	Geen items gevonden, probeer het nogmaals ...
+no history for this record	common	nl	Geen geschiedenis voor dit item
+no subject	common	nl	Geen onderwerp
 none	common	nl	Geen
+norfolk island	common	nl	
 normal	common	nl	Normaal
+northern mariana islands	common	nl	
+norway	common	nl	NOORWEGEN
+not assigned	common	nl	Niet toegewezen
+note	common	nl	Notitie
+notes	common	nl	Notities
+notify window	common	nl	Attentievenster
 november	common	nl	November
 october	common	nl	Oktober
-ok	common	nl	OK
+ok	common	nl	Oké
+old value	common	nl	Oude waarde
+oman	common	nl	
 on *nix systems please type: %1	common	nl	Op *nix systemen typt u: %1
+only private	common	nl	alleen privé
 only yours	common	nl	alleen eigen weergeven
+open notify window	common	nl	Attentievenster openen
+open popup window	common	nl	Popupvenster openen
 original	common	nl	Origineel
+other	common	nl	Andere
+overview	common	nl	Overzicht
+owner	common	nl	Eigenaar
 pager	common	nl	Buzzer
+pakistan	common	nl	PAKISTAN
+palau	common	nl	
+palestinian territory, occupied	common	nl	
+panama	common	nl	PANAMA
+papua new guinea	common	nl	
+paraguay	common	nl	
+parcel	common	nl	
+parent category	common	nl	
 password	common	nl	Wachtwoord
+password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
+pattern for search in addressbook	common	nl	Patroon voor zoekopdracht in Adressenboek
+pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Kalender
+pattern for search in projects	common	nl	Patroon voor zoekopdracht in Projecten
 permissions to the files/users directory	common	nl	privileges aan de bestanden/gebruikers toekennen
+personal	common	nl	Persoonlijk
+peru	common	nl	PERU
+philippines	common	nl	FILIPIJNEN
 phone	common	nl	Telefoon
+phone number	common	nl	telefoonnummer
+phpgroupware login	login	nl	pgpGroupWare aanmelding
+pitcairn	common	nl	
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
-powered by phpgroupware version %1	common	nl	Deze site werkt met <a href="http://www.phpgroupware.org">phpGroupWare</a> version %1
+please enter a name	common	nl	Voer a.u.b. een naam in !
+please run setup to become current	common	nl	Voer a.u.b. de setup uit om een actuele versie te verkrijgen
+please select	common	nl	Selecteer a.u.b.
+please set your global preferences	common	nl	Stel a.u.b. uw persoonlijke voorkeuren in !
+please set your preferences for this application	common	nl	Stel a.u.b. uw voorkeuren in voor deze toepassing !
+please wait...	common	nl	Geduld a.u.b.
+poland	common	nl	POLEN
+portugal	common	nl	PORTUGAL
+postal	common	nl	Post
+powered by phpgroupware version %1	common	nl	Deze site werkt met <a href=http://www.egroupware.org>eGroupWare</a> version %1
 preferences	common	nl	Voorkeuren
+prev. month (hold for menu)	common	nl	
+prev. year (hold for menu)	common	nl	
 previous page	common	nl	Vorige pagina
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
 private	common	nl	Privé
+project	common	nl	Project
+public	common	nl	publiek
+puerto rico	common	nl	
+qatar	common	nl	
+read	common	nl	Lezen
+read this list of methods.	common	nl	Lees deze lijst met methodes.
+reject	common	nl	Afwijzen
 rename	common	nl	Hernoemen
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	
+returns an array of todo items	common	nl	Geef een array met todo items
+returns struct of users application access	common	nl	
+reunion	common	nl	
+romania	common	nl	
+russian federation	common	nl	
+rwanda	common	nl	
+saint helena	common	nl	
+saint kitts and nevis	common	nl	
+saint lucia	common	nl	
+saint pierre and miquelon	common	nl	
+saint vincent and the grenadines	common	nl	
+samoa	common	nl	
+san marino	common	nl	
+sao tome and principe	common	nl	
 saturday	common	nl	Zaterdag
+saudi arabia	common	nl	
 save	common	nl	Opslaan
 search	common	nl	Zoeken
+section	common	nl	Sectie
+select	common	nl	Selecteren
+select category	common	nl	Selecteer Categorie
+select date	common	nl	Selecteer datum
+select group	common	nl	Selecteer groep
+select home email address	common	nl	Selecteer emailadres thuis
+select one	common	nl	Selecteer een
+select user	common	nl	Selecteer gebruiker
+select work email address	common	nl	Selecteer emailadres werk
+send	common	nl	Verzend
+senegal	common	nl	SENEGAL
 september	common	nl	September
+server %1 has been added	common	nl	Server %1 is toegevoegd
+server name	common	nl	Servernaam
 session has been killed	common	nl	Sessie is beëindigd
+setup	common	nl	Setup
+seychelles	common	nl	
 show all	common	nl	laat alles zien
+show all categorys	common	nl	Alle categoriën weergegeven
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
+sierra leone	common	nl	SIERRA LEONE
+singapore	common	nl	
+slovakia	common	nl	
+slovenia	common	nl	
+solomon islands	common	nl	
+somalia	common	nl	
 sorry, there was a problem processing your request.	common	nl	Sorry, er is een probleem opgetreden met het verwerken van uw verzoek.
-status	common	nl	status
+sorry, your login has expired	login	nl	Sorry, uw sessie is verlopen
+south africa	common	nl	ZUID AFRIKA
+south georgia and the south sandwich islands	common	nl	
+spain	common	nl	SPANJE
+sri lanka	common	nl	
+start date	common	nl	Startdatum
+start time	common	nl	Starttijd
+status	common	nl	Status
+subject	common	nl	Onderwerp
 submit	common	nl	Verzenden
+substitutions and their meanings:	common	nl	Substituties en hun betekenissen:
+sudan	common	nl	SUDAN
 sunday	common	nl	Zondag
+suriname	common	nl	SURINAME
+svalbard and jan mayen	common	nl	
+swaziland	common	nl	
+sweden	common	nl	ZWEDEN
+switzerland	common	nl	ZWITSERLAND
+syrian arab republic	common	nl	
+taiwan, province of china	common	nl	
+tajikistan	common	nl	
+tanzania, united republic of	common	nl	
+thailand	common	nl	THAILAND
+the api is current	common	nl	De API is actueel
+the api requires an upgrade	common	nl	De API vereist een upgrade
+the following applications require upgrades	common	nl	De volgende toepassingen vereisen een upgrade
+the mail server returned	common	nl	
+this application is current	common	nl	Deze toepassing is actueel
+this application requires an upgrade	common	nl	Deze toepassing vereist een upgrade
+this name has been used already	common	nl	Deze naam is reeds in gebruik !
 thursday	common	nl	Donderdag
-time	common	nl	tijd
+time	common	nl	Tijd
 time tracking	common	nl	Tijdregistratie
-to correct this error for the future you will need to properly set the	common	nl	Om deze fout te in de toekomst te voorkomen moet u de juiste
+time zone	common	nl	Tijdzone
+time zone offset	common	nl	Tijdzoneverschil
+title	common	nl	Titel
+to	common	nl	Aan
+to correct this error for the future you will need to properly set the	common	nl	Om deze fout in de toekomst te voorkomen moet u de juiste
+to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
+today	common	nl	Vandaag
+todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
+toggle first day of week	common	nl	
+togo	common	nl	
+tokelau	common	nl	
+tonga	common	nl	
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	nl	
 total	common	nl	Totaal
+trinidad and tobago	common	nl	
 tuesday	common	nl	Dinsdag
+tunisia	common	nl	
+turkey	common	nl	
+turkmenistan	common	nl	
+turks and caicos islands	common	nl	
+tuvalu	common	nl	
+uganda	common	nl	
+ukraine	common	nl	
+united arab emirates	common	nl	
+united kingdom	common	nl	VERENIGD KONINKRIJK
+united states	common	nl	VERENIGDE STATES
+united states minor outlying islands	common	nl	
+unknown	common	nl	Onbekend
+update	common	nl	Bijwerken
 updated	common	nl	Bijgewerkt
+url	common	nl	URL
+uruguay	common	nl	
+use button to search for	common	nl	
+use button to search for address	common	nl	
+use button to search for calendarevent	common	nl	
+use button to search for project	common	nl	
+use cookies	login	nl	gebruik koekjes
+user	common	nl	Gebruiker
+user accounts	common	nl	Gebruikersaccounts
+user groups	common	nl	Gebruikersgroupen
+username	common	nl	Gebruikersnaam
 users	common	nl	gebruikers
+users choice	common	nl	Gebruikerskeuze
+uzbekistan	common	nl	
 vacation hours per year	common	nl	Jaarlijks aantal verlofuren
 vacation hours used	common	nl	Gebruikte verlofuren
+vanuatu	common	nl	
+venezuela	common	nl	VENEZUELA
+version	common	nl	Versie
+viet nam	common	nl	VIETNAM
 view	common	nl	Bekijken
+virgin islands, british	common	nl	
+virgin islands, u.s.	common	nl	
+wallis and futuna	common	nl	
 wednesday	common	nl	Woensdag
+welcome	common	nl	Welkom
+western sahara	common	nl	
 which groups	common	nl	welke groepen
+wk	common	nl	
+work email	common	nl	email werk
+written by:	common	nl	Geschreven door:
+year	common	nl	Jaar
+yemen	common	nl	
 yes	common	nl	Ja
-you are required to change your password during your first login	common	nl	U moet na de eerste keer inlogggen uw eerste sessie uw wachtwoord wijzigen
-you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
+you are required to change your password during your first login	common	nl	U moet nadat u voor het eerst bent ingelogd uw wachtwoord wijzigen.
+you are running a newer version of phpgroupware than your database is setup for	common	nl	De versie van eGroupWare is recenter dan de versie van de geïnstalleerde database
 you have %1 new messages!	common	nl	U hebt %1 nieuwe berichten!
-your message has been sent	common	nl	Uw bericht is verzonden
-your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
-your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
-your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
-powered by phpgroupware version %1	all	nl	Deze site werkt met <a href=http://www.phpgroupware.org>phpGroupWare</a> version %1
-bad login or password	common	nl	Onjuiste gebruikersnaam of wachtwoord
-login	login	nl	Aanmelden
-password	login	nl	Wachtwoord
-phpgroupware login	login	nl	pgpGroupWare aanmelding
-sorry, your login has expired	login	nl	Sorry, uw sessie is verlopen
-use cookies	login	nl	gebruik koekjes
-username	login	nl	gebruikersnaam
+you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
 you have been successfully logged out	login	nl	U bent succesvol afgemeld
+you have not entered a title	common	nl	U heeft geen titel ingevoerd !
+you have not entered a valid date	common	nl	U heeft geen geldige datum ingevoerd !
+you have not entered a valid time of day	common	nl	U heeft geen geldige tijd van de dag ingevoerd !
+you have not entered participants	common	nl	U heeft geen deelnemers opgegeven !
+you have selected an invalid date	common	nl	U heeft een ongeldige datum geselecteerd !
+you have selected an invalid main category	common	nl	U heeft een ongeldige hoofdcategorie geselecteerd !
+you have successfully logged out	common	nl	U bent succesvol afgemeld
+your message could <b>not</b> be sent!<br>	common	nl	U bericht kon niet worden verzonden !
+your message has been sent	common	nl	Uw bericht is verzonden
+your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
+your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
 your session could not be verified.	login	nl	Uw sessie kon niet geverifieerd worden
+your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
+yugoslavia	common	nl	
+zambia	common	nl	
+zimbabwe	common	nl	ZIMBABWE

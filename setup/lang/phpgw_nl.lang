@@ -1,0 +1,398 @@
+(account deletion in sql only)	setup	nl	(verwijderen van accounts alleen in SQL)
+00 (disable)	setup	nl	00 (deactiveer / aanbevolen)
+13 (ntp)	setup	nl	13 (ntp)
+80 (http)	setup	nl	80 (http)
+actions	setup	nl	Acties
+add a domain	setup	nl	Een domein toevoegen
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
+additional settings	setup	nl	Overige instellingen
+admin first name	setup	nl	Voornaam beheerder
+admin last name	setup	nl	Achternaam beheerder
+admin password	setup	nl	Wachtwoord beheerder
+admin password to header manager	setup	nl	Wachtwoord beheerder van header
+admin username	setup	nl	gebruikersnaam beheerder
+admins	setup	nl	Beheerders
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	nl	Zet het bestand op de plek van header.inc.php als u het hebt ontvangen. Klik vervolgens op "doorgaan".
+all core tables and the admin and preferences applications	setup	nl	Alle hoofdtabellen en de beheerder- en voorkeurentoepassingen
+all users	setup	nl	Alle gebruikers
+analysis	setup	nl	Analyse
+app details	setup	nl	Toep. details
+app install/remove/upgrade	setup	nl	Toep. installeren/verwijderen/bijwerken
+app process	setup	nl	Toep. proces
+application data	setup	nl	Gegevens toepassing
+application list	setup	nl	Lijst toepassingen
+application management	setup	nl	Toepassingenbeheer
+application name and status	setup	nl	Naam en status toepassing
+application name and status information	setup	nl	Naam en statusinformatie toepassing
+application title	setup	nl	Titel toepassing
+are you sure you want to delete your existing tables and data?	setup	nl	Weet u zeker dat i uw huidige tabellen en gegevens wilt verwijderen?
+are you sure?	setup	nl	WEET U HET ZEKER?
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	nl	
+at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	nl	
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	nl	
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	nl	
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	nl	
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	nl	
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	nl	
+authentication / accounts	setup	nl	
+auto create account records for authenticated users	setup	nl	
+auto-created user accounts expire	setup	nl	
+available version	setup	nl	Beschikbare versie
+back to the previous screen	setup	nl	Terug naar voor vorig scherm
+back to user login	setup	nl	Terug naar gebruikerslogin
+backupwarn	setup	nl	
+because an application it depends upon was upgraded	setup	nl	omdat een toepassing waar het afhankelijk van is, is bijgewerkt
+because it depends upon	setup	nl	omdat het afhankelijk is van
+because it is not a user application, or access is controlled via acl	setup	nl	
+because it requires manual table installation, <br>or the table definition was incorrect	setup	nl	
+because it was manually disabled	setup	nl	
+because of a failed upgrade or install	setup	nl	
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	nl	
+because the enable flag for this app is set to 0, or is undefined	setup	nl	
+bottom	setup	nl	onderaan
+cancel	setup	nl	Annuleren
+cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	nl	
+change system-charset	setup	nl	Verander de systeemkarakterset
+charset	setup	nl	karakterset
+charset to convert to	setup	nl	
+check installation	setup	nl	Controleer installatie
+check ip address of all sessions	setup	nl	Controleer IPadres van alle sessies
+checking the egroupware installation	setup	nl	eGroupWare installatie aan het controleren
+click <a href="index.php">here</a> to return to setup.	setup	nl	Klik <a href="index.php">hier</a> om terug te gaan naar Setup.
+click here	setup	nl	Klik hier
+completed	setup	nl	Compleet
+configuration	setup	nl	Configuratie
+configuration completed	setup	nl	
+configuration password	setup	nl	
+configure now	setup	nl	
+continue	setup	nl	
+continue to the header admin	setup	nl	
+convert	setup	nl	
+could not open header.inc.php for writing!	setup	nl	
+country selection	setup	nl	
+create	setup	nl	
+create database	setup	nl	
+create demo accounts	setup	nl	
+create one now	setup	nl	
+create the empty database -	setup	nl	
+create the empty database and grant user permissions -	setup	nl	
+create your header.inc.php	setup	nl	
+created	setup	nl	
+creating tables	setup	nl	
+current system-charset	setup	nl	
+current system-charset is %1, click %2here%3 to change it.	setup	nl	
+current version	setup	nl	
+currently installed languages: %1 <br>	setup	nl	
+database successfully converted from '%1' to '%2'	setup	nl	
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	nl	
+db host	setup	nl	
+db name	setup	nl	
+db password	setup	nl	
+db root password	setup	nl	
+db root username	setup	nl	
+db type	setup	nl	
+db user	setup	nl	
+default file system space per user/group ?	setup	nl	
+delete	setup	nl	
+delete all my tables and data	setup	nl	
+delete all old languages and install new ones	setup	nl	
+deleting tables	setup	nl	
+demo server setup	setup	nl	
+deny access	setup	nl	
+deny all users access to grant other users access to their entries ?	setup	nl	
+dependency failure	setup	nl	
+deregistered	setup	nl	
+details for admin account	setup	nl	
+developers' table schema toy	setup	nl	
+did not find any valid db support!	setup	nl	
+do you want persistent connections (higher performance, but consumes more resources)	setup	nl	
+do you want to manage homedirectory and loginshell attributes?	setup	nl	
+domain	setup	nl	
+domain select box on login	setup	nl	
+dont touch my data	setup	nl	
+download	setup	nl	
+edit current configuration	setup	nl	
+edit your existing header.inc.php	setup	nl	
+edit your header.inc.php	setup	nl	
+enable for extra debug-messages	setup	nl	
+enable ldap version 3	setup	nl	
+enable mcrypt	setup	nl	
+enter some random text for app session encryption	setup	nl	
+enter some random text for app_session <br>encryption (requires mcrypt)	setup	nl	
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	nl	
+enter the full path for users and group files.<br>examples: /files, e:\files	setup	nl	
+enter the hostname of the machine on which this server is running	setup	nl	
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	nl	
+enter the site password for peer servers	setup	nl	
+enter the site username for peer servers	setup	nl	
+enter the title for your site	setup	nl	
+enter your default ftp server	setup	nl	
+enter your http proxy server	setup	nl	
+enter your http proxy server password	setup	nl	
+enter your http proxy server port	setup	nl	
+enter your http proxy server username	setup	nl	
+export has been completed!  you will need to set the user passwords manually.	setup	nl	
+export phpgroupware accounts from sql to ldap	setup	nl	
+export sql users to ldap	setup	nl	
+file	setup	nl	
+file type, size, version, etc.	setup	nl	
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	nl	
+force selectbox	setup	nl	
+found existing configuration file. loading settings from the file...	setup	nl	
+go back	setup	nl	
+go to	setup	nl	
+grant access	setup	nl	
+has a version mismatch	setup	nl	
+historylog removed	setup	nl	
+hooks deregistered	setup	nl	
+hooks registered	setup	nl	
+host information	setup	nl	
+hostname/ip of database server	setup	nl	
+however, the application is otherwise installed	setup	nl	
+however, the application may still work	setup	nl	
+if no acl records for user or any group the user is a member of	setup	nl	
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	nl	
+if using ldap	setup	nl	
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	nl	
+if you did not receive any errors, your applications have been	setup	nl	
+if you did not receive any errors, your tables have been	setup	nl	
+if you running this the first time, don't forget to manualy %1 !!!	setup	nl	
+image type selection order	setup	nl	
+import accounts from ldap to the phpgroupware accounts table (for a new install using sql accounts)	setup	nl	
+import has been completed!	setup	nl	
+import ldap users/groups	setup	nl	
+importing old settings into the new format....	setup	nl	
+include root (this should be the same as server root unless you know what you are doing)	setup	nl	
+insanity	setup	nl	
+install	setup	nl	
+install all	setup	nl	
+install applications	setup	nl	
+install language	setup	nl	
+installed	setup	nl	
+instructions for creating the database in %1:	setup	nl	
+invalid ip address	setup	nl	
+invalid password	setup	nl	
+is broken	setup	nl	
+is disabled	setup	nl	
+ldap account import/export	setup	nl	
+ldap accounts configuration	setup	nl	
+ldap accounts context	setup	nl	
+ldap config	setup	nl	
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	nl	
+ldap default shell (e.g. /bin/bash)	setup	nl	
+ldap encryption type	setup	nl	
+ldap export users	setup	nl	
+ldap groups context	setup	nl	
+ldap host	setup	nl	
+ldap import users	setup	nl	
+ldap modify	setup	nl	
+ldap root password	setup	nl	
+ldap rootdn	setup	nl	
+limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	nl	
+login to mysql -	setup	nl	
+logout	setup	nl	
+makesure	setup	nl	
+manage applications	setup	nl	
+manage languages	setup	nl	
+maximum account id (e.g. 65535 or 1000000)	setup	nl	
+may be broken	setup	nl	
+mcrypt algorithm (default tripledes)	setup	nl	
+mcrypt initialization vector	setup	nl	
+mcrypt mode (default cbc)	setup	nl	
+mcrypt settings (requires mcrypt php extension)	setup	nl	
+mcrypt version	setup	nl	
+minimum account id (e.g. 500 or 100, etc.)	setup	nl	
+modifications have been completed!	setup	nl	
+modify	setup	nl	
+modify an existing ldap account store for use with phpgroupware (for a new install using ldap accounts)	setup	nl	
+multi-language support setup	setup	nl	
+name of database	setup	nl	
+name of db user phpgroupware uses to connect	setup	nl	
+never	setup	nl	
+new	setup	nl	
+no	setup	nl	
+no algorithms available	setup	nl	
+no microsoft sql server support found. disabling	setup	nl	
+no modes available	setup	nl	
+no mysql support found. disabling	setup	nl	
+no oracle-db support found. disabling	setup	nl	
+no postgres-db support found. disabling	setup	nl	
+no xml support found. disabling	setup	nl	
+not complete	setup	nl	
+not completed	setup	nl	
+not ready for this stage yet	setup	nl	
+not set	setup	nl	
+note: you will be able to customize this later	setup	nl	
+now guessing better values for defaults...	setup	nl	
+ok	setup	nl	
+once the database is setup correctly	setup	nl	
+one month	setup	nl	
+one week	setup	nl	
+only add languages that are not in the database already	setup	nl	
+only add new phrases	setup	nl	
+or	setup	nl	
+or http://webdav.domain.com (webdav)	setup	nl	
+or we can attempt to create the database for you:	setup	nl	
+password needed for configuration	setup	nl	
+password of db user	setup	nl	
+passwords did not match, please re-enter	setup	nl	
+path information	setup	nl	
+path to user and group files has to be outside of the webservers document-root!!!	setup	nl	
+persistent connections	setup	nl	
+phpgroupware administration manual	setup	nl	
+please check for sql scripts within the application's directory	setup	nl	
+please check read/write permissions on directories, or back up and use another option.	setup	nl	
+please configure phpgroupware for your environment	setup	nl	
+please consult the %1.	setup	nl	
+please fix the above errors (***) and %1continue to the header admin%2	setup	nl	
+please install	setup	nl	
+please login	setup	nl	
+please login to phpgroupware and run the admin application for additional site configuration	setup	nl	
+please wait...	setup	nl	
+possible reasons	setup	nl	
+possible solutions	setup	nl	
+post-install dependency failure	setup	nl	
+potential problem	setup	nl	
+preferences	setup	nl	
+problem resolution	setup	nl	
+process	setup	nl	
+re-check my database	setup	nl	
+re-check my installation	setup	nl	
+re-enter password	setup	nl	
+read translations from	setup	nl	
+really uninstall all applications	setup	nl	
+recommended: filesystem	setup	nl	
+registered	setup	nl	
+remove	setup	nl	
+remove all	setup	nl	
+requires reinstall or manual repair	setup	nl	
+requires upgrade	setup	nl	
+resolve	setup	nl	
+return to setup	setup	nl	
+sample configuration not found. using built in defaults	setup	nl	
+save	setup	nl	
+save this text as contents of your header.inc.php	setup	nl	
+select an app, enter a target version, then submit to process to that version.<br>if you do not enter a version, only the baseline tables will be installed for the app.<br><blink>this will drop all of the apps' tables first!</blink>	setup	nl	
+select one...	setup	nl	
+select the default applications to which your users will have access	setup	nl	
+select the desired action(s) from the available choices	setup	nl	
+select to download file	setup	nl	
+select where you want to store/retrieve file contents	setup	nl	
+select where you want to store/retrieve filesystem information	setup	nl	
+select where you want to store/retrieve user accounts	setup	nl	
+select which group(s) will be exported (group membership will be maintained)	setup	nl	
+select which group(s) will be imported (group membership will be maintained)	setup	nl	
+select which group(s) will be modified (group membership will be maintained)	setup	nl	
+select which languages you would like to use	setup	nl	
+select which method of upgrade you would like to do	setup	nl	
+select which type of authentication you are using	setup	nl	
+select which user(s) will also have admin privileges	setup	nl	
+select which user(s) will be exported	setup	nl	
+select which user(s) will be imported	setup	nl	
+select which user(s) will be modified	setup	nl	
+select which user(s) will have admin privileges	setup	nl	
+select your old version	setup	nl	
+selectbox	setup	nl	
+server root	setup	nl	
+sessions type	setup	nl	
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	nl	
+settings	setup	nl	
+setup	setup	nl	
+setup demo accounts in ldap	setup	nl	
+setup main menu	setup	nl	
+setup the database	setup	nl	
+show 'powered by' logo on	setup	nl	
+some or all of its tables are missing	setup	nl	
+start the postmaster	setup	nl	
+status	setup	nl	
+step 1 - simple application management	setup	nl	
+step 2 - configuration	setup	nl	
+step 3 - language management	setup	nl	
+step 4 - advanced application management	setup	nl	
+table change messages	setup	nl	
+tables dropped	setup	nl	
+tables installed, unless there are errors printed above	setup	nl	
+tables upgraded	setup	nl	
+target version	setup	nl	
+text entry	setup	nl	
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	nl	
+the file	setup	nl	
+the table definition was correct, and the tables were installed	setup	nl	
+the tables	setup	nl	
+there was a problem trying to connect to your ldap server. <br>	setup	nl	
+there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	nl	
+this has to be outside the webservers document-root!!!	setup	nl	
+this program will convert your database to a new system-charset.	setup	nl	
+this program will help you upgrade or install different languages for phpgroupware	setup	nl	
+this section will help you export users and groups from phpgroupware's account tables into your ldap tree	setup	nl	
+this section will help you import users and groups from your ldap tree into phpgroupware's account tables	setup	nl	
+this section will help you setup your ldap accounts for use with phpgroupware	setup	nl	
+this should be around 30 bytes in length.<br>note: the default has been randomly generated.	setup	nl	
+this stage is completed<br>	setup	nl	
+this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!this will delete all existing accounts!!!</b><br>	setup	nl	
+to a version it does not know about	setup	nl	
+to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	nl	
+top	setup	nl	
+translations added	setup	nl	
+translations removed	setup	nl	
+translations upgraded	setup	nl	
+try to configure your php to support one of the above mentioned dbms, or install phpgroupware by hand.	setup	nl	
+two weeks	setup	nl	
+uninstall	setup	nl	
+uninstall all applications	setup	nl	
+uninstalled	setup	nl	
+upgrade	setup	nl	
+upgrade all	setup	nl	
+upgraded	setup	nl	
+upgrading tables	setup	nl	
+use cookies to pass sessionid	setup	nl	
+use pure html compliant code (not fully working yet)	setup	nl	
+users choice	setup	nl	
+utf-8 (unicode)	setup	nl	
+version mismatch	setup	nl	
+view	setup	nl	
+warning!	setup	nl	
+we can proceed	setup	nl	
+we will automatically update your tables/records to %1	setup	nl	
+what type of sessions management do you want to use (php4 session management may perform better)?	setup	nl	
+which database type do you want to use with phpgroupware?	setup	nl	
+would you like phpgroupware to cache the phpgw info array ?	setup	nl	
+would you like phpgroupware to check for a new version<br>when admins login ?	setup	nl	
+would you like to show each application's upgrade status ?	setup	nl	
+write config	setup	nl	
+yes	setup	nl	
+you appear to be running a pre-beta version of phpgroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	nl	
+you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run phpgroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	nl	
+you appear to be running version %1 of phpgroupware	setup	nl	U lijkt eGroupWare versie %1 te draaien
+you appear to be using php earlier than 4.1.0. phpgroupware now requires 4.1.0 or later	setup	nl	U lijkt een oudere versie dan PHP 4.1.0 te gebruiken. eGroupWare vereist nu PHP 4.1.0 of nieuwer
+you appear to be using php3. disabling php4 sessions support	setup	nl	Het lijkt erop dat u PHP3 gebruikt. PHP4 Sessieondersteuning is gedeactiveerd.
+you appear to be using php4. enabling php4 sessions support	setup	nl	Het lijkt erop dat u PHP4 gebruikt. PHP4 Sessieondersteuning is geactiveerd.
+you appear to have microsoft sql server support enabled	setup	nl	Microsoft SQL Server ondersteuning lijkt te zijn geactiveerd
+you appear to have mysql support enabled	setup	nl	MySQL ondersteuning lijkt te zijn geactiveerd.
+you appear to have oracle support enabled	setup	nl	Oracle ondersteuning lijkt te zijn geactiveerd.
+you appear to have oracle v8 (oci) support enabled	setup	nl	Oracle V8 (OCI) ondersteuning lijkt te zijn geactiveerd.
+you appear to have postgres-db support enabled	setup	nl	Postgres-DB ondersteuning lijkt te zijn geactiveerd.
+you appear to have xml support enabled	setup	nl	XML ondersteuning lijkt te zijn geactiveerd.
+you are ready for this stage, but this stage is not yet written.<br>	setup	nl	U bent klaar voor dit stadium, maar dit stadium is nog niet weggeschreven.</br>
+you didn't enter a config password for domain %1	setup	nl	U heeft geen configuratie wachtwoord ingevoerd voor domein %1.
+you didn't enter a header admin password	setup	nl	U heeft geen header beheerderwachtwoord ingevoerd.
+you do not have any languages installed. please install one now <br>	setup	nl	U heeft nog geen talen geïnstalleerd. Doe dit a.u.b. nu.<br/>
+you have not created your header.inc.php yet!<br> you can create it now.	setup	nl	U heeft nog geen header.inc.php gemaakt! <br/> U kunt dit nu doen.
+you have successfully logged out	setup	nl	U bent correct uitgelogd.
+you must enter a username for the admin	setup	nl	U moet een gebruikersnaam geven voor de beheerder
+you need to add some domains to your header.inc.php.	setup	nl	U moet één of meerdere domeinen toevoegen aan uw header.inc.php.
+you need to select your current charset!	setup	nl	U moet een huidige karakterset kiezen!
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	nl	U moet of proberen de de-installeren en vervolgens opnieuw te installeren of u kunt  handmatige reparaties doen
+you're using an old configuration file format...	setup	nl	U gebruikt een verouderd bestandsformaat voor de configuratie
+you're using an old header.inc.php version...	setup	nl	U gebruikt een verouderde header.inc.php versie...
+your applications are current	setup	nl	Uw toepassingen zijn actueel
+your database does not exist	setup	nl	U database bestaat niet!
+your database is not working!	setup	nl	U database werkt niet!
+your database is working, but you dont have any applications installed	setup	nl	U database werkt, maar u heeft nog geen toepassingen geïnstalleerd.
+your header admin password is not set. please set it now!	setup	nl	Uw header-beheerderwachtwoord is niet ingesteld. Doe dit nu!
+your header.inc.php needs upgrading.	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken
+your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	nl	Het is noodzakelijk uw header.inc.php bij te werken. <br>
+<b class="msg">WAARSCHUWING!</b><br/><b>MAAK BACK-UP'S!</b>
+your tables are current	setup	nl	Uw tabellen zijn actueel
+your tables may be altered and you may lose data	setup	nl	U tabellen kunnen gewijzigd worden en u kunt gegevens verliezen
+your tables will be dropped and you will lose data	setup	nl	U tabellen worden verwijderd en alle gegevens gaan verloren !!
