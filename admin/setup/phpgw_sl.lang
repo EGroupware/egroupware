@@ -149,7 +149,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sl	Vnes
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime strežnika skupine, na kateri teče strežnik.
-enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URP vašega eGroupware strežnika.<br>Primer: http://www.domena.si/egw &nbsp; ali &nbsp; /egw<br><b>Brez končne poševnice.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URP vašega eGroupware strežnika.<br>Primer: http://www.domena.si/egw &nbsp; ali &nbsp; /egw<br><b>Brez končne poševnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Pošlji.
 enter the site password for peer servers	admin	sl	Vnesite geslo vzporednega strežnika
 enter the site username for peer servers	admin	sl	Vnesite uporabniško ime vzporednega strežnika
@@ -352,9 +352,9 @@ view user account	admin	sl	Preglej uporabnikov račun
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
 would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Želite, da eGroupWare preveri za novo verzijo,<br>ko se prijavi administrator?
 would you like egroupware to check for new application versions when admins login ?	admin	sl	Želite, da eGroupWare preveri za novo verzijo programov,<br>ko se prijavi administrator?
-would you like phpgroupware to cache the phpgw info array ?	admin	sl	Ali želite, da eGroupware shrani spremenljivko phpgw_info v predpomnilnik?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da eGroupware preveri veljavnost različice ob administratorjevi prijavi?
-would you like phpgroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da eGroupware preveri veljavnost različice aplikacij ob administratorjevi prijavi?
+would you like egroupware to cache the phpgw info array ?	admin	sl	Ali želite, da eGroupware shrani spremenljivko phpgw_info v predpomnilnik?
+would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da eGroupware preveri veljavnost različice ob administratorjevi prijavi?
+would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da eGroupware preveri veljavnost različice aplikacij ob administratorjevi prijavi?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali želite avtomatično naložiti popravke jezika (ob prijavi)?
 would you like to show each application's upgrade status ?	admin	sl	Ali želite prikazati status različice vsake aplikacije?
 xml-rpc	admin	sl	XML_RPC
