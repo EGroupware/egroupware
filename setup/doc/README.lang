@@ -1,4 +1,4 @@
-Files in this dir are for setup only.  Please see each app/setup dir
+Files in setup/lang are for setup only.  Please see each app/setup dir
 for app-specific and phpgwap/setup for global langs.
 
 These files MUST be tab-delimited:
