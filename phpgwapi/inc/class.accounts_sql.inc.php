@@ -210,15 +210,13 @@
 			return $this->db->f(0) > 0;
 		}
 
-		// !! NOTE: We should pass an array to this to make updates easier, plus I need to add account_expires
-		//          I didn't want to risk breaking too much code at once, I will do this soon. (jengo)
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='', $account_home='',$account_shell='')
+		function create($account_info)
 		{
-          // $account_home and $account_shell not used here
 	      $this->db->query("insert into phpgw_accounts (account_lid, account_type, account_pwd, "
-	      	. "account_firstname, account_lastname, account_status) values ('" . $account_lid
-	      	. "','" . $account_type . "','" . md5($account_pwd) . "', '" . $account_firstname
-	      	. "','" . $account_lastname . "','" . $account_status . "')",__LINE__,__FILE__);
+	      	. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_info['lid']
+	      	. "','" . $account_info['type'] . "','" . md5($account_info['pwd']) . "', '" . $account_info['firstname']
+	      	. "','" . $account_info['lastname'] . "','" . $account_info['status'] . "','" . $account_info['expires']
+	      	. "')",__LINE__,__FILE__);
 		}
 
     function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False)
