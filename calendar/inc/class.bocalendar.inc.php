@@ -1564,12 +1564,13 @@
 				return 'private';
 			}
 
-//NDEE: cutting off too long entries 140304
-//ToDo: calculate length based on client window
-			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly && $field == "title")
+// cut off too long titles
+			elseif(strlen($event[$field]) > 19 && !$this->printer_friendly && $field=="title")
 //			elseif(strlen($event[$field]) > 19 && $this->printer_friendly)
 			{
-				return substr($event[$field], 0 , 19) . '&nbsp;...';
+// we dont use currently 160304
+//				return substr($event[$field], 0 , 19) . '&nbsp;...';
+				return $event[$field];
 			}
 			else
 			{
