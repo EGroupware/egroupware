@@ -61,36 +61,38 @@
 
   $view = "month";
 
-  $phpgw->template->set_file(array("index_t" => "index.tpl"));
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
 
-  $phpgw->template->set_block("index_t","index");
+  $p->set_file(array("index_t" => "index.tpl"));
+
+  $p->set_block("index_t","index");
 
   if ($friendly) {
-    $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
+    $p->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
   } else {
-    $phpgw->template->set_var("printer_friendly","");
+    $p->set_var("printer_friendly","");
   }
 
-  $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
+  $p->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar(1,$prev["month"],$prev["year"],"day.php"));
+  $p->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar(1,$prev["month"],$prev["year"],"day.php"));
 
   $m = mktime(2,0,0,$thismonth,1,$thisyear);
-  $phpgw->template->set_var("month_identifier",lang(strftime("%B",$m)) . " " . $thisyear);
-  $phpgw->template->set_var("username",$phpgw->common->grab_owner_name($owner));
-  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->mini_calendar(1,$next["month"],$next["year"],"day.php"));
+  $p->set_var("month_identifier",lang(strftime("%B",$m)) . " " . $thisyear);
+  $p->set_var("username",$phpgw->common->grab_owner_name($owner));
+  $p->set_var("small_calendar_next",$phpgw->calendar->mini_calendar(1,$next["month"],$next["year"],"day.php"));
   flush();
-  $phpgw->template->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
+  $p->set_var("large_month",$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
     $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+    $p->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</a>");
-    $phpgw->template->parse("out","index_t");
-    $phpgw->template->pparse("out","index_t");
+    $p->parse("out","index_t");
+    $p->pparse("out","index_t");
   } else {
-    $phpgw->template->set_var("print","");
-    $phpgw->template->parse("out","index_t");
-    $phpgw->template->pparse("out","index_t");
+    $p->set_var("print","");
+    $p->parse("out","index_t");
+    $p->pparse("out","index_t");
   }
   $phpgw->common->phpgw_footer();
 ?>

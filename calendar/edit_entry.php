@@ -17,7 +17,7 @@
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
 
   include("../header.inc.php");
-  
+
   $sb = CreateObject("phpgwapi.sbox");
 
   $cal_info = CreateObject('calendar.calendar_item');
@@ -36,6 +36,12 @@
     $hourformat = "H";
   }
 
+  if(!isset($owner)) {
+    $owner = $phpgw_info['user']['account_id'];
+  } else {
+    $owner = $phpgw_info['user']['account_id'];
+  }
+
   if ($id > 0) {
     $cal = $phpgw->calendar->getevent(intval($id));
     $cal_info = $cal[0];
@@ -48,12 +54,12 @@
       $cal_info->rpt_end = $cal_info->datetime + 86400;
     }
   } else if(isset($readsess)) {
-    $cal_info = $phpgw->common->appsession();
-    if(!$cal_info->owner) $cal_info->owner = $phpgw_info["user"]["account_id"];
+    $cal_info = $phpgw->common->appsession('entry','calendar');
+    if(!$cal_info->owner) $cal_info->owner = $owner;
     $can_edit = true;
   } else {
     $cal_info->id = 0;
-    $cal_info->owner = $phpgw_info["user"]["account_id"];
+    $cal_info->owner = $owner;
     $can_edit = true;
 
     if (!isset($day) || !$day)
@@ -170,35 +176,50 @@
     display_item(lang("Access"),$sb->getAccessList("cal[access]",$cal_info->access));
 
 // Groups
-    $db2 = $phpgw->db;
-    $db2->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=".$cal_info->owner,__LINE__,__FILE__);
-    $db2->next_record();
-    $user_groups = $phpgw->accounts->read_group_names($db2->f("account_lid"));
-      
+    $user_groups = $phpgw->accounts->memberships(intval($owner)); 
     display_item(lang("Groups"),$sb->getGroups($user_groups,$cal_info->groups,"cal[groups][]"));
 
 // Participants
-    $db2 = $phpgw->db;
-    $db2->query("select account_id,account_lastname,account_firstname,account_lid "
-		     . "from phpgw_accounts where account_status !='L' and "
-		     . "account_id != ".$phpgw_info["user"]["account_id"]." "
-		     . "and account_permissions like '%:calendar:%' "
-  		     . "order by account_lastname,account_firstname,account_lid");
+    $accounts = $phpgw->acl->get_ids_for_location('run',1,'calendar');
+    $users = Array();
+    for($i=0;$i<count($accounts);$i++) {
+      switch ($phpgw->accounts->get_type($accounts[$i])) {
+        case 'u' :
+          if($accounts[$i] != $owner && !$users[$accounts[$i]]) {
+            $users[$accounts[$i]] = $phpgw->common->grab_owner_name($accounts[$i]);
+          }
+          break;
+        case 'g' :
+          $group_members = $phpgw->acl->get_ids_for_location($accounts[$i],1,'phpgw_group');
+          while($group_members && $user = each($group_members)) {
+            if($user[1] != $owner && !$users[$user[1]]) {
+              $users[$user[1]] = $phpgw->common->grab_owner_name($user[1]);
+            }
+          }
+          break;
+      }
+    }
 
-    if ($db2->num_rows() > 50)
+    $num_users = count($users);
+    if ($num_users > 50) {
       $size = 15;
-    else if ($db2->num_rows() > 5)
+    } else if ($num_users > 5) {
       $size = 5;
-    else
-      $size = $db2->num_rows();
+    } else {
+      $size = $num_users;
+    }
     $str = "<select name=\"cal[participants][]\" multiple size=\"5\">";
-    for ($l=0;$l<count($cal_info->participants);$l++)
+    for ($l=0;$l<count($cal_info->participants);$l++) {
       $parts[$cal_info->participants[$l]] = True;
-    while ($db2->next_record()) {
-      $str .= "<option value=\"" . $db2->f("account_id") . "\"";  
-      if ($parts[$db2->f("account_id")])
-	$str .= " selected";
-      $str .= ">".$phpgw->common->grab_owner_name($db2->f("account_id"))."</option>";
+    }
+    
+    @asort($users);
+    @reset($users);
+    while ($user = each($users)) {
+      $str .= "<option value=\"" . $user[0] . "\"";  
+      if ($parts[$user[0]])
+        $str .= " selected";
+      $str .= ">".$user[1]."</option>";
     }
     $str .= "</select>";
     display_item(lang("Participants"),$str);

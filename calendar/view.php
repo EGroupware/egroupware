@@ -16,7 +16,7 @@
 
   $phpgw_info["flags"] = array("currentapp" => "calendar", "enable_nextmatchs_class" => True);
   include("../header.inc.php");
-
+$debugme = "on";
   if ($id < 1) {
      echo lang("Invalid entry id.");
      $phpgw->common->phpgw_exit();
@@ -106,9 +106,9 @@
     $cal_grps = "";
     for($i=0;$i<count($cal_info->groups);$i++) {
       if($i>0) $cal_grps .= "<br>";
-      $db->query("SELECT group_name FROM groups WHERE group_id=".$cal_info->groups[$i],__LINE__,__FILE__);
+      $db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id=".$cal_info->groups[$i],__LINE__,__FILE__);
       $db->next_record();
-      $cal_grps .= $db->f("group_name");
+      $cal_grps .= $db->f("account_lid");
     }
     display_item(lang("Groups"),$cal_grps);
   }

@@ -83,7 +83,7 @@
     $cal_info->edatetime = mktime($cal_info->end_hour,$cal_info->end_minute,0,$cal_info->end_month,$cal_info->end_day,$cal_info->end_year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
     $cal_info->rpt_end = mktime(12,0,0,$cal_info->rpt_month,$cal_info->rpt_day,$cal_info->rpt_year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
 
-    $cal_info = $phpgw->common->appsession($cal_info);
+    $phpgw->common->appsession('entry','calendar',$cal_info);
     $datetime_check = validate($cal_info);
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
       if ($cal_info->hour >= 12) {
@@ -97,7 +97,7 @@
     $cal_info->edatetime += ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
     $overlapping_events = $phpgw->calendar->overlap($cal_info->datetime,$cal_info->edatetime,$cal_info->participants,$cal_info->groups,$cal_info->owner,$cal_info->id);
   } else {
-    $cal_info = $phpgw->common->appsession();
+    $cal_info = $phpgw->common->appsession('entry','calendar');
   }
 
   if($datetime_check) {

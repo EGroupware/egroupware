@@ -1574,7 +1574,7 @@
         $calendar->description = htmlspecialchars(stripslashes($db2->f("cal_description")));
         if($db2->f("cal_group")) {
           $groups = explode(',',$db2->f("cal_group"));
-          for($j=1;$j<count($groups);$j++) {
+          for($j=1;$j<count($groups) - 1;$j++) {
             $calendar->groups[] = $groups[$j];
           }
         }

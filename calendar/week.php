@@ -52,19 +52,51 @@
   }
 
   if(!isset($owner)) { $owner = 0; } 
-  unset($owner);
 
   if(!isset($owner) || !$owner) {
-    $id = $phpgw_info["user"]["userid"];
-    $fn = $phpgw_info["user"]["firstname"];
-    $ln = $phpgw_info["user"]["lastname"];
-    $owner = 0;
+    $owner = $phpgw_info['user']['account_id'];
   } else {
-    $phpgw->db->query("SELECT account_lid,account_firstname,account_lastname FROM accounts WHERE account_id=$owner");
-    $phpgw->db->next_record();
-    $id = $phpgw->db->f("account_lid");
-    $fn = $phpgw->db->f("account_firstname");
-    $ln = $phpgw->db->f("account_lastname");
+    $grants = $phpgw->acl->get_location_list_for_id('calendar',PHPGW_ACL_READ,$owner);
+    $memberships = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+    while($grants && $granted = each($grants)){
+      if($granted[1] == 'u_'.$phpgw_info['user']['account_id']){
+        $can_read = True;
+        break;
+      }else{
+        reset($memberships);
+        while($group = each($memberships)) {
+          if($granted[1] == 'g_'.$group[1]['account_id']){
+            $can_read = True;
+            break 2;
+          }
+        }
+      }
+    }
+//    if(!$can_read){
+//      $my_groups = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
+//      $their_groups = $phpgw->accounts->memberships($owner);
+//      for($j=0;$j<count($my_groups);$j++){
+//echo 'My Group ('.$my_groups[$j]['account_name'].') '.$my_groups[$j]['account_id']."<br>\n";
+//        if($can_read){ break; }
+//        for($k=0;$k<count($their_groups);$k++){
+//echo 'Their Group ('.$their_groups[$k]['account_name'].') '.$their_groups[$k]['account_id']."<br>\n";
+//          if($can_read){ break 2; }
+//          if($my_groups[$j] == $their_groups[$k]){
+//echo 'Match Group ('.$my_groups[$j]['account_name'].') '.$my_groups[$j]['account_id']."<br>\n";
+//            $users = $phpgw->acl->get_ids_for_location('g_'.$my_groups[$j]['account_id'],PHPGW_ACL_READ,'calendar');
+//            for($l=0;$l<count($users);$l++){
+//              if($users[$l] == $owner){
+//                $can_read = True;
+//                break 3;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+    if(!$can_read) {
+      $owner = $phpgw_info['user']['account_id'];
+    }
   }
 
   $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth,$thisday + 7,$thisyear));
@@ -80,25 +112,27 @@
   }
   $first = $phpgw->calendar->splitdate($phpgw->calendar->get_weekday_start($thisyear, $thismonth, $thisday) + $start);
   $last = $phpgw->calendar->splitdate($first["raw"] + 518400);
-  $phpgw->template->set_file(array("week_t" => "week.tpl"));
 
-  $phpgw->template->set_block("week_t","week");
+  $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('calendar'));
+  $p->set_file(array("week_t" => "week.tpl"));
+
+  $p->set_block("week_t","week");
 
   if ($friendly) {
-    $phpgw->template->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
+    $p->set_var("printer_friendly","<body bgcolor=\"".$phpgw_info["theme"]["bg_color"]."\">");
   } else {
-    $phpgw->template->set_var("printer_friendly","");
+    $p->set_var("printer_friendly","");
   }
 
-  $phpgw->template->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
+  $p->set_var("bg_text",$phpgw_info["theme"]["bg_text"]);
 
-  $phpgw->template->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php"));
+  $p->set_var("small_calendar_prev",$phpgw->calendar->mini_calendar($thisday,$prevmonth["month"],$prevmonth["year"],"day.php"));
   if (!$friendly) {
-    $phpgw->template->set_var("prev_week_link","<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">&lt;&lt;</a>");
+    $p->set_var("prev_week_link","<a href=\"".$phpgw->link("week.php","year=".$prev["year"]."&month=".$prev["month"]."&day=".$prev["day"])."\">&lt;&lt;</a>");
   } else {
-    $phpgw->template->set_var("prev_week_link","&lt;&lt;");
+    $p->set_var("prev_week_link","&lt;&lt;");
   }
-  $phpgw->template->set_var("small_calendar_this",$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,"day.php"));
+  $p->set_var("small_calendar_this",$phpgw->calendar->mini_calendar($thisday,$thismonth,$thisyear,"day.php"));
 
   $week_id = lang(strftime("%B",$first["raw"]))." ".$first["day"];
   if($first["month"] <> $last["month"] && $first["year"] <> $last["year"]) $week_id .= ", ".$first["year"];
@@ -106,27 +140,27 @@
   if($first["month"] <> $last["month"]) $week_id .= lang(strftime("%B",$last["raw"]))." ";
   $week_id .= $last["day"].", ".$last["year"];
 
-  $phpgw->template->set_var("week_identifier",$week_id);
-  $phpgw->template->set_var("username",$phpgw->common->display_fullname($id,$fn,$ln));
+  $p->set_var("week_identifier",$week_id);
+  $p->set_var("username",$phpgw->common->grab_owner_name($owner));
 
   if (!$friendly) {
-    $phpgw->template->set_var("next_week_link","<a href=\"".$phpgw->link("week.php","year=".$next["year"]."&month=".$next["month"]."&day=".$next["day"])."\">&gt;&gt;</a>");
+    $p->set_var("next_week_link","<a href=\"".$phpgw->link("week.php","year=".$next["year"]."&month=".$next["month"]."&day=".$next["day"])."\">&gt;&gt;</a>");
   } else {
-    $phpgw->template->set_var("next_week_link","&gt;&gt;");
+    $p->set_var("next_week_link","&gt;&gt;");
   }
-  $phpgw->template->set_var("small_calendar_next",$phpgw->calendar->mini_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php"));
-  $phpgw->template->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$owner));
+  $p->set_var("small_calendar_next",$phpgw->calendar->mini_calendar($thisday,$nextmonth["month"],$nextmonth["year"],"day.php"));
+  $p->set_var("week_display",$phpgw->calendar->display_large_week($thisday,$thismonth,$thisyear,true,$owner));
 
   if (!$friendly) {
     $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
-    $phpgw->template->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
+    $p->set_var("print","<a href=\"".$phpgw->link("",$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window."
 	   . "status = '" . lang("Generate printer-friendly version"). "'\">[". lang("Printer Friendly") . "]</A>");
-    $phpgw->template->parse("out","week_t");
-    $phpgw->template->pparse("out","week_t");
+    $p->parse("out","week_t");
+    $p->pparse("out","week_t");
   } else {
-    $phpgw->template->set_var("print","");
-    $phpgw->template->parse("out","week_t");
-    $phpgw->template->pparse("out","week_t");
+    $p->set_var("print","");
+    $p->parse("out","week_t");
+    $p->pparse("out","week_t");
   }
   $phpgw->common->phpgw_footer();
 ?>
