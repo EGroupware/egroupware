@@ -32,10 +32,10 @@
 	}
 
 	#_debug_array($GLOBALS['phpgw_info']['user']['preferences']['common']);
-	$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
+	$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	if(!file_exists($theme_css))
 	{
-		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
+		$theme_css = $GLOBALS['phpgw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/'.$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'].'.css';
 	}
 
 	//pngfix defaults to yes
