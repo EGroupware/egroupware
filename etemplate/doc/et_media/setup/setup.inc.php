@@ -18,8 +18,8 @@
 	$setup_info['et_media']['app_order'] = 100;     // at the end
 	$setup_info['et_media']['tables']    = array('phpgw_et_media');
 	$setup_info['et_media']['enable']    = 1;
-	$setup_info['infolog']['author'] = 
- 	$setup_info['infolog']['maintainer'] = array(
+	$setup_info['et_media']['author'] = 
+ 	$setup_info['et_media']['maintainer'] = array(
 		'name'  => 'Ralf Becker',
 		'email' => 'ralfbecker@outdoor-training.de'
 	);

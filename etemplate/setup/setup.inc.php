@@ -18,8 +18,8 @@
 	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;
 
-	$setup_info['infolog']['author'] = 
- 	$setup_info['infolog']['maintainer'] = array(
+	$setup_info['etemplate']['author'] = 
+ 	$setup_info['etemplate']['maintainer'] = array(
 		'name'  => 'Ralf Becker',
 		'email' => 'ralfbecker@outdoor-training.de'
 	);
