@@ -19,9 +19,32 @@
 
   class calendar extends calendar_
   {
-	function calendar($p_friendly=False)
+	function calendar($params=False)
 	{
-      $this->printer_friendly = $p_friendly;
+	  global $phpgw_info;
+	  
+	  if(gettype($params)=="array")
+	  {
+	    while(list($key,$value) = each($params))
+	    {
+		  $this->$key = $value;
+	    }
+	  }
+	  else
+	  {
+        $this->printer_friendly = $params;
+      }
+
+      if(!$this->owner)
+      {
+        $this->owner = $phpgw_info['user']['account_id'];
+      }
+      
+      if(!isset($this->rights))
+      {
+        $this->rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+      }
+
       $this->today = $this->localdates(time());
     }
   }

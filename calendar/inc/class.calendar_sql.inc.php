@@ -18,9 +18,13 @@
   {
     var $stream;
     var $user;
+
+    var $printer_friendly = False;
+    var $owner;
+    var $rights;
+    
     var $cal_event;
     var $today = Array('raw','day','month','year','full','dow','dm','bd');
-    var $printer_friendly = False;
     var $repeated_events;
     var $checked_events;
     var $re = 0;
@@ -133,9 +137,7 @@
 
     function check_perms($needed)
     {
-      global $rights;
-      
-      if($rights & $needed)
+      if($this->rights & $needed)
       {
         return True;
       }

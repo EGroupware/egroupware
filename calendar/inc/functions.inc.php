@@ -19,6 +19,8 @@
     $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
   }
 
+  // This is the initialization of the ACL usage
+
   $grants = $phpgw->acl->get_grants('calendar');
 
   if(!isset($owner))
@@ -36,16 +38,22 @@
     if($grants[$owner])
     {
       $rights = $grants[$owner];
-      if (!($rights & PHPGW_ACL_READ))
+      if ($rights == 0)
       {
         $owner = $phpgw_info['user']['account_id'];
+		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
       }
     }
   }
 
   /* Load calendar class */
-  $printer_friendly = ((isset($friendly) && ($friendly==1))?True:False);
-  $phpgw->calendar  = CreateObject('calendar.calendar',$printer_friendly);
+  $parameters = Array(
+					'printer_friendly'		=> ((isset($friendly) && ($friendly==1))?True:False),
+					'owner'					=> $owner,
+					'rights'				=> $rights
+  );
+  
+  $phpgw->calendar  = CreateObject('calendar.calendar',$parameters);
 
   if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
     $phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
