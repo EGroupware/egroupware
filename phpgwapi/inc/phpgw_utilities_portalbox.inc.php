@@ -1,4 +1,15 @@
 <?php
+  /**************************************************************************\
+  * phpGroupWare - API                                                       *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
 
 class baseportalbox {
 
@@ -96,6 +107,7 @@ class linkbox extends baseportalbox {
         $p->set_var('title',$this->getvar('title'));
         $p->set_var('inner_width',$this->getvar('width'));
         $p->set_var('inner_bgcolor',$this->getvar('innerbgcolor'));
+        $p->set_var('header_background_image',$this->getvar('header_background_image'));
         $p->parse('output','portal_linkbox_header',True);
         
         for ($x = 0; $x < count($this->data); $x++) {
