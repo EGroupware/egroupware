@@ -629,6 +629,13 @@
 		$setup_info['calendar']['currentver'] = '0.9.11.001';
 		return $setup_info['calendar']['currentver'];
 	}
+	$test[] = '0.9.11';
+	function calendar_upgrade0_9_11()
+	{
+		global $setup_info;
+		$setup_info['calendar']['currentver'] = '0.9.11.001';
+		return $setup_info['calendar']['currentver'];
+	}
 
 	$test[] = '0.9.11.001';
 	function calendar_upgrade0_9_11_001()
