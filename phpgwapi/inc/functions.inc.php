@@ -143,18 +143,19 @@
 	 * Load up the main instance of the db class.                             *
 	 \************************************************************************/
 	$GLOBALS['phpgw']->db           = CreateObject('phpgwapi.db');
-	$GLOBALS['phpgw']->db->Host     = $GLOBALS['phpgw_info']['server']['db_host'];
-	$GLOBALS['phpgw']->db->Port     = $GLOBALS['phpgw_info']['server']['db_port'];
-	$GLOBALS['phpgw']->db->Type     = $GLOBALS['phpgw_info']['server']['db_type'];
-	$GLOBALS['phpgw']->db->Database = $GLOBALS['phpgw_info']['server']['db_name'];
-	$GLOBALS['phpgw']->db->User     = $GLOBALS['phpgw_info']['server']['db_user'];
-	$GLOBALS['phpgw']->db->Password = $GLOBALS['phpgw_info']['server']['db_pass'];
 	if ($GLOBALS['phpgw']->debug)
 	{
 		$GLOBALS['phpgw']->db->Debug = 1;
 	}
-
 	$GLOBALS['phpgw']->db->Halt_On_Error = 'no';
+	$GLOBALS['phpgw']->db->connect(
+		$GLOBALS['phpgw_info']['server']['db_name'],
+		$GLOBALS['phpgw_info']['server']['db_host'],
+		$GLOBALS['phpgw_info']['server']['db_port'],
+		$GLOBALS['phpgw_info']['server']['db_user'],
+		$GLOBALS['phpgw_info']['server']['db_pass'],
+		$GLOBALS['phpgw_info']['server']['db_type']
+	);
 	@$GLOBALS['phpgw']->db->query("SELECT COUNT(config_name) FROM phpgw_config");
 	if(!@$GLOBALS['phpgw']->db->next_record())
 	{
