@@ -139,17 +139,20 @@
 				$querymethod = " AND (cat_name like '%$query%' OR cat_description like '%$query%') ";
 			}
 
-			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
-				. " $grant_cats $querymethod $filter $ordermethod";
-
 			if ($limit)
 			{
 				$limitmethod = " " . $this->db->limit($start);
 			}
 
+			$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
+				. " $grant_cats $querymethod $filter";
+
 			$this->db2->query($sql,__LINE__,__FILE__);
+
 			$this->total_records = $this->db2->num_rows();
-			$this->db->query($sql . $limitmethod,__LINE__,__FILE__);
+
+			$this->db->query($sql . $ordermethod . $limitmethod,__LINE__,__FILE__);
+
 			//echo '<b>TEST:</b>' . $sql;
 
 			$i = 0;
@@ -250,11 +253,11 @@
 		{
 			global $phpgw;
 			$filter = $this->filter($type);
-			
+
 			if (!is_array($selected))
 			{
 				$selected = explode(',',$selected);
-			}			
+			}
 
 			if ($format == 'select')
 			{
@@ -270,7 +273,7 @@
 					$s .= '>' . $phpgw->strip_html($cats[$i]['name']);
 					if ($cats[$i]['app_name'] == 'phpgw')
 					{
-					$s .= '&lt;' . lang('Global') . '&gt;';
+						$s .= '&lt;' . lang('Global') . '&gt;';
 					}
 					$s .= '</option>' . "\n";
 				}
