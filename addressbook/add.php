@@ -26,58 +26,64 @@
   } else if (! $submit && ! $add_email) {
      form("","add.php","Add","","","");
   } else {
-     if ($bday_month == "" && $bday_day == "" && $bday_year == "")
+     if ($bday_month == "" && $bday_day == "" && $bday_year == "") {
         $bday = "";
-     else
+     } else {
         $bday = "$bday_month/$bday_day/$bday_year";
+     }
 
-     $access = $phpgw->accounts->array_to_string($access,$n_groups);
-     if($phpgw_info["apps"]["timetrack"]["enabled"]) {
+     if ($access != "private" && $access != "public") {
+        $access = $phpgw->accounts->array_to_string($access,$n_groups);
+     }
+
+     if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
        $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
-       	. "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
-        . "ab_state,ab_zip,ab_bday,"
-          . "ab_notes,ab_company_id) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
-          . addslashes($firstname). "','"
-          . addslashes($lastname) . "','"
-          . addslashes($title)  . "','"
-          . addslashes($email) 	. "','" 
-          . addslashes($hphone) . "','"
-          . addslashes($wphone) . "','"
-          . addslashes($fax) 	. "','"
-          . addslashes($pager) 	. "','"
-          . addslashes($mphone)	. "','"
-          . addslashes($ophone)	. "','"
-          . addslashes($street)	. "','"
-          . addslashes($address2) . "','"
-          . addslashes($city) 	. "','"
-          . addslashes($state) 	. "','"
-          . addslashes($zip) 	. "','"
-          . addslashes($bday) 	. "','"
-          . addslashes($notes) 	. "','"
-          . addslashes($company). "')";
+        	. "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
+            . "ab_state,ab_zip,ab_bday,"
+            . "ab_notes,ab_company_id,ab_url) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
+            . addslashes($firstname). "','"
+            . addslashes($lastname) . "','"
+            . addslashes($title)    . "','"
+            . addslashes($email)    . "','" 
+            . addslashes($hphone)   . "','"
+            . addslashes($wphone)   . "','"
+            . addslashes($fax)      . "','"
+            . addslashes($pager)    . "','"
+            . addslashes($mphone)   . "','"
+            . addslashes($ophone)   . "','"
+            . addslashes($street)   . "','"
+            . addslashes($address2) . "','"
+            . addslashes($city) 	. "','"
+            . addslashes($state)    . "','"
+            . addslashes($zip)      . "','"
+            . addslashes($bday) 	. "','"
+            . addslashes($notes)    . "','"
+            . addslashes($company)  . "','"
+            . addslashes($url)      . "')";
      } else {
        $sql = "insert into addressbook (ab_owner,ab_access,ab_firstname,ab_lastname,ab_title,ab_email,"
-        . "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
-        . "ab_state,ab_zip,ab_bday,"
-          . "ab_notes,ab_company) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
-          . addslashes($firstname). "','"
-          . addslashes($lastname) . "','"
-          . addslashes($title)  . "','"
-          . addslashes($email)  . "','"
-          . addslashes($hphone) . "','"
-          . addslashes($wphone) . "','"
-          . addslashes($fax)    . "','"
-          . addslashes($pager)  . "','"
-          . addslashes($mphone) . "','"
-          . addslashes($ophone) . "','"
-          . addslashes($street) . "','"
-          . addslashes($address2) . "','"
-          . addslashes($city)   . "','"
-          . addslashes($state)  . "','"
-          . addslashes($zip)    . "','"
-          . addslashes($bday)   . "','"
-          . addslashes($notes)  . "','"
-          . addslashes($company). "')";
+            . "ab_hphone,ab_wphone,ab_fax,ab_pager,ab_mphone,ab_ophone,ab_street,ab_address2,ab_city,"
+            . "ab_state,ab_zip,ab_bday,"
+            . "ab_notes,ab_company,ab_url) values ('" . $phpgw_info["user"]["account_id"] . "','$access','"
+            . addslashes($firstname). "','"
+            . addslashes($lastname) . "','"
+            . addslashes($title)    . "','"
+            . addslashes($email)    . "','"
+            . addslashes($hphone)   . "','"
+            . addslashes($wphone)   . "','"
+            . addslashes($fax)      . "','"
+            . addslashes($pager)    . "','"
+            . addslashes($mphone)   . "','"
+            . addslashes($ophone)   . "','"
+            . addslashes($street)   . "','"
+            . addslashes($address2) . "','"
+            . addslashes($city)     . "','"
+            . addslashes($state)    . "','"
+            . addslashes($zip)      . "','"
+            . addslashes($bday)     . "','"
+            . addslashes($notes)    . "','"
+            . addslashes($company)  . "','"
+            . addslashes($url)      . "')";
      }
      $phpgw->db->query($sql);
  
@@ -86,20 +92,20 @@
   }
 
 ?>
-    <TABLE border=0 cellPadding=0 cellSpacing=0 width="95%">
+    <TABLE border="0" cellPadding="0" cellSpacing="0" width="95%">
       <TBODY> 
       <TR> 
         <TD> 
-          <TABLE border=0 cellPadding=1 cellSpacing=1>
+          <TABLE border="0" cellPadding="1" cellSpacing="1">
             <TBODY> 
             <TR> 
-              <TD align=left> 
-                <INPUT type=submit name=submit value="OK">
+              <TD align="left"> 
+                <INPUT type="submit" name="submit" value="<?php echo lang("OK"); ?>">
               </TD>
-              <TD align=left> 
-                <INPUT name=reset type=reset value="Clear">
+              <TD align="left"> 
+                <INPUT name="reset" type="reset" value="<?php echo lang("Clear"); ?>">
               </TD>
-              <TD align=left> 
+              <TD align="left"> 
                 <a href="<?php echo $phpgw->link($phpgw_info["server"]["webserver_url"] . "/addressbook/") . "\">" . lang("Cancel"); ?></a>
               </TD>
             </TR>

@@ -24,71 +24,78 @@
   }
 
   if ($filter != "private")
+ {
      $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
+  }
 
-  if($phpgw_info["apps"]["timetrack"]["enabled"]) {
-   $phpgw->db->query("SELECT * FROM addressbook as a, customers as c WHERE a.ab_company_id = c.company_id "
-		     . "AND ab_id=$ab_id AND (ab_owner='"
-	             . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
+  if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
+     $phpgw->db->query("SELECT * FROM addressbook as a, customers as c WHERE a.ab_company_id = c.company_id "
+		             . "AND ab_id=$ab_id AND (ab_owner='"
+	                 . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
   } else {
-   $phpgw->db->query("SELECT * FROM addressbook "
-                     . "WHERE ab_id=$ab_id AND (ab_owner='"
+     $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id=$ab_id AND (ab_owner='"
                      . $phpgw_info["user"]["account_id"] . "' $filtermethod)");
   }
   $phpgw->db->next_record();
 
-  $fields = array('ab_id'   => $phpgw->db->f("ab_id"),
- 		        'owner'   => $phpgw->db->f("ab_owner"),
-			   'access'  => $phpgw->db->f("ab_access"),
-			   'firstname' => $phpgw->db->f("ab_firstname"),
-			   'lastname' => $phpgw->db->f("ab_lastname"),
-			   'title'   => $phpgw->db->f("ab_title"),
-			   'email'   => $phpgw->db->f("ab_email"),
-			   'hphone'  => $phpgw->db->f("ab_hphone"),
- 		        'wphone'  => $phpgw->db->f("ab_wphone"),
-			   'fax'	   => $phpgw->db->f("ab_fax"),
-			   'pager'   => $phpgw->db->f("ab_pager"),
-			   'mphone'  => $phpgw->db->f("ab_mphone"),
-			   'ophone'  => $phpgw->db->f("ab_ophone"),
-			   'street'  => $phpgw->db->f("ab_street"),
-			   'address2' => $phpgw->db->f("ab_address2"),
-			   'city'	   => $phpgw->db->f("ab_city"),
-			   'state'   => $phpgw->db->f("ab_state"),
-			   'zip'	   => $phpgw->db->f("ab_zip"),
-			   'bday'	   => $phpgw->db->f("ab_bday"),
-			   'company' => $phpgw->db->f("ab_company"),
-			   'company_id' => $phpgw->db->f("ab_company_id"),
-			   'company_name' => $phpgw->db->f("company_name"),
-			   'notes'   => $phpgw->db->f("ab_notes")
-		        );
+  echo "<p>&nbsp;<b>" . lang("Address book - view") . "</b><hr><p>";
 
-  $owner = $phpgw->db->f("ab_owner");
-  $ab_id = $phpgw->db->f("ab_id");
-  form("view","","View",$fields);
+  $i = 0;
+  while ($column = each($abc)) {
+     if ($phpgw->db->f("ab_" . $column[0])) {
+        $columns_to_display[$i]["field_name"]  = $column[1];
+        $columns_to_display[$i]["field_value"] = $phpgw->db->f("ab_" . $column[0]);
+        $i++;
+     }
+  }
+
+  echo '<table border="0" cellspacing="2" cellpadding="2" width="80%" align="center">';
+  for ($i=0;$i<200;) {		// The $i<200 is only used for a brake
+      if (! $columns_to_display[$i]["field_name"]) break;
+
+      $columns_html .= "<tr><td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
+                     . "<td>" . $columns_to_display[$i]["field_value"] . "</td>";
+
+      $i++;
+
+      if (! $columns_to_display[$i]["field_name"]) break;
+
+      $columns_html .= "<td><b>" . lang($columns_to_display[$i]["field_name"]) . "</b>:</td>"
+                     . "<td>" . $columns_to_display[$i]["field_value"];
+
+      $i++;
+	  $columns_html .= "</td></tr>";
+  }
+  $owner  = $phpgw->db->f("ab_owner");
+  $access = $phpgw->db->f("ab_access");
+  
+  echo $columns_html . '<tr><td colspan="4">&nbsp;</td></tr>';
+  echo "<tr><td><b>" . lang("Record owner") . "</b></td><td>"
+     . $phpgw->common->grab_owner_name($phpgw->db->f("ab_owner")) . "</td><td><b>"
+     . lang("Record Access") . "</b></td><td>";
+     
+  if ($access != "private" && $access != "public") {
+	 echo lang("Group access") . $phpgw->accounts->convert_string_to_names_access($access);
+  } else {
+     
+     echo $access;
+  }
+     
+  echo "</td></tr></table>";
 ?>
-    <TABLE border=0 cellPadding=0 cellSpacing=0 width="95%">
-      <TBODY> 
-      <TR> 
-        <TD> 
-          <TABLE border=0 cellPadding=1 cellSpacing=1>
-            <TBODY> 
-            <TR> 
-              <TD align=left> 
-               <?php
-                 echo $phpgw->common->check_owner($ab_id,$owner,"Edit");
-               ?>
-              </TD>
-              <TD align=left>
-                <a href="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>">Done</a>
-              </TD>
-            </TR>
-            </TBODY> 
-          </TABLE>
-        </TD>
-      </TR>
-      </TBODY>
-    </TABLE>
-</DIV>
+ <TABLE border="0" cellpadding="1" cellspacing="1">
+  <TR> 
+   <TD align="left">
+    <?php
+      echo $phpgw->common->check_owner($owner,"edit.php","Edit");
+    ?>
+   </TD>
+   <TD align="left">
+    <a href="<?php echo $phpgw->link("index.php","order=$order&start=$start&filter=$filter&query=$query&sort=$sort"); ?>">Done</a>
+   </TD>
+  </TR>
+ </TABLE>
+
 <?php
   $phpgw->common->phpgw_footer();
 ?>

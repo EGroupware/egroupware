@@ -163,6 +163,8 @@
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
     echo '<tr bgcolor="#' . $tr_color . '">';
     
+    $ab_id = $phpgw->db->f("ab_id");
+    
     while ($column = each($columns_to_display)) {
        if ($phpgw_info["apps"]["timetrack"]["enabled"]) {
           if ($column[0] == "company") {
@@ -174,46 +176,43 @@
           $field = $phpgw->db->f("ab_" . $column[0]);
        }
 
-       if (! $field) {
-          $field = "&nbsp;";
-       } else {
-          $field = htmlentities($field);
-       }
+       $field = htmlentities($field);
 
        // Some fields require special formating.       
        if ($column[0] == "url") {
           echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-             . '<a href="' . $field . '" target="_top">' . $field. '</a></font></td>';          
+             . '<a href="' . $field . '" target="_new">' . $field. '</a>&nbsp;</font></td>';
        } else if ($column[0] == "email") {
           if ($phpgw_info["user"]["apps"]["email"]) {
              echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
                 . '<a href="' . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/email/compose.php",
-                                            "to=" . urlencode($field)) . '" target="_top">' . $field . '</a></font></td>';
+                                            "to=" . urlencode($field)) . '" target="_top">' . $field . '</a>&nbsp;</font></td>';
           } else {
              echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-                . '<a href="mailto:' . $field . '" target="_top">' . $field. '</a></font></td>';
+                . '<a href="mailto:' . $field . '" target="_top">' . $field. '</a>&nbsp;</font></td>';
           }
        } else {
           echo '<td valign="top"><font face="' . $phpgw_info["theme"]["font"] . '" size="2">'
-             . $field . '</font></td>';
+             . $field . '&nbsp;</font></td>';
        }
        
     }
+    reset($columns_to_display);		// If we don't reset it, our inside while won't loop
     ?>
-    <td valign=top width=3%>
-	<font face=Arial, Helvetica, sans-serif size=2>
-          <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
+    <td valign="top" width="3%">
+ 	<font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size="2">
+      <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id&start=$start&order=$order&filter="
 								 . "$filter&query=$query&sort=$sort");
 	  ?>"> <?php echo lang("View"); ?> </a>
-        </font>
-       </td>
-       <td valign=top width=5%>
-        <font face=Arial, Helvetica, sans-serif size=2>
-         <?php echo $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")); ?>
-        </font>
-       </td>
-      </tr>
-     <?php
+     </font>
+    </td>
+    <td valign="top" width="5%">
+     <font face="<?php echo $phpgw_info["theme"]["font"]; ?>" size="2">
+      <?php echo $phpgw->common->check_owner($phpgw->db->f("ab_owner"),"edit.php",lang("edit"),"ab_id=" . $phpgw->db->f("ab_id")); ?>
+     </font>
+    </td>
+   </tr>
+   <?php
   }
 
 ?>

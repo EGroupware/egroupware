@@ -32,8 +32,7 @@
 
   function form($format,$action,$title,$fields)
   {
-      global $phpgw;
-      global $phpgw_info;
+      global $phpgw, $phpgw_info;
 
       $email        = $fields["email"];
       $firstname    = $fields["firstname"];
@@ -56,6 +55,7 @@
       $ab_company   = $fields["company"];
       $company_id   = $fields["company_id"];
       $company_name = $fields["company_name"];
+      $url          = $fields["url"];
 
     if ($format != "view") {
        $email 	= "<input name=\"email\" value=\"$email\">";
@@ -73,6 +73,8 @@
        $city	= "<input name=\"city\" value=\"$city\">";
        $state	= "<input name=\"state\" value=\"$state\">";
        $zip	= "<input name=\"zip\" value=\"$zip\">";
+       $url	= "<input name=\"url\" value=\"$url\">";
+              
        if($phpgw_info["apps"]["timetrack"]["enabled"]) {
          $company = '<select name="company">';
          $phpgw->db->query("select company_id,company_name from customers order by company_name");
@@ -186,13 +188,25 @@
   </tr>
 
   <tr>
-    <td><font color="#000000" face="" size="-1"><?php echo lang("Company Name"); ?>:</font></td>
     <td>
-      <font size="-1">
-      <?php echo $company; ?>
-    </font></td>
+     <font color="#000000" face="" size="-1"><?php echo lang("Company Name"); ?>:</font>
+    </td>
+    <td>
+     <font size="-1">
+<?php echo $company; ?>
+</font>
+    </td>
+    <td>
+     <font color="#000000" face="" size="-1"><?php echo lang("URL"); ?>:</font>
+    </td>
+    <td>
+     <font size="-1">
+<?php echo $url; ?>
+</font>
+    </td>
     <td><font size="-1"></font></td>
   </tr>
+  
   <tr>
     <td><font color="#000000" face="" size="-1"><?php echo lang("Home Phone"); ?>:</font></td>
     <td>
@@ -317,7 +331,7 @@
 	    . ":</font></td><td colspan=\"3\"><select name=\"n_groups[]\" "
 	    . "multiple size=\"5\">";
 
-        $user_groups = $phpgw->accounts->read_group_names($fields["owner"]);
+        $user_groups = $phpgw->accounts->read_group_names($fields["ab_owner"]);
         for ($i=0;$i<count($user_groups);$i++) {
             echo "<option value=\"" . $user_groups[$i][0] . "\"";
             if (ereg(",".$user_groups[$i][0].",",$access))

@@ -27,31 +27,33 @@
 
   if (! $submit) {
      $phpgw->db->query("SELECT * FROM addressbook WHERE ab_owner='"
-		           . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id");
+                     . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id");
      $phpgw->db->next_record();
 
-     $fields = array('ab_id'	=> $phpgw->db->f("ab_id"),
- 		           'owner'	=> $phpgw->db->f("ab_owner"),
-			      'access'	=> $phpgw->db->f("ab_access"),
-			      'firstname' => $phpgw->db->f("ab_firstname"),
-			      'lastname' => $phpgw->db->f("ab_lastname"),
-       			      'title'   => $phpgw->db->f("ab_title"),
-			      'email'	=> $phpgw->db->f("ab_email"),
-			      'hphone'	=> $phpgw->db->f("ab_hphone"),
- 			      'wphone'	=> $phpgw->db->f("ab_wphone"),
-			      'fax'	=> $phpgw->db->f("ab_fax"),
-			      'pager'	=> $phpgw->db->f("ab_pager"),
-			      'mphone'	=> $phpgw->db->f("ab_mphone"),
-			      'ophone'	=> $phpgw->db->f("ab_ophone"),
-			      'street'	=> $phpgw->db->f("ab_street"),
-                	      'address2' => $phpgw->db->f("ab_address2"),
-			      'city'	=> $phpgw->db->f("ab_city"),
-			      'state'	=> $phpgw->db->f("ab_state"),
-			      'zip'	=> $phpgw->db->f("ab_zip"),
-			      'bday'	=> $phpgw->db->f("ab_bday"),
-			      'company' => $phpgw->db->f("ab_company"),
-			      'company_id' => $phpgw->db->f("ab_company_id"),
-			      'notes'	=> $phpgw->db->f("ab_notes")
+     $fields = array('ab_id'     => $phpgw->db->f("ab_id"),
+ 		           'owner'      => $phpgw->db->f("ab_owner"),
+			        'access'     => $phpgw->db->f("ab_access"),
+			        'firstname'  => $phpgw->db->f("ab_firstname"),
+			        'lastname'   => $phpgw->db->f("ab_lastname"),
+       			 'title'      => $phpgw->db->f("ab_title"),
+			        'email'      => $phpgw->db->f("ab_email"),
+			        'hphone'     => $phpgw->db->f("ab_hphone"),
+ 			       'wphone'     => $phpgw->db->f("ab_wphone"),
+			        'fax'        => $phpgw->db->f("ab_fax"),
+			        'pager'      => $phpgw->db->f("ab_pager"),
+  			      'mphone'     => $phpgw->db->f("ab_mphone"),
+		  	      'ophone'     => $phpgw->db->f("ab_ophone"),
+			        'street'     => $phpgw->db->f("ab_street"),
+                    'address2'   => $phpgw->db->f("ab_address2"),
+  			      'city'       => $phpgw->db->f("ab_city"),
+		  	      'state'      => $phpgw->db->f("ab_state"),
+			        'zip'        => $phpgw->db->f("ab_zip"),
+			        'bday'       => $phpgw->db->f("ab_bday"),
+  			      'company'    => $phpgw->db->f("ab_company"),
+		  	      'company_id' => $phpgw->db->f("ab_company_id"),
+			        'notes'  	=> $phpgw->db->f("ab_notes")
+,
+			        'url'        => $phpgw->db->f("ab_url")
 		          );
 
      form("","edit.php","Edit",$fields);
@@ -64,45 +66,47 @@
 
     if($phpgw_info["apps"]["timetrack"]["enabled"]) {
       $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
-            . "', ab_firstname='". addslashes($firstname)
-	    . "', ab_lastname='" . addslashes($lastname)
-            . "', ab_title='"   . addslashes($title)
-	    . "', ab_hphone='" 	. addslashes($hphone)
-	    . "', ab_wphone='" 	. addslashes($wphone)
-	    . "', ab_fax='" 	. addslashes($fax)
-	    . "', ab_pager='" 	. addslashes($pager)
-	    . "', ab_mphone='" 	. addslashes($mphone)
-	    . "', ab_ophone='" 	. addslashes($ophone)
-	    . "', ab_street='" 	. addslashes($street)
-            . "', ab_address2='" . addslashes($address2)
-	    . "', ab_city='" 	. addslashes($city)
-	    . "', ab_state='" 	. addslashes($state)
-	    . "', ab_zip='" 	. addslashes($zip)
-	    . "', ab_bday='" 	. addslashes($bday)
-	    . "', ab_notes='" 	. addslashes($notes)
-	    . "', ab_company_id='" . addslashes($company)
-	    . "', ab_access='" 	. addslashes($access)
-	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
+           . "', ab_firstname='"  . addslashes($firstname)
+	       . "', ab_lastname='"   . addslashes($lastname)
+           . "', ab_title='"      . addslashes($title)
+   	    . "', ab_hphone='" 	. addslashes($hphone)
+	       . "', ab_wphone='" 	. addslashes($wphone)
+   	    . "', ab_fax='"        . addslashes($fax)
+	       . "', ab_pager='"      . addslashes($pager)
+   	    . "', ab_mphone='" 	. addslashes($mphone)
+	       . "', ab_ophone='" 	. addslashes($ophone)
+   	    . "', ab_street='" 	. addslashes($street)
+           . "', ab_address2='"   . addslashes($address2)
+	       . "', ab_city='" 	  . addslashes($city)
+   	    . "', ab_state='" 	 . addslashes($state)
+	       . "', ab_zip='" 	   . addslashes($zip)
+   	    . "', ab_bday='"       . addslashes($bday)
+	       . "', ab_notes='"      . addslashes($notes)
+   	    . "', ab_company_id='" . addslashes($company)
+	       . "', ab_access='" 	. addslashes($access)
+	       . "', ab_url='"    	. addslashes($url)
+   	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
      } else {
       $sql = "UPDATE addressbook set ab_email='" . addslashes($email)
             . "', ab_firstname='". addslashes($firstname)
             . "', ab_lastname='" . addslashes($lastname)
-            . "', ab_title='"   . addslashes($title)
-            . "', ab_hphone='"  . addslashes($hphone)
-            . "', ab_wphone='"  . addslashes($wphone)
-            . "', ab_fax='"     . addslashes($fax)
-            . "', ab_pager='"   . addslashes($pager)
-            . "', ab_mphone='"  . addslashes($mphone)
-            . "', ab_ophone='"  . addslashes($ophone)
-            . "', ab_street='"  . addslashes($street)
+            . "', ab_title='"    . addslashes($title)
+            . "', ab_hphone='"   . addslashes($hphone)
+            . "', ab_wphone='"   . addslashes($wphone)
+            . "', ab_fax='"      . addslashes($fax)
+            . "', ab_pager='"    . addslashes($pager)
+            . "', ab_mphone='"   . addslashes($mphone)
+            . "', ab_ophone='"   . addslashes($ophone)
+            . "', ab_street='"   . addslashes($street)
             . "', ab_address2='" . addslashes($address2)
-            . "', ab_city='"    . addslashes($city)
-            . "', ab_state='"   . addslashes($state)
-            . "', ab_zip='"     . addslashes($zip)
-            . "', ab_bday='"    . addslashes($bday)
-            . "', ab_notes='"   . addslashes($notes)
-            . "', ab_company='" . addslashes($company)
-            . "', ab_access='"  . addslashes($access)
+            . "', ab_city='"     . addslashes($city)
+            . "', ab_state='"    . addslashes($state)
+            . "', ab_zip='"      . addslashes($zip)
+            . "', ab_bday='"     . addslashes($bday)
+            . "', ab_notes='"    . addslashes($notes)
+            . "', ab_company='"  . addslashes($company)
+            . "', ab_access='"   . addslashes($access)
+            . "', ab_url='"      . addslashes($url)
             . "'  WHERE ab_owner='" . $phpgw_info["user"]["account_id"] . "' AND ab_id=$ab_id";
      }
 
@@ -120,16 +124,16 @@
    <input type="hidden" name="filter" value="<? echo $filter; ?>">
    <input type="hidden" name="start" value="<? echo $start; ?>">
 
-          <TABLE border=0 cellPadding=1 cellSpacing=1 width="95%">
+          <TABLE border="0" cellPadding="1" cellSpacing="1" width="95%">
             <TBODY>
              <tr>
-              <TD align=left width=7%>
+              <TD align="left" width="7%">
                <input type="submit" name="submit" value="<?php echo lang("Submit"); ?>">
               </TD>
-              <TD align=left width=7%>
+              <TD align="left" width="7%">
                 <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id") . "\">" . lang("Cancel"); ?></a>
               </TD>
-              <TD align=right> 
+              <TD align="right"> 
                <a href="<?php echo $phpgw->link("delete.php","ab_id=$ab_id") . "\">" . lang("Delete"); ?></a>
               </TD>
             </TR>
