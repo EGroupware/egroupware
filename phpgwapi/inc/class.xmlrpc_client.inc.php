@@ -26,8 +26,8 @@
 		var $errno;
 		var $errstring;
 		var $debug=0;
-		var $username="";
-		var $password="";
+		var $username = '';
+		var $password = '';
 
 		function xmlrpc_client($path='', $server='', $port=80)
 		{
@@ -40,18 +40,18 @@
 		{
 			if ($in)
 			{
-				$this->debug=1;
+				$this->debug = 1;
 			}
 			else
 			{
-				$this->debug=0;
+				$this->debug = 0;
 			}
 		}
 
 		function setCredentials($u, $p)
 		{
-			$this->username=$u;
-			$this->password=$p;
+			$this->username = $u;
+			$this->password = $p;
 		}
 
 		function send($msg, $timeout=0)
@@ -59,11 +59,11 @@
 			// where msg is an xmlrpcmsg
 			$msg->debug=$this->debug;
 			return $this->sendPayloadHTTP10(
-					$msg,
-					$this->server, $this->port,
-					$timeout, $this->username, 
-					$this->password
-				);
+				$msg,
+				$this->server, $this->port,
+				$timeout, $this->username, 
+				$this->password
+			);
 		}
 
 		function sendPayloadHTTP10($msg, $server, $port, $timeout=0,$username="", $password="")
@@ -88,25 +88,27 @@
 		
 			// thanks to Grant Rauscher <grant7@firstworld.net>
 			// for this
-			$credentials="";
+			$credentials = '';
 			if ($username!="")
 			{
-				$credentials="Authorization: Basic " . base64_encode($username . ":" . $password) . "\r\n";
+				$credentials = "Authorization: Basic " . base64_encode($username . ":" . $password) . "\r\n";
 			}
 
-			$op= "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
-				"Host: ". $this->server . "\r\n" .
-				$credentials . 
-				"Content-Type: text/xml\r\nContent-Length: " .
-				strlen($msg->payload) . "\r\n\r\n" .
-				$msg->payload;
+			$op = "POST " . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
+				. "Host: ". $this->server . "\r\n" .
+				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
+				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. $credentials
+				. "Content-Type: text/xml\r\nContent-Length: "
+				. strlen($msg->payload) . "\r\n\r\n"
+				. $msg->payload;
 
 			if (!fputs($fp, $op, strlen($op)))
 			{
 				$this->errstr="Write error";
 				return 0;
 			}
-			$resp=$msg->parseResponseFile($fp);
+			$resp = $msg->parseResponseFile($fp);
 			fclose($fp);
 			return $resp;
 		}
