@@ -16,7 +16,7 @@
     <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Enter_the_full_path_for_users_and_group_files.<br>Examples:_/files,_E:\FILES}:</td>
     <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40"></td>
    </tr>
@@ -60,7 +60,7 @@
     <td><input name="newsettings[hostname]" value="{value_hostname}"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Enter_your_default_FTP_server}:</td>
     <td><input name="newsettings[default_ftp_server]" value="{value_default_ftp_server}"></td>
    </tr>
@@ -75,7 +75,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Datetime_port.<br>If_using_port_13,_please_set_firewall_rules_appropriately_before_submitting_this_page.<br>(Port:_13_/_Host:_129.6.15.28)}</td>
     <td>
       <select name="newsettings[daytime_port]">
@@ -91,17 +91,17 @@
     <td><input name="newsettings[httpproxy_server]" value="{value_httpproxy_server}"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Enter_your_HTTP_proxy_server_port}:</td>
     <td><input name="newsettings[httpproxy_port]" value="{value_httpproxy_port}"></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr bgcolor="{row_off}">
     <td>{lang_Enter_the_site_username_for_peer_servers}.</td>
     <td><input name="newsettings[site_username]" value="{value_site_username}"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Enter_the_site_password_for_peer_servers}.</td>
     <td><input type="password" name="newsettings[site_password]" value="{value_site_password}"></td>
    </tr>

@@ -14,12 +14,12 @@
     <td colspan="2"><font color="{th_text}"><b>{lang_Preferences}</b></font></td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr bgcolor="{row_off}">
     <td>{lang_Enter_the_title_for_your_site}.</td>
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_Show_'powered_by'_logo_on}:</td>
     <td>
      <select name="newsettings[showpoweredbyon]">
@@ -29,7 +29,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr bgcolor="{row_off}">
     <td>{lang_Country_Selection} ({lang_Text_Entry}/{lang_SelectBox}):</td>
     <td>
      <select name="newsettings[countrylist]">
@@ -58,7 +58,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{row_on}">
     <td>{lang_check_ip_address_of_all_sessions}:</td>
     <td>
      <select name="newsettings[sessions_checkip]">
@@ -68,7 +68,7 @@
     </td>
    </tr>
 
-   <tr bgcolor="{row_on}">
+   <tr bgcolor="{row_off}">
     <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
     <td>
      <select name="newsettings[checkfornewversion]">
