@@ -13,7 +13,7 @@
 
   $phpgw_setup->db->query("DROP TABLE config");
   $phpgw_setup->db->query("DROP TABLE applications");
-  $phpgw_setup->db->query("DROP TABLE accounts");
+  $phpgw_setup->db->query("DROP TABLE phpgw_accounts");
   $phpgw_setup->db->query("DROP TABLE groups");
   $phpgw_setup->db->query("DROP TABLE preferences");
   $phpgw_setup->db->query("DROP TABLE phpgw_sessions");
