@@ -192,7 +192,7 @@
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
-    $phpgw->template->set_var("field",lang("Access"));
+    $phpgw->template->set_var("field",lang("Groups"));
     $str = "<select name=\"n_groups[]\" multiple size=\"5\">";
     $user_groups = $phpgw->accounts->read_group_names();
     for ($i=0;$i<count($user_groups);$i++) {
@@ -206,26 +206,27 @@
     $phpgw->template->parse("output","list",True);
 
     $phpgw->template->set_var("field",lang("Participants"));
-    $phpgw->db->query("select account_id,account_lastname,account_firstname,account_lid "
+    $db2 = $phpgw->db;
+    $db2->query("select account_id,account_lastname,account_firstname,account_lid "
 		     . "from accounts where account_status !='L' and "
 		     . "account_id != ".$phpgw_info["user"]["account_id"]." "
 		     . "and account_permissions like '%:calendar:%' "
   		     . "order by account_lastname,account_firstname,account_lid");
 
-    if ($phpgw->db->num_rows() > 50)
+    if ($db2->num_rows() > 50)
       $size = 15;
-    else if ($phpgw->db->num_rows() > 5)
+    else if ($db2->num_rows() > 5)
       $size = 5;
     else
-      $size = $phpgw->db->num_rows();
+      $size = $db2->num_rows();
     $str = "<select name=\"participants[]\" multiple size=\"5\">";
     for ($l=0;$l<count($cal_info->participants);$l++)
       $parts[$cal_info->participants[$l]] = True;
-    while ($phpgw->db->next_record()) {
-      $str .= "<option value=\"" . $phpgw->db->f("account_id") . "\"";  
-      if ($parts[$phpgw->db->f("account_id")])
+    while ($db2->next_record()) {
+      $str .= "<option value=\"" . $db2->f("account_id") . "\"";  
+      if ($parts[$db2->f("account_id")])
 	$str .= " selected";
-      $str .= ">".$phpgw->common->grab_owner_name($phpgw->db->f("account_id"))."</option>";
+      $str .= ">".$phpgw->common->grab_owner_name($db2->f("account_id"))."</option>";
     }
     $str .= "</select>";
     $str .= "<input type=\"hidden\" name=\"participants[]\" value=\"".$phpgw_info["user"]["account_id"]."\">";
@@ -273,7 +274,7 @@
     $phpgw->template->set_var("data",$str);
     $phpgw->template->parse("output","list",True);
 
-    $phpgw->template->set_var("field",lang("Repeat Day")."<br>".lang("for weekly"));
+    $phpgw->template->set_var("field",lang("Repeat Day")."<br>".lang("(for weekly)"));
     $str  = "<input type=\"checkbox\" name=\"rpt_sun\" value=\"y\"".($cal_info->rpt_sun?"checked":"")."> ".lang("Sunday")." ";
     $str .= "<input type=\"checkbox\" name=\"rpt_mon\" value=\"y\"".($cal_info->rpt_mon?"checked":"")."> ".lang("Monday")." ";
     $str .= "<input type=\"checkbox\" name=\"rpt_tue\" value=\"y\"".($cal_info->rpt_tue?"checked":"")."> ".lang("Tuesday")." ";
