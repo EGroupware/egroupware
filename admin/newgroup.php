@@ -57,6 +57,7 @@
 
         $cd = 31;
 
+        umask(000);
         if (! @mkdir ($basedir . $n_group, 0707)) $cd = 37;
 
         $phpgw->db->unlock();
