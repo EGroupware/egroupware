@@ -23,9 +23,7 @@
   $phpgw_info["flags"]["disable_vfs_class"] = True;
   include("../header.inc.php");
 
-  $phpgw->include_lang("nntp");
-
-   function get_tg()
+  function get_tg()
   {
     global $phpgw;
 

@@ -41,7 +41,7 @@
      $phpgw->common->navbar();
   }
  
-  $t->set_var("lang_header",lang("Add new application"));
+  $t->set_var("lang_header",lang("Edit application"));
 
   if ($error) {
      $t->set_var("error","<p><center>$error</center><br>");
