@@ -14,8 +14,6 @@
 
   $phpgw_info["flags"] = array("disable_template_class" => True, "login" => True, "currentapp" => "login", "noheader"  => True);
   include("header.inc.php");
-//  include($phpgw_info["server"]["include_root"] . "/lang/" . "en" . "_login.inc.php");
-  include($phpgw_info["server"]["api_dir"] . "/phpgw_template.inc.php");
 /*
   if ($code != 10 && $phpgw_info["server"]["usecookies"] == False) {
     Setcookie("sessionid");
