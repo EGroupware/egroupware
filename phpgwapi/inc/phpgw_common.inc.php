@@ -454,32 +454,10 @@
     }
 
     function phpgw_header() {
-      global $phpgw, $phpgw_info, $HTMLCOMPLAINT;
+      global $phpgw, $phpgw_info;
 
-      echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\"> ";
-      echo "<HTML LANG=\"en\">";
-      echo "<HEAD>";
-      echo "<TITLE>".$phpgw_info["server"]["site_title"]."</TITLE>";
-      echo "<META http-equiv=\"Content-Type\" content=\"text/html; charset=\"".$phpgw->translation->translate("charset")."\">";
-      echo "<STYLE type=\"text/css\">";
-      echo "  a {text-decoration:none;}";
-      echo "  <!--";
-      echo "   A:link{text-decoration:none}";
-      echo "   A:visted{text-decoration:none}";
-      echo "   A:active{text-decoration:none}";
-      echo "   body { margin-top: 0px; margin-right: 0px; margin-left: 0px}";
-      echo "   .tablink";
-      echo "   {";
-      echo "      color: #000000;";
-      echo "   }";
-      echo "  -->";
-      echo "</STYLE>";
-      echo "</HEAD>";
-      if ($phpgw_info["server"]["htmlcompliant"]) {
-	      echo ("<BODY BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\" ALINK=\"".$phpgw_info["theme"]["alink"]."\" LINK=\"".$phpgw_info["theme"]["link"]."\" VLINK=\"".$phpgw_info["theme"]["vlink"]."\">\n");
-      } else {
-	      echo ("<BODY BGCOLOR=\"".$phpgw_info["theme"]["bg_color"]."\">\n");
-      }
+      include($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
+            . $phpgw_info["server"]["template_set"] . "/head.inc.php");
       $this->navbar(False);
       include($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
             . $phpgw_info["server"]["template_set"] . "/navbar.inc.php");

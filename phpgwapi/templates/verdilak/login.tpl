@@ -1,61 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
 <!-- BEGIN login_form -->
-<html>
-<head>
- <title>{website_title} - Login</title>
-</head>
+<HEAD>
 
-<body bgcolor="FFFFFF">
- <a href="http://www.phpgroupware.org"><img src="phpGroupWare.jpg" alt="phpGroupWare" border="0"></a>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="phpGroupWare http://www.phpgroupware.org">
+<META NAME="description" CONTENT="phpGroupWare login screen">
+<META NAME="keywords" CONTENT="phpGroupWare login screen">
+
+<TITLE>{website_title} - Login</TITLE>
+</HEAD>
+
+<BODY bgcolor="#FFFFFF">
 <p>&nbsp;</p>
-<center>{lang_message}</center>
+<CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 
-<table bgcolor="000000" border="0" cellpadding="0" cellspacing="0" width="40%" align="center">
- <tr>
-  <td>
-   <table border="0" width="100%" bgcolor="486591" cellpadding="2" cellspacing="1">
-    <tr bgcolor="486591">
-     <td align="left">
-      <font color="fefefe">&nbsp;{lang_phpgw_login}</font>
-     </td>
-    </tr>
-    <tr bgcolor="e6e6e6">
-     <td valign="baselines">
+<TABLE bgcolor="000000" border="0" cellpadding="0" cellspacing="0" width="40%" align="CENTER">
+ <TR>
+  <TD>
+   <TABLE border="0" width="100%" bgcolor="486591" cellpadding="2" cellspacing="1">
+    <TR bgcolor="486591">
+     <TD align="LEFT" valign="MIDDLE">
+      <A href="http://www.phpgroupware.org"><img src="phpgwapi/templates/{template_set}/images/logo.gif" alt="phpGroupWare"  border="0"></a>
+     </TD>
+    </TR>
+    <TR bgcolor="e6e6e6">
+     <TD valign="BASELINE">
 
-      <form method="post" action="{login_url}">
-       <table border="0" align="center" bgcolor="486591" width="100%" cellpadding="0" cellspacing="0">
-        <tr bgcolor="e6e6e6">
-         <td colspan="2" align="center">
+      <FORM method="post" action="{login_url}">
+       <TABLE border="0" align="CENTER" bgcolor="486591" width="100%" cellpadding="0" cellspacing="0">
+        <TR bgcolor="e6e6e6">
+         <TD colspan="2" align="CENTER">
           {cd}
-         </td>
-        </tr>
-        <tr bgcolor="e6e6e6">
-         <td align="right"><font color="000000">{lang_username}:&nbsp;</font></td>
-         <td><input name="login" value="{cookie}"></td>
-        </tr>
-        <tr bgcolor="e6e6e6">
-         <td align="right"><font color="000000">{lang_password}:&nbsp;</font></td>
-         <td><input name="passwd" type="password"></td>
-        </tr>
-        <tr bgcolor="e6e6e6">
-         <td colspan="2" align="center">
+         </TD>
+        </TR>
+        <TR bgcolor="e6e6e6">
+         <TD align="RIGHT"><font color="000000">{lang_username}:&nbsp;</font></TD>
+         <TD><input name="login" value="{cookie}"></TD>
+        </TR>
+        <TR bgcolor="e6e6e6">
+         <TD align="RIGHT"><font color="000000">{lang_password}:&nbsp;</font></TD>
+         <TD><input name="passwd" type="password"></TD>
+        </TR>
+        <TR bgcolor="e6e6e6">
+         <TD colspan="2" align="CENTER">
           <input type="submit" value="{lang_login}" name="submit">
-         </td>
-        </tr>
-        <tr bgcolor="e6e6e6">
-         <td colspan="2" align="right">
+         </TD>
+        </TR>
+        <TR bgcolor="e6e6e6">
+         <TD colspan="2" align="RIGHT">
           <font color="000000" size="-1">{version}</font>
-         </td>
-        </tr>       
-       </table>
-      </form>
+         </TD>
+        </TR>       
+       </TABLE>
+      </FORM>
      
-     </td>
-    </tr>
-   </table>
-  </td>
- </tr>
-</table>
+     </TD>
+    </TR>
+   </TABLE>
+  </TD>
+ </TR>
+</TABLE>
 
-</html>
 <!-- END login_form -->
+</HTML>
