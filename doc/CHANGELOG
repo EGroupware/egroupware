@@ -8,6 +8,7 @@
 	     in the applications directory.
 	   - You can now add permissions to a group, all users within that group
 	     would be granted those permissions.
+	   - NNTP now compatible with PHP3/PHP4.
 	   - Fixed parse errors and footer problems with the calendars printer
 	     friendly version.
 	   - Fixed a problem with the groups directory not being deleted.
