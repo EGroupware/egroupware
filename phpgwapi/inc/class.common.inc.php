@@ -397,7 +397,16 @@
 		function create_tabs($tabs, $selected, $fontsize = '')
 		{
 			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-			$ir = PHPGW_IMAGES_DIR;
+
+			/* This is a php3 workaround */
+			if(PHPGW_IMAGES_DIR == 'PHPGW_IMAGES_DIR')
+			{
+				$ir = ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi');
+			}
+			else
+			{
+				$ir = PHPGW_IMAGES_DIR;
+			}
 
 			if ($fontsize)
 			{
