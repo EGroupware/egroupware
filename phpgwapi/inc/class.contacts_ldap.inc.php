@@ -780,8 +780,20 @@
 				. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
-		function update($id,$owner,$fields,$access='private',$cat_id='0',$tid='n')
+		function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
 		{
+			// access, cat_id and tid can be in $fields now or as extra params
+			foreach(array('access','cat_id','tid') as $extra)
+			{
+				if (!is_null($$extra))
+				{
+					$fields[$extra] = $$extra;
+				}
+				if (isset($fields[$extra]))
+				{
+					$stock_fields[$extra] = $fields[$extra];
+				}
+			}
 			$nonfields = $this->non_contact_fields;
 
 			if (!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
@@ -856,7 +868,7 @@
 					}
 
 					/* Verify access */
-					$stock_fields['access'] = $access;
+					$stock_fields['access'] = $fields['access'];
 					if (empty($ldap_fields[0]['phpgwcontactaccess']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactaccess'  => $stock_fields['access']));
@@ -867,7 +879,7 @@
 					}
 
 					/* Verify cat_id */
-					$stock_fields['cat_id']  = $cat_id ? $cat_id : ' ';
+					$stock_fields['cat_id']  = $fields['cat_id'] ? $fields['cat_id'] : ' ';
 					if (empty($ldap_fields[0]['phpgwcontactcatid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontactcatid'  => $stock_fields['cat_id']));
@@ -878,7 +890,7 @@
 					}
 
 					/* Verify tid */
-					$stock_fields['tid'] = $tid;
+					$stock_fields['tid'] = $fields['tid'];
 					if (empty($ldap_fields[0]['phpgwcontacttypeid']))
 					{
 						$err = ldap_modify($this->ldap,$dn,array('phpgwcontacttypeid'  => $stock_fields['tid']));
@@ -890,23 +902,24 @@
 
 					/* OK, just mod the data already */
 					$allfields = $stock_fieldnames + $nonfields;
+					/* Don't try to modify the uid, since this affects the dn */
+					unset($allfields['lid']);
 					foreach($allfields as $fname => $fvalue)
 					{
-						/* if ($ldap_fields[0][$fvalue]) */
 						if($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
-							/* echo "<br>".$fname." => ".$fvalue." was there"; */
+							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
 						}
 						elseif(!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
-							/* echo "<br>".$fname." not there - '".$fvalue."'"; */
+							//echo "<br>".$fname." not there - '".$fvalue."'";
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
 						}
 						elseif($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
 						{
+							//echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
 							/*
-							echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
 							NOTE: we use the ldap_fields because we need to send the
 							_ORIGINAL_ contents as the value. see:
 							http://www.php.net/manual/en/function.ldap-mod-del.php
