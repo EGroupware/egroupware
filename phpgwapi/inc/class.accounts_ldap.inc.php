@@ -756,7 +756,7 @@
 				$entry['homedirectory'] = $account_info['homedirectory'] && $account_info['homedirectory'] != $GLOBALS['phpgw_info']['server']['ldap_account_home'] ? $account_info['homedirectory'] : $GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_info['account_lid'];
 				$entry['loginshell'] = $account_info['loginshell'] ? $account_info['loginshell'] : $GLOBALS['phpgw_info']['server']['ldap_account_shell'];
 			}
-			else
+			elseif($account_info['account_type'] != 'g')
 			{
 				$entry['homedirectory'] = '/home/'.$account_info['account_lid'];
 				$entry['loginshell'] = '/bin/false';
@@ -858,7 +858,7 @@
 					$entry['phpgwaccountexpires']   = $account_info['account_expires'];
 				}
 
-				#_debug_array($entry);exit;
+				#_debug_array($entry);
 
 				ldap_add($this->ds, $dn, $entry);
 			}

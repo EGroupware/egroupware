@@ -43,6 +43,11 @@
 				return False;
 			}
 
+			if($GLOBALS['phpgw_info']['server']['ldap_version3'])
+			{
+				ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+			}
+
 			/* Login with the LDAP Admin. User to find the User DN.  */
 			if(!@ldap_bind($ldap, $GLOBALS['phpgw_info']['server']['ldap_root_dn'], $GLOBALS['phpgw_info']['server']['ldap_root_pw']))
 			{

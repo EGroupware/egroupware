@@ -31,15 +31,33 @@
 
 	function add_account($username,$first,$last,$passwd,$type='u')
 	{
-		$account_info = array(
-			'account_type'      => $type,
-			'account_lid'       => $username,
-			'account_passwd'    => $passwd,
-			'account_firstname' => $first,
-			'account_lastname'  => $last,
-			'account_status'    => 'A',
-			'account_expires'   => -1
-		);
+		if($type == 'u')
+		{
+			$account_info = array(
+				'account_type'      => $type,
+				'account_lid'       => $username,
+				'account_passwd'    => $passwd,
+				'account_firstname' => $first,
+				'account_lastname'  => $last,
+				'account_status'    => 'A',
+				'account_primary_group' => $GLOBALS['phpgw']->accounts->name2id('default'),
+				'account_groups'    => array($GLOBALS['phpgw']->accounts->name2id('default')),
+				'account_expires'   => -1
+			);
+		}
+		else
+		{
+			$account_info = array(
+				'account_type'      => $type,
+				'account_lid'       => $username,
+				'account_passwd'    => $passwd,
+				'account_firstname' => $first,
+				'account_lastname'  => $last,
+				'account_status'    => 'A',
+				'account_expires'   => -1
+			);
+		}
+		
 		$GLOBALS['phpgw']->accounts->create($account_info);
 
 		return $GLOBALS['phpgw']->accounts->name2id($username);
@@ -101,21 +119,26 @@
 
 		$GLOBALS['phpgw_setup']->loaddb();
 		/* Load up some configured values */
-		$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
+		$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config ".
+		"WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%'",__LINE__,__FILE__);
 		while ($GLOBALS['phpgw_setup']->db->next_record())
 		{
 			$config[$GLOBALS['phpgw_setup']->db->f('config_name')] = $GLOBALS['phpgw_setup']->db->f('config_value');
 		}
-		$GLOBALS['phpgw_info']['server']['ldap_host']          = $config['ldap_host'];
-		$GLOBALS['phpgw_info']['server']['ldap_context']       = $config['ldap_context'];
-		$GLOBALS['phpgw_info']['server']['ldap_group_context'] = $config['ldap_group_context'];
-		$GLOBALS['phpgw_info']['server']['ldap_root_dn']       = $config['ldap_root_dn'];
-		$GLOBALS['phpgw_info']['server']['ldap_root_pw']       = $config['ldap_root_pw'];
+		$GLOBALS['phpgw_info']['server']['ldap_host']		= $config['ldap_host'];
+		$GLOBALS['phpgw_info']['server']['ldap_context']	= $config['ldap_context'];
+		$GLOBALS['phpgw_info']['server']['ldap_group_context']	= $config['ldap_group_context'];
+		$GLOBALS['phpgw_info']['server']['ldap_root_dn']	= $config['ldap_root_dn'];
+		$GLOBALS['phpgw_info']['server']['ldap_root_pw']	= $config['ldap_root_pw'];
 		$GLOBALS['phpgw_info']['server']['ldap_extra_attributes'] = $config['ldap_extra_attributes'];
-		$GLOBALS['phpgw_info']['server']['ldap_account_home']  = $config['ldap_account_home'];
-		$GLOBALS['phpgw_info']['server']['ldap_account_shell'] = $config['ldap_account_shell'];
+		$GLOBALS['phpgw_info']['server']['ldap_account_home']	= $config['ldap_account_home'];
+		$GLOBALS['phpgw_info']['server']['ldap_account_shell']	= $config['ldap_account_shell'];
 		$GLOBALS['phpgw_info']['server']['ldap_encryption_type'] = $config['ldap_encryption_type'];
-		$GLOBALS['phpgw_info']['server']['account_repository'] = $config['account_repository'];
+		$GLOBALS['phpgw_info']['server']['account_repository']	= $config['account_repository'];
+		$GLOBALS['phpgw_info']['server']['ldap_version3'] 	= $config['ldap_version3'];
+		$GLOBALS['phpgw_info']['server']['account_min_id']	= $config['account_min_id'];
+		$GLOBALS['phpgw_info']['server']['account_max_id']	= $config['account_max_id'];
+
 		unset($config);
 
 		/* Create dummy class, then accounts object */
