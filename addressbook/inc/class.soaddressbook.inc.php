@@ -16,12 +16,36 @@
 	{
 		var $contacts;
 		var $rights;
+		var $grants;
+		var $owner;
 
 		function soaddressbook()
 		{
-			global $rights;
+			global $phpgw,$phpgw_info,$owner;
 
+			if(!isset($owner)) { $owner = 0; } 
+
+			$grants = $phpgw->acl->get_grants('addressbook');
+			if(!isset($owner) || !$owner)
+			{
+				$owner = $phpgw_info['user']['account_id'];
+				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+			}
+			else
+			{
+				if($grants[$owner])
+				{
+					$rights = $grants[$owner];
+					if (!($rights & PHPGW_ACL_READ))
+					{
+						$owner = $phpgw_info['user']['account_id'];
+						$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+					}
+				}
+			}
 			$this->rights = $rights;
+			$this->grants = $grants;
+			$this->owner  = $owner;
 		}
 
 		function makeobj()
@@ -49,7 +73,7 @@
 			}
 			else
 			{
-				$rtrn = array('No access' => 'No access');
+				$rtrn = array(0 => array('No access' => 'No access'));
 				return $rtrn;
 			}
 		}

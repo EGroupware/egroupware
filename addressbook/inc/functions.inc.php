@@ -12,30 +12,6 @@
 
   /* $Id$ */
 
-	/* I don't think this is needed anymore */
-	/* Perform acl check, set $rights */
-	if(!isset($owner)) { $owner = 0; } 
-
-	$grants = $phpgw->acl->get_grants('addressbook');
-
-	if(!isset($owner) || !$owner)
-	{
-		$owner = $phpgw_info['user']['account_id'];
-		$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-	}
-	else
-	{
-		if($grants[$owner])
-		{
-			$rights = $grants[$owner];
-			if (!($rights & PHPGW_ACL_READ))
-			{
-				$owner = $phpgw_info['user']['account_id'];
-				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-			}
-		}
-	}
-
 	function formatted_list($name,$list,$id='',$default=False,$java=False)
 	{
 		if ($java)

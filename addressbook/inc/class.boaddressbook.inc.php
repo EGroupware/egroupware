@@ -23,6 +23,51 @@
 			'add_email'       => True,
 			'update_entry'    => True
 		);
+		var $soap_functions = array(
+			'read_entries' => array(
+				'in' => array(
+					'int',
+					'int',
+					'struct',
+					'string',
+					'int'
+				),
+				'out' => array(
+					'array'
+				)
+			),
+			'read_entry' => array(
+				'in' => array(
+					'int',
+					'struct'
+				),
+				'out' => array(
+					'array'
+				)
+			),
+			'read_last_entry' => array(
+				'in' => array(
+					'struct'
+				),
+				'out' => array(
+					'array'
+				)
+			),
+			'add_entry' => array(
+				'in' => array(
+					'int',
+					'struct'
+				),
+				'out' => array()
+			),
+			'update_entry' => array(
+				'in' => array(
+					'int',
+					'struct'
+				),
+				'out' => array()
+			)
+		);
 
 		var $debug = False;
 
@@ -43,6 +88,8 @@
 			global $phpgw;
 
 			$this->so = CreateObject('addressbook.soaddressbook');
+			$this->rights = $this->so->rights;
+			$this->grants = $this->so->grants;
 
 			if($session)
 			{
@@ -94,28 +141,38 @@
 		{
 			global $phpgw;
 
-			if ($dirty == ''){$dirty = array();}
+			if ($dirty == '')
+			{
+				$dirty = array();
+			}
 			for($i=0;$i<count($dirty);$i++)
 			{
-				while (list($name,$value) = each($dirty[$i]))
+				if(gettype($dirty[$i]) == 'array')
 				{
-					$cleaned[$i][$name] = $phpgw->strip_html($dirty[$i][$name]);
+					while (list($name,$value) = @each($dirty[$i]))
+					{
+						$cleaned[$i][$name] = $phpgw->strip_html($dirty[$i][$name]);
+					}
+				}
+				else
+				{
+					$cleaned[$i] == $phpgw->strip_html($dirty[$i]);
 				}
 			}
 			return $cleaned;
 		}
 
-		function read_entries($start,$limit,$qcols,$qfilter,$userid='')
+		function read_entries($start,$limit,$qcols,$qfilter)
 		{
-			$entries = $this->so->read_entries($start,$limit,$qcols,$this->query,$qfilter,$this->sort,$this->order,$userid);
+			$entries = $this->so->read_entries($start,$limit,$qcols,$this->query,$qfilter,$this->sort,$this->order);
 			$this->total = $this->so->contacts->total_records;
 			if($this->debug) { echo '<br>Total records="' . $this->total . '"'; }
 			return $this->strip_html($entries);
 		}
 
-		function read_entry($id,$fields,$userid='')
+		function read_entry($id,$fields)
 		{
-			$entry = $this->so->read_entry($id,$fields,$userid);
+			$entry = $this->so->read_entry($id,$fields);
 			return $this->strip_html($entry);
 		}
 
@@ -152,7 +209,11 @@
 				$vcard = CreateObject('phpgwapi.vcard');
 				$entry = $vcard->in_file($filename);
 				/* _debug_array($entry);exit; */
-				$this->so->add_entry($phpgw_info['user']['account_id'],$entry,'private','','n');
+				$entry['owner'] = $phpgw_info['user']['account_id'];
+				$entry['access'] = 'private';
+				$entry['tid'] = 'n';
+				/* _debug_array($entry);exit; */
+				$this->so->add_entry($entry);
 				$ab_id = $this->get_lastid();
 
 				/* Delete the temp file. */
@@ -189,33 +250,9 @@
 				. $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=$ab_id&referer=$referer"));
 		}
 
-		function OLDcopy_entry($ab_id)
+		function add_entry($fields)
 		{
-			global $phpgw,$phpgw_info;
-
-			$addnew = $this->read_entry($ab_id,$this->so->contacts->stock_contact_fields,$phpgw_info['user']['account_id']);
-
-			$addnew[0]['note'] .= "\nCopied from ".$phpgw->accounts->id2name($addnew[0]['owner']).", record #".$addnew[0]['id'].".";
-			$addnew[0]['owner'] = $phpgw_info['user']['account_id'];
-			$addnew[0]['id']    = '';
-			$fields = $addnew[0];
-
-			if ($addnew['tid'])
-			{
-				$this->so->add_entry($fields['owner'],$fields,$fields['access'],$fields['cat_id'],$fields['tid']);
-			}
-			else
-			{
-				$this->so->add_entry($fields['owner'],$fields,$fields['access'],$fields['cat_id']);
-			}
-
-			$ab_id = $this->get_lastid();
-			Header("Location: " . $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.edit&ab_id=$ab_id"));
-		}
-
-		function add_entry($userid,$fields)
-		{
-			return $this->so->add_entry($userid,$fields);
+			return $this->so->add_entry($fields);
 		}
 
 		function get_lastid()
@@ -223,9 +260,9 @@
 			return $this->so->get_lastid();
 		}
 
-		function update_entry($userid,$fields)
+		function update_entry($fields)
 		{
-			return $this->so->update_entry($userid,$fields);
+			return $this->so->update_entry($fields);
 		}
 
 		function delete_entry($ab_id)
@@ -239,7 +276,7 @@
 			$phpgw->preferences->read_repository();
 			if (is_array($prefs))
 			{
-/*				_debug_array($prefs);exit; */
+				/* _debug_array($prefs);exit; */
 				while (list($pref,$x) = each($qfields))
 				{
 					/* echo '<br>checking: ' . $pref . '=' . $prefs[$pref]; */

@@ -73,7 +73,7 @@
 			$this->filter   = $this->bo->filter;
 			$this->cat_id   = $this->bo->cat_id;
 			if($this->debug) { $this->_debug_sqsof(); }
-/*			_debug_array($this); */
+			/* _debug_array($this); */
 		}
 
 		function _debug_sqsof()
@@ -416,7 +416,7 @@
 			else
 			{
 				/* read the entry list */
-				$entries = $this->bo->read_entries($this->start,$this->limit,$columns_to_display,$qfilter,$userid);
+				$entries = $this->bo->read_entries($this->start,$this->limit,$columns_to_display,$qfilter);
 				$total_records = $this->bo->total;
 			}
 
@@ -609,7 +609,7 @@
 				$referer = urlencode($fields['referer']);
 				unset($fields['referer']);
 
-				$this->bo->add_entry($phpgw_info['user']['account_id'],$fields);
+				$this->bo->add_entry($fields);
 
 				$ab_id = $this->bo->get_lastid();
 
@@ -656,7 +656,7 @@
 				$referer = urlencode($fields['referer']);
 				unset($fields['referer']);
 	
-				$this->bo->update_entry($userid,$fields);
+				$this->bo->update_entry($fields);
 	
 				Header("Location: "
 					. $phpgw->link('/index.php',"menuaction=addressbook.uiaddressbook.view&ab_id=" . $fields['ab_id'] . "&referer=$referer"));
@@ -755,8 +755,9 @@
 		{
 			global $phpgw,$phpgw_info,$ab_id,$submit,$referer;
 
-			// First, make sure they have permission to this entry
+			/* First, make sure they have permission to this entry */
 			$check = $this->bo->read_entry($ab_id,array('owner' => 'owner'));
+
 			$perms = $this->contacts->check_perms($this->contacts->grants[$check[0]['owner']],PHPGW_ACL_READ);
 
 			if ( (!$perms) && ($check[0]['owner'] != $phpgw_info['user']['account_id']) )
@@ -793,7 +794,7 @@
 				}
 			}
 
-			// No prefs?
+			/* No prefs? */
 			if (!$columns_to_display )
 			{
 				$columns_to_display = array(
@@ -949,7 +950,7 @@
 
 			if (!$catname) { $catname = lang('none'); }
 
-			// These are in the footer
+			/* These are in the footer */
 			$this->template->set_var('lang_owner',lang('Record owner'));
 			$this->template->set_var('owner',$phpgw->common->grab_owner_name($record_owner));
 			$this->template->set_var('lang_access',lang('Record access'));
@@ -1040,11 +1041,11 @@
 
 			while (list($col, $descr) = each($qfields))
 			{
-				// echo "<br>test: $col - $i $j - " . count($abc);
+				/* echo "<br>test: $col - $i $j - " . count($abc); */
 				$i++; $j++;
 				$showcol = $this->display_name($col);
 				if (!$showcol) { $showcol = $col; }
-				// yank the *'s prior to testing for a valid column description
+				/* yank the *'s prior to testing for a valid column description */
 				$coltest = ereg_replace("\*","",$showcol);
 				if ($coltest)
 				{
@@ -1384,7 +1385,7 @@
 
 			if ($format != "view")
 			{
-				// Preferred phone number radio buttons
+				/* Preferred phone number radio buttons */
 				$pref[0] = '<font size="-2">';
 				$pref[1] = '(' . lang('pref') . ')</font>';
 				while (list($name,$val) = each($this->contacts->tel_types))
@@ -1674,6 +1675,6 @@
 			$this->template->set_var('row_text',$phpgw_info['theme']['row_text']);
 
 			$this->template->pfp('out','form');
-		} //end form function
+		} /* end form function */
 	}
 ?>
