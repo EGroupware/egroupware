@@ -28,9 +28,9 @@
 		'db_name' => '{DB_NAME}', 
 		'db_user' => '{DB_USER}', 
 		'db_pass' => '{DB_PASS}', 
-		/* Look at the README file */
+		// Look at the README file
 		'db_type' => '{DB_TYPE}',
-		/* This will limit who is allowed to make configuration modifcations */
+		// This will limit who is allowed to make configuration modifcations
 		'config_passwd' => '{CONFIG_PASS}'
 	);
 
