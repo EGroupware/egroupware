@@ -57,10 +57,10 @@
   $sql = "create table phpgw_sessions (
     session_id         varchar(255),
     session_lid        varchar(255),
-    session_pwd        varchar(255),
     session_ip         varchar(255),
-    session_logintime	 int,
+    session_logintime  int,
     session_dla        int,
+    session_info       text,
     unique(session_id)
   )";
   $db->query($sql);
