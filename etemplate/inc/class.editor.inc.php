@@ -30,7 +30,8 @@
 			'not_writeable' => "Error: webserver is not allowed to write into '%s' !!!",
 			'exported'   => "eTemplate '%s' written to '%s'",
 			'newer_version' => "newer version '%s' exists !!!",
-			'need_name'  => 'Application name needed to write a langfile or dump the eTemplates !!!'
+			'need_name'  => 'Application name needed to write a langfile or dump the eTemplates !!!',
+			'x_deleted'  => '%d eTemplates deleted'
 		);
 		var $aligns = array(
 			'' => 'Left',
@@ -673,18 +674,35 @@
 			if (isset($cont['delete']))
 			{
 				list($delete) = each($cont['delete']);
-				$read = $result[$delete-1];
-				$this->etemplate->read($read['et_name'],$read['et_template'],$read['et_lang'],$read['group'],$read['et_version']);
+				$this->etemplate->read($result[$delete-1]);
 				unset($cont['delete']);
 				unset($cont['result']);
 				$this->delete(array('preserv' => $cont),'list_result');
 				return;
 			}
+			if (isset($cont['delete_selected']))
+			{
+				while (list($row,$sel) = each($cont['selected']))
+				{
+					if ($sel)
+					{
+						$this->etemplate->read($result[$row-1]);
+						$this->etemplate->delete();
+						++$n;
+					}
+				}
+				if ($n)
+				{
+					$msg = sprintf($this->messages['x_deleted'],$n);
+				}
+				unset($cont['selected']);
+				unset($cont['delete_selected']);
+				$result = $this->etemplate->search($cont);
+			}
 			if (isset($cont['read']))
 			{
 				list($read) = each($cont['read']);
-				$read = $result[$read-1];
-				$this->etemplate->read($read['et_name'],$read['et_template'],$read['et_lang'],$read['group'],$read['et_version']);
+				$this->etemplate->read($result[$read-1]);
 				$this->edit();
 				return;
 			}

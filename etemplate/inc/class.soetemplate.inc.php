@@ -361,14 +361,17 @@
 			}
 			$sql .= " ORDER BY et_name DESC,et_lang DESC,et_template DESC,et_version DESC";
 
-			$this->db->query($sql,__LINE__,__FILE__);
+			$tpl = new soetemplate;
+			$tpl->db->query($sql,__LINE__,__FILE__);
 
 			$result = array();
-			while ($this->db->next_record())
+			while ($tpl->db->next_record())
 			{
-				if ($this->db->f('et_lang') != '##')	// exclude or import-time-stamps
+				if ($tpl->db->f('et_lang') != '##')	// exclude or import-time-stamps
 				{
-					$result[] = $this->db->Record;
+					$tpl->db2obj();
+					
+					$result[] = $tpl->as_array();
 				}
 			}
 			return $result;
@@ -385,6 +388,7 @@
 				$this->$name = $this->db->f($db_col);
 			}
 			$this->data = unserialize(stripslashes($this->data));
+			if (!is_array($this->data)) $this->data = array();
 
 			if ($this->name[0] != '.')
 			{
@@ -639,10 +643,6 @@
 		{
 			$to_trans = array();
 
-			if (stristr($this->name,'test'))	// dont write all test-tpls
-			{
-				return $to_trans;
-			}
 			reset($this->data); each($this->data); // skip width
 			while (list($row,$cols) = each($this->data))
 			{
@@ -672,13 +672,20 @@
 		{
 			$to_trans = array();
 
-			$tmpl = new soetemplate;	// to not alter our own data
-			$tmpl->db->query("SELECT * FROM $this->db_name WHERE et_name LIKE '$app.%'");
+			$tpls = $this->search($app);
 
-			for ($n = 0; $tmpl->db->next_record(); ++$n)
+			$tpl = new soetemplate;	// to not alter our own data
+			
+			while (list(,$keys) = each($tpls))
 			{
-				$tmpl->db2obj();
-				$to_trans += $tmpl->getToTranslate();
+				if (($keys['name'] != $last['name'] ||		// write only newest version
+					 $keys['template'] != $last['template']) &&
+					 !strstr($keys['name'],'test'))
+				{
+					$tpl->read($keys);
+					$to_trans += $tpl->getToTranslate();
+					$last = $keys;
+				}
 			}
 			return $to_trans;
 		}
@@ -702,10 +709,12 @@
 
 			if (!file_exists(PHPGW_SERVER_ROOT.'/developer_tools/inc/class.solangfile.inc.php'))
 			{
-				return 'Error: app developer-tools not installed !!!';
+				$solangfile = CreateObject('etemplate.solangfile');
 			}
-			$solangfile = CreateObject('developer_tools.solangfile');
-
+			else
+			{
+				$solangfile = CreateObject('developer_tools.solangfile');
+			}
 			$langarr = $solangfile->load_app($app,$lang);
 			if (!is_array($langarr))
 			{
