@@ -1,4 +1,52 @@
 <br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>	setup	en	<br><center>Import has been completed!  Click <a href="index.php">here</a> to return to setup </center>
+Add auto-created users to this group ('Default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
+Admins	setup	en	Admins
+All Users	setup	en	All Users
+Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
+Authentication / Accounts	setup	en	Authentication / Accounts
+Auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
+Country Selection	setup	en	Country Selection
+Default file system space per user/group ?	setup	en	Default file system space per user/group ?
+Deny all users access to grant other users access to their entries ?	setup	en	Deny all users access to grant other users access to their entries ?
+Enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
+Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
+Enter the full path for users and group files.<br>Examples: /files, E:\FILES	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+Enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
+Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>	setup	en	Enter the location of phpGroupWare's URL.<br>Example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>No trailing slash</b>
+Enter the site password for peer servers	setup	en	Enter the site password for peer servers
+Enter the site username for peer servers	setup	en	Enter the site username for peer servers
+Enter the title for your site	setup	en	Enter the title for your site
+Enter your HTTP proxy server	setup	en	Enter your HTTP proxy server
+Enter your HTTP proxy server port	setup	en	Enter your HTTP proxy server port
+Enter your default FTP server	setup	en	Enter your default FTP server
+Host information	setup	en	Host information
+If no ACL records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
+If using LDAP, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+LDAP Default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
+LDAP Default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
+LDAP accounts context	setup	en	LDAP accounts context
+LDAP encryption type	setup	en	LDAP encryption type
+LDAP groups context	setup	en	LDAP groups context
+LDAP host	setup	en	LDAP host
+LDAP root password	setup	en	LDAP root password
+LDAP rootdn	setup	en	LDAP rootdn
+Maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account id (e.g. 65535 or 1000000)
+Minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
+Path information	setup	en	Path information
+Preferences	setup	en	Preferences
+Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
+Select where you want to store/retrieve filesystem information	setup	en	Select where you want to store/retrieve filesystem information
+Select where you want to store/retrieve user accounts	setup	en	Select where you want to store/retrieve user accounts
+Selectbox	setup	en	Selectbox
+Show 'powered by' logo on	setup	en	Show 'powered by' logo on
+Text Entry	setup	en	Text Entry
+Use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
+Use pure HTML compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
+Users Choice	setup	en	Users Choice
+Would you like phpGroupWare to cache the phpgw info array ?	setup	en	Would you like phpGroupWare to cache the phpgw info array ?
+Would you like phpGroupWare to check for a new version<br>when admins login ?	setup	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
+Would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
+You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 actions	setup	en	Actions
 admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
@@ -29,16 +77,17 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 cancel	setup	en	Cancel
 charset	setup	en	ISO-8859-1
+check ip address of all sessions	setup	en	check ip address of all sessions
 click here	setup	en	Click Here
-configuration completed	setup	en	Configuration completed
 configuration	setup	en	Configuration
+configuration completed	setup	en	Configuration completed
 configure now	setup	en	Configure Now
+create	setup	en	Create
 create database	setup	en	Create Database
 create one now	setup	en	Create one now
-create	setup	en	Create
 creating tables	setup	en	Creating Tables
-currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
 current version	setup	en	Current Version
+currently installed languages: x <br>	setup	en	Currently installed languages: %1 <br>
 db root password	setup	en	DB root password
 db root username	setup	en	DB root username
 delete all my tables and data	setup	en	Delete all my tables and data
@@ -62,9 +111,9 @@ if you did not receive any errors, your applications have been	setup	en	If you d
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 import ldap users/groups	setup	en	Import LDAP users/groups
 insanity	setup	en	Insanity
+install	setup	en	Install
 install Applications	setup	en	Install Applications
 install language	setup	en	Install Language
-install	setup	en	Install
 installed	setup	en	installed
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
@@ -78,8 +127,8 @@ manage languages	setup	en	Manage Languages
 multi-language support setup	setup	en	Multi-Language support setup
 mysqlinstr	setup	en	 Instructions for creating the database in MySQL:<br>Login to mysql -<br><i>[user@server user]# mysql -u root -p</i><br>Create the empty database and grant user permissions -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 not complete	setup	en	not complete
-note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 not ready for this stage yet	setup	en	Not ready for this stage yet
+note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 ok	setup	en	OK
 once the database is setup correctly	setup	en	Once the database is setup correctly
 only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
@@ -125,33 +174,31 @@ tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
 tables upgraded	setup	en	tables upgraded
 target version	setup	en	Target Version
-there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	en	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
-the tables	setup	en	the tables
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
+the tables	setup	en	the tables
+there was a problem tring to connect to your ldap server. <br>please check your LDAP server configuration	setup	en	There was a problem tring to connect to your LDAP server. <br>please check your LDAP server configuration
 this program will help you upgrade or install different languages for phpGroupWare	setup	en	This program will help you upgrade or install different languages for phpGroupWare
 this section will help you export users and groups from phpgroupWare's account tables into your ldap tree	setup	en	This section will help you export users and groups from phpGroupWare's account tables into your LDAP tree
 this section will help you import users and groups from your ldap tree into phpGroupWare's account tables	setup	en	This section will help you import users and groups from your LDAP tree into phpGroupWare's account tables
 this stage is completed<br>	setup	en	This stage is completed<br>
 this will create 1 admin account and 3 demo accounts<br>the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>	setup	en	This will create 1 admin account and 3 demo accounts<br>The username/passwords are: demo/guest, demo2/guest and demo3/guest.<br><b>!!!THIS WILL DELETE ALL EXISTING ACCOUNTS!!!</b><br>
-Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 to setup 1 admin account and 3 demo accounts.<br><b>this will delete all existing accounts</b>	setup	en	to setup 1 admin account and 3 demo accounts.<br><b>This will delete all existing accounts</b>
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled
-upgraded	setup	en	upgraded
 upgrade	setup	en	Upgrade
+upgraded	setup	en	upgraded
 upgrading tables	setup	en	Upgrading Tables
 version mismatch	setup	en	Version Mismatch
 we will automatically update your tables/records to x	setup	en	We will automatically update your tables/records to %1
 you appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run phpGroupWare correctly, if at all. <br><br>Please upgrade to at least version 3.0.16
-You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of phpGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running version x of phpGroupWare	setup	en	You appear to be running version %1 of phpGroupWare
 you are ready for this stage, but this stage is not yet written.<br>	setup	en	You are ready for this stage, but this stage is not yet written.<br>
 you do not have any languages installed. please install one now <br>	setup	en	You do not have any languages installed. Please install one now <br>
 you must enter a username for the admin	setup	en	You must enter a username for the admin
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 your applications are current	setup	en	Your applications are current
 your database does not exist	setup	en	Your database does not exist
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
