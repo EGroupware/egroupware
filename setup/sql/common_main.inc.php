@@ -20,7 +20,7 @@
   function update_version_table($tableschanged = True){
     global $phpgw_info, $phpgw_setup;
     if ($tableschanged == True){$phpgw_info["setup"]["tableschanged"] = True;}
-    $phpgw_setup->db->query("update applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
+    $phpgw_setup->db->query("update phpgw_applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
   }
 
   if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == "drop"){
@@ -30,7 +30,7 @@
     include("./sql/".$phpgw_domain[$ConfigDomain]["db_type"]."_newtables.inc.php");
     include("./sql/common_default_records.inc.php");
     $included = True;
-    include($phpgw_info["server"]["server_root"] . "/setup/lang.php");
+    include(PHPGW_SERVER_ROOT . "/setup/lang.php");
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "oldversion";
   }
 

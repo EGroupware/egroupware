@@ -47,11 +47,9 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "create table groups (
-    group_id	int NOT NULL auto_increment,
-    group_name	varchar(255),
-    group_apps    varchar(255),
-    primary key(group_id)
+  $sql = "CREATE TABLE phpgw_preferences (
+    preference_owner       int,
+    preference_value       text
   )";
   $phpgw_setup->db->query($sql);  
 
@@ -300,7 +298,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9";
+  $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
   $phpgw_info["setup"]["oldver"]["phpgwapi"] = $phpgw_info["setup"]["currentver"]["phpgwapi"];
   update_version_table();
 //  $phpgw_setup->update_version_table();

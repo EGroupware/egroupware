@@ -11,13 +11,6 @@
 
   /* $Id$ */
 
-  $d1 = strtolower(substr($phpgw_info["server"]["include_root"],0,3));
-  $d2 = strtolower(substr($phpgw_info["server"]["server_root"],0,3));
-  if($d1 == "htt" || $d1 == "ftp" || $d2 == "htt" || $d2 == "ftp") {
-    echo "Failed attempt to break in via an old Security Hole!<br>\n";
-    exit;
-  } unset($d1);unset($d2);
-
   function add_default_server_config(){
     global $phpgw_info, $phpgw_setup;
     $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('template_set', 'user_choice')");
@@ -60,7 +53,7 @@
 
   if ($useglobalconfigsettings == "on"){
     if (is_file($basedir)){
-      include ($phpgw_info["server"]["include_root"]."/globalconfig.inc.php");
+      include (PHPGW_INCLUDE_ROOT."/globalconfig.inc.php");
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('template_set', '".$phpgw_info["server"]["template_set"]."')");
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('temp_dir', '".$phpgw_info["server"]["temp_dir"]."')");
       $phpgw_setup->db->query("insert into phpgw_config (config_name, config_value) values ('files_dir', '".$phpgw_info["server"]["files_dir"]."')");
@@ -107,20 +100,38 @@
     add_default_server_config();
   }
 
-  include($phpgw_info["server"]["server_root"] . "/setup/sql/default_applications.inc.php");
+  include(PHPGW_SERVER_ROOT . "/setup/sql/default_applications.inc.php");
+	$defaultgroupid = mt_rand (100, 600000);
+  $sql = "insert into phpgw_accounts";
+  $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+  $sql .= "values (".$defaultgroupid.", 'Default', 'g', '".md5($passwd)."', 'Default', 'Group', ".time().", 'A')";
+  $phpgw_setup->db->query($sql);
 
-  $phpgw_setup->db->query("insert into groups (group_name) values ('Default')");  
-  $phpgw_setup->db->query("insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account','A')");
-
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '1', 1, 'u', 1)");
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', 1, 'u', 1)");
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', 1, 'u', 1)");
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', 1, 'u', 1)");
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', 1, 'u', 1)");
-  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', 1, 'u', 1)");
+	$admingroupid = mt_rand (100, 600000);
+  $sql = "insert into phpgw_accounts";
+  $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+  $sql .= "values (".$admingroupid.", 'Admins', 'g', '".md5($passwd)."', 'Admin', 'Group', ".time().", 'A')";
+  $phpgw_setup->db->query($sql);
 
   $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
-  $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('1', '$defaultprefs')");
+	$accountid = mt_rand (100, 600000);
+  $sql = "insert into phpgw_accounts";
+  $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
+  $sql .= "values (".$accountid.", 'demo', 'u', '81dc9bdb52d04dc20036dbd8313ed055', 'Demo', 'Account', ".time().", 'A')";
+  $phpgw_setup->db->query($sql);
+  $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('4', '$defaultprefs')");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$admingroupid."', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('email', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('notes', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('nntp', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('todo', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('transy', 'run', $accountid, 'u', 1)");
+  $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('manual', 'run', $accountid, 'u', 1)");
 
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('aa','Afar','No')");
   @$phpgw_setup->db->query("INSERT INTO languages (lang_id, lang_name, available) values ('ab','Abkhazian','No')");

@@ -11,18 +11,20 @@
 
   /* $Id$ */
 
-  $phpgw_setup->db->query("DROP TABLE config");
-  $phpgw_setup->db->query("DROP TABLE applications");
+  $phpgw_setup->db->query("DROP TABLE phpgw_config");
+  $phpgw_setup->db->query("DROP TABLE phpgw_applications");
   $phpgw_setup->db->query("drop sequence phpgw_accounts_account_id_seq");
   $phpgw_setup->db->query("DROP TABLE phpgw_accounts");
-  $phpgw_setup->db->query("drop sequence groups_group_id_seq");
-  $phpgw_setup->db->query("DROP TABLE groups");
-  $phpgw_setup->db->query("DROP TABLE preferences");
+  $phpgw_setup->db->query("DROP TABLE phpgw_preferences");
   $phpgw_setup->db->query("DROP TABLE phpgw_sessions");
   $phpgw_setup->db->query("DROP TABLE phpgw_app_sessions");
   $phpgw_setup->db->query("DROP TABLE phpgw_acl");
   $phpgw_setup->db->query("DROP TABLE phpgw_access_log");
+  $phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq");
+  $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("drop sequence profiles_con_seq");
+  $phpgw_setup->db->query("drop sequence phpgw_hooks_hook_id_seq");
+  $phpgw_setup->db->query("DROP TABLE phpgw_hooks");
   $phpgw_setup->db->query("DROP TABLE profiles");
   $phpgw_setup->db->query("drop sequence addressbook_ab_id_seq");
   $phpgw_setup->db->query("DROP TABLE addressbook");
@@ -40,10 +42,17 @@
   $phpgw_setup->db->query("DROP TABLE languages");
   $phpgw_setup->db->query("drop sequence categories_cat_id_seq");
   $phpgw_setup->db->query("DROP TABLE categories");
-  $phpgw_setup->db->query("drop sequence phpgw_categories_cat_id_seq");
-  $phpgw_setup->db->query("DROP TABLE phpgw_categories");
   $phpgw_setup->db->query("DROP sequence notes_note_id_seq");
   $phpgw_setup->db->query("DROP TABLE notes");
-  $phpgw_setup->db->query("drop sequence phpgw_hooks_hook_id_seq");
-  $phpgw_setup->db->query("DROP TABLE phpgw_hooks");
+
+  $phpgw_setup->db->query("DROP TABLE config");
+  $phpgw_setup->db->query("DROP TABLE applications");
+  $phpgw_setup->db->query("DROP TABLE config");
+  $phpgw_setup->db->query("DROP TABLE applications");
+  $phpgw_setup->db->query("drop sequence groups_group_id_seq");
+  $phpgw_setup->db->query("DROP TABLE groups");
+  $phpgw_setup->db->query("drop sequence accounts_account_id_seq");
+  $phpgw_setup->db->query("DROP TABLE accounts");
+  $phpgw_setup->db->query("DROP TABLE preferences");
+
 ?>

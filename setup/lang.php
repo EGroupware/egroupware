@@ -24,7 +24,7 @@
   }
   $phpgw_setup->loaddb();
 
-     include($phpgw_info["server"]["api_inc"]."/class.common.inc.php");
+     include(PHPGW_API_INC."/class.common.inc.php");
      $common = new common;
      // this is not used
      //$sep = $common->filesystem_separator();
@@ -54,7 +54,7 @@
            }
            if (($addlang && $upgrademethod == "addonlynew") || ($upgrademethod != "addonlynew")) {
               //echo '<br>Test: loop above file()';
-              $raw_file = file($phpgw_info["server"]["server_root"] . "/setup/phpgw_" . strtolower($lang) . ".lang");
+              $raw_file = file(PHPGW_SERVER_ROOT . "/setup/phpgw_" . strtolower($lang) . ".lang");
               while (list($null,$line) = each($raw_file)) {
                 $addit = False;
                 list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);

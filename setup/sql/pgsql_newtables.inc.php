@@ -31,7 +31,7 @@
   $phpgw_setup->db->query($sql);
 
 
-  $sql = "create table accounts (
+  $sql = "create table phpgw_accounts (
     account_id             serial,
     account_lid            varchar(25) NOT NULL,
     account_pwd            char(32) NOT NULL,
@@ -46,13 +46,18 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table groups (
-    group_id     serial,
-    group_name   varchar(50),
-    group_apps   varchar(255)
+  $sql = "create table preferences ( 
+    preference_owner       int,
+    preference_value       text
   )";
   $phpgw_setup->db->query($sql);
-  
+
+  $sql = "create table phpgw_preferences ( 
+    preference_owner       int,
+    preference_value       text
+  )";
+  $phpgw_setup->db->query($sql);
+
   $sql = "create table phpgw_sessions (
     session_id         varchar(255),
     session_lid        varchar(255),
@@ -88,12 +93,6 @@
    ip           varchar(30),
    li           int,
    lo           varchar(255)
-  )";
-  $phpgw_setup->db->query($sql);
-
-  $sql = "create table preferences ( 
-    preference_owner       int,
-    preference_value       text
   )";
   $phpgw_setup->db->query($sql);
 
