@@ -806,6 +806,29 @@
 	}
 
 	/*!
+	 @function copyobj
+	 @abstract duplicates the result of copying an object under php3/4 even when using php5
+	 @author milosch
+	 @discussion This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
+	 @syntax copyobj($source_object,$target_object);
+	 @example copyobj($GLOBALS['phpgw']->db,$mydb);
+	 @param $a   - Source Object
+	 @param $b   - Target Object (copy)
+	*/
+	function copyobj($a,&$b)
+	{
+		if(floor(phpversion()) > 4)
+		{
+			$b = $a->__clone();
+		}
+		else
+		{
+			$b = $a;
+		}
+		return;
+	}
+
+	/*!
 	 @function get_account_id
 	 @abstract Return a properly formatted account_id.
 	 @author skeeter
@@ -867,7 +890,7 @@
 	function _debug_array($array,$print=True)
 	{
 		$four = False;
-		if(@floor(phpversion()) == 4)
+		if(@floor(phpversion()) > 3)
 		{
 			$four = True;
 		}
