@@ -433,7 +433,7 @@
 			}
 			//echo '('.$start.','.$limit.')';
 
-			reset($ldap_fields);
+			@reset($ldap_fields);
 			$j=0;
 			for ($i=$start;$i<$limit;$i++) {
 				if ($i<$this->total_records && $ldap_fields[$i]["uid"][0]) {
@@ -566,7 +566,7 @@
 				list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 				if (gettype($stock_fieldnames) == "array") {
 					$stock_fields['phpgwowner']  = $owner;
-					if ($access) { $stock_fields['phpgwaccess'] = $access; }
+					$stock_fields['phpgwaccess'] = $access;
 					// Check each value, add our extra attributes if they are missing, and
 					// otherwise fix the entry while we can.
 					//
