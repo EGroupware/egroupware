@@ -90,8 +90,8 @@
 	while (list($col, $descr) = each($qfields)) {
 		// echo "<br>test: $col - $i $j - " . count($abc);
 		$i++; $j++;
-		$showcol = display_name($descr);
-		if (!$showcol) { $showcol = $descr; }
+		$showcol = display_name($col);
+		if (!$showcol) { $showcol = $col; }
 		// yank the *'s prior to testing for a valid column description
 		$coltest = ereg_replace("\*","",$showcol);
 		if ($coltest) {
