@@ -581,6 +581,7 @@
 			if($continue_app_data)
 			{
 				$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
+				$GLOBALS['phpgw']->template->halt_on_error = 'report';
 				if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)
 				{
 					include(PHPGW_APP_INC . '/functions.inc.php');
