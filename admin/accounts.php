@@ -16,8 +16,8 @@
 
   $t = new Template($phpgw_info["server"]["template_dir"]);
   $t->set_file(array( "header"	=> "accounts.tpl",
-			  "row"		=> "accounts.tpl",
-			  "footer"	=> "accounts.tpl" ));
+			       "row"		=> "accounts.tpl",
+			       "footer"	=> "accounts.tpl" ));
 
   $t->set_block("header","row","footer");
 
@@ -34,7 +34,7 @@
 
   if ($query) {
      $querymethod = " where firstname like '%$query%' OR lastname like '%$query%' OR loginid "
-		  . "like '%$query%' ";
+		        . "like '%$query%' ";
   }
 
   $phpgw->db->query("select count(*) from accounts $querymethod");
@@ -60,7 +60,7 @@
   $t->parse("out","header");
 
   $phpgw->db->query("select con,firstname,lastname,loginid from accounts $querymethod "
-	          . "$ordermethod limit $limit");
+	             . "$ordermethod limit $limit");
 
   while ($phpgw->db->next_record()) {
     $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -96,6 +96,7 @@
 
   }
 
+  $t->set_var("hidden_vars",$phpgw->form_sessionid());
   $t->set_var("actionurl",$phpgw->link("newaccount.php"));
   $t->set_var("lang_add",lang_common("add"));
   $t->set_var("lang_search",lang_common("search"));

@@ -31,7 +31,6 @@
 
   // When I am updating my server, I don't want people logging in a messing 
   // things up.
-
   function deny_login()
   {
     global $tmpl;
@@ -45,11 +44,9 @@
   function show_cookie()
   {
     global $phpgw_info, $code, $lastloginid, $login;
-    if ($code != 5 && $phpgw_info["server"]["usecookies"] == True){
-      if (!empty($login)) {
-        SetCookie("lastloginid",$login, time() + (24 * 3600 * 14),"/");
-      }
-      return $lastloginid;
+
+    if ($code != 5) {
+       return $lastloginid;
     }
   }
 
@@ -77,28 +74,28 @@
   /* Program starts here */
 
   if ($deny_login) {
-    deny_login();
+     deny_login();
   }
 
   if ($submit) {
     if (getenv(REQUEST_METHOD) != "POST") {
-      Header("Location: " . $phpgw->link("", "code=5"));
+       Header("Location: " . $phpgw->link("", "code=5"));
     }
 
     $sessionid = $phpgw->session->create($login,$passwd);
-    if (!$sessionid) {
-      Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
+    if (! $sessionid) {
+       Header("Location: " . $phpgw_info["server"]["webserver_url"] . "/login.php?cd=5");
     } else {
-      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]) . "/", "cd=yes");
+       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]) . "/", "cd=yes");
     }
 
   } else {
     if ($last_loginid) {
-      $phpgw->db->query("select value from preferences where owner='$last_loginid' "
-                     . "and name='lang'");
-      $phpgw->db->next_record();
-      if (! $phpgw->db->f("value")) {
-        $users_lang = "en";
+       $phpgw->db->query("select value from preferences where owner='$last_loginid' "
+                       . "and name='lang'");
+       $phpgw->db->next_record();
+       if (! $phpgw->db->f("value")) {
+          $users_lang = "en";
 //      } else {
 //           $users_lang = $phpgw->db->f("value");
 //           include($phpgw_info["server"]["include_root"] . "/lang/$users_lang/" . $users_lang
@@ -107,6 +104,7 @@
     }
   }
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
+  $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
   $tmpl->set_var("cd",check_logoutcode($cd));
   $tmpl->set_var("cookie",show_cookie());
   $tmpl->set_var("lang_username",lang_login("username"));
