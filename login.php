@@ -15,7 +15,7 @@
 
 	$phpgw_info = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
-		'disable_template_class' => True,
+//		'disable_template_class' => True,
 		'login'                  => True,
 		'currentapp'             => 'login',
 		'noheader'               => True
@@ -31,89 +31,53 @@
 		exit;
 	}
 		
-	
 	$GLOBALS['phpgw_info']['server']['template_dir'] = PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['login_template_set'];
-	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+	$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template', $GLOBALS['phpgw_info']['server']['template_dir']);
+	$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
+	$GLOBALS['phpgw']->template->set_file('login','login.tpl');
+	$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
 
 	// This is used for system downtime, to prevent new logins.
 	if ($GLOBALS['phpgw_info']['server']['deny_all_logins'])
 	{
-		$tmpl->set_file(array(
-			'login_form'  => 'login_denylogin.tpl'
-		));
-		$tmpl->set_var('template_set','default');
-		$tmpl->pfp('loginout','login_form');
+		$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+		$GLOBALS['phpgw']->template->set_block('login','login_form_deny','login_form');
+		$GLOBALS['phpgw']->template->set_var('template_set','default');
+		$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
+		$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
 		exit;
-	}
-
-	// !! NOTE !!
-	// Do NOT and I repeat, do NOT touch ANYTHING to do with lang in this file.
-	// If there is a problem, tell me and I will fix it. (jengo)
-
-/*
-	if ($code != 10 && $GLOBALS['phpgw_info']['server']['usecookies'] == False)
-	{
-		Setcookie('sessionid');
-		Setcookie('kp3');
-		Setcookie('domain');
-	}
-*/
-
-/* This is not working yet because I need to figure out a way to clear the $cd =1
-	if (isset($PHP_AUTH_USER) && $cd == '1')
-	{
-		Header('HTTP/1.0 401 Unauthorized');
-		Header('WWW-Authenticate: Basic realm="phpGroupWare"'); 
-		echo 'You have to re-authentificate yourself'; 
-		exit;
-	}
-*/
-
-	if (! $deny_login && ! $GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
-	{
-		$tmpl->set_file(array('login_form'  => 'login.tpl'));
-		$tmpl->set_var('charset',lang('charset'));
-	}
-	elseif ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
-	{
-		$tmpl->set_file(array('login_form'  => 'login_selectdomain.tpl'));
-		$tmpl->set_var('charset',lang('charset'));
 	}
 
 	function show_cookie()
 	{
-		global $code, $last_loginid, $login;
-//echo '$GLOBALS: <pre>';print_r($GLOBALS);echo '</pre>';
 		/* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
-		if ($code != 5 && (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies']))
+		if ($GLOBALS['HTTP_GET_VARS']['code'] != 5 && (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies']))
 		{
-			return $last_loginid;
+			return $GLOBALS['HTTP_COOKIE_VARS']['last_loginid'];
 		}
 	}
 
-	function check_logoutcode($code)
+	function check_logoutcode()
 	{
-		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template');
+		//$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template');
 		$GLOBALS['phpgw']->common = CreateObject('phpgwapi.common');
-		switch($code)
+		switch($GLOBALS['HTTP_GET_VARS']['code'])
 		{
 			case 1:
-				return $GLOBALS['phpgw']->common->msgbox('You have been successfully logged out', True);
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['You have been successfully logged out']=True;
 				break;
 			case 2:
-				return $GLOBALS['phpgw']->common->msgbox('Sorry, your login has expired', False);
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Sorry, your login has expired']=False;
 				break;
 			case 5:
-				return $GLOBALS['phpgw']->common->msgbox('Bad login or password', False);
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Bad login or password']=False;
 				break;
 			case 10:
 				Setcookie('sessionid');
 				Setcookie('kp3');
 				Setcookie('domain');
-				return $GLOBALS['phpgw']->common->msgbox('Your session could not be verified.',False);
+				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Your session could not be verified']=False;
 				break;
-			default:
-				return '&nbsp;';
 		}
 	}
 
@@ -128,7 +92,7 @@
 
 	# Apache + mod_ssl style SSL certificate authentication
 	# Certificate (chain) verification occurs inside mod_ssl
-	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']) && !isset($cd))
+	if ($GLOBALS['phpgw_info']['server']['auth_type'] == 'sqlssl' && isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']) && !isset($GLOBALS['HTTP_GET_VARS']['code']))
 	{
 		# an X.509 subject looks like:
 		# /CN=john.doe/OU=Department/O=Company/C=xx/Email=john@comapy.tld/L=City/
@@ -158,8 +122,8 @@
 		unset($sslattributes);
 	}
 
-	if (isset($HTTP_POST_VARS['passwd_type']) || $submit_x || $submit_y)
-//		 isset($HTTP_POST_VARS['passwd']) && $HTTP_POST_VARS['passwd']) // enable konqueror to login via Return
+	if (isset($GLOBALS['HTTP_POST_VARS']['passwd_type']) || $submit_x || $submit_y)
+//		 isset($GLOBALS['HTTP_POST_VARS']['passwd']) && $GLOBALS['HTTP_POST_VARS']['passwd']) // enable konqueror to login via Return
 	{
 		if (getenv(REQUEST_METHOD) != 'POST' && !isset($PHP_AUTH_USER) && !isset($HTTP_SERVER_VARS['SSL_CLIENT_S_DN']))
 		{
@@ -169,13 +133,13 @@
 
 		if (! isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?cd=5');
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php?code=5');
 		}
 		else
 		{
 			if ($GLOBALS['phpgw_forward'])
 			{
-				while (list($name,$value) = each($HTTP_GET_VARS))
+				while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
 				{
 					if (ereg('phpgw_',$name))
 					{
@@ -183,7 +147,7 @@
 					}
 				}
 			}
-			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/home.php','cd=yes' . $extra_vars));
+			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/home.php','code=yes' . $extra_vars,True));
 		}
 	}
 	else
@@ -191,7 +155,7 @@
 		// !!! DONT CHANGE THESE LINES !!!
 		// If there is something wrong with this code TELL ME!
 		// Commenting out the code will not fix it. (jengo)
-		if (isset($last_loginid))
+		if (isset($GLOBALS['HTTP_COOKIE_VARS']['last_loginid']))
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
 			$prefs = CreateObject('phpgwapi.preferences', $accounts->name2id($last_loginid));
@@ -209,7 +173,7 @@
 			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
-				$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
+				$GLOBALS['phpgw']->template->set_var('phpgw_loginscreen_message',stripslashes(lang('loginscreen_message')));
 			}
 		}
 		else
@@ -221,18 +185,19 @@
 			$GLOBALS['phpgw']->translation->add_app('loginscreen');
 			if (lang('loginscreen_message') != 'loginscreen_message*')
 			{
-				$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
+				$GLOBALS['phpgw']->template->set_var('phpgw_loginscreen_message',stripslashes(lang('loginscreen_message')));
 			}
 		}
 	}
 
-	if (!isset($cd) || !$cd)
+	if (!isset($GLOBALS['HTTP_GET_VARS']['code']) || !$GLOBALS['HTTP_GET_VARS']['code'])
 	{
-		$cd = '';
+		$GLOBALS['HTTP_GET_VARS']['code'] = '';
 	}
 
 	if ($GLOBALS['phpgw_info']['server']['show_domain_selectbox'])
 	{
+		$GLOBALS['phpgw']->template->set_block('login','login_form_select_domain','login_form');
 		reset($phpgw_domain);
 		unset($domain_select);      // For security ... just in case
 		while ($domain = each($phpgw_domain))
@@ -244,10 +209,14 @@
 			}
 			$domain_select .= '>' . $domain[0] . '</option>';
 		}
-		$tmpl->set_var('select_domain',$domain_select);
+		$GLOBALS['phpgw']->template->set_var('select_domain',$domain_select);
+	}
+	else
+	{
+		$GLOBALS['phpgw']->template->set_block('login','login_form_standard','login_form');
 	}
 
-	while (list($name,$value) = each($HTTP_GET_VARS))
+	while (list($name,$value) = each($GLOBALS['HTTP_GET_VARS']))
 	{
 		if (ereg('phpgw_',$name))
 		{
@@ -259,18 +228,27 @@
 	{
 		$extra_vars = '?' . substr($extra_vars,1,strlen($extra_vars));
 	}
-
-	$tmpl->set_var('login_url', $GLOBALS['phpgw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
-	$tmpl->set_var('registration_url',$GLOBALS['phpgw_info']['server']['webserver_url'] . '/registration/');
-	$tmpl->set_var('website_title', $GLOBALS['phpgw_info']['server']['site_title']);
-	$tmpl->set_var('cd',check_logoutcode($cd));
-	$tmpl->set_var('cookie',show_cookie());
-	$tmpl->set_var('lang_username',lang('username'));
-	$tmpl->set_var('lang_phpgw_login',lang('phpGroupWare login'));
-	$tmpl->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
-	$tmpl->set_var('lang_password',lang('password'));
-	$tmpl->set_var('lang_login',lang('login'));
-	$tmpl->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
-
-	$tmpl->pfp('loginout','login_form');
+	check_logoutcode();
+	$GLOBALS['phpgw']->common->msgbox('', False,'phpgw_login_msgbox');
+	
+	$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare - Login Page');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_target','_self');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_browser_ico','favicon.ico');
+	$GLOBALS['phpgw']->template->set_var('phpgw_head_website_title', $GLOBALS['phpgw_info']['server']['site_title']);
+	$GLOBALS['phpgw']->template->set_var('phpgw_body_tags','bgcolor="#FFFFFF"');
+	$GLOBALS['phpgw']->template->set_var('login_url', 'login.php' . $extra_vars);
+	$GLOBALS['phpgw']->template->set_var('registration_url','registration/');
+	$GLOBALS['phpgw']->template->set_var('cookie',show_cookie());
+	$GLOBALS['phpgw']->template->set_var('lang_username',lang('username'));
+	$GLOBALS['phpgw']->template->set_var('lang_phpgw_login',lang('phpGroupWare login'));
+	$GLOBALS['phpgw']->template->set_var('version',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
+	$GLOBALS['phpgw']->template->set_var('lang_password',lang('password'));
+	$GLOBALS['phpgw']->template->set_var('lang_login',lang('login'));
+	$GLOBALS['phpgw']->template->set_var('template_set',$GLOBALS['phpgw_info']['login_template_set']);
+	$GLOBALS['phpgw']->template->fp('phpgw_body','login_form');
+	$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
 ?>

@@ -982,6 +982,15 @@
 
 		function msgbox($text='',$type=True,$output='return')
 		{
+			if($output != 'return')
+			{
+				$return_result = False;
+			}
+			else
+			{
+				$return_result = True;
+				$output = 'phpgw_msgbox';
+			}
 			if ($text=='' && @isset($GLOBALS['phpgw_info']['flags']['msgbox_data']))
 			{
 				$text = $GLOBALS['phpgw_info']['flags']['msgbox_data'];
@@ -991,10 +1000,10 @@
 			{
 				return;
 			}
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_start');
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_row');
-			$GLOBALS['phpgw']->template->set_block('common','msgbox_end');
-			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_start');
+			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_start');
+			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_row');
+			$GLOBALS['phpgw']->template->set_block('msgbox','msgbox_end');
+			$GLOBALS['phpgw']->template->fp($output,'msgbox_start');
 
 			if (is_array($text))
 			{
@@ -1024,7 +1033,7 @@
 						$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_bad'));
 						$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','ERROR');
 					}
-					$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
+					$GLOBALS['phpgw']->template->fp($output,'msgbox_row',True);
 				}
 			}
 			else
@@ -1041,18 +1050,13 @@
 					$GLOBALS['phpgw']->template->set_var('msgbox_img',$this->image('phpgwapi','msgbox_bad'));
 					$GLOBALS['phpgw']->template->set_var('msgbox_img_alt','ERROR');
 				}
-				$GLOBALS['phpgw']->template->fp('msgbox','msgbox_row',True);
+				$GLOBALS['phpgw']->template->fp($output,'msgbox_row',True);
 			}
-			$GLOBALS['phpgw']->template->fp('msgbox','msgbox_end',True);
+			$GLOBALS['phpgw']->template->fp($output,'msgbox_end',True);
 
-			if($output == 'out')
+			if($return_result)
 			{
-				$GLOBALS['phpgw']->template->pfp('out', 'msgbox');
-				return;
-			}
-			else /* covers the default of 'return' */
-			{
-				return $GLOBALS['phpgw']->template->varvals['msgbox'];
+				return $GLOBALS['phpgw']->template->varvals[$output];
 			}
 		}
 
@@ -1143,17 +1147,6 @@
 			$GLOBALS['phpgw_info']['navbar']['logout']['url']   = $GLOBALS['phpgw']->link('/logout.php');
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
-
-			/*************************************************************************\
-			* If they are using frames, we need to set some variables                 *
-			\*************************************************************************/
-			if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) && 
-				$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
-				($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
-			{
-				$GLOBALS['phpgw_info']['flags']['navbar_target'] = 'phpgw_body';
-			}
 		}
 
 		/*!
@@ -1162,6 +1155,7 @@
 		*/
 		function phpgw_header($forceheader = True, $forcenavbar = True)
 		{
+/*
 			if($forceheader)
 			{
 				$GLOBALS['phpgw_info']['flags']['noheader'] = False;
@@ -1173,16 +1167,22 @@
 
 			if (!@$GLOBALS['phpgw_info']['flags']['noheader'])
 			{
-				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/head.inc.php');
+				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
+				include(PHPGW_TEMPLATE_DIR.'/head.inc.php');
+				$GLOBALS['phpgw']->template->reset_root();
 			}
 			if(!function_exists('parse_navbar'))
 			{
+				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
 				$this->navbar(False);
-				include(PHPGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info']['server']['template_set'] . '/navbar.inc.php');
+				include(PHPGW_TEMPLATE_DIR.'/navbar.inc.php');
+				$GLOBALS['phpgw']->template->reset_root();
 			}
 			if (!@$GLOBALS['phpgw_info']['flags']['nonavbar'] && !@$GLOBALS['phpgw_info']['flags']['navbar_target'])
 			{
+				$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
 				parse_navbar();
+				$GLOBALS['phpgw']->template->reset_root();
 			}
 			//elseif (!@$GLOBALS['phpgw_info']['flags']['noheader'] && function_exists('parse_nonavbar'))
 			//{
@@ -1190,9 +1190,9 @@
 			//}
 			if (!@$GLOBALS['phpgw_info']['flags']['noheader'] && !@$GLOBALS['phpgw_info']['flags']['nonavbar'])
 			{
-				$this->msgbox('',False,'out');
 				$GLOBALS['phpgw']->hooks->process('after_navbar');
 			}
+*/			
 		}
 
 		/*!
@@ -1214,47 +1214,70 @@
 				include(PHPGW_APP_INC . '/header.inc.php');
 			}
 		}
+		/*!
+		@function phpgw_appfooter
+		@abstract load footer.inc.php for an application
+		*/
+		function phpgw_appfooter()
+		{
+			if (!is_array(MENUACTION))
+			{
+				list($app,$class,$method) = explode('.',MENUACTION);
+				if (is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
+				{
+					$GLOBALS[$class]->footer();
+				}
+			}
+			elseif (file_exists(PHPGW_APP_INC . '/footer.inc.php'))
+			{
+				include(PHPGW_APP_INC . '/footer.inc.php');
+			}
+		}
 
 		function phpgw_footer()
 		{
 			global $HTMLCOMPLIANT;
-
-			if (!isset($GLOBALS['phpgw_info']['flags']['nofooter']) || !$GLOBALS['phpgw_info']['flags']['nofooter'])
+			if(!defined('PHPGW_FOOTER_RAN'))
 			{
-				if((file_exists(PHPGW_APP_INC . '/footer.inc.php') || MENUACTION) &&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
-					$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
-					!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
+				define('PHPGW_FOOTER_RAN',True);
+				if (!isset($GLOBALS['phpgw_info']['flags']['nofooter']) || !$GLOBALS['phpgw_info']['flags']['nofooter'])
 				{
-					if(MENUACTION)
+					if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'login' &&
+						$GLOBALS['phpgw_info']['flags']['currentapp'] != 'logout' &&
+						!@$GLOBALS['phpgw_info']['flags']['noappfooter'])
 					{
-						list($app,$class,$method) = explode('.',MENUACTION);
-						if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['footer'])
-						{
-//					eval("\$GLOBALS[$class]->footer();");
-							$GLOBALS[$class]->footer();
-						}
-						elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
-						{
-							include(PHPGW_APP_INC . '/footer.inc.php');
-						}
+						$this->phpgw_appfooter();
 					}
-					elseif(file_exists(PHPGW_APP_INC.'/footer.inc.php'))
-					{
-						include(PHPGW_APP_INC . '/footer.inc.php');
-					}
+					$GLOBALS['phpgw']->db->disconnect();
+					$this->msgbox('',False,'phpgw_msgbox');
+					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
+/*
+				
+					$GLOBALS['phpgw']->template->p('phpgw_head');
+					$GLOBALS['phpgw']->template->p('phpgw_navbar_start');
+					$this->msgbox('',False);
+					$GLOBALS['phpgw']->template->fp('phpgw_msgbox');
+					$GLOBALS['phpgw']->template->p('phpgw_appspace');
+					$GLOBALS['phpgw']->template->set_root(PHPGW_TEMPLATE_DIR);
+					parse_navbar_end();
+					$GLOBALS['phpgw']->template->reset_root();
+					$GLOBALS['phpgw']->hooks->process('navbar_end');
+					$GLOBALS['phpgw']->template->p('phpgw_navbar_end');
+					$GLOBALS['phpgw']->template->p('phpgw_footer');
+					$GLOBALS['phpgw']->template->parse('phpgw_main_body','login_form');
+					$GLOBALS['phpgw']->template->pfp('out','phpgw_main');
+*/	
 				}
-				$GLOBALS['phpgw']->db->disconnect();
-				parse_navbar_end();
-			}
 
-			/* Clean up mcrypt */
-			if (@is_object($GLOBALS['phpgw']->crypto))
-			{
-				$GLOBALS['phpgw']->crypto->cleanup();
-				unset($GLOBALS['phpgw']->crypto);
+				/* Clean up mcrypt */
+				if (@is_object($GLOBALS['phpgw']->crypto))
+				{
+					$GLOBALS['phpgw']->crypto->cleanup();
+					unset($GLOBALS['phpgw']->crypto);
+				}
 			}
+//			echo 'an app is trying to run the phpgw_footer() more than once<br>';
 		}
 
 		function hex2bin($data)

@@ -26,6 +26,7 @@
 
 		/* relative filenames are relative to this pathname */
 		var $root = '';
+		var $oldroot = '';
 
 		/* $varkeys[key] = 'key'; $varvals[key] = 'value'; */
 		var $varkeys = array();
@@ -55,26 +56,6 @@
 			{
 				$this->print = True;
 			}
-			/* This covers loading up the common tpl file and CSS data */
-			if(defined('PHPGW_TEMPLATE_DIR'))
-			{
-				$this->set_root(PHPGW_TEMPLATE_DIR);
-				$this->set_file('common', 'common.tpl');
-			}
-			else
-			{
-				$this->set_root(PHPGW_INCLUDE_ROOT.'/phpgwapi/templates/default');
-				$this->set_file('common', 'common.tpl');
-			}
-
-			/* This covers setting the theme values so that each app doesnt have to */
-			$theme_data = $GLOBALS['phpgw_info']['theme'];
-			unset($theme_data['css']);
-			$this->set_var($theme_data);
-			unset($theme_data);
-			$this->update_css();
-
-			/* Now move on to loading up the requested template set */
 			$this->set_root($root);
 			$this->set_unknowns($unknowns);
 		}
@@ -96,6 +77,23 @@
 			}
 		}
 
+		function update_preload_images()
+		{
+			if(@is_array($GLOBALS['phpgw_info']['flags']['preload_images']))
+			{
+				$preload_image_string = '';
+				reset($GLOBALS['phpgw_info']['flags']['preload_images']);
+				//$css_string = '<STYLE type="text/css">'."\n";
+				while(list($key,$value) = each($GLOBALS['phpgw_info']['flags']['preload_images']))
+				{
+					$css_string .= "\n\t$key { $value } ";
+				}
+				$css_string .= "\n";
+				//$css_string .= '</STYLE>'."\n";
+				$this->set_var('phpgw_css',$css_string);
+			}
+		}
+
 		/* public: setroot(pathname $root)
 		 * root:   new template directory.
 		 */
@@ -104,10 +102,16 @@
 			if (!is_dir($root))
 			{
 				$this->halt("set_root: $root is not a directory.");
-				return false;
+				return False;
 			}
+			$this->oldroot = $this->root;
 			$this->root = $root;
-			return true;
+			return True;
+		}
+
+		function reset_root()
+		{
+			$this->root = $this->oldroot;
 		}
 
 		/* public: set_unknowns(enum $unknowns)
@@ -133,7 +137,7 @@
 				if ($filename == '')
 				{
 					$this->halt("set_file: For handle $handle filename is empty.");
-					return false;
+					return False;
 				}
 				$this->file[$handle] = $this->filename($filename);
 			}
@@ -156,8 +160,9 @@
 			if (!$this->loadfile($parent))
 			{
 				$this->halt("subst: unable to load $parent.");
-				return false;
+				return False;
 			}
+
 			if ($name == '')
 			{
 				$name = $handle;
@@ -165,9 +170,7 @@
 			$str = $this->get_var($parent);
 			$reg = "/<!--\s+BEGIN $handle\s+-->(.*)\n\s*<!--\s+END $handle\s+-->/sm";
 			preg_match_all($reg, $str, $m);
-			$str = preg_replace($reg, '{' . "$name}", $str);
-			$this->set_var($handle, $m[1][0]);
-			$this->set_var($parent, $str);
+			$this->set_var($name, $m[1][0]);
 		}
 
 		/* public: set_var(array $values)
@@ -177,7 +180,7 @@
 		 * varname: name of a variable that is to be defined
 		 * value:   value of that variable
 		 */
-		function set_var($varname, $value = '')
+		function set_var($varname, $value = '', $append=False)
 		{
 			if (!is_array($varname))
 			{
@@ -188,7 +191,15 @@
 						print "scalar: set *$varname* to *$value*<br>\n";
 					}
 					$this->varkeys[$varname] = $this->varname($varname);
-					$this->varvals[$varname] = $value;
+
+					if ($append)
+					{
+						$this->varvals[$varname] = $this->get_var($varname).$value;
+					}
+					else
+					{
+						$this->varvals[$varname] = $value;
+					}
 				}
 			}
 			else
@@ -203,7 +214,16 @@
 							print "array: set *$k* to *$v*<br>\n";
 						}
 						$this->varkeys[$k] = $this->varname($k);
-						$this->varvals[$k] = $v;
+
+						if ($append)
+						{
+							$this->varvals[$k] = $this->get_var($k).$v;
+						}
+						else
+						{
+							$this->varvals[$k] = $v;
+						}
+
 					}
 				}
 			}
@@ -217,7 +237,7 @@
 			if (!$this->loadfile($handle))
 			{
 				$this->halt("subst: unable to load $handle.");
-				return false;
+				return False;
 			}
 
 			$str = $this->get_var($handle);
@@ -235,7 +255,7 @@
 		function psubst($handle)
 		{
 			print $this->subst($handle);
-			return false;
+			return False;
 		}
 
 		/* public: parse(string $target, string $handle, boolean append)
@@ -244,19 +264,12 @@
 		 * handle: handle of template to substitute
 		 * append: append to target handle
 		 */
-		function parse($target, $handle, $append = false)
+		function parse($target, $handle, $append = False)
 		{
 			if (!is_array($handle))
 			{
 				$str = $this->subst($handle);
-				if ($append)
-				{
-					$this->set_var($target, $this->get_var($target) . $str);
-				}
-				else
-				{
-					$this->set_var($target, $str);
-				}
+				$this->set_var($target, $str, $append);
 			}
 			else
 			{
@@ -270,10 +283,10 @@
 			return $str;
 		}
 
-		function pparse($target, $handle, $append = false)
+		function pparse($target, $handle, $append = False)
 		{
 			print $this->parse($target, $handle, $append);
-			return false;
+			return False;
 		}
 
 		/* This is short for finish parse */
@@ -331,14 +344,14 @@
 			if (!$this->loadfile($handle))
 			{
 				$this->halt("get_undefined: unable to load $handle.");
-				return false;
+				return False;
 			}
 
 			preg_match_all("/\{([^}]+)\}/", $this->get_var($handle), $m);
 			$m = $m[1];
 			if (!is_array($m))
 			{
-				return false;
+				return False;
 			}
 			reset($m);
 			while(list($k, $v) = each($m))
@@ -355,7 +368,7 @@
 			}
 			else
 			{
-				return false;
+				return False;
 			}
 		}
 
@@ -464,12 +477,12 @@
 		{
 			if (isset($this->varkeys[$handle]) and !empty($this->varvals[$handle]))
 			{
-				return true;
+				return True;
 			}
 			if (!isset($this->file[$handle]))
 			{
 				$this->halt("loadfile: $handle is not a valid handle.");
-				return false;
+				return False;
 			}
 			$filename = $this->file[$handle];
 
@@ -477,11 +490,11 @@
 			if (empty($str))
 			{
 				$this->halt("loadfile: While loading $handle, $filename does not exist or is empty.");
-				return false;
+				return False;
 			}
 
 			$this->set_var($handle, $str);
-			return true;
+			return True;
 		}
 
 		/***************************************************************************/
@@ -502,7 +515,7 @@
 				echo('<b>Halted.</b>');
 			}
 
-			$GLOBALS['phpgw']->common->phpgw_exit(True);
+			$GLOBALS['phpgw']->common->phpgw_exit();
 		}
 
 		/* public, override: haltmsg($msg)

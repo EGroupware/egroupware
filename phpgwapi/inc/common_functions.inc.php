@@ -340,87 +340,146 @@
 		}
 	}
 
-	function registervar($varname, $valuetype = 'alpha', $posttype = 'post', $allowblank = True)
+	function reg_var($varname, $method = 'any', $valuetype = 'alphanumeric',$default_value='',$register=True)
 	{
-		switch ($posttype)
+		if($method == 'any')
 		{
-			case 'get':
-				$posttype = 'HTTP_GET_VARS';
-				break;
-			case 'cookie':
-				$posttype = 'HTTP_COOKIE_VARS';
-				break;
-			default :
-				$posttype = 'HTTP_POST_VARS';
+			$method = Array('POST','GET','COOKIE','SERVER','GLOBAL','DEFAULT');
 		}
-
-		if (isset($GLOBALS[$posttype][$varname]))
+		elseif(!is_array($method))
 		{
-			if (!is_array($GLOBALS[$posttype][$varname]))
+			$method = Array($method);
+		}
+		$cnt = count($method);
+		for($i=0;$i<$cnt;$i++)
+		{
+
+			switch(strtoupper($method[$i]))
 			{
-				if ($allowblank == True && $GLOBALS[$posttype][$varname] == '')
-				{
-					$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
-					return 'Post';
-				}
-				else
-				{
-					if (sanitize($GLOBALS[$posttype][$varname],$valuetype) == 1)
+				case 'DEFAULT':
+					if($default_value)
 					{
-						$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
-						return 'Post';
+						$value = $default_value;
+						$i = $cnt+1; /* Found what we were looking for, now we end the loop */
+					}
+					break;
+				case 'GLOBAL':
+					if(@isset($GLOBALS[$varname]))
+					{
+						$value = $GLOBALS[$varname];
+						$i = $cnt+1;
+					}
+					break;
+				case 'POST':
+				case 'GET':
+				case 'COOKIE':
+				case 'SERVER':
+					if(phpversion() >= '4.2.0')
+					{
+						$meth = '_'.strtoupper($method[$i]);
 					}
 					else
 					{
-						return False;
+						$meth = 'HTTP_'.strtoupper($method[$i]).'_VARS';
 					}
-				}
-				return False;
+					if(@isset($GLOBALS[$meth][$varname]))
+					{
+						$value = $GLOBALS[$meth][$varname];
+						$i = $cnt+1;
+					}
+					break;
+				default:
+					if(@isset($GLOBALS[strtoupper($method[$i])][$varname]))
+					{
+						$value = $GLOBALS[strtoupper($method[$i])][$varname];
+						$i = $cnt+1;
+					}
+					break;
+			}
+		}
+
+		if (@!isset($value))
+		{
+			$value = $default_value;
+		}
+	
+		if (@!is_array($value))
+		{
+			if ($value == '')
+			{
+				$result = $value;
 			}
 			else
 			{
-				if (is_array($valuetype))
+				if (sanitize($value,$valuetype) == 1)
 				{
-					reset($GLOBALS[$posttype][$varname]);
-					$isvalid = True;
-					while(list($key, $value) = each($GLOBALS[$posttype][$varname]))
-					{
-						if ($allowblank == True && $GLOBALS[$posttype][$varname][$key] == '')
-						{
-						}
-						else
-						{
-							if (sanitize($GLOBALS[$posttype][$varname][$key],$valuetype[$key]) == 1)
-							{
-							}
-							else
-							{
-								$isvalid = False;
-							}
-						}
-					}
-					if ($isvalid)
-					{
-						$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $GLOBALS[$posttype][$varname];
-						return 'Post';
-					}
-					else
-					{
-						return 'Session';
-					}
-					return False;
+					$result = $value;
+				}
+				else
+				{
+					$result = $default_value;
 				}
 			}
-			return False;
-		}
-		elseif (count($GLOBALS[$posttype]) == 0)
-		{
-			return 'Session';
 		}
 		else
 		{
-			return False;
+			reset($value);
+			while(list($k, $v) = each($value))
+			{
+				if ($v == '')
+				{
+					$result[$k] = $v;
+				}
+				else
+				{
+					if (is_array($valuetype))
+					{
+						$vt = $valuetype[$k];
+					}
+					else
+					{
+						$vt = $valuetype;
+					}
+
+					if (sanitize($v,$vt) == 1)
+					{
+						$result[$k] = $v;
+					}
+					else
+					{
+						if (is_array($default_value))
+						{
+							$result[$k] = $default_value[$k];
+						}
+						else
+						{
+							$result[$k] = $default_value;
+						}
+					}
+				}
+			}
 		}
+		if($register)
+		{
+			$GLOBALS['phpgw_info'][$GLOBALS['phpgw_info']['flags']['currentapp']][$varname] = $result;
+		}
+		return $result;
+	}
+
+	/*!
+	 @function get_var
+	 @abstract retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
+	 @author skeeter
+	 @discussion This function is used to retrieve a value from a user defined order of methods. 
+	 @syntax get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
+	 @example $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
+	 @param $variable name
+	 @param $method ordered array of methods to search for supplied variable
+	 @param $default_value (optional)
+	*/
+	function get_var($variable,$method='any',$default_value='')
+	{
+		return reg_var($variable,$method,'any',$default_value,False);
 	}
 
 	/*!
@@ -440,63 +499,6 @@
 			$GLOBALS['phpgw_info']['flags']['included_classes'][$included_class] = True;   
 			include(PHPGW_SERVER_ROOT.'/phpgwapi/inc/class.'.$included_class.'.inc.php');
 		}
-	}
-
-	/*!
-	 @function get_var
-	 @abstract retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
-	 @author skeeter
-	 @discussion This function is used to retrieve a value from a user defined order of methods. 
-	 @syntax get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
-	 @example $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
-	 @param $variable name
-	 @param $method ordered array of methods to search for supplied variable
-	 @param $default_value (optional)
-	*/
-	function get_var($variable,$method,$default_value='')
-	{
-		for($i=0;$i<count($method);$i++)
-		{
-			switch(strtoupper($method[$i]))
-			{
-				case 'DEFAULT':
-					if($default_value)
-					{
-						$var = $default_value;
-					}
-					break;
-				case 'GLOBAL':
-					if(@isset($GLOBALS[$variable]))
-					{
-						$var = $GLOBALS[$variable];
-					}
-					break;
-				case 'POST':
-				case 'GET':
-				case 'COOKIE':
-				case 'SERVER':
-					if(phpversion() >= '4.2.0')
-					{
-						$meth = '_'.strtoupper($method[$i]);
-					}
-					else
-					{
-						$meth = 'HTTP_'.strtoupper($method[$i]).'_VARS';
-					}
-					if(@isset($GLOBALS[$meth][$variable]))
-					{
-						$var = $GLOBALS[$meth][$variable];
-					}
-					break;
-				default:
-					if(@isset($GLOBALS[strtoupper($method[$i])][$variable]))
-					{
-						$var = $GLOBALS[strtoupper($method[$i])][$variable];
-					}
-					break;
-			}
-		}
-		return (@$var?$var:'');
 	}
 
 	/*!

@@ -841,117 +841,109 @@
 		\*************************************************************************/
 		function link($url, $extravars = '')
 		{
-			$kp3 = get_var('kp3',Array('COOKIE','GET'));
+			/* first we process the $url to build the full scriptname */
+			$full_scriptname = True;
 
-			if (! $kp3)
+			$url_firstchar = substr($url ,0,1);
+			if ($url_firstchar == '/' && $GLOBALS['phpgw_info']['server']['webserver_url'] == '/')
 			{
-				$kp3 = $GLOBALS['phpgw_info']['user']['kp3'];
+				$full_scriptname = False;
 			}
 
-			// Explicit hack to work around problems with php running as CGI on windows
-			// please let us know if this doesn't work for you!
-
-			// I am not sure how my changes will affect the following.
-			// Could someone with access to a Windows install check it ? (jengo)
-
-/*			if (! $url && (PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WIN32' || PHP_OS == 'WIN16'))
+			if ($url_firstchar != '/')
 			{
-				$exe = strpos($GLOBALS['PHP_SELF'],'php.exe');
-				if ($exe != false) {
-					$exe += 7; // strlen('php.exe')
-					$url_root = split ('/', $GLOBALS['phpgw_info']['server']['webserver_url']);
-					$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2];
-					$url .= substr($PHP_SELF,$exe,strlen($GLOBALS['PHP_SELF'])-$exe);
+				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				if ($app != 'home' && $app != 'login' && $app != 'logout')
+				{
+					$url = $app.'/'.$url;
 				}
 			}
-*/
-
-			$url = $GLOBALS['phpgw_info']['server']['webserver_url'] . $url;
-
-			// This needs to be tested as well. (jengo)
-
-/*			if (! $url)
-			{
-				$url_root = split ('/', $GLOBALS['phpgw_info']['server']['webserver_url']);
-				// Some hosting providers have their paths screwy.
-				//	 If the value from $PHP_SELF is not what you expect, you can use this to patch it
-				//	 It will need to be adjusted to your specific problem tho.
-				//
-				//$patched_php_self = str_replace('/php4/php/phpgroupware', '/phpgroupware', $GLOBALS['PHP_SELF']);
-				$patched_php_self = $GLOBALS['PHP_SELF'];
-				$url = (strlen($url_root[0])? $url_root[0].'//':'') . $url_root[2] . $patched_php_self;
-			}
-*/
-
-			// build the extravars string from a array
 			
+			if($full_scriptname)
+			{
+				$webserver_url_count = strlen($GLOBALS['phpgw_info']['server']['webserver_url'])-1;
+				if(substr($GLOBALS['phpgw_info']['server']['webserver_url'] ,$webserver_url_count,1) != '/' && $url_firstchar != '/')
+				{
+					$url = $GLOBALS['phpgw_info']['server']['webserver_url'] .'/'. $url;
+				}
+				else
+				{
+					$url = $GLOBALS['phpgw_info']['server']['webserver_url'] . $url;
+				}
+			}
+
+			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+			{
+				if(substr($url ,0,4) != 'http')
+				{
+					$url = 'https://'.$GLOBALS['phpgw_info']['server']['hostname'].$url;
+				}
+				else
+				{
+					$url = str_replace ( 'http:', 'https:', $url);
+				}
+			}
+
+			/* Now we process the extravars into a proper url format */
+			/* if its not an array, then we turn it into one */
+			/* We do this to help prevent any duplicates from being sent. */
+			if (!is_array($extravars) && $extravars != '')
+			{
+				$a = explode('&', $extravars);
+				$i = 0;
+				while ($i < count($a))
+				{
+			    $b = split('=', $a[$i]);
+					$new_extravars[$b[0]] = $b[1];
+			   $i++;
+				}
+				$extravars = $new_extravars;
+				unset($new_extravars);
+			}
+
+			/* if using frames we make sure there is a framepart */
+			if(@defined('PHPGW_USE_FRAMES') && PHPGW_USE_FRAMES)
+			{
+				if (!isset($extravars['framepart']))
+				{
+					$extravars['framepart']='body';
+				}
+			}
+			
+			/* add session params if not using cookies */
+			if (@!$GLOBALS['phpgw_info']['server']['usecookies'])
+			{
+				$kp3 = get_var('kp3',Array('COOKIE','GET'));
+				if (!$kp3)
+				{
+					$kp3 = $GLOBALS['phpgw_info']['user']['kp3'];
+				}
+
+				$extravars['sessionid'] = @$GLOBALS['phpgw_info']['user']['sessionid'];
+				$extravars['kp3'] = $kp3;
+				$extravars['domain'] = @$GLOBALS['phpgw_info']['user']['domain'];
+			}
+
+			/* if we end up with any extravars then we generate the url friendly string */
+			/* and return the result */
 			if (is_array($extravars))
 			{
+				reset($extravars);
 				while(list($key,$value) = each($extravars))
 				{
 					if (!empty($new_extravars))
 					{
 						$new_extravars .= '&';
 					}
-					$new_extravars .= "$key=$value";
+					$new_extravars .= $key.'='.htmlentities(urlencode($value));
 				}
-				// This needs to be explictly reset to a string variable type for PHP3
+				/* This needs to be explictly reset to a string variable type for PHP3 */
 				settype($extravars,'string');
 				$extravars = $new_extravars;
+				unset($new_extravars);
+				return $url .= '?' . $extravars;
 			}
-
-			if (isset($GLOBALS['phpgw_info']['server']['usecookies']) && $GLOBALS['phpgw_info']['server']['usecookies'])
-			{
-				if ($extravars)
-				{
-					$url .= '?' . $extravars;
-				}
-			}
-			else
-			{
-				$sessionID  = 'sessionid=' . @$GLOBALS['phpgw_info']['user']['sessionid'];
-				$sessionID .= '&kp3=' . $kp3;
-				$sessionID .= '&domain=' . @$GLOBALS['phpgw_info']['user']['domain'];
-				// This doesn't belong in the API.
-				// Its up to the app to pass this value. (jengo)
-				// Putting it into the app requires a massive number of updates in email app. 
-				// Until that happens this needs to stay here (seek3r)
-				if (isset($GLOBALS['phpgw_info']['flags']['newsmode']) && 
-					$GLOBALS['phpgw_info']['flags']['newsmode'])
-				{
-					$url .= '&newsmode=on';
-				}
-
-				if ($extravars)
-				{
-					$url .= '?' . $extravars . '&' . $sessionID;
-				}
-				else
-				{
-					$url .= '?' . $sessionID;
-				}
-			}
-
-/*			$url = str_replace('/?', '/index.php?', $url);
-			$webserver_url_count = strlen($GLOBALS['phpgw_info']['server']['webserver_url']);
-			$slash_check = strtolower(substr($url ,0,1));
-			if (substr($url ,0,$webserver_url_count) != $GLOBALS['phpgw_info']['server']['webserver_url'])
-			{
-				$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
-				if ($slash_check == '/')
-				{
-					$url = $GLOBALS['phpgw_info']['server']['webserver_url'] . $url;
-				}
-				elseif ($app == 'home' || $app == 'logout' || $app == 'login')
-				{
-					$url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$url; 
-				}
-				else
-				{
-					$url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$app.'/'.$url; 
-				}
-			} */
-			//echo "$url\n";
+			/* if no extravars then we return the cleaned up url/scriptname */
 			return $url;
 		}
 	}

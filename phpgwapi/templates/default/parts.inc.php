@@ -11,17 +11,16 @@
 
   /* $Id$ */
 
-  function parse_navbar($force = False)
-  {
-		$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-		$tpl->set_unknowns('remove');
+	$GLOBALS['phpgw']->template->set_var('phpgw_top_height','10%');
+	$GLOBALS['phpgw']->template->set_var('phpgw_left_width','0');
+	$GLOBALS['phpgw']->template->set_var('phpgw_right_width','0');
+	$GLOBALS['phpgw']->template->set_var('phpgw_bottom_height','5%');
 
-		$tpl->set_file(
-			array(
-				'navbar'		=> 'navbar.tpl',
-				'navbar_app'	=> 'navbar_app.tpl'
-			)
-		);
+	function parse_toppart($output)
+  {
+		$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
+		$GLOBALS['phpgw']->template->set_block('parts','top_part');
+		$GLOBALS['phpgw']->template->set_block('parts','top_part_app');
 
 		$var['navbar_color'] = $GLOBALS['phpgw_info']['theme']['navbar_bg'];
 
@@ -59,8 +58,8 @@
    
 				$var['value'] = '<a href="' . $app[1]['url'] . '"' . $target . '>' . $title . '</a>';
 				$var['align'] = 'center';
-				$tpl->set_var($var);
-				$tpl->parse('applications','navbar_app',True);
+				$GLOBALS['phpgw']->template->set_var($var);
+				$GLOBALS['phpgw']->template->parse('applications','top_part_app',True);
 			}
 		}
 		if ($GLOBALS['phpgw_info']['user']['preferences']['common']['navbar_format'] == 'text')
@@ -68,11 +67,11 @@
 			$var['navbar_color'] = $GLOBALS['phpgw_info']['theme']['bg_color'];
 			$var['align'] = 'right';
 			$var['value'] = $GLOBALS['phpgw']->common->create_tabs($tabs,$selected,-1);
-			$tpl->set_var($var);
-			$tpl->parse('applications','navbar_app',True);
+			$GLOBALS['phpgw']->template->set_var($var);
+			$GLOBALS['phpgw']->template->parse('applications','top_part_app',True);
 		}
 
-		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
+		if	 ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'top')
 		{
 			$var['powered_by'] = lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']);
 		}
@@ -109,30 +108,26 @@
 		{
 			$var['messages'] = $api_messages . '<br>' . checkcode($cd);
 		}
-		$tpl->set_var($var);
-		$tpl->pfp('out','navbar');
-		return;
+		$GLOBALS['phpgw']->template->set_var($var);
+		$GLOBALS['phpgw']->template->fp($output,'top_part');
 	}
 
-	function parse_navbar_end()
+	function parse_bottompart($output)
 	{
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
 		{
-			$tpl = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$tpl->set_unknowns('remove');
-   
-			$tpl->set_file(
-				array(
-					'footer' => 'footer.tpl'
-				)
-			);
+			$GLOBALS['phpgw']->template->set_file('parts','parts.tpl');
+			$GLOBALS['phpgw']->template->set_block('parts','bottom_part');
 			$var = Array(
-				'table_bg_color'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'bg_color' => $GLOBALS['phpgw_info']['theme']['bg_color'],
 				'msg'			=> "<p><p>\n".lang('Powered by phpGroupWare version x',$GLOBALS['phpgw_info']['server']['versions']['phpgwapi']),
 				'version'		=> $GLOBALS['phpgw_info']['server']['versions']['phpgwapi']
 			);
-			$tpl->set_var($var);
-			$GLOBALS['phpgw']->hooks->process('navbar_end');
-			$tpl->pfp('out','footer');
+			$GLOBALS['phpgw']->template->set_var($var);
+			$GLOBALS['phpgw']->template->fp($output,'bottom_part');
+		}
+		else
+		{
+			$GLOBALS['phpgw']->template->set_var($output,'');
 		}
 	}

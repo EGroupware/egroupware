@@ -63,5 +63,5 @@
 		Setcookie('domain');
 	}
 
-	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=1');
+	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?code=1',True);
 ?>

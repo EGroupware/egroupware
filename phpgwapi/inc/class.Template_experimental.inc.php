@@ -440,8 +440,16 @@
 			}
 			if (!isset($this->file[$handle]))
 			{
-				$this->halt("loadfile: $handle is not a valid handle.");
-				return false;
+				if(isset($this->varvals[$handle])
+				{
+					return True;
+				}
+				else
+				{
+					$this->halt("loadfile: $handle is not a valid handle.");
+					return false;
+				}
+					
 			}
 			$filename = $this->file[$handle];
 

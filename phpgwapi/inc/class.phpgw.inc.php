@@ -116,12 +116,23 @@
 		function redirect($url = '')
 		{
 			$iis = @strpos($GLOBALS['HTTP_ENV_VARS']['SERVER_SOFTWARE'], 'IIS', 0);
-			
-			if ( !$url )
+
+			if (!$url)
 			{
 				$url = $GLOBALS['PHP_SELF'];
 			}
-			if ( $iis )
+			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+			{
+				if(substr($url ,0,4) != 'http')
+				{
+					$url = 'https://'.$GLOBALS['phpgw_info']['server']['hostname'].$url;
+				}
+				else
+				{
+					$url = str_replace ( 'http:', 'https:', $url);
+				}
+			}
+			if ($iis)
 			{
 				echo "\n<HTML>\n<HEAD>\n<TITLE>Redirecting to $url</TITLE>";
 				echo "\n<META HTTP-EQUIV=REFRESH CONTENT=\"0; URL=$url\">";

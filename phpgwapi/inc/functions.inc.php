@@ -79,11 +79,8 @@
 	/* Make sure the developer is following the rules. */
 	if (!isset($GLOBALS['phpgw_info']['flags']['currentapp']))
 	{
-		/* This object does not exist yet. */
-	/*	$GLOBALS['phpgw']->log->write(array('text'=>'W-MissingFlags, currentapp flag not set'));*/
-
-		echo '<b>!!! YOU DO NOT HAVE YOUR $GLOBALS[\'phpgw_info\'][\'flags\'][\'currentapp\'] SET !!!';
-		echo '<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';
+		$msgstring =  '<b>!!! YOU DO NOT HAVE YOUR $GLOBALS[\'phpgw_info\'][\'flags\'][\'currentapp\'] SET !!!<br>!!! PLEASE CORRECT THIS SITUATION !!!</b>';
+		$GLOBALS['phpgw_info']['flags']['msgbox_data'][$msgstring]=False;
 	}
 
 	magic_quotes_runtime(false);
@@ -232,11 +229,6 @@
 	}
 	unset($cache_query);
 	unset($server_info_cache);
-	if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && !$HTTPS)
-	{
-		Header('Location: https://' . $GLOBALS['phpgw_info']['server']['hostname'] . $GLOBALS['phpgw_info']['server']['webserver_url'] . $REQUEST_URI);
-		exit;
-	}
 
 	/************************************************************************\
 	* Required classes                                                       *
@@ -282,6 +274,11 @@
 	{
 		if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'login')
 		{
+			if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+			{
+				Header('Location: https://'.$GLOBALS['phpgw_info']['server']['hostname'].$GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI']);
+				exit;
+			}
 			if (@$login != '')
 			{
 				$login_array = explode("@",$login);
@@ -301,13 +298,15 @@
 	{
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
-			Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','cd=10')));
+			Header('Location: ' . $GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->session->link('/login.php','code=10')));
 			exit;
 		}
 
 		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
 
 		/* A few hacker resistant constants that will be used throught the program */
+
+$GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] = 'default';
 		define('PHPGW_TEMPLATE_DIR', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir', 'phpgwapi'));
 		define('PHPGW_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_path', 'phpgwapi'));
 		define('PHPGW_IMAGES_FILEDIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir', 'phpgwapi'));
@@ -316,6 +315,105 @@
 		define('PHPGW_APP_TPL', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir'));
 		define('PHPGW_IMAGES', ExecMethod('phpgwapi.phpgw.common.get_image_path'));
 		define('PHPGW_APP_IMAGES_DIR', ExecMethod('phpgwapi.phpgw.common.get_image_dir'));
+
+		/*************************************************************************\
+		* These lines load up the templates class and set some default values     *
+		\*************************************************************************/
+		$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
+		$GLOBALS['phpgw']->template->set_file('common', 'common.tpl');
+		$GLOBALS['phpgw']->template->set_file('phpgw', 'phpgw.tpl');
+		$GLOBALS['phpgw']->template->set_file('msgbox', 'msgbox.tpl');
+		
+		/* This will bring in the template sets parts definitions */
+		if (file_exists(PHPGW_TEMPLATE_DIR . '/parts.inc.php'))
+		{
+			include(PHPGW_TEMPLATE_DIR . '/parts.inc.php');
+		}
+		$val = $GLOBALS['phpgw']->template->get_var('phpgw_top_height');
+		if (empty($val))
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_top_height','10');
+		}
+		$val = $GLOBALS['phpgw']->template->get_var('phpgw_left_width');
+		if (empty($val))
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_left_width','10');
+		}
+		$val = $GLOBALS['phpgw']->template->get_var('phpgw_right_width');
+		if (empty($val))
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_right_width','10');
+		}
+		$val = $GLOBALS['phpgw']->template->get_var('phpgw_bottom_height');
+		if (empty($val))
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_bottom_height','10');
+		}
+
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_charset',lang('charset'));
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_description','phpGroupWare');
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_keywords','phpGroupWare');
+
+		if(@isset($GLOBALS['phpgw_info']['server']['enforce_ssl']) && $GLOBALS['phpgw_info']['server']['enforce_ssl'] && !$GLOBALS['HTTP_SERVER_VARS']['HTTPS'])
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_head_base','https://'.$GLOBALS['phpgw_info']['server']['hostname'].$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
+		}
+		else
+		{
+			$GLOBALS['phpgw']->template->set_var('phpgw_head_base',$GLOBALS['phpgw_info']['server']['webserver_url'].'/');
+		}
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_browser_ico','favicon.ico');
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_website_title', $GLOBALS['phpgw_info']['server']['site_title']);
+
+		/*************************************************************************\
+		* If they are using frames, we need to set some variables                 *
+		\*************************************************************************/
+		if(@isset($GLOBALS['HTTP_GET_VARS']['framepart']) && 
+			(	$GLOBALS['HTTP_GET_VARS']['framepart'] == 'unsupported' ||
+				$GLOBALS['HTTP_GET_VARS']['framepart'] == 'top' ||
+				$GLOBALS['HTTP_GET_VARS']['framepart'] == 'left' ||
+				$GLOBALS['HTTP_GET_VARS']['framepart'] == 'body' ||
+				$GLOBALS['HTTP_GET_VARS']['framepart'] == 'right' ||
+				$GLOBALS['HTTP_GET_VARS']['framepart'] == 'bottom'
+			))
+		{
+			define('PHPGW_FRAME_PART',$GLOBALS['HTTP_GET_VARS']['framepart']);
+		}
+		else
+		{
+			define('PHPGW_FRAME_PART','start');
+		}
+
+//$GLOBALS['phpgw_info']['server']['useframes'] = 'always';		
+		if(((isset($GLOBALS['phpgw_info']['user']['preferences']['common']['useframes']) &&	
+			$GLOBALS['phpgw_info']['user']['preferences']['common']['useframes'] && 
+			$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') || 
+			$GLOBALS['phpgw_info']['server']['useframes'] == 'always') &&	
+			PHPGW_FRAME_PART != 'unsupported')
+		{
+			define('PHPGW_USE_FRAMES',True);
+			define('PHPGW_NAVBAR_TARGET','body');
+			if (PHPGW_FRAME_PART == 'start')
+			{
+				$GLOBALS['phpgw']->template->set_var('phpgw_top_link',$GLOBALS['phpgw']->session->link('home.php','framepart=top'));
+				$GLOBALS['phpgw']->template->set_var('phpgw_right_link',$GLOBALS['phpgw']->session->link('home.php','framepart=right'));
+				$GLOBALS['phpgw']->template->set_var('phpgw_body_link',$GLOBALS['phpgw']->session->link('home.php','framepart=body'));
+				$GLOBALS['phpgw']->template->set_var('phpgw_left_link',$GLOBALS['phpgw']->session->link('home.php','framepart=left'));
+				$GLOBALS['phpgw']->template->set_var('phpgw_bottom_link',$GLOBALS['phpgw']->session->link('home.php','framepart=bottom'));
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_frames','phpgw_main');
+			}
+			else
+			{
+				$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_basic','phpgw_main');
+			}
+		}
+		else
+		{
+			define('PHPGW_USE_FRAMES',False);
+			define('PHPGW_NAVBAR_TARGET','_self');
+			$GLOBALS['phpgw']->template->set_block('phpgw','phpgw_main_tables','phpgw_main');
+		}
+		$GLOBALS['phpgw']->template->set_var('phpgw_head_target',PHPGW_NAVBAR_TARGET);
 
 		/*	define('PHPGW_APP_IMAGES_DIR', $GLOBALS['phpgw']->common->get_image_dir()); */
 
@@ -394,8 +492,6 @@
 			/* complety back screen and not know whats going on                */
 			echo '<body bgcolor="FFFFFF">';
 			$GLOBALS['phpgw']->log->write(array('text'=>'F-Abort, No themes found'));
-
-			exit;
 		}
 
 		if (isset($GLOBALS['phpgw_info']['theme']['hovlink'])
@@ -417,54 +513,141 @@
 		{
 			include(PHPGW_APP_TPL . '/css.inc.php');
 		}
-		
-		unset($theme_to_load);
+
+		/* This covers setting the theme values so that each app doesnt have to */
+		$theme_data = $GLOBALS['phpgw_info']['theme'];
+		unset($theme_data['css']);
+		$GLOBALS['phpgw']->template->set_var($theme_data);
+		unset($theme_data);
+		$GLOBALS['phpgw']->template->update_css();
+
+//		if(!PHPGW_USE_FRAMES || (PHPGW_USE_FRAMES && PHPGW_NAVBAR_TARGET != 'body'))
+//		{
+			$GLOBALS['phpgw']->common->navbar();
+//		}
 
 		/*************************************************************************\
-		* These lines load up the templates class                                 *
+		* load up top part if appropriate                                         *
 		\*************************************************************************/
-		if(!@$GLOBALS['phpgw_info']['flags']['disable_Template_class'])
+		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'top')
 		{
-			$GLOBALS['phpgw']->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-		}
-
-		/*************************************************************************\
-		* Verify that the users session is still active otherwise kick them out   *
-		\*************************************************************************/
-		if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences' &&
-			$GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
-		{
-			// This will need to use ACL in the future
-			if (! $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']] ||
-				(@$GLOBALS['phpgw_info']['flags']['admin_only'] &&
-				! $GLOBALS['phpgw_info']['user']['apps']['admin']))
+			if(!PHPGW_USE_FRAMES)
 			{
-				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
-
-				$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
-				$GLOBALS['phpgw']->common->phpgw_header();
-				$GLOBALS['phpgw']->common->phpgw_exit(True);
+				$output = 'phpgw_top';
+			}
+			else
+			{
+				$output = 'phpgw_body';
+			}
+			if(function_exists('parse_toppart'))
+			{
+				parse_toppart($output);
+			}
+			if(PHPGW_USE_FRAMES)
+			{
+				$GLOBALS['phpgw']->common->phpgw_footer();
 			}
 		}
-
 		/*************************************************************************\
-		* Load the header unless the developer turns it off                       *
+		* load up left part if appropriate                                         *
 		\*************************************************************************/
-		$GLOBALS['phpgw']->common->phpgw_header(False, False);
-
-		/*************************************************************************\
-		* Load the app include files if the exists                                *
-		\*************************************************************************/
-		/* Then the include file */
-		if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)
+		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'left')
 		{
-			include(PHPGW_APP_INC . '/functions.inc.php');
+			if(!PHPGW_USE_FRAMES)
+			{
+				$output = 'phpgw_left';
+			}
+			else
+			{
+				$output = 'phpgw_body';
+			}
+			if(function_exists('parse_leftpart'))
+			{
+				parse_leftpart($output);
+			}
+			if(PHPGW_USE_FRAMES)
+			{
+				$GLOBALS['phpgw']->common->phpgw_footer();
+			}
 		}
-
-		if (!@$GLOBALS['phpgw_info']['flags']['noappheader'])
+		/*************************************************************************\
+		* load up right part if appropriate                                         *
+		\*************************************************************************/
+		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'right')
 		{
-			$GLOBALS['phpgw']->common->phpgw_appheader();
+			if(!PHPGW_USE_FRAMES)
+			{
+				$output = 'phpgw_right';
+			}
+			else
+			{
+				$output = 'phpgw_body';
+			}
+			if(function_exists('parse_rightpart'))
+			{
+				parse_rightpart($output);
+			}
+			if(PHPGW_USE_FRAMES)
+			{
+				$GLOBALS['phpgw']->common->phpgw_footer();
+			}
+		}
+		/*************************************************************************\
+		* load up bottom part if appropriate                                         *
+		\*************************************************************************/
+		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'bottom')
+		{
+			if(!PHPGW_USE_FRAMES)
+			{
+				$output = 'phpgw_bottom';
+			}
+			else
+			{
+				$output = 'phpgw_body';
+			}
+			if(function_exists('parse_bottompart'))
+			{
+				parse_bottompart($output);
+			}
+			if(PHPGW_USE_FRAMES)
+			{
+//				$GLOBALS['phpgw']->common->phpgw_footer();
+			}
+		}
+		
+		/*************************************************************************\
+		* load up body/appspace if appropriate                                         *
+		\*************************************************************************/
+		if(!PHPGW_USE_FRAMES || PHPGW_FRAME_PART == 'body')
+		{
+			/* Verify that user has rights to the currentapp */
+			$continue_app_data = True;
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
+				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'preferences' &&
+				$GLOBALS['phpgw_info']['flags']['currentapp'] != 'about')
+			{
+				// This will need to use ACL in the future
+				if (! $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['flags']['currentapp']] ||
+					(@$GLOBALS['phpgw_info']['flags']['admin_only'] &&
+					! $GLOBALS['phpgw_info']['user']['apps']['admin']))
+				{
+					$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
+					$GLOBALS['phpgw_info']['flags']['msgbox_data']['Access not permitted']=False;
+					$continue_app_data = False;
+					$GLOBALS['phpgw']->template->set_var('phpgw_body',"user has no rights to this app!!!<br>\n");
+					//$GLOBALS['phpgw']->common->phpgw_display();
+					//$GLOBALS['phpgw']->common->phpgw_exit(True);
+				}
+			}
+			if($continue_app_data)
+			{
+				$GLOBALS['phpgw']->template->set_root(PHPGW_APP_TPL);
+				if (! preg_match ("/phpgwapi/i", PHPGW_APP_INC) && file_exists(PHPGW_APP_INC . '/functions.inc.php') && !MENUACTION)
+				{
+					include(PHPGW_APP_INC . '/functions.inc.php');
+				}
+			}
 		}
 	}
+
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
