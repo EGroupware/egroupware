@@ -11,9 +11,12 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home",
+                               "noapi" => True);
   include("./inc/functions.inc.php");
   include("../header.inc.php");
+  include($phpgw_info["server"]["include_root"] . "/phpgwapi/phpgw_common.inc.php");
+  $common = new common;
 
   // Authorize the user to use setup app and load the database
   // Does not return unless user is authorized
@@ -33,7 +36,12 @@
 
   if ($submit) {
     @$db->query("delete from config");
-    while ($newsetting = each($newsettings)) {
+    $phpgw_info["server"] = $newsettings;
+    //$config_string = addslashes(serialize($t_array));
+
+    $db->query("insert into config values ('" . addslashes(serialize($newsettings)) . "')",__LINE__,__FILE__);
+
+/*    while ($newsetting = each($newsettings)) {
    	  if ($newsetting[0] == "nntp_server") {
  	      $db->query("select config_value FROM config WHERE config_name='nntp_server'");
 	      if ($db->num_rows()) {
@@ -46,7 +54,7 @@
    	  }
       $db->query("insert into config (config_name, config_value) values ('" . addslashes($newsetting[0])
         . "','" . addslashes($newsetting[1]) . "')");
-    }
+    } */
     if ($newsettings["auth_type"] == "ldap") {
       Header("Location: ldap.php");
       exit;
@@ -62,9 +70,12 @@
   }
 
   @$db->query("select * from config");
-  while (@$db->next_record()) {
-    $current_config[$db->f("config_name")] = $db->f("config_value");
-  }
+  @$db->next_record();
+  $current_config = unserialize($db->f(0));
+ // $current_config = $phpgw_info["server"];
+
+//    $current_config[$db->f("config_name")] = $db->f("config_value");
+//  }
 
   if ($current_config["files_dir"] == "/path/to/dir/phpgroupware/files") {
      $current_config["files_dir"] = $phpgw_info["server"]["server_root"] . "/files";

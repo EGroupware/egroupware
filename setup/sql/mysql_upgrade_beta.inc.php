@@ -732,8 +732,11 @@
       if ($currentver == "0.9.7") {
         // upgrade code starts here
 
+        $db->query("drop table config");
+        $db->query("CREATE TABLE config ( config_string   blob )");
+        echo "<b>Note: You will need to re-submit your config data.</b>";
         // upgrade code ends here
-        $currentver = "0.9.8pre1";
+        $currentver = "0.9.8pre2";
         update_version_table();
       }
 /*
