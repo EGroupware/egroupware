@@ -33,7 +33,7 @@
 			);
 			$this->widget2xul = array(	// how to translate widget-names and widget-spec. attr.
 				'label' => array(
-					'.name' => 'label',
+					'.name' => 'description',
 					'label' => 'value'
 				),
 				'text' => array(
@@ -61,10 +61,18 @@
 				'template' => array(
 					'.name' => 'grid',
 					'size'  => 'content'
+				),
+				'image'   => array(
+					'.name' => 'image',
+					'label' => 'src'
+				),
+				'tab' => array(
+					'.name' => 'tabbox,tabs,tabpanels'
 				)
 			);
 			$this->xul2widget = array(
-				'menupopup' => 'select'
+				'menupopup' => 'select',
+				'description' => 'label'
 			);
 		}
 
@@ -143,9 +151,14 @@
 					}
 					$widgetattr2xul = isset($this->widget2xul[$type]) ? $this->widget2xul[$type] : array();
 					$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
-					list($parent,$child) = explode(',',$type);
+					list($parent,$child,$child2) = explode(',',$type);
 					$widget = new xmlnode($child ? $child : $parent);
-
+					if ($child2)
+					{
+						$child2 = new xmlnode($child2);
+						$child  = $widget;
+						$widget = new xmlnode($parent);
+					}
 					if (isset($widgetattr2xul['.set']))	// set default-attr for type
 					{
 						$attrs = explode(',',$widgetattr2xul[1]);
@@ -153,6 +166,23 @@
 						{
 							list($attr,$val) = explode('=',$attr);
 							$widget->set_attribute($attr,$val);
+						}
+					}
+					if ($parent == 'tabbox')
+					{
+						$labels = explode('|',$cell['label']);  unset($cell['label']);
+						$helps  = explode('|',$cell['help']);   unset($cell['help']);
+						$names  = explode('|',$cell['name']);   unset($cell['name']);
+						for ($n = 0; $n < count($labels); ++$n)
+						{
+							$tab = new xmlnode('tab');
+							$tab->set_attribute('label',$labels[$n]);
+							$tab->set_attribute('statustext',$helps[$n]);
+							$child->add_node($tab);
+
+							$grid = new xmlnode('grid');
+							$grid->set_attribute('id',$names[$n]);
+							$child2->add_node($grid);
 						}
 					}
 					while (list($attr,$val) = each($cell))
@@ -171,7 +201,7 @@
 						}
 						$this->set_attributes($widget,$attr,$val,&$spanned);
 					}
-					if ($child)
+					if ($child && !$child2)
 					{
 						$parent = new xmlnode($parent);
 						$parent->add_node($widget);
@@ -179,6 +209,11 @@
 					}
 					else
 					{
+						if ($child2)
+						{
+							$widget->add_node($child);
+							$widget->add_node($child2);
+						}
 						$xul_row->add_node($widget);
 					}
 				}
@@ -236,7 +271,7 @@
 				{
 					$attr['name'] = $attr['id']; unset($attr['id']);
 				}
-				if ($tag == 'grid' && $type == 'complete')
+				if ($tag == 'grid' && $type == 'complete' && !is_array($tab_attr))
 				{
 					$tag = 'template';
 				}
@@ -251,6 +286,11 @@
 				switch ($tag)
 				{
 					case 'grid':
+						if ($type != 'close' && is_array($tab_attr))
+						{
+							$tab_names[] = $attr['name'];
+							break;
+						}
 						if ($node['level'] > 2)	// level 1 is the overlay
 						{
 							return "Can't import nested $node[tag]'s !!!";
@@ -291,7 +331,41 @@
 						$etempl->data[0]["h$r"] = $attr['height'];
 						break;
 					case 'styles':
-						$etempl->style = $node['value'];
+						$etempl->style = trim($node['value']);
+						break;
+					case 'tabbox':
+						if ($type == 'open')
+						{
+							$tab_labels = $tab_helps = $tab_names = array();
+							$tab_attr = $attr;
+						}
+						else
+						{
+							$tab_attr['type'] = 'tab';
+							$tab_attr['label'] = implode('|',$tab_labels);
+							$tab_attr['name'] = implode('|',$tab_names);
+							$tab_attr['help'] = implode('|',$tab_helps);
+							$spanned = $tab_attr['span'] == 'all' ? $etempl->cols - $col : $tab_attr['span'];
+							$tab_attr['span'] .= $tab_attr['class'] ? ','.$tab_attr['class'] : '';
+							unset($tab_attr['class']);
+							$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $tab_attr;
+							unset($tab_attr);
+
+							while (--$spanned > 0)
+							{
+								$etempl->data[$etempl->rows][$etempl->num2chrs($col++)] = $etempl->empty_cell();
+							}
+						}
+						break;
+					case 'tabs':
+					case 'tabpanels':
+						break;
+					case 'tab':
+						if ($type != 'close')
+						{
+							$tab_labels[] = $attr['label'];
+							$tab_helps[]  = $attr['statustext'];
+						}
 						break;
 					case 'textbox':
 						if ($attr['multiline'])
@@ -317,13 +391,17 @@
 					default:
 						switch ($tag)
 						{
-							case 'label':
+							case 'description':
 								$attr['label'] = $attr['value'];
 								unset($attr['value']);
 								break;
 							case 'template':
 								$attr['size'] = $attr['content'];
 								unset($attr['content']);
+								break;
+							case 'image':
+								$attr['label'] = $attr['src'];
+								unset($attr['src']);
 								break;
 						}
 						$attr['help'] = $attr['statustext']; unset($attr['statustext']);
