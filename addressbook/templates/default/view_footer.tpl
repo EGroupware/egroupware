@@ -1,5 +1,4 @@
 <!-- BEGIN view_footer.tpl -->
-{columns}
   <tr>
     <td colspan="4">&nbsp;</td>
   </tr>
@@ -9,7 +8,7 @@
   </tr>
   <tr>
     <td><b>{lang_access}</b></td>
-    <td>{access_check}</b>
+    <td>{access}</b>
     </td>
   </tr>
   <tr>
