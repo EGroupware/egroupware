@@ -188,7 +188,8 @@
 				}
 				else // import
 				{
-					$oProc = CreateObject('phpgwapi.schema_proc',$GLOBALS['phpgw_info']['server']['db_type']);
+					$schema_app = $this->editor->stable ? 'etemplate' : 'phpgwapi';	// this is for 0.9.14
+					$oProc = CreateObject($schema_app.'.schema_proc',$GLOBALS['phpgw_info']['server']['db_type']);
 					$oProc->m_odb = $GLOBALS['phpgw']->db;
 					$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
 
