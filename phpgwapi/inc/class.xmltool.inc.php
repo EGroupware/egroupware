@@ -2,6 +2,7 @@
 	function var2xml($name, $data)
 	{
 		$doc = new xmltool();
+		$doc->indentstring = '';
 		return $doc->import_var($name,$data,True,True);
 	}
 
@@ -18,7 +19,7 @@
 		/* for nodes */
 		var $attributes = Array();
 		var $comments = Array();
-		var $indentstring = "  ";
+		var $indentstring = "\t";
 		
 		/* start the class as either a root or a node */
 		function xmltool ($node_type = 'root', $name='')
@@ -97,7 +98,7 @@
 			}
 		}
 
-		function get_node ($name = '')
+		function get_node ($name = '')	// what is that function doing: NOTHING !!!
 		{
 			switch	($this->data_type)
 			{
@@ -478,7 +479,7 @@
 					reset($this->attributes);
 					while(list($key,$val) = each ($this->attributes))
 					{
-						$result .= ' '.$key.'="'.$val.'"';
+						$result .= ' '.$key.'="'.htmlspecialchars($val).'"';
 					}
 				}
 
@@ -500,19 +501,19 @@
 								break;
 							}
 							
-							if(preg_match("(&|<)", $this->data))
+							/*if(preg_match("(&|<)", $this->data))	// this is unnecessary with htmlspecialchars($this->data)
 							{
 								$result .= '<![CDATA['.$this->data.']]>';
 								$endtag_indent = '';		
 							}
-							elseif(strlen($this->data) > 30)
+							else*/if(strlen($this->data) > 30 && !empty($this->indentstring))
 							{
-								$result .= "\n".$indentstring.$this->indentstring.$this->data."\n";
+								$result .= "\n".$indentstring.$this->indentstring.htmlspecialchars($this->data)."\n";
 								$endtag_indent = $indentstring;
 							}
 							else
 							{
-								$result .= $this->data;
+								$result .= htmlspecialchars($this->data);
 								$endtag_indent = '';
 							}
 							break;
@@ -562,6 +563,28 @@
 				}
 				return $result;
 			}
+		}
+	}
+
+	class xmlnode extends xmltool
+	{
+		function xmlnode($name)
+		{
+			$this->xmltool('node',$name);
+		}
+	}
+
+	class xmldoc extends xmltool
+	{
+		function xmldoc($version = '1.0')
+		{
+			$this->xmltool('root');
+			$this->set_version($version);
+		}
+
+		function add_root($root_node)
+		{
+			return $this->add_node($root_node);
 		}
 	}
 ?>
