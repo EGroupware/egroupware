@@ -891,6 +891,7 @@
 			$GLOBALS['phpgw_info']['navbar']['home']['icon']  = $this->image('phpgwapi','home.gif');
 
 			reset($GLOBALS['phpgw_info']['user']['apps']);
+			asort($GLOBALS['phpgw_info']['user']['apps']);
 			while ($permission = each($GLOBALS['phpgw_info']['user']['apps']))
 			{
 				if (is_long($permission[0]))
