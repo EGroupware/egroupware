@@ -1,24 +1,30 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 0.9.99.011
-%define packaging 1
-%define httpdroot  /var/www/html
+%define version 0.9.99.013
+%define packaging 2
+%define epoch 0
+%define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
-Summary: eGroupWare is a web-based groupware suite written in php. 
 Name: %{packagename}
 Version: %{version}
 Release: %{packaging}
-Copyright: GPL
+Epoch: %{epoch}
+Summary: eGroupWare is a web-based groupware suite written in php.
+                                                                                                                             
 Group: Web/Database
-URL: http://www.egroupware.org/
-Source: eGroupWare-%{version}-%{packaging}.tar.bz2
+License: GPL/LGPL
+URL: http://www.phpgroupware.org/
+Source0:  http://download.sourceforge.net/egroupware/eGroupWare-%{version}-%{packaging}.tar.bz2
 BuildRoot: /tmp/%{packagename}-buildroot
+Requires: php >= 4.0.6
+                                                                                                                             
 Prefix: %{httpdroot}
-Vendor: eGroupWare
-Packager: eGroupWare <r.jung@creativix.net>
 Buildarch: noarch
 AutoReqProv: no
-Requires: php >= 4.0.6
+                                                                                                                             
+Vendor: eGroupWare
+Packager: eGroupWare <r.jung@creativix.net>
+
 %description
 eGroupWare is a web-based groupware suite written in PHP. This package provides:
 
@@ -31,7 +37,6 @@ apps project for add-on apps.
 %setup -n %{egwdirname}
 
 %build
-# no build required
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -123,7 +128,22 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
-* Thu Mon 26 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.011
+* Sat Feb XX 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-x
+- add support to spec file for SuSE directory structure
+
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
+- RC3-4 bugfix for broken calender ACL
+
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-1
+- Release RC3-3 is only a small bugfixing for some installations
+- PostgreSQL bug fixed
+- Email Bug fixed
+- Login problem on some clients fixed
+
+* Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012-2
+- We use the download problem at out server buf fix some other problems
+
+* Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012
 - remove justweb template
 - Skel app added as package
 - Messenger back in eGW
@@ -138,11 +158,13 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 - new template set included jerryr (preview to 1.0 version)
 - felamimail extension (folders)
 - email bugfixes and extensions
+- username case sensitive
 - encrytion from passwords for header.inc.php and database passwords added
 - JiNN CMS updated
 - addressbook import extended
 - wiki some extensions
 - many Bugs fixed
+- fudforum available in a updated version
 
 * Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-2
 - Bug fix for PostgreSQL error.

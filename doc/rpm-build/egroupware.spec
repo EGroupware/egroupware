@@ -1,8 +1,9 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 0.9.99.011
-%define packaging 1
-%define httpdroot  /var/www/html
+%define version 0.9.99.013
+%define packaging 2
+%define epoch 0
+%define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
 %define addressbook addressbook
 %define backup backup
@@ -36,21 +37,26 @@
 %define tts tts
 %define wiki wiki
 
-Summary: eGroupWare is a web-based groupware suite written in php. 
 Name: %{packagename}
 Version: %{version}
 Release: %{packaging}
-Copyright: GPL
+Epoch: %{epoch}
+Summary: eGroupWare is a web-based groupware suite written in php. 
+
 Group: Web/Database
+License: GPL/LGPL
 URL: http://www.phpgroupware.org/
-Source: %{packagename}-%{version}-%{packaging}.tar.bz2
+Source0:  http://download.sourceforge.net/egroupware/%{packagename}-%{version}-%{packaging}.tar.bz2
 BuildRoot: /tmp/%{packagename}-buildroot
+Requires: php >= 4.0.6
+
 Prefix: %{httpdroot}
-Vendor: eGroupWare
-Packager: eGroupWare <r.jung@creativix.net>
 Buildarch: noarch
 AutoReqProv: no
-Requires: php >= 4.0.6
+
+Vendor: eGroupWare
+Packager: eGroupWare <r.jung@creativix.net>
+
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
 The core package provides the admin, setup, phpgwapi and preferences
@@ -208,7 +214,7 @@ Requires: eGroupWare = %{version}-%{packaging}
 The %{jinn} app is a multi-site, multi-database, multi-user/-group, database driven Content Management System written in and for the eGroupWare Framework.
 
 %package %{messenger}
-Summary: The eGroupWare %{messenger} application
+Summary: The eGroupWare %{version} application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging} 
@@ -272,20 +278,20 @@ Requires: eGroupWare = %{version}-%{registration}
 This is the %{registration} app for eGroupWare.
 
 %package %{skel}
-Summary: The eGroupWare %{skel} application
+Summary: The eGroupWare Skeleton application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}
 %description %{skel}
-This is the %{skel} app for eGroupWare.
+This is the Skeleton app for eGroupWare.
 
 %package %{sitemgr}
-Summary: The eGroupWare %{sitemgr} application
+Summary: The eGroupWare Sitemanager CMS application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}
 %description %{sitemgr}
-This is the %{sitemgr} app for eGroupWare.
+This is the Sitemanager CMS app for eGroupWare.
 
 %package %{stocks}
 Summary: The eGroupWare %{stocks} application
@@ -296,12 +302,12 @@ Requires: eGroupWare = %{version}-%{packaging}
 This is the %{stocks} app for eGroupWare.
 
 %package %{tts}
-Summary: The eGroupWare %{tts} application
+Summary: The eGroupWare trouble ticket system application
 Group: Web/Database
 AutoReqProv: no
 Requires: eGroupWare = %{version}-%{packaging}
 %description %{tts}
-This is the %{tts} app for eGroupWare.
+This is the trouble ticket system} app for eGroupWare.
 
 %package %{wiki}
 Summary: The eGroupWare %{wiki} application
@@ -327,33 +333,29 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %post
+
                                                                                                                              
     echo "***************************************************"
     echo "* Attention: You must create the folder FILES     *"
     echo "* manually outside the root from your             *"
     echo "* webserver root.                                 *"
     echo "* The folder must include the folders users and   *"
-    echo "* files like: /var/www/		            *"
-    echo "*                      egwfiles/                  *" 
+    echo "* files like: /var/www/                           *"
+    echo "*                      egwfiles/                  *"
     echo "*                                 users           *"
     echo "*                                 groups          *"
     echo "* Give the webserver the rights to read and write *"
-    echo "***************************************************" 
-    echo "* Please secure you apache and add 	    	    *"
+    echo "* and no anonymous access to this folders         *"
+    echo "* *************************************************"
+    echo "* Please secure you apache and add                *"
     echo "* the follow lines to you httpd.conf              *"
     echo "*                                                 *"
     echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$">                       *"
-    echo "*      Order allow,deny         		    *"
-    echo "* 	 Deny from all		         	    *"
-    echo "*    </Files> 			            *"
-    echo "*   <Files ~ ".tpl$">                             *"
+    echo "*   <Files ~ "\.inc\.php$|.tpl$">                 *"
     echo "*      Order allow,deny                           *"
     echo "*      Deny from all                              *"
-    echo "*   </Files>                                      *"
-    echo "* </Directory> 			            *"
+    echo "*    </Files>                                     *"
     echo "***************************************************"
-
 
 %postun
 
@@ -451,7 +453,7 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 
 %files %{messenger}
 %defattr(-,root,root)
-%{prefix}/%{egroupware}/%{messenger}
+%{prefix}/%{egwdirname}/%{messenger}
 
 %files %{news_admin}
 %defattr(-,root,root)
@@ -502,12 +504,27 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 %{prefix}/%{egwdirname}/%{wiki}
 
 %changelog
-* Thu Jan 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.011
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-x
+- add support to spec file for SuSE directory structure
+
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-2
+- bugfix for broken calender ACL
+
+* Sat Feb 07 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.013-1
+- Release RC3-3 is only a small bugfixing for some installations
+- PostgreSQL bug fixed
+- Email Bug fixed
+- Login problem on some clients fixed
+
+* Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012-2
+- We use the download problem at out server buf fix some other problems
+
+* Wed Jan 28 2004 Reiner Jung <r.jung@creativix.net> 0.9.99.012-1
 - remove justweb template
 - Skel app added as package
 - Messenger back in eGW
 - Spanish translation finished
-- Ukrain translation 50% finished
+- Ukrain translation added to eGW and more than 50% finished
 - extensions on Italian translation
 - backup rewrite
 - Poll upp is rewrited
@@ -516,12 +533,14 @@ cp -aRf * $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 - extension on idots
 - new template set included jerryr (preview to 1.0 version)
 - felamimail extension (folders)
-- email bugfixes and extensions
+- email bugfixes and some nice extensions
 - encrytion from passwords for header.inc.php and database passwords added
+- username case sensitive
 - JiNN CMS updated
 - addressbook import extended
 - wiki some extensions
 - many Bugs fixed
+- fudforum available in a updated version
 
 * Mon Dec 22 2003 Reiner Jung <r.jung@creativix.net> 0.9.99.008-2
 - Bug fix for PostgreSQL error.

@@ -22,7 +22,7 @@
 # How to create GPG keys to sign your rpm's you will found in a seperate
 # Document
 #
-# Script changed 2003 Sep 05 Reiner Jung
+# Script changed 2004 Feb 07 Reiner Jung
 
 SPECFILE=egroupware.spec
 SPECFILE2=egroupware-allapp.spec
@@ -38,6 +38,7 @@ RHBASE=/home/$HOMEBUILDDIR/redhat
 SRCDIR=$RHBASE/SOURCES
 SPECDIR=$RHBASE/SPECS
 LOGFILE=$SPECDIR/build-$PACKAGENAME-$VERSION-$PACKAGING.log
+VIRUSSCAN=$SPECDIR/clamav_scan-$PACKAGENAME-$VERSION-$PACKAGING.log
 MD5SUM=$SRCDIR/md5sum-$PACKAGENAME-$VERSION-$PACKAGING.txt
 
 
@@ -52,6 +53,10 @@ rm Root.anonymous
 echo "End from CVS update"						     		>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
+clamscan -r $ANONCVSDIR --log=$VIRUSSCAN
+
+echo "End from Anti Virus Scan"						     		>> $LOGFILE 2>&1
+echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
 cd $ANONCVSDIR/..
 tar czvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz egroupware  			>> $LOGFILE 2>&1
@@ -76,6 +81,10 @@ echo "End Build md5sum of tar.gz, tar.bz, zip"              				>> $LOGFILE 2>&1
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 echo "sign the md5sum file"								>> $LOGFILE 2>&1
 gpg --clearsign $MD5SUM									>> $LOGFILE 2>&1
+echo "---------------------------------------"              				>> $LOGFILE 2>&1
+
+echo "delete the original md5sum file"							>> $LOGFILE 2>&1
+rm -rf $MD5SUM			  	 						>> $LOGFILE 2>&1
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
 
