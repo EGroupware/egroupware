@@ -1,7 +1,7 @@
 <?php
 // This file defines a set of functions and an associative array.
 // The key of the array corresponds to a header in the source
-// outlook file and the value of the array item will be used in
+// import file and the value of the array item will be used in
 // the creation of the output file.
 //
 // An exported Outlook file looks like this:
@@ -23,143 +23,139 @@
 // Also start with a '#' symbol and a comma separated list will be
 // turned into a number of the same entries.
 
-class outlook_conv {
-  var $currentrecord; //used for buffering to allow uid lines to go first
+	class import_conv
+	{
+		var $currentrecord = array(); //used for buffering to allow uid lines to go first
 
-  var $outlook = array(
-	"Title" => "title", 
-	"First Name" => "n_given",
-	"Middle Name" => "n_middle",
-	"Last Name" => "n_family",
-	"Suffix" => "n_suffix",
-	"Company" => "org_name",  //objectclass: organization
-	"Department" => "org_unit", //objectclass: organizationalPerson
-	"Job Title" => "title", //objectclass: organizationalPerson
-	"Business Street" => "address2",
-	"Business Street 2" => "",
-	"Business Street 3" => "",
-	"Business City" => "",
-	"Business State" => "",
-	"Business Postal Code" => "",
-	"Business Country" => "",
-	"Home Street" => "adr_street",
-	"Home City" => "adr_locality",
-	"Home State" => "adr_region",
-	"Home Postal Code" => "adr_postalcode",
-	"Home Country" => "adr_countryname",
-	"Home Street 2" => "",
-	"Home Street 3" => "",
-	"Other Street" => "",
-	"Other City" => "",
-	"Other State" => "",
-	"Other Postal Code" => "",
-	"Other Country" => "",
-	"Assistant's Phone" => "",
-	"Business Fax" => "c_tel",
-	"Business Phone" => "b_tel",
-	"Business Phone 2" => "ophone",
-	"Callback" => "",
-	"Car Phone" => "",
-	"Company Main Phone" => "",
-	"Home Fax" => "",
-	"Home Phone" => "a_tel",
-	"Home Phone 2" => "", //This will make another homePhone entry
-	"ISDN" => "",
-	"Mobile Phone" => "mphone", //newPilotPerson
-	"Other Fax" => "",
-	"Other Phone" => "",
-	"Pager" => "pager",
-	"Primary Phone" => "",
-	"Radio Phone" => "",
-	"TTY/TDD Phone" => "",
-	"Telex" => "", //organization
-	"Account" => "",
-	"Anniversary" => "",
-	"Assistant's Name" => "", //newPilotPerson
-	"Billing Information" => "",
-	"Birthday" => "bday",
-	"Categories" => "", 
-	"Children" => "",
-	"Directory Server" => "",
-	"E-mail Address" => "d_email",
-	"E-mail Display Name" => "",
-	"E-mail 2 Address" => "",
-	"E-mail 2 Display Name" => "",
-	"E-mail 3 Address" => "", //add another...
-	"E-mail 3 Display Name" => "",
-	"Gender" => "",
-	"Government ID Number" => "",
-	"Hobby" => "",
-	"Initials" => "",
-	"Internet Free Busy" => "",
-	"Keywords" => "",
-	"Language" => "",
-	"Location" => "",
-	"Manager's Name" => "",
-	"Mileage" => "",
-	"Notes" => "note",
-	"Office Location" => "",
-	"Organizational ID Number" => "",
-	"PO Box" => "",
-	"Priority" => "",
-	"Private Profession" => "",
-	"Referred By" => "",
-	"Sensitivity" => "",
-	"Spouse" => "",
-	"User 1" => "",
-	"User 2" => "",
-	"User 3" => "",
-	"User 4" => "",
-	"Web Page" => "");
+		var $import = array(
+			"Title" => "title", 
+			"First Name" => "n_given",
+			"Middle Name" => "n_middle",
+			"Last Name" => "n_family",
+			"Suffix" => "n_suffix",
+			"Company" => "org_name",  //objectclass: organization
+			"Department" => "org_unit", //objectclass: organizationalPerson
+			"Job Title" => "title", //objectclass: organizationalPerson
+			"Business Street" => "address2",
+			"Business Street 2" => "",
+			"Business Street 3" => "",
+			"Business City" => "",
+			"Business State" => "",
+			"Business Postal Code" => "",
+			"Business Country" => "",
+			"Home Street" => "adr_street",
+			"Home City" => "adr_locality",
+			"Home State" => "adr_region",
+			"Home Postal Code" => "adr_postalcode",
+			"Home Country" => "adr_countryname",
+			"Home Street 2" => "",
+			"Home Street 3" => "",
+			"Other Street" => "",
+			"Other City" => "",
+			"Other State" => "",
+			"Other Postal Code" => "",
+			"Other Country" => "",
+			"Assistant's Phone" => "",
+			"Business Fax" => "c_tel",
+			"Business Phone" => "b_tel",
+			"Business Phone 2" => "ophone",
+			"Callback" => "",
+			"Car Phone" => "",
+			"Company Main Phone" => "",
+			"Home Fax" => "",
+			"Home Phone" => "a_tel",
+			"Home Phone 2" => "", //This will make another homePhone entry
+			"ISDN" => "",
+			"Mobile Phone" => "mphone", //newPilotPerson
+			"Other Fax" => "",
+			"Other Phone" => "",
+			"Pager" => "pager",
+			"Primary Phone" => "",
+			"Radio Phone" => "",
+			"TTY/TDD Phone" => "",
+			"Telex" => "", //organization
+			"Account" => "",
+			"Anniversary" => "",
+			"Assistant's Name" => "", //newPilotPerson
+			"Billing Information" => "",
+			"Birthday" => "bday",
+			"Categories" => "", 
+			"Children" => "",
+			"Directory Server" => "",
+			"E-mail Address" => "d_email",
+			"E-mail Display Name" => "",
+			"E-mail 2 Address" => "",
+			"E-mail 2 Display Name" => "",
+			"E-mail 3 Address" => "", //add another...
+			"E-mail 3 Display Name" => "",
+			"Gender" => "",
+			"Government ID Number" => "",
+			"Hobby" => "",
+			"Initials" => "",
+			"Internet Free Busy" => "",
+			"Keywords" => "",
+			"Language" => "",
+			"Location" => "",
+			"Manager's Name" => "",
+			"Mileage" => "",
+			"Notes" => "note",
+			"Office Location" => "",
+			"Organizational ID Number" => "",
+			"PO Box" => "",
+			"Priority" => "",
+			"Private Profession" => "",
+			"Referred By" => "",
+			"Sensitivity" => "",
+			"Spouse" => "",
+			"User 1" => "",
+			"User 2" => "",
+			"User 3" => "",
+			"User 4" => "",
+			"Web Page" => ""
+		);
 
-function outlook_start_file($buffer,$j="",$k="") {
-  return $buffer;
-}
+		function import_start_file($buffer,$j="",$k="") {
+			return $buffer;
+		}
 
-function outlook_end_file($buffer) {
-  global $phpgw,$phpgw_info;
-
-  $lines = split("\n",$buffer);
-  $contacts = CreateObject("phpgwapi.contacts");
- 
-  for ($i=0;$i<count($lines);$i++) {
-    $entry=$lines[$i];
-    $contacts->add($phpgw_info["user"]["account_id"],$entry);
-  }
+		function import_end_file($buffer) {
+			global $phpgw,$phpgw_info;
+	
+			//$contacts = CreateObject("phpgwapi.contacts");
+			echo '<br>'; 
+			while ( list($name,$value) = each($buffer) ) {
+				echo '<br>'.$name.' => '.$value;
+				$i++;
+				//$contacts->add($phpgw_info["user"]["account_id"],$entry);
+			}
   
-  return "Successfully imported $i records into your addressbook.";
-}
+			return "Successfully imported $i records into your addressbook.";
+		}
 
-function outlook_start_record($buffer) {
-  $top="";
+		function import_start_record($buffer) {
+			$top=array();
+			$this->currentrecord = $top;
+			return $buffer;
+		}
 
-  $this->currentrecord = $top;
-  return $buffer;
-}
+		function import_end_record($buffer,$private="private") {
+			global $phpgw_info;
+			$namelist=array();
+			while ( list($name, $value) = each($this->currentrecord)) {
+				$namelist = $namelist + array($name => $value);
+				echo '<br>'.$name.' => '.$value;
+			}
+			echo '<br>';
+			$buffer = $buffer + $namelist;
+			return $buffer;
+		}
 
-function outlook_end_record($buffer,$private="private") {
-  global $phpgw_info;
-  $row=0;
-  $i=0;
-  $lines = split("##",$this->currentrecord);
-  
-  for ($i=0;$i<count($lines)-1;$i++) {
-    list($name, $value) = split("%%",$lines[$i]);
-    $row++;
-    $namelist .= array($name => $value);
-	echo $name.' '.$value;
-  }
-  
-  return $buffer.$namelist;
-}
+		function import_new_attrib($buffer,$name,$value) {
+			$value = str_replace("\n","<BR>",$value);
+			$value = str_replace("\r","",$value);
+			$this->currentrecord += array($name => $value);
 
-function outlook_new_attrib($buffer,$name,$value) {
-  $value = str_replace("\n","<BR>",$value);
-  $value = str_replace("\r","",$value);
-  if ($value=="") { $value="NULL"; }
-  $this->currentrecord .= $name."%%".addslashes($value)."##";
-  
-  return $buffer;
-}
-}
+			return $buffer;
+		}
+	}
 ?>
