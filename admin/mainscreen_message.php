@@ -83,7 +83,7 @@
     
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
      $phpgw->template->set_var("tr_color",$tr_color);  
-     $phpgw->template->set_var("value",'<textarea name="message" cols="50" rows="10" wrap="hard">' . $current_message . '</textarea>');
+     $phpgw->template->set_var("value",'<textarea name="message" cols="50" rows="10" wrap="hard">' . stripslashes($current_message) . '</textarea>');
      $phpgw->template->parse("rows","row_2",True);
     
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);

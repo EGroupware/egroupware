@@ -49,7 +49,7 @@
 
   $phpgw->translation->add_app("mainscreen");  
   if (lang("mainscreen_message") != "mainscreen_message*") {
-     echo "<center>" . lang("mainscreen_message") . "</center>";
+     echo "<center>" . stripslashes(lang("mainscreen_message")) . "</center>";
   }
 
   if ((isset($phpgw_info["user"]["apps"]["admin"]) &&
