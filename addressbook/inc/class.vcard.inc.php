@@ -23,46 +23,8 @@
 
   /* $Id$ */
 
-	// Prelminary vcard import/export class
-	// The method of calls to this should probably be cleaned up, but
-	//   following are some examples:
-	//
 	class vcard
 	{
-		// This array is used by vcard->in to aid in parsing the multiple
-		//   attributes that are possible with vcard.
-		// Import is messier than export and needs to be changed.
-		// You MUST use this in conjunction with the vcard->in function:
-		//
-		// $contacts = CreateObject("phpgwapi.contacts");
-		// $vcard = CreateObject("phpgwapi.vcard");
-		// $myimport = $vcard->import;
-		// $buffer = array();
-		//
-		// $fp=fopen($filename,"r");
-		// while ($data = fgets($fp,8000)) {
-		//     list($name,$value,$extra) = split(':', $data);
-		//     if (substr($value,0,5) == "http") {
-		//         $value = $value . ":".$extra;
-		//     }
-		//     if ($name && $value) {
-		//         reset($vcard->import);
-		//         while ( list($fname,$fvalue) = each($vcard->import) ) {
-		//             if ( strstr(strtolower($name), $vcard->import[$fname]) ) {
-		//                 $value = trim($value);
-		//                 $value = ereg_replace("=0D=0A","\n",$value);
-		//                 $buffer += array($name => $value);
-		//             }
-		//         }
-		//     }
-		// }
-		// fclose($fp);
-		//
-		// Then, to convert the vcard array to a contacts class array:
-		//
-		//$entry = $vcard->in($buffer);
-		//$contacts->add($phpgw_info["user"]["account_id"],$entry);
-		//
 		var $import = array(
 			'n'        => 'n',
 			'sound'    => 'sound',
@@ -80,25 +42,6 @@
 			'email'    => 'email'
 		);
 
-		// This array is used by vcard->out to aid in parsing the multiple
-		//   attributes that are possible with vcard.
-		// You MUST use this in conjunction with the vcard->out function:
-		//
-		// $this->vcard = CreateObject("phpgwapi.vcard");
-		// $myexport = $this->vcard->export;
-		//
-		// while( list($name,$value) = each($currentrecord) ) {
-		//     if ($myexport[$name] && ($value != "") ) {
-		//         $buffer[$i][$myexport[$name]] = $value;
-		//     }
-		// }
-		//
-		// Then, to convert the data array to a vcard string:
-		//
-		// for ($i=0;$i<count($buffer);$i++) {
-		//     $vcards .= $this->vcard->out($buffer[$i]);
-		// }
-		//
 		var $export = array(
 			'fn'                  => 'FN',
 			'n_given'             => 'N;GIVEN',
@@ -161,14 +104,83 @@
 			'suffix' => 'suffix'
 		);
 
-		// Pass this an associative array of fieldnames and values
-		// returns a clean array based on contacts class std fields
-		// This array can then be passed via $phpgw->contacts->add($ownerid,$buffer)
+		/*
+			This now takes the upload filename
+			and parses using the class string and array processors.
+			The return is a contacts class entry, ready for add.
+		*/
+		function in_file($filename='')
+		{
+			if (!$filename)
+			{
+				return array();
+			}
+
+			$buffer = array();
+			
+			$fp = fopen($filename,'r');
+			while ($data = fgets($fp,8000))
+			{
+				list($name,$value,$extra) = split(':', $data);
+				if (substr($value,0,5) == 'http')
+				{
+					$value = $value . ':'.$extra;
+				}
+				if ($name && $value)
+				{
+					reset($this->import);
+					while ( list($fname,$fvalue) = each($this->import) )
+					{
+						if ( strstr(strtolower($name), $this->import[$fname]) )
+						{
+							$value = trim($value);
+							$value = ereg_replace("=0D=0A","\n",$value);
+							$buffer += array($name => $value);
+						}
+					}
+				}
+			}
+			fclose($fp);
+
+			$entry = $this->in($buffer);
+			/* _debug_array($entry);exit; */
+
+			return $entry;
+		}
+
+		/*
+			This is here to match the old in() function, now called _parse_in().
+			It is called now also by in_file() above.
+			It takes a pre-parsed file using the methods in in_file(), returns a clean contacts class array.
+		*/
 		function in($buffer)
 		{
-			global $phpgw;
-			// Following is a lot of pain and little magic
-			while ( list($name,$value) = @each($buffer) ) {
+			$buffer = $this->_parse_in($buffer);
+
+			$contacts = CreateObject('phpgwapi.contacts');		/* RB 2001/05/08 Lotus Organizer uses/needs extrafields from edit.php */
+			$all_fields = $contacts->stock_contact_fields + array("ophone" => "ophone","address2" => "address2","address3" => "address3");
+
+			while (list($fname,$fvalue) = each($all_fields))
+			{
+				if($buffer[$fname])
+				{
+					$entry[$fname] = $buffer[$fname];
+					/* echo '<br>'.$fname.' = "'.$entry[$fname].'"'."\n"; */
+				}
+			}
+			return $entry;
+		}
+
+		/*
+			Pass this an associative array of fieldnames and values
+			returns a clean array based on contacts class std fields
+			This array can then be passed via $phpgw->contacts->add($ownerid,$buffer)
+		*/
+		function _parse_in($buffer)
+		{
+			/* Following is a lot of pain and little magic */
+			while ( list($name,$value) = @each($buffer) )
+			{
 				$field  = split(";",$name);
 				$field[0] = ereg_replace("A\.","",$field[0]);
 				$field[0] = ereg_replace("B\.","",$field[0]);
@@ -181,10 +193,10 @@
 					switch ($field[0])
 					{
 						case 'LABEL':
-							$buffer['label'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['label'] = ereg_replace("=0D=0A","\n",$values[0]);
 							break;
 						case 'NOTE':
-							$buffer['note'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['note'] = ereg_replace("=0D=0A","\n",$values[0]);
 							break;
 						case 'ADR':
 							switch ($field[1])
@@ -195,30 +207,30 @@
 										case 'WORK':
 											if ( !stristr($buffer['adr_one_type'],$field[1]))
 											{
-												$buffer['adr_one_type'] .= 'intl;';
+												$entry['adr_one_type'] .= 'intl;';
 											}
 											if (!$buffer['adr_one_street'])
 											{
-												$buffer['address2']            = $values[1];
-												$buffer['adr_one_street']      = $values[2];
-												$buffer['adr_one_locality']    = $values[3];
-												$buffer['adr_one_region']      = $values[4];
-												$buffer['adr_one_postalcode']  = $values[5];
-												$buffer['adr_one_countryname'] = $values[6];
+												$entry['address2']            = $values[1];
+												$entry['adr_one_street']      = $values[2];
+												$entry['adr_one_locality']    = $values[3];
+												$entry['adr_one_region']      = $values[4];
+												$entry['adr_one_postalcode']  = $values[5];
+												$entry['adr_one_countryname'] = $values[6];
 											}
 											break;
 										case 'HOME':
 											if ( !stristr($buffer['adr_two_type'],$field[1]) )
 											{
-												$buffer['adr_two_type'] .= 'intl;';
+												$entry['adr_two_type'] .= 'intl;';
 											}
 											if (!$buffer['adr_two_street'])
 											{
-												$buffer['adr_two_street']      = $values[2];
-												$buffer['adr_two_locality']    = $values[3];
-												$buffer['adr_two_region']      = $values[4];
-												$buffer['adr_two_postalcode']  = $values[5];
-												$buffer['adr_two_countryname'] = $values[6];
+												$entry['adr_two_street']      = $values[2];
+												$entry['adr_two_locality']    = $values[3];
+												$entry['adr_two_region']      = $values[4];
+												$entry['adr_two_postalcode']  = $values[5];
+												$entry['adr_two_countryname'] = $values[6];
 											}
 											break;
 										default:
@@ -231,30 +243,30 @@
 										case 'WORK':
 											if ( !stristr($buffer['adr_one_type'],$field[1]))
 											{
-												$buffer['adr_one_type'] .= 'dom;';
+												$entry['adr_one_type'] .= 'dom;';
 											}
 											if (!$buffer['adr_one_street'])
 											{
-												$buffer['address2']            = $values[1];
-												$buffer['adr_one_street']      = $values[2];
-												$buffer['adr_one_locality']    = $values[3];
-												$buffer['adr_one_region']      = $values[4];
-												$buffer['adr_one_postalcode']  = $values[5];
-												$buffer['adr_one_countryname'] = $values[6];
+												$entry['address2']            = $values[1];
+												$entry['adr_one_street']      = $values[2];
+												$entry['adr_one_locality']    = $values[3];
+												$entry['adr_one_region']      = $values[4];
+												$entry['adr_one_postalcode']  = $values[5];
+												$entry['adr_one_countryname'] = $values[6];
 											}
 											break;
 										case 'HOME':
 											if ( !stristr($buffer['adr_two_type'],$field[1]) )
 											{
-												$buffer['adr_two_type'] .= 'dom;';
+												$entry['adr_two_type'] .= 'dom;';
 											}
 											if (!$buffer['adr_two_street'])
 											{
-												$buffer['adr_two_street']      = $values[2];
-												$buffer['adr_two_locality']    = $values[3];
-												$buffer['adr_two_region']      = $values[4];
-												$buffer['adr_two_postalcode']  = $values[5];
-												$buffer['adr_two_countryname'] = $values[6];
+												$entry['adr_two_street']      = $values[2];
+												$entry['adr_two_locality']    = $values[3];
+												$entry['adr_two_region']      = $values[4];
+												$entry['adr_two_postalcode']  = $values[5];
+												$entry['adr_two_countryname'] = $values[6];
 											}
 											break;
 										default:
@@ -267,30 +279,30 @@
 										case 'WORK':
 											if ( !stristr($buffer['adr_one_type'],$field[1]))
 											{
-												$buffer['adr_one_type'] .= 'parcel;';
+												$entry['adr_one_type'] .= 'parcel;';
 											}
 											if (!$buffer['adr_one_street'])
 											{
-												$buffer['address2']            = $values[1];
-												$buffer['adr_one_street']      = $values[2];
-												$buffer['adr_one_locality']    = $values[3];
-												$buffer['adr_one_region']      = $values[4];
-												$buffer['adr_one_postalcode']  = $values[5];
-												$buffer['adr_one_countryname'] = $values[6];
+												$entry['address2']            = $values[1];
+												$entry['adr_one_street']      = $values[2];
+												$entry['adr_one_locality']    = $values[3];
+												$entry['adr_one_region']      = $values[4];
+												$entry['adr_one_postalcode']  = $values[5];
+												$entry['adr_one_countryname'] = $values[6];
 											}
 											break;
 										case 'HOME':
 											if ( !stristr($buffer['adr_two_type'],$field[1]) )
 											{
-												$buffer['adr_two_type'] .= 'parcel;';
+												$entry['adr_two_type'] .= 'parcel;';
 											}
 											if (!$buffer['adr_two_street'])
 											{
-												$buffer['adr_two_street']      = $values[2];
-												$buffer['adr_two_locality']    = $values[3];
-												$buffer['adr_two_region']      = $values[4];
-												$buffer['adr_two_postalcode']  = $values[5];
-												$buffer['adr_two_countryname'] = $values[6];
+												$entry['adr_two_street']      = $values[2];
+												$entry['adr_two_locality']    = $values[3];
+												$entry['adr_two_region']      = $values[4];
+												$entry['adr_two_postalcode']  = $values[5];
+												$entry['adr_two_countryname'] = $values[6];
 											}
 											break;
 										default:
@@ -303,30 +315,30 @@
 										case 'WORK':
 											if ( !stristr($buffer['adr_one_type'],$field[1]))
 											{
-												$buffer['adr_one_type'] .= 'postal;';
+												$entry['adr_one_type'] .= 'postal;';
 											}
 											if (!$buffer['adr_one_street'])
 											{
-												$buffer['address2']            = $values[1];
-												$buffer['adr_one_street']      = $values[2];
-												$buffer['adr_one_locality']    = $values[3];
-												$buffer['adr_one_region']      = $values[4];
-												$buffer['adr_one_postalcode']  = $values[5];
-												$buffer['adr_one_countryname'] = $values[6];
+												$entry['address2']            = $values[1];
+												$entry['adr_one_street']      = $values[2];
+												$entry['adr_one_locality']    = $values[3];
+												$entry['adr_one_region']      = $values[4];
+												$entry['adr_one_postalcode']  = $values[5];
+												$entry['adr_one_countryname'] = $values[6];
 											}
 											break;
 										case 'HOME':
 											if ( !stristr($buffer['adr_two_type'],$field[1]) )
 											{
-												$buffer['adr_two_type'] .= 'postal;';
+												$entry['adr_two_type'] .= 'postal;';
 											}
 											if (!$buffer['adr_two_street'])
 											{
-												$buffer['adr_two_street']      = $values[2];
-												$buffer['adr_two_locality']    = $values[3];
-												$buffer['adr_two_region']      = $values[4];
-												$buffer['adr_two_postalcode']  = $values[5];
-												$buffer['adr_two_countryname'] = $values[6];
+												$entry['adr_two_street']      = $values[2];
+												$entry['adr_two_locality']    = $values[3];
+												$entry['adr_two_region']      = $values[4];
+												$entry['adr_two_postalcode']  = $values[5];
+												$entry['adr_two_countryname'] = $values[6];
 											}
 											break;
 										default:
@@ -336,30 +348,30 @@
 								case 'WORK':
 									if (!$buffer['adr_one_street'])
 									{
-										$buffer['address2']            = $values[1];
-										$buffer['adr_one_street']      = $values[2];
-										$buffer['adr_one_locality']    = $values[3];
-										$buffer['adr_one_region']      = $values[4];
-										$buffer['adr_one_postalcode']  = $values[5];
-										$buffer['adr_one_countryname'] = $values[6];
+										$entry['address2']            = $values[1];
+										$entry['adr_one_street']      = $values[2];
+										$entry['adr_one_locality']    = $values[3];
+										$entry['adr_one_region']      = $values[4];
+										$entry['adr_one_postalcode']  = $values[5];
+										$entry['adr_one_countryname'] = $values[6];
 									}
 									break;
 								case 'HOME':
-									$buffer['adr_two_street']      = $values[2];
-									$buffer['adr_two_locality']    = $values[3];
-									$buffer['adr_two_region']      = $values[4];
-									$buffer['adr_two_postalcode']  = $values[5];
-									$buffer['adr_two_countryname'] = $values[6];
+									$entry['adr_two_street']      = $values[2];
+									$entry['adr_two_locality']    = $values[3];
+									$entry['adr_two_region']      = $values[4];
+									$entry['adr_two_postalcode']  = $values[5];
+									$entry['adr_two_countryname'] = $values[6];
 									break;
 								default:
 									if (!$buffer['adr_one_street'])
 									{
-										$buffer['address2']            = $values[1];
-										$buffer['adr_one_street']      = $values[2];
-										$buffer['adr_one_locality']    = $values[3];
-										$buffer['adr_one_region']      = $values[4];
-										$buffer['adr_one_postalcode']  = $values[5];
-										$buffer['adr_one_countryname'] = $values[6];
+										$entry['address2']            = $values[1];
+										$entry['adr_one_street']      = $values[2];
+										$entry['adr_one_locality']    = $values[3];
+										$entry['adr_one_region']      = $values[4];
+										$entry['adr_one_postalcode']  = $values[5];
+										$entry['adr_one_countryname'] = $values[6];
 									}
 									break;
 							}
@@ -380,93 +392,93 @@
 									}
 									break;
 								case 'WORK':	// RB don't overwrite TEL;WORK;VOICE (main nr.) with TEL;WORK, TEL;WORK --> tel_isdn
-									$buffer[$buffer['tel_work'] ? 'tel_isdn' : 'tel_work'] = $values[0];
+									$entry[$buffer['tel_work'] ? 'tel_isdn' : 'tel_work'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'HOME':	// RB don't overwrite TEL;HOME;VOICE (main nr.) with TEL;HOME, TEL;HOME --> ophone
-									$buffer[$buffer['tel_home'] ? 'ophone' : 'tel_home' ] = $values[0];
+									$entry[$buffer['tel_home'] ? 'ophone' : 'tel_home' ] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'VOICE':
-									$buffer["tel_voice"] = $values[0];
+									$entry["tel_voice"] = $values[0];
 									if ($field[2] == "PREF")
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'FAX':
-									if ($buffer['tel_fax'])
+									if ($entry['tel_fax'])
 									{
 										// RB don't overwrite TEL;WORK;FAX with TEL;HOME;FAX, TEL;HOME;FAX --> ophone
-									   $buffer['ophone'] = $values[0] . ' Fax';
+									   $entry['ophone'] = $values[0] . ' Fax';
 									   break;
 									}
-									$buffer['tel_fax'] = $values[0];
+									$entry['tel_fax'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'MSG':
-									$buffer['tel_msg'] = $values[0];
+									$entry['tel_msg'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'CELL':
-									$buffer['tel_cell'] = $values[0];
+									$entry['tel_cell'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'PAGER':
-									$buffer['tel_pager'] = $values[0];
+									$entry['tel_pager'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'BBS':
-									$buffer['tel_bbs'] = $values[0];
+									$entry['tel_bbs'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'MODEM':
-									$buffer['tel_modem'] = $values[0];
+									$entry['tel_modem'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'CAR':
-									$buffer['tel_car'] = $values[0];
+									$entry['tel_car'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'ISDN':
-									$buffer['tel_isdn'] = $values[0];
+									$entry['tel_isdn'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								case 'VIDEO':
-									$buffer['tel_video'] = $values[0];
+									$entry['tel_video'] = $values[0];
 									if ($field[2] == 'PREF')
 									{
-										$buffer['tel_prefer'] .= strtolower($field[1]) . ';';
+										$entry['tel_prefer'] .= strtolower($field[1]) . ';';
 									}
 									break;
 								default:
@@ -477,28 +489,28 @@
 							switch ($field[1])
 							{
 								case 'WORK':
-									$buffer['email'] = $values[0];
-									$buffer['email_type'] = $field[2];
+									$entry['email'] = $values[0];
+									$entry['email_type'] = $field[2];
 									break;
 								case 'HOME':
-									$buffer['email_home'] = $values[0];
-									$buffer['email_home_type'] = $field[2];
+									$entry['email_home'] = $values[0];
+									$entry['email_home_type'] = $field[2];
 									break;
 								default:
 									if($buffer['email'])
 									{
-										$buffer['email_type'] = $field[2];
+										$entry['email_type'] = $field[2];
 									}
 									elseif (!$buffer['email'])
 									{
-										$buffer['email'] = $values[0];
-										$buffer['email_type'] = $field[1];
+										$entry['email'] = $values[0];
+										$entry['email_type'] = $field[1];
 									}
 									break;
 							}
 							break;
 						case 'URL':	// RB 2001/05/08 Lotus Organizer uses URL;WORK and URL;HOME (URL;HOME droped if both)
-							$buffer['url'] = $values[0];
+							$entry['url'] = $values[0];
 							break;
 						default:
 							break;
@@ -514,71 +526,59 @@
 							while(list($myname,$myval) = each($this->names) )
 							{
 								$namel = 'n_' . $myname;
-								$buffer[$namel] = $values[$j];
+								$entry[$namel] = $values[$j];
 								$j++;
 							}
 							break;
 						case 'FN':
-							$buffer['fn'] = $values[0];
+							$entry['fn'] = $values[0];
 							break;
 						case 'TITLE':
-							$buffer['title'] = $values[0];
+							$entry['title'] = $values[0];
 							break;
 						case 'TZ':
-							$buffer['tz'] = $values[0];
+							$entry['tz'] = $values[0];
 							break;
 						case 'GEO':
-							$buffer['geo'] = $values[0];
+							$entry['geo'] = $values[0];
 							break;
 						case 'URL':
-							$buffer['url'] = $values[0];
+							$entry['url'] = $values[0];
 							break;
 						case 'NOTE':
-							$buffer['note'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['note'] = ereg_replace("=0D=0A","\n",$values[0]);
 							break;
 						case 'KEY':
-							$buffer['key'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['key'] = ereg_replace("=0D=0A","\n",$values[0]);
 							break;
 						case 'LABEL':
-							$buffer['label'] = ereg_replace("=0D=0A","\n",$values[0]);
+							$entry['label'] = ereg_replace("=0D=0A","\n",$values[0]);
 							break;
 						case 'BDAY': #1969-12-31
 							$tmp = split('-',$values[0]);
 							if ($tmp[0])
 							{
-								$buffer['bday'] = $tmp[1] . '/' . $tmp[2] . '/' . $tmp[0];
+								$entry['bday'] = $tmp[1] . '/' . $tmp[2] . '/' . $tmp[0];
 							}
 							break;
 						case 'ORG':	// RB 2001/05/07 added for Lotus Organizer: ORG:Company;Department
-							$buffer['org_name'] = $values[0];
-							$buffer['org_unit'] = $values[1];
+							$entry['org_name'] = $values[0];
+							$entry['org_unit'] = $values[1];
 							break;
 					}
 				}
 			}
-			$buffer['tel_prefer']   = substr($buffer['tel_prefer'],0,-1);
-			$buffer['adr_one_type'] = substr($buffer['adr_one_type'],0,-1);
-			$buffer['adr_two_type'] = substr($buffer['adr_two_type'],0,-1);
+			$entry['tel_prefer']   = substr($buffer['tel_prefer'],0,-1);
+			$entry['adr_one_type'] = substr($buffer['adr_one_type'],0,-1);
+			$entry['adr_two_type'] = substr($buffer['adr_two_type'],0,-1);
 			
 			if (count($street = split("\r*\n",$buffer['adr_one_street'],3)) > 1)
 			{
-				$buffer['adr_one_street'] = $street[0];			// RB 2001/05/08 added for Lotus Organizer to split multiline adresses
-				$buffer['address2']		  = $street[1];
-				$buffer['address3']		  = $street[2];
+				$entry['adr_one_street'] = $street[0];			// RB 2001/05/08 added for Lotus Organizer to split multiline adresses
+				$entry['address2']		  = $street[1];
+				$entry['address3']		  = $street[2];
 			}
-			// Lastly, filter out all but standard fields, since they cover the vcard standard
-			// and we don't want $buffer['BEGIN'] etc...
-			$contacts = CreateObject('phpgwapi.contacts');		// RB 2001/05/08 Lotus Organizer uses/needs extrafields from edit.php
-			$all_fields = $contacts->stock_contact_fields + array("ophone" => "ophone","address2" => "address2","address3" => "address3");
 
-			while (list($fname,$fvalue) = each($all_fields))
-			{
-				if($buffer[$fname])
-				{
-					$entry[$fname] = $buffer[$fname];
-					// echo '<br>'.$fname.' = "'.$entry[$fname].'"'."\n";
-				}
-			}
 			return $entry;
 		}
 

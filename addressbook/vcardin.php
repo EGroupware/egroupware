@@ -3,6 +3,7 @@
 * phpGroupWare - E-Mail                                                    *
 * http://www.phpgroupware.org                                              *
 * This file written by Joseph Engo <jengo@phpgroupware.org>                *
++   and Miles Lott <miloschjengo@phpgroupware.org>                         *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
@@ -32,12 +33,7 @@
 		echo '<body bgcolor="' . $phpgw_info['theme']['bg_color'] . '">';
 	}
   
-	// Some of the methods where borrowed from
-	// Squirrelmail <Luke Ehresman> http://www.squirrelmail.org
-	// (only the uploaddir naming anymore)
-	$sep = SEP;
-
-	$uploaddir = $phpgw_info['server']['temp_dir'] . $sep;
+	$uploaddir = $phpgw_info['server']['temp_dir'] . SEP;
 
 	if ($action == 'Load Vcard')
 	{
@@ -59,39 +55,13 @@
 
 			$filename = $uploaddir . $newfilename;
 
-			$contacts = CreateObject('phpgwapi.contacts');
 			$vcard = CreateObject('phpgwapi.vcard');
-			$myimport = $vcard->import;
-			$buffer = array();
-
-			$fp=fopen($filename,'r');
-			while ($data = fgets($fp,8000))
-			{
-				list($name,$value,$extra) = split(':', $data);
-				if (substr($value,0,5) == 'http')
-				{
-					$value = $value . ':'.$extra;
-				}
-				if ($name && $value)
-				{
-					reset($vcard->import);
-					while ( list($fname,$fvalue) = each($vcard->import) )
-					{
-						if ( strstr(strtolower($name), $vcard->import[$fname]) )
-						{
-							$value = trim($value);
-							$value = ereg_replace("=0D=0A","\n",$value);
-							$buffer += array($name => $value);
-						}
-					}
-				}
-			}
-			fclose($fp);
-
-			$entry = $vcard->in($buffer);
+			$entry = $vcard->in_file($filename);
+			/* _debug_array($entry);exit; */
+			$contacts = CreateObject('phpgwapi.contacts');
 			$contacts->add($phpgw_info['user']['account_id'],$entry);
 
-			// Delete the temp file.
+			/* Delete the temp file. */
 			unlink($filename);
 			unlink($filename . '.info');
 			Header('Location: ' . $phpgw->link('/addressbook/', 'cd=14'));
