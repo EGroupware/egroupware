@@ -12,21 +12,8 @@
 
 	/* $Id$ */
 
-	if (floor(phpversion()) == 4) {
-		global $phpgw, $phpgw_info, $treemenu;
-	}
-
 // Only Modify the $file variable.....
 	$file = Array();
 //Do not modify below this line
-	$font = $phpgw_info['theme']['font'];
-	$navbar = $phpgw_info['user']['preferences']['common']['navbar_format'];
-	$lang = strtoupper($phpgw_info['user']['preferences']['common']['lang']);
-	$treemenu[] = '..'.($navbar != 'text'?'<img src="'.$phpgw->common->image($appname,'navbar.gif').'" border="0" alt="'.ucwords($appname).'">':'').($navbar != 'icons'?'<font face="'.$font.'">'.ucwords($appname).'</font>':'').'|'.$phpgw->link('/'.$appname.'/help/index.php');
-
-	$help_file = check_help_file($appname,$lang,$appname.'.php');
-	if($help_file != '')
-	{
-		$treemenu[] = '...<font face="'.$font.'">Overview</font>|'.$phpgw->link($help_file);
-	}
+	display_manual_section($appname,$file);
 ?>
