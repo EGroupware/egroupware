@@ -18,8 +18,7 @@
 		'nonavbar'	=>	True,
 		'noappheader'	=>	True,
 		'noappfooter'	=>	True,
-		'nofooter'	=>	True,
-		'xslt_app' => True
+		'nofooter'	=>	True
 	);
 	$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
 	
@@ -29,7 +28,7 @@
 		'menuaction'=> 'filemanager.uifilemanager.index'
 	);
 
-	Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$parms));
+	$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/index.php',$parms));
 	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
 	exit;
 ?>

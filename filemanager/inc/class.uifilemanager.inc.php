@@ -79,7 +79,7 @@
 			$this->create_home_dir();
 			$this->verify_path();
 			$this->update();
-			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets'));
+			
 		}
 
 		function load_header()
@@ -90,7 +90,9 @@
 			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
 			unset($GLOBALS['phpgw_info']['flags']['noappfooter']);
 			unset($GLOBALS['phpgw_info']['flags']['headonly']);
+			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets'));
 			$GLOBALS['phpgw']->xslttpl->add_file(array($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi','default') . SEP . 'app_header'));
+			
 		}
 		function no_header()
 		{
@@ -99,7 +101,7 @@
 			$GLOBALS['phpgw_info']['flags']['noappheader'] = True;
 			$GLOBALS['phpgw_info']['flags']['noappfooter'] = True;
 			 $GLOBALS['phpgw_info']['flags']['headonly'] = True;
- 
+			$GLOBALS['phpgw']->xslttpl->add_file(array('widgets'));
 
 
 		}
@@ -743,6 +745,7 @@
 			}
 			
 			$files_array = $this->bo->load_files();
+
 			$usage = 0;
 			$files_array = $this->dirs_first($files_array);
 			if(count($files_array) || $this->bo->cwd)
@@ -760,11 +763,10 @@
 									'value' => $file['name']
 								));
 					}
-
 					@reset($this->bo->file_attributes);
 					while(list($internal,$displayed) = each($this->bo->file_attributes))
 					{
-						if ($this->bo->settings[$internal])
+						if (!is_array($this->bo->settings)||$this->bo->settings[$internal])
 						{
 							if ($internal==$edit[$file['name']])
 							{
@@ -849,6 +851,7 @@
 						}
 					}
 				}
+
 				
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('summary' =>  array(
 						'file_count' => count($files_array),
@@ -991,17 +994,14 @@
 			$this->index($edit);
 		}
 		function view()
-		{	
-			$GLOBALS['phpgw_info']['flags']['noheader'] = true;
-			$GLOBALS['phpgw_info']['flags']['nonavbar'] = true;
-			$GLOBALS['phpgw_info']['flags']['noappheader'] = true;
-			$GLOBALS['phpgw_info']['flags']['noappfooter'] = true;
-
-			$this->bo->vfs->view(array (
-				'string'	=> $this->bo->path.'/'.$this->bo->file,
-				'relatives'	=> array (RELATIVE_NONE)
-			));
-			exit();;
+		{
+			Header('Location: '.$GLOBALS['phpgw']->link(
+						'view.php',
+						Array('path' => urlencode($this->bo->path),
+						'file'	=> urlencode($this->bo->file))
+					)
+				);
+			
 		}
 		
 		function history()
