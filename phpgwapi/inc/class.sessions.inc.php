@@ -386,8 +386,12 @@
 
 				// I added these into seperate steps for easier debugging
 				$data = $phpgw->db->f('content');
-				$data = $phpgw->common->decrypt($data);
-				$data = stripslashes($data);
+				// Changed by Skeeter 2001 Mar 04 0400Z
+				// This was not properly decoding structures saved into session data properly
+//				$data = $phpgw->common->decrypt($data);
+//				$data = stripslashes($data);
+				$data = $phpgw->crypto->decrypt($data);
+				$data = unserialize($data);
 
 				return $data;
 			} else {
