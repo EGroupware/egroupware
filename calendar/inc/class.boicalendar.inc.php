@@ -1104,7 +1104,7 @@
 				),
 				'sent_by'		=> Array(
 					'type'		=> 'function',
-					'function'	=> 'parse_user_host',
+					'function'	=> 'switch_mailto',
 					'quoted'		=> True,
 					'to_text'	=> False,
 					'properties'	=> Array(
