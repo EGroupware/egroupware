@@ -327,9 +327,6 @@ It should use the values in the $this->data
       
       $db2 = $this->db;
       
-      $group_pre = 'g_';
-      $user_pre = 'u_';
-      
       if ($app==False)
       {
         $app = $phpgw_info['flags']['currentapp'];
@@ -337,12 +334,12 @@ It should use the values in the $this->data
 
       $sql = "select acl_account, acl_rights from phpgw_acl where acl_appname = '$app' and "
            . "acl_location in ";
-      $security = "('". $user_pre . $phpgw_info['user']['account_id'] ."'";
+      $security = "('". $phpgw_info['user']['account_id'] ."'";
       $my_memberships = $phpgw->accounts->memberships($phpgw_info['user']['account_id']);
       while($groups = each($my_memberships))
       {
         $group = each($groups);
-        $security .= ",'" . $group_pre . $group[1]['account_id'] . "'";
+        $security .= ",'" . $group[1]['account_id'] . "'";
       }
 	  $security .= ')';
 	  $db2->query($sql . $security ,__LINE__,__FILE__);

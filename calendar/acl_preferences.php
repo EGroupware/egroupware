@@ -71,7 +71,7 @@
       while(list($right,$permission) = each($acllist)) {
         $totalacl += $right;
       }
-      $acl->add($phpgw_info["flags"]["currentapp"],'g_'.$group_id,$totalacl);
+      $acl->add($phpgw_info["flags"]["currentapp"],$group_id,$totalacl);
     }
 
 // User records
@@ -83,7 +83,7 @@
       while(list($right,$permission) = each($acllist)) {
         $totalacl += $right;
       }
-      $acl->add($phpgw_info["flags"]["currentapp"],'u_'.$user_id,$totalacl);
+      $acl->add($phpgw_info["flags"]["currentapp"],$user_id,$totalacl);
     }
   }
 
