@@ -1385,10 +1385,21 @@
 		//return True;
 	}
 
+	$test[] = '0.9.11.011';
+	function upgrade0_9_11_011()
+	{
+		global $setup_info;
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.001';
+		return $setup_info['phpgwapi']['currentver'];
+	}
+
 	$test[] = '0.9.13.001';
 	function phpgwapi_upgrade0_9_13_001()
 	{
-		global $setup_info;
+		global $setup_info,$phpgw_setup;
+
+		$phpgw_setup->oProc->AlterColumn('phpgw_categories','cat_access', array('type' => 'varchar', 'precision' => 7));
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.002';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
