@@ -109,25 +109,6 @@
 			echo parse_navbar();
 		}
 
-		$GLOBALS['phpgw']->db->query("select app_version from phpgw_applications where app_name='phpgwapi'",__LINE__,__FILE__);
-		if($GLOBALS['phpgw']->db->next_record())
-		{
-			$apiversion = $GLOBALS['phpgw']->db->f('app_version');
-		}
-		else
-		{
-			$GLOBALS['phpgw']->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$apiversion = $GLOBALS['phpgw']->db->f('app_version');
-		}
-
-		if ($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] > $apiversion)
-		{
-			echo '<p><b>' . lang('You are running a newer version of phpGroupWare than your database is setup for') . '.'
-				. '<br>' . lang('It is recommended that you run setup to upgrade your tables to the current version') . '.'
-				. '</b>';
-		}
-
 		$GLOBALS['phpgw']->translation->add_app('mainscreen');
 		if (lang('mainscreen_message') != 'mainscreen_message*')
 		{
@@ -143,15 +124,48 @@
 			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.phpgroupware.org/currentversion');
 			for ($i=0; $i<count($lines); $i++)
 			{
-				if (ereg("currentversion",$lines[$i]))
+				if (ereg('currentversion',$lines[$i]))
 				{
-					$line_found = explode(":",chop($lines[$i]));
+					$line_found = explode(':',chop($lines[$i]));
 				}
 			}
 			if($GLOBALS['phpgw']->common->cmp_version($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
 				echo '<p>There is a new version of phpGroupWare available. <a href="'
 					. 'http://www.phpgroupware.org">http://www.phpgroupware.org</a>';
+			}
+
+			$_found = False;
+			$GLOBALS['phpgw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
+			while($GLOBALS['phpgw']->db->next_record())
+			{
+				$_found = True;
+				$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
+				$_app_name    = $GLOBALS['phpgw']->db->f('app_name');
+				$_versionfile = $GLOBALS['phpgw']->common->get_app_dir($_app_name) . '/setup/setup.inc.php';
+				if(file_exists($_versionfile))
+				{
+					include($_versionfile);
+					$_file_version = $setup_info[$_app_name]['version'];
+					$_app_title    = $setup_info[$_app_name]['title'];
+					unset($setup_info);
+
+					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
+					{
+						$_app_string .= '<br>' . lang($_app_title);
+					}
+					unset($_file_version);
+					unset($_app_title);
+				}
+				unset($_db_version);
+				unset($_versionfile);
+			}
+			if($_found)
+			{
+				echo '<br>' . lang('The following applications require upgrades') . ':' . "\n";
+				echo $_app_string . "\n";
+				echo '<br>' . lang('Please run setup to become current') . '.' . "\n";
+				unset($_app_string);
 			}
 		}
 ?>
