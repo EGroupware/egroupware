@@ -7,6 +7,8 @@
 		as the true appname
 	- Added limit_query() function, this is a replacement for limit() which should no longer be used
 	- Admins can now force a default app
+	- Added global option to disable checking the IP address on sessions, usefull for those
+		behind load balanced proxys.
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)

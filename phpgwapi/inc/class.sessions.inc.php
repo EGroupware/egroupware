@@ -141,9 +141,12 @@
 				return False;
 			}
 
-			if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
+			if ($phpgw_info['server']['sessions_checkip'])
 			{
-				return False;
+				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
+				{
+					return False;
+				}
 			}
 
 			$phpgw->acl->acl($this->account_id);

@@ -85,6 +85,16 @@
     </td>
    </tr>
 
+   <tr bgcolor="{row_off}">
+    <td>{lang_check_ip_address_of_all_sessions}:</td>
+    <td>
+     <select name="newsettings[sessions_checkip]">
+      <option value="">No</option>
+      <option value="True"{selected_sessions_checkip_True}>Yes</option>
+     </select>
+    </td>
+   </tr>
+
    <tr bgcolor="{row_on}">
     <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
     <td>
