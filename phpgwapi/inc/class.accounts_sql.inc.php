@@ -59,6 +59,15 @@
       return $this->data;
     }
 
+		function save_repository()
+		{
+			$this->db->query("update phpgw_accounts set account_firstname='" . $this->data['firstname']
+				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
+				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
+		
+		}
+
+
 	function get_list($_type='both')
 	{
 		global $phpgw, $phpgw_info;
