@@ -27,11 +27,12 @@
 	$file = Array(
 		'Add'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
 		'_NewLine_', // give a newline
-		'import contacts'=>$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import')
+		'import contacts' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.import'),
+		'export contacts' => $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiXport.export')
 	);
 	display_sidebox($appname,$menu_title,$file);
 
-	if ($GLOBALS['phpgw_info']['user']['apps']['preferences'])
+	if($GLOBALS['phpgw_info']['user']['apps']['preferences'])
 	{
 		$menu_title = lang('Preferences');
 		$file = Array(
