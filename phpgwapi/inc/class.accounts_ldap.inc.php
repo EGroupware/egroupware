@@ -139,27 +139,34 @@
 
     function read_group_names($lid = "")
     {
+	return $this->security_equals($lid);
+    }
+
+    function security_equals($lid = "")
+    {
        global $phpgw, $phpgw_info;
-       
+
        if (! $lid) {
           $lid = $phpgw_info["user"]["userid"];
        }
        $groups = $this->read_groups($lid);
 
-       $db = $phpgw->db;
        $i = 0;
-       reset($groups);
        while ($groups && $group = each($groups)) {
-           $db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
-           $db->next_record();
-           $group_names[$i][0] = $group[0];
-           $group_names[$i][1] = $db->f("group_name");
-           $group_names[$i++][2] = $group[1];
+          $this->db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
+          $this->db->next_record();
+          $group_names[$i][0]   = $group[0];
+          $group_names[$i][1]   = $this->db->f("group_name");
+          $group_names[$i++][2] = $group[1];
        }
-       if (! $lid)
+
+       if (! $lid) {
           $this->group_names = $group_names;
+       }
+
        return $group_names;
     }
+
 
     function listusers($group="")
     {
@@ -245,7 +252,14 @@
         return False;
       }
     }
-    
+
+    function get_type($account_id)
+    {
+      global $phpgw, $phpgw_info;
+      
+      return "u";
+    }
+
     function exists($accountname)
     {
     	return True;
