@@ -13,7 +13,7 @@
 
 	$setup_info['admin']['name']      = 'admin';
 	$setup_info['admin']['title']     = 'Administration';
-	$setup_info['admin']['version']   = '0.9.13.001';
+	$setup_info['admin']['version']   = '0.9.13.002';
 	$setup_info['admin']['app_order'] = 1;
 	$setup_info['admin']['tables']    = '';
 	$setup_info['admin']['enable']    = 1;
