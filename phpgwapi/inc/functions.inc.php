@@ -77,11 +77,57 @@
 		 global $phpgw;
 		 return $phpgw->common->check_code($code);
 	}
-		/*!
-		@function filesystem_separator()
-		@abstract sets the file system seperator depending on OS
-		@result file system separator
-		*/
+
+	/*!
+	@function get_account_id()
+	@abstract Return a properly formatted account_id.
+	@discussion Author: skeeter <br>
+	This function will return a properly formatted account_id. <br>
+	This can take either a name or an account_id as paramters. <br>
+	If a name is provided it will return the associated id. <br>
+	Syntax: get_account_id($accountid); <br>
+	Example1: $account_id = get_account_id($accountid);
+	@param $account_id either a name or an id
+	@param $default_id either a name or an id
+	*/
+	function get_account_id($account_id = '',$default_id = '')
+	{
+		global $phpgw, $phpgw_info;
+
+		if (gettype($account_id) == 'integer')
+		{
+			return $account_id;
+		}
+		elseif ($account_id == '')
+		{
+			if ($default_id == '')
+			{
+				return $phpgw_info['user']['account_id'];
+			}
+			elseif (gettype($default_id) == 'string')
+			{
+				return $phpgw->accounts->name2id($default_id);
+			}
+			return intval($default_id);
+		}
+		elseif (gettype($account_id) == 'string')
+		{
+			if($phpgw->accounts->exists(intval($account_id)) == True)
+			{
+				return intval($account_id);
+			}
+			else
+			{
+				return $phpgw->accounts->name2id($account_id);
+			}
+		}
+	}
+
+	/*!
+	@function filesystem_separator()
+	@abstract sets the file system seperator depending on OS
+	@result file system separator
+	*/
 	function filesystem_separator()
 	{
 		if (PHP_OS == 'Windows' || PHP_OS == 'OS/2') {
@@ -91,16 +137,16 @@
 		}
 	}
 
-	function print_debug($text)
+	function print_debug($text='')
 	{
 		global $debugme;
-		if ($debugme == "on") { echo 'debug: '.$text.'<br>'; }
+		if (isset($debugme) && $debugme == "on") { echo 'debug: '.$text.'<br>'; }
 	}
 	print_debug('core functions are done');
 	/****************************************************************************\
 	* Quick verification of sane environment                                     *
 	\****************************************************************************/
-	error_reporting(7);
+//	error_reporting(7);
 	/* Make sure the header.inc.php is current. */
 	if ($phpgw_info["server"]["versions"]["header"] < $phpgw_info["server"]["versions"]["current_header"]){
 		echo "<center><b>You need to port your settings to the new header.inc.php version.</b></center>";
@@ -300,7 +346,7 @@
 		/*************************************************************************\
 		* These lines load up the templates class                                 *
 		\*************************************************************************/
-		$phpgw->template = CreateObject("phpgwapi.Template",$phpgw->common->get_tpl_dir($phpgw_info['flags']['currentapp']));
+		$phpgw->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 
 		/*************************************************************************\
 		* These lines load up the themes                                          *
@@ -392,44 +438,6 @@
 		if (!$phpgw_info["flags"]["noheader"] && ! $phpgw_info["flags"]["noappheader"] &&
 		file_exists(PHPGW_APP_INC . "/header.inc.php")) {
 			include(PHPGW_APP_INC . "/header.inc.php");
-		}
-	}
-
-	/************************************************************************\
-	* This function will return a properly formatted account_id.             *
-	* This needs to be placed here, or some classes will have a problem      *
-	* on instantiation.                                                      *
-	\************************************************************************/
-	function get_account_id($account_id = '',$default_id = '')
-	{
-		global $phpgw, $phpgw_info;
-
-		if (gettype($account_id) == 'integer')
-		{
-			return $account_id;
-		}
-		elseif ($account_id == '')
-		{
-			if ($default_id == '')
-			{
-				return $phpgw_info['user']['account_id'];
-			}
-			elseif (gettype($default_id) == 'string')
-			{
-				return $phpgw->accounts->name2id($default_id);
-			}
-			return intval($default_id);
-		}
-		elseif (gettype($account_id) == 'string')
-		{
-			if($phpgw->accounts->exists(intval($account_id)) == True)
-			{
-				return intval($account_id);
-			}
-			else
-			{
-				return $phpgw->accounts->name2id($account_id);
-			}
 		}
 	}
 
