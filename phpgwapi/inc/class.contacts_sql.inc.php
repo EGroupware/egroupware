@@ -504,7 +504,7 @@
 
 			if ($start && $limit)
 			{
-				$this->db->limit_query($sql,array($start,$limit),__LINE__,__FILE__);
+				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$limit);
 			}
 			elseif (!$limit)
 			{
