@@ -128,7 +128,9 @@
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'own')
 			{
-				$filtermethod .= " OR (info_responsible=$this->user OR info_status = 'offer')".
+				$filtermethod .= " OR (info_responsible=$this->user".
+					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
+						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
 			}
 			else      				// none --> all entrys user has rights to see
