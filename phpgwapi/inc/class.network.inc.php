@@ -187,16 +187,27 @@
 		 This allows for parsing of xml where the formatting was not ideal (elements
 		 opened and closed on a single line).
 		*/
-		function gethttpsocketfile($file,$string=False)
+		function gethttpsocketfile($file,$string=False,$user='',$passwd='')
 		{
 			$server = str_replace('http://','',$file);
 			$file = strstr($server,'/');
 			$server = str_replace($file,'',$server);
+
+			//allows for access to http-auth pages - added by Dave Hall <dave.hall@mbox.com.au>
+			if(!((empty($user))&&(empty($passwd))))
+			{
+				$auth = 'Authorization: Basic '.base64_encode("$user:$passwd")."\n";
+			}
+			else
+			{
+				$auth = '';
+			}
+
 			if($GLOBALS['phpgw_info']['server']['httpproxy_server'])
 			{
 				if ($this->open_port($server,80, 15))
 				{
-					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\r\n\r\n"))
+					if(!$this->write_port('GET http://' . $server . $file . ' HTTP/1.0'."\n".$auth."\r\n\r\n"))
 					{
 						return False;
 					}
@@ -231,7 +242,7 @@
 			{
 				if($this->open_port($server, 80, 15))
 				{
-					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\r\n\r\n"))
+					if(!$this->write_port('GET '.$file.' HTTP/1.0'."\n".'Host: '.$server."\n".$auth."\r\n\r\n"))
 					{
 						return 0;
 					}
