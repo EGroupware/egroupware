@@ -1,23 +1,41 @@
+(for weekly)	calendar	it	(per settimana)
+(i/v)cal	calendar	it	(i/v)Cal
 1 match found	calendar	it	Trovata 1 occorrenza
 a	calendar	it	A
+accept	calendar	it	Accetta
+accepted	calendar	it	Accettato
+add alarm	calendar	it	Aggiungi Allarme
+added	calendar	it	Aggiunto
+alarm management	calendar	it	Gestione Allarmi
 all day	calendar	it	Tutto il giorno
+are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività ?
 are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa nota ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta nota ?\n\nQuesto cancellerà\nquesta nota per tutti gli utenti.
 brief description	calendar	it	Descrizione breve
-calendar	common	it	calendario
-calendar preferences	common	it	Preferenze calendario
-calendar - add	calendar	it	Calendario - Aggiungi
-calendar - edit	calendar	it	Calendario - Modifica
+calendar	common	it	agenda
+calendar - add	calendar	it	Agenda - Aggiungi
+calendar - edit	calendar	it	Agenda - Modifica
+calendar - [iv]cal importer	calendar	it	Agenda - Importazione [iv]Cal
+calendar event	calendar	it	Evento in Agenda
+calendar holiday management	admin	it	Gestione Festività Agenda
+calendar preferences	common	it	Preferenze Agenda
+calendar settings	admin	it	Impostazioni Agenda
 daily	calendar	it	Giornaliero
 daily matrix view	calendar	it	Visualizza Matrice Giornaliera
 days repeated	calendar	it	giorni ripetuti
-default calendar filter	calendar	it	Filtro del calendario preferito
-default calendar view	calendar	it	Visualizzazione preferita del calendario
-description	calendar	it	Descrizione
+default calendar filter	calendar	it	Filtro di default dell'agenda
+default calendar view	calendar	it	Visualizzazione preferita dell'agenda
+deleted	calendar	it	Eliminato
+Display interval in Day View	calendar	it	Visualizza intervallo nella Visualizzazione Giornalira
+display mini calendars when printing	calendar	it	Visualizza mini calendari quando stampi
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
+do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
 duration	calendar	it	Durata
+edit series	calendar	it	Modifica Serie
+edit single	calendar	it	Modifica Singolo
 end date/time	calendar	it	Data/Ora finale
-(for weekly)	calendar	it	(per settimana)
+ends	calendar	it	finisce
+export	calendar	it	Esporta
 fr	calendar	it	V
 free/busy	calendar	it	Libero/Occupato
 frequency	calendar	it	Frequenza
@@ -27,48 +45,69 @@ generate printer-friendly version	calendar	it	Genera versione stampabile
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public only	calendar	it	Solo Pubblico Globale
 go!	calendar	it	Vai!
-grant calendar access	common	it	Permetti accesso al Calendario
+grant calendar access	common	it	Permetti accesso all'Agenda
 group public only	calendar	it	Solo Pubblico per il Gruppo
-ignore conflict	calendar	it	Ignora Conflitto
+has been canceled	calendar	it	è stato cancellato
+has been rescheduled to	calendar	it	è stato spostato a
 i participate	calendar	it	Io Partecipo
-minutes	calendar	it	minuti
+ignore conflict	calendar	it	Ignora Conflitto
+import	calendar	it	Importa
+interval	calendar	it	Intervallo
+load [iv]cal	calendar	it	Carica [iv]Cal
+location	calendar	it	Località
+location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
+minutes	calendar	it	minutes
 mo	calendar	it	L
+modified	calendar	it	Modificato
 mon	calendar	it	Lun
 month	calendar	it	Mese
+monthly	calendar	it	Mensile
 monthly (by date)	calendar	it	Mensile (per data)
 monthly (by day)	calendar	it	Mensile (per giorno)
-monthly	calendar	it	Mensile
 new entry	calendar	it	Nuovo Appuntamento
 no matches found.	calendar	it	Nessuna corrispondenza trovata.
-none	calendar	it	Nessuna
+no response	calendar	it	Nessuna Risposta
+participant	calendar	it	Partecipante
 participants	calendar	it	Partecipanti
+participates	calendar	it	partecipa
+print calendars in black & white	calendar	it	Stampa agende in bianco & nero
 printer friendly	calendar	it	Versione Stampabile
 private and global public	calendar	it	Privato e Pubblico Globale
 private and group public	calendar	it	Private e Pubblico per il Gruppo
 private only	calendar	it	Solo privato
 re-edit event	calendar	it	Ri-modifica l'evento
+refresh	calendar	it	Refresh
+reject	calendar	it	Reject
+rejected	calendar	it	Rifiutato
 repeat day	calendar	it	Giorno ripetizione
 repeat end date	calendar	it	Data ultima ripetizione
-repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
 repeat type	calendar	it	Tipo di ripetizione
+repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
 repetition	calendar	it	Ripetizione
 sa	calendar	it	Sa
 sat	calendar	it	Sab
+scheduling conflict	calendar	it	Conflitto di orario
 search results	calendar	it	Risultati Ricerca
+send updates via email	common	it	Invia aggiornamenti via email
+send/Receive updates via email	calendar	it	Invia/Ricevi aggiornamenti via email
 show day view on main screen	calendar	it	Mostra la vista giornaliera nella schermata principale
 show high priority events on main screen	calendar	it	Mostra eventi ad alta priorità nella schermata principale
-start date/time	calendar	it	Data/Ora Inizio
+sorry, the owner has just deleted this event	calendar	it	Spiacente, il proprietario ha appena cancellato questo evento
+start date 	calendar	it	Data Inizio
 su	calendar	it	Do
 sun	calendar	it	Dom
+tentative	calendar	it	Tentativo
 th	calendar	it	G
 the following conflicts with the suggested time:<ul>x</ul>	calendar	it	Il seguente è in conflitto con l'orario suggerito:<ul>%1</ul>
 this month	calendar	it	Questo mese
 this week	calendar	it	Questa settimana
+this year	calendar	it	Quest'anno
 thu	calendar	it	Gio
 today	calendar	it	Oggi
 tu	calendar	it	M
 tue	calendar	it	Mar
 use end date	calendar	it	Usa data di termine
+user	calendar	it	utente
 view this entry	calendar	it	Visualizza questo inserimento
 we	calendar	it	M
 wed	calendar	it	Mer
@@ -81,14 +120,14 @@ work day starts on	calendar	it	La giornata lavorativa inizia alle
 x matches found	calendar	it	Trovate %1 occorrenze
 year	calendar	it	Anno
 yearly	calendar	it	Annuale
-you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nel tuo calendario.
-you have x high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nel tuo calendario.
-you have not entered a\nbrief description	calendar	it	Non hai inserito una\nBreve Descrizione
-you have not entered a\nvalid time of day.	calendar	it	Non hai inserito un\norario valido.
+you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nella tua agenda.
+you have a meeting scheduled for	calendar	it	Hai un appuntamento fissato alle
+you have not entered a title	calendar	it	Non hai inserito alcun titolo
+you have not entered a valid date	calendar	it	Hai inserito una data non valida
+you have not entered a valid time of day	calendar	it	Hai inserito un orario non valido
+you have not entered participants	calendar	it	Non hai inserito i partecipanti
+you have x high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nella tua agenda.
 you must enter one or more search keywords	calendar	it	Devi inserire una o più keyword per la ricerca
-your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in calendario:
-user	calendar	it	utente
-start date 	calendar	it	Data Inizio
-end date	calendar	it	Data Fine
-this year	calendar	it	Quest'anno
-participates	calendar	it	partecipa
+your meeting scheduled for	calendar	it	Il tuo meeting fissato per
+your meeting that was scheduled for	calendar	it	Il tuo meeting che era fissato per 
+your suggested time of <b> x - x </b> conflicts with the following existing calendar entries:	calendar	it	L'orario suggerito <B> %1 - %2 </B> è in conflittop con i seguenti appunamenti presenti in agenda:
