@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" = "admin");
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "admin");
 
   if (! $app_name)
      Header("Location: " . $phpgw->link("applications.php"));
