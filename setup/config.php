@@ -48,7 +48,7 @@
 	/* Guessing default values. */
 	$GLOBALS['current_config']['hostname']  = $HTTP_HOST;
 	$GLOBALS['current_config']['files_dir'] = ereg_replace('/setup','/files',dirname($SCRIPT_FILENAME));
-	if (is_dir('/tmp'))
+	if (@is_dir('/tmp'))
 	{
 		$GLOBALS['current_config']['temp_dir'] = '/tmp';
 	}
@@ -85,7 +85,7 @@
 
 		while (list($setting,$value) = @each($newsettings))
 		{
-			echo '<br>Updating: ' . $setting . '=' . $value;
+			/* echo '<br>Updating: ' . $setting . '=' . $value; */
 			/* Don't erase passwords, since we also do not print them below */
 			if(!ereg('passwd',$setting) && !ereg('password',$setting) && !ereg('root_pw',$setting))
 			{
