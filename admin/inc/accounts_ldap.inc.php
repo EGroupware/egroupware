@@ -229,12 +229,15 @@
      // This is just until the API fully handles reading the LDAP account info.
      $lid = $account_info["loginid"];
      
-     if ($account_info["c_loginid"]) {
-        $account_info["loginid"] = $account_info["c_loginid"];
+     if ($account_info["old_loginid"] != $account_info["loginid"]) {
+//        $account_info["loginid"] = $account_info["c_loginid"];
 
         $entry["uid"]            = $account_info["loginid"];
         $entry["homeDirectory"]  = "/home/" . $account_info["loginid"];
         $entry["mail"]		 = $account_info["loginid"] . "@" . $phpgw_info["server"]["mail_suffix"];
+
+        $phpgw->db->query("update accounts set account_lid='" . $account_info["loginid"] . "' "
+                        . "where account_lid='" . $account_info["old_loginid"] . "'");
      }
      
      if ($account_info["passwd"]) {
@@ -255,14 +258,6 @@
         $account_info["account_status"] = "L";
      }
 
-     #$phpgw->db->query("update accounts set account_firstname='"
-     #   			 . addslashes($account_info["firstname"]) . "', account_lastname='"
-     #   			 . addslashes($account_info["lastname"]) . "', account_permissions='"
-     #	    	         . $phpgw->accounts->add_app("",True) . "', account_status='"
-     #			         . $account_info["account_status"] . "', account_groups='"
-     #    		         . $account_info["groups"] . "' where account_lid='" . $account_info["loginid"]
-     #   		         . "'");
-
      $entry["cn"]	 	= sprintf("%s %s", $account_info["firstname"], $account_info["lastname"]);
      $entry["sn"]	 	= $account_info["lastname"];
      $entry["givenname"] 	= $account_info["firstname"];
@@ -280,12 +275,12 @@
      @ldap_modify($ldap, $dn, $entry);
 
      $cd = 27;
-     if ($account_info["c_loginid"] != $account_info["loginid"]) {
+     if ($account_info["old_loginid"] != $account_info["loginid"]) {
         $sep = $phpgw->common->filesystem_separator();
 	
         $basedir = $phpgw_info["server"]["files_dir"] . $sep . "users" . $sep;
 
-        if (! @rename($basedir . $lid, $basedir . $account_info["loginid"])) {
+        if (! @rename($basedir . $account_info["old_loginid"], $basedir . $account_info["loginid"])) {
            $cd = 35;
         }
      }     
