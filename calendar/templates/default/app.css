@@ -1,8 +1,14 @@
 /* CSS Document */
+
+.to_continue
+{
+	font-size: 9px;
+}
+
 A.minicalendar 
 { 
 	color: #000000; 
-	font-size: 10px;
+	font-size: 9px;
 	
 }
 
@@ -11,7 +17,7 @@ A.bminicalendar
 	color: #336699; 
 	font-style: italic;
 	font-weight: bold;
-	font-size: 10px; 
+	font-size: 9px; 
 }
 
 A.minicalendargrey 
@@ -107,14 +113,38 @@ A.bminicalgreyhol
 	border: thin solid black;
 }
 
+/* common */
 .calendar_link_print
 {
 	text-align: center;
 	font-size: 10px;
 }
 
-// week view
+//Mini Calendar
 
+.calendar_minical_table
+{
+	width: 180px;
+	font-weight: bold;
+}
+
+.calendar_minical_daytable
+{
+	width: 100%;
+}
+
+.calendar_minical_dayname
+{
+	font-size: 9px;
+	text-align: right;
+}
+
+.calendar_minical_hrule
+{
+	width: 96%;
+}
+
+/* Header */
 .calendar_dropbuttons
 {
 	align: center;
@@ -128,6 +158,7 @@ A.bminicalgreyhol
 {
 	font-size:16px;
 	font-weight: bold;
+	text-align: center;
 }
 
 .calendar_header
@@ -151,7 +182,7 @@ A.bminicalgreyhol
 	font-weight: bold;
 }
 
-
+/* week view */
 .calendar_week_identifier_table
 {
 	border: 0px solid black;
@@ -169,6 +200,7 @@ A.bminicalgreyhol
 {
 	font-weight: bold;
 	font-size: 12px;
+	background: #D3DCE3;
 }
 
 .calendar_m_w_table
@@ -185,6 +217,7 @@ A.bminicalgreyhol
 	vertical-align: top;
 	padding-left: 4px;
 	padding-right: 4px;
+	padding-bottom: 6px;
 }
 
 A.event_entry
@@ -205,4 +238,20 @@ A.event_entry
 	font-size:12px;
 	color: #009999;
 	font-weight: bold;
+}
+
+.calendar_week_minical_table
+{
+	width:100%;
+	border: 0px solid #000000
+}
+
+.calendar_weekinfo
+{
+	color: #000000;
+	padding-left: 2px;
+	padding-right: 2px;
+	font-size: 10px;
+	font-weight: bold;
+	font-style: italic;
 }

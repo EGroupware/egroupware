@@ -4,10 +4,11 @@
 <table id="calendar_dayview_table" class="calendar_dayview_table" border="0" width="100%">
 	<tr>
 		<td valign="top" width="70%">
-			<table border="0" width=100%>
+			<table id="calendar_dayview1" border="0" width=100%>
 				<tr>
 					<td class="calendar_dayview_table_header">
-      					{date}&nbsp;[{username}]<br />
+      					{date}&nbsp;<span class="calendar_user_identifier">:&nbsp;{username}&nbsp;:</span>
+						<br />
      				</td>
     			</tr>
 				{day_events}
@@ -15,7 +16,7 @@
    			<p align="center">{print}</p>
   		</td>
  		 <td align="center" valign="top">
-  			 <table width="100%">
+  			 <table id="calendar_dayview2" width="100%">
     			<tr>
      				<td align="center">
 						{small_calendar}

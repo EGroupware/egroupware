@@ -5,8 +5,8 @@
 <!-- END link_pict -->
 
 <!-- BEGIN link_open -->
-<div style="overflow:hidden;">
-<a class="event_entry" href="{link_link}" onMouseOver="window.status='{lang_view}'; return true;" onMouseOut="window.status=''; return true;" title="{desc} - {location}"><br>
+<div id="calendar_event_entry" style="overflow:hidden;">
+<a class="event_entry" href="{link_link}" onMouseOver="window.status='{lang_view}'; return true;" onMouseOut="window.status=''; return true;" title="{desc}  {location}"><br>
 <!-- END link_open -->
 
 <!-- BEGIN pict -->

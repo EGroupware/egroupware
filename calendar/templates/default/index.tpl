@@ -1,6 +1,6 @@
 <!-- $Id$ -->
 {printer_friendly}
-<table border="0" width="100%" cols="5">
+<table id="calendar_index_table" border="0" width="100%" cols="5">
 	<tr>
 		<td align="left" valign="top" width="20%">
 			{small_calendar_prev}
@@ -14,7 +14,7 @@
 			</span>
 				<br />
 			<span class="calendar_user_identifier">
-				[&nbsp;{username}&nbsp;]
+				:&nbsp;{username}&nbsp;:
 			</span>
 		</td>
 		<td align="center" valign="middle" width="15%">

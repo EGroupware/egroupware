@@ -1,12 +1,12 @@
 <!-- $Id$ -->
 
 <!-- BEGIN monthly_header -->
- <tr colspan="{cols}" width="{col_width}%">
+ <tr class="calendar_m_w_table_header" colspan="{cols}" width="{col_width}%">
 {column_header}</tr>
 <!-- END monthly_header -->
 
 <!-- BEGIN column_title -->
-  <th class="calendar_weekview_daytitle" width="11%" bgcolor="{bgcolor}">{col_title}</th>
+  <th class="calendar_weekview_daytitle" width="14.28%">{col_title}</th>
 <!-- END column_title -->
 
 <!-- BEGIN month_column -->

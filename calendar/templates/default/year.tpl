@@ -1,7 +1,7 @@
 <!-- BEGIN year -->
 {print}
 <center>
-<table border="0" cellspacing="3" cellpadding="4" cols=4>
+<table id="calendar_year_table" border="0" cellspacing="3" cellpadding="4" cols=4>
 	<tr>
 		<td align="center">
 			{left_link}
