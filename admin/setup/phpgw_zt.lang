@@ -14,6 +14,7 @@ account preferences	admin	zt	帳號喜好設定
 acl manager	admin	zt	ACL管理者
 acl rights	common	zt	ACL權限
 action	admin	zt	動作
+activate wsiwyg-editor	admin	zt	啟用所見即所得編輯器
 activate wysiwyg-editor	admin	zt	啟用所見即所得編輯器
 add a category	admin	zt	新增類別
 add a group	admin	zt	新增群組
@@ -35,11 +36,14 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	zt	管理者名稱
 administration	admin	zt	管理
 admins	admin	zt	系統管理
+advanced options	admin	zt	進階選項
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	zt	登入失敗幾次之後要鎖定該帳號(預設三次)？
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	zt	登入失敗幾次之後要鎖定IP位址(預設三次)？
+aliases	admin	zt	對齊
 all records and account information will be lost!	admin	zt	所有的帳號資料及紀錄將會消失！
 all users	admin	zt	所有使用者
 allow anonymous access to this app	admin	zt	允許匿名使用者存取此應用程式
+alternate email address	admin	zt	替代郵件位址
 anonymous user	admin	zt	匿名使用者
 anonymous user (not shown in list sessions)	admin	zt	匿名用戶(上線列表中不顯示)
 appearance	admin	zt	外觀
@@ -61,6 +65,10 @@ async services last executed	admin	zt	非同步服務最後執行時間
 asynchronous timed services	admin	zt	非同步時間服務
 asyncservices not yet installed or other error (%1) !!!	admin	zt	非同步服務還沒安裝或是其他錯誤(%1)！
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zt	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
+attribute accountstatus explained	admin	zt	這處理了來自 QMAIL 概要的屬性 <b><i>-accountStatus-</i></b>
+attribute mail explained	admin	zt	這處理了來自 QMAIL 概要的屬性 <b><i>-mail-</i></b>且不能為空白。它也是eGW內建的郵件欄位
+attribute mailalternateaddress explained	admin	zt	這處理了來自 QMAIL 概要的屬性 <b><i>-mailAlternateAddress-</i></b>且可以視為虛擬地圖或是捷徑處理
+attribute mailforwardingaddress explained	admin	zt	這處理了來自 QMAIL 概要的屬性 <b><i>-mailForwardingAddress-</i></b>且如果被指定就不能夠為空白
 authentication / accounts	admin	zt	認證／帳號
 auto create account records for authenticated users	admin	zt	自動建立所有授權使用者的帳號資料
 back to the list	admin	zt	回到列表
@@ -83,6 +91,7 @@ color	admin	zt	顏色
 country selection	admin	zt	選擇國家
 create group	admin	zt	新增群組
 crontab only (recomended)	admin	zt	僅crontab  (建議)
+cyrus imap server	admin	zt	Cyrus IMAP伺服器
 data	admin	zt	資料
 day	admin	zt	日
 day of week<br>(0-6, 0=sun)	admin	zt	星期幾<br>(0-6, 0=星期日)
@@ -101,6 +110,7 @@ delete the group	admin	zt	刪除這個群組
 delete this category	admin	zt	刪除這個分類
 delete this group	admin	zt	刪除這個群組
 delete this user	admin	zt	刪除這個使用者
+deliver extern	admin	zt	外來的傳輸
 deny access to access log	admin	zt	禁止對存取紀錄的存取
 deny access to application registery	admin	zt	禁止存取應用程式註冊設定
 deny access to applications	admin	zt	無法存取應用程式
@@ -117,6 +127,7 @@ deny access to user accounts	admin	zt	無法存取使用者帳號
 deny all users access to grant other users access to their entries ?	admin	zt	不允許任何使用者將自己的資料開放給其它使用者存取？
 description can not exceed 255 characters in length !	admin	zt	描述文章的長度不可以超過255字元！
 disable "auto completion" of the login form	admin	zt	停止登入頁面中的自動完成功能
+disable wsiwyg-editor	admin	zt	停用所見即所得編輯器
 disable wysiwyg-editor	admin	zt	停用所見即所得編輯器
 disabled (not recomended)	admin	zt	停用(不建議)
 display	admin	zt	顯示
@@ -126,6 +137,7 @@ do you want to delete all global subcategories ?	admin	zt	您確定要刪除全�
 do you want to move all global subcategories one level down ?	admin	zt	您要將所有的子類別向下移一個階層？
 edit account	admin	zt	編輯帳號
 edit application	admin	zt	編輯應用程式
+edit email settings	admin	zt	編輯郵件設定
 edit global category	admin	zt	編輯全區分類
 edit global category for %1	admin	zt	編輯全域分類 %1
 edit group	admin	zt	編輯群組
@@ -139,6 +151,8 @@ edit this group	admin	zt	編輯這個群組
 edit this user	admin	zt	編輯這個使用者
 edit user	admin	zt	編輯使用者
 edit user account	admin	zt	編輯使用者帳號
+email account active	admin	zt	郵件帳號啟用
+email address	admin	zt	郵件位址
 enable debug-messages	admin	zt	顯示偵錯訊息
 enabled - hidden from navbar	admin	zt	啟用，但不顯示在功能列中
 enabled - popup window	admin	zt	啟用，顯示在跳出視窗中
@@ -150,7 +164,8 @@ enter the file name of your logo	admin	zt	請輸入商標的檔案名稱
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
 enter the hostname of the machine on which this server is running	admin	zt	輸入這個伺服器主機的主機名稱
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入 eGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware &nbsp;或&nbsp; /egroupware<br><b>結尾無斜線</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zt	輸入 eGroupWare 的網址<br>例如： http://www.domain.com/egroupware &nbsp; 或 &nbsp; /egroupware<br><b>最後不需要加斜線</b>
+enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zt	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
 enter the site password for peer servers	admin	zt	輸入對接伺服器的主機密碼
 enter the site username for peer servers	admin	zt	輸入對接伺服器的主機名稱
@@ -168,6 +183,7 @@ error canceling timer, maybe there's none set !!!	admin	zt	刪除計時器錯誤
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	zt	計時器設定錯誤，錯誤的語法或是已經有一個正在執行！
 error: %1 not found or other error !!!	admin	zt	錯誤：找不到%1或是其他錯誤！
 expires	admin	zt	過期
+explanation of ldapman	admin	zt	這個模組已經在 POSTFIX,LDAP,Courier-IMAP 測試過且需要核心與 QMAIL (OID7914)概要。更多細節可以參考 ADMIN 資料夾中的 README.ldapman 。
 fallback (after each pageview)	admin	zt	回到主頁(在每次瀏覽頁面後)
 file space	admin	zt	檔案空間
 file space must be an integer	admin	zt	檔案空間必須是整數
@@ -175,6 +191,9 @@ find and register all application hooks	admin	zt	尋找並註冊所有應用程�
 for the times above	admin	zt	次數上限
 for the times below (empty values count as '*', all empty = every minute)	admin	zt	下面的次數(空白視為"*"，全部空白等於每一分鐘)
 force selectbox	admin	zt	固定勾選方塊
+forward also to	admin	zt	同時轉寄到
+forward email's to	admin	zt	轉寄信件到
+forward only	admin	zt	轉寄
 global categories	common	zt	全區分類
 group ?	admin	zt	群組？
 group has been added	common	zt	成功新增群組
@@ -191,8 +210,9 @@ how many days should entries stay in the access log, before they get deleted (de
 how many minutes should an account or ip be blocked (default 30) ?	admin	zt	帳號鎖定將持續幾分鐘(預設30)？
 icon	admin	zt	圖示
 idle	admin	zt	閒置時間
-if no acl records for user or any group the user is a member of	admin	zt	如果沒有使用者的 ACL 記錄或這個使用者的任何群組
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	如果使用 LDAP，您是否要管理家目錄與登入管理介面屬性？
+if no acl records for user or any group the user is a member of	admin	zt	If no ACL records for user or any group the user is a member of
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zt	If using LDAP, do you want to manage homedirectory and loginshell attributes?
+in mbyte	admin	zt	以MB顯示
 inbound	admin	zt	聚集
 install crontab	admin	zt	安裝排定的工作
 installed applications	common	zt	已安裝之應用程式
@@ -215,6 +235,7 @@ ldap groups context	admin	zt	LDAP 群組內容
 ldap host	admin	zt	LDAP 主機
 ldap root password	admin	zt	LDAP 管理者密碼
 ldap rootdn	admin	zt	LDAP 主要端點﹝rootdn﹞
+leave empty for no quota	admin	zt	不填入任何資料表示無限制
 leave the category untouched and return back to the list	admin	zt	保留類別原樣並且回到列表
 leave the group untouched and return back to the list	admin	zt	保留群組員樣並且回到列表
 list config settings	admin	zt	列出組態設定
@@ -227,6 +248,7 @@ login shell	admin	zt	登入命令處理器
 login time	admin	zt	登入時間
 loginid	admin	zt	登入代碼
 mail settings	admin	zt	郵件設定
+main email-address	admin	zt	主要信箱
 main screen message	admin	zt	主畫面訊息
 manager	admin	zt	管理者
 maximum account id (e.g. 65535 or 1000000)	admin	zt	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
@@ -241,6 +263,7 @@ new group name	admin	zt	新的群組名稱
 new password [ leave blank for no change ]	admin	zt	新的密碼（空白時不更動）
 next run	admin	zt	下次執行
 no algorithms available	admin	zt	沒有任何可以使用的演算法
+no alternate email address	admin	zt	沒有可替換的郵件位址
 no jobs in the database !!!	admin	zt	資料庫中沒有任何工作！
 no login history exists for this user	admin	zt	這個使用者沒有登入的紀錄
 no matches found	admin	zt	沒有找到符合的資料
@@ -264,15 +287,21 @@ please enter a name	admin	zt	請輸入一個名稱
 please enter a name for that server !	admin	zt	請為該伺服器輸入一個名稱
 please run setup to become current	admin	zt	請執行安裝來符合現在的環境
 please select	admin	zt	請選擇
+postfix with ldap	admin	zt	使用LDAP與 Postfix
 preferences	admin	zt	喜好設定
 primary group	admin	zt	主要群組
+qmaildotmode	admin	zt	qmaildotmode
+qouta size in mbyte	admin	zt	配額(MB)
+quota settings	admin	zt	配額設定
 re-enter password	admin	zt	再次輸入密碼
 read this list of methods.	admin	zt	讀取這個方法的列表
 register application hooks	admin	zt	註冊應用程式
+remove	admin	zt	移除
 remove all users from this group	admin	zt	移除此群組中所有的使用者
 remove all users from this group ?	admin	zt	移除這個群組的所有使用者？
 return to admin mainscreen	admin	zt	回到管理者主畫面
 return to view account	admin	zt	回到帳號瀏覽
+route all mails to	admin	zt	轉遞所有信件到
 run asynchronous services	admin	zt	執行非同步服務
 save the category	admin	zt	儲存類別
 save the category and return back to the list	admin	zt	儲存類別並且回到列表
@@ -313,6 +342,9 @@ sorry, the follow users are still a member of the group %1	admin	zt	很抱歉，
 sort the entries	admin	zt	排序
 ssl	admin	zt	ssl
 standard	admin	zt	標準
+standard imap server	admin	zt	標準IMAP伺服器
+standard pop3 server	admin	zt	標準POP3伺服器
+standard smtp-server	admin	zt	標準SMTP伺服器
 start testjob!	admin	zt	啟動測試任務!
 submit changes	admin	zt	送出更新資料
 submit the search string	admin	zt	送出搜尋字串
@@ -344,12 +376,13 @@ total records	admin	zt	所有紀錄
 trust level	admin	zt	信用層級
 trust relationship	admin	zt	信用關係
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	zt	在Windows平台下您只能夠使用退回模式，退回指的是工作只會在瀏覽之後檢查。
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	zt	在 windows 環境需要 %1手動%2 安裝 asyncservice 或是使用回應模式，回應模式指的是在每頁瀏覽完才會被檢查。
 use cookies to pass sessionid	admin	zt	使用 COOKIE 傳遞連線代碼
 use pure html compliant code (not fully working yet)	admin	zt	使用標準 HTML 原始碼（尚未完全支援）
 use theme	admin	zt	使用布景主題
 user accounts	admin	zt	使用者管理
 user data	admin	zt	使用者資料
-user for smtp-authentication (leave it empty if no auth required)	admin	zt	SMTP認證的帳號(如果不需要認證可以保持空白)
+user for smtp-authentication (leave it empty if no auth required)	admin	zt	SMTP認證帳號(如果不需要就不用填入)
 user groups	admin	zt	使用者群組管理
 userdata	admin	zt	使用者資料
 users choice	admin	zt	使用者的選擇
@@ -361,9 +394,13 @@ view sessions	admin	zt	列出連線
 view this user	admin	zt	查看該使用者
 view user account	admin	zt	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zt	您希望將被移除使用者的資料轉移給誰？
-would you like egroupware to cache the egw info array ?	admin	zt	您希望eGroupWare暫存網頁資料嗎？
+would you like egroupware to cache the egw info array ?	admin	zt	您希望 eGroupWare 暫存 egw 資訊陣列嗎？
+would you like egroupware to cache the phpgw info array ?	admin	zt	您希望 eGroupWare 暫存 phpgw 資訊陣列嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
 would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
+would you like phpgroupware to cache the phpgw info array ?	admin	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
+would you like phpgroupware to check for a new version<br>when admins login ?	admin	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
+would you like phpgroupware to check for new application versions when admins login ?	admin	zt	您希望phpGroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zt	您想要自動讀取新的語言檔案嗎(登入時)？
 would you like to show each application's upgrade status ?	admin	zt	您希望顯示每一個應用程式升級的資訊嗎？
 xml-rpc	admin	zt	XML-RPC

@@ -20,6 +20,7 @@ alarm for %1 at %2 in %3	calendar	zt	在%3的%1 中 %2警告
 alarm management	calendar	zt	警示管理
 alarm-management	calendar	zt	警告管理員
 alarms	calendar	zt	警告
+all categories	calendar	zt	所有類別
 all day	calendar	zt	所有日期
 are you sure you want to delete this country ?	calendar	zt	您確定要移除這個國家嗎？
 are you sure you want to delete this holiday ?	calendar	zt	您確定要移除這個假日嗎？
@@ -27,10 +28,6 @@ are you sure\nyou want to\ndelete these alarms?	calendar	zt	您確定\n要刪除
 are you sure\nyou want to\ndelete this entry ?	calendar	zt	您確定要移除\n這筆資料嗎？
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定要移除這筆資料嗎？\n所有使用者的資料將一併移除。
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	zt	您確定\n您要刪除這個期間？\n\n這將會\n刪除所有使用者的相同事件。
-are you surenyou want tondelete these alarms?	calendar	zt	
-are you surenyou want tondelete this entry ?	calendar	zt	
-are you surenyou want tondelete this entry ?nnthis will deletenthis entry for all users.	calendar	zt	
-are you surenyou want tondelete this single occurence ?nnthis will deletenthis entry for all users.	calendar	zt	
 before the event	calendar	zt	事件之前
 brief description	calendar	zt	簡短敘述
 business	calendar	zt	商務
@@ -65,6 +62,7 @@ default appointment length (in minutes)	calendar	zt	預設會議時間長度(分
 default calendar filter	calendar	zt	預設行事曆過濾器
 default calendar view	calendar	zt	預設行事曆檢視模式
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zt	預設建立事件的長度(分鐘)，預設為60=1小時。
+default week view	calendar	zt	預設週曆模式
 defines the size in minutes of the lines in the day view.	calendar	zt	定義行事曆瀏覽時每個時段的分鐘數
 delete a single entry by passing the id.	calendar	zt	刪除這個事件並且略過這個ID
 delete an entire users calendar.	calendar	zt	刪除整個使用者的行事曆
@@ -73,13 +71,16 @@ delete series	calendar	zt	刪除連鎖項目
 delete single	calendar	zt	刪除單一項目
 deleted	calendar	zt	刪除日期
 description	calendar	zt	描述
+determining window width ...	calendar	zt	偵測視窗寬度...
 disable	calendar	zt	停用
 disabled	calendar	zt	停用
 display interval in day view	calendar	zt	每日顯示的間隔
 display mini calendars when printing	calendar	zt	列印時顯示小行事曆
 display status of events	calendar	zt	顯示事件的狀態
+displayed view	calendar	zt	已顯示模式
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	在歡迎畫面顯示您的預設行事曆瀏覽模式？
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入eGroupWare第一個看到或是按下您的首頁按鈕的頁面)
+displays your default calendar view on the startpage (page you get when you enter phpgroupware or click on the homepage icon)?	calendar	zt	顯示您預設的行事曆瀏覽模式在啟始頁(您登入phpGroupWare第一個看到或是按下您的首頁按鈕的頁面)
+do you want a weekview with or without weekend?	calendar	zt	您是否希望週曆包含週末？
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zt	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zt	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？<br>這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。<br>它只會在那一天或是那一週有約會時寄出。
 do you wish to autoload calendar holidays files dynamically?	admin	zt	您希望動態新增行事曆的假日嗎？
@@ -163,8 +164,11 @@ monthly	calendar	zt	每月
 monthly (by date)	calendar	zt	每月（以日期計）
 monthly (by day)	calendar	zt	每月（以天數計）
 monthview	calendar	zt	月行事曆
+needs javascript to be enabled !!!	calendar	zt	您必須啟用瀏覽器的javascript功能
 new entry	calendar	zt	新增資料
 new name must not exist and not be empty!!!	calendar	zt	新的名稱必須未存在或是不能夠空白！
+next day	calendar	zt	下一天
+no filter	calendar	zt	沒有規則
 no matches found	calendar	zt	沒有找到符合的結果
 no matches found.	calendar	zt	沒有找到符合的資料
 no repsonse	calendar	zt	沒有回應
@@ -202,7 +206,9 @@ planner	calendar	zt	計畫者
 planner by category	calendar	zt	類別計畫者
 planner by user	calendar	zt	使用者計畫者
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	zt	請確認、同意、拒絕或是檢查您的行事曆中相同的事件異動
+please enter a filename !!!	calendar	zt	請輸入檔案名稱！
 preselected group for entering the planner	calendar	zt	進入計畫管理的預設群組
+previous day	calendar	zt	前一天
 print calendars in black & white	calendar	zt	使用單色列印
 print the mini calendars	calendar	zt	列印迷你行事曆
 printer friendly	calendar	zt	友善列印
@@ -234,6 +240,7 @@ sa	calendar	zt	六
 sat	calendar	zt	六
 scheduling conflict	calendar	zt	約會重疊
 search results	calendar	zt	搜尋結果
+select a %1	calendar	zt	選了一個 %1
 selected contacts (%1)	calendar	zt	選擇的聯絡人(%1)
 send updates via email	common	zt	透過電子郵件傳送最新消息
 send/receive updates via email	calendar	zt	透過電子郵件傳送/接收最新消息
@@ -250,6 +257,11 @@ show default view on main screen	calendar	zt	在主要畫面顯示預設瀏覽
 show high priority events on main screen	calendar	zt	在首頁顯示高優先權的約會
 show invitations you rejected	calendar	zt	顯示您已經拒絕的邀請
 show list of upcoming events	calendar	zt	顯示即將到來的行程
+show next seven days	calendar	zt	顯示下一週
+show only one day	calendar	zt	只顯示一天
+show the calendar of multiple users	calendar	zt	顯示多人行事曆
+show this month	calendar	zt	顯示這個月
+show this week	calendar	zt	顯示這一週
 single event	calendar	zt	單一事件
 sorry, the owner has just deleted this event	calendar	zt	很抱歉，該約會的擁有者剛移除了該約會
 sorry, this event does not exist	calendar	zt	抱歉，這個事件不存在
@@ -295,6 +307,7 @@ today	calendar	zt	今天
 translation	calendar	zt	翻譯
 tu	calendar	zt	二
 tue	calendar	zt	二
+two dayview	calendar	zt	兩天模式
 update a single entry by passing the fields.	calendar	zt	透過第送的欄位更新一個單一事件
 updated	calendar	zt	更新日期
 use end date	calendar	zt	有結束日期
@@ -305,9 +318,12 @@ week	calendar	zt	星期
 weekday starts on	calendar	zt	星期開始日
 weekly	calendar	zt	每週
 weekview	calendar	zt	週行事曆
+weekview including weekend	calendar	zt	週曆包含週末
+weekview without weekend	calendar	zt	週曆不包含週末
 when creating new events default set to private	calendar	zt	新增約會時預設為私人性約會
 which events do you want to see when you enter the calendar.	calendar	zt	當您進入行事曆時您希望看到什麼樣的行事曆。
 which of calendar view do you want to see, when you start calendar ?	calendar	zt	當您開始了一個行事曆您希望看到哪個行事曆？
+wk	calendar	zt	週
 work day ends on	calendar	zt	每日結束時間
 work day starts on	calendar	zt	每日開始時間
 workdayends	calendar	zt	工作日結束於
