@@ -216,7 +216,7 @@
 			reset($ar);
 			list($typ, $val) = each($ar);
 			$rs.='<value>';
-			$rs.=$this->serializedata($typ, $val);
+			$rs.= @$this->serializedata($typ, $val);
 			$rs.='</value>'."\n";
 			return $rs;
 		}
