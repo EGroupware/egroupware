@@ -119,7 +119,7 @@ edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
 edit your existing header.inc.php	setup	de	Bearbeiten ihrer existierenden header.inc.php
 edit your header.inc.php	setup	de	Bearbeiten ihrer header.inc.php
 egroupware administration manual	setup	de	eGroupWare Adminsitrationsmanual (nur in englisch)
-enable for extra debug-messages	setup	de	ankreutzen für zusätzliche Diagnosemeldungen
+enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüssellung der app session
