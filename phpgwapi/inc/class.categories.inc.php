@@ -22,7 +22,6 @@
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
 	/* $Id$ */
-	/* $Source$ */
 
 	/*!
 	@class categories
@@ -138,7 +137,7 @@
 		@param $globals True or False, includes the global phpgroupware categories or not
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '## undef ##')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
 		{
 			if ($globals)
 			{
@@ -183,7 +182,7 @@
 				}
 			}
 
-			if ($parent_id != '## undef ##')
+			if (strlen($parent_id) != 0)
 			{
 				$parent_filter = " AND cat_parent='$parent_id'";
 			}
@@ -731,7 +730,7 @@
 		function name2id($cat_name)
 		{
 			$this->db->query("SELECT cat_id FROM phpgw_categories WHERE cat_name='" . $this->db->db_addslashes($cat_name) . "' "
-							."AND cat_appname='" . $this->app_name . "' AND cat_owner=" . $this->account_id,__LINE__,__FILE__);
+							."AND cat_appname='" . $this->app_name . "' AND (cat_owner=" . $this->account_id ." OR cat_owner=-1)",__LINE__,__FILE__);
 
 			if(!$this->db->num_rows())
 			{
