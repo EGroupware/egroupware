@@ -55,14 +55,14 @@
 			"adr_postal"		=> "", //yn
 			"tz"				=> "time zone",
 			"geo"				=> "geo",
-			"a_tel"				=> "home phone",
+			"a_tel"				=> "work phone",
 			"a_tel_work"		=> "",   //yn
 			"a_tel_home"		=> "",   //yn
 			"a_tel_voice"		=> "",  //yn
 			"a_tel_msg"			=> "",    //yn
 			"a_tel_fax"			=> "",    //yn
 			"a_tel_prefer"		=> "", //yn
-			"b_tel"				=> "work phone",
+			"b_tel"				=> "home phone",
 			"b_tel_work"		=> "",   //yn
 			"b_tel_home"		=> "",   //yn
 			"b_tel_voice"		=> "",  //yn

@@ -49,8 +49,8 @@
 	$lastname     = $fields["n_family"];
 	$suffix       = $fields["n_suffix"];
 	$title        = $fields["title"];
-	$hphone       = $fields["a_tel"];
-	$wphone       = $fields["b_tel"];
+	$wphone       = $fields["a_tel"];
+	$hphone       = $fields["b_tel"];
 	$fax          = $fields["c_tel"];
 	$pager        = $fields["pager"];
 	$mphone       = $fields["mphone"];
