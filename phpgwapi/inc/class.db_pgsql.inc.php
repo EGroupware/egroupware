@@ -331,12 +331,15 @@ class db {
 		{
 			$this->User = $adminname;
 			$this->Password = $adminpasswd;
-			$this->Database = "mysql";
 		}
-		$this->disconnect();
-		$this->query("CREATE DATABASE $currentDatabase");
-		$this->query("grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'");
-		$this->disconnect();
+
+		system("createdb -h ".$this->Host." ". $currentDatabase, $outval);
+		if($outval != 0) 
+		{
+        	/* either the rights r not available or the postmaster is not running .... */
+        	echo 'database creation faliure <BR>';
+        	echo 'please setup the postreSQL database manually<BR>';
+		}
 
 		$this->User = $currentUser;
 		$this->Password = $currentPassword;
