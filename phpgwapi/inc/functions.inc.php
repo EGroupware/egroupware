@@ -332,11 +332,11 @@
 		$phpgw->preferences->verify_basic_settings();
 	
 		/********* Optional classes, which can be disabled for performance increases *********/
-		while ($name = each($phpgw_info['flags']))
+		while ($phpgw_class_name = each($phpgw_info['flags']))
 		{
-			if (ereg('enable_',$name[0]))
+			if (ereg('enable_',$phpgw_class_name[0]))
 			{
-				$enable_class = ereg_replace('enable_','',$name[0]);
+				$enable_class = ereg_replace('enable_','',$phpgw_class_name[0]);
 				$enable_class = ereg_replace('_class','',$enable_class);
 				eval('$phpgw->' . $enable_class . ' = createobject(\'phpgwapi.' . $enable_class . '\');');
 			}
