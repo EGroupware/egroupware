@@ -769,5 +769,18 @@
 
 			return $grants;
 		}
+		
+		/**
+		 * Deletes all ACL entries for an account (user or group)
+		 *
+		 * @param int $account_id acount-id
+		 */
+		function delete_account($account_id)
+		{
+			if ((int) $account_id)
+			{
+				$this->db->query('DELETE FROM phpgw_acl WHERE acl_account='.(int)$account_id,__LINE__,__FILE__);
+			}
+		}
 	} //end of acl class
 ?>
