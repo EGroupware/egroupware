@@ -45,13 +45,13 @@
      $tpl->set_var("help_link",$phpgw_info["navbar"]["about"]["url"]);
 
      $ir = $phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images";
-     if (ereg($phpgw_info["server"]["webserver_url"] . "/index.php",$PHP_SELF)) {
+     if ($phpgw_info["flags"]["currentapp"] == "home") {
         $tpl->set_var("welcome_img",$ir . "/welcome-red.gif");
      } else {
         $tpl->set_var("welcome_img",$ir . "/welcome-grey.gif");
      }
 
-     if (ereg("preferences",$PHP_SELF)) {
+     if ($phpgw_info["flags"]["currentapp"] == "preferences") {
         $tpl->set_var("preferences_img",$ir . "/preferences-red.gif");
      } else {
         $tpl->set_var("preferences_img",$ir . "/preferences-grey.gif");
