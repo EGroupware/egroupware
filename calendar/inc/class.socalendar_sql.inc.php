@@ -389,7 +389,7 @@ class socalendar_ extends socalendar__
 				. 'mdatetime='.$today.', '
 				. 'edatetime='.$enddate.', '
 				. 'priority='.$event['priority'].', '
-				. ($event['category'] != 0?'category='.$event['category'].', ':'')
+				. 'category='.$event['category'].', '
 				. "cal_type='".$type."', "
 				. 'is_public='.$event['public'].', '
 				. "title='".addslashes($event['title'])."', "
