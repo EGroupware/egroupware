@@ -215,7 +215,7 @@ As one of the messages contain a %s to be used with sprintf, we have to run them
 
 			if (isset($content['save']))	<span>// save the entry ($this->data)</span>
 			{
-				$msg .= !$this->save() ? lang('Entry saved') : lang('Error: writeing !!!');
+				$msg .= !$this->save() ? lang('Entry saved') : lang('Error: while saving !!!');
 			}
 			elseif (isset($content['read']))
 			{

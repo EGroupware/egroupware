@@ -28,6 +28,7 @@ am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
+applies the changes made	etemplate	de	übernimmt die Änderungen
 applies the changes to the given version of the template	etemplate	de	übernimmt die Änderungen in die angegebene Version des Templates
 attach	etemplate	de	Anhängen
 attach file	etemplate	de	Datei anhängen
@@ -88,6 +89,7 @@ delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE
 delete and cut save the template!	etemplate	de	Löschen und Ausschneiden speichern das Template!
 delete column	etemplate	de	Spalte löschen
 delete index	etemplate	de	Index löschen
+delete the spezified etemplate	etemplate	de	löscht das angegebene eTemplate
 delete this column	etemplate	de	diese Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
 delete this row	etemplate	de	diese Zeile löschen
@@ -106,6 +108,7 @@ drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICH
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
 edit	etemplate	de	Bearbeiten
+edit embeded css styles or of the applications app.css file	etemplate	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
 edit the etemplate spez. above	etemplate	de	das oben spezifizierte eTemplate bearbeiten
 edit...	etemplate	de	Bearbeiten...
 editable templates - db-tools	etemplate	de	eTemplates - DB-Tools
@@ -123,8 +126,7 @@ enter the new version number here (has to be > old_version)	etemplate	de	Neue Ve
 entry saved	etemplate	de	Eintrag gespeichert
 error: template not found !!!	etemplate	de	Fehler: eTemplate nicht gefunden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
-error: while saveing !!!	etemplate	de	Fehler: beim Speichern !!!
-error: writeing !!!	etemplate	de	Fehler: schreiben !!!
+error: while saving !!!	etemplate	de	Fehler: beim Speichern !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
 etemplate	common	de	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	de	eTemplate '%1' importiert, benutze Speichern um es in der Datenbank abzulegen
@@ -245,13 +247,15 @@ read	etemplate	de	Lesen
 read a list of entries.	etemplate	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	etemplate	de	Liste einen einzelnen Eintrag durch übergabe seiner Id und Feldliste.
 read etemplate from database (for the keys above)	etemplate	de	ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
+readonly	etemplate	de	nur lesen
 remove row (can not be undone!!!)	etemplate	de	löscht eine Zeile (NICHT rückgängig zu machen)
 remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
+save the changes made and close the window	etemplate	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
-saves changes to tables_current.inc.php	etemplate	de	Speichert Änderungen in tables_current.inc.php
+saves changes to tables_current.inc.php	etemplate	de	speichert die Änderungen in tables_current.inc.php
 saves the template with given version number and closes the window	etemplate	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
 scale	etemplate	de	Scale
 scale for float	etemplate	de	Nachkommastellen für Gleitkommawerte

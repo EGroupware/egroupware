@@ -63,16 +63,16 @@
 		var $db_cols;
 		/**
 		 * @var array $widgets_with_children widgets that contain other widgets, eg. for tree_walk method
-		 * widget-type is the key, the value specifys how the children are stored: 1=template, 2=grid, 3=box
+		 * widget-type is the key, the value specifys how the children are stored.
 		 */
 		var $widgets_with_children = array(
-			'template' => 1,
-			'grid' => 2,
-			'box' => 3,
-			'vbox' => 3,
-			'hbox' => 3,
-			'groupbox' => 3,
-			'deck' => 3,
+			'template' => 'template',
+			'grid' => 'grid',
+			'box' => 'box',
+			'vbox' => 'box',
+			'hbox' => 'box',
+			'groupbox' => 'box',
+			'deck' => 'box',
 		);
 		
 		/**

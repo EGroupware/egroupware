@@ -494,6 +494,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>Options</b> xml: <b>image, ro_image</b>: Image to use instead of a Button with a label. There will
 		be no button around the image. If a ro_image is given (separated by a comma in the editors options)
 		it will be used if the button is set readonly (else the button is no rendered at all) .
+		<b>onclick</b>: specify some java-script to be called if the button gets pressed/clicked: <br />
+		a) general javascript: "window.close();"<br />
+		b) confirmation: "return window.confirm('<message>');" (message get run through lang()!)<br />
+		c) popups: "window.open(egw::link('/index.php','menuaction=app.class.func&id=$cont[id]'), 'dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"
+		(egw::link('<url>','<vars>') calls $GLOBALS['phpgw']->link() to allow eGW installtion relative links and to pass the session-id.
+		You can use $cont[<name>] (note no quotes!) to pass further information to the popup via the content array.)
 	</td>
 </tr>
 <tr>
@@ -726,26 +732,28 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td colspan="5">
 <pre>
 $content[$id] = array(		<span>// I = value set by the app, 0 = value on return / output</span>
-	'get_rows'     =>	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
-	'filter_label' =>	<span>// I  label for filter    (optional)</span>
-	'filter_help'  =>	<span>// I  help-msg for filter (optional)</span>
-	'no_filter'    => True	<span>// I  disable the 1. filter</span>
-	'no_filter2'   => True	<span>// I  disable the 2. filter (params are the same as for filter)</span>
-	'no_cat'       => True	<span>// I  disable the cat-selectbox</span>
-	'template'     =>	<span>// I  template to use for the rows, if not set via options</span>
-	'header_left'  =>	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
-	'header_right' =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
-	'bottom_too'   => True	<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
-	'start'        =>	<span>// IO position in list</span>
-	'cat_id'       =>	<span>// IO category, if not 'no_cat' => True</span>
-	'search'       =>	<span>// IO search pattern</span>
-	'order'        =>	<span>// IO name of the column to sort after (optional for the sortheaders)</span>
-	'sort'         =>	<span>// IO direction of the sort: 'ASC' or 'DESC'</span>
-	'col_filter'   =>	<span>// IO array of column-name value pairs (optional for the filterheaders)</span>
-	'filter'       =>	<span>// IO filter, if not 'no_filter' => True</span>
-	'filter2'      =>	<span>// IO filter2, if not 'no_filter2' => True</span>
-	'rows'         =>	<span>//  O content set by callback</span>
-	'total'        =>	<span>//  O the total number of entries</span>
+	'get_rows'       =>	<span>// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'</span>
+	'filter_label'   =>	<span>// I  label for filter    (optional)</span>
+	'filter_help'    =>	<span>// I  help-msg for filter (optional)</span>
+	'no_filter'      => True<span>// I  disable the 1. filter</span>
+	'no_filter2'     => True<span>// I  disable the 2. filter (params are the same as for filter)</span>
+	'no_cat'         => True<span>// I  disable the cat-selectbox</span>
+	'template'       =>	<span>// I  template to use for the rows, if not set via options</span>
+	'header_left'    =>	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
+	'header_right'   =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
+	'bottom_too'     => True<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
+	'start'          =>	<span>// IO position in list</span>
+	'cat_id'         =>	<span>// IO category, if not 'no_cat' => True</span>
+	'search'         =>	<span>// IO search pattern</span>
+	'order'          =>	<span>// IO name of the column to sort after (optional for the sortheaders)</span>
+	'sort'           =>	<span>// IO direction of the sort: 'ASC' or 'DESC'</span>
+	'col_filter'     =>	<span>// IO array of column-name value pairs (optional for the filterheaders)</span>
+	'filter'         =>	<span>// IO filter, if not 'no_filter' => True</span>
+	'filter_no_lang' => True<span>// I  set no_lang for filter (=dont translate the options)</span>
+	'filter2'        =>	<span>// IO filter2, if not 'no_filter2' => True</span>
+	'filter2_no_lang'=> True<span>// I  set no_lang for filter2 (=dont translate the options)</span>
+	'rows'           =>	<span>//  O content set by callback</span>
+	'total'          =>	<span>//  O the total number of entries</span>
 );
 
 <span>/*

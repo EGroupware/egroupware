@@ -52,7 +52,7 @@
 
 				if (isset($content['save']))
 				{
-					$msg .= !$this->save() ? lang('Entry saved') : lang('Error: writeing !!!');
+					$msg .= !$this->save() ? lang('Entry saved') : lang('Error: while saving !!!');
 				}
 				elseif (isset($content['read']))
 				{

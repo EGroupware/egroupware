@@ -794,9 +794,19 @@
 					list($app) = explode('.',$this->name);
 					list($img,$ro_img) = explode(',',$cell_options);
 					$title = strlen($label) <= 1 || $cell['no_lang'] ? $label : lang($label);
-					if (($onclick = $cell['onclick']) && preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$cell['onclick'],$matches))
+					if ($cell['onclick'])
 					{
-						$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars(lang($matches[1])))."');";
+						$onclick = $this->expand_name($cell['onclick'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+						if ($onclick && preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$onclick,$matches))
+						{
+							$url = $GLOBALS['phpgw']->link($matches[1],$matches[2]);
+							$onclick = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$onclick);
+						}
+						elseif ($onclick && preg_match('/^return confirm\(["\']{1}?(.*)["\']{1}\);$/',$cell['onclick'],$matches))
+						{
+							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
+							$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
+						}
 					}
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
@@ -1171,7 +1181,10 @@
 			{
 				$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$path,
 					$this->onclick_handler);
-				if ($type == 'select') $html .= '&nbsp;';
+				if ($type == 'button' || !$label)	// add something to click on
+				{
+					$html = (substr($html,-1) == "\n" ? substr($html,0,-1) : $html).'&nbsp;';
+				}
 				return $this->html->div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 			}
 			return $html;

@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.0.1.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row">
+					<description options=",,,type" value="Type"/>
+					<menulist>
+						<menupopup id="type" onchange="1" statustext="type of the field (select Label if field should be empty)"/>
+					</menulist>
+					<description options=",,,size" value="Options" align="center"/>
+					<textbox size="10" id="size" statustext="Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']"/>
+					<description options=",,,span" value="Span, Class" align="center"/>
+					<textbox size="10" id="span" statustext="number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)"/>
+				</row>
+				<row class="row">
+					<description options=",,,label" value="Label"/>
+					<textbox id="label" statustext="displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)"/>
+					<checkbox span="2" label="%s NoTranslation" align="center" id="no_lang" statustext="select if content of field should not be translated (label gets always translated)"/>
+					<description value="Align" align="center"/>
+					<menulist>
+						<menupopup id="align" statustext="alignment of label and input-field in table-cell"/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,name" value="Name"/>
+					<textbox id="name" statustext="index/name of returned content (name of the Template, Link / Method for Image)"/>
+					<hbox span="4">
+						<checkbox label="%s needed" align="center" id="needed" statustext="check if field has to be filled by user"/>
+						<checkbox label="%s readonly" align="center" id="readonly" statustext="check if content should only be displayed but not altered (the content is not send back then!)"/>
+						<checkbox label="%s disabled" align="center" id="disabled" statustext="if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell"/>
+						<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
+					</hbox>
+				</row>
+				<row class="row">
+					<description options=",,,help" value="Help"/>
+					<textbox size="45" span="3" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
+					<description options=",,,blur" value="blurText" align="center"/>
+					<textbox size="10" id="blur" statustext="this text gets displayed if the input-field is empty and has no focus (blur)"/>
+				</row>
+				<row class="row" disabled="!@type=button">
+					<description options="onclick" value="onClick"/>
+					<menulist>
+						<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
+					</menulist>
+					<textbox size="45" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.0.1.005">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<hbox span="all">
+						<menulist>
+							<menupopup options="Edit..." id="edit_menu" onchange="1" statustext="delete and cut save the template!"/>
+						</menulist>
+						<menulist>
+							<menupopup options="Box..." id="box_menu" onchange="1" statustext="all operations save the template!"/>
+						</menulist>
+						<menulist>
+							<menupopup options="Row..." id="row_menu" onchange="1" statustext="all operations save the template!"/>
+						</menulist>
+						<menulist>
+							<menupopup options="Column..." id="column_menu" onchange="1" statustext="all operations save the template!"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" no_lang="1" id="msg"/>
+				</row>
+				<row>
+					<html label="Name" id="java_script"/>
+					<hbox>
+						<textbox id="name" readonly="true"/>
+						<textbox id="template" readonly="true"/>
+						<textbox id="lang" readonly="true"/>
+						<textbox size="20" label="Version" id="version" statustext="increment version to not overwrite the existing template"/>
+						<description class="gray" value="Path" no_lang="1" id="path"/>
+					</hbox>
+				</row>
+				<row>
+					<description options=",,,goto" value="Path"/>
+					<hbox>
+						<path no_lang="1" id="goto" statustext="switch to a parent widget"/>
+						<path options=" " label=" " no_lang="1" id="goto2" statustext="switch to an other widgets of that container"/>
+					</hbox>
+				</row>
+				<row>
+					<template content="cell" span="all" id="etemplate.editor.widget.generic"/>
+				</row>
+				<row disabled="!@grid_row">
+					<groupbox span="all" orient="horizontal">
+						<caption label="Grid row attributes"/>
+						<textbox size="5" label="Height" id="grid_row[height]" statustext="height of row (in % or pixel)"/>
+						<textbox size="10" label="Disabled" id="grid_row[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
+						<textbox size="10" label="Class" id="grid_row[class]" statustext="CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows"/>
+						<menulist>
+							<menupopup label="Valign" id="grid_row[valign]" statustext="vertical alignment of row"/>
+						</menulist>
+					</groupbox>
+				</row>
+				<row disabled="!@grid_column">
+					<groupbox span="all" orient="horizontal">
+						<caption label="Grid column attributes"/>
+						<textbox size="5" label="Width" id="grid_column[width]" statustext="width of column (in % or pixel)"/>
+						<textbox size="10" label="Disabled" id="grid_column[disabled]" statustext="to disable: [! = not]&lt;value&gt;[=&lt;check&gt;] eg: '!@data' disables if content of data is empty"/>
+					</groupbox>
+				</row>
+				<row>
+					<hbox span="all">
+						<button label="Save" id="save" statustext="saves the template with given version number and closes the window"/>
+						<button label="Apply" id="apply" statustext="applies the changes to the given version of the template"/>
+						<button label="Cancel" id="cancel" statustext="closes the window without saving the changes"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

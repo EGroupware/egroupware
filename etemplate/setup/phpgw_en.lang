@@ -28,6 +28,7 @@ am	etemplate	en	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	en	an indexed column speeds up querys using that column (cost space on the disk !!!)
 application	etemplate	en	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
+applies the changes made	etemplate	en	applies the changes made
 applies the changes to the given version of the template	etemplate	en	applies the changes to the given version of the template
 attach	etemplate	en	Attach
 attach file	etemplate	en	attach file
@@ -88,6 +89,7 @@ delete all selected etemplates, without further inquiry	etemplate	en	delete ALL 
 delete and cut save the template!	etemplate	en	delete and cut save the template!
 delete column	etemplate	en	Delete Column
 delete index	etemplate	en	Delete Index
+delete the spezified etemplate	etemplate	en	Delete the spezified eTemplate
 delete this column	etemplate	en	delete this column
 delete this etemplate	etemplate	en	delete this eTemplate
 delete this row	etemplate	en	delete this row
@@ -106,6 +108,7 @@ drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT b
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
 edit	etemplate	en	Edit
+edit embeded css styles or of the applications app.css file	etemplate	en	edit embeded CSS styles or of the applications app.css file
 edit the etemplate spez. above	etemplate	en	edit the eTemplate spez. above
 edit...	etemplate	en	Edit...
 editable templates - db-tools	etemplate	en	Editable Templates - DB-Tools
@@ -123,8 +126,7 @@ enter the new version number here (has to be > old_version)	etemplate	en	enter t
 entry saved	etemplate	en	Entry saved
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	en	Error: webserver is not allowed to write into '%1' !!!
-error: while saveing !!!	etemplate	en	Error: while saveing !!!
-error: writeing !!!	etemplate	en	Error: writeing !!!
+error: while saving !!!	etemplate	en	Error: while saving !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	en	Error: writing file (no write-permission for the webserver) !!!
 etemplate	common	en	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	en	eTemplate '%1' imported, use Save to put it in the database
@@ -245,11 +247,13 @@ read	etemplate	en	Read
 read a list of entries.	etemplate	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	etemplate	en	Read a single entry by passing the id and fieldlist.
 read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
+readonly	etemplate	en	readonly
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
+save the changes made and close the window	etemplate	en	Save the changes made and close the window
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
 saves the template with given version number and closes the window	etemplate	en	saves the template with given version number and closes the window
