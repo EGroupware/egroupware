@@ -30,6 +30,7 @@
 	  (This was actually a problem with email, users not having a 
 	   Sent folder.  Sent Folders automatically created if not exist.)
 	- Fixed matrixview warnings when viewing manual.
+	- Fixed problem with moving to prev/next msg in NNTP.
         
 [0.9.6] - Fix user permissions where not being checked properly.
 
