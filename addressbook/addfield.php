@@ -2,32 +2,37 @@
   /**************************************************************************\
   * phpGroupWare - Addressbook                                               *
   * http://www.phpgroupware.org                                              *
-  * Written by Bettina Gille [ceb@phpgroupware.org]                          *
+  * Written by Miles Lott <milosch@phpgroupware.org>                         *
   * -----------------------------------------------                          *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
   *  Free Software Foundation; either version 2 of the License, or (at your  *
   *  option) any later version.                                              *
   \**************************************************************************/
-/* $Id$ */
 
-	$phpgw_info['flags']['currentapp'] = 'addressbook';
+  /* $Id$ */
+
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 
-	if(!$phpgw->acl->check('run',1,'admin'))
+	if(!$GLOBALS['phpgw']->acl->check('run',1,'admin'))
 	{
 		echo lang('access not permitted');
-		$phpgw->common->phpgw_footer();
-		$phpgw->common->phpgw_exit();
-
+		$GLOBALS['phpgw']->common->phpgw_footer();
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 
-	$t = new Template(PHPGW_APP_TPL);
-	$t->set_file(array('form' => 'field_form.tpl'));
-	$t->set_block('form','add','addhandle');
-	$t->set_block('form','edit','edithandle');
+	$field = $HTTP_POST_VARS['field'];
+	$field_name = $HTTP_POST_VARS['field_name'];
+	$start = $HTTP_POST_VARS['start'];
+	$query = $HTTP_POST_VARS['query'];
+	$sort  = $HTTP_POST_VARS['sort'];
 
-	if ($submit)
+	$GLOBALS['phpgw']->template->set_file(array('form' => 'field_form.tpl'));
+	$GLOBALS['phpgw']->template->set_block('form','add','addhandle');
+	$GLOBALS['phpgw']->template->set_block('form','edit','edithandle');
+
+	if ($HTTP_POST_VARS['submit'])
 	{
 		$errorcount = 0;
 
@@ -49,27 +54,27 @@
 		}
 	}
 
-	if ($errorcount) { $t->set_var('message',$phpgw->common->error_list($error)); }
-	if (($submit) && (! $error) && (! $errorcount)) { $t->set_var('message',lang('Field x has been added !', $field_name)); }
-	if ((! $submit) && (! $error) && (! $errorcount)) { $t->set_var('message',''); }
+	if ($errorcount) { $GLOBALS['phpgw']->template->set_var('message',$GLOBALS['phpgw']->common->error_list($error)); }
+	if (($submit) && (! $error) && (! $errorcount)) { $GLOBALS['phpgw']->template->set_var('message',lang('Field x has been added !', $field_name)); }
+	if ((! $submit) && (! $error) && (! $errorcount)) { $GLOBALS['phpgw']->template->set_var('message',''); }
 
-	$t->set_var('title_fields',lang('Add'). ' ' . lang('Custom Field'));
-	$t->set_var('actionurl',$phpgw->link('/addressbook/addfield.php'));
-	$t->set_var('doneurl',$phpgw->link('/addressbook/fields.php'));
-	$t->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
+	$GLOBALS['phpgw']->template->set_var('title_fields',lang('Add'). ' ' . lang('Custom Field'));
+	$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/addressbook/addfield.php'));
+	$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/addressbook/fields.php'));
+	$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="field" value="' . $field . '">');
 
-	$t->set_var('lang_name',lang('Field name'));
+	$GLOBALS['phpgw']->template->set_var('lang_name',lang('Field name'));
 
-	$t->set_var('lang_add',lang('Add'));
-	$t->set_var('lang_reset',lang('Clear Form'));
-	$t->set_var('lang_done',lang('Done'));
+	$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
+	$GLOBALS['phpgw']->template->set_var('lang_reset',lang('Clear Form'));
+	$GLOBALS['phpgw']->template->set_var('lang_done',lang('Done'));
 
-	$t->set_var('field_name',$field_name);
+	$GLOBALS['phpgw']->template->set_var('field_name',$field_name);
 
-	$t->set_var('edithandle','');
-	$t->set_var('addhandle','');
-	$t->pparse('out','form');
-	$t->pparse('addhandle','add');
+	$GLOBALS['phpgw']->template->set_var('edithandle','');
+	$GLOBALS['phpgw']->template->set_var('addhandle','');
+	$GLOBALS['phpgw']->template->pparse('out','form');
+	$GLOBALS['phpgw']->template->pparse('addhandle','add');
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>

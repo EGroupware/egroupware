@@ -11,26 +11,32 @@
   \**************************************************************************/
   /* $Id$ */
 
-	if ($confirm)
+	if ($HTTP_POST_VARS['confirm'])
 	{
-		$phpgw_info['flags'] = array(
+		$GLOBALS['phpgw_info']['flags'] = array(
 			'noheader' => True, 
 			'nonavbar' => True
 		);
 	}
 
-	$phpgw_info['flags']['currentapp'] = 'addressbook';
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 
-	if (!$field)
+	if (!$HTTP_POST_VARS['field'])
 	{
-		Header('Location: ' . $phpgw->link('/addressbook/fields.php'));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/addressbook/fields.php'));
 	}
 
-	if ($confirm)
+	$field = $HTTP_POST_VARS['field'];
+	$field_id = $HTTP_POST_VARS['field_id'] ? $HTTP_POST_VARS['field_id'] : $HTTP_GET_VARS['field_id'];
+	$start = $HTTP_POST_VARS['start'];
+	$query = $HTTP_POST_VARS['query'];
+	$sort = $HTTP_POST_VARS['sort'];
+
+	if ($HTTP_POST_VARS['confirm'])
 	{
 		save_custom_field($field);
-		Header('Location: ' . $phpgw->link('/addressbook/fields.php',"start=$start&query=$query&sort=$sort"));
+		Header('Location: ' . $GLOBALS['phpgw']->link('/addressbook/fields.php',"start=$start&query=$query&sort=$sort"));
 	}
 	else
 	{
@@ -40,16 +46,15 @@
 			. '<input type="hidden" name="start" value="' . $start .'">' . "\n"
 			. '<input type="hidden" name="field" value="' . $field .'">' . "\n";
 
-		$t = new Template(PHPGW_APP_TPL);
-		$t->set_file(array('field_delete' => 'delete_common.tpl'));
-		$t->set_var('messages',lang('Are you sure you want to delete this field?'));
+		$GLOBALS['phpgw']->template->set_file(array('field_delete' => 'delete_common.tpl'));
+		$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this field?'));
 
-		$nolinkf = $phpgw->link('/addressbook/fields.php',"field_id=$field_id&start=$start&query=$query&sort=$sort");
+		$nolinkf = $GLOBALS['phpgw']->link('/addressbook/fields.php',"field_id=$field_id&start=$start&query=$query&sort=$sort");
 		$nolink = '<a href="' . $nolinkf . '">' . lang('No') . '</a>';
-		$t->set_var('no',$nolink);
+		$phpgw->template->set_var('no',$nolink);
 
-		$yeslinkf = $phpgw->link('/addressbook/deletefield.php','field_id=' . $field_id . '&confirm=True');
-		$yeslinkf = '<form method="POST" name="yesbutton" action="' . $phpgw->link('/addressbook/deletefield.php') . '\">'
+		$yeslinkf = $GLOBALS['phpgw']->link('/addressbook/deletefield.php','field_id=' . $field_id . '&confirm=True');
+		$yeslinkf = '<form method="POST" name="yesbutton" action="' . $GLOBALS['phpgw']->link('/addressbook/deletefield.php') . '\">'
 			. $hidden_vars
 			. '<input type="hidden" name="field_id"  value="' . $field_id . '">'
 			. '<input type="hidden" name="confirm"   value="True">'
@@ -58,10 +63,10 @@
 
 		$yeslink = '<a href="' . $yeslinkf . '">' . lang('Yes') . '</a>';
 		$yeslink = $yeslinkf;
-		$t->set_var('yes',$yeslink);
+		$GLOBALS['phpgw']->template->set_var('yes',$yeslink);
 
-		$t->pparse('out','field_delete');
+		$GLOBALS['phpgw']->template->pparse('out','field_delete');
 	}
 
-	$phpgw->common->phpgw_footer();
+	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
