@@ -34,23 +34,43 @@
   $db->Database   = $phpgw_info["server"]["db_name"];
   $db->User	    = $phpgw_info["server"]["db_user"];
   $db->Password   = $phpgw_info["server"]["db_pass"];
+  $db->Halt_On_Error = "report";
 
+      echo "You appear to be running a new install of phpGroupWare, so the tables will be created for you.<br>\n";
+      include ("droptables_".$phpgw_info["server"]["db_type"].".inc.php");
+      include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
+      include ("default_records.inc.php");
+      include ("lang_records.inc.php");
+      echo "If you did not recieve any errors, your tables have been created.<br>\n";
+      echo "<a href=\"config.php\">Click here</a> to configure the environment.<br>\n"; 
+
+/*
   $db->query("select * from config");
   if ($db->num_rows() == 0){
     $db->query("select * from accounts");
     if ($db->num_rows() == 0){
       echo "You appear to be running a new install of phpGroupWare, so the tables will be created for you.<br>\n";
-      include ("createtables_"$phpgw_info["server"]["db_type"].".inc.php");
+      include ("droptables_".$phpgw_info["server"]["db_type"].".inc.php");
+      include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
       include ("default_records.inc.php");
+      include ("lang_records.inc.php");
       echo "If you did not recieve any errors, your tables have been created.<br>\n";
-      echo "<a href="config.php">Click here</a> to configure the environment.<br>\n"; 
+      echo "<a href=\"config.php\">Click here</a> to configure the environment.<br>\n"; 
     }else{
       echo "You appear to be running a pre-beta version of phpGroupWare<br>\n";
-      echo "We are not providing an upgrade path at this time, please backup your tables and drop them, so that this script can recreate them.<br>\n";
+      //echo "We are not providing an upgrade path at this time, please backup your tables and drop them, so that this script can recreate them.<br>\n";
+
+      echo "This script is going to take the evil action of dropping your existing table and re-creating them in the new format.<br>\n";
+      include ("droptables_".$phpgw_info["server"]["db_type"].".inc.php");
+      include ("createtables_".$phpgw_info["server"]["db_type"].".inc.php");
+      include ("default_records.inc.php");
+      include ("lang_records.inc.php");
+      echo "If you did not recieve any errors, your tables have been created.<br>\n";
+      echo "<a href=\"config.php\">Click here</a> to configure the environment.<br>\n"; 
     }
   }else{
     echo "Your database seems to be current.<br>\n"; 
-    echo "<a href="config.php">Click here</a> to configure the environment.<br>\n"; 
+    echo "<a href=\"config.php\">Click here</a> to configure the environment.<br>\n"; 
   }
-
+*/
 ?>
