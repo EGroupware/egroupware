@@ -196,6 +196,7 @@ enabled	weather	en	Enabled
 end date/time	calendar	en	End Date/Time
 end date	todo	en	End Date
 end time	common	en	end time
+ends	calendar	en	ends
 enter your new password	preferences	en	Enter your new password
 entries	bookkeeping	en	Entries
 entry has been deleted sucessfully	common	en	Entry has been deleted sucessfully
