@@ -127,6 +127,9 @@
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','firstname','True','addressbook')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','lastname','True','addressbook')");
   $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','company','True','addressbook')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','workdaystarts','8')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','workdayends','15')");
+  $db->query("insert into preferences (preference_owner, preference_name, preference_value, preference_appname) values ('demo','calendar','weekdaystarts','Monday')");
 
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AA','Afar','No')");        
   @$db->query("INSERT INTO languages (lang_id, lang_name, available) values ('AB','Abkhazian','No')");   
