@@ -27,7 +27,6 @@
 		var $process = '';
 		var $lang = '';
 		var $html = '';
-		var $appreg = '';
 
 		/* table name vars */
 		var $tbl_apps;
@@ -38,7 +37,6 @@
 		{
 			$this->detection = CreateObject('setup.setup_detection');
 			$this->process   = CreateObject('setup.setup_process');
-			$this->appreg    = CreateObject('setup.app_registry');
 
 			/* The setup application needs these */
 			$this->html = $html ? CreateObject('setup.setup_html') : '';
