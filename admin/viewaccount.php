@@ -28,7 +28,7 @@
 
 	if (! $account_id)
 	{
-		Header('Location: ' . $phpgw->link('accounts.php'));
+		Header('Location: ' . $phpgw->link('/admin/accounts.php'));
 	}
 
 	$t = new Template($phpgw->common->get_tpl_dir('admin'));

@@ -74,12 +74,12 @@
 			$p->set_var('row_loginid',$loginid);
 			$p->set_var('row_firstname',$firstname);
 			$p->set_var('row_lastname',$lastname);
-			$p->set_var('row_edit','<a href="'.$phpgw->link('editaccount.php','account_id='
+			$p->set_var('row_edit','<a href="'.$phpgw->link('/admin/editaccount.php','account_id='
 	       				     . $account_id) . '"> ' . lang('Edit') . ' </a>');
 	
 			if ($phpgw_info['user']['userid'] != $account['account_lid'])
 			{
-				$p->set_var('row_delete','<a href="' . $phpgw->link('deleteaccount.php','account_id='
+				$p->set_var('row_delete','<a href="' . $phpgw->link('/admin/deleteaccount.php','account_id='
 	      						. $account_id) . '"> '.lang('Delete').' </a>');
 			}
 			else
@@ -87,15 +87,15 @@
 				$p->set_var('row_delete','&nbsp;');
 			}
 	
-			$p->set_var('row_view','<a href="' . $phpgw->link("viewaccount.php", "account_id="
+			$p->set_var('row_view','<a href="' . $phpgw->link("/admin/viewaccount.php", "account_id="
 	   				         . $account_id) . '"> ' . lang("View") . ' </a>');
 	
 			$p->parse('rows','row',True);
 		}
 	}		// End else
 
-	$p->set_var('actionurl',$phpgw->link("newaccount.php"));
-	$p->set_var('accounts_url',$phpgw->link("accounts.php"));
+	$p->set_var('actionurl',$phpgw->link("/admin/newaccount.php"));
+	$p->set_var('accounts_url',$phpgw->link("/admin/accounts.php"));
 	$p->set_var('lang_add',lang("add"));
 	$p->set_var('lang_search',lang("search"));
 

@@ -72,7 +72,7 @@
           $phpgw->acl->delete($n_app_name,'everywhere',0,'g');
         }
 
-        Header("Location: " . $phpgw->link("applications.php"));
+        Header("Location: " . $phpgw->link("/admin/applications.php"));
         $phpgw->common->phpgw_exit();
      }
   }
@@ -98,7 +98,7 @@
   $p->set_var("lang_header",lang("Edit application"));
   $p->set_var("hidden_vars",'<input type="hidden" name="old_app_name" value="' . $old_app_name . '">');
   $p->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-  $p->set_var("form_action",$phpgw->link("editapplication.php"));
+  $p->set_var("form_action",$phpgw->link("/admin/editapplication.php"));
 
   display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
   display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');

@@ -29,7 +29,7 @@
   }
   
   if (! $group_id) {
-     Header("Location: " . $phpgw->link("groups.php"));
+     Header("Location: " . $phpgw->link("/admin/groups.php"));
   }
 
   if ($submit) {
@@ -119,7 +119,7 @@
 
         $phpgw->db->unlock();
 
-        Header('Location: ' . $phpgw->link('groups.php','cd='.$cd));
+        Header('Location: ' . $phpgw->link('/admin/groups.php','cd='.$cd));
         $phpgw->common->phpgw_exit();
      }
   }
@@ -153,7 +153,7 @@
      $db_perms = $apps->read_account_specific();
   }
 
-  $p->set_var('form_action',$phpgw->link('editgroup.php'));
+  $p->set_var('form_action',$phpgw->link('/admin/editgroup.php'));
   $p->set_var('hidden_vars','<input type="hidden" name="group_id" value="' . $group_id . '">');
 
   $p->set_var('lang_group_name',lang('group name'));

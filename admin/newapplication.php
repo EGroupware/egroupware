@@ -64,7 +64,7 @@
           $phpgw->acl->add($n_app_name,'everywhere',0,'g',1);
         }
 
-        Header("Location: " . $phpgw->link("applications.php"));
+        Header("Location: " . $phpgw->link("/admin/applications.php"));
         $phpgw->common->phpgw_exit();
      } else {
         $phpgw->template->set_var("error","<p><center>" . $phpgw->common->error_list($error) . "</center><br>");
@@ -79,7 +79,7 @@
   $phpgw->template->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
 
   $phpgw->template->set_var("hidden_vars","");
-  $phpgw->template->set_var("form_action",$phpgw->link("newapplication.php"));
+  $phpgw->template->set_var("form_action",$phpgw->link("/admin/newapplication.php"));
 
   display_row(lang("application name"),'<input name="n_app_name" value="' . $n_app_name . '">');
   display_row(lang("application title"),'<input name="n_app_title" value="' . $n_app_title . '">');

@@ -48,8 +48,8 @@
 
      $p->set_var("tr_color",$tr_color);
      $p->set_var("name",$name);
-     $p->set_var("edit",'<a href="' . $phpgw->link("editapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Edit") . ' </a>');
-     $p->set_var("delete",'<a href="' . $phpgw->link("deleteapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Delete")  . ' </a>');
+     $p->set_var("edit",'<a href="' . $phpgw->link("/admin/editapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Edit") . ' </a>');
+     $p->set_var("delete",'<a href="' . $phpgw->link("/admin/deleteapplication.php","app_name=" . urlencode($phpgw->db->f("app_name"))) . '"> ' . lang("Delete")  . ' </a>');
 
      if ($phpgw->db->f("app_enabled") != 0) {
         $status = lang("Yes");
@@ -61,7 +61,7 @@
      $p->parse("rows","row",True);
   }
 
-  $p->set_var("new_action",$phpgw->link("newapplication.php"));
+  $p->set_var("new_action",$phpgw->link("/admin/newapplication.php"));
   $p->set_var("lang_add",lang("add"));
   
   $p->pparse("out","list");

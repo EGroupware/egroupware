@@ -18,14 +18,13 @@
   $phpgw_info["flags"]["currentapp"] = "admin";
   include("../header.inc.php");
   if ($ksessionid == $phpgw_info["user"]["sessionid"]) {
-     Header("Location: " . $phpgw->link("currentusers.php"));
+     Header("Location: " . $phpgw->link("/admin/currentusers.php"));
      $phpgw->common->phpgw_exit();
   }
 
   if ($confirm) {
      $phpgw->db->query("delete from phpgw_sessions where session_id='$ksession'");
-     Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/admin/currentusers.php",
-	    "cd=19"));
+     Header("Location: " . $phpgw->link("/admin/currentusers.php","cd=19"));
   } else {
      ?>
      <center>
@@ -37,10 +36,10 @@
        </tr>
        <tr>
          <td>
-           <a href="<?php echo $phpgw->link("currentusers.php") . "\">" . lang("No"); ?></a>
+           <a href="<?php echo $phpgw->link("/admin/currentusers.php") . "\">" . lang("No"); ?></a>
          </td>
          <td>
-           <a href="<?php echo $phpgw->link("killsession.php","ksession=$ksession&confirm=true")
+           <a href="<?php echo $phpgw->link("/admin/killsession.php","ksession=$ksession&confirm=true")
 		 . "\">" . lang("Yes"); ?></a>
          </td>
        </tr>

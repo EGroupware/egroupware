@@ -15,7 +15,7 @@
   $phpgw_info['flags'] = array('noheader' => True, 'nonavbar' => True, 'currentapp' => 'admin');
 
   if (! $group_id) {
-     Header('Location: ' . $phpgw->link('groups.php'));
+     Header('Location: ' . $phpgw->link('/admin/groups.php'));
   }
   include('../header.inc.php');
   $p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
@@ -47,11 +47,11 @@
         $p->parse('messages','message_row',True);
 
         while (list(,$id) = each($old_group_list)) {
-          $p->set_var('message_display','<tr><td><a href="' . $phpgw->link('editaccount.php','account_=' . $id) . '">' . $phpgw->common->grab_owner_name($id) . '</a></tr></td>');
+          $p->set_var('message_display','<tr><td><a href="' . $phpgw->link('/admin/editaccount.php','account_=' . $id) . '">' . $phpgw->common->grab_owner_name($id) . '</a></tr></td>');
           $p->parse('messages','message_row',True);
         }
         $p->set_var('message_display','</table></center></td></tr><tr><td>'
-             . '<a href="' . $phpgw->link('deletegroup.php','group_id=' . $group_id . '&removeusers=True')
+             . '<a href="' . $phpgw->link('/admin/deletegroup.php','group_id=' . $group_id . '&removeusers=True')
              . '">' . lang('Remove all users from this group') . '</a></td></tr>');
         $p->parse('messages','message_row',True);
         $p->set_var('yes','');
@@ -75,7 +75,7 @@
 
         $phpgw->db->unlock();
 
-        Header('Location: ' . $phpgw->link('groups.php','cd='.$cd));
+        Header('Location: ' . $phpgw->link('/admin/groups.php','cd='.$cd));
         $phpgw->common->phpgw_exit();
      }
   } else {
@@ -85,8 +85,8 @@
 
     $p->set_var('message_display',lang('Are you sure you want to delete this group ?'));
     $p->parse('messages','message_row');
-    $p->set_var('yes','<a href="' . $phpgw->link('deletegroup.php',"group_id=$group_id&confirm=true") . '">' . lang('Yes') . '</a>');
-    $p->set_var('no','<a href="' . $phpgw->link('groups.php') . '">' . lang('No') . '</a>');
+    $p->set_var('yes','<a href="' . $phpgw->link('/admin/deletegroup.php',"group_id=$group_id&confirm=true") . '">' . lang('Yes') . '</a>');
+    $p->set_var('no','<a href="' . $phpgw->link('/admin/groups.php') . '">' . lang('No') . '</a>');
 
     $p->pparse('out','body');
 

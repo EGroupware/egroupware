@@ -156,7 +156,7 @@
          $phpgw->common->hook_single('add_user_data', $value);
        }       
 */
-        Header('Location: ' . $phpgw->link('accounts.php','cd='.$cd));
+        Header('Location: ' . $phpgw->link('/admin/accounts.php','cd='.$cd));
         $phpgw->common->phpgw_exit();
      }
 	}
@@ -186,7 +186,7 @@
 	$phpgw->template->set_var('tr_color1',$phpgw_info['theme']['row_on']);
 	$phpgw->template->set_var('tr_color2',$phpgw_info['theme']['row_off']);
   
-	$phpgw->template->set_var('form_action',$phpgw->link('newaccount.php'));
+	$phpgw->template->set_var('form_action',$phpgw->link('/admin/newaccount.php'));
 	$phpgw->template->set_var('lang_loginid',lang('LoginID'));
 
 	if ($account_status) 

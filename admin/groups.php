@@ -60,16 +60,16 @@
      if (! $group_name)  $group_name  = '&nbsp;';
 
      $p->set_var("group_name",$group_name); 
-     $p->set_var("edit_link",'<a href="' . $phpgw->link("editgroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
-     $p->set_var("delete_link",'<a href="' . $phpgw->link("deletegroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Delete") . ' </a>');
+     $p->set_var("edit_link",'<a href="' . $phpgw->link("/admin/editgroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Edit") . ' </a>');
+     $p->set_var("delete_link",'<a href="' . $phpgw->link("/admin/deletegroup.php","group_id=" . $phpgw->db->f("account_id")) . '"> ' . lang("Delete") . ' </a>');
  
      $p->parse("rows","row",True);
   }
 
-  $p->set_var("new_action",$phpgw->link("newgroup.php"));
+  $p->set_var("new_action",$phpgw->link("/admin/newgroup.php"));
   $p->set_var("lang_add",lang("add"));
 
-  $p->set_var("search_action",$phpgw->link("groups.php"));
+  $p->set_var("search_action",$phpgw->link("/admin/groups.php"));
   $p->set_var("lang_search",lang("search"));
 
   $p->pparse("out","list");

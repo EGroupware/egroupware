@@ -1,5 +1,7 @@
 <?php
 { 
+
+/*
   // This block of code is included by the main Administration page
   // it points to the user, application and other global config
   // pages.
@@ -22,33 +24,43 @@
 
   // Show the header for the section
   section_start("Administration",$imgpath);
+*/
 
+	echo "<p>\n";
+	$imgfile = $phpgw->common->get_image_dir($appname) . '/' . $appname . '.gif';
+	if (file_exists($imgfile))
+	{
+		$imgpath = $phpgw->common->get_image_path($appname) . '/' . $appname . '.gif';
+	}
+	else
+	{
+		$imgfile = $phpgw->common->get_image_dir($appname) . '/navbar.gif';
+		if (file_exists($imgfile))
+		{
+			$imgpath = $phpgw->common->get_image_path($appname) . '/navbar.gif';
+		}
+		else
+		{
+			$imgpath = '';
+		}
+	}
 
-  // actual items in this section
-  echo "<a href='" . $phpgw->link("accounts.php") . "'>";
-  echo lang("User accounts")."</a><br>\n";
+	section_start(ucfirst($appname),$imgpath);
 
-  echo "<a href='" . $phpgw->link("groups.php") . "'>";
-  echo lang("User groups")."</a><br>\n";
+	// actual items in this section
+	echo '<a href="' . $phpgw->link('/admin/accounts.php') . '">' . lang('User accounts')."</a><br>\n";
+	echo '<a href="' . $phpgw->link('/admin/groups.php') . '">' . lang('User groups')."</a><br>\n";
+	echo "<p>\n";
 
-  echo "<p>\n";
+	echo '<a href="' . $phpgw->link('/admin/applications.php') . '">' . lang('Applications')."</a><br>\n";
+	echo "<p>\n";
 
-  echo "<a href='" . $phpgw->link("applications.php") . "'>";
-  echo lang("Applications")."</a><br>\n";
+	echo '<a href="' . $phpgw->link('/admin/mainscreen_message.php') . '">' . lang('Change main screen message') . "</a><br>\n";
+	echo "<p>\n";
 
-  echo "<p>\n";
+	echo '<a href="' . $phpgw->link('/admin/currentusers.php') . '">' . lang('View sessions') . "</a><br>\n";
+	echo '<a href="' . $phpgw->link('/admin/accesslog.php') . '">' . lang('View Access Log') . "</a><br>\n";
 
-  echo "<a href='" . $phpgw->link("mainscreen_message.php") . "'>";
-  echo lang("Change main screen message")."</a><br>\n";
-
-  echo "<p>\n";
-
-  echo "<a href='" . $phpgw->link("currentusers.php") . "'>";
-  echo lang("View sessions")."</a><br>\n";
-
-  echo "<a href='" . $phpgw->link("accesslog.php") . "'>";
-  echo lang("View Access Log")."</a><br>\n";
-
-  section_end(); 
+	section_end(); 
 }
 ?>

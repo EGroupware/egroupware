@@ -52,7 +52,7 @@
   // Make sure they are not attempting to delete there own account.
   // If they are, they should not reach this point anyway.
   if ($phpgw_info["user"]["account_id"] == $account_id) {
-     Header("Location: " . $phpgw->link("accounts.php"));
+     Header('Location: ' . $phpgw->link('/admin/accounts.php'));
      $phpgw->common->phpgw_exit();
   }
 
@@ -61,9 +61,9 @@
      $account_id = rawurlencode($account_id);
      $phpgw->template->set_var("message",lang("Are you sure you want to delete this account ?") . "<br>"
                              . "<font color=\"red\"><blink>" . lang("All records and account information will be lost!") . "</blink></font>");
-     $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("deleteaccount.php","account_id=$account_id&confirm=true")
+     $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("/admin/deleteaccount.php","account_id=$account_id&confirm=true")
                                    . '">' . lang("Yes") . '</a>');
-     $phpgw->template->set_var("no",'<a href="' . $phpgw->link("accounts.php")
+     $phpgw->template->set_var("no",'<a href="' . $phpgw->link("/admin/accounts.php")
                                   . '">' . lang("No") . '</a>');
      $phpgw->template->pparse("out","body");
 
@@ -73,7 +73,7 @@
   if ($confirm) {
      $cd = account_delete($account_id);
 
-     Header("Location: " . $phpgw->link("accounts.php","cd=$cd"));
+     Header("Location: " . $phpgw->link("/admin/accounts.php","cd=$cd"));
   }
   account_close();
 ?>

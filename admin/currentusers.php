@@ -86,7 +86,7 @@
 
 		if ($phpgw->db->f('session_id') != $phpgw_info['user']['sessionid'])
 		{
-			$phpgw->template->set_var('row_kill','<a href="' . $phpgw->link('killsession.php','ksession='
+			$phpgw->template->set_var('row_kill','<a href="' . $phpgw->link('/admin/killsession.php','ksession='
 				. $phpgw->db->f('session_id') . '&kill=true') . '">' . lang('Kill').'</a>');
 		}
 		else

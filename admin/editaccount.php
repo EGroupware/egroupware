@@ -52,7 +52,7 @@
 			$allGroups = $account->get_list('groups');
 		}
 
-		$t->set_var('form_action',$phpgw->link('editaccount.php',
+		$t->set_var('form_action',$phpgw->link('/admin/editaccount.php',
 			"account_id=$_account_id&old_loginid=".rawurlencode($userData['account_lid'])));
 
 		if ($_errors) 
@@ -299,7 +299,7 @@
 	// not needed if i use the same file for new users too
 	if (! $account_id)
 	{
-		Header('Location: ' . $phpgw->link('accounts.php'));
+		Header('Location: ' . $phpgw->link('/admin/accounts.php'));
 	}
 
 	if ($submit)
@@ -320,7 +320,7 @@
 		if (!$errors = userDataInvalid($userData)) 
 		{ 
 			saveUserData($userData);
-			Header('Location: ' . $phpgw->link('accounts.php', 'cd='.$cd));
+			Header('Location: ' . $phpgw->link('/admin/accounts.php', 'cd='.$cd));
 			$phpgw->common->phpgw_exit();
 		}
 		else

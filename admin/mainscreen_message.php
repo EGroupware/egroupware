@@ -30,7 +30,7 @@
   
   if (! isset($select_lang)) {
      $phpgw->template->set_var("header_lang",lang("Main screen message"));
-     $phpgw->template->set_var("form_action",$phpgw->link("mainscreen_message.php"));
+     $phpgw->template->set_var("form_action",$phpgw->link("/admin/mainscreen_message.php"));
      $phpgw->template->set_var("tr_color",$phpgw_info["theme"]["th_bg"]);
      $phpgw->template->set_var("value","&nbsp;");
      $phpgw->template->parse("rows","row_2",True);     
@@ -76,7 +76,7 @@
      } else {
         $phpgw->template->set_var("header_lang",lang("Edit login screen message"));
      }
-     $phpgw->template->set_var("form_action",$phpgw->link("mainscreen_message.php","select_lang=$select_lang&section=$section"));
+     $phpgw->template->set_var("form_action",$phpgw->link("/admin/mainscreen_message.php","select_lang=$select_lang&section=$section"));
      $phpgw->template->set_var("tr_color",$phpgw_info["theme"]["th_bg"]);
      $phpgw->template->set_var("value","&nbsp;");
      $phpgw->template->parse("rows","row_2",True);

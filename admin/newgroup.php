@@ -108,7 +108,7 @@
 
         $phpgw->db->unlock();
 
-        Header("Location: " . $phpgw->link("groups.php","cd=$cd"));
+        Header("Location: " . $phpgw->link("/admin/groups.php","cd=$cd"));
         $phpgw->common->phpgw_exit();
      }
   }
@@ -125,7 +125,7 @@
      $p->set_var("error","");
   }
 
-  $p->set_var("form_action",$phpgw->link("newgroup.php"));
+  $p->set_var("form_action",$phpgw->link("/admin/newgroup.php"));
   $p->set_var("hidden_vars","");
   $p->set_var("lang_group_name",lang("New group name"));
   $p->set_var("group_name_value","");
