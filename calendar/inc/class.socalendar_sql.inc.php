@@ -529,7 +529,7 @@
 			$sql = 'SELECT DISTINCT phpgw_cal.cal_id,'
 					. 'phpgw_cal.datetime,phpgw_cal.edatetime,'
 					. 'phpgw_cal.priority '
-					. 'FROM phpgw_cal, phpgw_cal_user'
+					. 'FROM phpgw_cal_user, phpgw_cal'
 					. $from
 					. 'WHERE (phpgw_cal_user.cal_id = phpgw_cal.cal_id) '
 					. $where . $extra;
