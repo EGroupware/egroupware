@@ -71,11 +71,11 @@
 
 <?php
  $phpgw->nextmatchs->show("index.php",$start,$phpgw->db->f(0),"&order=$order&filter=$filter&sort="
-		              . "$sort&query=$query", "75%", $phpgw_info["theme"][th_bg]);
+		              . "$sort&query=$query", "75%", $phpgw_info["theme"]["th_bg"]);
 ?>
 
   <table width=75% border=0 cellspacing=1 cellpadding=3>
-    <tr bgcolor="<?php echo $phpgw_info["theme"][th_bg]; ?>">
+    <tr bgcolor="<?php echo $phpgw_info["theme"]["th_bg"]; ?>">
     <?php
        if ( $phpgw_info["user"]["preferences"]["addressbook_view_company"] == "True" ) {
           echo '<td height="21">';

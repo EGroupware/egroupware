@@ -27,7 +27,7 @@
 
   if (! $submit) {
      $phpgw->db->query("SELECT * FROM addressbook WHERE ab_owner='"
-		           . $phpgw_info["user"]["userid"] . "' AND ab_id='$ab_id'");
+		           . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id");
      $phpgw->db->next_record();
 
      $fields = array('ab_id'	=> $phpgw->db->f("ab_id"),
@@ -74,17 +74,17 @@
 	    . "', ab_notes='" 	. addslashes($notes)
 	    . "', ab_company='" 	. addslashes($company)
 	    . "', ab_access='" 	. addslashes($access)
-	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id='$ab_id'";
+	    . "'  WHERE ab_owner='" . $phpgw_info["user"]["userid"] . "' AND ab_id=$ab_id";
 
      $phpgw->db->query($sql);
 
-     Header("Location: " . $phpgw->link("view.php","&con=$con&order=$order&sort=$sort&filter="
+     Header("Location: " . $phpgw->link("view.php","&ab_id=$ab_id&order=$order&sort=$sort&filter="
  	     . "$filter&start=$start"));
      exit;
   }
 
 ?>
-   <input type="hidden" name="con" value="<? echo $con; ?>">
+   <input type="hidden" name="ab_id" value="<? echo $ab_id; ?>">
    <input type="hidden" name="sort" value="<? echo $sort; ?>">
    <input type="hidden" name="order" value="<? echo $order; ?>">
    <input type="hidden" name="filter" value="<? echo $filter; ?>">
@@ -97,10 +97,10 @@
                <input type="submit" name="submit" value="<?php echo lang("Submit"); ?>">
               </TD>
               <TD align=left width=7%>
-                <a href="<?php echo $phpgw->link("view.php","con=$con") . "\">" . lang("Cancel"); ?></a>
+                <a href="<?php echo $phpgw->link("view.php","ab_id=$ab_id") . "\">" . lang("Cancel"); ?></a>
               </TD>
               <TD align=right> 
-               <a href="<?php echo $phpgw->link("delete.php","con=$con") . "\">" . lang("Delete"); ?></a>
+               <a href="<?php echo $phpgw->link("delete.php","ab_id=$ab_id") . "\">" . lang("Delete"); ?></a>
               </TD>
             </TR>
             </TBODY> 
@@ -112,3 +112,4 @@
 
 <?php
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
+?>

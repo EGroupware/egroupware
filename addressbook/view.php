@@ -26,7 +26,7 @@
   if ($filter != "private")
      $filtermethod = " or ab_access='public' " . $phpgw->accounts->sql_search("ab_access");
 
-  $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id='$ab_id' AND (ab_owner='"
+  $phpgw->db->query("SELECT * FROM addressbook WHERE ab_id=$ab_id AND (ab_owner='"
 	             . $phpgw_info["user"]["userid"] . "' $filtermethod)");
   $phpgw->db->next_record();
 
