@@ -1,4 +1,4 @@
-A:link 
+A:link
 {
 	COLOR: #000000; 
 	TEXT-DECORATION: none
@@ -61,8 +61,9 @@ TABLE
 	PADDING-BOTTOM: 5px; 
 	WIDTH: 160px; 
 	COLOR: #000000; 
-	LINE-HEIGHT: 20px; 
-	PADDING-TOP: 5px; 
+	BACKGROUND-COLOR: #EAE9CA;
+	LINE-HEIGHT: 20px;
+	PADDING-TOP: 5px;
 	FONT-FAMILY: "Verdana", "Arial", "Helvetica", "sans-serif"
 }
 
@@ -70,6 +71,7 @@ TABLE
 {
 	FONT-SIZE: 12px; 
 	COLOR: #000000; 
+	BACKGROUND-COLOR: #EAE9CA;
 	FONT-FAMILY: "Arial", "Helvetica", "sans-serif"
 }
 

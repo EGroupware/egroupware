@@ -23,8 +23,8 @@
 					<TD width=15 rowSpan=2 vAlign=top class=toppannel></TD>
 				</TR>
 				<TR>
-					<TD align=left vAlign=top class=mainnote>{user_info}</TD>
-					<TD align=right vAlign=top class=mainnote>{current_users}</TD>
+					<TD align=left vAlign=top>{user_info}</TD>
+					<TD align=right vAlign=top>{current_users}</TD>
 				</TR>
 			</TABLE>
 			<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
@@ -48,7 +48,7 @@
 						<TD  height=23 colSpan=2 align="center" class=articletitle>{current_app_title}</TD>
 					</TR>
 					<TR align="center"> 
-						<TD height=20 colSpan=2 bgColor=#efefef class=mainnote>
+						<TD height=20 colSpan=2 class=mainnote>
 <!-- END navbar_footer -->
 
 
@@ -57,8 +57,8 @@
 <TR> 
 	<TD class=sideboxtitle align=middle height=28>{lang_title}</TD>
 </TR>
-<TR> 
-	<TD class=sideboxcontent bgColor=#efefef>
+<TR>
+	<TD class=sideboxcontent>
 		<TABLE class=sideboxtext cellSpacing=0 cellPadding=0 width="100%" border=0 valign="top">
 <!-- END extra_blocks_header -->
 
