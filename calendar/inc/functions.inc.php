@@ -1035,6 +1035,64 @@
       return $str;
     }
 
+    function mini_calendar($day,$month,$year,$link="") {
+      global $phpgw, $phpgw_info, $view;
+
+      $date = $this->makegmttime(0,0,0,$month,$day,$year);
+      $month_ago = intval(date("Ymd",mktime(0,0,0,$month - 1,$day,$year)));
+      $month_ahead = intval(date("Ymd",mktime(0,0,0,$month + 1,$day,$year)));
+      $monthstart = intval(date("Ymd",mktime(0,0,0,$month,1,$year)));
+      $monthend = intval(date("Ymd",mktime(0,0,0,$month + 1,0,$year)));
+
+      $weekstarttime = $this->get_sunday_before($year,$month,1);
+      if ($phpgw_info["user"]["preferences"]["calendar"]["weekdaystarts"] == "Monday") {
+		$days = array(0 => "Monday", 1 => "Tuesday", 2 => "Wednesday", 3 => "Thursday", 4 => "Friday", 5 => "Saturday", 6 => "Sunday");
+		$weekstarttime += (3600 * 25);
+      } else {
+		$days = array(0 => "Sunday", 1 => "Monday", 2 => "Tuesday", 3 => "Wednesday", 4 => "Thursday", 5 => "Friday", 6 => "Saturday");
+      }
+	  $p = new Template($phpgw->common->get_tpl_dir('calendar'));
+      $p->set_file(array("mini_cal" => "mini_cal.tpl"));
+      $p->set_block("mini_cal","month_week");
+      $p->set_block("mini_cal","day");
+      $p->set_var("bgcolor",$phpgw_info["theme"]["bg_text"]);
+      $p->set_var("bgcolor1",$phpgw_info["theme"]["bg_color"]);
+      $p->set_var("month",lang($phpgw->common->show_date($date["raw"],"F"))." ".$year);
+      $p->set_var("prevmonth",$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/index.php","date=".$month_ago));
+      $p->set_var("nextmonth",$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/index.php","date=".$month_ahead));
+
+      $p->set_var('bgcolor2',$phpgw_info["theme"]["cal_dayview"]);
+      for($i=0;$i<7;$i++) {
+		$p->set_var('dayname',substr(lang($days[$i]),0,2));
+		$p->parse('daynames','day',True);
+      }
+      for($i=$weekstarttime;date("Ymd",$i)<=$monthend;$i += (24 * 3600 * 7)) {
+		for($j=0;$j<7;$j++) {
+		  $str = "";
+		  $cal = $this->gmtdate($i + ($j * 24 * 3600));
+		  if($cal["full"] >= $monthstart && $cal["full"] <= $monthend) {
+			if($cal["full"] == $this->today["full"]) {
+			  $p->set_var('bgcolor2',$phpgw_info["theme"]["cal_today"]);
+			} else {
+	          $p->set_var('bgcolor2','#FFFFFF');
+	        }
+	        if(!$this->printer_friendly) {
+	      	  $str .= "<a href=\"".$phpgw->link($phpgw_info["server"]["webserver_url"]."/calendar/".$link,"year=".$cal["year"]."&month=".$cal["month"]."&day=".$cal["day"])."\">";
+	    	}
+	    	$str .= $cal["day"];
+	    	if(!$this->printer_friendly) $str .= "</a>";
+	    	$p->set_var('dayname',$str);
+	  	  } else {
+	    	$p->set_var('bgcolor2','FEFEFE');
+	    	$p->set_var('dayname',$cal["day"]);
+	  	  }
+	  	  $p->parse('monthweek_day','day',True);
+		}
+		$p->parse('display_monthweek','month_week',True);
+		$p->set_var('monthweek_day');
+      }
+      $p->pparse('out','mini_cal');
+    }
 
     function html_for_event_day_at_a_glance ($event) {
       global $phpgw, $phpgw_info;
