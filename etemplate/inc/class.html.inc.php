@@ -28,6 +28,14 @@ class html
 		
 		$this->prefered_img_title = $this->user_agent == 'mozilla' && $this->ua_version < 5 ? 'ALT' : 'TITLE';
 		//echo "<p>HTTP_USER_AGENT='$GLOBALS[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
+
+		$this->document_root = $_SERVER['DOCUMENT_ROOT'];
+		// this is because some webservers report their docroot without the leading slash
+		if (!is_dir($this->document_root) && is_dir('/'.$this->document_root))
+		{
+			$this->document_root = '/' . $this->document_root;
+		}
+		//echo "<p>_SERVER[DOCUMENT_ROOT]='$_SERVER[DOCUMENT_ROOT]', this->document_root='$this->document_root'</p>\n";
 	}
 
 	/*
@@ -275,8 +283,7 @@ class html
 		{
 			$path = $name;		// name may already contain absolut path
 		}
-		// as some webservers does not report there DOCUMENT_ROOT starting with a '/', we just add one
-		if (!@is_readable('/'.$_SERVER['DOCUMENT_ROOT'] . $path))
+		if (!@is_readable($this->document_root . $path))
 		{
 			return $title;
 		}
