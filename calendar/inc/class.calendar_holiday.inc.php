@@ -124,7 +124,7 @@ class calendar_holiday
 		$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale));
 		if (!$lines) return false;
 		$c_lines = count($lines);
-		for($i=10;$i<$c_lines;$i++)
+		for($i=0;$i<$c_lines;$i++)
 		{
 //			echo 'Line #'.$i.' : '.$lines[$i]."<br>\n";
 			$holiday = explode("\t",$lines[$i]);
@@ -248,6 +248,26 @@ class calendar_holiday
 		}
 		$this->holidays = $this->sort_by_date($this->holidays);
 		return $this->holidays;
+	}
+
+	function build_list_for_submission($locale)
+	{
+		global $phpgw;
+		
+		$i = -1;
+		$this->db->query("SELECT * FROM phpgw_cal_holidays WHERE locale='".$locale."'");
+		while($this->db->next_record())
+		{
+			$i++;
+			$holidays[$i]['locale'] = $this->db->f('locale');
+			$holidays[$i]['name'] = $phpgw->strip_html($this->db->f('name'));
+			$holidays[$i]['day'] = intval($this->db->f('mday'));
+			$holidays[$i]['month'] = intval($this->db->f('month_num'));
+			$holidays[$i]['occurence'] = intval($this->db->f('occurence'));
+			$holidays[$i]['dow'] = intval($this->db->f('dow'));
+			$holidays[$i]['observance_rule'] = $this->db->f('observance_rule');
+		}
+		return $holidays;
 	}
 
 	function build_holiday_query()

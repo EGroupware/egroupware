@@ -68,26 +68,34 @@
 		return $locale;
 	}
 
-	$p = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir('admin'));
+	$p = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
 	$templates = Array(
-		'group'      => 'groups.tpl'
+		'locales'      => 'locales.tpl'
 	);
 	$p->set_file($templates);
-	$p->set_block('group','list','list');
-	$p->set_block('group','row','row');
-	$p->set_block('group','row_empty','row_empty');
+	$p->set_block('locales','list','list');
+	$p->set_block('locales','row','row');
+	$p->set_block('locales','row_empty','row_empty');
+	$p->set_block('locales','submit_column','submit_column');
 
 	$total = country_total($query);
- 
-	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('/calendar/'.basename($SCRIPT_FILENAME),$start,$total));
-	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('/calendar/'.basename($SCRIPT_FILENAME),$start,$total));
-	$p->set_var('lang_groups',lang('Countries'));
+	$var = Array(
+		'th_bg'		=> $phpgw_info['theme']['th_bg'],
+		'left_next_matchs'	=> $phpgw->nextmatchs->left('/calendar/'.basename($SCRIPT_FILENAME),$start,$total),
+		'right_next_matchs'	=> $phpgw->nextmatchs->right('/calendar/'.basename($SCRIPT_FILENAME),$start,$total),
+		'lang_groups'	=> lang('Countries'),
+		'sort_name'		=> $phpgw->nextmatchs->show_sort_order($sort,'locale',$order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Country')),
+		'header_edit'	=> lang('Edit'),
+		'header_delete'	=> lang('Delete'),
+		'submit_extra'	=> '',
+		'submit_link'	=> lang('Submit to Repository'),
+		'back_button'	=> ''
+	);
 
-	$p->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'locale',$order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Country')));
-	$p->set_var('header_edit',lang('Edit'));
-	$p->set_var('header_delete',lang('Delete'));
+	$p->set_var($var);
+
+	$p->parse('header_submit','submit_column',False);
 
 	$locales = get_locale_list($sort, $order, $query, $total);
 
@@ -98,6 +106,7 @@
 	}
 	else
 	{
+		$p->set_var('submit_extra',' width="5%"');
 		while (list(,$value) = each($locales))
 		{
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
@@ -105,20 +114,27 @@
 
 			if (! $value)  $value  = '&nbsp;';
 
-			$p->set_var('group_name',$value); 
-			$p->set_var("edit_link",'<a href="' . $phpgw->link('/calendar/editlocale.php','locale='.$value) . '"> ' . lang('Edit') . ' </a>');
-			$p->set_var("delete_link",'<a href="' . $phpgw->link('/calendar/deletelocale.php','locale='.$value) . '"> ' . lang('Delete') . ' </a>');
+			$var = Array(
+				'tr_color'		=> $tr_color,
+				'group_name'	=> $value,
+				'edit_link'		=> '<a href="' . $phpgw->link('/calendar/editlocale.php','locale='.$value) . '"> ' . lang('Edit') . ' </a>',
+				'delete_link'	=> '<a href="' . $phpgw->link('/calendar/deletelocale.php','locale='.$value) . '"> ' . lang('Delete') . ' </a>',
+				'submit_link'	=> '<a href="' . $phpgw->link('/calendar/submitlocale.php','locale='.$value) . '"> ' . lang('Submit') . ' </a>'
+			);
+			$p->set_var($var);
+			$p->parse('submit_link_column','submit_column',False);
 			$p->parse('rows','row',True);
-
 		}
 	}
 
-	$p->set_var('new_action',$phpgw->link('/calendar/editholiday.php','id=0'));
-	$p->set_var("lang_add",lang('add'));
+	$var = Array(
+		'new_action'		=> $phpgw->link('/calendar/editholiday.php','id=0'),
+		'lang_add'			=> lang('add'),
+		'search_action'	=> $phpgw->link('/calendar/holiday_admin.php'),
+		'lang_search'		=> lang('search')
+	);
 
-	$p->set_var('search_action',$phpgw->link('/calendar/holiday_admin.php'));
-	$p->set_var('lang_search',lang('search'));
-
+	$p->set_var($var);
 	$p->pparse('out','list');
 
 	$phpgw->common->phpgw_footer();

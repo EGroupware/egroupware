@@ -74,6 +74,7 @@
 	$p->set_block('locale','list','list');
 	$p->set_block('locale','row','row');
 	$p->set_block('locale','row_empty','row_empty');
+	$p->set_block('locale','back_button_form','back_button_form');
 
 	$total = country_total($locale,$query);
 	if(!$total && !isset($query))
@@ -81,15 +82,19 @@
 		Header('Location: ' . $phpgw->link('/calendar/holiday_admin.php'));
 	}
  
-	$p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$var = Array(
+		'th_bg'		=> $phpgw_info['theme']['th_bg'],
+		'left_next_matchs'	=> $phpgw->nextmatchs->left('/calendar/'.basename($SCRIPT_FILENAME),$start,$total,'&locale='.$locale),
+		'right_next_matchs'	=> $phpgw->nextmatchs->right('/calendar/'.basename($SCRIPT_FILENAME),$start,$total,'&locale='.$locale),
+		'lang_groups'		=> lang('Holidays').' ('.$locale.')',
+		'sort_name'		=> $phpgw->nextmatchs->show_sort_order($sort,'name',$order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Holiday'),'&locale='.$locale),
+		'header_edit'	=> lang('Edit'),
+		'header_delete'	=> lang('Delete'),
+		'header_submit'	=> '',
+		'submit_link_column'		=> ''
+	);
 
-	$p->set_var('left_next_matchs',$phpgw->nextmatchs->left('/calendar/'.basename($SCRIPT_FILENAME),$start,$total,'&locale='.$locale));
-	$p->set_var('right_next_matchs',$phpgw->nextmatchs->right('/calendar/'.basename($SCRIPT_FILENAME),$start,$total,'&locale='.$locale));
-	$p->set_var('lang_groups',lang('Holidays').' ('.$locale.')');
-
-	$p->set_var('sort_name',$phpgw->nextmatchs->show_sort_order($sort,'name',$order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Holiday'),'&locale='.$locale));
-	$p->set_var('header_edit',lang('Edit'));
-	$p->set_var('header_delete',lang('Delete'));
+	$p->set_var($var);
 
 	$holidays = get_holiday_list($locale, $sort, $order, $query, $total);
 
@@ -103,26 +108,31 @@
 		while (list($index,$name) = each($holidays))
 		{
 			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-			$p->set_var('tr_color',$tr_color);
-			
 			if (! $name)  $name  = '&nbsp;';
 
-			$p->set_var('group_name',$name); 
-			$p->set_var('edit_link','<a href="' . $phpgw->link('/calendar/editholiday.php','locale='.$locale.'&id='.$index) . '"> ' . lang('Edit') . ' </a>');
-			$p->set_var('delete_link','<a href="' . $phpgw->link('/calendar/deleteholiday.php','locale='.$locale.'&id='.$index) . '"> ' . lang('Delete') . ' </a>');
-			$p->parse('rows','row',True);
+			$var = Array(
+				'tr_color'		=> $tr_color,
+				'header_delete'	=> lang('Delete'),
+				'group_name'		=> $name,
+				'edit_link'		=> '<a href="' . $phpgw->link('/calendar/editholiday.php','locale='.$locale.'&id='.$index) . '"> ' . lang('Edit') . ' </a>',
+				'delete_link'	=> '<a href="' . $phpgw->link('/calendar/deleteholiday.php','locale='.$locale.'&id='.$index) . '"> ' . lang('Delete') . ' </a>'
+			);
 
+			$p->set_var($var);
+			$p->parse('rows','row',True);
 		}
 	}
 
-	$p->set_var('new_action',$phpgw->link('/calendar/editholiday.php','locale='.$locale.'&id=0'));
-	$p->set_var('lang_add',lang('add'));
-
-	$p->set_var('back_action',$phpgw->link('/calendar/holiday_admin.php'));
-	$p->set_var('lang_back',lang('Back'));
-
-	$p->set_var('search_action',$phpgw->link('/calendar/editlocale.php','locale='.$locale));
-	$p->set_var('lang_search',lang('search'));
+	$var = Array(
+		'new_action'	=> $phpgw->link('/calendar/editholiday.php','locale='.$locale.'&id=0'),
+		'lang_add'		=> lang('add'),
+		'back_action'	=> $phpgw->link('/calendar/holiday_admin.php'),
+		'lang_back'		=> lang('Back'),
+		'search_action'	=> $phpgw->link('/calendar/editlocale.php','locale='.$locale),
+		'lang_search'	=> lang('search')
+	);
+	$p->set_var($var);
+	$p->parse('back_button','back_button_form',False);
 
 	$phpgw->common->phpgw_header();
 	echo parse_navbar();
