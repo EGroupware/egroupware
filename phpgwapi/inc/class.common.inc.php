@@ -667,7 +667,7 @@
 			{
 				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
-			if ($appname == 'home' || $appname == 'logout' || $appname == 'login')
+			if ($appname == 'home' || $appname == 'logout' || $appname == 'login' || $appname == 'about')
 			{
 				$appname = 'phpgwapi';
 			}
@@ -1128,7 +1128,7 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon']  = $this->image('preferences',Array('navbar','nonav'));
 			$GLOBALS['phpgw_info']['navbar']['preferences']['icon_hover']  = $this->image_on('preferences',Array('navbar','nonav'),'-over');
 
-			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'about')
+			if ($GLOBALS['phpgw_info']['flags']['currentapp'] == 'home' || $GLOBALS['phpgw_info']['flags']['currentapp'] == 'preferences')
 			{
 				$app = 'phpGroupWare';
 			}
