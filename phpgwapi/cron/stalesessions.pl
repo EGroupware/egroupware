@@ -9,6 +9,7 @@
 # *  Free Software Foundation; either version 2 of the License, or (at your  *
 # *  option) any later version.                                              *
 # \**************************************************************************/
+# $Id$
 
 use DBI;
 
@@ -17,7 +18,7 @@ use DBI;
 $db_host = 'localhost';
 $db_name = 'phpGroupWare';
 $db_user = 'phpgroupware';
-$db_pass = 'phpgr0upwar3';
+$db_pass = 'my_password';
 
 # Email users when they don't log out ?
 # If you are selecting this option.  You might want to customize the message
@@ -30,7 +31,7 @@ $email_user = 'Y';
 $sendmail_location = '/usr/sbin/sendmail';
 
 # Where should the message be comming from ?
-$message_from = "webmaster\@athens.prv";
+$message_from = "webmaster\@mydomain.com";
 
 # This is how long a user can be at idle before being deleted. Look at the
 # SECURITY file for more information.
@@ -50,17 +51,16 @@ $dbase = DBI->connect("DBI:mysql:$db_name;$db_host",$db_user,$db_pass);
 $staletime = time() - $secs_to_stale;
 
 if ($email_user eq 'Y') {
-   $command = $dbase->prepare("select loginid,logintime,ip,sessionid from "
-			    . "sessions where dla <= '$staletime'");
+   $command = $dbase->prepare("select session_lid,session_logintime,session_ip,session_id from "
+                            . "phpgw_sessions where session_dla <= '$staletime'");
    $command->execute();
 
    while (@session_data = $command->fetchrow_array()) {
      send_message($session_data[0],$session_data[1],$session_data[2]);
-     $command2 = $dbase->do("delete from sessions where sessionid='"
-		          . "$session_data[3]'");
+     $command2 = $dbase->do("delete from phpgw_sessions where session_id='$session_data[3]'");
    }
 } else {
-   $command = $dbase->do("delete from sessions where dla <= '$staletime'");
+   $command = $dbase->do("delete from phpgw_sessions where session_dla <= '$staletime'");
 }
 
 #$command->finish();
