@@ -568,7 +568,7 @@
 				{
 					$this->$name = $path;	// a reasonable default for *nix
 
-					if (!($Ok = is_executable($this->$name)))
+					if (!($Ok = @is_executable($this->$name)))
 					{
 						if (file_exists($this->$name))
 						{
@@ -590,7 +590,7 @@
 							$this->$name = substr($this->$name,0,$pos);
 						}
 					}
-					if (!$Ok && !is_executable($this->$name))
+					if (!$Ok && !@is_executable($this->$name))
 					{
 						$this->$name = $name;	// hopefully its in the path
 					}
