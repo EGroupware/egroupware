@@ -132,7 +132,7 @@
 				}
 			}
 
-			if ($functionparams != '_UNDEF_' && ($functionparams || $functionparams != 'True'))
+			if ((is_array($functionparams) || $functionparams != '_UNDEF_') && ($functionparams || $functionparams != 'True'))
 			{
 				return $GLOBALS[$classname]->$functionname($functionparams);
 			}

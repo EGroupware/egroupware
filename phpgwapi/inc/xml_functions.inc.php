@@ -689,7 +689,7 @@
 
 		if($server_name)
 		{
-			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password);
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password,"text");
 		}
 		else
 		{
@@ -701,7 +701,7 @@
 			{
 				$user = $username;
 			}
-			$sessionid = $GLOBALS['phpgw']->session->create($user,$password);
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password,"text");
 			$kp3 = $GLOBALS['phpgw']->session->kp3;
 			$domain = $GLOBALS['phpgw']->session->account_domain;
 		}
