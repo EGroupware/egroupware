@@ -60,13 +60,13 @@
 		{
 			switch($for)
 			{
-				case 'app':		$w = " cat_appname='" . $this->app_name . "'"; break;
-				case 'subs':		$w = " cat_parent != '0'"; break;
-				case 'mains':		$w = " cat_parent = '0'"; break;
+				case 'app':		$w = " where cat_appname='" . $this->app_name . "'"; break;
+				case 'subs':		$w = " where cat_parent != '0'"; break;
+				case 'mains':		$w = " where cat_parent = '0'"; break;
 				default:	return False;
 			
 			}
-			$this->db->query("select count(*) from phpgw_categories $w");
+			$this->db->query("select count(*) from phpgw_categories $w",__LINE__,__FILE__);
 			$this->db->next_record();
 			
 			return $this->db->f(0);
