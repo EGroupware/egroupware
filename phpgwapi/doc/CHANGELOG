@@ -13,6 +13,8 @@
         - Fixed free/busy displaying incorrect title date
         - Fixed templates messing up with certian languages
         - Fixed E-Mail addressbook not working
+        - Cleaned up the E-Mail mini box on main screen
+        - Fixed a number of the icons not showing up
 
 [0.9.8] - Merged in patch for UW-Maildir IMAP server support
           Thanks milosch
