@@ -53,7 +53,16 @@
 		<!-- END B_powered_top -->
 		<tr>
 			<td align="left">
-				{user_info}&nbsp;&nbsp;&nbsp;&nbsp;{current_users}
+				<table border="0" width="100%" height="" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left">
+						{user_info}
+					</td>
+					<td align="right">
+						&nbsp;{current_users}
+					</td>
+				</tr>
+				</table>
 			</td>
 		</tr>
 		<tr>
