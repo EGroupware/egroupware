@@ -184,14 +184,28 @@
 
 //      $phpgw_schema_proc = new phpgw_schema_proc($phpgw_domain[$ConfigDomain]["db_type"]);
     }
-  
+
+    // This is a php3/4 compliant in_array(), used only below in check_db() so far
+    function isinarray($needle,$haystack=array()) 
+    {
+      for($i=0;$i<count($haystack) && $haystack[$i] !=$needle;$i++);
+        return ($i!=count($haystack));
+    }
+
     function check_db()
     {
       global $phpgw_info;
       $this->db->Halt_On_Error = "no";
       $tables = $this->db->table_names();
-      if (is_array($tables) && count($tables) > 0){
-        /* tables exists. checking for post beta version */
+      while(list($key,$val) = @each($tables))
+      {
+        $tname[] = $val['table_name'];
+      }
+      $newapps = $this->isinarray('phpgw_applications',$tname);
+      $oldapps = $this->isinarray('applications',$tname);
+
+      if ( ( is_array($tables) ) && ( count($tables) > 0 ) && ( $newapps || $oldapps ) ){
+        /* tables exist. checking for post beta version */
         $this->db->query("select * from phpgw_applications");
         while (@$this->db->next_record()) {
           if ($this->db->f("app_name") == "admin"){$phpgw_info["setup"]["oldver"]["phpgwapi"] = $this->db->f("app_version");}
