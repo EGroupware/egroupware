@@ -1,9 +1,9 @@
 <?php
   /**************************************************************************\
   * eGroupWare API - Services Abstraction Class                              *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * Copyright (C) 2001 Miles Lott                                            *
-  * -------------------------------------------------------------------------*
+  * This file written by Miles Lott <milos@groupwhere.org>                   *
+  * Copyright (C) 2001-2004 Miles Lott                                       *
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *

@@ -1,11 +1,11 @@
 <?php
   /**************************************************************************\
   * eGroupWare API - Services Abstraction Class                              *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * Copyright (C) 2001 Miles Lott                                            *
-  * -------------------------------------------------------------------------*
+  * This file written by Miles Lott <milos@groupwhere.org>                   *
+  * Copyright (C) 2001-2004 Miles Lott                                       *
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -37,7 +37,7 @@
 				$function = $service[1];
 				$service  = $service[0];
 			}
-			switch ($service)
+			switch($service)
 			{
 				case 'schedule':
 				case 'contacts':

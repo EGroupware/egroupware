@@ -1,9 +1,9 @@
 <?php
   /**************************************************************************\
   * eGroupWare API - Services Abstraction Class                              *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * Copyright (C) 2001 Miles Lott                                            *
-  * -------------------------------------------------------------------------*
+  * This file written by Miles Lott <milos@groupwhere.org>                   *
+  * Copyright (C) 2001-2004 Miles Lott                                       *
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            * 
   * ------------------------------------------------------------------------ *
@@ -22,9 +22,9 @@
 
   /* $Id$ */
 
-	class service_contacts extends service
+	class service_notes extends service
 	{
-		function service_contacts()
+		function service_notes()
 		{
 			$this->provider = $GLOBALS['phpgw_info']['notes_service'] ? $GLOBALS['phpgw_info']['notes_service'] : 'notes';
 			$this->svc = $this->provider . '.bo' . $this->provider;
