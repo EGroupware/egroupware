@@ -42,6 +42,7 @@
 	class common
 	{
 		var $debug_info; // An array with debugging info from the API
+		var $found_files;
 
 		/*!
 		@function cmp_version
@@ -766,21 +767,56 @@
 
 		function find_image($appname,$image)
 		{
-			$imagedir            = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
-			$imagedir_default    = '/'.$appname.'/templates/default/images';
-			$imagedir_olddefault = '/'.$appname.'/images';
 
-			if(@file_exists(PHPGW_SERVER_ROOT.$imagedir.'/'.$image))
+			if (!is_array($this->found_files[$appname]['images']))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir.'/'.$image;
+				$imagedir_olddefault = '/'.$appname.'/images';
+				$imagedir_default    = '/'.$appname.'/templates/default/images';
+				$imagedir = '/'.$appname.'/templates/'.$GLOBALS['phpgw_info']['server']['template_set'].'/images';
+
+				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault))
+				{
+					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_olddefault);
+					while (false !== ($entry = $d->read()))
+					{
+						if ($entry != '.' && $entry != '..')
+						{
+							$this->found_files[$appname]['images'][$entry] = $imagedir_olddefault;
+						}
+					}
+					$d->close();
+				}
+	
+				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir_default))
+				{
+					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir_default);
+					while (false !== ($entry = $d->read()))
+					{
+						if ($entry != '.' && $entry != '..')
+						{
+							$this->found_files[$appname]['images'][$entry] = $imagedir_default;
+						}
+					}
+					$d->close();
+				}
+	
+				if (@is_dir(PHPGW_INCLUDE_ROOT.$imagedir))
+				{
+					$d = dir(PHPGW_INCLUDE_ROOT.$imagedir);
+					while (false !== ($entry = $d->read()))
+					{
+						if ($entry != '.' && $entry != '..')
+						{
+							$this->found_files[$appname]['images'][$entry] = $imagedir;
+						}
+					}
+					$d->close();
+				}
 			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT.$imagedir_default.'/'.$image))
+
+			if(isset($this->found_files[$appname]['images'][$image]))
 			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir_default.'/'.$image;
-			}
-			elseif(@file_exists(PHPGW_SERVER_ROOT.$imagedir_olddefault.'/'.$image))
-			{
-				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$imagedir_olddefault.'/'.$image;
+				$imgfile = $GLOBALS['phpgw_info']['server']['webserver_url'].$this->found_files[$appname]['images'][$image].'/'.$image;
 			}
 			else
 			{
