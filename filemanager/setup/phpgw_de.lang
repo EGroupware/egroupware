@@ -1,6 +1,6 @@
 %1 already exists as a file	filemanager	de	Es gibt bereits eine Datei %1
 application	filemanager	de	Anwendung
-back to file manager	filemanager	de	Zurück zum File Manager
+back to file manager	filemanager	de	Zurück zur Dateiverwaltung
 cancel editing %1 without saving	filemanager	de	Bearbeiten abbrechen %1 ohne zu speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
 cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
@@ -31,7 +31,7 @@ deleted %1	filemanager	de	%1 gelöscht
 directory	filemanager	de	Verzeichnis
 directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
-directory names cannot contain "%1"	filemanager	de	Verzeichnisname dürfen kein "%1" enthalten
+directory names cannot contain "%1"	filemanager	de	Verzeichnisnamen dürfen kein "%1" enthalten
 display attributes	filemanager	de	Anzeigeattribute
 download	filemanager	de	Herunterladen
 edit	filemanager	de	Bearbeiten
@@ -43,10 +43,10 @@ file	filemanager	de	Datei
 file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder löschen.
 file %1 could not be created.	filemanager	de	Datei %1 konnte nicht erstellt werden.
 file name	filemanager	de	Dateiname
-file names cannot contain "%1"	filemanager	de	Dateinamen dürfen keine "%1" enthalten
-file names cannot contain \ or /	filemanager	de	Dateinamen dürfen keine \ oder / enthalten
-filemanager	common	de	DateiManager
-filemanager preferences	filemanager	de	DateiManager Einstellungen
+file names cannot contain "%1"	filemanager	de	Dateinamen dürfen kein "%1" enthalten
+file names cannot contain \ or /	filemanager	de	Dateinamen dürfen kein \ oder / enthalten
+filemanager	common	de	Dateiverwaltung
+filemanager preferences	filemanager	de	Dateiverwaltungs-Einstellungen
 files	filemanager	de	Dateien
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 files is this directory	filemanager	de	Dateien in diesem Verzeichnis
@@ -55,13 +55,13 @@ folder up	filemanager	de	Ein Verzeichnis nach oben
 go home	filemanager	de	Zum Heimverzeichnis wechseln
 go to	filemanager	de	Gehe zu
 go to %1	filemanager	de	Gehe zu %1
-go to your home directory	filemanager	de	Gehe zu Ihrem Home-Verzeichnis
+go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go to:	filemanager	de	Gehe zu:
 go up	filemanager	de	einen Ordner nach oben
 home	filemanager	de	Home
 location	filemanager	de	Pfad
 locked	filemanager	de	Gesperrt
-mime type	filemanager	de	MIME Typ
+mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
 modified by	filemanager	de	Verändert von
 move to	filemanager	de	Verschieben nach
