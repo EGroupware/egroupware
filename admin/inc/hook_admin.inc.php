@@ -40,7 +40,7 @@
 		$file['Global Categories'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('mainscreen_message_access',1,'admin'))
+	if (!$GLOBALS['phpgw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['phpgw']->acl->check('mainscreen_message_access',2,'admin'))
 	{
 		$file['Change Main Screen Message'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index');
 	}
@@ -60,9 +60,14 @@
 		$file['View Error Log'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('appreg_access',1,'admin'))
+	if (! $GLOBALS['phpgw']->acl->check('applications_access',16,'admin'))
 	{
 		$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
+	}
+
+	if (! $GLOBALS['phpgw']->acl->check('asyncservice_access',1,'admin'))
+	{
+		$file['Asynchronous timed services'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiasyncservice.index');
 	}
 
 	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
