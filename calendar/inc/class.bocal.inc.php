@@ -15,7 +15,7 @@
 /**
  * Class to access and manipulate all calendar data
  *
- * At the moment this class partialy uses the "old" bocalendar class.
+ * At the moment this class partialy uses the "old" socalendar class.
  * As the calendar rewrite proceeds, these references will be removed.
  *
  * Note: All new code should only access this class and not bocalendar!!!
@@ -61,7 +61,7 @@ class bocal
 	 *	4 = function-calls to exported conversation-functions like date2ts, date2array, ...
 	 *	5 = function-calls to private functions
 	 */
-	var $debug=False;
+	var $debug=false;
 
 	/**
 	 * @var int $tz_offset_s offset in secconds between user and server-time,
@@ -112,8 +112,8 @@ class bocal
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
 
 		foreach(array(
-//			'old_bo'    => 'calendar.bocalendar',
 			'old_so'    => 'calendar.socalendar',
+			'so'    	=> 'calendar.socal',
 			'datetime'  => 'phpgwapi.datetime',
 		) as $my => $app_class)
 		{
@@ -121,6 +121,7 @@ class bocal
 
 			if (!is_object($GLOBALS['phpgw']->$class))
 			{
+				//echo "<p>calling CreateObject($app_class)</p>\n".str_repeat(' ',4096);
 				$GLOBALS['phpgw']->$class = CreateObject($app_class);
 			}
 			$this->$my = &$GLOBALS['phpgw']->$class;
@@ -237,19 +238,21 @@ class bocal
 		// If daywise is True each event need to be added in the array of each day it's running.
 		// Please note: as we use the old SO class, all returned dates are already in user-time !!!
 
-		$events = $recur_exceptions = $recur_events = Array();
+		$events = $recur_exceptions = Array();
 		$events_sorted = True;
 
-		if(count($event_ids))
+		if(count($event_ids) || count($rep_event_ids))
 		{
-			foreach($event_ids as $id)
+			//foreach($event_ids+$rep_event_ids as $id)
+			foreach((array) $this->read($event_ids+$rep_event_ids,true) as $id => $event)
 			{
-				$event = $this->read($id,True);	// = no ACL check, as other entries dont get reported !!!
+				//$event = $this->read($id,True);	// = no ACL check, as other entries dont get reported !!!
 
 				// recuring events are handled later, remember them for later use, no new read necessary
 				if ($event['recur_type'])
 				{
-					$recur_events[$id] = $event;
+					$this->insert_all_repetitions($event,$start,$end,$events,$recur_exceptions[$id]);
+					$events_sorted = False;
 					continue;
 				}
 				// recur-exceptions have a reference to the original event
@@ -266,25 +269,9 @@ class bocal
 			}
 			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
 			{
-				$this->debug_message('socalendar::search processed event_ids=%1, events=%2',False,$event_ids,$events);
+				$this->debug_message('socalendar::search processed event_ids=%1, events=%2',False,$event_ids+$rep_event_ids,$events);
 			}
 		}
-
-		if (count($rep_event_ids))
-		{
-			foreach($rep_event_ids as $id)
-			{
-				$event = isset($recur_events[$id]) ? $recur_events[$id] : $this->read($id,True);
-
-				$this->insert_all_repetitions($event,$start,$end,$events,$recur_exceptions[$id]);
-				$events_sorted = False;
-			}
-			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
-			{
-				$this->debug_message('socalendar::search processed rep_event_ids=%1, events=%2',False,$rep_event_ids,$events);
-			}
-		}
-
 		if (!$events_sorted)
 		{
 			// sort the events by start-date
@@ -333,39 +320,41 @@ class bocal
 	/**
 	 * Reads a calendar-entry
 	 *
-	 * @param $id int the id of the entry
-	 * @param $ignore_acl boolean should we ignore the acl, default False
-	 * @return array with the event or False if the acl-check went wrong
+	 * @param $ids array/int id(s) of the entry
+	 * @param $ignore_acl boolean should we ignore the acl, default False for a single id, true for multiple id's
+	 * @return boolean/array event or array of id => event pairs or False if the acl-check went wrong
 	 */
-	function read($id,$ignore_acl=False)
+	function read($ids,$ignore_acl=False)
 	{
 		$event = False;
 
-		if($ignore_acl || $this->check_perms(PHPGW_ACL_READ,$id))
+		if($ignore_acl || is_array($ids) || $this->check_perms(PHPGW_ACL_READ,$ids))
 		{
 			// some minimal cacheing to re-use the event already read in check_perms
 			static $event = array();
-			if (!isset($event['id']) || $event['id'] != $id)
-			{
-				$event = $this->old_so->read_entry($id);
 
-				if (!$event['recur_enddate']['year'] && !$event['recur_enddate']['month'] && !$event['recur_enddate']['day'])
+			if (is_array($ids) || !isset($event['id']) || $event['id'] != $ids)
+			{
+				$events = $this->so->read($ids);
+
+				foreach($events as $id => $event)
 				{
-					$event['recur_enddate'] = False;	// for easier checking
+					// we run all dates through date2array, to get the new keys (day,minute,second,full,raw)
+					foreach(array('starttime' => 'start','endtime' => 'end','modified' => 'modtime','recur_enddate' => 'recur_enddate') as $ts => $date)
+					{
+						unset($events[$id][$ts]);
+						// we convert here from the server-time timestamps to an array in user-time!
+						$events[$id][$date] = $event[$ts] ? $this->date2array((int) $event[$ts],true) : false;
+					}
 				}
-				// we run all dates through date2array, to get the new keys (day,minute,second,full,raw)
-				foreach(array('start','end','modtime','recur_enddate') as $date)
-				{
-					// The dates are already in user-time, because of the old so-class !!!
-					$event[$date] = $event[$date] ? $this->date2array($event[$date]) : $event[$date];
-				}
+				if (!is_array($ids)) $event = $events[$ids];
 			}
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
 		{
-			$this->debug_message('bocal::read(%1,%2)=%3',True,$id,$ignore_acl,$event);
+			$this->debug_message('bocal::read(%1,%2)=%3',True,$ids,$ignore_acl,is_array($ids) ? $events : $event);
 		}
-		return $event;
+		return is_array($ids) ? $events : $event;
 	}
 
 	/**
@@ -658,9 +647,15 @@ class bocal
 	{
 		$date_in = $date;
 
+
 		switch(gettype($date))
 		{
 			case 'string':	// YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss string
+				if (is_numeric($date) && $date > 21000000)
+				{
+					$date = (int) $date;	// this is already as timestamp
+					break;
+				}
 				if ($date[10] == 'T')
 				{
 					$date = array(
@@ -727,8 +722,10 @@ class bocal
 
 		if (!is_array($date) || count($date) < 8 || $server2user)	// do we need a conversation
 		{
-			$date = $this->date2ts($date);
-
+			if (!is_int($date))
+			{
+				$date = $this->date2ts($date);
+			}
 			if ($server2user)
 			{
 				$date += $this->tz_offset_s;
