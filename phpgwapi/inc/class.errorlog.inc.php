@@ -107,8 +107,7 @@
 			$db = $GLOBALS['phpgw']->db;
 //			$db->lock('phpgw_log');
 			$db->query	("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-						."('". $GLOBALS['phpgw']->db->to_timestamp(time()
-)
+						."('". $GLOBALS['phpgw']->db->to_timestamp(time())
 						."','".$GLOBALS['phpgw']->session->account_id
 						."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
 						.",'".$this->severity()."'"
@@ -130,8 +129,7 @@
 							."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
 							."(" . $log_id
 							."," . $i
-							.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp
-)
+							.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
 							."', '". $err->severity . "'"
 							.", '". $err->code . "'"
 							.", '". $err->msg . "'"
