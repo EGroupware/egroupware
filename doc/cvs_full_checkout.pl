@@ -29,8 +29,10 @@
 	@co_modules = (
 		'addressbook',
 		'admin',
+		'backup',
 		'bookkeeping',
 		'bookmarks',
+		'brewer',
 		'calendar',
 		'cart',
 		'ccs',
@@ -39,6 +41,7 @@
 		'chora',
 		'comic',
 		'cron',
+		'developer_tools',
 		'dj',
 		'eldaptir',
 		'email',
@@ -51,7 +54,10 @@
 		'inv',
 		'manual',
 		'mediadb',
+		'meerkat',
+		'messenger',
 		'napster',
+		'netsaint',
 		'news_admin',
 		'nntp',
 		'notes',
@@ -59,12 +65,16 @@
 		'phpGWShell_Win32_VB',
 		'phpgwapi',
 		'phpgwnetsaint',
+		'phpsysinfo',
 		'phpwebhosting',
 		'polls',
 		'preferences',
 		'projects',
+		'qmailldap',
 		'rbs',
 		'setup',
+		'skel',
+		'soap',
 		'squirrelmail',
 		'stocks',
 		'syncml-server',
@@ -73,7 +83,9 @@
 		'transy',
 		'tts',
 		'wap',
-		'weather'
+		'wcm',
+		'weather',
+		'xmlrpc'
 	);
 
 	# -- End config section

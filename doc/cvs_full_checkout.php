@@ -31,8 +31,10 @@
 	// Modules you want to checkout, do NOT add the phpgroupware module
 	$co_modules[] = 'addressbook';
 	$co_modules[] = 'admin';
+	$co_modules[] = 'backup';
 	$co_modules[] = 'bookkeeping';
 	$co_modules[] = 'bookmarks';
+	$co_modules[] = 'brewer';
 	$co_modules[] = 'calendar';
 	$co_modules[] = 'cart';
 	$co_modules[] = 'ccs';
@@ -41,6 +43,7 @@
 	$co_modules[] = 'chora';
 	$co_modules[] = 'comic';
 	$co_modules[] = 'cron';
+	$co_modules[] = 'developer_tools';
 	$co_modules[] = 'dj';
 	$co_modules[] = 'eldaptir';
 	$co_modules[] = 'email';
@@ -53,7 +56,10 @@
 	$co_modules[] = 'inv';
 	$co_modules[] = 'manual';
 	$co_modules[] = 'mediadb';
+	$co_modules[] = 'meerkat';
+	$co_modules[] = 'messenger';
 	$co_modules[] = 'napster';
+	$co_modules[] = 'netsaint';
 	$co_modules[] = 'news_admin';
 	$co_modules[] = 'nntp';
 	$co_modules[] = 'notes';
@@ -61,12 +67,16 @@
 	$co_modules[] = 'phpGWShell_Win32_VB';
 	$co_modules[] = 'phpgwapi';
 	$co_modules[] = 'phpgwnetsaint';
+	$co_modules[] = 'phpsysinfo';
 	$co_modules[] = 'phpwebhosting';
 	$co_modules[] = 'polls';
 	$co_modules[] = 'preferences';
 	$co_modules[] = 'projects';
+	$co_modules[] = 'qmailldap';
 	$co_modules[] = 'rbs';
 	$co_modules[] = 'setup';
+	$co_modules[] = 'skel';
+	$co_modules[] = 'soap';
 	$co_modules[] = 'squirrelmail';
 	$co_modules[] = 'stocks';
 	$co_modules[] = 'syncml-server';
@@ -75,7 +85,9 @@
 	$co_modules[] = 'transy';
 	$co_modules[] = 'tts';
 	$co_modules[] = 'wap';
+	$co_modules[] = 'wcm';
 	$co_modules[] = 'weather';
+	$co_modules[] = 'xmlrpc';
 
    // -- End config section
 
