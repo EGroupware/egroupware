@@ -17,7 +17,7 @@
   include("./inc/functions.inc.php");
 
   // Authorize the user to use setup app and load the database
-  // include("./inc/setup_auth.inc.php");
+  include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
 //  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi";
   include($phpgw_info["server"]["include_root"] . "/phpgwapi/inc/class.common.inc.php");
@@ -97,9 +97,13 @@
                  . " values('admin','run',".$account[1]["account_id"].",'u',1)";
             $phpgw_setup->db->query($sql ,__LINE__,__FILE__);
 
-            $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,"
-                     . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
-                     . $account[1]["account_lid"] . "','x',',1:0,','A','".time()."')",__LINE__,__FILE__);
+			$phpgw_setup->db->query("SELECT account_id FROM accounts WHERE account_id=" . $account[1]["account_id"]
+                     . " AND account_lid='" . $account[1]["account_lid"] . "'");
+            if(!$phpgw_setup->db->num_rows() && !$account[1]["account_lid"]) {
+              $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,"
+                     . "account_groups,account_status,account_lastpwd_change) values (" . $account[1]["account_id"] . ",'"
+                     . $account[1]["account_lid"] . "','x',',1:0,','A',".time().")",__LINE__,__FILE__);
+            }
         }
         $setup_complete = True;
      }
