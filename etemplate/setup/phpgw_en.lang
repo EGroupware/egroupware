@@ -84,6 +84,7 @@ error: while saveing !!!	etemplate	en	Error: while saveing !!!
 etemplate '%s' imported, use save to put it in the database	etemplate	en	eTemplate '%s' imported, use Save to put it in the database
 etemplate '%s' written to '%s'	etemplate	en	eTemplate '%s' written to '%s'
 etemplate editor	etemplate	en	eTemplate Editor
+exchange this row with the one above	etemplate	en	exchange this row with the one above
 exchange this two columns	etemplate	en	exchange this two columns
 exchange this two rows	etemplate	en	exchange this two rows
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
@@ -136,6 +137,8 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+linklist	etemplate	en	LinkList
+linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
 month	etemplate	en	Month
 name	etemplate	en	Name
