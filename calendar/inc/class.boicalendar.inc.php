@@ -1383,7 +1383,6 @@
 
 		function parse_geo(&$event,$value)
 		{
-			//		$return_value = $this->explode_param($value,True);
 			if(count($return_value) == 2)
 			{
 				$event['lat'] = $return_value[0];
@@ -1535,8 +1534,8 @@
 					$this->debug('Got a DATE-TIME type!');
 					$t_var = $var[$majortype];
 					unset($var[$majortype]);
-					reset($t_var);
-					while(list($key,$val) = each($t_var))
+					@reset($t_var);
+					while(list($key,$val) = @each($t_var))
 					{
 						$var[$key] = $val;
 					}
@@ -2229,43 +2228,40 @@
 			}
 			elseif(is_array($var))
 			{
-//				return 'MAILTO:'.$var['user'].'@'.$var['host'];
 				return $var['user'].'@'.$var['host'];
 			}
 		}
 
 		function switch_partstat($var)
 		{
-//			$this->debug_str = True;
 			$this->debug('PARTSTAT = '.$var);
-//			$this->debug_str = False;
 			if(is_string($var))
 			{
 				switch($var)
 				{
 					case 'NEEDS-ACTION':
-						return 0; // NEEDS_ACTION;
+						return NEEDS_ACTION;
 						break;
 					case 'ACCEPTED':
-						return 1; // ACCEPTED;
+						return ACCEPTED;
 						break;
 					case 'DECLINED':
-						return 2; // DECLINED;
+						return DECLINED;
 						break;
 					case 'TENTATIVE':
-						return 3; // TENTATIVE;
+						return TENTATIVE;
 						break;
 					case 'DELEGATED':
-						return 4; // DELEGATED;
+						return DELEGATED;
 						break;
 					case 'COMPLETED':
-						return 5; // COMPLETED;
+						return COMPLETED;
 						break;
 					case 'IN-PROCESS':
-						return 6; // IN_PROCESS;
+						return IN_PROCESS;
 						break;
 					default:
-						return 99; // OTHER;
+						return OTHER;
 						break;
 				}
 			}
@@ -2273,25 +2269,25 @@
 			{
 				switch((int)$var)
 				{
-					case 0: // NEEDS_ACTION:
+					case NEEDS_ACTION:
 						return 'NEEDS-ACTION';
 						break;
-					case 1: //  ACCEPTED:
+					case ACCEPTED:
 						return 'ACCEPTED';
 						break;
-					case 2: // DECLINED:
+					case DECLINED:
 						return 'DECLINED';
 						break;
-					case 3: // TENTATIVE:
+					case TENTATIVE:
 						return 'TENTATIVE';
 						break;
-					case 4: // DELEGATED:
+					case DELEGATED:
 						return 'DELEGATED';
 						break;
-					case 5: // COMPLETED:
+					case COMPLETED:
 						return 'COMPLETED';
 						break;
-					case 6: // IN_PROCESS:
+					case IN_PROCESS:
 						return 'IN-PROCESS';
 						break;
 					default:
@@ -2537,11 +2533,6 @@
 			$text = $this->read_line_unfold($ical_text);
 			while($text)
 			{
-//				if(strlen($ical_text[$i]) > 75)
-//				{
-//					continue;
-//				}
-
 				ereg($property_regexp,$text,$temp);
 				$majortype = str_replace('-','_',strtolower($temp[1]));
 				$value = chop($temp[2]);
