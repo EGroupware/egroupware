@@ -1,4 +1,5 @@
-		 							</div>
+		 							</td></tr></table>
+									</div>
 		  <!-- Applicationbox Column -->
 		  </td>
 		  </tr>
