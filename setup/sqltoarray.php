@@ -31,10 +31,10 @@
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
 
-	$download = $HTTP_POST_VARS['download'] ? $HTTP_POST_VARS['download'] : $HTTP_GET_VARS['download'];
-	$submit   = $HTTP_POST_VARS['submit']   ? $HTTP_POST_VARS['submit']   : $HTTP_GET_VARS['submit'];
-	$showall  = $HTTP_POST_VARS['showall']  ? $HTTP_POST_VARS['showall']  : $HTTP_GET_VARS['showall'];
-	$appname  = $HTTP_POST_VARS['appname']  ? $HTTP_POST_VARS['appname']  : $HTTP_GET_VARS['appname'];
+	$download = get_var('download',Array('GET','POST'));
+	$submit   = get_var('submit',Array('GET','POST'));
+	$showall  = get_var('showall',Array('GET','POST'));
+	$appname  = get_var('appname',Array('GET','POST'));
 	if ($download)
 	{
 		$setup_tpl->set_file(array(

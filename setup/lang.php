@@ -58,10 +58,10 @@
 		$langstbl = 'phpgw_languages';
 	}
 
-	if (@$GLOBALS['HTTP_POST_VARS']['submit'])
+	if (@get_var('submit',Array('POST')))
 	{
-		$lang_selected = $HTTP_POST_VARS['lang_selected'];
-		$upgrademethod = $HTTP_POST_VARS['upgrademethod'];
+		$lang_selected = get_var('lang_selected',Array('POST'));
+		$upgrademethod = get_var('upgrademethod',Array(POST'));
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		if (count($lang_selected))
 		{
@@ -153,7 +153,7 @@
 	}
 	else
 	{
-		if (@$GLOBALS['HTTP_POST_VARS']['cancel'])
+		if (@get_var('cancel',Array('POST')))
 		{
 			Header('Location: index.php');
 			exit;

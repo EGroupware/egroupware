@@ -23,7 +23,7 @@
 
 	// Authorize the user to use setup app and load the database
 	// Does not return unless user is authorized
-	if(!$GLOBALS['phpgw_setup']->auth('Config') || $HTTP_POST_VARS['cancel'])
+	if(!$GLOBALS['phpgw_setup']->auth('Config') || get_var('cancel',Array('POST')))
 	{
 		Header('Location: index.php');
 		exit;
@@ -45,7 +45,7 @@
 		return $GLOBALS['phpgw']->accounts->name2id($username);
 	}
 
-	if(!$HTTP_POST_VARS['submit'])
+	if(!get_var('submit',Array('POST')))
 	{
 		$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 		$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -82,11 +82,11 @@
 	else
 	{
 		/* Posted admin data */
-		$passwd   = $HTTP_POST_VARS['passwd'];
-		$passwd2  = $HTTP_POST_VARS['passwd2'];
-		$username = $HTTP_POST_VARS['username'];
-		$fname    = $HTTP_POST_VARS['fname'];
-		$lname    = $HTTP_POST_VARS['lname'];
+		$passwd   = get_var('passwd',Array('POST'));
+		$passwd2  = get_var('passwd2',Array('POST'));
+		$username = get_var('username',Array('POST'));
+		$fname    = get_var('fname',Array('POST'));
+		$lname    = get_var('lname',Array('POST'));
 
 		if($passwd != $passwd2)
 		{
@@ -160,7 +160,7 @@
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('manual','run'," . $defaultgroupid . ", 1)");
 
 		/* Creation of the demo accounts is optional - the checkbox is on by default. */
-		if($HTTP_POST_VARS['create_demo'])
+		if(get_var('create_demo',Array('POST')))
 		{
 			/* Create records for demo accounts */
 			$accountid = add_account('demo','Demo','Account','guest');

@@ -11,7 +11,7 @@
 
   /* $Id$ */
 
-	$phpgw_info = array();
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
@@ -28,7 +28,7 @@
 	}
 	// Does not return unless user is authorized
 
-	if ($HTTP_POST_VARS['cancel'])
+	if (get_var('cancel',Array('POST')))
 	{
 		Header('Location: index.php');
 		exit;
@@ -45,10 +45,10 @@
 
 	$GLOBALS['phpgw_setup']->html->show_header(lang('LDAP Config'),'','config',$ConfigDomain);
 
-	if ($error)
+	if ($GLOBALS['error'])
 	{
 		//echo '<br><center><b>Error:</b> '.$error.'</center>';
-		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$error);
+		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',$GLOBALS['error']);
 	}
 
 	$setup_tpl->set_block('ldap','header','header');

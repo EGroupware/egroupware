@@ -99,22 +99,22 @@
 	//var_dump($GLOBALS['setup_info']);exit;
 	@ksort($GLOBALS['setup_info']);
 
-	if ($HTTP_POST_VARS['cancel'])
+	if (get_var('cancel',Array('POST')))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 
-	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 	$GLOBALS['phpgw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$ConfigDomain);
 
-	if ($HTTP_POST_VARS['submit'])
+	if(get_var('submit',Array('POST')))
 	{
 		$GLOBALS['setup_tpl']->set_var('description',lang('App process') . ':');
 		$GLOBALS['setup_tpl']->pparse('out','header');
 
-		$appname = $HTTP_POST_VARS['appname'];
-		$install = $HTTP_POST_VARS['install'];
+		$appname = get_var('appname',Array('POST'));
+		$install = get_var('install',Array('POST'));
 
 		while (list($appname,$key) = @each($install))
 		{
@@ -169,9 +169,9 @@
 		$GLOBALS['setup_tpl']->pparse('out','footer');
 		exit;
 	}
-	if($HTTP_POST_VARS['detail'])
+	$detail = get_var('detail',Array('POST'));
+	if($detail)
 	{
-		$detail = $HTTP_POST_VARS['detail'];
 		@ksort($GLOBALS['setup_info'][$detail]);
 		@reset($GLOBALS['setup_info'][$detail]);
 		$GLOBALS['setup_tpl']->set_var('description',lang('App details') . ':');

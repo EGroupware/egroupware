@@ -25,28 +25,32 @@
 	unset($setup_info);
 	#include('../version.inc.php');
 
-	if(@$GLOBALS['HTTP_POST_VARS']['adddomain'])
+	$adddomain = get_var('adddomain',Array('POST'));
+	if(@$adddomain)
 	{
 	}
 
 	function check_form_values()
 	{
 		$errors = '';
-		@reset($GLOBALS['HTTP_POST_VARS']['domains']);
-		while(list($k,$v) = @each($GLOBALS['HTTP_POST_VARS']['domains']))
+		$domains = get_var('domains',Array('POST'));
+		@reset($domains);
+		while(list($k,$v) = @each($domains))
 		{
-			if(isset($GLOBALS['HTTP_POST_VARS']['deletedomain'][$v]))
+			$deletedomain = get_var('deletedomain',Array('POST'));
+			if(isset($deletedomain[$v]))
 			{
 				continue;
 			}
-			$dom = $GLOBALS['HTTP_POST_VARS']["setting_$v"];
+			$dom = get_var('setting_'.$v,Array('POST'));
 			if(!$dom['config_pass'])
 			{
 				$errors .= '<br>' . lang("You didn't enter a config password for domain x",$v);
 			}
 		}
 
-		if(!$GLOBALS['HTTP_POST_VARS']['setting']['HEADER_ADMIN_PASSWORD'])
+		$setting = get_var('setting',Array('POST'));
+		if(!$setting['HEADER_ADMIN_PASSWORD'])
 		{
 			$errors .= '<br>' . lang("You didn't enter a header admin password");
 		}
@@ -114,7 +118,7 @@
 			break;
 	}
 
-	switch(@$GLOBALS['HTTP_POST_VARS']['action'])
+	switch(@$get_var('action',Array('POST')))
 	{
 		case 'download':
 			check_form_values();
@@ -284,7 +288,7 @@
 					unset($default_domain); // we kill this for security reasons
 					$GLOBALS['phpgw_info']['server']['config_passwd'] = $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_info']['server']['default_domain']]['config_passwd'];
 
-					if(@$GLOBALS['HTTP_POST_VARS']['adddomain'])
+					if(@$adddomain)
 					{
 						$GLOBALS['phpgw_domain'][lang('new')] = array();
 					}

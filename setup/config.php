@@ -57,7 +57,7 @@
 		$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
 	}
 
-	if(@$GLOBALS['HTTP_POST_VARS']['cancel'])
+	if(@get_var('cancel',Array('POST')))
 	{
 		Header('Location: index.php');
 		exit;
@@ -74,14 +74,13 @@
 		$configtbl = 'phpgw_config';
 	}
 
-	if(@$GLOBALS['HTTP_POST_VARS']['submit'] && @$GLOBALS['HTTP_POST_VARS']['newsettings'])
+	$newsettings = get_var('newsettings',Array('POST'));
+	if(@get_var('submit',Array('POST')) && @$newsettings)
 	{
 		$GLOBALS['phpgw_setup']->db->transaction_begin();
 		/* This is only temp: */
 		$GLOBALS['phpgw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='useframes'");
 		$GLOBALS['phpgw_setup']->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) values ('phpgwapi','useframes','never')");
-
-		$newsettings = $GLOBALS['HTTP_POST_VARS']['newsettings'];
 
 		while(list($setting,$value) = @each($newsettings))
 		{
@@ -141,7 +140,7 @@
 		$GLOBALS['current_config']['files_dir'] = $GLOBALS['phpgw_info']['server']['server_root'] . '/files';
 	}
 
-	if($error == 'badldapconnection')
+	if($GLOBALS['error'] == 'badldapconnection')
 	{
 		/* Please check the number and dial again :) */
 		$GLOBALS['phpgw_setup']->html->show_alert_msg('Error',
@@ -205,7 +204,7 @@
 					}
 					else
 					{
-						$t->set_var($value,$current_config[$newval]);
+						$t->set_var($value,@$current_config[$newval]);
 					}
 					break;
 				case 'selected':
@@ -219,7 +218,7 @@
 					}
 					$config = implode('_',$configs);
 					/* echo $config . '=' . $current_config[$config]; */
-					if($current_config[$config] == $setting)
+					if(@$current_config[$config] == $setting)
 					{
 						$t->set_var($value,' selected');
 					}

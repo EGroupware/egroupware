@@ -38,7 +38,7 @@
 	}
 	// Does not return unless user is authorized
 
-	$ConfigDomain = $HTTP_COOKIE_VARS['ConfigDomain'] ? $HTTP_COOKIE_VARS['ConfigDomain'] : $HTTP_POST_VARS['ConfigDomain'];
+	$ConfigDomain = get_var('ConfigDomain',Array('POST','COOKIE'));
 
 	$tpl_root = $GLOBALS['phpgw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
@@ -109,22 +109,22 @@
 	//var_dump($setup_info);exit;
 	@ksort($setup_info);
 
-	if(@$HTTP_POST_VARS['cancel'])
+	if(@get_var('cancel',Array('POST')))
 	{
 		Header("Location: index.php");
 		exit;
 	}
 
-	if(@$HTTP_POST_VARS['submit'])
+	if(@get_var('submit',Array('POST')))
 	{
 		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 		$setup_tpl->set_var('description',lang('App install/remove/upgrade') . ':');
 		$setup_tpl->pparse('out','header');
 
-		$appname = $HTTP_POST_VARS['appname'];
-		$remove  = $HTTP_POST_VARS['remove'];
-		$install = $HTTP_POST_VARS['install'];
-		$upgrade = $HTTP_POST_VARS['upgrade'];
+		$appname = get_var('appname',Array('POST'));
+		$remove  = get_var('remove',Array('POST'));
+		$install = get_var('install',Array('POST'));
+		$upgrade = get_var('upgrade',Array('POST'));
 
 		while (list($appname,$key) = @each($remove))
 		{
@@ -220,9 +220,10 @@
 		$GLOBALS['phpgw_setup']->html->show_header(lang('Application Management'),False,'config',$ConfigDomain . '(' . $phpgw_domain[$ConfigDomain]['db_type'] . ')');
 	}
 
-	if(@$HTTP_GET_VARS['detail'])
+	$detail = get_var('detail',Array('GET')); 
+	$resolve = get_var('resolve',Array('GET')); 
+	if(@$detail)
 	{
-		$detail = $HTTP_GET_VARS['detail'];
 		@ksort($setup_info[$detail]);
 		@reset($setup_info[$detail]);
 		$setup_tpl->set_var('description',lang('App details') . ':');
@@ -258,15 +259,14 @@
 		$setup_tpl->pparse('out','footer');
 		exit;
 	}
-	elseif (@$HTTP_GET_VARS['resolve'])
+	elseif (@$resolve)
 	{
-		$resolve  = $HTTP_GET_VARS['resolve'];
-		$version  = $HTTP_GET_VARS['version'];
-		$notables = $HTTP_GET_VARS['notables'];
+		$version  = get_var('version',Array('GET'));
+		$notables = get_var('notables',Array('GET'));
 		$setup_tpl->set_var('description',lang('Problem resolution'). ':');
 		$setup_tpl->pparse('out','header');
 
-		if($HTTP_GET_VARS['post'])
+		if(get_var('post',Array('GET')))
 		{
 			echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('may be broken') . ' ';
 			echo lang('because an application it depends upon was upgraded');
@@ -275,7 +275,7 @@
 			echo '<br>';
 			echo lang('However, the application may still work') . '.';
 		}
-		elseif ($HTTP_GET_VARS['badinstall'])
+		elseif(get_var('badinstall',Array('GET')))
 		{
 			echo '"' . $setup_info[$resolve]['title'] . '" ' . lang('is broken') . ' ';
 			echo lang('because of a failed upgrade or install') . '.';
