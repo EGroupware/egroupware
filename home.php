@@ -56,7 +56,7 @@
 		$GLOBALS['phpgw_info']['server']['useframes'] == 'allowed') ||
 		($GLOBALS['phpgw_info']['server']['useframes'] == 'always'))
 		{
-			if ($cd == 'yes')
+			if ($GLOBALS['HTTP_GET_VARS']['cd'] == 'yes')
 			{
 				if (! $navbarframe && ! $framebody)
 				{
@@ -97,7 +97,7 @@
 				}
 			}
 		}
-		elseif ($cd=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
+		elseif ($GLOBALS['HTTP_GET_VARS']['cd']=='yes' && $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']
 			&& $GLOBALS['phpgw_info']['user']['apps'][$GLOBALS['phpgw_info']['user']['preferences']['common']['default_app']])
 		{
 			$GLOBALS['phpgw']->redirect($GLOBALS['phpgw']->link('/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['default_app'] . '/' . 'index.php'));
