@@ -814,5 +814,100 @@
 			}
 			return 'phpgw_hooks';
 		}
+
+		function setup_account_object()
+		{
+			if (!is_object($GLOBALS['phpgw']->accounts))
+			{
+				if (!is_object($this->db))
+				{
+					$this->loaddb();
+				}
+				/* Load up some configured values */
+				$this->db->query("SELECT config_name,config_value FROM phpgw_config ".
+					"WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%'",__LINE__,__FILE__);
+				while ($this->db->next_record())
+				{
+					$GLOBALS['phpgw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
+				}
+				if (!is_object($GLOBALS['phpgw']))
+				{
+					$GLOBALS['phpgw'] = CreateObject('phpgwapi.phpgw');
+				}
+				copyobj($this->db,$GLOBALS['phpgw']->db);
+				$GLOBALS['phpgw']->common      = CreateObject('phpgwapi.common');
+				$GLOBALS['phpgw']->accounts    = CreateObject('phpgwapi.accounts');
+
+				if(($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap') &&
+					!$GLOBALS['phpgw']->accounts->ds)
+				{
+					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['phpgw_info']['server']['ldap_host']);
+					exit;
+				}
+			}
+		}
+
+		/*!
+		@function add_account
+		@abstract add an user account or a user group
+		@param username string alphanumerical username or groupname (account_lid)
+		@param first, last string first / last name
+		@param $passwd string cleartext pw
+		@param $group string/boolean Groupname for users primary group or False for a group, default 'Default'
+		@param $changepw boolean user has right to change pw, default False
+		@returns the numerical user-id
+		@note if the $username already exists, only the id is returned, no new user / group gets created
+		*/
+		function add_account($username,$first,$last,$passwd,$group='default',$changepw=False)
+		{
+			$this->setup_account_object();
+
+			$groupid =  $group ? $GLOBALS['phpgw']->accounts->name2id($group) : False;
+
+			if (!($accountid = $GLOBALS['phpgw']->accounts->name2id($username)))
+			{
+				$accountid = $accountid ? $acountid : $GLOBALS['phpgw']->accounts->create(array(
+					'account_type'      => $group ? 'u' : 'g',
+					'account_lid'       => $username,
+					'account_passwd'    => $passwd,
+					'account_firstname' => $first,
+					'account_lastname'  => $last,
+					'account_status'    => 'A',
+					'account_primary_group' => $groupid,
+					'account_expires'   => -1
+				));
+			}
+			if ($groupid)
+			{
+				$this->add_acl('phpgw_group',$groupid,$accountid);
+			}
+			$this->add_acl('preferences','changepassword',$accountid,(int) $changepw);
+
+			return $accountid;
+		}
+
+		/*!
+		@function add_acl
+		@abstract Add ACL rights
+		@param $app string/array with app-names
+		@param $locations string eg. run
+		@param $account int/string accountid or account_lid
+		@param $rights int rights to set, default 1
+		*/
+		function add_acl($apps,$location,$account,$rights=1)
+		{
+			if (!is_int($account))
+			{
+				$this->setup_account_object();
+				$account = $GLOBALS['phpgw']->accounts->name2id($account);
+			}
+			if (!is_object($this->db)) $this->loaddb();
+
+			if (!is_array($apps)) $apps = array($apps);
+			foreach($apps as $app)
+			{
+				$this->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
+			}
+		}
 	}
 ?>
