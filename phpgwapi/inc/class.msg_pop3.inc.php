@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
-  * phpGroupWare Email - POP3 Mail Wrapper for Imap Enabled PHP                                  *
-  * http://www.phpgroupware.org/                                          *                               *
+  * phpGroupWare Email - POP3 Mail Wrapper for Imap Enabled PHP              *
+  * http://www.phpgroupware.org/                                             *
   * -------------------------------------------------------------------------*
   * This library is part of phpGroupWare (http://www.phpgroupware.org)       *
   * This library is free software; you can redistribute it and/or modify it  *
@@ -214,7 +214,7 @@
 			}
 			return imap_search($stream,$criteria,$flags);
 		}
-		
+
 		//function sort($stream,$criteria,$reverse='',$options='',$msg_info='')
 		function sort($stream,$criteria,$reverse='',$flags=0)
 		{
@@ -248,5 +248,4 @@
 			$folder_str = $GLOBALS['phpgw']->msg->get_folder_short($folder);
 			return $folder_str;
 		}
-
 	} // end of class msg

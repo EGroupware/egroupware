@@ -2,8 +2,8 @@
   /**************************************************************************\
   * phpGroupWare API - POP3                                                  *
   * This file written by Mark Peters <skeeter@phpgroupware.org>              *
-  * Handles specific operations in dealing with POP3                       *
-  * Copyright (C) 2001 Mark Peters and Angelo "Angles" Puglisi                       *
+  * Handles specific operations in dealing with POP3                         *
+  * Copyright (C) 2001 Mark Peters and Angelo "Angles" Puglisi               *
   * -------------------------------------------------------------------------*
   * This library is part of the phpGroupWare API                             *
   * http://www.phpgroupware.org/api                                          * 
@@ -20,6 +20,8 @@
   * along with this library; if not, write to the Free Software Foundation,  *
   * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
   \**************************************************************************/
+
+  /* $Id$ */
 
 	/*!
 	@class msg (sockets)
@@ -84,7 +86,7 @@
 		{
 			return '';
 		}
-		
+
 		/**************************************************************************\
 		*	OPEN and CLOSE Server Connection
 		\**************************************************************************/
@@ -104,7 +106,7 @@
 		function open ($fq_folder, $user, $pass, $flags='')
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering open<br>'; }
-			
+
 			// fq_folder is a "fully qualified folder", seperate the parts:
 			$svr_data = array();
 			$svr_data = $this->distill_fq_folder($fq_folder);
@@ -112,7 +114,7 @@
 			$server = $svr_data['server'];
 			$port = $svr_data['port'];
 			if ($this->debug >= 1) { echo 'pop3: open: svr_data:<br>'.serialize($svr_data).'<br>'; }
-			
+
 			//$port = 110;
 			if (!$this->open_port($server,$port,15))
 			{
@@ -134,7 +136,7 @@
 				return $this->socket;
 			}
 		}
-		
+
 		function close($flags='')
 		{
 			if (!$this->msg2socket('QUIT',"^\+ok",&$response))
@@ -149,11 +151,11 @@
 				return True;
 			}
 		}
-		
+
 		/**************************************************************************\
 		*	Mailbox Status and Information
 		\**************************************************************************/
-		
+
 		function mailboxmsginfo($stream_notused='')
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering mailboxmsginfo<br>'; }
@@ -206,7 +208,7 @@
 				return False;
 			}
 		}
-		
+
 		function status($stream_notused='', $fq_folder='',$options=SA_ALL)
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering status<br>'; }
@@ -224,7 +226,7 @@
 			//	a) returned by imap_ mailboxmsginfo as ->Nmsgs (in IMAP this is thefolder opened)
 			//	b) returned by imap_status (THIS) as ->messages (in IMAP used for folders other than the opened one)
 			// 2) total size of the box, which is:
-			//	returned by imap_ mailboxmsginfo as ->Size		
+			//	returned by imap_ mailboxmsginfo as ->Size
 			// Most Efficient Method:
 			//	call mailboxmsginfo and fill THIS structurte from that
 			$mailbox_msg_info = $this->mailboxmsginfo($stream_notused);
@@ -234,7 +236,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving status<br>'; }
 			return $info;
 		}
-		
+
 		// returns number of messages in the mailbox
 		function num_msg($stream_notused='')
 		{
@@ -247,8 +249,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving num_msg<br>'; }
 			return $return_num_msg;
 		}
-		
-		
+
 		/**************************************************************************\
 		*	Message Sorting
 		\**************************************************************************/
@@ -276,10 +277,10 @@
 		function sort($stream_notused='',$criteria=SORTARRIVAL,$reverse=False,$options='')
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering sort<br>'; }
-			
+
 			// nr_of_msgs on pop server
 			$msg_num = $this->num_msg($stream_notused);
-			
+
 			// no msgs - no sort.
 			if (!$msg_num)
 			{
@@ -338,7 +339,7 @@
 				else
 				{
 					uasort($field_list,array($this,"ssort_decending"));
-				}			
+				}
 			}
 			elseif(!$reverse)
 			{
@@ -362,7 +363,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving sort<br>'; }
 			return $return_array;
 		}
-		
+
 		function fetch_header_element($start,$stop,$element)
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering fetch_header_element<br>'; }
@@ -392,7 +393,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving fetch_header_element<br>'; }
 			return $field_element;
 		}
-	
+
 		/**************************************************************************\
 		*
 		*	Message Structural Information
@@ -413,7 +414,7 @@
 		{
 			// outer control structure for the multi-pass functions
 			if ($this->debug >= 1) { echo 'pop3: Entering fetchstructure<br>'; }
-			
+
 			// do we have a cached fetchstructure ?
 			if (($this->msg_structure != '')
 			&& ((int)$this->msg_structure_msgnum == (int)($msg_num)))
@@ -473,7 +474,7 @@
 			if (isset($this->msg_structure->parts))
 			{
 				for ($lev_1=0; $lev_1 < count($this->msg_structure->parts) ;$lev_1++)
-				{				
+				{
 					// grap 1st level embedded data (if any)
 					if ($this->debug >= 2) { echo '<br>***<br>* * * * * * * * *<br>pop3: fetchstructure: attempting this->msg_structure->parts['.$lev_1.'] of ['.(string)(count($this->msg_structure->parts)-1).'] embedded parts discovery * * * * *<br>'; }
 					// Create Sub-Parts FetchStructure Data  (if necessary)  ---
@@ -536,16 +537,16 @@
 			{
 				if ($this->debug >= 2) { echo 'pop3: fetchstructure: Traversal SKIP FIRST PARTS level parts NOT SET<br>'; }
 			}
-			
+
 			if ($this->debug >= 2) { echo '<br>***<br>pop3: fetchstructure: * * * * * * Traversal OVER * * * * * * * * * * <br>'; }
-			
+
 			if ($this->debug >= 2)
 			{
 				echo '<br>dumping fetchstructure FINAL data: <br>';
 				var_dump($this->msg_structure);
 				echo '<br><br><br>';
 			}
-			
+
 			if ($this->debug >= 1) { echo 'pop3: Leaving fetchstructure<br>'; }
 			return $this->msg_structure;
 		}
@@ -564,7 +565,7 @@
 		function fill_toplevel_fetchstructure($stream_notused,$msg_num,$flags="")
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering fill_toplevel_fetchstructure<br>'; }
-			
+
 			// --- Header Array  ---
 			$header_array = $this->get_header_array($stream_notused,$msg_num,$flags);
 			// --- Body Array  ---
@@ -605,7 +606,7 @@
 				if ($this->debug >= 1) { echo 'pop3: Leaving fill_toplevel_fetchstructure with error<br>'; }
 				return False;
 			}
-			
+
 			// ---  Create Class Base Fetchstructure Object  ---
 			$this->msg_structure_msgnum = (int)$msg_num;
 			$this->msg_structure = nil;
@@ -616,7 +617,7 @@
 			// ---  Fill  Top Level Fetchstructure  ---
 			// NOTE: first param to sub_get_structure is a REFERENCE
 			$this->sub_get_structure(&$this->msg_structure,$header_array);
-			
+
 			// ---  Fill Any Missing Necessary Data  ---
 			// --Bytes-- top level msg Size (bytes) is obtainable from the server
 			if (!$this->msg2socket('LIST '.$msg_num,"^\+ok",&$response))
@@ -682,7 +683,7 @@
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering create_embeded_fetchstructure<br>'; }
 			// --- Do We Have SubParts To Discover  ---
-			
+
 			// Test 1: Detect Boundary Paramaters
 			// initialize boundary holder
 			$info->custom['my_cookie'] = '';
@@ -846,7 +847,7 @@
 					if ($this->debug >= 1) { echo 'pop3: Leaving create_embeded_fetchstructure with Error in "message/rfc2822" range<br>'; }
 					return False;
 				}
-				
+
 				// note that below we will iterate thru this range
 				if ($this->debug >= 2) { echo 'pop3: create_embeded_fetchstructure: "mime loop", will iterate thru parents body_array range ['.$range_start.'] to ['.$range_end.']<br>'; }
 				
@@ -858,7 +859,7 @@
 				$info->parts[$enc_part_idx]->custom['top_level'] = False;
 				// ??? encapsulated part's parent does not have a boundary ???
 				$info->parts[$enc_part_idx]->custom['parent_cookie'] = '';
-				
+
 				// 2) Get This Part's Headers
 				// encapsulated headers begin immediately in the encapsulated part
 				$info->parts[$enc_part_idx]->custom['header_start'] = $range_start;
@@ -891,13 +892,13 @@
 				// make the header blob into an array of strings, one array element per header line, throw away blank lines
 				$part_header_array = Array();
 				$part_header_array = $this->glob_to_array($part_header_blob, False, '', True);
-				if ($this->debug >= 2) { echo 'pop3: create_embeded_fetchstructure: enc mime loop: part_header_array:'.serialize($part_header_array).'<br>'; }				
-				
+				if ($this->debug >= 2) { echo 'pop3: create_embeded_fetchstructure: enc mime loop: part_header_array:'.serialize($part_header_array).'<br>'; }
+
 				// 2) Feed these Headers thru "sub_get_structure"
 				// fill the conventional info on this fetchstructure sub-part
 				// NOTE: first param to sub_get_structure is a REFERENCE
 				$this->sub_get_structure(&$info->parts[$enc_part_idx],$part_header_array);
-				
+
 				// ==  CONTROVESTIAL DEFAULT UWASH VALUE ASSIGNMENTS  ==
 				// close study of UWash IMAP indicates the an immediate child message part of a RFC822 package will:
 				// (A) SUBTYPE
@@ -933,7 +934,7 @@
 					$info->parts[$enc_part_idx]->ifparameters = true;
 				}
 				// ends CONTROVESTIAL uwash inmitation code
-				
+
 				// 3) fill Part Start and Part End
 				// encapsulated body STARTS at the first line after the blank line header sep above
 				$info->parts[$enc_part_idx]->custom['part_start'] = (int)($y+1);
@@ -994,7 +995,7 @@
 			}
 			else
 			{
-				if ($this->debug >= 1) { echo 'pop3: create_embeded_fetchstructure: * * no mans land * *<br>'; }			
+				if ($this->debug >= 1) { echo 'pop3: create_embeded_fetchstructure: * * no mans land * *<br>'; }
 			}
 			//if ($this->debug >= 2)
 			//{
@@ -1005,7 +1006,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving create_embeded_fetchstructure<br>'; }
 			return True;
 		}
-		
+
 		/*!
 		@function sub_get_structure
 		@abstract HELPER  function for fetchstructure / IMAP_FETCHSTRUCTURE
@@ -1021,7 +1022,7 @@
 			// set debug flag
 			if ($this->debug >= 2)
 			{
-				$debug_mime = True;			
+				$debug_mime = True;
 			}
 			else
 			{
@@ -1060,81 +1061,82 @@
 				}
 				switch ($keyword)
 				{
-				  case 'content-type:' :
-					// this will fill type and (hopefully) subtype
-					// NOTE: first param to  parse_type_subtype  is a REFERENCE
-					$this->parse_type_subtype(&$info,$content);
-					// ALSO, typically Paramaters are on this line as well
-					$pos_param = strpos($content,';');
-					if ($pos_param > 0)
-					{
-						if ($this->debug >= 2) { echo 'pop3: sub_get_structure: apparent params exist in content ['.$content.']<br>'; }
-						// feed the whole param line into this function
-						$content = substr($content,$pos_param+1);
-						if ($this->debug >= 2) { echo 'pop3: sub_get_structure: calling parse_msg_params, feeding content ['.$content.']<br>'; }
-						// False = this is NOT a disposition param, this is the more common regular param
-						// NOTE: first param to  parse_msg_params  is a REFERENCE
-						$this->parse_msg_params(&$info,$content,False);
-					}
-					break;
-				  case 'content-transfer-encoding:' :
-					$info->encoding = $this->encoding_str_to_int($content);
-					break;
-				  case 'content-description:' :
-					$info->description   = $content;
-					//$i = $this->more_info($msg_part,$i,&$info,"description");
-					$info->ifdescription = true;
-					break;
-				  case 'content-disposition:' :
-					// disposition MAY have Paramaters on this line as well
-					$pos_param = strpos($content,';');
-					if ($pos_param > 0)
-					{
-						$content = substr($content,0,$pos_param);
-					}
-					$info->disposition = $content;
-					$info->ifdisposition = True;
-					// parse paramaters if any
-					if ($pos_param > 0)
-					{
-						// feed the whole param line into this function
-						$content = substr($content,$pos_param+1);
-						// NOTE: first param to  parse_msg_params  is a REFERENCE
-						$this->parse_msg_params(&$info,$content,False);
-					}
-					break;
-				  case 'content-identifier:' :
-				  case 'content-id:' :
-				  case 'message-id:' :
-					if ((strstr($content, '<'))
-					&& (strstr($content, '>')))
-					{
-						$content = str_replace('<','',$content);
-						$content = str_replace('>','',$content);
-					}
-					//$i = $this->more_info($msg_part,$i,&$info,"id");
-					$info->id   = $content;
-					$info->ifid = true;
-					break;
-				  case 'content-length:' :
-					$info->bytes = (int)$content;
-					break;
-				  case 'content-disposition:' :
-					$info->disposition   = $content;
-					//$i = $this->more_info($msg_part,$i,&$info,"disposition");
-					$info->ifdisposition = true;
-					break;
-				  case 'lines:' :
-					$info->lines = (int)$content;
-					break;
-				  /*
-				  case 'mime-version:' :
-					$new_idx = count($info->parameters);
-					$info->parameters[$new_idx] = new msg_params("Mime-Version",$content);
-					$info->ifparameters = true;
-					break;
-				  */
-				  default : break;
+					case 'content-type:' :
+						// this will fill type and (hopefully) subtype
+						// NOTE: first param to  parse_type_subtype  is a REFERENCE
+						$this->parse_type_subtype(&$info,$content);
+						// ALSO, typically Paramaters are on this line as well
+						$pos_param = strpos($content,';');
+						if ($pos_param > 0)
+						{
+							if ($this->debug >= 2) { echo 'pop3: sub_get_structure: apparent params exist in content ['.$content.']<br>'; }
+							// feed the whole param line into this function
+							$content = substr($content,$pos_param+1);
+							if ($this->debug >= 2) { echo 'pop3: sub_get_structure: calling parse_msg_params, feeding content ['.$content.']<br>'; }
+							// False = this is NOT a disposition param, this is the more common regular param
+							// NOTE: first param to  parse_msg_params  is a REFERENCE
+							$this->parse_msg_params(&$info,$content,False);
+						}
+						break;
+					case 'content-transfer-encoding:' :
+						$info->encoding = $this->encoding_str_to_int($content);
+						break;
+					case 'content-description:' :
+						$info->description   = $content;
+						//$i = $this->more_info($msg_part,$i,&$info,"description");
+						$info->ifdescription = true;
+						break;
+					case 'content-disposition:' :
+						// disposition MAY have Paramaters on this line as well
+						$pos_param = strpos($content,';');
+						if ($pos_param > 0)
+						{
+							$content = substr($content,0,$pos_param);
+						}
+						$info->disposition = $content;
+						$info->ifdisposition = True;
+						// parse paramaters if any
+						if ($pos_param > 0)
+						{
+							// feed the whole param line into this function
+							$content = substr($content,$pos_param+1);
+							// NOTE: first param to  parse_msg_params  is a REFERENCE
+							$this->parse_msg_params(&$info,$content,False);
+						}
+						break;
+					case 'content-identifier:' :
+					case 'content-id:' :
+					case 'message-id:' :
+						if ((strstr($content, '<'))
+						&& (strstr($content, '>')))
+						{
+							$content = str_replace('<','',$content);
+							$content = str_replace('>','',$content);
+						}
+						//$i = $this->more_info($msg_part,$i,&$info,"id");
+						$info->id   = $content;
+						$info->ifid = true;
+						break;
+					case 'content-length:' :
+						$info->bytes = (int)$content;
+						break;
+					case 'content-disposition:' :
+						$info->disposition   = $content;
+						//$i = $this->more_info($msg_part,$i,&$info,"disposition");
+						$info->ifdisposition = true;
+						break;
+					case 'lines:' :
+						$info->lines = (int)$content;
+						break;
+					/*
+					case 'mime-version:' :
+						$new_idx = count($info->parameters);
+						$info->parameters[$new_idx] = new msg_params("Mime-Version",$content);
+						$info->ifparameters = true;
+						break;
+					*/
+					default:
+						break;
 				}
 			}
 
@@ -1145,7 +1147,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving sub_get_structure<br>'; }
 			return $info;
 		}
-		
+
 		/*!
 		@function unset_unfilled_fetchstructure
 		@abstract HELPER  function for fetchstructure / IMAP_FETCHSTRUCTURE
@@ -1221,7 +1223,7 @@
 			//$info->parts = array();
 			if ($this->debug >= 1) { echo 'pop3: Leaving unset_unfilled_fetchstructure<br>'; }
 		}
-		
+
 		/*!
 		@function parse_type_subtype
 		@abstract HELPER  function for sub_get_structure / IMAP_FETCHSTRUCTURE
@@ -1271,7 +1273,7 @@
 			}
 			if ($this->debug >= 1) { echo 'pop3: Leaving parse_type_subtype<br>'; }
 		}
-		
+
 		/*!
 		@function parse_msg_params
 		@abstract HELPER  function for sub_get_structure / IMAP_FETCHSTRUCTURE
@@ -1352,15 +1354,15 @@
 			$type_int = TYPEOTHER;
 			switch ($type_str)
 			{
-				case 'text'		: $type_int = TYPETEXT; break;
-				case 'multipart'	: $type_int = TYPEMULTIPART; break;
-				case 'message'		: $type_int = TYPEMESSAGE; break;
-				case 'application'	: $type_int = TYPEAPPLICATION; break;
-				case 'audio'		: $type_int = TYPEAUDIO; break;
-				case 'image'		: $type_int = TYPEIMAGE; break;
-				case 'video'		: $type_int = TYPEVIDEO; break;
+				case 'text'        : $type_int = TYPETEXT; break;
+				case 'multipart'   : $type_int = TYPEMULTIPART; break;
+				case 'message'     : $type_int = TYPEMESSAGE; break;
+				case 'application' : $type_int = TYPEAPPLICATION; break;
+				case 'audio'       : $type_int = TYPEAUDIO; break;
+				case 'image'       : $type_int = TYPEIMAGE; break;
+				case 'video'       : $type_int = TYPEVIDEO; break;
 				// this causes errors under php 4.0.6, but used to work before that, I think
-				//defaut			: $type_int = TYPEOTHER; break;
+				//default          : $type_int = TYPEOTHER; break;
 			}
 			return $type_int;
 		}
@@ -1376,26 +1378,26 @@
 				return TYPEAPPLICATION;
 			}
 		}
-	
+
 		function default_subtype($type_int=TYPEAPPLICATION)
 		{
 			// APPLICATION/OCTET-STREAM is the default when NO info is available
 			switch ($type_int)
 			{
-				case TYPETEXT		: return 'plain'; break;
-				case TYPEMULTIPART	: return 'mixed'; break;
-				case TYPEMESSAGE		: return 'rfc822'; break;
-				case TYPEAPPLICATION	: return 'octet-stream'; break;
-				case TYPEAUDIO		: return 'basic'; break;
-				default			: return 'unknown'; break;
+				case TYPETEXT        : return 'plain'; break;
+				case TYPEMULTIPART   : return 'mixed'; break;
+				case TYPEMESSAGE     : return 'rfc822'; break;
+				case TYPEAPPLICATION : return 'octet-stream'; break;
+				case TYPEAUDIO       : return 'basic'; break;
+				default              : return 'unknown'; break;
 			}
 		}
-	
+
 		function default_encoding()
 		{
 			return ENC7BIT;
 		}
-	
+
 		// MAY BE OBSOLETED
 		function more_info($header,$i,$info,$infokey)
 		{
@@ -1412,23 +1414,23 @@
 			while (is_int($pos) && !$pos);
 			return $i;
 		}
-	
+
 		function encoding_str_to_int($encoding_str)
 		{
 			switch (strtolower($encoding_str))
 			{
-				case '7bit'		: $encoding_int = ENC7BIT; break;
-				case '8bit'		: $encoding_int = ENC8BIT; break;
-				case 'binary'		: $encoding_int = ENCBINARY; break;
-				case 'base64'		: $encoding_int = ENCBASE64; break;
-				case 'quoted-printable' : $encoding_int = ENCQUOTEDPRINTABLE; break;
-				case 'other'		: $encoding_int = ENCOTHER; break;
-				case 'uu'		: $encoding_int = ENCUU; break;
-				default			: $encoding_int = ENCOTHER; break;
+				case '7bit'   : $encoding_int = ENC7BIT; break;
+				case '8bit'   : $encoding_int = ENC8BIT; break;
+				case 'binary' : $encoding_int = ENCBINARY; break;
+				case 'base64' : $encoding_int = ENCBASE64; break;
+				case 'quoted-printable': $encoding_int = ENCQUOTEDPRINTABLE; break;
+				case 'other'  : $encoding_int = ENCOTHER; break;
+				case 'uu'     : $encoding_int = ENCUU; break;
+				default       : $encoding_int = ENCOTHER; break;
 			}
 			return $encoding_int;
 		}
-	
+
 		function size_msg($stream_notused,$msg_num)
 		{
 			if ($this->debug >= 1) { echo 'pop3: Entering size_msg<br>'; }
@@ -1444,7 +1446,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving size_msg<br>'; }
 			return $return_size;
 		}
-	
+
 		/**************************************************************************\
 		*	Message Envelope (Header Info) Data
 		\**************************************************************************/
@@ -1489,74 +1491,74 @@
 				$content = trim(substr($header_array[$i],$pos+1));
 				switch ($keyword)
 				{
-					case 'date:'	:
-					  $info->date  = $content;
-					  $info->udate = $this->make_udate($content);
-					  break;
-					case 'subject'	:
-					case 'subject:'	:
-					  $pos = strpos($header_array[$i+1],' ');
-					  if (is_int($pos) && !$pos)
-					  {
-						$i++; $content .= chop($header_array[$i]);
-					  }
-					  $info->subject = htmlspecialchars($content);
-					  $info->Subject = htmlspecialchars($content);
-					  break;
-					case 'in-reply-to:' :
-					  $info->in_reply_to = htmlspecialchars($content);
-					  break;
-					case 'message-id'  :
-					case 'message-id:' :
-					  $info->message_id = htmlspecialchars($content);
-					  break;
-					case 'newsgroups:' :
-					  $info->newsgroups = htmlspecialchars($content);
-					  break;
-					case 'followup-to:' :
-					  $info->follow_up_to = htmlspecialchars($content);
-					  break;
-					case 'references:' :
-					  $info->references = htmlspecialchars($content);
-					  break;
-					case 'to'	:
-					case 'to:'	: 
-					  // following two lines need to be put into a loop!
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->to   = $this->get_addr_details('to',$content,&$header_array,&$i);
-					  break;
-					case 'from'	:
-					case 'from:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->from = $this->get_addr_details('from',$content,&$header_array,&$i);
-					  break;
-					case 'cc'	:
-					case 'cc:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->cc   = $this->get_addr_details('cc',$content,&$header_array,&$i);
-					  break;
-					case 'bcc'	:
-					case 'bcc:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->bcc  = $this->get_addr_details('bcc',$content,&$header_array,&$i);
-					  break;
-					case 'reply-to'	:
-					case 'reply-to:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->reply_to = $this->get_addr_details('reply_to',$content,&$header_array,&$i);
-					  break;
-					case 'sender'	:
-					case 'sender:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->sender = $this->get_addr_details('sender',$content,&$header_array,&$i);
-					  break;
-					case 'return-path'	:
-					case 'return-path:'	:
-					  // NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
-					  $info->return_path = $this->get_addr_details('return_path',$content,&$header_array,&$i);
-					  break;
-					default	:
-					  break;
+					case 'date:':
+						$info->date  = $content;
+						$info->udate = $this->make_udate($content);
+						break;
+					case 'subject':
+					case 'subject:':
+						$pos = strpos($header_array[$i+1],' ');
+						if (is_int($pos) && !$pos)
+						{
+							$i++; $content .= chop($header_array[$i]);
+						}
+						$info->subject = htmlspecialchars($content);
+						$info->Subject = htmlspecialchars($content);
+						break;
+					case 'in-reply-to:':
+						$info->in_reply_to = htmlspecialchars($content);
+						break;
+					case 'message-id':
+					case 'message-id:':
+						$info->message_id = htmlspecialchars($content);
+						break;
+					case 'newsgroups:':
+						$info->newsgroups = htmlspecialchars($content);
+						break;
+					case 'followup-to:':
+						$info->follow_up_to = htmlspecialchars($content);
+						break;
+					case 'references:':
+						$info->references = htmlspecialchars($content);
+						break;
+					case 'to':
+					case 'to:': 
+						// following two lines need to be put into a loop!
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->to   = $this->get_addr_details('to',$content,&$header_array,&$i);
+						break;
+					case 'from':
+					case 'from:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->from = $this->get_addr_details('from',$content,&$header_array,&$i);
+						break;
+					case 'cc':
+					case 'cc:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->cc   = $this->get_addr_details('cc',$content,&$header_array,&$i);
+						break;
+					case 'bcc':
+					case 'bcc:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->bcc  = $this->get_addr_details('bcc',$content,&$header_array,&$i);
+						break;
+					case 'reply-to':
+					case 'reply-to:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->reply_to = $this->get_addr_details('reply_to',$content,&$header_array,&$i);
+						break;
+					case 'sender':
+					case 'sender:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->sender = $this->get_addr_details('sender',$content,&$header_array,&$i);
+						break;
+					case 'return-path':
+					case 'return-path:':
+						// NOTE: 3rd and 4th params to  get_addr_details  are REFERENCES
+						$info->return_path = $this->get_addr_details('return_path',$content,&$header_array,&$i);
+						break;
+					default:
+						break;
 				}
 			}
 			if ($this->debug >= 1)
@@ -1602,7 +1604,7 @@
 			}
 			while (!$done);
 			$temp = $people . 'address';
-			
+
 			if ($people == 'return_path')
 			{
 				$this->$people = htmlspecialchars($address);
@@ -1611,7 +1613,7 @@
 			{
 				$this->$temp = htmlspecialchars($address);
 			}
-			
+
 			for ($i=0,$pos=1;$pos;$i++)
 			{
 				//$addr_details = new msg_aka;
@@ -1682,11 +1684,11 @@
 			}
 			return $details;
 		}
-		
+
 		/**************************************************************************\
 		*	More Data Communications (dcom) With POP3 Server
 		\**************************************************************************/
-	
+
 		/**************************************************************************\
 		*	DELETE a Message From the Server
 		\**************************************************************************/
@@ -1775,7 +1777,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving delete<br>'; }
 			return True;
 		}
-	
+
 		/**************************************************************************\
 		*	Get Message Headers From Server
 		\**************************************************************************/
@@ -1795,9 +1797,9 @@
 		{
 			// NEEDED: code for flags: FT_UID; FT_INTERNAL; FT_PREFETCHTEXT
 			if ($this->debug >= 1) { echo 'pop3: Entering fetchheader<br>'; }
-			
+
 			$header_glob = $this->get_header_raw($stream_notused,$msg_num,$flags);
-			
+
 			// do we also need to get the text of the message?
 			if ((int)$flags == FT_PREFETCHTEXT)
 			{
@@ -1806,11 +1808,11 @@
 					."\r\n"
 					.$this->get_body($stream_notused,$msg_num,$flags);
 			}
-			
+
 			if ($this->debug >= 1) { echo 'pop3: Leaving fetchheader<br>'; }
 			return $header_glob;
 		}
-	
+
 		/*!
 		@function get_header_array
 		@abstract Custom Function - Similar to IMAP_FETCHHEADER - EXCEPT returns a string list array
@@ -1849,7 +1851,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving get_header_array<br>'; }
 			return $header_array;
 		}
-	
+
 		/*!
 		@function get_header_raw
 		@abstract HELPER function for "fetchheader" / IMAP_FETCHHEADER
@@ -1893,11 +1895,11 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving get_header_raw<br>'; }
 			return $glob;
 		}
-	
+
 		/**************************************************************************\
 		*	Get Message Body (Parts) From Server
 		\**************************************************************************/
-		
+
 		/*!
 		@function fetchbody
 		@abstract implements IMAP_FETCHBODY
@@ -1955,7 +1957,7 @@
 					if ($this->debug >= 1) { echo 'pop3: fetchbody: ERROR: required part data not present for '.$part_num.', internally ['.$the_part.']<br>'; }
 					// screw it, just return the whole thing
 					if ($this->debug >= 1) { echo 'pop3: fetchbody - using fallback pass thru<br>'; }
-					$body_blob = $this->get_body($stream_notused,$msg_num,$flags,False);				
+					$body_blob = $this->get_body($stream_notused,$msg_num,$flags,False);
 				}
 				else
 				{
@@ -1999,7 +2001,7 @@
 					if ($this->debug >= 1) { echo 'pop3: fetchbody: ERROR: required part data not present for '.$part_num.', internally ['.serialize($the_part).']<br>'; }
 					// screw it, just return the whole thing
 					if ($this->debug >= 1) { echo 'pop3: fetchbody - using fallback pass thru<br>'; }
-					$body_blob = $this->get_body($stream_notused,$msg_num,$flags,False);				
+					$body_blob = $this->get_body($stream_notused,$msg_num,$flags,False);
 				}
 				else
 				{
@@ -2026,7 +2028,7 @@
 			if ($this->debug >= 1) { echo 'pop3: Leaving fetchbody<br>'; }
 			return $body_blob;
 		}
-	
+
 		/*!
 		@function get_body
 		@abstract implements IMAP_BODY
@@ -2044,7 +2046,7 @@
 		{
 			// NEEDED: code for flags: FT_UID; maybe FT_INTERNAL; FT_NOT; flag FT_PEEK has no effect on POP3
 			if ($this->debug >= 1) { echo 'pop3: Entering get_body<br>'; }
-	
+
 			// do we have a cached body_array ?
 			if ((count($this->body_array) > 0)
 			&& ((int)$this->body_array_msgnum == (int)($msg_num))
