@@ -98,7 +98,7 @@
 			'lang_expires'		=> lang('Expires'),
 			'lang_firstname'	=> lang('First Name'),
 			'lang_button'		=> lang('Save'),
-			'lang_file_space'	=> lang('File Space'),
+			'lang_file_space'	=> lang('File Space')
 		);
 		$t->set_var($var);
 		$t->parse('form_buttons','form_buttons_',True);
@@ -153,7 +153,7 @@
 			'loginshell'	=> $loginshell,
 			'account_passwd'	=> $account_passwd,
 			'account_passwd_2'	=> $account_passwd_2,
-			'account_file_space'	=> $account_file_space,
+			'account_file_space'	=> $account_file_space
 		);
 		$t->set_var($var);
 		$t->parse('password_fields','form_passwordinfo',True);
@@ -466,7 +466,7 @@
 			'account_expires_month' => $account_expires_month,
 			'account_expires_day'   => $account_expires_day,
 			'account_expires_year'  => $account_expires_year,
-			'file_space'	=> $account_file_space_number . "-" . $account_file_space_type,
+			'file_space'	=> $account_file_space_number . "-" . $account_file_space_type
 		);
 
 		if (!$errors = userDataInvalid($userData))
