@@ -132,8 +132,8 @@
 							.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
 							."', '". $err->severity . "'"
 							.", '". $err->code . "'"
-							.", '". $err->msg . "'"
-							.", '". addslashes(implode('|',$err->parms)). "'"
+							.", '". $db->db_addslashes($err->msg) . "'"
+							.", '". $db->db_addslashes(implode('|',$err->parms)). "'"
 							.", '". $err->fname . "'"
 							.", " . intval($err->line)
 							.")" 
