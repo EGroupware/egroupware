@@ -103,16 +103,14 @@
 				{
 					include($_versionfile);
 					$_file_version = $setup_info[$_app_name]['version'];
-					$_app_title    = $setup_info[$_app_name]['title'];
 					unset($setup_info);
 
 					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
 					{
 						$_found = True;
-						$_app_string .= '<br>' . lang($_app_title);
+						$_app_string .= '<br>' . $GLOBALS['phpgw_info']['apps'][$_app_name]['title'];
 					}
 					unset($_file_version);
-					unset($_app_title);
 				}
 				unset($_db_version);
 				unset($_versionfile);
