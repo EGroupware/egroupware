@@ -39,7 +39,7 @@ auto create account records for authenticated users	setup	sl	Avtomati&#269;no us
 auto-created user accounts expire	setup	sl	Avtomati&#269;no ustvarjeni uporabniški ra&#269;uni prete&#269;ejo
 available version	setup	sl	Razpoložljiva razli&#269;ica
 back to the previous screen	setup	sl	Nazaj na prejšnji zaslon
-backupwarn	setup	sl	toda, <u>zelo priporo&#269;amo izdelavo rezervne kopije</u> vaših podatkov, za primer, da skripta le te poškoduje. <br><strong>Avtomati&#269;ne skripte namre&#269; lahko zaradi nepredvidenih okoliš&#269;in uni&#269;ijo vaše podatke.</strong> <br><em>Prosimo, izdelajte rezervno kopijo pred nadaljevanjem!</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	sl	toda, <u>zelo priporo&#269;amo izdelavo rezervne kopije</u> vaših podatkov, za primer, da skripta le te poškoduje. <br><strong>Avtomati&#269;ne skripte namre&#269; lahko zaradi nepredvidenih okoliš&#269;in uni&#269;ijo vaše podatke.</strong>
 because an application it depends upon was upgraded	setup	sl	ker je bila aplikacija, od katere je odvisen, nadgrajena
 because it depends upon	setup	sl	ker je odvisen od
 because it is not a user application, or access is controlled via acl	setup	sl	ker ni uporabnikova aplikacija, ali pa je dostop nadzorovan skozi acl

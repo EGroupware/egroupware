@@ -39,17 +39,55 @@
 		 */
 		function db_backup()
 		{
-			if (is_object($GLOBALS['phpgw_setup']->oProc))	// called from within setup
+			if (is_object($GLOBALS['phpgw_setup']->oProc))	// schema_proc already instanciated, use it
 			{
 				$this->schema_proc = $GLOBALS['phpgw_setup']->oProc;
 			}
-			else	// called from eGW
+			else
 			{
 				$this->schema_proc = CreateObject('phpgwapi.schema_proc');
 			}
 			$this->db = $this->schema_proc->m_odb;
 			$this->adodb = &$GLOBALS['phpgw']->ADOdb;
-			
+
+			if (is_object($GLOBALS['phpgw_setup']))		// called from setup
+			{
+				$tables = $this->adodb->MetaTables('TABLES');
+				if (in_array('phpgw_config',$tables))
+				{
+					$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__);
+					$this->db->next_record();
+					if (!($this->backup_dir = $this->db->f(0)))
+					{
+						$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__);
+						$this->db->next_record();
+						$this->backup_dir = $this->db->f(0).'/db_backup';
+					}					
+					$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+					$this->db->next_record();
+					$this->charset = $this->db->f(0);
+					if (!$this->charset)
+					{
+						$this->db->query("SELECT content FROM phpgw_lang WHERE message_id='charset' AND app_name='common' AND lang!='en'",__LINE__,__FILE__);
+						$this->db->next_record();
+						$this->charset = $this->db->f(0);
+					}
+				}
+				if (!$this->charset) $this->charset = 'iso-8859-1';
+			}
+			else	// called from eGW
+			{
+				$this->schema_proc = CreateObject('phpgwapi.schema_proc');
+				if (!($this->backup_dir = $GLOBALS['phpgw_info']['server']['backup_dir']))
+				{
+					$this->backup_dir = $GLOBALS['phpgw_info']['server']['files_dir'].'/db_backup';
+				}
+				$this->charset = $GLOBALS['phpgw']->translation->charset();
+			}
+			if (!is_dir($this->backup_dir) && is_writable(dirname($this->backup_dir)))
+			{
+				mkdir($this->backup_dir);
+			}
 			switch($this->db->Type)
 			{
 				case 'sapdb': 
@@ -61,9 +99,43 @@
 		}
 		
 		/**
+		 * Opens the backup-file using the highest availible compression
+		 *
+		 * @param $name=false string/boolean filename to use, or false for the default one
+		 * @param $reading=false opening for reading ('rb') or writing ('wb')
+		 * @return string/resource error-msg of file-handle
+		 */
+		function fopen_backup($name=false,$reading=false)
+		{
+			if (!$name) 
+			{
+				if (!$this->backup_dir || !is_writable($this->backup_dir))
+				{
+					return lang("backupdir '%1' is not writeable by the webserver",$this->backup_dir);
+				}
+				$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
+			}
+			else	// remove the extension, to use the correct wrapper based on the extension
+			{
+				$name = preg_replace('/\.(bz2|gz)$/i','',$name);
+			}
+			$mode = $reading ? 'rb' : 'wb';
+
+			if (!($f = @fopen($file = "compress.bzip2://$name.bz2",$mode)) &&
+				!($f = @fopen($file = "compress.zlib://$name.gz",$mode)) &&
+				!($f = @fopen($file = "zlib:$name.gz",$mode)) &&	// php < 4.3
+				!($f = @fopen($file = $name,$mode)))
+			{
+				$lang_mode = $reading ? lang('reading') : lang('writing');
+				return lang("Cant open '%1' for %2",$name,$lang_mode);
+			}
+			return $f;
+		}
+
+		/**
 		 * Backup all data in the form of a (compressed) csv file
 		 *
-		 * @param f resource file opened with fopen for reading
+		 * @param $f resource file opened with fopen for reading
 		 */ 
 		function restore($f)
 		{
@@ -88,7 +160,7 @@
 			while(!feof($f))
 			{
 				$line = trim(fgets($f)); ++$n;
-				
+echo "$n: $line<br>";
 				if (empty($line)) continue;
 				
 				if (substr($line,0,9) == 'charset: ')
@@ -104,7 +176,7 @@
 					$this->schemas = unserialize(trim(substr($line,8)));
 					foreach($this->schemas as $table_name => $schema)
 					{
-						//echo "<pre>$table_name => ".$this->write_array($schema,1)."</pre>\n";
+						echo "<pre>$table_name => ".$this->write_array($schema,1)."</pre>\n";
 						$this->schema_proc->CreateTable($table_name,$schema);
 					}
 					// make the schemas availible for the db-class
@@ -233,7 +305,7 @@
 
 			fwrite($f,"eGroupWare backup from ".date('Y-m-d H:i:s')."\n");
 
-			fwrite($f,"\ncharset: ".$GLOBALS['phpgw']->translation->charset()."\n\n");
+			fwrite($f,"\ncharset: $this->charset\n\n");
 
 			$this->schema_backup($f);	// add the schema in a human readable form too
 			
@@ -372,55 +444,3 @@
 			return $def;
 		}
 	}
-/*
-	$phpgw_info = array('flags' => array(
-		'currentapp' => 'admin',
-		'noheader' => true,
-		'nonavbar' => true,
-	));
-	include '../../header.inc.php';
-	
-	$db_backup = new db_backup();
-	
-	//ini_set('mbstring.internal_encoding','iso-8859-1');
-	//$str = '"c00cebe55f292105174b89133e5fc62a","ralf@pole","127.0.0.1",1091089152,1091089230,501';
-	//$str = '306266,"hansjorg","7722959c3ad772bcc6ac608bced3d9f4","Hansjörg","Helms",NULL,NULL,NULL,"A",-1,"u",NULL,0'."\n";
-	//$str = '306266,"hansjorg","7722959c3ad772bcc6ac608bced3d9f4","Hansjörg \\"Hansi\\"","Helms, Hansjörg\\\\",NULL,NULL,NULL,"A",-1,"u",NULL,0'."\n";
-	//$str = '"en","calendar","are you sure\\\\nyou want to\\\\ndelete this entry ?\\\\n\\\\nthis will delete\\\\nthis entry for all users.","Are you sure\\\\nyou want to\\\\ndelete this entry ?\\\\n\\\\nThis will delete\\\\nthis entry for all users."';
-	//echo "'$str'=<pre>".print_r($db_backup->csv_split($str),true)."</pre>\n";
-	//exit;
-
-	if ($_GET['backup'])
-	{
-		$name = is_numeric($_GET['backup']) ? '/tmp/db_backup' : $_GET['backup'];
-
-		if (!($f = fopen($file = "compress.bzip2://$name.bz2",'wb')) &&
-			!($f = fopen($file = "compress.zlib://$name.gz",'wb')) &&
-			!($f = fopen($file = "zlib:$name.gz",'wb')) &&	// php < 4.3
-			!($f = fopen($file = $name,'wb')))
-		{
-			die("Cant open $name for writing");
-		}
-		$db_backup->backup($f);
-		fclose($f);
-	
-		echo "<pre>";
-		fpassthru(fopen($file,'r'));
-	}
-	elseif ($_GET['restore'])
-	{
-		$name = is_numeric($_GET['restore']) ? '/tmp/db_backup' : $_GET['restore'];
-
-		if (!($f = fopen($file = "compress.bzip2://$name.bz2",'r')))
-		{
-			die("Cant open $name for reading");
-		}
-		$db_backup->restore($f);
-		fclose($f);
-		echo "DB restored from dump";
-	}
-	else
-	{
-		$db_backup->schema_backup();
-	}
-*/

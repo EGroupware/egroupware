@@ -201,6 +201,8 @@
 
 			if (!isset($this->loaded_apps[$app]) || $this->loaded_apps[$app] != $lang)
 			{
+				if ($app == 'setup') return $this->add_setup($lang);
+
 				$this->db->select($this->lang_table,'message_id,content',array(
 					'lang'		=> $lang,
 					'app_name'	=> $app,
@@ -213,6 +215,34 @@
 			}
 		}
 
+		/**
+		 * Adds setup's translations, they are not in the DB!
+		 */
+		function add_setup($lang)
+		{
+			$fn = PHPGW_SERVER_ROOT.'/setup/lang/phpgw_' . $lang . '.lang';
+			if (!file_exists($fn))
+			{
+				$fn = PHPGW_SERVER_ROOT.'/setup/lang/phpgw_en.lang';
+			}
+			if (file_exists($fn))
+			{
+				$fp = fopen($fn,'r');
+				while ($data = fgets($fp,8000))
+				{
+					// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
+					list($message_id,,,$content) = explode("\t",$data);
+					$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
+				}
+				fclose($fp);
+				
+				foreach($phrases as $message_id => $content)
+				{
+					$GLOBALS['lang'][$message_id] = $this->convert($content,$phrases['charset']);
+				}
+			}
+			$this->loaded_apps['setup'] = $lang;
+		}
 		/*!
 		@function get_installed_langs
 		@abstract returns a list of installed langs

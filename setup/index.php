@@ -75,6 +75,12 @@
 
 	$GLOBALS['phpgw_setup']->loaddb();
 
+	$GLOBALS['phpgw_setup']->html->show_header(
+		$GLOBALS['phpgw_info']['setup']['header_msg'],
+		False,
+		'config',
+		$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')'
+	);
 	/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
 	/* $GLOBALS['phpgw_setup']->clear_session_cache(); */
 
@@ -124,13 +130,24 @@
 		case 'Upgrade':
 			$subtitle = lang('Upgrading Tables');
 			$submsg = lang('At your request, this script is going to attempt to upgrade your old applications to the current versions').'.';
+			if ($_POST['backup'])
+			{
+				$submsg .= ' '.lang('After backing up your tables first.');
+			}
 			$subaction = lang('upgraded');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
 			break;
 		case 'Install':
 			$subtitle = lang('Creating Tables');
-			$submsg = lang('At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you').'.';
+			if ($_POST['upload'])
+			{
+				$submsg = lang('At your request, this script is going to attempt to install a previous backup').'.';
+			}
+			else
+			{
+				$submsg = lang('At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you').'.';
+			}
 			$subaction = lang('installed');
 			$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'new';
 			$GLOBALS['phpgw_info']['setup']['stage']['db'] = 6;
@@ -213,6 +230,9 @@
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
 			$setup_tpl->set_var('coreapps',lang('all applications'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
+			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
+			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
+				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
 			$setup_tpl->parse('V_db_stage_3','B_db_stage_3');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_3');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
@@ -220,13 +240,15 @@
 		case 4:
 			$setup_tpl->set_var('oldver',lang('You appear to be running version %1 of eGroupWare',$setup_info['phpgwapi']['currentver']));
 			$setup_tpl->set_var('automatic',lang('We will automatically update your tables/records to %1',$setup_info['phpgwapi']['version']));
-			$setup_tpl->set_var('backupwarn',lang('backupwarn'));
+			$setup_tpl->set_var('backupwarn',lang('but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>'));
+			$setup_tpl->set_var('lang_backup',lang('create a backup before upgrading the DB'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 			$setup_tpl->set_var('upgrade',lang('Upgrade'));
 			$setup_tpl->set_var('goto',lang('Go to'));
 			$setup_tpl->set_var('configuration',lang('configuration'));
 			$setup_tpl->set_var('admin_account',lang('Create admin account'));
 			$setup_tpl->set_var('applications',lang('Manage Applications'));
+			$setup_tpl->set_var('db_backup',lang('DB backup and restore'));
 			$setup_tpl->set_var('language_management',lang('Manage Languages'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
 			$setup_tpl->set_var('dont_touch_my_data',lang('Dont touch my data'));
@@ -251,6 +273,7 @@
 			$setup_tpl->set_var('tblchange',lang('Table Change Messages'));
 			$setup_tpl->parse('V_db_stage_6_pre','B_db_stage_6_pre');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_6_pre');
+			$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 
 			// FIXME : CAPTURE THIS OUTPUT
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'report';
@@ -265,20 +288,71 @@
 					$setup_info = $GLOBALS['phpgw_setup']->process->droptables($setup_info);
 					break;
 				case 'new':
-					/* process all apps and langs(last param True), excluding apps with the no_mass_update flag set. */
-					$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
-					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
-					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+					// use uploaded backup, instead installing from scratch
+					if ($_POST['upload'])
+					{
+						$db_backup = CreateObject('phpgwapi.db_backup');
+						if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] && 
+							is_uploaded_file($_FILES['uploaded']['tmp_name']))
+						{
+							if (preg_match('/\.(bz2|gz)$/i',$_FILES['uploaded']['name'],$matches))
+							{
+								$ext = '.'.$matches[1];
+								move_uploaded_file($_FILES['uploaded']['tmp_name'],$_FILES['uploaded']['tmp_name'].$ext);
+								$_FILES['uploaded']['tmp_name'] .= $ext;
+							}
+							if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
+							{
+								echo '<p align="center">'.lang('restore started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+								$db_backup->restore($f);
+								fclose($f);
+								echo '<p align="center">'.lang('restore finished')."</p>\n";
+								unlink($_FILES['uploaded']['tmp_name']);
+							}
+							else	// backup failed ==> dont start the upgrade
+							{
+								$setup_tpl->set_var('submsg',lang('Restore failed'));
+								$setup_tpl->set_var('tableshave','<b>'.$f.'</b>');
+								$setup_tpl->set_var('subaction','');
+							}
+						}
+					}
+					else
+					{
+						$setup_info = $GLOBALS['phpgw_setup']->detection->upgrade_exclude($setup_info);
+						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
+						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+					}
 					break;
 				case 'oldversion':
-					$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
-					$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+					// create a backup, before upgrading the tables
+					if ($_POST['backup'])
+					{
+						$db_backup = CreateObject('phpgwapi.db_backup');
+						if (is_resource($f = $db_backup->fopen_backup()))
+						{
+							echo '<p align="center">'.lang('backup started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+							$db_backup->backup($f);
+							fclose($f);
+							echo '<p align="center">'.lang('backup finished')."</p>\n";
+						}
+						else	// backup failed ==> dont start the upgrade
+						{
+							$setup_tpl->set_var('submsg',lang('Backup failed'));
+							$setup_tpl->set_var('tableshave','<b>'.$f.'</b>');
+							$setup_tpl->set_var('subaction','');
+						}
+					}
+					if (!@$_POST['backup'] || !is_string($f))
+					{
+						$setup_info = $GLOBALS['phpgw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
+						$GLOBALS['phpgw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+					}
 					break;
 			}
 
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 
-			$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
 			$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');
 			$db_filled_block = $db_filled_block . $setup_tpl->get_var('V_db_stage_6_post');
@@ -301,6 +375,42 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 	}
+	
+function check_dir($dir,&$msg,$check_in_docroot=false)
+{
+	if (!@is_dir($dir))
+	{
+		$msg = lang('does not exist');
+		return false;
+	}
+	if (!@is_writeable($dir))
+	{
+		$msg = lang('is not writeable by the webserver');
+		return false;
+	}
+	if ($check_in_docroot)
+	{
+		$docroots = array(PHPGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+		$dir = realpath($dir);
+
+		foreach ($docroots as $docroot)
+		{
+			$len = strlen($docroot);
+
+			if ($docroot == substr($dir,0,$len))
+			{
+				$rest = substr($dir,$len);
+
+				if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
+				{
+					$msg = lang('is in the webservers docroot');
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
 
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration',2));
@@ -310,11 +420,11 @@
 	//$GLOBALS['phpgw_info']['setup']['stage']['config'] = 10;
 	// end DEBUG code
 
+	$setup_tpl->set_var('config_status_img',$incomplete);
+	$setup_tpl->set_var('config_status_alt',lang('not completed'));
 	switch($GLOBALS['phpgw_info']['setup']['stage']['config'])
 	{
 		case 1:
-			$setup_tpl->set_var('config_status_img',$incomplete);
-			$setup_tpl->set_var('config_status_alt',lang('not completed'));
 			$btn_config_now = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 				lang('Please configure eGroupWare for your environment'),
 				'POST','config.php',
@@ -324,21 +434,48 @@
 			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 		case 10:
-			$setup_tpl->set_var('config_status_img',$completed);
-			$setup_tpl->set_var('config_status_alt',lang('completed'));
+			$GLOBALS['phpgw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_app='phpgwapi'");
+			while($GLOBALS['phpgw_setup']->db->next_record())
+			{
+				$config[$GLOBALS['phpgw_setup']->db->f(0)] = $GLOBALS['phpgw_setup']->db->f(1);
+			}
+			// set and create the default backup_dir
+			if (@is_writeable($config['files_dir']) && !isset($config['backup_dir']) && $config['file_store_contents'] == 'filesystem')
+			{
+				$config['backup_dir'] = $config['files_dir'].'/db_backup';
+				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
+				{
+					$GLOBALS['phpgw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','backup_dir',".$GLOBALS['phpgw_setup']->db->quote($config['backup_dir']).')',__LINE__,__FILE__);
+				}
+			}
+			$config_msg = '';
+			if (!check_dir($config['temp_dir'],$error_msg))
+			{
+				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
+			}
+			if (!check_dir($config['files_dir'],$error_msg,true))
+			{
+				$config_msg .= ($config_msg?"<br>\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
+			}
+			if (!check_dir($config['backup_dir'],$error_msg,true))
+			{
+				$config_msg .= ($config_msg?"<br>\n":'').lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
+			}
+			if (!$config_msg)
+			{
+				$setup_tpl->set_var('config_status_img',$completed);
+				$setup_tpl->set_var('config_status_alt',lang('completed'));
+				$config_msg = lang('Configuration completed');
+			}
 			$btn_edit_config = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
-				lang('Configuration completed'),
+				$config_msg,
 				'POST','config.php',
 				'submit',lang('Edit Current Configuration'),
 				''
 			);
-			$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='auth_type'");
-			$GLOBALS['phpgw_setup']->db->next_record();
-			if ($GLOBALS['phpgw_setup']->db->f(0) == 'ldap')
+			if ($config['auth_type'] == 'ldap')
 			{
-				$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='ldap_host'");
-				$GLOBALS['phpgw_setup']->db->next_record();
-				if ($GLOBALS['phpgw_setup']->db->f(0) != '')
+				if ($config['ldap_host'] != '')
 				{
 					$btn_config_ldap = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
 						lang('LDAP account import/export'),
@@ -351,35 +488,6 @@
 				{
 					$btn_config_ldap = '';
 				}
-/*
-				$GLOBALS['phpgw_setup']->db->query("select config_value FROM phpgw_config WHERE config_name='webserver_url'");
-				$GLOBALS['phpgw_setup']->db->next_record();
-				if ($GLOBALS['phpgw_setup']->db->f(0))
-				{
-					$link_make_accts = $GLOBALS['phpgw_setup']->html->make_href_link_simple(
-						'<br>',
-						'setup_demo.php',
-						lang('Click Here'),
-						'<b>'.lang('to setup 1 admin account and 3 demo accounts.').'</b>'
-					);
-				}
-				else
-				{
-					$link_make_accts = '&nbsp;';
-				}
-			}
-			else
-			{
-				$btn_config_ldap = '';
-				$link_make_accts = $GLOBALS['phpgw_setup']->html->make_href_link_simple(
-					'<br>',
-					'setup_demo.php',
-					lang('Click Here'),
-					'<b>'.lang('to setup 1 admin account and 3 demo accounts.').'</b>'
-				);
-			}
-			$config_td = "$btn_edit_config"."$link_make_accts";
-*/
 			}
 			$setup_tpl->set_var('config_table_data',$btn_edit_config);
 			$setup_tpl->set_var('ldap_table_data',$btn_config_ldap);
@@ -496,13 +604,26 @@
 			$setup_tpl->set_var('apps_table_data',lang('Not ready for this stage yet'));
 			break;
 	}
-
-	$GLOBALS['phpgw_setup']->html->show_header(
-		$GLOBALS['phpgw_info']['setup']['header_msg'],
-		False,
-		'config',
-		$GLOBALS['phpgw_setup']->ConfigDomain . '(' . $GLOBALS['phpgw_domain'][$GLOBALS['phpgw_setup']->ConfigDomain]['db_type'] . ')'
-	);
+	// Backup and restore section
+	$setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore',6));
+	switch($GLOBALS['phpgw_info']['setup']['stage']['db'])
+	{
+		case 10:
+			$setup_tpl->set_var('backup_status_img',$completed);
+			$setup_tpl->set_var('backup_status_alt',lang('completed'));
+			$setup_tpl->set_var('backup_table_data',$GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
+				''/*lang('This stage is completed<br>')*/,
+				'','db_backup.php',
+				'submit',lang('backup and restore'),
+				''));
+			break;
+		default:
+			$setup_tpl->set_var('backup_status_img',$incomplete);
+			$setup_tpl->set_var('backup_status_alt',lang('not completed'));
+			$setup_tpl->set_var('backup_table_data',lang('Not ready for this stage yet'));
+			break;
+	}
+	
 	$setup_tpl->pparse('out','T_setup_main');
 	$GLOBALS['phpgw_setup']->html->show_footer();
 ?>

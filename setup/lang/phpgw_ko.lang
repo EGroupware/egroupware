@@ -49,7 +49,7 @@ auto-created user accounts expire	setup	ko	자동생성된 사용자 계정 만료
 available version	setup	ko	가능한 버전
 back to the previous screen	setup	ko	이전 화면으로 돌아가기
 back to user login	setup	ko	사용자 접속으로 돌아가기
-backupwarn	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있습니다.</strong><br><em>더 진행하기 전에 백업하시길 권장합니다!</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	ko	하지만 저희는 스크립트가 실행도중 데이터를 손상할 수 있기때문에 귀하의 테이블을 <u>백업하길 적극 권장</u>합니다<br><strong>이 자동화된 스크립트는 데이터손실이 일어날수 있습니다.</strong>
 because an application it depends upon was upgraded	setup	ko	응용프로그램이 업그레이드 되었는지 여부에 달려있음
 because it depends upon	setup	ko	의존성때문에
 because it is not a user application, or access is controlled via acl	setup	ko	사용자 응용프로그램이 아니기때문에, 접근 제어는 ACL을 통해서

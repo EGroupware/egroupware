@@ -53,7 +53,7 @@ auto-created user accounts expire	setup	fr	Les comptes d'utilisateur auto-crées 
 available version	setup	fr	Version disponible
 back to the previous screen	setup	fr	Retour à l'écran précédent
 back to user login	setup	fr	Revenir à la maison
-backupwarn	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong><br><em>SVP faites une sauvegarde avant de continuer!</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
 because an application it depends upon was upgraded	setup	fr	parce-qu'une application de laquelle il dépend a été mise à jour
 because it depends upon	setup	fr	Parce-que ça dépend de
 because it is not a user application, or access is controlled via acl	setup	fr	Parce-que ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL

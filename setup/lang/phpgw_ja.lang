@@ -26,7 +26,7 @@ authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
 auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
 available version	setup	ja	最新の<BR>バージョン
-backupwarn	setup	ja	<br>しかし、この処理が、あなたのデータを破壊してしまった場合に備えて、<u>データバックアップをお勧めします。<br></u><em>先に進む前に、データのバックアップを行って下さい。</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	ja	<br>しかし、この処理が、あなたのデータを破壊してしまった場合に備えて、<u>データバックアップをお勧めします。</u>
 because it depends upon	setup	ja	理由は次のとおりです
 because it is not a user application, or access is controlled via acl	setup	ja	ユーザのアプリケーションでないか、ACL によってアクセス制限しています。
 because it requires manual table installation, <br>or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br>テーブル定義が正しくありません。

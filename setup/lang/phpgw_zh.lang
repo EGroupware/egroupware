@@ -40,7 +40,7 @@ auto-created user accounts expire	setup	zh	自动建立的用户帐户已过期
 available version	setup	zh	可用版本
 back to the previous screen	setup	zh	返回上一个页面
 back to user login	setup	zh	返回用户登录界面
-backupwarn	setup	zh	但是我们 <u>强烈建议您备份表格，</u> 以防止脚本破坏数据，<br><strong>这是有可能发生的！</strong><br><em>请在操作前作好备份！</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	zh	但是我们 <u>强烈建议您备份表格，</u> 以防止脚本破坏数据，<br><strong>这是有可能发生的！</strong>
 because an application it depends upon was upgraded	setup	zh	因为它所依赖的应用程序已升级
 because it depends upon	setup	zh	因为它依赖于
 because it is not a user application, or access is controlled via acl	setup	zh	因为它不是用户应用程序, 或者受ACL限制无权访问

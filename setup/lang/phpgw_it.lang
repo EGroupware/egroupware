@@ -46,7 +46,7 @@ auto-created user accounts expire	setup	it	Gli account utente auto-creati scadon
 available version	setup	it	Versione Disponibile
 back to the previous screen	setup	it	Indietro alla schermata precedente
 back to user login	setup	it	Indietro al Login Utente
-backupwarn	setup	it	ma noi <u>consigliamo vivamente di salvare</u> le tue tabelle nel caso in cui la procedura causidanni ai tuoi dati.<br><strong>Queste procedure automatizzate possono distruggere molto facilmente i tuoi dati.</strong><br><em>Per favore esegui un salvataggio prima di proseguire oltre!</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	it	ma noi <u>consigliamo vivamente di salvare</u> le tue tabelle nel caso in cui la procedura causidanni ai tuoi dati.<br><strong>Queste procedure automatizzate possono distruggere molto facilmente i tuoi dati.</strong>
 because an application it depends upon was upgraded	setup	it	perché un'applicazione da cui dipende è stata aggiornata
 because it depends upon	setup	it	perché dipende da
 because it is not a user application, or access is controlled via acl	setup	it	perché non si tratta di un'applicazione dell'utente, o l'accesso è controllato tramite ACL

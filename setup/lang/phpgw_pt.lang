@@ -27,7 +27,7 @@ Authentication / Accounts	setup	pt	Autenticação / Contas
 Auto create account records for authenticated users	setup	pt	Criar contas de usuários automaticamente para usuários autenticados
 auto-created user accounts expire	setup	pt	Usuários criados automaticamente expiram em
 available version	setup	pt	Versão disponível
-backupwarn	setup	pt	é <u>altamente recomendável</u> fazer um backup das tabelas do banco de dados caso o script danifique seus dados. <br><strong>Estes scripts automáticos podem destruir seus dados facilmente</strong><br><em>Por favor faça um backup antes de continuar</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	pt	é <u>altamente recomendável</u> fazer um backup das tabelas do banco de dados caso o script danifique seus dados. <br><strong>Estes scripts automáticos podem destruir seus dados facilmente</strong>
 because it depends upon	setup	pt	pois depende de
 because it is not a user application, or access is controlled via acl	setup	pt	pois não é uma aplicação de usuário ou o acesso é controlado através das regras de acesso
 because it requires manual table installation, <br>or the table definition was incorrect	setup	pt	pois requer instalação das tabelas do banco de dados manualmente, <br>ou a definição da tabela está incorreta

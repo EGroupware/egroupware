@@ -19,6 +19,7 @@ admin password to header manager	setup	en	Admin password to header manager
 admin user for header manager	setup	en	Admin user for header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
+after backing up your tables first.	setup	en	After backing up your tables first.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	en	After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".
 all applications	setup	en	all applications
 all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
@@ -38,6 +39,7 @@ application: %1, file: %2, line: "%3"	setup	en	Application: %1, File: %2, Line: 
 are you sure you want to delete your existing tables and data?	setup	en	Are you sure you want to delete your existing tables and data?
 are you sure?	setup	en	ARE YOU SURE?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	en	At your request, this script is going to attempt to create the database and assign the db user rights to it
+at your request, this script is going to attempt to install a previous backup	setup	en	At your request, this script is going to attempt to install a previous backup
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	en	At your request, this script is going to attempt to install the core tables and the admin and preferences applications for you.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	en	At your request, this script is going to attempt to upgrade your old tables to the new format
@@ -50,7 +52,15 @@ auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
 back to user login	setup	en	Back to user login
-backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
+back's up your db now, this might take a view minutes	setup	en	back's up your DB now, this might take a view minutes
+backup '%1' deleted	setup	en	backup '%1' deleted
+backup '%1' restored	setup	en	backup '%1' restored
+backup and restore	setup	en	backup and restore
+backup failed	setup	en	Backup failed
+backup finished	setup	en	backup finished
+backup now	setup	en	backup now
+backup sets	setup	en	backup sets
+backup started, this might take a view minutes ...	setup	en	backup started, this might take a view minutes ...
 because an application it depends upon was upgraded	setup	en	because an application it depends upon was upgraded
 because it depends upon	setup	en	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	en	because it is not a user application, or access is controlled via acl
@@ -60,6 +70,7 @@ because of a failed upgrade or install	setup	en	because of a failed upgrade or i
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	en	because of a failed upgrade, or the database is newer than the installed version of this app
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
 bottom	setup	en	bottom
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>
 cancel	setup	en	Cancel
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br> Instead you can %1 the file.
 change system-charset	setup	en	Change system-charset
@@ -84,6 +95,7 @@ configuration completed	setup	en	Configuration completed
 configuration password	setup	en	Configuration Password
 configuration user	setup	en	Configuration User
 configure now	setup	en	Configure Now
+confirm to delete this backup?	setup	en	Confirm to delete this backup?
 contain	setup	en	contain
 continue	setup	en	Continue
 continue to the header admin	setup	en	Continue to the Header Admin
@@ -91,6 +103,7 @@ convert	setup	en	Convert
 could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
 country selection	setup	en	Country Selection
 create	setup	en	Create
+create a backup before upgrading the db	setup	en	create a backup before upgrading the DB
 create admin account	setup	en	Create admin account
 create database	setup	en	Create Database
 create demo accounts	setup	en	Create demo accounts
@@ -107,6 +120,9 @@ current version	setup	en	Current Version
 currently installed languages: %1 <br>	setup	en	Currently installed languages: %1 <br>
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+day	setup	en	day
+day of week<br>(0-6, 0=sunday)	setup	en	day of week<br>(0-6, 0=sunday)
+db backup and restore	setup	en	DB backup and restore
 db host	setup	en	DB Host
 db name	setup	en	DB Name
 db password	setup	en	DB Password
@@ -131,6 +147,7 @@ developers' table schema toy	setup	en	Developers' Table Schema Toy
 did not find any valid db support!	setup	en	Did not find any valid DB support!
 do you want persistent connections (higher performance, but consumes more resources)	setup	en	Do you want persistent connections (higher performance, but consumes more resources)
 do you want to manage homedirectory and loginshell attributes?	setup	en	Do you want to manage homedirectory and loginshell attributes?
+does not exist	setup	en	does not exist
 domain	setup	en	Domain
 domain select box on login	setup	en	Domain select box on login
 dont touch my data	setup	en	Dont touch my data
@@ -146,6 +163,7 @@ enter some random text for app session encryption	setup	en	Enter some random tex
 enter some random text for app_session <br>encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path to the backup directory.<br>if empty: files directory	setup	en	Enter the full path to the backup directory.<br>if empty: files directory
 enter the hostname of the machine on which this server is running	setup	en	Enter the hostname of the machine on which this server is running
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	en	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 enter the site password for peer servers	setup	en	Enter the site password for peer servers
@@ -164,6 +182,7 @@ export sql users to ldap	setup	en	Export SQL users to LDAP
 false	setup	en	False
 file	setup	en	FILE
 file type, size, version, etc.	setup	en	file type, size, version, etc.
+filename	setup	en	filename
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
@@ -179,6 +198,7 @@ hooks deregistered	setup	en	hooks deregistered
 hooks registered	setup	en	hooks registered
 host information	setup	en	Host information
 hostname/ip of database server	setup	en	Hostname/IP of database server
+hour (0-24)	setup	en	hour (0-24)
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
 however, the application may still work	setup	en	However, the application may still work
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
@@ -201,6 +221,7 @@ insanity	setup	en	Insanity
 install	setup	en	Install
 install all	setup	en	Install All
 install applications	setup	en	Install Applications
+install backup	setup	en	install backup
 install language	setup	en	Install Language
 installed	setup	en	installed
 instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
@@ -208,6 +229,8 @@ invalid ip address	setup	en	Invalid IP address
 invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
+is in the webservers docroot	setup	en	is in the webservers docroot
+is not writeable by the webserver	setup	en	is not writeable by the webserver
 ldap account import/export	setup	en	LDAP account import/export
 ldap accounts configuration	setup	en	LDAP Accounts Configuration
 ldap accounts context	setup	en	LDAP accounts context
@@ -241,20 +264,24 @@ mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requir
 mcrypt version	setup	en	MCrypt version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
+minute	setup	en	minute
 modifications have been completed!	setup	en	Modifications have been completed!
 modify	setup	en	Modify
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
+month	setup	en	month
 multi-language support setup	setup	en	Multi-Language support setup
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user eGroupWare uses to connect
 never	setup	en	never
 new	setup	en	New
+next run	setup	en	next run
 no	setup	en	No
 no accounts existing	setup	en	No accounts existing
 no algorithms available	setup	en	no algorithms available
 no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
 no modes available	setup	en	no modes available
 no mysql support found. disabling	setup	en	No MySQL support found. Disabling
+no odbc support found. disabling	setup	en	No ODBC support found. Disabling
 no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
 no postgresql support found. disabling	setup	en	No PostgreSQL support found. Disabling
 no xml support found. disabling	setup	en	No XML support found. Disabling
@@ -276,6 +303,7 @@ or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	en	Or we can attempt to create the database for you:
+or you can install a previous backup.	setup	en	Or you can install a previous backup.
 password needed for configuration	setup	en	Password needed for configuration
 password of db user	setup	en	Password of db user
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
@@ -314,6 +342,11 @@ remove all	setup	en	Remove All
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
+restore	setup	en	restore
+restore failed	setup	en	Restore failed
+restore finished	setup	en	restore finished
+restore started, this might take a view minutes ...	setup	en	restore started, this might take a view minutes ...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	en	Restoring a backup will delete/replace all content in your database. Are you sure?
 return to setup	setup	en	Return to Setup
 run installation tests	setup	en	Run installation tests
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	en	safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
@@ -352,7 +385,10 @@ setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
+shedule	setup	en	shedule
+sheduled backups	setup	en	sheduled backups
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
+size	setup	en	size
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 start the postmaster	setup	en	Start the postmaster
@@ -360,8 +396,10 @@ status	setup	en	Status
 step %1 - admin account	setup	en	Step %1 - Admin Account
 step %1 - advanced application management	setup	en	Step %1 - Advanced Application Management
 step %1 - configuration	setup	en	Step %1 - Configuration
+step %1 - db backup and restore	setup	en	Step %1 - DB backup and restore
 step %1 - language management	setup	en	Step %1 - Language Management
 step %1 - simple application management	setup	en	Step %1 - Simple Application Management
+succesfully uploaded file %1	setup	en	succesfully uploaded file %1
 table change messages	setup	en	Table Change Messages
 tables dropped	setup	en	tables dropped
 tables installed, unless there are errors printed above	setup	en	tables installed, unless there are errors printed above
@@ -383,6 +421,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	en	There w
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
 this might take a while, please wait ...	setup	en	This might take a while, please wait ...
+this program lets you backup your database, shedule a backup or restore it.	setup	en	This program lets you backup your database, shedule a backup or restore it.
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
 this program will help you upgrade or install different languages for egroupware	setup	en	This program will help you upgrade or install different languages for eGroupWare
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
@@ -406,6 +445,9 @@ upgrade	setup	en	Upgrade
 upgrade all	setup	en	Upgrade All
 upgraded	setup	en	upgraded
 upgrading tables	setup	en	Upgrading Tables
+upload backup	setup	en	upload backup
+uploads a backup and installs it on your db	setup	en	uploads a backup and installs it on your DB
+uploads a backup to the backup-dir, from where you can restore it	setup	en	uploads a backup to the backup-dir, from where you can restore it
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
 user account prefix	setup	en	User account prefix
@@ -429,6 +471,7 @@ would you like egroupware to check for a new version<br>when admins login ?	setu
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	en	writable by the webserver
 write config	setup	en	Write config
+year	setup	en	year
 yes	setup	en	Yes
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of eGroupWare.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run eGroupWare correctly, if at all. <br><br>Please upgrade to at least version %1
@@ -438,6 +481,7 @@ you appear to be using php3. disabling php4 sessions support	setup	en	You appear
 you appear to be using php4. enabling php4 sessions support	setup	en	You appear to be using PHP4. Enabling PHP4 sessions support
 you appear to have microsoft sql server support enabled	setup	en	You appear to have Microsoft SQL Server support enabled
 you appear to have mysql support enabled	setup	en	You appear to have MySQL support enabled
+you appear to have odbc support enabled	setup	en	You appear to have ODBC support enabled
 you appear to have oracle support enabled	setup	en	You appear to have Oracle support enabled
 you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have Oracle V8 (OCI) support enabled
 you appear to have postgresql support enabled	setup	en	You appear to have PostgreSQL support enabled
@@ -458,9 +502,11 @@ you will need to load the proper schema into your ldap server - see phpgwapi/doc
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current
+your backup directory '%1' %2	setup	en	Your backup directory '%1' %2
 your database does not exist	setup	en	Your database does not exist
 your database is not working!	setup	en	Your Database is not working!
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
+your files directory '%1' %2	setup	en	Your files directory '%1' %2
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br><blink><b class="msg">WARNING!</b></blink><br><b>MAKE BACKUPS!</b>
@@ -468,3 +514,4 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	en	Your tables are current
 your tables may be altered and you may lose data	setup	en	Your tables may be altered and you may lose data.
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
+your temporary directory '%1' %2	setup	en	Your temporary directory '%1' %2

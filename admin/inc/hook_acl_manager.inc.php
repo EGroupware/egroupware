@@ -120,6 +120,13 @@
 		)
 	);	// added and working ralfbecker
 
+	$GLOBALS['acl_manager']['admin']['db_backup_access'] = array(
+		'name' => 'Deny access to DB backup and restore',
+		'rights' => array(
+			'DB backup and restore' => 1
+		)
+	);	// added and working ralfbecker
+
 	$GLOBALS['acl_manager']['admin']['info_access'] = array(
 		'name' => 'Deny access to phpinfo',
 		'rights' => array(

@@ -19,6 +19,7 @@ admin password to header manager	setup	de	Admin-Passwort für Headerverwaltung
 admin user for header manager	setup	de	Admin-Benutzer für Headerverwaltung
 admin username	setup	de	Admin-Benutzername
 admins	setup	de	Administratoren
+after backing up your tables first.	setup	de	Nach einer Datensicherung Ihrer Tabelen.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	de	Datei nach dem Herunterladen als header.inc.php speichern. Danach auf "Weiter" klicken.
 all applications	setup	de	Alle Anwendungen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
@@ -38,6 +39,7 @@ application: %1, file: %2, line: "%3"	setup	de	Anwendung: %1, Datei: %2, Zeile: 
 are you sure you want to delete your existing tables and data?	setup	de	Sind Sie sicher, dass Sie Ihre bestehenden Tabellen und Daten löschen wollen?
 are you sure?	setup	de	SIND SIE SICHER?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
+at your request, this script is going to attempt to install a previous backup	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun eine vorherige Datensicherung installieren.
 at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen die Kern-Tabellen und die Anwendungen Admin und Einstellungen für Sie installieren.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung hin wird dieses Skript versuchen, Ihre Anwendungen auf die gegenwärtige Version zu aktualisieren
@@ -51,7 +53,15 @@ auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten 
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 back to user login	setup	de	Zurück zur Benutzeranmeldung
-backupwarn	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong><br
+back's up your db now, this might take a view minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
+backup '%1' deleted	setup	de	Datensicherung '%1' gelöscht
+backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
+backup and restore	setup	de	Datensicherung und Wiederherstellung
+backup failed	setup	de	Datensicherung fehlgeschlagen
+backup finished	setup	de	Datensicherung beendet
+backup now	setup	de	jetzt sichern
+backup sets	setup	de	Datensicherungen
+backup started, this might take a view minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
@@ -61,6 +71,7 @@ because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder ei
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlschlug, oder die Datenbank ist neuer als die installierte Version dieser Applikation
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
 bottom	setup	de	unten
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
 cancel	setup	de	Abbrechen
 cannot create the header.inc.php due to file permission restrictions.<br> instead you can %1 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br>Stattdessen können Sie die Datei %1.
 change system-charset	setup	de	Systemzeichensatz wechseln
@@ -85,6 +96,7 @@ configuration completed	setup	de	Konfiguration abgeschlossen
 configuration password	setup	de	Konfigurationspasswort
 configuration user	setup	de	Konfigurationsbenutzer
 configure now	setup	de	Jetzt konfigurieren
+confirm to delete this backup?	setup	de	Bestätigen Sie diese Datensicherung zu löschen?
 contain	setup	de	enthält
 continue	setup	de	Weiter
 continue to the header admin	setup	de	Weiter zur Headerverwaltung
@@ -92,6 +104,7 @@ convert	setup	de	Konvertieren
 could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.php nicht zum schreiben öffen!
 country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
+create a backup before upgrading the db	setup	de	mache eine Datensicherung bevor die DB aktualisiert wird
 create admin account	setup	de	Administrator-Konto anlegen
 create database	setup	de	Datenbank erzeugen
 create demo accounts	setup	de	Demo-Benutzer anlegen
@@ -108,6 +121,9 @@ current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br>	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
+day	setup	de	Tag
+day of week<br>(0-6, 0=sunday)	setup	de	Wochentag<br>(0-6, 0=Sonntag)
+db backup and restore	setup	de	DB Datensicherung und Wiederherstellung
 db host	setup	de	Datenbank-Host
 db name	setup	de	Datenbank-Name
 db password	setup	de	Datenbank-Passwort
@@ -132,6 +148,7 @@ developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
 do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung (höhere Performance, braucht aber mehr Resourcen)
 do you want to manage homedirectory and loginshell attributes?	setup	de	Wollen Sie Benutzerverzeichnisse und Login-Shell Attribute verwalten?
+does not exist	setup	de	existiert nicht
 domain	setup	de	Domain
 domain select box on login	setup	de	Domain-Auswahlbox beim Einloggen
 dont touch my data	setup	de	Meine Daten nicht verändern
@@ -149,6 +166,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:\temp	setup	de	Vol
 enter the full path for temporary files.<br>examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the full path for users and group files.<br>examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path to the backup directory.<br>if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br>Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br>Beispiel: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the site password for peer servers	setup	de	Site Passwort für Peer Server
@@ -167,6 +185,7 @@ export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
 false	setup	de	Falsch
 file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
+filename	setup	de	Dateiname
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	Für eine Neuinstallation, wählen Sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
 force selectbox	setup	de	Auswahl erzwingen
 found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
@@ -182,6 +201,7 @@ hooks deregistered	setup	de	Haken nicht mehr aktiv
 hooks registered	setup	de	Haken registriert
 host information	setup	de	Host Informationen
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
+hour (0-24)	setup	de	Stunde (0-24)
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag denoch funktionieren
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
@@ -204,6 +224,7 @@ insanity	setup	de	Irrsinn
 install	setup	de	Installieren
 install all	setup	de	Alle Installieren
 install applications	setup	de	Anwendungen installieren
+install backup	setup	de	Datensicherung installieren
 install language	setup	de	Sprachen installieren
 installed	setup	de	installiert
 instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter %1 anzulegen:
@@ -211,6 +232,8 @@ invalid ip address	setup	de	Ungültige IP Adresse
 invalid password	setup	de	Ungültiges Passwort
 is broken	setup	de	ist kaputt
 is disabled	setup	de	ist nicht aktiv
+is in the webservers docroot	setup	de	ist im Dokumentenverzeichnis (Documentroot) des Webservers
+is not writeable by the webserver	setup	de	ist nicht vom Webserver schreibbar
 ldap account import/export	setup	de	LDAP-Benutzerkonten importieren/exportieren
 ldap accounts configuration	setup	de	LDAP-Benutzerkonten Konfiguration
 ldap accounts context	setup	de	LDAP-Kontext für Benutzerkonten
@@ -244,20 +267,24 @@ mcrypt settings (requires mcrypt php extension)	setup	de	MCrypt-Einstellungen (b
 mcrypt version	setup	de	MCrypt-Version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als 16M gesetzt: einige eGroupWare Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.B. 500 oder 100)
+minute	setup	de	Minute
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modify	setup	de	Ändern
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP-Benutzerkonten für die Benutzung durch eGroupWare anpassen (für eine neue Installation mit LDAP-Konten)
+month	setup	de	Monat
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den eGroupWare verwendet
 never	setup	de	niemals
 new	setup	de	Neu
+next run	setup	de	nächste Ausführung
 no	setup	de	Nein
 no accounts existing	setup	de	Keine Benutzerkonten gefunden
 no algorithms available	setup	de	Kein Algorithmus verfügbar
 no microsoft sql server support found. disabling	setup	de	Keine Unterstützung für Microsoft SQL Server gefunden. Abgeschaltet
 no modes available	setup	de	kein Modus verfügbar
 no mysql support found. disabling	setup	de	Keine Unterstützung für MySQL gefunden. Abgeschaltet
+no odbc support found. disabling	setup	de	Keine ODBC Unterstützung gefunden. Abgeschaltet
 no oracle-db support found. disabling	setup	de	Keine Unterstützung für Oracle gefunden. Abgeschaltet
 no postgresql support found. disabling	setup	de	Keine Unterstützung für PostgreSQL gefunden. Abgeschaltet
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
@@ -279,6 +306,7 @@ or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
+or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
 password needed for configuration	setup	de	Passwort wird für die Konfiguration benötgt
 password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
@@ -317,6 +345,11 @@ remove all	setup	de	Alle Entfernen
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
+restore	setup	de	Wiederherstellen
+restore failed	setup	de	Wiederherstellen fehlgeschlagen
+restore finished	setup	de	Wiederherstellen beendet
+restore started, this might take a view minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
+restoring a backup will delete/replace all content in your database. are you sure?	setup	de	Das Wiederherstellen einer Datensicherung löscht / ersetzt den Inhalt Ihrer Datenbank. Sind Sie sicher?
 return to setup	setup	de	Zurück zum Setup
 run installation tests	setup	de	Installationstests starten
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	de	safe_mode ist eingeschaltet, was ist generell gut, da es Ihre Installation sicherer macht.
@@ -355,7 +388,10 @@ setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
+shedule	setup	de	planen
+sheduled backups	setup	de	Regelmäßige Datensicherungen
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
+size	setup	de	Größe
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 start the postmaster	setup	de	Starten Sie den postmaster
@@ -363,8 +399,10 @@ status	setup	de	Status
 step %1 - admin account	setup	de	Schrit %1 - Administrator-Konto
 step %1 - advanced application management	setup	de	Schritt %1 - Erweiterte Verwaltung der Anwendungen
 step %1 - configuration	setup	de	Schritt %1 - Konfiguration
+step %1 - db backup and restore	setup	de	Schritt %1 - DB Datensicherung und Wiederherstellung
 step %1 - language management	setup	de	Schritt %1 - Verwaltung der Sprachen
 step %1 - simple application management	setup	de	Schritt %1 - Einfache Verwaltung der Anwendungen
+succesfully uploaded file %1	setup	de	Datei %1 erfolgreich hochgeladen
 table change messages	setup	de	Tabellen&auml;nderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig;er oben sind Fehlermelungen zu sehen
@@ -387,6 +425,7 @@ there was a problem trying to connect to your ldap server. <br>	setup	de	Es gab 
 there was a problem trying to connect to your ldap server. <br>please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br>Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss au&szlig;erhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
 this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zeit, bitte warten ...
+this program lets you backup your database, shedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder sie zurücksichern.
 this program will convert your database to a new system-charset.	setup	de	Dieses Programm wird Ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim Exportieren von Benutzern/Gruppen aus eGroupWare's Account-Tabellen in Ihren LDAP-Baum behilflich sein
@@ -410,6 +449,9 @@ upgrade	setup	de	Aktualisieren
 upgrade all	setup	de	Alle Aktualiseren
 upgraded	setup	de	Aktualisiert
 upgrading tables	setup	de	aktualisiere Tabellen
+upload backup	setup	de	Datensicherung hochladen
+uploads a backup and installs it on your db	setup	de	lädt eine Datensicherung hoch und installiert sie auf Ihrer DB
+uploads a backup to the backup-dir, from where you can restore it	setup	de	Läde eine Datensicherung in das Datensicherungsverzeichnis, von wo sie diese zurücksichern können
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 user account prefix	setup	de	Präfix für Benutzernamen
@@ -433,6 +475,7 @@ would you like egroupware to check for a new version<br>when admins login ?	setu
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 writable by the webserver	setup	de	schreibar durch den Webserver
 write config	setup	de	Konfiguration schreiben
+year	setup	de	Jahr
 yes	setup	de	Ja
 you appear to be running a pre-beta version of egroupware.<br>these versions are no longer supported, and there is no upgrade path for them in setup.<br> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br>Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br>Sie möchten vieleicht erst auf
 you appear to be running an old version of php <br>it its recommend that you upgrade to a new version. <br>older version of php might not run egroupware correctly, if at all. <br><br>please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br>Es ist notwendig auf eine neue Version zu aktualisieren.<br>Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br><br>Biite aktualisieren Sie mindestens auf Version %1
@@ -442,6 +485,7 @@ you appear to be using php3. disabling php4 sessions support	setup	de	Sie schein
 you appear to be using php4. enabling php4 sessions support	setup	de	Sie scheinen PHP4 zu verwenden. Schalte PHP4 Session Unterstützung ein.
 you appear to have microsoft sql server support enabled	setup	de	Sie scheinen Microsoft SQL Server Unterstützung zu haben.
 you appear to have mysql support enabled	setup	de	Sie scheinen MySQL Unterstützung zu haben.
+you appear to have odbc support enabled	setup	de	Sie scheinen ODBC Unterstützung zu haben.
 you appear to have oracle support enabled	setup	de	Sie scheinen Oracle Unterstützung zu haben.
 you appear to have oracle v8 (oci) support enabled	setup	de	Sie scheinen Oracle V8 (OCI) Unterstützung zu haben.
 you appear to have postgresql support enabled	setup	de	Sie scheinen PostgreSQL Unterstützung zu haben.
@@ -462,9 +506,11 @@ you will need to load the proper schema into your ldap server - see phpgwapi/doc
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell
+your backup directory '%1' %2	setup	de	Ihr Datensicherungsverzeichnis '%1' %2
 your database does not exist	setup	de	Ihre Datenbank existiert nicht
 your database is not working!	setup	de	Ihre Datenbank funktioniert nicht!
 your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Anwendungen installiert!
+your files directory '%1' %2	setup	de	Ihr Dateiverzeichnis '%1' %2
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
 your header.inc.php needs upgrading.<br><blink><b class="msg">warning!</b></blink><br><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br><blink><b class="msg">WARNUNG!</b></blink><br><b>MACHEN SIE EINE SICHERUNG!</b>
@@ -472,3 +518,4 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables may be altered and you may lose data	setup	de	Ihre Tabellen könnten verändert werden, und Sie könnten Daten verlieren!
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden Daten verlieren!
+your temporary directory '%1' %2	setup	de	Ihr temporäres Verzeichnis '%1' %2

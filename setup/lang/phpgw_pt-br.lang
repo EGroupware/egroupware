@@ -47,7 +47,7 @@ auto-created user accounts expire	setup	pt-br	Usuários criados automaticamente e
 available version	setup	pt-br	Versão Disponível
 back to the previous screen	setup	pt-br	Voltar a tela anterior
 back to user login	setup	pt-br	Voltar a tela de conexão
-backupwarn	setup	pt-br	é <u>altamente recomendável</u> fazer uma cópia de segurança das tabelas do banco de dados caso o script danifique seus dados. <br><strong>Estes scripts automáticos podem destruir seus dados facilmente</strong><br><em>Por favor faça uma cópia de segurança antes de continuar</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	pt-br	é <u>altamente recomendável</u> fazer uma cópia de segurança das tabelas do banco de dados caso o script danifique seus dados. <br><strong>Estes scripts automáticos podem destruir seus dados facilmente</strong>
 because an application it depends upon was upgraded	setup	pt-br	Porque um aplicativo que ele depende foi atualizado
 because it depends upon	setup	pt-br	pois depende de
 because it is not a user application, or access is controlled via acl	setup	pt-br	porque não é uma aplicação de usuário ou o acesso é controlado através das regras de acesso

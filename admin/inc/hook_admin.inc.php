@@ -72,6 +72,11 @@
 		$file['Asynchronous timed services'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiasyncservice.index');
 	}
 
+	if (! $GLOBALS['phpgw']->acl->check('db_backup_access',1,'admin'))
+	{
+		$file['DB backup and restore'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.admin_db_backup.index');
+	}
+
 	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
 	{
 		$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');

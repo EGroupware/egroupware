@@ -66,6 +66,19 @@
 	</td>
 </tr>
 <!-- end the apps section -->
+<!-- begin the backup section -->
+<tr class="th">
+	<td align="left" colspan="2">{backup_step_text}</td>
+</tr>
+<tr>
+	<td align="center">
+		<img src="{backup_status_img}" alt="{backup_status_alt}" border="0">
+	</td>
+	<td>
+		{backup_table_data}
+	</td>
+</tr>
+<!-- end the apps section -->
 <tr class="banner">
 	<td colspan="2">&nbsp;</td>
 </tr>

@@ -95,6 +95,7 @@ cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
+db backup and restore	admin	de	DB Datensicherung und Wiederherstellung
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
@@ -115,6 +116,7 @@ deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank ve
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten
 deny access to asynchronous timed services	admin	de	Zugriff auf asynchroner zeitgesteuerter Dienst verbieten
 deny access to current sessions	admin	de	Zugriff auf aktuellen Sitzungen verbieten
+deny access to db backup and restore	admin	de	Zugriff auf DB Datensicherung und Wiederherstellung verbieten
 deny access to error log	admin	de	Zugriff auf Fehlerprotokoll verbieten
 deny access to global categories	admin	de	Zugriff auf globalen Kategorien verbieten
 deny access to groups	admin	de	Zugriff auf Benutzergruppen verbieten

@@ -26,11 +26,16 @@
    </tr>
    
    <tr class="row_off">
+    <td>{lang_Enter_the_full_path_to_the_backup_directory.<br>if_empty:_files_directory}/db_backup:<br><b>{lang_This_has_to_be_outside_the_webservers_document-root!!!}</b></td>
+    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40"></td>
+   </tr>
+   
+   <tr class="row_on">
     <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br>Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br><b>No_trailing_slash</b>}:</td>
     <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40"></td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Image_type_selection_order}:</td>
     <td>
      <select name="newsettings[image_type]">

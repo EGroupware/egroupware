@@ -28,7 +28,7 @@ authentication / accounts	setup	pl	Uwierzytelnianie / Konta
 auto create account records for authenticated users	setup	pl	Automatycznie twórz zapisy kont dla uwierzytelnionych u¿ytkowników
 auto-created user accounts expire	setup	pl	Utworzone automatycznie konta u¿ytkowników wygas³y
 available version	setup	pl	Dostêpne wersje
-backupwarn	setup	pl	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>	setup	pl	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong>
 because it depends upon	setup	pl	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	pl	because it is not a user application, or access is controlled via acl
 because it requires manual table installation, <br>or the table definition was incorrect	setup	pl	because it requires manual table installation, <br>or the table definition was incorrect

@@ -63,13 +63,16 @@
 		<img src="{img_incomplete}" alt="{Complete}" border="0">
 	</td>
 	<td>
-		<form action="index.php" method="post">
+		<form action="index.php" method="post"  enctype="multipart/form-data">
 		<input type="hidden" name="oldversion" value="new">
 
 		{dbexists}<br>
         <input type="hidden" name="action" value="Install">
-		<input type="submit" name="label" value="{install}"> {coreapps}
-		<br><input type="checkbox" name="debug" value="1"> {lang_debug}
+		<input type="submit" name="label" value="{install}"> {coreapps}<br>
+		<input type="checkbox" name="debug" value="1"> {lang_debug}
+		<hr>
+		{lang_restore}<br>
+		{upload}
 		</form>
 	</td>
 </tr>
@@ -90,6 +93,7 @@
 		<input type="hidden" name="oldversion" value="{oldver}">
 		<input type="hidden" name="useglobalconfigsettings">
 		<input type="hidden" name="action" value="Upgrade">
+		<input type="checkbox" name="backup" value="1" checked="1"> {lang_backup}<br>
 		<input type="submit" name="label" value="{upgrade}"><br>
 		<input type="checkbox" name="debug" value="1"> {lang_debug}<br>
 		</form>
@@ -101,7 +105,7 @@
 		<input type="submit" name="label" value="{uninstall_all_applications}"><br>({dropwarn})
 		</form>
 		<hr>
-{dont_touch_my_data}.&nbsp;&nbsp;{goto}:
+		{dont_touch_my_data}.&nbsp;&nbsp;{goto}:
 		<form method="POST" action="config.php">
         <input type="hidden" name="action" value="Dont touch my data">
 		<input type="submit" name="label" value="{configuration}">
@@ -117,6 +121,10 @@
 		<form method="POST" action="applications.php">
         <input type="hidden" name="action" value="Dont touch my data">
 		<input type="submit" name="label" value="{applications}">
+		</form>
+		<form method="POST" action="db_backup.php">
+        <input type="hidden" name="action" value="Dont touch my data">
+		<input type="submit" name="label" value="{db_backup}">
 		</form>
 	</td>
 </tr>
@@ -162,11 +170,13 @@
 				{submsg}
 			</td>
 		</tr>
+<!--
 		<tr bgcolor="#486591">
 			<td>
 				<font color="#fefefe">&nbsp;<b>{tblchange}</b></font>
 			</td>
 		</tr>
+-->
 <!-- END B_db_stage_6_pre -->
 
 &nbsp; <!-- ================================== --> &nbsp; 
