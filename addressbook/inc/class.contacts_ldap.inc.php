@@ -291,7 +291,7 @@
 
 		// send this the range, query, sort, order and whatever fields you want to see
 		// 'rights' and 'access' are  unused at this time
-		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="",$rights="",$access="")
+		function read($start=0,$offset=0,$fields="",$query="",$filter="",$sort="",$order="")
 		{
 			global $phpgw,$phpgw_info;
 
@@ -300,6 +300,7 @@
 
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
+			$filterfields = array();
 			// turn filter's a=b,c=d OR a=b into an array
 			if ($filter) {
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
@@ -321,11 +322,25 @@
 					$filterfields = array($this->non_contact_fields[$name] => $value);
 				}
 			} else {
-				$filterfields = array(
-					'phpgwtypeid' => 'n'
-				);
+				$filterfields += array('phpgwtypeid' => 'n');
 				if ($DEBUG) { echo "<br>DEBUG - Filter strings: #phpgwtypeid=n#"; }
 			}	
+
+			if (is_array($this->grants))
+			{
+				$filterfields += array('phpgwaccess' => 'public');
+				$grants = $this->grants;
+				while (list($user) = each($grants))
+				{
+					if ($DEBUG) { echo "<br>DEBUG - Grant from owner: ".$user; }
+					$filterfields += array('phpgwowner' => $user);
+				}
+			}
+			//if ($DEBUG) {
+			//	while(list($name,$value) = each($filterfields)) {
+			//		echo "<br>DEBUG - Filter strings: #".$name.",".$value."#";
+			//	}
+			//}
 
 			if (!$sort) { $sort = "ASC";  }
 
