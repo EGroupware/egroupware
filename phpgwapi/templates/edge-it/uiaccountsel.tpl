@@ -77,7 +77,11 @@
 		<td width="20%" rowspan="3">{accountsel_icon}</td>
 		<td align="right" colspan="5">
 			<form method="POST" action="{search_action}">
-				{query_type}
+				 <select name="query_type" >
+						<option value="firstname">{lang_firstname}</option>
+						<option value="lastname">{lang_lastname}</option>
+					</select>
+				<!-- {query_type} -->
 				<input type="text" name="query" value="{prev_query}">
 				<input type="submit" name="search" value="{lang_search}">
 			</form>
