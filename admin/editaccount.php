@@ -19,6 +19,16 @@
   include("../header.inc.php");
   include($phpgw_info["server"]["app_inc"]."/accounts_".$phpgw_info["server"]["account_repository"].".inc.php");
 
+  function is_odd($n)
+  {
+     $ln = substr($n,-1);
+     if ($ln == 1 || $ln == 3 || $ln == 5 || $ln == 7 || $ln == 9) {
+        return True;
+     } else {
+        return False;
+     }
+  }
+
   if (! $account_id) {
      Header("Location: " . $phpgw->link("accounts.php"));
   }
@@ -193,8 +203,8 @@
 
   $i = 0;
   $sorted_apps = $phpgw_info["apps"];
-//  @asort($sorted_apps);
-//  @reset($sorted_apps);
+  @asort($sorted_apps);
+  @reset($sorted_apps);
   while ($permission = each($phpgw_info["apps"])) {
      if ($permission[1]["enabled"]) {
         $perm_display[$i][0] = $permission[0];
@@ -214,6 +224,10 @@
      $perm_html .= "></td>";
      $i++;
 
+     if ($i == count($perm_display) && is_odd(count($perm_display))) {
+        $perm_html .= '<td colspan="2">&nbsp;</td></tr>';
+     }
+
      if (! $perm_display[$i][1]) break;
      $perm_html .= '<td>' . lang($perm_display[$i][1]) . '</td>'
                  . '<td><input type="checkbox" name="new_permissions['
@@ -221,7 +235,7 @@
      if ($new_permissions[$perm_display[$i][0]] || $db_perms[$perm_display[$i][0]]) {
         $perm_html .= " checked";
      }
-     $perm_html .= "></td></tr>";
+     $perm_html .= "></td></tr>\n";
      $i++;
   }
 
