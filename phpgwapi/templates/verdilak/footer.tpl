@@ -1,5 +1,6 @@
 <!-- BEGIN footer -->
    </td>
+   <td background="{img_root}/endbar.gif">&nbsp;</td>
   </tr>
 </table>
 
