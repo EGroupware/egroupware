@@ -349,11 +349,12 @@
 			}
 			++$this->Row;
 
-			if ($this->Query_ID->EOF || !$this->Query_ID->RecordCount())
+			$this->Record = $this->Query_ID->fields;
+
+			if ($this->Query_ID->EOF || !$this->Query_ID->RecordCount() || !is_array($this->Record))
 			{
 				return False;
 			}
-			$this->Record = $this->Query_ID->fields;
 
 			return True;
 		}
