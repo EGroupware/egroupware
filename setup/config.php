@@ -69,17 +69,17 @@
    
    </tr>
    <tr bgcolor="e6e6e6">
-    <td>Enter path for temporey files.</td>
-    <td><input name="newsettings[temp_dir]" value="<?php echo $current_config["temp_dir"]; ?>"></td>
+    <td>Enter path for temporary files.</td>
+    <td><input name="newsettings[temp_dir]" value="<?php echo $current_config["temp_dir"]; ?>" size="40"></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
     <td>Enter path for users and group files.</td>
-    <td><input name="newsettings[files_dir]" value="<?php echo $current_config["files_dir"]; ?>"></td>
+    <td><input name="newsettings[files_dir]" value="<?php echo $current_config["files_dir"]; ?>" size="40"></td>
    </tr>
    
    <tr bgcolor="e6e6e6">
-    <td>Enter the location of phpGroupWares URL.<br>Example: /phpGroupWare</td>
+    <td>Enter the location of phpGroupWare's URL.<br>Example: /phpGroupWare<br>(leave blank if at http://yourserver/)</td>
     <td><input name="newsettings[webserver_url]" value="<?php echo $current_config["webserver_url"]; ?>"></td>
    </tr>
 
@@ -157,7 +157,7 @@
 
    <?php $selected[$current_config["auth_type"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
-    <td>Select which type of authentication you are using.<br>SQL is only support currently</td>
+    <td>Select which type of authentication you are using.</td>
     <td>
      <select name="newsettings[auth_type]">
       <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
@@ -174,12 +174,12 @@
 
    <tr bgcolor="e6e6e6">
     <td>LDAP context:</td>
-    <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>"></td>
+    <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>" size="40"></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
     <td>LDAP root dn:</td>
-    <td><input name="newsettings[ldap_root_dn]" value="<?php echo $current_config["ldap_root_dn"]; ?>"></td>
+    <td><input name="newsettings[ldap_root_dn]" value="<?php echo $current_config["ldap_root_dn"]; ?>" size="40"></td>
    </tr>
 
    <tr bgcolor="e6e6e6">
@@ -206,7 +206,7 @@
    
    <tr bgcolor="e6e6e6">
     <td>Enter some random text for app_session <br>encryption (requires mcrypt)</td>
-    <td><input name="newsettings[encryptkey]" value="<?php echo $current_config["encryptkey"]; ?>"></td>
+    <td><input name="newsettings[encryptkey]" value="<?php echo $current_config["encryptkey"]; ?>" size="40"></td>
    </tr>
    
    <tr bgcolor="FFFFFF">
