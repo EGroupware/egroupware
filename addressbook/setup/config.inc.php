@@ -3,7 +3,7 @@
    </tr>
 
    <tr bgcolor="486591">
-    <td colspan="2"><font color="fefefe">&nbsp;<b>Addressbook/Contact settings (section not yet functional)</b></font></td>
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Addressbook/Contact settings (ldap not yet functional)</b></font></td>
    </tr>
    <tr bgcolor="e6e6e6">
     <td>Contact application:</td>
