@@ -1,15 +1,14 @@
 <?php
-  /**************************************************************************\
-  * phpGroupWare - Setup                                                     *
-  * http://www.phpgroupware.org                                              *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+	/**************************************************************************\
+	* phpGroupWare - Setup                                                     *
+	* http://www.phpgroupware.org                                              *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
+	/* $Id$ */
 
 	/* Include older phpGroupWare update support */
 	include($appdir . 'tables_update_0_9_9.inc.php');
@@ -34,6 +33,13 @@
 
 	$test[] = '0.9.14.000';
 	function phpgwapi_upgrade0_9_14_000()
+	{
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '0.9.14.001';
+	function phpgwapi_upgrade0_9_14_001()
 	{
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.15.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
