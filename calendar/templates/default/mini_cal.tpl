@@ -13,6 +13,18 @@
       color: #999999;
     }
 
+    .minicalhol
+    {
+      color: #000000;
+      background-color: {holiday_color};
+    }
+
+    .minicalgreyhol
+    {
+      color: #999999;
+      background-color: {holiday_color};
+    }
+
   -->
  </style>
 

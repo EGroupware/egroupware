@@ -189,7 +189,7 @@ class calendar_holiday
 		{
 			if($this->holidays[$i]['date'] > $date)
 			{
-				continue;
+				$i = $c_holidays + 1;
 			}
 			elseif($this->holidays[$i]['date'] == $date)
 			{

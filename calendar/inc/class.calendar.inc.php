@@ -656,7 +656,8 @@ class calendar extends calendar_
 			'bgcolor'			=>	$phpgw_info['theme']['bg_color'],
 			'bgcolor1'			=>	$phpgw_info['theme']['bg_color'],
 			'month'				=>	$month,
-			'bgcolor2'			=>	$phpgw_info['theme']['cal_dayview']
+			'bgcolor2'			=>	$phpgw_info['theme']['cal_dayview'],
+			'holiday_color'	=> (substr($phpgw_info['theme']['bg07'],0,1)=='#'?'':'#').$phpgw_info['theme']['bg07']
 		);
 
 		$p->set_var($var);
@@ -701,21 +702,35 @@ class calendar extends calendar_
 			{
 				$str = '';
 				$cal = $this->gmtdate($i + ($j * 24 * 3600));
+				$cal = $this->makegmttime(0,0,0,$cal['month'],$cal['day'],$cal['year']);
 				if($cal['full'] >= $monthstart && $cal['full'] <= $monthend)
 				{
+					$day_image = '';
 					if ($cal['full'] == $this->today['full'])
 					{
-						$p->set_var('day_image',' background="'.$this->image_dir.'/mini_day_block.gif"');
+						$day_image .= ' background="'.$this->image_dir.'/mini_day_block.gif"';
+					}
+//					else
+//					{
+//						$p->set_var('bgcolor2','#FFFFFF');
+//					}
+					
+					$p->set_var('day_image',$day_image);
+
+
+					$holiday_found = $this->holidays->find_date($cal['raw']);
+					if($holiday_found != False)
+					{
+						$class = 'minicalhol';
 					}
 					else
 					{
-						$p->set_var('day_image','');
-						$p->set_var('bgcolor2','#FFFFFF');
+						$class = 'minicalendar';
 					}
-					
+
 					if(!$this->printer_friendly)
 					{
-						$str .= '<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="minicalendar">';
+						$str .= '<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$this->owner).'" class="'.$class.'">';
 					}
 					
 					$str .= $cal['day'];
@@ -736,15 +751,24 @@ class calendar extends calendar_
 				}
 				else
 				{
+					$holiday_found = $this->holidays->find_date($cal['raw']);
 					if($outside_month == True)
 					{
-						$p->set_var('bgcolor2','#FEFEFE');   
-						$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="minicalendargrey">'.$cal['day'].'</a>');
+						if($holiday_found == False)
+						{
+							$class = 'minicalendargrey';
+						}
+						else
+						{
+							$class = 'minicalgreyhol';
+						}
+						$p->set_var('day_image','');
+						$p->set_var('dayname','<a href="'.$phpgw->link('/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="'.$class.'">'.$cal['day'].'</a>');
 					}
 					else
 					{
 						$p->set_var('day_image','');
-						$p->set_var('bgcolor2','#FEFEFE');
+//						$p->set_var('bgcolor2','#FEFEFE');
 						$p->set_var('dayname','');
 					} 
 				}
@@ -982,7 +1006,7 @@ class calendar extends calendar_
 				{
 					while(list(,$value) = each($holiday_found))
 					{
-						$p->set_var('month_filler_text',$this->holidays->get_name($value));
+						$p->set_var('month_filler_text',$this->holidays->get_name($value).'<br>');
 						$p->parse('column_data','month_filler',True);
 					}
 				}
@@ -1368,6 +1392,10 @@ class calendar extends calendar_
 
 		$time = Array();
 
+		$date = $this->localdates($date['raw'] - $this->tz_offset);
+
+//		echo 'Searching for events on : '.$phpgw->common->show_date($date['raw'])."<br>\n";
+
 		$events = $this->get_sorted_by_date($date['raw'],$this->owner);
 
 		if(!$events)
@@ -1418,12 +1446,25 @@ class calendar extends calendar_
 				$this->last_row = $i;
 			}
 		}
+		$holiday_found = $this->holidays->find_date($date['raw']);
+		if($holiday_found == False)
+		{
+			$bgcolor = $phpgw->nextmatchs->alternate_row_color();
+		}
+		else
+		{
+			$bgcolor = $phpgw_info['theme']['bg04'];
+			while(list(,$value) = each($holiday_found))
+			{
+				$time[99] = '<center>'.$this->holidays->get_name($value).'</center>'.$time[99];
+			}
+		}
 
 		if (isset($time[99]) && strlen($time[99]) > 0)
 		{
 			$var = Array(
 				'event'		=>	$time[99],
-				'bgcolor'	=>	$phpgw->nextmatchs->alternate_row_color()
+				'bgcolor'	=>	$bgcolor
 			);
 			$p->set_var($var);
 			$p->parse('monthweek_day','day_row_event',False);
