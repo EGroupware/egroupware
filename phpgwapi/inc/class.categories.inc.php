@@ -315,8 +315,7 @@
 					. $querymethod;
 
 			$this->db2->query($sql . $parent_select,__LINE__,__FILE__);
-			//$total_mains = $this->db2->num_rows();
-			$this->total_records = $this->db2->num_rows();
+			$total = $this->db2->num_rows();
 
 			if ($limit)
 			{
@@ -344,6 +343,7 @@
 				else
 				{*/
 					$this->db->query($sql . $sub_select . $ordermethod,__LINE__,__FILE__);
+					$total += $this->db->num_rows();
 				//}
 
 				$subcats = $this->db2cats();
@@ -368,8 +368,7 @@
 					$num_cats = count($cats);
 				}
 			}
-			//$this->total_records = count($cats);
-			//$this->total_records = $total_mains + $total_subs;
+			$this->total_records = $total;
 			return $cats;
 		}
 
