@@ -34,6 +34,7 @@ authentication / accounts	admin	en	Authentication / Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users
 bi-directional	admin	en	bi-directional
 bi-dir passthrough	admin	en	bi-dir passthrough
+bottom	admin	en	bottom
 change main screen message	admin	en	Change main screen message
 check ip address of all sessions	admin	en	check ip address of all sessions
 country selection	admin	en	Country Selection
@@ -163,6 +164,7 @@ they must be removed before you can continue	admin	en	They must be removed befor
 this application is current	admin	en	This application is current
 this application requires an upgrade	admin	en	This application requires an upgrade
 this category is currently being used by applications as a parent category	admin	en	This category is currently being used by applications as a parent category.
+top	admin	en	top
 total records	admin	en	Total records
 trust level	admin	en	Trust Level
 trust relationship	admin	en	Trust Relationship
