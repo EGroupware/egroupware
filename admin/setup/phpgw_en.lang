@@ -63,6 +63,7 @@ enter the title for your site	admin	en	Enter the title for your site
 enter your default FTP server	admin	en	Enter your default FTP server
 enter your HTTP proxy server	admin	en	Enter your HTTP proxy server
 enter your HTTP proxy server port	admin	en	Enter your HTTP proxy server port
+find and register all application hooks	admin	en	Find and Register all Application Hooks
 force selectbox	admin	en	Force SelectBox
 global categories	admin	en	Global Categories
 group ?	admin	en	group ?

@@ -75,9 +75,9 @@
 				if(@file_exists($f))
 				{
 					include($f);
-					while(list(,$hook) = each($setup_info[$app_name]['hooks']))
+					while(is_array($setup_info[$app_name]['hooks']) && list(,$hook) = @each($setup_info[$app_name]['hooks']))
 					{
-						if(!$hooks->found_hooks[$hook][$appname])
+						if(!@$hooks->found_hooks[$hook][$app_name])
 						{
 							$this->register_hook(
 								Array(
@@ -90,5 +90,7 @@
 				}
 			}
 			Header('Location: '.$GLOBALS['phpgw']->link('/admin/index.php'));
+			$GLOBALS['phpgw']->common->phpgw_exit();
+
 		}
 	}
