@@ -66,19 +66,7 @@
 		$phpgw_setup->show_footer();
 
 		/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-		$tablenames = @$phpgw_setup->db->table_names();
-		while(list($key,$val) = @each($tablenames))
-		{
-			$tables[] = $val['table_name'];
-		}
-		if ($phpgw_setup->isinarray('phpgw_app_sessions',$tables))
-		{
-			$phpgw_setup->db->lock(array('phpgw_app_sessions'));
-			@$phpgw_setup->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'",__LINE__,__FILE__);
-			@$phpgw_setup->db->query("DELETE FROM phpgw_app_sessions WHERE app = 'phpgwapi' and location = 'phpgw_info_cache'",__LINE__,__FILE__);
-			$phpgw_setup->db->unlock();
-		}
-
+		$phpgw_setup->clear_session_cache();
 		exit;
 	}
 

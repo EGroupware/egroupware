@@ -192,6 +192,28 @@
 		}
 
 		/*!
+		@function clear_session_cache
+		@abstract Clear system/user level cache so as to have it rebuilt with the next access
+		@param	None
+		*/
+		function clear_session_cache()
+		{
+			
+			$tablenames = @$this->db->table_names();
+			while(list($key,$val) = @each($tablenames))
+			{
+				$tables[] = $val['table_name'];
+			}
+			if ($this->isinarray('phpgw_app_sessions',$tables))
+			{
+				$this->db->lock(array('phpgw_app_sessions'));
+				@$this->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'",__LINE__,__FILE__);
+				@$this->db->query("DELETE FROM phpgw_app_sessions WHERE app = 'phpgwapi' and location = 'phpgw_info_cache'",__LINE__,__FILE__);
+				$this->db->unlock();
+			}
+		}
+
+		/*!
 		@function register_app
 		@abstract Add an application to the phpgw_applications table
 		@param	$appname	Application 'name' with a matching $setup_info[$appname] array slice
@@ -268,6 +290,7 @@
 					. "'" . $tables . "',"
 					. "'" . $setup_info[$appname]['version'] . "');"
 				);
+				$this->clear_session_cache();
 			}
 		}
 
@@ -435,6 +458,7 @@
 
 			//echo 'DELETING application: ' . $appname;
 			$this->db->query("DELETE FROM $appstbl WHERE app_name='". $appname ."'");
+			$this->clear_session_cache();
 		}
 
 		/*!
