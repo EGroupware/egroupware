@@ -50,9 +50,7 @@
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
-			global $HTTP_RAW_POST_DATA;
-
-			// dispMap is a despatch array of methods
+			// dispMap is a dispatch array of methods
 			// mapped to function names and signatures
 			// if a method
 			// doesn't appear in the map then an unknown
@@ -81,8 +79,6 @@
 
 		function service($r=False)
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			if (!$r)	// do we have a response, or we need to parse the request
 			{
 				$r = $this->parseRequest();
@@ -104,11 +100,11 @@
 			if ($this->log)
 			{
 				$fp = fopen($this->log,'a+');
-				fwrite($fp,"\n\n".date('Y-m-d H:i:s')." authorized=".
-					($this->authed?$GLOBALS['phpgw_info']['user']['account_lid']:'False').
-					", method='$this->last_method'\n");
-				fwrite($fp,"==== GOT ============================\n".$HTTP_RAW_POST_DATA.
-					"\n==== RETURNED =======================\n");
+				fwrite($fp,"\n\n".date('Y-m-d H:i:s') . " authorized="
+					. ($this->authed?$GLOBALS['phpgw_info']['user']['account_lid']:'False')
+					. ", method='$this->last_method'\n");
+				fwrite($fp,"==== GOT ============================\n" . $GLOBALS['HTTP_RAW_POST_DATA']
+					. "\n==== RETURNED =======================\n");
 				fputs($fp,$payload);
 				fclose($fp);
 			}
@@ -256,13 +252,11 @@
 
 		function parseRequest($data='')
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			$r = False;
 
 			if ($data == '')
 			{
-				$data = $HTTP_RAW_POST_DATA;
+				$data = $GLOBALS['HTTP_RAW_POST_DATA'];
 			}
 			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 
@@ -468,17 +462,16 @@
 
 		function echoInput()
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			// a debugging routine: just echos back the input
 			// packet as a string value
 
-			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $HTTP_RAW_POST_DATA,'string'));
+			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '"
+				. $GLOBALS['HTTP_RAW_POST_DATA'],'string'));
 			//echo $r->serialize();
 
 			$fp = fopen('/tmp/xmlrpc_debug.in','w');
 			fputs($fp,$r->serialize);
-			fputs($fp,$HTTP_RAW_POST_DATA);
+			fputs($fp,$GLOBALS['HTTP_RAW_POST_DATA']);
 			fclose($fp);
 		}
 
