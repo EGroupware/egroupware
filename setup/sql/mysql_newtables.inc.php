@@ -68,7 +68,6 @@
     acl_appname       varchar(50),
     acl_location      varchar(255),
     acl_account       int,
-    acl_account_type  char(1),
     acl_rights        int
   )";
   $phpgw_setup->db->query($sql);  
@@ -292,7 +291,7 @@
          );";
   $phpgw_setup->db->query($sql); 
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 //  $phpgw_setup->update_version_table();

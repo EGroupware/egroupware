@@ -957,7 +957,7 @@
      
      $tables = Array('addressbook','calendar_entry','f_forums','phpgw_categories','todo');
      $fields["addressbook"] = Array('ab_access','ab_id');
-     $fields["calendar_entry"] = Array('cal_group','cal_id');
+                                $fields["calendar_entry"] = Array('cal_group','cal_id');
      $fields["f_forums"] = Array('groups','id');
      $fields["phpgw_categories"] = Array('cat_access','cat_id');
      $fields["todo"] = Array('todo_access','todo_id');
@@ -1064,6 +1064,28 @@
      
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre10';
   }
+
+	$test[] = '0.9.10pre10';
+	function upgrade0_9_10pre10()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("create table phpgw_temp as select acl_appname,acl_location,acl_account,"
+                            . "acl_right from phpgw_acl",__LINE__,__FILE__);
+
+		$sql = "CREATE TABLE phpgw_acl (
+			acl_appname       varchar(50),
+			acl_location      varchar(255),
+			acl_account       int,
+			acl_rights        int
+		)";
+		$phpgw_setup->db->query($sql);  
+
+		$phpgw_setup->db->query("insert into phpgw_acl select * from phpgw_temp",__LINE__,__FILE__);
+		$phpgw_setup->db->query("drop table phpgw_temp",__LINE__,__FILE__);
+     
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre11';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

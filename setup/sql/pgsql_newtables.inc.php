@@ -67,7 +67,6 @@
     acl_appname       varchar(50),
     acl_location      varchar(255),
     acl_account       int,
-    acl_account_type  char(1),
     acl_rights        int
   )";
   $phpgw_setup->db->query($sql);  
