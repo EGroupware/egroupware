@@ -57,7 +57,8 @@
 			);
 
 			$this->html = CreateObject('infolog.html');
-			$this->template = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
+			$this->template = CreateObject('phpgwapi.Template',
+													 $phpgw->common->get_tpl_dir('infolog'));
 			$this->categories = CreateObject('phpgwapi.categories');
 			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
 		}
@@ -96,10 +97,6 @@
 									str_replace( '/images','',$phpgw->common->get_image_path()).'/info.css">' );
 		}
 		
-		function loadStyleSheet( ) {
-			list( $style ) = $this->setStyleSheet(); echo $style;
-		}
-	   
 		/*
 		 * $info: info_id or array with one row form info-db
 		 * no Proj.Info if proj_id == p_id / no Addr.Info if addr_id == a_id
@@ -192,11 +189,7 @@
 								  'enddate','owner','datecreated','responsible' );
 			for ( ;$f = $h = current($fields); $f = next($fields)) {
 				$lang = lang(ucfirst( $f ));
-				if ($do_sort_header) {
-					$headers['sort_'.$f] = $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,'&'.$this->menuaction());
-				} else {
-					$headers['lang_'.$f] = $lang;            
-				}
+				$headers['lang_'.$f] = $do_sort_header ? $this->nextmatchs->show_sort_order($sort,'info_'.$f,$order,'/index.php',$lang,'&menuaction=infolog.uiinfolog.get_list') : $lang;            
 			}
 			return $headers;         
 		}
@@ -206,7 +199,6 @@
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
 			global $action,$addr_id,$proj_id,$info_id,$for_include;
 
-			echo "<p>for_include: $for_include, action: $action, addr_id: $addr_id</p>";
 			if (!$for_include) {
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
@@ -235,13 +227,13 @@
 				  $t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
 					break;
 			  case 'proj':
-					$common_hidden_vars .= $html->input_hidden('proj_id',$proj_id);
+					$common_hidden_vars .= $html->input_hidden('id_project',$proj_id);
 					$proj = $this->bo->readProj($proj_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$proj['title']);
 					break;
 			  case 'addr':
-					$common_hidden_vars .= $html->input_hidden('addr_id',$addr_id);
+					$common_hidden_vars .= $html->input_hidden('id_addr',$addr_id);
 					$addr = $this->bo->readAddr($addr_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$this->bo->addr2name($addr));
@@ -251,10 +243,10 @@
 					break;
 			}    
 			$t->set_var($this->setStyleSheet( ));
-			$t->set_var(actionurl,$phpgw->link('/index.php',
-							'menuaction=infolog.uiinfolog.edit&action=new'));
-			$t->set_var('cat_form',$phpgw->link('/index.php',
-							'menuaction=infolog.uiinfolog.get_list'));
+			global $REQUEST_URI;
+			$t->set_var(actionurl,$html->link('/index.php',
+							$this->menuaction('edit')+array( 'action' => 'new')));
+			$t->set_var('cat_form',$html->link('/index.php',$this->menuaction()));
 			$t->set_var('lang_category',lang('Category'));
 			$t->set_var('lang_all',lang('All'));
 			$t->set_var('lang_select',lang('Select'));
@@ -264,7 +256,7 @@
 			// ===========================================
 			// list header variable template-declarations
 			// ===========================================
-			$t->set_var( $this->infoHeaders( 1,$sort,$order ));
+			$t->set_var( $this->infoHeaders( !$for_include,$sort,$order ));
 			$t->set_var(h_lang_sub,lang('Sub'));
 			$t->set_var(h_lang_action,lang('Action'));
 			// -------------- end header declaration -----------------
@@ -331,19 +323,30 @@
 					break;
 			}
 
+			// catergory selection
+			$t->set_block('info_list_t','cat_selection','cat_selectionhandle');
+			if (!$for_include)
+				$t->parse('cat_selectionhandle','cat_selection',True);
+
 			// ===========================================
 			// nextmatch variable template-declarations
 			// ===========================================
-			$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,$total,
-									"menuaction=infolog.uiinfolog.get_list&order=$order&filter=$filter&sort=$sort&query=$query&action=$action&info_id=$info_id&cat_id=$cat_id",
+			if (!$for_include) {
+				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
+									$total,"menuaction=infolog.uiinfolog.get_list&order=$order&filter=$filter&sort=$sort&query=$query&action=$action&info_id=$info_id&cat_id=$cat_id",
 									'95%',$phpgw_info['theme']['th_bg']);
-			$t->set_var('next_matchs',$next_matchs);
-			if ($total > $maxmatchs)
-			$t->set_var('next_matchs_end',$next_matchs);
+				$t->set_var('next_matchs',$next_matchs);
+				if ($total > $maxmatchs)
+					$t->set_var('next_matchs_end',$next_matchs);
+			}
 
 			// ---------- end nextmatch template --------------------
 
-			$db->limit_query($q="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod",$start,__LINE__,__FILE__);
+			$sql="SELECT * FROM phpgw_infolog WHERE $filtermethod $pid $sql_query $ordermethod";
+			if ($for_include)
+				$db->query($sql);
+			else
+				$db->limit_query($sql,$start,__LINE__,__FILE__);
 
 			while ($db->next_record()) {
 				// ========================================
@@ -413,7 +416,7 @@
 			// back2project list href declaration for subproject list
 			// =========================================================
 
-			if ($action) {
+			if ($action && !$for_include) {
 				$t->set_var('lang_back2projects', '<br>'.
 			  		$html->a_href(lang('Back to Projectlist'),'/index.php',
 									  $this->menuaction()+array('filter' => $filter)));
@@ -441,9 +444,6 @@
 			global $dur_days,$eday,$emonth,$eyear;
 			global $type,$from,$addr,$id_addr,$id_project,$subject,$des,$access;
 			global $pri,$status,$confirm,$info_cat,$id_parent,$responsible;
-
-			//$phpgw->common->phpgw_header();
-			// echo parse_navbar();
 
 			$t = &$this->template; $html = &$this->html;
 
@@ -535,8 +535,7 @@
 					));
 			
 					if (!$query_addr && !$query_project) {
-						Header('Location: ' . $html->link('/index.php', $hidden_vars +
-							array( 'cd' => 15 ) + $this->menuaction()));
+						Header('Location: ' . $html->link('/index.php', $hidden_vars + array( 'cd' => 15 ) + $this->menuaction()));
 					}
 				}
 			}
@@ -590,7 +589,7 @@
 			switch ($action) {
 				case 'sp':
 					$info_action = 'Info Log - New Subproject'; break;
-				case 'new':
+				case 'new': case 'addr': case 'proj':
 					$info_action = 'Info Log - New';
 					if ($info_type && isset($this->enums['type'][$info_type]))
 						$this->data['info_type'] = $info_type;
@@ -686,9 +685,6 @@
 			$t->set_var('subprohandle','');
 			$t->pfp('out','info_edit');
 			$t->pfp('edithandle','edit');
-			 
-			// $phpgw->common->phpgw_footer();
-			// echo parse_navbar_end();
 		}
 
 		function delete( ) {
@@ -710,8 +706,7 @@
 			if ($confirm) {
 				$this->bo->delete($info_id);
 
-				Header('Location: ' . $html->link('/index.php',$hidden_vars +
-											 array( 'cd' => 16 )+$this->menuaction()));
+				Header('Location: ' . $html->link('/index.php',$hidden_vars + array( 'cd' => 16 )+$this->menuaction()));
 			} else {
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();

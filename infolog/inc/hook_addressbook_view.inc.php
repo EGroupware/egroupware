@@ -11,6 +11,18 @@
 
 	/* $Id$ */
 
-	echo 'Hello World<br>';
+	global $phpgw_info,$phpgw;
+	$save_app = $phpgw_info['flags']['currentapp']; 
+	$phpgw_info['flags']['currentapp'] = 'infolog'; 
+
+	$phpgw->translation->add_app('infolog');
+
 	global $ab_id;
-	echo lang('Infolog') . ': ' . $ab_id;
+	//echo "<p>hook_addressbook_view(ab_id=$ab_id)</p>";
+
+	global $addr_id,$action,$for_include;
+	$addr_id = $ab_id; $action='addr'; $for_include = True;
+	$infolog = CreateObject('infolog.uiinfolog');
+	$infolog->get_list();
+
+	$phpgw_info['flags']['currentapp'] = $save_app; 
