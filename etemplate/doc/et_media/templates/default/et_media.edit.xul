@@ -33,7 +33,7 @@
       </row>
       <row>
         <description value="Description"/>
-        <textbox ="" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/>
+        <textbox multiline="true" cols="3" rows="100" span="all" id="descr" statustext="we have a fulltext search using that description"/>
       </row>
       <row>
         <description span="all"/>

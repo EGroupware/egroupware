@@ -161,7 +161,7 @@
 					}
 					if (isset($widgetattr2xul['.set']))	// set default-attr for type
 					{
-						$attrs = explode(',',$widgetattr2xul[1]);
+						$attrs = explode(',',$widgetattr2xul['.set']);
 						while (list(,$attr) = each($attrs))
 						{
 							list($attr,$val) = explode('=',$attr);
