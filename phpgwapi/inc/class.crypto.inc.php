@@ -100,6 +100,7 @@
 
 				/* Hack IV to be the correct size */
 				$x = strlen($iv);
+					$this->iv = '';
 				for($i = 0; $i < $ivsize; $i++)
 				{
 					$this->iv .= $iv[$i % $x];
@@ -107,7 +108,7 @@
 
 				/* Hack Key to be the correct size */
 				$x = strlen($key);
-
+					$this->key = '';
 				for($i = 0; $i < $keysize; $i++)
 				{
 					$this->key .= $key[$i % $x];
