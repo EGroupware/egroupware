@@ -90,73 +90,99 @@
 		echo "<p><center>" . $phpgw->common->error_list($errors) . "</center>";
 	}
 
-	echo "<p><b>" . lang("Addressbook preferences") . ":" . "</b><hr><p>";
-?>
-  <form method="POST" action="<?php echo $phpgw->link('/addressbook/preferences.php'); ?>">
-   <table border="0" align="center" cellspacing="1" cellpadding="1">
-    <?php
-	// I need to create a common function to handle displaying multiable columns
-    
-	echo "<tr bgcolor=\"" . $phpgw_info["theme"]["th_bg"] . "\"><td colspan=\"3\">&nbsp;</td></tr>\n";
+	$t = new Template($phpgw->common->get_tpl_dir("addressbook"));
+	$t->set_file(array(
+		"preferences"	=> "preferences.tpl",
+	));
+
+	$t->set_var(action_url,$phpgw->link('/addressbook/preferences.php'));
+
 	$i = 0; $j = 0;
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
 	echo "<tr bgcolor=\"" . $tr_color . "\">\n";
-	while (list($col, $descr) = each($qfields)) {
+
+	while (list($col, $descr) = each($qfields))
+	{
 		// echo "<br>test: $col - $i $j - " . count($abc);
 		$i++; $j++;
 		$showcol = display_name($col);
 		if (!$showcol) { $showcol = $col; }
 		// yank the *'s prior to testing for a valid column description
 		$coltest = ereg_replace("\*","",$showcol);
-		if ($coltest) {
-			echo "\t<td><input type=\"checkbox\" name=\"ab_selected[" . $col . "]\" value=\"True\""
-			. ($phpgw_info["user"]["preferences"]["addressbook"][$col]?" checked":"") . '>' . $showcol
-			. "</option></td>\n";
-		} else {
-			$i--;
-			next;
-		}
-		if ($i == 3) {
-			echo "</tr>\n";
-			$i = 0;
-		}
-		if ($i == 0 && $coltest) {
-			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-			echo "<tr bgcolor=\"" . $tr_color . "\">\n";
-		}
-		if ($j == count($qfields)) {
-			if ($i == 1) {
-				echo "\t<td>&nbsp;</td><td>&nbsp;</td>\n";
+		if ($coltest)
+		{
+			$t->set_var($col,$showcol);
+			if ($phpgw_info["user"]["preferences"]["addressbook"][$col])
+			{
+				$t->set_var($col.'_checked'," checked");
 			}
-			if ($i == 2) {
-				echo "\t<td>&nbsp;</td>\n";
+			else
+			{
+				$t->set_var($col.'_checked','');
 			}
-			echo "</tr>\n";
 		}
 	}
+
+	if ($customfields)
+	{
+		$custom_var = '
+  <tr>
+    <td><font color="#000000" face="">'.lang('Custom').' '.lang('Fields').':</font></td>
+    <td></td>
+    <td></td>
+  </tr>
+';
+		while( list($cf) = each($customfields) )
+		{
+			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+			$custom_var .= "\n" . '<tr bgcolor="' . $tr_color . '">';
+			$custom_var .= '    <td><input type="checkbox" name="ab_selected['
+				. strtolower($cf) . ']"'
+				. ($phpgw_info["user"]["preferences"]["addressbook"][$cf]?" checked":"")
+				. '>' . $cf . '</option></td>' . "\n"
+				. '</tr>' . "\n";
+		}
+		$t->set_var(custom_fields,$custom_var);
+	}
+	else
+	{
+		$t->set_var(custom_fields,'');
+	}
+
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-    ?>
-    <tr bgcolor="<?php echo $tr_color; ?>">
-     <td colspan="2"><?php echo lang("show birthday reminders on main screen"); ?></td>
-     <td><input type="checkbox" name="mainscreen_showbirthdays" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
-    </tr><?php
-	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
-    <tr bgcolor="<?php echo $tr_color; ?>">
-     <td colspan="2"><?php echo lang("Autosave default category"); ?></td>
-     <td><input type="checkbox" name="autosave_category" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) echo " checked"; ?>></td>
-    </tr><?php
-	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
-    <tr bgcolor="<?php echo $tr_color; ?>">
-     <td colspan="2"><?php echo lang("Default Category"); ?></td>
-     <td><? echo cat_option($phpgw_info["user"]["preferences"]["addressbook"]["default_category"]); ?></td>
-    </tr>
-    <tr>
-     <td colspan="3" align="center">
-      <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
-     </td>
-    </tr>
-   </table>
-  </form>
-<?php
+    $t->set_var(tr_color,$tr_color);
+	$t->set_var(lang_showbirthday,lang("show birthday reminders on main screen"));
+
+	if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"])
+	{
+		$t->set_var(show_birthday," checked");
+	}
+	else
+	{
+		$t->set_var(show_birthday,'');
+	}
+
+	$t->set_var(lang_autosave,lang("Autosave default category"));
+	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"])
+	{
+		$t->set_var(autosave," checked");
+	}
+	else
+	{
+		$t->set_var(autosave,"");
+	}
+	$t->set_var(lang_defaultcat,lang("Default Category"));
+    $t->set_var(cat_select,cat_option($phpgw_info["user"]["preferences"]["addressbook"]["default_category"]));
+	$t->set_var(lang_abprefs,lang('Addressbook').' '.lang('Preferences'));
+	$t->set_var(lang_fields,lang('Fields to show in address list'));
+	$t->set_var(lang_personal,lang('Personal'));
+	$t->set_var(lang_business,lang('Business'));
+	$t->set_var(lang_home,lang('Home'));
+	$t->set_var(lang_phones,lang('Extra').' '.lang('Phone Numbers'));
+	$t->set_var(lang_other,lang('Other').' '.lang('Fields'));
+	$t->set_var(lang_otherprefs,lang('Other').' '.lang('Preferences'));
+	$t->set_var(lang_submit,lang("submit"));
+
+	$t->pparse('out','preferences');
 	$phpgw->common->phpgw_footer();
 ?>
