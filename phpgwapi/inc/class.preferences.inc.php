@@ -219,8 +219,8 @@
 			$this->forced = $this->default = $this->user = array();
 			while($this->db->next_record())
 			{
-				// The following ereg is required for PostgreSQL to work
-				$app = ereg_replace(' ','',$this->db->f('preference_app'));
+				// The following replacement is required for PostgreSQL to work
+				$app = str_replace(' ','',$this->db->f('preference_app'));
 				$value = unserialize($this->db->f('preference_value'));
 				$this->unquote($value);
 				if (!is_array($value))
@@ -263,20 +263,21 @@
 					$this->data[$app][$var] = $value;
 				}
 			}
-			// setup the standard substitues and substitues the data in $this->data
+			// setup the standard substitutes and substitutes the data in $this->data
 			//
 			$this->standard_substitutes();
 
-			// This is to supress warnings durring login
+			// This is to supress warnings during login
 			if (is_array($this->data))
 			{
 				reset($this->data);
 			}
-			if (isset($this->debug) && substr($GLOBALS['phpgw_info']['flags']['currentapp'],0,3) != 'log') {
-				echo "user<pre>";    print_r($this->user); echo "</pre>\n";
-				echo "forced<pre>";  print_r($this->forced); echo "</pre>\n";
-				echo "default<pre>"; print_r($this->default); echo "</pre>\n";
-				echo "effectiv<pre>";print_r($this->data); echo "</pre>\n"; 
+			if (isset($this->debug) && substr($GLOBALS['phpgw_info']['flags']['currentapp'],0,3) != 'log')
+			{
+				echo 'user<pre>';     print_r($this->user); echo "</pre>\n";
+				echo 'forced<pre>';   print_r($this->forced); echo "</pre>\n";
+				echo 'default<pre>';  print_r($this->default); echo "</pre>\n";
+				echo 'effectiv<pre>'; print_r($this->data); echo "</pre>\n"; 
 			}
 			return $this->data;
 		}
@@ -441,7 +442,7 @@
 		@discussion Use for sublevels of prefs, such as email app's extra accounts preferences
 		@param $app_name name of app
 		@param $var array keys separated by '/', eg. 'ex_accounts/1'
-		@note the function works on user and data, to be able to save the pref and to have imediate effect
+		@note the function works on user and data, to be able to save the pref and to have immediate effect
 		*/
 		function delete_struct($app_name, $var = '')
 		{
@@ -530,11 +531,14 @@
 
 				foreach($prefs as $app => $value)
 				{
-					if (!is_array($value)) continue;
+					if (!is_array($value))
+					{
+						continue;
+					}
 					$this->quote($value);
 					$value = addslashes(serialize($value));	// this addslashes is for the database
 					$app = $this->db->db_addslashes($app);
-					
+
 					$this->db->query($sql = "INSERT INTO phpgw_preferences"
 						. " (preference_owner,preference_app,preference_value)"
 						. " VALUES ($account_id,'$app','$value')",__LINE__,__FILE__);
