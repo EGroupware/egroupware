@@ -195,7 +195,8 @@
 	$t->set_var("lang_add",lang("Add"));
 	$t->set_var("lang_addvcard",lang("AddVCard"));
 	$t->set_var("lang_import",lang("Import Contacts"));
-	$t->set_var("import_url",$phpgw->link("/addressbook/import.php"));
+	$t->set_var("import_url",$phpgw->link("/addressbook/import.php",
+		"sort=$sort&order=$order&filter=$filter&start=$start&query=$query&cat_id=$cat_id"));
 	$t->set_var("lang_export",lang("Export Contacts"));
 	$t->set_var("export_url",$phpgw->link("/addressbook/export.php"));
 	$t->set_var("start",$start);
