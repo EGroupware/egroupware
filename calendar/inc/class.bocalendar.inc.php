@@ -202,9 +202,9 @@
 					'g_owner'	=> $this->g_owner
 				)
 			);
-			$localtime = $GLOBALS['phpgw']->datetme->users_localtime;
+			$localtime = $GLOBALS['phpgw']->datetime->users_localtime;
 
-			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
+			$date = get_var('date',Array('HTTP_GET_VARS','HTTP_POST_VARS','GLOBAL'));
 			$year = get_var('year',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$month = get_var('month',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
 			$day = get_var('day',Array('HTTP_GET_VARS','HTTP_POST_VARS'));
@@ -223,7 +223,7 @@
 				}
 				elseif($this->year == 0)
 				{
-					$this->year = date('Y',$GLOBALS['phpgw']->datetme->users_localtime);
+					$this->year = date('Y',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
 				if(isset($month) && $month!='')
 				{
@@ -231,7 +231,7 @@
 				}
 				elseif($this->month == 0)
 				{
-					$this->month = date('m',$GLOBALS['phpgw']->datetme->users_localtime);
+					$this->month = date('m',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
 				if(isset($day) && $day!='')
 				{
@@ -239,11 +239,11 @@
 				}
 				elseif($this->day == 0)
 				{
-					$this->day = date('d',$GLOBALS['phpgw']->datetme->users_localtime);
+					$this->day = date('d',$GLOBALS['phpgw']->datetime->users_localtime);
 				}
 			}
 
-			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->gmtnow);
+			$this->today = date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime);
 
 			if($this->debug)
 			{
