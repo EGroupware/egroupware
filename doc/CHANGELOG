@@ -13,6 +13,9 @@
 		- Split out auth class, so that you can auth from anywhere and still store your accounts in sql or ldap.
 		- Added mail auth class, that will authenticate users against their email accounts
 		- Added virtual domain support. (The setup program is not properly working yet)
+		- Fixed a few problems with the categories class
+		- Fixed nextmatchs calling link() wrong causing the next pages to not be displayed.
+		- Removed javascript from the login template
 
 [0.9.3] - Fixed the new user account form not returning the users firstname or last name when an
 	      error is reported.
