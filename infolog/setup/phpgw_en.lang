@@ -75,6 +75,7 @@ default status for a new log entry	infolog	en	default status for a new log entry
 delegation	infolog	en	Delegation
 delete	infolog	en	Delete
 delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	en	Delete all subs (if not subs will be subs of this enties parent or have no parent)
+delete one record by passing its id.	infolog	en	Delete one record by passing its id.
 delete the entry	infolog	en	Delete the entry
 delete this entry	infolog	en	delete this entry
 deletes the selected typ	infolog	en	deletes the selected type
@@ -133,6 +134,7 @@ length<br>rows	infolog	en	Length<br>Rows
 link	infolog	en	Link
 links	infolog	en	Links
 links of this entry	infolog	en	Links of this entry
+list all categories	infolog	en	List all categories
 list no subs/childs	infolog	en	List no Subs/Childs
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
@@ -177,11 +179,13 @@ priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
 re:	infolog	en	Re:
+read one record by passing its id.	infolog	en	Read one record by passing its id.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 responsible	infolog	en	Responsible
 responsible user, priority, ...	infolog	en	responsible user, priority, ...
+returns a list / search for records.	infolog	en	Returns a list / search for records.
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	saves the changes made and leaves
 saves this entry	infolog	en	Saves this entry
@@ -243,6 +247,7 @@ view the parent of this entry and all his subs	infolog	en	View the parent of thi
 view this linked entry in its application	infolog	en	view this linked entry in its application
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
 will-call	infolog	en	will call
+write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - delete	infolog	en	Yes - Delete
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid ending date
