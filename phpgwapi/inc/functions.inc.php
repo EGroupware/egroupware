@@ -796,19 +796,24 @@
 				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['template_set'];
 			}
 		}
-
 		if ($GLOBALS['phpgw_info']['server']['force_theme'] == 'user_choice')
 		{
-			$theme_to_load = (isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme'])?$GLOBALS['phpgw_info']['user']['preferences']['common']['theme']:'default');
+			if (!isset($GLOBALS['phpgw_info']['user']['preferences']['common']['theme']))
+			{
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = 'default';
+			}
 		}
 		else
 		{
-			$theme_to_load = (isset($GLOBALS['phpgw_info']['server']['force_theme'])?$GLOBALS['phpgw_info']['server']['force_theme']:'default');
+			if (isset($GLOBALS['phpgw_info']['server']['force_theme']))
+			{
+				$GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] = $GLOBALS['phpgw_info']['server']['force_theme'];
+			}
 		}
 
-		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme'))
+		if(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme'))
 		{
-			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $theme_to_load . '.theme');
+			include(PHPGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['phpgw_info']['user']['preferences']['common']['theme'] . '.theme');
 		}
 		elseif(@file_exists(PHPGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
 		{
@@ -853,6 +858,7 @@
 				{
 					echo parse_navbar();
 				}
+echo 'navbar_bg = '. $GLOBALS['phpgw_info']['theme']['navbar_bg'].'<br>';
 
 				$GLOBALS['phpgw']->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['phpgw_info']['flags']['currentapp']));
 
