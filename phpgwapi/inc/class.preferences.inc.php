@@ -146,9 +146,10 @@
 		*/
 		function delete($app_name, $var = '')
 		{
-			if ($var == '')
+			if (is_string($var) && $var == '')
 			{
-				$this->data[$app_name] = array();
+//				$this->data[$app_name] = array();
+				unset($this->data[$app_name]);
 			}
 			else
 			{

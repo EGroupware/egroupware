@@ -199,8 +199,58 @@
 <?php
 		echo '<a href="javascript:opennotifywindow()">' . lang('Open notify window') . '</a>';
 	}
-	$GLOBALS['phpgw']->common->hook('home',array('email','calendar','news','addressbook','squirrelmail'));
 
+	/* This initializes the users portal_order preference if it does not exist. */
+	if(!is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+	{
+		$GLOBALS['phpgw']->preferences->delete('portal_order');
+		@reset($GLOBALS['phpgw_info']['apps']);
+		$order = 0;
+		while (list(,$p) = each($GLOBALS['phpgw_info']['apps']))
+		{
+			if($GLOBALS['phpgw_info']['user']['apps'][$p['name']])
+			{
+				$GLOBALS['phpgw']->preferences->add('portal_order',$order++,$p['id']);
+			}
+				
+		}
+		$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();		
+	}
+
+	if(is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+	{
+		$app_check = Array();
+		@ksort($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
+		while(list($order,$app) = each($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+		{
+			if(!isset($app_check[intval($app)]) || !$app_check[intval($app)])
+			{
+				$app_check[intval($app)] = True;
+				$sorted_apps[] = $GLOBALS['phpgw']->applications->id2name(intval($app));
+			}
+		}
+	}
+	else
+	{
+		$sorted_apps = Array(
+			'email',
+			'calendar',
+			'news',
+			'addressbook',
+			'squirrelmail'
+		);
+	}
+	@reset($sorted_apps);
+	$GLOBALS['phpgw']->common->hook('home',$sorted_apps);
+
+	$GLOBALS['phpgw']->preferences->delete('portal_order');
+	@reset($GLOBALS['portal_order']);
+	while(list($app_order,$app_id) = each($GLOBALS['portal_order']))
+	{
+		$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
+	}
+	$GLOBALS['phpgw']->preferences->save_repository();
+	
 	//$phpgw->common->debug_phpgw_info();
 	//$phpgw->common->debug_list_core_functions();
 	$GLOBALS['phpgw']->common->phpgw_footer();

@@ -35,12 +35,44 @@
 
 		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['phpgw_info']['user']['account_id']);
 
+		$title = '<center><font color="#FFFFFF">'.lang('Birthdays').'</font></center>';
+
+		$portalbox = CreateObject('phpgwapi.listbox',
+			Array(
+				'title'	=> $title,
+				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
+				'width'	=> '100%',
+				'outerborderwidth'	=> '0',
+				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
+			)
+		);
+		$app_id = $GLOBALS['phpgw']->applications->name2id('addressbook');
+		$GLOBALS['portal_order'][] = $app_id;
+		$var = Array(
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id)
+		);
+
+
+		while(list($key,$value) = each($var))
+		{
+			$portalbox->set_controls($key,$value);
+		}
+
+		$portalbox->data = Array();
+
 		while(list($key,$val) = @each($bdays))
 		{
-			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
-				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
-			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . '</td></tr>' . "\n";
+			$portalbox->data[] = array('text'=>lang("Today is x's birthday!", $val['n_given'] . ' ' . $val['n_family']),'link'=>$GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']));
+//			$tmp = '<a href="'
+//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+//				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
+//			echo '<tr><td align="left">' . lang("Today is x's birthday!", $tmp) . '</td></tr>' . "\n";
 		}
 
 		$tomorrow = $GLOBALS['phpgw']->common->show_date($now + 86400,'n/d/');
@@ -49,11 +81,17 @@
 
 		while(list($key,$val) = @each($bdays))
 		{
-			$tmp = '<a href="'
-				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
-				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
-			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . '</td></tr>' . "\n";
+			$portalbox->data[] = array('text'=>lang("Tommorow is x's birthday!",$val['n_given'].' '.$val['n_family']),'link'=>$GLOBALS['phpgw']->link('/addressbook/view.php','ab_id='.$val['id']));
+//			$tmp = '<a href="'
+//				. $GLOBALS['phpgw']->link('/addressbook/view.php','ab_id=' .  $val['id']) . '">'
+//				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
+//			echo '<tr><td align="left">' . lang("Tomorrow is x's birthday.", $tmp) . '</td></tr>' . "\n";
 		}
+//		if(count($portalbox->data))
+//		{
+			echo $portalbox->draw();
+//		}
+		unset($portalbox);
 		echo "\n<!-- Birthday info -->\n";
 	}
 ?>

@@ -78,7 +78,8 @@
 						'title'   => $GLOBALS['phpgw_info']['apps'][$app[0]]['title'],
 						'name'    => $app[0],
 						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[0]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[0]]['id']
 					);
 				} 
 			}
@@ -113,7 +114,8 @@
 						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'    => $app[1],
 						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 					);
 				}
 			}
@@ -123,7 +125,8 @@
 					'title'   => $GLOBALS['phpgw_info']['apps'][$apps]['title'],
 					'name'    => $apps,
 					'enabled' => True,
-					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status']
+					'status'  => $GLOBALS['phpgw_info']['apps'][$apps]['status'],
+					'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 				);
 			}
 			reset($this->data);
@@ -215,7 +218,8 @@
 						'title'   => $GLOBALS['phpgw_info']['apps'][$app[1]]['title'],
 						'name'    => $app[1],
 						'enabled' => True,
-						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status']
+						'status'  => $GLOBALS['phpgw_info']['apps'][$app[1]]['status'],
+						'id'      => $GLOBALS['phpgw_info']['apps'][$app[1]]['id']
 					);
 				}
 			}
@@ -238,14 +242,13 @@
 			{
 				while ($this->db->next_record())
 				{
-					$name = $this->db->f('app_name');
-					$title  = $this->db->f('app_title');
-					$status = $this->db->f('app_enabled');
-					$GLOBALS['phpgw_info']['apps'][$name] = Array(
-						'title'   => $title,
-						'name'    => $name,
+					$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')] = Array(
+						'title'   => $this->db->f('app_title'),
+						'name'    => $this->db->f('app_name'),
 						'enabled' => True,
-						'status'  => $status
+						'status'  => $this->db->f('app_enabled'),
+						'id'      => intval($this->db->f('app_id')),
+						'order'   => intval($this->db->f('app_order'))
 					);
 				}
 			}
@@ -268,6 +271,32 @@
 			else
 			{
 				return False;
+			}
+		}
+		function id2name($id)
+		{
+			@reset($GLOBALS['phpgw_info']['apps']);
+			while (list($appname,$app) = each($GLOBALS['phpgw_info']['apps']))
+			{
+				if(intval($app['id']) == intval($id))
+				{
+					@reset($GLOBALS['phpgw_info']['apps']);
+					return $appname;
+				}
+			}
+			@reset($GLOBALS['phpgw_info']['apps']);
+			return '';
+		}
+		
+		function name2id($appname)
+		{
+			if(is_array($GLOBALS['phpgw_info']['apps'][$appname]))
+			{
+				return $GLOBALS['phpgw_info']['apps'][$appname]['id'];
+			}
+			else
+			{
+				return 0;
 			}
 		}
 	}

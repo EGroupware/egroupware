@@ -18,15 +18,14 @@
 	if($d1 == 'htt' || $d1 == 'ftp' )
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
-		$phpgw->common->phpgw_exit();
+		$GLOBALS['phpgw']->common->phpgw_exit();
 	}
 	unset($d1);
 
 	if ($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
-		global $date;
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
-		$date = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
+		$GLOBALS['date'] = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
 		$cal = CreateObject('calendar.uicalendar');
 		$extra_data = "\n".'<td>'."\n".'<table border="0" cols="3"><tr><td align="center" width="35%" valign="top">'
 			. $cal->mini_calendar(
@@ -55,19 +54,20 @@
 				'primary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'secondary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
 				'tertiary'	=> $GLOBALS['phpgw_info']['theme']['navbar_bg'],
-				'width'	=> '90%',
+				'width'	=> '100%',
 				'outerborderwidth'	=> '0',
 				'header_background_image'	=> $GLOBALS['phpgw']->common->image('phpgwapi/templates/phpgw_website','bg_filler.gif')
 			)
 		);
 
 		$app_id = $GLOBALS['phpgw']->applications->name2id('calendar');
+		$GLOBALS['portal_order'][] = $app_id;
 		$var = Array(
-			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
-			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
-			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
-			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq']),
-			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id, 'order' => $GLOBALS['order_seq'])
+			'up'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'down'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'close'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'question'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id),
+			'edit'	=> Array('url'	=> '/set_box.php', 'app'	=> $app_id)
 		);
 
 		while(list($key,$value) = each($var))

@@ -42,6 +42,8 @@
 		var $close;
 		var $question;
 		var $edit;
+		
+		var $data = Array();
 
 		// Textual variables
 		var $title;
@@ -129,8 +131,12 @@
 			}
 		}
 
-		function set_internal($data)
+		function set_internal($data='')
 		{
+			if($data=='' && !count($this->data))
+			{
+				$data = '<td>&nbsp;</td>';
+			}
 			$this->p->set_var('output',$data);
 			$this->p->parse('row','portal_row',true);
 		}
@@ -157,7 +163,7 @@
 						{
 							$image_width = 30;
 						}
-						$this->p->set_var('link_field_data','<a href="'.$this->$param.'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button.gif').'" border="0" width="'.$image_width.'" height="15" alt="'.$param.'"></a>');
+						$this->p->set_var('link_field_data','<a href="'.$this->$param.'"><img src="'.$GLOBALS['phpgw']->common->image('phpgwapi',$param.'.button.gif').'" border="0" width="'.$image_width.'" height="15" alt="'.lang($param).'"></a>');
 						$this->p->parse('control_link','link_field',True);
 					}
 				}

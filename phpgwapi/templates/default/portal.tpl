@@ -1,11 +1,11 @@
 <!-- BEGIN portal_box -->
 <p>
 <table border="{outer_border}" cellpadding="0" cellspacing="0" width="{outer_width}" bordercolor="{outer_bordercolor}" bgcolor="{outer_bgcolor}">
- <tr nowrap>
+ <tr nowrap align="center">
   <td align="center" background="{header_background_image}">{title}</td>{portal_controls}
  </tr>
  <tr>
-  <td>
+  <td colspan="2">
    <table border="1" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="{inner_bgcolor}">
     {row}
    </table>

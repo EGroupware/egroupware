@@ -988,6 +988,32 @@
 			}
 			return $e_password;
 		}
+
+		/*!
+		@function find_portal_order
+		@abstract find the current position of the app is the users portal_order preference
+		@param $app application id to find current position - required
+		@discussion No discussion
+		*/
+		function find_portal_order($app)
+		{
+			if(!is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+			{
+				return -1;
+			}
+			@reset($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
+			while(list($seq,$appid) = each($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+			{
+				if($appid == $app)
+				{
+					@reset($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
+					return $seq;
+				}
+			}
+			@reset($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
+			return -1;
+		}
+
 		/*!
 		@function hook
 		@abstract hooking function which allows applications to 'hook' into each other
@@ -1003,8 +1029,6 @@
 				$order[] = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			}
 
-			$GLOBALS['order_seq'] = -1;
-
 			/* First include the ordered apps hook file */
 			reset ($order);
 			while (list(,$appname) = each($order))
@@ -1013,7 +1037,6 @@
 				if (file_exists($f) &&
 					( $GLOBALS['phpgw_info']['user']['apps'][$appname] || (($no_permission_check || $appname == 'preferences') && $appname)) )
 				{
-					$GLOBALS['order_seq']++;
 					include($f);
 				}
 
@@ -1033,7 +1056,6 @@
 						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 						if (file_exists($f))
 						{
-							$GLOBALS['order_seq']++;
 							include($f);
 						}
 					}		// if
@@ -1050,7 +1072,6 @@
 						$f = PHPGW_SERVER_ROOT . '/' . $appname . '/inc/hook_' . $location . '.inc.php';
 						if (file_exists($f))
 						{
-							$GLOBALS['order_seq']++;
 							include($f);
 						}
 					}		// if
