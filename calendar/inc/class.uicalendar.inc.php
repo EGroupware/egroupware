@@ -206,7 +206,7 @@
 			for($i=0;$i<7;$i++)
 			{
 				$var = Array(
-					'dayname'	=> '<b>' . substr(lang($this->datetime->days[$i]),0,2) . '</b>',
+					'dayname'	=> '<b>' . substr(lang($this->datetime->days[$i]['name']),0,2) . '</b>',
 					'day_image'	=> ''
 				);
 				$this->output_template_array($p,'daynames','mini_day',$var);
@@ -373,12 +373,6 @@
 
 		function week()
 		{
-			if (!$this->bo->printer_friendly)
-			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				$GLOBALS['phpgw']->common->phpgw_header();
-			}
 			echo $this->printer_friendly($this->get_week());
 		}
 
@@ -546,16 +540,6 @@
 
 		function year()
 		{
-			if(!$this->bo->printer_friendly)
-			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				$GLOBALS['phpgw']->common->phpgw_header();
-			}
-			else
-			{
-				$GLOBALS['phpgw_info']['flags']['nofooter'] = True;
-			}
 			echo $this->printer_friendly($this->get_year());
 		}
 
@@ -1156,9 +1140,6 @@
 			
 			if (!$this->bo->printer_friendly)
 			{
-				unset($GLOBALS['phpgw_info']['flags']['noheader']);
-				unset($GLOBALS['phpgw_info']['flags']['nonavbar']);
-				$GLOBALS['phpgw']->common->phpgw_header();
 				$printer = '';
 				$param = '&date='.sprintf("%04d%02d%02d",$this->bo->year,$this->bo->month,$this->bo->day).'&friendly=1';
 				$print = '<a href="'.$this->page('day'.$param)."\" TARGET=\"cal_printer_friendly\" onMouseOver=\"window.status = '".lang('Generate printer-friendly version')."'\">[".lang('Printer Friendly').']</a>';
@@ -1963,11 +1944,11 @@
 				. '  A.bminicalhol { background: '.$this->holiday_color.'; color: #336699; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
 				. '  A.minicalgreyhol { background: '.$this->holiday_color.'; color: #999999; font: xx-small '.$this->theme['font'].' }'."\n"
 				. '  A.bminicalgreyhol { background: '.$this->holiday_color.'; color: #999999; font: italic bold xx-small '.$this->theme['font'].' }'."\n"
-				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
-				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
-				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle; }'."\n"
+				. '  .event-on { background: '.$this->theme['row_on'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
+				. '  .event-off { background: '.$this->theme['row_off'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
+				. '  .event-holiday { background: '.$this->theme['bg04'].'; color: '.$this->theme['bg_text'].'; font: 100 80%/110% '.$this->theme['font'].'; vertical-align: middle }'."\n"
 				. '  .time { background: '.$this->theme['navbar_bg'].'; color: '.$this->theme['bg_text'].'; font: 65%/100% '.$this->theme['font'].'; width: '.$time_width.'%; border: 1px '.$this->theme['navbar_text'].'; vertical-align: middle; }'."\n"
-				. '  .tablecell { width: 80px; height: 80px }'."\n";
+				. '  .tablecell { width: 80px; height: 80px }';
 		}
 
 		function no_edit()
@@ -2156,7 +2137,7 @@
 			$overlap = '';
 			for($i=0;$i<count($overlapping_events);$i++)
 			{
-				$overlapped_event = $this->bo->read_entry($overlapping_events[$i])
+				$overlapped_event = $this->bo->read_entry($overlapping_events[$i]);
 				$overlap .= '<li> ['.$GLOBALS['phpgw']->common->grab_owner_name($overlapped_event['owner']).'] '.$this->link_to_entry($overlapped_event,$month,$mday,$year);
 			}
 
@@ -2280,26 +2261,48 @@
 				);
 			}
 			$p->set_var($var);
-		
+
+			$col_width = 14;
 			$p->set_var('col_width','14');
 			if($display_name == True)
 			{
 				$p->set_var('col_title',lang('name'));
 				$p->parse('column_header','column_title',True);
-				$p->set_var('col_width','12');
+				$col_width = 12;
 			}
+
+			if($this->datetime->days[$i]['weekday'])
+			{
+				switch($col_width)
+				{
+					case 12:
+						$col_width = 16;
+						break;
+					case 14:
+						$col_width = 20;
+						break;
+				}
+			}
+			
+			$p->set_var('col_width',$col_width);
 
 			for($i=0;$i<7;$i++)
 			{
-				$p->set_var('col_title',lang($this->datetime->days[$i]));
-				$p->parse('column_header','column_title',True);
+				if($this->bo->prefs['calendar']['weekdays_only'] && $this->datetime->days[$i]['weekday'])
+				{
+					$p->set_var('col_title',lang($this->datetime->days[$i]['name']));
+					$p->parse('column_header','column_title',True);
+				}
 			}
 			return $p->fp('out','monthly_header');
 		}
 
 		function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0)
 		{
-			if($owner == 0) { $owner = $GLOBALS['phpgw_info']['user']['account_id']; }
+			if($owner == 0)
+			{
+				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
+			}
 
 			$temp_owner = $this->bo->owner;
 			$this->bo->owner = $owner;
@@ -2336,6 +2339,11 @@
 				$year = intval(substr($date,0,4));
 				$month = intval(substr($date,4,2));
 				$day = intval(substr($date,6,2));
+				$dow = $this->datetime->day_of_week($year,$month,$day);
+				if($this->bo->prefs['calendar']['weekdays_only'] && ($dow == 0 || $dow == 6))
+				{
+					continue;
+				}
 				$var = Array(
 					'column_data'	=> '',
 					'extra'		=> ''
@@ -2514,6 +2522,10 @@
 				$counter = 1;
 				$owners_array[0] = $owners;
 				$cols = 7;
+			}
+			if($this->bo->prefs['calendar']['weekdays_only'])
+			{
+				$cols -= 2;
 			}
 			$var = Array(
 			   'cols'         => $cols,

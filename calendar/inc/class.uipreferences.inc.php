@@ -144,15 +144,19 @@
 			}
 			$this->display_item(lang('Display interval in Day View'),'<select name="prefs[interval]">'."\n".$str.'</select>'."\n");
 
-			$this->display_item(lang('Send/receive updates via email'),'<input type="checkbox" name="prefs[send_updates]" value="True"'.(@$this->bo->prefs['calendar']['send_updates']?' checked':'').'>'."\n");
+			$checkboxes = Array(
+				'send_updates'	=> lang('Send/receive updates via email'),
+				'weekdays_only'	=> lang('Display week days only in Month/Week View'),
+				'display_status'	=> lang('Display status of events'),
+				'default_private'	=> lang('When creating new events default set to private'),
+				'display_minicals'	=> lang('Display mini calendars when printing'),
+				'print_black_white'	=> lang('Print calendars in black & white')
+			);
 
-			$this->display_item(lang('Display status of events'),'<input type="checkbox" name="prefs[display_status]" value="True"'.(@$this->bo->prefs['calendar']['display_status']?' checked':'').'>'."\n");
-
-			$this->display_item(lang('When creating new events default set to private'),'<input type="checkbox" name="prefs[default_private]" value="True"'.(@$this->bo->prefs['calendar']['default_private']?' checked':'').'>'."\n");
-
-			$this->display_item(lang('Display mini calendars when printing'),'<input type="checkbox" name="prefs[display_minicals]" value="True"'.(@$this->bo->prefs['calendar']['display_minicals']?' checked':'').'>'."\n");
-
-			$this->display_item(lang('Print calendars in black & white'),'<input type="checkbox" name="prefs[print_black_white]" value="True"'.(@$this->bo->prefs['calendar']['print_black_white']?' checked':'').'>'."\n");
+			while(list($pref_var,$desc) = each($checkboxes))
+			{
+				$this->display_item($desc,'<input type="checkbox" name="prefs['.$pref_var.']" value="True"'.(@$this->bo->prefs['calendar'][$pref_var]?' checked':'').'>'."\n");
+			}
 
 			$this->template->pparse('out','pref');
 		}

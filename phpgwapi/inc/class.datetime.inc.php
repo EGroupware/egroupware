@@ -120,13 +120,34 @@
 				// Saturday is for arabic support
 				case 'Saturday':
 					$this->days = Array(
-						0 => 'Sat',
-						1 => 'Sun',
-						2 => 'Mon',
-						3 => 'Tue',
-						4 => 'Wed',
-						5 => 'Thu',
-						6 => 'Fri'
+						0 => Array(
+							'name'	=> 'Sat',
+							'weekday'	=> 0
+						),
+						1 => Array(
+							'name'	=> 'Sun',
+							'weekday'	=> 0
+						),
+						2 => Array(
+							'name'	=> 'Mon',
+							'weekday'	=> 1
+						),
+						3 => Array(
+							'name'	=> 'Tue',
+							'weekday'	=> 1
+						),
+						4 => Array(
+							'name'	=> 'Wed',
+							'weekday'	=> 1
+						),
+						5 => Array(
+							'name'	=> 'Thu',
+							'weekday'	=> 1
+						),
+						6 => Array(
+							'name'	=> 'Fri',
+							'weekday'	=> 1
+						)
 					);
 					switch($weekday)
 					{
@@ -143,13 +164,34 @@
 					break;
 				case 'Monday':
 					$this->days = Array(
-						0 => 'Mon',
-						1 => 'Tue',
-						2 => 'Wed',
-						3 => 'Thu',
-						4 => 'Fri',
-						5 => 'Sat',
-						6 => 'Sun'
+						0 => Array(
+							'name'	=> 'Mon',
+							'weekday'	=> 1
+						),
+						1 => Array(
+							'name'	=> 'Tue',
+							'weekday'	=> 1
+						),
+						2 => Array(
+							'name'	=> 'Wed',
+							'weekday'	=> 1
+						),
+						3 => Array(
+							'name'	=> 'Thu',
+							'weekday'	=> 1
+						),
+						4 => Array(
+							'name'	=> 'Fri',
+							'weekday'	=> 1
+						),
+						5 => Array(
+							'name'	=> 'Sat',
+							'weekday'	=> 0
+						),
+						6 => Array(
+							'name'	=> 'Sun',
+							'weekday'	=> 0
+						)
 					);
 					switch($weekday)
 					{
@@ -167,13 +209,34 @@
 				case 'Sunday':
 				default:
 					$this->days = Array(
-						0 => 'Sun',
-						1 => 'Mon',
-						2 => 'Tue',
-						3 => 'Wed',
-						4 => 'Thu',
-						5 => 'Fri',
-						6 => 'Sat'
+						0 => Array(
+							'name'	=> 'Sun',
+							'weekday'	=> 0
+						),
+						1 => Array(
+							'name'	=> 'Mon',
+							'weekday'	=> 1
+						),
+						2 => Array(
+							'name'	=> 'Tue',
+							'weekday'	=> 1
+						),
+						3 => Array(
+							'name'	=> 'Wed',
+							'weekday'	=> 1
+						),
+						4 => Array(
+							'name'	=> 'Thu',
+							'weekday'	=> 1
+						),
+						5 => Array(
+							'name'	=> 'Fri',
+							'weekday'	=> 1
+						),
+						6 => Array(
+							'name'	=> 'Sat',
+							'weekday'	=> 0
+						)
 					);
 					$sday = mktime(2,0,0,$month,$day - $weekday,$year);
 					break;
