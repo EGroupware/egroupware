@@ -394,43 +394,51 @@
 						break;
 				}
 
-				$parts = $l_participants;
-				$minparts = min($l_participants);
-				$part = Array();
-				for($i=0;$i<count($parts);$i++)
+				if($l_participants)
 				{
-					$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
-					if($acct_type == 'u')
+					$parts = $l_participants;
+					$minparts = min($l_participants);
+					$part = Array();
+					for($i=0;$i<count($parts);$i++)
 					{
-						$part[$parts[$i]] = 1;
+						$acct_type = $GLOBALS['phpgw']->accounts->get_type(intval($parts[$i]));
+						if($acct_type == 'u')
+						{
+							$part[$parts[$i]] = 1;
+						}
+						elseif($acct_type == 'g')
+						{
+							/* This pulls ALL users of a group and makes them as participants to the event */
+							/* I would like to turn this back into a group thing. */
+							$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
+							$members = $acct->members(intval($parts[$i]));
+							unset($acct);
+							if($members == False)
+							{
+								continue;
+							}
+							while($member = each($members))
+							{
+								$part[$member[1]['account_id']] = 1;
+							}
+						}
 					}
-					elseif($acct_type == 'g')
+					else
 					{
-						/* This pulls ALL users of a group and makes them as participants to the event */
-						/* I would like to turn this back into a group thing. */
-						$acct = CreateObject('phpgwapi.accounts',intval($parts[$i]));
-						$members = $acct->members(intval($parts[$i]));
-						unset($acct);
-						if($members == False)
-						{
-							continue;
-						}
-						while($member = each($members))
-						{
-							$part[$member[1]['account_id']] = 1;
-						}
+						$part = False;
 					}
 				}
 
-				@reset($part);
-				while(list($key,$value) = each($part))
+				if($part)
 				{
-					$this->so->add_attribute('participants','U',intval($key));
+					@reset($part);
+					while(list($key,$value) = each($part))
+					{
+						$this->so->add_attribute('participants','U',intval($key));
+					}
 				}
 
-//				reset($participants);
 				$event = $this->get_cached_event();
-
 				if(!@$event['participants'][$l_cal['owner']])
 				{
 					$this->so->add_attribute('owner',$minparts);
