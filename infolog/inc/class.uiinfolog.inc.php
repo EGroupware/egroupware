@@ -128,15 +128,30 @@
 
 		function save_sessiondata($values)
 		{
-			$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
+			$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
+			//echo "<p>$for: uiinfolog::save_sessiondata(".print_r($values,True).") called_by='$this->called_by'</p>\n";
+			$GLOBALS['phpgw']->session->appsession($for.'session_data','infolog',array(
 				'search' => $values['search'],
 				'start'  => $values['start'],
 				'filter' => $values['filter'],
 				'cat_id' => $values['cat_id'],
 				'order'  => $values['order'],
 				'sort'   => $values['sort'],
-				'col_filter' => $values['col_filter']
+				'col_filter' => $values['col_filter'],
+				'session_for' => $for
 			));
+		}
+
+		function read_sessiondata()
+		{
+			$values = $GLOBALS['phpgw']->session->appsession(@$this->called_by.'session_data','infolog');
+			if (!@$values['session_for'] && $this->called_by)
+			{
+				$values['session_for'] = $this->called_by;
+				$this->save_sessiondata($values);
+			}
+			//echo "<p>$this->called_by: uiinfolog::read_sessiondata() = ".print_r($values,True)."</p>\n";
+			return $values;
 		}
 
 		function get_rows($query,&$rows,&$readonlys)
@@ -170,7 +185,7 @@
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]') values=\n"; _debug_array($values);
 			if (!is_array($values))
 			{
-				$values = array('nm' => $GLOBALS['phpgw']->session->appsession('session_data','infolog'));
+				$values = array('nm' => $this->read_sessiondata());
 				if (isset($_GET['filter']))
 				{
 					$values['nm']['filter'] = $_GET['filter'];	// infolog/index.php sets defaultFilter that way
@@ -180,10 +195,6 @@
 					$values['nm']['order'] = 'info_datemodified';
 					$values['nm']['sort'] = 'DESC';
 				}
-			}
-			else
-			{
-				$this->save_sessiondata($values['nm']);
 			}
 			if ($action == '')
 			{
@@ -228,6 +239,10 @@
 							break;
 					}
 				}
+			}
+			else
+			{
+				$this->save_sessiondata($values['nm']);
 			}
 			switch ($action)
 			{
@@ -473,7 +488,7 @@
 					case 'calendar':
 					default:	// to allow other apps to participate
 						$content['info_link_id'] = $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
-						$content['blur_title']   = $this->link->title($action,$action_id);
+//						$content['blur_title']   = $this->link->title($action,$action_id);
 
 					case '':
 						if ($info_id)
@@ -494,6 +509,10 @@
 				{
 					$content['info_type'] = 'note';
 				}
+			}
+			if ($action && $action != 'new' && $action != 'sp')
+			{
+				$content['blur_title']   = $this->link->title($action,$action_id);
 			}
 			$readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,PHPGW_ACL_DELETE);
 
@@ -698,8 +717,10 @@
 			{
 				return False;
 			}
-			$save_app = $GLOBALS['phpgw_info']['flags']['currentapp']; 
-			$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog'; 
+			$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
+
+			$save_app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$GLOBALS['phpgw_info']['flags']['currentapp'] = 'infolog';
 
 			$GLOBALS['phpgw']->translation->add_app('infolog');
 
