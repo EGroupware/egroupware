@@ -247,7 +247,8 @@
 			$returndata = parseobject($data[1][0], $fn);
 			if ($startstop[$key] == 'some_lame_string_that_wont_be_used_by_a_function')
 			{
-				$class['file '.$fn][0]['file'] = $fn;
+				$class['file '.$fn][0]['file'][] = $fn;
+				$class['file '.$fn][0]['file'] = array_unique($class['file '.$fn][0]['file']);
 				$class['file '.$fn][$returndata['name']] = $returndata['value'];
 			}
 			else
@@ -257,7 +258,8 @@
 					$returndoc = parsesimpleobject($matches_starts[$startstop[$key]]);
 					if ($returndoc != False)
 					{
-						$returndoc['value']['file'] = $fn;
+						$returndoc['value']['file'][] = $fn;
+						$returndoc['value']['file'] = array_unique($returndoc['value']['file']);
 					}
 					$class[$startstop[$key]][0] = $returndoc['value'];
 				}
