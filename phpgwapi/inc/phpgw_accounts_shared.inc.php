@@ -225,8 +225,6 @@
 	$db2->next_record();
 	$pref_info = $db2->f("preference_value");
 	$this->preference = unserialize($pref_info);
-#	if ($this->preference["common"]["lang"] == "auto")
-#		$this->preference["common"]["lang"] = $phpgw->common->getPreferredLanguage();
       }
     }
 

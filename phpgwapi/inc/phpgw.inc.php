@@ -367,7 +367,8 @@
          $preferences_update = True;
       }
       if (!isset($phpgw_info["user"]["preferences"]["common"]["lang"]) || !$phpgw_info["user"]["preferences"]["common"]["lang"]) {
-         $phpgw->preferences->change("common","lang","en");
+         #$phpgw->preferences->change("common","lang","en");
+	 $phpgw->preferences->change("common","lang",$phpgw->common->getPreferredLanguage());
          $preferences_update = True;
       }
       if ($preferences_update) {
