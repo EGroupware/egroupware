@@ -43,18 +43,22 @@
 	$setup_info['addressbook']['tables'][] = 'phpgw_addressbook_servers';
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['addressbook']['hooks'][] = 'about';
-	$setup_info['addressbook']['hooks'][] = 'admin';
-	$setup_info['addressbook']['hooks'][] = 'add_def_pref';
-	$setup_info['addressbook']['hooks'][] = 'config_validate';
-	$setup_info['addressbook']['hooks'][] = 'home';
-	$setup_info['addressbook']['hooks'][] = 'manual';
-	$setup_info['addressbook']['hooks'][] = 'deleteaccount';
-	$setup_info['addressbook']['hooks'][] = 'notifywindow';
-	$setup_info['addressbook']['hooks'][] = 'preferences';
+	$setup_info['addressbook']['hooks'] = array
+	(
+		'admin',
+		'add_def_pref',
+		'config_validate',
+		'home',
+		'manual',
+		'deleteaccount',
+		'notifywindow',
+		'preferences',
+		'help'
+	);
 
 	/* Dependencies for this app to work */
-	$setup_info['addressbook']['depends'][] = array(
+	$setup_info['addressbook']['depends'][] = array
+	(
 		'appname'  => 'phpgwapi',
 		'versions' => Array('0.9.15', '0.9.16')
 	);

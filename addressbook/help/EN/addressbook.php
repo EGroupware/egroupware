@@ -11,9 +11,12 @@
 
 	/* $Id$ */
 
-	$phpgw_flags = Array(
-		'currentapp'	=> 'manual'
+	$phpgw_flags = Array
+	(
+		'headonly'		=> True,
+		'currentapp'	=> 'addressbook'
 	);
+
 	$phpgw_info['flags'] = $phpgw_flags;
 	include('../../../header.inc.php');
 	$font = $phpgw_info['theme']['font'];

@@ -555,16 +555,16 @@
 					if($yours)
 					{
 						$filter_obj = array(
-							array('none',lang('Show all')),
-							array('yours',lang('Only yours')),
-							array('private',lang('private'))
+							array('none',lang('show all')),
+							array('yours',lang('only yours')),
+							array('private',lang('only private'))
 						);
 					}
 					else
 					{
 						$filter_obj = array(
-							array('none',lang('Show all')),
-							array('private',lang('private'))
+							array('none',lang('show all')),
+							array('private',lang('only private'))
 						);
 					}
 					for($index=0; $index<$indexlimit; $index++)
@@ -625,7 +625,7 @@
 				array
 				(
 					'key'	=> 'private',
-					'lang'	=> lang('private')
+					'lang'	=> lang('only private')
 				)
 			);
 
