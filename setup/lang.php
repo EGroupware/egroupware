@@ -88,6 +88,7 @@
 		$setup_tpl->set_var('blurb_addonlynew',$blurb_addonlynew);
 		$setup_tpl->set_var('blurb_addmissing',$blurb_addmissing);
 		$setup_tpl->set_var('blurb_dumpold',$blurb_dumpold);
+		$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
 		$setup_tpl->parse('V_choose_method','B_choose_method');
 	}
 	else
@@ -96,19 +97,16 @@
 	}
 
 	// Rejected Lines
-	if( is_array($GLOBALS['phpgw_setup']->translation->sql->line_rejected) )
+	if($_POST['debug'] && count($GLOBALS['phpgw_setup']->translation->sql->line_rejected))
 	{
-		unset($str);
+		$str = '';
 		foreach($GLOBALS['phpgw_setup']->translation->sql->line_rejected as $badline)
 		{
-			$_f_buffer = split("/", $badline["appfile"]);
-			$langfile  = "<font color='green'>" . $_f_buffer[count($_f_buffer)-1] . "</font> " . lang("in") . " ";
-		    $langfile .= "<font color='green'>" . $_f_buffer[count($_f_buffer)-3] . "</font> " . lang("module");
-		
-			$str .= lang("File") . " : " . $langfile . "<br>";
-			$str .= "&nbsp; &nbsp; &nbsp; " . lang("Line") . " : " . $badline["line"] . "<br>";
+			$_f_buffer = split("[/\\]", $badline['appfile']);
+			$str .= lang('Application: %1, File: %2, Line: "%3"','<b>'.$_f_buffer[count($_f_buffer)-3].'</b>',
+				'<b>'.$_f_buffer[count($_f_buffer)-1].'</b>',$badline['line'])."<br>\n";
 		}
-		$setup_tpl->set_var('V_alert_word', lang("Rejected lines"));
+		$setup_tpl->set_var('V_alert_word', lang('Rejected lines'));
 		$setup_tpl->set_var('V_alert_msg', $str);
 		$alert = TRUE;
 	}
