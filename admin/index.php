@@ -36,8 +36,6 @@
 	// This func called by the includes to dump a row header
 	function section_start($name='',$icon='',$appname='')
 	{
-		$GLOBALS['admin_tpl']->set_var('icon_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-		$GLOBALS['admin_tpl']->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
 		$GLOBALS['admin_tpl']->set_var('app_name',lang($name));
 		$GLOBALS['admin_tpl']->set_var('a_name',$appname);
 		$GLOBALS['admin_tpl']->set_var('app_icon',$icon);
