@@ -112,7 +112,7 @@
 		),
 		'phpgw_access_log' => array(
 			'fd' => array(
-				'sessionid' => array('type' => 'varchar', 'precision' => 30),
+				'sessionid' => array('type' => 'char', 'precision' => 32),
 				'loginid' => array('type' => 'varchar', 'precision' => 30),
 				'ip' => array('type' => 'varchar', 'precision' => 30),
 				'li' => array('type' => 'int', 'precision' => 4),
@@ -166,7 +166,7 @@
 			'pk' => array(),
 			'fk' => array(),
 			'ix' => array(),
-			'uc' => array('appname')
+			'uc' => array('id')
 		),
 		'phpgw_categories' => array(
 			'fd' => array(

@@ -1253,7 +1253,7 @@
 			'phpgw_nextid', array(
 				'fd' => array(
 					'appname' => array('type' => 'varchar', 'precision' => 25, 'nullable' => False),
-					'id' => array('type' => 'int', 'precision' => 4)
+					'id' => array('type' => 'int', 'precision' => 4),
 				),
 				'pk' => array(),
 				'fk' => array(),
@@ -1498,6 +1498,17 @@
 		$setup_info['phpgwapi']['currentver'] = '0.9.13.003';
 		return $setup_info['phpgwapi']['currentver'];
 		//return True;
+	}
+
+	$test[] = '0.9.13.003';
+	function phpgwapi_upgrade0_9_13_003()
+	{
+		global $setup_info,$phpgw_setup;
+
+		$phpgw_setup->oProc->AlterColumn('phpgw_access_log','sessionid',array('type' => 'char', 'precision' => 32));
+
+		$setup_info['phpgwapi']['currentver'] = '0.9.13.004';
+		return $setup_info['phpgwapi']['currentver'];
 	}
 
 ?>
