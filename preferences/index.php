@@ -22,16 +22,16 @@
   }
 
   echo "<br><a href=\"" . $phpgw->link("changepassword.php") . "\">"
-     . lang_pref("change your password") . "</a>";
+     . lang("change your password") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("changetheme.php") . "\">"
-     . lang_pref("select different theme") . "</a>";
+     . lang("select different theme") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("settings.php") . "\">"
-     . lang_pref("change your settings") . "</a>";
+     . lang("change your settings") . "</a>";
   echo "<br><a href=\"" . $phpgw->link("changeprofile.php") . "\">"
-     . lang_pref("change your profile") . "</a>";
+     . lang("change your profile") . "</a>";
 //  if ($phpgw_info["user"]["permissions"]["nntp"])
   if ($phpgw_info["user"]["apps"]["nntp"])
     echo "<br><a href=\"" . $phpgw->link("nntp.php") . "\">"
-       . lang_pref("monitor newsgroups") . "</a>";
+       . lang("monitor newsgroups") . "</a>";
 
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");

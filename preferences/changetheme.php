@@ -40,8 +40,8 @@
   $phpgw->common->header();
   $phpgw->common->navbar();
 
-  echo "<br>" . lang_pref("your current theme is: x",$phpgw_info["user"]["preferences"]["theme"]);
-  echo "<br>" . lang_pref("please, select a new theme") . ":";
+  echo "<br>" . lang("your current theme is: x",$phpgw_info["user"]["preferences"]["theme"]);
+  echo "<br>" . lang("please, select a new theme") . ":";
   echo "<br>";
 
   for ($i=0; $i<count($installed_themes); $i++) {

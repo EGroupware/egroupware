@@ -30,7 +30,7 @@
 ?>
       <tr>
        <td>
-        <?php echo lang_pref($text); ?> ?
+        <?php echo lang($text); ?> ?
        </td>
        <td>
         <input type="checkbox" name="<?php echo $option; ?>" value="True"<?php if ($phpgw_info["user"]["preferences"][$option]) echo " checked"; ?>>
@@ -41,7 +41,7 @@
 ?>
       <tr>
        <td>
-        <?php echo lang_pref("email signature"); ?>
+        <?php echo lang("email signature"); ?>
        </td>
        <td>
         <textarea name="email_sig" rows="3" cols="30"><?php echo $phpgw_info["user"]["preferences"]["email_sig"]; ?></textarea>
@@ -57,14 +57,14 @@
       <form method="POST" action="<?php echo $phpgw->link("settings.php"); ?>">
        <table border=0>
        <tr>
-        <td><?php echo lang_pref("max matchs per page"); ?>: </td>
+        <td><?php echo lang("max matchs per page"); ?>: </td>
         <td>
          <input name="maxmatchs" value="<?php
            echo $phpgw_info["user"]["preferences"]["maxmatchs"]; ?>" size="2">
         </td>
        </tr>
        <tr>
-        <td><?php echo lang_pref("Show text on navigation icons"); ?>: </td>
+        <td><?php echo lang("Show text on navigation icons"); ?>: </td>
         <td>
          <input type="checkbox" name="navbar_text"<?php
            if ($phpgw_info["user"]["preferences"]["navbar_text"])
@@ -73,7 +73,7 @@
         </td>
        </tr>
        <tr>
-        <td><?php echo lang_pref("time zone offset"); ?>: </td>
+        <td><?php echo lang("time zone offset"); ?>: </td>
         <td>
          <select name="tz_offset"><?php
            for ($i = -23; $i<24; $i++) {
@@ -86,12 +86,12 @@
                   echo ">+$i</option>\n";
            }
          ?></select>
-         <?php echo lang_pref("This server is located in the x timezone",strftime("%Z")); ?>
+         <?php echo lang("This server is located in the x timezone",strftime("%Z")); ?>
         </td>
        </tr>
 
        <tr>
-        <td><?php echo lang_pref("date format"); ?>:</td>
+        <td><?php echo lang("date format"); ?>:</td>
         <td>
          <?php $df[$phpgw_info["user"]["preferences"]["dateformat"]] = " selected"; ?>
          <select name="dateformat">
@@ -114,7 +114,7 @@
         </td>
        </tr>
        <tr>
-        <td><?php echo lang_pref("time format"); ?>:</td>
+        <td><?php echo lang("time format"); ?>:</td>
         <td><?php
             $timeformat_select[$phpgw_info["user"]["preferences"]["timeformat"]] = " selected";
             echo "<select name=\"timeformat\">"
@@ -125,7 +125,7 @@
         </td>
        </tr>
        <tr>
-         <td><?php echo lang_pref("language"); ?></td>
+         <td><?php echo lang("language"); ?></td>
          <td>
           <?php $lang_select[$phpgw_info["user"]["preferences"]["lang"]] = " selected"; ?>
           <select name="lang">
@@ -150,7 +150,7 @@
          if ($phpgw_info["user"]["apps"]["calendar"]) {
             ?>
             <tr>
-             <td><?php echo lang_pref("show high priority events on main screen"); ?> ?</td>
+             <td><?php echo lang("show high priority events on main screen"); ?> ?</td>
 	     <td><input type="checkbox" name="mainscreen_showevents" value="Y" <?php if ($phpgw_info["user"]["preferences"]["mainscreen_showevents"] == "Y") echo " checked"; ?>></td>
 
             </tr>
@@ -158,11 +158,11 @@
             $t_weekday[$phpgw_info["user"]["preferences"]["weekdaystarts"]] = " selected";
 ?>
              <tr>
-              <td><?php echo lang_pref("weekday starts on"); ?></td>
+              <td><?php echo lang("weekday starts on"); ?></td>
               <td>
                <select name="weekdaystarts">
-	        <option value="Monday"<?php echo $t_weekday["monday"]; ?>><?php echo lang_common("monday"); ?></option>
-	        <option value="Sunday"<?php echo $t_weekday["sunday"]; ?>><?php echo lang_common("sunday"); ?></option>
+	        <option value="Monday"<?php echo $t_weekday["monday"]; ?>><?php echo lang("monday"); ?></option>
+	        <option value="Sunday"<?php echo $t_weekday["sunday"]; ?>><?php echo lang("sunday"); ?></option>
 	       </select>
               </td>
 <?php
@@ -170,7 +170,7 @@
             $t_workdaystarts[$phpgw_info["user"]["preferences"]["workdaystarts"]] = " selected";
 ?>
              <tr>
-              <td><?php echo lang_pref("work day starts on"); ?></td>
+              <td><?php echo lang("work day starts on"); ?></td>
               <td>
                <select name="workdaystarts">
 	       <?php
@@ -183,7 +183,7 @@
              </tr>
             <?php $t_workdayends[$phpgw_info["user"]["preferences"]["workdayends"]] = " selected"; ?>
              <tr>
-              <td><?php echo lang_pref("work day ends on"); ?></td>
+              <td><?php echo lang("work day ends on"); ?></td>
               <td>
                <select name="workdayends">
 	        <?php
@@ -196,7 +196,7 @@
              </tr>
 
              <tr>
-              <td><?php echo lang_pref("Default application"); ?></td>
+              <td><?php echo lang("Default application"); ?></td>
 	         <td><select name="default_app">
                    <option value="">&nbsp;</option>
                   <?php
@@ -207,7 +207,7 @@
 				  if ($phpgw_info["user"]["preferences"]["default_app"] == $permission[0]) {
 					 echo " selected";
                           }
-				  echo ">" . lang_common($phpgw_info["apps"][$permission[0]]["title"])
+				  echo ">" . lang($phpgw_info["apps"][$permission[0]]["title"])
 					 . "</option>";
                        }
                     }
@@ -215,7 +215,7 @@
              </tr>
 
              <tr>
-              <td><?php echo lang_pref("Default sorting order"); ?></td>
+              <td><?php echo lang("Default sorting order"); ?></td>
 	      <td><?php
                     $default_order_display[$phpgw_info["user"]["preferences"]["default_sorting"]] = " selected"; ?>
                   <select name="default_sorting">
@@ -230,7 +230,7 @@
          if ($phpgw_info["user"]["apps"]["headlines"]) {
 ?>
             <tr>
-             <td><?php echo lang_pref("select headline news sites"); ?>:</td>
+             <td><?php echo lang("select headline news sites"); ?>:</td>
 <?php
 	     echo "<td><select name=\"headlines[]\" multiple size=5>\n";
 
@@ -255,7 +255,7 @@
 
        <tr>
         <td colspan="2" align="center">
-         <input type="submit" name="submit" value="<?php echo lang_common("submit"); ?>">
+         <input type="submit" name="submit" value="<?php echo lang("submit"); ?>">
         </td>
        </tr>
        </table>

@@ -112,8 +112,8 @@
 		        . "<input type=\"hidden\" name=\"query_result\" value=\"".$query_result."\">\n";
 
     $t->set_var("search_value",$query);
-    $t->set_var("search",lang_common("search"));
-    $t->set_var("next",lang_nntp("next"));
+    $t->set_var("search",lang("search"));
+    $t->set_var("next",lang("next"));
 
     $t->set_var("nml",$phpgw->nextmatchs->left(	$urlname,
 					$start,
@@ -124,7 +124,7 @@
 					$tg,
 				  	"&tg=$tg&sort=$sort&order=$order"));
 
-    $t->set_var("title",lang_nntp("Newsgroups"));
+    $t->set_var("title",lang("Newsgroups"));
     $t->set_var("action_url",$phpgw->link($urlname));
     $t->set_var("common_hidden_vars",$common_hidden_vars);
     $t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
@@ -159,7 +159,7 @@
       if ($i+1 <> count($nntpavailgroups["con"]))
 	$t->parse("output","nntp_list",True);
     }
-    $t->set_var("lang_update",lang_nntp("update"));
+    $t->set_var("lang_update",lang("update"));
     $t->set_var("checkmark",$phpgw_info["server"]["webserver_url"]."/email/images/check.gif");
 
     $t->pparse("out","nntp_footer");

@@ -30,7 +30,7 @@ if (! $submit) {
     <table border="0">
      <tr>
        <td>
-        <?php echo lang_pref("enter your new password"); ?>
+        <?php echo lang("enter your new password"); ?>
        </td>
        <td>
         <input type="password" name="n_passwd">
@@ -38,7 +38,7 @@ if (! $submit) {
      </tr>
      <tr>
        <td>
-        <?php echo lang_pref("re-enter your password"); ?>
+        <?php echo lang("re-enter your password"); ?>
        </td>
        <td>
         <input type="password" name="n_passwd_2">
@@ -46,23 +46,23 @@ if (! $submit) {
      </tr>
      <tr>
        <td colspan="2">
-        <input type="submit" name="submit" value="<?php echo lang_common("change"); ?>">
+        <input type="submit" name="submit" value="<?php echo lang("change"); ?>">
        </td>
      </tr>
     </table>
    </form>
    <br>
-   <pre><?php echo lang_pref("note: This feature does *not* change your email password. This will "
+   <pre><?php echo lang("note: This feature does *not* change your email password. This will "
             		   . "need to be done manually."); ?>
    </pre>
 <?php
   include($phpgw_info["server"]["api_dir"] . "/footer.inc.php");
 } else {
    if ($n_passwd != $n_passwd_2)
-      $error = lang_pref("the two passwords are not the same");
+      $error = lang("the two passwords are not the same");
 
    if (! $n_passwd)
-      $error = lang_pref("you must enter a password");
+      $error = lang("you must enter a password");
 
    if ($error) {
       phpgw_navbar();
