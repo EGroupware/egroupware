@@ -194,6 +194,21 @@
 			return $headers;         
 		}
 		
+		function get_referer( ) {
+			global $phpgw_info,$HTTP_REFERER,$referer;
+			if (!$referer)
+				$referer = $HTTP_REFERER;
+
+			$url = parse_url($referer);
+			$referer = str_replace($phpgw_info['server']['webserver_url'],'',
+										  $url['path']);
+			if ($url['query'])
+				$referer .= '?'.$url['query'];
+			//echo "<p>referer: $HTTP_REFERER --> $referer</p>";
+
+			return $referer;
+		}
+
 	 	function get_list( ) {
 			global $phpgw,$phpgw_info;
 			global $cat_filter,$cat_id,$sort,$order,$query,$start,$filter;
@@ -218,6 +233,10 @@
 			);
 			$common_hidden_vars = $html->input_hidden($hidden_vars);
 
+			global $PHP_SELF,$QUERY_STRING;	// set referer for form
+			$referer = $PHP_SELF.($QUERY_STRING ? '?'.$QUERY_STRING : '');
+			$common_hidden_vars .= $html->input_hidden('referer',$referer);
+
 			if ($action)
 				$common_hidden_vars    .= $html->input_hidden('action',$action);
 
@@ -227,13 +246,15 @@
 				  $t->set_var(lang_info_action,lang('Info Log - Subprojects from'));
 					break;
 			  case 'proj':
-					$common_hidden_vars .= $html->input_hidden('id_project',$proj_id);
+					$common_hidden_vars .=$html->input_hidden(array(
+						'id_project' => $proj_id, 'proj_id' => $proj_id));
 					$proj = $this->bo->readProj($proj_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$proj['title']);
 					break;
 			  case 'addr':
-					$common_hidden_vars .= $html->input_hidden('id_addr',$addr_id);
+					$common_hidden_vars .= $html->input_hidden(array(
+						'id_addr' => $addr_id, 'addr_id' => $addr_id ));
 					$addr = $this->bo->readAddr($addr_id);
 					$t->set_var(lang_info_action,lang('Info Log').' - '.
 									$this->bo->addr2name($addr));
@@ -318,8 +339,10 @@
 					$t->parse('projdetailshandle','projdetails',True);
 					break;
 			  case 'addr':
+			  		$nm_extra = "&addr_id=$addr_id";
 					break;
 			  case 'proj':
+			  		$nm_extra = "&proj_id=$proj_id";
 					break;
 			}
 
@@ -333,7 +356,7 @@
 			// ===========================================
 			if (!$for_include) {
 				$next_matchs = $this->nextmatchs->show_tpl('/index.php',$start,
-									$total,"menuaction=infolog.uiinfolog.get_list&order=$order&filter=$filter&sort=$sort&query=$query&action=$action&info_id=$info_id&cat_id=$cat_id",
+									$total,"menuaction=infolog.uiinfolog.get_list&order=$order&filter=$filter&sort=$sort&query=$query&action=$action$nm_extra&info_id=$info_id&cat_id=$cat_id",
 									'95%',$phpgw_info['theme']['th_bg']);
 				$t->set_var('next_matchs',$next_matchs);
 				if ($total > $maxmatchs)
@@ -451,6 +474,8 @@
 										'query' => $query,'start' => $start,
 										'filter' => $filter,'cat_id' => $cat_id );
 
+			$referer = $this->get_referer();
+
 			if ((!isset($info_id) || !$info_id) && !$action)   {
 				Header('Location: ' . 
 						 $html->link('/index.php',$hidden_vars+$this->menuaction()));
@@ -535,15 +560,14 @@
 					));
 			
 					if (!$query_addr && !$query_project) {
-						Header('Location: ' . $html->link('/index.php', $hidden_vars + array( 'cd' => 15 ) + $this->menuaction()));
+						Header('Location: ' . $html->link($referer, array('cd'=>15)));
 					}
 				}
 			}
 			$this->bo->read( $info_id );
 			if ($info_id && $action == 'sp') {   // new SubProject
 				if (!$this->bo->check_access($info_id,PHPGW_ACL_ADD)) {
-					Header('Location: ' . 
-							 $html->link('/index.php',$hidden_vars+$this->menuaction() ));
+					Header('Location: ' .  $html->link($referer));
 					$phpgw->common->phpgw_exit();
 				}
 				$parent = $this->data;
@@ -560,19 +584,21 @@
 				$this->data['info_des'] = '';
 			} else {
 				if ($info_id && !$this->bo->check_access($info_id,PHPGW_ACL_EDIT)) {
-					Header('Location: ' .
-							 $html->link('/index.php',$hidden_vars+ $this->menuaction()));
+					Header('Location: ' .  $html->link($referer));
 					$phpgw->common->phpgw_exit();
 				}
 			}      
 			$id_parent = $this->data['info_id_parent'];
-			$common_hidden_vars =  $html->input_hidden( $hidden_vars +
-																	  array('info_id' => $info_id,'action' => $action,'id_parent' => $id_parent ));
+			$common_hidden_vars =  $html->input_hidden( $hidden_vars + array(
+				'info_id' => $info_id,
+				'action' => $action,
+				'id_parent' => $id_parent,
+				'referer' => $referer
+			));
 
 			$phpgw->common->phpgw_header();
 			echo parse_navbar();
 
-			$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL); 
 			$t->set_file(array('info_edit' => 'form.tpl'));
 			  
 			// ====================================================================
@@ -677,8 +703,8 @@
 			 
 			if (!$action && $this->bo->check_access($info_id,PHPGW_ACL_DELETE)) {
 				$t->set_var('delete_button',$html->form_1button('delete','Delete',
-					$hidden_vars+$this->menuaction('delete'),
-					'/index.php'));
+					array('referer'=>$referer),'/index.php',
+					$this->menuaction('delete')+array('info_id'=>$info_id)));
 			}
 			$t->set_var('edithandle','');
 			$t->set_var('addhandle','');
@@ -694,19 +720,21 @@
 
 			$t = &$this->template; $html = &$this->html;
 
+			$referer = $this->get_referer();
+
 			$hidden_vars = array('sort' => $sort,'order' => $order,
 										'query' => $query,'start' => $start,
-										'filter' => $filter,'cat_id' => $cat_id );
+										'filter' => $filter,'cat_id' => $cat_id,
+										'referer' => $referer );
 			if (!$info_id ||
 			    !$this->bo->check_access($info_id,PHPGW_ACL_DELETE))
 			{
-				Header('Location: ' .
-						 $html->link('/index.php',$hidden_vars+$this->menuaction()));
+				Header('Location: ' .  $html->link($referer));
 			}
 			if ($confirm) {
 				$this->bo->delete($info_id);
 
-				Header('Location: ' . $html->link('/index.php',$hidden_vars + array( 'cd' => 16 )+$this->menuaction()));
+				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
 			} else {
 				$phpgw->common->phpgw_header();
 				echo parse_navbar();
@@ -720,9 +748,9 @@
 
 				$t->set_var('deleteheader',lang('Are you sure you want to delete this entry'));
 				$t->set_var('no_button',$html->form_1button('no_button',
-					'No - Cancel','','/index.php',$hidden_vars+$this->menuaction()));
+					'No - Cancel','',$referer));
 				$t->set_var('yes_button',$html->form_1button('yes_button',
-					'Yes - Delete','','/index.php',$hidden_vars +
+					'Yes - Delete',$hidden_vars,'/index.php',
 					array('info_id' => $info_id,'confirm' => 'True')+
 					$this->menuaction('delete')));
 				$t->pfp('out','info_delete');

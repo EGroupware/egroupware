@@ -36,6 +36,10 @@ class html
 		return "<input type=\"submit\" name=\"$name\" value=\"".lang($lang)."\">\n";
 	}
 
+	/*
+	 * create absolute link: $url: phpgw-relative link, may include query
+	 *								 $vars: query or array with query
+	 */
 	function link($url,$vars='')
 	{
 		global $phpgw;
@@ -51,6 +55,10 @@ class html
 			}
 			$vars = implode('&',$v);
 		}
+		list($url,$v) = explode('?',$url);	// url may contain additional vars
+		if ($v)
+			$vars .= ($vars ? '&' : '') . $v;
+
 		return $phpgw->link($url,$vars);
 	}
 
