@@ -28,52 +28,22 @@
 	// This is where it belongs (jengo)
 	// This is where it ended up (milosch)
 	/* Since LDAP will return system accounts, there are a few we don't want to login. */
-	$phpgw_info["server"]["global_denied_users"] = array(
-		'root'     => True,
-		'bin'      => True,
-		'daemon'   => True,
-		'adm'      => True,
-		'lp'       => True,
-		'sync'     => True,
-		'shutdown' => True,
-		'halt'     => True,
-		'ldap'     => True,
-		'mail'     => True,
-		'news'     => True,
-		'uucp'     => True,
-		'operator' => True,
-		'games'    => True,
-		'gopher'   => True,
-		'nobody'   => True,
-		'xfs'      => True,
-		'pgsql'    => True,
-		'mysql'    => True,
-		'postgres' => True,
-		'oracle'   => True,
-		'ftp'      => True,
-		'gdm'      => True,
-		'named'    => True,
-		'alias'    => True,
-		'web'      => True,
-		'sweep'    => True,
-		'cvs'      => True,
-		'qmaild'   => True,
-		'qmaill'   => True,
-		'qmaillog' => True,
-		'qmailp'   => True,
-		'qmailq'   => True,
-		'qmailr'   => True,
-		'qmails'   => True,
-		'rpc'      => True,
-		'rpcuser'  => True,
-		'amanda'   => True,
-		'apache'   => True,
-		'pvm'      => True,
-		'squid'    => True,
-		'ident'    => True,
-		'nscd'     => True,
-		'mailnull' => True,
-		'cyrus'	   => True
+	$phpgw_info['server']['global_denied_users'] = array(
+		'root'     => True, 'bin'      => True, 'daemon'   => True,
+		'adm'      => True, 'lp'       => True, 'sync'     => True,
+		'shutdown' => True, 'halt'     => True, 'ldap'     => True,
+		'mail'     => True, 'news'     => True, 'uucp'     => True,
+		'operator' => True, 'games'    => True, 'gopher'   => True,
+		'nobody'   => True, 'xfs'      => True, 'pgsql'    => True,
+		'mysql'    => True, 'postgres' => True, 'oracle'   => True,
+		'ftp'      => True, 'gdm'      => True, 'named'    => True,
+		'alias'    => True, 'web'      => True, 'sweep'    => True,
+		'cvs'      => True, 'qmaild'   => True, 'qmaill'   => True,
+		'qmaillog' => True, 'qmailp'   => True, 'qmailq'   => True,
+		'qmailr'   => True, 'qmails'   => True, 'rpc'      => True,
+		'rpcuser'  => True, 'amanda'   => True, 'apache'   => True,
+		'pvm'      => True, 'squid'    => True, 'ident'    => True,
+		'nscd'     => True, 'mailnull' => True, 'cyrus'	   => True
 	);
 
 	class accounts_
@@ -96,27 +66,28 @@
 			$ds = $phpgw->common->ldapConnect();
 
 			// search the dn for the given uid
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber='.$this->account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
 			/* Now dump it into the array; take first entry found */
-			$this->data["account_id"]	= $allValues[0]["uidnumber"][0];
-			$this->data["account_lid"] 	= $allValues[0]["uid"][0];
-			$this->data["account_dn"]  	= $allValues[0]["dn"];
-			$this->data["firstname"]   	= $allValues[0]["givenname"][0];
-			$this->data["lastname"]    	= $allValues[0]["sn"][0];
-			$this->data["fullname"]    	= $allValues[0]["cn"][0];
-			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
-				$this->data["homedirectory"]  = $allValues[0]["homedirectory"][0];
-				$this->data["loginshell"] = $allValues[0]["loginshell"][0];
+			$this->data['account_id']	= $allValues[0]['uidnumber'][0];
+			$this->data['account_lid'] 	= $allValues[0]['uid'][0];
+			$this->data['account_dn']  	= $allValues[0]['dn'];
+			$this->data['firstname']   	= $allValues[0]['givenname'][0];
+			$this->data['lastname']    	= $allValues[0]['sn'][0];
+			$this->data['fullname']    	= $allValues[0]['cn'][0];
+			if ($phpgw_info['server']['ldap_extra_attributes'])
+			{
+				$this->data['homedirectory']  = $allValues[0]['homedirectory'][0];
+				$this->data['loginshell'] = $allValues[0]['loginshell'][0];
 			}
-			$this->db->query("select * from phpgw_accounts where account_id='" . $this->data["account_id"] . "'",__LINE__,__FILE__);
+			$this->db->query("SELECT * FROM phpgw_accounts WHERE account_id='" . $this->data['account_id'] . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 
-			$this->data["lastlogin"]         = $this->db->f("account_lastlogin");
-			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
-			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
-			$this->data["status"]            = $this->db->f("account_status");
+			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
+			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
+			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
+			$this->data['status']            = $this->db->f('account_status');
 			$this->data['expires'] = -1;
 
 			return $this->data;
@@ -129,16 +100,17 @@
 			$ds = $phpgw->common->ldapConnect();
 
 			// search the dn for the given uid
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->account_id);
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber='.$this->account_id);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry["cn"]		    = sprintf("%s %s", $this->data["firstname"], $this->data["lastname"]);
-			$entry["sn"]		    = $this->data["lastname"];
-			$entry["givenname"]		= $this->data["firstname"];
+			$entry['cn']		    = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+			$entry['sn']		    = $this->data['lastname'];
+			$entry['givenname']		= $this->data['firstname'];
 
-			if ($phpgw_info["server"]["ldap_extra_attributes"]) {
-				$entry["homedirectory"] = $this->data["homedirectory"];
-				$entry["loginshell"]    = $this->data["loginshell"];
+			if ($phpgw_info['server']['ldap_extra_attributes'])
+			{
+				$entry['homedirectory'] = $this->data['homedirectory'];
+				$entry['loginshell']    = $this->data['loginshell'];
 			}
 
 			while (list($key,$val) = each($entry))
@@ -151,13 +123,13 @@
 					if (!$allValues[0][$key][0])
 					{
 						// attribute was not in LDAP, add it
-						ldap_mod_add($ds, $allValues[0]["dn"], $tmpentry);
+						ldap_mod_add($ds, $allValues[0]['dn'], $tmpentry);
 					}
 					else
 					{
 						// attribute was in LDAP, modify it
 						//echo $val.' ';
-						ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
+						ldap_modify($ds, $allValues[0]['dn'], $tmpentry);
 					}
 				}
 			}
@@ -166,11 +138,6 @@
 				. "', account_lastname='" . $this->data['lastname'] . "', account_status='"
 				. $this->data['status'] . "' where account_id='" . $this->account_id . "'",__LINE__,__FILE__);
 
-		}
-
-		function add($account_name, $account_type, $first_name, $last_name, $passwd = False) 
-		{
-			$this->create($account_name, $account_type, $first_name, $last_name, $passwd);
 		}
 
 		function delete($accountid = '')
@@ -183,7 +150,8 @@
 			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uid='.$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]['dn']) {
+			if ($allValues[0]['dn'])
+			{
 				$del = ldap_delete($ds, $allValues[0]['dn']);
 			}
 
@@ -209,16 +177,16 @@
 
 			if (! $sort)
 			{
-				$sort = "desc";
+				$sort = 'desc';
 			}
 
 			if ($order)
 			{
-				$orderclause = "order by $order $sort";
+				$orderclause = "ORDER BY $order $sort";
 			}
 			else
 			{
-				$orderclause = "order by account_lid,account_lastname,account_firstname asc";
+				$orderclause = 'ORDER BY account_lid,account_lastname,account_firstname ASC';
 			}
 
 			$ds = $phpgw->common->ldapConnect();
@@ -226,39 +194,42 @@
 			switch($_type)
 			{
 				case 'accounts':
-					$whereclause = "where account_type = 'u'";
+					$whereclause = "WHERE account_type = 'u'";
 					break;
 				case 'groups':
-					$whereclause = "where account_type = 'g'";
+					$whereclause = "WHERE account_type = 'g'";
 					break;
 				default:
-					$whereclause = "";
+					$whereclause = '';
 			}
 
-			$sql = "select * from phpgw_accounts $whereclause $orderclause $limitclause";
+			$sql = "SELECT * FROM phpgw_accounts $whereclause $orderclause $limitclause";
 			$this->db->query($sql,__LINE__,__FILE__);
-			while ($this->db->next_record()) {
+			while ($this->db->next_record())
+			{
 				// get user information from ldap only, if it's a user, not a group
-				if ($this->db->f("account_type") == 'u')
+				if ($this->db->f('account_type') == 'u')
 				{
-					$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=".$this->db->f("account_id"));
+					$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], 'uidnumber='.$this->db->f('account_id'));
 					$allValues = ldap_get_entries($ds, $sri);
 					$accounts[] = Array(
-						"account_id" => $allValues[0]["uidnumber"][0],
-						"account_lid" => $allValues[0]["uid"][0],
-						"account_type" => $this->db->f("account_type"),
-						"account_firstname" => $allValues[0]["givenname"][0],
-						"account_lastname" => $allValues[0]["sn"][0],
-						"account_status" => $this->db->f("account_status")
+						'account_id' => $allValues[0]['uidnumber'][0],
+						'account_lid' => $allValues[0]['uid'][0],
+						'account_type' => $this->db->f('account_type'),
+						'account_firstname' => $allValues[0]['givenname'][0],
+						'account_lastname' => $allValues[0]['sn'][0],
+						'account_status' => $this->db->f('account_status')
 					);
-				} else {
+				}
+				else
+				{
 					$accounts[] = Array(
-						"account_id" => $this->db->f("account_id"),
-						"account_lid" => $this->db->f("account_lid"),
-						"account_type" => $this->db->f("account_type"),
-						"account_firstname" => $this->db->f("account_firstname"),
-						"account_lastname" => $this->db->f("account_lastname"),
-						"account_status" => $this->db->f("account_status")
+						'account_id' => $this->db->f('account_id'),
+						'account_lid' => $this->db->f('account_lid'),
+						'account_type' => $this->db->f('account_type'),
+						'account_firstname' => $this->db->f('account_firstname'),
+						'account_lastname' => $this->db->f('account_lastname'),
+						'account_status' => $this->db->f('account_status')
 					);
 				}
 			}
@@ -271,10 +242,13 @@
 			global $phpgw, $phpgw_info;
 
 			$this->db->query("SELECT account_id FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-			if($this->db->num_rows()) {
+			if($this->db->num_rows())
+			{
 				$this->db->next_record();
 				return intval($this->db->f('account_id'));
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -284,10 +258,13 @@
 			global $phpgw, $phpgw_info;
 	
 			$this->db->query("SELECT account_lid FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if($this->db->num_rows()) {
+			if($this->db->num_rows())
+			{
 				$this->db->next_record();
 				return $this->db->f('account_lid');
-			} else {
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -296,12 +273,15 @@
 		{
 			global $phpgw, $phpgw_info;
 
-	    	$account_id = get_account_id($accountid);
+			$account_id = get_account_id($accountid);
 			$this->db->query("SELECT account_type FROM phpgw_accounts WHERE account_id='".$account_id."'",__LINE__,__FILE__);
-			if ($this->db->num_rows()) {
+			if ($this->db->num_rows())
+			{
 				$this->db->next_record();
-				return $this->db->f("account_type");
-	    	} else {
+				return $this->db->f('account_type');
+			}
+			else
+			{
 				return False;
 			}
 		}
@@ -332,10 +312,10 @@
 			}
 
 			$ds = $phpgw->common->ldapConnect();
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "$ldap_name=$account");
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "$ldap_name=$account");
 			$allValues = ldap_get_entries($ds, $sri);
 
-			if ($allValues[0]["dn"]) 
+			if ($allValues[0]['dn'])
 			{
 				$in += 2;
 			}
@@ -343,7 +323,6 @@
 			
 			return $in;
 		}
-		
 
 		function create($account_info)
 		{
@@ -383,8 +362,8 @@
 				//echo $account_id;exit;
 			}
 
-			$this->db->query("insert into phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
-				. "account_firstname, account_lastname, account_status, account_expires) values ('" . $account_id . "','" . $account_info['account_lid']
+			$this->db->query("INSERT INTO phpgw_accounts (account_id, account_lid, account_type, account_pwd, "
+				. "account_firstname, account_lastname, account_status, account_expires) VALUES ('" . $account_id . "','" . $account_info['account_lid']
 				. "','" . $account_info['account_type'] . "','" . md5($account_info['account_passwd']) . "', '" . $account_info['account_firstname']
 				. "','" . $account_info['account_lastname'] . "','" . $account_info['account_status'] . "'," . $account_info['account_expires'] . ")",__LINE__,__FILE__);
 
@@ -434,20 +413,20 @@
 						if (!$allValues[0][$key][0])
 						{
 							// attribute was not in LDAP, add it
-							ldap_mod_add($ds, $allValues[0]["dn"], $tmpentry);
+							ldap_mod_add($ds, $allValues[0]['dn'], $tmpentry);
 						}
 						else
 						{
 							// attribute was in LDAP, modify it
-							ldap_modify($ds, $allValues[0]["dn"], $tmpentry);
+							ldap_modify($ds, $allValues[0]['dn'], $tmpentry);
 						}
 					}
 				}
 
-//				if ($account_type == "g")
+//				if ($account_type == 'g')
 //				{
-//					$tmpentry["objectclass"][0] = 'top';
-//					$tmpentry["objectclass"][1] = 'posixGroup';
+//					$tmpentry['objectclass'][0] = 'top';
+//					$tmpentry['objectclass'][1] = 'posixGroup';
 //				}
 //				else
 				if ($account_info['account_type'] == 'u')
@@ -465,10 +444,10 @@
 			}
 			else
 			{
-//				if ($account_type == "g")
+//				if ($account_type == 'g')
 //				{
-//					$entry["objectclass"][0] = 'top';
-//					$entry["objectclass"][1] = 'posixGroup';
+//					$entry['objectclass'][0] = 'top';
+//					$entry['objectclass'][1] = 'posixGroup';
 //				}
 //				else
 				if ($account_info['account_type'] == 'u')
@@ -495,7 +474,8 @@
 			exit();
 			global $phpgw, $phpgw_info;
 			$accountid = mt_rand (100, 600000);
-			if ($defaultprefs =="") {
+			if ($defaultprefs =='')
+			{
 				$defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
 //				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
 			}
@@ -523,9 +503,9 @@
 
 			$ds = $phpgw->common->ldapConnect();
 
-			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uidnumber=$_account_id");
+			$sri = ldap_search($ds, $phpgw_info['server']['ldap_context'], "uidnumber=$_account_id");
 			$allValues = ldap_get_entries($ds, $sri);
 
-			return $allValues[0]["dn"];
+			return $allValues[0]['dn'];
 		}
 	}
