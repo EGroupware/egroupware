@@ -1,21 +1,24 @@
 %1 email addresses inserted	common	es-ca	%1 adreces de correu afegides
+%1 is not executable by the webserver !!!	common	es-ca	%1 no es pot executar en el servidor web !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-ca	%1eGroupWare%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	jscalendar	es-ca	(Maj-)+clic o arrosegar per a canviar el valor
 - click on any of the time parts to increase it	jscalendar	es-ca	- Premeu en qualsevol part de l'hora per a incrementar-la
-- hold mouse button on any of the above buttons for faster selection.	jscalendar	es-ca	- Mantingueu premut el botó del ratolí en qualsevol dels botons anteriors per a una sel.lecció més ràpida.
-- or click and drag for faster selection.	jscalendar	es-ca	- o premeu i arrosegueu per a una sel.lecció més ràpida.
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	es-ca	- Mantingueu premut el botó del ratolí en qualsevol dels botons anteriors per a una selecció més ràpida.
+- or click and drag for faster selection.	jscalendar	es-ca	- o premeu i arrosegueu per a una selecció més ràpida.
 - or shift-click to decrease it	jscalendar	es-ca	- o Maj+clic per disminuir
-- use the %1, %2 buttons to select month	jscalendar	es-ca	- Useu els botons %1, %2 per a sel.leccionar el mes
-- use the %1, %2 buttons to select year	jscalendar	es-ca	- Useu els botons %1, %2 per a sel.leccionar l'any
-00 (disable)	admin	es-ca	00 (desactivar)
+- use the %1, %2 buttons to select month	jscalendar	es-ca	- Useu els botons %1, %2 per a seleccionar el mes
+- use the %1, %2 buttons to select year	jscalendar	es-ca	- Useu els botons %1, %2 per a seleccionar l'any
+00 (disable)	admin	es-ca	00 (desactiva)
 13 (ntp)	admin	es-ca	13 (ntp)
+3 number of chars for day-shortcut	common	es-ca	3 caràcters per a l'abreviatura del dia
+3 number of chars for month-shortcut	common	es-ca	3 caràcters per a l'abreviatura del mes
 80 (http)	admin	es-ca	80 (http)
 about	common	es-ca	Quant a
 about %1	common	es-ca	Quant a %1
 about the calendar	jscalendar	es-ca	Quant al calendari
 about this editor	htmlarea	es-ca	Quant a aquest editor
 access	common	es-ca	Accés
-access not permitted	common	es-ca	Accés no permés
+access not permitted	common	es-ca	Accés no permès
 access type	common	es-ca	Tipo Acceso
 account has been created	common	es-ca	Compte creat
 account has been deleted	common	es-ca	Compte esborrat
@@ -37,7 +40,7 @@ afghanistan	common	es-ca	AFGANISTAN
 albania	common	es-ca	ALBÀNIA
 algeria	common	es-ca	ALGÈRIA
 all	common	es-ca	Tot
-alphabet	common	es-ca	a,b,c,ç,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
+alphabet	common	es-ca	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	es-ca	SAMOA AMERICANA
 andorra	common	es-ca	ANDORRA
 angola	common	es-ca	ANGOLA
@@ -75,7 +78,7 @@ belize	common	es-ca	BELIZE
 benin	common	es-ca	BENIN
 bermuda	common	es-ca	BERMUDA
 bhutan	common	es-ca	BHUTAN
-blocked, too many attempts	common	es-ca	Bloquejat, masses intents
+blocked, too many attempts	common	es-ca	Bloquejat, massa intents
 bold	htmlarea	es-ca	Negreta
 bolivia	common	es-ca	BOLIVIA
 bookkeeping	common	es-ca	Contabilidad
@@ -93,7 +96,7 @@ calendar	common	es-ca	Calendari
 cambodia	common	es-ca	CAMBODJA
 cameroon	common	es-ca	CAMERUN
 canada	common	es-ca	CANADA
-cancel	common	es-ca	Cancel.lar
+cancel	common	es-ca	Cancel·lar
 cape verde	common	es-ca	CAP VERD
 categories	common	es-ca	Categories
 categories for	common	es-ca	categories per
@@ -106,7 +109,7 @@ central african republic	common	es-ca	REPÚBLICA CENTREAFRICANA
 chad	common	es-ca	TXAD
 change	common	es-ca	Canvi
 charset	common	es-ca	iso-8859-1
-check installation	common	es-ca	Comprovar instal.lació
+check installation	common	es-ca	Comprovar instal·lació
 chile	common	es-ca	XILE
 china	common	es-ca	XINA
 choose the category	common	es-ca	Trieu la categoria
@@ -123,6 +126,8 @@ colombia	common	es-ca	COLÒMBIA
 comoros	common	es-ca	COMORES
 company	common	es-ca	Empresa
 company directory	common	es-ca	Directorio de la Organizacion
+config password	common	es-ca	Configura Contrasenya
+config username	common	es-ca	Configura Nom d'Usuari
 congo	common	es-ca	CONGO
 congo, the democratic republic of the	common	es-ca	CONGO, REPÚBLICA DEMOCRÀTICA DEL
 cook islands	common	es-ca	ILLES COOK
@@ -138,26 +143,27 @@ currency	common	es-ca	Moneda
 current	common	es-ca	Actual
 current style	htmlarea	es-ca	Estil actual
 current users	common	es-ca	Usuaris actuals
-cut selection	htmlarea	es-ca	Tallar sel.lecció
+cut selection	htmlarea	es-ca	Retallar selecció
 cyprus	common	es-ca	XIPRE
 czech republic	common	es-ca	REPÚBLICA TXECA
 date	common	es-ca	Data
 date due	common	es-ca	Data límit
-date selection:	jscalendar	es-ca	Sel.lecció de data:
+date selection:	jscalendar	es-ca	Selecció de data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	es-ca	Port de data.<br>Si useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.<br>
 december	common	es-ca	Desembre
-decrease indent	htmlarea	es-ca	Reduïr sangria
+decrease indent	htmlarea	es-ca	Reduir sangria
 default category	common	es-ca	Categoria predeterminada
 delete	common	es-ca	Esborrar
 denmark	common	es-ca	DINAMARCA
 description	common	es-ca	Descripció
-detail	common	es-ca	Detalle
+detail	common	es-ca	Detall
 details	common	es-ca	Detalls
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-ca	Desactivar la execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-ca	Desactivar l'execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
 disable internet explorer png-image-bugfix	common	es-ca	Desactivar el pegat d'IE per veure imatges PNG
 disable slider effects	common	es-ca	Desactivar efectes lliscants
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-ca	Desactivar efectes lliscants animats en mostrar o amagar menús a la plana? Opera i Konqueror probablement ho necessiten.
 disabled	common	es-ca	Desactivat
+display %s first	common	es-ca	Mostra %s primer
 display monday first	jscalendar	es-ca	Mostrar Dilluns primer
 display sunday first	jscalendar	es-ca	Mostar Diumenge primer
 djibouti	common	es-ca	DJIBOUTI
@@ -216,7 +222,7 @@ first page	common	es-ca	Primera plana
 firstname	common	es-ca	Nom de pila
 fixme!	common	es-ca	ARREGLEU-ME!
 font color	htmlarea	es-ca	Color de la lletra
-force selectbox	common	es-ca	Forçar quadre de sel.lecció
+force selectbox	common	es-ca	Forçar quadre de selecció
 france	common	es-ca	FRANÇA
 french guiana	common	es-ca	GUAIANA FRANCESA
 french polynesia	common	es-ca	POLINÈSIA FRANCESA
@@ -244,7 +250,7 @@ group has been added	common	es-ca	Grup afegit
 group has been deleted	common	es-ca	Grup esborrat
 group has been updated	common	es-ca	Grup actualitzat
 group name	common	es-ca	nom del grup
-group public	common	es-ca	Grup Public
+group public	common	es-ca	Grup Públic
 groups	common	es-ca	Grups
 groups with permission for %1	common	es-ca	Grups amb permís per %1
 groups without permission for %1	common	es-ca	Grups sense permís per %1
@@ -255,6 +261,9 @@ guinea	common	es-ca	GUINEA
 guinea-bissau	common	es-ca	GUINEA-BISSAU
 guyana	common	es-ca	GUYANA
 haiti	common	es-ca	HAITI
+header admin login	common	es-ca	Entrada per Administrar la Capçalera
+header password	common	es-ca	Contrasenya de la Capçalera
+header username	common	es-ca	Nom d'usuari de la Capçalera
 heard island and mcdonald islands	common	es-ca	ILLA HEARD I ILLES MCDONALD
 help	common	es-ca	Ajuda
 help using editor	htmlarea	es-ca	Ajuda usant editor
@@ -284,7 +293,7 @@ iran, islamic republic of	common	es-ca	IRAN, REPÚBLICA ISLÀMICA D
 iraq	common	es-ca	IRAQ
 ireland	common	es-ca	IRLANDA
 israel	common	es-ca	ISRAEL
-it has been more then %1 days since you changed your password	common	es-ca	Fa més de %1 díes des de que vàreu canviar la contrasenya
+it has been more then %1 days since you changed your password	common	es-ca	Fa més de %1 dies des de que vàreu canviar la contrasenya
 it is recommended that you run setup to upgrade your tables to the current version	common	es-ca	Es recomana que executeu <i>setup</i> per actualitzar les taules a la versió actual.
 italic	common	es-ca	Cursiva
 italy	common	es-ca	ITÀLIA
@@ -320,6 +329,7 @@ libyan arab jamahiriya	common	es-ca	LIBIA (LYBIAN ARAB JAMAHIRIYA)
 license	common	es-ca	Llicència
 liechtenstein	common	es-ca	LIECHTENSTEIN
 list	common	es-ca	Llista
+list members	common	es-ca	Llista de membres
 lithuania	common	es-ca	LITUÀNIA
 local	common	es-ca	Local
 login	common	es-ca	Entrar
@@ -351,7 +361,7 @@ mayotte	common	es-ca	MAYOTTE
 medium	common	es-ca	Mig
 menu	common	es-ca	Menú
 message	common	es-ca	Missatge
-mexico	common	es-ca	MÉXIC
+mexico	common	es-ca	MÈXIC
 micronesia, federated states of	common	es-ca	MICRONESIA, ESTATS FEDERATS DE
 moldova, republic of	common	es-ca	MOLDÀViA, REPÚBLICA DE
 monaco	common	es-ca	MONACO
@@ -402,7 +412,7 @@ ok	common	es-ca	Acceptar
 old value	common	es-ca	Valor anterior
 oman	common	es-ca	OMAN
 on *nix systems please type: %1	common	es-ca	En sistemes *nix escriviu: %1
-on mouse over	common	es-ca	Al moure el ratolí per sobre
+on mouse over	common	es-ca	En moure el ratolí per sobre
 only private	common	es-ca	només privat
 only yours	common	es-ca	només els vostres
 open notify window	common	es-ca	Obrir finestra de notificació
@@ -411,7 +421,8 @@ ordered list	htmlarea	es-ca	Llista ordenada
 original	common	es-ca	Original
 other	common	es-ca	Altres
 overview	common	es-ca	Resum
-owner	common	es-ca	Amo
+owner	common	es-ca	Propietari
+page	common	es-ca	Pàgina
 page was generated in %1 seconds	common	es-ca	Plana generada en %1 segons
 pakistan	common	es-ca	PAKISTAN
 palau	common	es-ca	PALAU
@@ -427,28 +438,29 @@ password has been updated	common	es-ca	Contrasenya actualitzada
 paste from clipboard	htmlarea	es-ca	Enganxar des del portapapers
 path	htmlarea	es-ca	Camí
 path to user and group files has to be outside of the webservers document-root!!!	common	es-ca	El camí als arxius d'usuari i grups HA D'ESTAR FORA del directori arrel de documents dels servidors web!!
-pattern for search in addressbook	common	es-ca	Patro de recerca a la Llibreta d'adreces
-pattern for search in calendar	common	es-ca	Patro de recerca al Calendari
-pattern for search in projects	common	es-ca	Patro de recerca als Projectes
+pattern for search in addressbook	common	es-ca	Patró de recerca a la Llibreta d'adreces
+pattern for search in calendar	common	es-ca	Patró de recerca al Calendari
+pattern for search in projects	common	es-ca	Patró de recerca als Projectes
 permissions to the files/users directory	common	es-ca	permissos als directoris d'arxius/usuaris
 personal	common	es-ca	Personal
 peru	common	es-ca	PERU
 philippines	common	es-ca	FILIPINES
 phone number	common	es-ca	Número de telèfon
+phpgroupware login	login	es-ca	Ingreso al Sistema de Groupware
 phpinfo	common	es-ca	PhpInfo
 phpwebhostin	common	es-ca	Manejo Avanzado de Archivos
 pitcairn	common	es-ca	PITCAIRN
-please %1 by hand	common	es-ca	Si us plau %1 manualmente
-please enter a name	common	es-ca	Si us plau introduiu un nom !
-please run setup to become current	common	es-ca	Si us plau executeu la instal.lació per posar-vos al dia
-please select	common	es-ca	Si us plau Trieu
-please set your global preferences	common	es-ca	Si us plau establiu les vostres preferències globals !
-please set your preferences for this application	common	es-ca	Si us plau establiu les vostres preferències per aquesta aplicació
-please wait...	common	es-ca	Si us plau espereu...
+please %1 by hand	common	es-ca	Si us plau, %1 manualment
+please enter a name	common	es-ca	Si us plau, introduïu un nom !
+please run setup to become current	common	es-ca	Si us plau, executeu la instal·lació per posar-vos al dia
+please select	common	es-ca	Si us plau, Trieu
+please set your global preferences	common	es-ca	Si us plau, establiu les vostres preferències globals !
+please set your preferences for this application	common	es-ca	Si us plau, establiu les vostres preferències per aquesta aplicació
+please wait...	common	es-ca	Si us plau, espereu...
 poland	common	es-ca	POLÒNIA
 portugal	common	es-ca	PORTUGAL
 postal	common	es-ca	Postal
-powered by egroupware version %1	common	es-ca	Versió %1
+powered by phpgroupware version %1	common	es-ca	Versió %1
 preferences	common	es-ca	Preferències
 preferences for the idots template set	common	es-ca	Preferències per al joc de plantilles "idot"
 prev. month (hold for menu)	jscalendar	es-ca	Mes anterior (mantenir clicat per menú)
@@ -466,10 +478,11 @@ read this list of methods.	common	es-ca	Llegir aquesta llista de mètodes
 redoes your last action	htmlarea	es-ca	Repeteix la darrera acció
 registration	common	es-ca	Registracion
 reject	common	es-ca	Rebutjar
-rename	common	es-ca	Reanomenar
+remove selected accounts	common	es-ca	esborra els comptes seleccionats
+rename	common	es-ca	Reanomena
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	es-ca	Torna una matriu de tasques pendents
-returns struct of users application access	common	es-ca	Torna una estructura de l'accés dels usuaria a la aplicació
+returns struct of users application access	common	es-ca	Torna una estructura de l'accés dels usuaris a l'aplicació
 reunion	common	es-ca	REUNION
 romania	common	es-ca	ROMANIA
 russian federation	common	es-ca	FEDERACIÓ RUSSA
@@ -486,6 +499,8 @@ saturday	common	es-ca	Dissabte
 saudi arabia	common	es-ca	ARÀBIA SAUDÍ
 save	common	es-ca	Desar
 search	common	es-ca	Cercar
+search %1 '%2'	common	es-ca	Cercar %1 '%2'
+search or select accounts	common	es-ca	Cercar o seleccionar comptes
 section	common	es-ca	Secció
 select	common	es-ca	Triar
 select all %1 %2 for %3	common	es-ca	Triar tots els %1 %2 per %3
@@ -496,20 +511,22 @@ select home email address	common	es-ca	Triar adreça de correu particular
 select one	common	es-ca	Triar un
 select user	common	es-ca	Triar usuari
 select work email address	common	es-ca	Triar adreça de correu del treball
+selection	common	es-ca	Selecció
 send	common	es-ca	Enviar
 senegal	common	es-ca	SENEGAL
 september	common	es-ca	Setembre
 server %1 has been added	common	es-ca	Servidor %1 afegit
 server name	common	es-ca	Nom del servidor
 session has been killed	common	es-ca	Sessió eliminada
-setup	common	es-ca	Instal.lació
-setup main menu	common	es-ca	Menú principal d'instal.lació
+setup	common	es-ca	Instal·lació
+setup main menu	common	es-ca	Menú principal d'instal·lació
+setup/config admin login	common	es-ca	Entrada per Instal·lar/Configurar Administrador
 seychelles	common	es-ca	SEYCHELLES
 show all	common	es-ca	mostrar tot
 show all categorys	common	es-ca	Mostrar totes les categories
 show menu	common	es-ca	mostrar menu
 show page generation time	common	es-ca	Mostrar temps de generació de la plana
-show page generation time on the bottom of the page?	common	es-ca	Mostrar el temps de generació de la plana a la parte inferior?
+show page generation time on the bottom of the page?	common	es-ca	Mostrar el temps de generació de la plana a la part inferior?
 show_more_apps	common	es-ca	mostrar més aplicacions
 showing %1	common	es-ca	mostrant %1
 showing %1 - %2 of %3	common	es-ca	mostrant %1 - %2 de %3
@@ -550,30 +567,27 @@ the api is current	common	es-ca	La API esta al dia
 the api requires an upgrade	common	es-ca	La API necessita actualització
 the following applications require upgrades	common	es-ca	Les següents aplicacions necessiten actualització
 the mail server returned	common	es-ca	El servidor de correu ha tornat
-this application is current	common	es-ca	Aquesta aplicació está al dia
+this application is current	common	es-ca	Aquesta aplicació està al dia
 this application requires an upgrade	common	es-ca	Aquesta aplicació necessita actualitzar-se
 this name has been used already	common	es-ca	Aquest nom ja és en ús !
 thursday	common	es-ca	Dijous
 time	common	es-ca	Hora
 time selection:	jscalendar	es-ca	Seleccionar hora:
 time zone	common	es-ca	Zona horària
-time zone offset	common	es-ca	Diferencia de zona horària
+time zone offset	common	es-ca	Diferència de zona horària
 timetrack	preferences	es-ca	Seguimiento del Tiempo
 title	common	es-ca	Títol
 to	common	es-ca	Per
 to correct this error for the future you will need to properly set the	common	es-ca	Per a corregir aquest error per al futur necessitareu configurar acuradament el
-to go back to the msg list, click <a href= %1 >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aqui</a>
-to go back to the msg list, click <a href= %1?sessionid=69211c0c32aa5581c5d69abdbcac4d64 >here</a>	common	es-ca	Para volver a la lista de mensajes, pulse <a href="%1">aquí</a>
-to go back to the msg list, click <a href= %1?sessionid=7fe5595a67d8747e64c2b92411ceaf31 >here</a>	common	es-ca	
-to go back to the msg list, click <a href= %1?sessionid=c0878fba5e3f2f6230f04199a7af15c6 >here</a>	common	es-ca	Para volver a la lista de menseajes, pulse <a href="%1">aquí</a>
+to go back to the msg list, click <a href= %1 >here</a>	common	es-ca	Per tornar a la llista de missatges, premeu <a href="%1">aquí</a>
 today	common	es-ca	Avui
 todays date, eg. "%1"	common	es-ca	data d'avui, ex. "%1"
-toggle first day of week	jscalendar	es-ca	Canviar el primer día de la setmana
+toggle first day of week	jscalendar	es-ca	Canviar el primer dia de la setmana
 toggle html source	htmlarea	es-ca	Canviar a vista de codi HTML
 togo	common	es-ca	TOGO
 tokelau	common	es-ca	TOKELAU
 tonga	common	es-ca	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-ca	Masses intents erronis de inici de sessió: %1 per a l'usuari '%2', %3 per la IP %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	es-ca	Massa intents erronis d'inici de sessió: %1 per a l'usuari '%2', %3 per la IP %4
 total	common	es-ca	Total
 trinidad and tobago	common	es-ca	TRINIDAD I TOBAGO
 tuesday	common	es-ca	Dimarts
@@ -638,8 +652,9 @@ you have not entered participants	common	es-ca	No heu entrat participants
 you have selected an invalid date	common	es-ca	Heu triat una data incorrecta !
 you have selected an invalid main category	common	es-ca	Heu triat una categoria principal incorrecta !
 you have successfully logged out	common	es-ca	Desconnexió correcta
+you need to add the webserver user '%1' to the group '%2'.	common	es-ca	Necessiteu afegir l'usuari '%1' del servidor web al grup '%2'.
 your message as been sent	common	es-ca	Su mensaje fue enviado
-your message could <b>not</b> be sent!<br>	common	es-ca	El missatge <b>no</b> s'ha pogut enviar<br>
+your message could <b>not</b> be sent!<br>	common	es-ca	El missatge <b>no</b> s'ha pogut enviar!<br>
 your message has been sent	common	es-ca	Missatge enviat
 your search returned %1 matchs	common	es-ca	la recerca ha tornat %1 resultats
 your search returned 1 match	common	es-ca	la recerca ha tornat 1 resultat
