@@ -57,13 +57,7 @@
       (isset($phpgw_info["server"]["checkfornewversion"]) &&
        $phpgw_info["server"]["checkfornewversion"])) {
      $phpgw->network->set_addcrlf(False);
-     if ($phpgw->network->open_port("phpgroupware.org",80,30)) {
-	 $phpgw->network->write_port("GET /currentversion HTTP/1.0\nHOST: www.phpgroupware.org\n\n");
-	 while ($line = $phpgw->network->read_port())
-	     $lines[] = $line;
-	 $phpgw->network->close_port();
-     }
-
+     $lines = $phpgw->network->gethttpsocketfile("http://www.phpgroupware.org/currentversion");
      for ($i=0; $i<count($lines); $i++) {
          if (ereg("currentversion",$lines[$i])) {
             $line_found = explode(":",chop($lines[$i]));
