@@ -95,20 +95,9 @@
 				return;
 			}
 
-			if(!isset($params['link']))
-			{
-				$params['link'] = '';
-			}
-
-			if(!isset($params['buttons']))
-			{
-				$params['button'] = 'none';
-			}
-
-			if(!isset($params['outside_month']))
-			{
-				$params['outside_month'] = True;
-			}
+			$params['link']			= (!isset($params['link'])?'':$params['link']);
+			$params['buttons']		= (!isset($params['buttons'])?'none':$params['buttons']);
+			$params['outside_month']	= (!isset($params['outside_month'])?True:$params['outside_month']);
 
 			$this->bo->read_holidays();
 
