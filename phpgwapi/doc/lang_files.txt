@@ -46,7 +46,7 @@ Rules:
   consult the API or application developer to let them know before you
   add missing phrases.
 
-6. Please be careful not to conflict with or duplicate an API lang entry.
+6. Please be careful not to conflict with or duplicate any lang entry.
   Conflicts should be checked for by using setup to load the language you are
   working with.  Also, if more than a couple of apps are using the same or
   similar lang entry, it should most likely be moved to the API lang files.
@@ -57,3 +57,5 @@ Rules:
   'admin', 'common' and the 'appname'.  When in doubt use common, so that
   it will show in prefs/admin, etc.
 
+8.  Please sort the file when you add new entries.  This makes it easier to
+  read and will help to locate duplicates.
