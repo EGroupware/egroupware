@@ -36,16 +36,120 @@
 	*/
 	class contacts_
 	{
-		var $db;
+		var $db = '';
 		var $std_table='phpgw_addressbook';
 		var $ext_table='phpgw_addressbook_extra';
 
-		var $account_id;
-		var $stock_contact_fields; /* This is an array of almost the fields in the phpgw_addressbook table, except id,owner,lid,tid,access,cat_id */
-		var $non_contact_fields;   /* Here are the rest */
-		var $email_types;          /* VCard email type array */
-		var $total_records;        /* This will contain numrows for data retrieved */
-		var $grants;               /* This holds all of the users that have granted access to there entrys */
+		var $account_id = 0;
+		var $stock_contact_fields = array();
+		var $non_contact_fields = array();
+		var $email_types = array();
+		var $total_records = 0;
+		var $grants = '';
+
+		/* The left side are the array elements used throughout phpgw, right side are the db field names. */
+		var $stock_contact_fields = array(
+			'fn'                  => 'fn',
+			'n_given'             => 'n_given',
+			'n_family'            => 'n_family',
+			'n_middle'            => 'n_middle',
+			'n_prefix'            => 'n_prefix',
+			'n_suffix'            => 'n_suffix',
+			'sound'               => 'sound',
+			'bday'                => 'bday',
+			'note'                => 'note',
+			'tz'                  => 'tz',
+			'geo'                 => 'geo',
+			'url'                 => 'url',
+			'pubkey'              => 'pubkey',
+			'org_name'            => 'org_name',
+			'org_unit'            => 'org_unit',
+			'title'               => 'title',
+			'adr_one_street'      => 'adr_one_street',
+			'adr_one_locality'    => 'adr_one_locality', 
+			'adr_one_region'      => 'adr_one_region', 
+			'adr_one_postalcode'  => 'adr_one_postalcode',
+			'adr_one_countryname' => 'adr_one_countryname',
+			'adr_one_type'        => 'adr_one_type',
+			'label'               => 'label',
+			'adr_two_street'      => 'adr_two_street',
+			'adr_two_locality'    => 'adr_two_locality', 
+			'adr_two_region'      => 'adr_two_region', 
+			'adr_two_postalcode'  => 'adr_two_postalcode',
+			'adr_two_countryname' => 'adr_two_countryname',
+			'adr_two_type'        => 'adr_two_type',
+			'tel_work'            => 'tel_work',
+			'tel_home'            => 'tel_home',
+			'tel_voice'           => 'tel_voice',
+			'tel_fax'             => 'tel_fax', 
+			'tel_msg'             => 'tel_msg',
+			'tel_cell'            => 'tel_cell',
+			'tel_pager'           => 'tel_pager',
+			'tel_bbs'             => 'tel_bbs',
+			'tel_modem'           => 'tel_modem',
+			'tel_car'             => 'tel_car',
+			'tel_isdn'            => 'tel_isdn',
+			'tel_video'           => 'tel_video',
+			'tel_prefer'          => 'tel_prefer',
+			'email'               => 'email',
+			'email_type'          => 'email_type',
+			'email_home'          => 'email_home',
+			'email_home_type'     => 'email_home_type'
+		);
+
+		var $non_contact_fields = array(
+			'id'     => 'id',
+			'lid'    => 'lid',
+			'tid'    => 'tid',
+			'cat_id' => 'cat_id',
+			'access' => 'access',
+			'owner'  => 'owner'
+		);
+
+		/* Used to flag an address as being:
+		   domestic AND/OR international(default)
+		   parcel(default)
+		   postal(default)
+		*/
+		var $adr_types = array(
+			'dom'    => lang('Domestic'),
+			'intl'   => lang('International'),
+			'parcel' => lang('Parcel'),
+			'postal' => lang('Postal')
+		);
+
+		/* Used to set preferred number field */
+		var $tel_types = array(
+			'work'  => 'work',
+			'home'  => 'home',
+			'voice' => 'voice',
+			'fax'   => 'fax',
+			'msg'   => 'msg',
+			'cell'  => 'cell',
+			'pager' => 'pager',
+			'bbs'   => 'bbs',
+			'modem' => 'modem',
+			'car'   => 'car',
+			'isdn'  => 'isdn',
+			'video' => 'video'
+		);
+
+		/* Used to set email_type fields */
+		var $email_types = array(
+			'INTERNET'   => 'INTERNET',
+			'CompuServe' => 'CompuServe',
+			'AOL'        => 'AOL',
+			'Prodigy'    => 'Prodigy',
+			'eWorld'     => 'eWorld',
+			'AppleLink'  => 'AppleLink',
+			'AppleTalk'  => 'AppleTalk',
+			'PowerShare' => 'PowerShare',
+			'IBMMail'    => 'IBMMail',
+			'ATTMail'    => 'ATTMail',
+			'MCIMail'    => 'MCIMail',
+			'X.400'      => 'X.400',
+			'TLX'        => 'TLX'
+		);
 
 		function contacts_($useacl=True)
 		{
@@ -55,118 +159,10 @@
 				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
 			}
 			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-
-			/* The left side are the array elements used throughout phpgw, right side are the db field names. */
-			$this->stock_contact_fields = array(
-				'fn'                     => 'fn',
-				'n_given'                => 'n_given',
-				'n_family'               => 'n_family',
-				'n_middle'               => 'n_middle',
-				'n_prefix'               => 'n_prefix',
-				'n_suffix'               => 'n_suffix',
-				'sound'                  => 'sound',
-				'bday'                   => 'bday',
-				'note'                   => 'note',
-				'tz'                     => 'tz',
-				'geo'                    => 'geo',
-				'url'                    => 'url',
-				'pubkey'                 => 'pubkey',
-
-				'org_name'               => 'org_name',
-				'org_unit'               => 'org_unit',
-				'title'                  => 'title',
-
-				'adr_one_street'         => 'adr_one_street',
-				'adr_one_locality'       => 'adr_one_locality', 
-				'adr_one_region'         => 'adr_one_region', 
-				'adr_one_postalcode'     => 'adr_one_postalcode',
-				'adr_one_countryname'    => 'adr_one_countryname',
-				'adr_one_type'           => 'adr_one_type',
-				'label'                  => 'label',
-
-				'adr_two_street'         => 'adr_two_street',
-				'adr_two_locality'       => 'adr_two_locality', 
-				'adr_two_region'         => 'adr_two_region', 
-				'adr_two_postalcode'     => 'adr_two_postalcode',
-				'adr_two_countryname'    => 'adr_two_countryname',
-				'adr_two_type'           => 'adr_two_type',
-
-				'tel_work'               => 'tel_work',
-				'tel_home'               => 'tel_home',
-				'tel_voice'              => 'tel_voice',
-				'tel_fax'                => 'tel_fax', 
-				'tel_msg'                => 'tel_msg',
-				'tel_cell'               => 'tel_cell',
-				'tel_pager'              => 'tel_pager',
-				'tel_bbs'                => 'tel_bbs',
-				'tel_modem'              => 'tel_modem',
-				'tel_car'                => 'tel_car',
-				'tel_isdn'               => 'tel_isdn',
-				'tel_video'              => 'tel_video',
-				'tel_prefer'             => 'tel_prefer',
-				'email'                  => 'email',
-				'email_type'             => 'email_type',
-				'email_home'             => 'email_home',
-				'email_home_type'        => 'email_home_type'
-			);
-
-			$this->non_contact_fields = array(
-				'id'     => 'id',
-				'lid'    => 'lid',
-				'tid'    => 'tid',
-				'cat_id' => 'cat_id',
-				'access' => 'access',
-				'owner'  => 'owner'
-			);
-
-			/* Used to flag an address as being:
-			   domestic AND/OR international(default)
-			   parcel(default)
-			   postal(default)
-			*/
-			$this->adr_types = array(
-				'dom'    => lang('Domestic'),
-				'intl'   => lang('International'),
-				'parcel' => lang('Parcel'),
-				'postal' => lang('Postal')
-			);
-
-			/* Used to set preferred number field */
-			$this->tel_types = array(
-				'work'  => 'work',
-				'home'  => 'home',
-				'voice' => 'voice',
-				'fax'   => 'fax',
-				'msg'   => 'msg',
-				'cell'  => 'cell',
-				'pager' => 'pager',
-				'bbs'   => 'bbs',
-				'modem' => 'modem',
-				'car'   => 'car',
-				'isdn'  => 'isdn',
-				'video' => 'video'
-			);
-
-			/* Used to set email_type fields */
-			$this->email_types = array(
-				'INTERNET'   => 'INTERNET',
-				'CompuServe' => 'CompuServe',
-				'AOL'        => 'AOL',
-				'Prodigy'    => 'Prodigy',
-				'eWorld'     => 'eWorld',
-				'AppleLink'  => 'AppleLink',
-				'AppleTalk'  => 'AppleTalk',
-				'PowerShare' => 'PowerShare',
-				'IBMMail'    => 'IBMMail',
-				'ATTMail'    => 'ATTMail',
-				'MCIMail'    => 'MCIMail',
-				'X.400'      => 'X.400',
-				'TLX'        => 'TLX'
-			);
 		}
 
 		/* send this the id and whatever fields you want to see */
-		function read_single_entry($id,$fields="")
+		function read_single_entry($id,$fields='')
 		{
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			list($stock_fields,$stock_fieldnames,$extra_fields) =
@@ -174,24 +170,22 @@
 
 			if (count($stock_fieldnames))
 			{
-				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				$t_fields = ',' . implode(',',$stock_fieldnames);
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
 			}
 
-			$this->db2 = $this->db;
- 
 			$this->db->query("SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table WHERE id='$id'");
 			$this->db->next_record();
 
-			$return_fields[0]['id']        = $this->db->f('id');
-			$return_fields[0]['lid']       = $this->db->f('lid');
-			$return_fields[0]['tid']       = $this->db->f('tid');
-			$return_fields[0]['owner']     = $this->db->f('owner');
-			$return_fields[0]['access']    = $this->db->f('access');
-			$return_fields[0]['cat_id']    = $this->db->f('cat_id');
+			$return_fields[0]['id']     = $this->db->f('id');
+			$return_fields[0]['lid']    = $this->db->f('lid');
+			$return_fields[0]['tid']    = $this->db->f('tid');
+			$return_fields[0]['owner']  = $this->db->f('owner');
+			$return_fields[0]['access'] = $this->db->f('access');
+			$return_fields[0]['cat_id'] = $this->db->f('cat_id');
 
 			if (gettype($stock_fieldnames) == 'array')
 			{
@@ -201,7 +195,7 @@
 				}
 			}
 
-			/* Setup address type fields */
+			/* Setup address type fields for ui forms display */
 			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
@@ -221,12 +215,12 @@
 				}
 			}
 
-			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
-			while ($this->db2->next_record())
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table where contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
+			while ($this->db->next_record())
 			{
-				if ($extra_fields[$this->db2->f('contact_name')])
+				if ($extra_fields[$this->db->f('contact_name')])
 				{
-					$return_fields[0][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
+					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
 			}
 			return $return_fields;
@@ -240,14 +234,12 @@
 
 			if (count($stock_fieldnames))
 			{
-				$t_fields = "," . implode(",",$stock_fieldnames);
-				if ($t_fields == ",")
+				$t_fields = ',' . implode(',',$stock_fieldnames);
+				if ($t_fields == ',')
 				{
 					unset($t_fields);
 				}
 			}
-
-			$this->db2 = $this->db;
 
 			$this->db->query('SELECT max(id) FROM '.$this->std_table,__LINE__,__FILE__);
 			$this->db->next_record();
@@ -272,7 +264,7 @@
 				}
 			}
 
-			/* Setup address type fields */
+			/* Setup address type fields for ui forms display */
 			if ($this->db->f('adr_one_type'))
 			{
 				$one_type = $this->db->f('adr_one_type');
@@ -292,12 +284,12 @@
 				}
 			}
 
-			$this->db2->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
-			while ($this->db2->next_record())
+			$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='" . $this->db->f('id') . "'",__LINE__,__FILE__);
+			while ($this->db->next_record())
 			{
-				if ($extra_fields[$this->db2->f('contact_name')])
+				if ($extra_fields[$this->db->f('contact_name')])
 				{
-					$return_fields[0][$this->db2->f('contact_name')] = $this->db2->f('contact_value');
+					$return_fields[0][$this->db->f('contact_name')] = $this->db->f('contact_value');
 				}
 			}
 			return $return_fields;
@@ -328,7 +320,7 @@
 			{
 				$check_stock = $this->stock_contact_fields + $this->non_contact_fields;
 
-				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
+				if ($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
 				$filterarray = split(',',$filter);
 				if ($filterarray[1])
 				{
@@ -338,7 +330,7 @@
 						list($name,$value) = split('=',$filterarray[$i]);
 						if ($name)
 						{
-							if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 1: #".$name."# => #".$value."#"; }
+							if ($DEBUG) { echo '<br>DEBUG - Filter intermediate strings 1: #'.$name.'# => #'.$value.'#'; }
 							$filterfields[$name] = $value;
 						}
 					}
@@ -398,12 +390,12 @@
 					}
 					$i++;
 				}
-				$filterlist  = substr($filterlist,0,-1);
-				$filterlist  = ereg_replace(";"," AND ",$filterlist);
+				$filterlist = substr($filterlist,0,-1);
+				$filterlist = ereg_replace(';',' AND ',$filterlist);
 				
 				if ($DEBUG)
 				{
-					echo "<br>DEBUG - Filter output string: #".$filterlist."#";
+					echo '<br>DEBUG - Filter output string: #'.$filterlist.'#';
 				}
 
 				if ($filterlist)
@@ -419,18 +411,18 @@
 
 			if (!$filtermethod)
 			{
-				if($GLOBALS['phpgw_info']['user']['account_id'])
+				if($this->account_id)
 				{
-					$fwhere .= " (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
-					$fand   .= " (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
+					$fwhere .= ' (owner=' . $this->account_id;
+					$fand   .= ' (owner=' . $this->account_id;
 				}
 			}
 			else
 			{
-				if($GLOBALS['phpgw_info']['user']['account_id'])
+				if($this->account_id)
 				{
-					$fwhere .= $filtermethod . " AND (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
-					$fand   .= $filtermethod . " AND (owner=" . $GLOBALS['phpgw_info']['user']['account_id'];
+					$fwhere .= $filtermethod . ' AND (owner=' . $this->account_id;
+					$fand   .= $filtermethod . ' AND (owner=' . $this->account_id;
 				}
 				else
 				{
@@ -458,7 +450,7 @@
 
 			if ($DEBUG && $filtermethod)
 			{
-				echo "<br>DEBUG - Filtering with: #" . $filtermethod . "#";
+				echo '<br>DEBUG - Filtering with: #' . $filtermethod . '#';
 			}
 
 			if (!$sort) { $sort = 'ASC'; }
@@ -476,9 +468,9 @@
 			{
 				echo "<br>DEBUG - $ordermethod";
 			}
-			
-			$filtermethod = "";
-			
+
+			$filtermethod = '';
+
 			if ($query)
 			{
 				$sql = "SELECT * FROM $this->std_table WHERE (bday LIKE '%$query%' OR n_family LIKE '"
@@ -492,15 +484,12 @@
 			else
 			{
 				$sql = "SELECT id,lid,tid,owner,access,cat_id $t_fields FROM $this->std_table " . $fwhere
-					. $filtermethod . " " . $ordermethod;
+					. $filtermethod . ' ' . $ordermethod;
 			}
-
 			if ($DEBUG) { echo "<br>$sql"; }
 
-			$this->db2 = $this->db;
-			$this->db2->query($sql,__LINE__,__FILE__);
-
-			$this->total_records = $this->db2->num_rows();
+			$this->db->query($sql,__LINE__,__FILE__);
+			$this->total_records = $this->db->num_rows();
 
 			if ($start && $limit)
 			{
@@ -514,8 +503,9 @@
 			{
 				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
 			}
+			$this->db2 = $this->db;
 
-			$i=0;
+			$i = 0;
 			while ($this->db->next_record())
 			{
 				$return_fields[$i]['id']     = $this->db->f('id');
@@ -585,7 +575,7 @@
 		function field_exists($id,$field_name)
 		{
 			$this->db->query("SELECT COUNT(*) FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
-			. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. addslashes($field_name) . "'",__LINE__,__FILE__);
 			$this->db->next_record();
 			return $this->db->f(0);
 		}
@@ -593,13 +583,13 @@
 		function add_single_extra_field($id,$owner,$field_name,$field_value)
 		{
 			$this->db->query("INSERT INTO $this->ext_table VALUES ($id,'$owner','" . addslashes($field_name)
-			. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
+				. "','" . addslashes($field_value) . "')",__LINE__,__FILE__);
 		}
 
 		function delete_single_extra_field($id,$field_name)
 		{
 			$this->db->query("DELETE FROM $this->ext_table WHERE contact_id='$id' AND contact_name='"
-			. addslashes($field_name) . "'",__LINE__,__FILE__);
+				. addslashes($field_name) . "'",__LINE__,__FILE__);
 		}
 
 		function update($id,$owner,$fields,$access='',$cat_id='',$tid='n')
@@ -619,8 +609,8 @@
 				{
 					$ta[] = $stock_fieldname . "='" . addslashes($stock_fields[$stock_fieldname]) . "'";
 				}
-				$fields_s = "," . implode(",",$ta);
-				if ($field_s == ",")
+				$fields_s = ',' . implode(',',$ta);
+				if ($field_s == ',')
 				{
 					unset($field_s);
 				}
@@ -639,8 +629,8 @@
 					else
 					{
 						$this->db->query("UPDATE $this->ext_table SET contact_value='" . addslashes($x_value)
-						. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
-						. "' AND contact_id='$id'",__LINE__,__FILE__);
+							. "',contact_owner='$owner' WHERE contact_name='" . addslashes($x_name)
+							. "' AND contact_id='$id'",__LINE__,__FILE__);
 					}
 				}
 				else
