@@ -15,18 +15,18 @@
   </tr>
   <tr>
     <td>
-     <font color="#000000" face="" size="-1">{lang_title}:</font>
-    </td>
-    <td>
-      <font size="-1">
-      {title}
-    </font></td>
-    <td>
-     <font color="#000000" face="" size="-1">{lang_email}:
+     <font color="#000000" face="" size="-1">{lang_email}:</font>
     </td>
     <td>
       <font size="-1">
       {email}
+    </font></td>
+    <td>
+     <font color="#000000" face="" size="-1">{lang_title}:
+    </td>
+    <td>
+      <font size="-1">
+      {title}
     </td>
   </tr>
   <tr>
