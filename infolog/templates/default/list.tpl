@@ -25,7 +25,7 @@
    <td class=list>{lang_subject}</td>
    <td width="10%" class=list>{lang_startdate}<br> <!-- </td>
    <td width="10%" class=list>-->{lang_enddate}</td>
-   <td width="10%" class=list>{lang_owner}<br>{lang_datecreated}</td>
+   <td width="10%" class=list>{lang_owner}<br>{lang_datemodified}</td>
    <td width="10%" class=list>{lang_responsible}</td>
   </tr>
   <tr bgcolor="{th_bg}" valign="top">
@@ -33,7 +33,7 @@
    <td class=list>{status}</td>
    <td class=list>{subject}<br>{des}{filelinks}</td>
    <td class=list>{startdate}<br>{enddate}</td>
-   <td class=list>{owner}<br>{datecreated}</td>
+   <td class=list>{owner}<br>{datemodified}</td>
    <td class=list">{responsible}</td>
   </tr>
  </table><p>
@@ -49,7 +49,7 @@
    <td width="4%" class=list>{lang_status}</td>
    <td class=list>{lang_subject}</td>
    <td width="8%" class=list>{lang_startdate}<br>{lang_enddate}</td>
-   <td width="8%" class=list>{lang_owner}<br>{lang_datecreated}</td>
+   <td width="8%" class=list>{lang_owner}<br>{lang_datemodified}</td>
    <td width="8%" class=list>{lang_responsible}</td>
    <td width="3%" class=list>{h_lang_sub}</td>
    <td width="3%" class=list>{h_lang_action}</td>
@@ -61,7 +61,7 @@
    <td class=list>{status}</td>
    <td class=list>{subject}<br>{des}{filelinks}</td>
    <td class=list>{startdate}<br>{enddate}</td>
-   <td class=list>{owner}<br>{datecreated}</td>
+   <td class=list>{owner}<br>{datemodified}</td>
    <td class=list>{responsible}</td>
    <td class=list>
 {subadd}

@@ -21,20 +21,22 @@
     <!-- END subpro -->
          <tr>
            <td>{lang_type}:</td>
-           <td>{type_list}</td>
+           <td width="40%">{type_list}</td>
            
            <td>{lang_owner}:</td>
            <td>{owner_info}</td>
          </tr>
          <tr>
            <td>{project_title}</td>
-           <td colspan="2">{project}</td>
-           <td>{project_nojs}</td>
+           <td colspan="3">{project} {project_nojs}</td>
          </tr>
          <tr>
           <td>{addr_title}</td>
-           <td colspan="2">{addr}</td>
-           <td>{addr_nojs}</td>
+           <td colspan="3">{addr} {addr_nojs}</td>
+         </tr>
+         <tr>
+          <td>{event_title}</td>
+           <td colspan="3">{event} {event_nojs}</td>
          </tr>
          <tr>
             <td colspan="4"><hr size="1"></td>

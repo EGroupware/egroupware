@@ -111,6 +111,10 @@
 
 		function addr2name( $addr )
 		{
+			if (!is_array($addr) && !($addr = $this->readAddr($addr)))
+			{
+				return '';
+			}
 			$name = $addr['n_family'];
 			if ($addr['n_given'])
 			{
@@ -130,11 +134,20 @@
 			return $GLOBALS['phpgw']->strip_html($name);
 		}
 
+		function proj2name( $proj )
+		{
+			if (!is_array($proj))
+			{
+				$proj = $this->readProj($proj);
+			}
+			return is_array($proj) ? $proj['title'] : '';
+		}
+
 		function readProj($proj_id)
 		{
 			if ($proj_id)
 			{
-				if (!is_object($this->projects))
+				if (!is_object($this->projects) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
 				{
 					$this->projects = createobject('projects.boprojects');
 				}
@@ -157,6 +170,43 @@
 				if (list( $addr ) = $this->contacts->read_single_entry( $addr_id ))
 				{
 					return $addr;
+				}
+			}
+			return False;
+		}
+
+		function event2name( $event )
+		{
+			if (!is_object($this->bocal) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
+			{
+				$this->bocal = createobject('calendar.bocalendar');
+			}
+			if (is_object($this->bocal) && !is_array($event) && (int) $event > 0)
+			{
+				$event = $this->bocal->read_entry($event);
+			}
+			if (!is_array($event))
+			{
+				return '';
+			}
+			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
+			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
+			$name .= ': ' . $event['title'];
+
+			return $GLOBALS['phpgw']->strip_html($name);
+		}
+
+		function readEvent($cal_id)
+		{
+			if ($cal_id)
+			{
+				if (!is_object($this->bocal) && file_exists(PHPGW_SERVER_ROOT.'/projects'))
+				{
+					$this->bocal = createobject('calendar.bocalendar');
+				}
+				if (is_object($this->bocal) && $event = $this->bocal->read_entry( $cal_id ))
+				{
+					return $event;
 				}
 			}
 			return False;
@@ -209,7 +259,7 @@
 			{
 				$values['owner'] = $this->so->user;
 			}
-			$values['datecreated'] = time(); // is now MODIFICATION-date
+			$values['datemodified'] = time();
 
 			if (!$values['subject'])
 			{

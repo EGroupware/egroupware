@@ -20,7 +20,7 @@
             <td class=list>{subject}<br>{des}{filelinks}</td>
             <td class=list>{startdate}</td>
             <td class=list>{enddate}</td>
-            <td class=list>{owner}<br>{datecreated}</td>
+            <td class=list>{owner}<br>{datemodified}</td>
             <td class=list">{responsible}</td>
           </tr>
       </table><p>

@@ -112,9 +112,9 @@
 
 		/*
 		 * $info: info_id or array with one row form info-db
-		 * no Proj.Info if proj_id == p_id / no Addr.Info if addr_id == a_id
+		 * no Proj.Info if action='proj' proj_id == action_id / no Addr.Info if addr_id == a_id
 		 */
-		function formatInfo($info=0,$p_id=0,$a_id=0)
+		function formatInfo($info=0,$action='',$action_id=0)
 		{
 			if (!is_array($info) && (!$info ||
 				 !is_array($info=$this->bo->read($info))))
@@ -127,7 +127,7 @@
 			$css_class = $info['info_pri'].($done ? '_done' : '');
 			$subject = "<span class=$css_class>";
 
-			if ($p_id != ($proj_id = $info['info_proj_id']) &&
+			if (($action_id != ($proj_id = $info['info_proj_id']) || $action != 'proj') &&
 			    $proj = $this->bo->readProj($proj_id))
 			{
 				$subject .= $this->html->bold($this->html->a_href($proj['title'],
@@ -135,29 +135,53 @@
 								 	array( 'filter' => $filter,'action' => 'proj',
 											 'action_id' => $proj_id )));
 			}
-			if ($a_id != ($addr_id = $info['info_addr_id']) &&
+			if (($action_id != ($addr_id = $info['info_addr_id']) || $action != 'addr') &&
 				 $addr = $this->bo->readAddr($addr_id))
 			{
 				if ($proj) $subject .= '<br>';
 				$addr = $this->bo->addr2name( $addr );
 				$subject .= $this->html->bold($this->html->a_href($addr,'/index.php',
-									array( 'menuaction' => 'addressbook.uiaddressbook.view',
-											 'ab_id' => $addr_id)
-									/* $this->menuaction() + array( 'filter' => $filter,'action' => 'addr',
-																			  'action_id' => $addr_id )*/
+									file_exists(PHPGW_SERVER_ROOT.'/addressbook') &&
+										$GLOBALS['phpgw_info']['user']['apps']['addressbook']['enabled'] ?
+									array(
+										'menuaction' => 'addressbook.uiaddressbook.view',
+										'ab_id' => $addr_id
+									) : $this->menuaction() + array(
+										'filter' => $filter,
+										'action' => 'addr',
+										'action_id' => $addr_id
+									)
+								));
+			}
+			if (($action_id != ($event_id = $info['info_event_id']) || $action != 'event') &&
+				 $event = $this->bo->readEvent($event_id))
+			{
+				if ($proj || $addr) $subject .= '<br>';
+				$event = $this->bo->event2name( $event );
+				$subject .= $this->html->bold($this->html->a_href($event,'/index.php',
+									file_exists(PHPGW_SERVER_ROOT.'/calendar') &&
+										$GLOBALS['phpgw_info']['user']['apps']['calendar']['enabled'] ?
+									array(
+										'menuaction' => 'calendar.uicalendar.view',
+										'cal_id' => $event_id
+									) : $this->menuaction() + array(
+										'filter' => $filter,
+										'action' => 'event',
+										'action_id' => $event_id
+									)
 								));
 			}
 			if (($from = $info['info_from']) && (!$addr || !strstr($addr,$from)))
 			{
-				if ($addr) $subject .= '<br>';
+				if ($addr || $event) $subject .= '<br>';
 				$subject .= '<b>'.$from.'</b>';
 			}
 			if ($info['info_addr'])
 			{
-				if ($addr || $from) $subject .= ': ';
+				if ($addr || $from || $event) $subject .= ': ';
 				$subject .= $info['info_addr'];
 			}
-			if ($proj || $addr || $from || $info['info_addr'])
+			if ($proj || $addr || $from || $info['info_addr'] || $event)
 			{
 				$subject .= '<br>';
 			}
@@ -218,7 +242,7 @@
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
 				'enddate'     => $enddate,
 				'owner'       => $owner,
-				'datecreated' => $GLOBALS['phpgw']->common->show_date($info['info_datecreated'],
+				'datemodified' => $GLOBALS['phpgw']->common->show_date($info['info_datemodified'],
 					$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']),
 				'responsible' => $responsible,
 				'filelinks'   => $links
@@ -237,7 +261,7 @@
 				'startdate'	=>	'Startdate',
 				'enddate'	=>	'Enddate',
 				'owner'		=>	'Owner',
-				'datecreated' => 'last changed',	// is MODIFICATION date now
+				'datemodified' => 'last changed',
 				'responsible' => 'Responsible'
 			);
 			while (list($f,$lang) = each($fields))
@@ -348,16 +372,19 @@
 			  case 'proj':
 					$action_vars += array( 'id_project' => $action_id,
 												  'proj_id' => $action_id);
-					$proj = $this->bo->readProj($action_id);
 					$t->set_var(lang_info_action,lang('InfoLog').' - '.
-									$proj['title']);
+									$this->bo->proj2name($action_id));
 					break;
 			  case 'addr':
 					$action_vars += array( 'id_addr' => $action_id,
 												  'addr_id' => $action_id );
-					$addr = $this->bo->readAddr($action_id);
 					$t->set_var(lang_info_action,lang('InfoLog').' - '.
-									$this->bo->addr2name($addr));
+									$this->bo->addr2name($action_id));
+					break;
+			  case 'event':
+					$action_vars += array( 'id_event' => $action_id,'event_id' => $action_id);
+					$t->set_var(lang_info_action,lang('InfoLog').' - '.
+									$this->bo->event2name($action_id));
 					break;
 			  default:
 					if ($filter && $filter != 'none')
@@ -427,9 +454,8 @@
 					$t->parse('projdetailshandle','projdetails',True);
 					break;
 			  case 'addr':
-			  		$nm_extra = "&action_id=$action_id";
-					break;
 			  case 'proj':
+			  case 'event':
 			  		$nm_extra = "&action_id=$action_id";
 					break;
 			}
@@ -472,7 +498,7 @@
 
 				$this->nextmatchs->template_alternate_row_color(&$t);
 
-				$t->set_var( $this->formatInfo( $id,$proj_id,$addr_id ));
+				$t->set_var( $this->formatInfo( $id,$action,$action_id ));
 
 				if ($this->bo->check_access($id,PHPGW_ACL_EDIT))
 				{
@@ -650,6 +676,7 @@
 			global $pri,$status,$confirm,$info_cat,$id_parent,$responsible;
 			global $attachfile,$attachfile_name,$attachfile_size,$attachfile_type;
 			global $filecomment,$full_fname;
+			global $id_event,$query_event;
 
 			$t = $this->template; $html = $this->html;
 
@@ -768,7 +795,8 @@
 							'enddate'   => $enddate,
 							'info_id'   => $info_id,
 							'id_parent' => $id_parent,
-							'responsible' => $responsible
+							'responsible' => $responsible,
+							'event_id'  => $id_event
 						));
 
 						if ($attachfile && $attachfile != "none")	// save the attached file
@@ -780,7 +808,7 @@
 						}
 					}
 
-					if (!$query_addr && !$query_project)
+					if (!$query_addr && !$query_project && !$query_event)
 					{
 						Header('Location: ' . $html->link($referer, array('cd'=>15)));
 						$GLOBALS['phpgw']->common->phpgw_exit();
@@ -852,7 +880,7 @@
 				case 'sp':
 					$info_action = 'InfoLog - New Subproject';
 					break;
-				case 'new': case 'addr': case 'proj':
+				case 'new': case 'addr': case 'proj': case 'event':
 					$info_action = 'InfoLog - New';
 					if ($info_type && isset($this->bo->enums['type'][$info_type]))
 						$this->bo->so->data['info_type'] = $info_type;
@@ -874,7 +902,7 @@
 			$t->set_var('common_hidden_vars',$common_hidden_vars);
 
 			// get an instance of select box class
-			$sb = CreateObject('phpgwapi.sbox2');
+			$sb = CreateObject('infolog.sbox2');
 
 			$t->set_var('lang_owner',lang('Owner'));
 			$t->set_var('owner_info',$sb->accountInfo($this->bo->so->data['info_owner']));
@@ -898,6 +926,9 @@
 
 			if (!isset($id_addr)) $id_addr = $this->bo->so->data['info_addr_id'];
 			$t->set_var($sb->getAddress('addr',$id_addr,$query_addr));
+
+			if (!isset($id_event)) $id_event = $this->bo->so->data['info_event_id'];
+			$t->set_var($sb->getEvent('event',$id_event,$query_event));
 
 			$t->set_var('lang_prsubject', lang('Subject'));
 			if (!isset($subject)) {
@@ -943,7 +974,7 @@
 			$t->set_var('lang_responsible',lang('Responsible'));
 			if (!isset($responsible)) $responsible=$this->bo->so->data['info_responsible'];
 			$t->set_var('responsible_list',$sb->getAccount('responsible',
-																		  $responsible));
+																		  $responsible,0,'accounts',-1));
 
 			$t->set_var('lang_access_type',lang('Private'));
 			if (!isset($access)) $access = $this->bo->so->data['info_access'] == 'private';

@@ -241,7 +241,7 @@
 			}
 			else
 			{
-			  $ordermethod = 'order by info_datecreated desc';   // newest first
+			  $ordermethod = 'order by info_datemodified desc';   // newest first
 			}
 			$filtermethod = $this->aclFilter($filter);
 			$filtermethod .= $this->statusFilter($filter);
@@ -257,6 +257,8 @@
 				case 'addr':	$filtermethod .= " AND info_addr_id=$action_id ";
 									break;
 				case 'proj':	$filtermethod .= " AND info_proj_id=$action_id ";
+									break;
+				case 'event':	$filtermethod .= " AND info_event_id=$action_id ";
 									break;
 			}
 			if ($query)			  // we search in _from, _subject and _des for $query

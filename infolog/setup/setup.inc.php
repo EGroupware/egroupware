@@ -13,7 +13,7 @@
 
 	$setup_info['infolog']['name']      = 'infolog';
 	$setup_info['infolog']['title']     = 'Info Log';
-	$setup_info['infolog']['version']   = '0.9.11';
+	$setup_info['infolog']['version']   = '0.9.15.001';
 	$setup_info['infolog']['app_order'] = 20;
 	$setup_info['infolog']['tables']    = array('phpgw_infolog');
 	$setup_info['infolog']['enable']    = 1;
@@ -31,6 +31,7 @@
 	$setup_info['infolog']['hooks'][] = 'about';
 	$setup_info['infolog']['hooks'][] = 'addressbook_view';
 	$setup_info['infolog']['hooks'][] = 'projects_view';
+	$setup_info['infolog']['hooks'][] = 'calendar_view';
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
