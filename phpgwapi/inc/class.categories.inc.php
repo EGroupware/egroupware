@@ -4,8 +4,8 @@
 	* This file written by Joseph Engo <jengo@phpgroupware.org>                *
 	*                  and Bettina Gille [ceb@phpgroupware.org]                *
 	* Category manager                                                         *
-	* Copyright (C) 2000,2001,2002 Joseph Engo                                 *
-	* -------------------------------------------------------------------------*
+	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
+	* ------------------------------------------------------------------------ *
 	* This library is part of the phpGroupWare API                             *
 	* http://www.phpgroupware.org/api                                          * 
 	* ------------------------------------------------------------------------ *
@@ -70,10 +70,11 @@
 		{
 			switch ($type)
 			{
-				case 'subs':        $s = " AND cat_parent != '0'"; break;
-				case 'mains':       $s = " AND cat_parent = '0'"; break;
-				case 'appandmains': $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
-				case 'appandsubs':  $s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
+				case 'subs':		$s = " AND cat_parent != '0'"; break;
+				case 'mains':		$s = " AND cat_parent = '0'"; break;
+				case 'appandmains':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent ='0'"; break;
+				case 'appandsubs':	$s = " AND cat_appname='" . $this->app_name . "' AND cat_parent !='0'"; break;
+				case 'noapp':		$s = " AND cat_appname != '" . $this->app_name . "'"; break;
 				default:            return False;
 			}
 			return $s;
@@ -536,8 +537,8 @@
 				{
 					if ($cats[$i]['level'] == 1)
 					{
-						$this->db->query('UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main=' . $cats[$i]['id']
-										. ' WHERE cat_id=' . $cats[$i]['id'],__LINE__,__FILE__);
+						$this->db->query("UPDATE phpgw_categories set cat_level=0, cat_parent=0, cat_main='" . intval($cats[$i]['id'])
+										. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 						$new_main = $cats[$i]['id'];
 					}
 					else
@@ -552,8 +553,8 @@
 							$update_parent = ',cat_parent=' . $new_parent;
 						}
 
-						$this->db->query('UPDATE phpgw_categories set cat_level=' . ($cats[$i]['level']-1) . $update_main . $update_parent 
-										. ' WHERE cat_id=' . $cats[$i]['id'],__LINE__,__FILE__);
+						$this->db->query("UPDATE phpgw_categories set cat_level='" . ($cats[$i]['level']-1) . "'" . $update_main . $update_parent 
+										. " WHERE cat_id='" . intval($cats[$i]['id']) . "' AND cat_appname='" . $this->app_name . "'",__LINE__,__FILE__);
 					}
 				}
 			}
@@ -662,6 +663,16 @@
 		*/
 		function exists($type,$cat_name = '',$cat_id = '')
 		{
+			if(is_array($type))
+			{
+				$temp_type = $type['type'];
+				$cat_name = $type['cat_name'] ? $type['cat_name'] : '';
+				$cat_id = $type['cat_id'] ? $type['cat_id'] : '';
+				settype($type,'string');
+				$type = $temp_type;
+				unset($temp_type);
+			}
+
 			$filter = $this->filter($type);
 
 			if ($cat_name)

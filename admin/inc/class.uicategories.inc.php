@@ -427,81 +427,84 @@
 
 			if ($GLOBALS['HTTP_POST_VARS']['confirm'])
 			{
-				if ($GLOBALS['HTTP_POST_VARS']['modify_subs'])
+				switch ($GLOBALS['HTTP_POST_VARS']['subs'])
 				{
-					$this->bo->delete($this->cat_id,False,True);
+					case 'move':
+						$this->bo->delete($this->cat_id,False,True);
+						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+						break;
+					case 'drop':
+						$this->bo->delete($this->cat_id,True);
+						Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+						break;
+					default:
+						$error_msg = lang('Please choose one of the methods to handle the subcategories');
+						//$this->bo->delete($this->cat_id);
+						break;
 				}
-				elseif ($GLOBALS['HTTP_POST_VARS']['drop_subs'])
-				{
-					$this->bo->delete($this->cat_id,True);
-				}
-				else
-				{
-					$this->bo->delete($this->cat_id);
-				}
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php',$link_data));
+			}
+
+			$GLOBALS['phpgw']->template->set_file(array('category_delete' => 'delete_cat.tpl'));
+
+			$GLOBALS['phpgw']->template->set_var('error_msg',$error_msg);
+			$nolink = $GLOBALS['phpgw']->link('/index.php',$link_data);
+
+			$apps_cats = $this->bo->exists(array
+			(
+				'type'     => 'noapp',
+				'cat_name' => '',
+				'cat_id'   => $this->cat_id
+			));
+
+			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $this->cat_id . '">');
+
+			if ($apps_cats)
+			{
+				$GLOBALS['phpgw']->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
+																. lang('You will need to remove the subcategories before you can delete this category'));
+
+				$GLOBALS['phpgw']->template->set_var('lang_subs','');
+				$GLOBALS['phpgw']->template->set_var('subs','');
+				$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
+				$GLOBALS['phpgw']->template->set_var('deletehandle','');
+				$GLOBALS['phpgw']->template->set_var('donehandle','');
+				$GLOBALS['phpgw']->template->pfp('out','category_delete');
+				$GLOBALS['phpgw']->template->pfp('donehandle','done');
 			}
 			else
 			{
-				$GLOBALS['phpgw']->template->set_file(array('category_delete' => 'delete_cat.tpl'));
+				$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this category ?'));
 
-				$nolink = $GLOBALS['phpgw']->link('/index.php',$link_data);
-
-				$apps_cats = $this->bo->exists(array
+				$exists = $this->bo->exists(array
 				(
 					'type'     => 'subs',
 					'cat_name' => '',
 					'cat_id'   => $this->cat_id
 				));
 
-				$GLOBALS['phpgw']->common->phpgw_header();
-
-				$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n";
-				$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
-
-				/*if ($apps_cats)
+				if ($exists)
 				{
-					$GLOBALS['phpgw']->template->set_var('messages',lang('This category is currently being used by applications as a parent category') . '<br>'
-						. lang('You will need to remove the subcategories before you can delete this category'));
+					$sub_select = '<input type="radio" name="subs" value="move">' . lang('Do you want to move all global subcategories one level down ?') . '<br>';
+					$sub_select .= '<input type="radio" name="subs" value="drop">' . lang('Do you want to delete all global subcategories ?');
+					$GLOBALS['phpgw']->template->set_var('sub_select',$sub_select);
 
-					$GLOBALS['phpgw']->template->set_var('lang_subs','');
-					$GLOBALS['phpgw']->template->set_var('subs','');
-					$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
-					$GLOBALS['phpgw']->template->set_var('deletehandle','');
-					$GLOBALS['phpgw']->template->set_var('donehandle','');
-					$GLOBALS['phpgw']->template->pfp('out','category_delete');
-					$GLOBALS['phpgw']->template->pfp('donehandle','done');
-				}
-				else
-				{*/
-					$GLOBALS['phpgw']->template->set_var('messages',lang('Are you sure you want to delete this category ?'));
-
-					$exists = $this->bo->exists(array
-					(
-						'type'     => 'subs',
-						'cat_name' => '',
-						'cat_id'   => $this->cat_id
-					));
-
-					if ($exists)
-					{
-						$GLOBALS['phpgw']->template->set_var('lang_drop_subs',lang('Do you also want to delete all global subcategories ?'));
+					/*	$GLOBALS['phpgw']->template->set_var('lang_drop_subs',lang('Do you also want to delete all global subcategories ?'));
 						$GLOBALS['phpgw']->template->set_var('drop_subs','<input type="checkbox" name="drop_subs" value="True">');
 
 						$GLOBALS['phpgw']->template->set_var('lang_modify_subs',lang('Do you want to move all global subcategories one level down ?'));
-						$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="modify_subs" value="True">');
-					}
+						$GLOBALS['phpgw']->template->set_var('subs','<input type="checkbox" name="modify_subs" value="True">'); */
+				}
 
-					$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
-					$GLOBALS['phpgw']->template->set_var('lang_no',lang('No'));
+				$GLOBALS['phpgw']->template->set_var('nolink',$nolink);
+				$GLOBALS['phpgw']->template->set_var('lang_no',lang('No'));
 
-					$link_data['menuaction'] = 'admin.uicategories.delete';
-					$link_data['cat_id'] = $this->cat_id;
-					$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
-					$GLOBALS['phpgw']->template->set_var('lang_yes',lang('Yes'));
+				$link_data['menuaction'] = 'admin.uicategories.delete';
+				$link_data['cat_id'] = $this->cat_id;
+				$GLOBALS['phpgw']->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php',$link_data));
+				$GLOBALS['phpgw']->template->set_var('lang_yes',lang('Yes'));
 
-					$GLOBALS['phpgw']->template->fp('phpgw_body','category_delete');
-				//}
+				$GLOBALS['phpgw']->template->fp('phpgw_body','category_delete');
 			}
 		}
 	}

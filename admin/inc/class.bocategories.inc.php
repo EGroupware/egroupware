@@ -125,9 +125,9 @@
 
 		function exists($data)
 		{
-			$data['type']   = $data['type'] ? $data['type'] : '';
-			$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
-			return $this->cats->exists($data['type'],$data['cat_name'],$data['cat_id']);
+			//$data['type']   = $data['type'] ? $data['type'] : '';
+			//$data['cat_id'] = $data['cat_id'] ? $data['cat_id'] : '';
+			return $this->cats->exists($data);
 		}
 
 		function formatted_list($data)
