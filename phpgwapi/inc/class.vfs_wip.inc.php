@@ -39,15 +39,6 @@
 	define (VFS_REAL, 1024);
 	define (RELATIVE_ALL, RELATIVE_PATH);
 
-	/* ACL access defines.  Used by acl_check () */
-	define (VFS_ACL_READ, 1);
-	define (VFS_ACL_ADD, 2);
-	define (VFS_ACL_EDIT, 4);
-	define (VFS_ACL_DELETE, 8);
-	define (VFS_ACL_PRIVATE, 16);
-	define (VFS_ACL_USER, VFS_ACL_READ|VFS_ACL_ADD|VFS_ACL_EDIT|VFS_ACL_DELETE);
-	define (VFS_ACL_ALL, VFS_ACL_READ|VFS_ACL_ADD|VFS_ACL_EDIT|VFS_ACL_DELETE|VFS_ACL_PRIVATE);
-
 	/*!
 	@class path_class
 	@abstract helper class for path_parts
@@ -285,6 +276,12 @@ class vfs
 				$rarray["fake_leading_dirs"] = $base . $extra_path;
 				$rarray["real_leading_dirs"] = $opp_base . $extra_path;
 			}
+			elseif (strrpos ($rarray["fake_full_path"], $sep) == 0)
+			{
+				/* If there is only one $sep in the path, we don't want to strip it off */
+				$rarray["fake_leading_dirs"] = $sep;
+				$rarray["real_leading_dirs"] = substr ($opp_base, 0, strlen ($opp_base) - 1);
+			}
 			else
 			{
 				/* These strip the ending / */
@@ -459,13 +456,103 @@ class vfs
 	@abstract Check ACL access to $file for $this->account_id
 	@param $file File to check access of
 	@param $relatives Standard relativity array
-	@param $operation Operation to check access to.  In the form of a VFS_ACL defines bitmask.  Default is read
-	@result True if access is ok, function does not return if access is bad
+	@param $operation Operation to check access to.  In the form of a PHPGW_ACL defines bitmask.  Default is read
+	@param $must_exist Boolean.  Set to True if $file must exist.  Otherwise, we check the parent directory as well
+	@result Boolean.  True if access is ok, False otherwise
 	*/
 
-	function acl_check ($file, $relatives = array (RELATIVE_CURRENT), $operation = VFS_ACL_READ)
+	function acl_check ($file, $relatives = array (RELATIVE_CURRENT), $operation = PHPGW_ACL_READ, $must_exist = False)
 	{
 		global $phpgw, $phpgw_info;
+
+		$account_id = $phpgw_info["user"]["account_id"];
+		$account_lid = $phpgw->accounts->id2name ($phpgw_info["user"]["account_id"]);
+
+		$p = $this->path_parts ($file, array ($relatives[0]));
+
+		/* Temporary, until we get symlink type files set up */
+		if ($p->outside)
+		{
+			return True;
+		}
+
+		/* If the file doesn't exist, we get ownership from the parent directory */
+		if (!$this->file_exists ($p->fake_full_path, array ($p->mask)))
+		{
+			if ($must_exist)
+			{
+				return False;
+			}
+
+			$file = $p->fake_leading_dirs;
+			$p2 = $this->path_parts ($file, array ($p->mask));
+
+			if (!$this->file_exists ($file, array ($p->mask)))
+			{
+				return False;
+			}
+		}
+		else
+		{
+			$p2 = $p;
+		}
+
+		/* Read access is always allowed here, but nothing else is */
+		if ($file == "/" || $file == $this->fakebase)
+		{
+			if ($operation == PHPGW_ACL_READ)
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
+		/*
+		   We don't use ls () to get owner_id as we normally would,
+		   because ls () calls acl_check (), which would create an infinite loop
+		*/
+		$query = $phpgw->db->query ("SELECT owner_id FROM phpgw_vfs WHERE directory='$p2->fake_leading_dirs_clean' AND name='$p2->fake_name_clean'", __LINE__, __FILE__);
+		$phpgw->db->next_record ();
+		$group_id = $phpgw->db->Record["owner_id"];
+
+		/* They always have access to their own files */
+		if ($group_id == $account_id)
+		{
+			return True;
+		}
+
+		/* Check if they're in the group.  If so, they have access */
+		$memberships = $phpgw->accounts->memberships ($account_id);
+
+		reset ($memberships);
+		while (list ($num, $group_array) = each ($memberships))
+		{
+			if ($group_id == $phpgw->accounts->name2id ($group_array["account_name"]))
+			{
+				$group_ok = 1;
+				break;
+			}
+		}
+
+		if ($group_ok)
+		{
+			return True;
+		}
+		
+		$acl = CreateObject ("phpgwapi.acl", $group_id);
+		$acl->read_repository ();
+
+		if ($acl->check ($account_id, $operation))
+		{
+			return True;
+		}
+		else
+		{
+			return False;
+		}
 	}
 	
 	/*!
@@ -554,6 +641,11 @@ class vfs
 
 		$p = $this->path_parts ($file, array ($relatives[0]));
 
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_READ))
+		{
+			return False;
+		}
+
 		if ($fp = fopen ($p->real_full_path, "r"))
 		{
 			$contents = fread ($fp, filesize ($p->real_full_path));
@@ -582,6 +674,20 @@ class vfs
 		global $phpgw_info;
 
 		$p = $this->path_parts ($file, array ($relatives[0]));
+
+		if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
+		{
+			$operation = PHPGW_ACL_EDIT;
+		}
+		else
+		{
+			$operation = PHPGW_ACL_ADD;
+		}
+
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), $operation))
+		{
+			return False;
+		}
 
 		umask(000);
 
@@ -638,10 +744,20 @@ class vfs
 		/* We, however, have to decide this ourselves */
 		if ($this->file_exists ($p->fake_full_path, array ($p->mask)))
 		{
+			if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_EDIT))
+			{
+				return False;
+			}
+
 			$vr = $this->set_attributes ($p->fake_full_path, array ($p->mask), array ("modifiedby_id" => $account_id, "modified" => date ("Y-m-d")));
 		}
 		else
 		{
+			if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_ADD))
+			{
+				return False;
+			}
+
 			$query = $phpgw->db->query ("INSERT INTO phpgw_vfs (owner_id, directory, name) VALUES ($this->working_id, '$p->fake_leading_dirs_clean', '$p->fake_name_clean')", __LINE__, __FILE__);
 
 			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("createdby_id" => $account_id, "created" => $this->now, "size" => 0, "deleteable" => "Y", "app" => $currentapp));
@@ -677,7 +793,26 @@ class vfs
 		$f = $this->path_parts ($from, array ($relatives[0]));
 		$t = $this->path_parts ($to, array ($relatives[1]));
 
-//		$this->acl_check ($t, array ($t->mask));
+		if (!$this->acl_check ($f->fake_full_path, array ($f->mask), PHPGW_ACL_READ))
+		{
+			return False;
+		}
+
+		if ($this->file_exists ($t->fake_full_path, array ($t->mask)))
+		{
+			if (!$this->acl_check ($t->fake_full_path, array ($t->mask), PHPGW_ACL_EDIT))
+			{
+				return False;
+			}
+		}
+		else
+		{
+			if (!$this->acl_check ($t->fake_full_path, array ($t->mask), PHPGW_ACL_ADD))
+			{
+				return False;
+			}
+
+		}
 
 		umask(000);
 
@@ -772,6 +907,24 @@ class vfs
 
 		$f = $this->path_parts ($from, array ($relatives[0]));
 		$t = $this->path_parts ($to, array ($relatives[1]));
+
+		if (!$this->acl_check ($f->fake_full_path, array ($f->mask), PHPGW_ACL_READ) || !$this->acl_check ($f->fake_full_path, array ($f->mask), PHPGW_ACL_DELETE))
+		{
+			return False;
+		}
+
+		if (!$this->acl_check ($t->fake_full_path, array ($t->mask), PHPGW_ACL_ADD))
+		{
+			return False;
+		}
+
+		if ($this->file_exists ($t->fake_full_path, array ($t->mask)))
+		{
+			if (!$this->acl_check ($t->fake_full_path, array ($t->mask), PHPGW_ACL_EDIT))
+			{
+				return False;
+			}
+		}
 
 		umask (000);
 
@@ -868,6 +1021,11 @@ class vfs
 
 		$p = $this->path_parts ($string, array ($relatives[0]));
 
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_DELETE))
+		{
+			return False;
+		}
+
 		if (!$this->file_exists ($string, array ($relatives[0])))
 		{
 			$rr = unlink ($p->real_full_path);
@@ -960,6 +1118,11 @@ class vfs
 
 		$p = $this->path_parts ($dir, array ($relatives[0]));
 
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_ADD))
+		{
+			return False;
+		}
+
 		/* We don't allow /'s in dir names, of course */
 		if (ereg ("/", $p->fake_name))
 		{
@@ -1017,6 +1180,15 @@ class vfs
 		global $phpgw_info;
 
 		$p = $this->path_parts ($file, array ($relatives[0]));
+
+		/*
+		   This is kind of trivial, given that set_attributes () can change owner_id,
+		   size, etc.
+		*/
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_EDIT))
+		{
+			return False;
+		}
 
 		if (!$this->file_exists ($file, array ($relatives[0])))
 		{
@@ -1077,7 +1249,7 @@ class vfs
 		if ($p->fake_leading_dirs != $fakebase && $p->fake_leading_dirs != "/")
 		{
 			$ls_array = $this->ls ($p->fake_leading_dirs, array ($p->mask), False, False, True);
-			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $ls_array["owner_id"]));
+			$this->set_attributes ($p->fake_full_path, array ($p->mask), array ("owner_id" => $ls_array[0]["owner_id"]));
 
 			return True;
 		}
@@ -1108,6 +1280,11 @@ class vfs
 		global $phpgw;
 
 		$p = $this->path_parts ($file, array ($relatives[0]));
+
+		if (!$this->acl_check ($p->fake_full_path, array ($p->mask), PHPGW_ACL_READ, True))
+		{
+			return False;
+		}
 
 		$query = $phpgw->db->query ("SELECT mime_type FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'", __LINE__, __FILE__);
 		$phpgw->db->next_record ();
@@ -1220,7 +1397,8 @@ class vfs
 			$phpgw->db->next_record ();
 			$record = $phpgw->db->Record;
 
-			$rarray = array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]);
+			/* We return an array of one array to maintain the standard */
+			$rarray = array (array ("file_id" => $record["file_id"], "owner_id" => $record["owner_id"], "createdby_id" => $record["createdby_id"], "modifiedby_id" => $record["modifiedby_id"], "created" => $record["created"], "modified" => $record["modified"], "size" => $record["size"], "mime_type" => $record["mime_type"], "deleteable" => $record["deleteable"], "comment" => $record["comment"], "app" => $record["app"], "directory" => $record["directory"], "name" => $record["name"]));
 
 			return $rarray;
 		}
