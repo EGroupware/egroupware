@@ -24,6 +24,7 @@
 
 	if ($GLOBALS['phpgw_info']['user']['preferences']['calendar']['mainscreen_showevents'])
 	{
+		$GLOBALS['phpgw']->translation->add_app('calendar');
 		$time = time() - ((60*60) * intval($GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset']));
 		$GLOBALS['date'] = $GLOBALS['phpgw']->common->show_date($time,'Ymd');
 		$GLOBALS['g_year'] = substr($GLOBALS['date'],0,4);
