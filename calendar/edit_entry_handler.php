@@ -28,11 +28,13 @@
       $error = 41;
     } elseif (($cal_info->minute < 0 || $cal_info->minute > 59) || ($cal_info->end_minute < 0 || $cal_info->minute > 59)) {
       $error = 41;
+    } elseif(!checkdate($cal_info->month,$cal_info->day,$cal_info->year) || !checkdate($cal_info->end_month,$cal_info->end_day,$cal_info->end_year)) {
+      $error = 42;
     } elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day == $cal_info->end_day)) {
       if ($cal_info->hour > $cal_info->end_hour) {
-	$error = 42;
+        $error = 42;
       } elseif (($cal_info->hour == $cal_info->end_hour) && ($cal_info->minute > $cal_info->end_minute)) {
-	$error = 42;
+        $error = 42;
       }
     } elseif (($cal_info->year == $cal_info->end_year) && ($cal_info->month == $cal_info->end_month) && ($cal_info->day > $cal_info->end_day)) {
       $error = 42;
@@ -58,11 +60,23 @@
       $cal_info->owner = $cal_info->participants[0];
     }
     if ($phpgw_info["user"]["preferences"]["common"]["timeformat"] == "12") {
-      if ($cal_info->ampm == "pm" && $cal_info->hour <> 12) {
-	$cal_info->hour += 12;
+      if ($cal_info->ampm == "pm") {
+        if ($cal_info->hour <> 12) {
+          $cal_info->hour += 12;
+        }
+      } elseif ($cal_info->ampm == "am") {
+        if ($cal_info->hour == 12) {
+          $cal_info->hour -= 12;
+        }
       }
-      if ($cal_info->end_ampm == "pm" && $cal_info->end_hour <> 12) {
-	$cal_info->end_hour += 12;
+      if ($cal_info->end_ampm == "pm") {
+        if ($cal_info->end_hour <> 12) {
+          $cal_info->end_hour += 12;
+        }
+      } elseif ($cal_info->end_ampm == "am") {
+        if ($cal_info->end_hour == 12) {
+          $cal_info->end_hour -= 12;
+        }
       }
     }
     $cal_info->datetime = mktime($cal_info->hour,$cal_info->minute,0,$cal_info->month,$cal_info->day,$cal_info->year) - ((60 * 60) * $phpgw_info["user"]["preferences"]["common"]["tz_offset"]);
