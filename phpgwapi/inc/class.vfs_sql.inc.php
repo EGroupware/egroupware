@@ -41,7 +41,8 @@
 		var $meta_types;
 		var $now;
 		var $file_actions;	// true if the content is stored in the file-system, false if it's stored in the DB too
-		var $vfs_table = 'phpgw_vfs';
+		var $vfs_table = 'egw_vfs';
+		var $vfs_column_prefix = 'vfs_';
 
 		/*!
 		@function vfs
@@ -66,6 +67,12 @@
 			$this->attributes[] = 'deleteable';
 			$this->attributes[] = 'content';
 
+			// set up the keys as db-column-names
+			foreach($this->attributes as $n => $attr)
+			{
+				unset($this->attributes[$n]);
+				$this->attributes[$this->vfs_column_prefix.$attr] = $attr;
+			}
 			/*
 			   Decide whether to use any actual filesystem calls (fopen(), fread(),
 			   unlink(), rmdir(), touch(), etc.).  If not, then we're working completely
@@ -94,7 +101,7 @@
 
 			$this->meta_types = array ('journal', 'journal-deleted');
 			
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['phpgw']->db);
 			$this->db->set_app('phpgwapi');
 
 			/* We store the linked directories in an array now, so we don't have to make the SQL call again */
@@ -103,24 +110,29 @@
 				case 'mssql': 
 				case 'sybase':
 					$where = array(
-						"CONVERT(varchar,link_directory) != ''",
-						"CONVERT(varchar,link_name) != ''",
+						"CONVERT(varchar,vfs_link_directory) != ''",
+						"CONVERT(varchar,vfs_link_name) != ''",
 					);
 					break;
 				default:
 					$where = array(
-						"(link_directory IS NOT NULL OR link_directory != '')",
-						"(link_name IS NOT NULL or link_name != '')",
+						"(vfs_link_directory IS NOT NULL OR vfs_link_directory != '')",
+						"(vfs_link_name IS NOT NULL OR vfs_link_name != '')",
 					);
 					break;
 			}
 			$where[] = $this->extra_sql(array('query_type' => VFS_SQL_SELECT));
-			$this->db->select($this->vfs_table,'directory,name,link_directory,link_name',$where,__LINE__,__FILE__);
+			$this->db->select($this->vfs_table,'vfs_directory,vfs_name,vfs_link_directory,vfs_link_name',$where,__LINE__,__FILE__);
 
 			$this->linked_dirs = array ();
 			while ($this->db->next_record ())
 			{
-				$this->linked_dirs[] = $this->db->Record;
+				$this->linked_dirs[] = array(
+					'directory' => $this->db->Record['vfs_directory'],
+					'name'      => $this->db->Record['vfs_name'],
+					'link_directory' => $this->db->Record['vfs_link_directory'],
+					'link_name' => $this->db->Record['vfs_link_name'],
+				);
 			}
 		}
 
@@ -164,7 +176,7 @@
 
 			if ($data['query_type'] == VFS_SQL_SELECT || $data['query_type'] == VFS_SQL_DELETE || $data['query_type'] = VFS_SQL_UPDATE)
 			{
-				return "((mime_type != '".implode("' AND mime_type != '",$this->meta_types)."') OR mime_type IS NULL)";
+				return "((vfs_mime_type != '".implode("' AND vfs_mime_type != '",$this->meta_types)."') OR vfs_mime_type IS NULL)";
 			}
 			return '';
 		}
@@ -377,7 +389,7 @@
 
 				if (isset ($value))
 				{
-					$to_write[$attribute] = $value;
+					$to_write[$this->vfs_column_prefix.$attribute] = $value;
 				}
 			}
 			/*
@@ -438,10 +450,10 @@
 					)
 				);
 
-				$this->db->update($this->vfs_table,array('mime_type'=>'journal-deleted'),array(
-						'directory'	=> $state_one_path_parts->fake_leading_dirs,
-						'name'		=> $state_one_path_parts->fake_name,
-						'mime_type'	=> 'journal',
+				$this->db->update($this->vfs_table,array('vfs_mime_type'=>'journal-deleted'),array(
+						'vfs_directory'	=> $state_one_path_parts->fake_leading_dirs,
+						'vfs_name'		=> $state_one_path_parts->fake_name,
+						'vfs_mime_type'	=> 'journal',
 					),__LINE__,__FILE__);
 
 				/*
@@ -466,11 +478,11 @@
 			if ($data['operation'] == VFS_OPERATION_DELETED)
 			{
 				$this->db->update($this->vfs_table,array(
-						'mime_type'	=> 'journal-deleted'
+						'vfs_mime_type'	=> 'journal-deleted'
 					),array(
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
-						'mime_type'	=> 'journal',
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
+						'vfs_mime_type'	=> 'journal',
 					),__LINE__,__FILE);
 			}
 
@@ -512,15 +524,15 @@
 			);
 
 			$where = array(
-				'directory'	=> $p->fake_leading_dirs,
-				'name'		=> $p->fake_name,
+				'vfs_directory'	=> $p->fake_leading_dirs,
+				'vfs_name'		=> $p->fake_name,
 			);
 			if (!$data['deleteall'])
 			{
-				$where[] = "(mime_type != 'journal' AND comment != 'Created')";
+				$where[] = "(vfs_mime_type != 'journal' AND vfs_comment != 'Created')";
 			}
 
-			$where[] = "(mime_type='journal-deleted'".(!$data['deletedonly']?" OR mime_type='journal'":'').')';
+			$where[] = "(vfs_mime_type='journal-deleted'".(!$data['deletedonly']?" OR vfs_mime_type='journal'":'').')';
 
 			return !!$this->db->delete($this->vfs_table,$where, __LINE__, __FILE__);
 		}
@@ -558,33 +570,33 @@
 			}
 
 			$where = array(
-				'directory'	=> $p->fake_leading_dirs,
-				'name'		=> $p->fake_name,
+				'vfs_directory'	=> $p->fake_leading_dirs,
+				'vfs_name'		=> $p->fake_name,
 			);
 
 			if ($data['type'] == 1)
 			{
-				$where[] = "mime_type='journal'";
+				$where[] = "vfs_mime_type='journal'";
 			}
 			elseif ($data['type'] == 2)
 			{
-				$where[] = "mime_type='journal-deleted'";
+				$where[] = "vfs_mime_type='journal-deleted'";
 			}
 			else
 			{
-				$where[] = "(mime_type='journal' OR mime_type='journal-deleted')";
+				$where[] = "(vfs_mime_type='journal' OR vfs_mime_type='journal-deleted')";
 			}
 
 			$this->db->select($this->vfs_table,'*',$where, __LINE__, __FILE__);
 
-			while ($this->db->next_record ())
+			while (($row = $this->db->Row(true)))
 			{
-				$rarray[] = $this->db->Record;
+				$rarray[] = $this->remove_prefix($row);
 			}
 
 			return $rarray;
 		}
-
+		
 		/*
 		 * See vfs_shared
 		 */
@@ -674,14 +686,14 @@
 				   We don't use ls () to get owner_id as we normally would,
 				   because ls () calls acl_check (), which would create an infinite loop
 				*/
-				$this->db->select($this->vfs_table,'owner_id',array(
-						'directory'	=> $p2->fake_leading_dirs,
-						'name'		=> $p2->fake_name,
+				$this->db->select($this->vfs_table,'vfs_owner_id',array(
+						'vfs_directory'	=> $p2->fake_leading_dirs,
+						'vfs_name'		=> $p2->fake_name,
 						$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 					), __LINE__, __FILE__);
 				$this->db->next_record ();
 
-				$owner_id = $this->db->Record['owner_id'];
+				$owner_id = $this->db->Record['vfs_owner_id'];
 			}
 			else
 			{
@@ -738,10 +750,7 @@
 			}
 			elseif (!$rights && $group_ok)
 			{
-				$conf = CreateObject('phpgwapi.config', 'phpgwapi');
-				$conf->read_repository();
-				
-				return $conf->config_data['acl_default'] == 'grant';
+				return $GLOBALS['phpgw_info']['server']['acl_default'] == 'grant';
 			}
 			else
 			{
@@ -782,8 +791,6 @@
 				return False;
 			}
 
-			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
-			$conf->read_repository();
 			if ($this->file_actions || $p->outside)
 			{
 				if (($fp = fopen ($p->real_full_path, 'rb')))
@@ -870,8 +877,6 @@
 				)
 			);
 
-			$conf = CreateObject('phpgwapi.config', 'phpgwapi');
-			$conf->read_repository();
 			if ($this->file_actions)
 			{
 				if (($fp = fopen ($p->real_full_path, 'wb')))
@@ -1006,9 +1011,9 @@
 				}
 
 				$query = $this->db->insert($this->vfs_table,array(
-						'owner_id'	=> $this->working_id,
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
+						'vfs_owner_id'	=> $this->working_id,
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
 					),false,__LINE__,__FILE__);
 
 				$this->set_attributes(array(
@@ -1453,20 +1458,20 @@
 							'relatives'	=> array ($t->mask)
 						)
 					);
-					$this->db->update($this->vfs_table,array('size'=>$size),array(
-							'directory'	=> $t->fake_leading_dirs,
-							'name'		=> $t->fake_name,
+					$this->db->update($this->vfs_table,array('vfs_size'=>$size),array(
+							'vfs_directory'	=> $t->fake_leading_dirs,
+							'vfs_name'		=> $t->fake_name,
 							$this->extra_sql(array ('query_type' => VFS_SQL_UPDATE)),
 						), __LINE__, __FILE__);
 				}
 				elseif (!$t->outside)
 				{
 					$this->db->update($this->vfs_table,array(
-							'directory'	=> $t->fake_leading_dirs,
-							'name'		=> $t->fake_name,
+							'vfs_directory'	=> $t->fake_leading_dirs,
+							'vfs_name'		=> $t->fake_name,
 						),array(
-							'directory'	=> $f->fake_leading_dirs,
-							'name'		=> $f->fake_name,
+							'vfs_directory'	=> $f->fake_leading_dirs,
+							'vfs_name'		=> $f->fake_name,
 							$this->extra_sql(array ('query_type' => VFS_SQL_UPDATE)),
 						), __LINE__, __FILE__);
 				}
@@ -1522,9 +1527,9 @@
 					$newdir = ereg_replace ("^$f->fake_full_path", $t->fake_full_path, $entry['directory']);
 
 					$this->db->update($this->vfs_table,array(
-							'directory'	=> $newdir
+							'vfs_directory'	=> $newdir
 						),array(
-							'file_id'	=> $entry['file_id'],
+							'vfs_file_id'	=> $entry['file_id'],
 							$this->extra_sql(array ('query_type' => VFS_SQL_UPDATE))
 						), __LINE__, __FILE__);
 
@@ -1620,8 +1625,8 @@
 				);
 
 				$query = $this->db->delete($this->vfs_table,array(
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
 						$this->extra_sql(array ('query_type' => VFS_SQL_DELETE))
 					), __LINE__, __FILE__);
 
@@ -1710,8 +1715,8 @@
 				);
 
 				$this->db->delete($this->vfs_table,array(
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
 						$this->extra_sql(array ('query_type' => VFS_SQL_DELETE))
 					), __LINE__, __FILE__);
 
@@ -1794,9 +1799,9 @@
 			)
 			{
 				$this->db->insert($this->vfs_table,array(
-						'owner_id'	=> $this->working_id, 
-						'name'		=> $p->fake_name, 
-						'directory'	=> $p->fake_leading_dirs,
+						'vfs_owner_id'	=> $this->working_id, 
+						'vfs_name'		=> $p->fake_name, 
+						'vfs_directory'	=> $p->fake_leading_dirs,
 					),false,__LINE__,__FILE__);
 	
 				$this->set_attributes(array(
@@ -1991,7 +1996,7 @@
 					{
 						$edited_comment = 1;
 					}
-					$to_write[$attribute] = $data['attributes'][$attribute];
+					$to_write[$this->vfs_column_prefix.$attribute] = $data['attributes'][$attribute];
 				}
 			}
 
@@ -2000,7 +2005,7 @@
 				return True;	// nothing to do
 			}
 			if (!$this->db->update($this->vfs_table,$to_write,array(
-					'file_id'	=>  $record['file_id'],
+					'vfs_file_id'	=>  $record['file_id'],
 					$this->extra_sql(array ('query_type' => VFS_SQL_UPDATE)),
 				), __LINE__, __FILE__)) 
 			{
@@ -2132,23 +2137,23 @@
 			   We don't use ls () because it calls file_type () to determine if it has been
 			   passed a directory
 			*/
-			$db2 = $this->db;
-			$db2->select($this->vfs_table,'mime_type',array(
-					'directory'	=> $p->fake_leading_dirs,
-					'name'		=> $p->fake_name,
+			$db2 = clone($this->db);
+			$db2->select($this->vfs_table,'vfs_mime_type',array(
+					'vfs_directory'	=> $p->fake_leading_dirs,
+					'vfs_name'		=> $p->fake_name,
 					$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 				), __LINE__, __FILE__);
 			$db2->next_record ();
-			$mime_type = $db2->Record['mime_type'];
+			$mime_type = $db2->Record['vfs_mime_type'];
 			if(!$mime_type)
 			{
 				$mime_type = $this->get_ext_mime_type (array ('string' => $data['string']));
 				{
 					$db2->update($this->vfs_table,array(
-							'mime_type'	=> $mime_type
+							'vfs_mime_type'	=> $mime_type
 						),array(
-							'directory'	=> $p->fake_leading_dirs,
-							'name'		=> $p->fake_name,
+							'vfs_directory'	=> $p->fake_leading_dirs,
+							'vfs_name'		=> $p->fake_name,
 							$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 						), __LINE__, __FILE__);
 				}
@@ -2186,10 +2191,10 @@
 				return $rr;
 			}
 
-			$db2 = $this->db;
-			$db2->select($this->vfs_table,'name',array(
-					'directory'	=> $p->fake_leading_dirs,
-					'name'		=> $p->fake_name,
+			$db2 = clone($this->db);
+			$db2->select($this->vfs_table,'vfs_name',array(
+					'vfs_directory'	=> $p->fake_leading_dirs,
+					'vfs_name'		=> $p->fake_name,
 					$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 				), __LINE__, __FILE__);
 
@@ -2265,9 +2270,9 @@
 
 			if ($data['checksubdirs'])
 			{
-				$this->db->select($this->vfs_table,'size',array(
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
+				$this->db->select($this->vfs_table,'vfs_size',array(
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
 						$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 					), __LINE__, __FILE__);
 				$this->db->next_record ();
@@ -2319,7 +2324,6 @@
 		 */
 		function ls ($data)
 		{
-//echo "<p>vfs_sql::ls(".print_r($data,true).")</p>\n";
 			if (!is_array ($data))
 			{
 				$data = array ();
@@ -2335,7 +2339,6 @@
 				);
 
 			$data = array_merge ($this->default_values ($data, $default_values), $data);
-//echo "<p>vfs_sql::ls: data=".print_r($data,true)."</p>\n";
 
 			$p = $this->path_parts (array(
 					'string'	=> $data['string'],
@@ -2343,7 +2346,6 @@
 				)
 			);
 			$dir = $p->fake_full_path;
-//echo "<p>vfs_sql::ls: dir='$dir', p=".print_r($p,true)."</p>\n";
 
 			/* If they pass us a file or 'nofiles' is set, return the info for $dir only */
 			if (@$data['file_id'] || ($this->file_type (array(
@@ -2354,20 +2356,19 @@
 				/* SELECT all, the, attributes */
 				if (@$data['file_id'])
 				{
-					$where = array('file_id' => $data['file_id']);
+					$where = array('vfs_file_id' => $data['file_id']);
 				}
 				else
 				{
 					$where = array(
-						'directory'	=> $p->fake_leading_dirs,
-						'name'		=> $p->fake_name,
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
 						$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 					);
 				}
-				$this->db->select($this->vfs_table,$this->attributes,$where,__LINE__,__FILE__);
+				$this->db->select($this->vfs_table,array_keys($this->attributes),$where,__LINE__,__FILE__);
 
-				$this->db->next_record ();
-				$record = $this->db->Record;
+				$record = $this->db->Row(true,$this->vfs_column_prefix);
 
 				/* We return an array of one array to maintain the standard */
 				$rarray = array ();
@@ -2383,10 +2384,10 @@
 						if($record[$attribute])
 						{
 							$this->db->update($this->vfs_table,array(
-									'mime_type'	=> $record[$attribute]
+									'vfs_mime_type'	=> $record[$attribute]
 								),array(
-									'directory'	=> $p->fake_leading_dirs,
-									'name'		=> $p->fake_name,
+									'vfs_directory'	=> $p->fake_leading_dirs,
+									'vfs_name'		=> $p->fake_name,
 									$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 								), __LINE__, __FILE__);
 						}
@@ -2442,22 +2443,22 @@
 
 			/* $dir's not a file, is inside the virtual root, and they want to check subdirs */
 			/* SELECT all, the, attributes FROM $this->vfs_table WHERE file=$dir */
-			$db2 = $this->db;
+			$db2 = clone($this->db);
 			$where = array(
-				'directory LIKE '.$this->db->quote($dir.'%'),
+				'vfs_directory LIKE '.$this->db->quote($dir.'%'),
 				$this->extra_sql(array ('query_type' => VFS_SQL_SELECT)),
 			);
 			if ($data['mime_type'])
 			{
-				$where['mime_type'] = $data['mime_type'];
+				$where['vfs_mime_type'] = $data['mime_type'];
 			}
-			$this->db->select($this->vfs_table,$this->attributes,$where, __LINE__, __FILE__,false,'ORDER BY '.$data['orderby']);
+			$this->db->select($this->vfs_table,array_keys($this->attributes),$where, __LINE__, __FILE__,false,
+				isset($this->attributes[$this->vfs_column_prefix.$data['orderby']]) ? 
+				'ORDER BY '.$this->vfs_column_prefix.$data['orderby'] : '');
 
 			$rarray = array ();
-			for ($i = 0; $this->db->next_record (); $i++)
+			for ($i = 0; ($record = $this->db->Row(true,$this->vfs_column_prefix)); $i++)
 			{
-				$record = $this->db->Record;
-
 				/* Further checking on the directory.  This makes sure /home/user/test won't match /home/user/test22 */
 				if (@!ereg ("^$dir(/|$)", $record['directory']))
 				{
@@ -2482,10 +2483,10 @@
 						if($record[$attribute])
 						{
 							$db2->update($this->vfs_table,array(
-									'mime_type'	=>	$record[$attribute]
+									'vfs_mime_type'	=>	$record[$attribute]
 								),array(
-									'directory'	=> $p->fake_leading_dirs,
-									'name'		=> $p->fake_name,
+									'vfs_directory'	=> $p->fake_leading_dirs,
+									'vfs_name'		=> $p->fake_name,
 									$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 								), __LINE__, __FILE__);
 						}
@@ -2633,10 +2634,10 @@
 				if($mime_type)
 				{
 					$this->db->update($this->vfs_table,array(
-							'mime_type'	=> $mime_type
+							'vfs_mime_type'	=> $mime_type
 						),array(
-							'directory'	=> $p->fake_leading_dirs,
-							'name'		=> $p->fake_name,
+							'vfs_directory'	=> $p->fake_leading_dirs,
+							'vfs_name'		=> $p->fake_name,
 							$this->extra_sql(array ('query_type' => VFS_SQL_SELECT))
 						), __LINE__, __FILE__);
 				}
