@@ -12,6 +12,7 @@
 
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 

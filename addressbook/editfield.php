@@ -11,6 +11,7 @@
   \**************************************************************************/
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw']_info['flags']['currentapp'] = 'addressbook';
 	include('../header.inc.php');
 

@@ -14,15 +14,14 @@
 
 	/* $Id$ */
 
-	$phpgw_info['flags']['currentapp'] = 'admin';
+	$GLOBALS['phpgw_info'] = array();
+	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'admin';
 	include('../header.inc.php');
 
 	$GLOBALS['admin_tpl'] = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-	$GLOBALS['admin_tpl']->set_file(
-		Array(
-			'admin' => 'index.tpl'
-		)
-	);
+	$GLOBALS['admin_tpl']->set_file(array(
+		'admin' => 'index.tpl'
+	));
 
 	$GLOBALS['admin_tpl']->set_block('admin','list');
 	$GLOBALS['admin_tpl']->set_block('admin','app_row');

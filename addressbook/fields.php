@@ -11,6 +11,7 @@
   \**************************************************************************/
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'currentapp' => 'addressbook',
 		'enable_nextmatchs_class' => True

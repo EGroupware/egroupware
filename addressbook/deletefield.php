@@ -11,6 +11,7 @@
   \**************************************************************************/
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	if ($HTTP_POST_VARS['confirm'])
 	{
 		$GLOBALS['phpgw_info']['flags'] = array(

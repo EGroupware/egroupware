@@ -12,6 +12,7 @@
 
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'addressbook';
 	$GLOBALS['phpgw_info']['flags']['enable_contacts_class'] = True;
 	include('../header.inc.php');

@@ -11,6 +11,7 @@
 
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'about';
 	$GLOBALS['phpgw_info']['flags']['disable_Template_class'] = True;
 	include('header.inc.php');
