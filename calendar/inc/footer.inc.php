@@ -11,6 +11,8 @@
   *  option) any later version.                                              *
   \**************************************************************************/
 
+  /* $Id$ */
+
   if (isset($friendly) && $friendly){
      $phpgw->common->phpgw_footer();
      $phpgw->common->phpgw_exit();

@@ -1,4 +1,5 @@
 <?php
+  /* $Id$ */
 
   global $date, $year, $month, $day, $thisyear, $thismonth, $thisday, $filter, $keywords;
   global $matrixtype, $participants;
