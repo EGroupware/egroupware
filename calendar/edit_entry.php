@@ -344,7 +344,7 @@
 	}
 	else
 	{
-		$recur_end = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->sec) + 86400 - $tz_offset;
+		$recur_end = mktime($event->start->hour,$event->start->min,$event->start->sec,$event->start->month,$event->start->mday,$event->start->year) + 86400 - $tz_offset;
 	}
 	
 	$str .= '>'.lang('Use End Date').'  ';
