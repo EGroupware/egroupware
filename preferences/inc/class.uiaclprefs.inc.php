@@ -25,7 +25,7 @@
 
 		function index()
 		{
-			$acl_app = get_vars('acl_app',Array('GET'));
+			$acl_app = get_var('acl_app',Array('GET'));
 			$owner   = $GLOBALS['owner'];
 
 			if (! $acl_app)
