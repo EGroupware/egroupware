@@ -117,7 +117,7 @@
 				case 'app':
 					if($control != '' && $control_url != '')
 					{
-						$this->setvar($control,$GLOBALS['phpgw']->link($this->check_help_file($control_url)));
+						$this->setvar($control,$this->check_help_file($control_url));
 					}
 					break;
 				default:
@@ -147,10 +147,13 @@
 		{
 			$control_array = array
 			(
-				'intro'		=> True,
-				'note'		=> True
+				'intro'		=> True
 			);
 
+			if($this->app_intro)
+			{
+				$control_array['app_intro'] = True;
+			}
 			if($this->up)
 			{
 				$control_array['up'] = True;
@@ -159,10 +162,9 @@
 			{
 				$control_array['down'] = True;
 			}
-			if($this->app_intro)
-			{
-				$control_array['app_intro'] = True;
-			}
+			$control_array['note'] = True;
+
+			//_debug_array($control_array);
 
 			@reset($control_array);
 			while(list($param,$value) = each($control_array))
@@ -173,10 +175,10 @@
 
 					$control_link[] = array
 					(
-						'param_url' 			=> $this->$param,
-						'link_img'				=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'_help'),
-						'img_width'				=> $image_width,
-						'lang_param_statustext'	=> lang($param)
+						'param_url' 		=> $this->$param,
+						'link_img'			=> $GLOBALS['phpgw']->common->image('phpgwapi',$param.'_help'),
+						'img_width'			=> $image_width,
+						'lang_param_title'	=> lang($param)
 					);
 				}
 			}

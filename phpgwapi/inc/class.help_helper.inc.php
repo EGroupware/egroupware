@@ -53,7 +53,7 @@
 				{
 					$this->set_controls('app',$key,$value);
 				}
-				$this->set_controls();
+				$this->set_controls('base');
 			}
 		}
 
