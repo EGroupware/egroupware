@@ -21,7 +21,8 @@
 			'add_entry'       => True,
 			'add_vcard'       => True,
 			'add_email'       => True,
-			'update_entry'    => True
+			'update_entry'    => True,
+			'delete_entry'    => True,
 		);
 
 		var $xml_functions  = array();
@@ -60,29 +61,29 @@
 		var $filter;
 		var $cat_id;
 		var $total;
+		var $contact_cache = array();
 
 		var $use_session = False;
 
 		function boaddressbook($session=False)
 		{
 			$this->so = CreateObject('addressbook.soaddressbook');
-			$this->rights = $this->so->rights;
-			$this->grants = $this->so->grants;
+			$this->grants = &$this->so->grants;
 
 			if($session)
 			{
 				$this->read_sessiondata();
 				$this->use_session = True;
 			}
-			/* _debug_array($GLOBALS['HTTP_POST_VARS']); */
+			/* _debug_array($_POST); */
 			/* Might change this to '' at the end---> */
-			$_start   = $GLOBALS['HTTP_POST_VARS']['start']   ? $GLOBALS['HTTP_POST_VARS']['start']   : $GLOBALS['HTTP_GET_VARS']['start'];
-			$_query   = $GLOBALS['HTTP_POST_VARS']['query']   ? $GLOBALS['HTTP_POST_VARS']['query']   : $GLOBALS['HTTP_GET_VARS']['query'];
-			$_sort    = $GLOBALS['HTTP_POST_VARS']['sort']    ? $GLOBALS['HTTP_POST_VARS']['sort']    : $GLOBALS['HTTP_GET_VARS']['sort'];
-			$_order   = $GLOBALS['HTTP_POST_VARS']['order']   ? $GLOBALS['HTTP_POST_VARS']['order']   : $GLOBALS['HTTP_GET_VARS']['order'];
-			$_filter  = $GLOBALS['HTTP_POST_VARS']['filter']  ? $GLOBALS['HTTP_POST_VARS']['filter']  : $GLOBALS['HTTP_GET_VARS']['filter'];
-			$_cat_id  = $GLOBALS['HTTP_POST_VARS']['cat_id']  ? $GLOBALS['HTTP_POST_VARS']['cat_id']  : $GLOBALS['HTTP_GET_VARS']['cat_id'];
-			$_fcat_id = $GLOBALS['HTTP_POST_VARS']['fcat_id'] ? $GLOBALS['HTTP_POST_VARS']['fcat_id'] : $GLOBALS['HTTP_GET_VARS']['fcat_id'];
+			$_start   = get_var('start',array('POST','GET'));
+			$_query   = get_var('query',array('POST','GET'));
+			$_sort    = get_var('sort',array('POST','GET'));
+			$_order   = get_var('order',array('POST','GET'));
+			$_filter  = get_var('filter',array('POST','GET'));
+			$_cat_id  = get_var('cat_id',array('POST','GET'));
+			$_fcat_id = get_var('fcat_id',array('POST','GET'));
 
 			if(!empty($_start) || ($_start == '0') || ($_start == 0))
 			{
@@ -98,7 +99,7 @@
 				$this->query  = $_query;
 			}
 
-			if(isset($GLOBALS['HTTP_POST_VARS']['fcat_id']) || isset($GLOBALS['HTTP_POST_VARS']['fcat_id']))
+			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
 				$this->cat_id = $_fcat_id;
 			}
@@ -262,14 +263,22 @@
 
 		function read_entry($data)
 		{
-			$entry = $this->so->read_entry($data['id'],$data['fields']);
-			return $this->strip_html($entry);
+			if ($this->check_perms($data,PHPGW_ACL_DELETE))
+			{
+				$entry = $this->so->read_entry($data['id'],$data['fields']);
+				return $this->strip_html($entry);
+			}
+			return array(0 => array('No access' => 'No access'));
 		}
 
 		function read_last_entry($fields)
 		{
-			$entry = $this->so->read_last_entry($fields);
-			return $this->strip_html($entry);
+			if ($this->check_perms($fields,PHPGW_ACL_DELETE))
+			{
+				$entry = $this->so->read_last_entry($fields);
+				return $this->strip_html($entry);
+			}
+			return array(0 => array('No access' => 'No access'));
 		}
 
 		function add_vcard()
@@ -342,6 +351,20 @@
 
 		function add_entry($fields)
 		{
+			// setting some defaults, if not set eg. via xmlrpc
+			$fields['tid'] = trim($fields['tid']);
+			if(empty($fields['tid']))
+			{
+				$fields['tid'] = 'n';
+			}
+			if(!@$fields['owner'])
+			{
+				$fields['owner'] = $GLOBALS['phpgw_info']['user']['account_id'];
+			}
+			if(empty($fields['access']))
+			{
+				$fields['access'] = 'public';
+			}
 			return $this->so->add_entry($fields);
 		}
 
@@ -352,12 +375,47 @@
 
 		function update_entry($fields)
 		{
-			return $this->so->update_entry($fields);
+			if ($this->check_perms($fields,PHPGW_ACL_EDIT))
+			{
+				return $this->so->update_entry($fields);
+			}
+			return False;
 		}
 
-		function delete_entry($ab_id)
+		function delete_entry($addr)
 		{
-			return $this->so->delete_entry($ab_id);
+			$id = !is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
+
+			if ($this->check_perms($id,PHPGW_ACL_DELETE))
+			{
+				return $this->so->delete_entry($id);
+			}
+			return False;
+		}
+
+		/*!
+		@function check_perms
+		@abstract checks if user has the necessary rights on the given address or address-id
+		@syntax check_perms($addr,$rights)
+		@param $addr mixed address-record with id and owner or addr-id
+		@param $rights integer PHPGW_ACL_{READ|EDIT|ADD|DELETE}
+		@return True if the user has the requested rights, else False
+		*/
+		function check_perms($addr,$rights)
+		{
+			$id = !is_array($addr) ? $addr : (isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
+
+			if (!is_array($addr) || !isset($addr['owner']))
+			{
+				$a = $this->so->read_entry($id,array('owner'));
+				$owner = $a[0]['owner'];
+			}
+			else
+			{
+				$owner = $addr['owner'];
+			}
+			//echo "<p>boaddressbook::check_perms(id='$id',rights=$rights): grant[owner='$owner']='".$this->grants[$owner]."' => ".(($this->grants[$owner] & 4) ? 'True':'False')."</p>\n";
+			return !!($this->grants[$owner] & $rights);
 		}
 
 		function save_preferences($prefs,$other,$qfields,$fcat_id)

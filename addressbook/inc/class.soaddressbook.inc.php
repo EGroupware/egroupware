@@ -21,39 +21,15 @@
 
 		function soaddressbook()
 		{
-			if(!isset($GLOBALS['owner']))
+			if (!is_object($GLOBALS['phpgw']->contacts))
 			{
-				$GLOBALS['owner'] = 0;
+				$GLOBALS['phpgw']->contacts = CreateObject('phpgwapi.contacts');
 			}
-			$owner = $GLOBALS['owner'];
+			$this->contacts = &$GLOBALS['phpgw']->contacts;
+			$this->grants = &$this->contacts->grants;
 
-			$this->contacts = CreateObject('phpgwapi.contacts');
-			$grants = $this->contacts->grants;
 			/* _debug_array($GLOBALS['phpgw_info']); */
 			/* _debug_array($grants); */
-
-			if(!isset($owner) || !$owner)
-			{
-				$owner = $GLOBALS['phpgw_info']['user']['account_id'];
-				/* echo $owner; */
-				$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-				/* echo $rights; */
-			}
-			else
-			{
-				if($grants[$owner])
-				{
-					$rights = $grants[$owner];
-					if (!($rights & PHPGW_ACL_READ))
-					{
-						$owner = $GLOBALS['phpgw_info']['user']['account_id'];
-						$rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-					}
-				}
-			}
-			$this->rights = $rights;
-			$this->grants = $grants;
-			$this->owner  = $owner;
 		}
 
 		function read_entries($data)
@@ -71,89 +47,54 @@
 
 		function read_entry($id,$fields)
 		{
-			if ($this->rights & PHPGW_ACL_READ)
-			{
-				return $this->contacts->read_single_entry($id,$fields);
-			}
-			else
-			{
-				$rtrn = array(0 => array('No access' => 'No access'));
-				return $rtrn;
-			}
+			return $this->contacts->read_single_entry($id,$fields);
 		}
 
 		function read_last_entry($fields)
 		{
-			if ($this->rights & PHPGW_ACL_READ)
-			{
-				return $this->contacts->read_last_entry($fields);
-			}
-			else
-			{
-				$rtrn = array(0 => array('No access' => 'No access'));
-				return $rtrn;
-			}
+			return $this->contacts->read_last_entry($fields);
 		}
 
 		function add_entry($fields)
 		{
-			$fields['tid'] = trim($fields['tid']);
-			if(empty($fields['tid']))
-			{
-				$fields['tid'] = 'n';
-			}
-			if ($this->rights & PHPGW_ACL_ADD)
-			{
-				$ab_id  = $fields['ab_id'];
-				$owner  = $fields['owner'];
-				$access = $fields['access'];
-				$cat_id = $fields['cat_id'];
-				$tid    = $fields['tid'];
-				unset($fields['owner']);
-				unset($fields['access']);
-				unset($fields['cat_id']);
-				unset($fields['ab_id']);
-				unset($fields['tid']);
+			$owner  = $fields['owner'];
+			$access = $fields['access'];
+			$cat_id = $fields['cat_id'];
+			$tid    = $fields['tid'];
+			unset($fields['owner']);
+			unset($fields['access']);
+			unset($fields['cat_id']);
+			unset($fields['ab_id']);
+			unset($fields['tid']);
 
-				$id = $this->contacts->add($owner,$fields,$access,$cat_id,$tid);
-			}
-			return $id;
+			return $this->contacts->add($owner,$fields,$access,$cat_id,$tid);
 		}
 
 		function get_lastid()
 		{
 		 	$entry = $this->contacts->read_last_entry();
-			$id = $entry[0]['id'];
-			return $id;
+			return $entry[0]['id'];
 		}
 
 		function update_entry($fields)
 		{
-			if ($this->rights & PHPGW_ACL_EDIT)
-			{
-				$ab_id  = $fields['ab_id'];
-				$owner  = $fields['owner'];
-				$access = $fields['access'];
-				$cat_id = $fields['cat_id'];
-				$tid = $fields['tid'];
-				unset($fields['owner']);
-				unset($fields['access']);
-				unset($fields['cat_id']);
-				unset($fields['ab_id']);
-				unset($fields['tid']);
+			$ab_id  = $fields['ab_id'];
+			$owner  = $fields['owner'];
+			$access = $fields['access'];
+			$cat_id = $fields['cat_id'];
+			$tid = $fields['tid'];
+			unset($fields['owner']);
+			unset($fields['access']);
+			unset($fields['cat_id']);
+			unset($fields['ab_id']);
+			unset($fields['tid']);
 
-				$this->contacts->update($ab_id,$owner,$fields,$access,$cat_id,$tid);
-			}
-			return;
+			return $this->contacts->update($ab_id,$owner,$fields,$access,$cat_id,$tid);
 		}
 
-		function delete_entry($data)
+		function delete_entry($id)
 		{
-			if ($this->rights & PHPGW_ACL_DELETE)
-			{
-				$this->contacts->delete($data['id']);
-			}
-			return;
+			return $this->contacts->delete($id);
 		}
 	}
 ?>
