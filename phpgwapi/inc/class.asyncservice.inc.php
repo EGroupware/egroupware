@@ -46,6 +46,7 @@
 		function asyncservice()
 		{
 			$this->db = $GLOBALS['phpgw']->db;
+			$this->db->set_app('phpgwapi');
 				
 			$this->cronline = PHPGW_SERVER_ROOT . '/phpgwapi/cron/asyncservices.php '.$GLOBALS['phpgw_info']['user']['domain'];
 			
@@ -468,33 +469,33 @@
 		*/
 		function read($id=0)
 		{
-			$id = $this->db->db_addslashes($id);
 			if (strpos($id,'%') !== False || strpos($id,'_') !== False)
 			{
-				$where = "id LIKE '$id' AND id!='##last-check-run##'";
+				$id = $this->db->quote($id);
+				$where = "async_id LIKE $id AND async_id != '##last-check-run##'";
 			}
 			elseif (!$id)
 			{
-				$where = 'next<='.time()." AND id!='##last-check-run##'";
+				$where = 'async_next <= '.time()." AND async_id != '##last-check-run##'";
 			}
 			else
 			{
-				$where = "id='$id'";
+				$where = array('async_id' => $id);
 			}
-			$this->db->query($sql="SELECT * FROM $this->db_table WHERE $where",__LINE__,__FILE__);
+			$this->db->select($this->db_table,'*',$where,__LINE__,__FILE__);
 
 			$jobs = array();
 			while ($this->db->next_record())
 			{
-				$id = $this->db->f('id');
+				$id = $this->db->f('async_id');
 
 				$jobs[$id] = array(
 					'id'     => $id,
-					'next'   => $this->db->f('next'),
-					'times'  => unserialize($this->db->f('times')),
-					'method' => $this->db->f('method'),
-					'data'   => unserialize($this->db->f('data')),
-					'account_id'   => $this->db->f('account_id')
+					'next'   => $this->db->f('async_next'),
+					'times'  => unserialize($this->db->f('async_times')),
+					'method' => $this->db->f('async_method'),
+					'data'   => unserialize($this->db->f('async_data')),
+					'account_id'   => $this->db->f('async_account_id')
 				);
 				//echo "job id='$id'<pre>"; print_r($jobs[$id]); echo "</pre>\n";
 			}
@@ -518,16 +519,21 @@
 			$job['data']  = $this->db->db_addslashes(serialize($job['data']));
 			$job['next']  = (int)$job['next'];
 			$job['account_id']  = (int)$job['account_id'];
-
-			if ($exists || $this->read($job['id']))
-			{
-				$this->db->query("UPDATE $this->db_table SET next=$job[next],times='$job[times]',".
-					"method='$job[method]',data='$job[data]',account_id=$job[account_id] WHERE id='$job[id]'",__LINE__,__FILE__);
+			
+			$data = array(
+				'async_next'      => $job['next'],
+				'async_times'     => serialize($job['times']),
+				'async_method'    => $job['method'],
+				'async_data'      => serialize($job['data']),
+				'async_accont_id' => $job['account_id'],
+			);
+			if ($exists)
+			{ 
+				$this->db->update($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
 			}
 			else
 			{
-				$this->db->query("INSERT INTO $this->db_table (id,next,times,method,data,account_id) VALUES ".
-					"('$job[id]',$job[next],'$job[times]','$job[method]','$job[data]',$job[account_id])",__LINE__,__FILE__);
+				$this->db->insert($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
 			}
 		}
 
@@ -538,7 +544,7 @@
 		*/
 		function delete($id)
 		{
-			$this->db->query("DELETE FROM $this->db_table WHERE id='$id'",__LINE__,__FILE__);
+			$this->db->delete($this->db_table,array('async_id' => $id),__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}

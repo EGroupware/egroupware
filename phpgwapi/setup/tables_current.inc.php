@@ -357,14 +357,14 @@
 		),
 		'phpgw_async' => array(
 			'fd' => array(
-				'id' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'next' => array('type' => 'int','precision' => '4','nullable' => False),
-				'times' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'method' => array('type' => 'varchar','precision' => '80','nullable' => False),
-				'data' => array('type' => 'text','nullable' => False),
-				'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
+				'async_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'async_next' => array('type' => 'int','precision' => '4','nullable' => False),
+				'async_times' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'async_method' => array('type' => 'varchar','precision' => '80','nullable' => False),
+				'async_data' => array('type' => 'text','nullable' => False),
+				'async_account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
 			),
-			'pk' => array('id'),
+			'pk' => array('async_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
