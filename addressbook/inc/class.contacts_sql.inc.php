@@ -335,10 +335,10 @@
 				while ($this->db2->next_record()) {
 					// If its not in the list to be returned, don't return it.
 					// This is still quicker then 5(+) separate queries
+					if (!strstr($tempcreate,$this->db2->f("contact_name"))) {
+						$tempcreate .= $this->db2->f("contact_name") ." TEXT,";
+					}
 					if ($extra_fields[$this->db2->f("contact_name")]) {
-						if (!strstr($tempcreate,$this->db2->f("contact_name"))) {
-							$tempcreate .= $this->db2->f("contact_name") ." TEXT,";
-						}
 						$tempinsert[$i] .= $this->db2->f("contact_name").",";
 						$tempvalues[$i] .= '"'.$this->db2->f("contact_value").'",';
 					}
@@ -356,7 +356,17 @@
 			}
 
 			// fixup strings, create and populate temp table of extra fields
+			// this section adds the extra_fields to the table
+			// if no prior data existed (new application, etc.)
+			if ($extra_fields) {
+				while (list($name,$value) = each($extra_fields)) {
+					if (!strstr($tempcreate,$name)) {
+						$tempcreate .= $name ." TEXT,";
+					}
+				}
+			}
 			$tempcreate = substr($tempcreate,0,-1) . ")";
+			//echo $tempcreate;
 			$this->db->query("DROP TABLE IF EXISTS $tmp_table");
 			$this->db->query($tempcreate);
 
