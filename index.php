@@ -126,15 +126,15 @@
       . "' and webcal_entry.cal_id = webcal_entry_user.cal_id) and "
       . "(cal_priority='3')");
     $phpgw->db->next_record();
+    $check = $phpgw->db->f(0);
+    if ($check == 1) { 
+        $key = "You have 1 high priority event on your calendar today.";
+    }
+    if ($check > 1) {
+      $key = "You have x high priority events on your calendar today.";
+    }
+    if ($check > 0) echo "<tr><td>" . lang_common($key,$check) . "</td></tr>";
 
-    if ($phpgw->db->f(0) == 1) {
-      echo "<tr><td>" . lang_common("You have 1 high priority event on your calendar today.")
-        . "</td></tr>";
-    }
-    if ($phpgw->db->f(0) > 1) {
-        echo "<tr><td>" . lang_common("You have x high priority events on your calendar "
-	   . "today.",$phpgw->db->f(0)) . "</td></tr>";
-    }
     echo "<!-- Calendar info -->\n";
   } 
 
