@@ -17,6 +17,7 @@
   }
 
   $phpgw_flags["currentapp"] = "admin";
+  $phpgw_flags["disable_network_class"] = True;
   include("../header.inc.php");
 
   $phpgw->include_lang("nntp");
