@@ -3,6 +3,8 @@
 	   - on group creation the files directory tried to be created in
 	     "filemanager/groups/" instead of in "files/groups/" - fixed.
 	     Same for the user directory.
+	   - Added error checking for creating/editing an account with no permissions.
+	   - Fixed a db->unlock() issue in editaccount.php
 
 [08212000] - removed db_lock() and db_unlock()  I changed the phpgw_db_* to use them
 	     properly

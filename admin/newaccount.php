@@ -28,6 +28,9 @@
      if ($n_passwd != $n_passwd_2)
         $error .= "<br>" . lang_admin("The two passwords are not the same");
 
+     if (count($new_permissions) == 0)
+        $error .= "<br>" . lang_admin("You must add at least 1 permission to this account");
+
      $phpgw->db->query("select loginid from accounts where loginid='$n_loginid'");
      $phpgw->db->next_record();
      if ($phpgw->db->f("loginid"))

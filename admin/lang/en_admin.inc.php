@@ -43,6 +43,9 @@
        case "edit group":		$s = "Edit Group";			break;
        case "submit changes":		$s = "Submit Changes";		break;
 
+       case "you must add at least 1 permission to this account":
+	$s = "You must add at least 1 permission to this account";	break;
+
        case "installed applications":
 	$s = "Installed applications";						break;
 

@@ -32,8 +32,6 @@
      $phpgw->db->next_record();
      $lid = $phpgw->db->f("loginid");
 
-     $phpgw->db->lock(array('accounts','preferences','sessions'));
-
      if ($n_passwd || $n_passwd_2) {
         if ($n_passwd != $n_passwd_2)
            $error .= lang_admin("The two passwords are not the same");
@@ -49,7 +47,11 @@
         }
      }
 
+     if (count($new_permissions) == 0)
+        $error .= "<br>" . lang_admin("You must add at least 1 permission to this account");
+
      if (! $error) {
+        $phpgw->db->lock(array('accounts','preferences','sessions'));
 	if ($n_passwd) {
            $phpgw->db->query("update accounts set passwd='" . md5($n_passwd) . "', "
 		          . "lastpasswd_change='" . time() . "' where loginid='"
@@ -101,8 +103,8 @@
 			   . "$n_account_status', groups='"
 			   . $phpgw->groups->array_to_string("none",$n_groups)
 			   . "' where loginid='$n_loginid'");
-        $phpgw->db->unlock();
 
+        $phpgw->db->unlock();
         Header("Location: " . $phpgw->link("accounts.php", "cd=$cd"));
         exit;
      }		// if ! $error
