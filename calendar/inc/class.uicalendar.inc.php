@@ -2800,8 +2800,17 @@
 			$overlap = '';
 			for($i=0;$i<count($overlapping_events);$i++)
 			{
-				$overlapped_event = $this->bo->read_entry($overlapping_events[$i]);
-				$overlap .= '<li> ['.$GLOBALS['phpgw']->common->grab_owner_name($overlapped_event['owner']).'] '.$this->link_to_entry($overlapped_event,$month,$mday,$year);
+				$overlapped_event = $this->bo->read_entry($overlapping_events[$i],True);
+				$overlap .= '<li>'.$this->link_to_entry($overlapped_event,$month,$mday,$year);
+				$overlap .= '<ul>';
+				foreach($overlapped_event['participants'] as $id => $status)
+				{
+					$conflict = isset($event['participants'][$id]);
+					$overlap .= '<li>'.($conflict?'<b>':'').
+						$GLOBALS['phpgw']->common->grab_owner_name($id).
+						($conflict?'</b> - '.lang('Scheduling conflict'):'')."</li>\n";
+				}
+				$overlap .= "</ul>\n";
 			}
 
 			unset($GLOBALS['phpgw_info']['flags']['noheader']);

@@ -520,14 +520,14 @@
 			$this->return_to = $data['return_to'];
 		}
 
-		function read_entry($id)
+		function read_entry($id,$ignore_acl=False)
 		{
 			if (is_array($id) && count($id) == 1)	// xmlrpc
 			{
 				list(,$id) = each($id);
 				$xmlrpc = True;
 			}
-			if($this->check_perms(PHPGW_ACL_READ,$id))
+			if($ignore_acl || $this->check_perms(PHPGW_ACL_READ,$id))
 			{
 				$event = $this->so->read_entry($id);
 				if(!isset($event['participants'][$this->owner]) && $this->user_is_a_member($event,$this->owner))
@@ -695,7 +695,7 @@
 			$l_recur_enddate = (@isset($params['recur_enddate']) && $params['recur_enddate']?$params['recur_enddate']:$_POST['recur_enddate']);
 
 			$send_to_ui = True;
-			if (!is_array($l_start) || !is_array($l_end))	// xmlrpc call
+			if ((!is_array($l_start) || !is_array($l_end)) && !isset($_GET['readsess']))	// xmlrpc call
 			{
 				$send_to_ui = False;
 
