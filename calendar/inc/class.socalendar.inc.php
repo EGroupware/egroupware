@@ -92,7 +92,7 @@
 				}
 				array_walk($cats,create_function('&$val,$key','$val = (int) $val;'));
 
-				$extra .= "($this->table.cal_category".(count($cats) > 1 ? ' IN ('.implode(',',$cats).')' : '='.(int)$cat_id);
+				$extra .= "($this->table.cal_category".(count($cats) > 1 ? ' IN ('.implode(',',$cats).')' : '='.$this->db->quote((int)$cat_id));
 				foreach($cats as $cat)
 				{
 					$extra .= " OR $this->table.cal_category LIKE '$cat,%' OR $this->table.cal_category LIKE '%,$cat,%' OR $this->table.cal_category LIKE '%,$cat'";
