@@ -25,9 +25,14 @@
   }
 
   if ($submit) {
+     $totalerrors = 0;
+
+     if (strlen($n_loginid) > 8)
+        $error[$totalerrors++] = lang("The loginid can not be more then 8 characters");
+    
      if ($old_loginid != $n_loginid) {
         if (account_exsists($n_loginid)) {
-           $error .= "<br>" . lang("That loginid has already been taken");
+           $error[$totalerrors++] = lang("That loginid has already been taken");
         }
         $c_loginid = $n_loginid;
         $n_loginid = $old_loginid;
@@ -35,18 +40,18 @@
   
      if ($n_passwd || $n_passwd_2) {
         if ($n_passwd != $n_passwd_2) {
-           $error .= lang("The two passwords are not the same");
+           $error[$totalerrors++] = lang("The two passwords are not the same");
         }
         if (! $n_passwd){
-           $error .= lang("You must enter a password");
+           $error[$totalerrors++] = lang("You must enter a password");
         }
      }
 
      if (count($new_permissions) == 0){
-        $error .= "<br>" . lang("You must add at least 1 permission to this account");
+        $error[$totalerrors++] = "<br>" . lang("You must add at least 1 permission to this account");
      }
      
-     if (! $error) {  
+     if (! $totalerrors) {
         $cd = account_edit(array("loginid"   => $n_loginid,   "permissions"    => $new_permissions,
         				         "firstname" => $n_firstname, "lastname"       => $n_lastname,
         				         "passwd"    => $n_passwd,    "account_status" => $account_status,
@@ -74,7 +79,7 @@
       <input type="hidden" name="old_loginid" value="<? echo $phpgw->db->f("account_lid"); ?>">
 <?php
   if ($error) {
-    echo "<center>" . lang("Error") . ":$error</center>";
+    echo "<center>" . $phpgw->common->error_list($error) . "</center>";
   }
 ?>
       <center>
