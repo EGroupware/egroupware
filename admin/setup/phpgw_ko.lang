@@ -11,7 +11,7 @@ account has been deleted	common	ko	계정이 삭제되었습니다
 account has been updated	common	ko	계정이 갱신되었습니다
 account list	admin	ko	계정 목록
 account permissions	admin	ko	계정 권한
-account preferences	admin	ko	계정 설정
+account preferences	admin	ko	계정 환경설정
 acl manager	admin	ko	ACL 메니저
 acl rights	common	ko	ACL 권한
 action	admin	ko	액션
@@ -42,9 +42,9 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
 all users	admin	ko	모든 사용자
 allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
-anonymous user	admin	ko	무명 사용자
+anonymous user	admin	ko	익명 사용자
 anonymous user (not shown in list sessions)	admin	ko	익명 사용자 ( 세션 목록에 나타나지 않음 )
-appearance	admin	ko	** 보이기 (Appearance)
+appearance	admin	ko	보이기
 application	admin	ko	응용프로그램
 application name	admin	ko	응용프로그램 이름
 application title	admin	ko	응용프로그램 제목
@@ -114,11 +114,11 @@ deny access to groups	admin	ko	거부된 접근을 그룹으로
 deny access to mainscreen message	admin	ko	거부된 접근을 주 화면 메세지로
 deny access to peer servers	admin	ko	거부된 접근을 피어 서버로
 deny access to phpinfo	admin	ko	거부된 접근을 phpinfo로
-deny access to site configuration	admin	ko	거부된 접근을 사이트 설정으로
+deny access to site configuration	admin	ko	거부된 접근을 사이트 구성으로
 deny access to user accounts	admin	ko	거부된 접근을 사용자 계정으로
 deny all users access to grant other users access to their entries ?	admin	ko	** 허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
 description can not exceed 255 characters in length !	admin	ko	설명은 255 글자길이를 초과 할수 없습니다!
-disable "auto completion" of the login form	admin	ko	로그인시 "자동완성" 기능 비활성화
+disable "auto completion" of the login form	admin	ko	접속시 "자동완성" 기능 비활성화
 disable wysiwyg-editor	admin	ko	위지웍-편집기 비활성화
 disabled	admin	ko	비활성화
 disabled (not recomended)	admin	ko	비활성화 됨 (추천)
@@ -133,7 +133,7 @@ edit global category	admin	ko	전역 카테고리 편집
 edit global category for %1	admin	ko	%1의 전역 카테고리 편집
 edit group	admin	ko	그룹 편집
 edit group acl's	admin	ko	그룹의 ACL을 편집
-edit login screen message	admin	ko	로그인 화면 메세지 편집
+edit login screen message	admin	ko	접속화면 메세지 편집
 edit main screen message	admin	ko	주 화면 메세지 편집
 edit peer server	admin	ko	피어 서버 편집
 edit table format	admin	ko	테이블 형식 편집
@@ -147,8 +147,8 @@ enabled - hidden from navbar	admin	ko	활성화 - 네비게이션바에서 숨김
 enabled - popup window	admin	ko	활성화 - 팝업창
 enter a description for the category	admin	ko	카테고리의 설명을 입력하세요
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	ko	응용프로그램의 세션 암호화에 사용할 텍스트 입력<br>(mcrypt 필요)
-enter the background color for the login page	admin	ko	로그인 페이지의 배경색 입력
-enter the background color for the site title	admin	ko	사이트 타이틀의 배경색 입력
+enter the background color for the login page	admin	ko	접속 페이지의 배경색 입력
+enter the background color for the site title	admin	ko	사이트 제목의 배경색 입력
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
 enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
@@ -157,7 +157,7 @@ enter the search string. to show all entries, empty this field and press the sub
 enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
 enter the title for your site	admin	ko	귀하의 사이트 제목을 입력
-enter the title of your logo	admin	ko	귀하의 로고의 타이틀을 입력
+enter the title of your logo	admin	ko	귀하의 로고의 제목을 입력
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	ko	귀하의 로고의 URL 이나 파일이름을 입력 ( phpgwapi/templates/default/images 안에 )
 enter the url where your logo should link to	admin	ko	귀하의 로고가 링크될 URL 을 입력
 enter your default ftp server	admin	ko	기본 FTP 서버주소 입력
@@ -170,11 +170,11 @@ error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 �
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!!!
 error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!!!
 expires	admin	ko	만료
-fallback (after each pageview)	admin	ko	** 폴백 (각 페이지보기 이후)
+fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
 file space	admin	ko	파일 용량
 file space must be an integer	admin	ko	파일 용량은 정수이어야 합니다
-find and register all application hooks	admin	ko	모든 응용프로그램 훅(hooks)을 찾거나 등록
-for the times above	admin	ko	** 이상과 같은 시간 (for the times above)
+find and register all application hooks	admin	ko	모든 응용프로그램의 "가로채기"을 찾거나 등록
+for the times above	admin	ko	위와 같은 시간
 for the times below (empty values count as '*', all empty = every minute)	admin	ko	이하와 같은 시간 (빈 값은 '*'로 처리되고, 모두 비어있으면 매 분마다입니다)
 force selectbox	admin	ko	강제 선택박스
 global categories	common	ko	전역 카테고리
@@ -192,7 +192,7 @@ hour<br>(0-23)	admin	ko	시간<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
 icon	admin	ko	아이콘
-idle	admin	ko	대기
+idle	admin	ko	대기시간
 if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
 inbound	admin	ko	인바운드
@@ -204,10 +204,10 @@ ip	admin	ko	IP
 jobs	admin	ko	작업(Jobs)
 kill	admin	ko	종료
 kill session	admin	ko	세션 종료
-last %1 logins	admin	ko	Last %1 logins
-last %1 logins for %2	admin	ko	Last %1 logins for %2
-last login	admin	ko	마지막 로그인
-last login from	admin	ko	마지막 로그인 위치는
+last %1 logins	admin	ko	** Last %1 logins
+last %1 logins for %2	admin	ko	** Last %1 logins for %2
+last login	admin	ko	마지막 접속
+last login from	admin	ko	마지막 접속 위치는
 last time read	admin	ko	마지막 읽은 시각
 ldap accounts context	admin	ko	LDAP 계정 컨텍스트
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ko	LDAP 기본 홈디렉토리 접두어 (예:/home/username 의 /home)
@@ -257,16 +257,16 @@ password for smtp-authentication	admin	ko	SMTP-인증 암호
 path information	admin	ko	경로 정보
 peer server list	admin	ko	피어서버 목록
 peer servers	admin	ko	피어 서버
-percent of users that logged out	admin	ko	퍼센트의 사용자가 로그아웃 하였습니다.
-percent this user has logged out	admin	ko	퍼센트의 사용자가 로그아웃 하였습니다.
+percent of users that logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
+percent this user has logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
 permissions	admin	ko	권한
 permissions this group has	admin	ko	이 그룹이 가진 권한
 phpinfo	admin	ko	PHP 정보
 please enter a name	admin	ko	이름을 입력하세요
 please enter a name for that server !	admin	ko	서버의 이름을 입력하세요!
-please run setup to become current	admin	ko	** 설정을 실행하세요 (Please run setup to become current)
+please run setup to become current	admin	ko	현재버전이 되려면 설정을 실행하세요
 please select	admin	ko	선택하세요
-preferences	admin	ko	설정
+preferences	admin	ko	환경설정
 primary group	admin	ko	주 그룹
 re-enter password	admin	ko	비밀번호 재입력
 read this list of methods.	admin	ko	이 메소드 목록 읽기
@@ -297,12 +297,12 @@ server password	admin	ko	서버 암호
 server type(mode)	admin	ko	서버 타입(모드)
 server url	admin	ko	서버 URL
 server username	admin	ko	서버 사용자이름
-set preference values.	admin	ko	설정 값을 결정
+set preference values.	admin	ko	환경설정 값을 결정
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
 show 'powered by' logo on	admin	ko	'powered by' 로고를 보임
-show access log	admin	ko	접근 로그를 보임
+show access log	admin	ko	접근 기록을 보임
 show current action	admin	ko	현재 액션을 보임
-show error log	admin	ko	에러로그름 보임
+show error log	admin	ko	에러 기록을 보임
 show phpinfo()	admin	ko	phpinfo()를 보임
 show session ip address	admin	ko	세션 IP주소를 보임
 site	admin	ko	Site
@@ -321,21 +321,21 @@ template selection	admin	ko	템플릿 선택
 text entry	admin	ko	텍스트 엔트리(Text entry)
 that application name already exists.	admin	ko	응용프로그램 이름이 이미 있습니다
 that application order must be a number.	admin	ko	응용프로그램 순서는 반드시 정수여야 합니다
-that loginid has already been taken	admin	ko	이 사용자 계정은 이미 사용중입니다.
+that loginid has already been taken	admin	ko	이 접속ID는 이미 사용중입니다
 that name has been used already	admin	ko	이름이 이미 있습니다
-that server name has been used already !	admin	ko	서버 이림이 이미 사용되고 있씁니다!
-the api is current	admin	ko	API는 현재 버전
+that server name has been used already !	admin	ko	이미 존재하는 서버이름 입니다!
+the api is current	admin	ko	API는 현재버전
 the api requires an upgrade	admin	ko	API의 업그레이드가 필요
-the groups must include the primary group	admin	ko	이 그룹은 반드시 주 그룹을 포함해야함
+the groups must include the primary group	admin	ko	그룹은 반드시 주 그룹을 포함해야함
 the login and password can not be the same	admin	ko	계정과 패스워드는 같지 않아야 합니다.
 the loginid can not be more then 8 characters	admin	ko	접속ID는 8글자를 초과할수 없습니다
 the testjob sends you a mail everytime it is called.	admin	ko	테스트작업(TestJob)이 불려질때마다 메일 발송
-the two passwords are not the same	admin	ko	두 비밀번호가 틀립니다
+the two passwords are not the same	admin	ko	두 비밀번호가 다릅니다
 the users bellow are still members of group %1	admin	ko	아래의 사용자는 아직 %1 그룹의 구성원입니다.
 there already is a group with this name. userid's can not have the same name as a groupid	admin	ko	이 이름의 그룹이 이미 있습니다. 사용자ID는 그룹ID와 같을수 없습니다
 they must be removed before you can continue	admin	ko	계속하기전에 반드시 삭제되어야 합니다
 this application is current	admin	ko	응용프로그램은 현재버전
-this application requires an upgrade	admin	ko	응용프로그램은 업그레이가 필요
+this application requires an upgrade	admin	ko	응용프로그램은 업그레이가 필요합니다
 this category is currently being used by applications as a parent category	admin	ko	이 카테고리는 현재 응용프로그램에 의해 상위 카테고리로 사용되고 있습니다
 timeout for application session data in seconds (default 86400 = 1 day)	admin	ko	응용프로그램 세션 데이터의 타임아웃 초 (기본 86400 = 하루)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	ko	세션 타임아웃 초 (기본 14400 = 4시간)
@@ -354,7 +354,7 @@ user for smtp-authentication (leave it empty if no auth required)	admin	ko	사용�
 user groups	admin	ko	사용자 그룹
 userdata	admin	ko	사용자데이터
 users choice	admin	ko	사용자 선택
-view access log	admin	ko	접속 로그 보기
+view access log	admin	ko	접속 기록 보기
 view account	admin	ko	계정 보기
 view category	admin	ko	카테고리 보기
 view error log	admin	ko	오류 기록 보기
@@ -362,10 +362,10 @@ view sessions	admin	ko	세션 보기
 view this user	admin	ko	이 사용자를보기
 view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	** 누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 로그인 할때<br>eGroupWare가 새버전을 확인하겠습니까?
-would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 로그인 할때 eGroupWare가 새 응용프로그램 버전을 확인하시겠습니까?
+would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>eGroupWare가 새버전을 확인하겠습니까?
+would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 eGroupWare가 새 응용프로그램 버전을 확인하시겠습니까?
 would you like phpgroupware to cache the phpgw info array ?	admin	ko	phpGroupWare가 phpgw info 배열을 캐쉬하도록 하겠습니까?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일은 자동적으로 읽어드리겠습니까? (로그인 할때)
+would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
 would you like to show each application's upgrade status ?	admin	ko	각 응용프로그램의 업그레이드 상태를 보시겠습니까?
 xml-rpc	admin	ko	XML-RPC
 you have entered an invalid expiration date	admin	ko	부적절한 만료 날짜를 입력하셨습니다
