@@ -11,7 +11,7 @@
   <td align="center">{phpgw_version}</td>
  </tr>
  <tr>
-  <td>Note: This will be some text on phpGroupWare it self</td>
+  <td align="center"><a href="http://www.phpgroupware.org" target="_new">phpGroupWare</a> is a multi-user, web-based groupware suite written in <a href="http://www.php.net" target="_new">PHP</a>.</td>
  </tr>
  <tr>
   <td><hr></td>
