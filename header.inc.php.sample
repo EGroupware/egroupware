@@ -24,17 +24,16 @@
   /* This is the basic include needed on each page for phpGroupWare application compliance */
   $phpgw_info["flags"]["htmlcompliant"] = True;
 
-  /* These are the settings for the database system */
-  $phpgw_info["server"]["db_host"] = "localhost";
-  $phpgw_info["server"]["db_name"] = "phpgroupware";
-  $phpgw_info["server"]["db_user"] = "phpgroupware";
-  $phpgw_info["server"]["db_pass"] = "your_password";
+  $phpgw_domain["default"] = array (
+    "db_host" => "localhost", 
+    "db_name" => "phpgw_domain1", 
+    "db_user" => "phpgroupware", 
+    "db_pass" => "their_password", 
   /* Look at the README file */
-  $phpgw_info["server"]["db_type"] = "mysql"; //mysql, pgsql (for postgresql), oracle, 
-                                              //msql (not tested), mssql (not tested), sybase (not tested), or odbc (not tested)
-  
+    "db_type" => "mysql",
   /* This will limit who is allowed to make configuration modifcations */
-  $phpgw_info["server"]["config_passwd"] = "changeme";    
+    "config_passwd" => "changeme"
+  );
 
   /* This is used to control mcrypt's use */
   $phpgw_info["server"]["mcrypt_enabled"] = False;
@@ -51,7 +50,7 @@
   /* Use this for supporting different domains using this single install */
   /* (ignore if you are only supporting a single domain)*/
   $phpgw_info["multiable_domains"] = False; //Set to True and create an array for each domain.
-  $phpgw_domain["domain1.com"] = array (
+  $phpgw_domain["domain2.com"] = array (
     "db_host" => "localhost", 
     "db_name" => "phpgw_domain1", 
     "db_user" => "phpgroupware", 
