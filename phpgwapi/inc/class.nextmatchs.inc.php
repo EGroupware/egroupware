@@ -49,8 +49,8 @@
 			$this->template->set_block('_nextmatchs','search_filter');
 			$this->template->set_block('_nextmatchs','cats_search_filter');
 
-			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'])
-			&& intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) > 0)
+			if(isset($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) &&
+				intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']) > 0)
 			{
 				$this->maxmatches = intval($GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']);
 			}
@@ -77,23 +77,22 @@
 			switch(strtolower($GLOBALS['phpgw_info']['user']['account_lid']))
 			{
 				case 'ceb':
-				$border = 2;
-				break;
+					$border = 2;
+					break;
 				default:
-				$border = 0;
-				break;
+					$border = 0;
+					break;
 			}
 
 			$var = array(
-				'align'		=> $align,
-				'img'		=> $GLOBALS['phpgw']->common->image('phpgwapi',$img),
-				'label'		=> lang($label),
-				'border'	=> $border
+				'align'  => $align,
+				'img'    => $GLOBALS['phpgw']->common->image('phpgwapi',$img),
+				'label'  => lang($label),
+				'border' => $border
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','link');
 		}
-
 
 		/*!
 		@function page
@@ -146,14 +145,14 @@
 			}
 			$border = 0;
 			$var = Array(
-				'align'		=> $align,
-				'action'	=> ($this->action?$this->page():$GLOBALS['phpgw']->link($link)),
-				'form_name'	=> $img,
-				'hidden'	=> substr($hidden,0,strlen($hidden)-1),
-				'img'		=> $GLOBALS['phpgw']->common->image('phpgwapi',$img),
-				'label'		=> $alt,
-				'border'	=> $border,
-				'start'		=> $extravars['start']
+				'align'     => $align,
+				'action'    => ($this->action?$this->page():$GLOBALS['phpgw']->link($link)),
+				'form_name' => $img,
+				'hidden'    => substr($hidden,0,strlen($hidden)-1),
+				'img'       => $GLOBALS['phpgw']->common->image('phpgwapi',$img),
+				'label'     => $alt,
+				'border'    => $border,
+				'start'     => $extravars['start']
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','form');
@@ -177,33 +176,33 @@
 			global $filter, $qfield, $start, $order, $sort;
 			$start = $localstart;
 
-			$cats	= CreateObject('phpgwapi.categories');
+			$cats = CreateObject('phpgwapi.categories');
 
 			$extravars = Array();
 			$extravars = $this->split_extras($extravars,$extra);
 
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
-				'lang_category'	=> lang('Category'),
-				'lang_all'		=> lang('All'),
-				'lang_select'	=> lang('Select'),
-				'cat_field'		=> $cat_field,
-				'categories'	=> $cats->formated_list('select','all',$cat_id,'True'),
-				'filter_value'	=> $filter,
-				'qfield'		=> $qfield,
-				'start_value'	=> $start,
-				'order_value'	=> $order,
-				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
-				'table_width'	=> $twidth,
-				'th_bg'			=> $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'left'			=> $this->left($sn,$start,$total,$extra),
-				'search'		=> ($showsearch?$this->search($search_obj):''),
-				'filter'		=> ($filter_obj?$this->filter($filter_obj,$yours):''),
-				'right'			=> $this->right($sn,$start,$total,$extra)
+				'form_action'   => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
+				'lang_category' => lang('Category'),
+				'lang_all'      => lang('All'),
+				'lang_select'   => lang('Select'),
+				'cat_field'     => $cat_field,
+				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
+				'filter_value'  => $filter,
+				'qfield'        => $qfield,
+				'start_value'   => $start,
+				'order_value'   => $order,
+				'sort_value'    => $sort,
+				'query_value'   => urlencode(stripslashes($GLOBALS['query'])),
+				'table_width'   => $twidth,
+				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'left'          => $this->left($sn,$start,$total,$extra),
+				'search'        => ($showsearch?$this->search($search_obj):''),
+				'filter'        => ($filter_obj?$this->filter($filter_obj,$yours):''),
+				'right'         => $this->right($sn,$start,$total,$extra)
 			);
 			$this->template->set_var($var);
-			$this->template->parse('cats','cats');			
+			$this->template->parse('cats','cats');
 			$this->template->parse('cats_search_filter_data','cats_search_filter');
 			return $this->template->fp('out','nextmatchs');
 		}
@@ -277,19 +276,18 @@
 			global $filter, $qfield, $order, $sort;
 
 			$extravars = Array(
-				'order'		=> $order,
-				'filter'	=> $filter,
-				'q_field'	=> $qfield,
-				'sort'		=> $sort,
-				'query'		=> urlencode(stripslashes($GLOBALS['query']))
+				'order'   => $order,
+				'filter'  => $filter,
+				'q_field' => $qfield,
+				'sort'    => $sort,
+				'query'   => urlencode(stripslashes($GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
-
 			$ret_str = '';
 
-			if (($start != 0)
-			&& ($start > $this->maxmatches))
+			if (($start != 0) &&
+				($start > $this->maxmatches))
 			{
 				$extravars['start'] = 0;
 				$ret_str .= $this->set_link('left','first.gif',$scriptname,lang('First page'),$extravars);
@@ -332,19 +330,19 @@
 			global $filter, $qfield, $order, $sort;
 
 			$extravars = Array(
-				'order'		=> $order,
-				'filter'	=> $filter,
-				'q_field'	=> $qfield,
-				'sort'		=> $sort,
-				'query'		=> urlencode(stripslashes($GLOBALS['query']))
+				'order'   => $order,
+				'filter'  => $filter,
+				'q_field' => $qfield,
+				'sort'    => $sort,
+				'query'   => urlencode(stripslashes($GLOBALS['query']))
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
 
 			$ret_str = '';
 
-			if (($total > $this->maxmatches)
-			&& ($total > $start + $this->maxmatches))
+			if (($total > $this->maxmatches) &&
+				($total > $start + $this->maxmatches))
 			{
 				$extravars['start'] = ($start + $this->maxmatches);
 				$ret_str .= $this->set_link('right','right.gif',$scriptname,lang('Next page'),$extravars);
@@ -354,8 +352,8 @@
 				$ret_str .= $this->set_icon('right','right-grey.gif',lang('Next page'));
 			}
 
-			if (($start != $total - $this->maxmatches)
-			&& (($total - $this->maxmatches) > ($start + $this->maxmatches)))
+			if (($start != $total - $this->maxmatches) &&
+				(($total - $this->maxmatches) > ($start + $this->maxmatches)))
 			{
 				$extravars['start'] = ($total - $this->maxmatches);
 				$ret_str .= $this->set_link('right','last.gif',$scriptname,lang('Last page'),$extravars);
@@ -378,16 +376,16 @@
 
 			$start = $localstart;
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
-				'filter_value'	=> $filter,
-				'qfield'	=> $qfield,
-				'start_value'	=> $start,
-				'order_value'	=> $order,
-				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
-				'th_bg'		=> $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'search'	=> $this->search($search_obj),
-				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
+				'form_action'  => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
+				'filter_value' => $filter,
+				'qfield'       => $qfield,
+				'start_value'  => $start,
+				'order_value'  => $order,
+				'sort_value'   => $sort,
+				'query_value'  => urlencode(stripslashes($GLOBALS['query'])),
+				'th_bg'        => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'search'       => $this->search($search_obj),
+				'filter'       => ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','search_filter');
@@ -403,23 +401,23 @@
 			global $filter, $qfield, $start, $order, $sort;
 
 			$start = $localstart;
-			$cats	= CreateObject('phpgwapi.categories');
+			$cats  = CreateObject('phpgwapi.categories');
 			$var = array(
-				'form_action'	=> ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
-				'lang_category'	=> lang('Category'),
-				'lang_all'	=> lang('All'),
-				'lang_select'	=> lang('Select'),
-				'cat_field'	=> $cat_field,
-				'categories'	=> $cats->formated_list('select','all',$cat_id,'True'),
-				'filter_value'	=> $filter,
-				'qfield'	=> $qfield,
-				'start_value'	=> $start,
-				'order_value'	=> $order,
-				'sort_value'	=> $sort,
-				'query_value'	=> urlencode(stripslashes($GLOBALS['query'])),
-				'th_bg'		=> $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'search'	=> $this->search($search_obj),
-				'filter'	=> ($filter_obj?$this->filter($filter_obj,$yours):'')
+				'form_action'   => ($this->action?$this->page($extra):$GLOBALS['phpgw']->link($sn, $extra)),
+				'lang_category' => lang('Category'),
+				'lang_all'      => lang('All'),
+				'lang_select'   => lang('Select'),
+				'cat_field'     => $cat_field,
+				'categories'    => $cats->formated_list('select','all',$cat_id,'True'),
+				'filter_value'  => $filter,
+				'qfield'        => $qfield,
+				'start_value'   => $start,
+				'order_value'   => $order,
+				'sort_value'    => $sort,
+				'query_value'   => urlencode(stripslashes($GLOBALS['query'])),
+				'th_bg'         => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'search'        => $this->search($search_obj),
+				'filter'        => ($filter_obj?$this->filter($filter_obj,$yours):'')
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','cats_search_filter');
@@ -441,9 +439,9 @@
 				$_query = ereg_replace('"','',$_query);
 			}
 			$var = array(
-				'query_value'	=> stripslashes($_query),
-				'searchby'	=> $this->searchby($search_obj),
-				'lang_search'	=> lang('Search')
+				'query_value' => stripslashes($_query),
+				'searchby'    => $this->searchby($search_obj),
+				'lang_search' => lang('Search')
 			);
 			$this->template->set_var($var);
 			return $this->template->fp('out','search');
@@ -461,7 +459,7 @@
 			$filter_obj = array(array('none','show all'));
 			$index = 0;
 
-			$GLOBALS['phpgw']->db->query("SELECT $idxfieldname, $strfieldname from $filtertable",__LINE__,__FILE__);
+			$GLOBALS['phpgw']->db->query("SELECT $idxfieldname, $strfieldname FROM $filtertable",__LINE__,__FILE__);
 			while($GLOBALS['phpgw']->db->next_record())
 			{
 				$index++;
@@ -540,7 +538,6 @@
 			if (is_array($filter_obj))
 			{
 				$str = '';
-
 				$indexlimit = count($filter_obj);
 
 				for ($index=0; $index<$indexlimit; $index++)
@@ -609,7 +606,7 @@
 		*/
 		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
-			global $phpgw, $filter, $qfield, $start;
+			global $filter, $qfield, $start;
 
 			if (($order == $var) && ($sort == 'ASC'))
 			{
@@ -663,7 +660,6 @@
 			}
 		}
 
-
 		/*!
 		@function show_sort_order_imap
 		@abstract ?
@@ -710,7 +706,6 @@
 			return '<a href="' .$link .'">' .$text .'</a>';
 		}
 
-
 		/*!
 		@function nav_left_right_imap
 		@abstract same code as left and right (as of Dec 07, 2001) except all combined into one function
@@ -729,10 +724,10 @@
 		function nav_left_right_imap($feed_vars)
 		{
 			$return_array = Array(
-				'first_page'	=> '',
-				'prev_page'	=> '',
-				'next_page'	=> '',
-				'last_page'	=> ''
+				'first_page' => '',
+				'prev_page'  => '',
+				'next_page'  => '',
+				'last_page'  => ''
 			);
 			$out_vars = array();
 			// things that might change
@@ -741,10 +736,10 @@
 			$out_vars['total'] = $feed_vars['total'];
 			$out_vars['cmd_prefix'] = $feed_vars['cmd_prefix'];
 			$out_vars['cmd_suffix'] = $feed_vars['cmd_suffix'];
-			
+
 			// first page
-			if (($feed_vars['start'] != 0)
-			&& ($feed_vars['start'] > $this->maxmatches))
+			if (($feed_vars['start'] != 0) &&
+				($feed_vars['start'] > $this->maxmatches))
 			{
 				$out_vars['start'] = 0;
 				$return_array['first_page'] = $this->set_link_imap('left','first.gif',lang('First page'),$out_vars);
@@ -771,13 +766,13 @@
 			{
 				$return_array['prev_page'] = $this->set_icon_imap('left','left-grey.gif',lang('Previous page'));
 			}
-			
+
 			// re-initialize the out_vars
 			// things that might change
 			$out_vars['start'] = $feed_vars['start'];
 			// next page
-			if (($feed_vars['total'] > $this->maxmatches)
-			&& ($feed_vars['total'] > $feed_vars['start'] + $this->maxmatches))
+			if (($feed_vars['total'] > $this->maxmatches) &&
+				($feed_vars['total'] > $feed_vars['start'] + $this->maxmatches))
 			{
 				$out_vars['start'] = ($feed_vars['start'] + $this->maxmatches);
 				$return_array['next_page'] = $this->set_link_imap('right','right.gif',lang('Next page'),$out_vars);
@@ -787,8 +782,8 @@
 				$return_array['next_page'] = $this->set_icon_imap('right','right-grey.gif',lang('Next page'));
 			}
 			// last page
-			if (($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches)
-			&& (($feed_vars['total'] - $this->maxmatches) > ($feed_vars['start'] + $this->maxmatches)))
+			if (($feed_vars['start'] != $feed_vars['total'] - $this->maxmatches) &&
+				(($feed_vars['total'] - $this->maxmatches) > ($feed_vars['start'] + $this->maxmatches)))
 			{
 				$out_vars['start'] = ($feed_vars['total'] - $this->maxmatches);
 				$return_array['last_page'] = $this->set_link_imap('right','last.gif',lang('Last page'),$out_vars);
@@ -799,7 +794,7 @@
 			}
 			return $return_array;
 		}
-	
+
 		/*!
 		@function set_link_imap
 		@abstract ?
@@ -814,12 +809,11 @@
 			$js_cmd = $out_vars['cmd_prefix'].$out_vars['start'].$out_vars['cmd_suffix'];
 			return '<img src="'.$img_full.'" border="0" alt="'.$alt_text.'" width="12" height="12" onclick="'.$js_cmd.'">'."\r\n";
 		}
-		
+
 		function set_icon_imap($align,$img,$alt_text)
 		{
 			$img_full = $GLOBALS['phpgw']->common->image('phpgwapi',$img);
 			return '<img src="'.$img_full.'" border="0" width="12" height="12" alt="'.$alt_text.'">'."\r\n";
 		}
-
 	} // End of nextmatchs class
 ?>
