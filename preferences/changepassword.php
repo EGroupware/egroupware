@@ -26,64 +26,41 @@
 		$phpgw->common->phpgw_exit();
 	}    
 
-	if (! $submit)
-	{
-		$phpgw->common->phpgw_header();
-		echo parse_navbar();
+	$phpgw->template->set_file(array(
+		'form' => 'changepassword.tpl'
+	));
+	$phpgw->template->set_var('lang_changepassword',lang('Change password'));
+	$phpgw->template->set_var('lang_enter_password',lang('Enter your new password'));
+	$phpgw->template->set_var('lang_reenter_password',lang('Re-enter your password'));
+	$phpgw->template->set_var('lang_change',lang('Change'));
+	$phpgw->template->set_var('form_action',$phpgw->link('/preferences/changepassword.php'));
 
-    ?>
-   <form method="POST" action="<?php echo $phpgw->link('/preferences/changepassword.php'); ?>">
-    <table border="0">
-     <tr>
-       <td>
-        <?php echo lang('enter your new password'); ?>
-       </td>
-       <td>
-        <input type="password" name="n_passwd">
-       </td>
-     </tr>
-     <tr>
-       <td>
-        <?php echo lang('re-enter your password'); ?>
-       </td>
-       <td>
-        <input type="password" name="n_passwd_2">
-       </td>
-     </tr>
-     <tr>
-       <td colspan="2">
-        <input type="submit" name="submit" value="<?php echo lang('change'); ?>">
-       </td>
-     </tr>
-    </table>
-   </form>
-   <br>
-   <?php
-		if ($phpgw_info['server']['auth_type'] != 'ldap')
-		{
-			echo '<pre>' . lang('note: This feature does *not* change your email password. This will '
- 	           	   	   . 'need to be done manually.') . '</pre>';
-		}
-		$phpgw->common->phpgw_footer();
-     
+	if ($phpgw_info['server']['auth_type'] != 'ldap')
+	{
+		$phpgw->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
+	           	   	   . 'need to be done manually.'));
 	}
-	else
+
+
+	if ($submit)
 	{
 		if ($n_passwd != $n_passwd_2)
 		{
-			$error = lang('The two passwords are not the same');
+			$errors[] = lang('The two passwords are not the same');
 		}
 
 		if (! $n_passwd)
 		{
-			$error = lang('You must enter a password');
+			$errors[] = lang('You must enter a password');
 		}
 
-		if ($error)
+		if (is_array($errors))
 		{
+			$phpgw->common->phpgw_header();
 			echo parse_navbar();
-			echo '<p><br>' . $error . '</p>';
-			$phpgw->common->phpgw_exit();
+			$phpgw->template->set_var('messages',$phpgw->common->error_list($errors));
+			$phpgw->template->pfp('out','form');
+			$phpgw->common->phpgw_exit(True);
 		}
 
 		$o_passwd = $phpgw_info['user']['passwd'];
@@ -96,8 +73,16 @@
 		else
 		{
 			$phpgw_info['user']['passwd'] = $phpgw->auth->change_password($o_passwd, $n_passwd);
-			//$phpgw->accounts->sync();
 			Header('Location: ' . $phpgw->link('/preferences/index.php','cd=18'));
 		}
+
+	}
+	else
+	{
+		$phpgw->common->phpgw_header();
+		echo parse_navbar();
+
+		$phpgw->template->pfp('out','form');
+		$phpgw->common->phpgw_footer();
 	}
 ?>
