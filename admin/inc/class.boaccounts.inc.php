@@ -135,6 +135,12 @@
 				$account_id = get_account_id($accountid);
 				// make this information also in hook available
 				$lid = $GLOBALS['phpgw']->accounts->id2name($account_id);
+
+				$GLOBALS['hook_values']['account_id'] = $account_id;
+				$GLOBALS['hook_values']['account_lid'] = $lid;
+				
+				$singleHookValues = $GLOBALS['hook_values']+array('location' => 'deleteaccount');
+
 				$db = $GLOBALS['phpgw']->db;
 				$db->query('SELECT app_name,app_order FROM phpgw_applications WHERE app_enabled!=0 ORDER BY app_order',__LINE__,__FILE__);
 				if($db->num_rows())
@@ -143,20 +149,15 @@
 					{
 						$appname = $db->f('app_name');
 
-						if($appname <> 'admin')
+						if($appname <> 'admin' || $appname <> 'preferences')
 						{
-							$GLOBALS['phpgw']->hooks->single('deleteaccount', $appname);
+							$GLOBALS['phpgw']->hooks->single($singleHookValues, $appname);
 						}
 					}
 				}
 
-				$GLOBALS['hook_values']['account_id'] = $account_id;
-				$GLOBALS['hook_values']['account_lid'] = $lid;
-
 				$GLOBALS['phpgw']->hooks->single('deleteaccount','preferences');
 				$GLOBALS['phpgw']->hooks->single('deleteaccount','admin');
-
-				$GLOBALS['phpgw']->hooks->process('deleteaccount');
 
 				$basedir = $GLOBALS['phpgw_info']['server']['files_dir'] . SEP . 'users' . SEP;
 
