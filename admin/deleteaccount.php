@@ -59,7 +59,7 @@
   if (($account_id) && (! $confirm)) {
      // the account can have special chars/white spaces, if it is a ldap dn
      $account_id = rawurlencode($account_id);
-     $phpgw->template->set_var("message",lang("Are you sure you want to delete this account ?") . "<br>"
+     $phpgw->template->set_var("messages",lang("Are you sure you want to delete this account ?") . "<br>"
                              . "<font color=\"red\"><blink>" . lang("All records and account information will be lost!") . "</blink></font>");
      $phpgw->template->set_var("yes",'<a href="' . $phpgw->link("/admin/deleteaccount.php","account_id=$account_id&confirm=true")
                                    . '">' . lang("Yes") . '</a>');
