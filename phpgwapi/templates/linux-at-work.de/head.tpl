@@ -14,13 +14,14 @@ A.main_menu, A.main_menu:LINK, A.main_menu:VISITED {
 }
 
 A.main_menu:HOVER {
-	background-color: #7C92DC;
+	background-color: #7C92FC;
 }
 
 DIV.main_menu {
 	position : absolute;
 	border : 0px dotted;
 	background : #7C92DC;
+	background : #7C92BC;
 	padding : 0px 0px 0px 0px;
 	padding-bottom : 0px;
 	padding-left : 0px;
@@ -30,8 +31,8 @@ DIV.main_menu {
 
 DIV.main_body {
 	position : absolute;
-	border : 0px dotted;
-	background-color : #B8FEAB;
+	border-width : 1px;
+	background-color : #7C92BC;
 	padding-bottom : 0px;
 	padding-left : 0px;
 	padding-right : 0px;
@@ -52,6 +53,7 @@ TD.main_menu {
 	margin-right: 10px;
 	vertical-align:middle;
 	text-align:right;
+	white-space: nowrap;
 }
 
 TD.main_menu_bottom {
@@ -115,7 +117,7 @@ TD.main_menu_info {
 	margin-right: 0px; 
 	margin-left: 0px; 
 	font-family: "{font_family}";
-	background-color : #B8FEAB;
+	background-color : #7C92BC;
   }
   .tablink { color: #000000; }
   {app_css}
@@ -123,13 +125,18 @@ TD.main_menu_info {
 </STYLE>
 <script language="JavaScript">
 <!--
-function MM_preloadImages()
+function checkphpgw()
 {
+	//window.alert("test");
+}
+
+function pageInit()
+{
+	window.setInterval("checkphpgw()",60000);
 }
 //-->
 </script>
 
 <TITLE>{website_title} - {app_name}</TITLE>
 </HEAD>
-<!-- idsociety body tags continue into navbar.tpl, so the closing bracket here is there END Head -->
-<BODY onLoad="MM_preloadImages()">
+<BODY onLoad="pageInit()">

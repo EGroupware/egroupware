@@ -95,12 +95,10 @@
 		}
 
 		$var['user_info_name'] = $GLOBALS['phpgw']->common->display_fullname();
-		$now = time();
 		$var['user_info_date'] =
-				  lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-				. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
-//				. lang($GLOBALS['phpgw']->common->show_date($now,'F')) . ' '
-//				. $GLOBALS['phpgw']->common->show_date($now,'d, Y');
+				  lang($GLOBALS['phpgw']->common->show_date(time(),'l')) . ' '
+				. lang($GLOBALS['phpgw']->common->show_date(time(),'F')) . ' '
+				. $GLOBALS['phpgw']->common->show_date(time(),'d, Y');
 		$var['user_info'] = $var['user_info_name'] .' - ' .$var['user_info_date'];
 		$var['user_info_size'] = '2';
 		$var['user_info_color'] = '#000000';
@@ -143,13 +141,8 @@
 	{
 		$tpl = CreateObject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
 		$tpl->set_unknowns('remove');
-		
-		$tpl->set_file(array('footer' => 'footer.tpl'));
 
-		// as of Dec 10, 2001 this powered by code is somewhat broken
-		// can cause a loop of error message about power bottom being invalid
-		// needs repair (ed: Angles)
-		/*
+		$tpl->set_file(array('footer' => 'footer.tpl'));
 		$tpl->set_block('footer','B_powered_bottom','V_powered_bottom');
 
 		if ($GLOBALS['phpgw_info']['server']['showpoweredbyon'] == 'bottom')
@@ -168,8 +161,7 @@
 		{
 			$tpl->set_var('V_powered_bottom','');
 		}
-		*/
-		
+
 		$GLOBALS['phpgw']->common->hook('navbar_end');
 		$tpl->pfp('out','footer');
 	}

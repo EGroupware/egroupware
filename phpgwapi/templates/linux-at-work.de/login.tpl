@@ -8,20 +8,43 @@
 <META NAME="description" CONTENT="phpGroupWare login screen">
 <META NAME="keywords" CONTENT="phpGroupWare login screen">
 <LINK rel="stylesheet" href="/copy.css">
+<script language="JavaScript">
+<!--
+function launchphpgroupware()
+{
+if (window.screen) {
+    var aw = screen.availWidth;
+    var ah = screen.availHeight;
+    window.moveTo(0, 0);
+    window.resizeTo(aw, ah);
+    if(window.name != "phpGroupware") 
+    {
+	Neufenster = window.open("login.php", "phpGroupware","width="+aw+",height="+ah+",location=no,menubar=yes,toolbar=no,resizable=yes");
+	Neufenster.focus();
+	window.close();
+    }
+    
+  }
+}
+//-->
+</script>
+
 <TITLE>{website_title} - Login</TITLE>
 </HEAD>
 
-<BODY bgcolor="#1559a9"  text="#FFFFFF" topmargin="0" marginheight="0" marginwidth="0" leftmargin="0">
+<BODY bgcolor="#1559a9"  text="#FFFFFF" topmargin="0" marginheight="0" marginwidth="0" leftmargin="0" 
+onLoad="launchphpgroupware('')">
 <CENTER>{lang_message}</CENTER>
 <p>&nbsp;</p>
 
 <center>
+<img src=vater_logo.gif border=0>
 
-<br><br>
-Benutzername: demo1, demo2 oder demo3<br>
-Passwort: demo<br>
 <br>
-Probleme? => <a href="mailto:lkneschke@phpgw.de">lkneschke@phpgw.de</a>
+
+Support: <a href="http://linux-at-work.de/index.php"
+target="_lawde">http://linux-at-work.de</a>
+
 <br><br><br>
 
       <FORM method="post" action="{login_url}">
@@ -37,11 +60,11 @@ Probleme? => <a href="mailto:lkneschke@phpgw.de">lkneschke@phpgw.de</a>
          </TD>
         </TR>
         <TR bgcolor="#1559a9">
-         <TD align="RIGHT"><font color="#FFFF99">Benutzername:&nbsp;</font></TD>
+         <TD align="left"><font color="#FFFF99">Benutzername:&nbsp;</font></TD>
          <TD><input name="login" value="{cookie}"></TD>
         </TR>
         <TR bgcolor="#1559a9">
-         <TD align="RIGHT"><font color="#FFFF99">Passwort:&nbsp;</font></TD>
+         <TD align="left"><font color="#FFFF99">Passwort:&nbsp;</font></TD>
          <TD><input name="passwd" type="password"></TD>
         </TR>
         <TR bgcolor="#1559a9">
@@ -67,10 +90,6 @@ Probleme? => <a href="mailto:lkneschke@phpgw.de">lkneschke@phpgw.de</a>
        </TABLE>
       </FORM>
 
-<br><br>
-
-Support: <a href="http://phpgw.de/index.php"
-target="_lawde">http://phpgw.de</a>
 </center>
      
 <!-- END login_form -->
