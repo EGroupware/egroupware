@@ -150,7 +150,7 @@
 			"tel_isdn"            => "TEL;ISDN",
 			"tel_video"           => "TEL;VIDEO",
 			"email"               => "EMAIL;WORK",
-			"email_home"          => "EMAIL;HOME",
+			"email_home"          => "EMAIL;HOME"
 		);
 
 		var $names = array(
