@@ -188,7 +188,7 @@
 		reset($participants);
 		if(!@$phpgw->calendar->event->participants[$owner])
 		{
-			$phpgw->calendar->add_attribute('owner',$participants[0]);
+			$phpgw->calendar->add_attribute('owner',min($part));
 		}
 
 		$phpgw->calendar->add_attribute('priority',$priority);
