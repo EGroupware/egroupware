@@ -683,7 +683,7 @@
 		$phpgw_setup->oProc->CreateTable(
 			'phpgw_categories', array(
 			"fd" => array(
-				'cat_id' => array('type' => 'auto', 'default' => '0', 'nullable' => false),
+				'cat_id' => array('type' => 'auto', 'nullable' => false),
 				'cat_parent' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
 				'cat_owner' => array('type' => 'int', 'precision' => 4, 'default' => '0', 'nullable' => false),
 				'cat_appname' => array('type' => 'varchar', 'precision'  => 50, 'nullable' => false),
@@ -767,7 +767,7 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->query("alter table phpgw_categories add column cat_access varchar(25) after cat_owner");
+		$phpgw_setup->oProc->AddColumn('phpgw_categories','cat_access',array('type' => 'varchar', 'precision' => 25));
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre2';
 		return $setup_info['phpgwapi']['currentver'];
@@ -808,10 +808,48 @@
 	{
 		global $setup_info, $phpgw_setup;
 
-		$phpgw_setup->oProc->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
-		$phpgw_setup->oProc->query("alter table phpgw_accounts drop column account_permissions",__LINE__,__FILE__);
-		$phpgw_setup->oProc->query("alter table phpgw_accounts drop column account_groups",__LINE__,__FILE__);
-		$phpgw_setup->oProc->query("alter table phpgw_accounts add column account_type char(1)",__LINE__,__FILE__);
+		$phpgw_setup->oProc->RenameTable('accounts','phpgw_accounts');
+
+		$newtbldef = array(
+			'fd' => array(
+				'account_id' => array('type' => 'auto', 'nullable' => false),
+				'account_lid' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+				'account_pwd' => array('type' => 'varchar', 'precision' => 32, 'nullable' => false),
+				'account_firstname' => array('type' => 'varchar', 'precision' => 50),
+				'account_lastname' => array('type' => 'varchar', 'precision' => 50),
+				'account_groups' => array('type' => 'varchar', 'precision' => 30),
+				'account_lastlogin' => array('type' => 'int', 'precision' => 4),
+				'account_lastloginfrom' => array('type' => 'varchar', 'precision' => 255),
+				'account_lastpwd_change' => array('type' => 'int', 'precision' => 4),
+				'account_status' => array('type' => 'char', 'precision' => 1, 'nullable' => false, 'default' => 'A')
+			),
+			'pk' => array('account_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('account_lid')
+		);
+		$phpgw_setup->oProc->DropColumn('phpgw_accounts',$newtbldef,'account_permissions');
+
+		$newtbldef = array(
+			'fd' => array(
+				'account_id' => array('type' => 'auto', 'nullable' => false),
+				'account_lid' => array('type' => 'varchar', 'precision' => 25, 'nullable' => false),
+				'account_pwd' => array('type' => 'varchar', 'precision' => 32, 'nullable' => false),
+				'account_firstname' => array('type' => 'varchar', 'precision' => 50),
+				'account_lastname' => array('type' => 'varchar', 'precision' => 50),
+				'account_lastlogin' => array('type' => 'int', 'precision' => 4),
+				'account_lastloginfrom' => array('type' => 'varchar', 'precision' => 255),
+				'account_lastpwd_change' => array('type' => 'int', 'precision' => 4),
+				'account_status' => array('type' => 'char', 'precision' => 1, 'nullable' => false, 'default' => 'A')
+			),
+			'pk' => array('account_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('account_lid')
+		);
+		$phpgw_setup->oProc->DropColumn('phpgw_accounts',$newtbldef,'account_groups');
+
+		$phpgw_setup->oProc->AddColumn('phpgw_accounts','account_type', array('type' => 'char', 'precision' => 1));
 		$phpgw_setup->oProc->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
 
 		$setup_info['phpgwapi']['currentver'] = '0.9.10pre4';
