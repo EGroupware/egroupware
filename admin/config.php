@@ -12,6 +12,7 @@
 
   /* $Id$ */
 
+	$GLOBALS['phpgw_info'] = array();
 	$GLOBALS['phpgw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
@@ -30,6 +31,7 @@
 		case 'addressbook':
 		case 'calendar':
 		case 'email':
+		case 'nntp':
 			/*
 			  Other special apps can go here for now, e.g.:
 			  case 'bogusappname':
