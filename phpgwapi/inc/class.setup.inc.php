@@ -89,8 +89,7 @@
 				6. None of the above
 			*/
 
-			// $expire = time() + 1200; /* Expire login in 20 minutes. */
-			$expire = '';
+			$expire = time() + 1200; /* Expire login if idle for 20 minutes. */
 
 			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
@@ -155,6 +154,9 @@
 				/* Returning after login to config */
 				if($ConfigPW == $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'])
 				{
+					setcookie('ConfigPW',"$ConfigPW","$expire");
+					setcookie('ConfigDomain',"$ConfigDomain","$expire");
+					setcookie('ConfigLang',"$ConfigLang","$expire");
 					return True;
 				}
 				else
@@ -169,6 +171,7 @@
 				/* Returning after login to header admin */
 				if($HeaderPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
 				{
+					setcookie('HeaderPW',"$HeaderPW","$expire");
 					return True;
 				}
 				else
