@@ -14,7 +14,6 @@
 	$phpgw_info = array();
 	$phpgw_info['flags'] = array('currentapp' => 'admin', 'enable_nextmatchs_class' => True);  
 	include('../header.inc.php');
-	// include(PHPGW_APP_INC . '/accounts_' . $phpgw_info['server']['account_repository'] . '.inc.php');
 
 	function account_total($query)
 	{
