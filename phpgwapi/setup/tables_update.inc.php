@@ -1268,6 +1268,14 @@
 	$test[] = '0.9.99.024';
 	function phpgwapi_upgrade0_9_99_024()
 	{
+/*
+		$sql = "SELECT ae1.contact_id,ae1.contact_name,ae1.contact_value,ae2.contact_value FROM phpgw_addressbook_extra ae1 LEFT JOIN phpgw_addressbook_extra ae2 ON ae1.contact_id==ae2.contact_id AND ae1.contact_name == ae2.contact_name WHERE ae1.contact_value != ae2.contact_vaue";
+		$GLOBALS['phpgw_setup']->oProc->query($sql,__LINE__,__FILE__);
+		while ($GLOBALS['phpgw_setup']->oProc->next_record())
+		{
+			
+		}
+*/
 		$GLOBALS['phpgw_setup']->oProc->RefreshTable('phpgw_addressbook_extra',array(
 			'fd' => array(
 				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -1351,7 +1359,23 @@
 			'uc' => array()
 		));
 
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '0.9.99.026';
+		// we dont need to do update 0.9.99.026, as UpdateSequenze is called now by RefreshTable
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+	
+	
+	$test[] = '0.9.99.026';
+	function phpgwapi_upgrade0_9_99_026()
+	{
+		// update the sequenzes for refreshed tables (postgres only)
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_categories','cat_id');
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_applications','app_id');
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_history_log','history_id');
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_vfs','file_id');
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_addressbook','id');
+		
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0';
+		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
 ?>

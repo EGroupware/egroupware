@@ -320,8 +320,21 @@
 			'ix' => array(array('info_owner','info_responsible','info_status','info_startdate'),array('info_id_parent','info_owner','info_responsible','info_status','info_startdate')),
 			'uc' => array()
 		));
+		
+		// we dont need to do update 0.9.15.008, as UpdateSequenze is called now by RefreshTable
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 
-		$GLOBALS['setup_info']['infolog']['currentver'] = '0.9.15.008';
+	
+	$test[] = '0.9.15.008';
+	function infolog_upgrade0_9_15_008()
+	{
+		// update the sequenzes for refreshed tables (postgres only)
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_infolog','info_id');
+		$GLOBALS['phpgw_setup']->oProc->UpdateSequence('phpgw_links','link_id');
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.0';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
 ?>
