@@ -13,12 +13,16 @@
 
   if (! $included) {
 
-     $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
-     include("../header.inc.php");
-
-     // Authorize the user to use setup app and load the database
-     include("./inc/setup_auth.inc.php");
-     //Does not return unless user is authorized
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
+  include("./inc/functions.inc.php");
+  include("../header.inc.php");
+  // Authorize the user to use setup app and load the database
+  // Does not return unless user is authorized
+  if (!auth()){
+    Header("Location: index.php");
+    exit;
+  }
+  loaddb();
 
      echo "<html><head><title>phpGroupWare Setup</title></head>\n";
      echo "<body bgcolor='#ffffff'>\n";
