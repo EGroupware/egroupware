@@ -53,7 +53,7 @@
     $phpgw_setup->loaddb();
     /* First clear out exsisting tables */
     $phpgw_setup->db->query("delete from phpgw_accounts");
-    $phpgw_setup->db->query("delete from preferences");
+    $phpgw_setup->db->query("delete from phpgw_preferences");
     $phpgw_setup->db->query("delete from phpgw_acl");
     $defaultprefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
 //    $defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}i:8;a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
@@ -76,7 +76,7 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (".$accountid.", 'demo', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo', 'Account', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)");
  	 	$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)");
@@ -91,7 +91,7 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (".$accountid.", 'demo2', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo2', 'Account', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)");
  	 	$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)");
@@ -106,9 +106,9 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (".$accountid.", 'demo3', 'u', '084e0343a0486ff05530df6c705c8bb4', 'Demo3', 'Account', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)values('preferences', 'changepassword', ".$accountid.", 'u', 0)");
- 	 	$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
+		$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('addressbook', 'run', ".$accountid.", 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('filemanager', 'run', ".$accountid.", 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('calendar', 'run', ".$accountid.", 'u', 1)");
@@ -122,7 +122,7 @@
     $sql .= "(account_id, account_lid, account_type, account_pwd, account_firstname, account_lastname, account_lastpwd_change, account_status)";
     $sql .= "values (".$accountid.", '$username', 'u', '".md5($passwd)."', '$fname', '$lname', ".time().", 'A')";
     $phpgw_setup->db->query($sql);
-    $phpgw_setup->db->query("insert into preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
+    $phpgw_setup->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('$accountid', '$defaultprefs')");
  	 	$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$defaultgroupid."', $accountid, 'u', 1)");
  	 	$phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('phpgw_group', '".$admingroupid."', $accountid, 'u', 1)");
     $phpgw_setup->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights) values('admin', 'run', ".$accountid.", 'u', 1)");
