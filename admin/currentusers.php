@@ -53,23 +53,24 @@
   if ($order) {
      $ordermethod = "order by $order $sort";
   } else {
-     $ordermethod = "order by dla asc";
+     $ordermethod = "order by session_dla asc";
   }
 
   $phpgw->db->query("select * from sessions $ordermethod limit $limit");
 
+  $i = 0;
   while ($phpgw->db->next_record()) {
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
      $t->set_var("tr_color",$tr_color);
 
-     $t->set_var("row_loginid",$phpgw->db->f("loginid"));
-     $t->set_var("row_ip",$phpgw->db->f("ip"));
-     $t->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("logintime")));
-     $t->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("dla"))));
+     $t->set_var("row_loginid",$phpgw->db->f("session_lid"));
+     $t->set_var("row_ip",$phpgw->db->f("session_ip"));
+     $t->set_var("row_logintime",$phpgw->common->show_date($phpgw->db->f("session_logintime")));
+     $t->set_var("row_idle",gmdate("G:i:s",(time() - $phpgw->db->f("session_dla"))));
 
-     if ($phpgw->db->f("sessionid") != $phpgw_info["user"]["sessionid"]) {
+     if ($phpgw->db->f("session_id") != $phpgw_info["user"]["sessionid"]) {
         $t->set_var("row_kill",'<a href="' . $phpgw->link("killsession.php","ksession="
-		  . $phpgw->db->f("sessionid") . "&kill=true\">" . lang("Kill")).'</a>');
+		  . $phpgw->db->f("session_id") . "&kill=true\">" . lang("Kill")).'</a>');
      } else {
 	$t->set_var("row_kill","&nbsp;");
      }
