@@ -76,6 +76,8 @@
 		var $memberships    = array();
 		var $members        = array();
 		var $xmlrpc_methods = array();
+		// enables the session-cache
+		var $use_session_cache = True;
 
 		/**************************************************************************\
 		* Standard constructor for setting $this->account_id                       *
@@ -84,6 +86,9 @@
 		\**************************************************************************/
 		function accounts($account_id = '', $account_type='')
 		{
+			// enable the caching in the session onyl for ldap
+			$this->user_session_cache = $GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap';
+
 			$this->db = $GLOBALS['phpgw']->db;
 
 			if($account_id != '')
@@ -112,9 +117,50 @@
 			);
 		}
 
+		/**
+		* Sets up the account-data cache
+		*
+		* The cache is shared between all instances of the account-class and it can be save in the session,
+		* if use_session_cache is set to True
+		*/
+		function setup_cache()
+		{
+			if ($this->use_session_cache &&		// are we supposed to use a session-cache
+				!@$GLOBALS['phpgw_info']['accounts']['session_cache_setup'] &&	// is it already setup
+				// is the account-class ready (startup !)
+				is_object($GLOBALS['phpgw']->session) && $GLOBALS['phpgw']->session->account_id)
+			{
+				// setting up the session-cache
+				$GLOBALS['phpgw_info']['accounts']['cache'] = $GLOBALS['phpgw']->session->appsession('accounts_cache','phpgwapi');
+				$GLOBALS['phpgw_info']['accounts']['session_cache_setup'] = True;
+				//echo "accounts::setup_cache() cache=<pre>".print_r($GLOBALS['phpgw_info']['accounts']['cache'],True)."</pre>\n";
+			}
+			if (!isset($this->cache))
+			{
+				$this->cache = &$GLOBALS['phpgw_info']['accounts']['cache'];
+			}
+		}
+
+		/**
+		* Saves the account-data cache in the session
+		*
+		* Gets called from common::phpgw_final()
+		*/
+		function save_session_cache()
+		{
+			if ($this->use_session_cache &&		// are we supposed to use a session-cache
+				$GLOBALS['phpgw_info']['accounts']['session_cache_setup'] &&	// is it already setup
+				// is the account-class ready (startup !)
+				is_object($GLOBALS['phpgw']->session))
+			{
+				$GLOBALS['phpgw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['phpgw_info']['accounts']['cache']);
+			}
+		}
+
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '')
 		{
-			static $account_list;
+			$this->setup_cache();
+			$account_list = &$this->cache['account_list'];
 
 			// For XML-RPC
 			if (is_array($_type))
@@ -140,6 +186,7 @@
 
 			if (isset($account_list[$serial]))
 			{
+				$this->total = count($account_list[$serial]);
 				return $account_list[$serial];
 			}
 			return $account_list[$serial] = accounts_::get_list($_type,$start,$sort,$order,$query,$offset);
@@ -155,6 +202,49 @@
 			{
 				return False;
 			}
+		}
+
+		/**
+		* Invalidate the cache (or parts of it) after change in $account_id
+		*
+		* Atm simplest approach - delete it all ;-)
+		*/
+		function cache_invalidate($account_id)
+		{
+			//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
+			$GLOBALS['phpgw_info']['accounts']['cache'] = array();
+		}
+
+		function save_repository()
+		{
+			$this->cache_invalidate($this->account_id);
+			accounts_::save_repository();
+		}
+
+		function delete($accountid)
+		{
+			$this->cache_invalidate($accountid);
+			accounts_::delete($accountid);
+		}
+
+		function create($account_info,$default_prefs=True)
+		{
+			$account_id = accounts_::create($account_info,$default_prefs);
+			$this->cache_invalidate($account_id);
+
+			return $account_id;
+		}
+
+		function read_repository()
+		{
+			$this->setup_cache();
+			$account_data = &$this->cache['account_data'];
+
+			if (isset($account_data[$this->account_id]))
+			{
+				return $this->data = $account_data[$this->account_id];
+			}
+			return $account_data[$this->account_id] = accounts_::read_repository();
 		}
 
 		function read()
@@ -180,7 +270,8 @@
 
 		function membership($accountid = '')
 		{
-			static $membership_list;
+			$this->setup_cache();
+			$membership_list = &$this->cache['membership_list'];
 
 			$account_id = get_account_id($accountid);
 
@@ -322,7 +413,8 @@
 
 		function name2id($account_lid)
 		{
-			static $name_list;
+			$this->setup_cache();
+			$name_list = &$this->cache['name_list'];
 
 			if(@isset($name_list[$account_lid]) && $name_list[$account_lid])
 			{
@@ -339,7 +431,8 @@
 
 		function id2name($account_id)
 		{
-			static $id_list;
+			$this->setup_cache();
+			$id_list = &$this->cache['id_list'];
 
 			if (! $account_id)
 			{
@@ -355,7 +448,9 @@
 
 		function get_type($accountid)
 		{
-			static $account_type;
+			$this->setup_cache();
+			$account_type = &$this->cache['account_type'];
+
 			$account_id = get_account_id($accountid);
 
 			if (isset($this->account_type) && $account_id == $this->account_id)
@@ -376,7 +471,8 @@
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
-			static $account_name;
+			$this->setup_cache();
+			$account_name = &$this->cache['account_name'];
 
 			$account_id = get_account_id($accountid);
 			if(isset($account_name[$account_id]))

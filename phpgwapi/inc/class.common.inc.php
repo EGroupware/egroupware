@@ -330,6 +330,10 @@
 			{
 				define('PHPGW_FINAL',True);
 
+				if (is_object($GLOBALS['phpgw']->accounts))
+				{
+					$GLOBALS['phpgw']->accounts->save_session_cache();
+				}
 				// call the asyncservice check_run function if it is not explicitly set to cron-only
 				//
 				if (!$GLOBALS['phpgw_info']['server']['asyncservice'])	// is default
