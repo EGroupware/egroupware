@@ -99,7 +99,7 @@
       $sql = "select acl_appname, acl_rights from phpgw_acl where (acl_location in ('$location','everywhere')) and ";
       if ($id_type == "both" || $id_type == "u"){
         // User piece
-        $sql .= "((acl_account_type = 'u' and acl_account = ".$phpgw_info["user"]["account_id"].")";
+        $sql .= "((acl_account_type = 'u' and acl_account = ".$id.")";
       }
       if ($id_type == "g"){
         $sql .= "(acl_account_type='g' and acl_account in (0"; // group 0 covers all users
@@ -108,11 +108,12 @@
       }
       if ($id_type == "both" || $id_type == "g"){
         // Group piece
-        $memberships = $phpgw->accounts->read_group_names();           
-        if (is_array($memberships) && count($memberships) > 0){
-          for ($idx = 0; $idx < count($memberships); ++$idx){
-            $sql .= ",".$memberships[$idx][0];
+        if (is_array($id) && count($id) > 0){
+          for ($idx = 0; $idx < count($id); ++$idx){
+            $sql .= ",".$id[$idx];
           }
+        } else {
+          $sql .= ",".$id;
         }
       }
       if ($id_type == "both"){
@@ -121,7 +122,7 @@
         $sql .= ")";
       }elseif ($id_type == "g"){
         $sql .= "))";
-      }      
+      }
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
@@ -143,7 +144,7 @@
       $sql = "select acl_location, acl_rights from phpgw_acl where (acl_appname in ('$app','everywhere')) and ";
       if ($id_type == "both" || $id_type == "u"){
         // User piece
-        $sql .= "((acl_account_type = 'u' and acl_account = ".$phpgw_info["user"]["account_id"].")";
+        $sql .= "((acl_account_type = 'u' and acl_account = ".$id.")";
       }
       if ($id_type == "g"){
         $sql .= "(acl_account_type='g' and acl_account in (0"; // group 0 covers all users
