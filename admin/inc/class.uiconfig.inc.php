@@ -152,17 +152,12 @@
 			else
 			{
 				$t->set_var('error','');
-				$t->set_var('th_err',$GLOBALS['phpgw_info']['theme']['th_bg']);
 			}
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 
 			$t->set_var('title',lang('Site Configuration'));
 			$t->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname));
-			$t->set_var('th_bg',     $GLOBALS['phpgw_info']['theme']['th_bg']);
-			$t->set_var('th_text',   $GLOBALS['phpgw_info']['theme']['th_text']);
-			$t->set_var('row_on',    $GLOBALS['phpgw_info']['theme']['row_on']);
-			$t->set_var('row_off',   $GLOBALS['phpgw_info']['theme']['row_off']);
 			$t->pparse('out','header');
 
 			$vars = $t->get_undefined('body');
