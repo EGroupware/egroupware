@@ -592,12 +592,12 @@
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$this->db->insert($this->recur_table,array(
-					'recure_type'	 => $event['recur_type'],
-					'recure_enddate' => $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0 ?
+					'recur_type'	 => $event['recur_type'],
+					'recur_enddate' => $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['mday'] != 0 && $event['recur_enddate']['year'] != 0 ?
 						$this->maketime($event['recur_enddate']) - $GLOBALS['phpgw']->datetime->tz_offset : 0,
 					'recur_data'	 => $event['recur_data'],
 					'recur_interval' => $event['recur_interval'],
-					'recur_exception'=> implode(',',$event['recur_exception']),
+					'recur_exception'=> is_array($event['recur_exception']) ? implode(',',$event['recur_exception']) : '',
 				),array('cal_id' => $event['id']),__LINE__,__FILE__);
 			}
 			else
