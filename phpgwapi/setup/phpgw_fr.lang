@@ -13,6 +13,11 @@
 3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis jour
 3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis mois
 80 (http)	admin	fr	80 (http)
+_delete row	htmlarea-ContextMenu	fr	Effacer _Ligne
+_image properties...	htmlarea-ContextMenu	fr	Propriétés _Image
+_modify link...	htmlarea-ContextMenu	fr	_Modifier Lien
+_remove link...	htmlarea-ContextMenu	fr	_Effacer Lien
+_table properties...	htmlarea-ContextMenu	fr	Propriétés _Table...
 about	common	fr	A propos
 about %1	common	fr	A propos de %1
 about the calendar	jscalendar	fr	A propos du Calendrier
@@ -36,9 +41,12 @@ administration	common	fr	Administration
 afghanistan	common	fr	AFGHANISTAN
 albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
+align	htmlarea-TableOperations	fr	Aligner
 all	common	fr	Tous
 all fields	common	fr	tous les champs
+all four sides	htmlarea-TableOperations	fr	Tous les quatre côtés
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	fr	Feuille de style alternative:
 american samoa	common	fr	SAMOA AMERICAINES
 andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
@@ -62,7 +70,9 @@ autosave default category	common	fr	Sauvegarde automatique dans catégorie par dé
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
 back to user login	common	fr	Retour au Login utilisateur
+background	htmlarea-TableOperations	fr	Arrière-plan
 background color	htmlarea	fr	Couleur de fond
+background color:	common	fr	Couleur d'arrière-plan
 bad login or password	common	fr	Mauvais login ou mot de passe
 bahamas	common	fr	BAHAMAS
 bahrain	common	fr	BAHRAIN
@@ -78,8 +88,11 @@ bhutan	common	fr	BOUTAN
 blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
 bold	htmlarea	fr	Gras
 bolivia	common	fr	BOLIVIE
+border	htmlarea-TableOperations	fr	Bord
+borders	htmlarea-TableOperations	fr	Bords
 bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
 botswana	common	fr	BOTSWANA
+bottom	htmlarea-TableOperations	fr	Fond
 bouvet island	common	fr	BOUVET ISLAND
 brazil	common	fr	BRESIL
 british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
@@ -88,12 +101,14 @@ bulgaria	common	fr	BULGARIE
 bulleted list	htmlarea	fr	Liste avec puces
 burkina faso	common	fr	BURKINA FASO
 burundi	common	fr	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	fr	Propriétés C_ellule...
 calendar	common	fr	Calendrier
 cambodia	common	fr	CAMBODGE
 cameroon	common	fr	CAMEROUN
 canada	common	fr	CANADA
 cancel	common	fr	Annuler
 cape verde	common	fr	CAP VERT
+caption	htmlarea-TableOperations	fr	Légende
 categories	common	fr	Catégories
 categories for	common	fr	catégories pour
 category	common	fr	Catégorie
@@ -101,9 +116,12 @@ category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
 category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
 cayman islands	common	fr	ILES CAIMAN
 cc	common	fr	Cc
+cell properties	htmlarea-TableOperations	fr	Propriétés Cellule...
+center	htmlarea-TableOperations	fr	Centrer
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
+char	htmlarea-TableOperations	fr	Caractère
 charset	common	fr	iso-8859-1
 check installation	common	fr	Vérifier l'installation
 chile	common	fr	CHILI
@@ -118,7 +136,9 @@ click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus p
 click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus pour voir les menus ?
 close	common	fr	Fermer
 cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	fr	Bords joints
 colombia	common	fr	COLOMBIE
+color	htmlarea-TableOperations	fr	Couleur
 comoros	common	fr	COMORRES
 company	common	fr	Société
 config password	common	fr	Mot de passe Configuration
@@ -131,13 +151,16 @@ copy selection	htmlarea	fr	Sélection pour copier
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
 create	common	fr	Créer
+create a link	htmlarea-ContextMenu	fr	Créer un lien
 created by	common	fr	Créé par
 croatia	common	fr	CROATIE
 cuba	common	fr	CUBA
 currency	common	fr	Devise
 current	common	fr	Courant
 current style	htmlarea	fr	Style courat
+current url is	htmlarea-ContextMenu	fr	L'URL actuelle est
 current users	common	fr	Utilisateurs connectés
+cut	htmlarea-ContextMenu	fr	Couper
 cut selection	htmlarea	fr	Sélection pour couper
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
@@ -145,15 +168,23 @@ date	common	fr	Date
 date due	common	fr	Date butoir
 date selection:	jscalendar	fr	Sélection de la date :
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptze svp les règles de votre firewall avant de soumettre cette page.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	fr	Effacer Co_lonne
 december	common	fr	Décembre
+decimal numbers	htmlarea-ListType	fr	Nombres décimaux
 decrease indent	htmlarea	fr	Diminuer l'indentation
 default category	common	fr	Catégorie par défaut
 delete	common	fr	Supprimer
+delete cell	htmlarea-TableOperations	fr	Effacer cellule
+delete column	htmlarea-TableOperations	fr	Effacer colonne
+delete row	htmlarea-TableOperations	fr	Effacer ligne
+delete the current column	htmlarea-ContextMenu	fr	Effacer la colonne actuelle
+delete the current row	htmlarea-ContextMenu	fr	Effacer la ligne actuelle
 denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
+dictionary	htmlarea-SpellChecker	fr	Dictionnaire
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
@@ -164,6 +195,8 @@ display monday first	jscalendar	fr	Affiche Lundi en premier
 display sunday first	jscalendar	fr	Affiche Dimanche en premier
 djibouti	common	fr	DJIBOUTI
 do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
+document properties	common	fr	Propriétés du document
+document title:	common	fr	Titre du document:
 domain	common	fr	domaine
 domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresses EMail, p.e. "%1"
 domestic	common	fr	Intérieur
@@ -182,6 +215,7 @@ egroupware api version %1	common	fr	eGroupWare version API %1
 egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
+element...	htmlarea-ContextMenu	fr	Elément...
 email	common	fr	EMail
 email-address of the user, eg. "%1"	common	fr	Adresse EMail de l'utilisateur, p.e. "%1"
 enabled	common	fr	Activé
@@ -204,18 +238,22 @@ falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	FAROE ISLANDS
 fax number	common	fr	Numéro de Fax
 february	common	fr	Février
+fg color	htmlarea-TableOperations	fr	Couleur avant-plan
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
 files	common	fr	Fichiers
 filter	common	fr	Filtrer
+finished list of mispelled words	htmlarea-SpellChecker	fr	Terminé la liste des mots mal orthographiés
 finland	common	fr	FINLANDE
 first name	common	fr	Prénom
 first name of the user, eg. "%1"	common	fr	Prénom de l'utilisateur, p.e. "%1"
 first page	common	fr	Première page
 firstname	common	fr	Prénom
 fixme!	common	fr	CORRIGEZ-MOI!
+float	htmlarea-TableOperations	fr	Flottant
 font color	htmlarea	fr	Couleur de la Police
 force selectbox	common	fr	Forcer la boîte de sélection
+frames	htmlarea-TableOperations	fr	Cadres
 france	common	fr	FRANCE
 french	common	fr	Français
 french guiana	common	fr	GUYANNE FRANCAISE
@@ -259,6 +297,7 @@ header admin login	common	fr	Connexion Administrateur Entete
 header password	common	fr	Mot de passe Entete
 header username	common	fr	Utilisateur Entete
 heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
+height	htmlarea-TableOperations	fr	Hauteur
 help	common	fr	Aide
 help using editor	htmlarea	fr	Aide en utilisant l'éditeur
 high	common	fr	Haut
@@ -269,14 +308,39 @@ home email	common	fr	email Accueil
 honduras	common	fr	HONDURAS
 hong kong	common	fr	HONG KONG
 horizontal rule	htmlarea	fr	Règle Horizontale
+how did you get here? (please report!)	htmlarea-ContextMenu	fr	Comment êtes-vous arrivé là? (Dites-nous SVP!)
+how many columns would you like to merge?	htmlarea-TableOperations	fr	Combien de colonnes voulez-vous fusionner?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être montrés sur la barre de navigation (haut de page). Les icônes suplémentaires seront placés dans une liste que l'ont appelera via un icône placé à droite de la barre de navigation.
+how many rows would you like to merge?	htmlarea-TableOperations	fr	Combien de lignes voulez-vous fusionner?
+html tidy	htmlarea-HtmlTidy	fr	Mise en forme HTML
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière cellule de la ligne.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière colonne de la table.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière ligne de la table.
 hungary	common	fr	HONGRIE
+i will open it in a new page.	htmlarea-SpellChecker	fr	Je vais l'ouvrir dans une nouvelle page.
+i_nsert row before	htmlarea-ContextMenu	fr	I_nsérer Ligne Avant
 iceland	common	fr	ISLANDE
+ignore	htmlarea-SpellChecker	fr	Ignorer
+ignore all	htmlarea-SpellChecker	fr	Ignorer tout
+image url	htmlarea-TableOperations	fr	URL de l'Image
+in_sert row after	htmlarea-ContextMenu	fr	In_sérer Ligne Après
 increase indent	htmlarea	fr	Augmenter l'indentation
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
+insert _column before	htmlarea-ContextMenu	fr	Insérer _Colonne Avant
+insert a new column after the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle colonne après celle-ci
+insert a new column before the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle colonne avant celle-ci
+insert a new row after the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle ligne après celle-ci
+insert a new row before the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle ligne avant celle-ci
 insert all %1 addresses of the %2 contacts in %3	common	fr	Insérer toutes les %1 adresses des %2 contacts de %3
+insert c_olumn after	htmlarea-ContextMenu	fr	Insérer _Colonne Après
+insert cell after	htmlarea-TableOperations	fr	Insérer cellule après
+insert cell before	htmlarea-TableOperations	fr	Insérer cellule avant
+insert column after	htmlarea-TableOperations	fr	Insérer colonne après
+insert column before	htmlarea-TableOperations	fr	Insérer colonne avant
 insert image	htmlarea	fr	Insérer une image
+insert row after	htmlarea-TableOperations	fr	Insérer ligne après
+insert row before	htmlarea-TableOperations	fr	Insérer ligne avant
 insert table	htmlarea	fr	Insérer une table
 insert web link	htmlarea	fr	Insérer un lien Web
 international	common	fr	International
@@ -297,10 +361,11 @@ jordan	common	fr	JORDANIE
 july	common	fr	Juillet
 jun	common	fr	Jun
 june	common	fr	Juin
-justify center	htmlarea	fr	Centrer
-justify full	htmlarea	fr	Justifier
-justify left	htmlarea	fr	Aligner à Gauche
-justify right	htmlarea	fr	Aligner à Droite
+justify	htmlarea-TableOperations	fr	Justifier
+justify center	common	fr	Centrer
+justify full	common	fr	Justifier
+justify left	common	fr	Aligner à Gauche
+justify right	common	fr	Aligner à Droite
 kazakstan	common	fr	KAZAKSTAN
 kenya	common	fr	KENYA
 keywords	common	fr	Mots-clés
@@ -316,12 +381,15 @@ last name of the user, eg. "%1"	common	fr	Nom de famille de l'utilisateur, p.e. 
 last page	common	fr	Dernière page
 lastname	common	fr	Nom
 latvia	common	fr	LATVIA
+layout	htmlarea-TableOperations	fr	Affichage
 lebanon	common	fr	LIBAN
+left	htmlarea-TableOperations	fr	Gauche
 lesotho	common	fr	LESOTHO
 liberia	common	fr	LIBERIA
 libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	fr	Lier les points à:
 list	common	fr	Liste
 list members	common	fr	Liste les membres
 lithuania	common	fr	LITHUANIE
@@ -330,6 +398,9 @@ login	common	fr	Login
 loginid	common	fr	LoginID
 logout	common	fr	Déconnexion
 low	common	fr	Bas
+lower greek letters	htmlarea-ListType	fr	Lettres grecques minuscules
+lower latin letters	htmlarea-ListType	fr	Lettres latines minuscules
+lower roman numbers	htmlarea-ListType	fr	Chiffres romains minuscules
 lowest	common	fr	Plus bas
 luxembourg	common	fr	LUXEMBOURG
 macau	common	fr	MACAU
@@ -345,6 +416,7 @@ maldives	common	fr	MALDIVES
 mali	common	fr	MALI
 malta	common	fr	MALTE
 march	common	fr	Mars
+margin	htmlarea-TableOperations	fr	Marge
 marshall islands	common	fr	ILES MARSHALL
 martinique	common	fr	MARTINIQUE
 mauritania	common	fr	MAURITANIE
@@ -354,9 +426,12 @@ may	common	fr	Mai
 mayotte	common	fr	MAYOTTE
 medium	common	fr	Moyen
 menu	common	fr	Menu
+merge cells	htmlarea-TableOperations	fr	Fusionner les cellules
 message	common	fr	Message
 mexico	common	fr	MEXIQUE
 micronesia, federated states of	common	fr	MICRONESIA, FEDERATED STATES OF
+middle	htmlarea-TableOperations	fr	Milieu
+modify url	htmlarea-ContextMenu	fr	Modifier l'URL
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
 monday	common	fr	Lundi
@@ -365,6 +440,7 @@ montserrat	common	fr	MONTSERRAT
 morocco	common	fr	MAROC
 mozambique	common	fr	MOZAMBIQUE
 myanmar	common	fr	MYANMAR
+n tidying up the html source, please wait...	htmlarea-HtmlTidy	fr	\n Mise en forme de la source HTML, un instant SVP...
 name	common	fr	Nom
 name of the user, eg. "%1"	common	fr	Nom de l'utilisateur, p.e. "%1"
 namibia	common	fr	NAMIBIE
@@ -389,6 +465,9 @@ niue	common	fr	NIUE
 no	common	fr	Non
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	fr	Aucun mot mal orthographié dans le dictionnaire sélectionné.
+no rules	htmlarea-TableOperations	fr	Sans règles
+no sides	htmlarea-TableOperations	fr	Sans côtés
 no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
 norfolk island	common	fr	NORFOLK ISLAND
@@ -410,11 +489,14 @@ only private	common	fr	Seulement privés
 only yours	common	fr	seulement les vôtres
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
+opens this link in a new window	htmlarea-ContextMenu	fr	Ouvrir ce lien dans une nouvelle fenêtre
 ordered list	htmlarea	fr	Liste triée
 original	common	fr	Original
+original word	htmlarea-SpellChecker	fr	Mot original
 other	common	fr	Autre
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
+padding	htmlarea-TableOperations	fr	Remplissage
 page	common	fr	Page
 page was generated in %1 seconds	common	fr	La page a été générée en %1 secondes
 pakistan	common	fr	PAKISTAN
@@ -428,34 +510,45 @@ parent category	common	fr	Catégorie parente
 password	common	fr	Mot de passe
 password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
+paste	htmlarea-ContextMenu	fr	Coller
 paste from clipboard	htmlarea	fr	Coller depuis la presse-papiers
 path	htmlarea	fr	Chemin
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
 pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
 pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
 pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
+percent	htmlarea-TableOperations	fr	pourcent
 permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
 personal	common	fr	Personnel
 peru	common	fr	PERU
 philippines	common	fr	PHILIPPINES
 phone number	common	fr	Numéro de téléphone
 pitcairn	common	fr	PITCAIRN
+pixels	htmlarea-TableOperations	fr	pixels
 please %1 by hand	common	fr	Veuillez %1 à la main
+please click into some cell	htmlarea-TableOperations	fr	Veuillez cliquer dans une cellule
+please confirm that you want to open this link	htmlarea-SpellChecker	fr	Veuillez confirmer que vous voulez ouvrir ce lien
+please confirm that you want to remove this element:	htmlarea-ContextMenu	fr	Veuillez confirmer que vous voulez effacer cet élément:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	fr	Veuillez confirmer que vous voulez enlever le lien à cet élément.
 please enter a name	common	fr	Veuillez saisir un nom !
 please run setup to become current	common	fr	Veuillez exécutez setup pour vous mettre à jour
 please select	common	fr	Veuillez Choisir
 please set your global preferences	common	fr	Veuillez réglez vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
+please wait.  calling spell checker.	htmlarea-SpellChecker	fr	Veuillez patienter. Appel au correcteur d'orthographe.
 please wait...	common	fr	Veuillez patienter...
+please wait: changing dictionary to	htmlarea-SpellChecker	fr	Veuillez patienter: changement dictionnaire vers
+pliz weit ;-)	htmlarea-SpellChecker	fr	paaatientez SVP ;-)
 poland	common	fr	POLOGNE
 portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
-powered by egroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
+powered by phpgroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	fr	Préférences
 preferences for the idots template set	common	fr	Préférences pour l´application du template idots
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
+primary style-sheet:	common	fr	Feuilles de style primaire:
 print	common	fr	Imprimer
 priority	common	fr	Priorité
 private	common	fr	Privé
@@ -463,17 +556,30 @@ project	common	fr	Projet
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
+re-check	htmlarea-SpellChecker	fr	Re-vérifier
 read	common	fr	Lire
 read this list of methods.	common	fr	Lire cette liste de méthodes.
 redoes your last action	htmlarea	fr	Répète votre dernière action
 reject	common	fr	Rejeter
 remove selected accounts	common	fr	effacer les comptes sélectionnés
+remove the	htmlarea-ContextMenu	fr	Enlever le
+remove this node from the document	htmlarea-ContextMenu	fr	Enlever ce noeud du document
 rename	common	fr	Renommer
+replace	htmlarea-SpellChecker	fr	Remplacer
+replace all	htmlarea-SpellChecker	fr	Remplacer tout
+replace with	htmlarea-SpellChecker	fr	Remplacer par
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
 returns an array of todo items	common	fr	Retourne une matrice d'objets à faire
 returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
 reunion	common	fr	REUNION
+revert	htmlarea-SpellChecker	fr	Annuler
+right	htmlarea-TableOperations	fr	Droite
 romania	common	fr	ROUMANIE
+row properties	htmlarea-TableOperations	fr	Propriétés Ligne
+rules	htmlarea-TableOperations	fr	Règles
+rules will appear between all rows and columns	htmlarea-TableOperations	fr	Les Règles apparaîtront entre toutes les lignes et colonnes
+rules will appear between columns only	htmlarea-TableOperations	fr	Les Règles apparaîtront entre les colonnes seulement
+rules will appear between rows only	htmlarea-TableOperations	fr	Les Règles apparaîtront entre les lignes seulement
 russian federation	common	fr	FEDERATION DE RUSSIE
 rwanda	common	fr	RWANDA
 saint helena	common	fr	SAINTE HELENE
@@ -516,6 +622,10 @@ show all categorys	common	fr	Voir toutes les catégories
 show menu	common	fr	Voir menu
 show page generation time	common	fr	Voir le temps de génération de page
 show page generation time on the bottom of the page?	common	fr	Montrer le temps de génération de page au fond de la page?
+show the image properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des propriétés de l'image
+show the table cell properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Cellules
+show the table properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau
+show the table row properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Lignes
 show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
@@ -528,18 +638,28 @@ somalia	common	fr	SOMALIE
 sorry, your login has expired	login	fr	Désolé, votre login a expiré
 south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	fr	Espacement
+spacing and padding	htmlarea-TableOperations	fr	Espacement et remplissage
 spain	common	fr	ESPAGNE
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	fr	Correction orthographique terminée, pas trouvé de mot mal orthographié. Fermeture...
+spell-check	htmlarea-SpellChecker	fr	Correction orthographique
+split cell	htmlarea-TableOperations	fr	Partage de cellule
+split column	htmlarea-TableOperations	fr	Partage de colonne
+split row	htmlarea-TableOperations	fr	Partage de ligne
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date de début
 start time	common	fr	Heure de début
 start with	common	fr	commence avec
 status	common	fr	Etat
 strikethrough	htmlarea	fr	Rayé
+style [css]	htmlarea-TableOperations	fr	Style [CSS]
 subject	common	fr	Sujet
 submit	common	fr	Envoyer
 subscript	htmlarea	fr	Subscript
 substitutions and their meanings:	common	fr	Substitutions et leurs sens:
 sudan	common	fr	SOUDAN
+suggestions	htmlarea-SpellChecker	fr	Suggestions
+summary	htmlarea-TableOperations	fr	Sommaire
 sunday	common	fr	Dimanche
 superscript	htmlarea	fr	Superscript
 suriname	common	fr	SURINAM
@@ -548,17 +668,27 @@ swaziland	common	fr	SWAZILAND
 sweden	common	fr	SUEDE
 switzerland	common	fr	SUISSE
 syrian arab republic	common	fr	SYRIE
+table properties	htmlarea-TableOperations	fr	Propriétés du Tableau
 taiwan	common	fr	TAIWAN/TAIPEI
 tajikistan	common	fr	TAJIKISTAN
 tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE OF
+text align	htmlarea-TableOperations	fr	Aligner le Texte
+text color:	common	fr	Couleur du Texte:
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
+the bottom side only	htmlarea-TableOperations	fr	En bas seulement
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
+the left-hand side only	htmlarea-TableOperations	fr	A gauche seulement
 the mail server returned	common	fr	Le serveur de mail a renvoyé
+the right and left sides only	htmlarea-TableOperations	fr	A gauche et droite seulement
+the right-hand side only	htmlarea-TableOperations	fr	A droite seulement
+the top and bottom sides only	htmlarea-TableOperations	fr	En haut et en bas seulement
+the top side only	htmlarea-TableOperations	fr	En haut seulement
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
 this name has been used already	common	fr	Ce nom est déjà utilisé !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	fr	Ceci annulera les modifications et quittera le correcteur orthographique. Veuillez confirmer SVP.
 thursday	common	fr	Jeudi
 time	common	fr	Heure
 time selection:	jscalendar	fr	Sélection du temps:
@@ -576,6 +706,7 @@ togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop d'essais de connexions: %1 pour l'utilisateur '%2', %3 pour l'IP %4
+top	htmlarea-TableOperations	fr	En haut
 total	common	fr	Total
 trinidad and tobago	common	fr	TRINIDAD AND TOBAGO
 tuesday	common	fr	Mardi
@@ -593,7 +724,12 @@ united kingdom	common	fr	ROYAUME UNI
 united states	common	fr	ETATS-UNIS
 united states minor outlying islands	common	fr	ILES MINEURES RELIEES AUX ETATS-UNIS
 unknown	common	fr	Inconnu
+unlink the current element	htmlarea-ContextMenu	fr	Enlever le lien à cet élément
+unset color	htmlarea-TableOperations	fr	Enlever la couleur
 update	common	fr	Mettre à jour
+upload image	htmlarea-UploadImage	fr	Uploader l'Image
+upper latin letters	htmlarea-ListType	fr	Lettres latines majuscules
+upper roman numbers	htmlarea-ListType	fr	Chiffres romains majuscules
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
@@ -610,6 +746,7 @@ uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
 version	common	fr	version
+vertical align	htmlarea-TableOperations	fr	Alignement vertical
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
@@ -619,6 +756,7 @@ wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
 western sahara	common	fr	SAHARA OUEST
 which groups	common	fr	Quels groupes
+width	htmlarea-TableOperations	fr	Largeur
 wk	jscalendar	fr	wk
 work email	common	fr	email Bureau
 written by:	common	fr	Ecrit par:
@@ -627,7 +765,7 @@ yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fr	Vous êtes en MODE TEXTE. Utilisez le bouton [<>] pour revenir au mode WYSIWIG.
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
-you are running a newer version of egroupware than your database is setup for	common	fr	Vous utilisez une version de eGroupWare plus récente que celle définie pour la base de données.
+you are running a newer version of phpgroupware than your database is setup for	common	fr	Vous utilisez une version de eGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
