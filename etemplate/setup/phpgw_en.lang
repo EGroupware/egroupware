@@ -1,10 +1,10 @@
-%1 disabled	etemplate	en	%1 disabled
 %1 etemplates deleted	etemplate	en	%1 eTemplates deleted
 %1 etemplates found	etemplate	en	%1 eTemplates found
-%1 needed	etemplate	en	%1 needed
-%1 notranslation	etemplate	en	%1 NoTranslation
-%1 onchange	etemplate	en	%1 onChange
-%1 readonly	etemplate	en	%1 readonly
+%s disabled	etemplate	en	%s disabled
+%s needed	etemplate	en	%s needed
+%s notranslation	etemplate	en	%s NoTranslation
+%s onchange	etemplate	en	%s onChange
+%s readonly	etemplate	en	%s readonly
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add column	etemplate	en	Add Column
@@ -60,9 +60,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	en	deletes the eTemplate spez. above
 deletes this column	etemplate	en	Deletes this column
 discard changes	etemplate	en	discard changes
-displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%1' in the label (label of the Submitbutton or Image-filename)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	en	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	en	displayed in statusline of browser if input-field gets focus
-do you want to save the changes you made in table %1?	etemplate	en	Do you want to save the changes you made in table %1?
+do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
@@ -237,7 +237,7 @@ type of the field (select label if field should be empty)	etemplate	en	type of t
 unique	etemplate	en	Unique
 unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields.
-update from version '%1' to	etemplate	en	Update from Version '%1' to
+update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
 value	etemplate	en	Value
 vbox	etemplate	en	VBox

@@ -17,22 +17,6 @@
 		var $debug;
 		var $etemplate; // eTemplate we edit
 		var $editor;	// editor eTemplate
-		var $messages = array(
-			'not_found' => 'Error: Template not found !!!',
-			'deleted'   => 'Template deleted',
-			'saved'     => 'Template saved',
-			'error_writing' => 'Error: while saveing !!!',
-			'other_version' => 'only an other Version found !!!',
-			'ext_loaded' => 'Extensions loaded:',
-			'x_found'    => '%1 eTemplates found',
-			'imported'   => "eTemplate '%1' imported, use Save to put it in the database",
-			'no_filename'=> 'no filename given or selected via Browse...',
-			'not_writeable' => "Error: webserver is not allowed to write into '%1' !!!",
-			'exported'   => "eTemplate '%1' written to '%2'",
-			'newer_version' => "newer version '%1' exists !!!",
-			'need_name'  => 'Application name needed to write a langfile or dump the eTemplates !!!',
-			'x_deleted'  => '%1 eTemplates deleted'
-		);
 		var $aligns = array(
 			'' => 'Left',
 			'right' => 'Right',
@@ -65,34 +49,26 @@
 			//'preferences' => True
 		);
 
-		function editor($lang_on_messages=True)
+		function editor()
 		{
 			$this->etemplate = CreateObject('etemplate.etemplate');
 			//echo '$HTTP_POST_VARS='; _debug_array($HTTP_POST_VARS);
 
 			$this->editor = new etemplate('etemplate.editor');
-
-			if ($lang_on_messages)
-			{
-				reset($this->messages);
-				while (list($key,$msg) = each($this->messages))
-					$this->messages[$key] = lang($msg);
-			}
 		}
 
 		function edit($msg = '')
 		{
-			$get_vars = $GLOBALS['HTTP_GET_VARS'];
-			if (isset($get_vars['name']) && !$this->etemplate->read($get_vars))
+			if (isset($_GET['name']) && !$this->etemplate->read($_GET))
 			{
-				$msg .= $this->messages['not_found'];
+				$msg .= lang('Error: Template not found !!!');
 			}
 			if (!is_array($this->extensions))
 			{
 				$this->extensions = $this->scan_for_extensions();
 				if (count($this->extensions))
 				{
-					$msg .= $this->messages['ext_loaded'] . ' ' . implode(', ',$this->extensions);
+					$msg .= lang('Extensions loaded:') . ' ' . implode(', ',$this->extensions);
 					$msg_ext_loaded = True;
 				}
 			}
@@ -107,7 +83,7 @@
 				$extensions = $this->scan_for_extensions($app);
 				if (count($extensions))
 				{
-					$msg .= (!$msg_ext_loaded?$this->messages['ext_loaded'].' ':', ') . implode(', ',$extensions);
+					$msg .= (!$msg_ext_loaded?lang('Extensions loaded:').' ':', ') . implode(', ',$extensions);
 					$this->extensions += $extensions;
 				}
 				$this->extensions['**loaded**'][$app] = True;
@@ -396,7 +372,7 @@
 					$content['version'] = '';	// trying it without version
 					if ($this->etemplate->read($content))
 					{
-						$msg = $this->messages['other_version'];
+						$msg = lang('only an other Version found !!!');
 					}
 					else
 					{
@@ -407,17 +383,17 @@
 						}
 						elseif (!count($result) || !$this->etemplate->read($result[0]))
 						{
-							$msg = $this->messages['not_found'];
+							$msg = lang('Error: Template not found !!!');
 						}
 						elseif ($content['name'] == $result[0]['name'])
 						{
-							$msg = $this->messages['other_version'];
+							$msg = lang('only an other Version found !!!');
 						}
 					}
 				}
 				elseif ($newest_version != '' && $this->etemplate->version != $newest_version)
 				{
-					$msg = sprintf($this->messages['newer_version'],$newest_version);
+					$msg = lang("newer version '%1' exists !!!",$newest_version);
 				}
 			}
 			elseif ($content['delete'])
@@ -430,7 +406,7 @@
 				list($name) = explode('.',$content['name']);
 				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
 				{
-					$msg = $this->messages['need_name'];
+					$msg = lang('Application name needed to write a langfile or dump the eTemplates !!!');
 				}
 				else
 				{
@@ -444,7 +420,7 @@
 					$this->etemplate->modified = time();
 				}
 				$ok = $this->etemplate->save(trim($content['name']),trim($content['template']),trim($content['lang']),intval($content['group']),trim($content['version']));
-				$msg = $this->messages[$ok ? 'saved' : 'error_writing'];
+				$msg = $ok ? lang('Template saved') : lang('Error: while saveing !!!');
 			}
 			elseif ($content['show'])
 			{
@@ -456,16 +432,14 @@
 				list($name) = explode('.',$content['name']);
 				if (empty($name) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$name))
 				{
-					$msg = $this->messages['need_name'];
+					$msg = lang('Application name needed to write a langfile or dump the eTemplates !!!');
 				}
 				else
 				{
 					$additional = array();
 					if ($name == 'etemplate')
 					{
-						$m = new editor(False);
-						$db_tools = CreateObject('etemplate.db_tools',False);
-						$additional = $m->messages + $db_tools->messages + $this->etemplate->types + $this->extensions + $this->aligns;
+						$additional = $this->etemplate->types + $this->extensions + $this->aligns;
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
@@ -520,7 +494,7 @@
 			}
 			if (!is_writeable($dir))
 			{
-				return sprintf($this->messages['not_writeable'],$dir);
+				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
 			}
 			if ($create)
 			{
@@ -555,14 +529,14 @@
 			fwrite($f,$xul);
 			fclose($f);
 
-			return sprintf($this->messages['exported'],$name,$file);
+			return lang("eTemplate '%1' written to '%2'",$name,$file);
 		}
 
 		function import_xml($file)
 		{
 			if ($file == 'none' || $file == '' || !($f = fopen($file,'r')))
 			{
-				return $this->messages['no_filename'];
+				return lang('no filename given or selected via Browse...');
 			}
 			$xul = fread ($f, filesize ($file));
 			fclose($f);
@@ -579,11 +553,11 @@
 			{
 				if (count($imported) == 1)
 				{
-					$imported = sprintf($this->messages['imported'],$this->etemplate->name);
+					$imported = lang("eTemplate '%1' imported, use Save to put it in the database",$this->etemplate->name);
 				}
 				else
 				{
-					$imported = 'File contains more than one etemplates, last one is shown !!!';
+					$imported = lang('File contains more than one eTemplate, last one is shown !!!');
 				}
 			}
 			return $imported;
@@ -613,7 +587,7 @@
 				{
 					$read_ok = $this->etemplate->delete();
 				}
-				$msg = $this->messages[$read_ok ? 'deleted' : 'not_found'];
+				$msg = $read_ok ? lang('Template deleted') : lang('Error: Template not found !!!');
 
 				if ($content['back'] == 'list_result')
 				{
@@ -640,9 +614,9 @@
 				$this->$back();
 				return;
 			}
-			if (isset($GLOBALS['HTTP_GET_VARS']['name']) && !$this->etemplate->read($GLOBALS['HTTP_GET_VARS']))
+			if (isset($_GET['name']) && !$this->etemplate->read($_GET))
 			{
-				$this->edit($this->messages['not_found']);
+				$this->edit(lang('Error: Template not found !!!'));
 				return;
 			}
 			$preserv = array(
@@ -700,7 +674,7 @@
 				}
 				if ($n)
 				{
-					$msg = sprintf($this->messages['x_deleted'],$n);
+					$msg = lang('%1 eTemplates deleted',$n);
 				}
 				unset($cont['selected']);
 				unset($cont['delete_selected']);
@@ -715,7 +689,7 @@
 			}
 			if (!$msg)
 			{
-				$msg = sprintf($this->messages['x_found'],count($result));
+				$msg = lang('%1 eTemplates found',count($result));
 			}
 			unset($cont['result']);
 			if (!isset($cont['name']))
@@ -751,17 +725,17 @@
 			{
 				$this->extensions = $post_vars['**extensions**']; unset($post_vars['**extensions**']);
 			}
-			if (isset($GLOBALS['HTTP_GET_VARS']['name']) && !$this->etemplate->read($GLOBALS['HTTP_GET_VARS']) ||
+			if (isset($_GET['name']) && !$this->etemplate->read($_GET) ||
 			    isset($post_vars['name']) && !$this->etemplate->read($post_vars))
 			{
-				$msg = $this->messages['not_found'];
+				$msg = lang('Error: Template not found !!!');
 
 				if (isset($post_vars['name']))
 				{
 					$post_vars['version'] = '';	// trying it without version
 					if ($this->etemplate->read($post_vars))
 					{
-						$msg = $this->messages['other_version'];
+						$msg = lang('only an other Version found !!!');
 					}
 				}
 			}

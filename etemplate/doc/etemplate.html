@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- $Id$ -->
 <html>
 <head>
@@ -77,11 +77,11 @@ et_media				<span>that has to be identical to our app-name</span>
 	<span>/* Dependencies for this app to work */</span>
 	setup_info['et_media']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.13','0.9.14','0.9.15')
+		 'versions' => Array('0.9.14','0.9.15','0.9.16')
 	);
 	$setup_info['et_media']['depends'][] = array(	<span>// this is only necessary as long the etemplate-class is not in the api</span>
 		 'appname' => 'etemplate',
-		 'versions' => Array('0.9.13','0.9.14','0.9.15')
+		 'versions' => Array('0.9.14','0.9.15','0.9.16')
 	);
 </pre>
 
@@ -165,12 +165,6 @@ $GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True;
 <pre>
 class et_media extends so_sql
 {
-	var $messages = array(
-		'nothing_found' => 'Nothing matched search criteria !!!',
-		'anz_found' => '%d matches on search criteria',
-		'saved' => 'Entry saved',
-		'error_writeing' => 'Error: writeing !!!'
-	);
 	var $types = array(
 		'' => 'Select one ...',
 		'cd' => 'Compact Disc',
@@ -184,7 +178,7 @@ class et_media extends so_sql
 As one of the messages contain a %s to be used with sprintf, we have to run them manualy through lang().</p>
 
 <pre>
-	function et_media($lang_on_messages = True)
+	function et_media()
 	{
 		$this->tmpl = CreateObject('etemplate.etemplate','et_media.edit');
 
@@ -195,13 +189,6 @@ As one of the messages contain a %s to be used with sprintf, we have to run them
 			'edit' => True,
 			'writeLangFile' => True
 		);
-
-		if ($lang_on_messages)			<span>// run all our messages throug lang</span>
-		{
-			reset($this->messages);
-			while (list($key,$msg) = each($this->messages))
-				$this->messages[$key] = lang($msg);
-		}
 	}
 </pre>
 
@@ -213,7 +200,6 @@ As one of the messages contain a %s to be used with sprintf, we have to run them
 		It get's the information it needs about the structure of our table from the tables_current-file we created with the db-tools.
 	<li>set up / extends from so_sql the public_functions array, all functions called which should be called by links or as methode,
 		like our callbacks, need to be listed here.
-	<li>run our messages through lang() if we are not called with False (see later)
 </ol>
 
 <pre>
@@ -229,7 +215,7 @@ As one of the messages contain a %s to be used with sprintf, we have to run them
 
 			if (isset($content['save']))	<span>// save the entry ($this->data)</span>
 			{
-				$msg .= $this->messages[!$this->save() ? 'saved' : 'error_writeing'];
+				$msg .= !$this->save() ? lang('Entry saved') : lang('Error: writeing !!!');
 			}
 			elseif (isset($content['read']))
 			{
@@ -238,7 +224,7 @@ As one of the messages contain a %s to be used with sprintf, we have to run them
 
 				if (!$found)			<span>// search returned empty</span>
 				{
-					$msg .= $this->messages['nothing_found'];
+					$msg .= lang('Nothing matched search criteria !!!');
 				}
 				else
 				{
@@ -333,7 +319,7 @@ We are only lacking some way to show if we get more than one match on a search, 
 			$entry[$row] = $data;
 		}
 		$content = array(
-			'msg' => sprintf($this->messages['anz_found'],count($found)),
+			'msg' => lang('%d matches on search criteria',,count($found)),
 			'entry' => $entry		<span>// et_media.show.rows uses this, as we put 'entry' in the Options-field</span>
 		);
 		$this->tmpl->read('et_media.show'); 	<span>// read the show-template</span>
@@ -368,7 +354,7 @@ We are only lacking some way to show if we get more than one match on a search, 
 
 				if (!$found)	<span>// search returned empty</span>
 				{
-					$msg .= $this->messages['nothing_found'];
+					$msg .= lang('Nothing matched search criteria !!!');
 				}
 				elseif (count($found) == 1)		<span>// only one match --> show it in the editor</span>
 				{
@@ -436,19 +422,17 @@ There are 2 possibilties to create it automaticaly:</p>
 	http://ourDomain/phpgroupware/index.php?menuaction=et_media.et_media.writeLangFile (the errormsg can be savely ignored)<br>
 	This is the function (don't forget to add it like the edit-function to public_functions):
 </ol>
+<p>Anyway we have to use the TranslationTools to find and write the lang()-messages of our code!</p>
 
 <pre>
 	<span>/*!
 	@function writeLangFile
-	@abstract writes langfile with all templates and messages registered here
-	@discussion can be called via [write Langfile] in eTemplate editor or 
-	@discussion http://domain/phpgroupware/index.php?et_media.et_media.writeLangFile
+	@abstract writes langfile with all templates registered here
+	@discussion can be called via [write Langfile] in eTemplate editor
 	*/</span>
 	function writeLangFile()
 	{
-		$etm = new et_media(False);	<span>// no lang on messages</span>
-
-		return $this->tmpl->writeLangFile('et_media','en',$etm->messages+$etm->types);
+		return $this->tmpl->writeLangFile('et_media','en',$this->types);
 	}
 </pre>
 

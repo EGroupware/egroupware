@@ -604,7 +604,7 @@
 			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
 			if (!is_writeable($dir))
 			{
-				return "Error: webserver is not allowed to write into '$dir' !!!";
+				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
 			}
 			$file = "$dir/etemplates.inc.php";
 			if (file_exists($file))
@@ -636,7 +636,7 @@
 			}
 			fclose($f);
 
-			return "$n eTemplates for Application '$app' dumped to '$file'";
+			return lang("%1 eTemplates for Application '%2' dumped to '%3'",$n,$app,$file);
 		}
 
 		function getToTranslateCell($cell,&$to_trans)
@@ -777,7 +777,7 @@
 			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
 			if (!is_writeable($dir))
 			{
-				return "Error: webserver is not allowed to write into '$dir' !!!";
+				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
 			}
 			$file = "$dir/phpgw_$lang.lang";
 			if (file_exists($file))
@@ -792,7 +792,7 @@
 			$solangfile->write_file($app,$langarr,$lang);
 			$solangfile->loaddb($app,$lang);
 
-			return "$n ($new new) Messages writen for Application '$app' and Languages '$lang'";
+			return lang("%1 (%2 new) Messages writen for Application '%3' and Languages '%4'",$n,$new,$app,$lang);
 		}
 
 		/*!
@@ -820,7 +820,7 @@
 				}
 				$templ->save();
 			}
-			return "$n new eTemplates imported for Application '$app'";
+			return lang("%1 new eTemplates imported for Application '%2'",$n,$app);
 		}
 
 		/*!

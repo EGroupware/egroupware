@@ -1,10 +1,10 @@
-%1 disabled	etemplate	de	%1 deaktiviert
 %1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
 %1 etemplates found	etemplate	de	%1 eTemplates gefunden
-%1 needed	etemplate	de	%1 benötigt
-%1 notranslation	etemplate	de	%1 nicht übersetzen
-%1 onchange	etemplate	de	%1 onChange
-%1 readonly	etemplate	de	%1 Schreibschutz
+%s disabled	etemplate	de	%s deaktiviert
+%s needed	etemplate	de	%s benötigt
+%s notranslation	etemplate	de	%s nicht übersetzen
+%s onchange	etemplate	de	%s onChange
+%s readonly	etemplate	de	%s Schreibschutz
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add column	etemplate	de	Spalte zufügen
@@ -51,7 +51,7 @@ db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
 default	etemplate	de	Vorgabe
 delete	etemplate	de	Löschen
-delete a single entry by passing the id.	etemplate	de	
+delete a single entry by passing the id.	etemplate	de	Löscht einen einzelnen Eintrag über seine Id.
 delete all selected etemplates, without further inquiry	etemplate	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
 delete column	etemplate	de	Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
@@ -60,9 +60,9 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	de	löscht das oben spezifizierte eTemplate
 deletes this column	etemplate	de	Löscht diese Spalte
 discard changes	etemplate	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%1' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%1' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	etemplate	de	wird in der Statuszeile des Browsers angezeit, wenn das Eingabefeld angesprochen wird
-do you want to save the changes you made in table %1?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%1' speichern?
+do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
@@ -237,7 +237,7 @@ type of the field (select label if field should be empty)	etemplate	de	Type des 
 unique	etemplate	de	Unique
 unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
-update from version '%1' to	etemplate	de	Update von Version '%1' auf
+update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
 value	etemplate	de	Wert
 vbox	etemplate	de	VBox

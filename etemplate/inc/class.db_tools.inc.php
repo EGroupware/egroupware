@@ -18,7 +18,6 @@
 		(
 			'edit'         => True,
 			'needs_save'   => True,
-			'writeLangFile'=> True,
 			//'admin'       => True,
 			//'preferences' => True
 		);
@@ -28,15 +27,6 @@
 		var $data;		// Table definitions
 		var $app;		// used app
 		var $table;		// used table
-		var $messages = array(
-			'not_found' => 'Not found !!!',
-			'writen' => 'File writen',
-			'error_writing' => 'Error: writing file (no write-permission for the webserver) !!!',
-			'no_write_necessary' => 'Table unchanged, no write necessary !!!',
-			'give_table_name' => 'Please enter table-name first !!!',
-			'new_table' => 'New table created',
-			'select_app' => 'Select an app first !!!'
-		);
 		var $types = array(
 			'varchar'	=> 'varchar',
 			'int'		=> 'int',
@@ -72,7 +62,7 @@
 		@author ralfbecker
 		@abstract constructor of class
 		*/
-		function db_tools($lang_on_messages=True)
+		function db_tools()
 		{
 			$this->editor = CreateObject('etemplate.etemplate','etemplate.db-tools.edit');
 			$this->data = array();
@@ -80,13 +70,6 @@
 			if (!is_array($GLOBALS['phpgw_info']['apps']) || !count($GLOBALS['phpgw_info']['apps']))
 			{
 				ExecMethod('phpgwapi.applications.read_installed_apps');
-			}
-			if ($lang_on_messages)
-			{
-				foreach($this->messages as $key => $msg)
-				{
-					$this->messages[$key] = lang($msg);
-				}
 			}
 		}
 
@@ -151,7 +134,7 @@
 				{
 					return;
 				}
-				$msg .= $this->messages['no_write_necessary'];
+				$msg .= lang('Table unchanged, no write necessary !!!');
 			}
 			elseif ($content['delete'])
 			{
@@ -171,17 +154,17 @@
 			{
 				if (!$this->app)
 				{
-					$msg .= $this->messages['select_app'];
+					$msg .= lang('Select an app first !!!');
 				}
 				elseif (!$content['new_table_name'])
 				{
-					$msg .= $this->messages['give_table_name'];
+					$msg .= lang('Please enter table-name first !!!');
 				}
 				elseif ($content['add_table'])
 				{
 					$this->table = $content['new_table_name'];
 					$this->data[$this->table] = array('fd' => array(),'pk' =>array(),'ix' => array(),'uc' => array(),'fk' => array());
-					$msg .= $this->messages['new_table'];
+					$msg .= lang('New table created');
 				}
 				else // import
 				{
@@ -274,8 +257,8 @@
 						}
 						$this->setup_version($this->app,'',$tables);
 					}
-					$msg .= $this->messages[$this->write($this->app,$this->data) ?
-						'writen' : 'error_writing'];
+					$msg .= $this->write($this->app,$this->data) ?
+						lang('File writen') : lang('Error: writing file (no write-permission for the webserver) !!!');
 				}
 				$this->changes = array();
 				// return to edit with everything set, so the user gets the table he asked for
@@ -912,17 +895,6 @@
 			//echo "a: $a<br>\nb: $b</p>\n";
 
 			return $a == $b;
-		}
-
-		/*!
-		@function writeLangFile
-		@abstract writes langfile with all templates and messages registered here
-		@discussion can be called via http://domain/phpgroupware/index.php?etemplate.db_tools.writeLangFile
-		*/
-		function writeLangFile()
-		{
-			$m = new db_tools(False);	// no lang on messages
-			$this->editor->writeLangFile('etemplate','en',$m->messages);
 		}
 	};
 
