@@ -122,63 +122,66 @@
 			$t->set_var('display_col',ucfirst($column));
 		}
 		$ref = $data = "";
-		$coldata = $fields[0][$column];
-		// Some fields require special formatting.       
-		if ( ($column == "note" || $column == "label" || $column == "pubkey") && $coldata )
+		if ($fields[0][$column])
 		{
-			$datarray = explode ("\n",$coldata);
-			if ($datarray[1])
+			$coldata = $fields[0][$column];
+			// Some fields require special formatting.       
+			if ( ($column == "note" || $column == "label" || $column == "pubkey") && $coldata )
 			{
-				while (list($key,$info) = each ($datarray))
+				$datarray = explode ("\n",$coldata);
+				if ($datarray[1])
 				{
-					if ($key)
+					while (list($key,$info) = each ($datarray))
 					{
-						$data .= "</td></tr><tr><td width=\"30%\">&nbsp;</td><td width=\"70%\">" .$info;
+						if ($key)
+						{
+							$data .= "</td></tr><tr><td width=\"30%\">&nbsp;</td><td width=\"70%\">" .$info;
+						}
+						else
+						{	// First row, don't close td/tr
+							$data .= $info;
+						}
 					}
-					else
-					{	// First row, don't close td/tr
-						$data .= $info;
-					}
+					$data .= "</tr>";
 				}
-				$data .= "</tr>";
+				else
+				{
+					$data = $coldata;
+				}
+			}
+			elseif ($column == "url" && $coldata)
+			{
+				$ref = '<a href="' . $coldata . '" target="_new">';
+				$data = $coldata . '</a>';
+			}
+			elseif ( (($column == "email") || ($column == "email_home")) && $coldata)
+			{
+				if ($phpgw_info["user"]["apps"]["email"])
+				{
+					$ref='<a href="' . $phpgw->link("/email/compose.php","to="
+						. urlencode($coldata)) . '" target="_new">';
+				}
+				else
+				{
+					$ref = '<a href="mailto:'.$coldata.'">';
+				}
+				$data = $coldata."</a>";
 			}
 			else
-			{
-				$data = $coldata;
+			{ // But these do not
+				$ref = ""; $data = $coldata;
 			}
-		}
-		elseif ($column == "url" && $coldata)
-		{
-			$ref = '<a href="' . $coldata . '" target="_new">';
-			$data = $coldata . '</a>';
-		}
-		elseif ( (($column == "email") || ($column == "email_home")) && $coldata)
-		{
-			if ($phpgw_info["user"]["apps"]["email"])
-			{
-				$ref='<a href="' . $phpgw->link("/email/compose.php","to="
-					. urlencode($coldata)) . '" target="_new">';
-			}
-			else
-			{
-				$ref = '<a href="mailto:'.$coldata.'">';
-			}
-			$data = $coldata."</a>";
-		}
-		else
-		{ // But these do not
-			$ref = ""; $data = $coldata;
-		}
 
-		if (!$data)
-		{
-			$t->set_var('ref_data',"&nbsp;");
+			if (!$data)
+			{
+				$t->set_var('ref_data',"&nbsp;");
+			}
+			else
+			{
+				$t->set_var('ref_data',$ref . $data);
+			}
+			$t->parse("cols","view_row",True);
 		}
-		else
-		{
-			$t->set_var('ref_data',$ref . $data);
-		}
-		$t->parse("cols","view_row",True);
 	}
 
 	$cat = CreateObject('phpgwapi.categories');
