@@ -5,9 +5,9 @@
   * and Dan Kuykendall <seek3r@phpgroupware.org>                             *
   * Handles multi-language support use SQL tables                            *
   * Copyright (C) 2000, 2001 Joseph Engo                                     *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the phpGroupWare API                             *
-  * http://www.phpgroupware.org/api                                          * 
+  * http://www.phpgroupware.org/api                                          *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -251,22 +251,25 @@
 				return $ret;
 			}
 
-            if ($from)
-            {
-                $from = strtolower($from);
-            }
-            if ($to)
-            {
-                $to = strtolower($to);
-            }
+			if ($from)
+			{
+				$from = strtolower($from);
+			}
+			if ($to)
+			{
+				$to = strtolower($to);
+			}
 
 			if (!$from)
 			{
 				$from = $this->mbstring ? strtolower(mb_detect_encoding($data)) : 'iso-8859-1';
-				if ($from == 'ascii') $from = 'iso-8859-1';
+				if($from == 'ascii')
+				{
+					$from = 'iso-8859-1';
+				}
 				//echo "<p>autodetected charset of '$data' = '$from'</p>\n";
 			}
-			/* 
+			/*
 			   php does not seem to support gb2312
 			   but seems to be able to decode it as EUC-CN
 			*/
@@ -274,9 +277,8 @@
 			{
 				case 'gb2312':
 				case 'gb18030':
-					$from = "EUC-CN";
+					$from = 'EUC-CN';
 					break;
-					
 				case 'us-ascii':
 					$from = 'iso-8859-1';
 					break;
@@ -309,7 +311,7 @@
 				}
 			}
 			#die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
-			
+
 			// this is not good, not convert did succed
 			return $data;
 		}
@@ -327,7 +329,7 @@
 
 			if (!isset($GLOBALS['phpgw_info']['server']) && $upgrademethod != 'dumpold')
 			{
-				$this->db->query("select * from phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
+				$this->db->query("SELECT * FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='lang_ctimes'",__LINE__,__FILE__);
 				if ($this->db->next_record())
 				{
 					$GLOBALS['phpgw_info']['server']['lang_ctimes'] = unserialize(stripslashes($this->db->f('config_value')));
@@ -343,7 +345,7 @@
 			if ($upgrademethod == 'dumpold')
 			{
 				// dont delete the custom main- & loginscreen messages every time
-				$this->db->query("DELETE FROM phpgw_lang where app_name != 'mainscreen' AND app_name != 'loginscreen'",__LINE__,__FILE__);
+				$this->db->query("DELETE FROM phpgw_lang WHERE app_name != 'mainscreen' AND app_name != 'loginscreen'",__LINE__,__FILE__);
 				//echo '<br>Test: dumpold';
 				$GLOBALS['phpgw_info']['server']['lang_ctimes'] = array();
 			}
