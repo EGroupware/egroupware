@@ -786,7 +786,9 @@ class net_http_client
 		else if ($this->responseHeaders['Content-Length'] )
 		{
 			$length = $this->responseHeaders['Content-Length'];
-			$data = fread( $this->socket, $length );
+			while (!feof($this->socket)) {
+				$data .= fread($this->socket, 1024);
+			}
 			if( $this->debug & DBGSOCK ) echo "DBG.SOCK socket_read using Content-Length ($length)\n";
 
 		}
