@@ -17,8 +17,8 @@
 		var $ui;
 		var $so;
 		var $public_functions = array(
-				'kill'          => True
-			);
+			'kill' => True
+		);
 
 		function bocurrentsessions()
 		{
@@ -70,5 +70,4 @@
 			$this->ui = createobject('admin.uicurrentsessions');
 			$this->ui->list_sessions();
 		}
-
 	}

@@ -99,7 +99,7 @@
 
 			$GLOBALS['phpgw']->template->set_file(array('server_list_t' => 'listservers.tpl'));
 			$GLOBALS['phpgw']->template->set_block('server_list_t','server_list','list');
-	
+
 			$GLOBALS['phpgw']->template->set_var('lang_action',lang('Server List'));
 			$GLOBALS['phpgw']->template->set_var('add_action',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiserver.edit'));
 			$GLOBALS['phpgw']->template->set_var('lang_add',lang('Add'));
@@ -152,7 +152,7 @@
 				$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 				$server_id = $server['server_id'];
-	
+
 				$GLOBALS['phpgw']->template->set_var(array(
 					'server_name' => $GLOBALS['phpgw']->strip_html($server['server_name']),
 					'server_url'  => $GLOBALS['phpgw']->strip_html($server['server_url']),
@@ -162,7 +162,7 @@
 
 				$GLOBALS['phpgw']->template->set_var('edit',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiserver.edit&server_id=' . $server_id));
 				$GLOBALS['phpgw']->template->set_var('lang_edit_entry',lang('Edit'));
-	
+
 				$GLOBALS['phpgw']->template->set_var('delete',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiserver.delete&server_id=' . $server_id));
 				$GLOBALS['phpgw']->template->set_var('lang_delete_entry',lang('Delete'));
 				$GLOBALS['phpgw']->template->parse('list','server_list',True);

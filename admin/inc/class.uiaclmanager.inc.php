@@ -85,7 +85,7 @@
 							'acl_app'    => $app,
 							'account_id' => $GLOBALS['account_id']
 						);
-	
+
 						$this->template->set_var('link_location',$GLOBALS['phpgw']->link('/index.php',$link_values));
 						$this->template->set_var('lang_location',lang($value['name']));
 						$this->template->fp('rows','link_row',True);
@@ -150,5 +150,4 @@
 
 			$this->template->pfp('out','form');
 		}
-
 	}

@@ -17,9 +17,9 @@
 		var $template;
 		var $bo;
 		var $public_functions = array(
-				'list_sessions' => True,
-				'kill'          => True
-			);
+			'list_sessions' => True,
+			'kill'          => True
+		);
 
 		function uicurrentsessions()
 		{
@@ -132,7 +132,7 @@
 				{
 					$this->template->set_var('row_action',$GLOBALS['phpgw']->strip_html($value['session_action']));
 				}
-				else if (! $can_view_action)
+				elseif(! $can_view_action)
 				{
 					$this->template->set_var('row_action','&nbsp; -- &nbsp;');
 				}
@@ -140,7 +140,7 @@
 				{
 					$this->template->set_var('row_action','&nbsp;');
 				}
-		
+
 				if ($value['session_id'] != $GLOBALS['phpgw_info']['user']['sessionid'] && ! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
 				{
 					$this->template->set_var('row_kill','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.kill&ksession='
@@ -150,12 +150,11 @@
 				{
 					$this->template->set_var('row_kill','&nbsp;');
 				}
-		
+
 				$this->template->parse('rows','row',True);
 			}
 
 			$this->template->pparse('out','list');
-		
 		}
 
 		function kill()
@@ -176,5 +175,4 @@
 
 			$this->template->pfp('out','form');
 		}
-
 	}

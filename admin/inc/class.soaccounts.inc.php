@@ -10,10 +10,9 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-	
+
 	class soaccounts
 	{
-
 		function soaccounts()
 		{
 		}
@@ -94,7 +93,7 @@
 				}
 			}
 
-/*					if ($apps_after)
+/*			if ($apps_after)
 			{
 				$GLOBALS['pref'] = CreateObject('phpgwapi.preferences',$userData['account_id']);
 				$GLOBALS['phpgw']->common->hook_single('add_def_pref','admin');

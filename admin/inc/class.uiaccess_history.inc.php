@@ -15,8 +15,8 @@
 	{
 		var $template;
 		var $public_functions = array(
-				'list_history' => True
-			);
+			'list_history' => True
+		);
 
 		function uiaccess_history()
 		{
@@ -46,25 +46,25 @@
 			$total_records = $this->bo->total($account_id);
 
 			$var = Array(
-				'th_bg'	=> $GLOBALS['phpgw_info']['theme']['th_bg'],
-				'nextmatchs_left'	=> $this->nextmatchs->left('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
-				'nextmatchs_right'	=> $this->nextmatchs->right('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
-				'showing'	=> $this->nextmatchs->show_hits($total_records,$start),
-				'lang_loginid'	=> lang('LoginID'),
-				'lang_ip'	=> lang('IP'),
-				'lang_login'	=> lang('Login'),
-				'lang_logout'	=> lang('Logout'),
-				'lang_total'	=> lang('Total')
+				'th_bg'       => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'nextmatchs_left'  => $this->nextmatchs->left('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
+				'nextmatchs_right' => $this->nextmatchs->right('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
+				'showing'          => $this->nextmatchs->show_hits($total_records,$start),
+				'lang_loginid'     => lang('LoginID'),
+				'lang_ip'     => lang('IP'),
+				'lang_login'  => lang('Login'),
+				'lang_logout' => lang('Logout'),
+				'lang_total'  => lang('Total')
 			);
 
 			if ($account_id)
 			{
 				$var['link_return_to_view_account'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php',
-						Array(
-							'menuaction'	=> 'admin.uiaccounts.view',
-							'account_id'	=> $account_id
-						)
-					) . '">' . lang('Return to view account') . '</a>';
+					Array(
+						'menuaction' => 'admin.uiaccounts.view',
+						'account_id' => $account_id
+					)
+				) . '">' . lang('Return to view account') . '</a>';
 				$var['lang_last_x_logins'] = lang('Last %1 logins for %2',$total_records,$this->bo->grab_fullname($account_id));
 			}
 			else
@@ -76,7 +76,7 @@
 
 			$records = $this->bo->list_history($account_id,$start,$order,$sort);
 			while (is_array($records) && list(,$record) = each($records))
-			{			
+			{
 				$this->nextmatchs->template_alternate_row_color($this->template);
 
 				$var = array(
@@ -109,8 +109,8 @@
 			}
 
 			$var = Array(
-				'bg_color'		=> $GLOBALS['phpgw_info']['themes']['bg_color'],
-				'footer_total'	=> lang('Total records') . ': ' . $total_records
+				'bg_color'     => $GLOBALS['phpgw_info']['themes']['bg_color'],
+				'footer_total' => lang('Total records') . ': ' . $total_records
 			);
 			if ($account_id)
 			{
@@ -120,11 +120,11 @@
 			{
 				$var['lang_percent'] = lang('Percent of users that logged out') . ': ' . $percent . '%';
 			}
-			
+
 			// create the menu on the left, if needed
 			$menuClass = CreateObject('admin.uimenuclass');
 			$var['rows'] = $menuClass->createHTMLCode('view_account');
-			
+
 			$this->template->set_var($var);
 			$this->template->pfp('out','list');
 		}
