@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.link_widget.list" template="" lang="" group="" version="0.9.15.001" class="whiteback">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row class="nmr">
+				<description id="${row}[app]"/>
+				<description no_lang="1" id="${row}[title]"/>
+				<description no_lang="1" id="${row}[remark]"/>
+				<button image="delete.gif" label="Unlink" id="unlink[$row_cont[link_id]]" statustext="Remove this link (not the entry itself)"/>
+			</row>
+		</rows>
+		<styles>
+			.whiteback { background: white; }
+		</styles>
+	</grid>
+</overlay>

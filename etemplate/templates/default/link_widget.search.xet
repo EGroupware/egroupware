@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<grid id="etemplate.link_widget.search" template="" lang="" group="" version="0.9.15.001">
+		<columns>
+			<column/>
+			<column/>
+			<column/>
+			<column/>
+		</columns>
+		<rows>
+			<row>
+				<menulist>
+					<menupopup label="Search" id="app" statustext="Select an App to search in"/>
+				</menulist>
+				<textbox id="query" statustext="Enter the query pattern"/>
+				<button label="Search" id="search" statustext="click here to start the search"/>
+				<description class="error_msg" value="Nothing found - try again !!!" id="msg"/>
+			</row>
+		</rows>
+		<styles>
+			.error_msg { font-style: italic; color: red; }
+		</styles>
+	</grid>
+</overlay>

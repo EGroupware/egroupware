@@ -37,6 +37,8 @@ checkbox	etemplate	en	Checkbox
 city	etemplate	en	City
 class	etemplate	en	class
 class, valign	etemplate	en	class, Valign
+click here to create the link	etemplate	en	click here to create the Link
+click here to start the search	etemplate	en	click here to start the search
 columnname	etemplate	en	ColumnName
 companyname	etemplate	en	Companyname
 create a new table for the application	etemplate	en	Create a new table for the application
@@ -77,6 +79,7 @@ embeded css styles, eg. '.red { background: red; }' (note the '.' before the cla
 enable javascript onchange submit	etemplate	en	enable JavaScript onChange submit
 enter '' for an empty default, nothing mean no default	etemplate	en	enter '' for an empty default, nothing mean no default
 enter the new version number here (has to be > old_version)	etemplate	en	enter the new version number here (has to be > old_version)
+enter the query pattern	etemplate	en	Enter the query pattern
 entries	etemplate	en	entries
 error: template not found !!!	etemplate	en	Error: Template not found !!!
 error: webserver is not allowed to write into '%s' !!!	etemplate	en	Error: webserver is not allowed to write into '%s' !!!
@@ -111,6 +114,7 @@ height of the table in % or pixels for the table-tag and (optional) div	etemplat
 help	etemplate	en	Help
 hier kommt text rein	etemplate	en	Hier kommt text rein
 horizontal rule	etemplate	en	Horizontal Rule
+html	etemplate	en	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	en	Image
 import	etemplate	en	Import
@@ -137,6 +141,7 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+link	etemplate	en	Link
 linklist	etemplate	en	LinkList
 linkto	etemplate	en	LinkTo
 load this template into the editor	etemplate	en	load this template into the editor
@@ -147,17 +152,20 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	en	name of the eTemplate, should be in form application.function[.subTemplate]
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	en	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+new search	etemplate	en	New search
 newer version '%s' exists !!!	etemplate	en	newer version '%s' exists !!!
 nextmatch	etemplate	en	Nextmatch
 no	etemplate	en	No
 no filename given or selected via browse...	etemplate	en	no filename given or selected via Browse...
 not started	etemplate	en	Not started
 note	etemplate	en	Note
+nothing found - try again !!!	etemplate	en	Nothing found - try again !!!
 nullable	etemplate	en	Nullable
 number of colums the field/cell should span or 'all' for the remaining columns	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 of	etemplate	en	of
 only an other version found !!!	etemplate	en	only an other Version found !!!
+optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
 options:	etemplate	en	Options:
 overflow	etemplate	en	Overflow
@@ -178,7 +186,9 @@ read	etemplate	en	Read
 read etemplate from database (for the keys above)	etemplate	en	read eTemplate from database (for the keys above)
 read template from database (for the keys above)	etemplate	en	read template from database (for the keys above)
 readonly	etemplate	en	Readonly
+remark	etemplate	en	Remark
 remove row (can not be undone!!!)	etemplate	en	remove Row (can NOT be undone!!!)
+remove this link (not the entry itself)	etemplate	en	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 save	etemplate	en	Save
@@ -193,7 +203,9 @@ select	etemplate	en	Select
 select a category	etemplate	en	select a Category
 select access	etemplate	en	Select Access
 select account	etemplate	en	Select Account
+select an app to search in	etemplate	en	Select an App to search in
 select an application	etemplate	en	Select an application
+select an entry to link with	etemplate	en	Select an entry to link with
 select an table of the application	etemplate	en	Select an table of the application
 select category	etemplate	en	Select Category
 select cathegory	etemplate	en	Select Cathegory
@@ -219,6 +231,7 @@ spacing	etemplate	en	Spacing
 spacing for the table-tag	etemplate	en	Spacing for the table-tag
 span	etemplate	en	Span
 span, class	etemplate	en	Span, Class
+start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
 street	etemplate	en	Street
 submitbutton	etemplate	en	Submitbutton
@@ -244,6 +257,7 @@ type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)
 unique	etemplate	en	Unique
+unlink	etemplate	en	Unlink
 update from version '%s' to	etemplate	en	Update from Version '%s' to
 upload	etemplate	en	Upload
 value	etemplate	en	Value
