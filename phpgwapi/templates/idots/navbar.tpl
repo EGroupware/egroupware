@@ -118,6 +118,6 @@
 
 <!-- BEGIN extra_block_spacer -->
 <tr class="divSideboxEntry"> 
-	<td colspan="2" height="8" class="textSidebox"></td>
+	<td colspan="2" height="8" class="textSidebox">&nbsp;</td>
 </tr>
 <!-- END extra_block_spacer -->
