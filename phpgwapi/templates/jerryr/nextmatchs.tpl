@@ -10,12 +10,10 @@
 
 
 <!-- BEGIN filter -->
-       <td>
 {select}
         <noscript>
          <input type="submit" value="{lang_filter}">
         </noscript>
-       </td>
 <!-- END filter -->
 
 
@@ -52,9 +50,7 @@
 
 
 <!-- BEGIN search -->
-       <td>
         <input type="text" name="query" value="{query_value}">&nbsp;{searchby}<input type="submit" name="Search" value="{lang_search}">
-       </td>
 <!-- END search -->
 
 <!-- BEGIN cats -->
@@ -76,7 +72,10 @@
       <input type="hidden" name="order" value="{order_value}">
       <input type="hidden" name="sort" value="{sort_value}">
       <input type="hidden" name="query" value="{query_value}">
-      <tr>{search}<td>&nbsp;</td>{filter}
+      <tr>
+      		<td>{search}</td>
+      		<td>&nbsp;</td>
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>
@@ -91,7 +90,12 @@
       <input type="hidden" name="order" value="{order_value}">
       <input type="hidden" name="sort" value="{sort_value}">
       <input type="hidden" name="query" value="{query_value}">
-      <tr>{cats}<td>&nbsp;</td>{search}<td>&nbsp;&nbsp;</td>{filter}
+      <tr>
+      		{cats}
+      		<td>&nbsp;</td>
+      		<td>{search}</td>
+      		<td>&nbsp;&nbsp;</td>
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>

@@ -10,12 +10,10 @@
 
 
 <!-- BEGIN filter -->
-       <td>
 {select}
         <noscript>
          <input type="submit" value="{lang_filter}">
         </noscript>
-       </td>
 <!-- END filter -->
 
 
@@ -77,7 +75,7 @@
       <tr>
       		<td>{search}</td>
       		<td>&nbsp;</td>
-      		{filter}
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>
@@ -97,7 +95,7 @@
       		<td>&nbsp;</td>
       		<td>{search}</td>
       		<td>&nbsp;&nbsp;</td>
-      		{filter}
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>
