@@ -427,19 +427,16 @@
 			$setup_tpl->set_var('lang_table_data',$btn_install_lang);
 			break;
 		case 10:
-			$langs_list = '';
-			reset ($GLOBALS['phpgw_info']['setup']['installed_langs']);
-			while (list ($key, $value) = each ($GLOBALS['phpgw_info']['setup']['installed_langs']))
+			$langs_list = array();
+			$languages = get_langs();
+			foreach ($GLOBALS['phpgw_info']['setup']['installed_langs'] as $key => $value)
 			{
-				if($value)
-				{
-					$langs_list .= ($langs_list?', ':'') . $value;
-				}
+				$langs_list[] = isset($languages[$key]) ? $languages[$key]['descr'] : $value;
 			}
 			$setup_tpl->set_var('lang_status_img',$completed);
 			$setup_tpl->set_var('lang_status_alt','completed');
 			$btn_manage_lang = $GLOBALS['phpgw_setup']->html->make_frm_btn_simple(
-				lang('This stage is completed<br>') . lang('Currently installed languages: %1 <br>',$langs_list),
+				lang('This stage is completed<br>') . lang('Currently installed languages: %1 <br>',implode(', ',$langs_list)),
 				'POST','lang.php',
 				'submit',lang('Manage Languages'),
 				'');

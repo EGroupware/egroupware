@@ -61,15 +61,13 @@
 	}
 	$select_box_desc = lang('Select which languages you would like to use');
 	$select_box = '';
-	$GLOBALS['phpgw_setup']->db->query($q="SELECT lang_id,lang_name FROM phpgw_languages WHERE available='Yes' ORDER BY lang_name");
-	while ($GLOBALS['phpgw_setup']->db->next_record())
+	foreach(get_langs() as $id => $data)
 	{
-		$id = $GLOBALS['phpgw_setup']->db->f('lang_id');
 		$select_box_langs =
 			@$select_box_langs
 			.'<option value="' . $id . '"'
-			.(@$GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED':'').'>'
-			. $GLOBALS['phpgw_setup']->db->f('lang_name') . '</option>'
+			.(@$GLOBALS['phpgw_info']['setup']['installed_langs'][$id]?' SELECTED="1"':'').'>'
+			. $data['descr'] . '</option>'
 			."\n";
 	}
 
