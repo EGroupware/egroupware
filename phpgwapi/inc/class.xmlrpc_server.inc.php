@@ -26,18 +26,22 @@
 	{
 		var $dmap = array();
 
-		function xmlrpc_server($dispMap, $serviceNow=1)
+		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
 			global $HTTP_RAW_POST_DATA;
+
 			// dispMap is a despatch array of methods
 			// mapped to function names and signatures
 			// if a method
 			// doesn't appear in the map then an unknown
 			// method error is generated
-			$this->dmap = $dispMap;
-			if ($serviceNow)
+			if($dispMap)
 			{
-				$this->service();
+				$this->dmap = $dispMap;
+				if ($serviceNow)
+				{
+					$this->service();
+				}
 			}
 		}
 
@@ -56,10 +60,24 @@
 
 		function service()
 		{
+			global $HTTP_RAW_POST_DATA;
+
 			$r = $this->parseRequest();
 			$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 			Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
 			print $payload;
+		}
+
+		/*
+		add a method to the dispatch map
+		*/
+		function add_to_map($methodname,$function,$sig,$doc)
+		{
+			$this->dmap[$methodname] = array(
+				'function'  => $function,
+				'signature' => $sig,
+				'docstring' => $doc
+			);
 		}
 
 		function verifySignature($in, $sig)
