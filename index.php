@@ -121,7 +121,7 @@
          }
      }
      if ($line_found[1] > $phpgw_info["server"]["versions"]["phpgwapi"]) {
-        echo "<p>There is a new version of phpGroupWare avaiable. <a href=\""
+        echo "<p>There is a new version of phpGroupWare available. <a href=\""
 	   . "http://www.phpgroupware.org\">http://www.phpgroupware.org</a>";
      }
   }
