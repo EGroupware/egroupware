@@ -1128,22 +1128,23 @@
 			$tpl->set_file('css', 'css.tpl');
 			$tpl->set_var($GLOBALS['phpgw_info']['theme']);
 			$app_css = '';
-    	if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
-    	{
-    		list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
-    		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
-    		{
-    			$app_css .= $GLOBALS[$class]->css();
-    		}
-    		if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
-    		{
-    			$java_script = $GLOBALS[$class]->java_script();
-    		}
-    	}
-    	if (isset($GLOBALS['phpgw_info']['flags']['css']))
-    	{
-    		$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
-    	}
+			
+			if(@isset($GLOBALS['HTTP_GET_VARS']['menuaction']))
+			{
+				list($app,$class,$method) = explode('.',$GLOBALS['HTTP_GET_VARS']['menuaction']);
+				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['css'])
+				{
+					$app_css .= $GLOBALS[$class]->css();
+				}
+				if(is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions['java_script'])
+				{
+					$java_script = $GLOBALS[$class]->java_script();
+				}
+			}
+			if (isset($GLOBALS['phpgw_info']['flags']['css']))
+			{
+				$app_css .= $GLOBALS['phpgw_info']['flags']['css'];
+			}
 			$tpl->set_var('app_css', $app_css);
 			
 			return $tpl->subst('css');			
