@@ -20,7 +20,6 @@
   }else{
     $phpgw_info["server"]["version"] = "Undetected";
   }
-//  $phpgw_info["server"]["current_header_version"] = "1.4";
 
   function show_header($title = "",$nologoutbutton = False) 
   {
