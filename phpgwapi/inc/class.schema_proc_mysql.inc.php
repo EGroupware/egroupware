@@ -417,6 +417,11 @@
 				}
 
 				$query = "CREATE TABLE $sTableName ($sTableSQL)";
+				// override default table type, if a fulltext index is requested, as only MyISAM can do fulltext
+				if (stristr($sTableSQL,'FULLTEXT') !== false)
+				{
+					$query .= 'TYPE=MyISAM';
+				}
 				return !!($oProc->m_odb->query($query));
 			}
 
