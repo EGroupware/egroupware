@@ -122,6 +122,8 @@
   
      $phpgw->db->lock(array('accounts','preferences','sessions'));
      
+     $lid = $account_info["loginid"];
+
      if ($account_info["c_loginid"]) {
         $phpgw->db->query("update accounts set account_lid='" . $account_info["c_loginid"]
                         . "' where account_lid='" . $account_info["loginid"] . "'");
@@ -134,7 +136,7 @@
 		               . "account_lastpwd_change='" . time() . "' where account_lid='"
 		               . $account_info["loginid"] . "'");
         $phpgw->db->query("update sessions set session_pwd='" . addslashes($account_info["passwd"])
-                        . "' where session_lid='" . $account_info["loginid"] . "'");
+                        . "' where session_lid='" . $lid . "'");
       }
 
       while ($permission = each($account_info["permissions"])) {
@@ -154,7 +156,7 @@
          change_owner("","preferences","preference_owner",$account_info["loginid"],$lid);
          change_owner("addressbook","addressbook","ab_owner",$account_info["loginid"],$lid);
          change_owner("todo","todo","todo_owner",$account_info["loginid"],$lid);
-         change_owner("","accounts","account_lid",$account_info["loginid"],$lid);
+//         change_owner("","accounts","account_lid",$account_info["loginid"],$lid);
          change_owner("","sessions","session_lid",$account_info["loginid"],$lid);
          change_owner("calendar","webcal_entry","cal_create_by",$account_info["loginid"],$lid);
          change_owner("calendar","webcal_entry_user","cal_login",$account_info["loginid"],$lid);
