@@ -217,7 +217,7 @@
      $phpgw->preferences->commit();
 
      if ($phpgw_info["server"]["useframes"] != "never") {
-        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/index.php"));
+        Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"] . "/preferences/index.php"));
         $phpgw->common->phpgw_exit();
      }
 
