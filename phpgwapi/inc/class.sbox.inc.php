@@ -625,9 +625,9 @@
 			return($this->country_array[$selected]);
 		}
 
-		function formatted_address($country = '',$id = '',$fields = '',$business = True)
+		function formatted_address($id = '',$fields = '',$business = True)
 		{
-			global $phpgw,$phpgw_info,$d;
+			global $phpgw,$phpgw_info;
 
 			$font = $phpgw_info['theme']['font'];
 
@@ -656,7 +656,7 @@
 				$city = $address[0]['adr_one_locality'];
 				$zip = $address[0]['adr_one_postalcode'];
 				$state = $address[0]['adr_one_region'];
-				$newcountry = $address[0]['address_one_countryname'];
+				$country = $address[0]['adr_one_countryname'];
 			}
 			else
 			{
@@ -664,16 +664,16 @@
 				$city = $address[0]['adr_two_locality'];
 				$zip = $address[0]['adr_two_postalcode'];
 				$state = $address[0]['adr_two_region'];
-				$newcountry = $address[0]['address_two_countryname'];
+				$country = $address[0]['adr_two_countryname'];
 			}
 
 			$a .= '<td><font face="' . $font . '">' . $street . '</font></td>' . "\n";
 			$a .= '</tr>' . "\n";
 			$a .= '<tr>' . "\n";
 
-			if ($newcountry)
+			if (! $country)
 			{
-				$country = $newcountry;
+				$country = $phpgw_info['user']['preferences']['common']['country'];
 			}
 
 			if ($country == 'DE')
@@ -686,7 +686,7 @@
 
 			if ($country == 'US')
 			{
-				$a .= '<td><font face="' . $font . '">' . $city  . ',&nbsp;' . $state . '&bbsp;' . $zip . '</font></td>' . "\n";
+				$a .= '<td><font face="' . $font . '">' . $city  . ',&nbsp;' . $state . '&nbsp;' . $zip . '</font></td>' . "\n";
 			}
 
 			$a .= '</tr>' . "\n";
