@@ -51,7 +51,7 @@
 			$this->account_id = get_account_id($account_id);
 		}
 
-		function list_methods($_type='xmlrpc')
+		function DONTlist_methods($_type='xmlrpc')
 		{
 			/*
 			  This handles introspection or discovery by the logged in client,

@@ -58,7 +58,7 @@
 			$this->kp3       = (isset($GLOBALS['HTTP_GET_VARS']['kp3'])?$GLOBALS['HTTP_GET_VARS']['kp3']:(isset($GLOBALS['HTTP_COOKIE_VARS']['kp3'])?$GLOBALS['HTTP_COOKIE_VARS']['kp3']:''));
 		}
 
-		function list_methods($_type)
+		function DONTlist_methods($_type)
 		{
 			if (is_array($_type))
 			{
