@@ -18,4 +18,5 @@
 	$setup_info['phpgwapi']['tables'][] = 'phpgw_access_log';
 	$setup_info['phpgwapi']['tables'][] = 'lang';
 	$setup_info['phpgwapi']['tables'][] = 'languages';
+	$setup_info['phpgwapi']['tables'][] = 'phpgw_nextid';
 ?>
