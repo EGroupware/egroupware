@@ -187,7 +187,7 @@
 			}
 
 			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid='".$account_lid."'",__LINE__,__FILE__);
-			return $this->db->num_rows() > 0;
+			return $this->db->f(0) > 0;
 		}
 
 		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status)
