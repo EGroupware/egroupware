@@ -195,4 +195,28 @@
 
 			return $data;
 		}
+
+		/*!
+		@function disable_cells($name)
+		@abstract disables all cells with name == $name
+		*/
+		function disable_cells($name)
+		{
+			reset($this->data);
+			$n = 0;
+         while(list($row,$cols) = each($this->data))
+			{
+				while(list($col,$cell) = each($cols))
+				{
+					if ($cell['name'] == $name)
+					{
+						$this->data[$row][$col]['disabled'] = True;
+						++$n;
+					}
+				}
+			}
+			reset($this->data);
+
+			return $n;
+		}
 	};
