@@ -45,9 +45,9 @@
   $p->set_var('bg_color',$phpgw_info['theme']['bg_color']);
   $p->set_var('th_bg',$phpgw_info['theme']['th_bg']);
 
-  $p->set_var('left_next_matchs',$phpgw->nextmatchs->left('admin/accounts.php',$start,$total));
+  $p->set_var('left_next_matchs',$phpgw->nextmatchs->left('/admin/accounts.php',$start,$total));
   $p->set_var('lang_user_accounts',lang('user accounts'));
-  $p->set_var('right_next_matchs',$phpgw->nextmatchs->right('admin/accounts.php',$start,$total));
+  $p->set_var('right_next_matchs',$phpgw->nextmatchs->right('/admin/accounts.php',$start,$total));
 
   $p->set_var('lang_loginid',$phpgw->nextmatchs->show_sort_order($sort,'account_lid',$order,'/admin/accounts.php',lang('LoginID')));
   $p->set_var('lang_lastname',$phpgw->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/admin/accounts.php',lang('last name')));
