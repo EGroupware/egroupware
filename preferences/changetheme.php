@@ -18,7 +18,7 @@
   
   if ($ntheme) {
      $theme = $ntheme;
-     $phpgw->common->preferences_update($phpgw_info["user"]["account_id"],"theme","common");
+     $phpgw->preferences->preferences_update($phpgw_info["user"]["account_id"],"theme","common");
      Header("location: " . $phpgw->link("changetheme.php"));
      exit;
   }
