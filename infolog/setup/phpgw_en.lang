@@ -28,7 +28,7 @@ add sub	infolog	en	add Sub
 add:	infolog	en	Add:
 all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-typ)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	en	allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-type)
 applies the changes	infolog	en	applies the changes
 are you shure you want to delete this entry ?	infolog	en	Are you shure you want to delete this entry ?
 are you sure you want to delete this entry	infolog	en	Are you sure you want to delete this entry
@@ -54,7 +54,7 @@ contact	infolog	en	Contact
 create new links	infolog	en	Create new links
 creates a new field	infolog	en	creates a new field
 creates a new status with the given values	infolog	en	creates a new status with the given values
-creates a new typ with the given name	infolog	en	creates a new typ with the given name
+creates a new typ with the given name	infolog	en	creates a new type with the given name
 csv-fieldname	infolog	en	CSV-Fieldname
 csv-filename	infolog	en	CSV-Filename
 csv-import	common	en	CSV-Import
@@ -62,9 +62,9 @@ custom	infolog	en	Custom
 custom contact-address, leave empty to use information from most recent link	infolog	en	Custom contact-address, leave empty to use information from most recent link
 custom contact-information, leave emtpy to use information from most recent link	infolog	en	Custom contact-information, leave emtpy to use information from most recent link
 custom fields	infolog	en	Custom Fields
-custom fields, typ and status	common	en	Custom fields, typ and status
+custom fields, typ and status	common	en	Custom fields, type and status
 custom regarding	infolog	en	Custom regarding
-custom status for typ	infolog	en	Custom status for typ
+custom status for typ	infolog	en	Custom status for type
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
@@ -74,7 +74,7 @@ delegation	infolog	en	Delegation
 delete	infolog	en	Delete
 delete the entry	infolog	en	Delete the entry
 delete this entry	infolog	en	delete this entry
-deletes the selected typ	infolog	en	deletes the selected typ
+deletes the selected typ	infolog	en	deletes the selected type
 deletes this field	infolog	en	deletes this field
 deletes this status	infolog	en	deletes this status
 description	infolog	en	Description
@@ -186,7 +186,7 @@ select	infolog	en	Select
 select a category for this entry	infolog	en	select a category for this entry
 select a priority for this task	infolog	en	select a priority for this task
 select a responsible user: a person you want to delegate this task	infolog	en	select a responsible user: a person you want to delegate this task
-select a typ to edit it's status-values or delete it	infolog	en	select a typ to edit it's status-values or delete it
+select a typ to edit it's status-values or delete it	infolog	en	select a type to edit it's status-values or delete it
 select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
@@ -214,8 +214,8 @@ to many might exceed your execution-time-limit	infolog	en	to many might exceed y
 today	infolog	en	Today
 todo	infolog	en	ToDo
 translation	infolog	en	Translation
-typ	infolog	en	Typ
-typ '%1' already exists !!!	infolog	en	Typ '%1' already exists !!!
+typ	infolog	en	Type
+typ '%1' already exists !!!	infolog	en	Type '%1' already exists !!!
 type	infolog	en	Type
 type of the log-entry: note, phonecall or todo	infolog	en	Type of the log-entry: Note, Phonecall or ToDo
 unlink	infolog	en	Unlink
@@ -238,5 +238,5 @@ yes - delete	infolog	en	Yes - Delete
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid ending date
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date
-you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new typ!!!
+you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new type!!!
 you must enter a subject or a description	infolog	en	You must enter a subject or a description
