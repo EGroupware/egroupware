@@ -1,7 +1,9 @@
 %1 records imported	addressbook	zt	共有%1  筆紀錄被匯入
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zt	共有%1 筆記錄被讀取（還未被匯入，您應該前往 %2back%3 並取消「匯入測試」）
+(e.g. 1969)	addressbook	zt	(例如 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zt	<b>沒有轉換格式 &lt;沒有&gt; 可以被指定。</b>  請從選單選取一種轉換格式
 @-eval() is only availible to admins!!!	addressbook	zt	@-eval() 只提供給管理者使用！！
+actions	addressbook	zt	動作
 add a single entry by passing the fields.	addressbook	zt	從欄位中新增一筆資料。
 add custom field	addressbook	zt	新增自訂欄位
 address book	common	zt	通訊錄
@@ -37,6 +39,7 @@ charset of file	addressbook	zt	檔案字元設定
 city	common	zt	縣市
 company	common	zt	公司
 company name	common	zt	公司名稱
+configuration	common	zt	設定
 contact	common	zt	聯絡人
 contact application	admin	zt	聯絡人申請
 contact settings	admin	zt	聯絡人設定
@@ -52,9 +55,11 @@ delete a single entry by passing the id.	addressbook	zt	從id刪除一筆資料。
 department	common	zt	部門
 domestic	addressbook	zt	國內
 download	addressbook	zt	下載
+download export file (uncheck to debug output in browser)	addressbook	zt	下載匯出的檔案(取消選取可以先在瀏覽器檢視輸出的資料)
 edit custom field	addressbook	zt	編輯自訂欄位
 edit custom fields	admin	zt	編輯自訂欄位
 empty for all	addressbook	zt	全部清除
+enter the path to the exported file here	addressbook	zt	輸入匯出檔案的路徑
 export contacts	addressbook	zt	匯出聯絡人
 export file name	addressbook	zt	匯出檔名
 export from addressbook	addressbook	zt	從通訊錄匯出
@@ -68,6 +73,7 @@ fields to show in address list	addressbook	zt	在住址清單中顯示欄位
 fieldseparator	addressbook	zt	欄位分隔
 full name	addressbook	zt	全名
 geo	addressbook	zt	GEO
+global categories	addressbook	zt	全域類別
 grant addressbook access	common	zt	允許存取通訊錄
 home address type	addressbook	zt	住家住址資料
 home city	addressbook	zt	住家所在縣/市
@@ -85,6 +91,8 @@ import file	addressbook	zt	匯入檔案
 import from ldif, csv, or vcard	addressbook	zt	從LDIF, CSV, 或 VCard匯入
 import from outlook	addressbook	zt	從Outlook匯入
 import next set	addressbook	zt	匯入下一個
+import_instructions	addressbook	zt	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
+<p>Palm Desktop 4.0 或是更新的版本，在瀏覽通訊錄資料時在<b>檔案</b>功能選擇 <b>匯出</b>，匯出的資料是 VCard 格式。
 international	addressbook	zt	國際
 isdn phone	addressbook	zt	ISDN電話
 label	addressbook	zt	概述
@@ -94,6 +102,7 @@ ldap root dn for contacts	admin	zt	聯絡人之LDAP root dn
 ldap root pw for contacts	admin	zt	聯絡人之LDAP root 密碼
 ldif	addressbook	zt	LDIF
 line 2	addressbook	zt	第2行
+mark records as private	addressbook	zt	標示為私人記錄
 message phone	addressbook	zt	留言電話
 middle name	addressbook	zt	中間欄位
 mobile	addressbook	zt	行動電話
@@ -118,11 +127,15 @@ read a single entry by passing the id and fieldlist.	addressbook	zt	從id及欄位清
 record access	addressbook	zt	記錄存取
 record owner	addressbook	zt	記錄擁有者
 retrieve contacts	admin	zt	讀取聯絡人
+select all	addressbook	zt	選擇全部
+select the type of conversion	addressbook	zt	選擇轉換的格式
+select the type of conversion:	addressbook	zt	選擇轉換的格式：
 select where you want to store	admin	zt	選擇您想存放的位置
 show birthday reminders on main screen	addressbook	zt	在主畫面顯示生日提示
 startrecord	addressbook	zt	開始記錄
 state	common	zt	省/市
 street	common	zt	街道
+successfully imported %1 records into your addressbook.	addressbook	zt	成功匯入 %1 筆通訊錄資料
 suffix	addressbook	zt	暱稱
 test import (show importable records <u>only</u> in browser)	addressbook	zt	測試匯入？（在瀏覽器中<u>只顯示</u>可匯入的紀錄）
 that field name has been used already !	addressbook	zt	這個欄位名稱已經被使用！
@@ -144,3 +157,4 @@ work phone	addressbook	zt	工作電話
 you must select a vcard. (*.vcf)	addressbook	zt	您必須選取一個vcard (*.vcf)
 you must select at least 1 column to display	addressbook	zt	您必須至少選取一個欄位才能顯示
 zip code	common	zt	郵遞區號
+zip_note	addressbook	zt	<p><b>注意：</b> 壓縮檔案可能包含 .csv, .vcf, 或 .ldif 格式，請不要在同一次的匯入工作中混用不同的檔案格式！

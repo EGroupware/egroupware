@@ -124,6 +124,7 @@ edit application	admin	zt	編輯應用程式
 edit global category	admin	zt	編輯全區分類
 edit global category for %1	admin	zt	編輯全域分類 %1
 edit group	admin	zt	編輯群組
+edit group acl's	admin	zt	編輯群組的ACL's
 edit login screen message	admin	zt	編輯登入畫面訊息
 edit main screen message	admin	zt	編輯主要畫面訊息
 edit peer server	admin	zt	編輯點伺服器
@@ -135,13 +136,16 @@ edit user	admin	zt	編輯使用者
 edit user account	admin	zt	編輯使用者帳號
 enable debug-messages	admin	zt	顯示偵錯訊息
 enabled - hidden from navbar	admin	zt	啟用，但不顯示在功能列中
+enabled - popup window	admin	zt	啟用，顯示在跳出視窗中
 enter a description for the category	admin	zt	輸入這個類別的描述
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	zt	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br>
 enter the background color for the login page	admin	zt	請輸入登入頁面的背景顏色
 enter the background color for the site title	admin	zt	輸入網站標題的背景顏色
 enter the file name of your logo	admin	zt	請輸入商標的檔案名稱
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zt	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zt	
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zt	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
+enter the full path for users and group files.<br>examples: /files, e:files	admin	zt	
 enter the hostname of the machine on which this server is running	admin	zt	輸入這個伺服器主機的主機名稱
 enter the location of phpgroupware's url.<br>example: http://www.domain.com/phpgroupware &nbsp; or &nbsp; /phpgroupware<br><b>no trailing slash</b>	admin	zt	輸入 phpGroupWare 的網頁位址 URL：<br>如：http://www.domain.com/phpgroupware &nbsp;或&nbsp; /phpgroupware<br><b>結尾無斜線</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zt	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
@@ -149,6 +153,7 @@ enter the site password for peer servers	admin	zt	輸入對接伺服器的主機密碼
 enter the site username for peer servers	admin	zt	輸入對接伺服器的主機名稱
 enter the title for your site	admin	zt	輸入此網站的標題
 enter the title of your logo	admin	zt	輸入您的首頁圖示說明文字
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	zt	輸入圖示的網址或檔案名稱(在phpgwapi/templates/default/images)
 enter the url where your logo should link to	admin	zt	輸入您的首頁圖示連結
 enter your default ftp server	admin	zt	輸入預設的檔案傳輸伺服器主機名稱
 enter your http proxy server	admin	zt	輸入網頁代理伺服器主機名稱
@@ -164,7 +169,7 @@ find and register all application hooks	admin	zt	尋找並註冊所有應用程式Hooks
 for the times above	admin	zt	次數上限
 for the times below (empty values count as '*', all empty = every minute)	admin	zt	下面的次數(空白視為"*"，全部空白等於每一分鐘)
 force selectbox	admin	zt	固定勾選方塊
-global categories	admin	zt	全區分類
+global categories	common	zt	全區分類
 group ?	admin	zt	群組？
 group has been added	common	zt	成功新增群組
 group has been deleted	common	zt	成功移除群組
@@ -282,6 +287,7 @@ server type(mode)	admin	zt	伺服器種類(模式)
 server url	admin	zt	伺服器網址
 server username	admin	zt	伺服器使用者帳號
 set preference values.	admin	zt	設定偏好值
+should the login page include a language selectbox (useful for demo-sites) ?	admin	zt	登入畫面要不要包含語言選單(利於展示)？
 show 'powered by' logo on	admin	zt	顯示「powered by」圖示位置
 show access log	admin	zt	顯示存取紀錄
 show current action	admin	zt	顯示現在動作
@@ -289,7 +295,7 @@ show error log	admin	zt	顯示錯誤紀錄
 show phpinfo()	admin	zt	顯示PHP資訊
 show session ip address	admin	zt	顯示處理?></td>  </tr>  <tr bgcolor=
 site	admin	zt	網站
-site configuration	admin	zt	網站設定
+site configuration	common	zt	網站設定
 soap	admin	zt	SOAP
 sorry, that group name has already been taken.	admin	zt	抱歉，群組名稱已經存在
 sorry, that group name has already been taking.	admin	zt	很抱歉，該群組名稱已被使用了
@@ -310,6 +316,7 @@ that name has been used already	admin	zt	這個名稱已經被使用了
 that server name has been used already !	admin	zt	這個伺服器名稱已經被使用了
 the api is current	admin	zt	API不需要升級
 the api requires an upgrade	admin	zt	API需要升級
+the groups must include the primary group	admin	zt	這個群組必須包含主要群組
 the login and password can not be the same	admin	zt	使用者密碼不可和使用者代碼相同
 the loginid can not be more then 8 characters	admin	zt	登入帳號不能超過8個字元
 the testjob sends you a mail everytime it is called.	admin	zt	測試工作每次執行都會傳送一個電子郵件訊息給您。
@@ -343,6 +350,8 @@ view sessions	admin	zt	列出連線
 view this user	admin	zt	查看該使用者
 view user account	admin	zt	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zt	您希望將被移除使用者的資料轉移給誰？
+would you like egroupware to check for a new version<br>when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查系統最新版本嗎？
+would you like egroupware to check for new application versions when admins login ?	admin	zt	您希望eGroupWare在管理員登入時檢查應用程式最新版本嗎？
 would you like phpgroupware to cache the phpgw info array ?	admin	zt	您希望 phpGroupWare 將系統資訊存到存取緩衝區內嗎？
 would you like phpgroupware to check for a new version<br>when admins login ?	admin	zt	您希望 phpGroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like phpgroupware to check for new application versions when admins login ?	admin	zt	您希望phpGroupWare在每次管理者登入時檢查新版的應用程式嗎？

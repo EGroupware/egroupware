@@ -3,7 +3,7 @@ application	filemanager	zt	應用程式
 back to file manager	filemanager	zt	回到檔案管理員
 cannot create directory because it begins or ends in a space	filemanager	zt	資料夾名稱包含空白字元，無法建立資料夾
 cannot replace %1 because it is a directory	filemanager	zt	無法置換%1，因為它是一個資料夾
-command sucessfully run	filemanager	zt	指令執行成功
+command sucessfully run	filemanager	zt	指令執行完成
 comment	filemanager	zt	備註
 comments cannot contain "%1"	filemanager	zt	備註不能包含 "%1"
 copied %1 to %2	filemanager	zt	複製 %1 到 %2
@@ -46,11 +46,13 @@ file names cannot contain \ or /	filemanager	zt	檔案名不能包含 \ 或 /
 filemanager	common	zt	檔案管理員
 filemanager preferences	filemanager	zt	檔案管理員設定
 files	filemanager	zt	檔案
+files in this directory	filemanager	zt	資料夾中的檔案
 folder	filemanager	zt	資料夾
 go to	filemanager	zt	前往
 go to %1	filemanager	zt	到 %1
 go to your home directory	filemanager	zt	到主要目錄
 go to:	filemanager	zt	到：
+go up	filemanager	zt	上一層
 home	filemanager	zt	首頁
 locked	filemanager	zt	被鎖定
 mime type	filemanager	zt	MIME 類型
@@ -59,17 +61,21 @@ modified by	filemanager	zt	修改者
 move to	filemanager	zt	搬到
 move to:	filemanager	zt	搬到：
 moved %1 to %2	filemanager	zt	把 %1搬到%2
+no files in this directory.	filemanager	zt	資料夾中沒有任何檔案
 no version history for this file/directory	filemanager	zt	這個檔案/資料夾沒有版本歷史
 operation	filemanager	zt	操作
+other settings	filemanager	zt	其他設定
 owner	filemanager	zt	擁有者
 preview %1	filemanager	zt	預覽 %1
 preview of %1	filemanager	zt	%1 的預覽
+quick jump to	filemanager	zt	快速切換
+reload	filemanager	zt	重新讀取
 rename	filemanager	zt	改名
 renamed %1 to %2	filemanager	zt	把%1 檔名改成 %2
 replaced %1	filemanager	zt	%1 完成修改
 save %1	filemanager	zt	儲存 %1
 save all	filemanager	zt	儲存全部
-saved %1	filemanager	zt	%1 儲存成功
+saved %1	filemanager	zt	%1 儲存完成
 show	filemanager	zt	顯示
 show ..	filemanager	zt	顯示 ..
 show .files	filemanager	zt	顯示 .檔案
@@ -83,6 +89,7 @@ unused space	filemanager	zt	剩餘空間
 up	filemanager	zt	上一層
 update	filemanager	zt	更新
 updated comment for %1	filemanager	zt	更新%1的備註
+upload	filemanager	zt	上傳
 upload fields	filemanager	zt	上傳區域
 upload files	filemanager	zt	上傳檔案
 used space	filemanager	zt	使用空間
