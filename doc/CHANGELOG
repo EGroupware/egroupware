@@ -14,6 +14,7 @@
 	      - Fixed editing of calendar entry with regards to start time
 	      - Fixed sorting order in navbar when apps where assigned to a group.
 	      - Fixed groups not being assinged an app properly.
+	      - Fixed timeout for email receiving/sending.
 
 [09072000] - Added print icon that allows you to print out a page without having
 	        the navbar. Thanks Sam Wynn Jr <sam.wynn@lmco.com>
