@@ -13,7 +13,7 @@
 
    <?php $selected[$current_config["showpoweredbyon"]] = " selected"; ?>
    <tr bgcolor="e6e6e6">
-    <td>Showed powered by logo on:</td>
+    <td>Showed 'powered by' logo on:</td>
     <td>
      <select name="newsettings[showpoweredbyon]">
       <option value="bottom"<?php echo $selected["bottom"]; ?>>bottom</option>
