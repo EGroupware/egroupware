@@ -422,6 +422,45 @@
 			return($julian);
 		}
 
+		/*!
+		@function days_between
+		@abstract Get the number of days between two dates
+		@author Steven Cramer
+		@param $m1 - Month_1, $d1 - Day_1, $y1 - Year_1, $m2 - Month_2, $d2 - Day_2, $y2 - Year_2
+		*/
+		function days_between($m1,$d1,$y1,$m2,$d2,$y2)
+		{
+//			$start = "$d1.$m1.$y1";
+
+			if ($y1 == $y2 && $m1 == $m2)
+			{
+				$days = $d2 - $d1;
+			}
+			else
+ 			{
+				$days = $this->days_in_month($m1,$y1) - $d1;
+				while ($m1 != $m2 || $y1 != $y2)
+				{
+					if ($m1+1 == 13)
+					{
+						$m1 = 1;
+						$y1++;
+					}
+					else 
+					{
+						$m1++;
+					}
+
+					if ($m1 != $m2 || $y1 != $y2)
+					{
+						$days += $this->days_in_month($m1,$y1);
+					}
+				}
+				$days += $d2;
+			}
+			return $days;
+		}
+
 		function date_compare($a_year,$a_month,$a_day,$b_year,$b_month,$b_day)
 		{
 			$a_date = mktime(0,0,0,intval($a_month),intval($a_day),intval($a_year));
