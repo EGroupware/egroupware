@@ -24,7 +24,7 @@
 
 		var $auto_stripslashes = False;
 
-		/* "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning) */
+		/* 'yes' (halt with message), 'no' (ignore errors quietly), 'report' (ignore errror, but spit a warning) */
 		var $Halt_On_Error = 'yes';
 
 		var $Link_ID  = 0;
@@ -40,10 +40,10 @@
 		/* Set this to 1 for automatic pg_freeresult on last record. */
 		var $Auto_Free = 0;
 
-		// PostgreSQL changed somethings from 6.x -> 7.x
+		/* PostgreSQL changed some things from 6.x -> 7.x */
 		var $db_version;
 
-		// For our error handling
+		/* For our error handling */
 		var $xmlrpc = False;
 		var $soap   = False;
 
@@ -60,12 +60,12 @@
 		{
 			$this->query($query);
 
-			if (ereg('xmlrpc.php',$GLOBALS['PHP_SELF']))
+			if(ereg('xmlrpc.php',$GLOBALS['PHP_SELF']))
 			{
 				$this->xmlrpc = True;
 			}
 
-			if (ereg('soap.php',$GLOBALS['PHP_SELF']))
+			if(ereg('soap.php',$GLOBALS['PHP_SELF']))
 			{
 				$this->soap = True;
 			}
@@ -73,14 +73,14 @@
 
 		function connect()
 		{
-			if (0 == $this->Link_ID)
+			if(0 == $this->Link_ID)
 			{
 				$cstr = 'dbname=' . $this->Database
 					. $this->ifadd($this->Host, 'host=')
 					. $this->ifadd($this->Port, 'port=')
 					. $this->ifadd($this->User, 'user=')
 					. $this->ifadd("'".$this->Password."'", 'password=');
-				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
+				if($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
 					$this->Link_ID=pg_pconnect($cstr);
 				}
@@ -89,13 +89,13 @@
 					$this->Link_ID=pg_connect($cstr);
 				}
 
-				if (! $this->Link_ID)
+				if(!$this->Link_ID)
 				{
 					$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'').'connect failed');
 				}
 				else
 				{
-					$this->query("select version()",__LINE__,__FILE__);
+					$this->query('SELECT version()',__LINE__,__FILE__);
 					$this->next_record();
 
 					$version          = $this->f('version');
@@ -108,7 +108,7 @@
 		function to_timestamp($epoch)
 		{
 			$db_version = $this->db_version;
-			if (floor($db_version) == 6)
+			if(floor($db_version) == 6)
 			{
 				return $this->to_timestamp_6($epoch);
 			}
@@ -120,7 +120,7 @@
 
 		function from_timestamp($timestamp)
 		{
-			if (floor($this->db_version) == 6)
+			if(floor($this->db_version) == 6)
 			{
 				return $this->from_timestamp_6($timestamp);
 			}
@@ -130,34 +130,32 @@
 			}
 		}
 
-		// For PostgreSQL 6.x
+		/* For PostgreSQL 6.x */
 		function to_timestamp_6($epoch)
 		{
 
 		}
 
-		// For PostgreSQL 6.x
+		/* For PostgreSQL 6.x */
 		function from_timestamp_6($timestamp)
 		{
 
 		}
 
-		// For PostgreSQL 7.x
+		/* For PostgreSQL 7.x */
 		function to_timestamp_7($epoch)
 		{
-			// This needs the GMT offset!
+			/* This needs the GMT offset! */
 			return date('Y-m-d H:i:s-00',$epoch);
 		}
 
-		// For PostgreSQL 7.x
+		/* For PostgreSQL 7.x */
 		function from_timestamp_7($timestamp)
 		{
 			ereg('([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})',$timestamp,$parts);
-	
+
 			return mktime($parts[4],$parts[5],$parts[6],$parts[2],$parts[3],$parts[1]);
 		}
-
-
 
 		function limit($start)
 		{
@@ -165,11 +163,11 @@
 
 			if ($start == 0)
 			{
-				$s = 'limit ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+				$s = 'LIMIT ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 			else
 			{
-				$s = 'limit ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] . ',' . $start;
+				$s = 'LIMIT ' . $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'] . ',' . $start;
 			}
 			return $s;
 		}
@@ -182,7 +180,7 @@
 
 		function db_addslashes($str)
 		{
-			if (!IsSet($str) || $str == '')
+			if(!isset($str) || $str == '')
 			{
 				return '';
 			}
@@ -198,7 +196,7 @@
 			* when calling the class without a query, e.g. in situations
 			* like these: '$db = new db_Subclass;'
 			*/
-			if ($Query_String == '')
+			if($Query_String == '')
 			{
 				return 0;
 			}
@@ -212,7 +210,7 @@
 
 			$this->Error = pg_ErrorMessage($this->Link_ID);
 			$this->Errno = ($this->Error == '') ? 0 : 1;
-			if (! $this->Query_ID)
+			if(!$this->Query_ID)
 			{
 				$this->halt('Invalid SQL: ' . $Query_String, $line, $file);
 			}
@@ -223,12 +221,12 @@
 		/* public: perform a query with limited result set */
 		function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '')
 		{
-			if (! $num_rows)
+			if(!$num_rows)
 			{
 				$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
 			}
 
-			if ($offset == 0)
+			if($offset == 0)
 			{
 				$Query_String .= ' LIMIT ' . $num_rows;
 			}
@@ -237,7 +235,7 @@
 				$Query_String .= ' LIMIT ' . $num_rows . ',' . $offset;
 			}
 
-			if ($this->Debug)
+			if($this->Debug)
 			{
 				printf("Debug: limit_query = %s<br>offset=%d, num_rows=%d<br>\n", $Query_String, $offset, $num_rows);
 			}
@@ -245,7 +243,7 @@
 			return $this->query($Query_String, $line, $file);
 		}
 
-		// public: discard the query result
+		/* public: discard the query result */
 		function free()
 		{
 			@pg_freeresult($this->Query_ID);
@@ -260,7 +258,7 @@
 			$this->Errno = ($this->Error == '') ? 0 : 1;
 
 			$stat = is_array($this->Record);
-			if (!$stat && $this->Auto_Free)
+			if(!$stat && $this->Auto_Free)
 			{
 				pg_freeresult($this->Query_ID);
 				$this->Query_ID = 0;
@@ -280,7 +278,7 @@
 
 		function transaction_commit()
 		{
-			if (! $this->Errno)
+			if(!$this->Errno)
 			{
 				return pg_Exec($this->Link_ID,'commit');
 			}
@@ -303,26 +301,26 @@
 			 * an entire installation.  These params allow us to retrieve the sequenced field without adding
 			 * conditional code to the apps.
 			 */
-			if (!isset($table) || $table == '' || !isset($field) || $field == '')
+			if(!isset($table) || $table == '' || !isset($field) || $field == '')
 			{
 				return -1;
 			}
 
 			$oid = pg_getlastoid($this->Query_ID);
-			if ($oid == -1)
+			if($oid == -1)
 			{
 				return -1;
 			}
 
-			$result = @pg_Exec($this->Link_ID, "select $field from $table where oid=$oid");
-			if (!$result)
+			$result = @pg_Exec($this->Link_ID, "SELECT $field FROM $table WHERE oid=$oid");
+			if(!$result)
 			{
 				return -1;
 			}
 
 			$Record = @pg_fetch_array($result, 0);
 			@pg_freeresult($result);
-			if (!is_array($Record)) /* OID not found? */
+			if(!is_array($Record)) /* OID not found? */
 			{
 				return -1;
 			}
@@ -330,15 +328,15 @@
 			return $Record[0];
 		}
 
-		function lock($table, $mode = 'write')
+		function lock($table, $mode='write')
 		{
 			$result = $this->transaction_begin();
 
-			if ($mode == 'write')
+			if($mode == 'write')
 			{
-				if (is_array($table))
+				if(is_array($table))
 				{
-					while ($t = each($table))
+					while($t = each($table))
 					{
 						$result = pg_Exec($this->Link_ID,'lock table ' . $t[1] . ' in share mode');
 					}
@@ -367,20 +365,20 @@
 		{
 			$this->connect();
 
-			if ($this->lock($this->Seq_Table))
+			if($this->lock($this->Seq_Table))
 			{
 				/* get sequence number (locked) and increment */
-				$q  = sprintf("select nextid from %s where seq_name = '%s'",
+				$q  = sprintf("SELECT nextid FROM %s WHERE seq_name = '%s'",
 					$this->Seq_Table,
 					$seq_name);
 				$id  = @pg_Exec($this->Link_ID, $q);
 				$res = @pg_Fetch_Array($id, 0);
 
 				/* No current value, make one */
-				if (!is_array($res))
+				if(!is_array($res))
 				{
 					$currentid = 0;
-					$q = sprintf("insert into %s values('%s', %s)",
+					$q = sprintf("INSERT INTO %s VALUES('%s', %s)",
 						$this->Seq_Table,
 						$seq_name,
 						$currentid);
@@ -391,7 +389,7 @@
 					$currentid = $res['nextid'];
 				}
 				$nextid = $currentid + 1;
-				$q = sprintf("update %s set nextid = '%s' where seq_name = '%s'",
+				$q = sprintf("UPDATE %s SET nextid = '%s' WHERE seq_name = '%s'",
 					$this->Seq_Table,
 					$nextid,
 					$seq_name);
@@ -413,8 +411,8 @@
 			$res   = array();
 
 			$this->connect();
-			$id = pg_exec($this->Link_ID, "select * from $table");
-			if ($id < 0)
+			$id = pg_exec($this->Link_ID, "SELECT * FROM $table");
+			if($id < 0)
 			{
 				$this->Error = pg_ErrorMessage($id);
 				$this->Errno = 1;
@@ -422,12 +420,12 @@
 			}
 			$count = pg_NumFields($id);
 
-			for ($i=0; $i<$count; $i++)
+			for($i=0; $i<$count; $i++)
 			{
 				$res[$i]['table'] = $table;
-				$res[$i]['name']  = pg_FieldName  ($id, $i); 
-				$res[$i]['type']  = pg_FieldType  ($id, $i);
-				$res[$i]['len']   = pg_FieldSize  ($id, $i);
+				$res[$i]['name']  = pg_FieldName($id, $i); 
+				$res[$i]['type']  = pg_FieldType($id, $i);
+				$res[$i]['len']   = pg_FieldSize($id, $i);
 				$res[$i]['flags'] = '';
 			}
 
@@ -462,7 +460,7 @@
 
 		function f($Name,$strip_slashes = '')
 		{
-			if ($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes))
+			if($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes))
 			{
 				return stripslashes($this->Record[$Name]);
 			}
@@ -479,7 +477,7 @@
 
 		function halt($msg, $line = '', $file = '')
 		{
-			if ($this->Halt_On_Error == 'no')
+			if($this->Halt_On_Error == 'no')
 			{
 				return;
 			}
@@ -488,7 +486,7 @@
 			$this->transaction_abort();
 
 
-			if ($this->xmlrpc || $this->soap)
+			if($this->xmlrpc || $this->soap)
 			{
 				$s = sprintf("Database error: %s\n", $msg);
 				$s .= sprintf("PostgreSQL Error: %s\n\n (%s)\n\n",$this->Errno,$this->Error);
@@ -499,43 +497,43 @@
 				$s .= sprintf("<b>PostgreSQL Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
 			}
 
-			if ($file)
+			if($file)
 			{
-				if ($this->xmlrpc || $this->soap)
+				if($this->xmlrpc || $this->soap)
 				{
-					$s .=	sprintf("File: %s\n",$file);
+					$s .= sprintf("File: %s\n",$file);
 				}
 				else
 				{
-					$s .=	sprintf("<br><b>File:</b> %s",$file);
+					$s .= sprintf('<br><b>File:</b> %s',$file);
 				}
 			}
 
-			if ($line)
+			if($line)
 			{
-				if ($this->xmlrpc || $this->soap)
+				if($this->xmlrpc || $this->soap)
 				{
-					$s .=	sprintf("Line: %s\n",$line);
+					$s .= sprintf("Line: %s\n",$line);
 				}
 				else
 				{
-					$s .=	sprintf("<br><b>Line:</b> %s",$line);
+					$s .= sprintf("<br><b>Line:</b> %s",$line);
 				}
 			}
 
-			if ($this->Halt_On_Error == 'yes')
+			if($this->Halt_On_Error == 'yes')
 			{
-				if (! $this->xmlrpc && ! $this->soap)
+				if(!$this->xmlrpc && !$this->soap)
 				{
 					$s .= '<p><b>Session halted.</b>';
 				}
 			}
 
-			if ($this->xmlrpc)
+			if($this->xmlrpc)
 			{
 				xmlrpcfault($s);
 			}
-			elseif ($this->soap)
+			elseif($this->soap)
 			{
 
 			}
@@ -548,9 +546,9 @@
 
 		function table_names()
 		{
-			$this->query("select relname from pg_class where relkind = 'r' and not relname like 'pg_%'");
+			$this->query("SELECT relname FROM pg_class WHERE relkind = 'r' AND NOT relname LIKE 'pg_%'");
 			$i=0;
-			while ($this->next_record())
+			while($this->next_record())
 			{
 				$return[$i]['table_name']= $this->f(0);
 				$return[$i]['tablespace_name']=$this->Database;
@@ -564,7 +562,7 @@
 		{
 			$this->query("SELECT relname FROM pg_class WHERE NOT relname ~ 'pg_.*' AND relkind ='i' ORDER BY relname");
 			$i=0;
-			while ($this->next_record())
+			while($this->next_record())
 			{
 				$return[$i]['index_name']= $this->f(0);
 				$return[$i]['tablespace_name']=$this->Database;
@@ -580,13 +578,13 @@
 			$currentPassword = $this->Password;
 			$currentDatabase = $this->Database;
 
-			if ($adminname != "")
+			if($adminname != '')
 			{
 				$this->User = $adminname;
 				$this->Password = $adminpasswd;
 			}
 
-			if (! $this->Host)
+			if(!$this->Host)
 			{
 				system('createdb ' . $currentDatabase, $outval);
 			}
@@ -598,8 +596,8 @@
 			if($outval != 0) 
 			{
 				/* either the rights r not available or the postmaster is not running .... */
-				echo 'database creation failure <BR>';
-				echo 'please setup the postreSQL database manually<BR>';
+				echo 'Database creation failure <BR>';
+				echo 'Please setup the postreSQL database manually<BR>';
 			}
 
 			$this->User = $currentUser;

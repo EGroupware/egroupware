@@ -27,11 +27,11 @@
 
 		var $Error    = '';
 
-		var $Auto_Free = 0;     ## Set this to 1 for automatic msql_free_result()
+		var $Auto_Free = 0;     /* Set this to 1 for automatic msql_free_result() */
 
 		function connect()
 		{
-			// Not connected? Then connect?
+			/* Not connected? Then connect? */
 			if ( 0 == $this->Link_ID )
 			{
 				// Check for local connect
@@ -40,14 +40,14 @@
 				$this->Link_ID=msql_pconnect($this->Host);
 			}
 
-			// Still not connected? Raise error.
-			if ( 0 == $this->Link_ID )
+			/* Still not connected? Raise error. */
+			if(0 == $this->Link_ID)
 			{
 				$this->halt('Link-ID == false, pconnect failed');
 			}
 
 			// Select current database
-			if (!msql_select_db($this->Database, $this->Link_ID))
+			if(!msql_select_db($this->Database, $this->Link_ID))
 			{
 				$this->halt('cannot use database '.$this->Database);
 			}
@@ -57,12 +57,12 @@
 		{
 			$this->connect();
 
-			#   printf("Debug: query = %s<br>\n", $Query_String);
+			/* printf("Debug: query = %s<br>\n", $Query_String); */
 
 			$this->Query_ID = msql_query($Query_String,$this->Link_ID);
 			$this->Row   = 0;
 			$this->Error = msql_error();
-			if (!$this->Query_ID)
+			if(!$this->Query_ID)
 			{
 				$this->halt('Invalid SQL: '.$Query_String);
 			}
@@ -76,7 +76,7 @@
 			$this->Error = msql_error();
 
 			$stat = is_array($this->Record);
-			if (!$stat && $this->Auto_Free)
+			if(!$stat && $this->Auto_Free)
 			{
 				msql_free_result($this->Query_ID);
 				$this->Query_ID = 0;
@@ -87,7 +87,7 @@
 		function seek($pos)
 		{
 			$status = msql_data_seek($this->Query_ID, $pos);
-			if ($status)
+			if($status)
 			{
 				$this->Row = $pos;
 			}
@@ -102,14 +102,14 @@
 
 			$this->connect();
 			$id = @msql_list_fields($this->Database, $table);
-			if ($id < 0)
+			if($id < 0)
 			{
 				$this->Error = msql_error();
 				$this->halt('Metadata query failed.');
 			}
 			$count = msql_num_fields($id);
 
-			for ($i=0; $i<$count; $i++)
+			for($i=0; $i<$count; $i++)
 			{
 				$res[$i]['table'] = msql_fieldtable ($id, $i);
 				$res[$i]['name']  = msql_fieldname  ($id, $i);

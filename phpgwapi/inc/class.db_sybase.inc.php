@@ -29,22 +29,22 @@
 		var $Record   = array();
 		var $Row;
 
-		var $Auto_Free = 0;     ## Set this to 1 for automatic sybase_free_result()
+		var $Auto_Free = 0;     /* Set this to 1 for automatic sybase_free_result() */
 
 		function connect()
 		{
-			if ( 0 == $this->Link_ID )
+			if(0 == $this->Link_ID)
 			{
-				if ($GLOBALS['phpgw_info']['server']['db_persistent'])
+				if($GLOBALS['phpgw_info']['server']['db_persistent'])
 				{
-					$this->Link_ID=sybase_pconnect($this->Host,$this->User,$this->Password);
+					$this->Link_ID = sybase_pconnect($this->Host,$this->User,$this->Password);
 				}
 				else
 				{
-					$this->Link_ID=sybase_connect($this->Host,$this->User,$this->Password);
+					$this->Link_ID = sybase_connect($this->Host,$this->User,$this->Password);
 				}
 			}
-			if (!$this->Link_ID)
+			if(!$this->Link_ID)
 			{
 				$this->halt('Link-ID == false, '.($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')..'connect failed');
 			}
@@ -58,11 +58,11 @@
 		{
 			$this->connect();
 
-			#   printf("Debug: query = %s<br>\n", $Query_String);
+			/* printf("Debug: query = %s<br>\n", $Query_String); */
 
 			$this->Query_ID = sybase_query($Query_String,$this->Link_ID);
 			$this->Row   = 0;
-			if (!$this->Query_ID)
+			if(!$this->Query_ID)
 			{
 				$this->halt('Invalid SQL: '.$Query_String);
 			}
@@ -76,7 +76,7 @@
 			$this->Row   += 1;
 
 			$stat = is_array($this->Record);
-			if (!$stat && $this->Auto_Free)
+			if(!$stat && $this->Auto_Free)
 			{
 				sybase_free_result($this->Query_ID);
 				$this->Query_ID = 0;
@@ -87,7 +87,7 @@
 		function seek($pos)
 		{
 			$status = sybase_data_seek($this->Query_ID, $pos);
-			if ($status)
+			if($status)
 			{
 				$this->Row = $pos;
 			}
@@ -102,7 +102,7 @@
 
 			$this->connect(); 
 			$result = $this->query("exec sp_columns $table");
-			if ($result < 0)
+			if($result < 0)
 			{
 				$this->Errno = 1;
 				$this->Error = 'Metadata query failed';
@@ -110,7 +110,7 @@
 			}
 			$count = sybase_num_rows($result);
 
-			for ($i=0; $i<$count; $i++)
+			for($i=0; $i<$count; $i++)
 			{
 				$res[$i]['table'] = $table ;
 				$res[$i]['name']  = sybase_result ($result, $i, 'COLUMN_NAME');
@@ -118,7 +118,6 @@
 				$res[$i]['len']   = sybase_result ($result, $i, 'LENGTH');
 				$res[$i]['position'] = sybase_result ($result, $i, 'ORDINAL_POSITION');
 				$res[$i]['flags'] = sybase_result ($result, $i, 'REMARKS');
-
 			}
 		}
 
