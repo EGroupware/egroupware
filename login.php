@@ -18,7 +18,7 @@
 			                   "noheader"                 => True
 			                  );
 
-  include("header.inc.php");
+  include("./header.inc.php");
 //  include($phpgw_info["server"]["include_root"] . "/lang/" . "en" . "_login.inc.php");
   include($phpgw_info["server"]["api_dir"] . "/phpgw_template.inc.php");
 
