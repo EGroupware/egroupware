@@ -210,13 +210,13 @@
 
 		if (!isset($GLOBALS['HTTP_GET_VARS']['type']))
 		{
-			$type = $session_data['type'];
+			$GLOBALS['type'] = $session_data['type'];
 		}
 		else
 		{
-			$type = $GLOBALS['HTTP_GET_VARS']['type'];
+			$GLOBALS['type'] = $GLOBALS['HTTP_GET_VARS']['type'];
 			$session_data = array(
-				'type' => $type
+				'type' => $GLOBALS['type']
 			);
 			$phpgw->session->appsession('session_data','preferences',$session_data);
 		}
@@ -234,7 +234,7 @@
 			'link'  => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname=' . $appname . '&type=forced')
 		);
 
-		switch($type)
+		switch($GLOBALS['type'])
 		{
 			case 'user':		$selected = 0; break;
 			case 'default':	$selected = 1; break;
@@ -244,11 +244,11 @@
 	}
 	else
 	{
-		$type = 'user';
+		$GLOBALS['type'] = 'user';
 	}
 
 	/* Only load if there working on the default preferences */
-	if ($type == 'default')
+	if ($GLOBALS['type'] == 'default')
 	{
 		$dp = createobject('phpgwapi.preferences',-2);
 		$dp->read_repository();
@@ -257,17 +257,17 @@
 	if ($GLOBALS['HTTP_POST_VARS']['submit'])
 	{
 		/* Don't use a switch here, we need to check some permissions durring the ifs */
-		if ($type == 'user')
+		if ($GLOBALS['type'] == 'user')
 		{
 			process_array($p, $user);
 		}
 
-		if ($type == 'default' && is_admin())
+		if ($GLOBALS['type'] == 'default' && is_admin())
 		{
 			process_array($dp, $default);		
 		}
 
-		if ($type == 'forced' && is_admin())
+		if ($GLOBALS['type'] == 'forced' && is_admin())
 		{
 			process_array($gp, $forced);
 		}
