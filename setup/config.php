@@ -38,6 +38,7 @@
   $db->Password   = $phpgw_info["server"]["db_pass"];
 
   echo "<title>phpGroupWare - setup</title>";
+  echo '<body bgcolor="FFFFFF">';
   echo "<center>phpGroupWare version " . $current_version . " setup</center><p>";
 
   if ($submit) {
@@ -56,71 +57,42 @@
   }
 ?>  
  <form method="POST" action="config.php">
-  <table border="0">
-   <tr>
+  <table border="0" align="center">
+   <tr bgcolor="486591">
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Directory information</b></font></td>
+   </tr>
+   
+   </tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter path for temporey files.</td>
     <td><input name="newsettings[temp_dir]" value="<?php echo $current_config["temp_dir"]; ?>"></td>
    </tr>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter path for users and group files.</td>
     <td><input name="newsettings[files_dir]" value="<?php echo $current_config["files_dir"]; ?>"></td>
    </tr>
-
-   <tr>
-    <td>Enter some random text for app_session <br>encryption (requires mcrypt)</td>
-    <td><input name="newsettings[encryptkey]" value="<?php echo $current_config["encryptkey"]; ?>"></td>
-   </tr>
-
-   <tr>
-    <td>Enter the title for your site.</td>
-    <td><input name="newsettings[site_title]" value="<?php echo $current_config["site_title"]; ?>"></td>
-   </tr>
-
-   <tr>
-    <td>Enter the hostname of the machine this server is running on.</td>
-    <td><input name="newsettings[hostname]" value="<?php echo $SERVER_NAME; ?>"></td>
-   </tr>
-
-   <tr>
+   
+   <tr bgcolor="e6e6e6">
     <td>Enter the location of phpGroupWares URL.<br>Example: /phpGroupWare</td>
     <td><input name="newsettings[webserver_url]" value="<?php echo $current_config["webserver_url"]; ?>"></td>
    </tr>
 
-   <?php $selected[$current_config["auth_type"]] = " selected"; ?>
-   <tr>
-    <td>Select which type of authentication you are using.<br>SQL is only support currently</td>
-    <td>
-     <select name="newsettings[auth_type]">
-      <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
-      <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
-     </select>
-    </td>
-   </tr>
-   <?php $selected = array(); ?>
-
-   <tr>
-    <td>LDAP host:</td>
-    <td><input name="newsettings[ldap_host]" value="<?php echo $current_config["ldap_host"]; ?>"></td>
+   <tr bgcolor="FFFFFF">
+    <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr>
-    <td>LDAP context:</td>
-    <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>"></td>
+   <tr bgcolor="486591">
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Mail settings</b></font></td>
    </tr>
 
-   <tr>
-    <td>Use cookies to pass sessionid:</td>
-    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
-   </tr>
-
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter the location of your mail server:</td>
     <td><input name="newsettings[mail_server]" value="<?php echo $current_config["mail_server"]; ?>"></td>
    </tr>
 
    <?php $selected[$current_config["mail_server_type"]] = " selected"; ?>
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Select your mail server type:</td>
     <td>
      <select name="newsettings[mail_server_type]">
@@ -132,7 +104,7 @@
    <?php $selected = array(); ?>
 
    <?php $selected[$current_config["imap_server_type"]] = " selected"; ?>
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>IMAP server type:</td>
     <td>
      <select name="newsettings[imap_server_type]">
@@ -143,13 +115,13 @@
    </tr>
    <?php $selected = array(); ?>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your mail sufix:</td>
     <td><input name="newsettings[mail_suffix]" value="<?php echo $current_config["mail_suffix"]; ?>"></td>
    </tr>
 
    <?php $selected[$current_config["mail_login_type"]] = " selected"; ?>
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Mail server login type:</td>
     <td>
      <select name="newsettings[mail_login_type]">
@@ -160,73 +132,86 @@
    </tr>
    <?php $selected = array(); ?>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your SMTP server hostname:</td>
     <td><input name="newsettings[smtp_server]" value="<?php echo $current_config["smtp_server"]; ?>"></td>
    </tr>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your SMTP server port:</td>
     <td><input name="newsettings[smtp_port]" value="<?php echo $current_config["smtp_port"]; ?>"></td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP server hostname:</td>
-    <td><input name="newsettings[nntp_server]" value="<?php echo $current_config["nntp_server"]; ?>"></td>
+   <tr bgcolor="FFFFFF">
+    <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP server port:</td>
-    <td><input name="newsettings[nntp_port]" value="<?php echo $current_config["nntp_port"]; ?>"></td>
+   <tr bgcolor="486591">
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Authentication</b></font></td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP sender:</td>
-    <td><input name="newsettings[nntp_sender]" value="<?php echo $current_config["nntp_sender"]; ?>"></td>
+   <?php $selected[$current_config["auth_type"]] = " selected"; ?>
+   <tr bgcolor="e6e6e6">
+    <td>Select which type of authentication you are using.<br>SQL is only support currently</td>
+    <td>
+     <select name="newsettings[auth_type]">
+      <option value="sql"<?php echo $selected["sql"]; ?>>SQL</option>
+      <option value="ldap"<?php echo $selected["ldap"]; ?>>LDAP</option>
+     </select>
+    </td>
+   </tr>
+   <?php $selected = array(); ?>
+
+   <tr bgcolor="e6e6e6">
+    <td>LDAP host:</td>
+    <td><input name="newsettings[ldap_host]" value="<?php echo $current_config["ldap_host"]; ?>"></td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP organization:</td>
-    <td><input name="newsettings[nntp_organization]" value="<?php echo $current_config["nntp_organization"]; ?>"></td>
+   <tr bgcolor="e6e6e6">
+    <td>LDAP context:</td>
+    <td><input name="newsettings[ldap_context]" value="<?php echo $current_config["ldap_context"]; ?>"></td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP admins email address:</td>
-    <td><input name="newsettings[nntp_admin]" value="<?php echo $current_config["nntp_admin"]; ?>"></td>
+   <tr bgcolor="e6e6e6">
+    <td>Use cookies to pass sessionid:</td>
+    <td><input type="checkbox" name="newsettings[usecookies]" value="True"<?php echo ($current_config["usecookies"]?" checked":""); ?>></td>
+   </tr>
+   
+   <tr bgcolor="e6e6e6">
+    <td>Enter some random text for app_session <br>encryption (requires mcrypt)</td>
+    <td><input name="newsettings[encryptkey]" value="<?php echo $current_config["encryptkey"]; ?>"></td>
+   </tr>
+   
+   <tr bgcolor="FFFFFF">
+    <td colspan="2">&nbsp;</td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP login:</td>
-    <td><input name="newsettings[nntp_login_username]" value="<?php echo $current_config["nntp_login_username"]; ?>"></td>
+   <tr bgcolor="486591">
+    <td colspan="2"><font color="fefefe">&nbsp;<b>Server information</b></font></td>
    </tr>
 
-   <tr>
-    <td>Enter your NNTP password:</td>
-    <td><input name="newsettings[nntp_login_password]" value="<?php echo $current_config["nntp_login_password"]; ?>"></td>
-   </tr>
-
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your default character set:<br>Don't change unless you know what you are doing.</td>
     <td><input name="newsettings[charset]" value="<?php echo $current_config["charset"]; ?>"></td>
    </tr>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your default FTP server.</td>
     <td><input name="newsettings[default_ftp_server]" value="<?php echo $current_config["default_ftp_server"]; ?>"></td>
    </tr>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your HTTP proxy server.</td>
     <td><input name="newsettings[httpproxy_server]" value="<?php echo $current_config["httpproxy_server"]; ?>"></td>
    </tr>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Enter your HTTP proxy server port.</td>
     <td><input name="newsettings[httpproxy_port]" value="<?php echo $current_config["httpproxy_port"]; ?>"></td>
    </tr>
 
    <?php $selected[$current_config["showpoweredbyon"]] = " selected"; ?>
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Showed powered by logo on:</td>
     <td>
      <select name="newsettings[showpoweredbyon]">
@@ -237,11 +222,68 @@
    </tr>
    <?php $selected = array(); ?>
 
-   <tr>
+   <tr bgcolor="e6e6e6">
     <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
     <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"<?php echo ($current_config["checkfornewversion"]?" checked":""); ?>></td>
    </tr>
-  
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter the title for your site.</td>
+    <td><input name="newsettings[site_title]" value="<?php echo $current_config["site_title"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter the hostname of the machine this server is running on.</td>
+    <td><input name="newsettings[hostname]" value="<?php echo $SERVER_NAME; ?>"></td>
+   </tr>
+
+   <tr bgcolor="FFFFFF">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr bgcolor="486591">
+    <td colspan="2"><font color="fefefe">&nbsp;<b>NNTP settings</b></font></td>
+   </tr>
+   
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP server hostname:</td>
+    <td><input name="newsettings[nntp_server]" value="<?php echo $current_config["nntp_server"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP server port:</td>
+    <td><input name="newsettings[nntp_port]" value="<?php echo $current_config["nntp_port"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP sender:</td>
+    <td><input name="newsettings[nntp_sender]" value="<?php echo $current_config["nntp_sender"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP organization:</td>
+    <td><input name="newsettings[nntp_organization]" value="<?php echo $current_config["nntp_organization"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP admins email address:</td>
+    <td><input name="newsettings[nntp_admin]" value="<?php echo $current_config["nntp_admin"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP login:</td>
+    <td><input name="newsettings[nntp_login_username]" value="<?php echo $current_config["nntp_login_username"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="e6e6e6">
+    <td>Enter your NNTP password:</td>
+    <td><input name="newsettings[nntp_login_password]" value="<?php echo $current_config["nntp_login_password"]; ?>"></td>
+   </tr>
+
+   <tr bgcolor="FFFFFF">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
    <tr>
     <td colspan="2" align="center"><input type="submit" name="submit" value="Submit"></td>
    </tr>
