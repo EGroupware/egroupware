@@ -161,7 +161,7 @@
        <option value="gb" <?php echo $selected['gb']?>>GB</option>
        <option value="mb" <?php echo $selected['mb']?>>MB</option>
        <option value="kb" <?php echo $selected['mb']?>>KB</option>
-       <option value="b" <?php echo $selected['mb']?>>B</option>
+       <option value="b" <?php echo $selected['b']?>>B</option>
       </select>
      </td>
     </tr>

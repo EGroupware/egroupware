@@ -95,24 +95,4 @@
 		}
 		return $out;
 	}
-
-	function size_type($config)
-	{
-		$size = array('gb','mb','kb','b');
-		
-		while(list($x,$val) = each($size))
-		{
-			if($config['vfs_default_account_size_type'] == $val)
-			{
-				$selected = ' selected';
-			}
-			else
-			{
-				$selected = '';
-			}
-			$descr = strtoupper($val);
-			$out .= '<option value="' . $val . '"' . $selected . '>'.$descr.'</option>' . "\n";
-		}
-		return $out;
-	}
 ?>

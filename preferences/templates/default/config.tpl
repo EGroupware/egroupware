@@ -100,7 +100,10 @@
      <td>
       <input type="text" name="newsettings[vfs_default_account_size_number]" size="7" value="{value_vfs_default_account_size_number}">&nbsp;&nbsp;
       <select name="newsettings[vfs_default_account_size_type]">
-{hook_size_type}
+       <option value="gb"{selected_vfs_default_account_size_type_gb}>GB</option>
+       <option value="mb"{selected_vfs_default_account_size_type_mb}>MB</option>
+       <option value="kb"{selected_vfs_default_account_size_type_mb}>KB</option>
+       <option value="b"{selected_vfs_default_account_size_type_b}>B</option>
       </select>
      </td>
     </tr>
