@@ -391,6 +391,7 @@
 // -------------------------- end nextmatch ------------------------------------
 
 			$GLOBALS['phpgw']->template->set_var('search_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
+			$GLOBALS['phpgw']->template->set_var('prev_query', $query);
 			$GLOBALS['phpgw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
 
 			foreach($users as $user)

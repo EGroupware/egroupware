@@ -78,7 +78,7 @@
 		<td align="right" colspan="5">
 			<form method="POST" action="{search_action}">
 				{query_type}
-				<input type="text" name="query">
+				<input type="text" name="query" value="{prev_query}">
 				<input type="submit" name="search" value="{lang_search}">
 			</form>
 		</td>
