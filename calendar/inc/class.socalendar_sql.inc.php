@@ -303,7 +303,8 @@ class socalendar_ extends socalendar__
 		$locks = Array(
 			'phpgw_cal',
 			'phpgw_cal_user',
-			'phpgw_cal_repeats'
+			'phpgw_cal_repeats',
+			'phpgw_cal_alarm'
 		);
 		$this->stream->lock($locks);
 		for($i=0;$i<count($this->deleted_events);$i++)
