@@ -97,18 +97,18 @@
     }
 
   } else {
-    if ($last_loginid) {
-       $phpgw->db->query("select preference_value from preferences where preference_owner='$last_loginid' "
-                       . "and preference_name='lang'");
-       $phpgw->db->next_record();
-       if (! $phpgw->db->f("value")) {
+//    if ($last_loginid) {
+//       $phpgw->db->query("select preference_value from preferences where preference_owner='$last_loginid' "
+//                       . "and preference_name='lang'");
+//       $phpgw->db->next_record();
+//       if (! $phpgw->db->f("preference_value")) {
           $users_lang = "en";
 //      } else {
 //           $users_lang = $phpgw->db->f("value");
 //           include($phpgw_info["server"]["include_root"] . "/lang/$users_lang/" . $users_lang
 //	         . "_login.inc.php");
-      }
-    }
+//      }
+//    }
   }
   $tmpl->set_var("login_url", $phpgw_info["server"]["webserver_url"] . "/login.php");
   $tmpl->set_var("website_title", $phpgw_info["server"]["site_title"]);
