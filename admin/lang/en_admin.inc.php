@@ -44,6 +44,12 @@
        case "installed applications":
 	$s = "Installed applications";						break;
 
+       case "select permissions this group will have":
+	$s = "Select permissions this group will have";		break;
+
+       case "sorry, that group name has already been taking.":
+	$s = "Sorry, that group name has already been taking.";	break;
+
        case "add new application":
 	$s = "Add new application";						break;
 

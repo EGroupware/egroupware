@@ -52,7 +52,7 @@
   $t->set_var("lang_app_name",lang_admin("application name"));
   $t->set_var("lang_app_title",lang_admin("application title"));
   $t->set_var("lang_enabled",lang_admin("enabled"));
-  $t->set_var("lang_add",lang_common("add"));
+  $t->set_var("lang_submit_button",lang_common("add"));
 
   $t->set_var("app_name_value","");
   $t->set_var("app_title_value","");
