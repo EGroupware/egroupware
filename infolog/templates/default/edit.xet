@@ -19,23 +19,24 @@
 	<grid id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.003" width="100%">
 		<columns>
 			<column width="100"/>
+			<column/>
 		</columns>
 		<rows>
-			<row class="th">
-				<description value="Create new links"/>
+			<row class="th" disabled="@status_only">
+				<description span="all" value="Create new links"/>
 			</row>
-			<row class="row">
-				<link-to id="link_to"/>
+			<row class="row" disabled="@status_only">
+				<link-to span="all" id="link_to"/>
 			</row>
 			<row class="th">
-				<description value="Existing links"/>
+				<description span="all" value="Existing links"/>
 			</row>
 			<row class="row_off" valign="top" height="164">
-				<link-list id="link_to"/>
+				<link-list span="all" id="link_to"/>
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit.delegation" template="" lang="" group="0" version="0.9.15.001" width="100%">
+	<grid id="infolog.edit.delegation" template="" lang="" group="0" version="0.9.15.002" width="100%">
 		<columns>
 			<column width="100"/>
 			<column/>
@@ -59,7 +60,7 @@
 					<menupopup type="select-account" options="Owner" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
 				</menulist>
 			</row>
-			<row class="row">
+			<row class="row" disabled="1">
 				<description value="Confirm"/>
 				<menulist>
 					<menupopup id="info_confirm" statustext="do you want a confirmation of the responsible on: accepting, finishing the task or both"/>
@@ -70,7 +71,17 @@
 			</row>
 		</rows>
 	</grid>
-	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.008" width="100%">
+	<grid id="infolog.edit.customfields" template="" lang="" group="0" version="0.9.15.001" width="100%" height="100%" spacing="0" padding="0">
+		<columns>
+			<column/>
+		</columns>
+		<rows>
+			<row height="100%">
+				<customfields id="customfields"/>
+			</row>
+		</rows>
+	</grid>
+	<grid id="infolog.edit" template="" lang="" group="" version="0.9.15.009" width="100%">
 		<columns>
 			<column width="103"/>
 			<column width="300"/>
@@ -104,17 +115,19 @@
 				<description value="Subject"/>
 				<textbox size="64" maxlength="64" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
 			</row>
-			<row height="250">
+			<row valign="top" height="250">
 				<tabbox>
 					<tabs span="all">
 						<tab label="Description" statustext="longer textual description"/>
 						<tab label="Links" statustext="Links of this entry"/>
 						<tab label="Delegation" statustext="responsible user, priority, ..."/>
+						<tab label="Customfields" statustext=""/>
 					</tabs>
 					<tabpanels>
 						<grid id="infolog.edit.description"/>
 						<grid id="infolog.edit.links"/>
 						<grid id="infolog.edit.delegation"/>
+						<grid id="infolog.edit.customfields"/>
 					</tabpanels>
 				</tabbox>
 			</row>
@@ -130,7 +143,7 @@
 			<row class="row">
 				<description value="Status"/>
 				<menulist>
-					<menupopup id="info_status" statustext="allows to set the status of an entry, eg. set a ToDo to done if it's finished (values depend on entry-typ)"/>
+					<menupopup id="info_status" statustext="@status_help"/>
 				</menulist>
 				<description value="Private"/>
 				<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>

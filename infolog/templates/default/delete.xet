@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<grid id="infolog.index.rows" template="" lang="" group="0" version="0.9.15.002">
+	<grid id="infolog.index.rows-noheader" template="" lang="" group="0" version="0.9.15.003">
 		<columns>
-			<column width="2%"/>
-			<column width="4%"/>
+			<column width="5%"/>
 			<column/>
 			<column width="8%"/>
 			<column width="8%"/>
@@ -14,36 +13,55 @@
 		</columns>
 		<rows>
 			<row class="th">
-				<description value="Type"/>
-				<description value="Status"/>
-				<description value="Subject"/>
-				<description value="Startdate Enddate"/>
-				<description value="Owner Responsible"/>
+				<vbox>
+					<description value="Type"/>
+					<description value="Status"/>
+				</vbox>
+				<vbox>
+					<description value="Subject"/>
+					<description value="Description"/>
+				</vbox>
+				<vbox>
+					<description value="Startdate"/>
+					<description value="Enddate"/>
+				</vbox>
+				<vbox>
+					<description value="Owner"/>
+					<description value="Responsible"/>
+				</vbox>
 				<description value="last changed"/>
 				<description value="Sub"/>
 				<description value="Action"/>
 			</row>
 			<row class="row" valign="top">
-				<image label="$row_cont[info_type]" align="center" src="${row}[info_type]"/>
-				<image label="$row_cont[info_status]" align="center" src="${row}[info_status]"/>
+				<hbox options="2,2" align="center">
+					<image label="$row_cont[info_type]" src="${row}[info_type]"/>
+					<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it"/>
+				</hbox>
 				<vbox options="0,0">
-					<html no_lang="1" id="${row}[subject]"/>
+					<description options="b,@${row}[info_link_view]" value="%s $row_cont[info_addr]" no_lang="1" id="${row}[info_link_title]" statustext="view this linked entry in its application"/>
+					<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 					<description no_lang="1" id="${row}[info_des]"/>
-					<html id="${row}[filelinks]"/>
+					<link-string id="${row}[filelinks]"/>
 				</vbox>
 				<vbox options="0,0">
 					<date id="${row}[info_startdate]" readonly="true"/>
-					<html id="${row}[enddate]" readonly="true"/>
+					<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
 				</vbox>
-				<vbox options="0,0" class="$row_cont[info_access]">
+				<vbox options="0,0">
 					<menulist>
-						<menupopup type="select-account" options=",,0" id="${row}[info_owner]" readonly="true"/>
+						<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
 					</menulist>
 					<menulist>
-						<menupopup type="select-account" options=",,0" id="${row}[info_responsible]" readonly="true"/>
+						<menupopup type="select-account" id="${row}[info_responsible]" readonly="true"/>
 					</menulist>
 				</vbox>
-				<date id="${row}[info_datemodified]" readonly="true"/>
+				<vbox options="0,0">
+					<date-time id="${row}[info_datemodified]" readonly="true"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
+					</menulist>
+				</vbox>
 				<vbox options="0,0" align="center">
 					<button image="new.gif" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry"/>
 					<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
@@ -57,38 +75,39 @@
 			</row>
 		</rows>
 		<styles>
-			.low,.pri_low_done { color:#606060; }
-.normal,.pri_normal_done { color:black }
-.high { color:#cc0000; } .high_done { color:#800000; }
-.urgent { color:#ff00ff; } .urgent_done { color:#800080; }
+			.low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
+.low,.low_done { color:#606060; }
+.normal,.normal_done { color:black }
+.high { color:#cc0000; } 
+.high_done { color:#800000; }
+.urgent { color:#ff00ff; } 
+.urgent_done { color:#800080; }
 .overdue { color:#cc0000; font-weight:bold; }
 .private { font-style:italic; }
-.note { color:#808080; font-style:italic; }
 
 		</styles>
 	</grid>
-	<grid id="infolog.delete" template="" lang="" group="" version="0.9.15.001" width="100%" border="0" spacing="0" padding="0">
+	<grid id="infolog.delete" template="" lang="" group="" version="0.9.15.003" width="100%" border="0" spacing="0" padding="0">
 		<columns>
 			<column/>
 		</columns>
 		<rows>
 			<row>
-				<description class="headertext" value="InfoLog - Delete" id="appheader"/>
+				<description/>
 			</row>
 			<row>
-				<hrule/>
+				<grid content="main" align="center" id="infolog.index.rows-noheader"/>
 			</row>
-			<row>
-				<grid content="main" align="center" id="infolog.index.rows"/>
-			</row>
-			<row height="100">
+			<row valign="bottom" height="50">
 				<description class="headertext" value="Are you shure you want to delete this entry ?" align="center"/>
+			</row>
+			<row height="50" disabled="!@remove_subs">
+				<checkbox label="Delete all subs (if not subs will be subs of this enties parent or have no parent)" align="center" id="remove_subs"/>
 			</row>
 			<row>
 				<hbox options="20" align="center">
 					<button label="Yes - Delete" align="right" id="delete" statustext="Delete the entry"/>
 					<button label="No - Cancel" id="cancel" statustext="Abort without deleting"/>
-					<description/>
 				</hbox>
 			</row>
 		</rows>
