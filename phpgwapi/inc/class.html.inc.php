@@ -145,6 +145,8 @@
 			}
 			if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'htmlarea'))
 			{
+
+								
 				$GLOBALS['phpgw']->js->validate_file('htmlarea','htmlarea');
 				$GLOBALS['phpgw']->js->validate_file('htmlarea','dialog');
 				$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
@@ -157,13 +159,18 @@
 					$GLOBALS['phpgw_info']['flags']['java_script'] .=
 '<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',$GLOBALS['phpgw']->link('/phpgwapi/inc/htmlarea-lang.php',array('lang'=>$lang))).'"></script>'."\n";
 				}
-				$GLOBALS['phpgw_info']['flags']['java_script'] .=
-'<style type="text/css">@import url(/egroupware/phpgwapi/js/htmlarea/htmlarea.css);</style>
-<script type="text/javascript">
-var htmlareaConfig = new HTMLArea.Config();
-htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
-</script>\n";
+
+				$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .=
+				'<style type="text/css">@import url(/egroupware/phpgwapi/js/htmlarea/htmlarea.css);</style>
+				<script type="text/javascript">
+				var _editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
+				var htmlareaConfig = new HTMLArea.Config();
+				htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
+				</script>\n";
+				
 			}
+//			echo $GLOBALS['phpgw_info']['flags']['java_script'];
+//			die('test');
 			$id = str_replace(array('[',']'),array('_',''),$name);	// no brakets in the id allowed by js
 
 			$GLOBALS['phpgw']->js->set_onload("HTMLArea.replace('$id',htmlareaConfig);");

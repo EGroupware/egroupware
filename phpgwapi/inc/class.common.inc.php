@@ -1233,6 +1233,14 @@
 		function get_java_script()
 		{
 			$java_script = '';
+
+			/* this flag is for all javascript code that has to be put before other jscode. 
+			Think of conf vars etc...  (pim@lingewoud.nl) */
+			if (isset($GLOBALS['phpgw_info']['flags']['java_script_thirst']))
+			{
+				$java_script .= $GLOBALS['phpgw_info']['flags']['java_script_thirst'] . "\n";
+			}
+			
 			if(@is_object($GLOBALS['phpgw']->js))
 			{
 				$java_script .= $GLOBALS['phpgw']->js->get_script_links();
