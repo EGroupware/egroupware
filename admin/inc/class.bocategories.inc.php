@@ -116,7 +116,7 @@
 
 		function save_cat($values)
 		{
-			if ($values['id'] && $values['id'] != 0)
+			if ($values['cat_id'] && $values['cat_id'] != 0)
 			{
 				return $this->cats->edit($values);
 			}
@@ -170,7 +170,7 @@
 					(
 						'type'     => 'appandmains',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'cat_id'   => $values['cat_id']
 					));
 				}
 				else
@@ -179,7 +179,7 @@
 					(
 						'type'     => 'appandsubs',
 						'cat_name' => $values['name'],
-						'cat_id'   => $values['id']
+						'cat_id'   => $values['cat_id']
 					));
 				}
 

@@ -104,6 +104,27 @@
 			return $this->db->f(0);
 		}
 
+		function db2cats()
+		{
+			while ($this->db->next_record())
+			{
+				$cats[] = array
+				(
+					'cat_id'	=> $this->db->f('cat_id'),
+					'owner'		=> $this->db->f('cat_owner'),
+					'access'	=> $this->db->f('cat_access'),
+					'app_name'	=> $this->db->f('cat_appname'),
+					'main'		=> $this->db->f('cat_main'),
+					'level'		=> $this->db->f('cat_level'),
+					'parent'	=> $this->db->f('cat_parent'),
+					'name'		=> $this->db->f('cat_name'),
+					'descr'		=> $this->db->f('cat_description'),
+					'data'		=> $this->db->f('cat_data')
+				);
+			}
+			return $cats;
+		}
+
 		/*!
 		@function return_array
 		@abstract return an array populated with categories
@@ -185,22 +206,7 @@
 
 			$this->total_records = $this->db->num_rows();
 
-			$i = 0;
-			while ($this->db->next_record())
-			{
-				$cats[$i]['id']          = $this->db->f('cat_id');
-				$cats[$i]['owner']       = $this->db->f('cat_owner');
-				$cats[$i]['access']      = $this->db->f('cat_access');
-				$cats[$i]['app_name']    = $this->db->f('cat_appname');
-				$cats[$i]['main']        = $this->db->f('cat_main');
-				$cats[$i]['level']       = $this->db->f('cat_level');
-				$cats[$i]['parent']      = $this->db->f('cat_parent');
-				$cats[$i]['name']        = $this->db->f('cat_name');
-				$cats[$i]['description'] = $this->db->f('cat_description');
-				$cats[$i]['data']        = $this->db->f('cat_data');
-				$i++;
-			}
-			return $cats;
+			return $this->db2cats();
 		}
 
 		function return_sorted_array($start,$limit = True,$query = '',$sort = '',$order = '',$globals = False, $parent_id = '')
@@ -272,26 +278,12 @@
 				$this->db->query($sql . $parent_select . $ordermethod,__LINE__,__FILE__);
 			}
 
-			$i = 0;
-			while ($this->db->next_record())
-			{
-				$cats[$i]['id']          = $this->db->f('cat_id');
-				$cats[$i]['owner']       = $this->db->f('cat_owner');
-				$cats[$i]['access']      = $this->db->f('cat_access');
-				$cats[$i]['app_name']    = $this->db->f('cat_appname');
-				$cats[$i]['main']        = $this->db->f('cat_main');
-				$cats[$i]['level']       = $this->db->f('cat_level');
-				$cats[$i]['parent']      = $this->db->f('cat_parent');
-				$cats[$i]['name']        = $this->db->f('cat_name');
-				$cats[$i]['description'] = $this->db->f('cat_description');
-				$cats[$i]['data']        = $this->db->f('cat_data');
-				$i++;
-			}
+			$cats = $this->db2cats();
 
 			$num_cats = count($cats);
 			for ($i=0;$i < $num_cats;$i++)
 			{
-				$sub_select = " AND cat_parent='" . $cats[$i]['id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
+				$sub_select = " AND cat_parent='" . $cats[$i]['cat_id'] . "' AND cat_level='" . ($cats[$i]['level']+1) . "'";
 
 				if ($limit)
 				{
@@ -302,22 +294,7 @@
 					$this->db->query($sql . $sub_select . $ordermethod,__LINE__,__FILE__);
 				}
 
-				$subcats = array();
-				$j = 0;
-				while ($this->db->next_record())
-				{
-					$subcats[$j]['id']          = $this->db->f('cat_id');
-					$subcats[$j]['owner']       = $this->db->f('cat_owner');
-					$subcats[$j]['access']      = $this->db->f('cat_access');
-					$subcats[$j]['app_name']    = $this->db->f('cat_appname');
-					$subcats[$j]['main']        = $this->db->f('cat_main');
-					$subcats[$j]['level']       = $this->db->f('cat_level');
-					$subcats[$j]['parent']      = $this->db->f('cat_parent');
-					$subcats[$j]['name']        = $this->db->f('cat_name');
-					$subcats[$j]['description'] = $this->db->f('cat_description');
-					$subcats[$j]['data']        = $this->db->f('cat_data');
-					$j++;
-				}
+				$subcats = $this->db2cats();
 
 				$num_subcats = count($subcats);
 				if ($num_subcats != 0)
@@ -355,16 +332,19 @@
 
 			if ($this->db->next_record())
 			{
-				$cats[0]['id']          = $this->db->f('cat_id');
-				$cats[0]['owner']       = $this->db->f('cat_owner');
-				$cats[0]['access']      = $this->db->f('cat_access');
-				$cats[0]['app_name']    = $this->db->f('cat_appname');
-				$cats[0]['main']        = $this->db->f('cat_main');
-				$cats[0]['level']       = $this->db->f('cat_level');
-				$cats[0]['parent']      = $this->db->f('cat_parent');
-				$cats[0]['name']        = $this->db->f('cat_name');
-				$cats[0]['description'] = $this->db->f('cat_description');
-				$cats[0]['data']        = $this->db->f('cat_data');
+				$cats = array
+				(
+					'cat_id'	=> $this->db->f('cat_id'),
+					'owner'		=> $this->db->f('cat_owner'),
+					'access'	=> $this->db->f('cat_access'),
+					'app_name'	=> $this->db->f('cat_appname'),
+					'main'		=> $this->db->f('cat_main'),
+					'level'		=> $this->db->f('cat_level'),
+					'parent'	=> $this->db->f('cat_parent'),
+					'name'		=> $this->db->f('cat_name'),
+					'descr'		=> $this->db->f('cat_description'),
+					'data'		=> $this->db->f('cat_data')
+				);
 			}
 			return $cats;
 		}
@@ -387,13 +367,13 @@
 		{
 			if(is_array($format))
 			{
-				$temp_format = $format['format'];
-				$type = (isset($format['type'])?$format['type']:'all');
-				$selected = (isset($format['selected'])?$format['selected']:'');
-				$globals = (isset($format['globals'])?$format['globals']:False);
-				$site_link = (isset($format['site_link'])?$format['site_link']:'site');
+				$temp_format	= $format['format'];
+				$type			= (isset($format['type'])?$format['type']:'all');
+				$selected		= (isset($format['selected'])?$format['selected']:'');
+				$globals		= (isset($format['globals'])?$format['globals']:False);
+				$site_link		= (isset($format['site_link'])?$format['site_link']:'site');
 				settype($format,'string');
-				$format = $temp_format;
+				$format			= $temp_format;
 				unset($temp_format);
 			}
 
@@ -481,11 +461,11 @@
 		{
 			if(is_array($data))
 			{
-				$format = (isset($data['format'])?$data['format']:'select');
-				$type = (isset($data['type'])?$data['type']:'all');
-				$selected = (isset($data['selected'])?$data['selected']:'');
-				$globals = (isset($data['globals'])?$data['globals']:False);
-				$site_link = (isset($data['site_link'])?$data['site_link']:'site');
+				$format		= (isset($data['format'])?$data['format']:'select');
+				$type		= (isset($data['type'])?$data['type']:'all');
+				$selected	= (isset($data['selected'])?$data['selected']:'');
+				$globals	= (isset($data['globals'])?$data['globals']:False);
+				$site_link	= (isset($data['site_link'])?$data['site_link']:'site');
 			}
 
 			if (!is_array($selected))
@@ -555,36 +535,36 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function add($cat_values)
+		function add($values)
 		{
-			if ($cat_values['parent'] && $cat_values['parent'] != 0)
+			if ($values['parent'] && $values['parent'] != 0)
 			{
-				$cat_values['main'] = $this->id2name($cat_values['parent'],'main');
-				$cat_values['level'] = $this->id2name($cat_values['parent'],'level')+1;
+				$values['main']  = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
+				$values['level'] = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
 			}
 
-			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
-			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
+			$values['descr']	= $this->db->db_addslashes($values['descr']);
+			$values['name']		= $this->db->db_addslashes($values['name']);
 
-			if (isset($cat_values['id']))
+			if (isset($values['id']))
 			{
 				$id_col = 'cat_id,';
-				$id_val = $cat_values['id'].',';
+				$id_val = $values['cat_id'].',';
 			}
 
 			$this->db->query("INSERT INTO phpgw_categories (${id_col}cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,cat_data,"
-				. "cat_main,cat_level) VALUES ($id_val'" . $cat_values['parent'] . "','" . $this->account_id . "','" . $cat_values['access']
-				. "','" . $this->app_name . "','" . $cat_values['name'] . "','" . $cat_values['descr'] . "','" . $cat_values['data']
-				. "','" . $cat_values['main'] . "','" . $cat_values['level'] . "')",__LINE__,__FILE__);
+				. "cat_main,cat_level) VALUES ($id_val'" . intval($values['parent']) . "','" . $this->account_id . "','" . $values['access']
+				. "','" . $this->app_name . "','" . $values['name'] . "','" . $values['descr'] . "','" . $values['data']
+				. "','" . $values['main'] . "','" . $values['level'] . "')",__LINE__,__FILE__);
 
-			if (isset($cat_values['id']))
+			if (isset($values['cat_id']))
 			{
-				$max = $cat_values['id'];
+				$max = intval($values['cat_id']);
 			}
 
 			$max = $this->db->get_last_insert_id('phpgw_categories','cat_id');
 
-			if (!$cat_values['parent'] || $cat_values['parent'] == 0)
+			if (!$values['parent'] || $values['parent'] == 0)
 			{
 				$this->db->query("UPDATE phpgw_categories SET cat_main='" . $max . "' WHERE cat_id='"
 								. $max . "'",__LINE__,__FILE__);
@@ -617,7 +597,7 @@
 				{
 					$cats = $this->return_sorted_array('',False,'','','',False, $cat_id);
 
-					$new_parent = $this->id2name($cat_id,'parent');
+					$new_parent = $this->id2item(array('cat_id' => $cat_id,'item' => 'parent'));
 
 					for ($i=0;$i<count($cats);$i++)
 					{
@@ -650,6 +630,52 @@
 			}
 		}
 
+		function subs($parent,&$subs,&$main)
+		{
+			if (!is_array($main))
+			{
+				$this->db->query("SELECT * from phpgw_categories WHERE cat_main = $main");
+				$main = $this->db2cats();
+				//echo "main: "; _debug_array($main);
+			}
+			reset($main);
+			for ($n = 0; $n < count($main); $n++)
+			{
+				$cat = $main[$n];
+				if ($cat['parent'] == $parent)
+				{
+					//echo "Adding($cat['cat_id'])<br>";
+					$subs[] = $cat;
+					$this->subs($cat['cat_id'],$subs,$main);
+				}
+			}
+		}
+
+		function reparent($values)
+		{
+			$id = $values['cat_id'];
+			$parent = $values['parent'];
+			$old_parent = $values['old_parent'];
+			$main = $old_parent ? intval($this->id2item(array('cat_id' => $old_parent,'item' => 'main'))) : $id;
+			//echo "<p>reparent($id,$parent,$old_parent,$main)</p>\n";
+
+			$subs = array();
+			$this->subs($id,$subs,$main);
+
+			$new_main = $parent ? $this->id2name($parent,'main') : $id;
+			$new_parent_level = $parent ? $this->id2name($parent,'level') : -1;
+			$old_parent_level = $old_parent ? $this->id2name($old_parent,'level') : -1;
+			$level_adj = $old_parent_level - $new_parent_level;
+			reset($subs);
+         //echo "new_main=$new_main,level_adj = $level_adj<br>";
+			while (list($n) = each($subs))
+			{
+				$subs[$n]['main'] = $new_main;
+				$subs[$n]['level'] -= $level_adj;
+				$this->edit($subs[$n]);
+			}
+		}
+
 		/*!
 		@function edit
 		@abstract edit a category
@@ -658,37 +684,39 @@
 		@param $cat_description category description defaults to ''
 		@param $cat_data category data defaults to ''
 		*/
-		function edit($cat_values)
+		function edit($values)
 		{
-			if (isset($cat_values['old_parent']) && intval($cat_values['old_parent']) != $cat_values['parent'])
+			if (isset($values['old_parent']) && $values['old_parent'] != $values['parent'])
 			{
-				$this->delete(array('cat_id' => $cat_values['id'],'drop_subs' => False,'modify_subs' => True));
-				return $this->add($cat_values);
+				//$this->delete(array('cat_id' => $values['cat_id'],'drop_subs' => False,'modify_subs' => True));
+				//return $this->add($values);
+
+				$this->reparent($values);
 			}
 			else
 			{
-				if ($cat_values['parent'] && ($cat_values['parent'] != 0))
+				if ($values['parent'] && ($values['parent'] != 0))
 				{
-					$cat_values['main']  = intval($this->id2name($cat_values['parent'],'main'));
-					$cat_values['level'] = intval($this->id2name($cat_values['parent'],'level')+1);
+					$values['main']  = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'main')));
+					$values['level'] = intval($this->id2item(array('cat_id' => $values['parent'],'item' => 'level'))+1);
 				}
 				else
 				{
-					$cat_values['main']  = intval($cat_values['id']);
-					$cat_values['level'] = 0;
+					$values['main']  = intval($values['id']);
+					$values['level'] = 0;
 				}
 			}
 
-			$cat_values['descr'] = $this->db->db_addslashes($cat_values['descr']);
-			$cat_values['name'] = $this->db->db_addslashes($cat_values['name']);
+			$values['descr']	= $this->db->db_addslashes($values['descr']);
+			$values['name']		= $this->db->db_addslashes($values['name']);
 
-			$sql = "UPDATE phpgw_categories SET cat_name='" . $cat_values['name'] . "', cat_description='" . $cat_values['descr']
-				. "', cat_data='" . $cat_values['data'] . "', cat_parent=" . $cat_values['parent'] . ", cat_access='"
-				. $cat_values['access'] . "', cat_main=" . $cat_values['main'] . ", cat_level=" . $cat_values['level']
-				. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($cat_values['id']);
+			$sql = "UPDATE phpgw_categories SET cat_name='" . $values['name'] . "', cat_description='" . $values['descr']
+					. "', cat_data='" . $values['data'] . "', cat_parent=" . intval($values['parent']) . ", cat_access='"
+					. $values['access'] . "', cat_main=" . $values['main'] . ", cat_level=" . $values['level']
+					. " WHERE cat_appname='" . $this->app_name . "' AND cat_id=" . intval($values['cat_id']);
 
 			$this->db->query($sql,__LINE__,__FILE__);
-			return intval($cat_values['id']);
+			return intval($values['cat_id']);
 		}
 
 		function name2id($cat_name)
@@ -708,10 +736,22 @@
 
 		function id2name($cat_id = '', $item = 'name')
 		{
+			return $this->id2item(array('cat_id' => $cat_id,'item' => $item));
+		}
+
+		function id2item($data)
+		{
+			if(is_array($data))
+			{
+				$cat_id	= $data['cat_id'];
+				$item	= (isset($data['item'])?$data['item']:'name');
+			}
+
 			if ($cat_id == '')
 			{
 				return '--';
 			}
+
 			switch($item)
 			{
 				case 'name':	$value = 'cat_name'; break;
@@ -736,18 +776,6 @@
 					return '--';
 				}
 			}
-		}
-
-		/*!
-		@function return_name
-		@abstract return category name given $cat_id
-		@param $cat_id
-		@result cat_name category name
-		*/
-		// NOTE: This is only a temp wrapper, use id2name() to keep things matching across the board. (jengo)
-		function return_name($cat_id)
-		{
-			return $this->id2name($cat_id);
 		}
 
 		/*!

@@ -150,9 +150,9 @@
 			for ($i=0;$i<count($categories);$i++)
 			{
 				$tr_color = $this->nextmatchs->alternate_row_color($tr_color);
-				$GLOBALS['phpgw']->template->set_var(tr_color,$tr_color);
+				$GLOBALS['phpgw']->template->set_var('tr_color',$tr_color);
 
-				$id = $categories[$i]['id'];
+				$id = $categories[$i]['cat_id'];
 				$level = $categories[$i]['level'];
 				$cat_name = $GLOBALS['phpgw']->strip_html($categories[$i]['name']);
 
@@ -163,7 +163,7 @@
 					$cat_name = $spaceset . $cat_name;
 				}
 
-				$descr = $GLOBALS['phpgw']->strip_html($categories[$i]['description']);
+				$descr = $GLOBALS['phpgw']->strip_html($categories[$i]['descr']);
 				if (!$descr) { $descr = '&nbsp;'; }
 
 				if ($level == 0)
@@ -236,7 +236,7 @@
 
 		function add()
 		{
-			$global_cats  = get_var('global_cats',array('POST','GET'));
+			$global_cats = get_var('global_cats',array('POST','GET'));
 
 			$link_data = array
 			(
@@ -249,11 +249,7 @@
 
 			$this->set_langs();
 
-			$new_parent = $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit     = $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent = $GLOBALS['HTTP_POST_VARS']['cat_parent'] ? $GLOBALS['HTTP_POST_VARS']['cat_parent'] : $GLOBALS['HTTP_GET_VARS']['cat_parent'];
-			$cat_name = $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description = $GLOBALS['HTTP_POST_VARS']['cat_description'];
+			$values = get_var('values',array('POST'));
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('cat_form','add');
@@ -271,20 +267,12 @@
 				$GLOBALS['phpgw']->template->set_var('title_categories',lang('Add global category'));
 			}
 
-			if ($new_parent)
+			if (get_var('submit',array('POST')))
 			{
-				$cat_parent = $new_parent;
-			}
-
-			if ($submit)
-			{
-				$values = array
-				(
-					'parent' => $cat_parent,
-					'descr'  => $cat_description,
-					'name'   => $cat_name,
-					'access' => 'public'
-				);
+				if(is_array($values))
+				{
+					$values['access'] = 'public';
+				}
 
 				$error = $this->bo->check_values($values);
 				if (is_array($error))
@@ -301,7 +289,8 @@
 			$link_data['menuaction'] = 'admin.uicategories.add';
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array(
+			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array
+			(
 				'select'      => 'select',
 				'all'         => 'all',
 				'cat_parent'  => $cat_parent,
@@ -335,12 +324,7 @@
 
 			$this->set_langs();
 
-			$new_parent			= $GLOBALS['HTTP_POST_VARS']['new_parent'];
-			$submit				= $GLOBALS['HTTP_POST_VARS']['submit'];
-			$cat_parent			= $GLOBALS['HTTP_POST_VARS']['cat_parent'];
-			$cat_name			= $GLOBALS['HTTP_POST_VARS']['cat_name'];
-			$cat_description	= $GLOBALS['HTTP_POST_VARS']['cat_description'];
-			$old_parent			= $GLOBALS['HTTP_POST_VARS']['old_parent'];
+			$values = get_var('values',array('POST'));
 
 			$GLOBALS['phpgw']->template->set_file(array('cat_form' => 'category_form.tpl'));
 			$GLOBALS['phpgw']->template->set_block('cat_form','add');
@@ -349,22 +333,13 @@
 
 			$GLOBALS['phpgw']->template->set_var('doneurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			if ($new_parent)
+			if (get_var('submit',array('POST')))
 			{
-				$cat_parent = $new_parent;
-			}
-
-			if ($submit)
-			{
-				$values = array
-				(
-					'id'			=> $this->cat_id,
-					'old_parent'	=> $old_parent,
-					'parent'		=> $cat_parent,
-					'descr'			=> $cat_description,
-					'name'			=> $cat_name,
-					'access'		=> 'public'
-				);
+				if (is_array($values))
+				{
+					$values['cat_id'] = $this->cat_id;
+					$values['access'] = 'public';
+				}
 
 				$error = $this->bo->check_values($values);
 				if (is_array($error))
@@ -389,21 +364,20 @@
 				$GLOBALS['phpgw']->template->set_var('title_categories',lang('Edit global category'));
 			}
 
-			$hidden_vars = '<input type="hidden" name="cat_id" value="' . $this->cat_id . '">' . "\n"
-							. '<input type="hidden" name="old_parent" value="' . $cats[0]['parent'] . '">' . "\n";
-			$GLOBALS['phpgw']->template->set_var('hidden_vars',$hidden_vars);
-
 			$link_data['menuaction'] = 'admin.uicategories.edit';
 			$link_data['cat_id']     = $this->cat_id;
 			$GLOBALS['phpgw']->template->set_var('actionurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
+
 			$link_data['menuaction'] = 'admin.uicategories.delete';
 			$GLOBALS['phpgw']->template->set_var('deleteurl',$GLOBALS['phpgw']->link('/index.php',$link_data));
 
-			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats[0]['name']));
-			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats[0]['description']));
+			$GLOBALS['phpgw']->template->set_var('old_parent',$cats['parent']);
+
+			$GLOBALS['phpgw']->template->set_var('cat_name',$GLOBALS['phpgw']->strip_html($cats['name']));
+			$GLOBALS['phpgw']->template->set_var('cat_description',$GLOBALS['phpgw']->strip_html($cats['descr']));
 			$GLOBALS['phpgw']->template->set_var('category_list',$this->bo->formatted_list(array('select'	=> 'select',
 																									'all'	=> 'all',
-																							'cat_parent'	=> $cats[0]['parent'],
+																							'cat_parent'	=> $cats['parent'],
 																							'global_cats'	=> $global_cats)));
 			$GLOBALS['phpgw']->template->parse('buttons','edit');
 			$GLOBALS['phpgw']->template->fp('phpgw_body','form');
@@ -473,7 +447,6 @@
 			));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
-			$GLOBALS['phpgw']->template->set_var('hidden_vars','<input type="hidden" name="cat_id" value="' . $this->cat_id . '">');
 
 			if ($apps_cats)
 			{
