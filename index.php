@@ -95,7 +95,7 @@
 //  $phpgw->preferences->read_preferences("calendar");
 //  $phpgw->preferences->read_preferences("stocks");
   
-  $phpgw->db->query("select app_version from applications where app_name='admin'",__LINE__,__FILE__);
+  $phpgw->db->query("select app_version from phpgw_applications where app_name='admin'",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   if ($phpgw_info["server"]["versions"]["phpgwapi"] > $phpgw->db->f("app_version")) {

@@ -41,7 +41,7 @@
   // We only want to list applications that are enabled, plus the common stuff
   // (if they can get to the admin page, the admin app is enabled, hence it is shown)
 
-  $phpgw->db->query("select app_name from applications where app_enabled = 1 order by app_title");
+  $phpgw->db->query("select app_name from phpgw_applications where app_enabled = 1 order by app_title",__LINE__,__FILE__);
   
   // Stuff it in an array in the off chance the admin includes need the db
   while ($phpgw->db->next_record() ) {

@@ -1024,6 +1024,16 @@
 		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre7";
   }
 
+  $test[] = "0.9.10pre7";
+  function upgrade0_9_10pre7()
+  {
+		global $phpgw_info, $phpgw_setup;
+
+    $phpgw_setup->db->query("alter table applications rename phpgw_applications",__LINE__,__FILE__);
+     
+		$phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre8";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
@@ -1036,7 +1046,7 @@
       echo "</table>";
       if ($tableschanged == True){$tablechanges = True;}
       if (!$phpgw_info["setup"]["prebeta"]){
-        $phpgw_setup->db->query("update applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
+        $phpgw_setup->db->query("update phpgw_applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where (app_name='admin' or app_name='filemanager' or app_name='addressbook' or app_name='todo' or app_name='calendar' or app_name='email' or app_name='nntp' or app_name='cron_apps' or app_name='notes')");
       }
     }
   }

@@ -146,7 +146,7 @@
 
     function read_installed_apps(){
       global $phpgw_info;
-      $this->db->query("select * from applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
+      $this->db->query("select * from phpgw_applications where app_enabled != '0' order by app_order asc",__LINE__,__FILE__);
       if($this->db->num_rows()) {
         while ($this->db->next_record()) {
           $name = $this->db->f("app_name");

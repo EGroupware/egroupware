@@ -192,7 +192,7 @@
       $tables = $this->db->table_names();
       if (is_array($tables) && count($tables) > 0){
         /* tables exists. checking for post beta version */
-        $this->db->query("select * from applications");
+        $this->db->query("select * from phpgw_applications");
         while (@$this->db->next_record()) {
           if ($this->db->f("app_name") == "admin"){$phpgw_info["setup"]["oldver"]["phpgwapi"] = $this->db->f("app_version");}
           $phpgw_info["setup"]["oldver"][$this->db->f("app_name")] = $this->db->f("app_version");
@@ -314,7 +314,7 @@
       $this->get_versions();
       reset ($phpgw_info["server"]["versions"]);
 
-      $this->db->query("select * from applications");
+      $this->db->query("select * from phpgw_applications");
       while ($this->db->next_record()){
         $phpgw_info["server"]["current_versions"][$this->db->f("app_name")] = $this->db->f("app_version");
       }
@@ -368,7 +368,7 @@
     function update_app_version($appname, $tableschanged = True){
       global $phpgw_info;
       if ($tableschanged == True){$phpgw_info["setup"]["tableschanged"] = True;}
-      $this->db->query("update applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where app_name='".$appname."'");
+      $this->db->query("update phpgw_applications set app_version='".$phpgw_info["setup"]["currentver"]["phpgwapi"]."' where app_name='".$appname."'");
     }
   
     function manage_tables($appname=""){

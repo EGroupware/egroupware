@@ -19,7 +19,7 @@
   )";
   $phpgw_setup->db->query($sql);
 
-  $sql = "create table applications (
+  $sql = "create table phpgw_applications (
     app_name     varchar(25) NOT NULL,
     app_title    varchar(50),
     app_enabled  int,

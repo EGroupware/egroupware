@@ -48,7 +48,7 @@
         $error[$totalerrors++] = lang("You must enter an application title.");
 
      if ($old_app_name != $n_app_name) {
-        $phpgw->db->query("select count(*) from applications where app_name='"
+        $phpgw->db->query("select count(*) from phpgw_applications where app_name='"
      			   	. addslashes($n_app_name) . "'",__LINE__,__FILE__);
         $phpgw->db->next_record();
      
@@ -58,7 +58,7 @@
      }
         
      if (! $totalerrors) {
-        $phpgw->db->query("update applications set app_name='" . addslashes($n_app_name) . "',"
+        $phpgw->db->query("update phpgw_applications set app_name='" . addslashes($n_app_name) . "',"
                 	     . "app_title='" . addslashes($n_app_title) . "', app_enabled='"
                         . "$n_app_status',app_order='$app_order' where app_name='$old_app_name'",__LINE__,__FILE__);
 
@@ -72,7 +72,7 @@
         $phpgw->common->phpgw_exit();
      }
   }
-  $phpgw->db->query("select * from applications where app_name='$app_name'",__LINE__,__FILE__);
+  $phpgw->db->query("select * from phpgw_applications where app_name='$app_name'",__LINE__,__FILE__);
   $phpgw->db->next_record();
 
   if ($totalerrors) {

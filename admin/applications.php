@@ -37,7 +37,7 @@
   $phpgw->template->set_var("lang_delete",lang("Delete"));
   $phpgw->template->set_var("lang_enabled",lang("Enabled"));
 
-  $phpgw->db->query("select * from applications $ordermethod",__LINE__,__FILE__);
+  $phpgw->db->query("select * from phpgw_applications $ordermethod",__LINE__,__FILE__);
   while ($phpgw->db->next_record()) {
      $tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
      $name = $phpgw->db->f("app_title");

@@ -20,7 +20,7 @@
   $phpgw->template->set_file(array("body" => "delete_common.tpl"));
 
   if ($confirm) {
-        $phpgw->db->query("delete from applications where app_name='$app_name'",__LINE__,__FILE__);
+        $phpgw->db->query("delete from phpgw_applications where app_name='$app_name'",__LINE__,__FILE__);
 
         Header("Location: " . $phpgw->link("applications.php"));
         $phpgw->common->phpgw_exit();

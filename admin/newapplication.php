@@ -37,7 +37,7 @@
         $app_order = 0;
      }
   
-     $phpgw->db->query("select count(*) from applications where app_name='"
+     $phpgw->db->query("select count(*) from phpgw_applications where app_name='"
                . addslashes($n_app_name) . "'",__LINE__,__FILE__);
      $phpgw->db->next_record();
      
@@ -56,7 +56,7 @@
         $error[$totalerrors++] = lang("You must enter an application title.");
      
      if (! $totalerrors) {
-        $phpgw->db->query("insert into applications (app_name,app_title,app_enabled,app_order) values('"
+        $phpgw->db->query("insert into phpgw_applications (app_name,app_title,app_enabled,app_order) values('"
                      . addslashes($n_app_name) . "','" . addslashes($n_app_title) . "','"
                      . "$n_app_status','$app_order')",__LINE__,__FILE__);
 
@@ -92,7 +92,7 @@
   display_row(lang("Status"),'<select name="n_app_status">' . $status_html . '</select>');
 
   if (! $app_order) {
-     $phpgw->db->query("select (max(app_order)+1) as max from applications");
+     $phpgw->db->query("select (max(app_order)+1) as max from phpgw_applications");
      $phpgw->db->next_record();
      $app_order = $phpgw->db->f("max");
   }
