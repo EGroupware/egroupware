@@ -122,7 +122,7 @@
 			elseif(!empty($ConfigLogin) && $auth_type == 'Config')
 			{
 				/* config login */
-				if($FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
+				if(isset($GLOBALS['phpgw_domain'][$FormDomain]) && $FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
 				{
 					setcookie('ConfigPW',"$FormPW","$expire");
 					setcookie('ConfigDomain',"$FormDomain","$expire");

@@ -252,6 +252,15 @@
 			$GLOBALS['phpgw_setup']->db->Halt_On_Error = 'no';
 			// _debug_array($setup_info);
 
+			if (!$GLOBALS['phpgw_setup']->db->Link_ID)
+			{
+				$GLOBALS['phpgw_setup']->db->connect();
+			}
+			if (!$GLOBALS['phpgw_setup']->db->Link_ID)
+			{
+				$GLOBALS['phpgw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
+				return 1;
+			}
 			if(!isset($setup_info['phpgwapi']['currentver']))
 			{
 				$setup_info = $this->get_db_versions($setup_info);
