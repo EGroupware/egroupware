@@ -53,7 +53,7 @@
         $group_con = $phpgw->db->f("group_id");
 
         for ($i=0; $i<count($n_users);$i++) {
-           $phpgw->db->query("SELECT groups FROM accounts WHERE con=".$n_users[$i]);
+           $phpgw->db->query("SELECT account_groups FROM accounts WHERE account_id=".$n_users[$i]);
 	      $phpgw->db->next_record();
            $user_groups = $phpgw->db->f("groups") . ",$group_con:0,";
 
