@@ -440,11 +440,10 @@
 		@param $text ?
 		@param $extra default ''
 		*/
-		function show_sort_order($sort,$var,$order,$program,$text,$extra='')
+		function show_sort_order($sort,$var,$order,$program,$text,$extra='',$build_a_href=True)
 		{
 			global $phpgw, $filter, $qfield, $start, $query;
 			$_query = stripslashes($query);
-
 
 			if (($order == $var) && ($sort == 'ASC'))
 			{
@@ -459,8 +458,16 @@
 				$sort = 'ASC';
 			}
 
-			return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
-				. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra) . '">' . $text . '</a>';
+			if ($build_a_href)
+			{
+				return '<a href="' . $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
+					. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra) . '">' . $text . '</a>';
+			}
+			else
+			{
+				return $phpgw->link($program,"order=$var&sort=$sort&filter=$filter&"
+					. "qfield=$qfield&start=$start&query=" . urlencode($_query) . $extra);
+			}
 		}
 
 		function show_sort_order_imap($sort,$order,$program,$text,$extra='')
