@@ -10,6 +10,10 @@
   \**************************************************************************/
 
   /* $Id$ */
+  
+  // Idea:  This is so I don't forget.  When they are preforming a new install, after config,
+  //        forward them right to index.php.  Create a session for them and have a nice little intro
+  //        page explaining what to do from there (ie, create there own account)
 
   $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("../header.inc.php");
