@@ -82,6 +82,7 @@ group ?	admin	en	group ?
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
 group has been updated	common	en	Group has been updated
+group manager	admin	en	Group Manager
 group name	admin	en	Group Name
 hide php information	admin	en	hide php information
 home directory	admin	en	Home directory
