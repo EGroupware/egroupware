@@ -31,7 +31,7 @@
 	class etemplate extends boetemplate
 	{
 		var $debug; // 1=calls to show and process_show, 2=content after process_show,
-						// 3=calls to show_cell and process_show_cell, or template-name or cell-type
+					// 3=calls to show_cell and process_show_cell, or template-name or cell-type
 		var $html;	// instance of html-class
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 
@@ -334,9 +334,9 @@
 			{
 				if (!(list($r_key) = each($this->data)))	// no further row
 				{
-					if (!($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) &&
-						!($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname) ||
-						!$this->isset_array($content,$idx))
+					if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) ||
+						($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname)) ||
+						!$this->isset_array($content,$idx_cname))
 					{
 						break;                     	// no auto-row-repeat
 					}
@@ -783,6 +783,10 @@
 						if (isset($sel_options[$org_name]) && is_array($sel_options[$org_name]))
 						{
 							$sels += $sel_options[$org_name];
+						}
+						elseif (isset($sel_options[$name_parts[0]]) && is_array($sel_options[$name_parts[0]]))
+						{
+							$sels += $sel_options[$name_parts[0]];
 						}
 					}
 					if (isset($content["options-$name"]))
