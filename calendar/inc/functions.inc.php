@@ -11,7 +11,83 @@
 
   /* $Id$ */
 
+  global $phpgw_info, $phpgw, $grants, $owner, $rights, $filter;
+  global $date, $year, $month, $day, $thisyear, $thismonth, $thisday;
+
+  if(!isset($filter) || !$filter)
+  {
+    $filter = $phpgw_info["user"]["preferences"]["calendar"]["defaultfilter"];
+  }
+
+  $grants = $phpgw->acl->get_grants('calendar');
+
+  if(!isset($owner))
+  {
+    $owner = 0;
+  }
+
+  if(!isset($owner) || !$owner)
+  {
+    $owner = $phpgw_info['user']['account_id'];
+    $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
+  }
+  else
+  {
+    if($grants[$owner])
+    {
+      $rights = $grants[$owner];
+      if (!($rights & PHPGW_ACL_READ))
+      {
+        $owner = $phpgw_info['user']['account_id'];
+      }
+    }
+  }
+
   /* Load calendar class */
   $printer_friendly = ((isset($friendly) && ($friendly==1))?True:False);
   $phpgw->calendar  = CreateObject('calendar.calendar',$printer_friendly);
+
+  if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
+    $phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
+    
+  if (isset($date) && strlen($date) > 0)
+  {
+    $thisyear  = intval(substr($date, 0, 4));
+    $thismonth = intval(substr($date, 4, 2));
+    $thisday   = intval(substr($date, 6, 2));
+  }
+  else
+  {
+    if (!isset($day) || !$day)
+    {
+      $thisday = $phpgw->calendar->today['day'];
+    }
+    else
+    {
+      $thisday = $day;
+    }
+    
+    if (!isset($month) || !$month)
+    {
+      $thismonth = $phpgw->calendar->today['month'];
+    }
+    else
+    {
+      $thismonth = $month;
+    }
+    
+    if (!isset($year) || !$year)
+    {
+      $thisyear = $phpgw->calendar->today['year'];
+    }
+    else
+    {
+      $thisyear = $year;
+    }
+
+  }
+  
+  $phpgw->calendar->tempyear = $thisyear;
+  $phpgw->calendar->tempmonth = $thismonth;
+  $phpgw->calendar->tempday = $thisday;
 ?>

@@ -28,47 +28,6 @@
 
   include('../header.inc.php');
 
-  if(isset($friendly) && $friendly) {
-    if(!isset($phpgw_info['user']['preferences']['calendar']['weekdaystarts']))
-      $phpgw_info['user']['preferences']['calendar']['weekdaystarts'] = 'Sunday';
-
-    if (isset($date) && strlen($date) > 0) {
-       $thisyear  = intval(substr($date, 0, 4));
-       $thismonth = intval(substr($date, 4, 2));
-       $thisday   = intval(substr($date, 6, 2));
-    } else {
-       if (!isset($day) || !$day)
-          $thisday = $phpgw->calendar->today['day'];
-       else
-          $thisday = $day;
-       if (!isset($month) || !$month)
-          $thismonth = $phpgw->calendar->today['month'];
-       else
-          $thismonth = $month;
-       if (!isset($year) || !$year)
-          $thisyear = $phpgw->calendar->today['year'];
-       else
-          $thisyear = $year;
-    }
-    
-    if(!isset($owner)) { $owner = 0; } 
-
-    if(!isset($owner) || !$owner) {
-      $owner = $phpgw_info['user']['account_id'];
-      $rights = PHPGW_ACL_READ + PHPGW_ACL_ADD + PHPGW_ACL_EDIT + PHPGW_ACL_DELETE + 16;
-    } else {
-      $grants = $phpgw->acl->get_grants('calendar');
-      if($grants[$owner])
-      {
-        $rights = $grants[$owner];
-        if (!($rights & PHPGW_ACL_READ))
-        {
-          $owner = $phpgw_info['user']['account_id'];
-        }
-      }
-    }
-  }
-
   $next = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth + 1,1,$thisyear));
 
   $prev = $phpgw->calendar->splitdate(mktime(2,0,0,$thismonth - 1,1,$thisyear));
@@ -98,7 +57,7 @@
   flush();
   $p->set_var('large_month',$phpgw->calendar->display_large_month($thismonth,$thisyear,True,$owner));
   if (!$friendly) {
-    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter;
+    $param = 'year='.$thisyear.'&month='.$thismonth.'&friendly=1&filter='.$filter.'&owner='.$owner;
     $p->set_var('print','<a href="'.$phpgw->link('',$param).'" TARGET="cal_printer_friendly" onMouseOver="window.'
 	   . "status = '" . lang('Generate printer-friendly version'). "'\">[". lang('Printer Friendly') . ']</a>');
     $p->parse('out','index_t');

@@ -131,6 +131,20 @@
       }
     }
 
+    function check_perms($needed)
+    {
+      global $rights;
+      
+      if($rights & $needed)
+      {
+        return True;
+      }
+      else
+      {
+        return False;
+      }
+    }
+
     function group_search($owner=0) {
       global $phpgw, $phpgw_info;
       
@@ -351,25 +365,25 @@
       global $phpgw_info;
 
       $is_private  = False;
-      if ($owner == $phpgw_info['user']['account_id'] || $owner == 0) {
+      if ($owner == $phpgw_info['user']['account_id'] || $owner == 0 || $this->check_perms(16) == True) {
       } elseif ($cal_info->access == 'private') {
-	$is_private = True;
+        $is_private = True;
       } elseif($cal_info->access == 'group') {
-	$is_private = True;
-	$phpgw->db->query('SELECT account_lid FROM accounts WHERE account_id='.$owner,__LINE__,__FILE__);
-	$phpgw->db->next_record();
-	$groups = $phpgw->accounts->read_groups($phpgw->db->f('account_lid'));
-	while ($group = each($groups)) {
-	  if (strpos(' '.$cal_info->groups.' ',','.$group[0]).',') $is_private = False;
-	}
+        $is_private = True;
+        $phpgw->db->query('SELECT account_lid FROM accounts WHERE account_id='.$owner,__LINE__,__FILE__);
+        $phpgw->db->next_record();
+        $groups = $phpgw->accounts->read_groups($phpgw->db->f('account_lid'));
+        while ($group = each($groups)) {
+          if (strpos(' '.$cal_info->groups.' ',','.$group[0]).',') $is_private = False;
+        }
       }
       if ($is_private) {
-	$str = 'private';
+        $str = 'private';
       } elseif (strlen($cal_info->name) > 19) {
-	$str = substr($cal_info->name, 0 , 19);
-	$str .= '...';
+        $str = substr($cal_info->name, 0 , 19);
+        $str .= '...';
       } else {
-	$str = $cal_info->name;
+        $str = $cal_info->name;
       }
       return $str;
     }
@@ -794,7 +808,6 @@
     function display_week($startdate,$weekly,$cellcolor,$display_name = False,$owner=0,$monthstart=0,$monthend=0) {
       global $phpgw;
       global $phpgw_info;
-      global $rights;
       
       $str = '';
       $gr_events = CreateObject('calendar.calendar_item');
@@ -832,19 +845,19 @@
 
           if (!$this->printer_friendly) {
             $str = '';
-            if($rights & PHPGW_ACL_ADD) {
+            if($this->check_perms(PHPGW_ACL_ADD) == True) {
               $str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date_year.'&month='.$date['month'].'&day='.$date['day']).'">';
             }
             
             $str .= '<img src="'.$phpgw->common->get_image_path('calendar').'/new.gif" width="10" height="10" ';
             
-            if($rights & PHPGW_ACL_ADD) {
+            if($this->check_perms(PHPGW_ACL_ADD) == True) {
               $str .= 'alt="'.lang('New Entry').'" ';
             }
             
             $str .= 'border="0" align="right">';
             
-            if($rights & PHPGW_ACL_ADD) {
+            if($this->check_perms(PHPGW_ACL_ADD) == True) {
               $str .= '</a>';
             }
             
@@ -1163,7 +1176,7 @@
     }
 
     function mini_calendar($day,$month,$year,$link='') {
-      global $phpgw, $phpgw_info, $view;
+      global $phpgw, $phpgw_info, $view, $owner;
 
       $date = $this->makegmttime(0,0,0,$month,$day,$year);
       $month_ago = intval(date('Ymd',mktime(0,0,0,$month - 1,$day,$year)));
@@ -1183,9 +1196,17 @@
       $p->set_var('cal_img_root',$phpgw->common->get_image_path('calendar'));
       $p->set_var('bgcolor',$phpgw_info['theme']['bg_color']);
       $p->set_var('bgcolor1',$phpgw_info['theme']['bg_color']);
-      $p->set_var('month','<a href="' . $phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/index.php','month=' . date('m',$date['raw']).'&year=' . date('Y',$date['raw'])) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year) . '</a>';
-      $p->set_var('prevmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/index.php','date='.$month_ago));
-      $p->set_var('nextmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/index.php','date='.$month_ahead));
+      if(!$this->printer_friendly)
+      {
+        $p->set_var('month','<a href="' . $phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','month='.date('m',$date['raw']).'&year='.date('Y',$date['raw']).'&owner='.$owner) . '" class="minicalendar">' . lang($phpgw->common->show_date($date['raw'],'F')).' '.$year . '</a>');
+      }
+      else
+      {
+        $p->set_var('month',lang($phpgw->common->show_date($date['raw'],'F')).' '.$year);
+      }
+
+      $p->set_var('prevmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ago.'&owner='.$owner));
+      $p->set_var('nextmonth',$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/month.php','date='.$month_ahead.'&owner='.$owner));
 
       $p->set_var('bgcolor2',$phpgw_info['theme']['cal_dayview']);
       for($i=0;$i<7;$i++) {
@@ -1207,7 +1228,7 @@
 	          $p->set_var('bgcolor2','#FFFFFF');
 	        }
 	        if(!$this->printer_friendly) {
-	      	  $str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day']).'" class="minicalendar">';
+	      	  $str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/'.$link,'year='.$cal['year'].'&month='.$cal['month'].'&day='.$cal['day'].'&owner='.$owner).'" class="minicalendar">';
 	    	}
 	        $str .= $cal['day'];
 	    	if (!$this->printer_friendly) $str .= '</a>';
@@ -1398,7 +1419,7 @@
         $p->set_var('open_link','');
         $p->set_var('close_link','');
         $str = ' - ';
-        if(!$this->printer_friendly) {
+        if(!$this->printer_friendly && $this->check_perms(PHPGW_ACL_EDIT)) {
           $str .= '<a href="'.$phpgw->link($phpgw_info['server']['webserver_url'].'/calendar/edit_entry.php','year='.$date['year']
                 . '&month='.$date['month'].'&day='.$date['day']
                 . '&hour='.substr($time,0,strpos($time,':'))
@@ -1406,7 +1427,7 @@
         }
         $p->set_var('open_link',$str);
         $p->set_var('time',(intval(substr($time,0,strpos($time,':'))) < 10 ? '0'.$time : $time) );
-        if(!$this->printer_friendly) {
+        if(!$this->printer_friendly && $this->check_perms(PHPGW_ACL_EDIT)) {
           $p->set_var('close_link','</a>');
         }
         $p->parse('monthweek_day','day_row_time',True);
