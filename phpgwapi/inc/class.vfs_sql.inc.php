@@ -1461,16 +1461,14 @@
 				}
 				elseif (!$t->outside)
 				{
-					/* RalfBecker 2004/09/19: for my undetstanding the query does nothing, as it only sets rows already containing these values !!!
 					$this->db->update($this->vfs_table,array(
 							'directory'	=> $t->fake_leading_dirs,
 							'name'		=> $t->fake_name,
 						),array(
-							'directory'	=> $t->fake_leading_dirs,
-							'name'		=> $t->fake_name,
+							'directory'	=> $f->fake_leading_dirs,
+							'name'		=> $f->fake_name,
 							$this->extra_sql(array ('query_type' => VFS_SQL_UPDATE)),
 						), __LINE__, __FILE__);
-					*/
 				}
 
 				$this->set_attributes(array(
