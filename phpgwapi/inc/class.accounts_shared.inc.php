@@ -46,6 +46,18 @@
 			}
 		}
 
+		function is_expired()
+		{
+			if ($this->data['expires'] != -1 && $this->data['expires'] < time())
+			{
+				return True;
+			}
+			else
+			{
+				return False;
+			}
+		}
+
 		function read()
 		{
 			if (count($this->data) == 0)
