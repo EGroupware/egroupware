@@ -29,61 +29,64 @@
     var $groups;
     var $group_names;
     var $apps;
+    var $db;
+    
+    function accounts_()
+    {
+       global $phpgw;
+       $this->db = $phpgw->db;
+    }
 
     function fill_user_array()
     {
       global $phpgw_info, $phpgw;
-      
-      $db2 = $phpgw->db;
 
-      $db2->query("select * from accounts where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
-      $db2->next_record();
+      $this->db->query("select * from accounts where account_lid='" . $phpgw_info["user"]["userid"] . "'",__LINE__,__FILE__);
+      $this->db->next_record();
     
       /* Now dump it into the array */
-      $phpgw_info["user"]["account_id"]        = $db2->f("account_id");
-      $phpgw_info["user"]["firstname"]         = $db2->f("account_firstname");
-      $phpgw_info["user"]["lastname"]          = $db2->f("account_lastname");
-      $phpgw_info["user"]["fullname"]          = $db2->f("account_firstname") . " "
-                                               . $db2->f("account_lastname");
-      $phpgw_info["user"]["groups"]            = explode (",", $db2->f("account_groups"));
+      $phpgw_info["user"]["account_id"]        = $this->db->f("account_id");
+      $phpgw_info["user"]["firstname"]         = $this->db->f("account_firstname");
+      $phpgw_info["user"]["lastname"]          = $this->db->f("account_lastname");
+      $phpgw_info["user"]["fullname"]          = $this->db->f("account_firstname") . " "
+                                               . $this->db->f("account_lastname");
+      $phpgw_info["user"]["groups"]            = explode (",", $this->db->f("account_groups"));
 
 //      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
 //      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
 //      $phpgw_info["user"]["preferences"] = $prefs->get_saved_preferences();
 //      $phpgw_info["user"]["apps"] = $apps->enabled_apps();
 
-      $phpgw_info["user"]["lastlogin"]         = $db2->f("account_lastlogin");
-      $phpgw_info["user"]["lastloginfrom"]     = $db2->f("account_lastloginfrom");
-      $phpgw_info["user"]["lastpasswd_change"] = $db2->f("account_lastpwd_change");
-      $phpgw_info["user"]["status"]            = $db2->f("account_status");
+      $phpgw_info["user"]["lastlogin"]         = $this->db->f("account_lastlogin");
+      $phpgw_info["user"]["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+      $phpgw_info["user"]["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+      $phpgw_info["user"]["status"]            = $this->db->f("account_status");
     }
 
     function read_userData($id)
     {
       global $phpgw_info, $phpgw;
       
-      $db2 = $phpgw->db;
-      
-      $db2->query("select * from accounts where account_id='$id'",__LINE__,__FILE__);
-      $db2->next_record();
+      $this->db->query("select * from accounts where account_id='$id'",__LINE__,__FILE__);
+      $this->db->next_record();
     
       /* Now dump it into the array */
-      $userData["account_id"]        = $db2->f("account_id");
-      $userData["account_lid"]       = $db2->f("account_lid");
-      $userData["firstname"]         = $db2->f("account_firstname");
-      $userData["lastname"]          = $db2->f("account_lastname");
-      $userData["fullname"]          = $db2->f("account_firstname") . " "
-                                               . $db2->f("account_lastname");
-      $userData["groups"]            = explode(",", $db2->f("account_groups"));
+      $userData["account_id"]        = $this->db->f("account_id");
+      $userData["account_lid"]       = $this->db->f("account_lid");
+      $userData["firstname"]         = $this->db->f("account_firstname");
+      $userData["lastname"]          = $this->db->f("account_lastname");
+      $userData["fullname"]          = $this->db->f("account_firstname") . " "
+                                               . $this->db->f("account_lastname");
+      $userData["groups"]            = explode(",", $this->db->f("account_groups"));
 //      $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
 //      $prefs = CreateObject('phpgwapi.preferences',intval($phpgw_info["user"]["account_id"]));
 //      $userData["preferences"] = $prefs->get_saved_preferences();
 //      $userData["apps"] = $apps->enabled_apps();
 
-      $userData["lastlogin"]         = $db2->f("account_lastlogin");
-      $userData["lastloginfrom"]     = $db2->f("account_lastloginfrom");
-      $userData["lastpasswd_change"] = $db2->f("account_lastpwd_change");
-      $userData["status"]            = $db2->f("account_status");
+      $userData["lastlogin"]         = $this->db->f("account_lastlogin");
+      $userData["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
+      $userData["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
+      $userData["status"]            = $this->db->f("account_status");
       
       return $userData;
     }
@@ -91,8 +94,7 @@
     function read_groups($id)
     {
       global $phpgw_info, $phpgw;
-       
-      $db2 = $phpgw->db;
+
       if (gettype($id) == "string") { $id = $this->username2userid($id); }
       $groups = Array();
       $group_memberhips = $phpgw->acl->get_location_list_for_id("phpgw_group", 1, "u", $id);
@@ -108,8 +110,6 @@
     {
        global $phpgw, $phpgw_info;
 
-       $db2 = $phpgw->db;
-
        if (! $lid) {
           $lid = $phpgw_info["user"]["userid"];
        }
@@ -117,10 +117,10 @@
 
        $i = 0;
        while ($groups && $group = each($groups)) {
-          $db2->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
-          $db2->next_record();
+          $this->db->query("select group_name from groups where group_id=".$group[0],__LINE__,__FILE__);
+          $this->db->next_record();
           $group_names[$i][0]   = $group[0];
-          $group_names[$i][1]   = $db2->f("group_name");
+          $group_names[$i][1]   = $this->db->f("group_name");
           $group_names[$i++][2] = $group[1];
        }
 
@@ -135,8 +135,6 @@
     {
        global $phpgw;
 
-       $db2 = $phpgw->db;
-
        if ($group) {
           $users = $phpgw->acl->get_ids_for_location($group, 1, "phpgw_group", "u");
           reset ($users);
@@ -149,15 +147,15 @@
             }
           }
           $sql .= ")";
-          $db2->query($sql,__LINE__,__FILE__);
+          $this->db->query($sql,__LINE__,__FILE__);
        } else {
-          $db2->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
+          $this->db->query("select account_lid,account_firstname,account_lastname from accounts",__LINE__,__FILE__);
        }
        $i = 0;
-       while ($db2->next_record()) {
-          $accounts["account_lid"][$i]       = $db2->f("account_lid");
-          $accounts["account_firstname"][$i] = $db2->f("account_firstname");
-          $accounts["account_lastname"][$i]  = $db2->f("account_lastname");
+       while ($this->db->next_record()) {
+          $accounts["account_lid"][$i]       = $this->db->f("account_lid");
+          $accounts["account_firstname"][$i] = $this->db->f("account_firstname");
+          $accounts["account_lastname"][$i]  = $this->db->f("account_lastname");
     	  $i++;
        }
        return $accounts;
@@ -166,11 +164,11 @@
     function username2userid($user_name)
     {
       global $phpgw, $phpgw_info;
-      $db2 = $phpgw->db;
-      $db2->query("SELECT account_id FROM accounts WHERE account_lid='".$user_name."'",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        $db2->next_record();
-        return $db2->f("account_id");
+
+      $this->db->query("SELECT account_id FROM accounts WHERE account_lid='".$user_name."'",__LINE__,__FILE__);
+      if($this->db->num_rows()) {
+        $this->db->next_record();
+        return $this->db->f("account_id");
       }else{
         return False;
       }
@@ -179,11 +177,11 @@
     function userid2username($user_id)
     {
       global $phpgw, $phpgw_info;
-      $db2 = $phpgw->db;
-      $db2->query("SELECT account_lid FROM accounts WHERE account_id='".$user_id."'",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        $db2->next_record();
-        return $db2->f("account_lid");
+
+      $this->db->query("SELECT account_lid FROM accounts WHERE account_id='".$user_id."'",__LINE__,__FILE__);
+      if($this->db->num_rows()) {
+        $this->db->next_record();
+        return $this->db->f("account_lid");
       }else{
         return False;
       }
@@ -192,11 +190,11 @@
     function groupname2groupid($group_name)
     {
       global $phpgw, $phpgw_info;
-      $db2 = $phpgw->db;
-      $db2->query("SELECT group_id FROM groups WHERE group_name='".$group_name."'",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        $db2->next_record();
-        return $db2->f("group_id");
+
+      $this->db->query("SELECT group_id FROM groups WHERE group_name='".$group_name."'",__LINE__,__FILE__);
+      if($this->db->num_rows()) {
+        $this->db->next_record();
+        return $this->db->f("group_id");
       }else{
         return False;
       }
@@ -205,11 +203,11 @@
     function groupid2groupname($group_id)
     {
       global $phpgw, $phpgw_info;
-      $db2 = $phpgw->db;
-      $db2->query("SELECT group_name FROM groups WHERE group_id='".$group_id."'",__LINE__,__FILE__);
-      if($db2->num_rows()) {
-        $db2->next_record();
-        return $db2->f("group_name");
+
+      $this->db->query("SELECT group_name FROM groups WHERE group_id='".$group_id."'",__LINE__,__FILE__);
+      if($this->db->num_rows()) {
+        $this->db->next_record();
+        return $this->db->f("group_name");
       }else{
         return False;
       }
