@@ -71,7 +71,7 @@
 					// 0 = sundays are observed on monday (+1), 6 = saturdays are observed on fridays (-1)
 					if($dow == 0 || $dow == 6)
 					{
-						$this->add($holiday,&$holidays,$year,$i,$dow == 0 ? 1 : -1);
+						$this->add($holiday,$holidays,$year,$i,$dow == 0 ? 1 : -1);
 					}
 					if ($holiday['month'] == 1 && $day == 1)
 					{
@@ -79,10 +79,10 @@
 						// checking if next year's newyear might be observed in this year
 						if ($dow == 6)
 						{
-							$this->add($holiday,&$holidays,$year+1,$i,-1);
+							$this->add($holiday,$holidays,$year+1,$i,-1);
 						}
 						// add the next years newyear, to show it in a week- or month-view
-						$this->add($holiday,&$holidays,$year+1,$i);
+						$this->add($holiday,$holidays,$year+1,$i);
 					}
 					// checking if last year's new year's eve might be observed in this year
 					if ($holiday['month'] == 12 && $day == 31)
@@ -90,10 +90,10 @@
 						$dow = $GLOBALS['phpgw']->datetime->day_of_week($year-1,$holiday['month'],$day);
 						if ($dow == 0)
 						{
-							$this->add($holiday,&$holidays,$year-1,$i,1);
+							$this->add($holiday,$holidays,$year-1,$i,1);
 						}
 						// add the last years new year's eve, to show it in a week- or month-view
-						$this->add($holiday,&$holidays,$year-1,$i);
+						$this->add($holiday,$holidays,$year-1,$i);
 					}
 				}
 			}
