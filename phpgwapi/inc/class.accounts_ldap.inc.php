@@ -33,6 +33,7 @@
 		var $user_context  = '';
 		var $group_context = '';
 		var $total;
+		var $account_type;
 
 		function accounts_()
 		{
@@ -430,6 +431,7 @@
 			{
 				return $id_list[$account_id];
 			}
+			$id_list[$account_id] = '';
 
 			$allValues = array();
 			$sri = ldap_search($this->ds, $this->group_context, "(&(gidnumber=$account_id)(phpgwaccounttype=g))");

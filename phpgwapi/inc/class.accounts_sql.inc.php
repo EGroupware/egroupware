@@ -34,6 +34,7 @@
 		var $account_id;
 		var $data;
 		var $total;
+		var $account_type;
 
 		function accounts_()
 		{
