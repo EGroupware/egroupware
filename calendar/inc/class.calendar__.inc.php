@@ -278,6 +278,10 @@ class calendar__
 	function event_init()
 	{
 		$this->event = CreateObject('calendar.calendar_item');
+		$this->event->start = new calendar_time;
+		$this->event->end = new calendar_time;
+		$this->event->mod = new calendar_time;
+		$this->event->recur_enddate = new calendar_time;
 		$this->add_attribute('owner',intval($this->user));
 	}
 

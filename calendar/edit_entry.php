@@ -117,8 +117,8 @@
 			$thisminute = (int)$minute;
 		}
 
-		$phpgw->calendar->set_start($thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
-		$phpgw->calendar->set_end($thisyear,$thismonth,$thisday,$thishour,$this->minute,0);
+		$phpgw->calendar->set_start($thisyear,$thismonth,$thisday,$thishour,$thisminute,0);
+		$phpgw->calendar->set_end($thisyear,$thismonth,$thisday,$thishour,$thisminute,0);
 		$phpgw->calendar->set_title('');
 		$phpgw->calendar->set_description('');
 		$phpgw->calendar->add_attribute('priority',2);

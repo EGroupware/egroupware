@@ -108,12 +108,8 @@ class calendar_ extends calendar__
 		
 		if($this->stream->num_rows() > 0)
 		{
-			$this->event = CreateObject('calendar.calendar_item');
-			$this->event->start = new calendar_time;
-			$this->event->end = new calendar_time;
-			$this->event->mod = new calendar_time;
-			$this->event->recur_enddate = new calendar_time;
-
+			$this->event_init();
+			
 			$this->stream->next_record();
 			// Load the calendar event data from the db into $event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
