@@ -1,0 +1,15 @@
+addressbook     common	pt-br	Rubrica
+address book	common	pt-br	Contatos
+birthday	common	pt-br	Aniversario
+city	common	pt-br	Cidade
+fax	common	pt-br	Fax
+home phone	addressbook	pt-br	Fone Residencial
+cell phone	addressbook	pt-br	Celular
+other number	addressbook	pt-br	Outro Numero
+pager	common	pt-br	Pager
+state	common	pt-br	Estado
+street	common	pt-br	Rua
+today is %1's birthday!	common	pt-br	Hoje e' aniversario de %1!
+tomorrow is %1's birthday.	common	pt-br	Amanha e' aniversario de %1.
+work phone	common	pt-br	Fone Comercial
+zip code	common	pt-br	CEP
