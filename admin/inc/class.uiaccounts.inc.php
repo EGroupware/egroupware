@@ -799,9 +799,12 @@
 				}
 			}
 
-			$perm_html = '';
+			$perm_html = '<td>'.lang('Application').'</td><td>&nbsp;</td><td>'.lang('ACL').'</td>';
+			$perm_html = '<tr bgcolor="'.$GLOBALS['phpgw_info']['theme']['th_bg'].'">'.
+				$perm_html.$perm_html."</tr>\n";
+			
 			$tr_color = $GLOBALS['phpgw_info']['theme']['row_off'];
-			for ($i=0;$perm_display[$i][1];$i++)
+			for ($i=0;$i < count($perm_display);$i++)
 			{
 				$app = $perm_display[$i][0];
 				if(!($i & 1))
@@ -811,7 +814,7 @@
 				}
 				$perm_html .= '<td width="40%">' . lang($perm_display[$i][1]) . '</td>'
 					. '<td width="5%"><input type="checkbox" name="account_apps['
-					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%">'
+					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'></td><td width="5%" align="center">'
 					. ($apps_with_acl[$app] && $group_info['account_id']?'<a href="'.$GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$group_info['account_id'])
 					. '" target="_blank"><img src="'.$GLOBALS['phpgw']->common->image('admin','dot').'" border="0" hspace="3" align="absmiddle" alt="'
 					. lang('Grant Access').'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
