@@ -123,7 +123,7 @@
 		exit;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header('LDAP Modify','','ldapmodify',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header('LDAP Modify','','config',$ConfigDomain);
 
 	if ($submit)
 	{

@@ -81,6 +81,7 @@
 			{
 				$GLOBALS['phpgw_setup']->html->show_header('Please login',True);
 				$GLOBALS['phpgw_setup']->html->login_form();
+				$GLOBALS['phpgw_setup']->html->show_footer();
 				exit;
 			}
 			break;
@@ -89,6 +90,7 @@
 			{
 				$GLOBALS['phpgw_setup']->html->show_header('Please login',True);
 				$GLOBALS['phpgw_setup']->html->login_form();
+				$GLOBALS['phpgw_setup']->html->show_footer();
 				exit;
 			}
 			$GLOBALS['phpgw_info']['setup']['HeaderFormMSG'] = 'Edit your header.inc.php';

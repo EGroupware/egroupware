@@ -69,105 +69,113 @@
 		function auth($auth_type='Config')
 		{
 			$FormLogout   = get_var('FormLogout',  array('GET','POST'));
-			$ConfigLogin  = get_var('ConfigLogin', array('POST','COOKIE'));
-			$HeaderLogin  = get_var('HeaderLogin', array('POST','COOKIE'));
+			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
+			$HeaderLogin  = get_var('HeaderLogin', array('POST'));
 			$FormDomain   = get_var('FormDomain',  array('POST'));
 			$FormPW       = get_var('FormPW',      array('POST'));
+
 			$ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
 			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
-			$HeaderPW     = get_var('HeaderPW',    array('COOKIE','POST'));
+			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
 			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 
-			if(isset($FormLogout) && !empty($FormLogout))
+			/* 6 cases:
+				1. Logging into header admin
+				2. Logging into config admin
+				3. Logging out of config admin
+				4. Logging out of header admin
+				5. Return visit to config OR header
+				6. None of the above
+			*/
+
+			if(!empty($HeaderLogin) && $auth_type == 'Header')
 			{
-				if($FormLogout == 'config' ||
-					$FormLogout == 'ldap' ||
-					$FormLogout == 'ldapexport' ||
-					$FormLogout == 'ldapimport' ||
-					$FormLogout == 'sqltoarray')
+				/* header admin login */
+				if($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
 				{
-					setcookie('ConfigPW','');  /* scrub the old one */
-					setcookie('ConfigDomain','');  /* scrub the old one */
+					setcookie('HeaderPW',"$FormPW");
+					return True;
+				}
+				else
+				{
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+					return False;
+				}
+			}
+			elseif(!empty($ConfigLogin) && $auth_type == 'Config')
+			{
+				/* config login */
+				if($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'])
+				{
+					setcookie('ConfigPW',"$FormPW");
+					setcookie('ConfigDomain',"$FormDomain");
+					setcookie('ConfigLang',"$ConfigLang");
+					return True;
+				}
+				else
+				{
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+					return False;
+				}
+			}
+			elseif(!empty($FormLogout))
+			{
+				/* logout */
+				if($FormLogout == 'config')
+				{
+					/* config logout */
+					setcookie('ConfigPW','');
+					setcookie('ConfigDomain','');
 					setcookie('ConfigLang','');
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'You have successfully logged out';
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+
 					return False;
 				}
 				elseif($FormLogout == 'header')
 				{
-					setcookie('HeaderPW','');  /* scrub the old one */
+					/* header admin logout */
+					setcookie('HeaderPW','');
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'You have successfully logged out';
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
+
 					return False;
 				}
 			}
-			elseif(isset($ConfigPW) && !empty($ConfigPW))
+			elseif(!empty($ConfigPW) && $auth_type == 'Config')
 			{
-				if($ConfigPW != $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'] && $auth_type == 'Config')
+				/* Returning after login to config */
+				if($ConfigPW == $GLOBALS['phpgw_domain'][$ConfigDomain]['config_passwd'])
 				{
-					setcookie('ConfigPW','');  /* scrub the old one */
-					setcookie('ConfigDomain','');  /* scrub the old one */
-					setcookie('ConfigLang','');
-					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
+					return True;
+				}
+				else
+				{
+					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
 					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
 					return False;
 				}
-				else
+			}
+			elseif(!empty($HeaderPW) && $auth_type == 'Header')
+			{
+				/* Returning after login to header admin */
+				if($HeaderPW == $GLOBALS['phpgw_info']['server']['header_admin_password'])
 				{
 					return True;
 				}
-			}
-			elseif(isset($FormPW) && !empty($FormPW))
-			{
-				if(isset($ConfigLogin))
+				else
 				{
-					if($FormPW == $GLOBALS['phpgw_domain'][$FormDomain]['config_passwd'] && $auth_type == 'Config')
-					{
-						setcookie('HeaderPW','');  /* scrub the old one */
-						setcookie('ConfigPW',"$FormPW");
-						setcookie('ConfigDomain',"$FormDomain");
-						setcookie('ConfigLang',"$ConfigLang");
-						$ConfigDomain = "$FormDomain";
-						return True;
-					}
-					else
-					{
-						$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = 'Invalid password';
-						$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
-						return False;
-					}
-				}
-				elseif(isset($HeaderLogin) && !empty($HeaderLogin))
-				{
-					if($FormPW == $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
-					{
-						setcookie('HeaderPW',"$FormPW");
-						return True;
-					}
-					else
-					{
-						$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
-						$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
-						return False;
-					}
-				}
-			}
-			elseif(isset($HeaderPW) && !empty($HeaderPW))
-			{
-				if($HeaderPW != $GLOBALS['phpgw_info']['server']['header_admin_password'] && $auth_type == 'Header')
-				{
-					setcookie('HeaderPW','');  /* scrub the old one */
-					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid session cookie (cookies must be enabled)';
+					$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = 'Invalid password';
 					$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
-				}
-				else
-				{
-					return True;
 				}
 			}
 			else
 			{
+				$GLOBALS['phpgw_info']['setup']['HeaderLoginMSG'] = '';
+				$GLOBALS['phpgw_info']['setup']['ConfigLoginMSG'] = '';
 				return False;
 			}
 		}

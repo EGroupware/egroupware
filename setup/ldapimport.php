@@ -396,7 +396,7 @@
 		$setup_complete = True;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header('LDAP Import','','ldapimport',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header('LDAP Import','','config',$ConfigDomain);
 
 	if ($error)
 	{

@@ -230,7 +230,7 @@
 		$setup_complete = True;
 	}
 
-	$GLOBALS['phpgw_setup']->html->show_header('LDAP Export','','ldapexport',$ConfigDomain);
+	$GLOBALS['phpgw_setup']->html->show_header('LDAP Export','','config',$ConfigDomain);
 
 	if($error)
 	{
