@@ -429,7 +429,7 @@
 
 			$title = strchr($method,'.') ? ExecMethod($method,$id) : $this->$method($id);
 
-			if (!$title)	// $app,$id has been deleted ==> unlink als links to it
+			if ($id && !$title)	// $app,$id has been deleted ==> unlink als links to it
 			{
 				$this->unlink(0,$app,$id);
 				return False;
