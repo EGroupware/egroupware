@@ -199,6 +199,10 @@
 			{
 				$GLOBALS['current_config']['temp_dir'] = '/tmp';
 			}
+			elseif(@is_dir('c:\\temp'))
+			{
+				$GLOBALS['current_config']['temp_dir'] = 'c:\\temp';
+			}
 			else
 			{
 				$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
