@@ -20,6 +20,7 @@
 	<xsl:variable name="phpgw_body" select="phpgw_body"/>
 	<xsl:variable name="greybar" select="greybar"/>
 	<xsl:variable name="phpgw_statustext" select="lang_phpgw_statustext"/>
+	<xsl:variable name="app_tpl" select="app_tpl"/>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -103,6 +104,18 @@
 								</xsl:when>
 								<xsl:when test="about">
 									<xsl:call-template name="about"/>
+								</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="$app_tpl != ''">
+									<xsl:choose>
+										<xsl:when test="$app_tpl = 'delete'">
+											<xsl:call-template name="app_delete"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:call-template name="app_data"/>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>

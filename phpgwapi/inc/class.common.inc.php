@@ -1237,6 +1237,8 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 				$this->msgbox('',False,'phpgw');
 			}
 
+			$var['app_tpl'] = ''; 
+
 			switch($GLOBALS['phpgw_info']['flags']['currentapp'])
 			{
 				case 'home':
@@ -1244,6 +1246,16 @@ if (!@is_file(PHPGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['phpgw_info'
 					break;
 				case 'about':
 					$var['about'] = True;
+					break;
+				default:
+					$menuaction	= get_var('menuaction',Array('GET'));
+					$xslt_app	= get_var('xslt_app',Array('GET'));
+
+					if ($menuaction && $GLOBALS['phpgw_info']['flags']['xslt_app'])
+					{
+						$app_function	= strrchr($menuaction,'.');
+						$var['app_tpl']	= substr($app_function,1,strlen($app_function));
+					}
 					break;
 			}
 

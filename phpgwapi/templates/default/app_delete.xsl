@@ -1,5 +1,9 @@
 <!-- $Id$ -->
 
+	<xsl:template name="app_delete">
+		<xsl:apply-templates select="delete"/>
+	</xsl:template>
+
 	<xsl:template match="delete">
 		<xsl:call-template name="app_header"/>
 			<table cellpadding="2" cellspacing="2" align="center">

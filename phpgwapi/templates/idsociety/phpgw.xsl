@@ -23,7 +23,7 @@
 	<xsl:variable name="prefs_title"><xsl:value-of select="prefs_title"/></xsl:variable>
 	<xsl:variable name="logout_title"><xsl:value-of select="logout_title"/></xsl:variable>
 	<xsl:variable name="about_title"><xsl:value-of select="about_title"/></xsl:variable>
-	<xsl:variable name="phpgw_body"><xsl:value-of select="phpgw_body"/></xsl:variable>
+	<xsl:variable name="app_tpl"><xsl:value-of select="app_tpl"/></xsl:variable>
 		<html>
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset={$charset}"/>
@@ -154,6 +154,18 @@
 								</xsl:when>
 								<xsl:when test="about">
 									<xsl:call-template name="about"/>
+								</xsl:when>
+							</xsl:choose>
+							<xsl:choose>
+								<xsl:when test="$app_tpl != ''">
+									<xsl:choose>
+										<xsl:when test="$app_tpl = 'delete'">
+											<xsl:call-template name="app_delete"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:call-template name="app_data"/>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of disable-output-escaping="yes" select="body_data"/>
