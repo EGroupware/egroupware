@@ -23,12 +23,12 @@
 	);
 
 	$setup_info['calendar']['license']  = 'GPL';
+	
 	$setup_info['calendar']['description'] = 'Powerful calendar with meeting request system and ACL security.';
 
-	$setup_info['calendar']['maintainer'] = array
-	(
-		'name'	=> 'Mark Peters',
-		'email'	=> 'skeeter@phpgroupware.org'
+	$setup_info['calendar']['maintainer'] = array(
+		'name'  => 'Ralf Becker',
+		'email' => 'ralfbecker@outdoor-training.de'
 	);
 
 	$setup_info['calendar']['based_on'] = array
@@ -58,7 +58,7 @@
 		'home_year',
 		'manual',
 		'preferences',
-		'about'
+		'settings'
 	);
 
 	/* Dependencies for this app to work */

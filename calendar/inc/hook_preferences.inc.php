@@ -12,16 +12,13 @@
   /* $Id$ */
 {
 // Only Modify the $file and $title variables.....
+	$title = $appname;
 	$file = array(
-		'Preferences' => $GLOBALS['phpgw']->link('/index.php',
-				Array(
-					'menuaction'   => 'calendar.uipreferences.preferences'
-				)
-			),
-		'Grant Access'  => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
+		'Preferences'     => $GLOBALS['phpgw']->link('/preferences/preferences.php','appname='.$appname),
+		'Grant Access'    => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 		'Edit Categories' => $GLOBALS['phpgw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname.'&cats_level=True&global_cats=True')
 	);
 //Do not modify below this line
-	display_section($appname,$file);
+	display_section($appname,$title,$file);
 }
 ?>
