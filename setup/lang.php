@@ -11,166 +11,120 @@
 
   /* $Id$ */
 
-  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi"  => True);
-  include("../header.inc.php");
+  if (! $included) {
+
+  $phpgw_info["flags"] = array("noheader" => True, "nonavbar" => True, "currentapp" => "home", "noapi" => True);
   include("./inc/functions.inc.php");
-
+  include("../header.inc.php");
   // Authorize the user to use setup app and load the database
-  // include("./inc/setup_auth.inc.php");
   // Does not return unless user is authorized
-  $phpgw_info["server"]["api_inc"] = $phpgw_info["server"]["include_root"]."/phpgwapi/inc";
-  include($phpgw_info["server"]["api_inc"] . "/phpgw_common.inc.php");
+  if (!$phpgw_setup->auth("Config")){
+    Header("Location: index.php");
+    exit;
+  }
+  $phpgw_setup->loaddb();
 
-  $common = new common;
-  $phpgw_setup->loaddb(); 
+     echo "<html><head><title>phpGroupWare Setup</title></head>\n";
+     echo "<body bgcolor='#ffffff'>\n";
 
-  $phpgw_setup->db->query("select config_name,config_value from config where config_name like 'ldap%'",__LINE__,__FILE__);
-  while ($phpgw_setup->db->next_record()) {
-     $config[$phpgw_setup->db->f("config_name")] = $phpgw_setup->db->f("config_value");
+     include($phpgw_info["server"]["include_root"]."/phpgwapi/phpgw_common.inc.php");
+     $common = new common;
+     $sep = $common->filesystem_separator();
+  } else {
+     $newinstall             = True;
+     $lang_selected["en"]    = "en";
+     $submit                 = True;
   }
 
-  // First, see if we can connect to the LDAP server, if not send `em back to config.php with an
-  // error message.
-
-  // connect to ldap server
-  if (! $ldap = @ldap_connect($config["ldap_host"])) {
-     $noldapconnection = True;
-  }
-
-  // bind as admin, we not to able to do everything
-  if (! @ldap_bind($ldap,$config["ldap_root_dn"],$config["ldap_root_pw"])) {
-     $noldapconnection = True;
-  }
-  
-  if ($noldapconnection) {
-     Header("Location: config.php?error=badldapconnection");
-     exit;
-  }
-
-  $sr = ldap_search($ldap,$config["ldap_context"],"(|(uid=*))",array("sn","givenname","uid","uidnumber"));
-  $info = ldap_get_entries($ldap, $sr);
-  
-  for ($i=0; $i<$info["count"]; $i++) {
-     if (! $phpgw_info["server"]["global_denied_users"][$info[$i]["uid"][0]]) {
-        $account_info[$i]["account_id"]        = $info[$i]["uidnumber"][0];
-        $account_info[$i]["account_lid"]       = $info[$i]["uid"][0];
-        $account_info[$i]["account_lastname"]  = $info[$i]["givenname"][0];
-        $account_info[$i]["account_firstname"] = $info[$i]["sn"][0];
-     }
-  }
-  
-  $phpgw_setup->db->query("select app_name,app_title from applications where app_enabled != '0' and "
-           . "app_name != 'admin'",__LINE__,__FILE__);
-  while ($phpgw_setup->db->next_record()) {
-     $apps[$phpgw_setup->db->f("app_name")] = $phpgw_setup->db->f("app_title");
-  }
-  
   if ($submit) {
-     if (! count($admins)) {
-        $error = "<br>You must select at least 1 admin";
-     }
-
-     if (! count($s_apps)) {
-        $error .= "<br>You must select at least 1 application";
-     }
-
-     if (! $error) {
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_ldap.inc.php");
-        include($phpgw_info["server"]["api_inc"] . "/phpgw_accounts_shared.inc.php");
-        $accounts = new accounts;
-
-        while ($app = each($s_apps)) {
-          $permissions_string =  $accounts->add_app($app[1]);
+     if (count($lang_selected)) {
+        if ($upgrademethod == "dumpold") {
+           $phpgw_setup->db->query("delete from lang");
+           //echo "<br>Test: dumpold";
         }
-        $permissions_string       = $accounts->add_app("",True);
-        $admin_permissions_string = $permissions_string . "admin:";
-        
-        while ($admin = each($admins)) {
-           $s_admin[$admin[1]] = True;
-        }
-   
-        while ($account = each($account_info)) {
-           if ($s_admin[$account[1]["account_id"]]) {
-              $np = $admin_permissions_string;
-           } else {
-              $np = $permissions_string;
+        while (list($null,$lang) = each($lang_selected)) {
+           $addlang = False;
+           if ($upgrademethod == "addonlynew") {
+              //echo "<br>Test: addonlynew - select count(*) from lang where lang='$lang'";
+              $phpgw_setup->db->query("select count(*) from lang where lang='$lang'");
+              $phpgw_setup->db->next_record();
+              
+              if ($phpgw_setup->db->f(0) == 0) {
+                 //echo "<br>Test: addonlynew - True";
+                 $addlang = True;
+              }
            }
-           // do some checks before we try to import the data
-           if (!empty($account[1]["account_id"]) && !empty($account[1]["account_lid"]))
-           $phpgw_setup->db->query("insert into accounts (account_id,account_lid,account_pwd,account_permissions,"
-                    . "account_groups,account_status,account_lastpwd_change) values ('" . $account[1]["account_id"] . "','"
-                    . $account[1]["account_lid"] . "','x','$np',',1:0,','A','".time()."')",__LINE__,__FILE__);
-        }
-        $setup_complete = True;
-     }
-  }
-  
-  // Add a check to see if there is no users in LDAP, if not create a default user.
+           if (($addlang && $upgrademethod == "addonlynew") || ($upgrademethod != "addonlynew")) {
+              //echo '<br>Test: loop above file()';
+              $raw_file = file($phpgw_info["server"]["server_root"] . "/setup/phpgw_" . strtolower($lang) . ".lang");
+              while (list($null,$line) = each($raw_file)) {
+                $addit = False;
+                list($message_id,$app_name,$phpgw_setup->db_lang,$content) = explode("\t",$line);
+                $message_id = addslashes(chop($message_id));
+                $app_name   = addslashes(chop($app_name));
+                $phpgw_setup->db_lang    = addslashes(chop($phpgw_setup->db_lang));
+                $content    = addslashes(chop($content));
+                if ($upgrademethod == "addmissing") {
+                   //echo "<br>Test: addmissing";
+                   $phpgw_setup->db->query("select count(*) from lang where message_id='$message_id' and lang='$phpgw_setup->db_lang'");
+                   $phpgw_setup->db->next_record();
+                
+                   if ($phpgw_setup->db->f(0) == 0) {
+                      //echo "<br>Test: addmissing - True - Total: " . $phpgw_setup->db->f(0);
+                      $addit = True;
+                   }
+                }
+             
+                if ($addit || ($upgrademethod == "dumpold" || $newinstall || $upgrademethod == "addonlynew")) {
+                   //echo "<br>adding - insert into lang values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')";
+                   $phpgw_setup->db->query("insert into lang values ('$message_id','$app_name','$phpgw_setup->db_lang','$content')");
+                }
+             }
+          }
+       }
+    } 
 
-  $phpgw_setup->setup_header();
-  
-  if ($error) {
-     echo "<br><center><b>Error:</b> $error</center>";
-  }
+    if (! $included) {
+       echo "<center>Language files have been installed</center>";
+       exit;
+    }
 
-  if ($setup_complete) {
-     $phpgw_setup->db->query("select config_value from config where config_name='webserver_url'",__LINE__,__FILE__);
-     $phpgw_setup->db->next_record();
-     echo '<br><center>Setup has been completed!  Click <a href="' . $phpgw_setup->db->f("config_value")
-        . '/login.php">here</a> to login</center>';
-     exit;
-  }
+  } else {
+    if (! $included) {
+       $phpgw_setup->setup_header();
 ?>
-
- <form action="ldap.php" method="POST">
-  <table border="0" align="center" width="70%">
+  <p><table border="0" align="center" width="<?php echo ($newinstall?"60%":"80%"); ?>">
    <tr bgcolor="486591">
-    <td colspan="2">&nbsp;<font color="fefefe">LDAP import users</font></td>
+    <td colspan="<?php echo ($newinstall?"1":"2"); ?>">&nbsp;<font color="fefefe">Multi-Language support setup</font></td>
    </tr>
    <tr bgcolor="e6e6e6">
-    <td colspan="2">&nbsp;This section will help you import users from your LDAP tree into phpGroupWare's account tables.<br>&nbsp;</td>
+    <td colspan="<?php echo ($newinstall?"1":"2"); ?>">This program will help you upgrade or installing different languages for phpGroupWare</td>
    </tr>
-
    <tr bgcolor="e6e6e6">
-    <td align="left" valign="top">
-     &nbsp;Select which user(s) will have the admin privileges
+    <td<?php echo ($newinstall?' align="center"':""); ?>>Select which languages you would like to use.
+     <form action="lang.php">
+      <?php echo ($newinstall?'<input type="hidden" name="newinstall" value="True">':""); ?>
+      <select name="lang_selected[]" multiple size="10">
+       <?php
+         $phpgw_setup->db->query("select lang_id,lang_name from languages where available='Yes'");
+         while ($phpgw_setup->db->next_record()) {
+           echo '<option value="' . $phpgw_setup->db->f("lang_id") . '">' . $phpgw_setup->db->f("lang_name") . '</option>';
+         }
+       ?>
+      </select>
     </td>
-    <td align="center">
-     <select name="admins[]" multiple size="5">
-      <?php
-        while ($account = each($account_info)) {
-          echo '<option value="' . $account[1]["account_id"] . '">'
-             . $common->display_fullname($account[1]["account_lid"],$account[1]["account_firstname"],$account[1]["account_lastname"])
-             . '</option>';
-          echo "\n";
-        }
-      ?>
-     </select>
-    </td>
+    <?php
+      if (! $newinstall) {
+         echo '<td valign="top">Select which method of upgrade you would like to do'
+            . '<br><input type="radio" name="upgrademethod" value="dumpold">&nbsp;Delete all old langagues and install new ones'
+            . '<br><input type="radio" name="upgrademethod" value="addmissing">&nbsp;Only add new pharses'
+            . '<br><input type="radio" name="upgrademethod" value="addonlynew">&nbsp;only add languages that are not in the database already.'
+            . '</td>';
+      }
+    ?>
    </tr>
-
-   <tr bgcolor="e6e6e6">
-    <td align="left" valign="top">
-     &nbsp;Select the default applications your users will have access to.
-     <br>&nbsp;Note: You will be able to customize this later.
-    </td>
-    <td>
-     <select name="s_apps[]" multiple size="5">
-      <?php
-        while ($app = each($apps)) {
-          echo '<option value="' . $app[0] . '" selected>' . $app[1] . '</option>';
-          echo "\n";
-        }
-      ?>
-     </select>
-    </td>
-   </tr>
-
-   <tr bgcolor="e6e6e6">
-    <td colspan="2" align="center">
-     <input type="submit" name="submit" value="import">
-    </td>
-   </tr> 
-    
   </table>
- </form>
+<?php
+    echo '<center><input type="submit" name="submit" value="Install"></center>';
+  }
+  }
