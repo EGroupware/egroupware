@@ -11,10 +11,17 @@
 
   /* $Id$ */
 
-	function upgrade_addressbook {
+	function upgradeaddr() {
 		global $phpgw_info, $phpgw_setup;
+		$phpgw_setup->loaddb();
 
 		// create new contacts class tables
+		$sql = "DROP TABLE IF EXISTS phpgw_addressbook";
+		$phpgw_setup->db->query($sql);
+
+		$sql = "DROP TABLE IF EXISTS phpgw_addressbook_extra";
+		$phpgw_setup->db->query($sql);
+
 		$sql = "CREATE TABLE phpgw_addressbook (
 			id int(8) DEFAULT '0' NOT NULL,
 			lid varchar(32),
@@ -70,7 +77,7 @@
 			d_email_work enum('y','n') DEFAULT 'n' NOT NULL,
 			d_email_home enum('y','n') DEFAULT 'n' NOT NULL,
 			PRIMARY KEY (id),
-			UNIQUE id (id),
+			UNIQUE id (id)
 		)";
 
 		$phpgw_setup->db->query($sql);
@@ -84,38 +91,38 @@
   
 		$phpgw_setup->db->query($sql);  
 
+		// create an extra db object for the two nested queries below
+		$db1 = $db2 = $db3 = $phpgw_setup->db;
+		
 		// read in old addressbook
-		$phpgw_setup->db->query("select * from addressbook");
+		$db1->query("select * from addressbook");
 
-		// create an extra db objects for the two nested queries below
-		$db2 = $phpgw_setup->db;
-
-		while ( $phpgw_setup->db->nextrecord() ) {
-			$fields["org_name"]			= $phpgw->db->f("ab_company");
-			$fields["n_given"]			= $phpgw->db->f("ab_firstname");
-			$fields["n_family"]			= $phpgw->db->f("ab_lastname");
-			$fields["fn"]				= $phpgw->db->f("ab_firstname")." ".$phpgw->db->f("ab_lastname");
-			$fields["d_email"]			= $phpgw->db->f("ab_email");
-			$fields["title"]			= $phpgw->db->f("ab_title");
-			$fields["a_tel"]			= $phpgw->db->f("ab_wphone");
+		while ( $db1->next_record() ) {
+			$fields["org_name"]			= $db1->f("ab_company");
+			$fields["n_given"]			= $db1->f("ab_firstname");
+			$fields["n_family"]			= $db1->f("ab_lastname");
+			$fields["fn"]				= $db1->f("ab_firstname")." ".$phpgw_setup->db->f("ab_lastname");
+			$fields["d_email"]			= $db1->f("ab_email");
+			$fields["title"]			= $db1->f("ab_title");
+			$fields["a_tel"]			= $db1->f("ab_wphone");
 			$fields["a_tel_work"]		= "y";
-			$fields["b_tel"]			= $phpgw->db->f("ab_hphone");
+			$fields["b_tel"]			= $db1->f("ab_hphone");
 			$fields["b_tel_home"]		= "y";
-			$fields["c_tel"]			= $phpgw->db->f("ab_fax");
+			$fields["c_tel"]			= $db1->f("ab_fax");
 			$fields["c_tel_fax"]		= "y";
-			$fields["adr_street"]		= $phpgw->db->f("ab_street");
-			$fields["adr_locality"]		= $phpgw->db->f("ab_city");
-			$fields["adr_region"]		= $phpgw->db->f("ab_state");
-			$fields["adr_postalcode"]	= $phpgw->db->f("ab_zip");
-			$fields["owner"]			= $phpgw->db->f("owner");
+			$fields["adr_street"]		= $db1->f("ab_street");
+			$fields["adr_locality"]		= $db1->f("ab_city");
+			$fields["adr_region"]		= $db1->f("ab_state");
+			$fields["adr_postalcode"]	= $db1->f("ab_zip");
+			$fields["owner"]			= $db1->f("ab_owner");
 
-			$extra["pager"]				= $phpgw->db->f("ab_pager");
-			$extra["mphone"]			= $phpgw->db->f("ab_mphone");
-			$extra["ophone"]			= $phpgw->db->f("ab_ophone");
-			$extra["address2"]			= $phpgw->db->f("ab_address2");
-			$extra["bday"]				= $phpgw->db->f("ab_bday");
-			$extra["url"]				= $phpgw->db->f("ab_url");
-			$extra["notes"]				= $phpgw->db->f("ab_notes");
+			$extra["pager"]				= $db1->f("ab_pager");
+			$extra["mphone"]			= $db1->f("ab_mphone");
+			$extra["ophone"]			= $db1->f("ab_ophone");
+			$extra["address2"]			= $db1->f("ab_address2");
+			$extra["bday"]				= $db1->f("ab_bday");
+			$extra["url"]				= $db1->f("ab_url");
+			$extra["notes"]				= $db1->f("ab_notes");
 
 			// add this record's standard with current entry's owner as owner
 			$sql="INSERT INTO phpgw_addressbook ("
@@ -128,18 +135,19 @@
 				. $fields["adr_locality"]."','".$fields["adr_region"]."','".$fields["adr_postalcode"]."',"
 				. $fields["owner"].")";
 
-			$phpgw_setup->db2->query($sql);
+			$db1->query($sql);
 
 			// fetch the id just inserted
-			$phpgw_setup->db2->query("SELECT max(id) FROM phpgw_addressbook ",__LINE__,__FILE__);
-			$phpgw_setup->db2->next_record();
-			$id = $phpgw_setup->db2->f(0);
+			$db2->query("SELECT max(id) FROM phpgw_addressbook ",__LINE__,__FILE__);
+			$db2->next_record();
+			$id = $db2->f(0);
 
 			// insert extra data for this record into extra fields table
 			while (list($name,$value) = each($extra)) {
-				$phpgw_setup->db2->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
+				$db3->query("INSERT INTO phpgw_addressbook_extra VALUES ('$id','" . $$fields["owner"] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')",__LINE__,__FILE__);
 			}
 		}
 	}
+	upgradeaddr();
 ?>
