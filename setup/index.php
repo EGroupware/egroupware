@@ -38,7 +38,7 @@
         $db->Halt_On_Error = "no";
   
         $tables = $db->table_names();
-        if (is_array($tables) && count($tables()) > 0){
+        if (is_array($tables) && count($tables) > 0){
           /* tables exists. checking for post beta version */
           $db->query("select app_version from applications where app_name='admin'");
           $db->next_record();
