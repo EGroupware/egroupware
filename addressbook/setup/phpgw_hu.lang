@@ -14,7 +14,7 @@ address line 3	addressbook	hu	Cím sor 3
 address type	addressbook	hu	Cím tipus
 addressbook	common	hu	Címjegyzék
 addressbook preferences	addressbook	hu	Címjegyzék  tulajdonságok
-addressbook preferences common  hu      címjegyzék tulajdonságok
+addressbook preferences	common	hu	címjegyzék tulajdonságok
 addressbook-fieldname	addressbook	hu	Címjegyzék-Mezönév
 addvcard	addressbook	hu	VCard hozzáadása
 alt. csv import	addressbook	hu	Alternativ CSV Import
