@@ -320,7 +320,7 @@
     {
        global $phpgw_info, $colspan, $phpgw;
 
-       if ($appname && (($appname=="home" || $appname=="logout" || $appname == "print" || $appname == "preferences")
+       if ($appname && (($appname=="home" || $appname=="logout" || $appname == "print" || $appname == "preferences" || $appname == "about")
 	       || ($phpgw_info["user"]["apps"][$appname]))) {
 
           if (isset($phpgw_info["flags"]["navbar_target"]) && $phpgw_info["flags"]["navbar_target"]) {
@@ -345,11 +345,13 @@
        	$urlbasename = $phpgw_info["server"]["webserver_url"];
 
        	if ($appname == "home") {
-        	  $output_text = "<A href=\"" . $phpgw->link($urlbasename."/index.php");
+        	$output_text = "<A href=\"" . $phpgw->link($urlbasename."/index.php");
        	} elseif ($appname == "logout") {
-        	  $output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
-          } elseif ($appname == "print") {
-             $output_text = "<A href=\"javascript:window.print();\"";
+        	$output_text = "<A href=\"" . $phpgw->link($urlbasename."/logout.php");
+       	} elseif ($appname == "about") {
+     	    $output_text = "<A href=\"" . $phpgw->link($urlbasename."/".$phpgw_info["flags"]["currentapp"]."/about.php");
+        } elseif ($appname == "print") {
+          $output_text = "<A href=\"javascript:window.print();\"";
 // Changed by Skeeter 03 Dec 00 2000 GMT
 // This is to allow for the calendar app to have a default page view.
    	    } elseif ($appname == "calendar") {
@@ -450,6 +452,15 @@
           }
           $i++;
 
+       	  if (file_exists($phpgw_info["server"]["app_root"]."/about.php")) {
+            $tabs[$i]["label"] = "about";
+            $tabs[$i]["link"]  = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/".$phpgw_info["flags"]["currentapp"]."/about.php");
+            if ($PHP_SELF == $phpgw_info["server"]["webserver_url"] . "/".$phpgw_info["flags"]["currentapp"]."/index.php") {
+               $selected = $i;
+            }
+            $i++;
+          }
+
           $tabs[$i]["label"] = "logout";
           $tabs[$i]["link"]  = $phpgw->link($phpgw_info["server"]["webserver_url"] . "/logout.php");
 
@@ -471,6 +482,10 @@
           }
     
           $this->show_icon(&$tpl,$td_width,"preferences","Preferences");
+       	  if (file_exists($phpgw_info["server"]["app_root"]."/about.php")) {
+            $this->show_icon(&$tpl,$td_width,"about","About");
+          }
+
           $this->show_icon(&$tpl,$td_width,"logout","Logout");
    
        } // end else
