@@ -544,7 +544,8 @@
 		function list_states($name, $selected = '')
 		{
 			$states = array(
-				''		=> 'non US',
+				''		=> lang('Select one'),
+				'--'	=> 'non US',
 				'AL'	=>	'Alabama',
 				'AK'	=>	'Alaska',
 				'AZ'	=>	'Arizona',
@@ -599,7 +600,12 @@
 
 			while (list($sn,$ln) = each($states))
 			{
-				$s .= '<option value="' . $sn . '">' . $ln . '</option>';
+				$s .= '<option value="' . $sn . '"';
+				if ($selected == $sn)
+				{
+					$s .= ' selected';
+				}
+				$s .= '>' . $ln . '</option>';
 			}
 			return '<select name="' . $name . '">' . $s . '</select>';
 		}
