@@ -16,7 +16,7 @@ about the calendar	jscalendar	fr	A propos du Calendrier
 about this editor	htmlarea	fr	A propos de cet éditeur
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
-account has been created	common	fr	Le compte a été crée
+account has been created	common	fr	Le compte a été créé
 account has been deleted	common	fr	Le compte a été effacé
 account has been updated	common	fr	Le compte a été mis à jour
 account is expired	common	fr	Le compte a expiré
@@ -78,7 +78,7 @@ brazil	common	fr	BRESIL
 british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
 brunei darussalam	common	fr	SULTANAT DE BRUNEI
 bulgaria	common	fr	BULGARIE
-bulleted list	htmlarea	fr	Liste avec boules
+bulleted list	htmlarea	fr	Liste avec puces
 burkina faso	common	fr	BURKINA FASO
 burundi	common	fr	BURUNDI
 calendar	common	fr	Calendrier
@@ -122,7 +122,7 @@ copy selection	htmlarea	fr	Sélection pour copier
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
 create	common	fr	Créer
-created by	common	fr	Crée Par
+created by	common	fr	Créé par
 croatia	common	fr	CROATIE
 cuba	common	fr	CUBA
 currency	common	fr	Devise
@@ -136,7 +136,7 @@ date	common	fr	Date
 date due	common	fr	Date butoir
 date selection:	jscalendar	fr	Sélection de la date :
 december	common	fr	Décembre
-decrease indent	htmlarea	fr	Décrémenter l'indentation
+decrease indent	htmlarea	fr	Diminuer l'indentation
 default category	common	fr	Catégorie par défaut
 delete	common	fr	Supprimer
 denmark	common	fr	DANEMARK
@@ -170,7 +170,7 @@ email-address of the user, eg. "%1"	common	fr	Adresse EMail de l'utilisateur, p.
 enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
-enlarge editor	htmlarea	fr	2largir l'éditeur
+enlarge editor	htmlarea	fr	Elargir l'éditeur
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
@@ -397,7 +397,7 @@ panama	common	fr	PANAMA
 papua new guinea	common	fr	PAPOUASIE NOUVELLE GUINEE
 paraguay	common	fr	PARAGUAY
 parcel	common	fr	Colis
-parent category	common	fr	Catégorie Parente
+parent category	common	fr	Catégorie parente
 password	common	fr	Mot de passe
 password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
@@ -525,7 +525,7 @@ this application requires an upgrade	common	fr	Cette application nécessite une m
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 thursday	common	fr	Jeudi
 time	common	fr	Heure
-time selection:	jscalendar	fr	Sélection de Temps:
+time selection:	jscalendar	fr	Sélection du temps:
 time zone	common	fr	Fuseau horaire
 time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
@@ -593,7 +593,7 @@ you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	f
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
 you are running a newer version of phpgroupware than your database is setup for	common	fr	Vous utilisez une version de phpGroupWare plus récente que celle définie pour la base de données.
 you have been successfully logged out	login	fr	Déconnexion réussie
-you have not entered a title	common	fr	Vous n'avez pas entré un titre
+you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
 you have not entered a valid time of day	common	fr	Vous n'avez pas entré une heure du jour valide
 you have not entered participants	common	fr	Vous n'avez pas entré de participants
