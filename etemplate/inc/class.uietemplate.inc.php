@@ -114,6 +114,7 @@
 			{
 				$GLOBALS['phpgw_info']['flags']['app_header'] = $content['app_header'];
 			}
+/*
 			$html = '';
 			if ($this->stable)
 			{
@@ -134,6 +135,7 @@
 				$hooked = $hooked['body_data'];
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $this->include_java_script(2)));
 			}
+*/
 			if ($GLOBALS['phpgw_info']['flags']['currentapp'] != 'etemplate')
 			{
 				$GLOBALS['phpgw']->translation->add_app('etemplate');	// some extensions have own texts
@@ -142,13 +144,32 @@
 			$GLOBALS['phpgw_info']['etemplate']['loop'] = False;
 			$GLOBALS['phpgw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['phpgw_info']['etemplate']['to_process'] = array();
-			$html .= ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
+			$html = ($this->stable ? $this->html->themeStyles()."\n\n" : ''). // so they get included once
 				$this->html->form($this->include_java_script(1).
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id,
 						'etemplate_exec_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
 					),'/etemplate/process_exec.php','','eTemplate',$GLOBALS['phpgw_info']['etemplate']['form_options']);
 			//_debug_array($GLOBALS['phpgw_info']['etemplate']['to_process']);
+			if ($this->stable)
+			{
+				$hooked = $GLOBALS['phpgw']->template->get_var('phpgw_body');
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !$return_html)
+				{
+					$GLOBALS['phpgw_info']['flags']['java_script'] .= $this->include_java_script(2);
+					$GLOBALS['phpgw']->common->phpgw_header();
+				}
+				else
+				{
+					$html = $this->include_java_script(2).$html;	// better than nothing
+				}
+			}
+			else
+			{
+				$hooked = $GLOBALS['phpgw']->xslttpl->get_var('phpgw');
+				$hooked = $hooked['body_data'];
+				$GLOBALS['phpgw']->xslttpl->set_var('phpgw',array('java_script' => $GLOBALS['phpgw_info']['flags']['java_script'].$this->include_java_script(2)));
+			}
 			list($width,$height,,,,,$overflow) = explode(',',$this->size);
 			if ($overflow)
 			{

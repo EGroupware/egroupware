@@ -36,6 +36,10 @@
 
 		function date_widget($ui)
 		{
+			if ($ui == 'html')
+			{
+				$this->jscal = CreateObject('phpgwapi.jscalendar');
+			}
 			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
 		}
 
@@ -144,10 +148,24 @@
 			for ($i=0,$n=$type == 'date-timeonly'?3:0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
 			{
 				$dcell = $tpl->empty_cell();
-				$dcell['type'] = $types[$format[$n]];
-				$dcell['size'] = $opts[$format[$n]];
-				$dcell['name'] = $format[$n];
-				$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+				// test if we can use jsCalendar
+				if ($n == 0 && $this->jscal && $tmpl->java_script())
+				{
+					$dcell['type'] = 'html';
+					$dcell['name'] = 'str';
+					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],$cell['help']);
+					$n = 2;				// no other fields
+					$options &= ~2;		// no set-today button
+					// register us for process_exec
+					$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-'.$cell['type'];
+				}
+				else
+				{
+					$dcell['type'] = $types[$format[$n]];
+					$dcell['size'] = $opts[$format[$n]];
+					$dcell['name'] = $format[$n];
+					$dcell['help'] = lang($help[$format[$n]]).': '.$cell['help'];	// note: no lang on help, already done
+				}
 				if ($n == 4)
 				{
 					$dcell['label'] = ':';	// put a : between hour and minute
@@ -207,10 +225,10 @@
 			return True;	// extra Label is ok
 		}
 
-		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl)
+		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			//echo "date_widget::post_process('$name','$extension_data') value=<pre>"; print_r($value); echo "</pre>\n";
-			if (!isset($value))
+			//echo "<p>date_widget::post_process('$name','$extension_data') value="; print_r($value); echo ", value_in="; print_r($value_in); echo "</p>\n";
+			if (!isset($value) && !isset($value_in))
 			{
 				return False;
 			}
@@ -222,7 +240,11 @@
 					$value[$d] = date($d);
 				}
 			}
-			if ($value['d'] || isset($value['H']) && $value['H'] !== '' || 
+			if (isset($value_in['str']))
+			{
+				$value = $this->jscal->input2date($value_in['str'],False,'d','m','Y');
+			}
+			if ($value['d'] || isset($value['H']) && $value['H'] !== '' ||
 			                   isset($value['i']) && $value['i'] !== '')
 			{
 				if ($value['d'])
