@@ -172,10 +172,12 @@
     function grab_owner_name($id)
     {
       global $phpgw;
-      $phpgw->db->query("select account_lid,account_firstname,account_lastname from accounts where account_id=".$id,__LINE__,__FILE__);
-      $phpgw->db->next_record();
 
-      return $phpgw->common->display_fullname($phpgw->db->f("account_lid"),$phpgw->db->f("account_firstname"),$phpgw->db->f("account_lastname"));
+      $db = $phpgw->db;
+      $db->query("select account_lid,account_firstname,account_lastname from accounts where account_id=".$id,__LINE__,__FILE__);
+      $db->next_record();
+
+      return $phpgw->common->display_fullname($db->f("account_lid"),$db->f("account_firstname"),$db->f("account_lastname"));
     }  
 
     function create_tabs($tabs, $selected, $fontsize = "")
