@@ -56,8 +56,11 @@
 				$this->print = True;
 			}
 			/* This covers loading up the common tpl file and CSS data */
-			$this->set_root(PHPGW_TEMPLATE_DIR);
-			$this->set_file('common', 'common.tpl');
+			if(defined('PHPGW_TEMPLATE_DIR'))
+			{
+				$this->set_root(PHPGW_TEMPLATE_DIR);
+				$this->set_file('common', 'common.tpl');
+			}
 			$this->set_var('phpgw_css',$GLOBALS['phpgw_info']['theme']['css']);
 
 			/* Now move on to loading up the requested template set */
