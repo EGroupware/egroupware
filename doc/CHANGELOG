@@ -18,6 +18,7 @@
 		- Fixed NNTP call to preferences.php if user does not have any groups selected.
 		- Fixed setting of default preferences of new users.
 		- Updated Spanish translations.  Thanks gmartine <gmartine@users.sourceforge.net>
+		- Default preferences used if not set in DB.
 
 
 [0.9.1] - Fixed a few missing variables with templates.
