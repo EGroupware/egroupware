@@ -115,7 +115,6 @@
        global $phpgw_info, $phpgw;
  
        $this->clean_sessions();
- 
        $login_array = explode("@", $login);
        $phpgw_info["user"]["userid"] = $login_array[0];
  
