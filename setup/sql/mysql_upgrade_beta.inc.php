@@ -1396,17 +1396,27 @@
 		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre24';
 	}
 
-        $test[] = '0.9.10pre24';
-        function upgrade0_9_10pre24()
-        {
-                global $phpgw_info, $phpgw_setup;
+	$test[] = '0.9.10pre24';
+	function upgrade0_9_10pre24()
+	{
+		global $phpgw_info, $phpgw_setup;
 
-                $sql = "alter table phpgw_categories add column cat_access char(7) after cat_owner";
+		$sql = "alter table phpgw_categories add column cat_access char(7) after cat_owner";
+		$phpgw_setup->db->query($sql,__LINE__,__FILE__);
 
-                $phpgw_setup->db->query($sql,__LINE__,__FILE__);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
+	}
 
-                $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
-        }
+	$test[] = '0.9.10pre25';
+	function upgrade0_9_10pre25()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_app_sessions add column session_dla int",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
+	}
 
   reset ($test);
   while (list ($key, $value) = each ($test)){

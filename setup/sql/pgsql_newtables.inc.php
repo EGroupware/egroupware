@@ -77,7 +77,8 @@
     loginid	     varchar(20),
     location      varchar(255),
     app	         varchar(20),
-    content	     text
+    content	     text,
+    session_dla   int
   )";
   $phpgw_setup->db->query($sql); 
 
@@ -314,7 +315,7 @@
           )";
   $phpgw_setup->db->query($sql);
 
-  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre25';
+  $phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
   $phpgw_info['setup']['oldver']['phpgwapi'] = $phpgw_info['setup']['currentver']['phpgwapi'];
   update_version_table();
 ?>

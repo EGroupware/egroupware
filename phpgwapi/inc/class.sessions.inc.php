@@ -185,11 +185,18 @@
 		{
 			global $phpgw_info, $phpgw;
 
-			if (!isset($phpgw_info['server']['cron_apps']) || ! $phpgw_info['server']['cron_apps'])
-			{
+			// If you plan on using the cron apps, please remove the following lines.
+			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
+
+//			if (! isset($phpgw_info['server']['cron_apps']) || ! $phpgw_info['server']['cron_apps'])
+//			{
 				$phpgw->db->query("delete from phpgw_sessions where session_dla <= '" . (time() -  7200)
 									 . "' and session_flags !='A'",__LINE__,__FILE__);
-			}
+
+				// This is set a little higher, we don't want to kill session data for anonymous sessions.
+				$phpgw->db->query("delete from phpgw_app_sessions where session_dla <= '" . (time() -  86400)
+									 . "'",__LINE__,__FILE__);
+//			}
 		}
 
 		function create($login,$passwd)
@@ -298,8 +305,11 @@
 		{
 			global $phpgw_info, $phpgw, $PHP_SELF;
 
-			$phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$PHP_SELF'"
-								. " where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
+			$phpgw->db->query("update phpgw_sessions set session_dla='" . time() . "', session_action='$PHP_SELF' "
+								. "where session_id='" . $this->sessionid."'",__LINE__,__FILE__);
+
+			$phpgw->db->query("update phpgw_app_sessions set session_dla='" . time() . "' "
+								. "where sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
 		}
     
 		function destroy()
@@ -409,9 +419,9 @@
 					$data = serialize($data);
 					$data = $phpgw->crypto->encrypt($data);
 
-					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content) "
+					$phpgw->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
 					. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
-					. "','".$location."','".$data."')",__LINE__,__FILE__);
+					. "','".$location."','".$data."','" . time() . "')",__LINE__,__FILE__);
 				} else {
 	 				$data = $phpgw->crypto->encrypt(serialize($data));
 					$phpgw->db->query("update phpgw_app_sessions set content = '".$data."'"

@@ -1785,6 +1785,17 @@
 	    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre25";
 	}
 
+	$test[] = '0.9.10pre25';
+	function upgrade0_9_10pre25()
+	{
+		global $phpgw_info, $phpgw_setup;
+
+		$phpgw_setup->db->query("alter table phpgw_app_sessions add column session_dla int",__LINE__,__FILE__);
+
+		$phpgw_setup->db->query($sql);
+		$phpgw_info['setup']['currentver']['phpgwapi'] = '0.9.10pre26';
+	}
+
     reset ($test);
     while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
