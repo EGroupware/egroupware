@@ -74,9 +74,12 @@
 
 		function accounts_()
 		{
+			/* THIS DOES NOT LOAD */
+			/*
 			$this->db = $GLOBALS['phpgw']->db;
 			$this->user_context  = $GLOBALS['phpgw_info']['server']['ldap_context'];
 			$this->group_context = $GLOBALS['phpgw_info']['server']['ldap_group_context'];
+			*/
 		}
 
 		function read_repository()
@@ -423,15 +426,16 @@
 
 			if ($allValues[0]['uidnumber'][0])
 			{
-				$name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]);
+				/* $name_list[$account_lid] = intval($allValues[0]['uidnumber'][0]); */
+				return intval($allValues[0]['uidnumber'][0]);
 			}
 
-			$sri = ldap_search($ds, $this->group_context, "cn=$account_id");
+			$sri = ldap_search($ds, $this->group_context, "cn=$account_lid");
 			$allValues = ldap_get_entries($ds, $sri);
 
 			if ($allValues[0]['gidnumber'][0])
 			{
-				$name_list[$account_lid] = False;
+				$name_list[$account_lid] = intval($allValues[0]['gidnumber'][0]);
 			}
 
 			return $name_list[$account_lid];
