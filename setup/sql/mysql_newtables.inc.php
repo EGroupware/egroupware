@@ -31,18 +31,17 @@
   )";
   $phpgw_setup->db->query($sql);  
 
-  $sql = "CREATE TABLE accounts (
-    account_id           int(11) DEFAULT '0' NOT NULL auto_increment,
-    account_lid          varchar(25) NOT NULL,
-    account_pwd          varchar(32) NOT NULL,
-    account_firstname    varchar(50),
-    account_lastname     varchar(50),
-    account_permissions  text,
-    account_groups       varchar(30),
-    account_lastlogin    int(11),
-    account_lastloginfrom varchar(255),
+  $sql = "CREATE TABLE phpgw_accounts (
+    account_id             int(11) DEFAULT '0' NOT NULL auto_increment,
+    account_lid            varchar(25) NOT NULL,
+    account_pwd            varchar(32) NOT NULL,
+    account_firstname      varchar(50),
+    account_lastname       varchar(50),
+    account_lastlogin      int(11),
+    account_lastloginfrom  varchar(255),
     account_lastpwd_change int(11),
-    account_status       enum('A','L') DEFAULT 'A' NOT NULL,
+    account_status         enum('A','L'),
+    account_type           char(1),
     PRIMARY KEY (account_id),
     UNIQUE account_lid (account_lid)
   )";

@@ -854,8 +854,20 @@
         }
       }
     }
-    $phpgw_setup->db->query("update accounts set account_groups = ''",__LINE__,__FILE__);
+    $phpgw_setup->db->query("alter table accounts set account_groups = ''",__LINE__,__FILE__);
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre3";
+  }
+
+  $test[] = "0.9.10pre3";
+  function upgrade0_9_10pre3()
+  {
+     global $phpgw_info, $phpgw_setup; 
+     $phpgw_setup->db->query("alter table accounts rename phpgw_accounts",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_permissions",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts drop column account_groups",__LINE__,__FILE__);
+     $phpgw_setup->db->query("alter table phpgw_accounts add column account_type char(1)",__LINE__,__FILE__);
+     $phpgw_setup->db->query("update phpgw_accounts set account_type='u'",__LINE__,__FILE__);
+     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre4";
   }
 
   reset ($test);
