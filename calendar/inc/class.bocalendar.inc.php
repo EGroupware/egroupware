@@ -1539,7 +1539,7 @@
 					$msgtype = '"calendar";';
 					break;
 				case MSG_ACCEPTED:
-					$action = 'Tentative';
+					$action = 'Accepted';
 					$event_id = $old_event['id'];
 					$msgtype = '"calendar";';
 					break;
