@@ -8,6 +8,7 @@
 --- Addressbook (orignal work)
 --- ToDolist (orignal work)
 --- Bookmarks (orignal work)
+--- Inventory (orignal work)
 --- Email (Adapted from Aeromail, which was written by Mark Cushman <mark@cushman.net> http://the.cushman.net/)
 --- Calendar (Adapted from WebCalendar, which was written by Craig Knudsen <cknudsen@radix.net> http://www.radix.net/~cknudsen)
 - Continues development and project direction. 
@@ -48,7 +49,7 @@
 - Minor bug fixes.
 - Conned Hakon into doing the Norwegian translations ;)
 
-### Patch Contributors ### (in alphabetical order)
+### Patch Contributors ### (in alphabetical order)	Let us know if we forgot anyone :)
 * Wolfgang Lunz |wlunz@infomatec.de|
 * bachroxx	|bachroxx@users.sourceforge.net|
 * brandonne	|brandonne@users.sourceforge.net|
