@@ -35,7 +35,7 @@
 		/**
 		* @var string $type database type
 		*/
-		var $type     = '';
+		var $Type     = '';
 
 		/**
 		* @var string $Host database host to connect to
@@ -111,6 +111,7 @@
         var $xmlrpc = False;
 		var $soap   = False;
 		var $Link_ID = 0;
+		var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
 		var $Query_ID = 0;
 
 		/**
@@ -176,6 +177,10 @@
 			{
 				$this->Type = $Type;
 			}
+			elseif (!$this->Type)
+			{
+				$this->Type = $GLOBALS['phpgw_info']['server']['db_type'];
+			}
 
 			if (!$this->Link_ID)
 			{
@@ -186,10 +191,11 @@
 						// create our own pgsql connection-string, to allow unix domain soccets if !$Host
 						$this->Host = "dbname=$this->Database".($this->Host ? " host=$this->Host".($this->Port ? " port=$this->Port" : '') : '').
 							" user=$this->User".($this->Password ? " password='".addslashes($this->Password)."'" : '');
-						$this->User = $this->Password = $this->Database = '';	// to indicate $Host is a connection-string
+						$this->User = $this->Password = $this->Database = $this->Port = '';	// to indicate $Host is a connection-string
 						break;
 					default:
 						$this->Host .= ($this->Port ? ':'.$this->Port : '');
+						$this->Port = '';
 						$type = $this->Type;
 				}
 
@@ -204,6 +210,10 @@
 					if (!is_object($GLOBALS['phpgw']->ADOdb))	// use the global object to store the connection
 					{
 						$this->Link_ID = &$GLOBALS['phpgw']->ADOdb;
+					}
+					else
+					{
+						$this->privat_Link_ID = True;	// remember that we use a privat Link_ID for disconnect
 					}
 					$this->Link_ID = ADONewConnection($type);
 					if (!$this->Link_ID)
@@ -232,7 +242,10 @@
 		*/
 		function disconnect()
 		{
-			unset($GLOBALS['phpgw']->adodb);
+			if (!$this->privat_Link_ID)
+			{
+				unset($GLOBALS['phpgw']->ADOdb);
+			}
 			unset($this->Link_ID);
 			$this->Link_ID = 0;
 		}
@@ -485,10 +498,10 @@
 
 			if ($id === False)	// function not supported
 			{
-				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->type'</p>\n";
+				echo "<p>db::get_last_insert_id(table='$table',field='$field') not yet implemented for db-type '$this->Type'</p>\n";
 				return -1;
 			}
-			if ($this->type != 'pgsql' || $id == -1)
+			if ($this->Type != 'pgsql' || $id == -1)
 			{
 				return $id;
 			}
@@ -676,7 +689,7 @@
 			printf("<p><b>Database error:</b> %s<br>\n", $msg);
 			if ($this->Errno != "0" && $this->Error != "()")
 			{
-				printf("<b>$this->type Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
+				printf("<b>$this->Type Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
 			}
 		}
 
@@ -788,7 +801,7 @@
 			$currentDatabase = $this->Database;
 
 			$extra = array();
-			switch ($this->type)
+			switch ($this->Type)
 			{
 				case 'pgsql':
 					$meta_db = 'template1';
@@ -798,7 +811,7 @@
 					$extra[] = "grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'";
 					break;
 				default:
-					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->type'</p>\n";
+					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->Type'</p>\n";
 					break;
 			}
 			if ($adminname != '')
