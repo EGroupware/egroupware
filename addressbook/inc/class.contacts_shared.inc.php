@@ -188,18 +188,55 @@
 					reset($filterfields);
 					while (list($col,$filt) = each($filterfields))
 					{
-						if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
-						if ($ldap_fields[$i][$col][0] == $filt)
+						if ($col == 'phpgwcontactcatid')
 						{
-							if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
-							$yes &= True;
-							$match++;
+							$colarray = explode(',',$ldap_fields[$i][$col][0]);
+							if ($colarray[1])
+							{
+								while(list($key,$val) = each ($colarray))
+								{
+									if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$val.'"'; }
+									if ($val == $filt)
+									{
+										if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+										$yes &= True;
+										$match++;
+										break;
+									}
+								}
+							}
+							else
+							{
+								if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
+								if ($ldap_fields[$i][$col][0] == $filt)
+								{
+									if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+									$yes &= True;
+									$match++;
+								}
+								else
+								{
+									if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+									$yes &= False;
+									$match--;
+								}							
+							}
 						}
 						else
 						{
-							if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
-							$yes &= False;
-							$match--;
+							if($DEBUG) { echo '&nbsp;&nbsp;Testing "'.$col.'" for "'.$filt.'"'; }
+							if ($ldap_fields[$i][$col][0] == $filt)
+							{
+								if($DEBUG) { echo ', and number '.$ldap_fields[$i]["uidnumber"][0].' matched.'."&nbsp;&nbsp;"; }
+								$yes &= True;
+								$match++;
+							}
+							else
+							{
+								if($DEBUG) { echo ', but number '.$ldap_fields[$i]["uidnumber"][0].' did not match.'."&nbsp;&nbsp;"; }
+								$yes &= False;
+								$match--;
+							}
 						}
 					}
 
