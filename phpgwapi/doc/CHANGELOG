@@ -3,6 +3,8 @@
 	- Hooks code has been changed some, the location is now required, and the hook filenames
 		need to follow the new format: hook_<location>.inc.php
 	- The sessions class now base64 encodes passwords in appsessions to prevent invaild chars.
+	- Added a $phpgw_info flag to allow apps to have admin only sections and keeping the currentapp
+		as the true appname
 
 [0.9.12]
 	- Note: These changelogs will only contain changes in the API (preferences, admin, etc)
