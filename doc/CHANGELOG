@@ -4,6 +4,7 @@
 		- Fixed deletion of user accounts hanging on deleting of calendar events.
 		- Fix for email in BIG5 charset.
 		- Fix for adding new users.
+		- Fixed a bug that was casuing people to have problems logining in when using cookie support.
 
 [0.9.4] - Fixed calendar week view.
 		- Displays calendar items in day view without start times.
