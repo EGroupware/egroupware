@@ -21,7 +21,7 @@ define('UIEDIT_DEBUG',0);
 					$var = Array(
 					'img_up' => array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'up'),
-											'alt' => lang('Up'),
+											'alt' => lang('up'),
 											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
 													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 													'path'		=> urlencode($this->bo->lesspath)
@@ -30,7 +30,7 @@ define('UIEDIT_DEBUG',0);
 
 					'img_home'	=> array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_home'),
-											'alt' => lang('Folder'),
+											'alt' => lang('folder'),
 											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
 													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 													'path' => urlencode($this->bo->homedir)
@@ -40,7 +40,7 @@ define('UIEDIT_DEBUG',0);
 					'dir' => $this->bo->path,
 					'img_dir' => array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_large'),
-											'alt' => lang('Folder')									
+											'alt' => lang('folder')									
 											)),
 				);	
 				$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('filemanager_nav' => $var));
@@ -60,14 +60,11 @@ define('UIEDIT_DEBUG',0);
 			$this->load_header();
 			$this->bo = &$parent->bo;
 			if (UIEDIT_DEBUG) echo ' action::edit ';
-//			$this->load_header();
 			$edit_file = get_var('file', array('GET', 'POST'));
 			if (!strlen($edit_file))
 			{		
 				$edit_file = $this->bo->fileman[0];
-			}
-
-			
+			}	
 /*			$this->bo->vfs->cd(array(
 				'string' => $this->bo->path,
 				'relatives' => array(RELATIVE_NONE)
@@ -81,15 +78,14 @@ define('UIEDIT_DEBUG',0);
 											));
 			$vars['action1'][] = array('widget' => array('type' => 'submit',
 						 'name' => "uiaction_edit_preview",
-						 'value'=>lang('Preview')
+						 'value'=>lang('preview')
 						 ));
-			//$this->action_link('edit_preview');
 			$vars['action2'][] = array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'filesave'),
 											));
 			$vars['action2'][]  = array('widget' => array('type' => 'submit',
 					'name' => 'uiaction_edit_save',
-					'value'=>lang('Save')
+					'value'=>lang('save')
 					));
 			$vars['action3'][] = array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'button_cancel'),
@@ -97,7 +93,7 @@ define('UIEDIT_DEBUG',0);
 
 			$vars['action3'][] = array('widget' => array('type' => 'submit',
 					'name' => 'uiaction_edit_cancel',
-					'value'=>lang('Close')
+					'value'=>lang('close')
 					));
 			$GLOBALS['phpgw']->xslttpl->set_var('phpgw', array('nav_data' => $vars));
 			$vars = array('filename' => $edit_file);
@@ -105,6 +101,10 @@ define('UIEDIT_DEBUG',0);
 			if (get_var('edited', array('GET', 'POST')))
 			{
 				$content = get_var('edit_file_content', array('GET', 'POST'));
+				if (get_magic_quotes_gpc()) //a thousand curses!
+				{
+					$content = stripslashes($content);
+				}
 			}
 			else
 			{

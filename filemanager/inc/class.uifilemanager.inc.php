@@ -37,34 +37,34 @@
 		var $template_dir;
 		var $help_info;
 		var $mime_ico = array (
-   'application/pdf' => 'pdf',
-   'application/postscript' => 'postscript',
-   'application/msword' => 'word',
-   'application/vnd.ms-excel' => 'excel',
-   'application/vnd.ms-powerpoint' => 'ppt',
-   'application/x-gzip' => 'tgz',
-   'application/x-bzip' => 'tgz',
-   'application/zip' => 'tgz',
-   'application/x-debian-package' => 'deb',
-   'application/x-rpm' => 'rpm',
-   'application' => 'document',
-   'application/octet-stream' => 'unknown',
-   'audio' => 'sound',
-   'audio/mpeg' => 'sound',
-   'Directory' => 'folder',
-   'exe' => 'exe',
-   'image' => 'image',
-   'text' => 'txt',
-   'text/html' => 'html',
-   'text/plain' => 'txt',
-   'text/xml' => 'html',
-   'text/x-vcalendar' => 'vcalendar',
-   'text/calendar' => 'vcalendar',
-   'text/x-vcard' => 'vcard',
-   'text/x-tex' => 'tex',
-   'unknown' => 'unknown',
-   'video' => 'video',
-   'message' => 'message'
+	'application/pdf' => 'pdf',
+	'application/postscript' => 'postscript',
+	'application/msword' => 'word',
+	'application/vnd.ms-excel' => 'excel',
+	'application/vnd.ms-powerpoint' => 'ppt',
+	'application/x-gzip' => 'tgz',
+	'application/x-bzip' => 'tgz',
+	'application/zip' => 'tgz',
+	'application/x-debian-package' => 'deb',
+	'application/x-rpm' => 'rpm',
+	'application' => 'document',
+	'application/octet-stream' => 'unknown',
+	'audio' => 'sound',
+	'audio/mpeg' => 'sound',
+	'Directory' => 'folder',
+	'exe' => 'exe',
+	'image' => 'image',
+	'text' => 'txt',
+	'text/html' => 'html',
+	'text/plain' => 'txt',
+	'text/xml' => 'html',
+	'text/x-vcalendar' => 'vcalendar',
+	'text/calendar' => 'vcalendar',
+	'text/x-vcard' => 'vcard',
+	'text/x-tex' => 'tex',
+	'unknown' => 'unknown',
+	'video' => 'video',
+	'message' => 'message'
 );
 
 		function uifilemanager()
@@ -99,7 +99,7 @@
 				'relatives' => Array(RELATIVE_NONE),
 				'operation' => PHPGW_ACL_READ)))
 			{
-				$this->no_access_exists(lang('You do not have access to %1',$this->bo->path));			
+				$this->no_access_exists(lang('you do not have access to %1',$this->bo->path));			
 			}
 			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
 			$this->bo->userinfo['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->bo->userinfo['working_id']);
@@ -111,6 +111,7 @@
 		//	$p->parse('col_headers','column_headers',$append);
 		}
 
+		/**TODO: xslt-ise this (and get rid of the hard-coded html)*/
 		function no_access_exists($error_msg)
 		{
 			if($this->bo->debug)
@@ -167,7 +168,7 @@
 					'relatives' => Array(RELATIVE_NONE)
 					)))
 				{
-					echo lang('failed to create directory') . ' <b>'. $this->bo->homedir . '</b><br><br>';
+					echo lang('failed to create directory') . ' :'. $this->bo->homedir . "\n";
 				}
 				$this->bo->vfs->override_acl = 0;
 			}
@@ -229,7 +230,7 @@
 					'relatives' => Array(RELATIVE_NONE)
 					)))
 			{
-				$this->no_access_exists(lang('Directory %1 does not exist',$this->bo->path));
+				$this->no_access_exists(lang('directory %1 does not exist',$this->bo->path));
 			}
 		}
 
@@ -268,20 +269,20 @@
 
 			}
 			$actions = Array(
-				'rename'	=> lang('Rename'),
-				'delete'	=> lang('Delete'),
-				'go'	=> lang('Go To'),
-				'copy'	=> lang('Copy To'),
-				'move'	=> lang('Move To'),
-				'download'	=> lang('Download'),
-				'newdir'	=> lang('Create Folder'),
-				'newfile'	=> lang('Create File'),
-				'edit'		=> lang('Edit'),
-				'edit_comments'		=> lang('Edit Comments'),
+				'rename'	=> lang('rename'),
+				'delete'	=> lang('delete'),
+				'go'	=> lang('go to'),
+				'copy'	=> lang('copy to'),
+				'move'	=> lang('move to'),
+				'download'	=> lang('download'),
+				'newdir'	=> lang('create folder'),
+				'newfile'	=> lang('create file'),
+				'edit'		=> lang('edit'),
+				'edit_comments'		=> lang('edit comments'),
 				'apply_edit_comment'		=> '1',
 				'apply_edit_name'		=> '1',
-				'cancel'	=> lang('Cancel'),
-				'upload'  => lang('Upload Files')
+				'cancel'	=> lang('cancel'),
+				'upload'  => lang('upload files')
 			);
 			
 			$local_functions = array(
@@ -300,9 +301,9 @@
 				'upload',
 				'download'
 			);
-			if (trim(strtolower($this->bo->cancel)) == strtolower(lang('Cancel'))) {
+			if (trim(strtolower($this->bo->cancel)) == strtolower(lang('cancel'))) {
 				$this->cancel();
-				exit();
+				exit();				
 			}
 			//If the action is a "uiaction" (ie it has its own seperate interface), this will run it
 			$this->actions->dispatch($this);
@@ -323,7 +324,7 @@
 					{
 						echo " bofunction $function ";
 						$f_function = 'f_'.$function;
-						$errors = $this->bo->$f_function();
+						$errors = implode("\n", $this->bo->$f_function());
 						$var = Array(
 							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 							'path'	=> urlencode($this->bo->path)
@@ -349,10 +350,11 @@
 			Header('Location: '.$GLOBALS['phpgw']->link('/index.php',Array(
 							'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 							'path'	=> urlencode($this->bo->path),
-							'errors' => lang('Unknown Action!')
+							'errors' => lang('unknown action!')
 						)));
 		}
 
+		/**TODO : xslt-ise this */
 		function help()
 		{
 			$this->load_header();
@@ -373,7 +375,7 @@
 			}
 			exit();
 		}
-
+		/**TODO : xslt-ise this */
 		function build_help($help_option,$text='')
 		{
 			if($this->bo->settings['show_help'])
@@ -451,39 +453,39 @@
 
 			$button['type'] = 'submit';
 			$button['name'] = 'uiaction_edit';
-			$button['value'] = lang('Edit');
+			$button['value'] = lang('edit');
 			$button['caption'] = $this->build_help('edit');
 			
 			$var[] = array('widget' => $button);
 			$button['name'] = "rename";
-			$button['value'] =lang('Rename');
+			$button['value'] =lang('rename');
 			$button['caption'] = $this->build_help('rename');
 			
 			$var[] = array('widget' => $button);
 			$button['name'] = "delete";
-			$button['value'] =lang('Delete');
+			$button['value'] =lang('delete');
 			$button['caption'] = $this->build_help('delete');
 			$var[] = array('widget' => $button);
 			
 			$button['name'] = "edit_comments";
-			$button['value'] =lang('Edit Comments');
+			$button['value'] =lang('edit comments');
 			$button['caption'] = $this->build_help('edit_comments');
 			$var[] = array('widget' => $button);	
 	
 			$var[] = array('widget' => array( 'type' => 'seperator' ));
 
 			$button['name'] = "go";
-			$button['value'] = lang('Go To');
+			$button['value'] = lang('go to');
 			$button['caption'] = $this->build_help('go_to');
 			$var[] = array('widget' => $button);
 			
 			$button['name'] = "copy";
-			$button['value'] = lang('Copy To');
+			$button['value'] = lang('copy to');
 			$button['caption'] = $this->build_help('copy_to');
 			$var[] = array('widget' => $button);
 			
 			$button['name'] = "move";
-			$button['value'] = lang('Move To');
+			$button['value'] = lang('move to');
 			$button['caption'] =$this->build_help('move_to');
 			$var[] = array('widget' => $button);
 
@@ -589,7 +591,7 @@
 			{
 				$var[]	= array('widget' => array('type'=>'submit',
 											'name'=> 'download',
-											'value' => lang('Download'),
+											'value' => lang('download'),
 											'caption' => $this->build_help('download')
 											));
 				$var[] = array('widget' => array( 'type' => 'seperator' ));
@@ -600,14 +602,14 @@
 												 ));
 				$var[]	= array('widget' => array('type' => 'submit',
 													'name' => 'newdir',
-													'value' => lang('Create Folder'),
+													'value' => lang('create folder'),
 													'caption' => $this->build_help('create_folder')
 												));
 				$var[] = array('widget' => array( 'type' => 'seperator' ));
 			}
 	/*		$var[] = array('widget' => array('type' => 'submit',
 											'name' => 'update',
-											'value' => lang('Update'),
+											'value' => lang('update'),
 											'caption' => $this->build_help('update')
 										));
 */
@@ -620,7 +622,7 @@
 											));
 				$var[] = array('widget' => array('type' => 'submit',
 												 'name' => 'newfile',
-												 'value' => lang('Create File'),
+												 'value' => lang('create file'),
 												 'caption' => $this->build_help('create_file')
 												));
 				$var[] = array('widget' => array( 'type' => 'seperator' ));
@@ -636,7 +638,7 @@
 											));
 				$var[] = array('widget' => array( 'type' => 'submit',
 												'name' => 'execute',
-												'value' => lang('Execute'),
+												'value' => lang('execute'),
 												'caption' => $this->build_help('execute')
 											));
 				$var[] = array('widget' => array( 'type' => 'seperator' ));
@@ -651,7 +653,7 @@
 			$p->parse('col_headers','column_headers_normal',True);
 
 			$var['td_extras']	= ' align="right"';
-			$var['column_header'] = '<b>'.lang('Used Space').'</b>:';
+			$var['column_header'] = '<b>'.lang('used space').'</b>:';
 			$p->set_var($var);
 			$p->parse('col_headers','column_headers_normal',True);
 
@@ -663,7 +665,7 @@
 			if($this_homedir)
 			{
 				$var['td_extras']	= ' align="right"';
-				$var['column_header'] = '<b>'.lang('Unused space').'</b>:';
+				$var['column_header'] = '<b>'.lang('unused space').'</b>:';
 				$p->set_var($var);
 				$p->parse('col_headers','column_headers_normal',True);
 
@@ -679,7 +681,7 @@
 			if($this_homedir)
 			{
 				$var['td_extras']	= ' colspan="'.($info_columns / 2).'" align="right" width="50%"';
-				$var['column_header'] = '<b>'.lang('Total Files').'</b>:';
+				$var['column_header'] = '<b>'.lang('total files').'</b>:';
 				$p->set_var($var);
 				$p->parse('col_headers','column_headers_normal',False);
 
@@ -701,12 +703,12 @@
 		{
 
 			$var_head[] = array('widget' => array('type' => 'label',
-				'caption' => lang('File').$this->build_help('upload_file')
+				'caption' => lang('file').$this->build_help('upload_file')
 				));
 
 
 			$var_head[] = array('widget' => array('type' => 'label',
-				'caption' => lang('Comment').$this->build_help('upload_comment')
+				'caption' => lang('comment').$this->build_help('upload_comment')
 				));
 			$table_head [] =array('table_col' => $var_head);		
 		//	$var[] = array('widget' => array('type' => 'seperator'));	
@@ -730,7 +732,7 @@
 			$var = array();
 			$var[] =  array('widget' => array('type' =>'submit',
 											'name' => 'upload',
-											'value' => lang('Upload Files'),
+											'value' => lang('upload Files'),
 											'caption' => $this->build_help('upload_files')
 											));
 					
@@ -781,15 +783,15 @@
 				{
 					$file = $files_array[$i];
 					$usage += $file['size'];
-		         	if (!count($edit) )
-		         	{
-			         	$file_attributes['checkbox'] = '';
-			            $file_output[$i]['checkbox'] =array('widget' => array( 'type' => 'checkbox',
-			            		'name' => 'fileman[]',
-			            		'value' => $file['name']
-			            	));
+						if (!count($edit) )
+						{
+							$file_attributes['checkbox'] = '';
+							$file_output[$i]['checkbox'] =array('widget' => array( 'type' => 'checkbox',
+									'name' => 'fileman[]',
+									'value' => $file['name']
+								));
 					}
-            
+
 					@reset($this->bo->file_attributes);
 					while(list($internal,$displayed) = each($this->bo->file_attributes))
 					{
@@ -820,17 +822,17 @@
 										break;
 									case 'name':
 										$mime_parts = explode('/',$file['mime_type']);		
-							            $file_icon = $this->mime_ico[$file['mime_type']];
-							            if (!$file_icon) {
-							               $file_icon = ( $this->mime_ico[$mime_parts[0]]) ?  $this->mime_ico[$mime_parts[0]] :  $this->mime_ico['unknown'];
-							               if (strpos($file['name'],'.exe') !== false) $file_icon =  $this->mime_ico['exe'];
-							            }
-				
-							            $file_output[$i]['name']['icon'] = array(
-		            						'widget' => array( 'type' => 'img',
-											  	'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,$file_icon)
-											   	));
-	
+											$file_icon = $this->mime_ico[$file['mime_type']];
+											if (!$file_icon) {
+												$file_icon = ( $this->mime_ico[$mime_parts[0]]) ?  $this->mime_ico[$mime_parts[0]] :  $this->mime_ico['unknown'];
+												if (strpos($file['name'],'.exe') !== false) $file_icon =  $this->mime_ico['exe'];
+											}
+
+											$file_output[$i]['name']['icon'] = array(
+												'widget' => array( 'type' => 'img',
+												'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,$file_icon)
+													));
+
 										if ($file['mime_type']=='Directory')
 										{
 											$href = array('menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
@@ -852,14 +854,14 @@
 														'href' =>  $GLOBALS['phpgw']->link('/index.php', $href)
 												));
 										if ($mime_parts[0] == 'text')
-		          					  	{
-		          					  		$href['menuaction'] = $this->bo->appname.'.ui'.$this->bo->appname.'.action';
-		          					  		$href['uiaction'] = 'edit';
-			          					  	$file_output[$i]['name']['edit'] = array('widget' => array( 'type' => 'img',
-			            							'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'pencil'),
-			            							'link' =>  $GLOBALS['phpgw']->link('/index.php', $href)
-			            							));	
-			            				}	
+											{
+												$href['menuaction'] = $this->bo->appname.'.ui'.$this->bo->appname.'.action';
+												$href['uiaction'] = 'edit';
+												$file_output[$i]['name']['edit'] = array('widget' => array( 'type' => 'img',
+														'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'pencil'),
+														'link' =>  $GLOBALS['phpgw']->link('/index.php', $href)
+														));	
+											}	
 										break;
 									default:
 										$file_output[$i][$internal] = $file[$internal];
@@ -904,7 +906,7 @@
 					'error'	=> (isset($this->bo->errors) && is_array(unserialize(base64_decode($this->bo->errors)))?$GLOBALS['phpgw']->common->error_list(unserialize(base64_decode($this->bo->errors)),'Results'):''),
 					'img_up' => array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'up'),
-											'alt' => lang('Up'),
+											'alt' => lang('up'),
 											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
 													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 													'path'		=> urlencode($this->bo->lesspath)
@@ -913,7 +915,7 @@
 					'help_up'	=> $this->build_help('up'),
 					'img_home'	=> array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_home'),
-											'alt' => lang('Folder'),
+											'alt' => lang('folder'),
 											'link' => $GLOBALS['phpgw']->link('/index.php',Array(
 													'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 													'path' => urlencode($this->bo->homedir)
@@ -922,7 +924,7 @@
 					'dir' => $this->bo->path,
 					'img_dir' => array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'folder_large'),
-											'alt' => lang('Folder'),						'link' => $GLOBALS['phpgw']->link('/index.php',Array(
+											'alt' => lang('folder'),						'link' => $GLOBALS['phpgw']->link('/index.php',Array(
 											'menuaction'	=> $this->bo->appname.'.ui'.$this->bo->appname.'.index',
 											'path' => urlencode($this->bo->path)
 												))								
@@ -938,19 +940,19 @@
 				{
 					$var['img_cancel'] = array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'button_cancel'),
-											'alt' => lang('Folder')									
+											'alt' => lang('folder')									
 						));
 					$var['button_cancel'] = array('widget' => array('type' => 'submit',
 										'name' => 'cancel',
-										'value' => lang('Cancel')
+										'value' => lang('cancel')
 						));
 					$var['img_ok'] = array('widget' => array('type' => 'img',
 											'src' => $GLOBALS['phpgw']->common->image($this->bo->appname,'button_ok'),
-											'alt' => lang('Folder')									
+											'alt' => lang('folder')									
 						));
 					$var['button_ok'] = array('widget' => array('type' => 'submit',
 										'name' => 'submit',
-										'value' => lang('OK')
+										'value' => lang('ok')
 						));
 					@reset($edit);
 					while( list($file,$prop) = each($edit))
@@ -1178,6 +1180,5 @@
 				exit();
 			}
 		}
-
 
 	}

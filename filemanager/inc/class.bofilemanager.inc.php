@@ -420,7 +420,7 @@
 			}
 			else
 			{
-				$data = '&nbsp;';
+				$data = '';
 			}
 			return $data;
 		}
@@ -431,7 +431,7 @@
 		}
 		function f_apply_edit_comment()
 		{
-			$result='';
+			$result=Array();
 			for ($i=0; $i<count($this->fileman) ; $i++)
 			{
 				$file = $this->fileman[$i];
@@ -445,7 +445,7 @@
 					)
 				))
 				{
-					$result .= lang(' Error: failed to change comment for :').$file."\n";
+					$result[] = lang('error: failed to change comment for : %1', $file);
 				}
 			}
 
@@ -454,19 +454,19 @@
 		
 		function f_apply_edit_name()
 		{
-			$result='';
+			$result = Array();
 			while (list ($from, $to) = each ($this->changes))
 			{
 				if ($badchar = $this->bad_chars ($to, True, True))
 				{
-			         $result .= 'File names cannot contain "'.$badchar.'"';
+			         $result[] = lang('file names cannot contain %1', $badchar);
 					continue;
 				}
 		
 				if (ereg ("/", $to) || ereg ("\\\\", $to))
 				{
 					//echo $GLOBALS['phpgw']->common->error_list (array ("File names cannot contain \\ or /"));
-		        	$result .= "File names cannot contain \\ or /";
+		        	$result[] = lang('file names cannot contain \\ or /');
 				}
 				elseif (!$this->vfs->mv (array (
 							'from'	=> $from,
@@ -475,44 +475,19 @@
 				)
 				{
 					//echo $GLOBALS['phpgw']->common->error_list (array ('Could not rename '.$disppath.'/'.$from.' to '.$disppath.'/'.$to));
-		        	$result .= 'Could not rename '.$this->path.'/'.$from.' to '.$this->path.'/'.$to;
+		        	$result[] = lang('could not rename %1 to %2', $this->path.'/'.$from, $this->path.'/'.$to);
 				}
 				else 
 				{
-					$result .= 'Renamed '.$this->path.'/'.$from.' to '.$this->path.'/'.$to;
+					$result[] = lang('renamed %1 to %2', $this->path.'/'.$this->path.'/'.$from, $to);
 				}
 			}
-		   /*html_break (2);
-		   html_link_back ();*/
-		
-		
-			/*echo "f_apply_edit_name()";
-			print_r($this->fileman);
-			echo '<br />';
-			print_r($this->changes);
-			die();
-			
-			$result='';
-			for ($i=0; $i<count($this->fileman) ; $i++)
-			{
-				$file = $this->fileman[$i];
-				
-				if (!$this->vfs->mv (array (
-					'from'	=> $file,
-					'relatives'	=> array (RELATIVE_ALL),
-					'to'	=> $this->changes[$file]
-					)
-				))
-				{
-					$result .= lang(' Error: failed to rename :').$file."\n";
-				}
-			}
-*/
 			return $result;
 		}
 
 		function f_delete()
 		{
+			$result = Array();
 			$numoffiles = count($this->fileman);
 			for($i=0;$i!=$numoffiles;$i++)
 			{
@@ -540,24 +515,25 @@
 							'relatives' => Array(RELATIVE_USER_NONE)
 							)))
 						{
-							$errors[] = '<font color="#0000FF">'.$mime_type.' Deleted: '.$this->path.SEP.$this->fileman[$i].'</font>';
+							$result[] = lang('deleted: %1', $this->path.SEP.$this->fileman[$i]);
 						}
 						else
 						{
-							$errors[] = '<font color="#FF0000">Could not delete '.$this->path.SEP.$this->fileman[$i].'</font>';
+							$result[] = lang('could not delete: %1',$this->path.SEP.$this->fileman[$i]);
 						}
 					}
 					else
 					{
-						$errors[] = '<font color="#FF0000">'.$this->path.SEP.$this->fileman[$i].' does not exist!</font>';
+						$result[] = lang('%1 does not exist!', $this->path.SEP.$this->fileman[$i]);
 					}
 				}
 			}
-			return $errors;
+			return $result;
 		}
 
 		function f_copy()
 		{
+			$result = Array();
 			$numoffiles = count($this->fileman);
 			for($i=0;$i!=$numoffiles;$i++)
 			{
@@ -569,19 +545,20 @@
 						'relatives' => Array(RELATIVE_NONE,RELATIVE_NONE)
 						)))
 					{
-						$errors[] = '<font color="#0000FF">File copied: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$result[] = lang('file copied: %1 to %2'.$this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i]);
 					}
 					else
 					{					
-						$errors[] = '<font color="#FF0000">Could not copy '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$result[] = lang('could not copy %1 to %2', $this->path.SEP.$this->fileman[$i],$this->todir.SEP.$this->fileman[$i]);
 					}
 				}
 			}
-			return $errors;
+			return $result;
 		}
 
 		function f_move()
 		{
+			$result = Array();
 			$numoffiles = count($this->fileman);
 			for($i=0;$i!=$numoffiles;$i++)
 			{
@@ -593,19 +570,20 @@
 						'relatives' => Array(RELATIVE_NONE,RELATIVE_NONE)
 						)))
 					{
-						$errors[] = '<font color="#0000FF">File moved: '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$result[] = lang('file moved: %1 to %2',$this->path.SEP.$this->fileman[$i], $this->todir.SEP.$this->fileman[$i]);
 					}
 					else
 					{					
-						$errors[] = '<font color="#FF0000">Could not move '.$this->path.SEP.$this->fileman[$i].' to '.$this->todir.SEP.$this->fileman[$i].'</font>';
+						$result[] = lang('could not move: %1 to %2',$this->path.SEP.$this->fileman[$i], $this->todir.SEP.$this->fileman[$i]);
 					}
 				}
 			}
-			return $errors;
+			return $result;
 		}
 
 		function f_download()
 		{
+			$result = Array();
 			$numoffiles = count($this->fileman);
 			for($i=0;$i!=$numoffiles;$i++)
 			{
@@ -620,30 +598,31 @@
 							'file' => $this->fileman[$i]
 						)
 					);
-					$errors[] = '<font color="#0000FF">File downloaded: '.$this->path.SEP.$this->fileman[$i].'</font>';
+					$result[] = lang('file downloaded: %1', $this->path.SEP.$this->fileman[$i]);
 				}
 				else
 				{
-					$errors[] = '<font color="#FF0000">File does not exist: '.$this->path.SEP.$this->fileman[$i].'</font>';
+					$result[] = lang('file does not exist: %1', $this->path.SEP.$this->fileman[$i]);
 				}
 			}
-			return $errors;
+			return $result;
 		}
 
 		function f_newdir()
 		{
+			$result = Array();
 			if ($this->newdir && $this->createdir)
 			{
 				if ($badchar = $this->bad_chars($this->createdir,True,True))
 				{
-					$errors[] = '<font color="#FF0000">Directory names cannot contain "'.$badchar.'"</font>';
-					return $errors;
+					$result[] = lang('directory names cannot contain "%1"', $badchar);
+					return $result;
 				}
 	
 				if (substr($this->createdir,strlen($this->createdir)-1,1) == ' ' || substr($this->createdir,0,1) == ' ')
 				{
-					$errors[] = '<font color="#FF0000">Cannot create directory because it begins or ends in a space</font>';
-					return $errors;
+					$result[] = lang('cannot create directory because it begins or ends in a space');
+					return $result;
 				}
 
 				$ls_array = $this->vfs->ls(array(
@@ -658,11 +637,11 @@
 				{
 					if ($fileinfo['mime_type'] != 'Directory')
 					{
-						$errors[] = '<font color="#FF0000">'.$fileinfo['name'].' already exists as a file</font>';
+						$result[] = lang('%1 already exists as a file', $fileinfo['name']);
 					}
 					else
 					{
-						$errors[] = '<font color="#FF0000">Directory '.$fileinfo['name'].' already exists.</font>';
+						$result[] = lang('directory %1 already exists', $fileinfo['name']);
 					}
 				}
 				else
@@ -672,64 +651,59 @@
 						'relatives' => Array(RELATIVE_NONE)
 						)))
 					{
-						$errors[] = '<font color="#0000FF">Created directory '.$this->path.SEP.$this->createdir.'</font>';
-//						$this->path = $this->path.SEP.$this->createdir;
+						$result[] = lang('created directory %1', $this->path.SEP.$this->createdir);
+						$this->path = $this->path.SEP.$this->createdir;
 					}
 					else
 					{
-						$errors[] = '<font color="#FF0000">Could not create '.$this->path.SEP.$this->createdir.'</font>';
+						$result[] = lang('could not create ', $this->path.SEP.$this->createdir);
 					}
 				}
 			}
-			return $errors;
+			return $result;
 		}
 
 		function f_newfile()
 		{
+			$result = Array();
 			if ($this->newfile && $this->createfile)
 			{
 				if($badchar = $this->bad_chars($this->createfile,True,True))
 				{
-					$errors[] = '<font color="#FF0000">Filenames cannot contain "'.$badchar.'"</font>';
-					return $errors;
+					$result[] = lang('filenames cannot contain "%1"', $badchar);
+					return $result;
 				}
 				if($this->vfs->file_exists(array(
 					'string' => $this->path.SEP.$this->createfile,
 					'relatives' => Array(RELATIVE_NONE)
 					)))
 				{
-					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' already exists.  Please edit it or delete it first.</font>';
-					return $errors;
+					$result[] = lang('file %1 already exists.  Please edit it or delete it first', $this->path.SEP.$this->createfile);
+					return $result;
 				}
 				if(!$this->vfs->touch(array(
 					'string' => $this->path.SEP.$this->createfile,
 					'relatives' => Array(RELATIVE_NONE)
 					)))
 				{
-					$errors[] = '<font color="#FF0000">File '.$this->path.SEP.$this->createfile.' could not be created.</font>';
+					$result[] = lang('file %1 could not be created', $this->path.SEP.$this->createfile);
 				}
 			}
 			else
 			{
-				$errors[] = '<font color="#FF0000">Filename not provided!</font>';
+				$result[] = lang('filename not provided!');
 			}
-			return $errors;
+			return $result;
 		}
 		
 		function f_upload()
 		{
-		/*	echo 'sub:'.$this->show_upload_boxes .' uf: ';
-			
-			print_r($this->upload_file);
-			echo  ' cf: '; print_r($this->upload_comment);
-			echo ' files: '; print_r($HTTP_POST_FILES);
-			die();*/
-			//echo (($show_upload_boxes > 1) ? $head_pre.$msg_top : $head_top);
+			$result = Array();
 			for ($i = 0; $i != $this->show_upload_boxes; $i++)
 			{
 				if ($badchar = $this->bad_chars ($this->upload_file['name'][$i], True, True))
 				{
-					array_push($err_msgs,$this->html_encode ('Filenames cannot contain "'.$badchar.'"', 1));
+					$result[] = lang('filenames cannot contain %1',$badchar);
 		         //echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Filenames cannot contain "'.$badchar.'"', 1)));
 					continue;
 				}
@@ -752,8 +726,7 @@
 				{
 					if ($fileinfo['mime_type'] == 'Directory')
 					{
-						array_push($err_msgs,'Cannot replace '.$fileinfo['name'].' because it is a directory');
-		            //echo $GLOBALS['phpgw']->common->error_list (array ('Cannot replace '.$fileinfo['name'].' because it is a directory'));
+						$result[] = lang('cannot replace %1 because it is a directory', $fileinfo['name']);
 						continue;
 					}
 				}
@@ -763,60 +736,60 @@
 					if ($fileinfo['name'] && $fileinfo['deleteable'] != 'N')
 					{
 						if (
-		      				$this->vfs->cp (array (
-		                     'from'	=> $this->upload_file['tmp_name'][$i],
-		                     'to'	=> $this->upload_file['name'][$i],
-		                     'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
-		                  )
-		               )
-		            ) {
-		               $this->vfs->set_attributes (array (
-		                     'string'	=> $this->upload_file['name'][$i],
-		                     'relatives'	=> array (RELATIVE_ALL),
-		                     'attributes'	=> array (
-		                              'owner_id' => $GLOBALS['userinfo']['username'],
-		                              'modifiedby_id' => $GLOBALS['userinfo']['username'],
-		                              'modified' => $now,
-		                              'size' => $this->upload_file['size'][$i],
-		                              'mime_type' => $this->upload_file['type'][$i],
-		                              'deleteable' => 'Y',
-		                              'comment' => stripslashes ($upload_comment[$i])
-		                           )
-		                  )
-		               );
-		               
-		            } else {
-		               array_push($err_msgs,'Failed to upload file: '.$this->upload_file['name'][$i]);
-		               continue;
-		            }
-		           
-						$result .=' Replaced '.$disppath.'/'.$this->upload_file['name'][$i].' '.$this->upload_file['size'][$i];
+								$this->vfs->cp (array (
+									'from'	=> $this->upload_file['tmp_name'][$i],
+									'to'	=> $this->upload_file['name'][$i],
+									'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
+								)
+							)
+						) {
+							$this->vfs->set_attributes (array (
+									'string'	=> $this->upload_file['name'][$i],
+									'relatives'	=> array (RELATIVE_ALL),
+									'attributes'	=> array (
+												'owner_id' => $GLOBALS['userinfo']['username'],
+												'modifiedby_id' => $GLOBALS['userinfo']['username'],
+												'modified' => $now,
+												'size' => $this->upload_file['size'][$i],
+												'mime_type' => $this->upload_file['type'][$i],
+												'deleteable' => 'Y',
+												'comment' => stripslashes ($upload_comment[$i])
+											)
+								)
+							);
+
+						} else {
+							$result[] = lang( 'failed to upload file: %1',$this->upload_file['name'][$i]);
+							continue;
+						}
+
+						$result[] = lang('replaced %1 (%2 bytes)',$this->path.'/'.$this->upload_file['name'][$i],$this->upload_file['size'][$i]);
 					}
 					else
 					{
 						if (
-		               $this->vfs->cp (array (
-		                     'from'	=> $this->upload_file['tmp_name'][$i],
-		                     'to'	=> $this->upload_file['name'][$i],
-		                     'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
-		                  )
-		               )
-		            ) {
-		
-		               $this->vfs->set_attributes (array (
-		                     'string'	=> $this->upload_file['name'][$i],
-		                     'relatives'	=> array (RELATIVE_ALL),
-		                     'attributes'	=> array (
-		                              'mime_type' => $this->upload_file_['type'][$i],
-		                              'comment' => stripslashes ($this->upload_comment[$i])
-		                           )
-		                  )
-		               );
-		            } else {
-		               array_push($err_msgs,'Failed to upload file: '.$this->upload_file['name'][$i]);
-		               continue;
-		            }
-						$result .= 'Created '.$this->path.'/'.$this->upload_file['name'][$i] .' '. $this->upload_file['size'][$i];
+							$this->vfs->cp (array (
+									'from'	=> $this->upload_file['tmp_name'][$i],
+									'to'	=> $this->upload_file['name'][$i],
+									'relatives'	=> array (RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
+								)
+							)
+						) {
+
+							$this->vfs->set_attributes (array (
+									'string'	=> $this->upload_file['name'][$i],
+									'relatives'	=> array (RELATIVE_ALL),
+									'attributes'	=> array (
+												'mime_type' => $this->upload_file['type'][$i],
+												'comment' => stripslashes ($this->upload_comment[$i])
+											)
+								)
+							);
+						} else {
+							$result[] = lang('failed to upload file: %1',$this->upload_file['name'][$i]);
+							continue;
+						}
+						$result[] = lang('created %1 (%2 bytes)',$this->path.'/'.$this->upload_file['name'][$i] , $this->upload_file['size'][$i]);
 					}
 				}
 				elseif ($this->upload_file['name'][$i])
@@ -826,7 +799,7 @@
 							'relatives'	=> array (RELATIVE_ALL)
 						)
 					);
-		
+
 					$this->vfs->set_attributes (array (
 							'string'	=> $this->upload_file['name'][$i],
 							'relatives'	=> array (RELATIVE_ALL),
@@ -836,21 +809,12 @@
 									)
 						)
 					);
-		
-					$result .= 'Created '.$this->path.'/'.$this->upload_file['name'][$i].' '. $this->file_size[$i];
+
+					$result .= ' Created '.$this->path.'/'.$this->upload_file['name'][$i].' '. $this->file_size[$i];
 				}
 			}
-		
-		   //output any error messages
-		 //  $backlink = ($show_upload_boxes > 1) ? '<a href="javascript:window.close();">Back to file manager</a>' : html_link_back(1);
-		   $refreshjs = '
-		   <script language="javascript">
-		      window.opener.processIt(\'update\');
-		   </script>';
-		   
-//		   if (sizeof($err_msgs)) echo $GLOBALS['phpgw']->common->error_list ($err_msgs,'Error',$backlink);
 
-			return $result.$err_msgs;
+			return $result;
 		
 		}
 		function load_help_info()
@@ -1020,9 +984,9 @@
 			return($this->eor(htmlspecialchars($string),$return));
 		}
 
-		function translate ($text)
+	/*	function translate ($text)
 		{
 			return($GLOBALS['phpgw']->lang($text));
-		}
+		}*/
 	}
 ?>
