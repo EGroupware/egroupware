@@ -156,9 +156,7 @@ default sorting order	email	en	Default sorting order
 delete	bookkeeping	en	Delete
 delete	common	en	Delete
 department	addressbook	en	Department
-description	admin	en	Description
-description	bookkeeping	en	Description
-description	calendar	en	Description
+description	common	en	Description
 detail	tts	en	Detail
 disabled	admin	en	Disabled
 display	admin	en	Display
@@ -414,6 +412,7 @@ other phone	common	en	Other phone
 owner	common	en	Owner
 pager	addressbook	en	Pager
 parcel	addressbook	en	Parcel
+parent category	common	en	Parent Category
 parent project	todo	en	parent project
 participants	calendar	en	Participants
 password	common	en	Password
@@ -444,6 +443,7 @@ previous page	common	en	Previous page
 print	common	en	Print
 printer friendly	calendar	en	Printer Friendly
 priority	common	en	Priority
+private	common	en	private
 private and global public	calendar	en	Private and Global Public
 private and group public	calendar	en	Private and Group Public
 private	common	en	Private
@@ -451,6 +451,7 @@ private_files	filemanager	en	Private files
 private only	calendar	en	Private Only
 proceed	bookkeeping	en	Proceed.
 project description	todo	en	Project Description
+public	common	en	public
 read	common	en	Read
 recent	weather	en	Recent
 record access	addressbook	en	Record Access
@@ -573,6 +574,7 @@ title	common	en	Title
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
 today	calendar	en	Today
 today is x's birthday!	common	en	Today is %1's birthday!
+todo categories	common	en	todo categories
 todo list - add sub-project	todo	en	todo list - add sub-project
 todo list - add	todo	en	todo list - add
 todo list	common	en	Todo List
@@ -601,6 +603,7 @@ use end date	calendar	en	Use End date
 user accounts	admin	en	User accounts
 user groups	admin	en	User groups
 username	login	en	Username
+user	common	en	User
 users	common	en	users
 usersfile_perm_error	filemanager	en	To correct this error you will need to properly set the permissions to the files/users directory.<BR> On *nix systems please type: chmod 707
 vcard	common	en	VCard
