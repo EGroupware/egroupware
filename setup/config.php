@@ -193,7 +193,15 @@
 					break;
 				case 'value':
 					$newval = ereg_replace(' ','_',$newval);
-					$t->set_var($value,$current_config[$newval]);
+					/* Don't show passwords in the form */
+					if(ereg('passwd',$value) || ereg('password',$value) || ereg('root_pw',$value))
+					{
+						$t->set_var($value,'');
+					}
+					else
+					{
+						$t->set_var($value,$current_config[$newval]);
+					}
 					break;
 				case 'selected':
 					$configs = array();
