@@ -67,6 +67,7 @@ defines the size in minutes of the lines in the day view.	calendar	en	Defines th
 delete a single entry by passing the id.	calendar	en	Delete a single entry by passing the id.
 delete an entire users calendar.	calendar	en	Delete an entire users calendar.
 delete selected contacts	calendar	en	Delete selected contacts
+delete selected participants	calendar	en	Delete selected participants
 delete series	calendar	en	Delete Series
 delete single	calendar	en	Delete Single
 deleted	calendar	en	Deleted
@@ -107,6 +108,7 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	en	External Participants
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	en	Failed sending message to '%1' #%2 subject='%3', sender='%4' !!!
 fieldseparator	calendar	en	Fieldseparator
+find free timeslots where the marked participants are availible for the given timespan	calendar	en	Find free timeslots where the marked participants are availible for the given timespan
 firstname of person to notify	calendar	en	Firstname of person to notify
 format of event updates	calendar	en	Format of event updates
 fr	calendar	en	F

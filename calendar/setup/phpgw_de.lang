@@ -74,6 +74,7 @@ defines the size in minutes of the lines in the day view.	calendar	de	Bestimmt d
 delete a single entry by passing the id.	calendar	de	Lösche einen einzelnen Eintrag über seine Id.
 delete an entire users calendar.	calendar	de	Lösche den kompletten Kalender eines Benutzers.
 delete selected contacts	calendar	de	Löscht die ausgewählten Kontakte.
+delete selected participants	calendar	de	Löscht die ausgewählten Teilnehmer
 delete series	calendar	de	Serie löschen
 delete single	calendar	de	Einzelevent löschen
 deleted	calendar	de	Abgesagt
@@ -115,6 +116,7 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	de	Externe Teilnehmer
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	de	Fehler beim Senden einer Email an '%1' #%2 Betreff='%3', Absender='%4' !!!
 fieldseparator	calendar	de	Feldtrenner
+find free timeslots where the marked participants are availible for the given timespan	calendar	de	Such freie Zeitslots an denen die ausgewählten Teilnehmer für die gegebene Zeitspanne verfügbar sind
 firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Person
 format of event updates	calendar	de	Format der Benachrichtigungen
 fr	calendar	de	Fr
