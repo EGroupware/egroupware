@@ -357,7 +357,7 @@
 				$ldap_fields = array();
 				$total = 0;
 				while (list($name,$value) = each($stock_fieldnames) ) {
-					$lquery = $value.'='.$query;
+					$lquery = $value.'=*'.$query.'*';
 					//echo $lquery; exit;
 					$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], $lquery);
 					$ldap_fields += ldap_get_entries($this->ldap, $sri);
