@@ -1,34 +1,35 @@
+%1 already exists as a file	filemanager	pl	%1 ju¿ istnieje jako plik
 application	filemanager	pl	Aplikacja
 back to file manager	filemanager	pl	Powrót do managera plików
 cannot create directory because it begins or ends in a space	filemanager	pl	
-cannot replace x because it is a directory	filemanager	pl	
+cannot replace %1 because it is a directory	filemanager	pl	
 command sucessfully run	filemanager	pl	Pomy¶lnie wykonano polecenie
 comment	filemanager	pl	Komentarz
-comments cannot contain "x"	filemanager	pl	Komentarz nie zawiera "%1"
-copied x to x	filemanager	pl	Skopiowano %1 do %2
+comments cannot contain "%1"	filemanager	pl	Komentarz nie zawiera "%1"
+copied %1 to %2	filemanager	pl	Skopiowano %1 do %2
 copy to	filemanager	pl	Kopiuj do
 copy to:	filemanager	pl	Kopiuj do
-could not copy x to x	filemanager	pl	Nie mo¿na skopiowaæ %1 do %2
-could not create directory x	filemanager	pl	Nie mo¿na utworzyæ katalogu %1
-could not create x	filemanager	pl	Nie mo¿na utworzyæ %1
-could not delete x	filemanager	pl	Nie mo¿na usun±æ %1
-could not move x to x	filemanager	pl	Nie mo¿na przenie¶æ %1
-could not rename x to x	filemanager	pl	Nie mo¿na zmieniæ nazwy %1
-could not save x	filemanager	pl	Nie mo¿na zapisaæ %1
+could not copy %1 to %2	filemanager	pl	Nie mo¿na skopiowaæ %1 do %2
+could not create directory %1	filemanager	pl	Nie mo¿na utworzyæ katalogu %1
+could not create %1	filemanager	pl	Nie mo¿na utworzyæ %1
+could not delete %1	filemanager	pl	Nie mo¿na usun±æ %1
+could not move %1 to %2	filemanager	pl	Nie mo¿na przenie¶æ %1
+could not rename %1 to %2	filemanager	pl	Nie mo¿na zmieniæ nazwy %1
+could not save %1	filemanager	pl	Nie mo¿na zapisaæ %1
 create file	filemanager	pl	Utwórz plik
 create folder	filemanager	pl	Utwórz katalog
 created	filemanager	pl	Utworzony
 created by	filemanager	pl	Utworzony przez
-created directory x	filemanager	pl	Utworzono katalog %1
-created x	filemanager	pl	Utworzono %1
+created directory %1	filemanager	pl	Utworzono katalog %1
+created %1	filemanager	pl	Utworzono %1
 date	filemanager	pl	Data
 default number of upload fields to show	filemanager	pl	
 delete	filemanager	pl	Usuñ
-deleted x	filemanager	pl	Usuniêto 51
+deleted %1	filemanager	pl	Usuniêto 51
 directory	filemanager	pl	Katalog
-directory names cannot contain "x"	filemanager	pl	Nazwa katalogu zawiera "%1"
-directory x already exists	filemanager	pl	Katalog %1 ju¿ istnieje
-directory x does not exist	filemanager	pl	Katalog %1 nie istnieje
+directory names cannot contain "%1"	filemanager	pl	Nazwa katalogu zawiera "%1"
+directory %1 already exists	filemanager	pl	Katalog %1 ju¿ istnieje
+directory %1 does not exist	filemanager	pl	Katalog %1 nie istnieje
 display attributes	filemanager	pl	Wy¶wietlane atrybuty
 download	filemanager	pl	Pobierz
 edit	filemanager	pl	Edycja
@@ -38,15 +39,15 @@ execute	filemanager	pl	Wykonaj
 failed to create directory	filemanager	pl	
 file	filemanager	pl	Plik
 file name	filemanager	pl	Nazwa pliku
-file names cannot contain "x"	filemanager	pl	Plik nie zawiera "%1"
+file names cannot contain "%1"	filemanager	pl	Plik nie zawiera "%1"
 file names cannot contain \\ or /	filemanager	pl	Nazwa pliku nie mo¿e zawierac \\ lub /
-file x already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
-file x could not be created.	filemanager	pl	Plik %1 nie mo¿e byæ utworzony
+file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 ju¿ istnieje. proszê edytowaæ go lub usun±æ
+file %1 could not be created.	filemanager	pl	Plik %1 nie mo¿e byæ utworzony
 filename	filemanager	pl	Nazwa pliku
 files	filemanager	pl	Plików
 folder	filemanager	pl	Katalog
 go to	filemanager	pl	Id¼ do
-go to x	filemanager	pl	Id¼ do %1
+go to %1	filemanager	pl	Id¼ do %1
 go to your home directory	filemanager	pl	
 go to:	filemanager	pl	Id¼ do
 home	filemanager	pl	
@@ -56,19 +57,19 @@ modified	filemanager	pl	Zmodyfikowany
 modified by	filemanager	pl	Zmodyfikowany przez
 move to	filemanager	pl	Przenie¶ do
 move to:	filemanager	pl	Przenie¶ do
-moved x to x	filemanager	pl	Przeniesiono %1 do %2
+moved %1 to %2	filemanager	pl	Przeniesiono %1 do %2
 no version history for this file/directory	filemanager	pl	
 operation	filemanager	pl	
 owner	filemanager	pl	W³a¶ciciel
 filemanager preferences	filemanager	pl	Preferencje filemanager
-preview of x	filemanager	pl	
-preview x	filemanager	pl	
+preview of %1	filemanager	pl	
+preview %1	filemanager	pl	
 rename	filemanager	pl	Zmiana nazwy
-renamed x to x	filemanager	pl	Zmieniono nazwê %1 na %2
-replaced x	filemanager	pl	Zastapiono %1
+renamed %1 to %2	filemanager	pl	Zmieniono nazwê %1 na %2
+replaced %1	filemanager	pl	Zastapiono %1
 save all	filemanager	pl	Zapisz wszystko
-save x	filemanager	pl	Zapisz %1
-saved x	filemanager	pl	Zapisano %1
+save %1	filemanager	pl	Zapisz %1
+saved %1	filemanager	pl	Zapisano %1
 show	filemanager	pl	Wy¶wietl
 show ..	filemanager	pl	Wy¶wietlaj ..
 show .files	filemanager	pl	Wy¶wietlaj .pliki
@@ -81,7 +82,7 @@ unknown mime-type defaults to text/plain when viewing	filemanager	pl
 unused space	filemanager	pl	Wolne miejsce
 up	filemanager	pl	W górê
 update	filemanager	pl	Aktualizuj
-updated comment for x	filemanager	pl	Zaktualizowano komentarz do 51
+updated comment for %1	filemanager	pl	Zaktualizowano komentarz do 51
 upload fields	filemanager	pl	wczytywanych plików
 upload files	filemanager	pl	Wczytaj pliki
 used space	filemanager	pl	Wykorzystane miejsce
@@ -90,5 +91,4 @@ version	filemanager	pl	Wersja
 view documents in new window	filemanager	pl	Wy¶wietlaj dokumenty w nowym oknie
 view documents on server (if available)	filemanager	pl	Poka¿ dokumenty na serwerze (je¶li s± dostêpne)
 who	filemanager	pl	Kto
-x already exists as a file	filemanager	pl	%1 ju¿ istnieje jako plik
-you do not have access to x	filemanager	pl	Nie masz praw do %1
+you do not have access to %1	filemanager	pl	Nie masz praw do %1

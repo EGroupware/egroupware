@@ -1,54 +1,65 @@
+$displayed	filemanager	en	$displayed
+%1 already exists as a file	filemanager	en	%1 already exists as a file
+%1 does not exist!	filemanager	en	%1 does not exist!
+add mozilla/netscape sidebar tab	filemanager	en	add mozilla/netscape sidebar tab
 application	filemanager	en	Application
 back to file manager	filemanager	en	Back to file manager
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
-cannot replace x because it is a directory	filemanager	en	Cannot replace %1 because it is a directory
+cannot replace %1 because it is a directory	filemanager	en	cannot replace %1 because it is a directory
+close	filemanager	en	close
 command sucessfully run	filemanager	en	Command sucessfully run
 comment	filemanager	en	Comment
-comments cannot contain "x"	filemanager	en	Comments cannot contain "%1"
-copied x to x	filemanager	en	Copied %1 to %2
 copy to	filemanager	en	Copy To
 copy to:	filemanager	en	Copy to:
-could not copy x to x	filemanager	en	Could not copy %1 to %2
-could not create directory x	filemanager	en	Could not create directory %1
-could not create x	filemanager	en	Could not create %1
-could not delete x	filemanager	en	Could not delete %1
-could not move x to x	filemanager	en	Could not move %1 to %2
-could not rename x to x	filemanager	en	Could not rename %1 to %2
-could not save x	filemanager	en	Could not save %1
+could not copy %1 to %2	filemanager	en	could not copy %1 to %2
+could not create 	filemanager	en	could not create 
+could not delete: %1	filemanager	en	could not delete: %1
+could not move: %1 to %2	filemanager	en	could not move: %1 to %2
+could not rename %1 to %2	filemanager	en	could not rename %1 to %2
+could not save %1	filemanager	en	Could not save %1
 create file	filemanager	en	Create File
 create folder	filemanager	en	Create Folder
 created	filemanager	en	Created
+created %1 (%2 bytes)	filemanager	en	created %1 (%2 bytes)
 created by	filemanager	en	Created by
-created directory x	filemanager	en	Created directory %1
-created x	filemanager	en	Created %1
+created directory %1	filemanager	en	created directory %1
 date	filemanager	en	Date
 default number of upload fields to show	filemanager	en	Default number of upload fields to show
 delete	filemanager	en	Delete
-deleted x	filemanager	en	Deleted %1
+deleted: %1	filemanager	en	deleted: %1
 directory	filemanager	en	Directory
-directory names cannot contain "x"	filemanager	en	Directory names cannot contain "%1"
-directory x already exists	filemanager	en	Directory %1 already exists
-directory x does not exist	filemanager	en	Directory %1 does not exist
+directory %1 already exists	filemanager	en	directory %1 already exists
+directory %1 does not exist	filemanager	en	directory %1 does not exist
+directory names cannot contain "%1"	filemanager	en	directory names cannot contain "%1"
 display attributes	filemanager	en	Display attributes
 download	filemanager	en	Download
 edit	filemanager	en	Edit
 edit comments	filemanager	en	Edit comments
 error running command	filemanager	en	Error running command
+error: failed to change comment for : %1	filemanager	en	error: failed to change comment for : %1
 execute	filemanager	en	Execute
 failed to create directory	filemanager	en	failed to create directory
+failed to upload file: %1	filemanager	en	failed to upload file: %1
 file	filemanager	en	File
+file %1 already exists.  please edit it or delete it first	filemanager	en	file %1 already exists.  Please edit it or delete it first
+file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
+file %1 could not be created	filemanager	en	file %1 could not be created
+file %1 could not be created.	filemanager	en	File %1 could not be created.
+file attributes to display:	filemanager	en	File attributes to display:
+file copied: %1 to %2	filemanager	en	file copied: %1 to %2
+file does not exist: %1	filemanager	en	file does not exist: %1
+file downloaded: %1	filemanager	en	file downloaded: %1
+file moved: %1 to %2	filemanager	en	file moved: %1 to %2
 file name	filemanager	en	File Name
-file names cannot contain "x"	filemanager	en	File names cannot contain "%1"
+file names cannot contain %1	filemanager	en	file names cannot contain %1
 file names cannot contain \\ or /	filemanager	en	File names cannot contain \\ or /
-file x already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
-file x could not be created.	filemanager	en	File %1 could not be created.
-files	filemanager	en	Files
 filemanager	common	en	Filemanager
+filemanager preferences	filemanager	en	Filemanager preferences
+filename not provided!	filemanager	en	filename not provided!
+files	filemanager	en	Files
 folder	filemanager	en	Folder
 go to	filemanager	en	Go To
-go to x	filemanager	en	Go to %1
 go to your home directory	filemanager	en	Go to your home directory
-go to:	filemanager	en	Go to:
 home	filemanager	en	Home
 locked	filemanager	en	Locked
 mime type	filemanager	en	MIME Type
@@ -56,19 +67,16 @@ modified	filemanager	en	Modified
 modified by	filemanager	en	Modified by
 move to	filemanager	en	Move To
 move to:	filemanager	en	Move to:
-moved x to x	filemanager	en	Moved %1 to %2
 no version history for this file/directory	filemanager	en	No version history for this file/directory
 operation	filemanager	en	Operation
 owner	filemanager	en	Owner
-filemanager preferences	filemanager	en	Filemanager preferences
-preview of x	filemanager	en	Preview of %1
-preview x	filemanager	en	Preview %1
+phpgroupware files	filemanager	en	phpgroupware files
+preview	filemanager	en	preview
 rename	filemanager	en	Rename
-renamed x to x	filemanager	en	Renamed %1 to %2
-replaced x	filemanager	en	Replaced %1
+renamed %1 to %2	filemanager	en	renamed %1 to %2
+replaced %1 (%2 bytes)	filemanager	en	replaced %1 (%2 bytes)
 save all	filemanager	en	Save all
-save x	filemanager	en	Save %1
-saved x	filemanager	en	Saved %1
+saved %1	filemanager	en	Saved %1
 show	filemanager	en	Show
 show ..	filemanager	en	Show ..
 show .files	filemanager	en	Show .files
@@ -77,11 +85,11 @@ show help	filemanager	en	Show help
 size	filemanager	en	Size
 sort by:	filemanager	en	Sort by:
 total files	filemanager	en	Total Files
+unknown action!	filemanager	en	unknown action!
 unknown mime-type defaults to text/plain when viewing	filemanager	en	Unknown MIME-type defaults to text/plain when viewing
 unused space	filemanager	en	Unused space
 up	filemanager	en	Up
 update	filemanager	en	Update
-updated comment for x	filemanager	en	Updated comment for %1
 upload fields	filemanager	en	upload fields
 upload files	filemanager	en	Upload files
 used space	filemanager	en	Used Space
@@ -90,5 +98,4 @@ version	filemanager	en	Version
 view documents in new window	filemanager	en	View documents in new window
 view documents on server (if available)	filemanager	en	View documents on server (if available)
 who	filemanager	en	Who
-x already exists as a file	filemanager	en	%1 already exists as a file
-you do not have access to x	filemanager	en	You do not have access to %1
+you do not have access to %1	filemanager	en	you do not have access to %1

@@ -1,94 +1,101 @@
-application	phpwebhosting	fr	Application
-back to file manager	phpwebhosting	fr	Retourner au gestionnaire de fichiers
-cannot create directory because it begins or ends in a space	phpwebhosting	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
-cannot replace x because it is a directory	phpwebhosting	fr	Ne peut remplacer %1 parce-que c'est un répertoire
-command sucessfully run	phpwebhosting	fr	Commande exécutée avec succès
-comment	phpwebhosting	fr	Commentaire
-comments cannot contain "x"	phpwebhosting	fr	Les commentaires ne peuvent pas contenir "%1"
-copied x to x	phpwebhosting	fr	Copié %1 vers %2
-copy to	phpwebhosting	fr	Copier vers
-copy to:	phpwebhosting	fr	Copier vers:
-could not copy x to x	phpwebhosting	fr	N'a pas pu copier %1 vers %2
-could not create directory x	phpwebhosting	fr	N'a pas pu créér le répertoire %1
-could not create x	phpwebhosting	fr	N'a pas pu créér %1
-could not delete x	phpwebhosting	fr	N'a pas pu effacer %1
-could not move x to x	phpwebhosting	fr	N'a pas pu déplacer %1 to %2
-could not rename x to x	phpwebhosting	fr	N'a pas pu renommer %1 to %2
-could not save x	phpwebhosting	fr	N'a pas pu enregistrer %1
-create file	phpwebhosting	fr	Créér fichier
-create folder	phpwebhosting	fr	Créér dossier
-created	phpwebhosting	fr	Créé
-created by	phpwebhosting	fr	Créé par
-created directory x	phpwebhosting	fr	Répertoire %1 créé
-created x	phpwebhosting	fr	%1 créé
-date	phpwebhosting	fr	Date
-default number of upload fields to show	phpwebhosting	fr	Nombre de champs d'upload par défaut à montrer
-delete	phpwebhosting	fr	Effacer
-deleted x	phpwebhosting	fr	%1 effacé
-directory	phpwebhosting	fr	Répertoire
-directory names cannot contain "x"	phpwebhosting	fr	Les noms de répertoire ne peuvent pas contenir "%1"
-directory x already exists	phpwebhosting	fr	Le répertoire %1 existe déjà
-directory x does not exist	phpwebhosting	fr	Le répertoire %1 n'existe pas
-display attributes	phpwebhosting	fr	Afficher les attributs
-download	phpwebhosting	fr	Downloader
-edit	phpwebhosting	fr	Modifier
-edit comments	phpwebhosting	fr	Modifier les commentaires
-error running command	phpwebhosting	fr	Erreur à l'exécution de la commande
-execute	phpwebhosting	fr	Exécuter
-failed to create directory	phpwebhosting	fr	Echec de création du répertoire
-file	phpwebhosting	fr	Fichier
-file name	phpwebhosting	fr	Nom du fichier
-file names cannot contain "x"	phpwebhosting	fr	Les noms de fichier ne peuvent contenir "%1"
-file names cannot contain \\ or /	phpwebhosting	fr	Les noms de fichier ne peuvent contenir \\ ou /
-file x already exists. please edit it or delete it first.	phpwebhosting	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
-file x could not be created.	phpwebhosting	fr	Le fichier %1 n'a pas pu être créé.
-files	phpwebhosting	fr	Fichiers
+$displayed	filemanager	fr	$displayed
+%1 already exists as a file	filemanager	fr	%1 existe déjà en tant que fichier
+%1 does not exist!	filemanager	fr	%1 n'existe pas!
+add mozilla/netscape sidebar tab	filemanager	fr	Ajouter le tableau barre latérale mozilla/netscape
+application	filemanager	fr	Application
+back to file manager	filemanager	fr	Retourner au gestionnaire de fichiers
+cannot create directory because it begins or ends in a space	filemanager	fr	Ne peut créér le répertoire car il commence ou finit sur un espace
+cannot replace %1 because it is a directory	filemanager	fr	Ne peut remplacer %1 parce-que c'est un répertoire
+close	filemanager	fr	Fermer
+command sucessfully run	filemanager	fr	Commande exécutée avec succès
+comment	filemanager	fr	Commentaire
+copy to	filemanager	fr	Copier vers
+copy to:	filemanager	fr	Copier vers:
+could not copy %1 to %2	filemanager	fr	N'a pas pu copier %1 vers %2
+could not create 	filemanager	fr	N'a pas pu créer 
+could not delete: %1	filemanager	fr	N'a pas pu effacer: %1
+could not move: %1 to %2	filemanager	fr	N'a pas pu déplacer: %1 vers %2
+could not rename %1 to %2	filemanager	fr	N'a pas pu renommer %1 vers %2
+could not save %1	filemanager	fr	N'a pas pu enregistrer %1
+create file	filemanager	fr	Créér fichier
+create folder	filemanager	fr	Créér dossier
+created	filemanager	fr	Créé
+created %1 (%2 bytes)	filemanager	fr	A crée %1 (%2 octets)
+created by	filemanager	fr	Créé par
+created directory %1	filemanager	fr	Répertoire %1 créé
+date	filemanager	fr	Date
+default number of upload fields to show	filemanager	fr	Nombre de champs d'upload par défaut à montrer
+delete	filemanager	fr	Effacer
+deleted: %1	filemanager	fr	Effacé(s): %1
+directory	filemanager	fr	Répertoire
+directory %1 already exists	filemanager	fr	Le répertoire %1 existe déjà
+Directory %1 does not exist	filemanager	fr	Le répertoire %1 n'existe pas
+directory names cannot contain "%1"	filemanager	fr	Les noms de répertoire ne peuvent pas contenir "%1"
+display attributes	filemanager	fr	Afficher les attributs
+download	filemanager	fr	Downloader
+edit	filemanager	fr	Modifier
+edit comments	filemanager	fr	Modifier les commentaires
+error running command	filemanager	fr	Erreur à l'exécution de la commande
+error: failed to change comment for : %1	filemanager	fr	Erreur: échec à la modification du commentaire pour : %1
+execute	filemanager	fr	Exécuter
+failed to create directory	filemanager	fr	Echec de création du répertoire
+failed to upload file: %1	filemanager	fr	Echec à l'upload du fichier: %1
+file	filemanager	fr	Fichier
+file %1 already exists.  please edit it or delete it first	filemanager	fr	Le fichier %1 existe déjà.  SVP modifiez-le ou effacez-le d'abord
+file %1 already exists. please edit it or delete it first.	filemanager	fr	Le fichier %1 existe déjà. SVP modifiez-le ou effacez-le d'abord.
+file %1 could not be created	filemanager	fr	Le fichier %1 n'a pas pu être crée
+file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.
+file attributes to display:	filemanager	fr	Les attributs de fichier à afficher:
+file copied: %1 to %2	filemanager	fr	Fichier copié: %1 vers %2
+file does not exist: %1	filemanager	fr	Le fichier n'existe pas: %1
+file downloaded: %1	filemanager	fr	Fichier downloadé: %1
+file moved: %1 to %2	filemanager	fr	Fichier déplacé: %1 vers %2
+file name	filemanager	fr	Nom du fichier
+file names cannot contain %1	filemanager	fr	Les noms de fichiers ne peuvent contenir %1
+file names cannot contain \\ or /	filemanager	fr	Les noms de fichier ne peuvent contenir \\ ou /
 filemanager	common	fr	Gestionnaire de fichiers
-folder	phpwebhosting	fr	Dossier
-go to	phpwebhosting	fr	Aller dans
-go to x	phpwebhosting	fr	Aller dans %1
-go to your home directory	phpwebhosting	fr	Aller dans votre répertoire "home" (maison)
-go to:	phpwebhosting	fr	Aller dans:
-home	phpwebhosting	fr	Maison
-locked	phpwebhosting	fr	Verouillé
-mime type	phpwebhosting	fr	Type MIME
-modified	phpwebhosting	fr	Modifié
-modified by	phpwebhosting	fr	Modifié par
-move to	phpwebhosting	fr	Déplacer dans
-move to:	phpwebhosting	fr	Déplacer dans:
-moved x to x	phpwebhosting	fr	Déplacé %1 dans %2
-no version history for this file/directory	phpwebhosting	fr	pas d'historique de versions pour ce fichier/répertoire
-operation	phpwebhosting	fr	Opération
-owner	phpwebhosting	fr	Propriétaire
-filemanager preferences	filemanager	en	Préférences du gestionnaire de fichiers
-preview of x	phpwebhosting	fr	Prévisualisation de %1
-preview x	phpwebhosting	fr	Prévisualisation %1
-rename	phpwebhosting	fr	Renommer
-renamed x to x	phpwebhosting	fr	Renommé %1 en %2
-replaced x	phpwebhosting	fr	Remplacé %1
-save all	phpwebhosting	fr	Enregistrer tout
-save x	phpwebhosting	fr	Enregistrer %1
-saved x	phpwebhosting	fr	%1 enregistré
-show	phpwebhosting	fr	Montrer
-show ..	phpwebhosting	fr	Montrer ..
-show .files	phpwebhosting	fr	Montrer .fichiers
-show command line (experimental. dangerous.)	phpwebhosting	fr	Montrer la ligne de commande (EXPERIMENTAL. DANGEREUX.)
-show help	phpwebhosting	fr	Montrer l'aide
-size	phpwebhosting	fr	Taille
-sort by:	phpwebhosting	fr	Trié par:
-total files	phpwebhosting	fr	Total de fichiers
-unknown mime-type defaults to text/plain when viewing	phpwebhosting	fr	text/plain utilisé par défaut si type MIME inconnu
-unused space	phpwebhosting	fr	Espace inutilisé
-up	phpwebhosting	fr	Haut
-update	phpwebhosting	fr	Mettre à jour
-updated comment for x	phpwebhosting	fr	Commentaire pour %1 mis à jour
-upload fields	phpwebhosting	fr	Champs d'upload
-upload files	phpwebhosting	fr	Fichiers d'upload
-used space	phpwebhosting	fr	Espace utilisé
-users	phpwebhosting	fr	Utilisateurs
-version	phpwebhosting	fr	Version
-view documents in new window	phpwebhosting	fr	Voir les documents dans une nouvelle fenêtre
-view documents on server (if available)	phpwebhosting	fr	Voir les documents sur le serveur (si disponible)
-who	phpwebhosting	fr	Qui
-x already exists as a file	phpwebhosting	fr	%1 existe déjà en tant que fichier
-you do not have access to x	phpwebhosting	fr	Vous n'avez pas accès à %1
+filemanager preferences	filemanager	fr	Préférences filemanager
+filename not provided!	filemanager	fr	Nom de fichier non fourni!
+files	filemanager	fr	Fichiers
+folder	filemanager	fr	Dossier
+go to	filemanager	fr	Aller dans
+go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (maison)
+home	filemanager	fr	Maison
+locked	filemanager	fr	Verouillé
+mime type	filemanager	fr	Type MIME
+modified	filemanager	fr	Modifié
+modified by	filemanager	fr	Modifié par
+move to	filemanager	fr	Déplacer dans
+move to:	filemanager	fr	Déplacer dans:
+no version history for this file/directory	filemanager	fr	pas d'historique de versions pour ce fichier/répertoire
+operation	filemanager	fr	Opération
+owner	filemanager	fr	Propriétaire
+phpgroupware files	filemanager	fr	Fichiers phpgroupware
+preview	filemanager	fr	Prévisualisation
+rename	filemanager	fr	Renommer
+renamed %1 to %2	filemanager	fr	Renommé %1 en %2
+replaced %1 (%2 bytes)	filemanager	fr	Remplacé %1 (%2 octets)
+save all	filemanager	fr	Enregistrer tout
+saved %1	filemanager	fr	%1 enregistré
+show	filemanager	fr	Montrer
+show ..	filemanager	fr	Montrer ..
+show .files	filemanager	fr	Montrer .fichiers
+show command line (experimental. dangerous.)	filemanager	fr	Montrer la ligne de commande (EXPERIMENTAL. DANGEREUX.)
+show help	filemanager	fr	Montrer l'aide
+size	filemanager	fr	Taille
+sort by:	filemanager	fr	Trié par:
+total files	filemanager	fr	Total de fichiers
+unknown action!	filemanager	fr	Action inconnue!
+unknown mime-type defaults to text/plain when viewing	filemanager	fr	text/plain utilisé par défaut si type MIME inconnu
+unused space	filemanager	fr	Espace inutilisé
+up	filemanager	fr	Haut
+update	filemanager	fr	Mettre à jour
+upload fields	filemanager	fr	Champs d'upload
+upload files	filemanager	fr	Fichiers d'upload
+used space	filemanager	fr	Espace utilisé
+users	filemanager	fr	Utilisateurs
+version	filemanager	fr	Version
+view documents in new window	filemanager	fr	Voir les documents dans une nouvelle fenêtre
+view documents on server (if available)	filemanager	fr	Voir les documents sur le serveur (si disponible)
+who	filemanager	fr	Qui
+You do not have access to %1	filemanager	fr	Vous n'avez pas accès à %1

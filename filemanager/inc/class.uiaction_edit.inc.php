@@ -126,11 +126,11 @@ define('UIEDIT_DEBUG',0);
 					))
 				)
 				{
-					$vars['output'] = lang('Saved x', $parent->bo->path.'/'.$edit_file);
+					$vars['output'] = lang('Saved %1', $parent->bo->path.'/'.$edit_file);
 				}
 				else
 				{
-					$vars['output'] = lang('Could not save x', $parent->bo->path.'/'.$edit_file);
+					$vars['output'] = lang('Could not save %1', $parent->bo->path.'/'.$edit_file);
 				}
 			}
 

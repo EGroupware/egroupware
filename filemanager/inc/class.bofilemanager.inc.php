@@ -672,7 +672,7 @@
 			{
 				if($badchar = $this->bad_chars($this->createfile,True,True))
 				{
-					$result[] = lang('filenames cannot contain "%1"', $badchar);
+					$result[] = lang('file names cannot contain %1', $badchar);
 					return $result;
 				}
 				if($this->vfs->file_exists(array(
@@ -706,8 +706,8 @@
 			{
 				if ($badchar = $this->bad_chars ($this->upload_file['name'][$i], True, True))
 				{
-					$result[] = lang('filenames cannot contain %1',$badchar);
-		         //echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('Filenames cannot contain "'.$badchar.'"', 1)));
+					$result[] = lang('file names cannot contain %1',$badchar);
+		         //echo $GLOBALS['phpgw']->common->error_list (array (html_encode ('File names cannot contain "'.$badchar.'"', 1)));
 					continue;
 				}
 		
