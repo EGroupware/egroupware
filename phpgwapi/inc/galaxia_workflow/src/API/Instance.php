@@ -367,7 +367,6 @@ class Instance extends Base {
     $now = date("U");
     $query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `wf_ended`=? where `wf_activity_id`=? and `wf_instance_id`=?";
     $this->query($query,array((int)$now,(int)$activityId,(int)$this->instanceId));
-    
     //Add a workitem to the instance 
     $iid = $this->instanceId;
     if($addworkitem) {
@@ -413,10 +412,14 @@ class Instance extends Base {
           $candidates[] = $res['wf_act_to_id'];
         }  
         if($type == 'split') {
-          $first = true;
+          $erase_from = false;
+		  $num_candidates = count($candidates);
+		  $i = 1;
           foreach ($candidates as $cand) {
-            $this->sendTo($activityId,$cand,$first);
-            $first = false;
+			// only erase split activity in instance when all the activities comming from the split have been set up
+			if ($i == $num_candidates) $erase_from = true;
+            $this->sendTo($activityId,$cand,$erase_from);
+			$i++;
           }
         } elseif($type == 'switch') {
           if (in_array($this->nextActivity,$candidates)) {
@@ -516,7 +519,7 @@ class Instance extends Base {
   You should not call this method unless you know very very well what
   you are doing.
   */
-  function sendTo($from,$activityId,$split=false) {
+  function sendTo($from,$activityId,$erase_from=true) {
     //1: if we are in a join check
     //if this instance is also in
     //other activity if so do
@@ -553,10 +556,18 @@ class Instance extends Base {
     //update the instance_activities table
     //if not splitting delete first
     //please update started,status,user
-    if(!$split) {
+    if($erase_from) {
       $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=? and `wf_activity_id`=?";
       $this->query($query,array((int)$this->instanceId,$from));
     }
+  
+    if ($type == 'join') {
+      if (count($this->activities)>1) {
+        // This instance will have to wait!
+        return;
+      }
+    }    
+
     $now = date("U");
     $iid = $this->instanceId;
     $query="delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `wf_instance_id`=? and `wf_activity_id`=?";
@@ -571,15 +582,7 @@ class Instance extends Base {
     while ($res = $result->fetchRow()) {
       $this->activities[]=$res;
     }    
-  
-    if ($type == 'join') {
-      if (count($this->activities)>1) {
-        // This instance will have to wait!
-        return;
-      }
-    }    
 
-     
     //if the activity is not interactive then
     //execute the code for the activity and
     //complete the activity
