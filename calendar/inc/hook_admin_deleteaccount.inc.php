@@ -14,10 +14,10 @@
 	// Delete all records for a user
 	if (floor($PHP_VERSION ) == 4)
 	{
-		global $accountid;
+		global $account_id;
 	}
 
 	$calendar = CreateObject('calendar.calendar');
-	$cal_stream = $calendar->open('INBOX',$accountid,'');
-	$calendar->delete_calendar($cal_stream,$accountid);
+	$cal_stream = $calendar->open('INBOX',$account_id,'');
+	$calendar->delete_calendar($cal_stream,$account_id);
 ?>

@@ -13,9 +13,9 @@
 	// Delete all records for a user
 	if (floor($PHP_VERSION ) == 4)
 	{
-		global $accountid;
+		global $account_id;
 	}
 
 	$contacts = CreateObject('phpgwapi.contacts');
-	$contacts->delete_all($accountid);
+	$contacts->delete_all($account_id);
 ?>
