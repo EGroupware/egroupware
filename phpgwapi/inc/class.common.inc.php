@@ -1170,6 +1170,51 @@
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/*!
+		@function get_email_passwd_ex
+		@abstract uses code in /email class msg to obtain the appropriate password for email
+		@param  (none - it will abtain the info it needs on its own)
+		*/
+		function get_email_passwd_ex()
+		{
+			global $phpgw_info, $phpgw;
+
+			// we need mail_server_type in order to completely create the msg object
+			// at this point, the real mail_server_type does not matter, we only need the password related functions
+			if (empty($phpgw_info['user']['preferences']['email']['mail_server_type']))
+			{
+				$phpgw_info['user']['preferences']['email']['mail_server_type'] = 'imap';
+				$server_type_was_empty = True;
+			}
+			else
+			{
+				$server_type_was_empty = False;
+			}
+
+			// ----  Create the email Message Class    -----
+			$phpgw->msg = CreateObject("email.msg");
+			$phpgw->msg->msg_common_();
+
+			// use the Msg class to obtain the appropriate password
+			$tmp_prefs = $phpgw->preferences->read();
+			if (!isset($tmp_prefs['email']['passwd']))
+			{
+				$email_passwd = $phpgw_info['user']['passwd'];
+			}
+			else
+			{
+				$email_passwd = $phpgw->msg->decrypt_email_passwd($tmp_prefs['email']['passwd']);
+			}
+			
+			// return mail_server_type value to its previous state, if necessary
+			if ($server_type_was_empty)
+			{
+				$phpgw_info['user']['preferences']['email']['mail_server_type'] = '';
+			}
+			
+			return $email_passwd;
+		}
+		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
+		/*!
 		@function create_emailpreferences
 		@abstract create email preferences
 		@discussion This is not the best place for it, but it needs to be shared between Aeromail and SM
@@ -1181,6 +1226,9 @@
 			global $phpgw, $phpgw_info;
 
 			$account_id = get_account_id($accountid);
+			
+			// NEW EMAIL PASSWD METHOD (shared between SM and aeromail)
+			$prefs['email']['passwd'] = $this->get_email_passwd_ex();
 			
 			/* Add default preferences info */
 			if (!isset($prefs['email']['userid']))
@@ -1200,7 +1248,8 @@
 			{
 				$phpgw_info['server']['mail_server_type'] = 'imap';
 			}
-
+			
+			/* // OLD EMAIL PASSWD METHOD
 			if (!isset($prefs['email']['passwd']))
 			{
 				$prefs['email']['passwd'] = $phpgw_info['user']['passwd'];
@@ -1208,7 +1257,9 @@
 			else
 			{
 				$prefs['email']['passwd'] = $this->decrypt($prefs['email']['passwd']);
-			}
+			} */
+			// NEW EMAIL PASSWD METHOD Located at the begining of this function
+			
 			if (!isset($prefs['email']['address']))
 			{
 				$prefs['email']['address'] = $phpgw->accounts->id2name($account_id)
@@ -1243,6 +1294,10 @@
 			{
 				$prefs['email']['mail_server_type'] = 'nntp';
 			}
+			
+			// DEBUG
+			//echo "<br>prefs['email']['passwd']: " .$prefs['email']['passwd'] .'<br>';
+			
 			return $prefs;
 		}
 
