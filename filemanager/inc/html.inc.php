@@ -70,11 +70,13 @@ function html_form_select_end ($return = 0)
 	return (eor ($rstring, $return));
 }
 
-function html_form_option ($value = NULL, $selected = NULL, $return = 0)
+function html_form_option ($value = NULL, $displayed = NULL, $selected = NULL, $return = 0)
 {
+	if ($value != NULL && $value)
+		$value = "value=$value";
 	if ($selected != NULL && $selected)
 		$selected = "selected";
-	$rstring = "<option $selected>$value</option>";
+	$rstring = "<option $value $selected>$displayed</option>";
 	return (eor ($rstring, $return));
 }
 
@@ -313,7 +315,7 @@ function html_link ($href = NULL, $text = NULL, $return = 0, $encode = 1, $linko
 	return (eor ($rstring, $return));
 }
 
-function html_link_back ($return)
+function html_link_back ($return = 0)
 {
 	global $hostname;
 	global $path;
@@ -446,17 +448,19 @@ function html_image ($src = NULL, $alt = NULL, $align = NULL, $border = NULL, $s
 	return (eor ($rstring, $return));
 }
 
-function html_help_link ($help_name)
+function html_help_link ($help_name = NULL, $text = "[?]", $target = "_new", $return = 0)
 {
 	global $settings;
 	global $appname;
 
 	if (!$settings["show_help"])
+	{
 		return 0;
+	}
 
-	$rstring = html_link ("$appname/index.php?op=help&help_name=$help_name", "[?]", 1, 1, 0, "_new");
+	$rstring = html_link ("$appname/index.php?op=help&help_name=$help_name", $text, True, 1, 0, $target);
 
-	echo $rstring;
+	return (eor ($rstring, $return));
 }
 
 ?>
