@@ -125,7 +125,7 @@
 			/* Do this last since we are depending upon this record to get the account_lid above */
 			$tables_array = Array('phpgw_accounts');
 			$this->db->lock($tables_array);
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id=' . $account_id);
+			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id=' . intval($account_id),__LINE__,__FILE__);
 			$this->db->unlock();
 		}
 
