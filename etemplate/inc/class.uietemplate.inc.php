@@ -587,9 +587,10 @@
 				case 'label':		//  size: [[b]old][[i]talic][,link]
 					if (is_array($value))
 						break;
-					list($style,$extra_link) = explode(',',$cell_options);
+					list($style,$extra_link,$activate_links) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br(htmlspecialchars($value));
+					if ($activate_links) $value = $this->html->activate_links($value);
 					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
 					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
