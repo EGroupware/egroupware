@@ -286,13 +286,11 @@
 			return array(0 => array('No access' => 'No access'));
 		}
 
-		function add_vcard()
+		function add_vcard($uploadedfile='')
 		{
-			global $uploadedfile;
-
 			if($uploadedfile == 'none' || $uploadedfile == '')
 			{
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.in&action=GetFile'));
+				return False;
 			}
 			else
 			{
@@ -317,13 +315,15 @@
 				$entry['access'] = 'private';
 				$entry['tid'] = 'n';
 				/* _debug_array($entry);exit; */
+
 				$this->so->add_entry($entry);
 				$ab_id = $this->get_lastid();
 
 				/* Delete the temp file. */
 				unlink($filename);
 				unlink($filename . '.info');
-				Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
+
+				return (int)$ab_id;
 			}
 		}
 

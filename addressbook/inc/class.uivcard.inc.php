@@ -34,7 +34,7 @@
 
 		function uivcard()
 		{
-			$this->template = $GLOBALS['phpgw']->template;
+			$this->template = &$GLOBALS['phpgw']->template;
 			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->browser  = CreateObject('phpgwapi.browser');
 			$this->vcard    = CreateObject('phpgwapi.vcard');
@@ -43,12 +43,22 @@
 
 		function in()
 		{
+			$uploadedfile = get_var('uploadedfile','FILES');
 			$action = get_var('action',array('POST','GET'));
 
 			$GLOBALS['phpgw']->common->phpgw_header();
 			echo parse_navbar();
 
 			echo '<body bgcolor="' . $GLOBALS['phpgw_info']['theme']['bg_color'] . '">';
+
+			if($uploadedfile)
+			{
+				$ab_id = $this->bo->add_vcard($uploadedfile);
+				if($done)
+				{
+					Header('Location: ' . $GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id));
+				}
+			}
 
 			if($action == 'GetFile')
 			{
@@ -58,7 +68,7 @@
 			$this->template->set_file(array('vcardin' => 'vcardin.tpl'));
 
 			$this->template->set_var('vcard_header','<p>&nbsp;<b>' . lang('Address book - VCard in') . '</b><hr><p>');
-			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.boaddressbook.add_vcard'));
+			$this->template->set_var('action_url',$GLOBALS['phpgw']->link('/index.php','menuaction=addressbook.uivcard.in'));
 			$this->template->set_var('lang_access',lang('Access'));
 			$this->template->set_var('lang_groups',lang('Which groups'));
 			$this->template->set_var('access_option',$access_option);
