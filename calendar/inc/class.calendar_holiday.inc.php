@@ -117,7 +117,7 @@ class calendar_holiday
 	{
 		global $phpgw;
 		
-		if($holiday['mday'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
+		if($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
 		{
 			if($holiday['occurence'] != 99)
 			{
@@ -186,9 +186,9 @@ class calendar_holiday
 			$this->holidays[$i]['month'] = intval($this->db->f('month_num'));
 			$this->holidays[$i]['occurence'] = intval($this->db->f('occurence'));
 			$this->holidays[$i]['dow'] = intval($this->db->f('dow'));
-			if(count($find_locale) == 2 && $find_locale[0] != $find_locale[1])
+			if(count($this->users) == 2 && $this->users[0] != $this->users[1])
 			{
-				if($this->holidays[$i]['locale'] == $find_locale[1])
+				if($this->holidays[$i]['locale'] == $this->users[1])
 				{
 					$this->holidays[$i]['owner'] = 'user';
 				}
@@ -255,7 +255,7 @@ class calendar_holiday
 	function find_date($date)
 	{
 		global $phpgw;
-		
+
 		$c_holidays = count($this->holidays);
 		for($i=0;$i<$c_holidays;$i++)
 		{
