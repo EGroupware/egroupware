@@ -293,8 +293,18 @@
 	{
 		if (! $GLOBALS['phpgw']->session->verify())
 		{
-			// we forward to the same place after the relogin
-			list(,$relpath) = explode($GLOBALS['phpgw_info']['server']['webserver_url'],$_SERVER['PHP_SELF'],2);
+			// we forward to the same place after the re-login
+			if ($GLOBALS['phpgw_info']['server']['webserver_url'] && $GLOBALS['phpgw_info']['server']['webserver_url'] != '/')
+			{
+				list(,$relpath) = explode($GLOBALS['phpgw_info']['server']['webserver_url'],$_SERVER['PHP_SELF'],2);
+			}
+			else	// the webserver-url is empty or just a slash '/' (eGW is installed in the docroot and no domain given)
+			{
+				if (preg_match('/^https?:\/\/[^\/]*\/(.*)$/',$relpath=$_SERVER['PHP_SELF'],$matches))
+				{
+					$relpath = $matches[1];
+				}
+			}
 			// this removes the sessiondata if its saved in the URL
 			$query = preg_replace('/[&]?sessionid=[^&]+&kp3=[^&]+&domain=.*$/','',$_SERVER['QUERY_STRING']);
 			Header('Location: '.$GLOBALS['phpgw_info']['server']['webserver_url'].'/login.php?cd=10&phpgw_forward='.urlencode($relpath.(!empty($query) ? '?'.$query : '')));
