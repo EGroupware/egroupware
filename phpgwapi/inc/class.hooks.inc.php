@@ -39,15 +39,14 @@
 		*/
 		function read()
 		{
-			global $phpgw;
-			$db = $phpgw->db;
+			$db = $GLOBALS['phpgw']->db;
 
-			$db->query("select * from phpgw_hooks");
+			$db->query('select * from phpgw_hooks');
 			while ($db->next_record())
 			{
-				$return_array[$db->f("hook_id")]["app"]      = $db->f("hook_appname");
-				$return_array[$db->f("hook_id")]["location"] = $db->f("hook_location");
-				$return_array[$db->f("hook_id")]["filename"] = $db->f("hook_filename");
+				$return_array[$db->f('hook_id')]['app']      = $db->f('hook_appname');
+				$return_array[$db->f('hook_id')]['location'] = $db->f('hook_location');
+				$return_array[$db->f('hook_id')]['filename'] = $db->f('hook_filename');
 			}
 			if(isset($return_array))
 			{
@@ -66,14 +65,12 @@
 		@param \$type 
 		@param \$where
 		*/
-		function process($type,$where = "")
+		function process($type,$where='')
 		{
-			global $phpgw_info, $phpgw;
-
-			$currentapp = $phpgw_info["flags"]["currentapp"];
+			$currentapp = $GLOBALS['phpgw_info']['flags']['currentapp'];
 			$type = strtolower($type);
 
-			if ($type != "location" && $type != "app")
+			if ($type != 'location' && $type != 'app')
 			{
 				return False;
 			}
@@ -81,15 +78,15 @@
 			// Add a check to see if that location/app has a hook
 			// This way it doesn't have to loop everytime
 
-			while ($hook = each($phpgw_info["hooks"]))
+			while ($hook = each($GLOBALS['phpgw_info']['hooks']))
 			{
-				if ($type == "app")
+				if ($type == 'app')
 				{
-					if ($hook[1]["app"] == $currentapp)
+					if ($hook[1]['app'] == $currentapp)
 					{
-						$include_file = $phpgw_info["server"]["server_root"] . "/"
-							. $currentapp . "/hooks/"
-							. $hook[1]["app"] . $hook[1]["filename"];
+						$include_file = $GLOBALS['phpgw_info']['server']['server_root'] . '/'
+							. $currentapp . '/hooks/'
+							. $hook[1]['app'] . $hook[1]['filename'];
 						include($include_file);
 					}
 				}
@@ -97,12 +94,12 @@
 				{
 					if ($hook[1]["location"] == $where)
 					{
-						$include_file = $phpgw_info["server"]["server_root"] . "/"
-							. $hook[1]["app"] . "/hooks/"
-							. $hook[1]["filename"];
+						$include_file = $GLOBALS['phpgw_info']['server']['server_root'] . '/'
+							. $hook[1]['app'] . '/hooks/'
+							. $hook[1]['filename'];
 						if (! is_file($include_file))
 						{
-							$phpgw->common->phpgw_error("Failed to include hook: $include_file");
+							$GLOBALS['phpgw']->common->phpgw_error('Failed to include hook: ' . $include_file);
 						}
 						else
 						{
