@@ -36,6 +36,7 @@
 		var $Error        = '';
 		var $Auto_Free    = 0;     ## set this to 1 to automatically free results
 		var $Debug        = false;
+		var $Transaction  = false;
 
 		function connect()
 		{
@@ -180,14 +181,16 @@
 
 		function transaction_begin()
 		{
-			return $this->query('BEGIN TRAN');
+			$this->Transaction = !!mssql_query('BEGIN TRAN', $this->Link_ID);
+			return $this->Transaction;
 		}
 
 		function transaction_commit()
 		{
-			if (!$this->Errno)
+			if (!$this->Errno && $this->Transaction)
 			{
-				return $this->query('COMMIT TRAN');
+				$this->Transaction = false;
+				return !!mssql_query('COMMIT TRAN', $this->Link_ID);
 			}
 
 			return False;
@@ -195,7 +198,13 @@
 
 		function transaction_abort()
 		{
-			return $this->query('ROLLBACK TRAN');
+			if ($this->Transaction)
+			{
+				$this->Transaction = false;
+				return !!mssql_query('ROLLBACK TRAN', $this->Link_ID);
+			}
+
+			return false;
 		}
 
 		function seek($pos)
