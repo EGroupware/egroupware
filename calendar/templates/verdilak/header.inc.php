@@ -74,46 +74,10 @@
 	$tpl->set_var('header_column','');
 	$tpl->set_var('cols',$cols);
 
-	$remainder = 72;
+	if($referrer!='view')
+	{
+		$remainder = 72;
 
-	$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-	if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
-	{
-		$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
-	}
-	if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
-	{
-		$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
-	}
-	if(isset($GLOBALS['HTTP_POST_VARS']['matrixtype']) && $GLOBALS['HTTP_POST_VARS']['matrixtype'])
-	{
-		$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
-	}
-	if(isset($GLOBALS['HTTP_POST_VARS']['participants']) && $GLOBALS['HTTP_POST_VARS']['participants'])
-	{
-		for ($i=0;$i<count($GLOBALS['HTTP_POST_VARS']['participants']);$i++)
-		{
-			$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
-		}
-	}
-	if($this->debug) { echo 'Cat ID = ('.$this->bo->cat_id.")<br>\n"; }
-
-	$var = Array(
-		'form_width' => '28',
-		'form_link'	=> $this->page($referrer),
-		'form_name'	=> 'cat_id',
-		'title'	=> lang('Category'),
-		'hidden_vars'	=> $hidden_vars,
-		'form_options'	=> '<option value="0">All</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
-		'button_value'	=> lang('Go!')
-	);
-	$tpl->set_var($var);
-	$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
-	$tpl->parse('header_column','head_col',True);
-
-	if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
-	{
-		$remainder -= 28;
 		$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
 		if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
 		{
@@ -134,92 +98,128 @@
 				$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
 			}
 		}
-		if($this->debug) { echo 'Filter = ('.$this->bo->filter.")<br>\n"; }
-		$form_options = '<option value=" all "'.($this->bo->filter==' all '?' selected':'').'>'.lang('All').'</option>'."\n";
-		$form_options .= '     <option value=" private "'.((!isset($this->bo->filter) || !$this->bo->filter) || $this->bo->filter==' private '?' selected':'').'>'.lang('Private Only').'</option>'."\n";
-		
+		if($this->debug) { echo 'Cat ID = ('.$this->bo->cat_id.")<br>\n"; }
+
 		$var = Array(
 			'form_width' => '28',
 			'form_link'	=> $this->page($referrer),
-			'form_name'	=> 'filter',
-			'title'	=> lang('Filter'),
+			'form_name'	=> 'cat_id',
+			'title'	=> lang('Category'),
 			'hidden_vars'	=> $hidden_vars,
-			'form_options'	=> $form_options,
+			'form_options'	=> '<option value="0">All</option>'.$this->cat->formated_list('select','all',$this->bo->cat_id,'True'),
 			'button_value'	=> lang('Go!')
 		);
 		$tpl->set_var($var);
 		$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
 		$tpl->parse('header_column','head_col',True);
-	}
 
-	if((!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && count($this->bo->grants) > 0)
-	{
-		$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
-		if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+		if($this->bo->check_perms(PHPGW_ACL_PRIVATE))
 		{
-			$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
-		}
-		if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
-		{
-			$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
-		}
-		$hidden_vars .= '    <!-- BO Owner = '.$this->bo->owner.' -->'."\n";
-		$form_options = '';
-		reset($this->bo->grants);
-		while(list($grantor,$temp_rights) = each($this->bo->grants))
-		{
-			$GLOBALS['phpgw']->accounts->get_account_name($grantor,$lid,$fname,$lname);
-			$drop_down[$lname.' '.$fname] = Array(
-				'grantor'	=> $grantor,
-				'value'		=> ($GLOBALS['phpgw']->accounts->get_type($grantor)=='g'?'g_':'')
-					. $grantor,
-				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
-			);
-		}
-		$memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
-		while($memberships != False && list($key,$group_info) = each($memberships))
-		{
-			$GLOBALS['phpgw']->accounts->get_account_name($group_info['account_id'],$lid,$fname,$lname);
-			$drop_down[$lname.' '.$fname] = Array(
-				'grantor'	=> $group_info['account_id'],
-				'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_info['account_id'])=='g'?'g_':'')
-					.$group_info['account_id'],
-				'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
-			);
-
-			$account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar');
-			while($account_perms && list($key,$group_id) = each($account_perms))
+			$remainder -= 28;
+			$hidden_vars = '<input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
+			if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
 			{
-				$GLOBALS['phpgw']->accounts->get_account_name($group_id,$lid,$fname,$lname);
+				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+			}
+			if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+			{
+				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+			}
+			if(isset($GLOBALS['HTTP_POST_VARS']['matrixtype']) && $GLOBALS['HTTP_POST_VARS']['matrixtype'])
+			{
+				$hidden_vars .= '    <input type="hidden" name="matrixtype" value="'.$GLOBALS['HTTP_POST_VARS']['matrixtype'].'">'."\n";
+			}
+			if(isset($GLOBALS['HTTP_POST_VARS']['participants']) && $GLOBALS['HTTP_POST_VARS']['participants'])
+			{
+				for ($i=0;$i<count($GLOBALS['HTTP_POST_VARS']['participants']);$i++)
+				{
+					$hidden_vars .= '    <input type="hidden" name="participants[]" value="'.$GLOBALS['HTTP_POST_VARS']['participants'][$i].'">'."\n";
+				}
+			}
+			if($this->debug) { echo 'Filter = ('.$this->bo->filter.")<br>\n"; }
+			$form_options = '<option value=" all "'.($this->bo->filter==' all '?' selected':'').'>'.lang('All').'</option>'."\n";
+			$form_options .= '     <option value=" private "'.((!isset($this->bo->filter) || !$this->bo->filter) || $this->bo->filter==' private '?' selected':'').'>'.lang('Private Only').'</option>'."\n";
+
+			$var = Array(
+				'form_width' => '28',
+				'form_link'	=> $this->page($referrer),
+				'form_name'	=> 'filter',
+				'title'	=> lang('Filter'),
+				'hidden_vars'	=> $hidden_vars,
+				'form_options'	=> $form_options,
+				'button_value'	=> lang('Go!')
+			);
+			$tpl->set_var($var);
+			$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
+			$tpl->parse('header_column','head_col',True);
+		}
+
+		if((!isset($GLOBALS['phpgw_info']['server']['deny_user_grants_access']) || !$GLOBALS['phpgw_info']['server']['deny_user_grants_access']) && count($this->bo->grants) > 0)
+		{
+			$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
+			if(isset($GLOBALS['HTTP_POST_VARS']['keywords']) && $GLOBALS['HTTP_POST_VARS']['keywords'])
+			{
+				$hidden_vars .= '    <input type="hidden" name="keywords" value="'.$GLOBALS['HTTP_POST_VARS']['keywords'].'">'."\n";
+			}
+			if(isset($GLOBALS['HTTP_GET_VARS']['cal_id']) && $GLOBALS['HTTP_GET_VARS']['cal_id'] != 0)
+			{
+				$hidden_vars .= '    <input type="hidden" name="cal_id" value="'.$GLOBALS['HTTP_GET_VARS']['cal_id'].'">'."\n";
+			}
+			$hidden_vars .= '    <!-- BO Owner = '.$this->bo->owner.' -->'."\n";
+			$form_options = '';
+			reset($this->bo->grants);
+			while(list($grantor,$temp_rights) = each($this->bo->grants))
+			{
+				$GLOBALS['phpgw']->accounts->get_account_name($grantor,$lid,$fname,$lname);
 				$drop_down[$lname.' '.$fname] = Array(
-					'grantor'	=> $group_id,
-					'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_id)=='g'?'g_':'')
-						.$group_id,
+					'grantor'	=> $grantor,
+					'value'		=> ($GLOBALS['phpgw']->accounts->get_type($grantor)=='g'?'g_':'').$grantor,
 					'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
 				);
 			}
+			$memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']);
+			while($memberships != False && list($key,$group_info) = each($memberships))
+			{
+				$GLOBALS['phpgw']->accounts->get_account_name($group_info['account_id'],$lid,$fname,$lname);
+				$drop_down[$lname.' '.$fname] = Array(
+					'grantor'	=> $group_info['account_id'],
+					'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_info['account_id'])=='g'?'g_':'').$group_info['account_id'],
+					'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
+				);
+
+				$account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar');
+				while($account_perms && list($key,$group_id) = each($account_perms))
+				{
+					$GLOBALS['phpgw']->accounts->get_account_name($group_id,$lid,$fname,$lname);
+					$drop_down[$lname.' '.$fname] = Array(
+						'grantor'	=> $group_id,
+						'value'		=> ($GLOBALS['phpgw']->accounts->get_type($group_id)=='g'?'g_':'').$group_id,
+						'name'		=> $GLOBALS['phpgw']->common->display_fullname($lid,$fname,$lname)
+					);
+				}
+			}
+		
+			@reset($drop_down);
+			@ksort($drop_down);
+			while(list($key,$grant) = each($drop_down))
+			{
+				$form_options .= '    <option value="'.$grant['value'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
+	      }
+			reset($this->bo->grants);
+		
+			$var = Array(
+				'form_width' => $remainder,
+				'form_link'	=> $this->page($referrer),
+				'form_name'	=> 'owner',
+				'title'	=> lang('User'),
+				'hidden_vars'	=> $hidden_vars,
+				'form_options'	=> $form_options,
+				'button_value'	=> lang('Go!')
+			);
+			$tpl->set_var($var);
+			$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
+			$tpl->parse('header_column','head_col',True);
 		}
-		
-		@reset($drop_down);
-		@ksort($drop_down);
-		while(list($key,$grant) = each($drop_down))
-		{
-			$form_options .= '    <option value="'.$grant['value'].'"'.($grant['grantor']==$this->bo->owner?' selected':'').'>'.$grant['name'].'</option>'."\n";
-      }
-		reset($this->bo->grants);
-		
-		$var = Array(
-			'form_width' => $remainder,
-			'form_link'	=> $this->page($referrer),
-			'form_name'	=> 'owner',
-			'title'	=> lang('User'),
-			'hidden_vars'	=> $hidden_vars,
-			'form_options'	=> $form_options,
-			'button_value'	=> lang('Go!')
-		);
-		$tpl->set_var($var);
-		$tpl->set_var('str',$tpl->fp('out','form_button_dropdown'));
-		$tpl->parse('header_column','head_col',True);
 	}
 
 	$hidden_vars = '    <input type="hidden" name="from" value="'.$GLOBALS['HTTP_GET_VARS']['menuaction'].'">'."\n";
