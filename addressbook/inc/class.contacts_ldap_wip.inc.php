@@ -734,7 +734,7 @@
 					while ( list($fname,$fvalue) = each($allfields) )
 					{
 						//if ($ldap_fields[0][$fvalue])
-						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue] != $stock_fields[$fname])
+						if ($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
 							$err = ldap_modify($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
@@ -745,6 +745,15 @@
 							//echo "<br>".$fname." not there - '".$fvalue."'";
 							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $stock_fields[$fname]));
 						}
+						elseif ($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
+						{
+							//echo "<br>".$fname." gone...  deleting - '".$fvalue."'";
+							// NOTE: we use the ldap_fields because we need to send the
+							// _ORIGINAL_ contents as the value. see:
+							// http://www.php.net/manual/en/function.ldap-mod-del.php
+							$err = ldap_mod_del($this->ldap,$dn,array($fvalue => $ldap_fields[0][$fvalue][0]));
+						}
+						// Else we have nothing to do.
 					}
 				}
 
