@@ -19,7 +19,7 @@
   				<td colspan="2">
 					<table cellpadding="3" cellspacing="0" class="portal">
 						<xsl:choose>
-							<xsl:when test="listbox">
+							<xsl:when test="listbox != ''">
 								<tr>
 									<td>
 										<ul>
@@ -30,14 +30,14 @@
 							</xsl:when>
 						</xsl:choose>
 						<xsl:choose>
-							<xsl:when test="extrabox">
+							<xsl:when test="extrabox != ''">
 								<tr>
 									<td>
 										<xsl:value-of disable-output-escaping="yes" select="extrabox"/>
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="xextrabox">
+							<xsl:when test="xextrabox != ''">
 								<tr>
 									<td>
 										<xsl:call-template name="extrabox"/>

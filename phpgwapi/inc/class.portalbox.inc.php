@@ -67,6 +67,7 @@
 			{
 				$this->output = array();
 			}
+			$GLOBALS['phpgw']->xslttpl->add_file('portal');
 		}
 
 		/*
@@ -102,11 +103,7 @@
 		{
 			if ($extra && $this->app_name)
 			{
-				$GLOBALS['phpgw']->xslttpl->add_file(array('portal',$GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrabox'));
-			}
-			else
-			{
-				$GLOBALS['phpgw']->xslttpl->add_file('portal');
+				$GLOBALS['phpgw']->xslttpl->add_file($GLOBALS['phpgw']->common->get_tpl_dir($this->app_name,'default') . SEP . 'extrabox');
 			}
 		}
 
@@ -177,22 +174,6 @@
 					'extrabox'		=> $this->extrabox,
 					'xextrabox'		=> $this->xextrabox
 				);
-
-				for ($i=0;$i<count($this->output['portal_data']);$i++)
-				{
-					if ($this->output['portal_data'][$i]['listbox'] == '')
-					{
-						unset($this->output['portal_data'][$i]['listbox']);
-					}
-					if ($this->output['portal_data'][$i]['extrabox'] == '')
-					{
-						unset($this->output['portal_data'][$i]['extrabox']);
-					}
-					if ($this->output['portal_data'][$i]['xextrabox'] == '')
-					{
-						unset($this->output['portal_data'][$i]['xextrabox']);
-					}
-				}
 			}
 		}
 	}
