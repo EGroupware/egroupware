@@ -39,12 +39,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>eGroupWare.org: There is already a holiday-file for '<?php echo $_GET['locale']; ?>' !!!</title>
+	<title>eGroupWare.org: There is already a holiday-file for '<?php echo $_POST['locale']; ?>' !!!</title>
 </head>
 <body>
-	<h1>There is already a holiday-file for '<?php echo $_GET['locale']; ?>' !!!</h1>
+	<h1>There is already a holiday-file for '<?php echo $_POST['locale']; ?>' !!!</h1>
 
-	<p>If you think your version of the holidays for '<?php echo $_GET['locale']; ?>' should replace
+	<p>If you think your version of the holidays for '<?php echo $_POST['locale']; ?>' should replace
 	the existing one, please <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>&download=1">download</a> the file
 	and <a href="mailto:egroupware-developers@lists.sourceforge.net">mail it</a> to us.</p>
 
