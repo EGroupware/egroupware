@@ -16,6 +16,8 @@
 	$table_locks = Array('phpgw_preferences');
 
 	$GLOBALS['phpgw']->db->lock($table_locks);
-	$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.$account_id,__LINE__,__FILE__);
+	$GLOBALS['phpgw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.$GLOBALS['HTTP_POST_VARS']['account_id'],__LINE__,__FILE__);
 	$GLOBALS['phpgw']->db->unlock();
+
+
 ?>
