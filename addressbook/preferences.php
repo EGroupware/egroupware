@@ -64,6 +64,13 @@
 				$phpgw->preferences->delete("addressbook","mainscreen_showbirthdays");
 			}
 
+ 			if ($autosave_category) {
+				$phpgw->preferences->delete("addressbook","autosave_category");
+				$phpgw->preferences->add("addressbook","autosave_category",True);
+			} else {
+				$phpgw->preferences->delete("addressbook","autosave_category");
+			}
+
  			if ($cat_id) {
 				$phpgw->preferences->delete("addressbook","default_category");
 				$phpgw->preferences->add("addressbook","default_category",$cat_id);
@@ -131,7 +138,12 @@
     ?>
     <tr bgcolor="<?php echo $tr_color; ?>">
      <td colspan="2"><?php echo lang("show birthday reminders on main screen"); ?></td>
-     <td><input type="checkbox" name="mainscreen_showbirthdays" value="True"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
+     <td><input type="checkbox" name="mainscreen_showbirthdays" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["mainscreen_showbirthdays"]) echo " checked"; ?>></td>
+    </tr><?
+	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
+    <tr bgcolor="<?php echo $tr_color; ?>">
+     <td colspan="2"><?php echo lang("Autosave default category"); ?></td>
+     <td><input type="checkbox" name="autosave_category" value="true"<?php if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) echo " checked"; ?>></td>
     </tr><?
 	$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);?>
     <tr bgcolor="<?php echo $tr_color; ?>">

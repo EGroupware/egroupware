@@ -43,6 +43,12 @@
 
 	if ($cat_id=='') {
 		$cat_id = $phpgw_info["user"]["preferences"]["addressbook"]["default_category"];
+	} 
+
+	if ($phpgw_info["user"]["preferences"]["addressbook"]["autosave_category"]) {
+		$phpgw->preferences->delete("addressbook","default_category");
+		$phpgw->preferences->add("addressbook","default_category",$cat_id);
+		$phpgw->preferences->save_repository();
 	}
 
  	$extrafields = array(
