@@ -37,10 +37,16 @@
 			{
 				$Host     = $this->Host;
 			}
-            if ($Port == '') 
-            {   
+			if ($Port == '') 
+			{   
 				$Port     = isset($this->Port) ? $this->Port : '3306';
-            } 
+			} 
+			// Check if using local socket instead of TCP/IP
+			if (substr($Port,0,1) == '/')
+			{
+				$Host = '';
+			}
+			$Host = $Host.':'.$Port;
 			if ($User == '')
 			{
 				$User     = $this->User;
@@ -49,7 +55,6 @@
 			{
 				$Password = $this->Password;
 			}
-			$Host = $Host.':'.$Port;
 
 			/* establish connection, select database */
 			if (! $this->Link_ID)
@@ -67,7 +72,6 @@
 					$this->halt(($GLOBALS['phpgw_info']['server']['db_persistent']?'p':'')."connect($Host, $User, \$Password) failed.");
 					return 0;
 				}
-
 				if (!@mysql_select_db($Database,$this->Link_ID))
 				{
 					$this->halt("cannot use database ".$this->Database);
