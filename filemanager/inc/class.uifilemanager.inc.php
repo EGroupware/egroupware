@@ -1718,7 +1718,7 @@
 				}
 				$viewable = array('','text/plain','text/csv','text/html','text/text');
 
-				if(in_array($mime_type,$viewable))
+				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
 					header('Content-type: ' . $mime_type);
 					header('Content-disposition: filename="' . $this->file . '"');//FIXME
