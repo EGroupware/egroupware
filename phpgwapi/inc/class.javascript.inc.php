@@ -130,7 +130,6 @@
 						{
 							if(!empty($files) && is_array($files))
 							{
-								print_r($files);
 								foreach($files as $file => $browser)
 								{
 									$links .= '<script type="text/javascript" src="'
