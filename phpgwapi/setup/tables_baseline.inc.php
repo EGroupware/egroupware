@@ -164,7 +164,7 @@
 				'ab_zip' => array('type' => 'varchar', 'precision' => 255),
 				'ab_bday' => array('type' => 'varchar', 'precision' => 255),
 				'ab_notes' => array('type' => 'text'),
-				'ab_company' => array('type' => 'varchar', 'precision' => 255),
+				'ab_company' => array('type' => 'varchar', 'precision' => 255)
 			),
 			'pk' => array('ab_id'),
 			'fk' => array(),
