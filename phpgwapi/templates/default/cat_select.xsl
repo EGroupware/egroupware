@@ -1,7 +1,7 @@
 <!-- $Id$ -->
 
 	<xsl:template name="cat_select">
-		<option value=""><xsl:value-of select="lang_none"/></option>
+		<option value=""><xsl:value-of select="lang_no_cat"/></option>
 			<xsl:apply-templates select="cat_list"/>
 	</xsl:template>
 

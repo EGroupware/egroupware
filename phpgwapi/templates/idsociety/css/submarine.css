@@ -171,26 +171,26 @@ a:hover
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
-	color: #000000;
 	font-style: normal;
 	font-weight: normal;
+	color: #000000;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
 	word-spacing: 0em;
 }
 
-.calendar:today
+.cal_today
 {
 	background-color: #FFFFCC;
 }
 
-.calendar:dayview
+.cal_dayview
 {
 	background-color: #C0C0C0;
 }
 
-.email:folder
+.email_folder
 {
 	background-color: #7090FF;
 	color: #FFFFFF;

@@ -1,44 +1,16 @@
 body
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif; 
-	font-size: 10pt; 
-	font-style: normal; 
-	color: #222222;
-	line-height: normal; 
-	font-weight: normal; 
-	letter-spacing: 0em; 
-	word-spacing: 0em; 
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
 	background-color: #dfdfdf;
 }
 
 table
-{   
-	background-color: #eeeeee;
-	border: 0px; 
-	font-family: Verdana,Arial,Helvetica,sans-serif; 
-	font-size: 10pt;
-	font-style: normal; 
-	line-height: normal; 
-	font-weight: normal; 
-	color: #000000; 
-	text-decoration: none;
-	letter-spacing: 0em; 
-	word-spacing: 0em; 
-	padding: 2em;
-}
-
-th
-{	
-	background-color: #eeeeee;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	font-style: normal;
-	line-height: normal;
-	font-weight: normal;
-	color: #000000;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
+{
+	border-width: 0;
+	color: #222222;
 }
 
 td
@@ -54,24 +26,13 @@ td
 	word-spacing: 0em;
 }
 
-td.row-on
-{
-	background-color: #eeeeee;
-}
-
-td.row-off
-{
-	background-color: #cccccc;
-}
-
-
 a:link
 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: #0000ff;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -83,8 +44,8 @@ a:visited
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: #5555ff;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -96,8 +57,8 @@ a:active
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: black;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -109,8 +70,8 @@ a:hover
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: black;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -128,17 +89,70 @@ a:hover
 	background-image: url(logo_003300.gif);	
 }
 
-.calendar:today
+.row_on
+{
+	background-color: #eeeeee;
+}
+
+.row_off
+{
+	background-color: #cccccc;
+}
+
+.th
+{
+	background-color: #aaaaaa;
+}
+
+.th_bright
+{
+	background-color: #eeeeee;
+}
+
+.th_text
+{
+	font-style: bold;
+	font-weight: bold;
+	color: #000000;
+}
+
+.appheader
+{
+	font-style: bold;
+	font-weight: bold;
+	background-color: #eeeeee;
+}
+
+.functionmsg
+{
+	font-style: bold;
+	font-weight: bold;
+}
+
+.forms
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	color: #000000;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.cal_today
 {
 	background-color: #FBF1C5;
 }
 
-.calendar:dayview
+.cal_dayview
 {
 	background-color: #F9E99F;
 }
 
-.email:folder
+.email_folder
 {
 	background-color: #EAD688;
 	color: #000000;

@@ -1,44 +1,15 @@
 body
 {
-	font-family: Verdana,Arial,Helvetica,sans-serif; 
-	font-size: 10pt; 
-	font-style: normal; 
-	color: #000000;
-	line-height: normal; 
-	font-weight: normal; 
-	letter-spacing: 0em; 
-	word-spacing: 0em; 
-	background-color: #FFFFFF;
+	margin-right: 0em;
+	margin-left: 0em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+	background-color: #80BBFF;
 }
 
 table
-{   
-	background-color: #7090FF;
-	border: 0px; 
-	font-family: Verdana,Arial,Helvetica,sans-serif; 
-	font-size: 10pt;
-	font-style: normal; 
-	line-height: normal; 
-	font-weight: normal; 
-	color: #000000; 
-	text-decoration: none;
-	letter-spacing: 0em; 
-	word-spacing: 0em; 
-	padding: 2em;
-}
-
-th
-{	
-	background-color: #D3DCE3;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-size: 10pt;
-	font-style: normal;
-	line-height: normal;
-	font-weight: normal;
-	color: #000000;
-	text-decoration: none;
-	letter-spacing: 0em;
-	word-spacing: 0em;
+{
+	border-width: 0;
 }
 
 td
@@ -70,8 +41,8 @@ a:link
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: blue;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -83,8 +54,8 @@ a:visited
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: blue;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -96,8 +67,8 @@ a:active
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: red;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -109,8 +80,8 @@ a:hover
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 10pt;
 	color: red;
-	font-style: bold;
-	font-weight: bold;
+	font-style: normal;
+	font-weight: normal;
 	line-height: normal;
 	text-decoration: none;
 	letter-spacing: 0em;
@@ -119,8 +90,7 @@ a:hover
 
 .navbar
 {
-	background-color: #80BBFF;
-	color: #000000;
+	background-color: #7090FF;
 }
 
 .navbar:spezial_logo
@@ -128,12 +98,65 @@ a:hover
 	background-image: url(logo_003300.gif);	
 }
 
-.calendar:today
+.row_on
+{
+	background-color: #D3DCE3;
+}
+
+.row_off
+{
+	background-color: #EEEEEE;
+}
+
+.th
+{
+	background-color: #7090FF;
+}
+
+.th_bright
+{
+	background-color: #EEEEEE;
+}
+
+.th_text
+{
+	font-style: bold;
+	font-weight: bold;
+	color: #000000;
+}
+
+.appheader
+{
+	font-style: bold;
+	font-weight: bold;
+	background-color: #D3DCE3;
+}
+
+.functionmsg
+{
+	font-style: bold;
+	font-weight: bold;
+}
+
+.forms
+{
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	line-height: normal;
+	text-decoration: none;
+	letter-spacing: 0em;
+	word-spacing: 0em;
+}
+
+.cal_today
 {
 	background-color: #FFFFCC;
 }
 
-.calendar:dayview
+.cal_dayview
 {
 	background-color: #C0C0C0;
 }
@@ -142,54 +165,4 @@ a:hover
 {
 	background-color: #7090FF;
 	color: #FFFFFF;
-}
-
-.bg01
-{
-	background-color: #dadada;
-}
-
-.bg02
-{
-	background-color: #dad0d0;
-}
-
-.bg03
-{
-	background-color: #dacaca;
-}
-
-.bg04
-{
-	background-color: #dac0c0;
-}
-
-.bg05
-{
-	background-color: #dababa;
-}
-
-.bg06
-{
-	background-color: #dab0b0;
-}
-
-.bg07
-{
-	background-color: #daaaaa;
-
-}
-.bg08
-{
-	background-color: #da9090;
-}
-
-.bg09
-{
-	background-color: #da8a8a;
-}
-
-.bg10
-{
-	background-color: #da7a7a;
 }
