@@ -638,6 +638,17 @@
 			}
 		}
 
+		function delete_all()
+		{
+			global $phpgw_info;
+			$sri = ldap_search($this->ldap, $phpgw_info["server"]["ldap_contact_context"], "uidnumber=*");
+			$ldap_fields = ldap_get_entries($this->ldap, $sri);
+
+			$entry = "";
+			while (list($null,$entry) =  each($ldap_fields)) {
+				$err = ldap_delete($this->ldap,$entry['dn']);
+			}
+		}
 	}
 
 ?>

@@ -28,7 +28,8 @@
 		"addressbook_footer"	=> "footer.tpl" ));
 
 	$this = CreateObject("phpgwapi.contacts");
-
+	//$this->delete_all();
+	//exit;
 	// Read in user custom fields, if any
 	$phpgw->preferences->read_repository();
 	$customfields = array();
