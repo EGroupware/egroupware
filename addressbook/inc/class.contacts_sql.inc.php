@@ -368,7 +368,12 @@
 				}
 			}
 
-			$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+			if (!$filtermethod) {
+				$fwhere .= " WHERE (owner=" . $phpgw_info['user']['account_id'];
+			} else {
+				$fwhere .= $filtermethod . " AND (owner=" . $phpgw_info['user']['account_id'];
+			}
+
 			if (is_array($this->grants))
 			{
 				$grants = $this->grants;
