@@ -29,6 +29,7 @@
 		var $accounts;
 		var $table = 'phpgw_interserv';
 		var $total = 0;
+		var $result = '';
 
 		var $servers = array();
 		var $serverid = 0;
@@ -112,12 +113,9 @@
 		/* send command to remote server */
 		function send($method_name, $args, $url, $debug=True)
 		{
-			$cmd = '$return = $this->_send_' . $this->mode . '_' . $this->security . '($method_name, $args, $url, $debug);';
+			$cmd = '$this->_send_' . $this->mode . '_' . $this->security . '($method_name, $args, $url, $debug);';
 			eval($cmd);
-			if($return)
-			{
-				return $return;
-			}
+			return $this->result;
 		}
 
 		function _split_url($url)
@@ -193,8 +191,8 @@
 			{
 				$this->debug('Error: no response from '.$hostpart.'!');
 			}
-
-			return $retval;
+			$this->result = $retval;
+			return $this->result;
 		}
 
 		function _send_xmlrpc_($method_name, $args, $url, $debug=True)
@@ -232,7 +230,8 @@
 				$this->debug('Fault Code: ' . $r->faultCode() . ' Reason "' . $r->faultString() . '"<br>',$debug);
 			}
 
-			return $v;
+			$this->result = xmlrpc_decode($v);
+			return $this->result;
 		}
 
 		function _send_soap_ssl($method_name, $args, $url, $debug=True)
@@ -419,6 +418,7 @@
 		{
 			$sql = "SELECT * FROM $this->table";
 			$this->db->query($sql,__LINE__,__FILE__);
+			
 			while ($this->db->next_record())
 			{
 				$this->servers[$this->db->f('server_name')]['server_id']   = $this->db->f('server_id');
@@ -431,7 +431,7 @@
 				$this->servers[$this->db->f('server_name')]['admin_name']  = $this->db->f('admin_name');
 				$this->servers[$this->db->f('server_name')]['admin_email'] = $this->db->f('admin_email');
 			}
-			$this->total = $this->db->num_rows();
+			$this->total = $this->db->num_rows() + 1;
 			return $this->servers;
 		}
 
@@ -447,7 +447,7 @@
 			{
 				$select .= ' selected';
 			}
-			$select .= '>' . lang('Local') . '</option>'."\n";
+			$select .= '>' . lang('Please Select') . '</option>'."\n";
 
 			while (list($key,$val) = each($this->get_list()))
 			{
@@ -552,8 +552,7 @@
 					$this->db->f('trust_rel') >= 1)
 				{
 					$this->authed = True;
-					$sessionid = $GLOBALS['phpgw']->session->create('anonymous','anonymous1');
-					return $sessionid;
+					return True;
 				}
 			}
 			return False;

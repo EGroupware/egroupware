@@ -301,6 +301,179 @@
 			return $this->sessionid;
 		}
 
+		function verify_server($sessionid, $kp3)
+		{
+			global $phpgw, $phpgw_info;
+
+			$phpgw->interserver = CreateObject('phpgwapi.interserver');
+			$db              = $phpgw->db;
+			$db2             = $phpgw->db;
+			$this->sessionid = $sessionid;
+			$this->kp3       = $kp3;
+
+			$phpgw->common->key  = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
+			$phpgw->common->iv   = $phpgw_info['server']['mcrypt_iv'];
+
+			$cryptovars[0] = $phpgw->common->key; 
+			$cryptovars[1] = $phpgw->common->iv;
+			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+
+			$db->query("select * from phpgw_sessions where session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
+			$db->next_record();
+
+			$this->session_flags = $db->f('session_flags');
+
+			$login_array = explode('@', $db->f('session_lid'));
+			$this->account_lid = $login_array[0];
+
+			if (@$login_array[1] != '')
+			{
+				$this->account_domain = $login_array[1];
+			}
+			else
+			{
+				$this->account_domain = $phpgw_info['server']['default_domain'];
+			}
+
+			$phpgw_info['user']['kp3'] = $this->kp3;
+			$phpgw_info_flags    = $phpgw_info['flags'];
+
+			$phpgw_info['flags'] = $phpgw_info_flags;
+			$userid_array = explode('@',$db->f('session_lid'));
+// Thinking this might solve auth_http	problems
+			if(@$userid_array[1] == '') { $userid_array[1] = 'default'; }
+			$this->account_lid = $userid_array[1];
+			$this->update_dla();
+			$this->account_id = $phpgw->interserver->name2id($this->account_lid);
+
+			if (!$this->account_id)
+			{
+				return False;
+			}
+
+			$phpgw_info['user']['account_id'] = $this->account_id;
+			
+			$this->read_repositories(@$phpgw_info['server']['cache_phpgw_info']);
+
+			$phpgw_info['user']  = $this->user;
+			$phpgw_info['hooks'] = $this->hooks;
+
+			$phpgw_info['user']['session_ip']  = $db->f('session_ip');
+			$phpgw_info['user']['passwd'] = base64_decode($this->appsession('password','phpgwapi'));
+
+			if ($userid_array[1] != $phpgw_info['user']['domain'])
+			{
+				$phpgw->log->message('W-VerifySession, the domains %1 and %2 don\t match',$userid_array[1],$phpgw_info['user']['domain']);
+				$phpgw->log->commit();
+
+				return False;
+			}
+
+			if (@$phpgw_info['server']['sessions_checkip'])
+			{
+				if (PHP_OS != 'Windows' && (! $phpgw_info['user']['session_ip'] || $phpgw_info['user']['session_ip'] != $this->getuser_ip()))
+				{
+					// This needs some better wording
+					$phpgw->log->message('W-VerifySession, IP %1 doesn\'t match IP %2 in session table',$this->getuser_ip(),$phpgw_info['user']['session_ip']);
+					$phpgw->log->commit();
+
+					return False;
+				}
+			}
+
+			$phpgw->acl->acl($this->account_id);
+			$phpgw->accounts->accounts($this->account_id);
+			$phpgw->preferences->preferences($this->account_id);
+			$phpgw->applications->applications($this->account_id);
+
+			if (! $this->account_lid)
+			{
+				// This needs some better wording
+				$phpgw->log->message('W-VerifySession, account_id is empty');
+				$phpgw->log->commit();
+
+				return False;
+			}
+			else
+			{
+				return True;
+			}
+		}
+
+		function create_server($login,$passwd)
+		{
+			global $phpgw_info, $phpgw, $PHP_SELF;
+
+			$phpgw->interserver = CreateObject('phpgwapi.interserver');
+			$this->login  = $login;
+			$this->passwd = $passwd;
+			$this->clean_sessions();
+			$login_array = explode('@', $login);
+			$this->account_lid = $login_array[0];
+			$now = time();
+
+			if ($login_array[1] != '')
+			{
+				$this->account_domain = $login_array[1];
+			}
+			else
+			{
+				$this->account_domain = $phpgw_info['server']['default_domain'];
+			}
+
+			$serverdata = array(
+				'server_name' => $this->account_domain,
+				'username'    => $this->account_lid,
+				'password'    => $passwd
+			);
+			if (!$phpgw->interserver->auth($serverdata))
+			{
+				return False;
+				exit;
+			}
+
+			if (!$phpgw->interserver->exists($this->account_lid))
+			{
+				$this->account_id = $phpgw->interserver->name2id($this->account_lid);
+			}
+			$phpgw_info['user']['account_id'] = $this->account_id;
+			$phpgw->interserver->serverid = $this->account_id;
+
+			$this->sessionid    = md5($phpgw->common->randomstring(10));
+			$this->kp3          = md5($phpgw->common->randomstring(15));
+
+			$phpgw->common->key = md5($this->kp3 . $this->sessionid . $phpgw_info['server']['encryptkey']);
+			$phpgw->common->iv  = $phpgw_info['server']['mcrypt_iv'];
+			$cryptovars[0] = $phpgw->common->key;
+			$cryptovars[1] = $phpgw->common->iv;
+			$phpgw->crypto = CreateObject('phpgwapi.crypto', $cryptovars);
+
+			//$this->read_repositories(False);
+
+			$phpgw_info['user']  = $this->user;
+			$phpgw_info['hooks'] = $this->hooks;
+
+			$this->appsession('password','phpgwapi',base64_encode($this->passwd));
+			$session_flags = 'S';
+
+			$user_ip  = $this->getuser_ip();
+
+			$phpgw->db->transaction_begin();
+			$phpgw->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
+								. "','".$login."','" . $user_ip . "','"
+								. $now . "','" . $now . "','" . $PHP_SELF . "','" . $session_flags
+								. "')",__LINE__,__FILE__);
+
+			$phpgw->db->query("INSERT INTO phpgw_access_log VALUES ('" . $this->sessionid . "','"
+								. "$login','" . $user_ip . "','$now','','" . $this->account_id . "')",__LINE__,__FILE__);
+
+			$this->appsession('account_previous_login','phpgwapi',$phpgw->auth->previous_login);
+			$phpgw->auth->update_lastlogin($this->account_id,$user_ip);
+			$phpgw->db->transaction_commit();
+
+			return array($this->sessionid,$this->kp3);
+		}
+
 		// This will update the DateLastActive column, so the login does not expire
 		function update_dla()
 		{

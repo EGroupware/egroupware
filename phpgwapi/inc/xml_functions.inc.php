@@ -652,7 +652,7 @@
 	}
 
 	$GLOBALS['_xmlrpcs_auth_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_auth_doc'] = 'Verify server authentication';
+	$GLOBALS['_xmlrpcs_auth_doc'] = 'Server authentication';
 	function _xmlrpcs_auth($server,$m)
 	{
 		$server_name = $m->getParam(0);
@@ -662,10 +662,39 @@
 		$serverdata['username']    = $username->scalarval();
 		$serverdata['password']    = $password->scalarval();
 
-		$is = CreateObject('phpgwapi.interserver');
-		$sessionid = $is->auth($serverdata);
+		list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($serverdata['username'].'@'.$serverdata['server_name'],$serverdata['password']);
 
-		if($sessionid)
+		if($sessionid && $kp3)
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','sessionid','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','kp3','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$kp3,'string');
+		}
+		else
+		{
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','GOAWAY','string');
+			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','XOXO','string');
+		}
+		$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
+		return $r;
+	}
+
+	$GLOBALS['_xmlrpcs_auth_verify_sig'] = array(array(xmlrpcString,xmlrpcString,xmlrpcString,xmlrpcString));
+	$GLOBALS['_xmlrpcs_auth_verify_doc'] = 'Verify Server authentication';
+	function _xmlrpcs_auth_verify($server,$m)
+	{
+		$xserver_name = $m->getParam(0);
+		$xsessionid   = $m->getParam(1);
+		$xkp3         = $m->getParam(2);
+
+		$server_name  = $xserver_name->scalarval();
+		$sessionid    = $xsessionid->scalarval();
+		$kp3          = $xkp3->scalarval();
+
+		$verified = $GLOBALS['phpgw']->session->verify_server($sessionid,$kp3);
+
+		if($verified)
 		{
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval','HELO','string');
 			$rtrn[] = CreateObject('phpgwapi.xmlrpcval',$sessionid,'string');
@@ -704,6 +733,11 @@
 			'function'  => '_xmlrpcs_auth',
 			'signature' => $GLOBALS['_xmlrpcs_auth_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_auth_doc']
+		),
+		'system.auth_verify' => array(
+			'function'  => '_xmlrpcs_auth_verify',
+			'signature' => $GLOBALS['_xmlrpcs_auth_verify_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_auth_verify_doc']
 		)
 	);
 
