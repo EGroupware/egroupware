@@ -17,7 +17,7 @@ at your request, this script is going to attempt to install all the applications
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fr	Sur votre demande, ce script va tenter de mettre à jour vos vieilles applications vers les versions actuelles
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fr	Sur votre demande, ce script va tenter de mettre à jour vos vieilles tables vers le nouveau format
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	fr	Sur votre demande, ce script va (sans hésiter !) supprimer vos tables existantes et les recréér dans le nouveau format
-at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	fr	Sur votre demande, ce script va (sans hésiter !) désinstaller toutes vos applications, ce qui supprime vos tables existantes et vos données de configuration
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fr	Sur votre demande, ce script va (sans hésiter !) désinstaller toutes vos applications, ce qui supprime vos tables existantes et vos données de configuration
 available version	setup	fr	Version disponible
 backupwarn	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong><br><em>SVP faites une sauvegarde avant de continuer!</em>
 because it depends upon	setup	fr	Parce-que ça dépend de

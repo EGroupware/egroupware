@@ -20,7 +20,7 @@ at your request, this script is going to attempt to install all the applications
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	zt	跟據您的要求，系統現在將會嘗試將所有舊版本的應用程式升級。
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	zt	跟據您的要求，系統現在將會嘗試將您的資料表升級成新的架構。
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	zt	跟據您的要求，系統現在將會將您原始的資料表及其中的資料完全移除，並以新的資料表格式重新建立資料表。
-at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	zt	跟據您的要求，系統現在將會移除所有的應用程式並移除所有的資料表及其中的資料。
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	zt	跟據您的要求，系統現在將會移除所有的應用程式並移除所有的資料表及其中的資料。
 Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'	setup	zt	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
 Authentication / Accounts	setup	zt	認證／帳號
 Auto create account records for authenticated users	setup	zt	自動建立所有授權使用者的帳號資料

@@ -19,7 +19,7 @@ at your request, this script is going to attempt to the tables for you	setup	ja	
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ja	古いアプリケーションを現在のバージョンにアップグレードしました。
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	古いテーブルを現在のフォーマットにアップグレードしました。
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ja	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
-at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	ja	アプリケーションアンインストールで、テーブルとデータを削除しました
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ja	アプリケーションアンインストールで、テーブルとデータを削除しました
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br>正しいタイプを使う
 authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する

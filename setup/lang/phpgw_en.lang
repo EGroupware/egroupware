@@ -67,7 +67,7 @@ at your request, this script is going to attempt to install all the applications
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	en	At your request, this script is going to attempt to upgrade your old applications to the current versions
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	en	At your request, this script is going to attempt to upgrade your old tables to the new format
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	en	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
-at your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which delete your existing tables and data
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	en	At your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data
 available version	setup	en	Available Version
 backupwarn	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br><strong>These automated scripts can easily destroy your data.</strong><br><em>Please backup before going any further!</em>
 because it depends upon	setup	en	because it depends upon
