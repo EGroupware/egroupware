@@ -391,7 +391,6 @@
 						default:
 							$error			= array('Please choose one of the methods to handle the subcategories');
 							$msgbox_error	= $GLOBALS['phpgw']->common->error_list($error);
-							$show_done		= 'yes';
 							break;
 					}
 				}
@@ -416,7 +415,8 @@
 				$error = array('This category is currently being used by applications as a parent category',
 								'You will need to reassign these subcategories before you can delete this category');
 
-				$msgbox_error = $GLOBALS['phpgw']->common->error_list($error);
+				$msgbox_error	= $GLOBALS['phpgw']->common->error_list($error);
+				$show_done		= 'yes';
 			}
 			else
 			{
