@@ -18,6 +18,8 @@
 	// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 	// THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+	/* $Id$ */
+
 	if (!function_exists('xml_parser_create'))
 	{
 		// Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
@@ -649,8 +651,9 @@
 		}
 		return $r;
 	}
-/*
-	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcString, xmlrpcString));
+
+	/*
+	$GLOBALS['_xmlrpcs_listApps_sig'] = array(array(xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_listApps_doc'] = 'Returns a list of installed phpgw apps';
 	function _xmlrpcs_listApps($server,$m)
 	{
@@ -663,34 +666,21 @@
 				$name   = $GLOBALS['phpgw']->db->f('app_name');
 				$title  = $GLOBALS['phpgw']->db->f('app_title');
 				$status = $GLOBALS['phpgw']->db->f('app_enabled');
-				$apps[$name] = array(
-					'title'  => $title,
-					'name'   => $name,
-					'status' => $status
+				$version= $GLOBALS['phpgw']->db->f('app_version');
+				$apps[$name] = CreateObject('phpgwapi.xmlrpcval',
+					array(
+						'title'  => CreateObject('phpgwapi.xmlrpcval',$title,'string'),
+						'name'   => CreateObject('phpgwapi.xmlrpcval',$name,'string'),
+						'status' => CreateObject('phpgwapi.xmlrpcval',$status,'string'),
+						'version'=> CreateObject('phpgwapi.xmlrpcval',$version,'string')
+					),
+					'struct'
 				);
 			}
 		}
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$apps, 'struct'));
 	}
-
-	$GLOBALS['_xmlrpcs_listUsers_sig'] = array(array(xmlrpcString, xmlrpcString));
-	$GLOBALS['_xmlrpcs_listUsers_doc'] = 'Returns a list of phpgw users';
-	function _xmlrpcs_listUsers($server,$m)
-	{
-		$m->getParam(0);
-		$accounts = $GLOBALS['phpgw']->accounts->get_list('accounts');
-		while(list($key,$acct) = @each($accounts))
-		{
-			$r = CreateObject('phpgwapi.xmlrpcval','account_lid','string');
-			$s = CreateObject('phpgwapi.xmlrpcval',$acct['account_lid'],'string');
-			$acct_data[] = $r;
-			$acct_data[] = $s;
-			
-		}
-
-		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$acct_data, 'struct'));
-	}
-*/
+	*/
 
 	$GLOBALS['_xmlrpcs_login_sig'] = array(array(xmlrpcStruct,xmlrpcStruct));
 	$GLOBALS['_xmlrpcs_login_doc'] = 'phpGroupWare client or server login via XML-RPC';
@@ -766,7 +756,6 @@
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$rtrn,'struct'));
 	}
 
-	/*
 	$GLOBALS['_xmlrpcs_dmap'] = array(
 		'system.listMethods' => array(
 			'function'  => '_xmlrpcs_listMethods',
@@ -783,40 +772,13 @@
 			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
 		),
+		/*
 		'system.listApps' => array(
 			'function'  => '_xmlrpcs_listApps',
 			'signature' => $GLOBALS['_xmlrpcs_listApps_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
 		),
-		'system.listUsers' => array(
-			'function'  => '_xmlrpcs_listUsers',
-			'signature' => $GLOBALS['_xmlrpcs_listUsers_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_listUsers_doc']
-		),
-		'system.login'  => array(
-			'function'  => '_xmlrpcs_login',
-			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_login_doc']
-		)
-	);
-	*/
-
-	$GLOBALS['_xmlrpcs_dmap'] = array(
-		'system.listMethods' => array(
-			'function'  => '_xmlrpcs_listMethods',
-			'signature' => $GLOBALS['_xmlrpcs_listMethods_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_listMethods_doc']
-		),
-		'system.methodHelp' => array(
-			'function'  => '_xmlrpcs_methodHelp',
-			'signature' => $GLOBALS['_xmlrpcs_methodHelp_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_methodHelp_doc']
-		),
-		'system.methodSignature' => array(
-			'function'  => '_xmlrpcs_methodSignature',
-			'signature' => $GLOBALS['_xmlrpcs_methodSignature_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_methodSignature_doc']
-		),
+		*/
 		'system.login'  => array(
 			'function'  => '_xmlrpcs_login',
 			'signature' => $GLOBALS['_xmlrpcs_login_sig'],
@@ -834,5 +796,4 @@
 	{
 		$GLOBALS['_xmlrpc_debuginfo'] .= $m . "\n";
 	}
-
 ?>
