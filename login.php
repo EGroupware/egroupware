@@ -44,10 +44,10 @@
 
   function show_cookie()
   {
-    global $phpgw_info, $code, $lastloginid, $login;
+    global $phpgw_info, $code, $last_loginid, $login;
     /* This needs to be this way, because if someone doesnt want to use cookies, we shouldnt sneak one in */
     if ($code != 5 && (isset($phpgw_info["server"]["usecookies"]) && $phpgw_info["server"]["usecookies"])){
-       return $lastloginid;
+       return $last_loginid;
     }
   }
 
