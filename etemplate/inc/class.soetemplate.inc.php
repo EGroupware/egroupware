@@ -204,7 +204,7 @@
 			$this->db->query($sql,__LINE__,__FILE__);
 			if (!$this->db->next_record())
 			{
-				return False;
+				return $this->readfile();
 			}
 			$this->db2obj();
 
@@ -227,7 +227,7 @@
 			}
 			$file .= '.xul';
 
-			if ($this->name == '' || $app == '' || $name == '' || !is_readable($file) || !($f = fopen($file,'r')))
+			if ($this->name == '' || $app == '' || $name == '' || !@file_exists($file) || !($f = @fopen($file,'r')))
 			{
 				//echo "<p>Can't open '$file' !!!</p>\n";
 				return False;
