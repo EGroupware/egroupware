@@ -14,11 +14,34 @@
 
   /* $Id$ */
 
+  class calendar_time {
+    var $year;
+    var $month;
+    var $mday;
+    var $hour;
+    var $min;
+    var $sec;
+    var $alarm = 0;
+  }
+
   class calendar_item {
-    var $owner;
+//New ICal Support
     var $id = 0;
-    var $name = "Unnamed Event";
+    var $public = 0;
+    var $category = "none";
+    var $title = "Unnamed Event";
     var $description = "Unnamed Event";
+    var $alarm = 0;
+    var $start;
+    var $end;
+    var $recur_type = 0;
+    var $recur_interval = 0;
+    var $recur_enddate;
+    var $recur_data = 0;
+
+// Legacy Support
+    var $owner;
+    var $name = "Unnamed Event";
     var $datetime = 0;
     var $day = 0;
     var $month = 0;

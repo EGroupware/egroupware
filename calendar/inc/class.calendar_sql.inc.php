@@ -78,6 +78,8 @@ class calendar_
 
 	function fetch_event($mcal_stream,$event_id,$options='')
 	{
+		global $phpgw;
+		
 		if(!isset($this->stream))
 		{
 			return False;
@@ -85,24 +87,280 @@ class calendar_
 	  
 		$this->stream->lock(array('calendar_entry','calendar_entry_user','calendar_entry_repeats'));
 
+		// This is the preferred method once everything is normalized...
+		//$this->stream->query('SELECT * FROM calendar_entry WHERE id='.$event_id,__LINE__,__FILE__);
+		// But until then, do it this way...
 		$this->stream->query('SELECT * FROM calendar_entry WHERE cal_id='.$event_id,__LINE__,__FILE__);
 		
 		if($this->stream->num_rows() > 0)
 		{
-			$this->event = CreateObject('calendar.calendar_item');
+			$event = CreateObject('calendar.calendar_item');
+			$event->start = new calendar_time;
+			$event->end = new calendar_time;
+			$event->recur_enddate = new calendar_time;
+
 			$this->stream->next_record();
-			// Load the calendar event data from the db into $this->event structure
+			// Load the calendar event data from the db into $event structure
 			// Use http://www.php.net/manual/en/function.mcal-fetch-event.php as the reference
 			
+			// This is the preferred method once everything is normalized...
+			//$event->owner = $this->user;
+			// But until then, do it this way...
+		//Legacy Support
+			$event->owner = $this->stream->f('cal_owner');
+			
+			// This is the preferred method once everything is normalized...
+			//$event->id = $event_id;
+			// But until then, do it this way...
+		//Legacy Support
+			$event->id = intval($this->stream->f('cal_id'));
+			
+			// This is the preferred method once everything is normalized...
+			//$event->public = $this->stream->f('public');
+			// But until then, do it this way...
+		//Legacy Support
+			$event->access = $this->stream->f('cal_access');
+		//Legacy Support (New)
+			$event->public = ($this->stream->f('cal_access')=='private'?0:1);
+
+			// This is the preferred method once everything is normalized...
+			//$event->category = $this->stream->f('category');
+			// But until then, do it this way...
+		//Legacy Support (New)
+			$event->category = 'Unfiled';
+
+			// This is the preferred method once everything is normalized...
+			//$event->title = $phpgw->strip_html($this->stream->f('title'));
+			// But until then, do it this way...
+		//Legacy Support
+			$event->name = $phpgw->strip_html($this->stream->f('cal_name'));
+		//Legacy Support (New)
+			$event->title = $phpgw->strip_html($this->stream->f('cal_name'));
+			
+			// This is the preferred method once everything is normalized...
+			//$event->title = $phpgw->strip_html($this->stream->f('description'));
+			// But until then, do it this way...
+		//Legacy Support
+		//Legacy Support (New)
+			$event->description = $phpgw->strip_html($this->stream->f('cal_description'));
+
+			// This is the preferred method once everything is normalized...
+			//$event->alarm = intval($this->stream->f('alarm'));
+			// But until then, do it this way...
+		//Legacy Support (New)
+			$event->alarm = 0;
+			
+			// This is the preferred method once everything is normalized...
+			//$event->start = unserialize($this->stream->f('start'));
+			// But until then, do it this way...
+		//Legacy Support
+			$event->datetime = $this->stream->f('cal_datetime');
+			$date = $this->localdates($event->datetime);
+			$event->day = $date['day'];
+			$event->month = $date['month'];
+			$event->year = $date['year'];
+
+			$time = $this->splittime($phpgw->common->show_date($event->datetime,'His'));
+			$event->hour   = (int)$time['hour'];
+			$event->minute = (int)$time['minute'];
+			$event->ampm   = $time['ampm'];
+
+		//Legacy Support (New)
+			$datetime = $this->localdates($this->stream->f('cal_datetime'));
+			$event->start->year	= $datetime['year'];
+			$event->start->month	= $datetime['month'];
+			$event->start->mday	= $datetime['day'];
+			$event->start->hour	= $datetime['hour'];
+			$event->start->min	= $datetime['minute'];
+			$event->start->sec	= $datetime['second'];
+			$event->start->alarm	= 0;
+			
+
+		//Legacy Support
+			$event->mdatetime = $this->stream->f('cal_mdatetime');
+			$date = $this->localdates($event->mdatetime);
+			$event->mod_day = $date['day'];
+			$event->mod_month = $date['month'];
+			$event->mod_year = $date['year'];
+
+			$time = $this->splittime($phpgw->common->show_date($event->mdatetime,'His'));
+			$event->mod_hour = (int)$time['hour'];
+			$event->mod_minute = (int)$time['minute'];
+			$event->mod_second = (int)$time['second'];
+			$event->mod_ampm = $time['ampm'];
+
+
+			// This is the preferred method once everything is normalized...
+			//$event->end = unserialize($this->stream->f('end'));
+			// But until then, do it this way...
+		//Legacy Support
+			$event->edatetime = $this->stream->f('cal_edatetime');
+			$date = $this->localdates($event->edatetime);
+			$event->end_day = $date['day'];
+			$event->end_month = $date['month'];
+			$event->end_year = $date['year'];
+
+			$time = $this->splittime($phpgw->common->show_date($event->edatetime,'His'));
+			$event->end_hour = (int)$time['hour'];
+			$event->end_minute = (int)$time['minute'];
+			$event->end_second = (int)$time['second'];
+			$event->end_ampm = $time['ampm'];
+
+		//Legacy Support (New)
+			$datetime = $this->localdates($this->stream->f('cal_edatetime'));
+			$event->end->year	= $datetime['year'];
+			$event->end->month	= $datetime['month'];
+			$event->end->mday	= $datetime['day'];
+			$event->end->hour	= $datetime['hour'];
+			$event->end->min	= $datetime['minute'];
+			$event->end->sec	= $datetime['second'];
+			$event->end->alarm	= 0;
+
+		//Legacy Support
+			$event->priority = $this->stream->f('cal_priority');
+			if($this->stream->f('cal_group'))
+			{
+				$groups = explode(',',$this->stream->f('cal_group'));
+				for($j=1;$j<count($groups) - 1;$j++)
+				{
+					$event->groups[] = $groups[$j];
+				}
+			}
+
+			// This should all be one table,
+			// but for now we'll leave it separate...
+			// This is the preferred method once everything is normalized...
+			//$this->stream->query('SELECT * FROM calendar_entry_repeats WHERE id='.$event_id,__LINE__,__FILE__);
+			// But until then, do it this way...
+		//Legacy Support
+			$this->stream->query('SELECT * FROM calendar_entry_repeats WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			if($this->stream->num_rows())
+			{
+				$this->stream->next_record();
+
+				// This is the preferred method once everything is normalized...
+				//$event->recur_type = intval($this->stream->f('recur_type'));
+				// But until then, do it this way...
+		//Legacy Support
+				$rpt_type = strtolower($this->stream->f('cal_type'));
+				$event->rpt_type = !$rpt_type?'none':$rpt_type;
+				
+		//Legacy Support (New)
+				switch($event->rpt_type)
+				{
+					case 'none':
+						$event->recur_type = RECUR_NONE;
+						break;
+					case 'daily':
+						$event->recur_type = RECUR_DAILY;
+						break;
+					case 'weekly':
+						$event->recur_type = RECUR_WEEKLY;
+						break;
+					case 'monthlybydate':
+						$event->recur_type = RECUR_MONTHLY_MDAY;
+						break;
+					case 'monthlybyday':
+						$event->recur_type = RECUR_MONTHLY_WDAY;
+						break;
+					case 'yearly':
+						$event->recur_type = RECUR_YEARLY;
+						break;
+				}
+				
+				// This is the preferred method once everything is normalized...
+				//$event->recur_interval = intval($this->stream->f('recur_interval'));
+				// But until then, do it this way...
+		//Legacy Support
+				$event->rpt_freq = (int)$this->stream->f('cal_frequency');
+		//Legacy Support (New)
+				$event->recur_interval = (int)$this->stream->f('cal_frequency');
+
+				// This is the preferred method once everything is normalized...
+				//$event->recur_enddate = unserialize($this->stream->f('recur_enddate'));
+				// But until then, do it this way...
+		//Legacy Support
+				$event->recur_use_end = $this->stream->f('cal_use_end');
+				if($event->recur_use_end == True)
+				{
+		//Legacy Support
+					$event->rpt_end = $this->stream->f('cal_end');
+					$date = $this->localdates($this->stream->f('cal_end'));
+					$event->rpt_end_day = (int)$date['day'];
+					$event->rpt_end_month = (int)$date['month'];
+					$event->rpt_end_year = (int)$date['year'];
+					
+		//Legacy Support (New)
+					$event->recur_enddate->year	= $date['year'];
+					$event->recur_enddate->month	= $date['month'];
+					$event->recur_enddate->mday	= $date['day'];
+					$event->recur_enddate->hour	= $date['hour'];
+					$event->recur_enddate->min	= $date['minute'];
+					$event->recur_enddate->sec	= $date['second'];
+					$event->recur_enddate->alarm	= 0;
+				}
+				else
+				{
+		//Legacy Support
+					$event->rpt_end = 0;
+					$event->rpt_end_day = 0;
+					$event->rpt_end_month = 0;
+					$event->rpt_end_year = 0;
+
+		//Legacy Support (New)
+					$event->recur_enddate->year	= 0;
+					$event->recur_enddate->month	= 0;
+					$event->recur_enddate->mday	= 0;
+					$event->recur_enddate->hour	= 0;
+					$event->recur_enddate->min	= 0;
+					$event->recur_enddate->sec	= 0;
+					$event->recur_enddate->alarm	= 0;
+				}
+				
+				// This is the preferred method once everything is normalized...
+				//$event->recur_data = $this->stream->f('recur_data');
+				// But until then, do it this way...
+		//Legacy Support
+				$rpt_days = strtoupper($this->stream->f('cal_rpt_days'));
+				$event->rpt_days = $rpt_days;
+				$event->rpt_sun = (substr($rpt_days,0,1)=='Y'?1:0);
+				$event->rpt_mon = (substr($rpt_days,1,1)=='Y'?1:0);
+				$event->rpt_tue = (substr($rpt_days,2,1)=='Y'?1:0);
+				$event->rpt_wed = (substr($rpt_days,3,1)=='Y'?1:0);
+				$event->rpt_thu = (substr($rpt_days,4,1)=='Y'?1:0);
+				$event->rpt_fri = (substr($rpt_days,5,1)=='Y'?1:0);
+				$event->rpt_sat = (substr($rpt_days,6,1)=='Y'?1:0);
+
+		//Legacy Support (New)
+				$event->recur_data = 0;
+				$event->recur_data += (substr($rpt_days,0,1)=='Y'?M_SUNDAY:0);
+				$event->recur_data += (substr($rpt_days,1,1)=='Y'?M_MONDAY:0);
+				$event->recur_data += (substr($rpt_days,2,1)=='Y'?M_TUESDAY:0);
+				$event->recur_data += (substr($rpt_days,3,1)=='Y'?M_WEDNESDAY:0);
+				$event->recur_data += (substr($rpt_days,4,1)=='Y'?M_THURSDAY:0);
+				$event->recur_data += (substr($rpt_days,5,1)=='Y'?M_FRIDAY:0);
+				$event->recur_data += (substr($rpt_days,6,1)=='Y'?M_SAYURDAY:0);
+			}
+			
+		//Legacy Support
+			$this->stream->query('SELECT * FROM calendar_entry_user WHERE cal_id='.$event_id,__LINE__,__FILE__);
+			if($this->stream->num_rows())
+			{
+				while($this->stream->next_record())
+				{
+					$event->participants[] = $this->stream->f('cal_login');
+					$event->status[] = $this->stream->f('cal_status');
+				}
+			}
 		}
 		else
 		{
-			$this->event = False;
+			$event = False;
 		}
       
 		$this->stream->unlock();
 
-		return $this->event;
+		return $event;
 	}
 
 	function list_events($mcal_stream,$startYear,$startMonth,$startDay,$endYear='',$endMonth='',$endYear='')
@@ -271,6 +529,7 @@ class calendar_
 		$date['dow'] = intval($phpgw->common->show_date($date['raw'],'w'));
 		$date['hour'] = intval($phpgw->common->show_date($date['raw'],'H'));
 		$date['minute'] = intval($phpgw->common->show_date($date['raw'],'i'));
+		$date['second'] = intval($phpgw->common->show_date($date['raw'],'s'));
 		
 		return $date;
 	}
@@ -872,8 +1131,6 @@ class calendar_
 				if($calendar->rpt_use_end)
 				{
 					$calendar->rpt_end = $db2->f('cal_end');
-					$rpt_end = $phpgw->common->show_date($db2->f('cal_end'),'Ymd');
-//					$date = $this->date_to_epoch($rpt_end);
 					$date = $this->localdates($db2->f('cal_end'));
 					$calendar->rpt_end_day = (int)$date['day'];
 					$calendar->rpt_end_month = (int)$date['month'];

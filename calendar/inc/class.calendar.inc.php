@@ -14,8 +14,34 @@
 
   /* $Id$ */
 
+if(extension_loaded("mcal") == False)
+{
+	define(RECUR_NONE,0);
+	define(RECUR_DAILY,1);
+	define(RECUR_WEEKLY,2);
+	define(RECUR_MONTHLY_MDAY,3);
+	define(RECUR_MONTHLY_WDAY,4);
+	define(RECUR_YEARLY,5);
+	
+	define(M_SUNDAY,1);
+	define(M_MONDAY,2);
+	define(M_TUESDAY,4);
+	define(M_WEDNESDAY,8);
+	define(M_THURSDAY,16);
+	define(M_FRIDAY,32);
+	define(M_SATURDAY,64);
+	
+	define(M_WEEKDAYS,63);
+	define(M_WEEKEND,65);
+	define(M_ALLDAYS,127);
+}
+
 CreateObject('calendar.calendar_item');
 $phpgw_info['server']['calendar_type'] = 'sql';
+if($phpgw_info['server']['calendar_type'] == 'mcal' && extension_loaded("mcal") == False)
+{
+	$phpgw_info['server']['calendar_type'] = 'sql';
+}
 include(PHPGW_INCLUDE_ROOT.'/calendar/inc/class.calendar_'.$phpgw_info['server']['calendar_type'].'.inc.php');
 
 class calendar extends calendar_
@@ -236,7 +262,10 @@ class calendar extends calendar_
 		else
 		{
 			$this->repeated_events = $events;
-			$this->repeating_events = $this->getevent($events);
+			for($i=0;$i<count($events);$i++)
+			{
+				$this->repeating_events[] = $this->fetch_event($this->stream,$events[$i]);
+			}
 		}
 	}
 
@@ -404,7 +433,11 @@ class calendar extends calendar_
 		}
 		else
 		{
-			$events = $this->getevent($event);
+			for($i=0;$i<$this->sorted_events_matching;$i++)
+			{
+				$events[] = $this->fetch_event($this->stream,$event[$i]);
+			}
+
 			if($this->sorted_events_matching == 1)
 			{
 				return $events;
