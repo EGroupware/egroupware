@@ -26,7 +26,16 @@
 	$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
 	
 	include('../header.inc.php');
+	if(!is_object($GLOBALS['phpgw']->datetime))
+	{
+		$GLOBALS['phpgw']->datetime = CreateObject('phpgwapi.datetime');
+	}
+	
+	$parms = Array(
+		'menuaction'=> 'calendar.uicalendar.index',
+		'date'		=> date('Ymd',$GLOBALS['phpgw']->datetime->users_localtime)
+	);
 
-	Header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=calendar.uicalendar.index&date='.date('Ymd')));
+	Header('Location: '.$GLOBALS['phpgw']->link('/index.php',$parms));
 	$GLOBALS['phpgw']->common->phpgw_exit();
 ?>
