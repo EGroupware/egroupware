@@ -1,6 +1,14 @@
 <?php
 
 ###
+# DEV NOTE:
+#
+# index.php is depreciated by the inc/class.xxphpwebhosting.inc.php files.
+# index.php is still used in the 0.9.14 release, but all future changes should be
+# made to the inc/class.xxphpwebhosting.inc.php files (3-tiered).  This includes using templates.
+###
+
+###
 # Enable this to display some debugging info
 ###
 
