@@ -77,6 +77,7 @@ global public and group public	calendar	en	Global Public and group public
 global public only	calendar	en	Global Public Only
 go!	calendar	en	Go!
 grant calendar access	common	en	Grant Calendar Access
+group planner	calendar	en	Group Planner
 group public only	calendar	en	Group Public Only
 has been canceled	calendar	en	has been canceled
 has been rescheduled to	calendar	en	has been rescheduled to
