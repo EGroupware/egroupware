@@ -225,21 +225,21 @@
 			}
 		}
 
-		function exists($account_id)
+		function exists($account_lid)
 		{
 			global $phpgw, $phpgw_info;
-			if (gettype($account_id) == "string") {
-				$account_id = $this->name2id($account_id);
+
+			$this->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_lid=".$account_lid,__LINE__,__FILE__);
+			$this->db->next_record();
+			if ($this->db->f(0))
+			{
+				$insql = True;
 			}
-			if ($account_id) {
-				$sql = "SELECT account_id FROM phpgw_accounts WHERE account_id=".$account_id;
-				$this->db->query($sql,__LINE__,__FILE__);
-				if ($this->db->num_rows() == 1) {
-					$insql = True;
-				} else {
-					$insql = False;
-				}
+			else
+			{
+				$insql = False;
 			}
+
 			$ds = $phpgw->common->ldapConnect();
 			$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=".$account_lid);
 			$allValues = ldap_get_entries($ds, $sri);
