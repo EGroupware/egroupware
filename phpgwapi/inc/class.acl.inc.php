@@ -88,14 +88,17 @@
     }
 
     function delete($app, $location, $id, $id_type){
-      $sql = "delete from phpgw_acl where acl_appname='".$app."'";
-      $sql .= " and acl_location ='".$location."' and ";
+      $sql = "delete from phpgw_acl where acl_appname like '".$app."'";
+      $sql .= " and acl_location like '".$location."' and ";
       $sql .= " acl_account_type = '".$id_type."' and acl_account = ".$id;
       $this->db->query($sql ,__LINE__,__FILE__);
       return True;
     }
 
-    function view($app, $location, $id, $id_type){
+    function replace($app, $location, $id, $id_type, $rights){
+      $this->delete($app, $location, $id, $id_type);
+      $this->add($app, $location, $id, $id_type, $rights);
+      return True;
     }
 
     function get_app_list($location, $required){
@@ -128,7 +131,6 @@
       }
       return $apps;
     }
-
 
     function get_app_list_for_id($location, $required, $id_type = "", $id = ""){
       global $phpgw, $phpgw_info;
@@ -163,40 +165,27 @@
       return $apps;
     }
 
-    function view_location_list($app, $required, $id_type = "both", $id = ""){
+    function get_location_list($app, $required){
       global $phpgw, $phpgw_info;
-      if ($id == ""){$id = $phpgw_info["user"]["account_id"];}
-      $sql = "select acl_location, acl_rights from phpgw_acl where (acl_appname in ('$app','everywhere')) and ";
-      if ($id_type == "both" || $id_type == "u"){
-        // User piece
-        $sql .= "((acl_account_type = 'u' and acl_account = ".$id.")";
-      }
-      if ($id_type == "g"){
-        $sql .= "(acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      }elseif ($id_type == "both"){
-        $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
-      }
-      if ($id_type == "both" || $id_type == "g"){
-        // Group piece
-        $memberships = $phpgw->accounts->read_group_names();           
-        if (is_array($memberships) && count($memberships) > 0){
-          for ($idx = 0; $idx < count($memberships); ++$idx){
-            $sql .= ",".$memberships[$idx][0];
-          }
+      // User piece
+      $sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' ";
+      $sql .= " and ((acl_account_type = 'u' and acl_account = '".$phpgw_info["user"]["account_id"]."')";
+    
+      // Group piece
+      $sql .= " or (acl_account_type='g' and acl_account in (0"; // group 0 covers all users
+      $memberships = $phpgw->accounts->read_group_names();           
+      if (is_array($memberships) && count($memberships) > 0){
+        for ($idx = 0; $idx < count($memberships); ++$idx){
+          $sql .= ",".$memberships[$idx][0];
         }
       }
-      if ($id_type == "both"){
-        $sql .= ")))";
-      }elseif ($id_type == "u"){
-        $sql .= ")";
-      }elseif ($id_type == "g"){
-        $sql .= "))";
-      }      
+      $sql .= ")))";
+
       $this->db->query($sql ,__LINE__,__FILE__);
       $rights = 0;
       if ($this->db->num_rows() == 0 ){ return False; }
       while ($this->db->next_record()) {
-        if ($this->db->f("acl_location") == 0){ return False; }
+        if ($this->db->f("acl_rights") == 0){ return False; }
         $rights |= $this->db->f("acl_rights");
         if (!!($rights & $required) == True){
           $locations[] = $this->db->f("acl_location");
@@ -206,19 +195,39 @@
       }
       return $locations;
     }
-    
-    function remove_locations($location, $id_type = "u", $id = ""){
-      global $phpgw, $phpgw_info;
-      if ($id == ""){$id = $phpgw_info["user"]["account_id"];}
-      $sql = "DELETE FROM phpgw_acl WHERE acl_location='".$location."' AND acl_account_type='".$id_type."' AND acl_account='".$id."'";
-      $this->db->query($sql ,__LINE__,__FILE__);
-    }
 
-    function remove_granted_rights($app, $location, $id="") {
+    function get_location_list_for_id($app, $required, $id_type = "", $id = ""){
       global $phpgw, $phpgw_info;
-      if ($id == ""){$id = $phpgw_info["user"]["account_id"];}
-      $sql = "DELETE FROM phpgw_acl WHERE acl_appname='".$app."' AND acl_account_type = 'u' AND acl_location='".$location."' AND acl_account='".$id."'";
+      if ($id == ""){ $id = $phpgw_info["user"]["account_id"]; }
+      if ($id_type == ""){ $id_type = "u"; }
+      $sql = "select acl_location, acl_rights from phpgw_acl where acl_appname = '$app' and ";
+      if ($id_type == "u"){
+        $sql .= "acl_account_type = 'u' and acl_account = ".$id;
+      }elseif($id_type == "g"){
+        $sql .= "acl_account_type='g' and acl_account in (0"; // group 0 covers all users
+        // Group piece
+        if (is_array($memberships) && count($memberships) > 0){
+          for ($idx = 0; $idx < count($memberships); ++$idx){
+            $sql .= ",".$memberships[$idx][0];
+          }
+        }
+        $sql .= ")";
+      }
+
       $this->db->query($sql ,__LINE__,__FILE__);
+      $rights = 0;
+      if ($this->db->num_rows() == 0 ){ return False; }
+      while ($this->db->next_record()) {
+        if ($this->db->f("acl_rights") == 0){ return False; }
+        $rights |= $this->db->f("acl_rights");
+        if (!!($rights & $required) == True){
+          $locations[] = $this->db->f("acl_location");
+        }else{
+          return False;
+        }
+      }
+      return $locations;
     }
+   
   } //end of acl class
 ?>

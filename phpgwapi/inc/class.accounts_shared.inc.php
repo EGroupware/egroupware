@@ -39,7 +39,7 @@
        $phpgw_info["user"]["preferences"] = $phpgw->preferences->get_preferences();
        $this->groups = $this->read_groups($phpgw_info["user"]["userid"]);
        $apps = CreateObject('phpgwapi.applications',intval($phpgw_info["user"]["account_id"]));
-       $phpgw_info["user"]["apps"] = $apps->apps_enabled();
+       //$phpgw_info["user"]["apps"] = $apps->apps_enabled();
     }
   
     // use this if you make any changes to phpgw_info, including preferences, config table changes, etc
@@ -73,23 +73,6 @@
                 . $phpgw_info["user"]["sessionid"] . "'",__LINE__,__FILE__);
     }
 
-    function add_app($appname,$rebuild = False)
-    {
-       if (! $rebuild) {
-          if (gettype($appname) == "array") {
-             $t .= ":";
-             $t .= implode(":",$appname);
-             $this->temp_app_list .= $t;
-          } else {
-	        $this->temp_app_list .= ":" . $appname;
-	     }
-       } else {
-          $t = $this->temp_app_list . ":";
-          unset($this->temp_app_list);
-          return $t;
-       }
-    }
-    
     function sql_search($table,$owner=0)
     {
       global $phpgw_info;

@@ -794,6 +794,43 @@
     $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.9";
   }
 
+  $test[] = "0.9.9";
+  function upgrade0_9_9(){
+    global $phpgw_info, $phpgw_setup;
+    $db2 = $phpgw_setup->db;
+    //convert user settings
+    $phpgw_setup->db->query("select account_id, account_permissions from accounts",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $apps_perms = explode(":",$phpgw_setup->db->f("account_permissions"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          if ($apps_perms[$i] != ""){
+            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("account_id").", 'u', 1)";
+            $db2->query($sql ,__LINE__,__FILE__);
+          }
+        }
+      }
+    }
+    $phpgw_setup->db->query("update accounts set account_permissions = ''",__LINE__,__FILE__);
+    //convert group settings
+    $phpgw_setup->db->query("select group_id, group_apps from groups",__LINE__,__FILE__);
+    if($phpgw_setup->db->num_rows()) {
+      while($phpgw_setup->db->next_record()) {
+        $apps_perms = explode(":",$phpgw_setup->db->f("group_apps"));
+        for($i=1;$i<count($apps_perms)-1;$i++) {
+          if ($apps_perms[$i] != ""){
+            $sql = "insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_account_type, acl_rights)";
+            $sql .= " values('".$apps_perms[$i]."', 'run', ".$phpgw_setup->db->f("group_id").", 'g', 1)";
+            $db2->query($sql ,__LINE__,__FILE__);
+          }
+        }
+      }
+    }
+    $phpgw_setup->db->query("update groups set group_apps = ''",__LINE__,__FILE__);
+    $phpgw_info["setup"]["currentver"]["phpgwapi"] = "0.9.10pre1";
+  }
+
   reset ($test);
   while (list ($key, $value) = each ($test)){
     if ($phpgw_info["setup"]["currentver"]["phpgwapi"] == $value) {
