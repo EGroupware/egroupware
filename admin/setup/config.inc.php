@@ -66,7 +66,7 @@
 
    <tr bgcolor="e6e6e6">
     <td>LDAP root password:</td>
-    <td><input name="newsettings[ldap_root_pw]" value="<?php echo $current_config["ldap_root_pw"]; ?>"></td>
+    <td><input name="newsettings[ldap_root_pw]" type="password" value="<?php echo $current_config["ldap_root_pw"]; ?>"></td>
    </tr>
    
    <?php $selected[$current_config["ldap_encryption_type"]] = " selected"; ?>
