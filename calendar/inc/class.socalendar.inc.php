@@ -85,32 +85,20 @@
 
 		function list_repeated_events($syear,$smonth,$sday,$eyear,$emonth,$eday,$owner_id=0)
 		{
-			if($GLOBALS['phpgw_info']['server']['calendar_type'] != 'sql')
+			if(!$owner_id)
+			{
+				$owner_id = $this->is_group ? $this->g_owner : $this->owner;
+			}
+			if($GLOBALS['phpgw_info']['server']['calendar_type'] != 'sql' ||
+			   !count($owner_id))	// happens with empty groups
 			{
 				return Array();
 			}
 
 			$starttime = mktime(0,0,0,$smonth,$sday,$syear) - $GLOBALS['phpgw']->datetime->tz_offset;
 			$endtime = mktime(23,59,59,$emonth,$eday,$eyear) - $GLOBALS['phpgw']->datetime->tz_offset;
-//			$starttime = mktime(0,0,0,$smonth,$sday,$syear);
-//			$endtime = mktime(23,59,59,$emonth,$eday,$eyear);
-			$sql = "AND (phpgw_cal.cal_type='M') "
-				. 'AND (phpgw_cal_user.cal_login in (';
-			if($owner_id)
-			{
-				if(is_array($owner_id))
-				{
-					$sql .= implode(',',$owner_id);
-				}
-				else
-				{
-					$sql .= $owner_id;
-				}
-			}
-			else
-			{
-				$sql .= (!$this->is_group?$this->owner:implode(',',$this->g_owner));
-			}
+			$sql = "AND phpgw_cal.cal_type='M' AND phpgw_cal_user.cal_login IN (".
+				(is_array($owner_id) ? implode(',',$owner_id) : $owner_id).')';
 
 //			$member_groups = $GLOBALS['phpgw']->accounts->membership($this->user);
 //			@reset($member_groups);
@@ -122,7 +110,7 @@
 //			$sql .= ','.implode(',',$member).') ';
 //			$sql .= 'AND (phpgw_cal.datetime <= '.$starttime.') ';
 //			$sql .= 'AND (((phpgw_cal_repeats.recur_enddate >= '.$starttime.') AND (phpgw_cal_repeats.recur_enddate <= '.$endtime.')) OR (phpgw_cal_repeats.recur_enddate=0))) '
-			$sql .= ') AND ((phpgw_cal_repeats.recur_enddate >= '.$starttime.') OR (phpgw_cal_repeats.recur_enddate=0))) '
+			$sql .= ' AND (phpgw_cal_repeats.recur_enddate >= '.$starttime.' OR phpgw_cal_repeats.recur_enddate=0) '
 				. (strpos($this->filter,'private')?'AND phpgw_cal.is_public=0 ':'')
 				. ($this->cat_id?"AND phpgw_cal.category like '%".$this->cat_id."%' ":'')
 				. 'ORDER BY phpgw_cal.datetime ASC, phpgw_cal.edatetime ASC, phpgw_cal.priority ASC';
