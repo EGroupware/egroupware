@@ -207,7 +207,7 @@ modify	setup	zh	修改
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	zh	修改现有 LDAP 帐号的保存，以便使用 eGroupWare (第一次安装使用 LDAP 帐户)
 multi-language support setup	setup	zh	多语言安装支持
 name of database	setup	zh	数据库名
-name of db user phpgroupware uses to connect	setup	zh	phpGroupWare 连接的数据库用户名
+name of db user egroupware uses to connect	setup	zh	eGroupWare 连接的数据库用户名
 never	setup	zh	绝不
 new	setup	zh	新建
 no	setup	zh	否

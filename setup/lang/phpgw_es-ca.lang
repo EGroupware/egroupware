@@ -224,7 +224,6 @@ multi-language support setup	setup	es-ca	Configuració del suport Multi-Idioma
 mysqlinstr	setup	es-ca	Instrucciones para crear la base de datos en MySQL:<br>Autentifiquese en mysql -<br><i>[usuario@servidor usuario]# mysql -u root -p</i><br>Cree la base de datos vacia y conceda permisos al usuario -<br><i>mysql> create database phpgroupware;</i><br><i>mysql> grant all on phpgroupware.* to phpgroupware@localhost identified by 'password';</i>
 name of database	setup	es-ca	Nom de la base de dades
 name of db user egroupware uses to connect	setup	es-ca	Nom de l'usuari de la base de dades que usa eGroupWare per a connectar
-name of db user phpgroupware uses to connect	setup	es-ca	Nombre del usuario de la base de datos que usa eGroupWare para conectar
 never	setup	es-ca	mai
 new	setup	es-ca	Nou
 no	setup	es-ca	No
