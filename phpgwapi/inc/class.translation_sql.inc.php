@@ -399,7 +399,7 @@
 							if ($upgrademethod == 'addmissing')
 							{
 								//echo '<br>Test: addmissing';
-								$this->db->query("SELECT content,app_name IN ('common') AS in_api FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') ORDER BY in_api DESC",__LINE__,__FILE__);
+								$this->db->query("SELECT content,CASE WHEN app_name IN ('common') then 1 else 0 END AS in_api FROM phpgw_lang WHERE message_id='$message_id' AND lang='$lang' AND (app_name='$app_name' OR app_name='common') ORDER BY in_api DESC",__LINE__,__FILE__);
 
 								if (!($row = $this->db->row(True)))
 								{
