@@ -222,7 +222,7 @@ class calendar_ extends calendar__
 
 		//Legacy Support
 			$this->event->priority = intval($this->stream->f('cal_priority'));
-			if($this->stream->f('cal_group'))
+			if($this->stream->f('cal_group') || $this->stream->f('cal_group') != 'NULL')
 			{
 				$groups = explode(',',$this->stream->f('cal_group'));
 				for($j=1;$j<count($groups) - 1;$j++)
