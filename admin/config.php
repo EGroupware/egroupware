@@ -15,16 +15,18 @@
 	$phpgw_info['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
-		'currentapp' => "admin",
+		'currentapp' => 'admin',
 		'enable_nextmatchs_class' => True
 	);
 	include('../header.inc.php');
 
-	$t = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$t = CreateObject('phpgwapi.Template',$phpgw->common->get_tpl_dir($appname));
 	$t->set_file(array(
-		'header' => 'config_head.tpl',
-		'footer' => 'config_footer.tpl'
+		'config' => 'config.tpl'
 	));
+	$t->set_block('config','header','header');
+	$t->set_block('config','body','body');
+	$t->set_block('config','footer','footer');
 
 	function nextcolor()
 	{
@@ -46,7 +48,6 @@
 		$c->read_repository();
 		$current_config = $c->config_data;
 	}
-	//echo print_r($current_config); exit;
 
 	if ($cancel)
 	{
@@ -57,8 +58,10 @@
 	{
 		while (list($key,$config) = each($newsettings))
 		{
-			//echo '<br>' . $key . ' = "' . $config . '"';
-			$c->config_data[$key] = $config;
+			if ($config)
+			{
+				$c->config_data[$key] = $config;
+			}
 		}
 		$c->save_repository(True);
 
@@ -71,11 +74,69 @@
 
 	$t->set_var('title',lang('Site Configuration'));
 	$t->set_var('action_url',$phpgw->link('/admin/config.php'));
-	$t->set_var('th_bg',$phpgw_info["theme"]["th_bg"]);
-	$t->set_var('th_text',$phpgw_info["theme"]["th_text"]);
+	$t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+	$t->set_var('th_text',$phpgw_info['theme']['th_text']);
+	$t->set_var('row_on',$phpgw_info['theme']['row_on']);
+	$t->set_var('row_off',$phpgw_info['theme']['row_off']);
 	$t->pparse('out','header');
 
-	include(PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'inc' . SEP . 'config.inc.php');
+	$vars = $t->get_undefined('body');
+	while (list($null,$value) = each($vars))
+	{
+		$valarray = explode('_',$value);
+		$type = $valarray[0];
+		$new = $newval = '';
+
+		while($chunk = next($valarray))
+		{
+			$new[] = $chunk;
+		}
+		$newval = implode(' ',$new);
+
+		switch ($type)
+		{
+			case "lang":
+				$t->set_var($value,lang($newval));
+				break;
+			case "value":
+				$newval = ereg_replace(' ','_',$newval);
+				$t->set_var($value,$current_config[$newval]);
+				break;
+			case "checked":
+				if ($current_config[$newval])
+				{
+					$t->set_var($value,' checked');
+				}
+				else
+				{
+					$t->set_var($value,'');
+				}
+				break;
+			case "selected":
+				$configs = array();
+				$config  = '';
+				$newvals = explode(' ',$newval);
+				$setting = end($newvals);
+				for ($i=0;$i<(count($newvals) - 1); $i++)
+				{
+					$configs[] = $newvals[$i];
+				}
+				$config = implode('_',$configs);
+				if ($current_config[$config] == $setting)
+				{
+					$t->set_var($value,' selected');
+				}
+				else
+				{
+					$t->set_var($value,'');
+				}
+				break;
+			default:
+				$t->set_var($value,'');
+				break;
+		}
+	}
+	$t->pparse('out','body');
 
 	$t->pparse('out','footer');
 	$phpgw->common->phpgw_footer();
