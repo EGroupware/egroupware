@@ -2907,7 +2907,7 @@
 
 		function is_owner($part_record)
 		{
-			if(($part_record['user'].'@'.$part_record['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address']) ||
+			if(($part_record['mailto']['user'].'@'.$part_record['mailto']['host'] == $GLOBALS['phpgw_info']['user']['preferences']['email']['address']) ||
 				($part_record['cn'] == $GLOBALS['phpgw_info']['user']['account_lid']))
 			{
 				return True;
