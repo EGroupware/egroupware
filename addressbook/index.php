@@ -22,6 +22,7 @@
 
 	$obj = CreateObject('addressbook.uiaddressbook');
 	$obj->index();
+	echo lang('alphabet');
 
 	$GLOBALS['phpgw']->common->phpgw_footer();
 ?>
