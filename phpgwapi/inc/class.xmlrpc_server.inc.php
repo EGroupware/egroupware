@@ -290,6 +290,16 @@
 
 				if (!isset($dmap[$methName]['function']))
 				{
+					if($sysCall && $this->authed)
+					{
+						$r = CreateObject('phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval',
+								$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName,
+								'string'
+							)
+						);
+						return $r;
+					}
 					if ($this->authed)
 					{
 						/* phpgw mod - fetch the (bo) class methods to create the dmap */
@@ -373,11 +383,11 @@
 					}
 					else
 					{
-						$r = CreateObject(
-							'phpgwapi.xmlrpcresp',
-							CreateObject('phpgwapi.xmlrpcval'),
-							$GLOBALS['xmlrpcerr']['incorrect_params'],
-							$GLOBALS['xmlrpcstr']['incorrect_params'] . ': ' . $sr[1]
+						$r = CreateObject('phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval',
+								$GLOBALS['xmlrpcstr']['incorrect_params'] . ': ' . $sr[1],
+								'string'
+							)
 						);
 					}
 				}
@@ -390,11 +400,11 @@
 					}
 					else
 					{
-						$r = CreateObject(
-							'phpgwapi.xmlrpcresp',
-							CreateObject('phpgwapi.xmlrpcval'),
-							$GLOBALS['xmlrpcerr']['unknown_method'],
-							$GLOBALS['xmlrpcstr']['unknown_method']
+						$r = CreateObject('phpgwapi.xmlrpcresp',
+							CreateObject('phpgwapi.xmlrpcval',
+								$GLOBALS['xmlrpcstr']['unknown_method'] . ': ' . $methName,
+								'string'
+							)
 						);
 					}
 				}
