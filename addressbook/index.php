@@ -161,8 +161,10 @@
 	$t->set_var("th_text",$phpgw_info["theme"]["th_text"]);
 	$t->set_var("lang_add",lang("Add"));
 	$t->set_var("lang_addvcard",lang("AddVCard"));
-	$t->set_var("lang_import",lang("Import File"));
+	$t->set_var("lang_import",lang("Import Contacts"));
 	$t->set_var("import_url",$phpgw->link("/addressbook/import.php"));
+	$t->set_var("lang_export",lang("Export Contacts"));
+	$t->set_var("export_url",$phpgw->link("/addressbook/export.php"));
 	$t->set_var("start",$start);
 	$t->set_var("sort",$sort);
 	$t->set_var("order",$order);
