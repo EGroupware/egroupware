@@ -1472,7 +1472,7 @@ class calendar extends calendar_
 			if(($this->printer_friendly == False) && ($this->check_perms(PHPGW_ACL_EDIT) == True))
 			{
 				$new_hour = intval(substr($dtime,0,strpos($dtime,':')));
-				if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12')
+				if ($phpgw_info['user']['preferences']['common']['timeformat'] == '12' && $i >= 12)
 				{
 					$new_hour += 12;
 				}
