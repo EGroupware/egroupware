@@ -1,136 +1,12 @@
 access	common	es	Acceso
-access type	common	es	Tipo Acceso
-account has been created	common	es	Cuenta creada
-account has been deleted	common	es	Cuenta borrada
-account has been updated	common	es	Cuenta actualizada
-account preferences	common	es	Preferencias de la Cuenta
-add	common	es	Agregar
-admin	common	es	Admin
-administration	common	es	Administración
-april	common	es	Abril
-are you sure you want to delete this entry ?	common	es	Seguro de querer borrar esta entrada ?
-august	common	es	Agosto
-cancel	common	es	Cancelar
-change	common	es	Cambiar
-charset	common	es	iso-8859-1
-clear	common	es	Clear
-clear form	common	es	Limpiar Formulario
-copy	common	es	Copiar
-create	common	es	Crear
-created by	common	es	Creado por
-current users	common	es	Usuarios conectados
-date	common	es	Fecha
-december	common	es	Diciembre
-delete	common	es	Borrar
-done	common	es	Hecho
-e-mail	common	es	E-Mail
-edit	common	es	Editar
-email	common	es	E-Mail
-entry has been deleted sucessfully	common	es	Entrada borrada exitosamente
-entry updated sucessfully	common	es	Entrada actualizada exitosamente
-error	common	es	Error
-exit	common	es	Salir
-february	common	es	Febrero
-filter	common	es	Filtro
-files	common	es	Archivos
-first name	common	es	Nombre
-friday	common	es	Viernes
-ftp	common	es	FTP
-global public	common	es	Global Publico
-group access	common	es	Grupo Acceso
-group has been added	common	es	Grupo agregado
-group has been deleted	common	es	Grupo borrado
-group has been updated	common	es	Grupo actualizado
-group public	common	es	Grupo Publico
-groups	common	es	Grupos
-help	common	es	Ayuda
-high	common	es	Alta
-home	common	es	Principal
-it has been more then x days since you changed your password	common	es	Han pasado mas de %1 dias desde que ud. cambio su contraseña
-january	common	es	Enero
-july	common	es	Julio
-june	common	es	Junio
-last name	common	es	Apellido
-last page	common	es	ultima pagina
-login	common	es	Login
-logout	common	es	Logout
-low	common	es	Baja
-march	common	es	Marzo
-may	common	es	Mayo
-medium	common	es	Media
-monday	common	es	Lunes
-name	common	es	Nombre
-new entry added sucessfully	common	es	Nueva entrada agregada exitosamente
-new phrase has been added	common	es	Nueva frase agregada
-next page	common	es	proxima pagina
-no	common	es	No
-none	common	es	Ninguno
-normal	common	es	Normal
-notes	common	es	Notas
-november	common	es	Noviembre
-october	common	es	Octubre
-ok	common	es	OK
-on *nix systems please type: x	common	es	es sistemas *nix por favor escriba: %1
-only yours	common	es	solamente los suyos
-password	common	es	Contraseña
-password has been updated	common	es	Contraseña actualizada
-permissions to the files/users directory	common	es	permisos a los archivos/directorios de usuario
-phpinfo	common	es	PhpInfo
-please x by hand	common	es	Por favor %1 manualmente
-powered by phpgroupware version x	common	es	Potenciado por <a href="http://www.phpgroupware.org">phpGroupWare</a> versión %1
-preferences	common	es	Preferencias
-previous page	common	es	pagina previa
-print	common	es	Imprimir
-priority	common	es	Prioridad
-private	common	es	Privado
-rename	common	es	Renombrar
-saturday	common	es	Sabado
-save	common	es	Salvar
-search	common	es	Buscar
-september	common	es	Setiembre
-session has been killed	common	es	Sesion terminada
-show all	common	es	mostrar todos
-showing x	common	es	Mostrando %1
-showing x - x of x	common	es	mostrando %1 - %2 de %3
-sorry, there was a problem proccesing your request.	common	es	Hubo un problema al procesar su pedido.
-submit	common	es	Enviar
-sunday	common	es	Domingo
-thursday	common	es	Jueves
-time	common	es	Hora
-to correct this error for the future you will need to properly set the	common	es	Para corregir este error para el futuro necesitara setear apropiadamente el
-total	common	es	Total
-tuesday	common	es	Martes
-updated	common	es	Actualizado
-url	common	es	URL
-users	common	es	usuarios
-view	common	es	Ver
-wednesday	common	es	Miercoles
-welcome	common	es	Pagina Principal
-which groups	common	es	Que grupos
-yes	common	es	Si
-you are required to change your password during your first login	common	es	Se requiere que cambie la contraseña durante su primer login.
-you have 1 new message!	common	es	Ud. tiene 1 nuevo mensaje!
-you have x new messages!	common	es	Ud. tiene %1 nuevos mensajes!
-your message as been sent	common	es	Su mensaje fue enviado
-your search returned 1 match	common	es	su busqueda retorno 1 coincidencia
-your search returned x matchs	common	es	su busqueda retorno %1 coincidencias
-your settings have been updated	common	es	Sus paramatros han sido actualizados
-bad login or password	login	es	Usuario y/o contraseña incorrecta.
-login	login	es	Login
-password	login	es	Contraseña
-phpgroupware login	login	es	Ingreso al Sistema de Groupware 
-sorry, your login has expired	login	es	Su login a caducado.
-use cookies	login	es	utilizar cookies
-username	login	es	Usuario
-you have been successfully logged out	login	es	Ud. se ha deslogueado exitosamente.
-your session could not be verified.	login	es	Su sesión no pudo ser verificada.
 access not permitted	common	es	Acceso no permitido
 acl	common	es	LCA
 active	common	es	Activo
 add	common	es	Agregar
 add category	common	es	Agregar Categoria
 add x category for	common	es	Agregar %1 categoria para
-admin	common	en	Admin
+add sub	common	es	Agregar sub
+admin	common	en	Admininstrador
 administration	common	es	Administracion
 afghanistan	common	es	AFGHANISTAN
 albania	common	es	ALBANIA
@@ -150,8 +26,10 @@ aruba	common	es	ARUBA
 august	common	es	Agosto
 australia	common	es	AUSTRALIA
 austria	common	es	AUSTRIA
+author	common	es	Autor
 autosave default category	common	es	Autograbar Categoria Predeterminada
 azerbaijan	common	es	AZERBAIJAN
+back	common	es	Volver
 bad login or password	login	es	Nombre de Usuario o Clave invalido
 bahamas	common	es	BAHAMAS
 bahrain	common	es	BAHRAIN
@@ -190,6 +68,7 @@ change	common	es	Cambiar
 charset	common	es	iso-8859-1
 chile	common	es	CHILE
 china	common	es	CHINA
+choose the category	common	es	Elija la categoria
 choose the parent category	common	es	Elija la categoria padre
 christmas island	common	es	CHRISTMAS ISLAND
 clear	common	es	Limpiar
@@ -208,6 +87,7 @@ created by	common	es	Creado por
 croatia	common	es	CROATIA
 cuba	common	es	CUBA
 currency	common	es	Cambio
+current	common	es	Actual
 current users	common	es	Usuarios Actuales
 cyprus	common	es	CYPRUS
 czech republic	common	es	CZECH REPUBLIC
@@ -218,6 +98,8 @@ default category	common	es	Categoria Predeterminada
 delete	common	es	Eliminar
 denmark	common	es	DENMARK
 description	common	es	Descripcion
+detail	common	es	Detalle
+details	common	es	Detalles
 disabled	common	es	Deshabilitado
 djibouti	common	es	DJIBOUTI
 do you also want to delete all subcategories ?	common	es	Desea Ud. eliminar todas las subcategorias ?
@@ -242,7 +124,7 @@ entry updated sucessfully	common	es	La entrada ha sido actualizada exitosamente
 equatorial guinea	common	es	EQUATORIAL GUINEA
 eritrea	common	es	ERITREA
 error	common	es	Error
-error creating x x directory	common	es	Error creando directorio %1%2 
+error creating x x directory	common	es	Error creando directorio %1%2
 error deleting x x directory	common	es	Error eliminando directorio %1%2
 error renaming x x directory	common	es	Error renombrando directorio %1%2
 estonia	common	es	ESTONIA
@@ -257,6 +139,7 @@ filter	common	es	Filtro
 finland	common	es	FINLAND
 first name	common	es	Primer Nombre
 firstname	common	es	PrimerNombre
+force selectbox	common	es	Forzar Caja de Seleccion
 france	common	es	FRANCE
 french guiana	common	es	FRENCH GUIANA
 french polynesia	common	es	FRENCH POLYNESIA
@@ -288,6 +171,8 @@ guyana	common	es	GUYANA
 haiti	common	es	HAITI
 heard island and mcdonald islands	common	es	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	es	Ayuda
+high	common	es	Alto
+highest	common	es	Mas alto
 holy see (vatican city state)	common	es	HOLY SEE (VATICAN CITY STATE)
 home	common	es	Inicio
 honduras	common	es	HONDURAS
@@ -316,6 +201,7 @@ korea, democratic peoples republic of	common	es	KOREA, DEMOCRATIC PEOPLES REPUBL
 korea, republic of	common	es	KOREA, REPUBLIC OF
 kuwait	common	es	KUWAIT
 kyrgyzstan	common	es	KYRGYZSTAN
+language	common	es	Idioma
 lao peoples democratic republic	common	es	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	es	Apellido
 lastname	common	es	Apellido
@@ -325,9 +211,12 @@ lesotho	common	es	LESOTHO
 liberia	common	es	LIBERIA
 libyan arab jamahiriya	common	es	LIBYAN ARAB JAMAHIRIYA
 liechtenstein	common	es	LIECHTENSTEIN
+list	common	es	Listar
 lithuania	common	es	LITHUANIA
 login	common	es	Ingresar
 logout	common	es	Salir
+low	common	es	Bajo
+lowest	common	es	Mas bajo
 luxembourg	common	es	LUXEMBOURG
 macau	common	es	MACAU
 macedonia, the former yugoslav republic of	common	es	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
@@ -378,17 +267,19 @@ no	common	es	No
 no subject	common	es	Sin Asunto
 none	common	es	Ninguno
 norfolk island	common	es	NORFOLK ISLAND
+normal	common	es	Normal
 northern mariana islands	common	es	NORTHERN MARIANA ISLANDS
 norway	common	es	NORWAY
 note	common	es	Nota
 notes	common	es	Notas
+notify window	common	es	Ventana de Notificacion
 november	common	es	Noviembre
-november	calendar	es	Noviembre
 october	common	es	Octubre
 ok	common	es	OK
 oman	common	es	OMAN
 only yours	common	es	solo los suyos
 open notify window	common	es	Abrir Ventana de Notificacion
+original	common	es	Original
 other	common	es	Otro
 overview	common	es	Resumen
 owner	common	es	Due&ntilde;o
@@ -410,7 +301,7 @@ please run setup to become current	common	es	Por favor ejecute el setup para act
 please set your preferences for this application	common	es	Por favor elija sus preferencias para esta aplicacion
 poland	common	es	POLAND
 portugal	common	es	PORTUGAL
-powered by phpgroupware version x	common	es	Demo provista por Servicio Tecnico
+powered by phpgroupware version x	common	es	Potenciado por phpgroupware version %1
 preferences	common	es	Preferencias
 print	common	es	Imprimir
 priority	common	es	Prioridad
@@ -436,6 +327,7 @@ saturday	common	es	Sabado
 saudi arabia	common	es	SAUDI ARABIA
 save	common	es	Grabar
 search	common	es	Buscar
+section	common	es	Seccion
 select category	common	es	Seleccionar Categoria
 senegal	common	es	SENEGAL
 september	common	es	Septiembre
@@ -500,12 +392,14 @@ united arab emirates	common	es	UNITED ARAB EMIRATES
 united kingdom	common	es	UNITED KINGDOM
 united states	common	es	UNITED STATES
 united states minor outlying islands	common	es	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	es	Desconociodo
 update	common	es	Actualizar
 url	common	es	URL
 uruguay	common	es	URUGUAY
 user	common	es	Usuario
 username	common	es	Nombre de Usuario
 users	common	es	usuarios
+users choice	common	es	A eleccion del usuario
 uzbekistan	common	es	UZBEKISTAN
 vanuatu	common	es	VANUATU
 venezuela	common	es	VENEZUELA
@@ -531,18 +425,3 @@ your settings have been updated	common	es	Sus preferencias fueron actualizadas
 yugoslavia	common	es	YUGOSLAVIA
 zambia	common	es	ZAMBIA
 zimbabwe	common	es	ZIMBABWE
-select one	common	es	Seleccionar Uno
-expires	common	es	Expira
-user data	common	es	Datos de los Usuarios
-email settings	common	es	Seteos del Email
-edit user account	common	es	Editar Cuenta de Usuario
-bookkeeping	common	es	Contabilidad
-info log	common	es	Info Log
-never	common	es	Nunca
-company directory	common	es	Directorio de la Organizacion
-registration	common	es	Registracion
-notify window	common	es	Ventana de Notificacion
-phpwebhostin	common	es	Manejo Avanzado de Archivos
-addressbook preferences	common	es	Preferencias de Libreta de Direcciones
-timetrack	common	es	Seguimiento del Tiempo
-timetrack	preferences	es	Seguimiento del Tiempo
