@@ -9,14 +9,14 @@ REL="HOME"
 TITLE="phpGroupWare Docs V0.05"
 HREF="book1.html"><LINK
 REL="UP"
-TITLE="Installation Steps"
+TITLE="Installing on Tested Systems"
 HREF="installing.html"><LINK
 REL="PREVIOUS"
 TITLE="Testing the install"
-HREF="x156.html"><LINK
+HREF="x109.html"><LINK
 REL="NEXT"
 TITLE="Trouble Shooting"
-HREF="troubleshoot.html"></HEAD
+HREF="trobleshooting.html"></HEAD
 ><BODY
 CLASS="SECT1"
 ><DIV
@@ -38,20 +38,20 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="x156.html"
+HREF="x109.html"
 >Prev</A
 ></TD
 ><TD
 WIDTH="80%"
 ALIGN="center"
 VALIGN="bottom"
->Chapter 7. Installation Steps</TD
+>Chapter 6. Installing on Tested Systems</TD
 ><TD
 WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="troubleshoot.html"
+HREF="trobleshooting.html"
 >Next</A
 ></TD
 ></TR
@@ -64,64 +64,68 @@ CLASS="SECT1"
 ><H1
 CLASS="SECT1"
 ><A
-NAME="AEN161"
+NAME="AEN114"
 >Installing additional applications</A
 ></H1
 ><P
->  		Once you have the core phpGroupWare install up and running,
-  		you may want to download and install additional applications.
-  	</P
+>		Once you have the core phpGroupWare install up and running,
+		you may want to download and install additional applications.
+	</P
 ><P
->  		You should consult any <TT
+>		You should consult any <TT
 CLASS="FILENAME"
 >README</TT
 > or <TT
 CLASS="FILENAME"
 >INSTALL</TT
 >
-  		files that come with the new application first, as most require you
-  		to create additional tables in the database, and add additional
-  		translation data to the lang table (typically a file called <TT
+		files that come with the new application first, as most require you
+		to create additional tables in the database, and add additional
+		translation data to the lang table (typically a file called <TT
 CLASS="FILENAME"
 >lang.sql</TT
 >)
-  	</P
+	</P
 ><P
->  		You install the new application within the phpGroupWare install tree by
-  		copying the application directory into the phpGroupWare install location,
-  		and enabling the application through the Administration page.
-  	</P
+>		You install the new application within the phpGroupWare install tree by
+		copying the application directory into the phpGroupWare install location,
+		and enabling the application through the Administration page.
+	</P
 ><P
->      For example, this is the process to install the
-  		Headlines application (see <A
+>		For example, this is the process to install the
+		Headlines application (see <A
 HREF="http://sourceforge.net/phpgwapps/"
 TARGET="_top"
->  		<I
+>		<I
 CLASS="CITETITLE"
 >http://sourceforge.net/phpgwapps/</I
 ></A
 > for
-  		more on this and other applications).
-  		<P
+		more on this and other applications).
+		<P
 ></P
 ><UL
 ><LI
 STYLE="list-style-type: disc"
 ><P
->Download the .tar.gz file for the application, or check out the source with cvs with
-          <P
-><B
-CLASS="COMMAND"
->export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'</B
-> <BR><B
-CLASS="COMMAND"
->cvs login   (just hit enter if prompted for a password)</B
-> <BR><B
-CLASS="COMMAND"
->cvs co headlines</B
-> <BR></P
->
-    		</P
+>Download the .tar.gz file for the application, or check out the source
+		with cvs with
+		<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="90%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>export CVSROOT=':pserver:anonymous@cvs.phpgroupware.sourceforge.net:/cvsroot/phpgwapps'
+cvs login   (just hit enter if prompted for a password)
+cvs co headlines
+		</PRE
+></TD
+></TR
+></TABLE
+></P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
@@ -130,13 +134,13 @@ STYLE="list-style-type: disc"
 CLASS="CLASSNAME"
 >headlines</TT
 > directory into your phpGroupWare
-    			install directory.</P
+			install directory.</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
 ><P
 >Log into phpGroupWare as an administrative user, and go to the Administration page.
-    			</P
+				</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
@@ -145,71 +149,70 @@ STYLE="list-style-type: disc"
 CLASS="CLASSNAME"
 >Applications</TT
 > link.
-    				</P
+				</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
 ><P
 >Click on add, and fill in the form.</P
 ><P
->    			<SPAN
+>			<SPAN
 CLASS="APPLICATION"
 >Application name</SPAN
 >
-    			should be identical to the name
-    			of the directory you moved into the phpGroupWare install, in this case use <TT
+			should be identical to the name
+			of the directory you moved into the phpGroupWare install, in this case use <TT
 CLASS="CLASSNAME"
 >headlines</TT
 >
-    		</P
+		</P
 ><P
->    			<SPAN
+>			<SPAN
 CLASS="APPLICATION"
 >Application Title</SPAN
 >
-    			is shown in the navigation bar and other places to refer to the
-    			new application. Enter <TT
+			is shown in the navigation bar and other places to refer to the
+			new application. Enter <TT
 CLASS="CLASSNAME"
 >Headlines</TT
 > for this example.
-    		</P
+		</P
 ><P
->    			<SPAN
+>			<SPAN
 CLASS="APPLICATION"
 >Enabled</SPAN
 >
-    			can be used to disable an application for all users temporially. You
-    			should normal check the box to enable the application.
-    		</P
+			can be used to disable an application for all users temporially. You
+			should normal check the box to enable the application.
+		</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
 ><P
 >Back in the Administration page, you need to enable the application for specific users
-    			or user groups by editing them, and checking the new <TT
+			or user groups by editing them, and checking the new <TT
 CLASS="CLASSNAME"
 >Headlines</TT
 > box that appears
-    			in the middle of the account editing page.</P
+			in the middle of the account editing page.</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
 ><P
 >Once you have added the Headlines app to your account, you should see a Headlines
-    			entry in the Administration and Preferences pages, and there should be an icon for
-    			the Headlines application in the navigation bar.</P
+			entry in the Administration and Preferences pages, and there should be an icon for
+			the Headlines application in the navigation bar.</P
 ></LI
 ><LI
 STYLE="list-style-type: disc"
 ><P
 >Once you enable a few of the Headlines sites through the Administration page link, you
-    			should see headlines grabbed from the sites you selected when you click on the Headlines
-  			  icon in the navigation bar.
-  			</P
+			should see headlines grabbed from the sites you selected when you click on the Headlines
+			icon in the navigation bar.</P
 ></LI
 ></UL
 >
-    </P
+		</P
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -226,7 +229,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="x156.html"
+HREF="x109.html"
 >Prev</A
 ></TD
 ><TD
@@ -242,7 +245,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="troubleshoot.html"
+HREF="trobleshooting.html"
 >Next</A
 ></TD
 ></TR

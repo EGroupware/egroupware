@@ -1,0 +1,16 @@
+<article id="devabout">
+	<title>About developers docs</title>
+
+	<simplesect>
+		<title>About this document</title>
+		<para></para>
+	</simplesect>
+	<simplesect>
+		<title>History</title>
+		<para>
+			This document was written by Dan Kuykendall.
+
+  			2000-09-25 documentation on lang(), codes, administration and preferences extension added by Steve Brown.
+		</para>
+	</simplesect>
+</article>

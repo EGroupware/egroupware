@@ -1,0 +1,436 @@
+<HTML
+><HEAD
+><TITLE
+>Installing your application</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="phpGroupWare Docs V0.05"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="Developers Documentation"
+HREF="p261.html"><LINK
+REL="PREVIOUS"
+TITLE="Guidelines"
+HREF="devguid.html"><LINK
+REL="NEXT"
+TITLE="Infrastructure"
+HREF="devinfra.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Docs V0.05</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="devguid.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="devinfra.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="DEVINSTALL"
+>Chapter 23. Installing your application</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN321"
+>Overview</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN324"
+>Automatic features</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN339"
+>Adding files, directories and icons.</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN343"
+>Making phpGroupWare aware of your application</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN347"
+>Hooking into Administration page</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN359"
+>section_start</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN366"
+>section_end</A
+></DT
+><DT
+><A
+HREF="devinstall.html#AEN370"
+>Hooking into Preferences page</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN321"
+>Overview</A
+></H4
+><P
+>It is fairly simple to add and delete applications to/from phpGroupWare.</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN324"
+>Automatic features</A
+></H4
+><P
+>			To make things easy for developers we go ahead and load the following files.
+  			<P
+></P
+><UL
+><LI
+><P
+> <TT
+CLASS="FILENAME"
+>appname/inc/functions.inc.php</TT
+> - This file should include
+					all your application specific functions.</P
+></LI
+><LI
+><P
+> <TT
+CLASS="FILENAME"
+>appname/inc/header.inc.php</TT
+> - This file is loaded by
+ 					<TT
+CLASS="CLASSNAME"
+>$phpgw-&#62;common-&#62;header</TT
+> just after the system header/navbar,
+ 					and allows developers to use it for whatever they need to load.</P
+></LI
+><LI
+><P
+> <TT
+CLASS="FILENAME"
+>appname/inc/footer.inc.php</TT
+> - This file is loaded by
+  					<TT
+CLASS="CLASSNAME"
+>$phpgw-&#62;common-&#62;footer</TT
+> just before the system footer,
+  					allowing developers to close connections and whatever else they need.</P
+></LI
+></UL
+>  			
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN339"
+>Adding files, directories and icons.</A
+></H4
+><P
+>			You will need to create the following directories for your code
+  			(replace 'appname' with your application name)
+  			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+> `-- appname
+      `-- images
+      |   `-- navbar.gif
+      `-- inc
+      |   |-- functions.inc.php
+      |   |-- header.inc.php
+      |   |-- footer.inc.php
+      |   |-- preferences.inc.php
+      |   `-- admin.inc.php
+      `-- templates
+          `-- default
+  			</PRE
+></TD
+></TR
+></TABLE
+>
+  		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN343"
+>Making phpGroupWare aware of your application</A
+></H4
+><P
+>			 To make the application aware of your application, add your application details to the applications table. This can be done via the GUI administration screen, or via a SQL script.
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>  insert into applications (app_name, app_title, app_enabled) values ('appname', 'The App name', 1);</PRE
+></TD
+></TR
+></TABLE
+>
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN347"
+>Hooking into Administration page</A
+></H4
+><P
+>			When a user goes to the Administration page, it stats appname/inc/admin.inc.php
+			for each application that is enabled, in alphabetical order of application title.
+			If the file exists, it is include()d in the hopes it will display a selection of
+			links to configure that application.
+
+			Simple Example:
+			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?php
+  $img = "/" . $appname . "/images/navbar.gif";
+  section_start("My Application",$img);
+  echo "&#60;a HREF=\"" . $phpgw-&#62;link("myAdminPage.php") . "\"&#62;";
+  echo lang("Change myApp settings") . "&#60;/a&#62;";
+  section_end();
+?&#62;
+			</PRE
+></TD
+></TR
+></TABLE
+>
+			Look at headlines/inc/admin.inc.php and admin/inc/admin.inc.php for more examples.
+
+			Things to note:
+			<P
+></P
+><UL
+><LI
+STYLE="list-style-type: disc"
+><P
+>Links are relative to the <TT
+CLASS="FILENAME"
+>admin/index.php</TT
+> file, not your
+				 application's base directory. (so use <TT
+CLASS="CLASSNAME"
+>$appname</TT
+> in your
+				 <TT
+CLASS="CLASSNAME"
+>link()</TT
+> calls)</P
+></LI
+><LI
+STYLE="list-style-type: disc"
+><P
+>The file is brought in with include() so be careful to not pollute the name-space
+				too much</P
+></LI
+></UL
+>
+			The standard $phpgw and $phpgw_info variables are in-scope, as is $appname
+			which corresponds to the application name in the path.
+
+			There are 2 functions to coordinate the display of each application's links,
+			section_start() and section_end()
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN359"
+>section_start</A
+></H4
+><P
+>			<TT
+CLASS="CLASSNAME"
+>section_start($title,$icon_url)</TT
+>
+			starts the section for your application. <TT
+CLASS="CLASSNAME"
+>$title</TT
+> is passed through
+			<TT
+CLASS="CLASSNAME"
+>lang()</TT
+>
+			for you. <TT
+CLASS="CLASSNAME"
+>$icon_url</TT
+> should be page-relative to admin/index.php or
+			an absolute URL.
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN366"
+>section_end</A
+></H4
+><P
+>			<TT
+CLASS="CLASSNAME"
+>section_end()</TT
+> closes the section that was started with section_start().
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN370"
+>Hooking into Preferences page</A
+></H4
+><P
+>			The mechanism to hook into the preferences page is identical to the one used to
+			hook into the administration page, however it looks for
+			<TT
+CLASS="FILENAME"
+>appname/inc/preferences.inc.php</TT
+> instead of
+			<TT
+CLASS="FILENAME"
+>appname/inc/admin.inc.php</TT
+>. The same functions and variables are defined.
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="devguid.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="devinfra.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Guidelines</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="p261.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Infrastructure</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

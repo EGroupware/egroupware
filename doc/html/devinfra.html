@@ -1,0 +1,295 @@
+<HTML
+><HEAD
+><TITLE
+>Infrastructure</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
+REL="HOME"
+TITLE="phpGroupWare Docs V0.05"
+HREF="book1.html"><LINK
+REL="UP"
+TITLE="Developers Documentation"
+HREF="p261.html"><LINK
+REL="PREVIOUS"
+TITLE="Installing your application"
+HREF="devinstall.html"><LINK
+REL="NEXT"
+TITLE="The API"
+HREF="devapi.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare Docs V0.05</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="devinstall.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="devapi.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="DEVINFRA"
+>Chapter 24. Infrastructure</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="devinfra.html#AEN377"
+>Overview</A
+></DT
+><DT
+><A
+HREF="devinfra.html#AEN380"
+>Directory tree</A
+></DT
+><DT
+><A
+HREF="devinfra.html#AEN384"
+>Translations</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN377"
+>Overview</A
+></H4
+><P
+>			phpGroupWare attempts to provide developers with a sound directory
+			structure to work from. The directory layout may seem complex at first,
+			but after some use, you will see that it is designed to accommodate a
+			large number of applications and functions.
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN380"
+>Directory tree</A
+></H4
+><P
+>			<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>.-- addressbook
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- admin
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   |-- footer.inc.php
+|   |   `-- admin.inc.php
+|   `-- templates
+|       `-- default
+|-- calendar
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   `-- footer.inc.php
+|   `-- templates
+|       `-- default
+|-- cron
+|-- doc
+|-- email
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   |-- footer.inc.php
+|   |   |-- preferences.inc.php
+|   |   `-- admin.inc.php
+|   `-- templates
+|       `-- default
+|-- filemanager
+|-- files
+|   |-- groups
+|   `-- users
+|-- inc
+|   |-- phpgwapi
+|   |   |-- phpgw.inc.php
+|   |   |-- phpgw_info.inc.php
+|   |   |-- phpgw_common.inc.php
+|   |   `-- etc...
+|   `-- templates
+|       |-- default
+|       |   |-- addressbook
+|       |   |-- admin
+|       |   |-- calendar
+|       |   |-- common
+|       |   |-- email
+|       |   |-- filemanager
+|       |   |-- headlines
+|       |   |-- preferences
+|       |   |-- todo
+|       |   `-- tts
+|       `-- icons
+|           |-- email
+|           |-- calendar
+|           `-- tts
+|-- preferences
+|   `-- images
+|   |   `-- navbar.gif
+|   `-- inc
+|   |   |-- functions.inc.php
+|   |   |-- header.inc.php
+|   |   |-- footer.inc.php
+|   |   `-- preferences.inc.php
+|   `-- templates
+|       `-- default
+|-- themes
+`-- todo
+    `-- images
+    |   `-- navbar.gif
+    `-- inc
+    |   |-- functions.inc.php
+    |   |-- header.inc.php
+    |   `-- footer.inc.php
+    `-- templates
+        `-- default
+			</PRE
+></TD
+></TR
+></TABLE
+>
+		</P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H4
+CLASS="SIMPLESECT"
+><A
+NAME="AEN384"
+>Translations</A
+></H4
+><P
+>			The translations are now being done thru the database, and will be configurable
+			to use other mechanisms.We are completing a program called Transy, which will
+			provide developers/translators a nice GUI for building and updating translations.
+			In the mean time you will need to create a SQL script yourself and name it lang.sql.
+			You can copy the one in doc/lang.sql and use it as a template.
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="devinstall.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="devapi.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Installing your application</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="p261.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The API</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

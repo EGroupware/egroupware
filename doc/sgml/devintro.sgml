@@ -1,0 +1,29 @@
+<chapter id="devintro">
+	<title>Introduction</title>
+	<para>
+		phpGroupWare is a web based groupware application framework (API),
+		for writing applications. Integrated applications such as email,
+		calendar, todo list, address book, and file manager are included.
+        </para>
+
+        <simplesect>
+        	<title>Overview of application writing</title>
+        	<para>
+        		We have attempted to make writing application for phpGroupWare as
+        		painless as possible. We hope any pain and suffering is cause by making
+        		your application work, but not dealing with phpGroupWare itself.
+        	</para>
+        </simplesect>
+        <simplesect>
+        	<title>What does the phpGroupWare API provide?</title>
+        	<para>
+        		The phpGroupWare API handles session management, user/group management,
+        		has support for multiple databases, using the PHPLIB database abstraction
+        		method, we support templates using the PHPLIB Templates class, a file
+        		system interface, and even a network i/o interface. On top of these
+        		standard functions, phpGroupWare provides several functions to give
+        		you the information you need about the users environment, and to properly
+        		plug into phpGroupWare.
+        	</para>
+        </simplesect>
+</chapter>

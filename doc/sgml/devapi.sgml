@@ -1,0 +1,192 @@
+<chapter id="devapi">
+	<title>The API</title>
+	
+	<sect1>
+		<title>Introduction</title>
+		<para>
+  			phpGroupWare attempts to provide developers with a useful API to handle common tasks.
+  	        </para>
+   		<para>
+   			To do this we have created a multi-dimensional class $phpgw->.
+   		</para>
+   		<para>
+   			This allows for terrific code organization, and help developers easily identify
+  			the file that the function is in. All the files that are part of this class are in the
+  			<filename>inc/core</filename> directory
+  			and are named to match the sub-class.
+  		</para>
+  		<para>
+  			 Example:<classname>$phpgw->send->msg()</classname> is in the
+  			 	<filename>inc/phpgwapi/phpgw_send.inc.php</filename> file.
+  		</para>
+	</sect1>
+	<sect1>
+		<title>Basic functions</title>
+		<para></para>
+	
+		<sect2>
+			<title>$phpgw->link</title>
+			<para>
+				<classname>$phpgw->link($url)</classname>
+			</para>
+			<para>
+				Add support for session management. ALL links must use this, that includes href's form actions and header location's.
+				If you are just doing a form action back to the same page, you can use it without any parameters.
+				This function is right at the core of the class because it is used so often, we wanted to save developers a few keystrokes.
+				Example:
+				<programlisting>
+&lt;form name=copy method=post action="&lt;?php echo $phpgw-&gt;link();?&gt;"&gt;
+/* If session management is done via passing url parameters */
+/* The the result would be */
+/* &lt;form name=copy method=post action="somepage.php?sessionid=87687693276?kp3=kjh98u80"&gt; */
+				</programlisting>
+			</para>
+		</sect2>
+	</sect1>
+	<sect1>
+		<title>Application Functions</title>
+		<para></para>
+			
+		<sect2>
+			<title>$phpgw->common->phpgw_header</title>
+			<para>
+				<classname>$phpgw->phpgw_header()</classname>
+			</para>
+			<para>
+				Print out the start of the HTML page, including the navigation bar
+				and includes <filename>appname/inc/header.php</filename>
+			</para>
+		</sect2>
+		<sect2>
+			<title>$phpgw->common->phpgw_footer</title>
+			<para><classname>$phpgw->phpgw_footer()</classname></para>
+			<para>
+				Prints the system footer, and includes <filename>appname/inc/footer.php</filename>
+			</para>
+		</sect2>
+		<sect2>
+			<title>$phpgw->common->appsession</title>
+			<para><classname>$phpgw->common->appsession($data)</classname></para>
+			<para>
+				Store important information session information that your
+				application needs.
+			</para>
+		        <para>
+		        	<classname>$phpgw->appsession</classname> will return the value of your session data is
+		        	you leave the parameter empty [i.e. <classname>$phpgw->appsession("")</classname>], otherwise
+		        	it will store whatever data you send to it.
+		        </para>
+			<para>
+				You can also store a comma delimited string and use <classname>explode()</classname>
+				to turn it back into an array when you receive the value back.
+			</para>
+			<para>
+				Example:
+<programlisting>
+  $phpgw->common->appsession("/path/to/something");
+  echo "Dir: " . $phpgw->common->appsession();
+</programlisting>
+			</para>
+		</sect2>
+	</sect1>
+
+
+	<sect1>
+		<title>File functions</title>
+		<para></para>
+		
+		<sect2>
+			<title>$phpgw->vfs->read_file</title>
+			<para>
+				<classname>$phpgw->vfs->read_file($file)</classname> Returns the data from
+				<classname>$file</classname>.
+				You must send the complete path to the file.
+			</para>
+			<para>
+			Example:
+<programlisting>
+$data = $phpgw->vfs->read_file("/some/dir/to/file.txt");
+</programlisting>
+			</para>
+		</sect2>
+  		<sect2>
+  			<title>$phpgw->vfs->write_file</title>
+			<para>
+				<classname>$phpgw->vfs->write_file($file, $contents)</classname>
+				Write data to <classname>$file</classname>.
+				You must send the complete path to the file.
+			</para>
+			<para>
+				Example:
+<programlisting>
+$data = $phpgw->vfs->write_file("/some/dir/to/file.txt");
+</programlisting>
+			</para>
+		</sect2>
+
+		<sect2>
+			<title>$phpgw->vfs->read_userfile</title>
+			<para>
+				<classname>$phpgw->vfs->read_userfile($file)</classname>
+				Returns the data from <classname>$file</classname>, which resides
+				in the users private dir.
+			</para>
+			<para>
+			Example:
+<programlisting>
+$data = $phpgw->vfs->read_userfile("file.txt");
+</programlisting>
+			</para>
+                </sect2>
+		<sect2>
+			<title>$phpgw->vfs->write_userfile</title>
+			<para>
+				<classname>$phpgw->write_userfile($file, $contents)</classname>
+				Writes data to <classname>$file</classname>, which resides in the
+				users private dir.
+			</para>
+			<para>
+			Example:
+<programlisting>
+$data = $phpgw->vfs->write_userfile("file.txt");
+</programlisting>
+			</para>
+		</sect2>
+		<sect2>
+			<title>$phpgw->vfs->list_userfiles</title>
+			<para>
+				<classname>$phpgw->vfs->list_userfiles()</classname>
+				Returns an array which has the list of files in the users private dir.
+			</para>
+			<para>
+			Example:
+<programlisting>
+$filelist = array();
+$filelist = $phpgw->vfs->list_userfiles();
+</programlisting>
+			</para>
+		</sect2>
+	</sect1>
+
+	<sect1>
+		<title>Email/NNTP Functions</title>
+		<para></para>
+		
+		<sect2>
+			<title>$phpgw->send->msg</title>
+			<para>
+				<classname>$phpgw->msg->send($service, $to, $subject, $body, $msgtype, $cc, $bcc)</classname>
+				Send a message via email or NNTP and returns any error codes.
+			</para>
+			<para>
+				Example:
+<programlisting>
+$to = "someuser@domain.com";
+$subject = "Hello buddy";
+$body = "Give me a call\n Been wondering what your up to.";
+$errors = $phpgw->msg->send("email", $to, $subject, $body);
+</programlisting>
+			</para>
+		</sect2>
+	</sect1>
+</chapter>

@@ -1,0 +1,162 @@
+<chapter id="devlangsup">
+	<title>Using Language Support</title>
+	
+	<simplesect>
+		<title>Overview</title>
+		<para>
+			phpGroupWare is built using a multi-language support scheme. This means the pages can be
+			translated to other languages very easily. Translations of text strings are
+			stored in the phpGroupWare database, and can be modified by the phpGroupWare
+			administrator.
+		</para>
+	</simplesect>
+	<simplesect>
+		<title>How to use lang support</title>
+		<para>
+			The  <classname>lang()</classname> function is your application's interface to phpGroupWare's
+			internationalization support.
+
+  			While developing your application, just wrap all your text output with calls to
+  			lang(), as in the following code:
+<programlisting>
+  $x = 42;
+  echo lang("The counter is %1",$x)."&lt;br&gt;";
+</programlisting>
+  			This will attempt to translate "The counter is %1", and return a translated version
+  			based on the current application and language in use. Note how the position that
+   			<classname>$x</classname> will end up is controlled by the format string, <emphasis>not</emphasis> by
+  			building up the string in your code. This allows your application to be translated
+  			to languages where the actual number is not placed at the end of the string.
+
+  			When a translation is not found, the original text will be returned with a * after
+  			the string.  This makes it easy to develop your application, then go back and
+  			add missing translations (identified by the *) later.
+
+			  Without a specific translation in the lang table, the above code will print:
+<classname>
+The counter is 42*&lt;br&gt;
+</classname>
+If the current user speaks Italian, they string returned may instead be:
+<classname>
+il contatore è 42&lt;br&gt;
+</classname>
+		</para>
+	</simplesect>
+	<simplesect>
+		<title>The lang function</title>
+		<para>
+ 			<classname>lang($key, $m1="", $m2="", $m3="", $m4="", $m5="",
+        				$m6="", $m7="", $m8="", $m9="", $m10="")
+  			</classname>
+  			<variablelist>
+        			<varlistentry>
+               				<term>$key</term>
+               				<listitem>
+               					 <para>is the string to translate and may contain replacement directives of the form  <classname>%n</classname>. </para>
+               				</listitem>
+        			</varlistentry>
+        			<varlistentry>
+            				<term>$m1</term>
+               				<listitem>
+        					 <para> is the first replacement value or may be an array of replacement values (in which case $m2 and above are ignored). </para>
+                			</listitem>
+               			</varlistentry>
+               			<varlistentry>
+               				<term>$m2</term>
+               				<listitem>
+               					 <para>- $m10/ the 2nd through 10th replacement values if $m1 is not an array. </para>
+               				</listitem>
+               			</varlistentry>
+            		</variablelist>
+			The database is searched for rows with a  <classname>lang.message_id</classname> that matches  <classname>$key</classname>.
+			If a translation is not found, the original  <classname>$key</classname> is used. The translation engine then replaces
+			all tokens of the form  <classname>%N</classname> with the Nth parameter (either  <classname>$m1[N]</classname> or  <classname>$mN</classname>).
+		</para>
+	</simplesect>
+	<simplesect>
+		<title>Adding translation data</title>
+		<para>
+			An application called <emphasis>Transy</emphasis> is being developed to make this easier, until then you can create
+			the translation data manually.
+		</para>
+	</simplesect>
+	<simplesect>
+		<title>The lang table</title>
+		<para>
+			The translation class uses the lang table for all translations.
+			We are concerned with 4 of the columns to create a translation:
+			<variablelist>
+				<varlistentry>
+					<term>message_id</term>
+					<listitem>
+						 <para>
+							The key to identify the message (the  <classname>$key</classname> passed
+							to the  <classname>lang()</classname> function). This is written in English.
+						 </para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>	
+					<term>app_name</term>
+					<listitem>
+						 <para>
+							The application the translation applies to, or
+							<classname>common</classname> if it is common across multiple applications.
+						 </para>
+					</listitem>
+				</varlistentry>
+		                <varlistentry>
+		                       	<term>lang</term>
+		                       	<listitem>
+		                       		 <para>The code for the language the translation is in. </para>
+		                       	</listitem>
+		                </varlistentry>		
+				<varlistentry>
+					<term>content</term>
+					<listitem>
+						 <para>The translated string. </para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</para>
+	</simplesect>
+	<simplesect>	
+		<title>lang.sql</title>
+		<para>
+			Currently all applications, and the core phpGroupWare source tree
+			have a  <classname>lang.sql</classname> file. This is the place to add translation
+			data. Just add lines of the form:
+<programlisting>
+REPLACE INTO lang (message_id, app_name, lang, content)
+VALUES( 'account has been deleted','common','en','Account has been deleted');
+</programlisting>
+			translating the  <classname>content</classname> to reflect the  <classname>message_id</classname> string in the  <classname>lang</classname> language.
+			If the string is specific to your application, put your application name in for  <classname>app_name</classname>
+			otherwise use the name  <classname>common</classname>. The  <classname>message_id</classname> should be in lower case for a small
+			increase in speed.
+		</para>
+        </simplesect>
+	<simplesect>
+		<title>Common return codes</title>
+		<para>
+			If you browse through the phpGroupWare sources, you may notice
+			a pattern to the return codes used in the higher-level functions.
+			The codes used are partially documented in the  <classname>doc/developers/CODES</classname>
+			file.
+	
+			Codes are used as a simple way to communicate common error and progress
+			conditions back to the user. They are mapped to a text string through the
+			<classname>check_code()</classname> function, which passes the strings through
+			<classname>lang()</classname> before returning.
+
+			For example, calling
+<programlisting>
+echo check_code(13);
+</programlisting>
+			Would print
+<classname>
+Your message has been sent
+</classname>
+			translated into the current language.
+		</para>
+  	</simplesect>
+</chapter>

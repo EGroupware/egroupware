@@ -1,21 +1,24 @@
 <HTML
 ><HEAD
 ><TITLE
->Developers Documentation</TITLE
+>Email/NNTP Functions</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.52"><LINK
 REL="HOME"
 TITLE="phpGroupWare Docs V0.05"
 HREF="book1.html"><LINK
+REL="UP"
+TITLE="The API"
+HREF="devapi.html"><LINK
 REL="PREVIOUS"
-TITLE="Updating"
-HREF="updata.html"><LINK
+TITLE="File functions"
+HREF="x434.html"><LINK
 REL="NEXT"
-TITLE="Developing Add-On Apps"
-HREF="devaddapp.html"></HEAD
+TITLE="Configuration Variables"
+HREF="devconfvar.html"></HEAD
 ><BODY
-CLASS="PART"
+CLASS="SECT1"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
@@ -35,20 +38,20 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="updata.html"
+HREF="x434.html"
 >Prev</A
 ></TD
 ><TD
 WIDTH="80%"
 ALIGN="center"
 VALIGN="bottom"
-></TD
+>Chapter 25. The API</TD
 ><TD
 WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="devaddapp.html"
+HREF="devconfvar.html"
 >Next</A
 ></TD
 ></TR
@@ -57,45 +60,49 @@ HREF="devaddapp.html"
 ALIGN="LEFT"
 WIDTH="100%"></DIV
 ><DIV
-CLASS="PART"
-><A
-NAME="AEN312"
-></A
-><DIV
-CLASS="TITLEPAGE"
+CLASS="SECT1"
 ><H1
-CLASS="TITLE"
->V. Developers Documentation</H1
-><DIV
-CLASS="PARTINTRO"
+CLASS="SECT1"
 ><A
-NAME="AEN314"
-></A
+NAME="AEN471"
+>Email/NNTP Functions</A
+></H1
 ><P
->		This documentation is for developers who want to hack into the core of the
-		phpGroupWare.  Please follow this documentation carefully before u take a jump into
-		the code :)
-	</P
-></DIV
+></P
 ><DIV
-CLASS="TOC"
-><DL
-><DT
-><B
->Table of Contents</B
-></DT
-><DT
->22. <A
-HREF="devaddapp.html"
->Developing Add-On Apps</A
-></DT
-><DT
->23. <A
-HREF="apidocs.html"
->API documentation</A
-></DT
-></DL
-></DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN474"
+>$phpgw-&#62;send-&#62;msg</A
+></H2
+><P
+>				<TT
+CLASS="CLASSNAME"
+>$phpgw-&#62;msg-&#62;send($service, $to, $subject, $body, $msgtype, $cc, $bcc)</TT
+>
+				Send a message via email or NNTP and returns any error codes.
+			</P
+><P
+>				Example:
+<TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>$to = "someuser@domain.com";
+$subject = "Hello buddy";
+$body = "Give me a call\n Been wondering what your up to.";
+$errors = $phpgw-&#62;msg-&#62;send("email", $to, $subject, $body);</PRE
+></TD
+></TR
+></TABLE
+>
+			</P
 ></DIV
 ></DIV
 ><DIV
@@ -113,7 +120,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="updata.html"
+HREF="x434.html"
 >Prev</A
 ></TD
 ><TD
@@ -129,7 +136,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="devaddapp.html"
+HREF="devconfvar.html"
 >Next</A
 ></TD
 ></TR
@@ -138,17 +145,20 @@ HREF="devaddapp.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Updating</TD
+>File functions</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
 VALIGN="top"
->&nbsp;</TD
+><A
+HREF="devapi.html"
+>Up</A
+></TD
 ><TD
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Developing Add-On Apps</TD
+>Configuration Variables</TD
 ></TR
 ></TABLE
 ></DIV

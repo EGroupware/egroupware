@@ -1,0 +1,19 @@
+<chapter id="devtemp">
+	<title>Using Templates</title>
+	
+	<simplesect>
+		<title>Overview</title>
+		<para>
+			phpGroupWare is built using a templates based design. This means the display pages, stored in tpl files, can be translated to other languages, made to look completely different.
+		</para>
+	</simplesect>
+	<simplesect>
+		<title>How to use templates</title>
+		<para>
+			Some instructions on using templates.
+		</para>
+		<para>
+  			For Further info read the PHPLIBs documentation for their template class.
+		</para>
+	</simplesect>
+</chapter>
