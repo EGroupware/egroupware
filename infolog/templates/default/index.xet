@@ -67,6 +67,10 @@
 
 		</styles>
 	</grid>
+	<grid id="infolog.index.rows,1" template="" lang="" group="0" version="">
+		<columns/>
+		<rows/>
+	</grid>
 	<grid id="infolog.index" template="" lang="" group="" version="0.9.15.003" width="100%" border="0" spacing="0" padding="0">
 		<columns>
 			<column width="95%"/>
@@ -90,7 +94,7 @@
 				<grid content="main" span="all" id="infolog.index.rows"/>
 			</row>
 			<row>
-				<nextmatch options="infolog.index.rows" span="all" id="nm"/>
+				<nextmatch options="infolog.index.rows,1" span="all" id="nm"/>
 			</row>
 			<row>
 				<hbox span="all">

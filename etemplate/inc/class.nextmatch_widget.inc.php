@@ -34,59 +34,78 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			//echo "<p>nextmatch_widget.pre_process: value = "; _debug_array($value);
-			// save values in persistent extension_data to be able use it in post_process
-			//$extension_data = $value;
 
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			$obj = CreateObject($app.'.'.$class);
 			if (!is_object($obj))
 			{
 				echo "<p>nextmatch_widget::pre_process($name): '$value[get_rows]' is no valid method !!!</p>\n";
-				return;
+				//return;
 			}
-			$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+			else
+			{
+				$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+			}
 			if ($value['start'] > $total)
 			{
 				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
-			if ($cell['size'])	// template name can be supplied either in $value['template'] or the options-field
+			list($template,$options) = explode(',',$cell['size']);
+			if ($template)	// template name can be supplied either in $value['template'] or the options-field
 			{
-				$value['template'] = $cell['size'];
+				$value['template'] = $template;
 			}
 			if (!is_object($value['template']))
 			{
 				$value['template'] = new etemplate($value['template'],$tmpl->as_array());
 			}
-			$nextmatch = new etemplate('etemplate.nextmatch_widget');
-
-			if ($value['no_cat'])
+			if ($total < 1)
 			{
-				$nextmatch->disable_cells('cat_id');
+				$value['template']->data[0]['h2'] = ',1';	// disable the data row
 			}
-			if ($value['no_filter'])
-			{
-				$nextmatch->disable_cells('filter');
-			}
-			if ($value['no_filter2'])
-			{
-				$nextmatch->disable_cells('filter2');
-			}
-			$start = $value['start'];
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-			$end   = $start+$max > $total ? $total : $start+$max;
-			$value['range'] = (1+$start) . ' - ' . $end;
-			$nextmatch->set_cell_attribute('first','readonly',$start <= 0);
-			$nextmatch->set_cell_attribute('left', 'readonly',$start <= 0);
-			$nextmatch->set_cell_attribute('right','readonly',$start+$max >= $total);
-			$nextmatch->set_cell_attribute('last', 'readonly',$start+$max >= $total);
+			if ($total <= $max && $options && $value['search'] == '' &&
+				 ($value['no_cat'] || !$value['cat_id']) &&
+				 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
+				 ($value['no_filter2'] || !$value['filter2'] || $value['filter2'] == 'none'))
+			{											// disable whole nextmatch line if no scrolling necessary
+				$cell['size'] = $cell['name'].'[rows]';
+				$cell['obj'] = &$value['template'];
+				$cell['name'] = $value['template']->name;
+			}
+			else
+			{
+				$nextmatch = new etemplate('etemplate.nextmatch_widget');
 
+				if ($value['no_cat'])
+				{
+					$nextmatch->disable_cells('cat_id');
+				}
+				if ($value['no_filter'])
+				{
+					$nextmatch->disable_cells('filter');
+				}
+				if ($value['no_filter2'])
+				{
+					$nextmatch->disable_cells('filter2');
+				}
+				$start = $value['start'];
+				$end   = $start+$max > $total ? $total : $start+$max;
+				$value['range'] = $total ? (1+$start) . ' - ' . $end : '0';
+				$nextmatch->set_cell_attribute('first','readonly',$start <= 0);
+				$nextmatch->set_cell_attribute('left', 'readonly',$start <= 0);
+				$nextmatch->set_cell_attribute('right','readonly',$start+$max >= $total);
+				$nextmatch->set_cell_attribute('last', 'readonly',$start+$max >= $total);
+
+				$cell['size'] = $cell['name'];
+				$cell['obj'] = &$nextmatch;
+				$cell['name'] = $nextmatch->name;
+			}
 			$cell['type'] = 'template';
-			$cell['size'] = $cell['name'];
-			$cell['obj'] = &$nextmatch;
-			$cell['name'] = $nextmatch->name;
 			$cell['label'] = $cell['help'] = '';
 
+			// save values in persistent extension_data to be able use it in post_process
 			$extension_data = $value;
 
 			return False;	// NO extra Label
@@ -97,17 +116,16 @@
 			//echo "<p>nextmatch_widget.post_process: value = "; _debug_array($value);
 			$old_value = $extension_data;
 
-			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
-
 			$loop = False;
-			if ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
+			if (is_array($value) && ($value['start_search'] || $value['cat_id'] != $old_value['cat_id'] ||
 			    $old_value['filter'] != '' && $value['filter'] != $old_value['filter'] ||
-			    $old_value['filter2'] != '' && $value['filter2'] != $old_value['filter2'])
+			    $old_value['filter2'] != '' && $value['filter2'] != $old_value['filter2']))
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
-				//_debug_array($old_value);
+				//echo "value ="; _debug_array($value);
+				//echo "old_value ="; _debug_array($old_value);
 				$loop = True;
 			}
 			elseif ($value['first'])
@@ -130,6 +148,8 @@
 				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
 				$loop = True;
 			}
+			$value['start'] = $old_value['start'];	// need to be set, to be reported back
+			
 			return True;
 		}
 	}

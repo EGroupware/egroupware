@@ -108,7 +108,12 @@
 		function get_rows($query,&$rows,&$readonlys)
 		{
 			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]')</p>\n";
-
+			$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
+				'search' => $query['search'],
+				'start'  => $query['start'],
+				'filter' => $query['filter'],
+				'cat_id' => $query['cat_id']
+			));
 			$ids = $this->bo->search($query['order'],$query['sort'],$query['filter'],$query['cat_id'],
 				$query['search'],$query['action'],$query['action_id'],$query['ordermethod'],
 				$query['start'],$total);
@@ -140,9 +145,12 @@
 			}
 			else
 			{
-				$data = $values['nm'];
-				unset($data['rows']);
-				$GLOBALS['phpgw']->session->appsession('session_data','infolog',$data);
+				$GLOBALS['phpgw']->session->appsession('session_data','infolog',array(
+					'search' => $values['nm']['search'],
+					'start'  => $values['nm']['start'],
+					'filter' => $values['nm']['filter'],
+					'cat_id' => $values['nm']['cat_id']
+				));
 			}
 			$action = $action ? $action : $values['action'];
 			$action_id = $action_id ? $action_id : $values['action_id'];
@@ -159,7 +167,7 @@
 				{
 					list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 					list($do_id) = @each($do_id);
-					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
+					echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
 					switch($do)
 					{
 						case 'edit':
