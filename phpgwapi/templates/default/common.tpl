@@ -11,7 +11,7 @@
 <!-- END msgbox_start -->
 
 <!-- BEGIN msgbox_row -->
-<TR><TD bgcolor="{msgbox_row_color}"><img src="{msgbox_img}" ALT="{msgbox_img_alt}"> {msgbox_text}</TD></TR>
+<TR><TD bgcolor="white"><img src="{msgbox_img}" ALT="{msgbox_img_alt}"> {msgbox_text}</TD></TR>
 <!-- END msgbox_row -->
 
 <!-- BEGIN msgbox_end -->
