@@ -336,7 +336,7 @@ class uiviews extends uical
 	{
 		// Get Owner/Participants
 		$_session_data = $GLOBALS['phpgw']->session->appsession("session_data", "calendar");
-		$participants = str_replace(",", ";", $_session_data["owner"]);
+		$participants = $_session_data["owner"];
 		unset($_session_data);
 
 		if ($this->debug > 1 || $this->debug==='timeGridWidget') $this->bo->debug_message('uiviews::timeGridWidget(events=%1,width=%2,granularity_m=%3,px_m=%4,)',True,$daysEvents,$width,$granularity_m,$px_m);

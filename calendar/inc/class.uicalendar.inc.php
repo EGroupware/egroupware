@@ -1302,9 +1302,21 @@
 				// Construct Participants stack
 				$_stack_participants = $GLOBALS['phpgw']->session->appsession("participants");
 				if($matrix_mode == 1) // You come from matrix, ok
-					$_stack_participants .= ";" . $GLOBALS['phpgw']->session->appsession("participants_matrix");
+				{
+					// protection
+					if($_stack_participants)
+						$_stack_participants .= ";";
+
+					$_stack_participants .= $GLOBALS['phpgw']->session->appsession("participants_matrix");
+				}
 				if( get_var('owner',array('GET'),FALSE) )
-					$_stack_participants .= ";" . str_replace(",", ";", get_var('owner', array('GET'), FALSE));
+				{
+					// protection
+					if($_stack_participants)
+						$_stack_participants .= ";";
+
+					$_stack_participants .= str_replace(",", ";", get_var('owner', array('GET'), FALSE));
+				}
 				
 				// Read each participant
 				foreach(explode(";", $_stack_participants) as $part)
