@@ -8,12 +8,12 @@
 <META NAME="description" CONTENT="phpGroupWare">
 <META NAME="keywords" CONTENT="phpGroupWare">
 <STYLE type="text/css">
-  a {text-decoration:none;}
+  a { text-decoration:none; }
   <!--
-    A:link{text-decoration:none}
-    A:visted{text-decoration:none}
-    A:active{text-decoration:none}
-    body { margin-top: 0px; margin-right: 0px; margin-left: 0px}
+    A:link{ text-decoration:none }
+    A:visted{ text-decoration:none }
+    A:active{ text-decoration:none }
+    body { margin-top: 0px; margin-right: 0px; margin-left: 0px }
     .tablink { color: #000000; }
   -->
 </STYLE>
