@@ -55,10 +55,11 @@
 		function add($status,$record_id,$new_value)
 		{
 			$this->db->query("insert into phpgw_history_log (history_record_id,"
-				. "history_appname,history_owner,history_status,history_new_value) "
+				. "history_appname,history_owner,history_status,history_new_value,history_timestamp) "
 				. "values ('$record_id','" . $this->appname . "','"
 				. $GLOBALS['phpgw_info']['user']['account_id'] . "','$status','"
-				. addslashes($new_value) . "')",__LINE__,__FILE__);
+				. addslashes($new_value) . "','" . $this->db->to_timestamp(time())
+				. "')",__LINE__,__FILE__);
 		}
 
 		// array $filter_out
