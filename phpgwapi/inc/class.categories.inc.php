@@ -37,8 +37,25 @@
      }
 
      // Return into a select box, list or other formats
-     function lista()
+     function formated_list($format,$type)
      {
+        global $phpgw;
+
+        switch ($type)
+        {
+          case "onlymains":   $method = "and cat_parent='0'";   break;
+          case "onlysubs":    $method = "and cat_parent !='0'"; break;
+        }
+
+        if ($format == "select") {
+           $this->db->query("select * from phpgw_categories where cat_owner='" . $this->account_id
+                           . "' $method",__LINE__,__FILE__);
+           while ($this->db->next_record()) {
+              $s .= '<option value="' . $this->db->f("cat_id") . '">'
+                  . $phpgw->strip_html($this->db->f("cat_name")) . '</option>';
+           }
+           return $s;
+        }
 
      }
 
@@ -56,12 +73,12 @@
                   . $this->account_id . "'",__LINE__,__FILE__);
      }
 
-     function edit($owner,$app_name,$cat_name,$cat_description)
+     function edit($cat_id,$cat_parent,$cat_name,$cat_description,$cat_data)
      {
-
-        $db2->query("update categories set cat_name='" . addslashes($cat_name) . "', cat_description='"
-                  . addslashes($cat_description) . "' where account_id='$owner' and app_name='"
-                  . addslashes($app_name) . "'");
+         $this->db->query("update phpgw_categories set cat_name='" . addslashes($cat_name) . "', "
+                        . "cat_description='" . addslashes($cat_description) . "', cat_data='"
+                        . "$cat_data', cat_parent='$cat_parent' where cat_owner='"
+                        . $this->account_id . "' and cat_id='$cat_id'",__LINE__,__FILE__);
      }
 
   }
