@@ -75,7 +75,7 @@ enter your HTTP proxy server	admin	fi	Anna HTTP-välityspalvelin
 enter your HTTP proxy server port	admin	fi	Anna HTTP-välityspalvelimen portti
 expires	admin	fi	Vanhentuu
 find and register all application hooks	admin	fi	Etsi ja rekisteröi kaikki sovelluskoukut
-global categories	admin	fi	Yleiset luokat
+global categories	common	fi	Yleiset luokat
 group ?	admin	fi	ryhmä ?
 group has been added	common	fi	Ryhmä lisätty
 group has been deleted	common	fi	Ryhmä poistettu
@@ -155,7 +155,7 @@ server username	admin	fi	Palvelimen käyttäjätunnus
 set preference values.	admin	fi	Tee asetukset.
 show 'powered by' logo on	admin	fi	'Tämä on' -logon paikka
 site	admin	fi	Palvelu
-site configuration	admin	fi	Palvelun asetukset
+site configuration	common	fi	Palvelun asetukset
 sorry, that group name has already been taken.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, that group name has already been taking.	admin	fi	Valitan, ryhmän nimi on jo käytössä.
 sorry, the follow users are still a member of the group %1	admin	fi	Valitan, nämä käyttäjät kuuluvat vielä ryhmään %1

@@ -164,7 +164,7 @@ find and register all application hooks	admin	zt	尋找並註冊所有應用程式Hooks
 for the times above	admin	zt	次數上限
 for the times below (empty values count as '*', all empty = every minute)	admin	zt	次數下限 (空白視為 '*', 全部空白 = 每一分鐘)
 force selectbox	admin	zt	強制使用選取方塊
-global categories	admin	zt	全域類別
+global categories	common	zt	全域類別
 group ?	admin	zt	群組?
 group has been added	common	zt	群組增加成功
 group has been deleted	common	zt	群組已被刪除
@@ -289,7 +289,7 @@ show error log	admin	zt	顯示錯誤日誌
 show phpinfo()	admin	zt	顯示phpinfo()
 show session ip address	admin	zt	顯示處理程序IP位址
 site	admin	zt	站點
-site configuration	admin	zt	站點設置
+site configuration	common	zt	站點設置
 soap	admin	zt	SOAP
 sorry, that group name has already been taken.	admin	zt	抱歉，該群組名已被佔用.
 sorry, the above users are still a member of the group %1	admin	zt	抱歉，以上用戶也是%1群組的成員

@@ -77,7 +77,7 @@ enter your HTTP proxy server	admin	pt	Digite o endereço do servidor proxy HTTP
 enter your HTTP proxy server port	admin	pt	Digite a porta do servidor proxy
 expires	admin	pt	Expira
 find and register all application hooks	admin	pt	Procurar e registrar todas as configurações de aplicações
-global categories	admin	pt	Categorias globais
+global categories	common	pt	Categorias globais
 group ?	admin	pt	grupo ?
 group has been added	common	pt	Grupo adicionado
 group has been deleted	common	pt	Grupo removido
@@ -159,7 +159,7 @@ server %1 has been updated	admin	pt	Servidor %1 foi atualizado
 set preference values.	admin	pt	Definir preferências.
 show 'powered by' logo on	admin	pt	Área para exibição da logomarca do phpGroupWare
 site	admin	pt	Site
-site configuration	admin	pt	Configuração do servidor
+site configuration	common	pt	Configuração do servidor
 sorry, that group name has already been taken.	admin	pt	Este nome de grupo já está em uso.
 sorry, that group name has already been taking.	admin	pt	Desculpe, este grupo já existe
 sorry, the follow users are still a member of the group %1	admin	pt	Desculpe, os seguintes usuários ainda são membros do grupo %1

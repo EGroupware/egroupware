@@ -105,7 +105,7 @@ forecast	admin	pl	Prognoza
 forecast zone	admin	pl	Strefa prognozy
 forum administration	admin	pl	Administracja forum
 gd version	admin	pl	Wersja GD
-global categories	admin	pl	Kategorie globalne
+global categories	common	pl	Kategorie globalne
 global options	admin	pl	Opcje globalne
 group ?	admin	pl	grupa?
 group has been added	common	pl	Dodano grupê
@@ -218,7 +218,7 @@ set preference values.	admin	pl	Wprowad¼ warto¶ci ustawieñ
 show 'powered by' logo on	admin	pl	Wy¶wietl logo 'powered by'
 show \'powered by\' logo on	admin	pl	Wy¶wietl logo ,,powered by\'\'
 site	admin	pl	Serwis
-site configuration	admin	pl	Konfiguracja serwisu
+site configuration	common	pl	Konfiguracja serwisu
 sorry, that group name has already been taken.	admin	pl	Nazwa grupy jest ju¿ u¿ywana
 sorry, that group name has already been taking.	admin	pl	Taka nazwa grupy ju¿ istnieje
 sorry, the follow users are still a member of the group %1	admin	pl	Przykro mi, nastêpuj±cy u¿ytkownicy s± wci±¿ cz³onkami grupy %1

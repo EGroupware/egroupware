@@ -106,7 +106,7 @@ force selectbox	admin	it	Forza elenco a discesa
 forecast	admin	it	Previsione
 forecast zone	admin	it	Zona di previsione
 fzone	admin	it	ZonaF
-global categories	admin	it	Categorie Globali
+global categories	common	it	Categorie Globali
 global comics	admin	it	Fumetti Disponibili
 global options	admin	it	Opzioni Globali
 group ?	admin	it	gruppo ?
@@ -209,7 +209,7 @@ server username	admin	it	Username per il server
 set preference values.	admin	it	Imposta i valori delle preferenze
 show 'powered by' logo on	admin	it	Visualizza il logo 'creato con'
 site	admin	it	Sito
-site configuration	admin	it	Configurazione per tutto il Sito
+site configuration	common	it	Configurazione per tutto il Sito
 sorry, that group name has already been taken.	admin	it	Spiacente, questo nome di gruppo è già stato utilizzato
 sorry, that group name has already been taking. admin	it Peccato, quel nome di gruppo &egrave; gi&agrave; stato	it	
 sorry, the above users are still a member of the group %1	admin	it	Spiacente, l'utente è ancora membro del gruppo %1

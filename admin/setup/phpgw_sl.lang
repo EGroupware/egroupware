@@ -164,7 +164,7 @@ find and register all application hooks	admin	sl	Poiš&#269;i in registriraj vse 
 for the times above	admin	sl	za &#269;ase nad
 for the times below (empty values count as '*', all empty = every minute)	admin	sl	za &#269;ase pod (prazno šteje kot '*'; vse prazno = vsako minuto)
 force selectbox	admin	sl	Prisili izbiro
-global categories	admin	sl	Splošne kategorije
+global categories	common	sl	Splošne kategorije
 group ?	admin	sl	skupina ?
 group has been added	common	sl	Skupina je bila dodana.
 group has been deleted	common	sl	Skupina je bila izbrisana.
@@ -289,7 +289,7 @@ show error log	admin	sl	Pokaži seznam napak
 show phpinfo()	admin	sl	Pokaži phpinfo()
 show session ip address	admin	sl	Pokaži IP naslov seje
 site	admin	sl	Mesto
-site configuration	admin	sl	Nastavitve mesta
+site configuration	common	sl	Nastavitve mesta
 soap	admin	sl	SOAP
 sorry, that group name has already been taken.	admin	sl	Oprostite, to ime skupine je že uporabljeno.
 sorry, the above users are still a member of the group %1	admin	sl	Oprostite, zgornji uporabniki so še vedno &#269;lani skupine %1.

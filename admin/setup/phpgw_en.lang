@@ -164,7 +164,7 @@ find and register all application hooks	admin	en	Find and Register all Applicati
 for the times above	admin	en	for the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	for the times below (empty values count as '*', all empty = every minute)
 force selectbox	admin	en	Force Selectbox
-global categories	admin	en	Global Categories
+global categories	common	en	Global Categories
 group ?	admin	en	group ?
 group has been added	common	en	Group has been added
 group has been deleted	common	en	Group has been deleted
@@ -251,6 +251,7 @@ please enter a name for that server !	admin	en	Please enter a name for that serv
 please run setup to become current	admin	en	Please run setup to become current
 please select	admin	en	Please Select
 preferences	admin	en	Preferences
+primary group	admin	en	primary Group
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
@@ -288,7 +289,7 @@ show error log	admin	en	Show error log
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address
 site	admin	en	Site
-site configuration	admin	en	Site configuration
+site configuration	common	en	Site configuration
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
 sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1
@@ -357,4 +358,3 @@ you must enter an application name.	admin	en	You must enter an application name.
 you must enter an application title.	admin	en	You must enter an application title.
 you must select a file type	admin	en	You must select a file type
 you will need to remove the subcategories before you can delete this category	admin	en	You will need to remove the subcategories before you can delete this category !
-primary Group	admin	en	primary Group

@@ -86,7 +86,7 @@ expires	admin	es	Expira
 find and register all aplication hooks	admin	es	Encontrar y registrar todos los enlaces a aplicaciones
 force selectbox	admin	es	Forzar Caja de Seleccion
 forum administration	admin	es	Administracion de Foros
-global categories	admin	es	Categorias Globales
+global categories	common	es	Categorias Globales
 global options	admin	es	Opciones Globales
 group ?	admin	es	¿Grupo?
 group has been added	common	es	El grupo ha sido agregado
@@ -167,7 +167,7 @@ server username	admin	es	Usuario del servidor
 set preferences value	admin	es	Establecer valores de las preferencias
 show 'powered by' logo on	admin	es	Mostrar logo de 'potenciado por' en
 site	admin	es	Sitios
-site configuration	admin	es	Configuracion del Sitio
+site configuration	common	es	Configuracion del Sitio
 site links	admin	es	Enlaces a Sitios
 sorry, that group name has already been taken.	admin	es	Este nombre de grupo ya esta siendo utilizado.
 sorry, the follow users are still a member of the group %1	admin	es	Los siguientes usuarios aun son miembros del grupo %1

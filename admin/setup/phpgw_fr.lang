@@ -126,7 +126,7 @@ file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 find and register all application hooks	admin	fr	Trouver et enregistrer tous les "application hooks"
 force selectbox	admin	fr	Forcer la boite de sélection
-global categories	admin	fr	Catégories globales
+global categories	common	fr	Catégories globales
 group ?	admin	fr	Groupe ?
 group has been added	common	fr	Le groupe a été ajouté
 group has been deleted	common	fr	Le groupe a été effacé
@@ -227,7 +227,7 @@ server username	admin	fr	Nom d'utilisateur du serveur
 set preference values.	admin	fr	Régler les valeurs des préférences.
 show 'powered by' logo on	admin	fr	Montrer le logo 'exécuté par' sur
 site	admin	fr	Site
-site configuration	admin	fr	Configuration du site
+site configuration	common	fr	Configuration du site
 sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de groupe a déjà été pris.
 sorry, the follow users are still a member of the group %1	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
 sort the entries	admin	fr	Trier les entrées

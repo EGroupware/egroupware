@@ -164,7 +164,7 @@ find and register all application hooks	admin	zh	查找并注册所有应用程序Hooks
 for the times above	admin	zh	for the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	zh	for the times below (empty values count as '*', all empty = every minute)
 force selectbox	admin	zh	Force Selectbox
-global categories	admin	zh	全局类别
+global categories	common	zh	全局类别
 group ?	admin	zh	组?
 group has been added	common	zh	组已添加
 group has been deleted	common	zh	组已删除
@@ -288,7 +288,7 @@ show error log	admin	zh	显示错误日志
 show phpinfo()	admin	zh	显示phpinfo()
 show session ip address	admin	zh	显示会话IP地址
 site	admin	zh	站点
-site configuration	admin	zh	站点设置
+site configuration	common	zh	站点设置
 soap	admin	zh	SOAP
 sorry, that group name has already been taken.	admin	zh	抱歉，该组名已被占用.
 sorry, the above users are still a member of the group %1	admin	zh	抱歉，以上用户也是%1组的成员
