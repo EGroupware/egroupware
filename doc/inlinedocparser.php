@@ -1,5 +1,5 @@
 <?php
-    $types = array('abstract','param','result','description','discussion', 'author', 'copyright', 'package');
+    $types = array('abstract','param','example','syntax','result','description','discussion','author','copyright','package','access');
 
     if ($fn)
     {
@@ -73,8 +73,8 @@
             }
         }
         echo '<br><pre>';
-//        print_r($elements);
-        var_dump($elements);
+        print_r($elements);
+//        var_dump($elements);
         echo '</pre>' . "\n";
     }
 ?>

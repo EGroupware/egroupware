@@ -24,15 +24,19 @@
   /* $Id$ */
 
 	/*!
-	 @class acl
-	 @abstract Acces Control List Security System
-	 @discussion Author: Seek3r <br>
-	 This class provides an ACL security scheme. <br>
-	 This can manage rights to 'run' applications, and limit certain features within an application.<br>
-	 It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.<br>
-	 It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.<br>
-	 Syntax: CreateObject('phpgwapi.acl',int account_id); <br>
-	 Example1: $acl = CreateObject('phpgwapi.acl',5);  // 5 is the user id
+		@class acl
+		@abstract Acces Control List Security System
+		@discussion This class provides an ACL security scheme.
+		This can manage rights to 'run' applications, and limit certain features within an application.
+		It is also used for granting a user "membership" to a group, or making a user have the security equivilance of another user.
+		It is also used for granting a user or group rights to various records, such as todo or calendar items of another user.
+		@syntax CreateObject('phpgwapi.acl',int account_id);
+		@example $acl = CreateObject('phpgwapi.acl',5);  // 5 is the user id
+		@example $acl = CreateObject('phpgwapi.acl',10);  // 10 is the user id
+		@author Seek3r
+		@copyright LGPL
+		@package phpgwapi
+	  	@access	public
 	*/
 	class acl
 	{			/*! @var $account_id */
