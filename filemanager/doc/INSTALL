@@ -4,7 +4,7 @@ Command examples are suggestions only.  Use your head.
 
 COMMAND SUMMARY
 ---------------
-cp -a /some/path/to/phpgroupware/files /path/to/files
+cp -a /some/path/to/egroupware/files /path/to/files
 cd /path/to/files
 chown -R nobody .
 -OR-
@@ -15,7 +15,7 @@ http://yourhost.com/setup/ > Setup/Config > Edit Current Configuration
 
 FULL EXPLANATION
 ----------------
-[REQUIRED] Copy phpgroupware/files to where you want to store the files.
+[REQUIRED] Copy egroupware/files to where you want to store the files.
 	   THIS SHOULD BE SOMEWHERE NOT INSIDE THE WEBROOT AND NOT ACCESSIBLE TO THE WEB.
 	   Having the files within the webroot is a huge security risk as well as a privacy concern.
 	   The exception to this would be if you WANT the users' and groups' files to be accessible

@@ -4,7 +4,7 @@ Note: if you don't know what WebDAV is you probably don't need it.  The default
 vfs_sql is generally faster and easier to setup.
 
 Filemanager's WebDAV support allows you to store your files online in 
-phpgroupware, in a way that cooperates well with other web applications (for
+egroupware, in a way that cooperates well with other web applications (for
 instance, in Windows you can then access your files as a "web folder", and
 similarly KDE, Gnome, MacOSX, and amultitude of applications (eg MS Office and
 OpenOffice.org) all include some way of browsing files on a WebDAV share)
@@ -35,10 +35,10 @@ To install:
 				RemoveType application/x-httpd-php-source .phps
 			</Location>
 			<Files ~ "^\.ht">
-				#This ensures phpgroupware can modify .htaccess files
+				#This ensures egroupware can modify .htaccess files
 				order deny,allow
 				deny from all
-				#make sure your phpgroupware server is included here.
+				#make sure your egroupware server is included here.
 				allow from localhost .localdomain
 			</Files>
 			ServerName files.yourdomain.com
@@ -46,7 +46,7 @@ To install:
 			CustomLog logs/dav_acc combined
 		</VirtualHost>
 
-2/	On the setup page (phpgroupware/setup/config.php) specify
+2/	On the setup page (egroupware/setup/config.php) specify
 	the WebDAV server URL (eg http://files.yourdomain.com ) in the: "Full path
 	for users and groups files" text area, and select DAV in the:
 	"Select where you want to store/retrieve filesystem information"
@@ -61,7 +61,7 @@ To install:
 		/var/files/home/
 
 4/	(OPTIONAL) Ideally you want some kind of authentication on the WebDAV
-	repository, so that users accessing it directly still need their phpgroupware
+	repository, so that users accessing it directly still need their egroupware
 	password.
 	To enable authentication you must use a third-party Apache authentication
 	module.  Which you use depends on how you have setup authentication in
