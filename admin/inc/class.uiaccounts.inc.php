@@ -957,7 +957,7 @@
 				for ($i=0; $i<count($userGroups); $i++) 
 				{
 					/* print "Los1:".$userData["account_id"].$userGroups[$i]['account_id']." : ".$value['account_id']."<br>"; */
-					if ($userGroups[$i]['account_id'] == $value['account_id']) 
+					if (@$userGroups[$i]['account_id'] == $value['account_id']) 
 					{
 						$groups_select .= ' selected';
 					}
