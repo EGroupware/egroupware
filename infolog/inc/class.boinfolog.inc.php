@@ -142,11 +142,7 @@
 				$data['info_subject'] = '';
 			}
 			$this->link_id2from($data);
-;
-			if ($data['info_link_title'] == $data['info_from'])
-			{
-				$data['info_from'] = '';
-			}
+
 			return $err ? False : $data;
 		}
 
