@@ -35,8 +35,9 @@
 		function uivcard()
 		{
 			global $phpgw;
-			$this->template = &$phpgw->template;
-			$this->contacts = &$phpgw->contacts;
+
+			$this->template = $phpgw->template;
+			$this->contacts = CreateObject('phpgwapi.contacts');
 			$this->browser  = CreateObject('phpgwapi.browser');
 			$this->vcard    = CreateObject('phpgwapi.vcard');
 			$this->bo = CreateObject('addressbook.boaddressbook',True);

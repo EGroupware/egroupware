@@ -900,7 +900,7 @@
 					$ot = 'one_'.$type;
 					eval("
 						if (\$$ot=='on') {
-							\$badrtype \.= ' value=\"on\" checked';
+							\$badrtype .= ' value=\"on\" checked';
 						}
 					");
 					$badrtype .= '>'.$val;
@@ -913,7 +913,7 @@
 					$tt = 'two_'.$type;
 					eval("
 						if (\$$tt=='on') {
-							\$hadrtype \.= ' value=\"on\" checked';
+							\$hadrtype .= ' value=\"on\" checked';
 						}
 					");
 					$hadrtype .= '>'.$val;

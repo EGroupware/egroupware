@@ -36,7 +36,7 @@
 		{
 			global $phpgw;
 
-			$this->contacts = &$phpgw->contacts;
+			$this->contacts = $phpgw->contacts;
 			$this->so = CreateObject('addressbook.soaddressbook');
 			if($session)
 			{
