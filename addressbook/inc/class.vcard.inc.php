@@ -339,7 +339,10 @@
 									break;
 							}
 							break;
-						case "TEL":
+						case "TEL": 						// RB 2001/05/07 added for Lotus Organizer ueses TEL;{WORK|HOME};{VOICE|FAX}[;PREF]
+							if ($field[2] == 'FAX' && ($field[1] == 'WORK' || $field[i] == 'HOME')) {
+								array_shift($field);		// --> ignore the WORK or HOME if FAX follows, HOME;FAX and HOME;TEL are maped later
+							}
 							switch ($field[1]) {
 								case "PREF":
 									//echo $field[2]." is preferred";
@@ -347,14 +350,14 @@
 										$buffer["tel_prefer"] .= strtolower($field[2]) . ";";
 									}
 									break;
-								case "WORK":
-									$buffer["tel_work"] = $values[0];
+								case "WORK":									// RB don't overwrite TEL;WORK;VOICE (main nr.) with TEL;WORK, TEL;WORK --> tel_isdn
+									$buffer[$buffer["tel_work"] ? "tel_isdn" : "tel_work"] = $values[0];
 									if ($field[2] == "PREF") {
 										$buffer["tel_prefer"] .= strtolower($field[1]) . ";";
 									}
 									break;
-								case "HOME":
-									$buffer["tel_home"] = $values[0];
+								case "HOME":									// RB don't overwrite TEL;HOME;VOICE (main nr.) with TEL;HOME, TEL;HOME --> ophone
+									$buffer[$buffer["tel_home"] ? "ophone" : "tel_home" ] = $values[0];
 									if ($field[2] == "PREF") {
 										$buffer["tel_prefer"] .= strtolower($field[1]) . ";";
 									}
@@ -366,6 +369,10 @@
 									}
 									break;
 								case "FAX":
+									if ($buffer["tel_fax"]) {				// RB don't overwrite TEL;WORK;FAX with TEL;HOME;FAX, TEL;HOME;FAX --> ophone
+									   $buffer["ophone"] = $values[0] . ' Fax';
+									   break;
+									}									
 									$buffer["tel_fax"] = $values[0];
 									if ($field[2] == "PREF") {
 										$buffer["tel_prefer"] .= strtolower($field[1]) . ";";
@@ -442,6 +449,10 @@
 									}
 									break;
 							}
+							break;
+						case "URL":												// RB 2001/05/08 Lotus Organizer uses URL;WORK and URL;HOME (URL;HOME droped if both)
+							$buffer["url"] = $values[0];
+							break;
 						default:
 							break;
 					}
@@ -486,20 +497,31 @@
 								$buffer["bday"] = $tmp[1]."/".$tmp[2]."/".$tmp[0];
 							}
 							break;
+						case "ORG": 										// RB 2001/05/07 added for Lotus Organizer: ORG:Company;Department
+							$buffer["org_name"] = $values[0];
+							$buffer["org_unit"] = $values[1];
+							break;
 					}
 				}
 			}
 			$buffer["tel_prefer"]   = substr($buffer["tel_prefer"],0,-1);
 			$buffer["adr_one_type"] = substr($buffer["adr_one_type"],0,-1);
 			$buffer["adr_two_type"] = substr($buffer["adr_two_type"],0,-1);
-
+			
+			if (count($street = split("\r*\n",$buffer["adr_one_street"],3)) > 1) {
+				$buffer["adr_one_street"] = $street[0];			// RB 2001/05/08 added for Lotus Organizer to split multiline adresses
+				$buffer["address2"]		  = $street[1];
+				$buffer["address3"]		  = $street[2];
+			}
 			// Lastly, filter out all but standard fields, since they cover the vcard standard
 			// and we don't want $buffer['BEGIN'] etc...
-			$contacts = CreateObject('phpgwapi.contacts');
-			while (list($fname,$fvalue) = each($contacts->stock_contact_fields)) {
+			$contacts = CreateObject('phpgwapi.contacts');		// RB 2001/05/08 Lotus Organizer uses/needs extrafields from edit.php																			
+			$all_fields = $contacts->stock_contact_fields + array("ophone" => "ophone","address2" => "address2","address3" => "address3");
+			
+			while (list($fname,$fvalue) = each($all_fields)) {
 				if($buffer[$fname]) {
 					$entry[$fname] = $buffer[$fname];
-					//echo '<br>'.$fname.' = "'.$entry[$fname].'"'."\n";
+					// echo '<br>'.$fname.' = "'.$entry[$fname].'"'."\n";
 				}
 			}
 			return $entry;

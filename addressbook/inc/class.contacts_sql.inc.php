@@ -406,6 +406,10 @@
 				}
 				$filterlist  = substr($filterlist,0,-1);
 				$filterlist  = ereg_replace(","," AND ",$filterlist);
+				
+				// echo "<p>contacts->read(): filterlist=\"$filterlist\" -->";	// allow multiple (','-separated) cat's per address
+				$filterlist = ereg_replace('cat_id=[\']*([0-9]+)[\']*',"CONCAT(',',cat_id,',') LIKE '%,\\1,%'",$filterlist);
+				// echo "\"$filterlist\"</p>\n";
 
 				if ($DEBUG)
 				{
