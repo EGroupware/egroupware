@@ -17,7 +17,8 @@
 		'currentapp' => 'home',
 		'noapi' => True
 	);
-	include ('./inc/functions.inc.php');
+	include('./inc/functions.inc.php');
+	include('./inc/xml_functions.inc.php');
 
 	$tpl_root = $phpgw_setup->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('phpgwapi.Template',$tpl_root);
