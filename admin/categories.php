@@ -50,7 +50,7 @@
 
 	$c = CreateObject('phpgwapi.categories');
 	$c->app_name = 'phpgw';
-	$categories = $c->return_array('all',$start,True,$query,$sort,$order);
+	$categories = $c->return_array('all',$start,True,$query,$sort,$order,True);
 
 //--------------------------------- nextmatch --------------------------------------------
 
@@ -83,62 +83,42 @@
 
 	for ($i=0;$i<count($categories);$i++)
 	{
-		if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'] && $categories[$i]['app_name'] == 'phpgw')
+		$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
+		$t->set_var(tr_color,$tr_color);
+
+		$cat_id = $categories[$i]['id'];
+		$space = '&nbsp;&nbsp;';
+		$level = $categories[$i]['level'];
+
+		if ($level > 0)
 		{
-			$tr_color = $phpgw->nextmatchs->alternate_row_color($tr_color);
-			$t->set_var(tr_color,$tr_color);
+			$spaceset = str_repeat($space,$level);
+			$name = $spaceset . $phpgw->strip_html($categories[$i]['name']);
+		}
 
-			$cat_id = $categories[$i]['id'];
-			$owner = $categories[$i]['owner'];
-			$space = '&nbsp;&nbsp;';
-			$level = $categories[$i]['level'];
+		$descr = $phpgw->strip_html($categories[$i]['description']);
+		if (!$descr) { $descr = '&nbsp;'; }
 
-			if ($level > 0)
-			{
-				$spaceset = str_repeat($space,$level);
-				$name = $spaceset . $phpgw->strip_html($categories[$i]['name']);
-			}
-
-			$descr = $phpgw->strip_html($categories[$i]['description']);
-			if (!$descr) { $descr = '&nbsp;'; }
-
-			if ($level == 0)
-			{
-				$name = '<font color="FF0000"><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
-				$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
-			}
+		if ($level == 0)
+		{
+			$name = '<font color="FF0000"><b>' . $phpgw->strip_html($categories[$i]['name']) . '</b></font>';
+			$descr = '<font color="FF0000"><b>' . $descr . '</b></font>';
+		}
 
 //-------------------------- template declaration for list records ---------------------------
 
-			$t->set_var(array('name' => $name,
-							'descr' => $descr));
+		$t->set_var(array('name' => $name,
+						'descr' => $descr));
 
-			if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'])
-			{
-				$t->set_var('edit',$phpgw->link('/admin/editcategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
-												. '&order=' . $order . '&filter=' . $filter));
-				$t->set_var('lang_edit_entry',lang('Edit'));
-			}
-			else
-			{
-				$t->set_var('edit','');
-				$t->set_var('lang_edit_entry','&nbsp;');
-			}
+		$t->set_var('edit',$phpgw->link('/admin/editcategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort
+										. '&order=' . $order . '&filter=' . $filter));
+		$t->set_var('lang_edit_entry',lang('Edit'));
 
-			if ($categories[$i]['owner'] == $phpgw_info['user']['account_id'])
-			{
-				$t->set_var('delete',$phpgw->link('/admin/deletecategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order='
-												. $order . '&filter=' . $filter));
-				$t->set_var('lang_delete_entry',lang('Delete'));
-			}
-			else
-			{
-				$t->set_var('delete','');
-				$t->set_var('lang_delete_entry','&nbsp;');
-			}
+		$t->set_var('delete',$phpgw->link('/admin/deletecategory.php','cat_id=' . $cat_id . '&start=' . $start . '&query=' . $query . '&sort=' . $sort . '&order='
+										. $order . '&filter=' . $filter));
+		$t->set_var('lang_delete_entry',lang('Delete'));
 
-			$t->parse('list','cat_list',True);
-		}
+		$t->parse('list','cat_list',True);
 	}
 
 // ---------------------------- end record declaration -----------------------------------------
