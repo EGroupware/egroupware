@@ -62,30 +62,30 @@
 			$this->colormap = array();
 			$this->hColor = 0;
 			$this->font = 0;
-			$this->type = 'png';			
-			$this->temp_file	= PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'images' . SEP . 'draw_tmp.png';
+			$this->type = 'png';
+			$this->temp_file = PHPGW_SERVER_ROOT . SEP . 'phpgwapi' . SEP . 'images' . SEP . 'draw_tmp.png';
 		}
 
 		function check_gd()
 		{
-    		ob_start();
-    		phpinfo(8); // Just get the modules loaded
-    		$a = ob_get_contents();
-    		ob_end_clean();
+			ob_start();
+			phpinfo(8); // Just get the modules loaded
+			$a = ob_get_contents();
+			ob_end_clean();
 
 			if(preg_match('/.*GD Version.*(1[0-9|\.]+).*/',$a,$m))
 			{
 				$r=1; //$v=$m[1];
-    		}
+			}
 			elseif(preg_match('/.*GD Version.*(2[0-9|\.]+).*/',$a,$m))
 			{
 				$r=2; //$v=$m[1];
-    		}
-    		else
+			}
+			else
 			{
 				$r=0; //$v=$m[1];
-    		}
-    		return $r;
+			}
+			return $r;
 		}
 
 		function Init()
@@ -116,9 +116,13 @@
 			if ($x >= 0 && $x <= $this->width && $y >= 0 && $y <= $this->height)
 			{
 				if ($linestyle == 'dashed')
+				{
 					ImageDashedLine($this->hImage, $this->cur_x, $this->cur_y, $x, $y, $this->hColor);
+				}
 				else
+				{
 					ImageLine($this->hImage, $this->cur_x, $this->cur_y, $x, $y, $this->hColor);
+				}
 
 				$this->cur_x = $x;
 				$this->cur_y = $y;
@@ -134,9 +138,13 @@
 			if ($x1 >= 0 && $x1 <= $this->width && $y1 >= 0 && $y1 <= $this->height && $x2 >= 0 && $x2 <= $this->width && $y2 >= 0 && $y2 <= $this->height)
 			{
 				if ($linestyle == 'solid')
+				{
 					ImageLine($this->hImage, $x1, $y1, $x2, $y2, $this->hColor);
+				}
 				else
+				{
 					ImageDashedLine($this->hImage, $x1, $y1, $x2, $y2, $this->hColor);
+				}
 
 				$this->cur_x = $x2;
 				$this->cur_y = $y2;
@@ -213,7 +221,9 @@
 		function SetFont($font)
 		{
 			if ($font < 1 || $font > 5)
+			{
 				return false;
+			}
 
 			$this->font = $font;
 
@@ -250,35 +260,47 @@
 				{
 					$this->cur_y += $textwidth / 2;
 					if ($this->cur_y > $this->height)
+					{
 						$this->cur_y = $this->height;
+					}
 				}
 				else
 				{
 					$this->cur_x -= $textwidth / 2;
 					if ($this->cur_x < 0)
+					{
 						$this->cur_x = 0;
+					}
 				}
 			}
-			else if ($justification == 'right')
+			elseif ($justification == 'right')
+			{
+				if ($direction == 'up')
 				{
-					if ($direction == 'up')
+					$this->cur_y += $textwidth;
+					if ($this->cur_y > $this->height)
 					{
-						$this->cur_y += $textwidth;
-						if ($this->cur_y > $this->height)
-							$this->cur_y = $this->height;
-					}
-					else
-					{
-						$this->cur_x -= $textwidth;
-						if ($this->cur_x < 0)
-							$this->cur_x = 0;
+						$this->cur_y = $this->height;
 					}
 				}
+				else
+				{
+					$this->cur_x -= $textwidth;
+					if ($this->cur_x < 0)
+					{
+						$this->cur_x = 0;
+					}
+				}
+			}
 
 			if ($direction == 'up')
+			{
 				ImageStringUp($this->hImage, $this->font, $this->cur_x, $this->cur_y, $text, $this->hColor);
+			}
 			else
+			{
 				ImageString($this->hImage, $this->font, $this->cur_x, $this->cur_y, $text, $this->hColor);
+			}
 
 			return true;
 		}

@@ -2,7 +2,7 @@
 	/*******************************************************************\
 	* phpGroupWare - GD Graph                                           *
 	* http://www.phpgroupware.org                                       *
-	* This program is part of the GNU project, see http://www.gnu.org/	*
+	* This program is part of the GNU project, see http://www.gnu.org/  *
 	*                                                                   *
 	* Written by Bettina Gille [ceb@phpgroupware.org]                   *
 	*                                                                   *
@@ -50,7 +50,7 @@
 		var $margin_bottom;
 		var $margin_right;
 		var $img;
-	
+
 		function gdgraph($debug = False)
 		{
 			$this->debug			= $debug;
@@ -83,7 +83,7 @@
 			$this->img				= CreateObject('phpgwapi.gdimage');
 			$this->temp_file		= $this->img->temp_file;
 		}
-	
+
 		function rRender()
 		{
 			// Initialize image - map white since it's our background
@@ -148,12 +148,16 @@
 				while (list($junk2, $value) = each($line))
 				{
 					if ($value > $largest)
-					$largest = $value;
+					{
+						$largest = $value;
+					}
 				}
 			}
 
 			while ($largest < ($this->num_lines_y - 1))
+			{
 				$largest = ($this->num_lines_y - 1);
+			}
 
 			$spread = ceil($largest / ($this->num_lines_y - 1));
 			$largest = $spread * ($this->num_lines_y - 1);*/
@@ -284,71 +288,77 @@
 
 		function Open()
 		{
-		print('<script language="JavaScript">');
-		print('window.open(\'main.php3?menuAction=boGraph.Show&');
-		if (ereg('MSIE', $GLOBALS['HTTP_USER_AGENT']))
-			print('DCLINFO=' . $GLOBALS['DCLINFO'] . '&');
-		print($this->ToURL() . '\', \'graph\', \'width=' . ($this->graph_width + 20) . ',height=' . ($this->graph_height + 20) . ',resizable=yes,scrollbars=yes\');');
-		print('</script>');
-	}
-
-	function Show()
-	{
-		$this->FromURL();
-		$this->Render();
-	}
-
-	function FromURL()
-	{
-		$this->title = $GLOBALS['title'];
-		$this->caption_x = $GLOBALS['caption_x'];
-		$this->caption_y = $GLOBALS['caption_y'];
-		$this->num_lines_x = $GLOBALS['num_lines_x'];
-		$this->num_lines_y = $GLOBALS['num_lines_y'];
-		$this->line_captions_x = explode(',', $GLOBALS['line_captions_x']);
-		
-		$dataURL = explode('~', $GLOBALS['data']);
-		$this->data = array();
-		while (list($junk, $line) = each($dataURL))
-			$this->data[] = explode(',', $line);
-		
-		$this->colors = explode(',', $GLOBALS['colors']);
-		$this->color_legend = explode(',', $GLOBALS['color_legend']);
-		$this->graph_width = $GLOBALS['graph_width'];
-		$this->graph_height = $GLOBALS['graph_height'];
-		$this->margin_top = $GLOBALS['margin_top'];
-		$this->margin_left = $GLOBALS['margin_left'];
-		$this->margin_bottom = $GLOBALS['margin_bottom'];
-		$this->margin_right = $GLOBALS['margin_right'];
-	}
-	
-	function ToURL()
-	{
-		$url = 'title=' . rawurlencode($this->title) . '&';
-		$url .= 'caption_x=' . rawurlencode($this->caption_x) . '&';
-		$url .= 'caption_y=' . rawurlencode($this->caption_y) . '&';
-		$url .= 'num_lines_x=' . $this->num_lines_x . '&';
-		$url .= 'num_lines_y=' . $this->num_lines_y . '&';
-		$url .= 'line_captions_x=' . rawurlencode(implode(',', $this->line_captions_x)) . '&';
-		reset($this->data);
-		$dataURL = '';
-		while(list($junk, $line) = each($this->data))
-		{
-			if ($dataURL != '')
-				$dataURL .= '~';
-			$dataURL .= implode(',', $line);
+			print('<script language="JavaScript">');
+			print('window.open(\'main.php3?menuAction=boGraph.Show&');
+			if(strstr($GLOBALS['HTTP_USER_AGENT'],'MSIE'))
+			{
+				print('DCLINFO=' . $GLOBALS['DCLINFO'] . '&');
+			}
+			print($this->ToURL() . '\', \'graph\', \'width=' . ($this->graph_width + 20) . ',height=' . ($this->graph_height + 20) . ',resizable=yes,scrollbars=yes\');');
+			print('</script>');
 		}
-		$url .= 'data=' . $dataURL . '&';
-		$url .= 'colors=' . implode(',', $this->colors) . '&';
-		$url .= 'color_legend=' . rawurlencode(implode(',', $this->color_legend)) . '&';
-		$url .= 'graph_width=' . $this->graph_width . '&';
-		$url .= 'graph_height=' . $this->graph_height . '&';
-		$url .= 'margin_top=' . $this->margin_top . '&';
-		$url .= 'margin_left=' . $this->margin_left . '&';
-		$url .= 'margin_bottom=' . $this->margin_bottom . '&';
-		$url .= 'margin_right=' . $this->margin_right;
 
-		return $url;
-	}
+		function Show()
+		{
+			$this->FromURL();
+			$this->Render();
+		}
+
+		function FromURL()
+		{
+			$this->title = $GLOBALS['title'];
+			$this->caption_x = $GLOBALS['caption_x'];
+			$this->caption_y = $GLOBALS['caption_y'];
+			$this->num_lines_x = $GLOBALS['num_lines_x'];
+			$this->num_lines_y = $GLOBALS['num_lines_y'];
+			$this->line_captions_x = explode(',', $GLOBALS['line_captions_x']);
+
+			$dataURL = explode('~', $GLOBALS['data']);
+			$this->data = array();
+			while (list($junk, $line) = each($dataURL))
+			{
+				$this->data[] = explode(',', $line);
+			}
+
+			$this->colors = explode(',', $GLOBALS['colors']);
+			$this->color_legend = explode(',', $GLOBALS['color_legend']);
+			$this->graph_width = $GLOBALS['graph_width'];
+			$this->graph_height = $GLOBALS['graph_height'];
+			$this->margin_top = $GLOBALS['margin_top'];
+			$this->margin_left = $GLOBALS['margin_left'];
+			$this->margin_bottom = $GLOBALS['margin_bottom'];
+			$this->margin_right = $GLOBALS['margin_right'];
+		}
+
+		function ToURL()
+		{
+			$url = 'title=' . rawurlencode($this->title) . '&';
+			$url .= 'caption_x=' . rawurlencode($this->caption_x) . '&';
+			$url .= 'caption_y=' . rawurlencode($this->caption_y) . '&';
+			$url .= 'num_lines_x=' . $this->num_lines_x . '&';
+			$url .= 'num_lines_y=' . $this->num_lines_y . '&';
+			$url .= 'line_captions_x=' . rawurlencode(implode(',', $this->line_captions_x)) . '&';
+			reset($this->data);
+			$dataURL = '';
+			while(list($junk, $line) = each($this->data))
+			{
+				if ($dataURL != '')
+				{
+					$dataURL .= '~';
+				}
+				$dataURL .= implode(',', $line);
+			}
+			$url .= 'data=' . $dataURL . '&';
+			$url .= 'colors=' . implode(',', $this->colors) . '&';
+			$url .= 'color_legend=' . rawurlencode(implode(',', $this->color_legend)) . '&';
+			$url .= 'graph_width=' . $this->graph_width . '&';
+			$url .= 'graph_height=' . $this->graph_height . '&';
+			$url .= 'margin_top=' . $this->margin_top . '&';
+			$url .= 'margin_left=' . $this->margin_left . '&';
+			$url .= 'margin_bottom=' . $this->margin_bottom . '&';
+			$url .= 'margin_right=' . $this->margin_right;
+
+			return $url;
+		}
 	}
 ?>
