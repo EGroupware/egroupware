@@ -396,7 +396,7 @@ class socalendar_ extends socalendar__
 				$part[$key] = substr($GLOBALS['phpgw']->crypto->encrypt($event[$field]),0,20);
 				if(!$GLOBALS['phpgw']->crypto->enabled)
 				{
-					$part[$key] = GLOBALS['phpgw']->crypto->bin2hex($part[$key]);
+					$part[$key] = GLOBALS['phpgw']->crypto->bin2hex(unserialize($part[$key]));
 				}
 			}
 			$event['uid'] = $part[0].'-'.$part[1].'@'.$id_suffix;
