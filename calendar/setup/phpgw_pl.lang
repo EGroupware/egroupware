@@ -1,79 +1,139 @@
+%1 %2 in %3	calendar	pl	%1 %2 w %3
+%1 matches found	calendar	pl	Znaleziono %1 zgodnych
+%1 records imported	calendar	pl	Zaimportowano %1 rekordów
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; mo¿esz siê cofn±c i odznaczyæ Import Testowy)
 (for weekly)	calendar	pl	(dla tygodniowego)
-(i/v)cal	calendar	pl	
 1 match found	calendar	pl	Znaleziono 1 zgodny
 a	calendar	pl	a
 accept	calendar	pl	Akceptuj
 accepted	calendar	pl	Zaakceptowano
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pl	Akcja która spowodowa³a powiadomienie: Dodano, Anulowano, Zakceptowano, Odrzucono...
 add alarm	calendar	pl	Dodaj alarm
+add contact	calendar	pl	Dodaj kontakt
 added	calendar	pl	Dodano
+address book	calendar	pl	Adresy, Kontakty
+alarm	calendar	pl	Alarm
+alarm for %1 at %2 in %3	calendar	pl	Alarm dla %1 o %2 w %3
 alarm management	calendar	pl	Zarz±dzanie alarmami
+alarm-management	calendar	pl	Zarzadzaniealarmami
+alarms	calendar	pl	Alarmy
 all day	calendar	pl	Wszystkie dni
+are you sure you want to delete this country ?	calendar	pl	Na pewno chcesz usun±æ \nten kraj?
 are you sure you want to delete this holiday ?	calendar	pl	Na pewno chcesz usun±æ ¶wiêto?
+are you sure\nyou want to\ndelete these alarms?	calendar	pl	Na pewno chcesz usun±æ \nte alarmy?
 are you sure\nyou want to\ndelete this entry ?	calendar	pl	Na pewno\nchcesz\nusun±æ ten wpis?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	pl	Na pewno\nchcesz\nusun±æ ten wpis?\n\nWpis zostanie usuniêty\ndla wszystkich u¿ytkowników.
+before the event	calendar	pl	przed zdarzeniem
 brief description	calendar	pl	Krótki opis
+business	calendar	pl	Biznes
 calendar	common	pl	Kalendarz
-calendar - [iv	calendar	pl	
 calendar - add	calendar	pl	Dodaj do kalendarza
 calendar - edit	calendar	pl	Edycja kalendarza
-calendar event	calendar	pl	Zdarzenai kalendarza
+calendar event	calendar	pl	Zdarzenia kalendarza
 calendar holiday management	admin	pl	Zarz±dzanie ¶wiêtami
 calendar preferences	calendar	pl	Preferencje kalendarza
 calendar settings	admin	pl	Ustawienia kalendarza
+calendar-fieldname	calendar	pl	Kalendarz-Nazwapola
+canceled	calendar	pl	Anulowany
+change status	calendar	pl	Zmieñ status
+click %1here%2 to return to the calendar.	calendar	pl	Kliknij %1tutaj%2 aby wróciæ do Kalendarza
+configuration	calendar	pl	Konfiguracja
 countries	calendar	pl	Kraje
 country	calendar	pl	Kraj
+created by	calendar	pl	Utworzony przez
+custom fields	calendar	pl	Pola w³asne
+custom fields and sorting	common	pl	Pola w³asne i sortowanie
 daily	calendar	pl	Codziennie
 daily matrix view	calendar	pl	Harmonogram dnia
+days	calendar	pl	dni
 days repeated	calendar	pl	Dni powtórzeñ
+dayview	calendar	pl	Widok Dzienny
+default appointment length (in minutes)	calendar	pl	domy¶lna d³ugo¶æ spotkania (w minutach)
 default calendar filter	calendar	pl	Domy¶lny filtr kalendarza
 default calendar view	calendar	pl	Domy¶lny uk³ad kalendarza
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pl	Domy¶lna d³ugo¶æ nowo dodawanych zdarzeñ. D³ugo¶æ podaj w minutach.
+delete selected contacts	calendar	pl	Skasuj wybrane kontakty
+delete series	calendar	pl	Skasuj seriê
+delete single	calendar	pl	Skasuj pojedynczy
 deleted	calendar	pl	Usuniêto
-display interval in day view	calendar	pl	
+description	calendar	pl	Opis
+display interval in day view	calendar	pl	Przedzia³ wy¶wietlania w Widoku Dziennym
 display mini calendars when printing	calendar	pl	Wy¶wietlaæ mini kaledarz przy wydruku?
 display status of events	calendar	pl	Wy¶wietl status zdarzeñ
-do you wish to autoload calendar holidays files dynamically?	admin	pl	
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pl	Pokazywaæ Twój kalendarz na stronie g³ównej (stronie, któr± widzisz po zalogowaniu siê do eGW lub po klikniêciu na ikonê strony domowej - homepage)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pl	Czy chcesz byæ powiadamiany o nowych lub zmienionych spotkaniach? Bêdziesz powiadamiany o zmianach któe sam zrobisz.<br>Mo¿esz ograniczyæ powiadomienia tylko do niektórych zmian. Ka¿da pozycja zawiera wszystkie powiadomienia wymienione powy¿ej. <i>Wszystkie zmiany</i> zawieraj± zmiany nazwy, opisu, uczestników, ale nie same odpowiedzi uczestników. Je¿eli w³a¶ciciel zdarzenia wybierze powiadomienia dowolne, bêdzie otrzymywa³ równie¿ odpowiedzi uczestników, takie jak akceptacje czy odrzucenia.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywaæ mailem regularne podsumowania swoich spotkañ?<br>Podsumowanie jest wysy³ane na Twój adres email codziennie rano, lub w poniedzia³ki dla podsumowañ tygodniowych.<br>Podsumowanie jest wysy³ane tylko je¿eli masz zaplanowane jakie¶ spotkania w danym dniu lub tygodniu.
+do you wish to autoload calendar holidays files dynamically?	admin	pl	Czy chcesz automatycznie ³adowaæ do kalendarza listê ¶wi±t?
+download	calendar	pl	¦ci±gnij
 duration	calendar	pl	Czas trwania
-edit series	calendar	pl	
-edit single	calendar	pl	
+edit series	calendar	pl	Edytuj seriê
+edit single	calendar	pl	Edytuj pojedynczy
+email notification	calendar	pl	Powiadomienie email
+email notification for %1	calendar	pl	Powiadomienie email dla %1
 end date/time	calendar	pl	Data/godzina zakoñczenia
-ends	calendar	pl	
+exceptions	calendar	pl	Wyj±tki
 export	calendar	pl	Eksport
+extended	calendar	pl	Rozszerzone
+firstname of person to notify	calendar	pl	Imiê osoby do powiadomienia
 fr	calendar	pl	Pt
 free/busy	calendar	pl	Wolny/Zajêty
 frequency	calendar	pl	Czêsto¶æ powtarzania
 fri	calendar	pl	Pt
 full description	calendar	pl	Pe³ny opis
+fullname of person to notify	calendar	pl	Imiê i nazwisko osoby do powiadomienia
 generate printer-friendly version	calendar	pl	Wersja do wydruku
+global categories	calendar	pl	Kategorie globalne
 global public and group public	calendar	pl	Publiczne dla grupy i globalnie
 global public only	calendar	pl	Tylko globalnie publiczne
 go!	calendar	pl	Id¼!
-grant calendar access	common	pl	
+grant calendar access	common	pl	Udostêpnij kalendarz
+group planner	calendar	pl	Planowanie grupowe
 group public only	calendar	pl	Tylko grupowo publiczne
-has been canceled	calendar	pl	
-has been rescheduled to	calendar	pl	
+here is your requested alarm.	calendar	pl	Oto alarm, którego za¿±da³e¶/a¶
+high priority	calendar	pl	wysoki priorytet
 holiday	calendar	pl	¦wiêto
+holiday management	calendar	pl	Zarz±dzanie ¶wiêtami
+holidays	calendar	pl	¦wiêta
+hours	calendar	pl	godziny
 i participate	calendar	pl	Uczestniczê
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	pl	Je¿eli zaznaczone ¶wiêta przypadaj± na weekend, zostan± przeniesione na nadchodz±cy ponedzia³ek.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	pl	Je¿eli nie wprowadzisz tutaj has³a, informacja bêdzie dostêpna dla ka¿dego, kto zna URL!!!
 ignore conflict	calendar	pl	Ignoruj konflikt
 import	calendar	pl	Import
-interval	calendar	pl	
-load [iv	calendar	pl	
+import csv-file	common	pl	Importuj plik CSV
+interval	calendar	pl	Przedzia³
+intervals in day view	calendar	pl	Przedzia³y w widoku dziennym
+last	calendar	pl	ostatni
+link	calendar	pl	Link
+link to view the event	calendar	pl	Link do zdarzenia
+list all categories.	calendar	pl	Poka¿ wszystkie kategorie
 location	calendar	pl	Lokalizacja
-location to autoload from	admin	pl	
+matrixview	calendar	pl	Harmonogram dnia
 minutes	calendar	pl	minuty
 mo	calendar	pl	Po
-modified	calendar	pl	
+modified	calendar	pl	Zmodyfikowany
 mon	calendar	pl	Pon
 month	calendar	pl	Miesi±c
 monthly	calendar	pl	Miesiêczny
 monthly (by date)	calendar	pl	Co miesi±c (wg dat)
 monthly (by day)	calendar	pl	Co miesi±c (wg dni)
+monthview	calendar	pl	Widok Miesiêczny
 new entry	calendar	pl	Nowy wpis
+no matches found	calendar	pl	Nic nie znaleziono
 no matches found.	calendar	pl	Nie znaleziono zgodnych
 no matchs found	calendar	pl	Nie znaleziono zgodnych
 no response	calendar	pl	Brak odpowiedzi
+number of months	calendar	pl	Ilo¶æ miesiêcy
+on all changes	calendar	pl	po wszystkich zmianach
+on all modification, but responses	calendar	pl	po wszystkich zmianach z wyj±tkiem odpowiedzi
+on any time change too	calendar	pl	tak¿e po ka¿dej zmianie czasu
+on invitation / cancelation only	calendar	pl	tylko po zaproszeniu / odwo³aniu
+on participant responses too	calendar	pl	tak¿e po odpowiedziach uczestników
+open todo's:	calendar	pl	Otwarte Do Zrobienia:
 participant	calendar	pl	Uczestnik
 participants	calendar	pl	Uczestnicy
-participates	calendar	pl	uczestniczy?
+participates	calendar	pl	Uczestniczy
+permission denied	calendar	pl	Dostêp zabroniony
 planner	calendar	pl	Zaplanowane
 print calendars in black & white	calendar	pl	Drukuj kalendarz jako czarno-bia³y
 printer friendly	calendar	pl	Wersja do wydruku
@@ -90,32 +150,58 @@ repeat type	calendar	pl	Typ powtórek
 repeating event information	calendar	pl	Informacja o powtórkach
 repetition	calendar	pl	Powtarzanie
 reset	calendar	pl	Skasuj
+rule	calendar	pl	Regu³a
 sa	calendar	pl	So
 sat	calendar	pl	So
 scheduling conflict	calendar	pl	Konflikt w terminarzu
 search results	calendar	pl	Wynik szukania
 select country for including holidays	calendar	pl	Wybierz kraj do w³±czenia ¶wi±t
-send updates via email	common	pl	
+selected contacts (%1)	calendar	pl	Wybrane kontakty (%1)
+send updates via email	common	pl	Wy¶lij uaktualnienia e-mailem
 send/receive updates via email	calendar	pl	Wy¶lij/Odbierz aktualizacjê przez e-mail
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	pl	Czy odrzucone zaproszenia nadal maj± byæ widoczne w Twoim kalendarzu?<br>Tylko je¿eli s± widoczne, mo¿esz zaakceptowaæ je pó¼niej (np. kiedy zostanie usuniêty konflikt terminów).
+should new events created as private by default ?	calendar	pl	Czy nowe zdarzenia maja byæ oznaczane domy¶lnie jako prywatne?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	pl	Czy widok do druku ma byæ czarno-bia³y, czy te¿ kolorowy (jak normalny)?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	pl	Czy pokazywaæ w nawiasach status (zaakceptowane, odrzucone...) uczestników zdarzenia obok ich nazwiska?
 show day view on main screen	calendar	pl	Wy¶wietl widok dnia na stronie g³ównej
-show default view on main screen	calendar	pl	
 show high priority events on main screen	calendar	pl	Wy¶wietl zdarzenia o wysokim priorytecie na stronie g³ównej
+show invitations you rejected	calendar	pl	Poka¿ zaproszenia które odrzuci³e¶/a¶
+show list of upcoming events	calendar	pl	Poka¿ listê nadchodz±cych zdarzeñ
+single event	calendar	pl	pojedyncze zdarzenie
 sorry, the owner has just deleted this event	calendar	pl	W³a¶ciciel ju¿ usun±³ to zdarzenie
+sorry, this event does not exist	calendar	pl	To zdarzenie ju¿ nie istnieje
+sort by	calendar	pl	Sortuj wg.
 start date/time	calendar	pl	Data/godzina rozpoczêcia
+start- and enddates	calendar	pl	Daty rozpoczêcia i zakoñczenia
 su	calendar	pl	N
 submit to repository	calendar	pl	Wy¶lij do repozytorium
 sun	calendar	pl	Nie
 tentative	calendar	pl	Niezobowi±zuj±cy
+test import (show importable records <u>only</u> in browser)	calendar	pl	Import testowy (tylko pokazuje importowane rekordy, nie importuje ich)
+text	calendar	pl	Tekst
 th	calendar	pl	Cz
-the following conflicts with the suggested time:<ul>x</ul>	calendar	pl	
-there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	pl	
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	pl	Nastêpuj±ce wpisy s± w konflikcie z sugerowanym czasem: <ul>%1</ul>
+the user %1 is not participating in this event!	calendar	pl	U¿ytkownik %1 nie jest uczestnikiem tego zdarzenia!
+this day is shown as first day in the week or month view.	calendar	pl	Ten dzieñ jest wy¶wietlany jako pierwszy w widoku dziennym lub tygodniowym.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	pl	Najczê¶ciej jest to spowodowane b³êdna konfiguracj± serwera SMTP (lub jej brakiem). Powiadom administratora.
+this message is sent for canceled or deleted events.	calendar	pl	Ta wiadomo¶æ jest wysy³ana dla anulowanych lub skasowanych zdarzeñ.
+this message is sent for modified or moved events.	calendar	pl	Ta wiadomo¶æ jest wysy³ana dla zmodyfikowanych lub przeniesionych zdarzeñ.
+this message is sent when you accept, tentative accept or reject an event.	calendar	pl	Ta wiadomo¶æ jest wysy³ana kiedy akceptujesz, akceptujesz próbnie lub odrzucasz zdarzenie.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	pl	Ta wiadomo¶æ jest wysy³ana, kiedy ustawiasz Alarm dla jakiego¶ zdarzenia. Do³±cz wszystkie informacje, których mo¿esz potrzebowaæ.
 this month	calendar	pl	Bie¿±cy miesi±c
 this week	calendar	pl	Bie¿±cy tydzieñ
 this year	calendar	pl	Bie¿±cy rok
 thu	calendar	pl	Czw
+title	calendar	pl	Nazwa
+title of the event	calendar	pl	Nazwa zdarzenia
+title-row	calendar	pl	Rz±d tytu³owy
+to-firstname	calendar	pl	Do-imie
+to-fullname	calendar	pl	Do-imienazwisko
+to-lastname	calendar	pl	Do-nazwisko
 today	calendar	pl	Dzisiaj
 tu	calendar	pl	Wt
 tue	calendar	pl	Wto
+updated	calendar	pl	Uaktualniony
 use end date	calendar	pl	U¿yj daty zakoñczenia
 view this entry	calendar	pl	Podgl±d wpisu
 we	calendar	pl	¦r
@@ -123,20 +209,24 @@ wed	calendar	pl	¦ro
 week	calendar	pl	Tydzieñ
 weekday starts on	calendar	pl	Pierwszy dzieñ tygodnia
 weekly	calendar	pl	Tygodniowy
+weekview	calendar	pl	Widok tygodniowy
 when creating new events default set to private	calendar	pl	Ustawiæ nowe zdarzenia jako prywatne?
 work day ends on	calendar	pl	Koniec dnia o
 work day starts on	calendar	pl	Pocz±tek dnia o
-%1 matches found	calendar	pl	Znaleziono %1 zgodnych
 year	calendar	pl	Rok
 yearly	calendar	pl	Roczny
-you have 1 high priority event on your calendar today.	common	pl	
-you have a meeting scheduled for	calendar	pl	
-you have not entered a title	calendar	pl	Nie poda³e¶ tytu³u
-you have not entered a valid date	calendar	pl	Nie poda³e¶ poprawnej daty
-you have not entered a valid time of day	calendar	pl	
-you have not entered participants	calendar	pl	Nie poda³e¶ uczestników
-you have %1 high priority events on your calendar today.	common	pl	
+yearview	calendar	pl	Widok roczny
+you do not have permission to add alarms to this event !!!	calendar	pl	Nie masz uprawnieñ aby dodaæ alarm do tego zdarzenia!!!
+you do not have permission to delete this alarm !!!	calendar	pl	Nie masz uprawnieñ aby skasowaæ ten alarm!!!
+you do not have permission to enable/disable this alarm !!!	calendar	pl	Nie masz uprawnieñ aby w³±czyæ-wy³±czyæ ten alarm!!!
+you do not have permission to read this record!	calendar	pl	Nie masz uprawnieñ do tego rekordu!!!
+you have %1 high priority events on your calendar today.	common	pl	W dzisiejszym kalendarzu masz %1 zdarzeñ z wysokim priorytetem.
+you have 1 high priority event on your calendar today.	common	pl	W dzisiejszym kalendarzu masz jedno zdarzenie z wysokim priorytetem.
+you have a meeting scheduled for %1	calendar	pl	Masz spotkanie zaplanowane na %1
+you have not entered a title	calendar	pl	Nie poda³e¶/a¶ tytu³u
+you have not entered a valid date	calendar	pl	Nie poda³e¶/a¶ poprawnej daty
+you have not entered participants	calendar	pl	Nie poda³e¶/a¶ uczestników
 you must enter one or more search keywords	calendar	pl	Musisz podaæ jedno lub wiêcej s³ów kluczowych
-your meeting scheduled for	calendar	pl	
-your meeting that had been scheduled for	calendar	pl	
+your meeting scheduled for %1 has been canceled	calendar	pl	Twoje spotkanie zaplanowane na %1 zosta³o odwo³ane
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pl	Twoje spotkanie zaplanowane na %1 zosta³o przesuniête na %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pl	Twój zaproponowany czas <B> %1 - %2 </B> jest w konflikcie z nastêpuj±cymi wpisami w kalendarzu:
