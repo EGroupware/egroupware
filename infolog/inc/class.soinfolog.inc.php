@@ -552,7 +552,7 @@
 				//echo "<p>sql='$sql'</p>\n";
 				while ($this->db->next_record())
 				{
-					$this->db2data(&$info);
+					$this->db2data($info);
 					$ids[$info['info_id']] = $info;
 				}
 			}
