@@ -211,6 +211,11 @@
 			return $this->cal->delete_alarm($id);
 		}
 
+		function delete_alarms($cal_id)
+		{
+			return $this->cal->delete_alarms($cal_id);
+		}
+
 		function delete_entry($id)
 		{
 			return $this->cal->delete_event($id);

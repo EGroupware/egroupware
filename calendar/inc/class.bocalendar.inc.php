@@ -960,13 +960,14 @@
 				if ($l_cal['alarmdays'] > 0 || $l_cal['alarmhours'] > 0 ||
 						$l_cal['alarmminutes'] > 0)
 				{
-					$time = $this->maketime($event['start']) -
-						($l_cal['alarmdays'] * 24 * 3600) -
-						($l_cal['alarmhours'] * 3600) -
-						($l_cal['alarmminutes'] * 60);
+					$offset = ($l_cal['alarmdays'] * 24 * 3600) +
+						($l_cal['alarmhours'] * 3600) + ($l_cal['alarmminutes'] * 60);
+
+					$time = $this->maketime($event['start']) - $offset;
 
 					$event['alarm'][] = Array(
 						'time'    => $time,
+						'offset'  => $offset,
 						'owner'   => $this->owner,
 						'enabled' => 1
 					);
@@ -1040,6 +1041,19 @@
 					print_debug('Updating Event ID',$event['id']);
 					$new_event = $event;
 					$old_event = $this->read_entry($event['id']);
+					// if old event has alarm and the start-time changed => update them
+					//echo "<p>checking ".count($old_event['alarm'])." alarms of event #$event[id] start moved from ".print_r($old_event['start'],True)." to ".print_r($event['start'],True)."</p>\n";
+					if ($old_event['alarm'] &&
+					    $this->maketime($old_event['start']) != $this->maketime($event['start']))
+					{
+						$this->so->delete_alarms($old_event['id']);
+						foreach($old_event['alarm'] as $id => $alarm)
+						{
+							$alarm['time'] = $this->maketime($event['start']) - $alarm['offset'];
+							$event['alarm'][] = $alarm;
+						}
+						//echo "updated alarms<pre>".print_r($event['alarm'],True)."</pre>\n";
+					}
 					$this->so->cal->event = $event;
 					$this->so->add_entry($event);
 					$this->prepare_recipients($new_event,$old_event);
