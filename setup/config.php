@@ -177,7 +177,50 @@
     <td><input name="newsettings[nntp_admin]" value="<?php echo $current_config["nntp_admin"]; ?>"></td>
    </tr>
 
+   <tr>
+    <td>Enter your NNTP login:</td>
+    <td><input name="newsettings[nntp_login_username]" value="<?php echo $current_config["nntp_login_username"]; ?>"></td>
+   </tr>
 
+   <tr>
+    <td>Enter your NNTP password:</td>
+    <td><input name="newsettings[nntp_login_password]" value="<?php echo $current_config["nntp_login_password"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your default character set:<br>Don't change unless you know what you are doing.</td>
+    <td><input name="newsettings[charset]" value="<?php echo $current_config["charset"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your default FTP server.</td>
+    <td><input name="newsettings[default_ftp_server]" value="<?php echo $current_config["default_ftp_server"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your HTTP proxy server.</td>
+    <td><input name="newsettings[httpproxy_server]" value="<?php echo $current_config["httpproxy_server"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Enter your HTTP proxy server port.</td>
+    <td><input name="newsettings[httpproxy_port]" value="<?php echo $current_config["httpproxy_port"]; ?>"></td>
+   </tr>
+
+   <tr>
+    <td>Showed powered by logo on:</td>
+    <td>
+     <select name="newsettings[showpoweredbyon]">
+      <option value="bottom">bottom</option>
+      <option value="top">top</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr>
+    <td>Would like like phpGroupWare to check for new version<br>when admins login ?:</td>
+    <td><input type="checkbox" name="newsettings[checkfornewversion]" value="True"></td>
+   </tr>
   
    <tr>
     <td colspan="2" align="center"><input type="submit" name="submit" value="Submit"></td>
