@@ -209,11 +209,18 @@
 		@abstract copy data after a query into $data
 		@syntax db2data(&$data)
 		@param $data array to copy the data
-		@description doesnt do much anymore
+		@description copy only non-numeric keys
 		*/
 		function db2data(&$data)
 		{
-			$data = $this->db->Record;
+			$data = array();
+			foreach ($this->db->Record as $key => $val)
+			{
+				if (!is_numeric($key))
+				{
+					$data[$key] = $val;
+				}
+			}
 		}
 
 		/*!
