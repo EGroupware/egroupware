@@ -173,6 +173,11 @@
 					echo parse_navbar();
 				}
 				echo $html;
+
+				if (!@$GLOBALS['phpgw_info']['etemplate']['hooked'] && !isset($_GET['menuaction']))
+				{
+					$GLOBALS['phpgw']->common->phpgw_footer();
+				}
 			}
 			else
 			{
