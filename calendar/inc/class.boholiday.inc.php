@@ -235,6 +235,10 @@
 			{
 				$this->locales[] = $phpgw_info['user']['preferences']['calendar']['locale'];
 			}
+			else
+			{
+				$this->locales[] = 'US';
+			}
 			
 			if($this->owner != $phpgw_info['user']['account_id'])
 			{
