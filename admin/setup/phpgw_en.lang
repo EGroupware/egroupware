@@ -23,7 +23,7 @@ add new account	admin	en	Add new account
 add new application	admin	en	Add new application
 add peer server	admin	en	Add Peer Server
 admin email	admin	en	Admin Email
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?	admin	en	Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)
 admin name	admin	en	Admin Name
 administration	admin	en	Administration
 admins	admin	en	Admins
@@ -271,7 +271,7 @@ view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like phpgroupware to cache the phpgw info array ?	admin	en	Would you like phpGroupWare to cache the phpgw info array ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	en	Would you like phpGroupWare to check for a new version<br>when admins login ?
+would you like phpgroupware to check for new application versions when admins login ?	admin	en	Would you like phpGroupWare to check for new application versions when admins login ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account

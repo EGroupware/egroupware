@@ -13,7 +13,7 @@
 <!-- BEGIN body -->
 
    <tr class="row_on">
-    <td>{lang_Enter_the_title_for_your_site}.</td>
+    <td>{lang_Enter_the_title_for_your_site}:</td>
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
    </tr>
 
@@ -38,7 +38,7 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Would_you_like_phpGroupWare_to_check_for_a_new_version<br>when_admins_login_?}:</td>
+    <td>{lang_Would_you_like_phpGroupWare_to_check_for_new_application_versions_when_admins_login_?}:</td>
     <td>
      <select name="newsettings[checkfornewversion]">
       <option value="">{lang_No}</option>
@@ -48,14 +48,12 @@
    </tr>
 
    <tr class="row_on">
-    <td>
-      {lang_Timeout_for_sessions_in_seconds_(default_14400_=_4_hours)}
-    </td>
+    <td>{lang_Timeout_for_sessions_in_seconds_(default_14400_=_4_hours)}:</td>
     <td><input size="8" name="newsettings[sessions_timeout]" value="{value_sessions_timeout}"></td>
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Timeout_for_application_session_data_in_seconds_(default_86400_=_1_day)}.</td>
+    <td>{lang_Timeout_for_application_session_data_in_seconds_(default_86400_=_1_day)}:</td>
     <td><input size="8" name="newsettings[sessions_app_timeout]" value="{value_sessions_app_timeout}"></td>
    </tr>
 
@@ -102,7 +100,7 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Minimum_password_length}.</td>
+    <td>{lang_Minimum_password_length}:</td>
     <td><input size="4" name="newsettings[pass_min_length]" value="{value_pass_min_length}"></td>
    </tr>
 
@@ -180,7 +178,7 @@
    </tr>
    
    <tr class="row_on">
-    <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)_?}:</td>
+    <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>
      <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">
     </td>

@@ -20,7 +20,7 @@ add new account	admin	de	Neues Konto hinzuf&uuml;gen
 add new application	admin	de	Neue Anwendung hinzufügen
 add peer server	admin	de	Peer Server hinzufügen
 admin email	admin	de	Email Administration
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify) ?	admin	de	Email Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen (leer für keine Benachrichtigung) ?
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	Email Adressen der Administratoren (mit Komma getrennt) die über eine Sperre benachrichtigt werden sollen (leer für keine Benachrichtigung)
 admin name	admin	de	Admin Name
 administration	admin	de	Administration
 admins	admin	de	Admins
@@ -240,7 +240,7 @@ view sessions	admin	de	Sitzungen anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 would you like phpgroupware to cache the phpgw info array ?	admin	de	Soll phpGroupWare das phpgw info Array cachen ?
-would you like phpgroupware to check for a new version<br>when admins login ?	admin	de	Soll phpGroupWare nach neuen Versionen suchen,<br> wenn sich ein Administrator anmeldet ?
+would you like phpgroupware to check for new application versions when admins login ?	admin	de	Soll phpGroupWare auf neue Programm-Versionen pr&uuml;fen, wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
