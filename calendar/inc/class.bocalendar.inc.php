@@ -106,8 +106,6 @@
 
 		function bocalendar($session=0)
 		{
-			$GLOBALS['phpgw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
-
 			$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
 
 			if($this->debug) { echo "Read Use_Session : (".$session.")<br>\n"; }
@@ -206,6 +204,54 @@
 			{
 				echo "BO Filter : (".$this->filter.")<br>\n";
 				echo "Owner : ".$this->owner."<br>\n";
+			}
+		}
+
+		function list_methods($_type='xmlrpc')
+		{
+			switch($_type)
+			{
+				case 'xmlrpc':
+					$xml_functions = array(
+						'read_entry' => array(
+							'function'  => 'read_entry',
+							'signature' => array(array(xmlrpcStruct,xmlrpcInt)),
+							'docstring' => lang('Read a single entry by passing the id and fieldlist.')
+						),
+						'add_entry' => array(
+							'function'  => 'update',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Add a single entry by passing the fields.')
+						),
+						'update_entry' => array(
+							'function'  => 'update',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Update a single entry by passing the fields.')
+						),
+						'delete_entry' => array(
+							'function'  => 'delete_entry',
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'docstring' => lang('Delete a single entry by passing the id.')
+						),
+						'delete_calendar' => array(
+							'function'  => 'delete_calendar',
+							'signature' => array(array(xmlrpcInt,xmlrpcInt)),
+							'docstring' => lang('Delete an entire users calendar.')
+						),
+						'store_to_cache' => array(
+							'function'  => 'store_to_cache',
+							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
+							'docstring' => lang('Read a list of entries.')
+						)
+					);
+					return $xml_functions;
+					break;
+				case 'soap':
+					return $this->soap_functions;
+					break;
+				default:
+					return array();
+					break;
 			}
 		}
 
@@ -1284,102 +1330,6 @@
 			$this->so->set_recur_yearly($year,$month,$day,$interval);
 		}
 		/* End of SO functions */
-
-		function set_week_array($startdate,$cellcolor,$weekly)
-		{
-			for ($j=0,$datetime=$startdate - $this->datetime->tz_offset;$j<7;$j++,$datetime += 86400)
-			{
-				$date = date('Ymd',$datetime);
-
-				if($this->debug)
-				{
-					echo "set_week_array : Date : ".$date."<br>\n";
-				}
-
-				$holidays = $this->cached_holidays[$date];
-				if($weekly)
-				{
-					$cellcolor = $GLOBALS['phpgw']->nextmatchs->alternate_row_color($cellcolor);
-				}
-				
-				$day_image = '';
-				if($holidays)
-				{
-					$extra = ' bgcolor="'.$this->holiday_color.'"';
-					$class = 'minicalhol';
-					if ($date == $this->today)
-					{
-						$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
-					}
-				}
-				elseif ($date != $this->today)
-				{
-					$extra = ' bgcolor="'.$cellcolor.'"';
-					$class = 'minicalendar';
-				}
-				else
-				{
-					$extra = ' bgcolor="'.$GLOBALS['phpgw_info']['theme']['cal_today'].'"';
-					$class = 'minicalendar';
-					$day_image = ' background="'.$GLOBALS['phpgw']->common->image('calendar','mini_day_block.gif').'"';
-				}
-
-				if($this->printer_friendly && @$this->prefs['calendar']['print_black_white'])
-				{
-					$extra = '';
-				}
-
-				if(!$this->printer_friendly && $this->check_perms(PHPGW_ACL_ADD))
-				{
-					$new_event = True;
-				}
-				else
-				{
-					$new_event = False;
-				}
-				$holiday_name = Array();
-				if($holidays)
-				{
-					for($k=0;$k<count($holidays);$k++)
-					{
-						$holiday_name[] = $holidays[$k]['name'];
-					}
-				}
-				if($this->cached_events[$date])
-				{
-					if($this->debug)
-					{
-						echo "Date : ".$date." Appointments found : ".count($this->cached_events[$date])."<br>\n";
-					}
-					$appts = True;
-				}
-				else
-				{
-					$appts = False;
-				}
-				$week = '';
-				if (!$j || ($j && substr($date,6,2) == '01'))
-				{
-					$week = 'week ' .(int)((date('z',($startdate+(24*3600*4)))+7)/7);
-				}
-				$daily[$date] = Array(
-					'extra'		=> $extra,
-					'new_event'	=> $new_event,
-					'holidays'	=> $holiday_name,
-					'appts'		=> $appts,
-					'week'		=> $week,
-					'day_image'	=> $day_image,
-					'class'		=> $class
-				);
-			}
-
-			if($this->debug)
-			{
-				$this->_debug_array($daily);
-			}
-			
-			return $daily;
-		}
 
 		function prepare_matrix($interval,$increment,$part,$status,$fulldate)
 		{
