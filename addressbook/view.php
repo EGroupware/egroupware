@@ -194,6 +194,8 @@
 			$t->parse('cols','view_row',True);
 		}
 	}
+	// Following cleans up view_row, since we were only using it to fill {cols}
+	$t->set_var('view_row','');
 
 	$cat = CreateObject('phpgwapi.categories');
 	$catinfo = $cat->return_single($fields[0]['cat_id']);
