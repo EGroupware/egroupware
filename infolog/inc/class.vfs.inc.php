@@ -102,7 +102,7 @@
 
 			// test if the files-dir is inside the document-root, and refuse working if so
 			//
-			if (strstr($this->basedir,PHPGW_SERVER_ROOT) || strstr($this->basedir,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']))
+			if ($this->in_docroot($this->basedir))
 			{
 				$GLOBALS['phpgw']->common->phpgw_header();
 				if ($GLOBALS['phpgw_info']['flags']['noheader']) 
@@ -155,6 +155,31 @@
 			{
 				$this->linked_dirs[] = $GLOBALS['phpgw']->db->Record;
 			}
+		}
+
+		/*!
+		@function in_docroot
+		@abstract test if $path lies within the webservers document-root
+		*/
+		function in_docroot($path)
+		{
+			$docroots = array(PHPGW_SERVER_ROOT,$GLOBALS['HTTP_SERVER_VARS']['DOCUMENT_ROOT']);
+
+			foreach ($docroots as $docroot)
+			{
+				$len = strlen($docroot);
+
+				if ($docroot == substr($path,0,$len))
+				{
+					$rest = substr($path,$len);
+
+					if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
+					{
+						return True;
+					}
+				}
+			}
+			return False;
 		}
 
 		/*!
