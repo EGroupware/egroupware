@@ -1,4 +1,68 @@
+account active	admin	ru	Учетная запись активна
+account has been created	common	ru	Учетная запись была создана
+account has been deleted	common	ru	Учетная запись была удалена
+account has been updated	common	ru	Учетная запись была изменена
+activate wysiwyg-editor	admin	ru	включить визуальный (WYSIWYG) редактор
+add a category	admin	ru	Добавить категорию
+add a group	admin	ru	Добавить группу
+add a new account.	admin	ru	Добавить новую учетную запись
+add a subcategory	admin	ru	добавить подкатегорию
+add a user	admin	ru	добавить пользователя
+add account	admin	ru	Добавить учетную запись
+add application	admin	ru	Добавить приложение
+add group	admin	ru	Добавить группу
+add new account	admin	ru	Добавить новую учетную запись
+add new application	admin	ru	Добавить новое приложение
+add sub-category	admin	ru	Добавить подкатегорию
+admin email	admin	ru	E-mail Администратора
+admin name	admin	ru	Имя Администратора
+administration	admin	ru	Администрирование
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию 3)?
+all records and account information will be lost!	admin	ru	Все записи и учетные записи будут потеряны!
+all users	admin	ru	Все пользователи
+allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
+anonymous user	admin	ru	Анонимный пользователь
+application	admin	ru	Приложение
+applications	admin	ru	Приложения
+are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить данную учетную запичь?
+are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить данное приложение?
+are you sure you want to delete this category ?	common	ru	Вы уверены, что хотите удалить данную категорию?
+are you sure you want to delete this group ?	admin	ru	Вы уверены, что хотите удалить данную группу?
+are you sure you want to delete this server?	admin	ru	Вы уверены, что хотите удалить данный сервер?
+are you sure you want to kill this session ?	admin	ru	Вы уверены, что хотите прервать данную сессию?
+authentication / accounts	admin	ru	Авторизация / Учетные записи
+back to the list	admin	ru	назад к списку
+categories list	admin	ru	Список категорий
+check ip address of all sessions	admin	ru	Проверить IP-адреса всех сессий
+color	admin	ru	Цвет
+country selection	admin	ru	Выбор страны
+create group	admin	ru	Создать группу
+delete account	admin	ru	Удалить учетную запись
+delete application	admin	ru	Удалить приложение
+delete category	admin	ru	Удалить категорию
+delete group	admin	ru	Удалить группу
+disable wysiwyg-editor	admin	ru	отключить визуальный (WYSIWYG) редактор
+edit account	admin	ru	Редактировать учетную запись
+edit group	admin	ru	Редактировать группу
+edit login screen message	admin	ru	Редактировать сообщение при входе в систему
+edit this category	admin	ru	редактировать данную категорию
+edit this group	admin	ru	редактировать данную группу
+edit this user	admin	ru	редактировать данного пользователя
+edit user	admin	ru	редактировать пользователя
+edit user account	admin	ru	Редактировать учетную запись пользователя
+enter a description for the category	admin	ru	введите описание категории
 enter your default mail domain ( from: user@domain )	admin	ru	Введите Ваш почтовый домен по умолчанию  ( From: user@domain )
+enter your http proxy server	admin	ru	Введитн адрес HTTP прокси сервера
+enter your http proxy server port	admin	ru	Введите порт HTTP прокси сервера
 enter your smtp server hostname or ip address	admin	ru	Введите IP-адрес или имя Вашего SMTP-сервера
 enter your smtp server port	admin	ru	Введите порт Вашего SMTP-сервера
+group has been added	common	ru	Группа была добавлена
+group has been deleted	common	ru	Группа была удалена
+group has been updated	common	ru	Группа была обновлена
+group manager	admin	ru	Менеджер Групп
+home directory	admin	ru	Домашняя директория
 mail settings	admin	ru	Установки почты
+sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
+the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
+you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
