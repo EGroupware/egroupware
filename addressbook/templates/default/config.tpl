@@ -9,19 +9,17 @@
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
-   <tr bgcolor="{row_on}">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-   <tr bgcolor="{row_off}">
+   <tr bgcolor="{th_bg}">
     <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></font></td>
    </tr>
+   <!--
    <tr bgcolor="{row_on}">
     <td>{lang_Contact_application}:</td>
     <td><input name="newsettings[contact_application]" value="{value_contact_application}"></td>
    </tr>
    <tr bgcolor="{row_off}">
     <td align="center" colspan="2">{lang_WARNING!!_LDAP_is_valid_only_if_you_are_NOT_using_contacts_for_accounts_storage!}</td>
-   </tr>
+   </tr> -->
    <tr bgcolor="{row_off}">
     <td>{lang_Select_where_you_want_to_store}/{lang_retrieve_contacts}.</td>
     <td>
