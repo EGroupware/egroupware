@@ -18,6 +18,13 @@
 	$setup_info['infolog']['tables']    = array('phpgw_infolog');
 	$setup_info['infolog']['enable']    = 1;
 
+	$setup_info['infolog']['author'] = 'Ralf Becker';
+	$setup_info['infolog']['license']  = 'GPL';
+	$setup_info['infolog']['description'] =
+		'CRM type app using Addressbook, Notes, Phonelog.';
+	$setup_info['infolog']['maintainer'] = 'Ralf Becker';
+	$setup_info['infolog']['maintainer_email'] = 'ralfbecker@outdoor-training.de';
+
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['infolog']['hooks'][] = 'preferences';
 	$setup_info['infolog']['hooks'][] = 'admin';
