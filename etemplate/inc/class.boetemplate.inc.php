@@ -310,8 +310,8 @@
 		@syntax loadExtension( $name,$ui='' )
 		@author ralfbecker
 		@abstact trys to load the Extension / Widget-class from the app or etemplate
-		@param $name name of the extension the classname should be class.${name}_widget.inc.php
-		@discussion the $name might be "$name.$app" to give a app-name (default is the current app)
+		@param $name name of the extension, the classname should be class.${name}_widget.inc.php
+		@discussion the $name might be "$name.$app" to give a app-name (default is the current app,or template-name)
 		*/
 		function loadExtension($name,&$parent,$ui='html')
 		{
@@ -321,6 +321,10 @@
 			if ($app == '')
 			{
 				$app = $GLOBALS['phpgw_info']['flags']['current_app'];
+			}
+			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			{
+				list($app) = explode('.',$this->name);
 			}
 			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{

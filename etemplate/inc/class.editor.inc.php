@@ -66,11 +66,13 @@
 			if ($this->extensions == '')
 			{
 				$this->extensions = $this->scan_for_extensions();
-				list($app) = explode('.',$this->name);
-				if ($app != '' && $app != 'etemplate')
-				{
-					$this->extensions += $this->scan_for_extensions($app);
-				}
+			}
+			list($app) = explode('.',$this->etemplate->name);
+			if ($app && $app != 'etemplate' && is_array($this->extensions) &&
+			    (!is_array($this->extensions['**loaded**']) || !$this->extensions['**loaded**'][$app]))
+			{
+				$this->extensions += $this->scan_for_extensions($app);
+				$this->extensions['**loaded**'][$app] = True;
 			}
 			$content = $this->etemplate->as_array() + array(
 				'cols' => $this->etemplate->cols,
@@ -136,9 +138,11 @@
 			{
 				echo 'editor.edit: content ='; _debug_array($content);
 			}
+			$types = array_merge($this->etemplate->types,$this->extensions);
+			unset($types['**loaded**']);
 			$this->editor->exec('etemplate.editor.process_edit',$content,
 				array(
-					'type' => array_merge($this->etemplate->types,$this->extensions),
+					'type' => $types,
 					'align' => $this->aligns
 				),
 				$no_button,$cols_spanned + array('**extensions**' => $this->extensions));
@@ -435,7 +439,7 @@
 
 		/*!
 		@function scan_for_extensions
-		@syntax scan_for_extensions(  )
+		@syntax scan_for_extensions( $app )
 		@author ralfbecker
 		@abstract search the inc-dirs of etemplate and the app whichs template is edited for extensions / custom widgets
 		@discussion extensions are class-files in $app/inc/class.${name}_widget.inc.php
@@ -447,14 +451,17 @@
 
 			$dir = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/inc');
 
+			echo "<p>loading extenstions for '$app': ";
 			while ($dir && ($file = readdir($dir)))
 			{
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
 					 ($ext = $this->etemplate->loadExtension($regs[1].'.'.$app,$this->etemplate)))
 				{
+					echo "$regs[1], ";
 					$extensions[$regs[1]] = $ext->human_name;
 				}
 			}
+			echo "</p>\n";
 			return $extensions;
 		}
 	};
