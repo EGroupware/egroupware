@@ -1939,7 +1939,7 @@ class calendar extends calendar_
 		$str .= ' '.$phpgw->common->show_date($date['raw'],'d, Y').'<br>';
 		$str .= '<table width="85%" border="0" cellspacing="0" cellpadding="0" cols="'.((24 * $interval) + 1).'">';
 		$str .= '<tr><td height="1" colspan="'.((24 * $interval) + 1).'" bgcolor="black"><img src="'.$this->image_dir.'/pix.gif"></td></tr>';
-		$str .= '<tr><td width="15%">'.lang('Participant').'</td>';
+		$str .= '<tr><td width="15%"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">'.lang('Participant').'</font></td>';
 		for($i=0;$i<24;$i++)
 		{
 			for($j=0;$j<$interval;$j++)
@@ -1951,7 +1951,7 @@ class calendar extends calendar_
 						{
 							$k = ($i<=9?'0':substr($i,0,1));
 						}
-						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
+						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">';
 						$str .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j<=9?'0':'').($increment * $j)."'; return true;\">";
 						$str .= $k.'</a></font></td>';
 						break;
@@ -1960,12 +1960,12 @@ class calendar extends calendar_
 						{
 							$k = ($i<=9?substr($i,0,1):substr($i,1,2));
 						}
-						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
+						$str .= '<td align="right" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">';
 						$str .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
 						$str .= $k.'</a></font></td>';
 						break;
 					default:
-						$str .= '<td align="left" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'">';
+						$str .= '<td align="left" bgcolor="'.$phpgw_info['theme']['bg_color'].'"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">';
 						$str .= '<a href="'.$phpgw->link('/calendar/edit_entry.php','year='.$date['year'].'&month='.$date['month'].'&day='.$date['day'].'&hour='.$i.'&minute='.(interval * $j))."\" onMouseOver=\"window.status='".$i.':'.($increment * $j)."'; return true;\">";
 						$str .= '&nbsp</a></font></td>';
 						break;
@@ -1983,7 +1983,7 @@ class calendar extends calendar_
 		{
 			$this->read_repeated_events($participants[$i]);
 			$str .= '<tr>';
-			$str .= '<td width="15%">'.$this->get_fullname($participants[$i]).'</td>';
+			$str .= '<td width="15%"><font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">'.$this->get_fullname($participants[$i]).'</font></td>';
 			$events = $this->get_sorted_by_date($date['raw'],$participants[$i]);
 			if($this->sorted_events_matching == False)
 			{
@@ -2074,7 +2074,7 @@ class calendar extends calendar_
 					for($m=0;$m<$interval;$m++)
 					{
 						$index = ($hour + (($m * $increment) * 100));
-						$str .= '<td height="1" align="left" bgcolor="'.$time_slice[$index]['color']."\" color=\"#999999\"  onMouseOver=\"window.status='".$time_slice[$index]['description']."'; return true;\">".$time_slice[$index]['marker'].'</td>';
+						$str .= '<td height="1" align="left" bgcolor="'.$time_slice[$index]['color']."\" color=\"#999999\"  onMouseOver=\"window.status='".$time_slice[$index]['description']."'; return true;\">".'<font color="'.$phpgw_info['theme']['bg_text'].'" face="'.$phpgw_info['theme']['font'].'" size="-2">'.$time_slice[$index]['marker'].'</font></td>';
 					}
 				}
 			}
