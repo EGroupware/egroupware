@@ -81,18 +81,6 @@
 					}
 					return $sday;
 					break;
-				case 'Sunday':
-					$this->days = Array(
-						0 => 'Sun',
-						1 => 'Mon',
-						2 => 'Tue',
-						3 => 'Wed',
-						4 => 'Thu',
-						5 => 'Fri',
-						6 => 'Sat'
-					);
-					return mktime(2,0,0,$month,$day - $weekday,$year);
-					break;
 				case 'Monday':
 					$this->days = Array(
 						0 => 'Mon',
@@ -116,6 +104,19 @@
 							break;
 					}
 					return $sday - (60 * 60 * 2);
+					break;
+				case 'Sunday':
+				default:
+					$this->days = Array(
+						0 => 'Sun',
+						1 => 'Mon',
+						2 => 'Tue',
+						3 => 'Wed',
+						4 => 'Thu',
+						5 => 'Fri',
+						6 => 'Sat'
+					);
+					return mktime(2,0,0,$month,$day - $weekday,$year);
 					break;
 			}
 		}
