@@ -195,10 +195,8 @@
 					{
 						/* header admin login */
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if($FormUser == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_user']) &&
-							(md5($FormPW) == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']) ||
-							$FormPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
-						)
+						if ($this->check_auth($FormUser,$FormPW,$GLOBALS['phpgw_info']['server']['header_admin_user'],
+							$GLOBALS['phpgw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$FormUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$FormPW",$expire,'/');
@@ -216,10 +214,8 @@
 					{
 						// Returning after login to header admin
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if($HeaderUser == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_user']) &&
-							(md5($HeaderPW) == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']) ||
-							$HeaderPW == stripslashes($GLOBALS['phpgw_info']['server']['header_admin_password']))
-						)
+						if ($this->check_auth($HeaderUser,$HeaderPW,$GLOBALS['phpgw_info']['server']['header_admin_user'],
+							$GLOBALS['phpgw_info']['server']['header_admin_password']))
 						{
 							$this->set_cookie('HeaderUser',"$HeaderUser",$expire,'/');
 							$this->set_cookie('HeaderPW',"$HeaderPW",$expire,'/');
@@ -239,11 +235,9 @@
 					{
 						/* config login */
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if(isset($GLOBALS['phpgw_domain'][$FormDomain]) &&
-							$FormUser == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_user']) &&
-							(md5($FormPW) == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']) ||
-							$FormPW == stripslashes(@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
-						)
+						if (isset($GLOBALS['phpgw_domain'][$FormDomain]) &&
+							$this->check_auth($FormUser,$FormPW,@$GLOBALS['phpgw_domain'][$FormDomain]['config_user'],
+							@$GLOBALS['phpgw_domain'][$FormDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$FormUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$FormPW",$expire,'/');
@@ -264,10 +258,8 @@
 					{
 						// Returning after login to config
 						/* New test is md5, cleartext version is for header < 1.26 */
-						if($ConfigUser == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_user']) &&
-							(md5($ConfigPW) == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']) ||
-							$ConfigPW == stripslashes($GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
-						)
+						if ($this->check_auth($ConfigUser,$ConfigPW,@$GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_user'],
+							@$GLOBALS['phpgw_domain'][$this->ConfigDomain]['config_passwd']))
 						{
 							$this->set_cookie('ConfigUser',"$ConfigUser",$expire,'/');
 							$this->set_cookie('ConfigPW',"$ConfigPW",$expire,'/');
@@ -286,6 +278,20 @@
 			}
 
 			return False;
+		}
+
+		// returns True if user and pw match, if conf_pw is a md5 ONLY compare with md5($pw) and NOT the plaintext !!!
+		function check_auth($user,$pw,$conf_user,$conf_pw)
+		{
+			if ($user != $conf_user)
+			{
+				return False; // wrong username
+			}
+			if (preg_match('/^[0-9a-f]{32}$/',$conf_pw))	// $conf_pw is a md5
+			{
+				$pw = md5($pw);
+			}
+			return $pw == $conf_pw;
 		}
 
 		function checkip($remoteip='')
