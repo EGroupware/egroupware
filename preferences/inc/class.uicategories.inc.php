@@ -166,11 +166,11 @@
 
 				if ($cats[$i]['app_name'] == 'phpgw')
 				{
-					$appendix = '&lt;' . lang('Global') . '&gt;';
+					$appendix = '&nbsp;&lt;' . lang('Global') . '&gt;';
 				}
 				elseif ($cats[$i]['owner'] == '-1')
 				{
-					$appendix = '&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$cats_app]['title'] . '&gt;';
+					$appendix = '&nbsp;&lt;' . lang('Global') . '&nbsp;' . $GLOBALS['phpgw_info']['apps'][$cats_app]['title'] . '&gt;';
 				}
 				else
 				{
@@ -181,7 +181,7 @@
 
 				if ($level > 0)
 				{
-					$space = '-';
+					$space = '&nbsp;.&nbsp;';
 					$spaceset = str_repeat($space,$level);
 					$name = $spaceset . $GLOBALS['phpgw']->strip_html($cats[$i]['name']) . $appendix;
 				}

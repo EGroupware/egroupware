@@ -152,7 +152,7 @@
 
 				if ($level > 0)
 				{
-					$space = '-';
+					$space = '&nbsp;.&nbsp;';
 					$spaceset = str_repeat($space,$level);
 					$cat_name = $spaceset . $cat_name;
 				}
@@ -168,7 +168,7 @@
 
 				if ($GLOBALS['appname'] && $categories[$i]['app_name'] == 'phpgw')
 				{
-					$appendix = '&lt;' . lang('Global') . '&gt;';
+					$appendix = '&nbsp;&lt;' . lang('Global') . '&gt;';
 				}
 				else
 				{
