@@ -77,6 +77,7 @@
         echo "<input type=submit name=\"junk\" value=\"continue\">";
         echo "</form>";
         echo "</body></html>";
+        break;
       }else{
         $phpgw_setup->show_header("Error generating header.inc.php", False, "header");
         echo "Could not open header.inc.php for writing!<br>\n";
