@@ -102,7 +102,7 @@
 			$fields["org_name"]			= $db1->f("ab_company");
 			$fields["n_given"]			= $db1->f("ab_firstname");
 			$fields["n_family"]			= $db1->f("ab_lastname");
-			$fields["fn"]				= $db1->f("ab_firstname")." ".$phpgw_setup->db1->f("ab_lastname");
+			$fields["fn"]				= $db1->f("ab_firstname")." ".$db1->f("ab_lastname");
 			$fields["d_email"]			= $db1->f("ab_email");
 			$fields["title"]			= $db1->f("ab_title");
 			$fields["a_tel"]			= $db1->f("ab_wphone");
