@@ -42,8 +42,8 @@ class holidaycalc {
 				if($dow == 0)
 				{
 					$i++;
-					$holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
-					$holidays[$i]['name'] = $holiday['name'];
+					$holidays[$i]['locale'] = $holiday['locale'];
+					$holidays[$i]['name'] = $holiday['name'].' (Observed)';
 					$holidays[$i]['day'] = $holiday['day'] + 1;
 					$holidays[$i]['month'] = $holiday['month'];
 					$holidays[$i]['occurence'] = $holiday['occurence'];
@@ -54,8 +54,8 @@ class holidaycalc {
 				elseif($dow == 6)
 				{
 					$i++;
-					$holidays[$i]['locale'] = $holiday['locale'].' (Observed)';
-					$holidays[$i]['name'] = $holiday['name'];
+					$holidays[$i]['locale'] = $holiday['locale'];
+					$holidays[$i]['name'] = $holiday['name'].' (Observed)';
 					$holidays[$i]['day'] = $holiday['day'] - 1;
 					$holidays[$i]['month'] = $holiday['month'];
 					$holidays[$i]['occurence'] = $holiday['occurence'];
