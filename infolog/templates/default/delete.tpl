@@ -22,16 +22,18 @@
             <td class=list">{responsible}</td>
           </tr>
       </table><p>
-
+{yes_form}
        <table border=0 with=65%>
        <tr>
         <td align=center colspan=2>
-         <b>{deleteheader}</b>
+         <b>{deleteheader}</b><p>
+{to_del}
         </td>
        </tr>
        <tr>
-         <td align=center>{yes_button}</td>
-         <td align=center>{no_button}</td>
+         <td height=50 valign=bottom align=center>{yes_button}</td>
+         <td valign=bottom align=center>{no_button}</td>
        </tr>
       </table>
+</form>
      </center>

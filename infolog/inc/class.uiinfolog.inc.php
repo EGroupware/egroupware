@@ -975,7 +975,7 @@
 
 		function delete( )
 		{
-			global $info_id,$confirm;
+			global $info_id,$confirm,$to_del;
 
 			$t = $this->template; $html = $this->html;
 
@@ -989,20 +989,25 @@
 			}
 			if ($confirm)
 			{
-				$this->bo->delete($info_id);
+				$file = $this->basedir.'/'.$info_id;	// whole dir
 
-				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
-
-				/*
-				**	Also remove the attached files for that entry
-				*/
-				$dir=$this->basedir.'/'.$info_id;
-				if ($this->vfs->file_exists($dir,array(RELATIVE_ROOT)))
+				if (!isset($to_del) || $to_del == '.')
 				{
-						$this->vfs->override_acl = 1;
-						$this->vfs->delete($dir,array(RELATIVE_ROOT));
-						$this->vfs->override_acl = 0;
+					$this->bo->delete($info_id);
+
+					$file = $this->basedir.'/'.$info_id;	// whole dir
 				}
+				else
+				{
+					$file .= '/'.$to_del;
+				}
+				if ($this->vfs->file_exists($file,array(RELATIVE_ROOT)))
+				{
+					$this->vfs->override_acl = 1;
+					$this->vfs->delete($file,array(RELATIVE_ROOT));
+					$this->vfs->override_acl = 0;
+				}
+				Header('Location: ' . $html->link($referer,array( 'cd' => 16 )));
 			}
 			else
 			{
@@ -1010,18 +1015,38 @@
 				echo parse_navbar();
 
 				$t->set_file(array( 'info_delete' => 'delete.tpl' ));
+
+				// add the links to the files which corrospond to this entry
+				$attachments = $this->vfs->ls($this->basedir.'/'.$info_id.'/',array(REALTIVE_NONE));
+				if (count($attachments) && $attachments[0]['name'])
+				{
+					$to_del = array('.' => lang('entry and all files'));
+
+					while (list($keys,$fileinfo) = each($attachments))
+					{
+						$to_del[$fileinfo['name']] = $fileinfo['name'] .
+							($fileinfo['comment'] ? ' ('.$fileinfo['comment'].')' : '');
+					}
+					$sbox2 = CreateObject('phpgwapi.sbox2');
+					$t->set_var('to_del',$sbox2->getArrayItem('to_del','.',$to_del,True));
+				}
+				else
+				{
+					$t->set_var('to_del','');
+				}
 				$t->set_var( $this->setStyleSheet( ));
 				$t->set_var( $this->infoHeaders(  ));
 				$t->set_var( $this->formatInfo( $info_id ));
 				$t->set_var('lang_info_action',lang('InfoLog - Delete'));
 
-				$t->set_var('deleteheader',
-								lang('Are you sure you want to delete this entry'));
+				$t->set_var('deleteheader',lang('Are you sure you want to delete this entry'));
 				$t->set_var('no_button',$html->form_1button('no_button',
 					'No - Cancel','',$referer));
-				$t->set_var('yes_button',$html->form_1button('yes_button',
-					'Yes - Delete',array('referer' => $referer),'/index.php',$this->menuaction('delete')+
-					array('info_id' => $info_id,'confirm' => 'True')));
+
+				$t->set_var('yes_form',$html->form('',array('referer' => $referer),'/index.php',
+					$this->menuaction('delete') + array('info_id' => $info_id,'confirm' => 'True')));
+				$t->set_var('yes_button',$html->submit_button('yes_button','Yes - Delete'));
+
 				$t->pfp('out','info_delete');
 			}
 		}

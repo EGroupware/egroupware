@@ -30,6 +30,7 @@ download	infolog	en	Download
 duration	infolog	en	Duration
 enddate	infolog	en	Enddate
 enddate can not be before startdate	infolog	en	Enddate can not be before startdate
+entry and all files	infolog	en	Entry and all files
 fax	infolog	en	Fax
 fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish

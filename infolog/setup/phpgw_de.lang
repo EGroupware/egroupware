@@ -30,6 +30,7 @@ download	infolog	de	Datei laden
 duration	infolog	de	Dauer
 enddate	infolog	de	Enddatum
 enddate can not be before startdate	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
+entry and all files	infolog	de	Eintrag und alle Dateien
 fax	infolog	de	Fax
 fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
