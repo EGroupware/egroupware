@@ -103,6 +103,7 @@ detail	common	en	Detail
 details	common	en	Details
 disabled	common	en	Disabled
 djibouti	common	en	DJIBOUTI
+do you really want to delete this entry	common	en	Do you really want to delete this entry ?
 do you want to delete all subcategories ?	common	en	Do you want to delete all subcategories ?
 do you want to move all subcategories one level down ?	common	en	Do you want to move all subcategories one level down ?
 dominica	common	en	DOMINICA
@@ -313,7 +314,7 @@ powered by phpgroupware version x	common	en	Powered by <a href="http://www.phpgr
 preferences	common	en	Preferences
 print	common	en	Print
 priority	common	en	Priority
-private	common	en	Private
+private	common	en	private
 public	common	en	public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
