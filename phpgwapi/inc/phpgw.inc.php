@@ -94,17 +94,6 @@
        include($phpgw_info["server"]["api_inc"] . "/phpgw_vfs.inc.php");
        $phpgw->vfs  = new vfs;
     }
-
-    if ($phpgw_info["flags"]["enable_todo_class"]) {
-       include($phpgw_info["server"]["api_inc"] . "/phpgw_todo.inc.php");
-       $phpgw->todo = new todo;
-    }
-  
-    if ($phpgw_info["flags"]["enable_addressbook_class"]) {
-       include($phpgw_info["server"]["api_inc"] . "/phpgw_addressbook.inc.php");
-       $phpgw->addressbook = new addressbook;
-    }
-    
   } 
     
   /**************************************************************************\
@@ -114,12 +103,10 @@
   {
     var $accounts;
     var $acl;
-    var $addressbook;
     var $auth;
     var $db;
     var $debug = 0;		// This will turn on debugging information. (Not fully working)
     var $crypto;
-    var $calendar;
     var $categories;
     var $common;
     var $hooks;
@@ -127,14 +114,17 @@
     var $nextmatchs;
     var $preferences;
     var $session;
-    var $msg;
     var $send;
     var $template;
-    var $todo;
     var $translation;
     var $utilities;
     var $vfs;
 
+    var $calendar;
+    var $msg;
+
+    var $addressbook;
+    var $todo;
 
     // This is here so you can decied what the best way to handle bad sessions
     // You could redirect them to login.php with code 2 or use the default
