@@ -48,6 +48,6 @@
 	/* Dependencies for this app to work */
 	$setup_info['addressbook']['depends'][] = array(
 		'appname' => 'phpgwapi',
-		'versions' => Array('0.9.14','0.9.15','1.0.0')
+		'versions' => Array('0.9.14','0.9.15','1.0.0','1.0.1')
 	);
 ?>

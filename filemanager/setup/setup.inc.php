@@ -33,6 +33,6 @@
 	$setup_info['filemanager']['depends'][] = array
 	(
 		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.14','0.9.16','1.0.0')
+		 'versions' => array('0.9.14','0.9.16','1.0.0','1.0.1')
 	);
 ?>
