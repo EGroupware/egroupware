@@ -62,6 +62,14 @@
 		);
 		var $xmlrpc = False;	// called via xmlrpc
 
+		/**
+		 * @var int $tz_offset_s offset in secconds between user and server-time,
+		 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+		 */
+		var $tz_offset = 0;
+		var $tz_offset_s = 0;
+		var $user_time_now;
+		
 		function boinfolog( $info_id = 0)
 		{
 			$this->enums = $this->stock_enums = array(
@@ -130,8 +138,13 @@
 					$this->customfields = $this->config->config_data['customfields'];
 				}
 			}
+			/**
+			 * @var int $tz_offset_s offset in secconds between user and server-time,
+			 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+			 */
 			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
-			$this->tz_offset_sec = 60*60*$this->tz_offset;
+			$this->tz_offset_s = 60*60*$this->tz_offset;
+			$this->user_time_now = time() + $this->tz_offset_s;
 
 			// are we called via xmlrpc?
 			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
@@ -211,7 +224,7 @@
 			return substr($des,0,60).' ...';
 		}
 
-		function read($info_id)
+		function &read($info_id)
 		{
 			if (is_array($info_id))
 			{
@@ -234,14 +247,20 @@
 				}
 				return False;
 			}
-			$data = &$this->so->data;
+			$data = $this->so->data;
 
 			if ($data['info_subject'] == $this->subject_from_des($data['info_des']))
 			{
 				$data['info_subject'] = '';
 			}
 			$this->link_id2from($data);
-
+echo "<p>boinfolog::read($info_id) start=$data[info_startdate]=".date('Y-m-d H:i:s',$data['info_startdate']).", modified=$data[info_datemodified]=".date('Y-m-d H:i:s',$data['info_datemodified'])."</p>\n";
+			// convert system- to user-time
+			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+			{
+				if ($data[$time]) $data[$time] += $this->tz_offset_s;
+			}
+echo "<p>boinfolog::read($info_id) start=$data[info_startdate]=".date('Y-m-d H:i:s',$data['info_startdate']).", modified=$data[info_datemodified]=".date('Y-m-d H:i:s',$data['info_datemodified'])."</p>\n";
 			if ($this->xmlrpc)
 			{
 				$data = $this->data2xmlrpc($data);
@@ -316,7 +335,7 @@
 				);
 				if ($set_enddate)
 				{
-					$values['info_enddate'] = time();
+					$values['info_enddate'] = $this->user_time_now;
 				}
 				$check_defaults = False;
 			}
@@ -325,7 +344,7 @@
 				if (!$values['info_enddate'] && 
 					($values['info_status'] == 'done' || $values['info_status'] == 'billed'))
 				{
-					$values['info_enddate'] = time();	// set enddate to today if status == done
+					$values['info_enddate'] = $this->user_time_now;	// set enddate to today if status == done
 				}
 				if ($values['info_responsible'] && $values['info_status'] == 'offer')
 				{
@@ -346,11 +365,16 @@
 			}
 			if ($touch_modified || !$values['info_datemodified'])
 			{
-				$values['info_datemodified'] = time();
+				$values['info_datemodified'] = $this->user_time_now;
 			}
 			if ($touch_modified || !$values['info_modifier'])
 			{
 				$values['info_modifier'] = $this->so->user;
+			}
+			// convert user- to system-time
+			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+			{
+				if ($values[$time]) $values[$time] -= $this->tz_offset_s;
 			}
 			return $this->so->write($values);
 		}
@@ -374,10 +398,22 @@
 		@param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
 		@returns array with id's as key of the matching log-entries
 		*/
-		function search(&$query)
+		function &search(&$query)
 		{
 			//echo "<p>boinfolog::search(".print_r($query,True).")</p>\n";
 			$ret = $this->so->search($query);
+			
+			// convert system- to user-time
+			if (is_array($ret) && $this->tz_offset_s)
+			{
+				foreach($ret as $id => $data)
+				{
+					foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+					{
+						if ($data[$time]) $ret[$id][$time] += $this->tz_offset_s;
+					}
+				}
+			}
 			if ($this->xmlrpc && is_array($ret))
 			{
 				$infos = $ret;
@@ -472,14 +508,14 @@
 			{
 				foreach($infos as $info)
 				{
-					$time = intval(date('Hi',$info['info_startdate']+$this->tz_offset_sec));
-					$date = date('Y/m/d',$info['info_startdate']+$this->tz_offset_sec);
+					$time = intval(date('Hi',$info['info_startdate']));
+					$date = date('Y/m/d',$info['info_startdate']);
 					if ($do_events && !$time ||
 					    !$do_events && $time && $date == $date_wanted)
 					{
 						continue;
 					}
-					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']+$this->tz_offset_sec),date('i',$info['info_startdate']+$this->tz_offset_sec)).' ':'').
+					$title = ($do_events?$GLOBALS['phpgw']->common->formattime(date('H',$info['info_startdate']),date('i',$info['info_startdate'])).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
 					$content=array();
@@ -494,8 +530,8 @@
 					$content = $GLOBALS['phpgw']->html->table(array(1 => $content));
 
 					$to_include[] = array(
-						'starttime' => $info['info_startdate']+$this->tz_offset_sec,
-						'endtime'   => ($info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate'])+$this->tz_offset_sec,
+						'starttime' => $info['info_startdate'],
+						'endtime'   => ($info['info_enddate'] ? $info['info_enddate'] : $info['info_startdate']),
 						'title'     => $title,
 						'view'      => $view,
 						'icons'     => $icons,

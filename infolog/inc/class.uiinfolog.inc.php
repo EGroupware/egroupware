@@ -78,8 +78,6 @@
 			$this->tmpl = CreateObject('etemplate.etemplate');
 			$this->html = &$this->tmpl->html;
 
-			$this->tz_offset = $GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
-
 			$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
 		}
 
@@ -92,7 +90,7 @@
 			$id = $info['info_id'];
 			$done = $info['info_status'] == 'done' || $info['info_status'] == 'billed';
 			$info['sub_class'] = $info['info_pri'] . ($done ? '_done' : '');
-			if (!$done && $info['info_enddate'] < time()+60*60*$this->tz_offset)
+			if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 			{
 				$info['end_class'] = 'overdue';
 			}
@@ -408,9 +406,8 @@
 					get_var('HTTP_REFERER',Array('SERVER')));
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
-				$this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
-				$content = $this->bo->so->data;
-				$today = mktime(-$this->tz_offset,0,0,date('m'),date('d'),date('Y'));	// time=00:00
+				$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
+				$today = mktime(-$this->bo->tz_offset,0,0,date('m'),date('d'),date('Y'));	// time=00:00
 
 				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
 				{
@@ -439,11 +436,11 @@
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
 					$content['info_lastmodified'] = '';
-					if ($content['info_startdate'] < time())	// parent-startdate is in the past => today
+					if ($content['info_startdate'] < $this->bo->user_time_now)	// parent-startdate is in the past => today
 					{
 						$content['info_startdate'] = $today;
 					}
-					if ($content['info_enddate'] < time())		// parent-enddate is in the past => empty
+					if ($content['info_enddate'] < $this->bo->user_time_now)		// parent-enddate is in the past => empty
 					{
 						$content['info_enddate'] = '';
 					}
