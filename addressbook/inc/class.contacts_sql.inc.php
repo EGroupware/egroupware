@@ -225,8 +225,6 @@
 				}
 			}
 
-			//if ($query) { echo "DEBUG: Queries temporarily unavailable"; }
-
 			// turn filter's a=b,c=d OR a=b into an array
 			if ($filter) {
 				if ($DEBUG) { echo "DEBUG - Inbound filter is: #".$filter."#"; }
@@ -251,19 +249,23 @@
 				// now check each element of the array and convert into SQL for queries
 				// below
 				$i=0;
+				reset($filterfields);
 				while (list($name,$value) = each($filterfields)) {
 					if ($DEBUG) { echo "<br>DEBUG - Filter intermediate strings 2: #".$name."# => #".$value."#"; }
 					$isstd=0;
 					if ($name && empty($value)) {
-						reset($stock_fields);
-						while (list($fname,$fvalue)=each($stock_fields)) {
+						if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is empty (NULL)"; }
+						$check_stock = $this->stock_contact_fields + array('id' => 'id', 'tid' => 'tid', 'lid' => 'lid', 'owner' => 'owner');
+						while (list($fname,$fvalue)=each($check_stock)) {
 							if ($fvalue==$name) {
 								$filterlist .= $name.' is NULL,';
 								$isstd=1;
+								if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is a stock field"; }
 								break;
 							}
 						}
 						if (!$isstd) {
+							if ($DEBUG) { echo "<br>DEBUG - filter field '".$name."' is an extra field"; }
 							$filterlist2 .= 'b.'.$name.' is NULL,';
 							$fieldlist2  .= 'b.'.$name.',';
 						}
@@ -303,6 +305,7 @@
 
 			if (!$sort) { $sort = "ASC";  }
 
+			reset($stock_fields);
 			if ($order) {
 				while (list($name,$value)=each($stock_fields)) {
 					if ($name == $order) {
@@ -400,7 +403,7 @@
 			}
 
 			if ($DEBUG && $filtertemp) {
-				echo "<br>DEBUG - Filtering with: #" . $filtertemp . "#";
+				echo "<br>DEBUG - Final SELECT - Filtering with: #" . $filtertemp . "#";
 			}
 
 			$qfields = $std . $ext;
@@ -418,12 +421,12 @@
 			$sql = 'SELECT a.id,a.tid,a.lid,a.owner,b.id,'
 				. $qfields . ' FROM '.$this->std_table.' AS a, '
 				. $tmp_table .' AS b WHERE a.id=b.id ' . $filtertemp
-				. $squery . $ordermethod;
+				. $squery;
 
  			$this->db3->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db3->num_rows();
 
-			$this->db->query($sql. " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
+			$this->db->query($sql. " " . " " . $ordermethod . " " . $this->db->limit($start,$offset),__LINE__,__FILE__);
 
 			$i=0;
 			while ($this->db->next_record()) {
