@@ -110,7 +110,7 @@
      }
   }
 
-  echo '<p><table border="0" width="100%">';
+  echo '<p><table border="0" width="100%" align="center">';
 ?>
  <script langague="JavaScript">
     function opennotifywindow()
