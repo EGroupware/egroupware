@@ -1160,7 +1160,7 @@
 									'size' => $_FILES['upload_file']['size'][$i],
 									'mime_type' => $_FILES['upload_file']['type'][$i],
 									'deleteable' => 'Y',
-									'comment' => stripslashes($upload_comment[$i])
+									'comment' => stripslashes($_POST['upload_comment'][$i])
 								)
 							);
 							$this->bo->vfs->set_attributes($tmp_arr);
@@ -1188,7 +1188,7 @@
 								'relatives'	=> array(RELATIVE_ALL),
 								'attributes'=> array(
 									'mime_type' => $_FILES['upload_file']['type'][$i],
-									'comment' => stripslashes($upload_comment[$i])
+									'comment' => stripslashes($_POST['upload_comment'][$i])
 								)
 							));
 
@@ -1207,7 +1207,7 @@
 							'relatives'	=> array(RELATIVE_ALL),
 							'attributes'=> array(
 								'mime_type' => $_FILES['upload_file']['type'][$i],
-								'comment' => $upload_comment[$i]
+								'comment' => stripslashes($_POST['upload_comment'][$i])
 							)
 						));
 
