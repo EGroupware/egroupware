@@ -48,6 +48,11 @@
 				$this->userlang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
 			}
 			$this->add_app('common');
+			if (!count($GLOBALS['lang']))
+			{
+				$this->userlang = 'en';
+				$this->add_app('common');
+			}
 			$this->add_app($GLOBALS['phpgw_info']['flags']['currentapp']);
 		}
 

@@ -254,29 +254,25 @@
 			$accounts = CreateObject('phpgwapi.accounts');
 			$prefs = CreateObject('phpgwapi.preferences', $accounts->name2id($_COOKIE['last_loginid']));
 
-			if (! $prefs->account_id)
-			{
-				// Default to the first language, the users browser accepts.
-				list($lang) = explode(',',$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-				$lang = substr($lang,0,2);
-				if(strlen($lang) != 2) $lang="en";
-				$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $lang;
-			}
-			else
+			if ($prefs->account_id)
 			{
 				$GLOBALS['phpgw_info']['user']['preferences'] = $prefs->read_repository();
 			}
-			#print 'LANG:' . $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] . '<br>';
 		}
-		else
+		if (!isset($_COOKIE['last_loginid']) || !$prefs->account_id)
 		{
 			// If the lastloginid cookies isn't set, we will default to the first language,
 			// the users browser accepts.
-			list($lang) = explode(',',$_SERVER["HTTP_ACCEPT_LANGUAGE"]);
-			$lang = substr($lang,0,2);
-			if(strlen($lang) != 2) $lang="en";
+			list($lang) = explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			if (strlen($lang) > 2)
+			{
+				$lang = substr($lang,0,2);
+			}
 			$GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] = $lang;
 		}
+		#print 'LANG:' . $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'] . '<br>';
+
+		$GLOBALS['phpgw']->translation->init();	// this will set the language according to the (new) set prefs
 		$GLOBALS['phpgw']->translation->add_app('login');
 		$GLOBALS['phpgw']->translation->add_app('loginscreen');
 		if (lang('loginscreen_message') == 'loginscreen_message*')
