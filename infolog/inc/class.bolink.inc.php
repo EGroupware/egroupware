@@ -316,7 +316,7 @@
 		*/
 		function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='')
 		{
-			return unlink2($link_id,$app,$id,$owner,$app2,$id2);
+			return $this->unlink2($link_id,$app,$id,$owner,$app2,$id2);
 		}
 
 		function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='')
