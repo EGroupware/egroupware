@@ -1,5 +1,4 @@
 <?php
-
   /**************************************************************************\
   * phpGroupWare - Calendar                                                  *
   * http://www.phpgroupware.org                                              *
@@ -55,16 +54,15 @@
 
     echo "<TR><TD COLSPAN=7 ALIGN=\"center\"><FONT SIZE=\"2\">";
 
-    if (! $friendly)
-       echo "<A HREF=\"".$phpgw->link(
-			$phpgw_info["server"]["app_root"]."/",
-			"year=$thisyear&month=$thismonth")
-	  . "\">";
+    if (! $friendly) {
+       echo "<A HREF=\"".$phpgw->link("index.php","year=$thisyear&month=$thismonth") . "\">";
+    }
 
-    if ($showyear)
+    if ($showyear) {
        echo lang_common(date("F",$monthstart)) . " $thisyear" . "</a></font></td></tr>";
-    else
+    } else {
        echo lang_common(date("F",$monthstart)) . "</A></FONT></TD></TR>";
+    }
 
     echo "<tr>"
        . "<td>" . lang_calendar("Su") . "</td>"
