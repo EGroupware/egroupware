@@ -64,7 +64,6 @@ help	common	nl	Help
 high	common	nl	Hoog
 home	common	nl	Start
 human resources	common	nl	Personeel
-inventory	common	nl	Magazijn
 it has been more then x days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd
 january	common	nl	Januari
 july	common	nl	Juli
@@ -107,7 +106,6 @@ previous page	common	nl	Vorige pagina
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
 private	common	nl	Privé
-Projects	common	nl	Projecten
 rename	common	nl	Hernoemen
 saturday	common	nl	Zaterdag
 save	common	nl	Opslaan

@@ -42,7 +42,6 @@ news type	admin	nl	Nieuwstype
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 permissions	admin	nl	Rechten
 permissions this group has	admin	nl	Rechten van deze groep
-Projects	admin	nl	Projecten
 re-enter password	admin	nl	Wachtwoord opnieuw invoeren
 remove all users from this group	admin	nl	Verwijder alle gebruikers uit deze groep
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt

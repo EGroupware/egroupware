@@ -163,7 +163,6 @@ image	all	fr	Image
 imap server type	all	fr	Type de Serveur IMAP
 import lang set	all	fr	Importer table de langage
 installed applications	all	fr	Applications installées
-inventory	all	fr	Inventaire
 ip	all	fr	IP
 it has been more then x days since you changed your password	all	fr	Cela fait plus de %1 jours que vous n'avez pas modifi&eacute; votre mot de passe
 january	all	fr	Janvier
@@ -230,7 +229,6 @@ non-standard	all	fr	Non standard
 none	all	fr	Aucun
 normal	all	fr	Normal
 note: this feature does *not* change your email password. this will need to be done manually.	all	fr	Note: Ceci ne change pas le mot de passe de votre email. Ceci doit &ecirc;tre fait manuellement.
-notes	all	fr	Notes
 november	all	fr	Novembre
 no_file_name	all	fr	Aucun nom de fichier sp&eacute;cifi&eacute;
 october	all	fr	Octobre

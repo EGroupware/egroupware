@@ -42,7 +42,6 @@ news type	admin	da	Nyheds type
 percent of users that logged out	admin	da	Procent af brugere som er logget ud
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Denne gruppes rettigheder
-Projects	admin	da	Projekter
 re-enter password	admin	da	Indtast password igen
 remove all users from this group	admin	da	Fjern alle brugere fra denne gruppe
 select permissions this group will have	admin	da	Vælg de rettigheder, denne gruppe får

@@ -14,8 +14,6 @@ language	preferences	ja	言語
 max matchs per page	preferences	ja	１ページ最大行数
 monitor newsgroups	preferences	ja	購読設定
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ja	※注意：電子メールのパスワードは変更しません。電子メールのパスワードは、手動で変更してください。
-notes access	preferences	ja	ノート利用許可
-notes categories	preferences	ja	カテゴリ設定
 please, select a new theme	preferences	ja	Please, select a new theme
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 select different theme	preferences	ja	異なるテーマを選択してください。
