@@ -682,6 +682,13 @@
 			}
 			*/
 
+			if ($GLOBALS['phpgw_info']['server']['account_repository'] == 'ldap' && 
+				(!$_userData['account_lastname'] && !$_userData['lastname']))
+			{
+				$error[$totalerrors] = lang('You must enter a lastname');
+				$totalerrors++;
+			}
+
 			if (!$_userData['account_lid'])
 			{
 				$error[$totalerrors] = lang('You must enter a loginid');

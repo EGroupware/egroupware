@@ -718,7 +718,7 @@
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'posixGroup';
 					$entry['objectclass'][2] = 'phpgwAccount';
-					$entry['cn']             = $account_info['account_lid'];
+					$entry['cn']             = utf8_encode($account_info['account_lid']);
 					$entry['gidnumber']      = $account_id;
 					$entry['userpassword']   = $GLOBALS['phpgw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['description']    = 'phpgw-created group';
@@ -726,9 +726,17 @@
 				else
 				{
 					$dn = 'uid=' . $account_info['account_lid'] . ',' . $this->user_context;
-					$entry['cn']        = sprintf("%s %s", $account_info['account_firstname'], $account_info['account_lastname']);
-					$entry['sn']        = $account_info['account_lastname'];
-					$entry['givenname'] = $account_info['account_firstname'];
+					
+					$entry['cn']	= utf8_encode(sprintf("%s %s",
+						$account_info['account_firstname'],
+						$account_info['account_lastname']
+					));
+								
+					$entry['sn']	= utf8_encode($account_info['account_lastname']);
+						
+					if($account_info['account_firstname'])
+						$entry['givenname']	= utf8_encode($account_info['account_firstname']);
+						
 					$entry['uid']       = $account_info['account_lid'];
 					$entry['uidnumber'] = $account_id;
 					if ($GLOBALS['phpgw_info']['server']['ldap_group_id'])
@@ -756,7 +764,7 @@
 
 				ldap_add($this->ds, $dn, $entry);
 			}
-			/* print ldap_error($this->ds); */
+			// print ldap_error($this->ds);
 
 			if($account_id && is_object($GLOBALS['phpgw']->preferences) && $default_prefs)
 			{
