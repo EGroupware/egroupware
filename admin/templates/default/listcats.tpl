@@ -5,7 +5,7 @@
   <td colspan="4" align="center" bgcolor="#c9c9c9"><b>{title_categories}<b/></td>
 </tr> 
 <tr>
-<td colspan="4" align=left>
+<td colspan="4" align="left">
   <table border="0" width="100%">
     <tr>
     {left}
@@ -17,7 +17,7 @@
   </tr>
  <tr>
   <td>&nbsp;</td>
-  <td colspan="4" align=right>
+  <td colspan="4" align="right">
   <form method="post" action="{actionurl}">
  <input type="text" name="query">&nbsp;<input type="submit" name="search" value="{lang_search}"></form></td>
  </tr>

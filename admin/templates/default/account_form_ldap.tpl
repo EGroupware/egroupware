@@ -3,7 +3,7 @@
 
  <form method="POST" action="{form_action}">
   <center>
-   <table border=0 width=85%>
+   <table border="0" width="85%">
     <tr bgcolor="{th_bg}">
       <td colspan="4">&nbsp;</td>
     </tr>
@@ -33,7 +33,7 @@
  
     <tr bgcolor="{tr_color2}">
      <td>{lang_groups}</td>
-     <td colspan=3>{groups_select}&nbsp;</td>
+     <td colspan="3">{groups_select}&nbsp;</td>
     </tr>
 
     {permissions_list}

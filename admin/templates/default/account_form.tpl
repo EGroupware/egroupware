@@ -30,6 +30,11 @@
      <td colspan=3>{groups_select}&nbsp;</td>
     </tr>
 
+    <tr bgcolor="{tr_color1}">
+     <td>{lang_expires}</td>
+     <td colspan=3>{expires_list}&nbsp;</td>
+    </tr>
+
     {permissions_list}
     
     {gui_hooks}

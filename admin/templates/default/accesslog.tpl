@@ -17,11 +17,11 @@
    {rows}
 
    <tr bgcolor="{bg_color}">
-    <td colspan=5 align=left>{footer_total}</td>
+    <td colspan="5" align="left">{footer_total}</td>
    </tr>
 
    <tr bgcolor="{bg_color}">
-    <td colspan=5 align=left>{lang_percent}</td>
+    <td colspan="5" align="left">{lang_percent}</td>
    </tr>
   </table>
 <!-- END list -->
