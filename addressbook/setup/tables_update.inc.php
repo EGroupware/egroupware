@@ -14,14 +14,15 @@
 	$test[] = '0.9.1';
 	function addressbook_upgrade0_9_1()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 
 		$oProc->AlterColumn('addressbook', 'ab_id', array('type' => 'auto', 'nullable' => false));
 		$oProc->AddColumn('addressbook', 'ab_company_id', array('type' => 'int', 'precision' => 4));
 		$oProc->AddColumn('addressbook', 'ab_title', array('type' => 'varchar', 'precision' => 60));
 		$oProc->AddColumn('addressbook', 'ab_address2', array('type' => 'varchar', 'precision' => 60));
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.2';
+		$setup_info['addressbook']['currentver'] = '0.9.2';
+		return True;
 	}
 
 	function addressbook_v0_9_2to0_9_3update_owner($table, $field)
@@ -35,11 +36,19 @@
 			{
 				$owner[count($owner)] = $phpgw_setup->db->f($field);
 			}
+			if($phpgw_setup->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre4')
+			{
+				$acctstbl = 'accounts';
+			}
+			else
+			{
+				$acctstbl = 'phpgw_accounts';
+			}
 			for($i=0;$i<count($owner);$i++)
 			{
-				$oProc->m_odb->query("select account_id from accounts where account_lid='".$owner[$i]."'");
+				$oProc->m_odb->query("SELECT account_id FROM $acctstbl WHERE account_lid='".$owner[$i]."'");
 				$oProc->m_odb->next_record();
-				$oProc->m_odb->query("update $table set $field=".$oProc->m_odb->f("account_id")." where $field='".$owner[$i]."'");
+				$oProc->m_odb->query("UPDATE $table SET $field=".$oProc->m_odb->f("account_id")." WHERE $field='".$owner[$i]."'");
 			}
 		}
 		$oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
@@ -48,94 +57,101 @@
 	$test[] = '0.9.3pre1';
 	function addressbook_upgrade0_9_3pre1()
 	{
-		global $phpgw_info;
-		v0_9_2to0_9_3update_owner('addressbook','ab_owner');
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.3pre2';
+		global $setup_info;
+
+		if(addressbook_v0_9_2to0_9_3update_owner('addressbook','ab_owner'))
+		{
+			$setup_info['addressbook']['currentver'] = '0.9.3pre2';
+			return True;
+		}
 	}
 
 	$test[] = '0.9.3pre6';
 	function addressbook_upgrade0_9_3pre6()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 
 		$oProc->AddColumn('addressbook', 'ab_url', array('type' => 'varchar', 'precision' => 255));
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.3pre7';
+		$setup_info['addressbook']['currentver'] = '0.9.3pre7';
+		return True;
 	}
 
 	$test[] = '0.9.10pre12';
 	function addressbook_upgrade0_9_10pre12()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 		$db1 = $phpgw_setup->db;
 
-		$sql = "CREATE TABLE phpgw_addressbook (
-			id int(8) PRIMARY KEY DEFAULT '0' NOT NULL auto_increment,
-			lid varchar(32),
-			tid char(1),
-			owner int(8),
-			fn varchar(64),
-			sound varchar(64),
-			org_name varchar(64),
-			org_unit varchar(64),
-			title varchar(64),
-			n_family varchar(64),
-			n_given varchar(64),
-			n_middle varchar(64),
-			n_prefix varchar(64),
-			n_suffix varchar(64),
-			label text,
-			adr_poaddr varchar(64),
-			adr_extaddr varchar(64),
-			adr_street varchar(64),
-			adr_locality varchar(32),
-			adr_region varchar(32),
-			adr_postalcode varchar(32),
-			adr_countryname varchar(32),
-			adr_work enum('n','y') NOT NULL,
-			adr_home enum('n','y') NOT NULL,
-			adr_parcel enum('n','y') NOT NULL,
-			adr_postal enum('n','y') NOT NULL,
-			tz varchar(8),
-			geo varchar(32),
-			a_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-			a_tel_work enum('n','y') NOT NULL,
-			a_tel_home enum('n','y') NOT NULL,
-			a_tel_voice enum('n','y') NOT NULL,
-			a_tel_msg enum('n','y') NOT NULL,
-			a_tel_fax enum('n','y') NOT NULL,
-			a_tel_prefer enum('n','y') NOT NULL,
-			b_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-			b_tel_work enum('n','y') NOT NULL,
-			b_tel_home enum('n','y') NOT NULL,
-			b_tel_voice enum('n','y') NOT NULL,
-			b_tel_msg enum('n','y') NOT NULL,
-			b_tel_fax enum('n','y') NOT NULL,
-			b_tel_prefer enum('n','y') NOT NULL,
-			c_tel varchar(40) DEFAULT '+1 (000) 000-0000' NOT NULL,
-			c_tel_work enum('n','y') NOT NULL,
-			c_tel_home enum('n','y') NOT NULL,
-			c_tel_voice enum('n','y') NOT NULL,
-			c_tel_msg enum('n','y') NOT NULL,
-			c_tel_fax enum('n','y') NOT NULL,
-			c_tel_prefer enum('n','y') NOT NULL,
-			d_emailtype enum('INTERNET','CompuServe','AOL','Prodigy','eWorld','AppleLink','AppleTalk','PowerShare','IBMMail','ATTMail','MCIMail','X.400','TLX') NOT NULL,
-			d_email varchar(64),
-			d_email_work enum('n','y') NOT NULL,
-			d_email_home enum('n','y') NOT NULL,
-			UNIQUE (id)
-		)";
+		$oProc->CreateTable(array('phpgw_addressbook', array(
+			'fd' => array(
+				'id'           => array('type' => 'auto', 'default' => '0', 'nullable' => False),
+				'lid'          => array('type' => 'varchar', 'precision' => 32),
+				'tid'          => array('type' => 'char', 'precision' => 1),
+				'owner'        => array('type' => 'int' => 'precision' => 4),
+				'fn'           => array('type' => 'varchar', 'precision' => 64),
+				'sound'        => array('type' => 'varchar', 'precision' => 64),
+				'org_name'     => array('type' => 'varchar', 'precision' => 64),
+				'org_unit'     => array('type' => 'varchar', 'precision' => 64),
+				'title'        => array('type' => ' varchar', 'precision' => 64),
+				'n_family'     => array('type' => ' varchar', 'precision' => 64),
+				'n_given'      => array('type' => ' varchar', 'precision' => 64),
+				'n_middle'     => array('type' => ' varchar', 'precision' => 64),
+				'n_prefix'     => array('type' => ' varchar', 'precision' => 64),
+				'n_suffix'     => array('type' => ' varchar', 'precision' => 64),
+				'label'        => array('type' => 'text'),
+				'adr_poaddr'   => array('type' => ' varchar', 'precision' => 64),
+				'adr_extaddr'  => array('type' => ' varchar', 'precision' => 64),
+				'adr_street'   => array('type' => ' varchar', 'precision' => 64),
+				'adr_locality' => array('type' => ' varchar', 'precision' => 32),
+				'adr_region'   => array('type' => ' varchar', 'precision' => 32),
+				'adr_postalcode'  => array('type' => ' varchar', 'precision' => 32),
+				'adr_countryname' => array('type' => ' varchar', 'precision' => 32),
+				'adr_work'     => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'adr_home'     => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'adr_parcel'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'adr_postal'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'tz'           => array('type' => 'varchar', 'precision' => 8),
+				'geo'          => array('type' => 'varchar', 'precision' => 32),
+				'a_tel'        => array('type' => 'varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
+				'a_tel_work'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'a_tel_home'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'a_tel_voice'  => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'a_tel_msg'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'a_tel_fax'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'a_tel_prefer' => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel'        => array('type' => ' varchar', 'precision' => 40, 'default' => '+1 (000) 000-0000', 'nullable' => False),
+				'b_tel_work'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel_home'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel_voice'  => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel_msg'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel_fax'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'b_tel_prefer' => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel'        => array('type' => ' varchar', 'precision' => 40), 'default' => '+1 (000) 000-0000', 'nullable' => False),
+				'c_tel_work'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel_home'   => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel_voice'  => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel_msg'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel_fax'    => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'c_tel_prefer' => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'd_emailtype'  => array('type' => 'varchar', 'precision' => 32),
+				'd_email'      => array('type' => 'varchar', 'precision' => 64),
+				'd_email_work' => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False),
+				'd_email_home' => array('type' => 'char' => '1', 'default' => 'n', 'nullable' => False)
+			),
+			'pk' => array('id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array('uc')
+		);
 
-		$oProc->m_odb->query($sql);
+		$oProc->CreateTable(array('phpgw_addressbook_extra', array(
+			'contact_id'    => array('type' => 'int'     => 'precision' => 4),
+			'contact_owner' => array('type' => 'int'     => 'precision' => 4),
+			'contact_name'  => array('type' => 'varchar' => 'precision' => 255),
+			'contact_value' => array('type' => 'varchar' => 'precision' => 255)
+		);
 
-		$sql = "CREATE TABLE phpgw_addressbook_extra (
-			contact_id int(11),
-			contact_owner int(11),
-			contact_name varchar(255),
-			contact_value varchar(255)
-		)";
-
-		$oProc->m_odb->query($sql);
 
 		$db1->query("SELECT * FROM addressbook");
 
@@ -143,7 +159,7 @@
 
 		while ($db1->next_record())
 		{
-			$fields['id']	  = $db1->f('ab_id');
+			$fields['id']         = $db1->f('ab_id');
 			$fields['owner']      = addslashes($db1->f('ab_owner'));
 			$fields['n_given']    = addslashes($db1->f('ab_firstname'));
 			$fields['n_family']   = addslashes($db1->f('ab_lastname'));
@@ -158,9 +174,9 @@
 			$fields['org_name']   = addslashes($db1->f('ab_company'));
 			$fields['title']      = addslashes($db1->f('ab_title'));
 			$fields['adr_street'] = addslashes($db1->f('ab_street'));
-			$fields['adr_locality']       = addslashes($db1->f('ab_city'));
-			$fields['adr_region']         = addslashes($db1->f('ab_state'));
-			$fields['adr_postalcode']     = addslashes($db1->f('ab_zip'));
+			$fields['adr_locality']   = addslashes($db1->f('ab_city'));
+			$fields['adr_region']     = addslashes($db1->f('ab_state'));
+			$fields['adr_postalcode'] = addslashes($db1->f('ab_zip'));
 
 			$extra['pager']       = $db1->f('ab_pager');
 			$extra['mphone']      = $db1->f('ab_mphone');
@@ -183,18 +199,20 @@
 
 			while (list($name,$value) = each($extra))
 			{
-				$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields['id']."','" . $$fields['owner'] . "','"
+				$sql = "INSERT INTO phpgw_addressbook_extra VALUES ('".$fields['id']."','" . $fields['owner'] . "','"
 					. addslashes($name) . "','" . addslashes($value) . "')";
 				$oProc->m_odb->query($sql);
 			}
 		}
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre13';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre13';
+		return True;
+		// Note we are still leaving the old addressbook table alone here... for third party apps if they need it
 	}
 
 	$test[] = '0.9.10pre13';
 	function addressbook_upgrade0_9_10pre13()
 	{
-		global $phpgw_info, $phpgw_setup,$oProc;
+		global $setup_info, $phpgw_setup,$oProc;
 		$db1 = $phpgw_setup->db;
 
 		$oProc->AddColumn('phpgw_addressbook', 'url',  array('type' => 'varchar', 'precision' => 128));
@@ -249,13 +267,14 @@
 				$oProc->m_odb->query($delete);
 			}
 		}
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre14';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre14';
+		return True;
 	}
 
 	$test[] = '0.9.10pre15';
 	function addressbook_upgrade0_9_10pre15()
 	{
-		global $phpgw_info, $phpgw_setup,$oProc;
+		global $setup_info, $oProc;
 
 		$oProc->AlterColumn('phpgw_addressbook', 'adr_work', 'char',     array('precision' => 1, 'default' => 'n', 'nullable' => False));
 		$oProc->AlterColumn('phpgw_addressbook', 'adr_home', 'char',     array('precision' => 1, 'default' => 'n', 'nullable' => False));
@@ -282,13 +301,14 @@
 		$oProc->AlterColumn('phpgw_addressbook', 'd_email_work', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
 		$oProc->AlterColumn('phpgw_addressbook', 'd_email_home', 'char', array('precision' => 1, 'default' => 'n', 'nullable' => False));
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre16';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre16';
+		return True;
 	}
 	
 	$test[] = '0.9.10pre16';
 	function addressbook_upgrade0_9_10pre16()
 	{
-		global $phpgw_info, $phpgw_setup, $oProc;
+		global $setup_info, $phpgw_setup, $oProc;
 
 		$oProc->RenameColumn('phpgw_addressbook', 'a_tel', 'tel_work');
 		$oProc->RenameColumn('phpgw_addressbook', 'b_tel', 'tel_home');
@@ -367,7 +387,8 @@
 				$oProc->m_odb->query($delete);
 			}
 		}
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre17';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre17';
+		return True;
 	}
 
 	$test[] = '0.9.10pre17';
@@ -418,36 +439,40 @@
 		$oProc->m_odb->query("update phpgw_addressbook set email_home=''         where email_home='n' OR email_home='y'");
 		$oProc->m_odb->query("update phpgw_addressbook set email_home_type=''    where email_home_type='n' OR  email_home_type='y'");
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre18';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre18';
+		return True;
 	}
 
 	$test[] = '0.9.10pre20';
 	function addressbook_upgrade0_9_10pre20()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 
 		$oProc->AddColumn('phpgw_addressbook', 'access', array('type' => 'char', 'precision' => 7));
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre21';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre21';
+		return True;
 	}
 
 	$test[] = '0.9.10pre21';
 	function addressbook_upgrade0_9_10pre21()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 
 		$oProc->AddColumn('phpgw_addressbook', 'cat_id', array('type' => 'varchar', 'precision' => 32));
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre22';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre22';
+		return True;
 	}
 
 	$test[] = '0.9.10pre23';
 	function addressbook_upgrade0_9_10pre23()
 	{
-		global $phpgw_info, $oProc;
+		global $setup_info, $oProc;
 
 		$oProc->m_odb->query("UPDATE phpgw_addressbook SET tid='n' WHERE tid is null");
 
-		$phpgw_info['setup']['currentver']['addressbook'] = '0.9.10pre24';
+		$setup_info['addressbook']['currentver'] = '0.9.10pre24';
+		return True;
 	}
 ?>
