@@ -23,11 +23,12 @@
 		var $me = array();
 		var $mytype = 0;
 
-		function xmlrpcval($val=-1, $type='')
+		function xmlrpcval($val = -1, $type = '')
 		{
 			$this->me = array();
 			$this->mytype = 0;
-			if ($val!=-1 || $type!='')
+
+			if ($val != -1 || $type != '')
 			{
 				if ($type=='')
 				{
