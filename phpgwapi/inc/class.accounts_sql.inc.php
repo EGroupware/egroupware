@@ -135,7 +135,7 @@
 				$sort = "DESC";
 			}
 
-			if ($order)
+			if (!empty($order) && preg_match('/^[a-zA-Z_0-9, ]+$/',$order) && (empty($sort) || preg_match('/^(DESC|ASC|desc|asc)$/',$sort)))
 			{
 				$orderclause = "ORDER BY $order $sort";
 			}
