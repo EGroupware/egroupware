@@ -38,7 +38,7 @@
     <td colspan=2><b>{lang_enablemcrypt}</b><br>
       <select name="setting[enable_mcrypt]">
         <option value="True"{mcrypt_enabled}>True
-        <option value=""{mcrypt_disabled}>False
+        <option value="False"{mcrypt_disabled}>False
       </select>
     </td>
   </tr>
