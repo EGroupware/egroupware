@@ -1,0 +1,54 @@
+<?php
+  /**************************************************************************\
+  * phpGroupWare                                                             *
+  * http://www.phpgroupware.org                                              *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
+
+  /* $Id$ */
+
+  $phpgw_info["flags"]["currentapp"] = "about";
+  include("header.inc.php");
+
+  if ($app) {
+     $sep = $phpgw->common->filesystem_separator();
+     $include = $phpgw_info["server"]["server_root"] . $sep . $app . $sep . "inc" . $sep . "about.inc.php";
+     if (is_file($include)) {
+        include($include);
+        $included = True;
+/*        if (is_file($phpgw_info["server"]["server_root"] . $sep . "inc" . $sep . "version.inc.php")) {
+           include($phpgw_info["server"]["server_root"] . "/inc/version.inc.php");
+        } */
+     } else {
+        $included = False;
+     }
+  } else {
+     $api_only = True;
+  }
+  
+  $tpl = new Template($phpgw_info["server"]["include_root"] . "/phpgwapi/templates/"
+                    . $phpgw_info["server"]["template_set"]);
+  $tpl->set_file(array("phpgw_about"         => "about.tpl",
+                       "phpgw_about_unknown" => "about_unknown.tpl"                                 
+                      ));
+
+  $tpl->set_var("webserver_url",$phpgw_info["server"]["webserver_url"]);
+  $tpl->set_var("phpgw_version","phpGroupWare API version " . $phpgw_info["server"]["versions"]["phpgwapi"]);
+  if ($included) {
+     $tpl->set_var("phpgw_app_about",about_app("",""));
+     //about_app($tpl,"phpgw_app_about");
+  } else {
+     if ($api_only) {
+        $tpl->set_var("phpgw_app_about","");
+     } else {
+        $tpl->set_var("app_header",$app);
+        $tpl->parse("phpgw_app_about","phpgw_about_unknown");
+     }
+  }
+
+  $tpl->pparse("out","phpgw_about");
+?>

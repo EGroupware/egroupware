@@ -390,7 +390,7 @@
      * Verify that the users session is still active otherwise kick them out    *
      \**************************************************************************/
      if ($phpgw_info["flags"]["currentapp"] != "home" && $phpgw_info["flags"]["currentapp"] != "logout"
-        && $phpgw_info["flags"]["currentapp"] != "preferences") {
+        && $phpgw_info["flags"]["currentapp"] != "preferences" && $phpgw_info["flags"]["currentapp"] != "about") {
 
         if (! $phpgw_info["user"]["apps"][$phpgw_info["flags"]["currentapp"]]) {
            $phpgw->common->phpgw_header();
