@@ -71,7 +71,7 @@
 			$account_id = $account['account_id'];
 			$loginid    = $account['account_lid'];
 	
-			$phpgw->nextmatchs->template_alternate_row_color(&$p);
+			$phpgw->nextmatchs->template_alternate_row_color($p);
 	
 			if (! $lastname)
 			{
