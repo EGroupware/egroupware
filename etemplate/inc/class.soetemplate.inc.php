@@ -60,19 +60,28 @@
 			'et_modified' => 'modified'
 		);
 		var $db_cols;
-
+		var $widgets_with_children = array(	// widgets that contain other widgets, for tree_walk method
+			'box' => true,
+			'vbox' => true,
+			'hbox' => true,
+			'groupbox' => true,
+			'deck' => true,
+			'grid' => true,
+			'template' => true,
+		);
+		
 		/**
 		 * constructor of the class
 		 *
 		 * calls init or read depending on a name for the template is given
 		 *
-		 * @param $name string name of the eTemplate or array with the values for all keys
-		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
-		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
-		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
-		 * @param $version string version of the eTemplate
-		 * @param $rows int initial size of the template, default 1, only used if no name given !!!
-		 * @param $cols int initial size of the template, default 1, only used if no name given !!!
+		 * @param string $name name of the eTemplate or array with the values for all keys
+		 * @param string $template template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param string $version version of the eTemplate
+		 * @param int $rows initial size of the template, default 1, only used if no name given !!!
+		 * @param int $cols initial size of the template, default 1, only used if no name given !!!
 		 */
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
@@ -92,7 +101,8 @@
 		/**
 		 * generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
 		 *
-		 * @param $num int numerical index to generate name from 1 => 'A'
+		 * @static
+		 * @param int $num numerical index to generate name from 1 => 'A'
 		 * @return string the name
 		 */
 		function num2chrs($num)
@@ -109,11 +119,13 @@
 		}
 
 		/**
-		 * constructor for a new / empty cell
+		 * constructor for a new / empty cell/widget
 		 *
 		 * nothing fancy so far
 		 *
 		 * @static
+		 * @param string $type type of the widget
+		 * @param string $name name of widget
 		 * @return array the cell
 		 */
 		function empty_cell($type='label',$name='')
@@ -127,12 +139,13 @@
 		/**
 		 * constructs a new cell in a give row or the last row, not existing rows will be created
 		 *
+		 * @deprecated as it uses this->data
 		 * @param int $row row-number starting with 1 (!)
 		 * @param string $type type of the cell
 		 * @param string $label label for the cell
 		 * @param string $name name of the cell (index in the content-array)
 		 * @param array $attributes other attributes for the cell
-		 * @return a reference to the new cell, use $new_cell = &$tpl->new_cell(); (!)
+		 * @return array a reference to the new cell, use $new_cell = &$tpl->new_cell(); (!)
 		*/
 		function &new_cell($row=False,$type='label',$label='',$name='',$attributes=False)
 		{
@@ -221,6 +234,9 @@
 
 		/**
 		 * initialises internal vars rows & cols from the data of a grid
+		 *
+		 * @static 
+		 * @param array &$grid to calc rows and cols
 		 */
 		function set_grid_rows_cols(&$grid)
 		{
@@ -239,7 +255,7 @@
 		/**
 		 * initialises internal vars rows & cols from the data of the first (!) grid
 		 *
-		 * @depricated
+		 * @deprecated as it uses this->data
 		 */
 		function set_rows_cols()
 		{
@@ -260,13 +276,13 @@
 		/**
 		 * initialises all internal data-structures of the eTemplate and sets the keys
 		 *
-		 * @param $name string name of the eTemplate or array with the values for all keys and possibly data
-		 * @param $template string template-set or '' for the default one
-		 * @param $lang string language or '' for the default one
-		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
-		 * @param $version string version of the eTemplate
-		 * @param $rows int initial size of the template, default 1
-		 * @param $cols int initial size of the template, default 1
+		 * @param string $name name of the eTemplate or array with the values for all keys and possibly data
+		 * @param string $template template-set or '' for the default one
+		 * @param string $lang language or '' for the default one
+		 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param string $version version of the eTemplate
+		 * @param int $rows initial size of the template, default 1
+		 * @param int $cols initial size of the template, default 1
 		 */
 		function init($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
@@ -318,11 +334,11 @@
 		/**
 		 * reads an eTemplate from the database
 		 *
-		 * @param $name string name of the eTemplate or array with the values for all keys
-		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
-		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
-		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
-		 * @param $version string version of the eTemplate
+		 * @param string $name name of the eTemplate or array with the values for all keys
+		 * @param string $template template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param string $version version of the eTemplate
 		 * @return boolean True if a fitting template is found, else False
 		 */
 		function read($name,$template='default',$lang='default',$group=0,$version='')
@@ -393,11 +409,12 @@
 
 		/**
 		 * Reads an eTemplate from the filesystem, the keys are already set by init in read
+		 *
 		 * @return boolean True if a template was found, else False
 		 */
 		function readfile()
 		{
-			list($app,$name) = split("\.",$this->name,2);
+			list($app,$name) = explode('.',$this->name,2);
 			$template = $this->template == '' ? 'default' : $this->template;
 
 			if ($this->lang)
@@ -466,13 +483,13 @@
 		}
 
 		/**
-		 * Lists the eTemplates matching the given criteria
+		 * Lists the eTemplates matching the given criteria, sql wildcards % and _ possible
 		 *
-		 * @param $name string name of the eTemplate or array with the values for all keys
-		 * @param $template string template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
-		 * @param $lang string language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
-		 * @param $group int id of the (primary) group of the user or 0 for none, not used at the moment !!!
-		 * @param $version string version of the eTemplate
+		 * @param string $name name of the eTemplate or array with the values for all keys
+		 * @param string $template template-set, '' loads the prefered template of the user, 'default' loads the default one '' in the db
+		 * @param string $lang language, '' loads the pref. lang of the user, 'default' loads the default one '' in the db
+		 * @param int $group id of the (primary) group of the user or 0 for none, not used at the moment !!!
+		 * @param string $version version of the eTemplate
 		 * @return array of arrays with the template-params
 		 */
 		function search($name,$template='default',$lang='default',$group=0,$version='')
@@ -624,7 +641,7 @@
 		 * The never empty type field ensures a cell does not disapear completely.
 		 * Calls it self recursivly for arrays / the rows
 		 *
-		 * @param $arr the array to compress
+		 * @param array $arr the array to compress
 		 * @return array
 		 */
 		function compress_array($arr)
@@ -652,7 +669,7 @@
 		 *
 		 * the returned array ($data_too > 0) can be used with init to recreate the template 
 		 *
-		 * @param $data_too int 0 = no data array, 1 = data array too, 2 = serialize data array
+		 * @param int $data_too 0 = no data array, 1 = data array too, 2 = serialize data array
 		 * @return array with template-data
 		 */
 		function as_array($data_too=0)
@@ -679,6 +696,11 @@
 		/**
 		 * saves eTemplate-object to db, can be used as saveAs by giving keys as params
 		 *
+		 * @param string $name name of the eTemplate or array with the values for all keys
+		 * @param string $template template-set
+		 * @param string $lang language or ''
+		 * @param int $group id of the (primary) group, not used at the moment !!!
+		 * @param string $version version of the eTemplate
 		 * @return int number of affected rows, 1 should be ok, 0 somethings wrong
 		 */
 		function save($name='',$template='.',$lang='.',$group='',$version='.')
@@ -780,7 +802,7 @@
 		/**
 		 * dumps all eTemplates to <app>/setup/etemplates.inc.php for distribution
 		 *
-		 * @param $app string app- or template-name contain app
+		 * @param string $app app- or template-name contain app
 		 * @return string translated message with number of dumped templates or error-message (webserver has no write access)
 		 */
 		function dump2setup($app)
@@ -827,34 +849,8 @@
 			return lang("%1 eTemplates for Application '%2' dumped to '%3'",$n,$app,$file);
 		}
 
-		function getToTranslateCell($cell,&$to_trans)
-		{
-			$strings = explode('|',$cell['help']);
-
-			if ($cell['type'] != 'image')
-			{
-				$strings = array_merge($strings,explode('|',$cell['label']));
-			}
-			list($extra_row) = explode(',',$cell['size']);
-			if (substr($cell['type'],0,6) == 'select' && !empty($extra_row) && !intval($extra_row))
-			{
-				$strings[] = $extra_row;
-			}
-			if (!empty($cell['blur']))
-			{
-				$strings[] = $cell['blur'];
-			}
-			foreach($strings as $str)
-			{
-				if (strlen($str) > 1 && $str[0] != '@')
-				{
-					$to_trans[trim(strtolower($str))] = $str;
-				}
-			}
-		}
-
 		/**
-		 * extracts all texts: labels and helptexts from an eTemplate-object
+		 * extracts all texts: labels and helptexts from the cells of an eTemplate-object
 		 *
 		 * some extensions use a '|' to squezze multiple texts in a label or help field
 		 *
@@ -864,29 +860,16 @@
 		{
 			$to_trans = array();
 
-			reset($this->data); each($this->data); // skip width
-			while (list($row,$cols) = each($this->data))
-			{
-				foreach($cols as $col => $cell)
-				{
-					$this->getToTranslateCell($cell,$to_trans);
-
-					if ($cell['type'] == 'vbox' || $cell['type'] == 'hbox')
-					{
-						for ($n = 1; $n <= $cell['size']; ++$n)
-						{
-							$this->getToTranslateCell($cell[$n],$to_trans);
-						}
-					}
-				}
-			}
+			$this->widget_tree_walk('getToTranslateCell',$to_trans);
+			
+			//echo '<b>'.$this->name.'</b>'; _debug_array($to_trans);
 			return $to_trans;
 		}
 
 		/**
 		 * Read all eTemplates of an app an extracts the texts to an array
 		 *
-		 * @param $app string name of the app
+		 * @param string $app name of the app
 		 * @return array with texts
 		 */
 		function getToTranslateApp($app)
@@ -914,9 +897,9 @@
 		/**
 		 * Write new lang-file using the existing one and all text from the eTemplates
 		 *
-		 * @param $app string app- or template-name
-		 * @param $lang string language the messages in the template are, defaults to 'en'
-		 * @param $additional array extra texts to translate, if you pass here an array with all messages and
+		 * @param string $app app- or template-name
+		 * @param string $lang language the messages in the template are, defaults to 'en'
+		 * @param array $additional extra texts to translate, if you pass here an array with all messages and
 		 * 	select-options they get writen too (form is <unique key> => <message>)
 		 * @return string translated message with number of messages written (total and new), or error-message
 		 */
@@ -996,7 +979,7 @@
 		/**
 		 * Imports the dump-file /$app/setup/etempplates.inc.php unconditional (!)
 		 *
-		 * @param $app string app name
+		 * @param string $app app name
 		 * @return string translated message with number of templates imported
 		 */
 		function import_dump($app)
@@ -1023,7 +1006,7 @@
 		 * Get called on every read of a eTemplate, caches the result in phpgw_info.
 		 * The timestamp of the last import for app gets written into the db.
 		 *
-		 * @param $app string app- or template-name
+		 * @param string $app app- or template-name
 		 * @return string translated message with number of templates imported
 		 */
 		function test_import($app)	// should be done from the setup-App
@@ -1053,6 +1036,7 @@
 		
 		/**
 		 * prints/echos the template's content, eg. for debuging
+		 *
 		 * @param boolean $backtrace = true give a function backtrace
 		 * @param boolean $no_other_objs = true dump other objs (db, html, ...) too
 		 */
@@ -1081,4 +1065,166 @@
 				}
 			}
 		}
-	};
+
+		/**
+		 * applys a function to each widget in the children tree of the template
+		 *
+		 * The function should be defined as [&]func([&]$widget,[&]$extra)
+		 * If the function returns anything but null or sets $extra['__RETURN__NOW__'] (func has to reference $extra !!!), 
+		 * the walk stops imediatly and returns that result
+		 *
+		 * Only some widgets have a sub-tree of children: *box, grid, template, ...
+		 * For them we call tree_walk($widget,$func,$extra) instead of func direct
+		 *
+		 * @param string/array $func function to use or array($obj,'method')
+		 * @param mixed &$extra extra parameter passed to function
+		 * @return mixed return-value of func or null if nothing returned at all
+		 */
+		function &widget_tree_walk($func,&$extra)
+		{
+			if (!is_callable($func))
+			{
+				echo "<p><b>boetemplate($this->name)::widget_tree_walk</b>(".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
+				return false;
+			}
+			foreach($this->children as $c => $nul)
+			{
+				$child = &$this->children[$c];
+				if (isset($this->widgets_with_children[$child['type']]))
+				{
+					$result =& $this->tree_walk($child,$func,$extra);
+				}
+				else 
+				{
+					$result =& $func($child,$extra);
+				}
+				if (!is_null($result) || isset($extra['__RETURN_NOW__'])) break;
+			}
+			return $result;
+		}
+				
+		/**
+		 * applys a function to each child in the tree of a widget (incl. the widget itself) 
+		 *
+		 * The function should be defined as [&]func([&]$widget,[&]$extra) [] = optional
+		 * If the function returns anything but null or sets $extra['__RETURN__NOW__'] (func has to reference $extra !!!), 
+		 * the walk stops imediatly and returns that result
+		 *
+		 * Only some widgets have a sub-tree of children: *box, grid, template, ...
+		 * For performance reasons the function use recursion only if a widget with children contains 
+		 * a further widget with children.
+		 *
+		 * @param array $widget the widget(-tree) the function should be applied too
+		 * @param string/array $func function to use or array($obj,'method')
+		 * @param mixed &$extra extra parameter passed to function
+		 * @return mixed return-value of func or null if nothing returned at all
+		 */
+		function &tree_walk(&$widget,$func,&$extra)
+		{
+			if (!is_callable($func))
+			{
+				echo "<p><b>boetemplate::tree_walk</b>(, ".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
+				return false;
+			}
+			$result =& $func($widget,$extra);
+			if (!is_null($result) || isset($extra['__RETURN__NOW__']) || !isset($this->widgets_with_children[$widget['type']]))
+			{
+				return $result;
+			}
+			switch($widget['type'])
+			{
+				case 'box':
+				case 'vbox':
+				case 'hbox':
+				case 'groupbox':
+				case 'deck':
+					for($n = 1; is_array($widget[$n]); ++$n)
+					{
+						$child = &$widget[$n];
+						if (isset($this->widgets_with_children[$child['type']]))
+						{
+							$result =& $this->tree_walk($child,$func,$extra);
+						}
+						else
+						{
+							$result =& $func($child,$extra);
+						}
+						if (!is_null($result) || isset($extra['__RETURN__NOW__'])) return $result;
+					}
+					break;
+
+				case 'grid':
+					$data = &$widget['data'];
+					if (!is_array($data)) break;	// no children
+
+					foreach($data as $r => $row)
+					{
+						if (!$r || !is_array($row)) continue;
+
+						foreach($row as $c => $col)
+						{
+							$child = &$data[$r][$c];
+							if (isset($this->widgets_with_children[$child['type']]))
+							{
+								$result =& $this->tree_walk($child,$func,$extra);
+							}
+							else
+							{
+								$result =& $func($child,$extra);
+							}
+							if (!is_null($result) || isset($extra['__RETURN__NOW__'])) return $result;
+						}
+					}
+					break;
+					
+				case 'template':
+					if (!isset($widget['obj']) && $widget['name'][0] != '@')
+					{
+						$widget['obj'] = new etemplate;
+						if (!$widget['obj']->read($widget['name'])) $widget['obj'] = false;
+					}
+					if (!is_object($widget['obj'])) break;	// cant descent into template
+					
+					$result =& $widget['obj']->widget_tree_walk($func,$extra);
+					break;
+			}
+			return $result;
+		}
+	}
+
+	if (!function_exists('getToTranslateCell'))
+	{
+		/**
+		 * extracts all translatable labels from a widget
+		 *
+		 * @param array $cell the widget
+		 * @param array &$to_trans array with (lowercased) label => translation pairs
+		 */
+		function getToTranslateCell($cell,&$to_trans)
+		{
+			//echo $cell['name']; _debug_array($cell);
+			$strings = explode('|',$cell['help']);
+
+			if ($cell['type'] != 'image')
+			{
+				$strings = array_merge($strings,explode('|',$cell['label']));
+			}
+			list($extra_row) = explode(',',$cell['size']);
+			if (substr($cell['type'],0,6) == 'select' && !empty($extra_row) && !intval($extra_row))
+			{
+				$strings[] = $extra_row;
+			}
+			if (!empty($cell['blur']))
+			{
+				$strings[] = $cell['blur'];
+			}
+			foreach($strings as $str)
+			{
+				if (strlen($str) > 1 && $str[0] != '@')
+				{
+					$to_trans[trim(strtolower($str))] = $str;
+				}
+			}
+		}
+	}
+	
