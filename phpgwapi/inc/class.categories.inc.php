@@ -89,7 +89,7 @@
 		@param $order order by
 		@result $cats array
 		*/
-		function return_array($type,$start,$limit,$query = '',$sort = '',$order = '',$public = False, $parent_id = '')
+		function return_array($type,$start,$limit = True,$query = '',$sort = '',$order = '',$public = False, $parent_id = '')
 		{
 			global $phpgw, $phpgw_info;
 
@@ -243,7 +243,7 @@
 
 			if ($format == 'select')
 			{
-				$cats = $this->return_array($type,$start,$limit = False,$query,$sort,$order,$public);
+				$cats = $this->return_array($type,$start,False,$query,$sort,$order,$public);
 
 				for ($i=0;$i<count($cats);$i++)
 				{
