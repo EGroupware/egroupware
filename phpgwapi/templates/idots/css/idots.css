@@ -1,19 +1,19 @@
 /*
-	StyleSheet coding standards:
+StyleSheet coding standards:
 
-	1. use lowercase if possible
+1. use lowercase if possible
 
-	2. format styles like this:
-	
-		body
-		{
-			font-size: 12px;
-			font-family: Verdana, Arial, Helvetica, sans-serif
-		}
+2. format styles like this:
 
-	3. existing html elements on top of the document, then all self defined .classes and at last all self defined #id's.
+body
+{
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif
+}
 
-	4. close every property with ; also the last one.
+3. existing html elements on top of the document, then all self defined .classes and at last all self defined #id's.
+
+4. close every property with ; also the last one.
 */
 
 body 
@@ -85,7 +85,7 @@ select
 td
 {
 	font-size: 11px;
-/*	padding-top:1px;
+	/*	padding-top:1px;
 	padding-bottom:1px;*/
 }
 
@@ -136,7 +136,7 @@ a.textSidebox
 	padding-top:2px;
 	padding-bottom:2px;
 	border-top: #aaaaaa 1px solid;
-	
+
 }
 
 .sideboxSpace
@@ -212,7 +212,7 @@ a.textSidebox
 	height:15px;
 	padding-left:170px;
 	margin-top: 13px;
-/*	margin-bottom: 2px;*/
+	/*	margin-bottom: 2px;*/
 }
 
 #divSubContainer
@@ -246,13 +246,13 @@ a.textSidebox
 
 #divAppboxHeader
 {
-	width:100%;
+	/*width:100%;*/
 	background-image:url(../images/appbox-header-background.png);
 	background-repeat: repeat-x;
 	height:36px;
 	line-height:28px;
 	text-align:center;
-/*	padding-top:7px;*/
+	/*	padding-top:7px;*/
 	padding-bottom:0px;
 	font-size:14px;
 	font-weight:bold;
@@ -270,7 +270,7 @@ a.textSidebox
 
 #divAppbox
 {
-	width:100%;
+/*	width:100%;*/
 	background-color:#f7f7f7;
 	padding:5px;
 	border-bottom-color:#9c9c9c;
@@ -282,6 +282,48 @@ a.textSidebox
 	border-right-color:#9c9c9c;
 	border-right-width:1px;
 	border-right-style:solid;
+}
+
+#fmStatusBar
+{
+	margin-left:4px;
+	margin-bottom:3px;
+	font-size: 10px; 
+/*	font-family: Verdana, Arial, Helvetica, sans-serif;*/
+	
+
+}
+
+
+.fmButton
+{
+	background-image:url(../images/buttonbackground.png);
+	width:28px;
+	height:28px;
+	background-repeat: no-repeat;
+}
+
+#fmLocation
+{
+	margin-left:4px;
+	margin-bottom:3px;
+
+}
+
+#fmMenu
+{
+	position:relative;
+}
+#fmFileWindow
+{
+	background-color:#ffffff;
+	margin-left:4px;
+	padding:5px;
+	position:relative;
+	border-right: #cccccc 1px solid; 
+	border-top: #9c9c9c 2px solid; 
+	border-left: #9c9c9c 2px solid; 
+	border-bottom: #cccccc 1px solid
 }
 
 #user_info
