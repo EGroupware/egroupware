@@ -1,6 +1,0 @@
-<!-- $Id$ -->
-<table width="100%" border="0" bordercolor="#FFFFFF" cellspacing="2" cellpadding="2">
- {row}
-</table>
-
-
