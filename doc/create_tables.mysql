@@ -23,24 +23,24 @@ insert into applications (app_name, app_title, app_enabled, app_order, app_table
 insert into applications (app_name, app_title, app_enabled, app_order, app_tables) values ('cron_apps', 'cron_apps', 0, 0, NULL);
 
 CREATE TABLE accounts (
-  con		int(11) DEFAULT '0' NOT NULL auto_increment,
-  loginid	varchar(25) NOT NULL,
-  passwd	varchar(32) NOT NULL,
-  firstname	varchar(50),
-  lastname	varchar(50),
-  permissions	text,
-  groups	varchar(30),
-  lastlogin	int(11),
-  lastloginfrom	varchar(255),
-  lastpasswd_change int(11),
-  status enum('A','L') DEFAULT 'A' NOT NULL,
-  PRIMARY KEY (con),
-  UNIQUE loginid (loginid)
+  account_id           int(11) DEFAULT '0' NOT NULL auto_increment,
+  account_lid          varchar(25) NOT NULL,
+  account_pwd          varchar(32) NOT NULL,
+  account_firstname    varchar(50),
+  account_lastname     varchar(50),
+  account_permissions  text,
+  account_groups       varchar(30),
+  account_lastlogin    int(11),
+  account_lastloginfrom varchar(255),
+  account_lastpwd_change int(11),
+  account_status       enum('A','L') DEFAULT 'A' NOT NULL,
+  PRIMARY KEY (account_id),
+  UNIQUE account_lid (account_lid)
 );
 
-insert into accounts (loginid,passwd,firstname,lastname,permissions,groups,
-status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
-':admin:email:todo:addressbook:calendar:hr:',',1,','A');
+insert into accounts (account_lid,account_pwd,account_firstname,account_lastname,account_permissions,
+account_groups,account_status) values ('demo','81dc9bdb52d04dc20036dbd8313ed055','Demo','Account',
+':admin:email:todo:addressbook:calendar:',',1,','A');
 
 create table groups (
   group_id	int NOT NULL auto_increment,
