@@ -33,8 +33,7 @@
 
   $tpl->set_file(array("footer" => "footer.tpl"));
   $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images");
-//  $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
-  $tpl->set_var("table_bg_color","990000");
+  $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
   echo $tpl->finish($tpl->parse("out","footer"));
 
   // This will need to be converted into the classic template

@@ -21,8 +21,7 @@
      $tpl->set_file(array("navbar" => "navbar.tpl"));
 
      $tpl->set_var("img_root",$phpgw_info["server"]["webserver_url"] . "/phpgwapi/templates/verdilak/images");
-     //$tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
-     $tpl->set_var("table_bg_color","990000");
+     $tpl->set_var("table_bg_color",$phpgw_info["theme"]["navbar_bg"]);
 
      if ($phpgw_info["flags"]["navbar_target"]) {
         $target = ' target="' . $phpgw_info["flags"]["navbar_target"] . '"';
