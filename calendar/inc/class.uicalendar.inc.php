@@ -1723,16 +1723,19 @@
 
 			unset($thisdate);
 			$thisdate = mktime(0,0,0,$this->bo->month,$this->bo->day,$this->bo->year) - $this->tz_offset;
-			$sun = $this->bo->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $this->tz_offset - 7200;
+//			$sun = $this->bo->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $this->tz_offset - 7200;
+			$sun = $this->bo->datetime->get_weekday_start($this->bo->year,$this->bo->month,$this->bo->day) - $this->tz_offset;
 
 			$str = '';
 			for ($i = -7; $i <= 7; $i++)
 			{
 				$begin = $sun + (604800 * $i);
 				$end = $begin + 604799;
-				$str .= '<option value="' . $GLOBALS['phpgw']->common->show_date($begin,'Ymd') . '"'.($begin <= $thisdate && $end >= $thisdate?' selected':'')
-				   .'>' . lang($GLOBALS['phpgw']->common->show_date($begin,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($begin,'d') . '-'
-					. lang($GLOBALS['phpgw']->common->show_date($end,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($end,'d') . '</option>'."\n";
+				$str .= '<option value="' . $GLOBALS['phpgw']->common->show_date($begin,'Ymd') . '"'.($begin <= $thisdate && $end >= $thisdate?' selected':'').'>'
+				   . $GLOBALS['phpgw']->common->show_date($begin,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']) . ' - '
+				   . $GLOBALS['phpgw']->common->show_date($end,$GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat']);
+//				   . lang($GLOBALS['phpgw']->common->show_date($begin,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($begin,'d') . '-'
+//					. lang($GLOBALS['phpgw']->common->show_date($end,'F')) . ' ' . $GLOBALS['phpgw']->common->show_date($end,'d') . '</option>'."\n";
 			}
  
 			$var = Array(
