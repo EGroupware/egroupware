@@ -643,6 +643,11 @@
 				$appname = 'phpgwapi';
 			}
 
+			if (!isset($GLOBALS['phpgw_info']['server']['template_set']) && isset($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set']))
+			{
+				$GLOBALS['phpgw_info']['server']['template_set'] = $GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'];
+			}
+
 			// Setting this for display of template choices in user preferences
 			if ($GLOBALS['phpgw_info']['server']['template_set'] == 'user_choice')
 			{
