@@ -149,7 +149,17 @@
 			}
 			$allValues = ldap_get_entries($ds, $sri);
 
-			$entry['cn']                    = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+			$this->data['account_type'] = $allValues[0]['phpgwaccounttype'][0];
+			
+			if($acct_type == 'u')
+			{
+				$entry['cn']                 = sprintf("%s %s", $this->data['firstname'], $this->data['lastname']);
+			}
+			else
+			{
+				$entry['cn'] 	              = $this->data['firstname'];
+			}
+				
 			$entry['sn']                    = $this->data['lastname'];
 			$entry['givenname']             = $this->data['firstname'];
 			$entry['phpgwaccountlastlogin']     = $this->data['lastlogin'];
@@ -184,7 +194,7 @@
 				while (list($key,$val) = each($allValues[0]))
 				{
 					/* Don't include row count and headers */
-					if (gettype($key) == 'string' && $key != 'count')
+					if (is_string($key) && $key != 'count')
 					{
 						if (is_array($val))
 						{
@@ -323,19 +333,20 @@
 			$account_id = get_account_id($accountid);
 			$account_lid = $this->id2name($account_id);
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$sri = ldap_search($ds, $this->user_context, 'uid='.$account_lid);
+			
+			$sri = ldap_search($ds, $this->group_context, 'gidnumber='.$account_id);
 			$allValues = ldap_get_entries($ds, $sri);
+
+			if(!$allValues[0][dn])
+			{
+				$sri = ldap_search($ds, $this->user_context, 'uid='.$account_lid);
+				$allValues = ldap_get_entries($ds, $sri);
+			}
 
 			if ($allValues[0]['dn'])
 			{
 				$del = ldap_delete($ds, $allValues[0]['dn']);
 			}
-
-			/* Do this last since we are depending upon this record to get the account_lid above */
-			$tables_array = Array('phpgw_accounts');
-			$this->db->lock($tables_array);
-			$this->db->query('DELETE FROM phpgw_accounts WHERE account_id='.$account_id);
-			$this->db->unlock();
 		}
 
 		function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = '')
@@ -481,7 +492,7 @@
 			static $account_type;
 
 			$account_id = get_account_id($accountid);
-			if(@isset($account_type[$account_id]))
+			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
 			{
 				return $account_type[$account_id];
 			}
@@ -522,12 +533,12 @@
 			$users  = array();
 			$groups = array();
 
-			if(gettype($account) == 'integer')
+			if(is_int($account))
 			{
 				$ldapgroup = 'gidnumber';
 				$ldapacct  = 'uidnumber';
 				/* If data is cached, use it. */
-				if(@isset($by_id[$account]))
+				if(@isset($by_id[$account]) && @$by_id[$account])
 				{
 					return $by_id[$account];
 				}
@@ -537,7 +548,7 @@
 				$ldapgroup = 'cn';
 				$ldapacct  = 'uid';
 				/* If data is cached, use it. */
-				if(@isset($by_lid[$account]))
+				if(@isset($by_lid[$account]) && @$by_lid[$account])
 				{
 					return $by_lid[$account];
 				}
@@ -580,7 +591,6 @@
 		function create($account_info)
 		{
 			$ds = $GLOBALS['phpgw']->common->ldapConnect();
-			$this->acct_type = $account_type;
 
 			/* echo '<br>in create for account_lid: "'.$account_lid.'"'; */
 			if (empty($account_info['account_id']) || !$account_info['account_id'])
@@ -596,7 +606,7 @@
 			$entry['phpgwaccounttype']          = $account_info['account_type'];
 			$entry['phpgwaccountexpires']       = $account_info['account_expires'];
 
-			if ($account_type == 'g')
+			if ($account_info['account_type'] == 'g')
 			{
 				$sri = ldap_search($ds, $this->group_context, 'cn=' . $account_info['account_lid']);
 			}
@@ -608,7 +618,7 @@
 
 			if ($GLOBALS['phpgw_info']['server']['ldap_extra_attributes'] && $account_info['account_type'] != 'g')
 			{
-				$entry['homedirectory'] = $account_info['homedirectory'] ? $account_info['homedirectory'] :$GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_info['account_lid'];
+				$entry['homedirectory'] = $account_info['homedirectory'] && $account_info['homedirectory'] != $GLOBALS['phpgw_info']['server']['ldap_account_home'] ? $account_info['homedirectory'] : $GLOBALS['phpgw_info']['server']['ldap_account_home'].SEP.$account_info['account_lid'];
 				$entry['loginshell'] = $account_info['loginshell'] ? $account_info['loginshell'] : $GLOBALS['phpgw_info']['server']['ldap_account_shell'];
 			}
 
