@@ -101,7 +101,7 @@
 			   . " lastname='" . addslashes($n_lastname) . "', permissions='"
 	  		   . $phpgw->accounts->add_app("",True) . "', status='"
 			   . "$n_account_status', groups='"
-			   . $phpgw->groups->array_to_string("none",$n_groups)
+			   . $phpgw->accounts->array_to_string("none",$n_groups)
 			   . "' where loginid='$n_loginid'");
 
         $phpgw->db->unlock();
