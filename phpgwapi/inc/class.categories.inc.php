@@ -35,6 +35,7 @@
 		var $db;
 		var $total_records;
 		var $grants;
+
 		/*!
 		@function filter
 		@abstract ?
@@ -45,8 +46,11 @@
 		{
 			switch ($type)
 			{
-				case 'subs':  $s = " and cat_parent != '0'"; break;
-				case 'mains': $s = " and cat_parent = '0'"; break;
+				case 'subs':         $s = " and cat_parent != '0'"; break;
+				case 'mains':        $s = " and cat_parent = '0'"; break;
+				case 'appandmains':  $s = " and cat_appname='" . $this->app_name . "' and cat_parent ='0'"; break;
+				case 'appandsubs':   $s = " and cat_appname='" . $this->app_name . "' and cat_parent !='0'"; break;
+				default: return False;
 			}
 			return $s;
 		}
@@ -60,9 +64,11 @@
 		{
 			switch($for)
 			{
-				case 'app':		$w = " where cat_appname='" . $this->app_name . "'"; break;
-				case 'subs':		$w = " where cat_parent != '0'"; break;
-				case 'mains':		$w = " where cat_parent = '0'"; break;
+				case 'app':          $w = " where cat_appname='" . $this->app_name . "'"; break;
+				case 'appandmains':  $w = " where cat_appname='" . $this->app_name . "' and cat_parent ='0'";
+				case 'appandsubs':   $w = " where cat_appname='" . $this->app_name . "' and cat_parent !='0'";
+				case 'subs':         $w = " where cat_parent != '0'"; break;
+				case 'mains':        $w = " where cat_parent = '0'"; break;
 				default:	return False;
 			
 			}
@@ -83,18 +89,19 @@
 		@param $order order by
 		@result $cats array
 		*/
-		function return_array($type = 'all',$start,$limit,$query = '',$sort = '',$order = '',$public = 'False')
+		function return_array($type,$start,$limit,$query = '',$sort = '',$order = '',$public = False, $parent_id = '')
 		{
 			global $phpgw, $phpgw_info;
 
 			$this->db2 = $this->db;
 			
-			if ($public == 'True') 
+			if ($public) 
 			{
-			$public_cats = " OR cat_appname='phpgw' ";
+				$public_cats = " OR cat_appname='phpgw' ";
 			}
 
 			$filter = $this->filter($type);
+
 			if (!$sort)
 			{
 				$sort = "ASC";
@@ -124,20 +131,26 @@
 			    $grant_cats = " (cat_owner='" . $this->account_id . "' OR cat_access='public') ";
 			}
 
+			if ($parent_id)
+			{
+				$parent_filter = " and cat_parent='$parent_id'";
+			}
+
 			if ($query)
 			{
-				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats) AND "
+				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND "
 				    . " $grant_cats AND (cat_name like '%$query%' OR cat_description like '%$query%') $filter $ordermethod";
 			}
 			else
 			{
-				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats) AND " 
+				$sql = "SELECT * from phpgw_categories WHERE (cat_appname='" . $this->app_name . "' $public_cats $parent_filter) AND " 
 					. " $grant_cats $filter $ordermethod";
 			}
 
 			$this->db2->query($sql,__LINE__,__FILE__);
 			$this->total_records = $this->db2->num_rows();
 			$this->db->query($sql. " " . $this->db->limit($start,$limit),__LINE__,__FILE__);
+			//echo '<b>TEST:</b>' . $sql;
 
 			$i = 0;
 			while ($this->db->next_record())
@@ -213,19 +226,19 @@
 		@param $selected ?
 		@result $s array - populated with categories
 		*/
-		function formated_list($format,$type,$selected = '',$public = 'False')
+		function formated_list($format,$type,$selected = '',$public = False)
 		{
 			global $phpgw;
 			$filter = $this->filter($type);
 
-			if ($public == 'True')
+			if ($public)
 			{
-			$public_cats = " OR cat_appname='phpgw' ";
+				$public_cats = " OR cat_appname='phpgw' ";
 			}
 
 			if ($format == 'select')
 			{
-			$cats = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
+				$cats = $this->return_array($type,$start,$limit,$query,$sort,$order,$public);
 
 				for ($i=0;$i<count($cats);$i++)
 				{
