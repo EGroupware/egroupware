@@ -61,8 +61,8 @@
     }
 
     function group_search($owner=0) {
-      global $phpgw;
-      global $phpgw_info;
+      global $phpgw, $phpgw_info;
+      
       $owner = $owner==$phpgw_info["user"]["account_id"]?0:$owner;
       $groups = substr($phpgw->accounts->sql_search("calendar_entry.cal_group",intval($owner)),4);
       if (!$groups) {
@@ -1116,7 +1116,7 @@
 			                         . "/images/mini_day_block.gif" . '"');
 			   //$p->set_var('bgcolor2','#'.$phpgw_info["theme"]["cal_today"]);
 			} else {
-  			$p->set_var("day_image","");
+              $p->set_var("day_image","");
 	          $p->set_var('bgcolor2','#FFFFFF');
 	        }
 	        if(!$this->printer_friendly) {
@@ -1130,6 +1130,7 @@
                $p->set_var('dayname',$str);
             }
 	  	  } else {
+            $p->set_var("day_image","");
             $p->set_var('bgcolor2','#FEFEFE');
             $str = "";
 //            if(!$this->printer_friendly) {
