@@ -33,13 +33,13 @@ important that some basic rules be followed when developing in CVS:
 	project ;)
 
 6.  If you are working in the API, or on some other application which could
-	affect the useability for users and developers, please be sure to fully
+	affect the usability for users and developers, please be sure to fully
 	test your changes.  It is recommended that you visit a large sampling of
 	applications to ensure that they still work as expected after your
 	changes.  This could include the functioning of one application or the
 	API against mysql AND pgsql, at least.  It could also affect the function
 	of an application that uses LDAP instead of SQL for storage and
-	retreival.
+	retrieval.
 
 7.  Do not write table update scripts that alter content or structure of the
 	API or of another application's tables.
@@ -56,7 +56,7 @@ important that some basic rules be followed when developing in CVS:
 	the idsociety template.  Do not put a 31x31 color icon in the idsociety
 	template.
 
-11. Basicly all template files are located in the app_name/templates/default/
+11. Basically, all template files are located in the app_name/templates/default/
 	directory. Please do only commit template files to other app_name/templates/
 	_layout_/directories if they _differ_ from the default version. The same is
 	valid for images. All application images are located in the app_name/templates/
