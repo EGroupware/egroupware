@@ -1,7 +1,6 @@
 This is a preliminary etiquette doc for phpGroupWare.  Please check it from time to
 time for updates:
 
-
 	phpGroupWare is a large project, with possibly over 50 developers at the time
 of this writing.  In its current location, it is impossible to restrict access
 for each developer to a particular module or application.  As such, it is
