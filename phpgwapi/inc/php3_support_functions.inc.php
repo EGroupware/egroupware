@@ -1,5 +1,4 @@
 <?php
-	//$debugme = "on";
 	 /**************************************************************************\
 	 * phpGroupWare API - PHP3 Compatibility layer                              *
 	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
@@ -23,10 +22,12 @@
 	 * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	 \**************************************************************************/
 
+	/* $Id$ */
+
 	function is_bool($var)
 	{
 		$retval = gettype($var) ;
-		if ( strcmp( $retval, "unknown type") == 0 )
+		if ( strcmp( $retval, 'unknown type') == 0 )
 		{
 			/* Chances are that we have a boolean */
 			if ($var == True || $var == False)
@@ -44,7 +45,7 @@
 		}
 	}
 
-	function array_keys ($arr, $term="")
+	function array_keys ($arr, $term='')
 	{
 		$t = array();
 		while (list($k,$v) = each($arr))
@@ -58,9 +59,8 @@
 		}
 	}
 
-
 /*
-	function array_reverse ($array, $preserve_keys = FALSE)
+	function array_reverse ($array, $preserve_keys = False)
 	{
 		for(list($key,$value) = @end($array); list($key,$value) = @prev($array); )
 		{
@@ -70,7 +70,7 @@
 	}
 */
 	
-	function array_search ($needle, $haystack, $strict = FALSE)
+	function array_search ($needle, $haystack, $strict = False)
 	{
 		@reset($haystack);
 		while(list($key,$value) = each($haystack))
@@ -80,10 +80,10 @@
 				return $key;
 			}
 		}
-		return FALSE; 
+		return False; 
 	}
 
-	function in_array ($needle, $haystack, $strict = FALSE)
+	function in_array ($needle, $haystack, $strict = False)
 	{
 		if(is_array ($haystack) && count($haystack))
 		{
@@ -91,10 +91,10 @@
 			{
 				if($needle==$x[1] && (!$strict || gettype($needle)==gettype($x[1])))
 				{
-					return TRUE;
+					return True;
 				}
 			}
-			return FALSE; 
+			return False; 
 		}
 	}
 
