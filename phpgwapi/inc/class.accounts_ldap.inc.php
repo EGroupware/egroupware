@@ -107,6 +107,7 @@
 			$this->data["lastloginfrom"]     = $this->db->f("account_lastloginfrom");
 			$this->data["lastpasswd_change"] = $this->db->f("account_lastpwd_change");
 			$this->data["status"]            = $this->db->f("account_status");
+			$this->data['expires'] = -1;
 
 			return $this->data;
 		}
