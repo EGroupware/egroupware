@@ -1,6 +1,6 @@
 %1 already exists as a file	filemanager	zh	文件%1已存在
 application	filemanager	zh	应用程序
-back to file manager	filemanager	zh	返回文件管理器
+back to file manager	filemanager	zh	返回网上文件柜
 cancel editing %1 without saving	filemanager	zh	取消编辑%1, 不保存
 cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
 cannot replace %1 because it is a directory	filemanager	zh	%1是目录, 无法被替换
@@ -45,7 +45,7 @@ file %1 could not be created.	filemanager	zh	文件 %1 不能创建.
 file name	filemanager	zh	文件名
 file names cannot contain "%1"	filemanager	zh	文件名不能包含"%1"
 file names cannot contain \ or /	filemanager	zh	文件名不能包含\或/
-filemanager	common	zh	文件管理
+filemanager	common	zh	网上文件柜
 filemanager preferences	filemanager	zh	首选项
 files	filemanager	zh	文件
 files is this directory	filemanager	zh	文件总数
@@ -90,7 +90,7 @@ show command line (experimental. dangerous.)	filemanager	zh	显示命令行(本�
 show help	filemanager	zh	显示提示信息
 size	filemanager	zh	大小
 sort by:	filemanager	zh	排序方式
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	zh	文件管理器前瞻版, 仅用于测试, 欢迎报告Bug.
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	zh	网上文件柜前瞻版, 仅用于测试, 欢迎报告Bug.
 total files	filemanager	zh	所有文件
 unknown mime-type defaults to text/plain when viewing	filemanager	zh	以文本方式查看未知mime类型的文件
 unused space	filemanager	zh	可用空间
@@ -100,7 +100,7 @@ updated comment for %1	filemanager	zh	%1的注释已更新
 upload	filemanager	zh	上传
 upload fields	filemanager	zh	上传区域
 upload files	filemanager	zh	上传文件
-use new experimental filemanager?	filemanager	zh	是否使用文件管理器前瞻版?
+use new experimental filemanager?	filemanager	zh	是否使用网上文件柜前瞻版?
 used space	filemanager	zh	已用空间
 users	filemanager	zh	用户
 version	filemanager	zh	版本
