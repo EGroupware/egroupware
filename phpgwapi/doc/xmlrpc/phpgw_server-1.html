@@ -1,0 +1,296 @@
+<HTML
+><HEAD
+><TITLE
+>   Business layer requests
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="HOME"
+TITLE="   phpGroupWare XML-RPC/SOAP Methodology
+  "
+HREF="phpgw_server.html"><LINK
+REL="PREVIOUS"
+TITLE="   phpGroupWare XML-RPC/SOAP Methodology
+  "
+HREF="phpgw_server.html"><LINK
+REL="NEXT"
+TITLE="   More to come...
+  "
+HREF="phpgw_server-2.html"></HEAD
+><BODY
+CLASS="SECT1"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>phpGroupWare XML-RPC/SOAP Methodology</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="phpgw_server.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="phpgw_server-2.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN33"
+>Business layer requests</A
+></H1
+><P
+>   Once a successful login return packet has been received and sessionid/kp3 have been extracted, every subsequent packet sent to the phpgroupware server must be preceded by an Authorization header. Here is a sample header:
+  </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>POST /phpgroupware/xmlrpc.php HTTP/1.0
+User-Agent: PHP XMLRPC 1.0
+Host: my.local.host
+Authorization: Basic ZDgxNDIyZDRkYjg5NDEyNGNiMzZlMDhhZTdlYzAxZmY6NTU3YzkyYjBmNGE4ZDVlOTUzMzI2YmU2OTQyNjM3YjQ=
+Content-Type: text/xml
+Content-Length: 875
+  </PRE
+></TD
+></TR
+></TABLE
+><P
+>   The longish string is a base64 encoding of the $sessionid . ':' . $kp3. For now this is our only supported authentication method. Additional methods would probably also affect the methodCalls. This is certainly open to discussion. Following is a typical request for some contact data:
+  </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?xml version="1.0"?&#62;
+&#60;methodCall&#62;
+&#60;methodName&#62;addressbook.boaddressbook.read_entries&#60;/methodName&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;start&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;1&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;limit&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;5&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;fields&#60;/name&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;n_given&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;n_given&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;n_family&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;n_family&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;query&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;filter&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;sort&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;order&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodCall&#62;
+  </PRE
+></TD
+></TR
+></TABLE
+><P
+>   Successful response:
+  </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?xml version="1.0"?&#62;
+&#60;methodResponse&#62;
+&#60;params&#62; 
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;0&#60;/name&#62;
+&#60;value&#62;&#60;struct&#62; 
+&#60;member&#62;&#60;name&#62;id&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;1&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;lid&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;tid&#60;/name&#62; 
+&#60;value&#62;&#60;string&#62;n&#60;/string&#62;&#60;/value&#62; 
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;owner&#60;/name&#62; 
+&#60;value&#62;&#60;string&#62;500&#60;/string&#62;&#60;/value&#62; 
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;access&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;private&#60;/string&#62;&#60;/value&#62; 
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;cat_id&#60;/name&#62; 
+&#60;value&#62;&#60;string&#62;1&#60;/string&#62;&#60;/value&#62; 
+&#60;/member&#62; 
+&#60;member&#62;&#60;name&#62;n_given&#60;/name&#62; 
+&#60;value&#62;&#60;string&#62;Alan&#60;/string&#62;&#60;/value&#62; 
+&#60;/member&#62; 
+&#60;/struct&#62;&#60;/value&#62; 
+&#60;/member&#62; 
+&#60;member&#62;&#60;name&#62;1&#60;/name&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;id&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;2&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;lid&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;tid&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;n&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;owner&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;500&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;access&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;private&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;cat_id&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;1&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;n_given&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;Andy&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/member&#62;
+...
+  </PRE
+></TD
+></TR
+></TABLE
+><P
+>   Unauthorized access attempt returns:
+  </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;methodResponse&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;string&#62;UNAUTHORIZED&#60;/string&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodResponse&#62;
+  </PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="phpgw_server.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="phpgw_server.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="phpgw_server-2.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>phpGroupWare XML-RPC/SOAP Methodology</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>More to come...</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

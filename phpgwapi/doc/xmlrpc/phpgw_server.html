@@ -1,0 +1,305 @@
+<HTML
+><HEAD
+><TITLE
+>   phpGroupWare XML-RPC/SOAP Methodology
+  </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="NEXT"
+TITLE="   Business layer requests
+  "
+HREF="phpgw_server-1.html"></HEAD
+><BODY
+CLASS="ARTICLE"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>phpGroupWare XML-RPC/SOAP Methodology</A
+></H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+></A
+></H3
+><HR></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN8"
+>System level requests</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN10"
+>Login and authentication</A
+></H2
+><P
+>    Authentication for user logins is handled internally no differently than for the typical phpGroupWare login via web browser. Server logins, added for XML-RPC and SOAP, are only slightly different. For either protocol, user and server login and authentication and subsequent requests are handled by their respective server apps, xmlrpc.php and soap.php. A server is identified by a custom HTTP header, without which a normal user login will be undertaken.
+   </P
+><P
+>    A client or server sends the appropriate XML-RPC or SOAP packet containing host, user, and password information to the phpgw server. The server then assigns a sessionid and key, which is returned to the client in the appropriate format.
+   </P
+><P
+>    Our current method for authenticating requests after successful login is via the Authorization: Basic HTTP header to be sent by the client or requesting server. The format of this header is a base64 encoding of the assigned sessionid and kp3 variables, seperated by a ':'.
+   </P
+><P
+>    Further security may be obtained by using SSL on the client and server. In the future, we may encrypt/descrypt the data on either end, or at least provide this as an option. The sessionid and key variables will make this possible, and relatively secure.
+   </P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN16"
+>system.login</A
+></H3
+><P
+>     The first request a client will make is the system.login method. Here is a sample of a server login packet in XML-RPC:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?xml version="1.0"?&#62;
+&#60;methodCall&#62;
+&#60;methodName&#62;system.login&#60;/methodName&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;server_name&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;my.host.name&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;username&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;bubba&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;password&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;gump&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62; &#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodCall&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     And the same in SOAP:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?xml version="1.0"?&#62;
+&#60;SOAP-ENV:Envelope
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance" xmlns:xsd="http://www.w3.org/1999/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:si="http://soapinterop.org/xsd"
+xmlns:ns6="http://soapinterop.org" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&#62;
+&#60;SOAP-ENV:Body&#62; &#60;ns6:system_login&#62;
+&#60;server_name xsi:type=":string"&#62;my.host.name&#60;/server_name&#62;
+&#60;username xsi:type=":string"&#62;bubba&#60;/username&#62;
+&#60;password xsi:type=":string"&#62;gump&#60;/password&#62;
+&#60;/ns6:system_login&#62;
+&#60;/SOAP-ENV:Body&#62;
+&#60;/SOAP-ENV:Envelope&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     The same style of packet would be required for a user/client login. A successful login should yield the following reply:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;methodResponse&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;sessionid&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;cf5c5534307562fc57915608377db007&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;kp3&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;2fe54daa11c8d52116788aa3f93cb70e&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodResponse&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     And a failed login:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;methodResponse&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;GOAWAY&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;XOXO&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodResponse&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     eqweqw
+    </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN27"
+>system.logout</A
+></H3
+><P
+>     Logout:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;?xml version="1.0"?&#62;
+&#60;methodCall&#62;
+&#60;methodName&#62;system.logout&#60;/methodName&#62;
+&#60;params&#62; &#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;sessionid&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;ea35cac53d2c12bd05caecd97304478a&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;member&#62;&#60;name&#62;kp3&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;4f2b256e0da4e7cbbebaac9f1fc8ca4a&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodCall&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+><P
+>     Logout worked:
+    </P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;methodResponse&#62;
+&#60;params&#62;
+&#60;param&#62;
+&#60;value&#62;&#60;struct&#62;
+&#60;member&#62;&#60;name&#62;GOODBYE&#60;/name&#62;
+&#60;value&#62;&#60;string&#62;XOXO&#60;/string&#62;&#60;/value&#62;
+&#60;/member&#62;
+&#60;/struct&#62;&#60;/value&#62;
+&#60;/param&#62;
+&#60;/params&#62;
+&#60;/methodResponse&#62;
+    </PRE
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="phpgw_server-1.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Business layer requests</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
