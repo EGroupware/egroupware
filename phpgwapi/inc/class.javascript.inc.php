@@ -86,8 +86,9 @@
 		*/
 		function get_body_attribs()
 		{
-			$js  = ($this->body['onLoad'] ? 'onLoad="' . $this->body['onLoad'] . '"' : '');
-			$js .= ($this->body['onUnload'] ? 'onUnLoad="' . $this->body['onUnload'] . '"': '');
+			$js  = ($this->body['onLoad'] ? 'onLoad="' . addslashes($this->body['onLoad']) . '"' : '');
+			$js .= ($this->body['onUnload'] ? 'onUnLoad="' . addslashes($this->body['onUnload']) . '"': '');
+			$js .= ($this->body['onResize'] ? 'onResize="' . addslashes($this->body['onResize']) . '"': '');
 			return $js;
 		}
 
@@ -157,6 +158,16 @@
 		function set_onunload($code)
 		{
 			$this->body['onUnload'] .= $code;
+		}
+
+		/**
+		* Sets an onResize action for a page
+		*
+		* @param string javascript to be used
+		*/
+		function set_onresize($code)
+		{
+			$this->body['onResize'] .= $code;
 		}
 
 		/**
