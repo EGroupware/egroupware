@@ -75,7 +75,7 @@
 		{
 			if ($_POST['convert'])
 			{
-				$buffer = $this->bo->import($tsvfile,$_POST['conv_type'],$_POST['private'],$_POST['fcat_id']);
+				$buffer = $this->bo->import($_FILES['tsvfile']['tmp_name'],$_POST['conv_type'],$_POST['private'],$_POST['fcat_id']);
 
 				if ($_POST['download'] == '')
 				{

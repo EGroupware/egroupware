@@ -81,7 +81,7 @@
 				$this->contacts->add($GLOBALS['phpgw_info']['user']['account_id'],$entry,$access,$cat_id);
 			}
 			$num = $i - 1;
-			return lang('Successfully imported x records into your addressbook.',$num);
+			return lang('Successfully imported %1 records into your addressbook.',$num);
 		}
 	}
 ?>
