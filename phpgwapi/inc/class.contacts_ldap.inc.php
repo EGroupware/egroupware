@@ -308,7 +308,7 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='')
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='',$cquery='')
 		{
 			if(!$start)
 			{
@@ -406,7 +406,16 @@
 			$ldap_fields = array();
 			$myfilter = '';
 
-			if($query)
+			if($cquery)
+			{
+				$cfields = array(
+					'fn'       => 'cn',
+					'n_family' => 'sn',
+					'org_name' => 'o'
+				);
+				$myfilter = $this->makefilter($filterfields,$cfields,$cquery,$DEBUG,True);
+			}
+			elseif($query)
 			{
 				reset($this->stock_contact_fields);
 				$myfilter = $this->makefilter($filterfields,$this->stock_contact_fields,$query,$DEBUG);
@@ -498,7 +507,7 @@
 		}
 
 		/* Used by read() above to build the ldap filter string */
-		function makefilter($qarray,$extra='',$query='', $DEBUG=False)
+		function makefilter($qarray,$extra='',$query='', $DEBUG=False,$first=False)
 		{
 			if(!is_array($qarray))
 			{
@@ -547,7 +556,14 @@
 						}
 						else
 						{
-							$oquery .= '(' . $x . '=*' . $y . '*)';
+							if($first)
+							{
+								$oquery .= '(' . $x . '=' . $y . '*)';
+							}
+							else
+							{
+								$oquery .= '(' . $x . '=*' . $y . '*)';
+							}
 							$hasor = True;
 						}
 					}

@@ -301,7 +301,7 @@
 		}
 
 		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='')
+		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='',$cquery='')
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
@@ -482,7 +482,21 @@
 
 			$filtermethod = '';
 
-			if($query)
+			if($cquery)
+			{
+				$cfields = array(
+					'fn'       => 'cn',
+					'n_family' => 'sn',
+					'org_name' => 'o'
+				);
+				while(list($f,$x) = each($cfields))
+				{
+					$sql .= " $f LIKE '$cquery%' OR ";
+				}
+				$sql = substr($sql,0,-3) . ') ' . $fand . $filtermethod . $ordermethod;
+				unset($f); unset($x);
+			}
+			elseif($query)
 			{
 				$query  = ereg_replace("'",'',$query);
 				$query  = ereg_replace('"','',$query);
