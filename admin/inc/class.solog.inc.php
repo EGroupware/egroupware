@@ -79,7 +79,7 @@
 		function get_error_e($parms)
 		{	
 			// Fixed From
-			if ($parms['from'] == '')
+			if (!isset($parms['from']))
 			{
 				$parms['from'] = array('phpgw_accounts');
 			}
@@ -89,7 +89,7 @@
 			} 
 
 			// Fix Where
-			if ($parms['where'] == '')
+			if (!isset($parms['where']))
 			{
 				$parms['where'] = array('phpgw_log.log_user = phpgw_accounts.account_id');
 			}
@@ -99,7 +99,7 @@
 			}
 			
 			// Fix Default Fields
-			if ($parms['fields'] == '')
+			if (!isset($parms['fields']))
 			{
 				$parms['fields'] = $this->get_error_cols_e();
 			}
@@ -116,7 +116,7 @@
 			
 			// Build From_Clause
 			$from_clause = 'FROM phpgw_log, phpgw_log_msg ';
-			if ($from != '')
+			if (isset($from))
 			{
 				$from[] = 'phpgw_log';
 				$from[] = 'phpgw_log_msg';
@@ -125,7 +125,7 @@
 		    
 			// Build Where_Clause
 			$where_clause = 'WHERE phpgw_log.log_id = phpgw_log_msg.log_msg_log_id ';
-			if ($where != '')
+			if (isset($where))
 			{
 				$where[] = 'phpgw_log.log_id = phpgw_log_msg.log_msg_log_id';
 				$where_clause = 'WHERE ' . implode(' AND ',$where) . ' ';
@@ -133,22 +133,22 @@
 		
 			// Build Order_By_Clause
 			$orderby_clause = 'Order By phpgw_log.log_id, phpgw_log_msg.log_msg_seq_no ';
-			if ($orderby != '')
+			if (isset($orderby))
 			{
 				$orderby_clause = 'Order By ' . implode(', ',$orderby);
 			}
 			
 			// If no Fields specified default to *
-			if ($fields == '')
+			if (!isset($fields))
 			{
-				$fields = $this->error_cols;
+				$fields = $this->error_cols();
 			}
 			
 			$rows = array();
-			$rowno = 0;
 			
 			// Do Select 
-			$this->db->query("select ". implode(', ',array_keys($fields)).' '.$from_clause.$where_clause.$orderby_clause,__LINE__,__FILE__);
+			$select = "select ". implode(', ',array_keys($fields)).' '.$from_clause.$where_clause.$orderby_clause;
+			$this->db->query($select,__LINE__,__FILE__);
 			while($this->db->next_record())
 			{
 				reset($fields);
@@ -156,8 +156,7 @@
 				{
 					$this_row[$fname] = $this->db->f($fname);
 				};
-				$rows[$rowno] = $this_row;
-				$rowno++;
+				$rows[] = $this_row;
 			};
 			return $rows;
 		}
