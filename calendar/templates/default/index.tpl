@@ -1,15 +1,5 @@
 <!-- $Id$ -->
 {printer_friendly}
-<head>
-<style type="text/css">
-<!--
-  .tablecell {
-    width: 80px;
-    height: 80px;
-  }
--->
-</style>
-</head>
 <table border="0" width="100%">
  <tr>
   <td align="left" valign="top">
