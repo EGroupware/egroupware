@@ -278,12 +278,29 @@
 			return $new_ldap;
 		}
 
-		function formatted_address($id = '',$fields = '',$business = True)
+		function formatted_address($id, $business = True)
 		{
-			$font = $GLOBALS['phpgw_info']['theme']['font'];
-
 			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
 			$s = CreateObject('phpgwapi.sbox');
+
+			$fields = array
+			(
+				'n_given'				=> 'n_given',
+				'n_family'				=> 'n_family',
+				'title'					=> 'title',
+				'org_name'				=> 'org_name',
+				'org_unit'				=> 'org_unit',
+				'adr_one_street'		=> 'adr_one_street',
+				'adr_one_locality'		=> 'adr_one_locality',
+				'adr_one_postalcode'	=> 'adr_one_postalcode',
+				'adr_one_region'		=> 'adr_one_region',
+				'adr_one_countryname'	=> 'adr_one_countryname',
+				'adr_two_street'		=> 'adr_two_street',
+				'adr_two_locality'		=> 'adr_two_locality',
+				'adr_two_postalcode'	=> 'adr_two_postalcode',
+				'adr_two_region'		=> 'adr_two_region',
+				'adr_two_countryname'	=> 'adr_two_countryname'
+			);
 
 			$address = $this->read_single_entry($id,$fields);
 
@@ -294,6 +311,15 @@
 
 			if ($business)
 			{
+				if ($address[0]['org_name'])
+				{
+					$company = $address[0]['org_name'];
+				}
+				else
+				{
+					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				}
+
 				$street  = $address[0]['adr_one_street'];
 				$city    = $address[0]['adr_one_locality'];
 				$zip     = $address[0]['adr_one_postalcode'];
@@ -302,6 +328,7 @@
 			}
 			else
 			{
+				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
 				$street  = $address[0]['adr_two_street'];
 				$city    = $address[0]['adr_two_locality'];
 				$zip     = $address[0]['adr_two_postalcode'];
@@ -323,19 +350,217 @@
 				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
 			}
 
-			$a .= $t->set_var('font',$font);
-			$a .= $t->set_var('title',$title);
-			$a .= $t->set_var('firstname',$address[0]['n_given']);
-			$a .= $t->set_var('lastname',$address[0]['n_family']);
-			$a .= $t->set_var('company',$address[0]['org_name']);
+			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
+			$a .= $t->set_var('company',$company);
 			$a .= $t->set_var('department',$address[0]['org_unit']);
 			$a .= $t->set_var('street',$street);
 			$a .= $t->set_var('city',$city);
 			$a .= $t->set_var('zip',$zip);
 			$a .= $t->set_var('state',$state);
 
-			$countryname = $s->get_full_name($country);
-			$a .= $t->set_var('country',lang($countryname));
+			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			{
+				$countryname = $s->get_full_name($country);
+				$a .= $t->set_var('country',lang($countryname));
+			}
+
+			$a .= $t->fp('out','address_format');
+			return $a;
+		}
+
+		function formatted_address_full($id, $business = True, $fontsize = '2')
+		{
+			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
+			$s = CreateObject('phpgwapi.sbox');
+
+			$fields = array
+			(
+				'n_given'				=> 'n_given',
+				'n_family'				=> 'n_family',
+				'title'					=> 'title',
+				'org_name'				=> 'org_name',
+				'org_unit'				=> 'org_unit',
+				'adr_one_street'		=> 'adr_one_street',
+				'adr_one_locality'		=> 'adr_one_locality',
+				'adr_one_postalcode'	=> 'adr_one_postalcode',
+				'adr_one_region'		=> 'adr_one_region',
+				'tel_work'				=> 'tel_work',
+				'tel_fax'				=> 'tel_fax',
+				'email'					=> 'email',
+				'url'					=> 'url',
+				'adr_one_countryname'	=> 'adr_one_countryname',
+				'adr_two_street'		=> 'adr_two_street',
+				'adr_two_locality'		=> 'adr_two_locality',
+				'adr_two_postalcode'	=> 'adr_two_postalcode',
+				'adr_two_region'		=> 'adr_two_region',
+				'adr_two_countryname'	=> 'adr_two_countryname',
+				'tel_home'				=> 'tel_home',
+				'email_home'			=> 'email_home'
+			);
+
+			$address = $this->read_single_entry($id,$fields);
+
+			if ($address[0]['title'])
+			{
+				$title = $address[0]['title'] . '&nbsp;';
+			}
+
+			if ($business)
+			{
+				if ($address[0]['org_name'])
+				{
+					$company = $address[0]['org_name'];
+				}
+				else
+				{
+					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				}
+
+				$street		= $address[0]['adr_one_street'];
+				$city		= $address[0]['adr_one_locality'];
+				$zip		= $address[0]['adr_one_postalcode'];
+				$state		= $address[0]['adr_one_region'];
+				$country	= $address[0]['adr_one_countryname'];
+				$tel		= $address[0]['tel_work'];
+				$email		= $address[0]['email'];
+			}
+			else
+			{
+				$company	= $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				$street		= $address[0]['adr_two_street'];
+				$city		= $address[0]['adr_two_locality'];
+				$zip		= $address[0]['adr_two_postalcode'];
+				$state		= $address[0]['adr_two_region'];
+				$country	= $address[0]['adr_two_countryname'];
+				$tel		= $address[0]['tel_home'];
+				$email		= $address[0]['email_home'];
+			}
+
+			if (! $country)
+			{
+				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
+			}
+
+			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
+			{
+				$a = $t->set_file(array('address_format' => 'full_format_' . strtolower($country) . '.tpl'));
+			}
+			else
+			{
+				$a = $t->set_file(array('address_format' => 'full_format_us.tpl'));
+			}
+
+			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
+			$a .= $t->set_var('fontsize',$fontsize);
+			$a .= $t->set_var('lang_url',lang('url'));
+			$a .= $t->set_var('lang_email',lang('email'));
+			$a .= $t->set_var('lang_fax',lang('fax number'));
+			$a .= $t->set_var('lang_fon',lang('phone number'));
+			$a .= $t->set_var('company',$company);
+			$a .= $t->set_var('department',$address[0]['org_unit']);
+			$a .= $t->set_var('street',$street);
+			$a .= $t->set_var('city',$city);
+			$a .= $t->set_var('zip',$zip);
+			$a .= $t->set_var('state',$state);
+			$a .= $t->set_var('email',$email);
+			$a .= $t->set_var('tel',$tel);
+			$a .= $t->set_var('fax',$address[0]['tel_fax']);
+			$a .= $t->set_var('url',$address[0]['url']);
+
+			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			{
+				$countryname = $s->get_full_name($country);
+				$a .= $t->set_var('country',lang($countryname));
+			}
+
+			$a .= $t->fp('out','address_format');
+			return $a;
+		}
+
+		function formatted_address_line($id, $business = True, $fontsize = '2')
+		{
+			$t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('addressbook'));
+			$s = CreateObject('phpgwapi.sbox');
+
+			$fields = array
+			(
+				'n_given'				=> 'n_given',
+				'n_family'				=> 'n_family',
+				'title'					=> 'title',
+				'org_name'				=> 'org_name',
+				'adr_one_street'		=> 'adr_one_street',
+				'adr_one_locality'		=> 'adr_one_locality',
+				'adr_one_postalcode'	=> 'adr_one_postalcode',
+				'adr_one_region'		=> 'adr_one_region',
+				'adr_one_countryname'	=> 'adr_one_countryname',
+				'adr_two_street'		=> 'adr_two_street',
+				'adr_two_locality'		=> 'adr_two_locality',
+				'adr_two_postalcode'	=> 'adr_two_postalcode',
+				'adr_two_region'		=> 'adr_two_region',
+				'adr_two_countryname'	=> 'adr_two_countryname'
+			);
+
+			$address = $this->read_single_entry($id,$fields);
+
+			if ($address[0]['title'])
+			{
+				$title = $address[0]['title'] . '&nbsp;';
+			}
+
+			if ($business)
+			{
+				if ($address[0]['org_name'])
+				{
+					$company = $address[0]['org_name'];
+				}
+				else
+				{
+					$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				}
+
+				$street  = $address[0]['adr_one_street'];
+				$city    = $address[0]['adr_one_locality'];
+				$zip     = $address[0]['adr_one_postalcode'];
+				$state   = $address[0]['adr_one_region'];
+				$country = $address[0]['adr_one_countryname'];
+			}
+			else
+			{
+				$company = $title . $address[0]['n_given'] . '&nbsp;' . $address[0]['n_family'];
+				$street  = $address[0]['adr_two_street'];
+				$city    = $address[0]['adr_two_locality'];
+				$zip     = $address[0]['adr_two_postalcode'];
+				$state   = $address[0]['adr_two_region'];
+				$country = $address[0]['adr_two_countryname'];
+			}
+
+			if (! $country)
+			{
+				$country = $GLOBALS['phpgw_info']['user']['preferences']['common']['country'];
+			}
+
+			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
+			{
+				$a = $t->set_file(array('address_format' => 'line_format_' . strtolower($country) . '.tpl'));
+			}
+			else
+			{
+				$a = $t->set_file(array('address_format' => 'line_format_us.tpl'));
+			}
+
+			$a .= $t->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
+			$a .= $t->set_var('fontsize',$fontsize);
+			$a .= $t->set_var('company',$company);
+			$a .= $t->set_var('street',$street);
+			$a .= $t->set_var('city',$city);
+			$a .= $t->set_var('zip',$zip);
+			$a .= $t->set_var('state',$state);
+
+			if ($country != $GLOBALS['phpgw_info']['user']['preferences']['common']['country'])
+			{
+				$countryname = $s->get_full_name($country);
+				$a .= $t->set_var('country','&nbsp;°&nbsp;' . lang($countryname));
+			}
 
 			$a .= $t->fp('out','address_format');
 			return $a;
