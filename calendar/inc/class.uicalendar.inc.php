@@ -2345,6 +2345,7 @@
 			{
 				$this->index();
 			}
+
 			
 			// Fetch participants
 			if( get_var("matrix", array("GET", "POST")) == 1 )
@@ -2355,7 +2356,13 @@
 				// fetch participatns from get and post var
 				$participants = get_var("participants", array("GET", "POST"));
 				// Defined - into session - who participates
-				$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", implode(";", $participants));
+				$GLOBALS['phpgw']->session->appsession("participants_matrix", "calendar", @implode(";", $participants));
+			}
+
+			// No type ... return to the select page
+			if (!get_var("matrixtype", array("GET", "POST")) OR !$participants )
+			{
+				header('Location: ?menuaction=calendar.uicalendar.matrixselect');
 			}
 
 			$date["year"] 	= get_var("year",  array("GET", "POST"));
