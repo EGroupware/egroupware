@@ -25,6 +25,7 @@ add new application	admin	en	Add new application
 add new phrase	transy	en	Add new phrase
 add new ticket	tts	en	Add new ticket
 add note	notes	en	Add note 
+add x category for	common	en	Add %1 category for
 address book	common	en	Address Book
 addressbook	common	en	Addressbook
 addressbook preferences	common	en	Addressbook preferences
@@ -98,7 +99,8 @@ categories	common	en	Categories
 category	common	en	Category
 category description	admin	en	Category description
 category name	admin	en	Category name
-category x has been added !	admin	en	Category %1 has been added !
+category x has been added !	common	en	Category %1 has been added !
+category x has been updated !	common	en	Category %1 has been updated !
 cc	email	en	CC
 cell phone	addressbook	en	cell phone
 center	weather	en	Center
@@ -179,6 +181,7 @@ edit group	admin	en	Edit Group
 edit_income	bookkeeping	en	Edit income
 edit note for	notes	en	Edit note for
 edit user account	admin	en	Edit user account
+edit x category for	common	en	Edit %1 category for
 email account name	email	en	Email Account Name
 email address	email	en	E-Mail address
 e-mail	common	en	E-Mail
@@ -482,7 +485,7 @@ select category	common	en	Select Category
 select different theme	preferences	en	Select different Theme
 select headline news sites	common	en	Select Headline News sites
 select language to generate for	transy	en	Select language to generate for
-select parent category	admin	en	Select parent category
+select parent category	common	en	Select parent category
 select permissions this group will have	admin	en	Select permissions this group will have
 select users for inclusion	admin	en	Select users for inclusion
 select which application for this phrase	transy	en	select which application for this phrase

@@ -117,9 +117,7 @@ categories for	common	ja	カテゴリ
 categories name	admin	ja	カテゴリ名
 category	common	ja	カテゴリ
 category description	admin	ja	カテゴリ詳細
-category x has been added !	admin	ja	カテゴリ %1 を追加しました。
 category x has been added !	common	ja	カテゴリ %1 を追加しました。
-category x has been updated !	admin	ja	カテゴリ %1 を訂正しました。
 category x has been updated !	common	ja	カテゴリ %1 を訂正しました。
 cc	email	ja	CC
 cell phone	addressbook	ja	cell 電話
@@ -579,7 +577,6 @@ select headline news sites	common	ja	ヘッドラインニュースサイトの選択
 select headline news sites	preferences	ja	ヘッドラインニュースサイトの選択
 select home email address	email	ja	電子メール（個人）
 select language to generate for	transy	ja	作成する言語
-select parent category	admin	ja	親カテゴリ選択
 select parent category	common	ja	親カテゴリ選択
 select permissions this group will have	admin	ja	利用可能アプリケーション
 select	todo	ja	選択
