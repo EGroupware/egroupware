@@ -158,7 +158,10 @@
 			$addr_names = $GLOBALS['phpgw']->contacts->stock_contact_fields + array(
 				'cat_id' => 'Categories: @cat_id(Cat1,Cat2)',
 				'access' => 'Access: public,private',
-				'owner'  => 'Owner: defaults to user'
+				'owner'  => 'Owner: defaults to user',
+				'address2' => 'address line 2',
+				'address3' => 'address line 3',
+			 	'ophone'   => 'Other Phone'
 			);
 
 			while(list($field,$name) = each($addr_names))
