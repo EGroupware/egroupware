@@ -87,23 +87,6 @@
       Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]) . "/", "cd=yes");
     }
 
-      // Create the users private_dir if not exist
-/*
-        $sep = $phpgw->common->filesystem_separator();
-        $basedir = $phpgw_info["server"]["server_root"] . $sep . "filemanager" . $sep
-                 . "users" . $sep;
-        if(!is_dir($basedir . $phpgw->db->f("loginid")))
-          mkdir($basedir . $phpgw->db->f("loginid"), 0707);
-*/
-
-/*
-      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                                           . "/", $usecookies));
-      Header("Location: " . $phpgw->link($phpgw_info["server"]["webserver_url"]
-                                                           . "/", "cd=yes"));
-      exit;
-    }
-*/
   } else {
     if ($last_loginid) {
       $phpgw->db->query("select value from preferences where owner='$last_loginid' "
@@ -126,11 +109,6 @@
   $tmpl->set_var("lang_password",lang_login("password"));
   $tmpl->set_var("lang_login",lang_login("login"));
 
-  if ($phpgw_info["server"]["usecookies"]) {
-    $tmpl->set_var("use_cookies","<tr><td bgcolor=#FFFFFF height=\"25\" width=\"29%\" "
-	    . "colspan=\"2\">" . lang_login("use cookies") . "<input type=\"checkbox\" "
-	    . "name=\"usecookies\" value=\"True\"></td></tr>");
-  }
   $tmpl->parse("login2out","login2");
   $tmpl->parse("loginout", "login");
   $tmpl->p("loginout");
