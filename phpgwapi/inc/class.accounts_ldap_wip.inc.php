@@ -511,7 +511,7 @@
 			}
 		}
 
-		function create($account_type, $account_lid, $account_pwd, $account_firstname, $account_lastname, $account_status, $account_id='',$account_home='',$account_shell='')
+		function create($account_info)
 		{
 			global $phpgw_info, $phpgw;
 
@@ -534,11 +534,11 @@
 
 			if ($account_type == "g")
 			{
-				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "cn=" . $account_info['lid']);
+				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_group_context"], "cn=" . $account_info['account_lid']);
 			}
 			else
 			{
-				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=" . $account_info['lid']);
+				$sri = ldap_search($ds, $phpgw_info["server"]["ldap_context"], "uid=" . $account_info['account_lid']);
 			}
 			$allValues = ldap_get_entries($ds, $sri);
 
@@ -550,7 +550,7 @@
 				}
 				else
 				{
-					$entry["homedirectory"] = $phpgw_info["server"]["ldap_account_home"].SEP.$account_info['lid'];
+					$entry["homedirectory"] = $phpgw_info["server"]["ldap_account_home"].SEP.$account_info['account_lid'];
 				}
 
 				if ($account_shell)
@@ -619,23 +619,23 @@
 				// Not already there, we will add it
 				if ($account_type == "g")
 				{
-					$dn = 'cn='.$account_lid.','.$phpgw_info["server"]["ldap_group_context"];
+					$dn = 'cn='.$account_info['account_lid'] . ',' . $phpgw_info["server"]["ldap_group_context"];
 					unset($entry["homedirectory"]);
 					unset($entry["loginshell"]);
 					$entry["objectclass"][0] = 'top';
 					$entry["objectclass"][1] = 'posixGroup';
-					$entry["cn"]             = $account_info['lid'];
+					$entry["cn"]             = $account_info['account_lid'];
 					$entry["gidnumber"]      = $account_id;
 					$entry["userpassword"]   = $phpgw->common->encrypt_password($account_info['passwd']);
 					$entry["description"]    = 'phpgw-created group';
 				}
 				else
 				{
-					$dn = 'uid=' . $account_lid . ',' . $phpgw_info["server"]["ldap_context"];
+					$dn = 'uid=' . $account_info['account_lid'] . ',' . $phpgw_info["server"]["ldap_context"];
 					$entry["cn"]        = sprintf("%s %s", $account_firstname, $account_lastname);
 					$entry["sn"]        = $account_info['lastname'];
 					$entry["givenname"] = $account_info['firstname'];
-					$entry["uid"]       = $account_info['lid'];
+					$entry["uid"]       = $account_info['account_lid'];
 					$entry["uidnumber"] = $account_id;
 					if ($phpgw_info["server"]["ldap_group_id"])
 					{
