@@ -271,6 +271,7 @@
 		       ."'nntp')");
  	  }
 	  $db->query("drop table users_newsgroups");
+	  $db->query("update applications set app_tables='newsgroups' where app_name='nntp'");
 	}
       }
 
