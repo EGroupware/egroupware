@@ -220,6 +220,58 @@
 			return $retVal && $this->m_oTranslator->CreateTable($this, $this->m_aTables, $sTableName, $aTableDef);
 		}
 
+		// This function manually re-created the table incl. primary key and all other indices
+		// It is meant to use if the primary key, existing indices or column-order changes or
+		// columns are not longer used or new columns need to be created (with there default value or NULL)
+		function RefreshTable($sTableName, $aTableDef)
+		{
+			if($GLOBALS['DEBUG']) { echo "<p>schema_proc::RefreshTable('$sTableName',<pre>".print_r($aTableDef,True).")\n\nm_aTables[$sTableName]=".print_r($this->m_aTables[$sTableName],True)."</pre>\n"; }
+			$old_fd = $this->m_aTables[$sTableName]['fd'];
+
+			$Ok = $this->m_oDeltaProc->RefreshTable($this, $this->m_aTables, $sTableName, $aTableDef);
+			if(!$Ok || $this->m_bDeltaOnly)
+			{
+				return $Ok;	// nothing else to do
+			}
+			$tmp_name = 'tmp_'.$sTableName;
+			$this->m_odb->transaction_begin();
+
+			$select = array();
+			foreach($aTableDef['fd'] as $name => $data)
+			{
+				if (isset($old_fd[$name]))	// existing column, use its value => column-name in query
+				{
+					$select[] = $name;
+				}
+				else	// new column => use default value or NULL
+				{
+					if (!isset($data['default']) && (!isset($data['nullable']) || $data['nullable']))
+					{
+						$select[] = 'NULL';
+					}
+					else
+					{
+						$select[] = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
+					}
+				}
+			}
+			$select = implode(',',$select);
+
+			$Ok = $this->RenameTable($sTableName,$tmp_name) &&
+				$this->CreateTable($sTableName,$aTableDef) &&
+				$this->m_odb->query("INSERT INTO $sTableName SELECT $select FROM $tmp_name",__LINE__,__FILE__);
+
+			if (!$Ok)
+			{
+				$this->m_odb->transaction_fail();
+				return False;
+			}
+			$this->DropTable($tmp_name);
+			$this->m_odb->transaction_commit();
+
+			return True;
+		}
+
 		function f($value)
 		{
 			if($this->m_bDeltaOnly)

@@ -155,7 +155,7 @@
 				}
 			}
 
-			return Rrue;
+			return True;
 		}
 
 		function AddColumn($oProc, &$aTables, $sTableName, $sColumnName, &$aColumnDef)
@@ -179,6 +179,13 @@
 			}
 
 			return True;
-		}	
+		}
+
+		function RefreshTable($oProc, &$aTables, $sTableName, $aTableDef)
+		{
+			$aTables[$sTableName] = $aTableDef;
+
+			return True;
+		}
 	}
 ?>
